@@ -1,0 +1,2248 @@
+[
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 89.52,
+  "유지계약액": 52651,
+  "대상신계약액": 58814,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 89.521,
+   "diff": -0.001,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 95.85,
+  "유지계약액": 429,
+  "대상신계약액": 448,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 95.759,
+   "diff": 0.091,
+   "strict_ok": false,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false,
+  "identity_note": "strict +-0.06 fails but printed rate lies inside the interval implied by rounding of the (백만원) amounts"
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 73.71,
+  "유지계약액": 329,
+  "대상신계약액": 446,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 73.767,
+   "diff": -0.057,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 82.27,
+  "유지계약액": 16593,
+  "대상신계약액": 20169,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 82.27,
+   "diff": 0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": 76.75,
+  "유지계약액": 9033,
+  "대상신계약액": 11770,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 76.746,
+   "diff": 0.004,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 86.78,
+  "유지계약액": 109584,
+  "대상신계약액": 126285,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 86.775,
+   "diff": 0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 88.12,
+  "유지계약액": 12300,
+  "대상신계약액": 13959,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 88.115,
+   "diff": 0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 13,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 72.33,
+  "유지계약액": 37912,
+  "대상신계약액": 52412,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 72.335,
+   "diff": -0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 83.25,
+  "유지계약액": 274,
+  "대상신계약액": 329,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 83.283,
+   "diff": -0.033,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 45.79,
+  "유지계약액": 1983,
+  "대상신계약액": 4330,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 45.797,
+   "diff": -0.007,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 76.29,
+  "유지계약액": 6935,
+  "대상신계약액": 9091,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 76.284,
+   "diff": 0.006,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": 66.23,
+  "유지계약액": 5821,
+  "대상신계약액": 8790,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 66.223,
+   "diff": 0.007,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 75.18,
+  "유지계약액": 67806,
+  "대상신계약액": 90197,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 75.175,
+   "diff": 0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 79.86,
+  "유지계약액": 8132,
+  "대상신계약액": 10183,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 79.859,
+   "diff": 0.001,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 25,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 59.5,
+  "유지계약액": 36398,
+  "대상신계약액": 61170,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 59.503,
+   "diff": -0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 44.77,
+  "유지계약액": 155,
+  "대상신계약액": 347,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 44.669,
+   "diff": 0.101,
+   "strict_ok": false,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false,
+  "identity_note": "strict +-0.06 fails but printed rate lies inside the interval implied by rounding of the (백만원) amounts"
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 42.7,
+  "유지계약액": 2672,
+  "대상신계약액": 6258,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 42.697,
+   "diff": 0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 76.54,
+  "유지계약액": 22891,
+  "대상신계약액": 29906,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 76.543,
+   "diff": -0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": 65.76,
+  "유지계약액": 8601,
+  "대상신계약액": 13081,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 65.752,
+   "diff": 0.008,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 72.76,
+  "유지계약액": 104484,
+  "대상신계약액": 143608,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 72.756,
+   "diff": 0.004,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 70.15,
+  "유지계약액": 8107,
+  "대상신계약액": 11557,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 70.148,
+   "diff": 0.002,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 37,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 52.08,
+  "유지계약액": 31941,
+  "대상신계약액": 61332,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 52.079,
+   "diff": 0.001,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 53.78,
+  "유지계약액": 87,
+  "대상신계약액": 162,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 53.704,
+   "diff": 0.076,
+   "strict_ok": false,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false,
+  "identity_note": "strict +-0.06 fails but printed rate lies inside the interval implied by rounding of the (백만원) amounts"
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 37.89,
+  "유지계약액": 2188,
+  "대상신계약액": 5777,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 37.874,
+   "diff": 0.016,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 65.76,
+  "유지계약액": 11220,
+  "대상신계약액": 17062,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 65.76,
+   "diff": -0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": 53.07,
+  "유지계약액": 2326,
+  "대상신계약액": 4383,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 53.069,
+   "diff": 0.001,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 57.25,
+  "유지계약액": 82544,
+  "대상신계약액": 144178,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 57.251,
+   "diff": -0.001,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 49.12,
+  "유지계약액": 5554,
+  "대상신계약액": 11307,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 49.12,
+   "diff": -0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0005",
+  "원수사명": "흥국화재해상보험",
+  "생손보여부": "손보",
+  "공시분기": "2024.4Q",
+  "회차": 61,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": true,
+  "출처": {
+   "file": "data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf",
+   "page": 86
+  },
+  "추출방식": "vision",
+  "dash_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 85.83,
+  "유지계약액": 404356,
+  "대상신계약액": 471123,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 85.828,
+   "diff": 0.002,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 92.24,
+  "유지계약액": 140584,
+  "대상신계약액": 152416,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 92.237,
+   "diff": 0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 87.01,
+  "유지계약액": 32869,
+  "대상신계약액": 37775,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 87.013,
+   "diff": -0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 83.89,
+  "유지계약액": 25284,
+  "대상신계약액": 30138,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 83.894,
+   "diff": -0.004,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 89.3,
+  "유지계약액": 957793,
+  "대상신계약액": 1072615,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 89.295,
+   "diff": 0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": 88.27,
+  "유지계약액": 974,
+  "대상신계약액": 1104,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 88.225,
+   "diff": 0.045,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 87.24,
+  "유지계약액": 26429,
+  "대상신계약액": 30294,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 87.242,
+   "diff": -0.002,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": 100.0,
+  "유지계약액": 2,
+  "대상신계약액": 2,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 100.0,
+   "diff": 0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 13,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 67.96,
+  "유지계약액": 289315,
+  "대상신계약액": 425708,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 67.961,
+   "diff": -0.001,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 77.93,
+  "유지계약액": 117858,
+  "대상신계약액": 151229,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 77.933,
+   "diff": -0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 58.83,
+  "유지계약액": 14101,
+  "대상신계약액": 23969,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 58.83,
+   "diff": -0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 70.69,
+  "유지계약액": 13224,
+  "대상신계약액": 18706,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 70.694,
+   "diff": -0.004,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 72.85,
+  "유지계약액": 664242,
+  "대상신계약액": 911851,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 72.845,
+   "diff": 0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": 76.16,
+  "유지계약액": 855,
+  "대상신계약액": 1123,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 76.135,
+   "diff": 0.025,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 78.62,
+  "유지계약액": 21550,
+  "대상신계약액": 27411,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 78.618,
+   "diff": 0.002,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": 100.0,
+  "유지계약액": 8,
+  "대상신계약액": 8,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 100.0,
+   "diff": 0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 25,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 53.74,
+  "유지계약액": 191079,
+  "대상신계약액": 355543,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 53.743,
+   "diff": -0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 62.13,
+  "유지계약액": 80047,
+  "대상신계약액": 128845,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 62.127,
+   "diff": 0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 32.99,
+  "유지계약액": 4419,
+  "대상신계약액": 13394,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 32.992,
+   "diff": -0.002,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 51.79,
+  "유지계약액": 7292,
+  "대상신계약액": 14080,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 51.79,
+   "diff": 0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 59.91,
+  "유지계약액": 404144,
+  "대상신계약액": 674606,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 59.908,
+   "diff": 0.002,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": 66.49,
+  "유지계약액": 777,
+  "대상신계약액": 1169,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 66.467,
+   "diff": 0.023,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 63.13,
+  "유지계약액": 14234,
+  "대상신계약액": 22545,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 63.136,
+   "diff": -0.006,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": 100.0,
+  "유지계약액": 1,
+  "대상신계약액": 1,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 100.0,
+   "diff": 0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 37,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "설계사",
+  "채널_원문": "설계사",
+  "유지율": 44.94,
+  "유지계약액": 152302,
+  "대상신계약액": 338935,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 44.935,
+   "diff": 0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "개인대리점",
+  "채널_원문": "개인대리점",
+  "유지율": 52.45,
+  "유지계약액": 66725,
+  "대상신계약액": 127212,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 52.452,
+   "diff": -0.002,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "법인대리점_금융기관",
+  "채널_원문": "금융기관보험대리점",
+  "유지율": 26.39,
+  "유지계약액": 4066,
+  "대상신계약액": 15409,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 26.387,
+   "diff": 0.003,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "법인대리점_TM",
+  "채널_원문": "TM",
+  "유지율": 30.14,
+  "유지계약액": 2430,
+  "대상신계약액": 8061,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 30.145,
+   "diff": -0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "법인대리점_홈쇼핑",
+  "채널_원문": "홈쇼핑",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "법인대리점_기타",
+  "채널_원문": "기타",
+  "유지율": 50.4,
+  "유지계약액": 265342,
+  "대상신계약액": 526522,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 50.395,
+   "diff": 0.005,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "직영_임직원",
+  "채널_원문": "임직원",
+  "유지율": 54.54,
+  "유지계약액": 646,
+  "대상신계약액": 1184,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 54.561,
+   "diff": -0.021,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "직영_복합",
+  "채널_원문": "복합",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "직영_다이렉트",
+  "채널_원문": "다이렉트",
+  "유지율": 42.44,
+  "유지계약액": 9678,
+  "대상신계약액": 22804,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "identity": {
+   "computed": 42.44,
+   "diff": 0.0,
+   "strict_ok": true,
+   "rounding_interval_ok": true
+  },
+  "identity_break": false
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "중개사",
+  "채널_원문": "중개사",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ },
+ {
+  "원보험사코드": "KR0010",
+  "원수사명": "KB손해보험",
+  "생손보여부": "손보",
+  "공시분기": "2025.4Q",
+  "회차": 61,
+  "채널": "기타",
+  "채널_원문": "기타",
+  "유지율": null,
+  "유지계약액": null,
+  "대상신계약액": null,
+  "단위": "백만원, %",
+  "dash": false,
+  "출처": {
+   "file": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+   "page": 115
+  },
+  "추출방식": "vision",
+  "blank": true,
+  "blank_fields": [
+   "유지율",
+   "유지계약액",
+   "대상신계약액"
+  ]
+ }
+]

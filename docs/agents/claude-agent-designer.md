@@ -44,7 +44,7 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 |---|---|---|
 | `index.html` | Market map (treemap on desktop, vertical list on mobile) + IFRS17 quadrant + bubble | `kics_disclosure.json`, `CSM_waterfall.json`, `NB_CSM_multiple.json` — **버블 데이터는 이 페이지에 인라인**(별도 `csm_bubble.json` 을 fetch 하지 않음) |
 | `K-ICS.html` | Per-insurer K-ICS detail + sub-items + 자본 도넛 + 금리 민감도(자산D/부채D/듀레이션갭) + forward outlook | `kics_disclosure.json`, `kics_rate_sensitivity.json`, `kics_duration_gap.json`, `kics_tier1_utilization.json`, `kics_tier2_utilization.json`, `kics_forward_capital.json` |
-| `IFRS17.html` | 7-panel IFRS17 dashboard (1=재무상태표 T계정, 2-7=CSM 이동·시계열·상각·손익·NB·민감도) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `kics_disclosure.json`, `IFRS17_BS.json`, `data/dart/viz/csm_waterfall.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json` |
+| `IFRS17.html` | 7-panel IFRS17 dashboard (1=재무상태표 T계정, 2-7=CSM 이동·시계열·상각·손익·NB·민감도) + 섹션 8=손해율 가정 · 9=판매채널별 유지율(접이식 트리 표, 마스터 `손해율`·`유지율` 시트의 파생 패널 JSON 2개, 빌더 `scripts/viz_build_persistency_lossratio_panels.py`) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `kics_disclosure.json`, `IFRS17_BS.json`, `data/dart/viz/csm_waterfall.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json`, `data/loss_ratio/panel_loss_ratio.json`, `data/persistency/panel_persistency.json` |
 | `공시보고서.html` | 배당현황 — 회사별 배당지표 | `dividend.json`, `kics_disclosure.json` |
 
 > 이 열은 HTML 에서 **기계 도출**한다(2026-10-07 재도출). 페이지의 fetch 를 바꾸면 **이 표와 `claude-agent-publishing.md` §1 을 같이 고쳐라**

@@ -400,6 +400,10 @@ LIVE_ARTIFACT_READERS = {
     "data/dart/viz/sensitivity_heatmap.json": ["validate_data_contract",
                                                "validate_master_tables"],
     "data/ir/nb_csm_ratio.json": ["validate_nb_csm_multiple"],
+    # 2026-10-08 IFRS17.html 섹션 8·9 (손해율 가정 · 판매채널별 유지율). 검사기 = 빌더의 `--check`:
+    # 마스터 JSON 에서 다시 만든 바이트가 디스크의 패널 JSON 과 같은지 + 크기 예산(불변식 1: 화면 파일 = 검사한 파일).
+    "data/loss_ratio/panel_loss_ratio.json": ["viz_build_persistency_lossratio_panels"],
+    "data/persistency/panel_persistency.json": ["viz_build_persistency_lossratio_panels"],
     # `/` 로 끝나면 **접두 선언**이다 — 그 폴더 아래 전부를 한 검사기가 덮는다는 뜻.
     # `public_exports/` 는 사용자가 내려받는 12개 스냅샷인데(download-survey.js), 파일 목록이
     # `export_public_sheets.MASTERS` 하나에서 나오고 `validate_live_artifacts` 도 그 목록을
@@ -463,6 +467,33 @@ def _origin_main_fetches() -> set[str] | None:
     return out if any_ok else None
 
 
+def _worktree_fetches() -> set[str]:
+    """작업트리의 배포 HTML(+같은 저장소 JS)이 참조하는 .json — **아직 origin/main 에 안 올라간** 화면 파일.
+
+    선언(PANEL_DERIVED_FROM · LIVE_ARTIFACT_READERS)은 배포와 같은 커밋에 들어가야 배포 뒤 gap 검사가
+    통과하는데, 그러면 배포 전(origin/main 이 아직 그 파일을 fetch 안 함)에는 ghost 검사가 "죽은 선언"
+    이라고 막는다. 그래서 ghost 는 `origin/main ∪ 작업트리 HTML` 어디에도 없을 때만 죽은 선언으로 본다.
+    gap 검사(화면이 읽는데 선언이 없음)는 그대로 origin/main 기준이라 약해지지 않는다.
+    """
+    out: set[str] = set()
+    scripts: set[str] = set()
+    for h in _HTML:
+        f = ROOT / h
+        if not f.exists():
+            continue
+        body = f.read_text(encoding="utf-8", errors="replace")
+        for m in _JSON_LITERAL.finditer(body):
+            out.add(m.group(1).lstrip("./"))
+        for m in re.finditer(r"""<script[^>]*\bsrc=['"]([^'":]+?\.js)['"]""", body):
+            scripts.add(m.group(1).lstrip("./"))
+    for js in sorted(scripts):
+        f = ROOT / js
+        if f.exists():
+            for m in _JSON_LITERAL.finditer(f.read_text(encoding="utf-8", errors="replace")):
+                out.add(m.group(1).lstrip("./"))
+    return out
+
+
 def _declared_readers(artifact: str) -> list[str] | None:
     """정확 일치 선언, 없으면 가장 긴 접두(`.../`) 선언을 쓴다."""
     if artifact in LIVE_ARTIFACT_READERS:
@@ -487,9 +518,10 @@ def test_every_live_fetched_artifact_has_a_declared_reader():
         f"라이브가 fetch 하는데 선언이 없는 아티팩트 {undeclared} — 어떤 검사기가 읽을지 "
         f"정하고 LIVE_ARTIFACT_READERS 에 넣어라. 선언만 하고 안 읽으면 아래 테스트가 막는다."
     )
+    seen = fetched | _worktree_fetches()      # 배포 대기 중인 화면 파일의 선언은 죽은 선언이 아니다
     ghost = sorted(k for k in LIVE_ARTIFACT_READERS
-                   if (k.endswith("/") and not any(a.startswith(k) for a in fetched))
-                   or (not k.endswith("/") and k not in fetched))
+                   if (k.endswith("/") and not any(a.startswith(k) for a in seen))
+                   or (not k.endswith("/") and k not in seen))
     assert not ghost, (
         f"선언에만 있고 라이브가 더는 fetch 하지 않는 아티팩트 {ghost} — 화면에서 빠졌다면 "
         f"선언도 지워라(죽은 사본을 계속 검사하게 된다)."
@@ -569,6 +601,11 @@ PANEL_DERIVED_FROM = {
     "data/dart/viz/insurance_pl_breakdown.json": "PL_breakdown.json",
     "data/dart/viz/sensitivity_heatmap.json":    "CSM_sensitivity.json",
     "data/ir/nb_csm_ratio.json":                 "NB_CSM_multiple.json",
+    # 2026-10-08 IFRS17.html 섹션 8·9. 빌더 scripts/viz_build_persistency_lossratio_panels.py 가
+    # data/loss_ratio/master_loss_ratio.json · data/persistency/master_persistency.json(= xlsx 시트 `손해율` · `유지율`)
+    # 에서만 만든다. 마스터 시트의 키는 build_master_xlsx.MASTERS 의 JSON 경로(루트 기준 상대경로).
+    "data/loss_ratio/panel_loss_ratio.json":     "data/loss_ratio/master_loss_ratio.json",
+    "data/persistency/panel_persistency.json":   "data/persistency/master_persistency.json",
 }
 
 
@@ -599,8 +636,8 @@ def test_every_live_fetched_artifact_lands_in_a_master_sheet():
     )
 
     # 선언만 하고 실제로는 화면이 더는 안 읽는 항목도 막는다(죽은 선언 방지).
-    ghost = sorted(k for k in PANEL_DERIVED_FROM
-                   if k not in {f.lstrip("./") for f in fetched})
+    seen = {f.lstrip("./") for f in fetched} | _worktree_fetches()   # 배포 대기 중인 화면 파일 포함
+    ghost = sorted(k for k in PANEL_DERIVED_FROM if k not in seen)
     assert not ghost, (
         f"PANEL_DERIVED_FROM 에만 있고 화면이 더는 fetch 하지 않는 것 {ghost} — 선언을 지워라."
     )

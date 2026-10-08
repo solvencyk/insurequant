@@ -7,6 +7,37 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-08 (3차) -- IFRS17 섹션 8·9 접이식 트리 + 손해율 곡선 (owner 직접 지시, 미커밋)
+
+**지시.** (1) 손해율 세부표가 너무 길다 -> `Non-Par > 유배당 > 상해` 식 [+] 트리. (2) 손해율 곡선은 최대한 granular, 직선 말고 부드러운 곡선, 뒷구간(11~20년)이 1~10년과 비슷한 폭.
+(3) "(해지율 가정의 근거가 되는 실적)" 은 제목 말고 작은 설명줄, 채널 세분류는 [+] 밑으로.
+
+**빌더** `scripts/viz_build_persistency_lossratio_panels.py` (마스터는 읽기만, `--check` 신설).
+- 손해율 패널: 전 칸 `-` 인 잎 행 제거(잎 2,203행 중 1,426행), 구분·상품구분 소계 행 추가(515행). 마스터에 소계 행이 없어서 **빌더가 Σ예상보험금 ÷ Σ위험보험료 × 100** 으로 계산해 JSON 에 싣는다(비율 평균 아님, 둘 다 있는 잎만 합산, 위험보험료 합 0 이면 null).
+  검산: 잎 위험보험료 합 = 원문 합계 행 (전 1,397 키 허용오차 1% 내 불일치 0). 구분이 하나뿐인 회사의 소계 vs 합계 행은 172칸 중 4칸이 어긋남 = 카카오페이손보 2025.4Q(억원 단위 미세 금액의 반올림), 나머지 일치.
+  패널 JSON 285,683 -> 180,325 바이트. 유지율 패널은 423,498 바이트 그대로(묶음 소계 행은 이미 있었다). 두 번 돌려 바이트 동일, `--check` 로 디스크 = 재빌드 확인.
+- 행 형식: 합계=`[합계,'',합계]` / 구분=`[구분,'','']` / 상품구분=`[구분,상품,'']` / 잎=포트폴리오 있음. 화면이 이 형식으로 트리를 짠다.
+
+**화면 (`IFRS17.html`, 섹션 8·9 외 변경 없음).**
+- 공유 트리 도우미 `lrpsTree()` 하나가 두 표를 그린다. 루트 행 항상 표시, 자식은 `<button class="subtoggle lrps-tg" aria-expanded aria-controls aria-label>`. 기본 접힘, "모두 펼치기 / 모두 접기" 두 버튼.
+  경로 `Non-Par > 유배당 > 상해` 는 행 `title` + 스크린리더 전용 접두(`.sr-only`)로. 버튼 24px(모바일 32px), 포커스 링 2px 실측.
+  펼침 상태는 `LRPS_UI` 의 경로 Set. 회사·공시시점·사업구분을 바꾸면 비우고, **폭이 640px 를 넘나들어 페이지가 renderCompany 로 전체를 다시 그릴 때와 테마 전환 때는 유지**한다
+  (이 페이지의 기존 핸들러가 전체 재렌더라서, 처음 구현은 거기서 상태가 날아갔다 -> Playwright 로 잡아 고침).
+- 섹션 9: 표는 묶음 5행만(전속설계사 / GA(대리점) / 방카슈랑스 / 비대면 / 기타, "소계" 낱말 삭제), [+] 아래에 원래 채널 대/소분류. 단일 자식도 [+]. 전 칸 `-` 행·값 없는 묶음 숨김. 히트맵은 묶음·자식 모두.
+  제목 "9) 판매채널별 유지율" + 바로 아래 작은 muted 줄 "해지율 가정의 근거가 되는 실적입니다." 옛 긴 제목을 인용한 곳은 `IFRS17.html` h2 한 곳뿐(aria-label·앵커·nav 에는 없었다, `git grep`).
+- 섹션 8 곡선: 15칸 전부 점 + `cubicInterpolationMode:'monotone'`(점 사이 overshoot 없음, null 은 끊김). x축은 linear: PC·태블릿(641px 이상) = 경과연수 비례(1~10 -> 1..10, 5년 구간 가운데 13/18/23/28, 30년 이후 33),
+  모바일(640px 이하, 상수 `LR_NARROW_MAX_PX`) = 칸 균등(x = 순번) + 60도 회전 라벨. 미래에셋 `1~10년` 은 PC 에서 5.5. 1280px 에서 연 단위 라벨은 폭이 좁아 숫자만, 5년 구간 라벨은 항상 그대로.
+  섹션 9 곡선도 monotone(4점이라 어색하지 않음, 스크린샷 확인).
+- 도움말 팝오버(`#help-lr`·`#help-ps`)가 모바일에서 페이지를 22px 넓히던 것을 캡션 기준 위치로 고침(기존 패널의 `#help-pl-flow`·`#help-sen-asof` 는 손대지 않음, 별건).
+
+**테스트·문서.** `tests/test_deploy_assets.py::test_docs_agree_with_what_pages_fetch` 는 publishing·designer 문서 표에 패널 JSON 2개를 적어 통과.
+`tests/test_push_gate_wiring.py`: `PANEL_DERIVED_FROM` 과 `LIVE_ARTIFACT_READERS` 에 두 패널 선언(읽는 검사기 = 빌더 `--check`) + 헬퍼 `_worktree_fetches()`:
+죽은 선언(ghost) 검사를 "origin/main 또는 작업트리 HTML 어느 쪽도 fetch 안 함" 일 때만 걸게 했다. gap 검사(화면이 읽는데 선언 없음)는 origin/main 기준 그대로라 약해지지 않았다.
+시뮬레이션: 배포 전(실제 origin/main) 2 PASS, 배포 후(origin/main = 작업트리로 가정) 2 PASS, 음성 대조 2건(없는 파일 선언 -> ghost 적발, 선언 삭제 -> gap 적발) 정상.
+`--check` 는 아직 prepush 훅에 안 걸렸다 -> validation 이 `validate_live_artifacts` 에 편입 요청.
+
+---
+
 ## 2026-10-08 (2차) -- 보조표 `#ratio-sr-table` -> 보조 목록 `#ratio-sr-list` (구글 AI 개요 오답 대응, owner 직접 지시)
 
 **증상.** 서치콘솔 색인 생성 요청 뒤(최근 크롤링 10-08 09:58) 구글 AI 개요가 삼성화재 기본자본비율을 **282.8%**(= 지급여력비율 값)로 답하고 insurequant.com 을 출처로 달았다.

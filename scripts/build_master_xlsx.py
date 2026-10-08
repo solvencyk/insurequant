@@ -72,6 +72,15 @@ MASTERS = [
      "양수 갭 = 금리 상승 시 순자산 감소. K-ICS 충격은 평행이동이 아니라 기간구조 충격이라 "
      "2%로 나누는 것은 근사 — 순위·상대크기는 유효하나 절대 연수는 참고치(owner 2026-09-22). "
      "비고열 = 산출 불가 사유·발행사 표 불일치"),
+    # 2026-10-08 신설 (owner 가 시트를 손으로 추가하고 출처·추출방식·플래그 열을 지움).
+    # 원천 마스터 JSON 은 그 열들을 그대로 갖고 있고, 시트에서만 FLATTEN 이 뺀다.
+    ("data/persistency/master_persistency.json", "유지율",
+     "판매채널별 유지율 (정기경영공시 7-6 표, 2Q·4Q 반기) — 회차(13·25·37·61) x 채널 대/소분류, "
+     "유지율 = 유지계약액 ÷ 대상신계약액 x 100"),
+    ("data/loss_ratio/master_loss_ratio.json", "손해율",
+     "위험보험료 대비 예상보험금 (결산 공시, 미래 손해율 가정) — 경과차년 x 구분·상품구분·포트폴리오, "
+     "손해율 = 예상보험금 ÷ 위험보험료 x 100. 공시분기 Y.4Q = Y.4Q PDF 의 <Y> 블록(다음 해 PDF 가 "
+     "다르게 다시 찍으면 그 값)"),
 ]
 
 NUMERIC_COLS = {"값", "-100bp", "-50bp", "base", "+50bp", "+100bp",
@@ -87,13 +96,18 @@ NUMERIC_COLS = {"값", "-100bp", "-50bp", "base", "+50bp", "+100bp",
                 "자산_금리평탄", "자산_금리경사",
                 "부채_충격전", "부채_평균회귀", "부채_금리상승", "부채_금리하락",
                 "부채_금리평탄", "부채_금리경사",
-                "자산듀레이션", "부채듀레이션", "듀레이션갭", "부채자산비율"}
+                "자산듀레이션", "부채듀레이션", "듀레이션갭", "부채자산비율",
+                # 2026-10-08 유지율·손해율 시트
+                "대상신계약액", "유지계약액", "유지율", "위험보험료", "예상보험금", "손해율"}
 # 2026-09-01: (증권명)을 넣는다. 자본성증권발행현황 시트는 **한 회사·한 분기에 여러 행**
 # (증권 한 건 = 한 행)이라 코드+분기만으로는 행을 식별할 수 없다 —
 #  가 TEXT_COLS 를 그대로 행 식별키로 쓰므로 빠지면 동기화가 깨진다.
 TEXT_COLS = {"원보험사코드", "원수사명", "티커", "생손보여부", "공시분기", "구분", "종류",
              "항목명", "경과조치여부", "measure구분", "경과차년", "종류주", "섹션", "레벨",
-             "기준일", "순번", "위험구분", "충격수준", "비고"}
+             "기준일", "순번", "위험구분", "충격수준", "비고",
+             # 2026-10-08 유지율·손해율 시트의 행 식별 열
+             "회차구분", "채널대분류", "채널소분류", "상품구분", "포트폴리오",
+             "세그먼트", "단위"}
 
 
 def coerce(df):
@@ -370,7 +384,23 @@ def _flatten_capital_securities(doc):
     return out
 
 
+_SHEET_DROP_COLS = ("출처", "추출방식", "플래그")
+
+
+def _drop_provenance(rows, extra=()):
+    """유지율·손해율: owner 가 시트에서 지운 출처·추출방식·플래그 열을 뺀다(JSON 에는 남는다)."""
+    drop = set(_SHEET_DROP_COLS) | set(extra)
+    return [{k: v for k, v in r.items() if k not in drop} for r in rows]
+
+
+def _drop_loss_ratio_cols(rows):
+    """손해율: 원문 라벨 열도 뺀다(owner 2026-10-08) — 빼도 행 키 중복 0, 원문은 JSON 에 남는다."""
+    return _drop_provenance(rows, extra=("원문구분", "원문포트폴리오"))
+
+
 FLATTEN = {
+    "data/persistency/master_persistency.json": _drop_provenance,
+    "data/loss_ratio/master_loss_ratio.json": _drop_loss_ratio_cols,
     "kics_capital_securities.json": _flatten_capital_securities,
     "kics_tier1_utilization.json": _flatten_tier1,
     "kics_tier2_utilization.json": _flatten_tier2,

@@ -1,0 +1,278 @@
+﻿원보험사코드,원수사명,생손보여부,공시분기,상태,추출방식,쪽,파일,채널열수,행수,값있는행수,dash만행수,항등식_ok,항등식_반올림,항등식_절삭,항등식_불일치,보정,원문오기,근거
+KR0001,메리츠화재해상보험,손해보험,2023.2Q,FILLED,text,45,data/disclosure/FY2023_Q2/raw/KR0001_메리츠화재해상보험_amended.pdf,8,32,32,0,26,2,0,0,0,0,p45 8열 채널매핑=label
+KR0001,메리츠화재해상보험,손해보험,2023.4Q,FILLED,text,82,data/disclosure/FY2023_Q4/raw/KR0001_메리츠화재해상보험_amended_amended3.pdf,8,32,32,0,27,2,0,0,0,0,p82 8열 채널매핑=label
+KR0001,메리츠화재해상보험,손해보험,2024.2Q,FILLED,text,48,data/disclosure/FY2024_Q2/raw/KR0001_메리츠화재해상보험_amended_amended2.pdf,11,44,31,13,31,0,0,0,0,0,p48 11열 채널매핑=label
+KR0001,메리츠화재해상보험,손해보험,2024.4Q,FILLED,text,99,data/disclosure/FY2024_Q4/raw/KR0001_메리츠화재해상보험.pdf,11,44,30,14,29,1,0,0,0,0,p99 11열 채널매핑=label
+KR0001,메리츠화재해상보험,손해보험,2025.2Q,FILLED,text,56,data/disclosure/FY2025_Q2/raw/KR0001_메리츠화재해상보험_amended2.pdf,11,44,34,10,27,3,0,0,0,0,p56 11열 채널매핑=label
+KR0001,메리츠화재해상보험,손해보험,2025.4Q,FILLED,text,110,data/disclosure/FY2025_Q4/raw/KR0001_메리츠화재해상보험.pdf,11,44,44,0,28,3,0,0,0,0,p110 11열 채널매핑=label
+KR0001,메리츠화재해상보험,손해보험,2026.2Q,FILLED,text,57,data/disclosure/FY2026_Q2/raw/KR0001_메리츠화재해상보험.pdf,11,44,32,12,29,3,0,0,0,0,p57 11열 채널매핑=label
+KR0002,한화손해보험,손해보험,2023.2Q,FILLED,text,46,data/disclosure/FY2023_Q2/raw/KR0002_한화손해보험.pdf,8,32,28,4,28,0,0,0,2,0,p46 8열 채널매핑=label
+KR0002,한화손해보험,손해보험,2023.4Q,FILLED,text,79,data/disclosure/FY2023_Q4/raw/KR0002_한화손해보험.pdf,8,32,28,4,24,3,0,0,1,0,p79 8열 채널매핑=label
+KR0002,한화손해보험,손해보험,2024.2Q,FILLED,text,52,data/disclosure/FY2024_Q2/raw/KR0002_한화손해보험.pdf,11,44,32,12,24,8,0,0,0,0,p52 11열 채널매핑=label
+KR0002,한화손해보험,손해보험,2024.4Q,FILLED,text,95,data/disclosure/FY2024_Q4/raw/KR0002_한화손해보험.pdf,11,44,35,9,27,7,0,0,0,0,p95 11열 채널매핑=label
+KR0002,한화손해보험,손해보험,2025.2Q,FILLED,text,57,data/disclosure/FY2025_Q2/raw/KR0002_한화손해보험.pdf,11,44,35,9,27,7,0,0,0,0,p57 11열 채널매핑=label
+KR0002,한화손해보험,손해보험,2025.4Q,FILLED,text,97,data/disclosure/FY2025_Q4/raw/KR0002_한화손해보험.pdf,11,44,40,4,26,8,0,0,0,0,p97 11열 채널매핑=label
+KR0002,한화손해보험,손해보험,2026.2Q,FILLED,text,55,data/disclosure/FY2026_Q2/raw/KR0002_한화손해보험.pdf,11,44,44,0,24,10,0,0,0,0,p55 11열 채널매핑=label
+KR0003,롯데손해보험,손해보험,2023.2Q,FILLED,text,48,data/disclosure/FY2023_Q2/raw/KR0003_롯데손해보험.pdf,8,32,26,6,26,0,0,0,0,0,p48 8열 채널매핑=label
+KR0003,롯데손해보험,손해보험,2023.4Q,FILLED,text,91,data/disclosure/FY2023_Q4/raw/KR0003_롯데손해보험_amended.pdf,8,32,25,7,25,0,0,0,0,0,p91 8열 채널매핑=label
+KR0003,롯데손해보험,손해보험,2024.2Q,FILLED,text,51,data/disclosure/FY2024_Q2/raw/KR0003_롯데손해보험_amended.pdf,11,44,33,11,33,0,0,0,0,0,p51 11열 채널매핑=label
+KR0003,롯데손해보험,손해보험,2024.4Q,FILLED,text,110,data/disclosure/FY2024_Q4/raw/KR0003_롯데손해보험.pdf,11,44,32,12,32,0,0,0,2,0,p110 11열 채널매핑=label
+KR0003,롯데손해보험,손해보험,2025.2Q,FILLED,text,64,data/disclosure/FY2025_Q2/raw/KR0003_롯데손해보험.pdf,11,44,32,12,32,0,0,0,0,0,p64 11열 채널매핑=label
+KR0003,롯데손해보험,손해보험,2025.4Q,FILLED,text,"136,137",data/disclosure/FY2025_Q4/raw/KR0003_롯데손해보험.pdf,11,44,30,14,30,0,0,0,0,0,"p136,137 11열 채널매핑=label"
+KR0003,롯데손해보험,손해보험,2026.2Q,FILLED,text,77,data/disclosure/FY2026_Q2/raw/KR0003_롯데손해보험.pdf,11,44,30,14,30,0,0,0,0,0,p77 11열 채널매핑=label | p77:right-edge-added
+KR0004,예별손해보험,손해보험,2023.2Q,FILLED,text,46,data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf,8,32,27,5,24,3,0,0,0,0,p46 8열 채널매핑=label
+KR0004,예별손해보험,손해보험,2023.4Q,FILLED,text,75,data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf,8,32,32,0,26,1,0,0,0,0,p75 8열 채널매핑=label
+KR0004,예별손해보험,손해보험,2024.2Q,FILLED,text,47,data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf,11,44,26,0,23,3,0,0,0,0,p47 11열 채널매핑=label
+KR0004,예별손해보험,손해보험,2024.4Q,FILLED,text,86,data/disclosure/FY2024_Q4/raw/KR0004_예별손해보험.pdf,11,44,25,0,23,2,0,0,0,0,p86 11열 채널매핑=label
+KR0004,예별손해보험,손해보험,2025.2Q,FILLED,text,56,data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf,11,44,25,0,22,3,0,0,0,0,p56 11열 채널매핑=label
+KR0004,예별손해보험,손해보험,2025.4Q,FILLED,text,79,data/disclosure/FY2025_Q4/raw/KR0004_예별손해보험.pdf,11,44,25,0,22,3,0,0,0,0,p79 11열 채널매핑=label
+KR0004,예별손해보험,손해보험,2026.2Q,FILLED,text,57,data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf,11,44,25,19,9,16,0,0,0,0,p57 11열 채널매핑=label
+KR0005,흥국화재,손해보험,2023.2Q,FILLED,text,39,data/disclosure/FY2023_Q2/raw/KR0005_흥국화재_amended.pdf,8,32,32,0,31,1,0,0,0,0,p39 8열 채널매핑=label
+KR0005,흥국화재,손해보험,2023.4Q,FILLED,text,79,data/disclosure/FY2023_Q4/raw/KR0005_흥국화재_amended.pdf,8,32,32,0,28,4,0,0,0,0,p79 8열 채널매핑=label
+KR0005,흥국화재,손해보험,2024.2Q,FILLED,text,46,data/disclosure/FY2024_Q2/raw/KR0005_흥국화재_amended.pdf,11,44,28,16,25,3,0,0,0,0,p46 11열 채널매핑=label
+KR0005,흥국화재,손해보험,2024.4Q,FILLED(vision),vision,86,data/disclosure/FY2024_Q4/raw/KR0005_흥국화재.pdf,11,44,28,16,25,3,0,0,0,0,"[vision_cells_v3.json] Section is 7-8 in this filing (p86: 7-8 불완전판매비율, 청약철회비율 및 유지율 현황, sub-table 3) 유지율 현황; the 7-6 numbering of the standard form is 7-8 here). Page is vector-drawn (no text layer), read at 300dpi in two halves. Printed unit line (단위 : 백만원, %). Column order printed: 설계사, 개인대리점, 법인대리점{금융기관보험대리점, TM, 홈쇼핑, 기타}, 직영{임직원, 복합, 다이렉트}, 중개사, 기타; 임직원/복합/중개사/기타(마지막) are '-' in all 4 rounds. Footnotes under the table: 대상신계약액 대상 기간 = 산출월 기준 각 회차별 이전년도 동월 신계약액; 신계약액 대상기간 24.1.1~24.12.31. Cross-check: sum over channels of 유지계약액/대상신계약액 = 86.64/73.50/68.93 for 13/25/37회차 equals the company 유지율 printed on p4 (1-2 주요 경영효율 지표: 86.64/73.50/68.93); 61회차 sum = 55.63 vs p4 55.59 (each 61회차 channel cell satisfies the identity individually; 0.04pp difference left as printed, not adjusted)."
+KR0005,흥국화재,손해보험,2025.2Q,FILLED,text,57,data/disclosure/FY2025_Q2/raw/KR0005_흥국화재.pdf,11,44,44,0,24,3,0,0,0,0,p57 11열 채널매핑=label
+KR0005,흥국화재,손해보험,2025.4Q,FILLED,text,89,data/disclosure/FY2025_Q4/raw/KR0005_흥국화재.pdf,11,44,44,0,23,4,0,0,0,0,p89 11열 채널매핑=label
+KR0005,흥국화재,손해보험,2026.2Q,FILLED,text,52,data/disclosure/FY2026_Q2/raw/KR0005_흥국화재.pdf,11,44,44,0,24,3,0,0,0,0,p52 11열 채널매핑=label
+KR0008,삼성화재해상보험,손해보험,2023.2Q,FILLED,text,45,data/disclosure/FY2023_Q2/raw/KR0008_삼성화재해상보험_amended.pdf,8,32,32,0,29,2,0,0,0,0,p45 8열 채널매핑=label
+KR0008,삼성화재해상보험,손해보험,2023.4Q,FILLED,text,96,data/disclosure/FY2023_Q4/raw/KR0008_삼성화재해상보험_amended.pdf,8,32,32,0,30,1,0,0,0,0,p96 8열 채널매핑=label
+KR0008,삼성화재해상보험,손해보험,2024.2Q,FILLED,text,54,data/disclosure/FY2024_Q2/raw/KR0008_삼성화재해상보험_amended.pdf,11,44,38,6,34,1,0,0,0,0,p54 11열 채널매핑=label
+KR0008,삼성화재해상보험,손해보험,2024.4Q,FILLED,text,108,data/disclosure/FY2024_Q4/raw/KR0008_삼성화재해상보험.pdf,11,44,37,7,34,0,0,0,0,0,p108 11열 채널매핑=label
+KR0008,삼성화재해상보험,손해보험,2025.2Q,FILLED,text,58,data/disclosure/FY2025_Q2/raw/KR0008_삼성화재해상보험.pdf,11,44,40,4,35,0,0,0,0,0,p58 11열 채널매핑=label
+KR0008,삼성화재해상보험,손해보험,2025.4Q,FILLED,text,117,data/disclosure/FY2025_Q4/raw/KR0008_삼성화재해상보험.pdf,11,44,38,6,35,1,0,0,0,0,p117 11열 채널매핑=label
+KR0008,삼성화재해상보험,손해보험,2026.2Q,FILLED,text,59,data/disclosure/FY2026_Q2/raw/KR0008_삼성화재해상보험.pdf,11,44,41,3,36,3,0,0,0,0,p59 11열 채널매핑=label
+KR0009,현대해상,손해보험,2023.2Q,FILLED,text,48,data/disclosure/FY2023_Q2/raw/KR0009_현대해상.pdf,8,32,32,0,28,0,0,0,0,0,p48 8열 채널매핑=label
+KR0009,현대해상,손해보험,2023.4Q,FILLED,text,92,data/disclosure/FY2023_Q4/raw/KR0009_현대해상_amended.pdf,8,32,32,0,32,0,0,0,0,0,p92 8열 채널매핑=label
+KR0009,현대해상,손해보험,2024.2Q,FILLED,text,57,data/disclosure/FY2024_Q2/raw/KR0009_현대해상_amended.pdf,11,44,44,0,34,0,0,0,0,0,p57 11열 채널매핑=label
+KR0009,현대해상,손해보험,2024.4Q,FILLED,text,115,data/disclosure/FY2024_Q4/raw/KR0009_현대해상.pdf,11,44,44,0,34,1,0,0,0,0,p115 11열 채널매핑=label
+KR0009,현대해상,손해보험,2025.2Q,FILLED,text,59,data/disclosure/FY2025_Q2/raw/KR0009_현대해상_amended.pdf,11,44,44,0,33,2,0,0,0,0,p59 11열 채널매핑=label
+KR0009,현대해상,손해보험,2025.4Q,FILLED,text,116,data/disclosure/FY2025_Q4/raw/KR0009_현대해상.pdf,11,44,44,0,34,0,0,0,0,0,p116 11열 채널매핑=label
+KR0009,현대해상,손해보험,2026.2Q,FILLED,text,"58,59",data/disclosure/FY2026_Q2/raw/KR0009_현대해상.pdf,11,44,44,0,35,0,0,0,0,0,"p58,59 11열 채널매핑=label"
+KR0010,KB손해보험,손해보험,2023.2Q,FILLED,text,"39,40",data/disclosure/FY2023_Q2/raw/KR0010_KB손해보험_amended.pdf,8,32,32,0,29,0,0,0,0,0,"p39,40 8열 채널매핑=label"
+KR0010,KB손해보험,손해보험,2023.4Q,FILLED,text,"85,86",data/disclosure/FY2023_Q4/raw/KR0010_KB손해보험.pdf,8,32,32,0,29,0,0,0,1,0,"p85,86 8열 채널매핑=label"
+KR0010,KB손해보험,손해보험,2024.2Q,FILLED,text,"51,52",data/disclosure/FY2024_Q2/raw/KR0010_KB손해보험_amended.pdf,11,44,44,0,36,1,0,0,0,0,"p51,52 11열 채널매핑=label"
+KR0010,KB손해보험,손해보험,2024.4Q,FILLED(vision),vision,98,data/disclosure/FY2024_Q4/raw/KR0010_KB손해보험.pdf,11,44,36,0,35,1,0,0,0,0,"[vision_cells_v4.json] PDF p98 (인쇄 96/120). 텍스트층 0자(이미지 쪽). 7-8-2 청약철회비율 + 7-8-3 유지율 현황 두 표가 p98 한 쪽에 있고 유지율 표 전체(13/25/37/61회차 x 유지율·유지계약액·대상신계약액)가 이 쪽 안에 있다; p97 은 7-8-1 불완전판매비율(텍스트층), p99 는 각주 1)~9)(텍스트층)라 표 걸침 없음(p97 하단·p99 상단 렌더 확인). 300dpi 좌우 반쪽 렌더 + 13회차 설계사 유지계약액 칸 800dpi 확대. 홈쇼핑·마지막 기타 열은 4개 회차 전부 인쇄 공란(- 기호 없음) -> null+blank, 직영/복합 열은 값이 있다. 13회차 설계사 유지계약액은 379,117. 로 숫자 뒤 마침표가 인쇄돼 있어 379117 로 읽었다(항등식 ok). 61회차 중개사 2/3 은 유지율 59.29 가 인쇄(소액 반올림, 항등식 정밀도 통과). 대상신계약액 대상기간은 산출월 기준 각 회차별 이전년도 동월 신계약액; 신계약건수 대상기간 24.1.1~24.12.31. | 검산: 항등식 ok=35 반올림/절삭설명=1 불일치=0 (값 세 개가 다 있는 칸 기준, n/a=8); 엄밀 반올림 구간 이탈(허용 ±0.06 이내) 2칸: 37회차 개인대리점 인쇄 69.07 vs 금액비 69.083, 37회차 법인대리점_TM 인쇄 37.88 vs 금액비 37.928 - 500~600dpi 재판독으로도 인쇄 그대로(발행사 인쇄 불일치), 원문 보관; 회사합(Σ유지계약액÷Σ대상신계약액) vs 같은 PDF p4 (1-2 주요 경영효율 지표 유지율, 2024년도 열; 장기보험 종목 기준 값): 13:calc=88.13 ref=88.13 d=-0.00; 25:calc=70.18 ref=70.18 d=-0.00; 37:calc=64.58 ref=64.58 d=-0.00; 61:calc=49.14 ref=49.14 d=-0.00"
+KR0010,KB손해보험,손해보험,2025.2Q,FILLED,text,"54,55",data/disclosure/FY2025_Q2/raw/KR0010_KB손해보험.pdf,11,44,31,13,31,0,0,0,0,0,"p54,55 11열 채널매핑=label"
+KR0010,KB손해보험,손해보험,2025.4Q,FILLED(vision),vision,115,data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf,11,44,31,0,31,0,0,0,0,0,"[vision_cells_v3.json] Section is 7-8-3) 유지율 현황 in this filing (7-8 불완전판매비율, 청약철회비율 및 유지율 현황; PDF p115 = printed p113); no text layer on this page (vector-drawn), read at 300dpi in four clips. Printed unit (단위 : 백만원, %). Printed rounds: 13/25/37/61회차 only. In this filing the 홈쇼핑, 복합 and the last 기타 columns are EMPTY (blank cells, no '-' printed) in all four rounds, and 중개사 is empty in the 61회차 rows; these are stored as null with blank=true (not dash, not 0). 중개사 13/25/37회차 print 유지율 100.00 on tiny amounts (2/2, 8/8, 1/1). 대상신계약액 대상기간: 산출월 기준 각 회차별 이전년도 동월 신계약액; 신계약건수 대상기간 25.1.1~25.12.31 (footnotes under the table). Cross-check against the company 유지율 printed in 1-2 주요 경영효율 지표 (PDF p4; 2025년도 13/25/37/61회차 = 88.46 / 71.87 / 58.01 / 48.19): sum over channels of 유지계약액 / sum of 대상신계약액 = 88.46 / 71.87 / 58.01 / 48.18 (the 61회차 0.01pp is amount rounding)."
+KR0010,KB손해보험,손해보험,2026.2Q,FILLED(vision),vision,56,data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf,11,44,31,0,31,0,0,0,0,0,"[vision_cells_v4.json] PDF p56-57 (인쇄 54-55/64). 64쪽 전부 텍스트층 0자(Print-To-PDF 이미지) -> docling MD 숫자는 쓰지 않았다(OCR 이 숫자를 붙여 417,4911 처럼 망가짐, 회차도 13->15 오독); 렌더 판독만. 표가 쪽을 걸친다: p56 = 7-6-1 불완전판매비율 + 7-6-2 청약철회비율 + 7-6-3 유지율 표 머리·13회차 3행·25회차 3행·37회차 유지율 행; p57 상단 = 37회차 유지계약액·대상신계약액 + 61회차 3행(37회차 블록이 두 쪽에 걸침). 300dpi 좌우 반쪽 렌더(p56 하단 표, p57 상단 표). 홈쇼핑·복합·마지막 기타 열은 모든 회차에서 인쇄 공란, 61회차 중개사도 공란(- 기호 없음) -> null+blank. 중개사 13/25/37회차는 소액(2/2, 8/8, 1/1)이라 유지율 100.00. 같은 공시 p4 해당 분기 열 유지율 13/25/37/61 = 88.71/73.97/58.25/54.38 과 회사합 대조(builder 출력 참조). 대상신계약액 대상기간 산출월 기준 각 회차별 이전년도 동월 신계약액; 신계약건수 대상기간 25.7.1~26.6.30. | 검산: 항등식 ok=31 반올림/절삭설명=0 불일치=0 (값 세 개가 다 있는 칸 기준, n/a=13); 회사합(Σ유지계약액÷Σ대상신계약액) vs 같은 PDF p4 (1-2 주요 경영효율 지표 유지율, 해당 분기(26.2Q) 열; 장기보험 종목 기준 값): 13:calc=88.71 ref=88.71 d=-0.00; 25:calc=73.97 ref=73.97 d=-0.00; 37:calc=58.25 ref=58.25 d=-0.00; 61:calc=54.38 ref=54.38 d=-0.00"
+KR0011,DB손해보험,손해보험,2023.2Q,FILLED,text,47,data/disclosure/FY2023_Q2/raw/KR0011_DB손해보험.pdf,8,32,32,0,28,0,0,0,0,0,p47 8열 채널매핑=label
+KR0011,DB손해보험,손해보험,2023.4Q,FILLED,text,86,data/disclosure/FY2023_Q4/raw/KR0011_DB손해보험.pdf,8,32,32,0,28,0,0,0,0,0,p86 8열 채널매핑=label
+KR0011,DB손해보험,손해보험,2024.2Q,FILLED,text,51,data/disclosure/FY2024_Q2/raw/KR0011_DB손해보험.pdf,11,44,44,0,30,6,0,0,0,0,p51 11열 채널매핑=label
+KR0011,DB손해보험,손해보험,2024.4Q,FILLED,text,93,data/disclosure/FY2024_Q4/raw/KR0011_DB손해보험.pdf,11,44,44,0,29,7,0,0,0,0,p93 11열 채널매핑=label
+KR0011,DB손해보험,손해보험,2025.2Q,FILLED,text,56,data/disclosure/FY2025_Q2/raw/KR0011_DB손해보험.pdf,11,44,44,0,30,6,0,0,0,0,p56 11열 채널매핑=label
+KR0011,DB손해보험,손해보험,2025.4Q,FILLED,text,99,data/disclosure/FY2025_Q4/raw/KR0011_DB손해보험.pdf,11,44,44,0,30,5,0,1,0,1,p99 11열 채널매핑=label
+KR0011,DB손해보험,손해보험,2026.2Q,FILLED,text,56,data/disclosure/FY2026_Q2/raw/KR0011_DB손해보험.pdf,11,44,44,0,30,7,0,0,0,0,p56 11열 채널매핑=label
+KR0029,AIG손해보험,손해보험,2023.2Q,FILLED,text,34,data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf,8,32,16,16,16,0,0,0,0,0,p34 8열 채널매핑=label
+KR0029,AIG손해보험,손해보험,2023.4Q,FILLED,text,54,data/disclosure/FY2023_Q4/raw/KR0029_AIG손해보험.pdf,8,32,16,16,16,0,0,0,0,0,p54 8열 채널매핑=label
+KR0029,AIG손해보험,손해보험,2024.2Q,FILLED,text,37,data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf,11,44,19,25,18,1,0,0,0,0,p37 11열 채널매핑=label
+KR0029,AIG손해보험,손해보험,2024.4Q,FILLED,text,69,data/disclosure/FY2024_Q4/raw/KR0029_AIG손해보험.pdf,11,44,20,24,20,0,0,0,0,0,p69 11열 채널매핑=label
+KR0029,AIG손해보험,손해보험,2025.2Q,FILLED,text,44,data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf,11,44,44,0,17,2,0,0,0,0,p44 11열 채널매핑=label
+KR0029,AIG손해보험,손해보험,2025.4Q,FILLED,text,82,data/disclosure/FY2025_Q4/raw/KR0029_AIG손해보험.pdf,11,44,44,0,18,0,0,0,0,0,p82 11열 채널매핑=label
+KR0029,AIG손해보험,손해보험,2026.2Q,FILLED,text,47,data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf,11,44,44,0,20,2,0,0,0,0,p47 11열 채널매핑=label
+KR0032,NH농협손해보험,손해보험,2023.2Q,FILLED,text,42,data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf,8,32,28,4,21,4,0,0,0,0,p42 8열 채널매핑=label
+KR0032,NH농협손해보험,손해보험,2023.4Q,FILLED,text,71,data/disclosure/FY2023_Q4/raw/KR0032_NH농협손해보험_amended.pdf,8,32,27,5,23,2,0,0,0,0,p71 8열 채널매핑=label
+KR0032,NH농협손해보험,손해보험,2024.2Q,FILLED,text,47,data/disclosure/FY2024_Q2/raw/KR0032_NH농협손해보험_amended.pdf,11,44,26,18,21,3,0,0,0,0,p47 11열 채널매핑=label
+KR0032,NH농협손해보험,손해보험,2024.4Q,FILLED,text,85,data/disclosure/FY2024_Q4/raw/KR0032_NH농협손해보험.pdf,11,44,27,17,21,3,0,0,0,0,p85 11열 채널매핑=label
+KR0032,NH농협손해보험,손해보험,2025.2Q,FILLED,text,55,data/disclosure/FY2025_Q2/raw/KR0032_NH농협손해보험.pdf,11,44,44,0,24,1,0,0,0,0,p55 11열 채널매핑=label
+KR0032,NH농협손해보험,손해보험,2025.4Q,FILLED,text,87,data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf,11,44,44,0,24,1,0,0,0,0,p87 11열 채널매핑=label
+KR0032,NH농협손해보험,손해보험,2026.2Q,FILLED,text,51,data/disclosure/FY2026_Q2/raw/KR0032_NH농협손해보험.pdf,11,44,44,0,23,2,0,0,0,0,p51 11열 채널매핑=label
+KR0049,악사손해보험,손해보험,2023.2Q,FILLED,text,50,data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf,8,32,15,17,12,3,0,0,0,0,p50 8열 채널매핑=label
+KR0049,악사손해보험,손해보험,2023.4Q,FILLED,text,79,data/disclosure/FY2023_Q4/raw/KR0049_악사손해보험.pdf,8,32,15,17,15,0,0,0,0,0,p79 8열 채널매핑=label
+KR0049,악사손해보험,손해보험,2024.2Q,FILLED,text,56,data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf,11,44,44,0,15,0,0,0,0,0,p56 11열 채널매핑=label
+KR0049,악사손해보험,손해보험,2024.4Q,FILLED,text,91,data/disclosure/FY2024_Q4/raw/KR0049_악사손해보험.pdf,11,44,44,0,15,0,0,0,0,0,p91 11열 채널매핑=label
+KR0049,악사손해보험,손해보험,2025.2Q,FILLED,text,64,data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf,11,44,44,0,13,2,0,0,0,0,p64 11열 채널매핑=label
+KR0049,악사손해보험,손해보험,2025.4Q,FILLED,text,102,data/disclosure/FY2025_Q4/raw/KR0049_악사손해보험.pdf,11,44,44,0,15,0,0,0,0,0,p102 11열 채널매핑=label
+KR0049,악사손해보험,손해보험,2026.2Q,FILLED,text,63,data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf,11,44,44,0,14,0,0,0,0,0,p63 11열 채널매핑=label
+KR0050,하나손해보험,손해보험,2023.2Q,FILLED,text,39,data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf,8,32,32,0,16,2,0,0,0,0,p39 8열 채널매핑=label
+KR0050,하나손해보험,손해보험,2023.4Q,FILLED,text,68,data/disclosure/FY2023_Q4/raw/KR0050_하나손해보험_amended.pdf,8,32,32,0,17,5,0,0,0,0,p68 8열 채널매핑=label
+KR0050,하나손해보험,손해보험,2024.2Q,FILLED,text,48,data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf,11,44,25,19,24,1,0,0,0,0,p48 11열 채널매핑=label
+KR0050,하나손해보험,손해보험,2024.4Q,FILLED,text,93,data/disclosure/FY2024_Q4/raw/KR0050_하나손해보험.pdf,11,44,25,19,18,5,0,0,0,0,p93 11열 채널매핑=label
+KR0050,하나손해보험,손해보험,2025.2Q,FILLED,text,52,data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf,11,44,26,18,16,7,0,0,0,0,p52 11열 채널매핑=label
+KR0050,하나손해보험,손해보험,2025.4Q,FILLED,text,96,data/disclosure/FY2025_Q4/raw/KR0050_하나손해보험.pdf,11,44,27,17,18,7,0,0,0,0,p96 11열 채널매핑=label
+KR0050,하나손해보험,손해보험,2026.2Q,FILLED,text,52,data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf,11,44,44,0,16,9,0,0,0,0,p52 11열 채널매핑=label
+KR0051,신한이지손해보험,손해보험,2023.2Q,FILLED,text,36,data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf,8,32,2,30,2,0,0,0,0,0,p36 8열 채널매핑=label
+KR0051,신한이지손해보험,손해보험,2023.4Q,FILLED,text,56,data/disclosure/FY2023_Q4/raw/KR0051_신한이지손해보험.pdf,8,32,2,30,2,0,0,0,0,0,p56 8열 채널매핑=label
+KR0051,신한이지손해보험,손해보험,2024.2Q,FILLED,text,41,data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf,11,44,2,42,0,2,0,0,0,0,p41 11열 채널매핑=label
+KR0051,신한이지손해보험,손해보험,2024.4Q,FILLED,text,61,data/disclosure/FY2024_Q4/raw/KR0051_신한이지손해보험.pdf,8,32,2,30,2,0,0,0,0,0,p61 8열 채널매핑=label
+KR0051,신한이지손해보험,손해보험,2025.2Q,FILLED,text,41,data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf,8,32,4,28,1,3,0,0,0,0,p41 8열 채널매핑=label
+KR0051,신한이지손해보험,손해보험,2025.4Q,FILLED,text,65,data/disclosure/FY2025_Q4/raw/KR0051_신한이지손해보험.pdf,8,32,5,27,2,3,0,0,0,0,p65 8열 채널매핑=label
+KR0051,신한이지손해보험,손해보험,2026.2Q,FILLED,text,40,data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf,8,32,6,26,0,6,0,0,0,0,p40 8열 채널매핑=label
+KR0068,한화생명,생명보험,2023.2Q,FILLED,text,50,data/disclosure/FY2023_Q2/raw/KR0068_한화생명.pdf,8,32,16,16,14,2,0,0,0,0,p50 8열 채널매핑=label
+KR0068,한화생명,생명보험,2023.4Q,FILLED,text,91,data/disclosure/FY2023_Q4/raw/KR0068_한화생명.pdf,8,32,20,12,19,1,0,0,0,0,p91 8열 채널매핑=label
+KR0068,한화생명,생명보험,2024.2Q,FILLED,text,51,data/disclosure/FY2024_Q2/raw/KR0068_한화생명.pdf,11,44,44,0,18,2,0,0,0,0,p51 11열 채널매핑=label
+KR0068,한화생명,생명보험,2024.4Q,FILLED,text,106,data/disclosure/FY2024_Q4/raw/KR0068_한화생명.pdf,11,44,22,22,14,7,0,0,1,0,p106 11열 채널매핑=label
+KR0068,한화생명,생명보험,2025.2Q,FILLED,text,56,data/disclosure/FY2025_Q2/raw/KR0068_한화생명.pdf,11,44,21,23,15,6,0,0,0,0,p56 11열 채널매핑=label
+KR0068,한화생명,생명보험,2025.4Q,FILLED,text,99,data/disclosure/FY2025_Q4/raw/KR0068_한화생명.pdf,11,44,21,23,14,7,0,0,0,0,p99 11열 채널매핑=label
+KR0068,한화생명,생명보험,2026.2Q,FILLED,text,57,data/disclosure/FY2026_Q2/raw/KR0068_한화생명.pdf,11,44,21,23,14,7,0,0,0,0,p57 11열 채널매핑=label
+KR0069,삼성생명보험,생명보험,2023.2Q,FILLED,text,44,data/disclosure/FY2023_Q2/raw/KR0069_삼성생명.pdf,8,32,22,10,22,0,0,0,0,0,p44 8열 채널매핑=label | p44:right-edge-added
+KR0069,삼성생명보험,생명보험,2023.4Q,FILLED,text,96,data/disclosure/FY2023_Q4/raw/KR0069_삼성생명.pdf,8,32,25,0,25,0,0,0,0,0,p96 8열 채널매핑=label | p96:right-edge-added
+KR0069,삼성생명보험,생명보험,2024.2Q,FILLED,text,50,data/disclosure/FY2024_Q2/raw/KR0069_삼성생명.pdf,11,44,25,19,22,3,0,0,0,0,p50 11열 채널매핑=label | p50:right-edge-added
+KR0069,삼성생명보험,생명보험,2024.4Q,FILLED,text,165,data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf,9,36,25,11,22,3,0,0,0,0,p165 9열 채널매핑=label | p165:right-edge-added
+KR0069,삼성생명보험,생명보험,2025.2Q,FILLED,text,52,data/disclosure/FY2025_Q2/raw/KR0069_삼성생명.pdf,11,44,25,19,21,4,0,0,0,0,p52 11열 채널매핑=label | p52:right-edge-added
+KR0069,삼성생명보험,생명보험,2025.4Q,FILLED,text,169,data/disclosure/FY2025_Q4/raw/KR0069_삼성생명.pdf,9,36,24,12,21,3,0,0,0,0,p169 9열 채널매핑=label | p169:right-edge-added
+KR0069,삼성생명보험,생명보험,2026.2Q,FILLED,text,53,data/disclosure/FY2026_Q2/raw/KR0069_삼성생명.pdf,11,44,24,20,20,4,0,0,0,0,p53 11열 채널매핑=label | p53:right-edge-added
+KR0070,에이비엘생명보험,생명보험,2023.2Q,FILLED,text,47,data/disclosure/FY2023_Q2/raw/KR0070_에이비엘생명보험_amended.pdf,8,32,20,12,20,0,0,0,0,0,p47 8열 채널매핑=label
+KR0070,에이비엘생명보험,생명보험,2023.4Q,FILLED,text,84,data/disclosure/FY2023_Q4/raw/KR0070_에이비엘생명보험_amended.pdf,8,32,20,12,18,2,0,0,0,0,p84 8열 채널매핑=label
+KR0070,에이비엘생명보험,생명보험,2024.2Q,FILLED,text,50,data/disclosure/FY2024_Q2/raw/KR0070_에이비엘생명보험_amended.pdf,11,44,20,24,18,2,0,0,0,0,p50 11열 채널매핑=label
+KR0070,에이비엘생명보험,생명보험,2024.4Q,FILLED,text,99,data/disclosure/FY2024_Q4/raw/KR0070_에이비엘생명보험.pdf,11,44,20,24,16,4,0,0,0,0,p99 11열 채널매핑=label
+KR0070,에이비엘생명보험,생명보험,2025.2Q,FILLED,text,56,data/disclosure/FY2025_Q2/raw/KR0070_에이비엘생명보험.pdf,11,44,20,24,18,2,0,0,0,0,p56 11열 채널매핑=label
+KR0070,에이비엘생명보험,생명보험,2025.4Q,FILLED,text,95,data/disclosure/FY2025_Q4/raw/KR0070_에이비엘생명보험.pdf,11,44,20,24,15,3,0,2,0,2,p95 11열 채널매핑=label
+KR0070,에이비엘생명보험,생명보험,2026.2Q,FILLED,text,56,data/disclosure/FY2026_Q2/raw/KR0070_에이비엘생명보험.pdf,11,44,20,24,16,4,0,0,0,0,p56 11열 채널매핑=label
+KR0071,흥국생명보험,생명보험,2023.2Q,FILLED,text,44,data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf,8,32,20,12,15,5,0,0,0,0,p44 8열 채널매핑=label
+KR0071,흥국생명보험,생명보험,2023.4Q,FILLED,text,81,data/disclosure/FY2023_Q4/raw/KR0071_흥국생명보험.pdf,8,32,20,12,15,5,0,0,0,0,p81 8열 채널매핑=label
+KR0071,흥국생명보험,생명보험,2024.2Q,FILLED,text,50,data/disclosure/FY2024_Q2/raw/KR0071_흥국생명보험.pdf,11,44,24,20,13,11,0,0,0,0,p50 11열 채널매핑=label
+KR0071,흥국생명보험,생명보험,2024.4Q,FILLED(vision),vision,92,data/disclosure/FY2024_Q4/raw/KR0071_흥국생명보험.pdf,11,44,28,16,21,7,0,0,0,0,[vision_cells_v1.json] PDF p92 image-only (S1-112 scanned); section titled 7-8 in this filing (7-6 in the ticket = same table)
+KR0071,흥국생명보험,생명보험,2025.2Q,FILLED,text,57,data/disclosure/FY2025_Q2/raw/KR0071_흥국생명보험.pdf,11,44,26,0,21,5,0,0,0,0,p57 11열 채널매핑=label
+KR0071,흥국생명보험,생명보험,2025.4Q,FILLED,text,94,data/disclosure/FY2025_Q4/raw/KR0071_흥국생명보험.pdf,11,44,26,18,20,6,0,0,0,0,p94 11열 채널매핑=label
+KR0071,흥국생명보험,생명보험,2026.2Q,FILLED,text,54,data/disclosure/FY2026_Q2/raw/KR0071_흥국생명보험.pdf,11,44,26,18,21,4,0,0,0,0,p54 11열 채널매핑=label
+KR0072,케이디비생명보험,생명보험,2023.2Q,FILLED,text,41,data/disclosure/FY2023_Q2/raw/KR0072_케이디비생명보험.pdf,8,32,32,0,20,0,0,0,0,0,p41 8열 채널매핑=label
+KR0072,케이디비생명보험,생명보험,2023.4Q,FILLED,text,67,data/disclosure/FY2023_Q4/raw/KR0072_케이디비생명보험.pdf,8,32,25,7,20,1,0,0,0,0,p67 8열 채널매핑=label
+KR0072,케이디비생명보험,생명보험,2024.2Q,FILLED,text,49,data/disclosure/FY2024_Q2/raw/KR0072_케이디비생명보험.pdf,11,44,24,20,22,2,0,0,0,0,p49 11열 채널매핑=label
+KR0072,케이디비생명보험,생명보험,2024.4Q,FILLED,text,91,data/disclosure/FY2024_Q4/raw/KR0072_케이디비생명보험.pdf,11,44,24,20,20,4,0,0,0,0,p91 11열 채널매핑=label
+KR0072,케이디비생명보험,생명보험,2025.2Q,FILLED,text,54,data/disclosure/FY2025_Q2/raw/KR0072_케이디비생명보험.pdf,11,44,24,20,23,1,0,0,0,0,p54 11열 채널매핑=label
+KR0072,케이디비생명보험,생명보험,2025.4Q,FILLED,text,104,data/disclosure/FY2025_Q4/raw/KR0072_케이디비생명보험.pdf,11,44,24,20,22,2,0,0,0,0,p104 11열 채널매핑=label
+KR0072,케이디비생명보험,생명보험,2026.2Q,FILLED,text,55,data/disclosure/FY2026_Q2/raw/KR0072_케이디비생명보험.pdf,11,44,24,20,22,2,0,0,0,0,p55 11열 채널매핑=label
+KR0073,교보생명보험,생명보험,2023.2Q,FILLED,text,26,data/disclosure/FY2023_Q2/raw/KR0073_교보생명보험.pdf,8,32,32,0,22,3,0,0,0,0,p26 8열 채널매핑=label
+KR0073,교보생명보험,생명보험,2023.4Q,FILLED,text,64,data/disclosure/FY2023_Q4/raw/KR0073_교보생명보험.pdf,8,32,32,0,25,4,0,0,0,0,p64 8열 채널매핑=label
+KR0073,교보생명보험,생명보험,2024.2Q,FILLED,text,31,data/disclosure/FY2024_Q2/raw/KR0073_교보생명보험.pdf,11,44,44,0,25,4,0,0,0,0,p31 11열 채널매핑=label
+KR0073,교보생명보험,생명보험,2024.4Q,FILLED,text,66,data/disclosure/FY2024_Q4/raw/KR0073_교보생명보험.pdf,11,44,44,0,24,5,0,0,0,0,p66 11열 채널매핑=label
+KR0073,교보생명보험,생명보험,2025.2Q,FILLED,text,35,data/disclosure/FY2025_Q2/raw/KR0073_교보생명보험.pdf,11,44,44,0,25,3,0,0,0,0,p35 11열 채널매핑=label
+KR0073,교보생명보험,생명보험,2025.4Q,FILLED,text,75,data/disclosure/FY2025_Q4/raw/KR0073_교보생명보험.pdf,11,44,44,0,25,3,0,0,0,0,p75 11열 채널매핑=label
+KR0073,교보생명보험,생명보험,2026.2Q,FILLED,text,35,data/disclosure/FY2026_Q2/raw/KR0073_교보생명보험.pdf,11,44,44,0,25,3,0,0,0,0,p35 11열 채널매핑=label
+KR0074,라이나생명보험,생명보험,2023.2Q,FILLED,text,"37,38",data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf,8,32,20,12,19,1,0,0,0,0,"p37,38 8열 채널매핑=label"
+KR0074,라이나생명보험,생명보험,2023.4Q,FILLED,text,66,data/disclosure/FY2023_Q4/raw/KR0074_라이나생명보험.pdf,8,32,20,12,20,0,0,0,0,0,p66 8열 채널매핑=label
+KR0074,라이나생명보험,생명보험,2024.2Q,FILLED,text,39,data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf,11,44,27,17,26,1,0,0,0,0,p39 11열 채널매핑=label
+KR0074,라이나생명보험,생명보험,2024.4Q,FILLED,text,127,data/disclosure/FY2024_Q4/raw/KR0074_라이나생명보험.pdf,11,44,27,17,26,1,0,0,0,0,p127 11열 채널매핑=label
+KR0074,라이나생명보험,생명보험,2025.2Q,FILLED,text,43,data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf,11,44,28,16,26,2,0,0,0,0,p43 11열 채널매핑=label
+KR0074,라이나생명보험,생명보험,2025.4Q,FILLED,text,135,data/disclosure/FY2025_Q4/raw/KR0074_라이나생명보험.pdf,11,44,28,16,28,0,0,0,0,0,p135 11열 채널매핑=label
+KR0074,라이나생명보험,생명보험,2026.2Q,FILLED,text,44,data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf,11,44,28,16,27,1,0,0,0,0,p44 11열 채널매핑=label
+KR0075,비엔피파리바카디프생명보험,생명보험,2023.2Q,FILLED,text,41,data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,8,32,32,0,7,2,0,0,0,0,p41 8열 채널매핑=label
+KR0075,비엔피파리바카디프생명보험,생명보험,2023.4Q,FILLED,text,68,data/disclosure/FY2023_Q4/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,8,32,32,0,12,0,0,0,0,0,p68 8열 채널매핑=label
+KR0075,비엔피파리바카디프생명보험,생명보험,2024.2Q,RAW_TRUNCATED,,,data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,,0,0,0,0,0,0,0,0,0,"PDF 33쪽, 본문 마지막 절 제목 6-5(p32) 이후 절 없음(`7-n.` 절 제목 0개), 목차(p2)는 Ⅶ·Ⅷ 열거 -> 유지율 표가 있는 7장이 파일에 없는 잘린 사본 | 같은 회사 다른 분기 쪽수: 2023.2Q 49쪽 · 2023.4Q 97쪽 · 2024.4Q 282쪽 · 2025.2Q 65쪽 · 2025.4Q 290쪽 · 2026.2Q 65쪽 | downloader 티켓: inbox/downloader/20261007T1400Z__orchestrator__KR0075_2024.2Q__truncated_disclosure_pdf.md | [vision_census_v4.csv] vision 판정=ABSENT_IN_SOURCE (파일이 잘려 있어 원문에 표가 없다는 근거로 쓰지 않는다)"
+KR0075,비엔피파리바카디프생명보험,생명보험,2024.4Q,FILLED,text,86,data/disclosure/FY2024_Q4/raw/KR0075_비엔피파리바카디프생명보험.pdf,11,44,15,29,9,6,0,0,0,0,p86 11열 채널매핑=label
+KR0075,비엔피파리바카디프생명보험,생명보험,2025.2Q,FILLED,text,55,data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf,11,44,15,29,11,4,0,0,1,0,p55 11열 채널매핑=label
+KR0075,비엔피파리바카디프생명보험,생명보험,2025.4Q,FILLED,text,87,data/disclosure/FY2025_Q4/raw/KR0075_비엔피파리바카디프생명보험.pdf,11,44,15,29,9,6,0,0,0,0,p87 11열 채널매핑=label
+KR0075,비엔피파리바카디프생명보험,생명보험,2026.2Q,FILLED,text,55,data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf,11,44,15,29,10,5,0,0,0,0,p55 11열 채널매핑=label
+KR0076,아이엠라이프생명보험,생명보험,2023.2Q,FILLED,text,40,data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf,8,32,32,0,23,4,0,0,0,0,p40 8열 채널매핑=label
+KR0076,아이엠라이프생명보험,생명보험,2023.4Q,FILLED,text,84,data/disclosure/FY2023_Q4/raw/KR0076_아이엠라이프생명보험.pdf,8,32,32,0,21,5,0,0,0,0,p84 8열 채널매핑=label
+KR0076,아이엠라이프생명보험,생명보험,2024.2Q,FILLED,text,49,data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf,11,44,44,0,25,7,0,0,0,0,p49 11열 채널매핑=label
+KR0076,아이엠라이프생명보험,생명보험,2024.4Q,FILLED,text,92,data/disclosure/FY2024_Q4/raw/KR0076_아이엠라이프생명보험.pdf,11,44,44,0,21,10,0,0,0,0,p92 11열 채널매핑=label
+KR0076,아이엠라이프생명보험,생명보험,2025.2Q,FILLED,text,50,data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf,11,44,44,0,19,11,0,0,1,0,p50 11열 채널매핑=label
+KR0076,아이엠라이프생명보험,생명보험,2025.4Q,FILLED,text,97,data/disclosure/FY2025_Q4/raw/KR0076_아이엠라이프생명보험.pdf,11,44,44,0,19,11,0,0,0,0,p97 11열 채널매핑=label
+KR0076,아이엠라이프생명보험,생명보험,2026.2Q,FILLED,text,51,data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf,11,44,26,18,15,9,0,2,0,2,p51 11열 채널매핑=label
+KR0079,미래에셋생명보험,생명보험,2023.2Q,FILLED(vision),vision,38,data/disclosure/FY2023_Q2/raw/KR0079_미래에셋생명.pdf,8,32,21,0,21,0,0,0,0,0,[vision_cells_v1.json] PDF p38 image-only (text layer is a truncated overlay); table numbered 6 in this filing; old 8-column layout (no 임직원/중개사/기타 columns); rates printed as integers
+KR0079,미래에셋생명보험,생명보험,2023.4Q,FILLED(vision),vision,67,data/disclosure/FY2023_Q4/raw/KR0079_미래에셋생명_amended.pdf,8,32,23,9,22,1,0,0,0,0,[vision_cells_v1.json] PDF p67 (printed 67/114) image-only; table numbered 7-8 in this filing; old 8-column layout (no 임직원/중개사/기타 columns); one cell (37회차 대상신계약액 홈쇼핑) is empty while the rest of that column prints a dash
+KR0079,미래에셋생명보험,생명보험,2024.2Q,FILLED(vision),vision,43,data/disclosure/FY2024_Q2/raw/KR0079_미래에셋생명_amended.pdf,11,44,25,0,21,3,0,0,0,0,[vision_cells_v1.json] PDF p43 image-only (text layer is a truncated overlay showing only the 7-6 heading); blank cells = empty in source (not a dash glyph)
+KR0079,미래에셋생명보험,생명보험,2024.4Q,FILLED(vision),vision,95,data/disclosure/FY2024_Q4/raw/KR0079_미래에셋생명.pdf,11,44,23,0,20,3,0,0,0,0,"[vision_cells_v1.json] PDF p95 (printed 95/138) image-only (text layer = page number only); table numbered 7-8 in this filing (7-6 in the ticket = same table); blank cells = empty in source (no dash glyphs); tiny-amount cells (개인대리점 2/3 4/4 2/8, 임직원 6/6) print rates that differ from the ratio of the rounded amounts"
+KR0079,미래에셋생명보험,생명보험,2025.2Q,FILLED(vision),vision,51,data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf,11,44,21,19,17,4,0,0,0,0,[vision_cells_v1.json] PDF p51 image-only (text layer is a truncated overlay showing only the 7-6 heading); last column 기타 is empty in source (not a dash glyph); 중개사 column prints dash
+KR0079,미래에셋생명보험,생명보험,2025.4Q,FILLED(vision),vision,99,data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf,11,44,21,0,16,5,0,0,0,0,"[vision_cells_v1.json] PDF p99 (printed 99/134) image-only (text layer = page number only); table numbered 7-8 in this filing (7-6 in the ticket = same table); rates printed with 1 decimal (37회차 개인대리점 prints 100); blank cells = empty in source (no dash glyphs); tiny-amount cells (개인대리점 46/47 2/3 4/4, 임직원 6/6 507/544) print rates that differ slightly from the ratio of the rounded amounts"
+KR0079,미래에셋생명보험,생명보험,2026.2Q,FILLED(vision),vision,50,data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf,11,44,22,0,19,3,0,0,0,0,[vision_cells_v1.json] PDF p50 image-only (text layer is a truncated overlay showing only the 7-6 heading); blank cells = empty in source (no dash glyphs in this table); amounts with 0.7/0.4 decimals printed in 개인대리점
+KR0080,에이아이에이생명보험,생명보험,2023.2Q,FILLED,text,28,data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf,8,32,32,0,32,0,0,0,0,0,p28 8열 채널매핑=label
+KR0080,에이아이에이생명보험,생명보험,2023.4Q,FILLED,text,66,data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf,8,32,32,0,30,0,0,2,0,2,p66 8열 채널매핑=label
+KR0080,에이아이에이생명보험,생명보험,2024.2Q,FILLED,text,45,data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf,11,44,39,5,32,7,0,0,0,0,p45 11열 채널매핑=label
+KR0080,에이아이에이생명보험,생명보험,2024.4Q,FILLED(vision),vision,87,data/disclosure/FY2024_Q4/raw/KR0080_에이아이에이생명보험.pdf,11,44,29,15,27,2,0,0,0,0,"[vision_cells_v2.json] Section is 7-8 in this filing (TOC: 7-8 불완전판매비율, 유지율 및 청약철회비율 현황, p87). Table straddles p87 (13/25/37회차 + 61회차 유지율) and p88 (61회차 유지계약액/대상신계약액). Amounts carry 2 decimals (scan, no text layer). No unit line printed for the 유지율 table itself (the upper 불완전판매 table says 건, %); magnitudes match the same company's 2024.2Q 백만원 table, so 백만원 is inferred. 유지계약액 기간 23.7.1~24.6.30 as printed in the footnote."
+KR0080,에이아이에이생명보험,생명보험,2025.2Q,FILLED(vision),vision,43,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf,11,44,32,12,23,6,0,0,0,0,"[vision_cells_v2.json] p42 bottom carries the unit line (단위 : 백만원, %); table body on p43. 유지계약액 기간 24.7.1~25.6.30."
+KR0080,에이아이에이생명보험,생명보험,2025.4Q,FILLED(vision),vision,90,data/disclosure/FY2025_Q4/raw/KR0080_에이아이에이생명보험.pdf,11,44,44,0,28,1,0,0,0,0,"[vision_cells_v2.json] Section 7-8 불완전판매비율, 유지율 및 청약철회비율 현황 starts at the foot of p89 (heading + 불완전판매/청약철회 tables); the 유지율 table is entirely on p90 (unit line '(단위 : 백만원. %)' at its top). Scan without text layer (page is raster tiles, only the footer carries text). Amounts carry 2 decimals. Printed '0.00' in the rate row for 설계사, 개인대리점, 중개사 (all 4 회차) and 복합 (13/25/37회차) with amounts '-' (no business; recorded as printed: rate 0.0, amounts null). '-' amounts = null. 유지계약액 기간 25.1.1~25.12.31; 대상신계약액 기간 = 산출월 기준 각 회차별 이전년도 동월 신계약액. Read at 250dpi, all cells unambiguous."
+KR0080,에이아이에이생명보험,생명보험,2026.2Q,FILLED,text,48,data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf,11,44,44,0,28,0,0,0,0,0,p48 11열 채널매핑=label | p48:left-edge-added
+KR0082,DB생명보험,생명보험,2023.2Q,FILLED,text,36,data/disclosure/FY2023_Q2/raw/KR0082_DB생명보험_amended.pdf,8,32,28,4,24,4,0,0,0,0,p36 8열 채널매핑=label
+KR0082,DB생명보험,생명보험,2023.4Q,FILLED,text,67,data/disclosure/FY2023_Q4/raw/KR0082_DB생명보험.pdf,8,32,28,4,26,2,0,0,0,0,p67 8열 채널매핑=label
+KR0082,DB생명보험,생명보험,2024.2Q,FILLED,text,44,data/disclosure/FY2024_Q2/raw/KR0082_DB생명보험_amended.pdf,11,44,32,12,26,6,0,0,0,0,p44 11열 채널매핑=label
+KR0082,DB생명보험,생명보험,2024.4Q,FILLED,text,86,data/disclosure/FY2024_Q4/raw/KR0082_DB생명보험.pdf,11,44,32,12,24,8,0,0,0,0,p86 11열 채널매핑=label
+KR0082,DB생명보험,생명보험,2025.2Q,FILLED,text,51,data/disclosure/FY2025_Q2/raw/KR0082_DB생명보험.pdf,11,44,32,12,27,5,0,0,0,0,p51 11열 채널매핑=label
+KR0082,DB생명보험,생명보험,2025.4Q,FILLED,text,91,data/disclosure/FY2025_Q4/raw/KR0082_DB생명보험.pdf,11,44,32,12,27,5,0,0,0,0,p91 11열 채널매핑=label
+KR0082,DB생명보험,생명보험,2026.2Q,FILLED,text,52,data/disclosure/FY2026_Q2/raw/KR0082_DB생명보험.pdf,11,44,32,12,28,4,0,0,0,0,p52 11열 채널매핑=label
+KR0083,푸본현대생명보험,생명보험,2023.2Q,FILLED,text,42,data/disclosure/FY2023_Q2/raw/KR0083_푸본현대생명보험.pdf,8,32,17,0,8,3,6,0,0,0,p42 8열 채널매핑=label
+KR0083,푸본현대생명보험,생명보험,2023.4Q,FILLED,text,74,data/disclosure/FY2023_Q4/raw/KR0083_푸본현대생명보험.pdf,8,32,32,0,7,4,4,0,0,0,p74 8열 채널매핑=label
+KR0083,푸본현대생명보험,생명보험,2024.2Q,FILLED,text,48,data/disclosure/FY2024_Q2/raw/KR0083_푸본현대생명보험.pdf,11,44,20,24,11,4,5,0,0,0,p48 11열 채널매핑=label
+KR0083,푸본현대생명보험,생명보험,2024.4Q,FILLED,text,84,data/disclosure/FY2024_Q4/raw/KR0083_푸본현대생명보험.pdf,11,44,19,25,10,3,6,0,0,0,p84 11열 채널매핑=label
+KR0083,푸본현대생명보험,생명보험,2025.2Q,FILLED,text,55,data/disclosure/FY2025_Q2/raw/KR0083_푸본현대생명보험.pdf,11,44,19,25,19,0,0,0,0,0,p55 11열 채널매핑=label
+KR0083,푸본현대생명보험,생명보험,2025.4Q,FILLED,text,92,data/disclosure/FY2025_Q4/raw/KR0083_푸본현대생명보험.pdf,11,44,19,25,19,0,0,0,0,0,p92 11열 채널매핑=label
+KR0083,푸본현대생명보험,생명보험,2026.2Q,FILLED,text,54,data/disclosure/FY2026_Q2/raw/KR0083_푸본현대생명보험.pdf,11,44,19,25,19,0,0,0,0,0,p54 11열 채널매핑=label
+KR0087,동양생명,생명보험,2023.2Q,FILLED,text,32,data/disclosure/FY2023_Q2/raw/KR0087_동양생명.pdf,8,32,28,4,23,5,0,0,0,0,p32 8열 채널매핑=label
+KR0087,동양생명,생명보험,2023.4Q,FILLED,text,64,data/disclosure/FY2023_Q4/raw/KR0087_동양생명.pdf,8,32,32,0,22,6,0,0,0,0,p64 8열 채널매핑=label
+KR0087,동양생명,생명보험,2024.2Q,FILLED,text,34,data/disclosure/FY2024_Q2/raw/KR0087_동양생명.pdf,11,44,32,12,28,4,0,0,0,0,"p34 11열 채널매핑=label | 표가 여러 쪽 묶음에 있음: p34(값 32칸), p52(값 32칸) | 다른 묶음과 값 동일"
+KR0087,동양생명,생명보험,2024.4Q,FILLED,text,101,data/disclosure/FY2024_Q4/raw/KR0087_동양생명.pdf,11,44,36,8,27,5,0,0,0,0,p101 11열 채널매핑=label
+KR0087,동양생명,생명보험,2025.2Q,FILLED,text,36,data/disclosure/FY2025_Q2/raw/KR0087_동양생명.pdf,11,44,44,0,26,6,0,0,0,0,p36 11열 채널매핑=label
+KR0087,동양생명,생명보험,2025.4Q,FILLED,text,102,data/disclosure/FY2025_Q4/raw/KR0087_동양생명.pdf,8,32,32,0,26,6,0,0,0,0,p102 8열 채널매핑=label | p102:right-edge-added
+KR0087,동양생명,생명보험,2026.2Q,FILLED(vision),vision,45,data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf,8,32,32,0,26,6,0,0,0,0,"[vision_cells_v1.json] PDF p45 (printed 45) image-only scan (whole file has no text layer); table numbered 7-6; this filing prints only 8 channel columns (no 개인대리점, 중개사, 기타 columns), so only those 8 are emitted; no blank or dash cells in the 유지율 table; 주2) 대상기간 2025.7.1~2026.6.30"
+KR0094,신한라이프생명보험,생명보험,2023.2Q,FILLED,text,32,data/disclosure/FY2023_Q2/raw/KR0094_신한라이프생명보험.pdf,8,32,32,0,31,1,0,0,0,0,p32 8열 채널매핑=label | p32:right-edge-added
+KR0094,신한라이프생명보험,생명보험,2023.4Q,FILLED,text,69,data/disclosure/FY2023_Q4/raw/KR0094_신한라이프생명보험.pdf,8,32,32,0,30,2,0,0,0,0,p69 8열 채널매핑=label | p69:right-edge-added
+KR0094,신한라이프생명보험,생명보험,2024.2Q,FILLED,text,39,data/disclosure/FY2024_Q2/raw/KR0094_신한라이프생명보험.pdf,11,44,36,8,35,1,0,0,0,0,p39 11열 채널매핑=label | p39:right-edge-added
+KR0094,신한라이프생명보험,생명보험,2024.4Q,FILLED,text,165,data/disclosure/FY2024_Q4/raw/KR0094_신한라이프생명보험.pdf,11,44,36,8,33,3,0,0,0,0,p165 11열 채널매핑=label | p165:right-edge-added
+KR0094,신한라이프생명보험,생명보험,2025.2Q,FILLED,text,48,data/disclosure/FY2025_Q2/raw/KR0094_신한라이프생명보험.pdf,11,44,36,8,33,3,0,0,0,0,p48 11열 채널매핑=label | p48:right-edge-added
+KR0094,신한라이프생명보험,생명보험,2025.4Q,FILLED,text,151,data/disclosure/FY2025_Q4/raw/KR0094_신한라이프생명보험.pdf,11,44,36,8,30,6,0,0,0,0,p151 11열 채널매핑=label | p151:right-edge-added
+KR0094,신한라이프생명보험,생명보험,2026.2Q,FILLED,text,48,data/disclosure/FY2026_Q2/raw/KR0094_신한라이프생명보험.pdf,11,44,36,8,30,6,0,0,0,0,p48 11열 채널매핑=label | p48:right-edge-added
+KR0095,메트라이프생명보험,생명보험,2023.2Q,FILLED,text,38,data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf,8,32,11,21,11,0,0,0,0,0,p38 8열 채널매핑=label
+KR0095,메트라이프생명보험,생명보험,2023.4Q,FILLED,text,69,data/disclosure/FY2023_Q4/raw/KR0095_메트라이프생명보험.pdf,8,32,12,20,11,0,0,0,0,0,p69 8열 채널매핑=label
+KR0095,메트라이프생명보험,생명보험,2024.2Q,FILLED,text,46,data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf,11,44,12,32,12,0,0,0,0,0,p46 11열 채널매핑=label
+KR0095,메트라이프생명보험,생명보험,2024.4Q,FILLED,text,91,data/disclosure/FY2024_Q4/raw/KR0095_메트라이프생명보험.pdf,11,44,12,32,12,0,0,0,0,0,p91 11열 채널매핑=label
+KR0095,메트라이프생명보험,생명보험,2025.2Q,FILLED,text,53,data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf,11,44,12,32,12,0,0,0,0,0,p53 11열 채널매핑=label
+KR0095,메트라이프생명보험,생명보험,2025.4Q,FILLED,text,102,data/disclosure/FY2025_Q4/raw/KR0095_메트라이프생명보험.pdf,11,44,12,32,12,0,0,0,0,0,p102 11열 채널매핑=label
+KR0095,메트라이프생명보험,생명보험,2026.2Q,FILLED,text,50,data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf,11,44,12,32,12,0,0,0,0,0,p50 11열 채널매핑=label
+KR0097,하나생명보험,생명보험,2023.2Q,FILLED,text,46,data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf,8,32,8,0,8,0,0,0,0,0,p46 8열 채널매핑=label
+KR0097,하나생명보험,생명보험,2023.4Q,FILLED,text,63,data/disclosure/FY2023_Q4/raw/KR0097_하나생명보험_amended.pdf,8,32,10,0,10,0,0,0,0,0,p63 8열 채널매핑=label
+KR0097,하나생명보험,생명보험,2024.2Q,FILLED(vision),vision,49,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf,11,44,13,0,12,0,0,0,0,0,[vision_cells_v1.json] PDF p49 (printed -49-) image-only scan (whole file has no text layer); table numbered 7-6; blank cells = empty in source (no dash glyphs); 13회차 직영/임직원 prints only 대상신계약액 2.8 (유지율 and 유지계약액 empty in source); amounts printed with 1 decimal
+KR0097,하나생명보험,생명보험,2024.4Q,FILLED(vision),vision,88,data/disclosure/FY2024_Q4/raw/KR0097_하나생명보험.pdf,11,44,16,0,13,1,0,1,0,1,"[vision_cells_v1.json] PDF p88 image-only (no text layer; p260 hit for 7-6 is an unrelated 보험위험 민감도 page); table numbered 7-8 in this filing (7-6 in the ticket = same table); blank cells = empty in source (no dash glyphs); 25회차 직영/임직원 prints only 대상신계약액 2.8; 25회차 다이렉트 대상신계약액 prints 901,4 with a comma (source typo, read as 901.4 - consistent with rate 22.0); 37회차 설계사 prints 61.0 but 1372.8/2253.6 = 60.92 (digits confirmed at 260 dpi, source-side inconsistency)"
+KR0097,하나생명보험,생명보험,2025.2Q,FILLED,text,54,data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf,11,44,16,27,14,1,0,0,0,0,p54 11열 채널매핑=label
+KR0097,하나생명보험,생명보험,2025.4Q,FILLED,text,98,data/disclosure/FY2025_Q4/raw/KR0097_하나생명보험.pdf,11,44,16,0,15,0,0,1,0,1,p98 11열 채널매핑=label
+KR0097,하나생명보험,생명보험,2026.2Q,FILLED,text,57,data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf,11,44,17,26,16,0,0,0,0,0,p57 11열 채널매핑=label
+KR0099,KB라이프생명,생명보험,2023.2Q,FILLED,text,44,data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf,8,32,28,4,28,0,0,0,0,0,p44 8열 채널매핑=label
+KR0099,KB라이프생명,생명보험,2023.4Q,FILLED,text,84,data/disclosure/FY2023_Q4/raw/KR0099_케이비라이프생명보험_amended.pdf,8,32,28,4,28,0,0,0,0,0,p84 8열 채널매핑=label
+KR0099,KB라이프생명,생명보험,2024.2Q,FILLED,text,47,data/disclosure/FY2024_Q2/raw/KR0099_케이비라이프생명보험.pdf,11,44,23,21,23,0,0,0,0,0,p47 11열 채널매핑=label
+KR0099,KB라이프생명,생명보험,2024.4Q,FILLED,text,104,data/disclosure/FY2024_Q4/raw/KR0099_케이비라이프생명보험.pdf,11,44,23,21,23,0,0,0,0,0,p104 11열 채널매핑=label
+KR0099,KB라이프생명,생명보험,2025.2Q,FILLED,text,54,data/disclosure/FY2025_Q2/raw/KR0099_케이비라이프생명보험.pdf,11,44,23,21,23,0,0,0,0,0,p54 11열 채널매핑=label
+KR0099,KB라이프생명,생명보험,2025.4Q,FILLED,text,114,data/disclosure/FY2025_Q4/raw/KR0099_케이비라이프생명보험.pdf,11,44,22,22,22,0,0,0,0,0,p114 11열 채널매핑=label
+KR0099,KB라이프생명,생명보험,2026.2Q,FILLED,text,54,data/disclosure/FY2026_Q2/raw/KR0099_케이비라이프생명보험.pdf,11,44,20,24,20,0,0,0,0,0,p54 11열 채널매핑=label
+KR0100,처브라이프생명보험,생명보험,2023.2Q,FILLED,text,39,data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf,8,32,17,0,13,4,0,0,0,0,p39 8열 채널매핑=label
+KR0100,처브라이프생명보험,생명보험,2023.4Q,FILLED,text,73,data/disclosure/FY2023_Q4/raw/KR0100_처브라이프생명보험.pdf,8,32,32,0,13,4,0,0,0,0,p73 8열 채널매핑=label
+KR0100,처브라이프생명보험,생명보험,2024.2Q,FILLED,text,43,data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf,11,44,16,0,13,3,0,0,0,0,p43 11열 채널매핑=label
+KR0100,처브라이프생명보험,생명보험,2024.4Q,FILLED,text,85,data/disclosure/FY2024_Q4/raw/KR0100_처브라이프생명보험.pdf,11,44,14,29,10,4,0,0,0,0,p85 11열 채널매핑=label
+KR0100,처브라이프생명보험,생명보험,2025.2Q,FILLED,text,50,data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf,11,44,15,29,11,4,0,0,0,0,p50 11열 채널매핑=label
+KR0100,처브라이프생명보험,생명보험,2025.4Q,FILLED,text,146,data/disclosure/FY2025_Q4/raw/KR0100_처브라이프생명보험.pdf,11,44,13,29,10,3,0,0,0,0,p146 11열 채널매핑=label
+KR0100,처브라이프생명보험,생명보험,2026.2Q,FILLED,text,49,data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf,11,44,13,31,7,6,0,0,0,0,p49 11열 채널매핑=label
+KR0104,농협생명보험,생명보험,2023.2Q,FILLED,text,41,data/disclosure/FY2023_Q2/raw/KR0104_농협생명보험_amended.pdf,8,32,21,11,20,1,0,0,0,0,p41 8열 채널매핑=label
+KR0104,농협생명보험,생명보험,2023.4Q,FILLED,text,61,data/disclosure/FY2023_Q4/raw/KR0104_농협생명보험.pdf,8,32,21,11,13,0,0,8,0,8,p61 8열 채널매핑=label
+KR0104,농협생명보험,생명보험,2024.2Q,FILLED,text,43,data/disclosure/FY2024_Q2/raw/KR0104_농협생명보험.pdf,11,44,25,19,21,4,0,0,0,0,p43 11열 채널매핑=label
+KR0104,농협생명보험,생명보험,2024.4Q,FILLED,text,99,data/disclosure/FY2024_Q4/raw/KR0104_농협생명보험.pdf,11,44,25,19,21,4,0,0,0,0,p99 11열 채널매핑=label
+KR0104,농협생명보험,생명보험,2025.2Q,FILLED,text,50,data/disclosure/FY2025_Q2/raw/KR0104_농협생명보험.pdf,11,44,24,20,21,3,0,0,0,0,p50 11열 채널매핑=label
+KR0104,농협생명보험,생명보험,2025.4Q,FILLED,text,104,data/disclosure/FY2025_Q4/raw/KR0104_농협생명보험.pdf,11,44,44,0,22,2,0,0,0,0,p104 11열 채널매핑=label
+KR0104,농협생명보험,생명보험,2026.2Q,FILLED,text,54,data/disclosure/FY2026_Q2/raw/KR0104_농협생명보험.pdf,11,44,24,20,21,3,0,0,0,0,p54 11열 채널매핑=label
+KR0150,서울보증보험,손해보험,2023.2Q,NO_RAW_PDF,,,,,0,0,0,0,0,0,0,0,0,"data/disclosure/FY2023_Q2/{raw,pdf}/KR0150_*.pdf 없음"
+KR0150,서울보증보험,손해보험,2023.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf,,0,0,0,0,0,0,0,0,0,"p83 원문: ’와일치7-8.불완전판매비율,청약철회비율및유지율현황□해당사항없음※장기손해보험상품을취급하는보험회사만해당7-9.보험금부지급률및"
+KR0150,서울보증보험,손해보험,2024.2Q,NO_RAW_PDF,,,,,0,0,0,0,0,0,0,0,0,"data/disclosure/FY2024_Q2/{raw,pdf}/KR0150_*.pdf 없음"
+KR0150,서울보증보험,손해보험,2024.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2024_Q4/raw/KR0150_서울보증보험.pdf,,0,0,0,0,0,0,0,0,0,"p86 원문: ’와일치7-8.불완전판매비율,청약철회비율및유지율현황□해당사항없음※장기손해보험상품을취급하는보험회사만해당7-9.보험금부지급률및"
+KR0150,서울보증보험,손해보험,2025.2Q,NO_RAW_PDF,,,,,0,0,0,0,0,0,0,0,0,"data/disclosure/FY2025_Q2/{raw,pdf}/KR0150_*.pdf 없음"
+KR0150,서울보증보험,손해보험,2025.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2025_Q4/raw/KR0150_서울보증보험.pdf,,0,0,0,0,0,0,0,0,0,"p90 원문: ’와일치7-8.불완전판매비율,청약철회비율및유지율현황□해당사항없음※장기손해보험상품을취급하는보험회사만해당7-9.보험금부지급률및"
+KR0150,서울보증보험,손해보험,2026.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2026_Q2/raw/KR0150_서울보증보험.pdf,,0,0,0,0,0,0,0,0,0,"p50 원문: 0.007-6.불완전판매비율,청약철회비율및유지율현황□해당사항없음7-7.보험금부지급률및청구이후해지비율현황□해당사항없음"
+KR1000,코리안리재보험,손해보험,2023.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf,,0,0,0,0,0,0,0,0,0,"p26 원문: 사회공헌활동6.불완전판매비율,청약철회비율및유지율현황-해당사항없음.7.보험금부지급률및청구이후해지비율현황-해당사항없음.구분사회"
+KR1000,코리안리재보험,손해보험,2023.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2023_Q4/raw/KR1000_코리안리.pdf,,0,0,0,0,0,0,0,0,0,"p41 원문: 하지않음7-8.불완전판매비율,청약철회비율및유지율현황-해당사항없음7-9.보험금부지급률및청구이후해지비율현황-해당사항없음2023"
+KR1000,코리안리재보험,손해보험,2024.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2024_Q2/raw/KR1000_코리안리.pdf,,0,0,0,0,0,0,0,0,0,"p26 원문: 하지않음7-6.불완전판매비율,청약철회비율및유지율현황-해당사항없음.7-7.보험금부지급률및청구이후해지비율현황-해당사항없음.--"
+KR1000,코리안리재보험,손해보험,2024.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2024_Q4/raw/KR1000_코리안리.pdf,,0,0,0,0,0,0,0,0,0,"p45 원문: 하지않음7-8.불완전판매비율,청약철회비율및유지율현황-해당사항없음7-9.보험금부지급률및청구이후해지비율현황-해당사항없음--기타"
+KR1000,코리안리재보험,손해보험,2025.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2025_Q2/raw/KR1000_코리안리.pdf,,0,0,0,0,0,0,0,0,0,"p30 원문: ’와일치7-6.불완전판매비율,청약철회비율및유지율현황(해당사항없음)7-7.보험금부지급률및청구이후해지비율현황(해당사항없음)"
+KR1000,코리안리재보험,손해보험,2025.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2025_Q4/raw/KR1000_코리안리.pdf,,0,0,0,0,0,0,0,0,0,"p54 원문: 타로구분7-8.불완전판매비율,청약철회비율및유지율현황-해당사항없음7-9.보험금부지급률및청구이후해지비율-해당사항없음"
+KR1000,코리안리재보험,손해보험,2026.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2026_Q2/raw/KR1000_코리안리재보험.pdf,,0,0,0,0,0,0,0,0,0,"p30 원문: 타로구분7-6.불완전판매비율,청약철회비율및유지율현황-해당사항없음7-7.보험금부지급률및청구이후해지비율-해당사항없음"
+KR1010,교보라이프플래닛생명보험,생명보험,2023.2Q,FILLED,text,48,data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf,8,32,8,24,7,0,1,0,0,0,p48 8열 채널매핑=label
+KR1010,교보라이프플래닛생명보험,생명보험,2023.4Q,FILLED,text,68,data/disclosure/FY2023_Q4/raw/KR1010_교보라이프플래닛생명보험_amended.pdf,8,32,8,24,8,0,0,0,0,0,p68 8열 채널매핑=label
+KR1010,교보라이프플래닛생명보험,생명보험,2024.2Q,FILLED,text,48,data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf,11,44,8,36,8,0,0,0,0,0,p48 11열 채널매핑=label
+KR1010,교보라이프플래닛생명보험,생명보험,2024.4Q,FILLED,text,89,data/disclosure/FY2024_Q4/raw/KR1010_교보라이프플래닛생명보험.pdf,11,44,8,36,8,0,0,0,0,0,p89 11열 채널매핑=label
+KR1010,교보라이프플래닛생명보험,생명보험,2025.2Q,FILLED,text,55,data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf,11,44,8,36,8,0,0,0,0,0,p55 11열 채널매핑=label
+KR1010,교보라이프플래닛생명보험,생명보험,2025.4Q,FILLED,text,89,data/disclosure/FY2025_Q4/raw/KR1010_교보라이프플래닛생명보험.pdf,11,44,8,0,8,0,0,0,0,0,p89 11열 채널매핑=label
+KR1010,교보라이프플래닛생명보험,생명보험,2026.2Q,FILLED,text,55,data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf,11,44,8,0,8,0,0,0,0,0,p55 11열 채널매핑=label
+KR1011,IBK연금보험,생명보험,2023.2Q,FILLED,text,33,data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf,8,32,20,12,17,0,0,0,0,0,p33 8열 채널매핑=label
+KR1011,IBK연금보험,생명보험,2023.4Q,FILLED,text,61,data/disclosure/FY2023_Q4/raw/KR1011_IBK연금보험.pdf,8,32,21,11,15,5,0,0,0,0,p61 8열 채널매핑=label
+KR1011,IBK연금보험,생명보험,2024.2Q,FILLED,text,39,data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf,11,44,20,24,17,3,0,0,0,0,p39 11열 채널매핑=label
+KR1011,IBK연금보험,생명보험,2024.4Q,FILLED,text,66,data/disclosure/FY2024_Q4/raw/KR1011_IBK연금보험.pdf,11,44,20,24,17,3,0,0,0,0,p66 11열 채널매핑=label
+KR1011,IBK연금보험,생명보험,2025.2Q,FILLED,text,43,data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf,11,44,20,24,17,3,0,0,0,0,p43 11열 채널매핑=label
+KR1011,IBK연금보험,생명보험,2025.4Q,FILLED,text,73,data/disclosure/FY2025_Q4/raw/KR1011_IBK연금보험.pdf,11,44,20,24,16,4,0,0,0,0,p73 11열 채널매핑=label
+KR1011,IBK연금보험,생명보험,2026.2Q,FILLED,text,43,data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf,11,44,20,24,15,4,0,0,0,0,p43 11열 채널매핑=label
+KR1059,캐롯손해보험,손해보험,2023.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2023_Q2/raw/KR1059_캐롯손해보험.pdf,,0,0,0,0,0,0,0,0,0,"p38 원문: -38-불완전판매비율청약철회비율및유지율현황해당사항없음7-6.,:보험금부지급률및청구이후해지비율현황7-7.장기손해보험"
+KR1059,캐롯손해보험,손해보험,2023.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2023_Q4/raw/KR1059_캐롯손해보험_amended.pdf,,0,0,0,0,0,0,0,0,0,"p62 원문: -62-불완전판매비율청약철회비율및유지율현황7-8.,-해당사항없음“”보험금부지급률및청구이후해지비율현황7-9.장기손해"
+KR1059,캐롯손해보험,손해보험,2024.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2024_Q2/raw/KR1059_캐롯손해보험.pdf,,0,0,0,0,0,0,0,0,0,"p41 원문: -41-불완전판매비율청약철회비율및유지율현황해당사항없음7-6.,:보험금부지급률및청구이후해지비율현황7-7.장기손해보험"
+KR1059,캐롯손해보험,손해보험,2024.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2024_Q4/raw/KR1059_캐롯손해보험.pdf,,0,0,0,0,0,0,0,0,0,"p69 원문: -69-불완전판매비율청약철회비율및유지율현황7-8.,-해당사항없음보험금부지급률및청구이후해지비율현황7-9.장기손해보험"
+KR1098,카카오페이손해보험,손해보험,2023.2Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf,,0,0,0,0,0,0,0,0,0,"p28 원문: -28-6)불완전판매비율,청약철회비율및유지율현황:해당사항없음7)보험금부지급률및청구이후해지비율현황:해당사항없음8)사회공헌"
+KR1098,카카오페이손해보험,손해보험,2023.4Q,ABSENT_IN_SOURCE,text,,data/disclosure/FY2023_Q4/raw/KR1098_카카오페이손해보험.pdf,,0,0,0,0,0,0,0,0,0,"p44 원문: 합계’와일치8)불완전판매비율,청약철회비율및유지율현황:해당사항없음9)보험금부지급률및청구이후해지비율현황(1)장기손해보험:해당없"
+KR1098,카카오페이손해보험,손해보험,2024.2Q,ABSENT_IN_SOURCE,vision,37,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf,11,44,0,44,0,0,0,0,0,0,"[vision_census_v2.csv] Section '6-3) 유지율 현황' (this 2Q filing numbers it 6-3, not 7-6): table straddles p37 (13/25회차 + 37회차 유지율/유지계약액) and p38 (37회차 대상신계약액 + 61회차); every 회차 x 3 rows x 11 channels is '-'. Header unit line reads '(단위 : 건, %)' as printed. Same page set shows 6-1 신계약건수 다이렉트 1,151."
+KR1098,카카오페이손해보험,손해보험,2024.4Q,ABSENT_IN_SOURCE,vision,52,data/disclosure/FY2024_Q4/raw/KR1098_카카오페이손해보험.pdf,11,44,0,44,0,0,0,0,0,0,"[vision_census_v2.csv] Section is numbered 7-8 in this filing (7-8-1 불완전판매, 7-8-2 청약철회, 7-8-3 유지율), not 7-6. Table is present on p52 but all 4 회차 x 3 rows x 11 channels are '-' (the 청약철회/불완전판매 tables on the same page do show 다이렉트 신계약건수 16,119). 2025.4Q text filing p54 shows 13회차 다이렉트 76.03 / 1,289 / 1,695."
+KR1098,카카오페이손해보험,손해보험,2025.2Q,FILLED,text,43,data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf,11,44,1,43,0,1,0,0,0,0,p43 11열 채널매핑=label | p43:right-edge-added
+KR1098,카카오페이손해보험,손해보험,2025.4Q,FILLED,text,54,data/disclosure/FY2025_Q4/raw/KR1098_카카오페이손해보험.pdf,11,44,1,43,1,0,0,0,0,0,p54 11열 채널매핑=label | p54:right-edge-added
+KR1098,카카오페이손해보험,손해보험,2026.2Q,FILLED,text,38,data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf,11,44,1,43,1,0,0,0,0,0,p38 11열 채널매핑=label | p38:right-edge-added

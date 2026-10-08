@@ -65,7 +65,7 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 |---|---|
 | `index.html` | `kics_disclosure.json` · `CSM_waterfall.json` · `NB_CSM_multiple.json` |
 | `K-ICS.html` | `kics_disclosure.json` · `kics_rate_sensitivity.json` · `kics_duration_gap.json` · `kics_tier1_utilization.json` · `kics_tier2_utilization.json` · `kics_forward_capital.json` |
-| `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `kics_disclosure.json` · `IFRS17_BS.json` · `data/dart/viz/csm_waterfall.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` |
+| `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `kics_disclosure.json` · `IFRS17_BS.json` · `data/dart/viz/csm_waterfall.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` · `data/loss_ratio/panel_loss_ratio.json` · `data/persistency/panel_persistency.json` |
 | `공시보고서.html` | `dividend.json` · `kics_disclosure.json` |
 
 The HTML pages fetch these directly — **데이터를 HTML 에 인라인하지 않는다**(K-ICS 하단 3패널도 루트 JSON 을 fetch 한다. JSON 을 빼고 HTML 만 올리면

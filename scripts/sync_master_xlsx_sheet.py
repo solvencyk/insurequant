@@ -225,7 +225,10 @@ def main() -> int:
     if dry:
         print("(dry-run; 파일 안 씀)")
         return 0
-    if not (cell_edits or inserts or deletes):
+    # 2026-10-08: owner 가 손으로 만든 시트는 값이 이미 같아도 요약에 행이 없다 — 그 경우는 저장한다.
+    summary_missing = SUMMARY_SHEET in wb.sheetnames and sheet not in {
+        wb[SUMMARY_SHEET].cell(row=r, column=1).value for r in range(4, wb[SUMMARY_SHEET].max_row + 1)}
+    if not (cell_edits or inserts or deletes or summary_missing):
         print("이미 동기 상태 — 파일 안 씀")
         return 0
 
