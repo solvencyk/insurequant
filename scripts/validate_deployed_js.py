@@ -54,7 +54,7 @@ except Exception:
 ROOT = Path(__file__).resolve().parents[1]
 
 # 배포 4종. `tests/test_deploy_assets.PAGES` 와 같은 목록이다(같은 배포본을 본다).
-PAGES = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html"]
+PAGES = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html", "compare.html"]
 
 # ---------------------------------------------------------------------------
 # 전역 allowlist

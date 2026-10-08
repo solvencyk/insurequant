@@ -5,13 +5,14 @@
 
 ## Status (최신 3개)
 
-- **2026-10-08 IFRS17 섹션 8·9 (손해율 가정 · 판매채널별 유지율), 미커밋** — 두 표를 접이식 [+] 트리(기본 접힘, 모두 펼치기/접기)로, 손해율 곡선은 monotone 곡선 + 경과연수 비례 x축(640px 이하 모바일은 칸 균등), 9 제목은 "9) 판매채널별 유지율" + 작은 설명줄. 파일 `IFRS17.html`·`scripts/viz_build_persistency_lossratio_panels.py`·패널 JSON 2개·`tests/test_push_gate_wiring.py`·docs 2.
-  남은 것: publishing 이 `IFRS17.html` + 패널 JSON 2개를 main 에 같이 올리기(밀리면 패널 빈칸). 상세 `docs/changelog_designer.md` 2026-10-08 (3차).
+- **2026-10-08 사별 비교 `compare.html` 신규** — 회사 1~4곳의 최신 공시 값을 지표별 막대로 비교(지급여력비율·기본자본비율·기말 CSM·신계약 CSM 배수·보험손익·당기순이익·ROE·유지율 13/25/37/61회차 한 차트·손해율), 같은 유형(생보/손보) 업계 중앙값, 검색창 추천(기말 CSM 위 2·아래 1, 기준은 화면에 안 보임).
+  파일 `compare.html`·`data/compare/panel_compare.json`·`scripts/viz_build_compare_panel.py`(`--check`)·5개 페이지 탭·`sitemap.xml`·테스트 배선. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- compare.html`.
+  남은 것: 모바일 실기기 확인, 막대 색(틸+회색)·지표 목록 owner 확인, 서치콘솔 sitemap 재제출.
+- **2026-10-08 IFRS17 섹션 8·9 (손해율 가정 · 판매채널별 유지율), 라이브** — 두 표를 접이식 [+] 트리(기본 접힘, 모두 펼치기/접기)로, 손해율 곡선은 monotone 곡선 + 경과연수 비례 x축(640px 이하 모바일은 칸 균등), 9 제목은 "9) 판매채널별 유지율" + 작은 설명줄. 파일 `IFRS17.html`·`scripts/viz_build_persistency_lossratio_panels.py`·패널 JSON 2개·`tests/test_push_gate_wiring.py`·docs 2.
+  라이브 main `c72359f`·`0a07663`·`58dff57`. 상세 `docs/changelog_designer.md` 2026-10-08 (3차).
 - **2026-10-08 index 마켓맵 보조 목록(`#ratio-sr-list`, `.sr-only`)** — 회사별 "K-ICS 지급여력비율 X%, 기본자본비율 Y%" 를 한 줄씩 글자로(토글로만 보이던 기본자본비율 보강).
   처음엔 표였으나 구글 AI 개요가 열 제목 없이 행만 읽어 기본자본비율을 282.8% 로 오답 → 줄마다 지표명을 붙인 목록으로 교체. `GROUPED`·`samoNum` 으로 JS 가 채움, 픽셀 동일.
   owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- index.html`. 남은 것: 서치콘솔 재색인 뒤 AI 개요 재확인.
-- **2026-10-07 og:image 링크 미리보기 카드** — 루트 5개 페이지에 `og:image`·`twitter:card` meta + `og-image.png`(트리맵+버블맵 장식 카드, 원본 `docs/og-image.src.html`).
-  `ALWAYS_KEEP` 등재. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- og-image.png`.
 
 ## 열린 일
 

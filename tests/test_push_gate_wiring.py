@@ -404,6 +404,8 @@ LIVE_ARTIFACT_READERS = {
     # 마스터 JSON 에서 다시 만든 바이트가 디스크의 패널 JSON 과 같은지 + 크기 예산(불변식 1: 화면 파일 = 검사한 파일).
     "data/loss_ratio/panel_loss_ratio.json": ["viz_build_persistency_lossratio_panels"],
     "data/persistency/panel_persistency.json": ["viz_build_persistency_lossratio_panels"],
+    # 2026-10-08 compare.html(사별 비교). 검사기 = 빌더의 `--check`(마스터 7종에서 다시 만든 바이트 == 디스크 패널 JSON + 크기 예산).
+    "data/compare/panel_compare.json": ["viz_build_compare_panel"],
     # `/` 로 끝나면 **접두 선언**이다 — 그 폴더 아래 전부를 한 검사기가 덮는다는 뜻.
     # `public_exports/` 는 사용자가 내려받는 12개 스냅샷인데(download-survey.js), 파일 목록이
     # `export_public_sheets.MASTERS` 하나에서 나오고 `validate_live_artifacts` 도 그 목록을
@@ -422,7 +424,7 @@ DEPLOYED_VS_UPSTREAM = {
     "kics_tier2_utilization.json": ("output/tier2_utilization/", ["validate_live_artifacts"]),
 }
 
-_HTML = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html"]
+_HTML = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html", "compare.html"]
 
 
 _JSON_LITERAL = re.compile(r"""['"`]([^'"`\s]+?\.json)['"`]""")
@@ -606,7 +608,17 @@ PANEL_DERIVED_FROM = {
     # 에서만 만든다. 마스터 시트의 키는 build_master_xlsx.MASTERS 의 JSON 경로(루트 기준 상대경로).
     "data/loss_ratio/panel_loss_ratio.json":     "data/loss_ratio/master_loss_ratio.json",
     "data/persistency/panel_persistency.json":   "data/persistency/master_persistency.json",
+    # 2026-10-08 compare.html. 마스터 7종을 한 패널로 합친 파생이라 값이 튜플이다(scripts/viz_build_compare_panel.py).
+    "data/compare/panel_compare.json":           ("kics_disclosure.json", "CSM_waterfall.json", "NB_CSM_multiple.json",
+                                                  "PL_breakdown.json", "IFRS17_BS.json",
+                                                  "data/persistency/master_persistency.json",
+                                                  "data/loss_ratio/master_loss_ratio.json"),
 }
+
+
+def _as_tuple(v):
+    """PANEL_DERIVED_FROM 의 값(마스터 1개 문자열 또는 여러 개 튜플)을 항상 튜플로."""
+    return () if not v else ((v,) if isinstance(v, str) else tuple(v))
 
 
 def test_every_live_fetched_artifact_lands_in_a_master_sheet():
@@ -626,8 +638,8 @@ def test_every_live_fetched_artifact_lands_in_a_master_sheet():
         base = f.lstrip("./")
         if base.startswith("public_exports/"):
             continue          # 마스터의 공개 사본 — 원본이 이미 검사된다
-        master = base if base in sheet_of else PANEL_DERIVED_FROM.get(base)
-        if not master or master not in sheet_of:
+        masters = (base,) if base in sheet_of else _as_tuple(PANEL_DERIVED_FROM.get(base))
+        if not masters or any(mm not in sheet_of for mm in masters):
             gaps.append(base)
     assert not gaps, (
         f"화면이 그리는데 마스터 시트가 없는 데이터 {gaps} — owner 상시 규칙 위반. "

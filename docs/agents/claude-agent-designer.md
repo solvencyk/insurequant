@@ -46,6 +46,7 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 | `K-ICS.html` | Per-insurer K-ICS detail + sub-items + 자본 도넛 + 금리 민감도(자산D/부채D/듀레이션갭) + forward outlook | `kics_disclosure.json`, `kics_rate_sensitivity.json`, `kics_duration_gap.json`, `kics_tier1_utilization.json`, `kics_tier2_utilization.json`, `kics_forward_capital.json` |
 | `IFRS17.html` | 7-panel IFRS17 dashboard (1=재무상태표 T계정, 2-7=CSM 이동·시계열·상각·손익·NB·민감도) + 섹션 8=손해율 가정 · 9=판매채널별 유지율(접이식 트리 표, 마스터 `손해율`·`유지율` 시트의 파생 패널 JSON 2개, 빌더 `scripts/viz_build_persistency_lossratio_panels.py`) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `kics_disclosure.json`, `IFRS17_BS.json`, `data/dart/viz/csm_waterfall.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json`, `data/loss_ratio/panel_loss_ratio.json`, `data/persistency/panel_persistency.json` |
 | `공시보고서.html` | 배당현황 — 회사별 배당지표 | `dividend.json`, `kics_disclosure.json` |
+| `compare.html` | 사별 비교 — 회사 1~4곳의 최신 공시 값을 지표별 막대로 비교(생보는 생보끼리·손보는 손보끼리, 같은 유형 업계 중앙값, 검색창 추천, 유지율 13·25·37·61회차는 한 차트) | `data/compare/panel_compare.json` |
 
 > 이 열은 HTML 에서 **기계 도출**한다(2026-10-07 재도출). 페이지의 fetch 를 바꾸면 **이 표와 `claude-agent-publishing.md` §1 을 같이 고쳐라**
 > (거기에 재도출 명령이 있다). 둘 다 배포 keep-list 의 근거이고 `tests/test_deploy_assets.py` 가 대조한다.

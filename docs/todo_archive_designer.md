@@ -1,5 +1,10 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+## 2026-10-08 (4차) 밀린 Status (사별 비교 항목이 들어오며 최신 3개에서 밀림)
+
+- **2026-10-07 og:image 링크 미리보기 카드** — 루트 5개 페이지에 `og:image`·`twitter:card` meta + `og-image.png`(트리맵+버블맵 장식 카드, 원본 `docs/og-image.src.html`).
+  `ALWAYS_KEEP` 등재. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- og-image.png`.
+
 ## 2026-10-08 (3차) 밀린 Status (IFRS17 섹션 8·9 항목이 들어오며 최신 3개에서 밀림)
 
 - **2026-09-22 K-ICS 금리 민감도 패널 교체** — 순자산 듀레이션/컨벡서티 2카드 → 자산D/부채D/듀레이션갭 3카드(owner 지시).

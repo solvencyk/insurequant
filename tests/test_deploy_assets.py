@@ -24,7 +24,7 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[1]
-PAGES = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html"]
+PAGES = ["index.html", "K-ICS.html", "IFRS17.html", "공시보고서.html", "compare.html"]
 
 # fetch('x.json'), fetch("x.json"), fetch(`x.json`)
 _FETCH = re.compile(r"""fetch\(\s*['"`]([^'"`)]+)['"`]""")

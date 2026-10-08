@@ -155,8 +155,8 @@ def screen_coverage() -> None:
         if base.startswith("public_exports/"):
             continue
         n += 1
-        master = base if base in sheet_of else T.PANEL_DERIVED_FROM.get(base)
-        if not master or master not in sheet_of:
+        masters = (base,) if base in sheet_of else T._as_tuple(T.PANEL_DERIVED_FROM.get(base))
+        if not masters or any(mm not in sheet_of for mm in masters):
             gaps.append(base)
     print(f"  화면 fetch {n}개 · 마스터 시트 없는 것 {len(gaps)}개")
     for g in gaps:

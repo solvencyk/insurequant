@@ -7,6 +7,17 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-08 (4차) -- 사별 비교 `compare.html` 신규 (owner 직접 지시, orchestrator 작성)
+
+**지시.** 회사별 비교 화면. 처음 목업(꺾은선 추이) -> "꺾은선이 난잡하다, 최신 공시 기준 막대로" -> 색·추천 문구·지표 정리 후 라이브.
+**화면.** 회사 1~4곳(생보는 생보끼리, 손보는 손보끼리)을 지표별 가로 막대로 비교. 막대는 회사마다 **그 회사의 가장 최근 공시 값**이고, 지표의 최신 공시 분기(39사 전체 기준)보다 오래된 값에는 `25.4Q` 같은 칩이 붙는다.
+같은 유형 업계 중앙값은 마지막 막대 + 세로 점선. 유지율 13·25·37·61회차는 한 카드(회차 4구간). 막대 색은 처음 고른 회사만 틸(`--primary`), 나머지는 중립 회색(회사 구분은 이름 라벨).
+**추천.** 검색창을 누르면 맨 위 "추천": 처음 고른 회사와 같은 유형에서 기말 CSM 이 바로 위 2곳·아래 1곳(모자라면 반대쪽으로 채움, 재보험·보증 제외). **기준은 화면에 쓰지 않는다**(owner 지시) — 전체 목록은 가나다순, 숫자·칩 없음. 로직은 클라이언트 JS 라 소스에는 보인다(owner: 거기까진 안 숨겨도 됨).
+**데이터.** `scripts/viz_build_compare_panel.py` 가 루트 마스터 7종(kics_disclosure·CSM_waterfall·NB_CSM_multiple·PL_breakdown·IFRS17_BS·master_persistency·master_loss_ratio)에서 `data/compare/panel_compare.json`(약 58KB) 하나를 만든다. `--check` = 다시 만든 바이트 == 디스크 파일 + 1.5MB 예산.
+**제외한 것.** 지급여력금액(owner), 꺾은선 추이·기간 선택, Chart.js(막대는 HTML/CSS).
+**배선.** `tests/test_deploy_assets.PAGES`·`tests/test_push_gate_wiring`(`_HTML`·`LIVE_ARTIFACT_READERS`·`PANEL_DERIVED_FROM` 은 여러 마스터를 튜플로 허용하도록 `_as_tuple`)·`scripts/validate_deployed_js.PAGES`·`scripts/status_report.py`·`scripts/android_push_and_deploy.sh NEW_FILES`·`sitemap.xml`·두 agent 문서의 fetch 표·5개 페이지 탭("사별 비교").
+**검증.** `test_deploy_assets`+`test_push_gate_wiring` 73 passed 1 skipped, `validate_deployed_js` RED=0(compare.html 포함), 빌더 `--check` OK. 10분 전체 훅은 owner 규칙(새 화면만 올리는 배포는 생략)대로 건너뜀.
+
 ## 2026-10-08 (3차) -- IFRS17 섹션 8·9 접이식 트리 + 손해율 곡선 (owner 직접 지시, 미커밋)
 
 **지시.** (1) 손해율 세부표가 너무 길다 -> `Non-Par > 유배당 > 상해` 식 [+] 트리. (2) 손해율 곡선은 최대한 granular, 직선 말고 부드러운 곡선, 뒷구간(11~20년)이 1~10년과 비슷한 폭.
