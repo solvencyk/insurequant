@@ -187,6 +187,7 @@
         <div id="reference-period" class="reference-period" style="display:none;">기준시점: </div>
       </div>
       <div id="map-list" class="map-list" aria-label="K-ICS ratio list (mobile)"></div>
+      <div id="ratio-sr-table" class="sr-only"></div>
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
@@ -493,6 +494,7 @@
           const sectorSel = document.getElementById('sector');
           render(sectorSel ? sectorSel.value : 'ALL');
           requestAnimationFrame(() => render(sectorSel ? sectorSel.value : 'ALL'));
+          try { renderRatioSrTable(); } catch (e) { console.warn('보조표 생성 실패(지도와 무관):', e); }  // 아래 .catch 가 지도 전체를 비우므로 보조표 오류가 새지 않게 막는다
         })
         .catch(e => {
           console.error('JSON 파일을 불러오는 중 오류 발생:', e);
@@ -951,6 +953,41 @@
         empty.textContent = 'K-ICS 데이터를 불러오는 중이거나 표시할 항목이 없습니다.';
         host.appendChild(empty);
       }
+    }
+
+    // 보조표(화면에는 안 보이고 스크린리더·검색엔진이 읽는다). 마켓맵은 지급여력비율과 기본자본비율을 토글로
+    // 하나씩만 보여 주므로, 두 비율을 회사별로 한 번에 글자로 둔다. 지도와 같은 GROUPED·같은 samoNum 서식으로
+    // 채워서 값이 항상 지도와 일치하고, HTML 에 숫자를 직접 적지 않는다(인라인 금지 규칙 유지).
+    // 규칙: 지도에 보이는 값만 넣는다. 키워드를 따로 얹으면 구글 스팸 정책(숨은 텍스트) 위반이다.
+    function renderRatioSrTable() {
+      const host = document.getElementById('ratio-sr-table');
+      if (!host) return;
+      host.textContent = '';
+      const pct = v => Number.isFinite(v) ? samoNum(v, 1) + '%' : '—';
+      const q = getLatestQuarter(allData);
+      const table = document.createElement('table');
+      const cap = document.createElement('caption');
+      cap.textContent = '보험사별 K-ICS 지급여력비율·기본자본비율' + (q ? ` (${q} 기준, 경과조치 적용 후 값 우선)` : '');
+      table.appendChild(cap);
+      const headRow = document.createElement('tr');
+      ['보험사', '업권', 'K-ICS 지급여력비율', '기본자본비율'].forEach(t => {
+        const th = document.createElement('th'); th.scope = 'col'; th.textContent = t; headRow.appendChild(th);
+      });
+      const thead = document.createElement('thead'); thead.appendChild(headRow); table.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      const SECTOR_LABEL = { Life: '생명보험', 'Non-Life': '손해보험' };
+      for (const s of ['Life', 'Non-Life']) {
+        for (const d of (GROUPED[s] || [])) {
+          const tr = document.createElement('tr');
+          const name = document.createElement('th'); name.scope = 'row'; name.textContent = shortName(d.company); tr.appendChild(name);
+          [SECTOR_LABEL[s], pct(d.ratio), pct(d.basicCapitalRatio)].forEach(t => {
+            const td = document.createElement('td'); td.textContent = t; tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        }
+      }
+      table.appendChild(tbody);
+      host.appendChild(table);
     }
 
     const sel = document.getElementById("sector");
