@@ -342,9 +342,9 @@
           <label>공시시점 <select id="psQ" class="select"></select></label>
         </div>
         <div class="small-muted" id="psCap">유지율 = 유지계약액 ÷ 대상신계약액 · 회차 = 계약 후 경과 개월
-          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="채널 묶음과 계산 방법" aria-describedby="help-ps">?</button><span class="iq-help-pop" role="tooltip" id="help-ps"><b>채널 묶음</b><br>전속설계사 = 설계사 · GA(대리점) = 개인대리점 + 법인대리점 기타 · 방카슈랑스 = 법인대리점 금융기관보험대리점 · 비대면 = 법인대리점 TM·홈쇼핑 + 직영 다이렉트 · 기타 = 직영 임직원·복합, 중개사, 기타(표에만 표시). 표는 묶음 행만 보이고 [+] 로 세부 채널을 펼칩니다.<br><br>묶음 유지율은 같은 회차의 유지계약액 합 ÷ 대상신계약액 합입니다. 대상신계약액이 0이면 '-' 이며, 49회차는 공시표에 없습니다.</span></span></div>
+          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="채널군과 계산 방법" aria-describedby="help-ps">?</button><span class="iq-help-pop" role="tooltip" id="help-ps"><b>채널군</b><br>전속설계사 = 설계사 · GA(대리점) = 개인대리점 + 법인대리점 기타 · 방카슈랑스 = 법인대리점 금융기관보험대리점 · 비대면 = 법인대리점 TM·홈쇼핑 + 직영 다이렉트 · 기타 = 직영 임직원·복합, 중개사, 기타(표에만 표시). 표는 채널군 행만 보이고 [+] 로 세부 채널을 펼칩니다. 차트는 전속설계사와 GA(대리점) 두 선만 그리고, 방카슈랑스·비대면·기타는 표에서 봅니다.<br><br>채널군 유지율은 같은 회차의 유지계약액 합 ÷ 대상신계약액 합입니다. 대상신계약액이 0이면 '-' 이며, 49회차는 공시표에 없습니다.</span></span></div>
         <div id="psChartStub" class="stub-msg" style="display:none"></div>
-        <div class="chart-container chart-sm" id="psChartBox"><canvas id="canvasPs" role="img" aria-label="회차별 판매채널 묶음 유지율 감소 곡선 차트"></canvas></div>
+        <div class="chart-container chart-sm" id="psChartBox"><canvas id="canvasPs" role="img" aria-label="회차별 판매채널군 유지율 감소 곡선 차트"></canvas></div>
         <div class="lrps-treebar" id="psBar"><button type="button" class="lrps-bar-btn" data-act="open" aria-label="채널 표 모두 펼치기">모두 펼치기</button><button type="button" class="lrps-bar-btn" data-act="close" aria-label="채널 표 모두 접기">모두 접기</button></div>
         <div class="table-wrap lrps-table" id="psTable"></div>
         <div class="small-muted" id="psUnit" style="margin-top:6px"></div>
@@ -1497,11 +1497,11 @@
   const LR_MQ = window.matchMedia("(max-width:"+LR_NARROW_MAX_PX+"px)");
   const LR_OPEN_END_X = 33;   // "30년 이후" 의 x 위치(연수 비례일 때). 26~30년 구간 가운데값 28 다음 5칸
   const PS_ROUNDS = [13,25,37,61];
-  const PS_BUNDLES = ["전속설계사","GA(대리점)","방카슈랑스","비대면"];   // 차트 선. '기타' 는 표에만
+  const PS_BUNDLES = ["전속설계사","GA(대리점)"];   // 차트 선은 둘뿐(owner 2026-10-08). 방카·비대면·기타는 표에만
   // 색약 안전(적록 ΔRGB ≥ 94, scripts/a11y_contrast_check.py cbcheck) + 마커·점선 모양으로도 구분한다.
-  const PS_COLORS = { light:["#0f6e68","#D55E00","#CC79A7","#343a40"], dark:["#54b3aa","#f08a4b","#e6a3c8","#8fb4e8"] };
-  const PS_MARKERS = ["circle","triangle","rect","rectRot"];
-  const PS_DASH = [[],[],[7,4],[2,3]];
+  const PS_COLORS = { light:["#0f6e68","#D55E00"], dark:["#54b3aa","#f08a4b"] };
+  const PS_MARKERS = ["circle","triangle"];
+  const PS_DASH = [[],[]];
 
   // 한 자리 소수 + 음수 △. -0 은 0.0 으로 정규화.
   function pct1(v){
@@ -1734,7 +1734,7 @@
         },
         scales:{
           x:{ type:"linear", min:xMin, max:xMax,
-              title:{ display:true, text: narrow ? "경과차년 (년 · 칸 간격 균등)" : "경과차년 (년 · 가로 간격은 경과 연수에 비례)" },
+              title:{ display:true, text:"경과차년" },
               afterBuildTicks:(axis)=>{ axis.ticks = xs.map(v=>({ value:v })); },
               ticks:{ autoSkip:false, maxRotation: narrow?60:0, minRotation: narrow?60:0, font:{ size: narrow?10:12 },
                 callback:function(v){
@@ -1813,7 +1813,7 @@
     const coName = codeToName[company] || c.n || company;
     const narrow = LR_MQ.matches;
     const pal = (window.IQTheme && IQTheme.isDark()) ? PS_COLORS.dark : PS_COLORS.light;
-    // 차트: 묶음 4개 × 회차(실제 개월 간격 숫자축). 전부 null 인 묶음은 선을 만들지 않는다.
+    // 차트: 전속설계사·GA 두 선 × 회차(실제 개월 간격 숫자축). 전부 null 이면 선을 만들지 않는다.
     const ds = [];
     for (const r of rows){
       if (r[2]!==1) continue;
@@ -1826,9 +1826,9 @@
     if (charts.ps){ try{ charts.ps.destroy(); }catch(e){} charts.ps=null; }
     const chartBox=q(host,"#psChartBox"), chartStub=q(host,"#psChartStub"), cv=q(host,"#canvasPs");
     chartBox.style.display = ds.length ? "" : "none";
-    stub(chartStub, !ds.length, "채널별 유지율을 그릴 값이 없습니다.");
+    stub(chartStub, !ds.length, "전속설계사·GA(대리점) 유지율이 공시되지 않은 회사입니다. 다른 채널군은 아래 표에서 확인하세요.");
     if (!(ds.length && cv)) return;
-    cv.setAttribute("aria-label", shortName(coName)+" "+qq+" 공시 회차별 채널 묶음 유지율 감소 곡선 · "+ds.map(d=>d.label).join(", "));
+    cv.setAttribute("aria-label", shortName(coName)+" "+qq+" 공시 회차별 채널군 유지율 감소 곡선 · "+ds.map(d=>d.label).join(", "));
     charts.ps = new Chart(cv.getContext("2d"), {
       type:"line", data:{ datasets: ds },
       options:{
@@ -1836,7 +1836,7 @@
         interaction:{ mode:"index", intersect:false },
         plugins:{
           legend:{ display:true, position: narrow ? "bottom" : "top", labels:{ usePointStyle:true } },
-          title:{ display:true, text:"채널 묶음별 유지율 · "+shortName(coName) },
+          title:{ display:true, text:"채널군별 유지율 · "+shortName(coName) },
           tooltip:{ callbacks:{
             title:(items)=> items.length ? items[0].parsed.x+"회차" : "",
             label:(x)=> x.dataset.label+": "+(x.parsed.y==null ? "-" : pct1(x.parsed.y)+"%"),
