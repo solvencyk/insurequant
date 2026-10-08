@@ -324,13 +324,14 @@
     pool.forEach(function(x, i){ if(x.c.code === anchor.code) p = i; });
     if(p < 0) return {anchor:anchor, picks:[], nu:0, nd:0};
     var up = [], dn = [], i;
-    for(i = p - 1; i >= 0; i--) if(!has(pool[i].c.code)) up.push(pool[i]);
-    for(i = p + 1; i < pool.length; i++) if(!has(pool[i].c.code)) dn.push(pool[i]);
+    for(i = p - 1; i >= 0; i--) up.push(pool[i]);
+    for(i = p + 1; i < pool.length; i++) dn.push(pool[i]);
     var nu = 2, nd = 1;
     if(up.length < nu){ nd += nu - up.length; nu = up.length; }
     if(dn.length < nd){ nu = Math.min(up.length, nu + nd - dn.length); nd = dn.length; }
     var picks = up.slice(0, nu).reverse().map(function(x){ return {x:x, dir:'up'}; })
       .concat(dn.slice(0, nd).map(function(x){ return {x:x, dir:'down'}; }));
+    picks = picks.filter(function(q){ return !has(q.x.c.code); });   /* 고정 3곳 중 이미 고른 곳만 뺀다 */
     return {anchor:anchor, picks:picks, nu:nu, nd:nd};
   }
 
@@ -341,16 +342,23 @@
     S.sel.push({code:code});
     return true;
   }
+  /* 주소 표기 = 회사 표시명(예: 농협생명). 사내 회사코드는 주소에 쓰지 않는다. 이미 퍼진 코드 링크는 읽기만 하고 writeURL 이 이름으로 바꿔 쓴다. */
+  function fromToken(x){
+    x = x.trim(); if(!x) return null;
+    var u = x.toUpperCase(); if(CO[u]) return u;
+    for(var k in CO) if(CO[k].short === x || CO[k].name === x) return k;
+    return null;
+  }
   function readURL(){
     var p = new URLSearchParams(location.search), codes = [];
-    (p.get('c') || '').split(',').forEach(function(x){ x = x.trim().toUpperCase(); if(CO[x] && codes.indexOf(x) < 0) codes.push(x); });
+    (p.get('c') || '').split(',').forEach(function(x){ var c = fromToken(x); if(c && codes.indexOf(c) < 0) codes.push(c); });
     S.sel = []; codes.slice(0, MAXC).forEach(addCo);
     S.basis = p.get('b') === 'pre' ? 'pre' : 'post';
     S.med = p.get('md') !== '0';
   }
   function writeURL(){
     var p = new URLSearchParams();
-    if(S.sel.length) p.set('c', S.sel.map(function(s){ return s.code; }).join(','));
+    if(S.sel.length) p.set('c', S.sel.map(function(s){ return CO[s.code].short; }).join(','));
     if(S.basis === 'pre') p.set('b', 'pre');
     if(!S.med) p.set('md', '0');
     var q = p.toString().replace(/%2C/g, ',');

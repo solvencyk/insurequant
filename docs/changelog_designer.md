@@ -16,6 +16,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 **데이터.** `scripts/viz_build_compare_panel.py` 가 루트 마스터 7종(kics_disclosure·CSM_waterfall·NB_CSM_multiple·PL_breakdown·IFRS17_BS·master_persistency·master_loss_ratio)에서 `data/compare/panel_compare.json`(약 58KB) 하나를 만든다. `--check` = 다시 만든 바이트 == 디스크 파일 + 1.5MB 예산.
 **제외한 것.** 지급여력금액(owner), 꺾은선 추이·기간 선택, Chart.js(막대는 HTML/CSS).
 **후속(같은 날, owner).** 기본 회사 없음 — 주소에 `c=` 가 없으면 빈 상태로 시작(`default_from` 삭제)하고 첫 회사는 사람이 고른다. 목록 순서는 회사코드 순(생보 한화생명·삼성생명…, 손보 메리츠·한화손보·롯데손보…)이고, 첫 회사를 고른 뒤에도 맨 위 「추천」만 기말 CSM 기준이다.
+**후속 2(같은 날, owner).** 주소에 회사코드(사내 전용)를 쓰지 않는다: `?c=농협생명,신한라이프`처럼 표시명을 쓰고, 이미 퍼진 코드 링크는 읽은 뒤 이름으로 바꿔 쓴다(JSON 을 열어 보면 코드가 보이는 건 owner 가 허용). 추천 3곳은 첫 회사 기준으로 고정 — 하나 고르면 그 회사만 목록에서 빠지고 다시 채우지 않는다. 코드 노출로 한때 라이브에서 내렸다가(`22761d1`) 이 수정과 함께 재게시했다.
 **배선.** `tests/test_deploy_assets.PAGES`·`tests/test_push_gate_wiring`(`_HTML`·`LIVE_ARTIFACT_READERS`·`PANEL_DERIVED_FROM` 은 여러 마스터를 튜플로 허용하도록 `_as_tuple`)·`scripts/validate_deployed_js.PAGES`·`scripts/status_report.py`·`scripts/android_push_and_deploy.sh NEW_FILES`·`sitemap.xml`·두 agent 문서의 fetch 표·5개 페이지 탭("사별 비교").
 **검증.** `test_deploy_assets`+`test_push_gate_wiring` 73 passed 1 skipped, `validate_deployed_js` RED=0(compare.html 포함), 빌더 `--check` OK. 10분 전체 훅은 owner 규칙(새 화면만 올리는 배포는 생략)대로 건너뜀.
 
