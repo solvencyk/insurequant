@@ -1,5 +1,9 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+## 2026-10-08 밀린 Status (index 보조표 항목이 들어오며 최신 3개에서 밀림)
+
+- **2026-09-21c IFRS17·기타공시 헤더 셀렉트 + 기간 토글 이식**, 토글 CSS 를 `common.css` 로 승격, 섹션 앵커 착지 오프셋을 헤더 실측으로. `6a51b7a`.
+
 ## 2026-10-07 밀린 Status (og:image 항목이 들어오며 최신 3개에서 밀림)
 
 - **2026-09-21 K-ICS `IQP is not defined` 라이브 사고 복구** — 정의 복원 + try/catch 안전망. `197d15e`. 게이트는 validation `DEPLOYED_JS_UNDEFINED_CALL`.

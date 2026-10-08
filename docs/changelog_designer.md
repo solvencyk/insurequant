@@ -1,9 +1,26 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-10-07 · Stage 5/5 — designer
+> Last updated: 2026-10-08 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-10-08 -- index 마켓맵 보조표 `#ratio-sr-table` (스크린리더·검색엔진용, 화면 변화 없음, owner 직접 지시)
+
+**바뀐 것.** `index.html` 마켓맵 패널(`#map-list` 바로 아래)에 `<div id="ratio-sr-table" class="sr-only">` 를 두고, `renderRatioSrTable()` 이 회사별
+**지급여력비율·기본자본비율**을 표(`<caption>`·`<th scope>`)로 채운다. 마켓맵은 두 비율을 토글로 하나씩만 보여 줘서 기본자본비율은 토글을 눌러야만 글자로 나왔다 —
+검색엔진·스크린리더는 토글을 안 누른다. 데이터 로드 `.then` 끝에서 try/catch 로 호출한다(아래 `.catch` 가 지도 전체를 비우므로 보조표 오류가 새면 안 된다).
+
+**왜.** owner 가 "구글에서 삼성 기본자본비율을 검색하면 InsureQuant 가 걸리게" 를 원했고 숨은 글자(흰 글씨·0.1pt)를 제안했다. 그건 구글 스팸 정책 "hidden text" 위반이라
+기각하고, 정책이 허용 예로 든 "스크린 리더 전용 텍스트"(차트 대체 텍스트, WCAG 1.1.1)로 같은 효과를 낸다. **지도에 보이는 값만 넣는다 — 키워드를 따로 얹으면 위반이다.**
+
+**데이터 규칙.** HTML 에 숫자를 적지 않는다 — 지도와 같은 `GROUPED`(최신 분기, 경과조치 적용 후 우선)·같은 `samoNum`(음수 △) 으로 JS 가 채워 값이 항상 일치한다. "데이터 HTML 인라인 금지" 유지.
+
+**검증(Playwright, GA 차단).** 39사 행, 데스크톱·모바일 모두 컨테이너 1×1px 로 잘림, 보조표 유무 전체 페이지 스크린샷 픽셀 동일·스크롤 크기 동일,
+지도 글자(지급여력비율 29개 / 토글 후 기본자본비율 29개)가 표 해당 열의 부분집합. `tests/test_deploy_assets.py` 10 passed(느린 .py 파싱 1건 제외).
+정정: 마켓맵은 캔버스가 아니라 DOM(`div`)이라 지급여력비율은 이미 글자였다 — 빠져 있던 것은 기본자본비율(토글 뒤)이었다.
 
 ---
 

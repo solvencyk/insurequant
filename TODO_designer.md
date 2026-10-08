@@ -1,15 +1,16 @@
 # Insurequant Designer TODO (Stage 5)
 
-> 갱신 2026-10-07 · 프롬프트 `docs/agents/claude-agent-designer.md` · 이력 `docs/changelog_designer.md`
+> 갱신 2026-10-08 · 프롬프트 `docs/agents/claude-agent-designer.md` · 이력 `docs/changelog_designer.md`
 > 2026-10-07 정리 전 전문(BS-TACCOUNT·DESIGN-V2·MOB 블록 포함)은 `docs/todo_archive_designer.md` 맨 위에 있다. designer 는 push 하지 않는다.
 
 ## Status (최신 3개)
 
+- **2026-10-08 index 마켓맵 보조표(`#ratio-sr-table`, `.sr-only`)** — 회사별 지급여력비율·기본자본비율을 한 번에 글자로(토글로만 보이던 기본자본비율 보강).
+  지도와 같은 `GROUPED`·`samoNum` 으로 JS 가 채움(인라인 금지 유지), 픽셀 동일. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- index.html`.
 - **2026-10-07 og:image 링크 미리보기 카드** — 루트 5개 페이지에 `og:image`·`twitter:card` meta + `og-image.png`(트리맵+버블맵 장식 카드, 원본 `docs/og-image.src.html`).
   `ALWAYS_KEEP` 등재. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- og-image.png`.
 - **2026-09-22 K-ICS 금리 민감도 패널 교체** — 순자산 듀레이션/컨벡서티 2카드 → 자산D/부채D/듀레이션갭 3카드(owner 지시).
   컨벡서티는 폐지(K-ICS 상승/하락 충격 비대칭). 라이브 `22e2471`.
-- **2026-09-21c IFRS17·기타공시 헤더 셀렉트 + 기간 토글 이식**, 토글 CSS 를 `common.css` 로 승격, 섹션 앵커 착지 오프셋을 헤더 실측으로. `6a51b7a`.
 
 ## 열린 일
 
