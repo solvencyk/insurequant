@@ -1,5 +1,13 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+## 2026-10-08 (5차) 밀린 Status (사별 비교 차트·모바일 수정 항목이 들어오며 최신 3개에서 밀림) + 닫은 열린 일
+
+- **2026-10-08 index 마켓맵 보조 목록(`#ratio-sr-list`, `.sr-only`)** — 회사별 "K-ICS 지급여력비율 X%, 기본자본비율 Y%" 를 한 줄씩 글자로(토글로만 보이던 기본자본비율 보강).
+  처음엔 표였으나 구글 AI 개요가 열 제목 없이 행만 읽어 기본자본비율을 282.8% 로 오답 → 줄마다 지표명을 붙인 목록으로 교체. `GROUPED`·`samoNum` 으로 JS 가 채움, 픽셀 동일.
+  owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- index.html`. 남은 것: 서치콘솔 재색인 뒤 AI 개요 재확인.
+
+- (닫음) IFRS17 모바일 가로 넘침 160px — 375px 에서 TABLE 407px 로 적었던 항목. 숨은 ? 도움말 팝오버가 문서 폭을 넓히던 것이 원인으로 같이 해결돼 재현되지 않음(2026-10-08).
+
 ## 2026-10-08 (4차) 밀린 Status (사별 비교 항목이 들어오며 최신 3개에서 밀림)
 
 - **2026-10-07 og:image 링크 미리보기 카드** — 루트 5개 페이지에 `og:image`·`twitter:card` meta + `og-image.png`(트리맵+버블맵 장식 카드, 원본 `docs/og-image.src.html`).
