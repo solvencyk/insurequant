@@ -1495,6 +1495,7 @@
   // 섹션 8 차트 x축: 이 폭 이하(모바일)는 칸마다 같은 폭, 초과(PC·태블릿)는 경과 연수에 비례. owner 가 바꾸려면 이 한 줄.
   const LR_NARROW_MAX_PX = 640;
   const LR_MQ = window.matchMedia("(max-width:"+LR_NARROW_MAX_PX+"px)");
+  const LR_NARROW_TICKS = new Set(["11~15년","21~25년","30년 이후"]);   // 모바일 x축에 남기는 5년 구간 라벨
   const LR_OPEN_END_X = 33;   // "30년 이후" 의 x 위치(연수 비례일 때). 26~30년 구간 가운데값 28 다음 5칸
   const PS_ROUNDS = [13,25,37,61];
   const PS_BUNDLES = ["전속설계사","GA(대리점)"];   // 차트 선은 둘뿐(owner 2026-10-08). 방카·비대면·기타는 표에만
@@ -1706,11 +1707,11 @@
     const ds = [];
     if (prev) ds.push({ label: prevQ+" 공시 합계 (직전)", data: pts(prev),
       borderColor: TH.muted, backgroundColor: "transparent", pointBackgroundColor: TH.muted, pointBorderColor: TH.muted,
-      borderWidth:2, borderDash:[3,4], pointRadius:3, pointHoverRadius:5,
+      borderWidth:2, borderDash:[3,4], pointRadius: narrow?0:3, pointHoverRadius: narrow?4:5,
       cubicInterpolationMode:"monotone", spanGaps:false, order:2 });
     if (cur) ds.push({ label: qq+" 공시 합계", data: pts(cur),
       borderColor: currentKey.line, backgroundColor: currentKey.soft, pointBackgroundColor: currentKey.line, pointBorderColor: currentKey.line,
-      borderWidth:3.5, pointRadius:4, pointHoverRadius:6,
+      borderWidth:3.5, pointRadius: narrow?2.5:4, pointHoverRadius: narrow?5:6,
       cubicInterpolationMode:"monotone", spanGaps:false, order:1 });
     if (charts.lr){ try{ charts.lr.destroy(); }catch(e){} charts.lr=null; }
     const cv = q(host,"#canvasLr");
@@ -1740,6 +1741,12 @@
                 callback:function(v){
                   const i = xs.indexOf(v); if (i<0) return "";
                   const lab = labels[i];
+                  // 모바일은 라벨을 띄엄띄엄: 홀수 연차(1·3·5·7·9년) + 11~15·21~25·30년 이후. 표준 칸이 아닌 거친 구간(1~10년 등)은 항상 표시.
+                  if (narrow){
+                    const ym = /^(\d+)년$/.exec(lab);
+                    const std = ym || LR_NARROW_TICKS.has(lab) || /^(16~20|26~30)년$/.test(lab);
+                    if (std && !(ym ? (Number(ym[1])%2===1) : LR_NARROW_TICKS.has(lab))) return "";
+                  }
                   // 연 단위 칸(1년…10년)은 폭이 좁으면 숫자만. 5년 구간 라벨은 어떤 폭에서도 그대로.
                   if (!narrow && /^\d+년$/.test(lab) && this.width/(xMax-xMin) < 32) return lab.replace("년","");
                   return lab;
