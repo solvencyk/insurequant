@@ -121,6 +121,45 @@
   .bs-l2-row{grid-template-columns:1fr;gap:2px}
   .bs-l2-val{text-align:left}
 }
+/* 섹션 8·9 (손해율 가정 · 판매채널별 유지율): 컨트롤 줄 + 첫 열 고정 가로 스크롤 표 */
+.lrps-ctl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.lrps-ctl label{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.lrps-ctl label[hidden]{display:none}
+.lrps-pv{margin-left:auto;font-size:13px;color:var(--muted)}
+.lrps-pv b{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.lrps-table table{width:max-content;min-width:100%}
+.lrps-table thead th{position:sticky;top:0;z-index:2;white-space:nowrap}
+.lrps-table th:first-child,.lrps-table td:first-child{position:sticky;left:0;z-index:1;background:var(--bg);box-shadow:1px 0 0 var(--border);white-space:normal;min-width:132px;max-width:220px;text-align:left}
+.lrps-table thead th:first-child{z-index:3;background:var(--card)}
+.lrps-table td.num{white-space:nowrap}
+.lrps-table td.empty{color:var(--muted)}
+.lrps-desc{margin:-4px 0 12px}
+#lrCap,#psCap{position:relative}
+#lrCap .iq-help,#psCap .iq-help{position:static}
+#lrCap .iq-help-pop,#psCap .iq-help-pop{max-width:min(340px,calc(100vw - 64px))}
+.lrps-treebar{display:flex;gap:6px;align-items:center;margin:12px 0 6px}
+.lrps-treebar[hidden]{display:none}
+.lrps-bar-btn{font:inherit;font-size:12px;min-height:28px;padding:2px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--ink-strong);cursor:pointer}
+.lrps-bar-btn:hover{border-color:var(--primary);color:var(--primary)}
+.lrps-table tbody th{font-weight:inherit;background:var(--bg);text-align:left}
+.lrps-lab{display:inline-flex;align-items:center;gap:6px;padding-left:calc(var(--d,0)*16px)}
+.lrps-tg{width:24px;height:24px;margin:0;flex:0 0 auto;font-size:15px}
+.lrps-sp{display:inline-block;width:24px;flex:0 0 auto}
+.lrps-table tr[hidden]{display:none}
+.lrps-table tr.lrps-total td,.lrps-table tr.lrps-total th,.lrps-table tr.lrps-g1 td,.lrps-table tr.lrps-g1 th{font-weight:700}
+.lrps-table tr.lrps-total td,.lrps-table tr.lrps-g1 td,.lrps-table tr.lrps-total th,.lrps-table tr.lrps-g1 th{background:var(--card)}
+.lrps-table tr.lrps-g2 td,.lrps-table tr.lrps-g2 th{font-weight:600}
+.lrps-table tr.lrps-sub th{color:var(--ink-strong)}
+@media(max-width:640px){
+  .lrps-ctl{gap:8px}
+  .lrps-pv{margin-left:0;flex-basis:100%}
+  .lrps-table th:first-child,.lrps-table td:first-child{min-width:112px;max-width:44vw;white-space:normal;overflow:visible;text-overflow:clip}
+  .lrps-lab{gap:4px;padding-left:calc(var(--d,0)*10px)}
+  .lrps-tg{width:32px;height:32px}
+  .lrps-sp{width:32px}
+  .lrps-bar-btn{min-height:32px}
+  #lrWrap .chart-container{height:380px}
+}
 </style>
 </head>
 <body>
@@ -151,6 +190,8 @@
         <li><a href="#sec-pl">손익 워터폴</a></li>
         <li><a href="#sec-nb">NB 배수</a></li>
         <li><a href="#sec-sens">민감도</a></li>
+        <li><a href="#sec-lr">손해율 가정</a></li>
+        <li><a href="#sec-ps">유지율</a></li>
       </ul>
     </nav>
     <div class="section-body">
@@ -276,6 +317,39 @@
       <div id="senStub" class="stub-msg" style="display:none"></div>
       <div class="table-wrap" id="senTable"></div>
     </div>
+    <div class="panel" id="sec-lr" data-pane="lr">
+      <h2>8) 손해율 가정 (위험보험료 대비 예상보험금)</h2>
+      <div id="lrStub" class="stub-msg" style="display:none"></div>
+      <div id="lrWrap">
+        <div class="lrps-ctl" id="lrCtl">
+          <label>공시시점 <select id="lrQ" class="select"></select></label>
+          <label id="lrSegWrap" hidden>사업 구분 <select id="lrSeg" class="select"></select></label>
+          <span class="lrps-pv" id="lrPv" aria-live="polite"></span>
+        </div>
+        <div class="small-muted" id="lrCap">손해율 = 예상보험금 ÷ 위험보험료 · 경과차년별 미래 가정
+          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="손해율 가정 읽는 법" aria-describedby="help-lr">?</button><span class="iq-help-pop" role="tooltip" id="help-lr">굵은 실선은 선택한 공시시점의 전체 합계, 옅은 점선은 직전 연도 공시의 합계입니다. 현재가치 기준 손해율은 선에 넣지 않고 오른쪽 숫자로 따로 적습니다. 값이 없는 칸은 '-' 이고 선이 끊깁니다. 아래 표의 구분·상품구분 행은 그 아래 포트폴리오의 예상보험금 합 ÷ 위험보험료 합(비율의 평균이 아님)이고, [+] 로 펼칩니다.</span></span></div>
+        <div class="chart-container chart-sm"><canvas id="canvasLr" role="img" aria-label="경과차년별 손해율 가정 꺾은선 차트"></canvas></div>
+        <div class="lrps-treebar" id="lrBar"><button type="button" class="lrps-bar-btn" data-act="open" aria-label="세부 표 모두 펼치기">모두 펼치기</button><button type="button" class="lrps-bar-btn" data-act="close" aria-label="세부 표 모두 접기">모두 접기</button></div>
+        <div class="table-wrap lrps-table" id="lrTable"></div>
+      </div>
+    </div>
+    <div class="panel" id="sec-ps" data-pane="ps">
+      <h2>9) 판매채널별 유지율</h2>
+      <div class="small-muted lrps-desc" id="psDesc">해지율 가정의 근거가 되는 실적입니다.</div>
+      <div id="psStub" class="stub-msg" style="display:none"></div>
+      <div id="psWrap">
+        <div class="lrps-ctl" id="psCtl">
+          <label>공시시점 <select id="psQ" class="select"></select></label>
+        </div>
+        <div class="small-muted" id="psCap">유지율 = 유지계약액 ÷ 대상신계약액 · 회차 = 계약 후 경과 개월
+          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="채널 묶음과 계산 방법" aria-describedby="help-ps">?</button><span class="iq-help-pop" role="tooltip" id="help-ps"><b>채널 묶음</b><br>전속설계사 = 설계사 · GA(대리점) = 개인대리점 + 법인대리점 기타 · 방카슈랑스 = 법인대리점 금융기관보험대리점 · 비대면 = 법인대리점 TM·홈쇼핑 + 직영 다이렉트 · 기타 = 직영 임직원·복합, 중개사, 기타(표에만 표시). 표는 묶음 행만 보이고 [+] 로 세부 채널을 펼칩니다.<br><br>묶음 유지율은 같은 회차의 유지계약액 합 ÷ 대상신계약액 합입니다. 대상신계약액이 0이면 '-' 이며, 49회차는 공시표에 없습니다.</span></span></div>
+        <div id="psChartStub" class="stub-msg" style="display:none"></div>
+        <div class="chart-container chart-sm" id="psChartBox"><canvas id="canvasPs" role="img" aria-label="회차별 판매채널 묶음 유지율 감소 곡선 차트"></canvas></div>
+        <div class="lrps-treebar" id="psBar"><button type="button" class="lrps-bar-btn" data-act="open" aria-label="채널 표 모두 펼치기">모두 펼치기</button><button type="button" class="lrps-bar-btn" data-act="close" aria-label="채널 표 모두 접기">모두 접기</button></div>
+        <div class="table-wrap lrps-table" id="psTable"></div>
+        <div class="small-muted" id="psUnit" style="margin-top:6px"></div>
+      </div>
+    </div>
   </template>
 
 <script>
@@ -329,6 +403,9 @@
     plx: [resolveUrl("PL_breakdown.json")],
     nbm: dataPaths("NB_CSM_multiple.json", "NB_CSM_multiple.json"),
     eqx: [resolveUrl("IFRS17_BS.json")],
+    // 섹션 8·9 패널 JSON — 마스터(손해율·유지율 시트)의 파생. 빌더 scripts/viz_build_persistency_lossratio_panels.py
+    lr: [resolveUrl("data/loss_ratio/panel_loss_ratio.json")],
+    ps: [resolveUrl("data/persistency/panel_persistency.json")],
   };
 
   const NB_LOOKUP = {
@@ -340,7 +417,7 @@
     한화생명: { slug: "hanwha_life", bucket: "life" },
   };
 
-  const charts = { wf: null, amort: null, pl: null, nb: null, hist: null };
+  const charts = { wf: null, amort: null, pl: null, nb: null, hist: null, lr: null, ps: null };
   let CSM_RANGE_LABEL = "";  // D-2 20260818: 전사 wfx 최소~최대 분기, boot()에서 1회 계산 — h2/aria-label/커버리지줄 3곳이 공유
 
   const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, ni:null };
@@ -458,7 +535,7 @@
     for (const k of ["wf","pl"]){ // ECharts
       if (charts[k]){ try{ charts[k].dispose(); }catch(e){} charts[k]=null; }
     }
-    for (const k of ["amort","nb","hist"]){ // Chart.js
+    for (const k of ["amort","nb","hist","lr","ps"]){ // Chart.js
       try{ charts[k] && charts[k].destroy(); }catch(e){}
       charts[k]=null;
     }
@@ -1409,6 +1486,379 @@
   // scripts/a11y_contrast_check.py로 검증: 신규 팔레트 전 쌍 최소 ΔRGB 82(기존 최저 39의 2배+).
   const NB_LINE_COLORS = ["#0f6e68", "#009E73", "#D55E00", "#343a40", "#CC79A7", "#7c5c00"];
 
+  // ===== 섹션 8·9: 손해율 가정 / 판매채널별 유지율 =====
+  // 패널 JSON 2개(빌더 scripts/viz_build_persistency_lossratio_panels.py)를 fetch 한다 — HTML 에 인라인하지 않는다.
+  // 회사 → 공시분기 중첩. 값이 null 인 칸은 '-' 로 쓰고 선은 끊는다(0 과 미공시를 섞지 않는다).
+  const LRPS = { lr:null, ps:null };
+  const LR_YEARS = ["1년","2년","3년","4년","5년","6년","7년","8년","9년","10년","11~15년","16~20년","21~25년","26~30년","30년 이후","현재가치"];
+  const LR_RANK = {}; LR_YEARS.forEach((y,i)=>{ LR_RANK[y]=i; }); LR_RANK["1~10년"] = -1;   // 미래에셋은 1~10년을 한 칸으로 공시
+  // 섹션 8 차트 x축: 이 폭 이하(모바일)는 칸마다 같은 폭, 초과(PC·태블릿)는 경과 연수에 비례. owner 가 바꾸려면 이 한 줄.
+  const LR_NARROW_MAX_PX = 640;
+  const LR_MQ = window.matchMedia("(max-width:"+LR_NARROW_MAX_PX+"px)");
+  const LR_OPEN_END_X = 33;   // "30년 이후" 의 x 위치(연수 비례일 때). 26~30년 구간 가운데값 28 다음 5칸
+  const PS_ROUNDS = [13,25,37,61];
+  const PS_BUNDLES = ["전속설계사","GA(대리점)","방카슈랑스","비대면"];   // 차트 선. '기타' 는 표에만
+  // 색약 안전(적록 ΔRGB ≥ 94, scripts/a11y_contrast_check.py cbcheck) + 마커·점선 모양으로도 구분한다.
+  const PS_COLORS = { light:["#0f6e68","#D55E00","#CC79A7","#343a40"], dark:["#54b3aa","#f08a4b","#e6a3c8","#8fb4e8"] };
+  const PS_MARKERS = ["circle","triangle","rect","rectRot"];
+  const PS_DASH = [[],[],[7,4],[2,3]];
+
+  // 한 자리 소수 + 음수 △. -0 은 0.0 으로 정규화.
+  function pct1(v){
+    if (v==null || !Number.isFinite(v)) return "-";
+    const r = Math.round(v*10)/10;
+    return (r<0 ? "△" : "") + Math.abs(r).toLocaleString("ko-KR",{minimumFractionDigits:1,maximumFractionDigits:1});
+  }
+  function lrpsFill(sel, values, labelOf, want){
+    const cur = Array.from(sel.options).map(o=>o.value);
+    if (cur.length!==values.length || cur.some((v,i)=>v!==values[i])){
+      sel.innerHTML = "";
+      for (const v of values){ const o=document.createElement("option"); o.value=v; o.textContent=labelOf(v); sel.appendChild(o); }
+    }
+    sel.value = values.includes(want) ? want : values[0];
+  }
+  function lrpsCell(tr, text, cls){
+    const td=document.createElement("td"); td.textContent=text; if(cls) td.className=cls; tr.appendChild(td); return td;
+  }
+
+  // ---- 공유 트리 표 도우미 (8·9 공통) ----
+  // nodes: [{label, path, cls, cells:[{t,cls,style,title}], children:[…]}]. 루트 행은 항상 보이고, 자식은 [+] 로 펼친다.
+  // 접힌 채로 시작하고, 펼침 상태는 이 호출 안(클로저)에만 있다 → 회사·공시시점이 바뀌어 다시 그리면 저절로 초기화된다.
+  // 버튼은 진짜 <button aria-expanded aria-controls>. 차트만 다시 그리는 리사이즈에서는 이 표를 건드리지 않는다.
+  // 이 페이지는 폭이 640px 를 넘나들거나 테마가 바뀌면 renderCompany 로 대시보드 전체를 다시 그린다. 그때 공시시점·사업구분·
+  // 펼침 상태가 날아가지 않도록 선택값과 펼친 행의 경로를 LRPS_UI 에 두고, 회사나 공시시점·사업구분을 바꿀 때만 비운다.
+  const LRPS_UI = { lr:{ company:null, q:null, seg:null, open:new Set() }, ps:{ company:null, q:null, open:new Set() } };
+  let LRPS_UID = 0;
+  function lrpsTree(box, bar, o){
+    const uid = "lrpst"+(++LRPS_UID)+"-";
+    box.innerHTML = "";
+    const tbl=document.createElement("table"), thead=document.createElement("thead"), htr=document.createElement("tr");
+    [o.head].concat(o.cols).forEach((h,i)=>{ const th=document.createElement("th"); th.scope="col"; th.textContent=h; if(i>0) th.className="num"; htr.appendChild(th); });
+    thead.appendChild(htr); tbl.appendChild(thead);
+    const tb=document.createElement("tbody");
+    const all=[]; let seq=0;
+    function build(node, depth, parentPath){
+      const it={ node, kids:[], open:!!(o.open && o.open.has(node.path)), btn:null, tr:document.createElement("tr") };
+      all.push(it);
+      it.tr.id = uid+(seq++);
+      if (node.cls) it.tr.className = node.cls;
+      tb.appendChild(it.tr);
+      const th=document.createElement("th"); th.scope="row"; th.title=node.path;
+      const lab=document.createElement("span"); lab.className="lrps-lab"; lab.style.setProperty("--d", depth);
+      const kids=node.children||[];
+      if (kids.length){
+        const b=document.createElement("button"); b.type="button"; b.className="subtoggle lrps-tg";
+        b.textContent="+"; b.setAttribute("aria-expanded","false");
+        lab.appendChild(b); it.btn=b;
+      } else {
+        const sp=document.createElement("span"); sp.className="lrps-sp"; sp.setAttribute("aria-hidden","true"); lab.appendChild(sp);
+      }
+      const txt=document.createElement("span"); txt.className="lrps-txt";
+      if (parentPath){   // 화면에는 들여쓰기만, 스크린리더에는 "Non-Par > 유배당 > 상해" 경로 전체
+        const pre=document.createElement("span"); pre.className="sr-only"; pre.textContent=parentPath+" > "; txt.appendChild(pre);
+      }
+      txt.appendChild(document.createTextNode(node.label)); lab.appendChild(txt);
+      th.appendChild(lab); it.tr.appendChild(th);
+      for (const c of node.cells){
+        const td=document.createElement("td"); td.textContent=c.t; if(c.cls) td.className=c.cls;
+        if (c.style) td.style.background=c.style; if (c.title) td.title=c.title; it.tr.appendChild(td);
+      }
+      it.kids = kids.map(k=> build(k, depth+1, node.path));
+      return it;
+    }
+    const roots=(o.nodes||[]).map(n=> build(n, 0, ""));
+    function sync(){
+      (function walk(list, show){
+        for (const it of list){
+          it.tr.hidden = !show;
+          if (it.btn){
+            it.btn.textContent = it.open ? "−" : "+";
+            it.btn.setAttribute("aria-expanded", it.open ? "true" : "false");
+            const t = it.node.path+(it.open ? " 접기" : " 펼치기");
+            it.btn.setAttribute("aria-label", t); it.btn.title = t;
+          }
+          walk(it.kids, show && it.open);
+        }
+      })(roots, true);
+    }
+    for (const it of all){
+      if (!it.btn) continue;
+      it.btn.setAttribute("aria-controls", it.kids.map(k=>k.tr.id).join(" "));
+      it.btn.addEventListener("click", ()=>{
+        it.open = !it.open;
+        if (o.open){ if (it.open) o.open.add(it.node.path); else o.open.delete(it.node.path); }
+        sync();
+      });
+    }
+    tbl.appendChild(tb); box.appendChild(tbl);
+    if (bar){
+      bar.hidden = !all.some(it=> it.btn);
+      const setAll = (v)=>()=>{
+        all.forEach(it=>{ if(it.btn){ it.open=v; if (o.open){ if (v) o.open.add(it.node.path); else o.open.delete(it.node.path); } } });
+        sync();
+      };
+      const bo=bar.querySelector('[data-act="open"]'), bc=bar.querySelector('[data-act="close"]');
+      if (bo) bo.onclick=setAll(true);
+      if (bc) bc.onclick=setAll(false);
+    }
+    sync();
+  }
+  const lrpsHas = (vals)=> vals.some(v=> v!=null);
+
+  // ---- 8) 손해율 가정 ----
+  function lrColsOf(qd, seg){
+    if (Array.isArray(qd.c)) return qd.c;
+    if (qd.c && qd.c[seg]) return qd.c[seg];
+    return (LRPS.lr && LRPS.lr.meta && LRPS.lr.meta.years) || LR_YEARS;
+  }
+  function lrPriorQuarter(qq){ const [y,n]=wfParseQ(qq); return (y-1)+"."+n+"Q"; }
+  function lrTotalMap(qd, seg){
+    const rows = qd && qd.s && qd.s[seg]; if(!rows) return null;
+    const t = rows.find(r=> r[0]==="합계" && r[2]==="합계"); if(!t) return null;
+    const m = {}; lrColsOf(qd, seg).forEach((y,i)=>{ m[y]=t[3][i]; });
+    return m;
+  }
+  // 칸 라벨 → x 좌표. 넓은 화면은 경과 연수에 비례(1~10년 = 1…10, 5년 구간은 가운데값, 30년 이후 = LR_OPEN_END_X).
+  // 좁은 화면(LR_NARROW_MAX_PX 이하)은 칸마다 같은 폭(= 순번).
+  function lrXPos(label, idx, narrow){
+    if (narrow) return idx+1;
+    let m = /^(\d+)년$/.exec(label); if (m) return +m[1];
+    m = /^(\d+)~(\d+)년$/.exec(label); if (m) return (+m[1] + +m[2]) / 2;
+    if (/이후/.test(label)) return LR_OPEN_END_X;
+    return idx+1;
+  }
+  function renderLossRatio(host, company){
+    lrChartRedraw = null;
+    const P = LRPS.lr, c = P && P.companies[company];
+    const stubEl=q(host,"#lrStub"), wrap=q(host,"#lrWrap");
+    if (!c){
+      stub(stubEl, true, "공시 없음"); if(wrap) wrap.style.display="none"; return;
+    }
+    stub(stubEl, false); wrap.style.display="";
+    const ui = LRPS_UI.lr;
+    if (ui.company!==company){ ui.company=company; ui.q=null; ui.seg=null; ui.open=new Set(); }   // 다른 회사 → 초기화
+    const qsel=q(host,"#lrQ"), ssel=q(host,"#lrSeg");
+    const qs = Object.keys(c.q).sort(wfCmpDesc);
+    lrpsFill(qsel, qs, v=>v, ui.q || qs[0]);
+    const onPick = ()=>{ ui.open=new Set(); drawLossRatio(host, company); };   // 공시시점·사업구분을 직접 바꾸면 접힌 상태로
+    qsel.addEventListener("change", onPick);
+    ssel.addEventListener("change", onPick);
+    drawLossRatio(host, company);
+  }
+  function drawLossRatio(host, company){
+    const c = LRPS.lr.companies[company];
+    const qsel=q(host,"#lrQ"), ssel=q(host,"#lrSeg"), segWrap=q(host,"#lrSegWrap");
+    const qq = qsel.value, qd = c.q[qq]; if(!qd) return;
+    const segs = Object.keys(qd.s);
+    const ui = LRPS_UI.lr;
+    lrpsFill(ssel, segs, v=> v || "전체", ssel.options.length ? ssel.value : (ui.seg==null ? ssel.value : ui.seg));
+    segWrap.hidden = segs.length < 2;
+    const seg = ssel.value, rows = qd.s[seg], cols = lrColsOf(qd, seg);
+    ui.q = qq; ui.seg = seg;
+    const cur = lrTotalMap(qd, seg);
+    const prevQ = lrPriorQuarter(qq), prev = lrTotalMap(c.q[prevQ], seg);
+
+    // 현재가치 기준 손해율은 선에 넣지 않고 숫자 하나로
+    const pvEl = q(host,"#lrPv");
+    const pvCur = cur ? cur["현재가치"] : null, pvPrev = prev ? prev["현재가치"] : null;
+    pvEl.innerHTML = "";
+    pvEl.append("현재가치 기준 ");
+    const b=document.createElement("b"); b.textContent = pvCur==null ? "-" : pct1(pvCur)+"%"; pvEl.appendChild(b);
+    if (prev) pvEl.append(" · "+prevQ+" 공시 "+(pvPrev==null ? "-" : pct1(pvPrev)+"%"));
+
+    // 차트는 폭이 브레이크포인트를 넘나들 때 이 클로저만 다시 부른다(표 펼침 상태·선택값은 그대로).
+    lrChartRedraw = ()=>{ if (host.isConnected) drawLrChart(host, company, qq, cur, prev, prevQ); };
+    lrChartRedraw();
+
+    // 세부 표: 합계 맨 위, 구분 › 상품구분 › 포트폴리오 트리(기본 접힘). 전 칸 '-' 인 행은 숨긴다.
+    // 구분·상품구분 행의 값은 빌더가 계산해 둔 Σ예상보험금÷Σ위험보험료×100 (마스터에는 소계 행이 없다).
+    const fmt = (v)=> ({ t: pct1(v), cls: "num"+(v==null?" empty":"") });
+    const roots=[], gmap={}, pmap={};
+    for (const r of rows){
+      const a=r[0], p=r[1], f=r[2], vals=r[3];
+      if (a==="합계" && f==="합계"){ roots.push({ label:"합계", path:"합계", cls:"lrps-total", cells:vals.map(fmt) }); continue; }
+      if (!lrpsHas(vals)) continue;
+      if (f===""){
+        if (p===""){
+          const n={ label:a, path:a, cls:"lrps-grp lrps-g1", cells:vals.map(fmt), children:[] }; gmap[a]=n; roots.push(n);
+        } else {
+          const n={ label:p, path:a+" > "+p, cls:"lrps-grp lrps-g2", cells:vals.map(fmt), children:[] };
+          pmap[a+"\u0001"+p]=n; (gmap[a] ? gmap[a].children : roots).push(n);
+        }
+      } else {
+        const n={ label:f, path:[a,p,f].filter(Boolean).join(" > "), cls:"lrps-leaf", cells:vals.map(fmt) };
+        const par = p ? (pmap[a+"\u0001"+p] || gmap[a]) : gmap[a];
+        (par ? par.children : roots).push(n);
+      }
+    }
+    lrpsTree(q(host,"#lrTable"), q(host,"#lrBar"), { head:"구분 › 상품구분 › 포트폴리오", cols, nodes:roots, open:ui.open });
+  }
+  function drawLrChart(host, company, qq, cur, prev, prevQ){
+    const c = LRPS.lr.companies[company];
+    const coName = codeToName[company] || c.n || company;
+    const narrow = LR_MQ.matches;
+    // 선: 선택 시점 합계(굵은 실선) + 직전 연도 공시 합계(옅은 점선, 없으면 생략). 칸은 하나도 빼거나 합치지 않는다.
+    const labelSet = new Set();
+    for (const m of [cur, prev]) if (m) for (const y of Object.keys(m)) if (y!=="현재가치") labelSet.add(y);
+    const labels = Array.from(labelSet).sort((a,b)=> (LR_RANK[a]==null?99:LR_RANK[a]) - (LR_RANK[b]==null?99:LR_RANK[b]));
+    const xs = labels.map((y,i)=> lrXPos(y, i, narrow));
+    const pts = (m)=> labels.map((y,i)=> ({ x: xs[i], y: (m && m[y]!=null) ? m[y] : null }));
+    const ds = [];
+    if (prev) ds.push({ label: prevQ+" 공시 합계 (직전)", data: pts(prev),
+      borderColor: TH.muted, backgroundColor: "transparent", pointBackgroundColor: TH.muted, pointBorderColor: TH.muted,
+      borderWidth:2, borderDash:[3,4], pointRadius:3, pointHoverRadius:5,
+      cubicInterpolationMode:"monotone", spanGaps:false, order:2 });
+    if (cur) ds.push({ label: qq+" 공시 합계", data: pts(cur),
+      borderColor: currentKey.line, backgroundColor: currentKey.soft, pointBackgroundColor: currentKey.line, pointBorderColor: currentKey.line,
+      borderWidth:3.5, pointRadius:4, pointHoverRadius:6,
+      cubicInterpolationMode:"monotone", spanGaps:false, order:1 });
+    if (charts.lr){ try{ charts.lr.destroy(); }catch(e){} charts.lr=null; }
+    const cv = q(host,"#canvasLr");
+    if (!cv) return;
+    const vals = ds.flatMap(d=> d.data.map(p=>p.y)).filter(v=> v!=null);
+    cv.setAttribute("aria-label", shortName(coName)+" "+qq+" 공시 경과차년별 손해율 가정 곡선 차트"
+      + (vals.length ? " · 범위 "+pct1(Math.min(...vals))+"%에서 "+pct1(Math.max(...vals))+"%" : " · 표시할 값 없음"));
+    const xMin = narrow ? 0.5 : 0, xMax = narrow ? labels.length+0.5 : LR_OPEN_END_X+1;
+    charts.lr = new Chart(cv.getContext("2d"), {
+      type:"line", data:{ datasets: ds },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        interaction:{ mode:"index", intersect:false },
+        plugins:{
+          legend:{ display:true, position: narrow ? "bottom" : "top" },
+          title:{ display:true, text:"손해율 가정 · "+shortName(coName) },
+          tooltip:{ callbacks:{
+            title:(items)=> items.length ? labels[items[0].dataIndex] : "",
+            label:(x)=> x.dataset.label+": "+(x.parsed.y==null ? "-" : pct1(x.parsed.y)+"%"),
+          } },
+        },
+        scales:{
+          x:{ type:"linear", min:xMin, max:xMax,
+              title:{ display:true, text: narrow ? "경과차년 (년 · 칸 간격 균등)" : "경과차년 (년 · 가로 간격은 경과 연수에 비례)" },
+              afterBuildTicks:(axis)=>{ axis.ticks = xs.map(v=>({ value:v })); },
+              ticks:{ autoSkip:false, maxRotation: narrow?60:0, minRotation: narrow?60:0, font:{ size: narrow?10:12 },
+                callback:function(v){
+                  const i = xs.indexOf(v); if (i<0) return "";
+                  const lab = labels[i];
+                  // 연 단위 칸(1년…10년)은 폭이 좁으면 숫자만. 5년 구간 라벨은 어떤 폭에서도 그대로.
+                  if (!narrow && /^\d+년$/.test(lab) && this.width/(xMax-xMin) < 32) return lab.replace("년","");
+                  return lab;
+                } },
+              grid:{ drawOnChartArea:true } },
+          y:{ title:{ display:true, text:"손해율 (%)" }, ticks:{ callback:(v)=> fmtNum(Number(v))+"%" } },
+        },
+      },
+    });
+  }
+
+  // ---- 9) 판매채널별 유지율 ----
+  function psHeat(v, lo, hi){
+    if (v==null) return "";
+    const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(TH.primary || "#0f6e68");
+    const rgb = m ? [parseInt(m[1],16),parseInt(m[2],16),parseInt(m[3],16)] : [15,110,104];
+    const t = hi>lo ? (v-lo)/(hi-lo) : 1;
+    return "rgba("+rgb.join(",")+","+(0.07+0.38*Math.max(0,Math.min(1,t))).toFixed(3)+")";
+  }
+  function renderPersistency(host, company){
+    psChartRedraw = null;
+    const P = LRPS.ps, c = P && P.companies[company];
+    const stubEl=q(host,"#psStub"), wrap=q(host,"#psWrap");
+    if (!c){ stub(stubEl, true, "공시 없음"); if(wrap) wrap.style.display="none"; return; }
+    stub(stubEl, false); wrap.style.display="";
+    const ui = LRPS_UI.ps;
+    if (ui.company!==company){ ui.company=company; ui.q=null; ui.open=new Set(); }
+    const qsel=q(host,"#psQ");
+    const qs = Object.keys(c.q).sort(wfCmpDesc);
+    lrpsFill(qsel, qs, v=>v, ui.q || qs[0]);
+    qsel.addEventListener("change", ()=>{ ui.open=new Set(); drawPersistency(host, company); });
+    drawPersistency(host, company);
+  }
+  function drawPersistency(host, company){
+    const c = LRPS.ps.companies[company];
+    const qq = q(host,"#psQ").value, qd = c.q[qq]; if(!qd) return;
+    const rows = qd.r, ui = LRPS_UI.ps;
+    ui.q = qq;
+    psChartRedraw = ()=>{ if (host.isConnected) drawPsChart(host, company, qq, rows); };
+    psChartRedraw();
+
+    // 표: 채널 묶음 행만 보이고 [+] 로 원래 채널 대/소분류 행을 펼친다. 값 크기만큼 색, 대상신계약액 0 → '-'.
+    // 묶음 행 바로 뒤에 그 묶음의 원래 행들이 온다(빌더가 그 순서로 쓴다). 전 칸 '-' 인 행은 숨기고,
+    // 묶음 자체에 값이 없고 보이는 자식도 없으면 묶음 행도 숨긴다.
+    const unit = qd.u || "";
+    const all = rows.flatMap(r=> r[3]).filter(v=> v!=null);
+    const lo = all.length ? Math.min(...all) : 0, hi = all.length ? Math.max(...all) : 0;
+    const cellsOf = (r)=> r[3].map((v,j)=>{
+      const o = { t: v==null ? "-" : pct1(v), cls:"num"+(v==null?" empty":"") };
+      if (v!=null) o.style = psHeat(v, lo, hi);
+      const n=r[4][j], m=r[5][j];
+      if (n!=null && m!=null) o.title = "대상신계약액 "+n.toLocaleString("ko-KR")+" · 유지계약액 "+m.toLocaleString("ko-KR")+(unit?" ("+unit+")":"");
+      return o;
+    });
+    const roots=[]; let grp=null;
+    for (const r of rows){
+      if (r[2]===1){
+        grp={ label:r[0], path:r[0], cls:"lrps-total", cells:cellsOf(r), own:lrpsHas(r[3]), children:[] }; roots.push(grp);
+      } else if (grp && lrpsHas(r[3])){
+        const lab = r[0] + (r[1] ? " · "+r[1] : "");
+        grp.children.push({ label:lab, path:grp.path+" > "+lab, cls:"lrps-sub", cells:cellsOf(r) });
+      }
+    }
+    lrpsTree(q(host,"#psTable"), q(host,"#psBar"),
+      { head:"채널", cols:PS_ROUNDS.map(x=> x+"회차"), nodes: roots.filter(n=> n.own || n.children.length), open:ui.open });
+    const uEl=q(host,"#psUnit");
+    if (uEl) uEl.textContent = "'-' 는 대상신계약액이 0이거나 공시되지 않은 칸입니다." + (unit ? " 금액 단위 "+unit+"(칸 위에 올리면 표시)." : "");
+  }
+  function drawPsChart(host, company, qq, rows){
+    const c = LRPS.ps.companies[company];
+    const coName = codeToName[company] || c.n || company;
+    const narrow = LR_MQ.matches;
+    const pal = (window.IQTheme && IQTheme.isDark()) ? PS_COLORS.dark : PS_COLORS.light;
+    // 차트: 묶음 4개 × 회차(실제 개월 간격 숫자축). 전부 null 인 묶음은 선을 만들지 않는다.
+    const ds = [];
+    for (const r of rows){
+      if (r[2]!==1) continue;
+      const bi = PS_BUNDLES.indexOf(r[0]); if (bi<0) continue;
+      if (!r[3].some(v=> v!=null)) continue;
+      ds.push({ label:r[0], data: PS_ROUNDS.map((x,j)=> ({ x, y: r[3][j]==null ? null : r[3][j] })),
+        borderColor:pal[bi], backgroundColor:pal[bi], borderWidth:2.5, borderDash:PS_DASH[bi],
+        pointStyle:PS_MARKERS[bi], pointRadius:5, pointHoverRadius:7, cubicInterpolationMode:"monotone", spanGaps:false });
+    }
+    if (charts.ps){ try{ charts.ps.destroy(); }catch(e){} charts.ps=null; }
+    const chartBox=q(host,"#psChartBox"), chartStub=q(host,"#psChartStub"), cv=q(host,"#canvasPs");
+    chartBox.style.display = ds.length ? "" : "none";
+    stub(chartStub, !ds.length, "채널별 유지율을 그릴 값이 없습니다.");
+    if (!(ds.length && cv)) return;
+    cv.setAttribute("aria-label", shortName(coName)+" "+qq+" 공시 회차별 채널 묶음 유지율 감소 곡선 · "+ds.map(d=>d.label).join(", "));
+    charts.ps = new Chart(cv.getContext("2d"), {
+      type:"line", data:{ datasets: ds },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        interaction:{ mode:"index", intersect:false },
+        plugins:{
+          legend:{ display:true, position: narrow ? "bottom" : "top", labels:{ usePointStyle:true } },
+          title:{ display:true, text:"채널 묶음별 유지율 · "+shortName(coName) },
+          tooltip:{ callbacks:{
+            title:(items)=> items.length ? items[0].parsed.x+"회차" : "",
+            label:(x)=> x.dataset.label+": "+(x.parsed.y==null ? "-" : pct1(x.parsed.y)+"%"),
+          } },
+        },
+        scales:{
+          x:{ type:"linear", min:7, max:67, title:{ display:true, text:"회차 (계약 후 경과 개월)" },
+              afterBuildTicks:(axis)=>{ axis.ticks = PS_ROUNDS.map(v=>({ value:v })); },
+              ticks:{ callback:(v)=> v+"회차" }, grid:{ drawOnChartArea:true } },
+          y:{ suggestedMax:100, title:{ display:true, text:"유지율 (%)" }, ticks:{ callback:(v)=> fmtNum(Number(v))+"%" } },
+        },
+      },
+    });
+  }
+  // 폭이 LR_NARROW_MAX_PX 를 넘나들면 차트만 다시 그린다(새로고침 없이, 선택값·표 펼침 상태 유지).
+  let lrChartRedraw = null, psChartRedraw = null;
+  const _lrMqChange = ()=>{
+    try{ lrChartRedraw && lrChartRedraw(); }catch(e){ console.warn("loss-ratio chart redraw", e); }
+    try{ psChartRedraw && psChartRedraw(); }catch(e){ console.warn("persistency chart redraw", e); }
+  };
+  if (LR_MQ.addEventListener) LR_MQ.addEventListener("change", _lrMqChange); else if (LR_MQ.addListener) LR_MQ.addListener(_lrMqChange);
+
   function mountDash(company){
     const host=document.getElementById("dashHost");
     host.innerHTML="";
@@ -2154,6 +2604,9 @@
 
     renderBsSection(host, company);
     renderBsTable(host, company, wfMode);
+    // 섹션 8·9: 패널 하나가 죽어도 나머지 패널은 그대로 두도록 각각 격리한다.
+    try{ renderLossRatio(host, company); }catch(e){ console.warn("loss-ratio panel", e); }
+    try{ renderPersistency(host, company); }catch(e){ console.warn("persistency panel", e); }
   }
 
   function onSelect(){
@@ -2180,12 +2633,15 @@
     // D10: 9개 JSON을 직렬 await → Promise.all 병렬(진입 로딩 지연 경감). 로딩 힌트 표시.
     const _eh=document.getElementById("emptyHint");
     if (_eh) _eh.textContent="데이터 불러오는 중…";
-    const [wf, amort, plx, senx, nbx, wfxRaw, plxRaw, nbmRaw, eqxRaw] = await Promise.all([
+    const [wf, amort, plx, senx, nbx, wfxRaw, plxRaw, nbmRaw, eqxRaw, lrRaw, psRaw] = await Promise.all([
       fetchJsonSafe(PATHS.wf), fetchJsonSafe(PATHS.amort), fetchJsonSafe(PATHS.pl),
       fetchJsonSafe(PATHS.sen), fetchJsonSafe(PATHS.nb),
       fetchJsonSafe(PATHS.wfx), fetchJsonSafe(PATHS.plx), fetchJsonSafe(PATHS.nbm),
       fetchJsonSafe(PATHS.eqx),
+      fetchJsonSafe(PATHS.lr), fetchJsonSafe(PATHS.ps),
     ]);
+    LRPS.lr = (lrRaw && lrRaw.companies) ? lrRaw : null;
+    LRPS.ps = (psRaw && psRaw.companies) ? psRaw : null;
     if (_eh) _eh.textContent="보험사를 선택해 주세요";
 
     payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx;
