@@ -13,9 +13,13 @@
 - 기말 CSM: CSM_waterfall.json 항목 6 (억원)
 - 신계약 CSM 배수: NB_CSM_multiple.json 신계약CSM배수_연누계
 - 보험손익/당기순이익(당분기, 억원): PL_breakdown.json 항목 1/24, 값_당분기, 비면 누계 차분(백만원 -> 억원 /100)
+- 추가 지표(화면 기본 목록에는 없고 사용자가 끌어다 넣는 것, default=false): 지급여력금액(K-ICS 1)·지급여력기준금액(K-ICS 14)·신계약 CSM(NB_CSM_multiple 신계약CSM_연누계)·
+  투자손익(PL 17 당분기)·자본총계(IFRS17_BS 3)·자산총계(IFRS17_BS 1). 전부 금액이라 중앙값은 만들지 않는다.
 - ROE(연환산): 당기순이익 누계(항목 24) x 4/q / 평균(직전 4Q 자본, 당분기말 자본)(IFRS17_BS 항목 3), 두 자본 > 0 일 때만, 2024.1Q 부터
 - 유지율 13/25/37/61회차: master_persistency.json 회차별 채널행 합산 Σ유지/Σ대상 (원문오기 SWAPPED=맞교환, INCONSISTENT=제외). 화면에서는 한 차트에 모아 비교
 - 손해율: master_loss_ratio.json 합계/합계/현재가치 Σ예상보험금/Σ위험보험료 (세그먼트 합산)
+- 손해율 가정 곡선(loss_curve): 같은 합계/합계 행을 경과차년(1~10년·11~15·16~20·21~25·26~30·30년 이후)별로 같은 방식으로 합산.
+  미래에셋생명만 1~10년을 한 구간("1~10년")으로 공시해 별도 칸에 둔다. 업계 중앙값은 칸별로 같은 규칙(같은 유형, 재보험·보증 제외, 5곳 미만 null).
 
 업계 중앙값: 같은 생/손보 유형 안에서, 재보험(KR1000)·보증(KR0150) 제외, 그 분기에 값이 있는 회사만으로 계산한다
 (결측은 0 으로 채우지 않고 건너뜀). 표본이 5곳 미만이면 중앙값을 만들지 않는다(null).
@@ -140,9 +144,11 @@ for r in csm:
 
 nb = load("NB_CSM_multiple.json")
 nb_mult = defaultdict(lambda: [None] * NQ)
+nb_amt = defaultdict(lambda: [None] * NQ)
 for r in nb:
     if r["원보험사코드"] in roster and r["공시분기"] in QI:
         nb_mult[r["원보험사코드"]][QI[r["공시분기"]]] = num(r["신계약CSM배수_연누계"])
+        nb_amt[r["원보험사코드"]][QI[r["공시분기"]]] = num(r["신계약CSM_연누계"])
 
 pl = load("PL_breakdown.json")
 ytd = {}
@@ -151,7 +157,7 @@ for r in pl:
     if r["원보험사코드"] not in roster or r["공시분기"] not in QI:
         continue
     it = int(r["항목번호"]) if str(r["항목번호"]).isdigit() else None
-    if it in (1, 24):
+    if it in (1, 17, 24):
         ytd[(it, r["원보험사코드"], r["공시분기"])] = num(r["값"])
         qgiven[(it, r["원보험사코드"], r["공시분기"])] = num(r.get("값_당분기"))
 
@@ -187,12 +193,25 @@ def quarterly_eok(item):
 
 ins_profit = quarterly_eok(1)
 net_income = quarterly_eok(24)
+inv_profit = quarterly_eok(17)
 
 bs = load("IFRS17_BS.json")
 equity = {}
+assets = {}
 for r in bs:
-    if r["항목번호"] == 3 and r["원보험사코드"] in roster and r["공시분기"] in QI:
-        equity[(r["원보험사코드"], r["공시분기"])] = num(r["값"])
+    if r["항목번호"] in (1, 3) and r["원보험사코드"] in roster and r["공시분기"] in QI:
+        (assets if r["항목번호"] == 1 else equity)[(r["원보험사코드"], r["공시분기"])] = num(r["값"])
+
+
+def bs_eok(src):
+    out = {}
+    for c in roster:
+        out[c] = [None if src.get((c, q)) is None else src[(c, q)] / 100.0 for q in QUARTERS]   # 백만원 -> 억원
+    return out
+
+
+equity_eok = bs_eok(equity)
+assets_eok = bs_eok(assets)
 
 roe = {}
 for c in roster:
@@ -261,6 +280,42 @@ for (c, q), (rp, ec, units, k) in lrg.items():
     if rp > 0:
         loss_pv[c][QI[q]] = ec / rp * 100.0
 
+# ---------------------------------------------------------------- loss ratio curve (경과차년별)
+LR_LABELS = [f"{n}년" for n in range(1, 11)] + ["11~15년", "16~20년", "21~25년", "26~30년", "30년 이후"]
+LR_COARSE = "1~10년"
+LR_SLOTS = LR_LABELS + [LR_COARSE]
+lr_acc = defaultdict(lambda: [0.0, 0.0])
+lr_unit = defaultdict(set)
+for r in lr:
+    if r["구분"] != "합계" or r["포트폴리오"] != "합계" or r["경과차년"] not in LR_SLOTS:
+        continue
+    if r["원보험사코드"] not in roster or r["공시분기"] not in QI:
+        continue
+    rp, ec = r["위험보험료"], r["예상보험금"]
+    if rp is None or ec is None:
+        continue
+    a = lr_acc[(r["원보험사코드"], r["공시분기"], r["경과차년"])]
+    a[0] += rp
+    a[1] += ec
+    lr_unit[(r["원보험사코드"], r["공시분기"])].add(r["단위"])
+assert all(len(u) == 1 for u in lr_unit.values()), "한 공시의 손해율 행에 단위가 섞였다"
+loss_curve_v = defaultdict(dict)
+for (c, q, lab), (rp, ec) in lr_acc.items():
+    if rp > 0:
+        row = loss_curve_v[c].setdefault(q, [None] * len(LR_SLOTS))
+        row[LR_SLOTS.index(lab)] = round(ec / rp * 100.0, 1)
+loss_curve_med = {}
+for ty in ("생보", "손보"):
+    pool = [c for c, d in roster.items() if d["type"] == ty and d["median_pool"]]
+    byq = {}
+    for q in sorted({q for c in pool for q in loss_curve_v.get(c, {})}, key=qkey):
+        row = []
+        for k in range(len(LR_LABELS)):
+            xs = [loss_curve_v[c][q][k] for c in pool if q in loss_curve_v.get(c, {}) and loss_curve_v[c][q][k] is not None]
+            row.append(round(statistics.median(xs), 1) if len(xs) >= 5 else None)
+        byq[q] = row
+    loss_curve_med[ty] = byq
+
 # ---------------------------------------------------------------- metrics config
 NA = {
     "csm_closing": {"KR0051": "PAA 전용이라 CSM 없음", "KR0150": "보증보험이라 CSM 없음", "KR0004": "CSM 공시 거의 없음"},
@@ -320,6 +375,37 @@ METRICS = [
          defn="합계 포트폴리오의 예상보험금 ÷ 위험보험료, 미래 가정치",
          note="결산 시점의 미래 손해율 가정이지 실적이 아닙니다. 값은 2023.4Q·2024.4Q·2025.4Q 최대 3개 시점이고 2023.4Q는 10곳뿐입니다. 위험보험료가 작은 소규모사는 값이 흔들립니다.",
          v=loss_pv),
+    # ---- 추가 지표: 화면 기본 목록에는 없고(default=False) 사용자가 '지표 편집'에서 끌어다 넣는다. 전부 금액이라 중앙값 없음.
+    dict(id="kics_avail", group="건전성 · K-ICS", label="지급여력금액", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False, basis=True, default=False,
+         defn="가용자본: 건전성감독기준 순자산에서 불인정 항목을 빼고 재분류 항목을 더한 지급여력금액",
+         note="경과조치 적용 후/전 토글을 따릅니다. 금액이라 회사 규모에 비례합니다.",
+         v=kics_series(1, "post"), v_pre=kics_series(1, "pre")),
+    dict(id="kics_scr", group="건전성 · K-ICS", label="지급여력기준금액", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False, basis=True, default=False,
+         defn="요구자본: 지급여력비율의 분모",
+         note="경과조치 적용 후/전 토글을 따릅니다. 금액이라 회사 규모에 비례합니다.",
+         v=kics_series(14, "post"), v_pre=kics_series(14, "pre")),
+    dict(id="nb_csm", group="IFRS17 · 손익", label="신계약 CSM", unit="억원", kind="eok", dec=0,
+         period="분기·결산", median=False, clip=False, default=False,
+         defn="해당 연도 누적 신계약 CSM",
+         note="연 누계라 1Q에서 4Q로 갈수록 해당 연도 누적분이 쌓인 값입니다. 재보험·보증은 구조상 산출하지 않습니다.",
+         v=nb_amt),
+    dict(id="inv_profit", group="IFRS17 · 손익", label="투자손익", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False, default=False,
+         defn="투자이익에서 보험금융비용을 뺀 값, 별도 기준 당분기",
+         note="당분기 값이 없는 결산 분기는 연 누계에서 3Q 누계를 뺀 값입니다.",
+         v=inv_profit),
+    dict(id="equity", group="IFRS17 · 손익", label="자본총계", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False, default=False,
+         defn="IFRS17 재무상태표 자본총계, 분기말 별도 기준",
+         note="금액이라 회사 규모에 비례합니다.",
+         v=equity_eok),
+    dict(id="assets", group="IFRS17 · 손익", label="자산총계", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False, default=False,
+         defn="IFRS17 재무상태표 자산총계, 분기말 별도 기준",
+         note="금액이라 회사 규모에 비례합니다.",
+         v=assets_eok),
 ]
 
 
@@ -380,6 +466,14 @@ out = {
     "companies": [{k: d[k] for k in COMPANY_KEYS}
                   for d in sorted(roster.values(), key=lambda d: (d["type"] != "생보", d["size_rank"] or 99))],
     "metrics": METRICS,
+    "loss_curve": {
+        "label": "손해율 가정 (경과차년별)", "unit": "%",
+        "defn": "합계 포트폴리오의 예상보험금 ÷ 위험보험료, 경과차년별 미래 가정치",
+        "note": "결산 시점의 미래 손해율 가정이지 실적이 아닙니다. 선 하나는 그 회사의 가장 최근 결산 공시이고, 현재가치 기준 손해율은 선에 넣지 않고 범례 옆 숫자로 적었습니다. 위험보험료가 작은 소규모사는 값이 흔들립니다.",
+        "labels": LR_SLOTS, "n_std": len(LR_LABELS),
+        "v": {c: dict(sorted(loss_curve_v[c].items(), key=lambda kv: qkey(kv[0]))) for c in sorted(loss_curve_v)},
+        "med": loss_curve_med,
+    },
 }
 payload = json.dumps(out, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
 
@@ -399,6 +493,7 @@ def main() -> int:
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_bytes(payload)
     print("wrote", OUT, len(payload), "bytes;", len(roster), "companies;", len(METRICS), "metrics;", NQ, "quarters")
+    print(f"  loss_curve: {len(loss_curve_v)} companies, quarters {sorted({q for c in loss_curve_v for q in loss_curve_v[c]}, key=qkey)}")
     for m in METRICS:
         li = NQ - 1
         n_last = sum(1 for c in roster if m["v"][c][li] is not None)

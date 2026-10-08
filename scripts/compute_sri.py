@@ -45,6 +45,9 @@ ASSETS = [
      "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"),
     ("xlsx@0.18.5",
      "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"),
+    # compare.html 스크린샷 메뉴가 클릭할 때만 동적으로 불러온다(script 태그가 아니라 compare.html 의 H2C_URL / H2C_SRI 상수).
+    ("html2canvas@1.4.1",
+     "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"),
 ]
 
 
