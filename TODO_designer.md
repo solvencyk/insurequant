@@ -5,8 +5,9 @@
 
 ## Status (최신 3개)
 
-- **2026-10-08 index 마켓맵 보조표(`#ratio-sr-table`, `.sr-only`)** — 회사별 지급여력비율·기본자본비율을 한 번에 글자로(토글로만 보이던 기본자본비율 보강).
-  지도와 같은 `GROUPED`·`samoNum` 으로 JS 가 채움(인라인 금지 유지), 픽셀 동일. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- index.html`.
+- **2026-10-08 index 마켓맵 보조 목록(`#ratio-sr-list`, `.sr-only`)** — 회사별 "K-ICS 지급여력비율 X%, 기본자본비율 Y%" 를 한 줄씩 글자로(토글로만 보이던 기본자본비율 보강).
+  처음엔 표였으나 구글 AI 개요가 열 제목 없이 행만 읽어 기본자본비율을 282.8% 로 오답 → 줄마다 지표명을 붙인 목록으로 교체. `GROUPED`·`samoNum` 으로 JS 가 채움, 픽셀 동일.
+  owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- index.html`. 남은 것: 서치콘솔 재색인 뒤 AI 개요 재확인.
 - **2026-10-07 og:image 링크 미리보기 카드** — 루트 5개 페이지에 `og:image`·`twitter:card` meta + `og-image.png`(트리맵+버블맵 장식 카드, 원본 `docs/og-image.src.html`).
   `ALWAYS_KEEP` 등재. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- og-image.png`.
 - **2026-09-22 K-ICS 금리 민감도 패널 교체** — 순자산 듀레이션/컨벡서티 2카드 → 자산D/부채D/듀레이션갭 3카드(owner 지시).
