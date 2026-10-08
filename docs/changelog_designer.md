@@ -27,6 +27,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 **검증.** Playwright 스모크(데스크탑 1280·모바일 375 콘솔 에러 0, scrollWidth = 폭), `test_deploy_assets` 통과, `validate_deployed_js` RED=0. owner 가 사용 사례 검증을 직접 하기로 해서 독립 QA 에이전트는 중단했다(손해율 곡선·추가 지표 재계산 검산은 불일치 0, 반올림 차이만).
 **남은 것.** 모바일 실기기 확인, 다운로드 팝업 제목의 모바일 글자, 편집 목록을 0개로 비운 상태는 새로고침하면 기본으로 돌아감(`m=none` 같은 표기 없음).
+**후속(같은 날, owner).** (1) IFRS17 통합 현황 아래 "CSM 워터폴 커버리지: N개사 · 범위 · 연 누계(YTD) 기준" 문구와 `#wfPeriodLine` 삭제. (2) 공유 메뉴를 사별 비교 전용에서 사이트 공통으로: `theme.js` 가 헤더에 붙이고(`#iqShareBtn`, 일본어 jp/ 제외, 페이지가 자체 `#share-btn` 을 가지면 건너뜀) 모양은 `common.css`(`.iq-share*`, `.iq-toast`). 스크린샷은 짧은 페이지는 본문 전체, 아주 긴 페이지는 지금 화면만 찍고 아직 안 나타난 패널(`.will-reveal`)도 또렷하게 만든다. 페이지별 조정은 `window.IQShareConfig`. (3) 사별 비교 추가 지표에 해약환급금준비금(IFRS17_BS 항목 5, 적립 잔액) 추가 — 추가 지표 7개.
 
 ## 2026-10-08 (4차) -- 사별 비교 `compare.html` 신규 (owner 직접 지시, orchestrator 작성)
 

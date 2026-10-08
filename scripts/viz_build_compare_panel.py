@@ -14,7 +14,7 @@
 - 신계약 CSM 배수: NB_CSM_multiple.json 신계약CSM배수_연누계
 - 보험손익/당기순이익(당분기, 억원): PL_breakdown.json 항목 1/24, 값_당분기, 비면 누계 차분(백만원 -> 억원 /100)
 - 추가 지표(화면 기본 목록에는 없고 사용자가 끌어다 넣는 것, default=false): 지급여력금액(K-ICS 1)·지급여력기준금액(K-ICS 14)·신계약 CSM(NB_CSM_multiple 신계약CSM_연누계)·
-  투자손익(PL 17 당분기)·자본총계(IFRS17_BS 3)·자산총계(IFRS17_BS 1). 전부 금액이라 중앙값은 만들지 않는다.
+  투자손익(PL 17 당분기)·자본총계(IFRS17_BS 3)·자산총계(IFRS17_BS 1)·해약환급금준비금(IFRS17_BS 5, 적립 잔액). 전부 금액이라 중앙값은 만들지 않는다.
 - ROE(연환산): 당기순이익 누계(항목 24) x 4/q / 평균(직전 4Q 자본, 당분기말 자본)(IFRS17_BS 항목 3), 두 자본 > 0 일 때만, 2024.1Q 부터
 - 유지율 13/25/37/61회차: master_persistency.json 회차별 채널행 합산 Σ유지/Σ대상 (원문오기 SWAPPED=맞교환, INCONSISTENT=제외). 화면에서는 한 차트에 모아 비교
 - 손해율: master_loss_ratio.json 합계/합계/현재가치 Σ예상보험금/Σ위험보험료 (세그먼트 합산)
@@ -198,9 +198,10 @@ inv_profit = quarterly_eok(17)
 bs = load("IFRS17_BS.json")
 equity = {}
 assets = {}
+surrender = {}
 for r in bs:
-    if r["항목번호"] in (1, 3) and r["원보험사코드"] in roster and r["공시분기"] in QI:
-        (assets if r["항목번호"] == 1 else equity)[(r["원보험사코드"], r["공시분기"])] = num(r["값"])
+    if r["항목번호"] in (1, 3, 5) and r["원보험사코드"] in roster and r["공시분기"] in QI:
+        {1: assets, 3: equity, 5: surrender}[r["항목번호"]][(r["원보험사코드"], r["공시분기"])] = num(r["값"])
 
 
 def bs_eok(src):
@@ -212,6 +213,7 @@ def bs_eok(src):
 
 equity_eok = bs_eok(equity)
 assets_eok = bs_eok(assets)
+surrender_eok = bs_eok(surrender)
 
 roe = {}
 for c in roster:
@@ -406,6 +408,11 @@ METRICS = [
          defn="IFRS17 재무상태표 자산총계, 분기말 별도 기준",
          note="금액이라 회사 규모에 비례합니다.",
          v=assets_eok),
+    dict(id="surrender_reserve", group="IFRS17 · 손익", label="해약환급금준비금", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False, default=False,
+         defn="해약환급금준비금 적립 잔액(분기말, 별도 기준)",
+         note="적립액 잔액입니다(그 분기에 새로 쌓은 금액이 아님). 생명보험 중심 항목이고 공시하지 않는 회사는 n/a 입니다. 금액이라 회사 규모에 비례합니다.",
+         v=surrender_eok),
 ]
 
 
