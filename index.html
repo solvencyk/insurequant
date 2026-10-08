@@ -187,7 +187,7 @@
         <div id="reference-period" class="reference-period" style="display:none;">기준시점: </div>
       </div>
       <div id="map-list" class="map-list" aria-label="K-ICS ratio list (mobile)"></div>
-      <div id="ratio-sr-table" class="sr-only"></div>
+      <div id="ratio-sr-list" class="sr-only"></div>
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
@@ -494,7 +494,7 @@
           const sectorSel = document.getElementById('sector');
           render(sectorSel ? sectorSel.value : 'ALL');
           requestAnimationFrame(() => render(sectorSel ? sectorSel.value : 'ALL'));
-          try { renderRatioSrTable(); } catch (e) { console.warn('보조표 생성 실패(지도와 무관):', e); }  // 아래 .catch 가 지도 전체를 비우므로 보조표 오류가 새지 않게 막는다
+          try { renderRatioSrList(); } catch (e) { console.warn('보조 목록 생성 실패(지도와 무관):', e); }  // 아래 .catch 가 지도 전체를 비우므로 보조 목록 오류가 새지 않게 막는다
         })
         .catch(e => {
           console.error('JSON 파일을 불러오는 중 오류 발생:', e);
@@ -955,39 +955,34 @@
       }
     }
 
-    // 보조표(화면에는 안 보이고 스크린리더·검색엔진이 읽는다). 마켓맵은 지급여력비율과 기본자본비율을 토글로
+    // 보조 목록(화면에는 안 보이고 스크린리더·검색엔진이 읽는다). 마켓맵은 지급여력비율과 기본자본비율을 토글로
     // 하나씩만 보여 주므로, 두 비율을 회사별로 한 번에 글자로 둔다. 지도와 같은 GROUPED·같은 samoNum 서식으로
     // 채워서 값이 항상 지도와 일치하고, HTML 에 숫자를 직접 적지 않는다(인라인 금지 규칙 유지).
+    // 표가 아니라 '한 줄에 이름·지표명·값이 같이 있는 목록'인 이유: 처음엔 표였는데 구글 AI 개요가 열 제목 없이
+    // 행만 잘라 읽어 삼성화재 기본자본비율을 지급여력비율 값(282.8%)으로 답했다(2026-10-08). 줄 하나가 혼자서 뜻이 통해야 한다.
     // 규칙: 지도에 보이는 값만 넣는다. 키워드를 따로 얹으면 구글 스팸 정책(숨은 텍스트) 위반이다.
-    function renderRatioSrTable() {
-      const host = document.getElementById('ratio-sr-table');
+    function renderRatioSrList() {
+      const host = document.getElementById('ratio-sr-list');
       if (!host) return;
       host.textContent = '';
-      const pct = v => Number.isFinite(v) ? samoNum(v, 1) + '%' : '—';
       const q = getLatestQuarter(allData);
-      const table = document.createElement('table');
-      const cap = document.createElement('caption');
-      cap.textContent = '보험사별 K-ICS 지급여력비율·기본자본비율' + (q ? ` (${q} 기준, 경과조치 적용 후 값 우선)` : '');
-      table.appendChild(cap);
-      const headRow = document.createElement('tr');
-      ['보험사', '업권', 'K-ICS 지급여력비율', '기본자본비율'].forEach(t => {
-        const th = document.createElement('th'); th.scope = 'col'; th.textContent = t; headRow.appendChild(th);
-      });
-      const thead = document.createElement('thead'); thead.appendChild(headRow); table.appendChild(thead);
-      const tbody = document.createElement('tbody');
+      const head = document.createElement('p');
+      head.textContent = '보험사별 K-ICS 지급여력비율·기본자본비율' + (q ? ` (${q} 기준, 경과조치 적용 후 값 우선)` : '');
+      host.appendChild(head);
+      const ul = document.createElement('ul');
       const SECTOR_LABEL = { Life: '생명보험', 'Non-Life': '손해보험' };
       for (const s of ['Life', 'Non-Life']) {
         for (const d of (GROUPED[s] || [])) {
-          const tr = document.createElement('tr');
-          const name = document.createElement('th'); name.scope = 'row'; name.textContent = shortName(d.company); tr.appendChild(name);
-          [SECTOR_LABEL[s], pct(d.ratio), pct(d.basicCapitalRatio)].forEach(t => {
-            const td = document.createElement('td'); td.textContent = t; tr.appendChild(td);
-          });
-          tbody.appendChild(tr);
+          const parts = [];
+          if (Number.isFinite(d.ratio)) parts.push(`K-ICS 지급여력비율 ${samoNum(d.ratio, 1)}%`);
+          if (Number.isFinite(d.basicCapitalRatio)) parts.push(`기본자본비율 ${samoNum(d.basicCapitalRatio, 1)}%`);
+          if (!parts.length) continue;
+          const li = document.createElement('li');
+          li.textContent = `${shortName(d.company)}(${SECTOR_LABEL[s]})${q ? ' ' + q : ''}: ${parts.join(', ')}`;
+          ul.appendChild(li);
         }
       }
-      table.appendChild(tbody);
-      host.appendChild(table);
+      host.appendChild(ul);
     }
 
     const sel = document.getElementById("sector");
