@@ -344,7 +344,6 @@
   function readURL(){
     var p = new URLSearchParams(location.search), codes = [];
     (p.get('c') || '').split(',').forEach(function(x){ x = x.trim().toUpperCase(); if(CO[x] && codes.indexOf(x) < 0) codes.push(x); });
-    if(!codes.length){ var from = (p.get('from') || '').toUpperCase(); codes = [CO[from] ? from : DATA.meta.default_from]; }
     S.sel = []; codes.slice(0, MAXC).forEach(addCo);
     S.basis = p.get('b') === 'pre' ? 'pre' : 'post';
     S.med = p.get('md') !== '0';
@@ -413,7 +412,7 @@
       }
     }
     var all = DATA.companies.filter(function(c){ return ok(c) && !shown[c.code]; })
-      .sort(function(a,b){ return a.name.localeCompare(b.name, 'ko'); });
+      .sort(function(a,b){ return a.code < b.code ? -1 : a.code > b.code ? 1 : 0; });
     var groups = ty ? [ty] : ['생보', '손보'];
     groups.forEach(function(g){
       var rows = all.filter(function(c){ return c.type === g; });

@@ -373,7 +373,6 @@ out = {
     "meta": {
         "quarters": QUARTERS,
         "latest": LAST_Q,
-        "default_from": "KR0009",
         "median_rule": "같은 생/손보 유형, 재보험(KR1000)·보증(KR0150) 제외, 그 분기에 값이 있는 회사만(결측은 건너뜀), 5곳 미만이면 없음",
         "sources": ["kics_disclosure.json", "CSM_waterfall.json", "NB_CSM_multiple.json", "PL_breakdown.json",
                     "IFRS17_BS.json", "data/persistency/master_persistency.json", "data/loss_ratio/master_loss_ratio.json"],
