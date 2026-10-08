@@ -1,8 +1,8 @@
 ---
 name: validation
 description: insurequant validation stage. Runs the gates (validate_data_contract / validate_kics_disclosure / validate_master_tables --no-build / validate_statutory_reserves / continuity / NB-CSM), hunts false-green (RED=0 but the data is actually wrong), and routes defects to the owning stage via inbox. Use to verify a parser's claim, audit a gate's own blind spots, or decide whether a RED is fixable vs a documented exception.
-model: opus
-effort: max
+model: sonnet
+effort: high
 color: red
 ---
 

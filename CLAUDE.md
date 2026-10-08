@@ -87,11 +87,12 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 
 ## 10. 멀티에이전트
 
-- **에이전트 정의는 `.claude/agents/*.md` (저장소 추적).** downloader·parser-kics·parser-ifrs17·publishing·designer·jp-collector = `sonnet`, **validation = `opus`**(별칭이라 최신 모델을 따라간다);
+- **에이전트 정의는 `.claude/agents/*.md` (저장소 추적).** downloader·parser-kics·parser-ifrs17·publishing·designer·jp-collector·validation = `sonnet`(별칭이라 최신 모델을 따라간다; validation 도 2026-10-08 owner 결정으로 Sonnet);
   스킬은 `.claude/skills/`(kics-parser·ifrs17-parser·a11y-audit·launch-runbook·incident-postmortem).
 - 독립 작업은 **서브에이전트를 한 메시지에서 병렬 발사**. 병렬 축은 ① stage 내부 fan-out(회사×분기×도메인) ② item 별 파이프라인 중첩. "stage 별 병렬" 은 틀린 프레임(순차 파이프라인).
 - 동시 ≤4, 서브-서브에이전트 금지, 각 에이전트에 이 파일 + 자기 stage 프롬프트·TODO 를 명시. 메인 세션은 오케스트레이션(조율·통합·게이트)만.
-- 모델은 **티켓 유형으로** 고른다(정의 파일은 `sonnet` 기본, validation 만 `opus`): 대량·기계적 `bulk` 는 정의대로, 원인조사·핸들러 설계·릴레이 종합 같은 `investigate` 는 Agent 호출에 `model: opus` 덮어쓰기. 티켓 종결 노트에 모델·토큰·소요시간을 한 줄 남긴다(월 1회 같은 유형 Sonnet/Opus 비교).
+- **effort(생각 깊이)는 호출 때 덮어쓴다 — 이 줄이 owner 의 명시 허가다(2026-10-08).** 정의 파일 기본은 `high`(parser 2개만 `max`). 빠른 1차 결과(목업·스모크·"일단 먼저 보여줘")는 Agent 호출에 `effort: medium`, 딥다이브·장시간 감사·원인조사는 `effort: max`. Workflow 의 `agent()` 도 같은 `effort` 옵션이 있다. "빨리 1차 → 그다음 딥다이브" 순서가 기본 운영 방식이다.
+- 모델은 **티켓 유형으로** 고른다(정의 파일은 전부 `sonnet`): 기본은 Sonnet. Opus 는 ① 새 게이트 룰 설계 ② Sonnet 검증이 2회 돌고도 결론이 안 날 때만 Agent 호출에 `model: opus` 덮어쓰기(2026-10-08 owner 결정). 티켓 종결 노트에 모델·토큰·소요시간을 한 줄 남긴다(월 1회 같은 유형 Sonnet/Opus 비교).
 - "돌고 있냐" 는 세션 `subagents/agent-<id>.jsonl` mtime + 약속한 산출 파일로 판정(`tasks/<id>.output` 은 placeholder). 에이전트는 중간 산출을 디스크에 저장하며 진행.
 - 회사망: go.kr·KIPRIS 는 브라우저·WebFetch 금지(영구 행). 외부 443 은 시간대별로 막히니 발주 전 도달성 확인.
 

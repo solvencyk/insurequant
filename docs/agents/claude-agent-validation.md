@@ -317,7 +317,7 @@ YELLOW(QoQ warn 포함)는 어떤 다운스트림도 차단하지 않는다. 보
 
 ```javascript
 Agent({
-  subagent_type: "validation",      // .claude/agents/validation.md (model: opus)
+  subagent_type: "validation",      // .claude/agents/validation.md (model: sonnet)
   description: "K-ICS validation + retry loop",
   prompt: `
 본 문서를 작업 지시서로 따른다: docs/agents/claude-agent-validation.md
