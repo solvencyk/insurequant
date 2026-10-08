@@ -126,6 +126,9 @@
       .swatch,.bubble-swatch{width:88px}
       #csm-coverage-table{font-size:12px}
       #csm-coverage-table th,#csm-coverage-table td{padding:4px 6px}
+      /* ? 도움말 팝오버: 안 보여도(opacity:0) 폭 340px 이 문서 스크롤 폭을 넓혀 모바일 레이아웃 뷰포트가 커지고 우하단 고정 버튼이 화면 밖으로 밀렸다. 모바일은 ? 아래 한 줄 폭(양옆 8px)으로 연다. fixed 는 .panel 의 transform 때문에 안 먹는다. */
+      .iq-help{position:static}
+      .iq-help-pop{left:8px;right:8px;top:auto;margin-top:28px;width:auto;max-width:none}
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="sha384-o5uz97et3bErHvpKfD4Jz4n0JfhJDWABFuF4NP+iEEDxE1VwMWJ19QGR0lqFZnr6" crossorigin="anonymous"></script>
@@ -135,12 +138,12 @@
     <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">보험사 공시 대시보드</span></a>
     <div class="header-row">
       <div class="tabs">
+        <a href="compare.html" class="tab">사별 비교</a>
         <a href="K-ICS.html" class="tab">K-ICS</a>
         <a href="IFRS17.html" class="tab">IFRS17</a>
         <a href="공시보고서.html" class="tab">기타공시</a>
-        <a href="compare.html" class="tab">사별 비교</a>
       </div>
-      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
+      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ <span class="dl-full">테이블 다운로드(.xlsx)</span><span class="dl-short">다운로드(xlsx)</span></button>
     </div>
   </header>
   <div class="container">
@@ -243,6 +246,7 @@
     const jsonPath = resolveUrl('kics_disclosure.json');
     let bubbleRows = null;
     let bubbleChart = null;
+    let bubbleShowEst = false;   // owner 2026-10-08: 연1회 공시사(추정)는 기본 숨김 — 버블이 겹쳐 짜부되는 것을 막는다. 범례 '추정'을 눌러 켠다
     let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
     let allData = [];
     let GROUPED = {};
@@ -1043,7 +1047,7 @@
       let rows = bubbleRows.filter(r => Number.isFinite(r.nbCsm) && r.nbCsm > 0 && Number.isFinite(r.multiple)); // log축: nbCsm>0 필수 (Group B는 multiple null → 자동 제외)
       if (sectorFilter && sectorFilter !== 'ALL') rows = rows.filter(r => r.sector === sectorFilter);
 
-      if (metaEl) {
+      const writeMeta = () => { if (!metaEl) return;
         const estCount = rows.filter(r => r.estimated).length;
         // D-2 후속(20260818T0210Z): X축도 회사별 최신으로 바뀌어 크기와 같은 성격이 됐다 — Y(배수)만
         // 여전히 고정 타깃이라 셋을 따로 표기. 범위는 데이터에서 도출(하드코딩 금지).
@@ -1051,8 +1055,9 @@
         const maxClosingQ = qlabel(maxClosingK) || NB_TARGET_Q;
         const maxXK = Math.max(0, ...rows.map(r => qkey(r.srcQ)));
         const maxXQ = qlabel(maxXK) || NB_TARGET_Q;
-        metaEl.textContent = `표시 ${rows.length}社 (실공시 ${rows.length - estCount} · 추정 ${estCount}) · X축(신계약CSM)=회사별 최신(~${maxXQ}) · Y축(배수)=${NB_TARGET_Q} 고정 · 크기(기말)=회사별 최신(~${maxClosingQ})`;
-      }
+        metaEl.textContent = `표시 ${bubbleShowEst ? rows.length : rows.length - estCount}社 (` + (bubbleShowEst ? `실공시 ${rows.length - estCount} · 추정 ${estCount}` : `실공시 · 연1회 공시사 추정 ${estCount}社는 범례 '추정'을 눌러 표시`) + `) · X축(신계약CSM)=회사별 최신(~${maxXQ}) · Y축(배수)=${NB_TARGET_Q} 고정 · 크기(기말)=회사별 최신(~${maxClosingQ})`;
+      };
+      writeMeta();
       if (!rows.length) {
         el.innerHTML = '<div style="padding:24px;color:var(--muted);font-size:13px">NB 배수 데이터 없음 — data/_derived/nb_csm_multiple.json 확인</div>';
         return;
@@ -1063,7 +1068,8 @@
       // 10조)으로 반올림해버려 버블이 왼쪽에 다닥다닥 몰리고 오른쪽 절반이 통째로 빈다. 실데이터
       // 범위(현재 필터된 rows 기준 — 업권 필터 시 그 부분집합으로도 같이 좁혀짐)에 로그 패딩만
       // 줘서 그때그때 맞춘다. 하드코딩 금지, 매 렌더마다 재계산.
-      const xVals = rows.map(r => r.nbCsm).filter(v => Number.isFinite(v) && v > 0);
+      const visRows = bubbleShowEst ? rows : rows.filter(r => !r.estimated);
+      const xVals = (visRows.length ? visRows : rows).map(r => r.nbCsm).filter(v => Number.isFinite(v) && v > 0);
       const xPad = Math.pow(10, 0.2);   // 로그축 여백 ×1.58 (양옆 대칭)
       const xAxisMin = Math.min(...xVals) / xPad;
       const xAxisMax = Math.max(...xVals) * xPad;
@@ -1080,7 +1086,7 @@
       bubbleChart.setOption({
         grid: { left: 70, right: 28, top: 40, bottom: 58 },
         textStyle: { color: TH.muted },
-        legend: { top: 8, data: legendData, textStyle: { color: TH.text } },
+        legend: { top: 8, data: legendData, selected: { [ESTIMATED_NAME]: bubbleShowEst }, textStyle: { color: TH.text } },
         tooltip: Object.assign(window.IQTheme ? IQTheme.echartsTooltip() : {}, {
           trigger: 'item',
           formatter: p => {
@@ -1161,6 +1167,7 @@
       bubbleChart.off('legendselectchanged');
       bubbleChart.on('legendselectchanged', (params) => {
         const sel = params.selected || {};
+        bubbleShowEst = sel[ESTIMATED_NAME] !== false; writeMeta();
         const visible = rows.filter(r => {
           const name = r.estimated ? ESTIMATED_NAME : (r.sector === 'Life' ? '생명보험' : '손해보험');
           return sel[name] !== false;

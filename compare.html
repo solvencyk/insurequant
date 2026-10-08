@@ -43,6 +43,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
   <link rel="stylesheet" href="common.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" integrity="sha384-FcQlsUOd0TJjROrBxhJdUhXTUgNJQxTMcxZe6nHbaEfFL1zjQ+bq/uRoBQxb0KMo" crossorigin="anonymous"></script>
   <script src="theme.js"></script>
   <style>
     /* 사별 비교 목업. 토큰·헤더·탭·세그먼트 토글·.iq-help 는 common.css 것을 그대로 쓰고, 여기에는 이 페이지 고유 규칙만 둔다. */
@@ -75,28 +76,16 @@
     .check-row{display:inline-flex;align-items:center}
     .check input{width:18px;height:18px;accent-color:var(--primary)}
 
-    .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
-    .panel h2{margin-bottom:4px}
-    .panel .sub{margin:0 0 12px 0;font-size:12px;color:var(--muted)}
 
-    .table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:8px;background:var(--bg)}
-    table.sum{border-collapse:separate;border-spacing:0;width:100%;min-width:520px}
-    table.sum th, table.sum td{border:none;border-bottom:1px solid var(--border);padding:8px 12px;font-size:14px;white-space:nowrap}
-    table.sum thead th{background:var(--card);vertical-align:bottom;text-align:right}
-    table.sum thead th:first-child, table.sum tbody th{position:sticky;left:0;z-index:2;text-align:left;box-shadow:1px 0 0 var(--border)}
-    table.sum tbody th{background:var(--bg);font-weight:500;min-width:150px}
-    table.sum thead th:first-child{z-index:3}
-    table.sum tr.grp th{background:var(--card);font-size:12px;color:var(--muted);font-weight:600;padding:5px 12px}
-    table.sum tr.grp th{position:sticky;left:0}
-    table.sum td{text-align:right}
-    table.sum td.na{color:var(--muted);font-size:12px;text-align:right;white-space:normal;min-width:110px}
-    table.sum .th-co{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:13px}
-    table.sum .asof{display:block;font-size:11px;color:var(--muted);font-weight:400}
     .neg{color:var(--neg)}
     .unit{font-size:11px;color:var(--muted);font-weight:400;margin-left:4px}
 
     /* 차트 카드 그리드: 모바일·태블릿 1열, 1080 이상 2열, 1500 이상 3열 */
     .grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+    /* 넓은 화면의 유지율·손해율 차트는 가로로 길어야 해서 한 줄을 다 쓴다(모바일은 기존 막대 카드) */
+    .card.wide{grid-column:1/-1}
+    .chart-box{position:relative;width:100%;height:380px;margin-top:6px}
+    .chart-box.tall{height:420px}
     @media (min-width:1080px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
     @media (min-width:1500px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
     .group-h{grid-column:1/-1;margin:8px 0 -4px 0;font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em}
@@ -153,7 +142,52 @@
     .iq-help-pop{white-space:normal}
     .container,.cmp-bar{overflow-x:clip}
 
+    /* 공유 메뉴 — 헤더 우상단, 테마 토글 왼쪽(테마 토글 right:16px + 30px + 간격 8px) */
+    header .header-row{padding-right:84px}
+    .share-wrap{position:absolute;top:50%;right:54px;transform:translateY(-50%)}
+    .share-btn{width:30px;height:30px;padding:0;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:50%;background:var(--card);color:var(--text);cursor:pointer;transition:background var(--t-fast),color var(--t-fast)}
+    .share-btn:hover,.share-btn[aria-expanded="true"]{border-color:var(--primary);color:var(--primary)}
+    .share-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:188px;margin:0;padding:4px;list-style:none;background:var(--bg);border:1px solid var(--border);border-radius:10px;box-shadow:0 10px 28px rgba(0,0,0,.2);z-index:1100}
+    .share-menu[hidden]{display:none}
+    .share-menu button{display:block;width:100%;padding:10px 12px;border:none;border-radius:8px;background:transparent;color:var(--text);font:inherit;font-size:14px;text-align:left;cursor:pointer}
+    .share-menu button:hover,.share-menu button:focus-visible{background:var(--card)}
+    .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:9px 16px;border-radius:999px;background:var(--tip-bg,rgba(24,24,27,.92));color:var(--tip-text,#f5f5f4);font-size:13px;z-index:2000;pointer-events:none}
+    .toast[hidden]{display:none}
+
+    /* 지표 편집 패널 — 칩을 끌어 순서를 바꾸고, 목록 밖으로 끌어내면 뺀다 */
+    .ue-toggle[aria-expanded="true"]{border-color:var(--primary);color:var(--primary)}
+    .uedit{margin:-4px 0 16px;padding:12px 14px 10px;border:1px solid var(--border);border-radius:12px;background:var(--card)}
+    .uedit[hidden]{display:none}
+    .ue-h{margin:0 0 6px;font-size:13px;font-weight:700}
+    .ue-h .ue-n{margin-left:6px;font-size:12px;font-weight:400;color:var(--muted)}
+    .ue-list{position:relative;list-style:none;margin:0 0 12px;padding:8px;display:flex;flex-wrap:wrap;align-content:flex-start;gap:8px;min-height:58px;border:1px dashed var(--border);border-radius:10px;background:var(--bg)}
+    .ue-list.ue-over{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+    .ue-list.ue-over-rm{border-color:var(--neg);box-shadow:inset 0 0 0 1px var(--neg)}
+    .ue-empty{align-self:center;font-size:13px;color:var(--muted);line-height:1.5}
+    .uchip{display:inline-flex;align-items:stretch;max-width:100%;min-height:36px;border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--r-md);background:var(--card);font-size:14px;font-weight:600}
+    .uchip.off{border-left-color:var(--muted);border-style:dashed;border-left-style:solid}
+    .uc-main{display:inline-flex;align-items:center;gap:6px;min-width:0;padding:0 8px;border:none;border-radius:var(--r-md);background:transparent;color:var(--text);font:inherit;text-align:left;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+    .uchip.off .uc-main{padding-right:12px}
+    .uchip.off .uc-main:hover{color:var(--primary)}
+    .ue-grip{color:var(--muted);font-size:13px;letter-spacing:-2px;line-height:1}
+    .ue-plus{color:var(--muted);font-size:16px;line-height:1}
+    .uc-x{width:30px;margin:2px 2px 2px 0;border:none;border-radius:50%;background:transparent;color:var(--muted);font-size:18px;line-height:1;cursor:pointer}
+    .uc-x:hover{background:var(--bg);color:var(--neg)}
+    .ue-src{opacity:.35}
+    .ue-ins{position:absolute;width:3px;border-radius:2px;background:var(--primary);pointer-events:none}
+    .ue-ghost{position:fixed;left:0;top:0;z-index:3000;pointer-events:none;padding:6px 12px;border:1px solid var(--primary);border-left-width:4px;border-radius:var(--r-md);background:var(--bg);color:var(--text);box-shadow:0 8px 22px rgba(0,0,0,.28);font-size:14px;font-weight:600;white-space:nowrap}
+    .ue-ghost small{display:block;font-size:11px;font-weight:600}
+    .ue-ghost.rm{border-color:var(--neg);color:var(--neg)}
+    body.ue-dragging,body.ue-dragging *{cursor:grabbing!important;user-select:none;-webkit-user-select:none}
+    .ue-foot{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+    .ue-tip{margin:0;font-size:12px;color:var(--muted);line-height:1.6}
+
     @media (max-width:640px){
+      .uedit{padding:12px 10px 10px}
+      .uchip{min-height:44px}
+      .uc-x{width:44px;margin:0;border-radius:0 var(--r-md) var(--r-md) 0}
+      .ue-foot .btn{min-height:44px}
+      .ue-toggle{min-height:44px}
       .container{padding:12px}
       .cmp-bar{padding:10px 12px;margin:-12px -12px 8px}
       .chips{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:6px}
@@ -162,9 +196,7 @@
       .chip .tag{display:none}
       .add-wrap{width:100%}
       .add-wrap input{flex:1 1 auto;width:auto;min-width:0}
-      .panel{padding:14px}
       .opts{gap:10px 14px}
-      table.sum th, table.sum td{padding:8px 10px}
       .brow{grid-template-columns:minmax(96px,34%) minmax(0,1fr) 4.4em;gap:0 8px}
       .pop{left:0;right:0;width:auto}
     }
@@ -175,11 +207,20 @@
     <a href="index.html" class="brand">InsureQuant <span class="hint-brand">사별 비교</span></a>
     <div class="header-row">
       <div class="tabs">
+        <a href="compare.html" class="tab active" aria-current="page">사별 비교</a>
         <a href="K-ICS.html" class="tab">K-ICS</a>
         <a href="IFRS17.html" class="tab">IFRS17</a>
         <a href="공시보고서.html" class="tab">기타공시</a>
-        <a href="compare.html" class="tab active" aria-current="page">사별 비교</a>
       </div>
+    </div>
+    <div class="share-wrap" id="share-wrap">
+      <button type="button" class="share-btn" id="share-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="share-menu" aria-label="공유" title="공유">
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8.4 10.9l7.2-4.1M8.4 13.1l7.2 4.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><g fill="currentColor"><circle cx="18" cy="5.5" r="2.7"/><circle cx="6" cy="12" r="2.7"/><circle cx="18" cy="18.5" r="2.7"/></g></svg>
+      </button>
+      <ul class="share-menu" id="share-menu" role="menu" aria-label="공유" hidden>
+        <li role="none"><button type="button" role="menuitem" id="share-copy">링크 복사</button></li>
+        <li role="none"><button type="button" role="menuitem" id="share-shot">현재 페이지 스크린샷</button></li>
+      </ul>
     </div>
   </header>
 
@@ -194,7 +235,7 @@
           <ul class="pop" id="co-pop" role="listbox" aria-label="회사 목록과 추천" hidden></ul>
           <span class="iq-help">
             <button type="button" class="iq-help-btn" aria-label="기본 선택 규칙 도움말" aria-describedby="help-default">?</button>
-            <span class="iq-help-pop" role="tooltip" id="help-default">검색창을 누르면 추천 회사가 맨 위에 나옵니다. 생보는 생보끼리, 손보는 손보끼리만 비교합니다. 주소의 ?c= 뒤에 회사코드를 쉼표로 이으면 그대로 공유됩니다.</span>
+            <span class="iq-help-pop" role="tooltip" id="help-default">검색창을 누르면 추천 회사가 맨 위에 나옵니다. 생보는 생보끼리, 손보는 손보끼리만 비교합니다. 주소의 ?c= 뒤에 회사 이름을 쉼표로 이으면 그대로 공유됩니다.</span>
           </span>
         </div>
         <span class="count-note" id="count-note"></span>
@@ -220,19 +261,24 @@
           </span></span>
       </div>
       <div class="opt">
-        <span class="control-label">공유</span>
-        <button type="button" class="btn" id="copy">링크 복사</button>
+        <span class="control-label" id="lb-units">지표</span>
+        <button type="button" class="btn ue-toggle" id="ue-toggle" aria-expanded="false" aria-controls="uedit">지표 편집</button>
       </div>
     </div>
-    <div class="sr-only" role="status" aria-live="polite" id="live"></div>
-
-    <section class="panel" id="panel-sum" aria-labelledby="h-sum">
-      <h2 id="h-sum">지표 요약</h2>
-      <p class="sub" id="sum-sub"></p>
-      <div class="table-wrap" tabindex="0" role="region" aria-label="지표 요약 표, 가로로 스크롤할 수 있습니다">
-        <table class="sum" id="sum"></table>
+    <section class="uedit" id="uedit" aria-label="지표 편집" hidden>
+      <h2 class="ue-h" id="ue-h1">표시 중인 지표<span class="ue-n" id="ue-cnt"></span></h2>
+      <ul class="ue-list" id="ue-on" aria-labelledby="ue-h1"></ul>
+      <h2 class="ue-h" id="ue-h2">추가할 수 있는 지표<span class="ue-n">위로 끌어 놓거나 눌러서 추가 · 표시 중인 지표를 여기로 끌어 놓으면 빼기</span></h2>
+      <ul class="ue-list" id="ue-off" aria-labelledby="ue-h2"></ul>
+      <div class="ue-foot">
+        <p class="ue-tip">칩을 끌어 순서를 바꾸고, 목록 밖으로 끌어내면 뺍니다. 키보드: 표시 중인 칩에서 방향키로 순서 이동, Delete로 빼기, 추가할 칩에서 Enter로 추가.</p>
+        <button type="button" class="btn" id="ue-reset">기본값으로</button>
       </div>
+      <p class="sr-only" id="ue-kb">방향키로 순서를 옮기고 Delete 키로 뺍니다.</p>
+      <p class="sr-only" id="ue-kb2">Enter 키를 누르면 표시 중인 지표 맨 뒤에 추가합니다.</p>
     </section>
+    <div class="sr-only" role="status" aria-live="polite" id="live"></div>
+    <div class="toast" id="toast" hidden></div>
 
     <div id="main-msg" class="msg" hidden>데이터를 불러오는 중입니다…</div>
     <div class="grid" id="grid"></div>
@@ -248,7 +294,8 @@
   'use strict';
   var MAXC = 4;
   var DATA = null, CO = {}, Q = [], LAST = 0, CSM_M = null;
-  var S = { sel:[], basis:'post', med:true };
+  var S = { sel:[], basis:'post', med:true, units:[] };
+  var UNITS = [], UNIT = {}, UNIT_OF = {}, DEF = [];   /* 지표 단위: chart_group 이 같은 지표(유지율 4회차)는 한 단위 */
   var $ = function(id){ return document.getElementById(id); };
 
   /* ---------- 서식 ---------- */
@@ -355,10 +402,14 @@
     S.sel = []; codes.slice(0, MAXC).forEach(addCo);
     S.basis = p.get('b') === 'pre' ? 'pre' : 'post';
     S.med = p.get('md') !== '0';
+    var ids = [];
+    (p.get('m') || '').split(',').forEach(function(x){ var u = UNIT_OF[x.trim()]; if(u && ids.indexOf(u) < 0) ids.push(u); });
+    S.units = ids.length ? ids : DEF.slice();
   }
   function writeURL(){
     var p = new URLSearchParams();
     if(S.sel.length) p.set('c', S.sel.map(function(s){ return CO[s.code].short; }).join(','));
+    if(S.units.length && !sameUnits(S.units, DEF)) p.set('m', S.units.join(','));
     if(S.basis === 'pre') p.set('b', 'pre');
     if(!S.med) p.set('md', '0');
     var q = p.toString().replace(/%2C/g, ',');
@@ -429,11 +480,11 @@
       rows.forEach(function(c){ h += optHTML(c); });
     });
     if(!popOpts.length) h += '<li role="presentation" class="ph ph-note">' + (txt ? '일치하는 회사가 없습니다.' : '추가할 수 있는 회사가 없습니다.') + '</li>';
-    pop.innerHTML = h;
+    pop.innerHTML = h; pop.scrollTop = 0;
   }
   function openPop(){
     if(inp.disabled) return;
-    buildPop(); pop.hidden = false; inp.setAttribute('aria-expanded', 'true'); inp.removeAttribute('aria-activedescendant');
+    buildPop(); pop.hidden = false; pop.scrollTop = 0; inp.setAttribute('aria-expanded', 'true'); inp.removeAttribute('aria-activedescendant');
   }
   function closePop(){ pop.hidden = true; inp.setAttribute('aria-expanded', 'false'); inp.removeAttribute('aria-activedescendant'); act = -1; }
   function markAct(){
@@ -464,35 +515,437 @@
     });
   }
 
-  /* ---------- 요약 표 ---------- */
-  function renderTable(){
-    $('panel-sum').hidden = !S.sel.length;
-    if(!S.sel.length) return;
-    var type = selType(), t = $('sum'), h = '<caption class="sr-only">선택한 회사의 지표별 최신 값</caption><thead><tr><th scope="col">지표</th>';
-    S.sel.forEach(function(s){ h += '<th scope="col"><div class="th-co"><span class="nm">' + esc(CO[s.code].short) + '</span></div></th>'; });
-    if(S.med) h += '<th scope="col"><div class="th-co"><span>업계 중앙값 · ' + type + '</span></div></th>';
-    h += '</tr></thead><tbody>';
-    var ncol = S.sel.length + 1 + (S.med ? 1 : 0), lastGroup = '';
-    DATA.metrics.forEach(function(m){
-      if(m.group !== lastGroup){ h += '<tr class="grp"><th scope="colgroup" colspan="' + ncol + '">' + esc(m.group) + '</th></tr>'; lastGroup = m.group; }
-      var asof = mLast(m), bt = m.basis ? (S.basis === 'pre' ? ' 적용 전' : ' 적용 후') : '';
-      h += '<tr><th scope="row">' + esc(m.label) + '<span class="unit">' + esc(m.unit) + bt + '</span>' +
-           '<span class="asof">' + (asof >= 0 ? '최신 공시 ' + Q[asof] : '공시 없음') + '</span></th>';
-      S.sel.forEach(function(s){
-        var cell = cellFor(m, s.code, asof);
-        if(!cell){ h += '<td class="na" title="' + esc(naReason(m, s.code)) + '">n/a<br>' + esc(naReason(m, s.code)) + '</td>'; return; }
-        h += '<td class="' + (cell.v < 0 ? 'neg' : '') + '">' + fmt(cell.v, m) + (cell.i !== asof ? ' ' + qchip(cell.i, asof) : '') + '</td>';
+  /* ---------- 넓은 화면(641px~): 유지율 묶음 막대 · 손해율 꺾은선 (Chart.js). 모바일은 위의 가로 막대 그대로 ---------- */
+  var WIDE = window.matchMedia ? window.matchMedia('(min-width:641px)') : {matches:true};
+  var CHARTS = [], TH = null, FONT = '';
+  var PAL_BAR  = ['#8ccfc6', '#f6b49f', '#a8c1f0', '#e6d27e'];   /* 파스텔 막대: 처음 고른 회사 = 사이트 기본 틸 계열 */
+  var PAL_LINE = ['#4fb0a5', '#ee8f72', '#7b9fe6', '#cdb04a'];   /* 선·표식은 같은 색을 조금 진하게(밝은 배경에서도 보이게) */
+  var PT = ['circle', 'triangle', 'rect', 'rectRot'];            /* 색만으로 구분하지 않도록 표식 모양도 다르게 */
+  var LR_END_X = 33;                                             /* '30년 이후'의 x 위치(경과 연수에 비례, 26~30년 다음 5칸) */
+  function chartsOn(){ return !!(window.Chart && WIDE.matches); }
+  function readTheme(){
+    TH = window.IQTheme ? IQTheme.chart() : {text:'#18181b', muted:'#63666b', border:'#e4e4e2', bg:'#ffffff'};
+    if(window.Chart){
+      if(window.IQTheme) IQTheme.applyChartJs(window.Chart);
+      FONT = getComputedStyle(document.body).fontFamily;
+      Chart.defaults.font.family = FONT;
+    }
+  }
+  function killCharts(){ CHARTS.forEach(function(c){ try{ c.destroy(); }catch(e){} }); CHARTS = []; }
+  function hatch(color){
+    var c = document.createElement('canvas'); c.width = c.height = 8;
+    var x = c.getContext('2d'); x.strokeStyle = color; x.lineWidth = 1.6; x.beginPath();
+    x.moveTo(-2, 10); x.lineTo(10, -2); x.moveTo(-2, 2); x.lineTo(2, -2); x.moveTo(6, 10); x.lineTo(10, 6); x.stroke();
+    return x.createPattern(c, 'repeat');
+  }
+  function chartCanvas(card, label){
+    var box = document.createElement('div'); box.className = 'chart-box';
+    var cv = document.createElement('canvas'); cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', label);
+    box.appendChild(cv); card.appendChild(box); return cv;
+  }
+  function notes(card, items){
+    if(items.length) card.insertAdjacentHTML('beforeend', items.map(function(t){ return '<p class="clipnote">' + t + '</p>'; }).join(''));
+  }
+  /* 막대 위 숫자 */
+  var VAL_LABELS = {
+    id: 'valLabels',
+    afterDatasetsDraw: function(chart){
+      var ctx = chart.ctx; ctx.save(); ctx.fillStyle = TH.text; ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+      chart.data.datasets.forEach(function(ds, i){
+        var meta = chart.getDatasetMeta(i); if(meta.hidden) return;
+        meta.data.forEach(function(el, j){
+          var v = ds.data[j]; if(v == null) return;
+          ctx.font = '600 ' + (el.width < 26 ? 9 : 11) + 'px ' + FONT;
+          ctx.fillText(nf(v, 1), el.x, el.y - 3);
+        });
       });
-      if(S.med){
-        if(m.median){
-          var mc = medCell(m, type, asof);
-          h += '<td>' + (mc ? fmt(mc.v, m) + (mc.i !== asof ? ' ' + qchip(mc.i, asof) : '') : '—') + '</td>';
-        } else h += '<td class="na">—</td>';
-      }
-      h += '</tr>';
+      ctx.restore();
+    }
+  };
+
+  /* 유지율: x = 13·25·37·61회차, 묶음 안에 회사별 막대(+같은 유형 중앙값) */
+  function persistChart(card, ms){
+    var asofs = ms.map(mLast), amax = Math.max.apply(null, asofs), type = selType();
+    var ds = [], stale = [], missing = [], any = false;
+    S.sel.forEach(function(s, k){
+      var st = [], miss = [], nm = CO[s.code].short;
+      var data = ms.map(function(m, j){
+        var cell = asofs[j] >= 0 ? cellFor(m, s.code, asofs[j]) : null;
+        if(!cell){ miss.push(m.sub); st.push(null); return null; }
+        any = true;
+        if(cell.i !== asofs[j]){ st.push(Q[cell.i]); stale.push(nm + ' ' + m.sub + ' ' + qshort(Q[cell.i])); } else st.push(null);
+        return cell.v;
+      });
+      if(miss.length) missing.push(nm + ' ' + (miss.length === ms.length ? '전 회차' : miss.join('·')));
+      ds.push({label: nm, data: data, st: st, backgroundColor: PAL_BAR[k % 4], borderWidth: 0, borderRadius: 3,
+        categoryPercentage: 0.8, barPercentage: 0.92, maxBarThickness: 54});
     });
-    t.innerHTML = h + '</tbody>';
-    $('sum-sub').textContent = '회사마다 공시된 가장 최근 값입니다. 노란 칩의 분기는 그 지표의 최신 공시 분기보다 오래된 값이라는 뜻입니다.';
+    if(!any){ card.insertAdjacentHTML('beforeend', '<div class="empty">선택한 회사 모두 이 지표를 공시하지 않습니다.</div>'); return; }
+    var medShown = false, medGap = false;
+    if(S.med){
+      var mst = [];
+      var md = ms.map(function(m, j){
+        var mc = asofs[j] >= 0 ? medCell(m, type, asofs[j]) : null;
+        mst.push(mc && mc.i !== asofs[j] ? Q[mc.i] : null);
+        return mc ? mc.v : null;
+      });
+      medShown = md.some(function(x){ return x != null; }); medGap = md.some(function(x){ return x == null; });
+      if(medShown) ds.push({label: type + ' 업계 중앙값', data: md, st: mst, backgroundColor: hatch(TH.muted), borderColor: TH.muted, borderWidth: 1, borderRadius: 3,
+        categoryPercentage: 0.8, barPercentage: 0.92, maxBarThickness: 54});
+    }
+    var label = '유지율 최신 공시 비교. ' + ds.filter(function(d){ return d.st.length; }).map(function(d){
+      return d.label + ' ' + d.data.map(function(v, j){ return ms[j].sub + ' ' + (v == null ? 'n/a' : nf(v, 1) + '%'); }).join(', ');
+    }).join('. ');
+    var cv = chartCanvas(card, label);
+    CHARTS.push(new Chart(cv.getContext('2d'), {
+      type: 'bar', plugins: [VAL_LABELS],
+      data: {labels: ms.map(function(m){ return m.sub; }), datasets: ds},
+      options: {
+        responsive: true, maintainAspectRatio: false, layout: {padding: {top: 18}},
+        interaction: {mode: 'index', intersect: false},
+        plugins: {
+          legend: {position: 'top', labels: {usePointStyle: true, pointStyle: 'rectRounded', boxWidth: 10, boxHeight: 10, padding: 14, color: TH.text}},
+          tooltip: {
+            filter: function(it){ return it.parsed.y != null; },
+            callbacks: {
+              title: function(items){ var j = items[0].dataIndex; return ms[j].sub + ' · 최신 공시 ' + (asofs[j] >= 0 ? Q[asofs[j]] : '없음'); },
+              label: function(c){ var q = c.dataset.st && c.dataset.st[c.dataIndex]; return c.dataset.label + ': ' + nf(c.parsed.y, 1) + '%' + (q ? ' (' + qshort(q) + ' 공시)' : ''); }
+            }
+          }
+        },
+        scales: {
+          x: {grid: {display: false}, ticks: {font: {size: 13, weight: '600'}, color: TH.text}},
+          y: {min: 0, max: 100, ticks: {stepSize: 20, callback: function(v){ return v + '%'; }}, title: {display: true, text: '유지율 (%)'}}
+        }
+      }
+    }));
+    var foot = [];
+    if(stale.length) foot.push('최신 공시(' + Q[amax] + ')보다 오래된 값: ' + esc(stale.join(', ')) + '.');
+    if(missing.length) foot.push('공시 없음: ' + esc(missing.join(', ')) + '.');
+    if(medShown && medGap) foot.push('값이 있는 ' + esc(type) + '사가 5곳 미만인 회차는 업계 중앙값을 그리지 않습니다.');
+    notes(card, foot);
+  }
+
+  /* 손해율 가정: x = 경과차년, y = 손해율, 회사별 꺾은선(부드러운 곡선). 회사마다 가장 최근 결산 공시 */
+  function lrX(lab){
+    var m = /^(\d+)년$/.exec(lab); if(m) return +m[1];
+    m = /^(\d+)~(\d+)년$/.exec(lab); if(m) return (+m[1] + +m[2]) / 2;
+    return LR_END_X;
+  }
+  function lossChart(card, m){
+    var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
+    var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
+    var ds = [], nas = [], stale = [], coarse = [], any = false;
+    S.sel.forEach(function(s, k){
+      var nm = CO[s.code].short, byQ = C.v[s.code] || {}, row = null, qi = -1;
+      for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
+      if(!row){ nas.push('<li><b>' + esc(nm) + '</b> n/a — ' + esc(naReason(m, s.code)) + '</li>'); return; }
+      any = true;
+      var co = row[nstd] != null, pts = [];
+      for(i = 0; i < nstd; i++) pts.push({x: xs[i], y: row[i]});
+      if(co){ coarse.push(nm); for(i = 0; i < 10; i++) pts[i].y = row[nstd]; }   /* 1~10년을 한 구간으로 공시한 회사 */
+      var pv = cellFor(m, s.code, asof);
+      if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
+      ds.push({label: nm + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm, coarse: co, data: pts,
+        borderColor: PAL_LINE[k % 4], backgroundColor: PAL_LINE[k % 4], borderWidth: 3, pointStyle: PT[k % 4],
+        pointRadius: co ? 0 : 4, pointHoverRadius: co ? 4 : 6, cubicInterpolationMode: 'monotone', spanGaps: false, borderDash: co ? [5, 4] : [], order: 1});
+    });
+    if(!any){ card.insertAdjacentHTML('beforeend', '<div class="empty">선택한 회사 모두 이 지표를 공시하지 않습니다.</div>'); notes(card, []); return; }
+    var mq = null, medShown = false;
+    if(S.med && C.med && C.med[type]){
+      for(j = asof; j >= 0; j--){
+        var row2 = C.med[type][Q[j]];
+        if(row2 && row2.some(function(x){ return x != null; })){ mq = row2; break; }
+      }
+      if(mq){
+        medShown = true;
+        ds.push({label: type + ' 업계 중앙값', short: type + ' 업계 중앙값', data: xs.map(function(x, n){ return {x: x, y: mq[n]}; }),
+          borderColor: TH.muted, backgroundColor: TH.muted, borderWidth: 2, borderDash: [6, 4], pointRadius: 0, pointHoverRadius: 4,
+          cubicInterpolationMode: 'monotone', spanGaps: false, order: 2});
+      }
+    }
+    var label = '손해율 가정 경과차년별 꺾은선. ' + ds.map(function(d){
+      var v = d.data.filter(function(p){ return p.y != null; });
+      return v.length ? d.short + ' ' + nf(v[0].y, 1) + '%에서 ' + nf(v[v.length - 1].y, 1) + '%' : d.short + ' n/a';
+    }).join('. ');
+    var cv = chartCanvas(card, label); cv.parentNode.classList.add('tall');
+    CHARTS.push(new Chart(cv.getContext('2d'), {
+      type: 'line', data: {datasets: ds},
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        interaction: {mode: 'nearest', axis: 'x', intersect: false},
+        plugins: {
+          legend: {position: 'top', labels: {usePointStyle: true, boxWidth: 10, boxHeight: 10, padding: 14, color: TH.text}},
+          tooltip: {
+            filter: function(it){ return it.parsed.y != null; },
+            callbacks: {
+              title: function(items){ var n = xs.indexOf(items[0].parsed.x); return n >= 0 ? labs[n] : ''; },
+              label: function(c){ return c.dataset.short + ': ' + nf(c.parsed.y, 1) + '%' + (c.dataset.coarse && c.parsed.x <= 10 ? ' (1~10년 한 구간 값)' : ''); }
+            }
+          }
+        },
+        scales: {
+          x: {type: 'linear', min: 0, max: LR_END_X + 1, title: {display: true, text: '경과차년'},
+            afterBuildTicks: function(axis){ axis.ticks = xs.map(function(v){ return {value: v}; }); },
+            ticks: {autoSkip: false, maxRotation: 0, minRotation: 0, callback: function(v){
+              var n = xs.indexOf(v); if(n < 0) return '';
+              var lab = labs[n];
+              return /^\d+년$/.test(lab) && this.width / (LR_END_X + 1) < 32 ? lab.replace('년', '') : lab;
+            }}},
+          y: {grace: '5%', title: {display: true, text: '손해율 (%)'}, ticks: {callback: function(v){ return nf(Number(v), 0) + '%'; }}}
+        }
+      }
+    }));
+    var foot = ['현재가치 기준 손해율은 선에 넣지 않고 범례 옆 숫자로 적었습니다.'];
+    if(coarse.length) foot.push(esc(coarse.join(', ')) + '은 경과 1~10년을 한 구간으로 공시해 그 구간을 점선으로 그렸습니다.');
+    if(stale.length) foot.push('최신 결산(' + Q[asof] + ')보다 오래된 공시: ' + esc(stale.join(', ')) + '.');
+    if(S.med && !medShown) foot.push('값이 있는 ' + esc(type) + '사가 5곳 미만이라 업계 중앙값을 그리지 않습니다.');
+    notes(card, foot);
+    if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
+  }
+
+  /* ---------- 공유: 링크 복사 · 현재 페이지 스크린샷 (헤더 우상단 아이콘 메뉴) ---------- */
+  var H2C_URL = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+  var H2C_SRI = 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H';
+  var toastTimer = null;
+  function toast(t){
+    var el = $('toast'); el.textContent = t; el.hidden = false; say(t);
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ el.hidden = true; }, 2600);
+  }
+  function copyLink(){
+    writeURL();
+    var u = new URL(location.href); u.searchParams.delete('iq_internal');
+    var link = u.toString().replace(/%2C/gi, ',');
+    var done = function(){ toast('링크를 복사했습니다'); };
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, function(){ window.prompt('링크를 복사하세요', link); });
+    else window.prompt('링크를 복사하세요', link);
+  }
+  /* html2canvas 는 스크린샷을 누를 때만 불러온다(평소 페이지 로딩에 영향 없음). SRI 로 고정. */
+  function loadH2C(ok){
+    if(window.html2canvas){ ok(); return; }
+    var s = document.createElement('script'); s.src = H2C_URL; s.integrity = H2C_SRI; s.crossOrigin = 'anonymous';
+    s.onload = ok; s.onerror = function(){ toast('이미지 저장 도구를 불러오지 못했습니다'); };
+    document.head.appendChild(s);
+  }
+  function saveBlob(blob){
+    var name = 'insurequant-compare-' + new Date().toISOString().slice(0, 10) + '.png';
+    function download(){
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 4000); toast('이미지를 저장했습니다');
+    }
+    var file = null; try{ file = new window.File([blob], name, {type: 'image/png'}); }catch(e){}
+    var touch = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+    if(touch && file && navigator.share && navigator.canShare && navigator.canShare({files: [file]})){
+      navigator.share({files: [file], title: 'InsureQuant 사별 비교'}).then(function(){}, function(e){ if(!e || e.name !== 'AbortError') download(); });
+    } else download();
+  }
+  function shoot(){
+    toast('이미지를 만드는 중…');
+    loadH2C(function(){
+      var root = document.querySelector('.container'), bg = getComputedStyle(document.body).backgroundColor;
+      window.html2canvas(root, {
+        backgroundColor: bg, scale: Math.min(2, window.devicePixelRatio || 1), useCORS: true, logging: false,
+        windowWidth: document.documentElement.clientWidth,
+        ignoreElements: function(el){
+          var c = el.classList;
+          return !!(c && (c.contains('add-wrap') || c.contains('count-note') || c.contains('opts') || c.contains('uedit') || c.contains('iq-help') || c.contains('msg'))) || el.id === 'co-pop' || el.id === 'toast';
+        },
+        onclone: function(doc){
+          var bar = doc.querySelector('.cmp-bar'); if(bar) bar.style.position = 'static';
+          var f = doc.createElement('div');
+          f.style.cssText = 'padding:12px 0 4px;font-size:12px;color:' + TH.muted;
+          f.textContent = 'InsureQuant · www.insurequant.com/compare.html · ' + DATA.meta.latest + ' 기준 공시 · 공시자료를 가공한 값이며 오류가 있을 수 있습니다';
+          doc.querySelector('.container').appendChild(f);
+        }
+      }).then(function(cv){
+        cv.toBlob(function(b){ if(b) saveBlob(b); else toast('이미지를 만들지 못했습니다'); }, 'image/png');
+      }, function(){ toast('이미지를 만들지 못했습니다'); });
+    });
+  }
+  function initShare(){
+    var btn = $('share-btn'), menu = $('share-menu'), wrap = $('share-wrap');
+    function items(){ return [].slice.call(menu.querySelectorAll('[role=menuitem]')); }
+    function close(){ menu.hidden = true; btn.setAttribute('aria-expanded', 'false'); }
+    function open(){ menu.hidden = false; btn.setAttribute('aria-expanded', 'true'); items()[0].focus(); }
+    btn.addEventListener('click', function(e){ e.stopPropagation(); if(menu.hidden) open(); else close(); });
+    document.addEventListener('click', function(e){ if(!menu.hidden && !wrap.contains(e.target)) close(); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !menu.hidden){ close(); btn.focus(); } });
+    menu.addEventListener('keydown', function(e){
+      if(e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault(); var it = items(), k = it.indexOf(document.activeElement);
+      it[(k + (e.key === 'ArrowDown' ? 1 : it.length - 1)) % it.length].focus();
+    });
+    $('share-copy').addEventListener('click', function(){ close(); copyLink(); });
+    $('share-shot').addEventListener('click', function(){ close(); btn.focus(); shoot(); });
+  }
+
+  /* ---------- 지표 편집 ---------- */
+  function buildUnits(){
+    UNITS = []; UNIT = {}; UNIT_OF = {}; DEF = [];
+    DATA.metrics.forEach(function(m){
+      var id = m.chart_group || m.id, u = UNIT[id];
+      UNIT_OF[m.id] = id; UNIT_OF[id] = id;
+      if(u){ u.ms.push(m); return; }
+      u = {id:id, ms:[m], label:m.chart_group ? (m.chart_label || m.label) : m.label, group:m.group, def:m.default !== false};
+      UNIT[id] = u; UNITS.push(u); if(u.def) DEF.push(id);
+    });
+  }
+  function sameUnits(a, b){ return a.length === b.length && a.every(function(x, i){ return x === b[i]; }); }
+  function setUnits(arr, msg, focusId){
+    S.units = arr; update(true); say(msg);
+    if(focusId){ var el = $('uedit').querySelector('.uc-main[data-uid="' + focusId + '"]'); if(el) el.focus(); }
+  }
+  function unitLab(id){ return UNIT[id].label; }
+  function offIds(){ return UNITS.filter(function(u){ return S.units.indexOf(u.id) < 0; }).map(function(u){ return u.id; }); }
+  function moveUnit(id, d){
+    var i = S.units.indexOf(id), j = i + d;
+    if(j < 0 || j >= S.units.length){ say(unitLab(id) + ' — 이미 맨 ' + (d < 0 ? '앞' : '뒤') + '입니다'); return; }
+    var arr = S.units.slice(); arr.splice(i, 1); arr.splice(j, 0, id);
+    setUnits(arr, unitLab(id) + ' 표시 순서 ' + (j + 1) + '번째로 이동', id);
+  }
+  function removeUnit(id, kb){
+    var i = S.units.indexOf(id); if(i < 0) return;
+    var arr = S.units.filter(function(x){ return x !== id; });
+    setUnits(arr, unitLab(id) + ' 지표를 뺐습니다. 표시 중 ' + arr.length + '개', kb ? (arr[i] || arr[i - 1] || id) : null);
+  }
+  function addUnit(id, kb, at){
+    if(S.units.indexOf(id) >= 0) return;
+    var off = offIds(), p = off.indexOf(id), arr = S.units.slice();
+    if(at == null || at > arr.length) at = arr.length;
+    arr.splice(at, 0, id);
+    setUnits(arr, unitLab(id) + ' 지표를 ' + (at + 1) + '번째로 추가했습니다. 표시 중 ' + arr.length + '개', kb ? (off[p + 1] || off[p - 1] || id) : null);
+  }
+  function renderEditor(){
+    cancelDrag();
+    var h = '', on = $('ue-on'), off = $('ue-off'), n = S.units.length;
+    S.units.forEach(function(id, i){
+      var u = UNIT[id];
+      h += '<li class="uchip" data-uid="' + esc(id) + '"><button type="button" class="uc-main" data-uid="' + esc(id) + '" aria-label="' + esc(u.label) + ', 표시 중 ' + n + '개 중 ' + (i + 1) + '번째" aria-describedby="ue-kb" title="' + esc(u.group) + '">' +
+        '<span class="ue-grip" aria-hidden="true">⋮⋮</span><span class="ue-lb">' + esc(u.label) + '</span></button>' +
+        '<button type="button" class="uc-x" data-uid="' + esc(id) + '" aria-label="' + esc(u.label) + ' 빼기">&times;</button></li>';
+    });
+    on.innerHTML = h || '<li class="ue-empty">표시 중인 지표가 없습니다. 아래에서 추가하세요.</li>';
+    h = '';
+    offIds().forEach(function(id){
+      var u = UNIT[id];
+      h += '<li class="uchip off" data-uid="' + esc(id) + '"><button type="button" class="uc-main" data-uid="' + esc(id) + '" aria-label="' + esc(u.label) + ' 추가" aria-describedby="ue-kb2" title="' + esc(u.group) + '">' +
+        '<span class="ue-grip" aria-hidden="true">⋮⋮</span><span class="ue-lb">' + esc(u.label) + '</span><span class="ue-plus" aria-hidden="true">+</span></button></li>';
+    });
+    off.innerHTML = h || '<li class="ue-empty">모든 지표가 표시 중입니다.</li>';
+    $('ue-cnt').textContent = n + '/' + UNITS.length + '개';
+    $('ue-toggle').textContent = sameUnits(S.units, DEF) ? '지표 편집' : '지표 편집 · 변경됨';
+  }
+
+  /* 끌어서 옮기기 — Pointer Events(마우스·터치 공통). 5px 이상 움직여야 드래그, 아니면 클릭. */
+  var DR = null, noClick = false;
+  function inRect(r, x, y, pad){ return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad; }
+  function insIndex(x, y){
+    var chips = [].slice.call($('ue-on').querySelectorAll('.uchip')).filter(function(c){ return c.getAttribute('data-uid') !== DR.id; });
+    for(var i = 0; i < chips.length; i++){
+      var r = chips[i].getBoundingClientRect();
+      if(y < r.top || (y <= r.bottom && x < r.left + r.width / 2)) return i;
+    }
+    return chips.length;
+  }
+  function showIns(idx){
+    var on = $('ue-on'), ins = DR.ins, chips = [].slice.call(on.querySelectorAll('.uchip')).filter(function(c){ return c.getAttribute('data-uid') !== DR.id; });
+    var lr = on.getBoundingClientRect(), x, y, hgt;
+    if(!chips.length){ x = 10; y = 8; hgt = 36; }
+    else if(idx < chips.length){ var r = chips[idx].getBoundingClientRect(); x = r.left - lr.left - 6; y = r.top - lr.top; hgt = r.height; }
+    else { var r2 = chips[chips.length - 1].getBoundingClientRect(); x = r2.right - lr.left + 3; y = r2.top - lr.top; hgt = r2.height; }
+    ins.style.left = Math.round(x) + 'px'; ins.style.top = Math.round(y) + 'px'; ins.style.height = Math.round(hgt) + 'px'; ins.hidden = false;
+  }
+  function dragFlags(){
+    var on = $('ue-on'), off = $('ue-off');
+    on.classList.toggle('ue-over', DR.target === 'on');
+    off.classList.toggle('ue-over-rm', DR.target === 'rm' && DR.inOff);
+    DR.ghost.classList.toggle('rm', DR.target === 'rm');
+    DR.gs.textContent = DR.target === 'rm' ? '놓으면 빼기' : DR.target === 'on' ? (DR.from === 'on' ? '놓으면 이 위치로 이동' : '놓으면 추가') : '';
+    DR.gs.hidden = !DR.gs.textContent;
+    if(DR.target !== 'on') DR.ins.hidden = true;
+  }
+  function startDrag(){
+    DR.on = true;
+    var g = document.createElement('div'); g.className = 'ue-ghost'; g.setAttribute('aria-hidden', 'true');
+    g.innerHTML = '<span class="gl">' + esc(unitLab(DR.id)) + '</span><small class="gs" hidden></small>';
+    document.body.appendChild(g); DR.ghost = g; DR.gs = g.querySelector('.gs');
+    var ins = document.createElement('i'); ins.className = 'ue-ins'; ins.hidden = true; $('ue-on').appendChild(ins); DR.ins = ins;
+    DR.el.parentNode.classList.add('ue-src');
+    document.body.classList.add('ue-dragging');
+  }
+  function dragMove(e){
+    if(!DR || e.pointerId !== DR.pid) return;
+    if(!DR.on){ if(Math.sqrt(Math.pow(e.clientX - DR.x0, 2) + Math.pow(e.clientY - DR.y0, 2)) < 5) return; startDrag(); }
+    e.preventDefault();
+    var x = e.clientX, y = e.clientY, g = DR.ghost, touch = e.pointerType !== 'mouse';
+    var gx = touch ? x - g.offsetWidth / 2 : x + 14, gy = touch ? y - g.offsetHeight - 26 : y + 14;   /* 화면 밖으로 잘리지 않게 가둔다 */
+    gx = Math.max(4, Math.min(gx, window.innerWidth - g.offsetWidth - 4)); gy = Math.max(4, Math.min(gy, window.innerHeight - g.offsetHeight - 4));
+    g.style.transform = 'translate(' + Math.round(gx) + 'px,' + Math.round(gy) + 'px)';
+    if(y < 56) window.scrollBy(0, -12); else if(y > window.innerHeight - 56) window.scrollBy(0, 12);
+    var inOn = inRect($('ue-on').getBoundingClientRect(), x, y, 8), inOff = inRect($('ue-off').getBoundingClientRect(), x, y, 0);
+    DR.inOff = inOff;
+    if(inOn){ DR.target = 'on'; DR.idx = insIndex(x, y); showIns(DR.idx); }
+    else DR.target = DR.from === 'on' ? 'rm' : 'none';
+    dragFlags();
+  }
+  function dragEnd(commit){
+    var d = DR; if(!d) return;
+    document.removeEventListener('pointermove', dragMove); document.removeEventListener('pointerup', dragUp); document.removeEventListener('pointercancel', dragCancel);
+    DR = null;
+    try{ d.el.releasePointerCapture(d.pid); }catch(err){}
+    if(!d.on) return;
+    noClick = true; setTimeout(function(){ noClick = false; }, 0);   /* 끌기를 끝낸 포인터의 click 한 번만 무시 */
+    if(d.ghost) d.ghost.remove();
+    if(d.ins) d.ins.remove();
+    document.body.classList.remove('ue-dragging');
+    $('ue-on').classList.remove('ue-over'); $('ue-off').classList.remove('ue-over-rm');
+    [].forEach.call($('uedit').querySelectorAll('.ue-src'), function(el){ el.classList.remove('ue-src'); });
+    if(!commit){ say('끌어 놓기를 취소했습니다'); return; }
+    if(d.target === 'on'){
+      var arr = S.units.filter(function(x){ return x !== d.id; }); arr.splice(d.idx, 0, d.id);
+      if(d.from === 'on' && sameUnits(arr, S.units)) return;
+      if(d.from === 'on') setUnits(arr, unitLab(d.id) + ' 표시 순서 ' + (d.idx + 1) + '번째로 이동');
+      else setUnits(arr, unitLab(d.id) + ' 지표를 ' + (d.idx + 1) + '번째로 추가했습니다. 표시 중 ' + arr.length + '개');
+    } else if(d.target === 'rm'){
+      var rest = S.units.filter(function(x){ return x !== d.id; });
+      setUnits(rest, unitLab(d.id) + ' 지표를 뺐습니다. 표시 중 ' + rest.length + '개');
+    }
+  }
+  function dragUp(e){ if(DR && e.pointerId === DR.pid) dragEnd(true); }
+  function dragCancel(e){ if(DR && e.pointerId === DR.pid) dragEnd(false); }
+  function cancelDrag(){ if(DR) dragEnd(false); }
+  function dragDown(e, btn){
+    if(DR || (e.pointerType === 'mouse' && e.button !== 0)) return;
+    DR = {id:btn.getAttribute('data-uid'), from:btn.closest('#ue-on') ? 'on' : 'off', el:btn, pid:e.pointerId, x0:e.clientX, y0:e.clientY, on:false, target:'none', idx:0, inOff:false};
+    try{ btn.setPointerCapture(e.pointerId); }catch(err){}
+    document.addEventListener('pointermove', dragMove, {passive:false}); document.addEventListener('pointerup', dragUp); document.addEventListener('pointercancel', dragCancel);
+  }
+  function initEditor(){
+    var box = $('uedit'), tg = $('ue-toggle');
+    tg.addEventListener('click', function(){
+      var open = box.hidden; box.hidden = !open; tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    box.addEventListener('pointerdown', function(e){ var b = e.target.closest('.uc-main'); if(b) dragDown(e, b); });
+    box.addEventListener('contextmenu', function(e){ if(e.target.closest('.uc-main')) e.preventDefault(); });
+    box.addEventListener('click', function(e){
+      var x = e.target.closest('.uc-x'), m = e.target.closest('.uc-main');
+      if(noClick) return;
+      if(x) removeUnit(x.getAttribute('data-uid'), e.detail === 0);
+      else if(m && m.closest('.off')) addUnit(m.getAttribute('data-uid'), e.detail === 0);
+    });
+    box.addEventListener('keydown', function(e){
+      var m = e.target.closest ? e.target.closest('.uc-main') : null; if(!m || !m.closest('#ue-on') || e.altKey || e.ctrlKey || e.metaKey) return;
+      var id = m.getAttribute('data-uid'), k = e.key;
+      if(k === 'ArrowLeft' || k === 'ArrowUp'){ e.preventDefault(); moveUnit(id, -1); }
+      else if(k === 'ArrowRight' || k === 'ArrowDown'){ e.preventDefault(); moveUnit(id, 1); }
+      else if(k === 'Delete' || k === 'Backspace'){ e.preventDefault(); removeUnit(id, true); }
+    });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && DR && DR.on){ e.preventDefault(); cancelDrag(); } });
+    $('ue-reset').addEventListener('click', function(){
+      if(sameUnits(S.units, DEF)){ say('이미 기본 구성입니다'); return; }
+      setUnits(DEF.slice(), '지표를 기본 구성으로 되돌렸습니다. 표시 중 ' + DEF.length + '개');
+    });
   }
 
   /* ---------- 막대 ---------- */
@@ -600,23 +1053,25 @@
   }
 
   function renderCards(){
-    var grid = $('grid'); grid.innerHTML = '';
+    var grid = $('grid'); grid.innerHTML = ''; killCharts();
     if(!S.sel.length){ grid.innerHTML = '<div class="msg" style="grid-column:1/-1">비교할 회사를 위 검색창에서 골라 주세요.</div>'; return; }
-    var type = selType(), lastGroup = '', cards = [];
-    DATA.metrics.forEach(function(m){
-      var last = cards[cards.length - 1];
-      if(m.chart_group && last && last[0].chart_group === m.chart_group) last.push(m); else cards.push([m]);
-    });
-    cards.forEach(function(ms){
-      var m0 = ms[0], grouped = ms.length > 1, title = grouped ? m0.chart_label : m0.label;
-      if(m0.group !== lastGroup){ var gh = document.createElement('div'); gh.className = 'group-h'; gh.textContent = m0.group; grid.appendChild(gh); lastGroup = m0.group; }
+    if(!S.units.length){ grid.innerHTML = '<div class="msg" style="grid-column:1/-1">표시 중인 지표가 없습니다. 위의 "지표 편집"에서 지표를 추가해 주세요.</div>'; return; }
+    var type = selType(), lastGroup = '', ngrp = 0;
+    S.units.forEach(function(id){
+      var ms = UNIT[id].ms;
+      var m0 = ms[0], grouped = ms.length > 1;
+      var curve = (chartsOn() && m0.id === 'loss_pv' && DATA.loss_curve) ? DATA.loss_curve : null;
+      var chartMode = !!curve || (chartsOn() && grouped && m0.chart_group === 'persist');
+      var title = curve ? curve.label : (grouped ? m0.chart_label : m0.label);
+      if(m0.group !== lastGroup){ var gh = document.createElement('div'); gh.className = 'group-h'; gh.textContent = m0.group; gh.id = 'grp-' + (++ngrp); gh.setAttribute('data-section-label', m0.group); grid.appendChild(gh); lastGroup = m0.group; }
       var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title);
       var asofs = ms.map(mLast), amax = Math.max.apply(null, asofs), bt = (!grouped && m0.basis) ? (S.basis === 'pre' ? ' · 적용 전' : ' · 적용 후') : '';
-      card.innerHTML = '<h3>' + esc(title) + '<span class="unit">' + esc(m0.unit) + bt + '</span>' +
+      card.innerHTML = '<h3>' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
         '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + m0.id + '">?</button>' +
-        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(m0.note) + '</span></span></h3>' +
-        '<p class="def">' + esc(m0.defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] : '없음') + '</p>';
+        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? curve.note : m0.note) + '</span></span></h3>' +
+        '<p class="def">' + esc(curve ? curve.defn : m0.defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] : '없음') + '</p>';
       grid.appendChild(card);
+      if(chartMode){ card.classList.add('wide'); if(curve) lossChart(card, m0); else persistChart(card, ms); return; }
       var nas = [];
       var secs = ms.map(function(m, k){
         var asof = asofs[k], rows = [];
@@ -642,7 +1097,7 @@
 
   /* ---------- 갱신 ---------- */
   function update(push){
-    renderChips(); syncSeg(); renderTable(); renderCards();
+    renderChips(); syncSeg(); renderEditor(); renderCards();
     if(push) writeURL();
   }
 
@@ -650,18 +1105,13 @@
     DATA.companies.forEach(function(c){ CO[c.code] = c; });
     DATA.metrics.forEach(function(m){ if(m.id === 'csm_closing') CSM_M = m; });
     Q = DATA.meta.quarters; LAST = Q.length - 1;
-    readURL(); writeURL(); initPop();
+    buildUnits(); readTheme(); readURL(); writeURL(); initPop(); initShare(); initEditor();
+    if(WIDE.addEventListener) WIDE.addEventListener('change', function(){ update(false); });
+    window.addEventListener('iq:themechange', function(){ readTheme(); update(false); });
     $('main-msg').hidden = true;
     var fq = $('footerQ'); if(fq) fq.textContent = DATA.meta.latest;
     $('opt-basis').addEventListener('click', function(e){ var b = e.target.closest('.seg-btn'); if(b){ S.basis = b.getAttribute('data-v'); update(true); } });
     $('med').addEventListener('change', function(){ S.med = $('med').checked; update(true); });
-    $('copy').addEventListener('click', function(){
-      writeURL();
-      var u = new URL(location.href); u.searchParams.delete('iq_internal');
-      var done = function(){ say('링크를 복사했습니다'); };
-      if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(u.toString()).then(done, function(){ window.prompt('링크를 복사하세요', u.toString()); });
-      else window.prompt('링크를 복사하세요', u.toString());
-    });
     function flipHelp(e){
       var h = e.target.closest ? e.target.closest('.iq-help') : null; if(!h) return;
       var pp = h.querySelector('.iq-help-pop'), r = h.getBoundingClientRect();

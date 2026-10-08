@@ -60,7 +60,16 @@
     .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
     .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
     .coming-soon p{font-size:16px;margin:0}
-    .table-container{margin-top:32px;}
+    .table-container{margin-top:32px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+    /* 첫 열 고정(owner 2026-10-08) — IFRS17 .lrps-table 과 같은 방식: sticky left + --bg 배경 + 오른쪽 1px 선(border-collapse 라 테두리는 스크롤 때 같이 안 따라온다) */
+    .table-container table{width:max-content;min-width:100%}
+    .table-container th:first-child,.table-container td:first-child{position:sticky;left:0;z-index:1;background:var(--bg);box-shadow:1px 0 0 var(--border);text-align:left;white-space:normal;min-width:132px;max-width:220px}
+    .table-container thead th{white-space:nowrap}
+    .table-container thead th:first-child{z-index:3;background:var(--card)}
+    /* 금리 민감도 표: 첫 두 열(구분·항목)을 같이 고정. 구분 셀은 rowspan 이라 :first-child 가 행마다 달라 클래스로 지정 */
+    #sens-table th.sens-grp,#sens-table td.sens-grp{position:sticky;left:0;z-index:1;background:var(--bg);box-shadow:1px 0 0 var(--border);text-align:left;width:56px;min-width:56px;max-width:56px;white-space:nowrap}
+    #sens-table th.sens-name,#sens-table td.sens-name{position:sticky;left:55px;z-index:1;background:var(--bg);box-shadow:1px 0 0 var(--border);min-width:96px;max-width:none;white-space:nowrap}
+    #sens-table thead th.sens-grp,#sens-table thead th.sens-name{z-index:3;background:var(--card)}
     /* .subtoggle + :hover → common.css (shared with IFRS17 재보험 토글) */
     .panel .subtitle{color:var(--muted);font-size:13px;line-height:1.5;margin:-8px 0 16px 0}
     .panel .subtitle li{margin-bottom:2px}
@@ -107,11 +116,14 @@
       .chart-container{height:360px;padding:8px}
       .forward-chart{height:340px;padding:8px}
       .sens-chart{height:260px}
-      .table-container{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .table-container th:first-child,.table-container td:first-child{min-width:112px;max-width:40vw}
       table{font-size:12px}
       th,td{padding:4px 6px}
       .donut-row{gap:12px}
       .donut-wrap{height:200px}
+      /* ? 도움말 팝오버: 안 보여도(opacity:0) 폭 340px 이 문서 스크롤 폭을 넓혀 모바일 레이아웃 뷰포트가 커지고 우하단 고정 버튼이 화면 밖으로 밀렸다. 모바일은 ? 아래 한 줄 폭(양옆 8px)으로 연다. fixed 는 .panel 의 transform 때문에 안 먹는다. */
+      .iq-help{position:static}
+      .iq-help-pop{left:8px;right:8px;top:auto;margin-top:28px;width:auto;max-width:none}
     }
   </style>
 </head>
@@ -120,12 +132,12 @@
     <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">K-ICS 지급여력비율 변동 추이</span></a>
     <div class="header-row">
       <div class="tabs">
+        <a href="compare.html" class="tab">사별 비교</a>
         <a href="K-ICS.html" class="tab active" aria-current="page">K-ICS</a>
         <a href="IFRS17.html" class="tab">IFRS17</a>
         <a href="공시보고서.html" class="tab">기타공시</a>
-        <a href="compare.html" class="tab">사별 비교</a>
       </div>
-      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
+      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ <span class="dl-full">테이블 다운로드(.xlsx)</span><span class="dl-short">다운로드(xlsx)</span></button>
     </div>
     <div class="header-select-row">
       <label class="header-select-label" for="company">보험사 선택
@@ -1550,7 +1562,7 @@
       // 테이블: 적용후 → 적용전 그룹, 각 그룹 금액/기준금액/비율
       const fmtAmt = v => v == null ? '-' : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toLocaleString('ko-KR');
       const fmtPct = v => v == null ? '-' : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toFixed(2) + '%';
-      let html = '<table><thead><tr><th>구분</th><th class="sens-name">항목</th><th>−100bp</th><th>−50bp</th><th>기준</th><th>+50bp</th><th>+100bp</th></tr></thead><tbody>';
+      let html = '<table><thead><tr><th class="sens-grp">구분</th><th class="sens-name">항목</th><th>−100bp</th><th>−50bp</th><th>기준</th><th>+50bp</th><th>+100bp</th></tr></thead><tbody>';
       ['적용후', '적용전'].forEach(mode => {
         if (!byMode[mode]) return;
         const groupRows = SENS_MEASURES
@@ -1559,7 +1571,7 @@
         groupRows.forEach((r, i) => {
           const isRatio = r.name === '지급여력비율';
           html += '<tr>';
-          if (i === 0) html += '<td rowspan="' + groupRows.length + '">' + mode + '</td>';
+          if (i === 0) html += '<td class="sens-grp" rowspan="' + groupRows.length + '">' + mode + '</td>';
           html += '<td class="sens-name">' + r.name + '</td>';
           r.vals.forEach(v => {
             html += '<td class="sens-num">' + (isRatio ? fmtPct(v) : fmtAmt(v)) + '</td>';

@@ -131,7 +131,7 @@
   function syncSectionNav(){
     syncHdrVar();
     var nav = document.querySelector('.section-nav');
-    if(!nav){ _navPairs = []; return; }
+    if(!nav){ _navPairs = []; syncSecFab(); clampHelpPops(); return; }
     _navPairs = [];
     [].slice.call(nav.querySelectorAll('a[href^="#"]')).forEach(function(a){
       var el = document.getElementById(a.getAttribute('href').slice(1));
@@ -142,6 +142,8 @@
     });
     _navActive = null;
     spySectionNav();
+    syncSecFab();
+    clampHelpPops();
   }
   function spySectionNav(){
     if(!_navPairs.length) return;
@@ -161,20 +163,30 @@
       if(on) p.a.setAttribute('aria-current', 'true'); else p.a.removeAttribute('aria-current');
     });
   }
+  /* 모바일(<=640px)에서는 접고 펴는 동작을 하지 않는다(owner 2026-10-08: "자꾸 숨김처리 돼서
+     찾기 힘듬"). 거기서는 우하단 햄버거 FAB 가 섹션 바로가기를 맡고, 상단 네비는 CSS 가 감춘다. */
+  var mqMobile = window.matchMedia ? window.matchMedia('(max-width:640px)') : null;
+  function isMobileW(){ return !!(mqMobile && mqMobile.matches); }
   function onNavScroll(){
     var nav = document.querySelector('.section-nav');
     if(nav){
       var y = window.scrollY, h = hdrH();
-      if(y > _lastY + 6 && y > h + 80) nav.classList.add('is-tucked');
+      if(isMobileW()) nav.classList.remove('is-tucked');
+      else if(y > _lastY + 6 && y > h + 80) nav.classList.add('is-tucked');
       else if(y < _lastY - 6 || y <= h) nav.classList.remove('is-tucked');
       _lastY = y;
     }
     spySectionNav();
+    if(_secOpen) markSecActive();
   }
   /* rAF 로 묶지 않는다 — 백그라운드 탭에서 rAF 가 멈추면 스파이가 조용히 죽는다(실측).
      대상이 10개 미만이라 매 스크롤에 rect 를 재도 비용이 없고, 활성이 바뀔 때만 DOM 을 건드린다. */
   window.addEventListener('scroll', onNavScroll, { passive:true });
-  window.addEventListener('resize', function(){ syncHdrVar(); _navActive = null; spySectionNav(); });
+  window.addEventListener('resize', function(){
+    syncHdrVar(); _navActive = null; spySectionNav();
+    clampHelpPops();
+    if(_secOpen && !isMobileW()) closeSec(false);
+  });
 
   /* **페이지마다 re-sync 를 배선하지 않는다.** 처음엔 IFRS17 에만 렌더 후 호출을 넣었는데,
      K-ICS 는 부팅 시점(보험사 미선택)에 안내문이 떠 있어 3개 섹션이 "미공시" 로 찍히고
@@ -190,6 +202,214 @@
     }).observe(host, { childList:true, subtree:true, attributes:true,
                        attributeFilter:['style','class','hidden'] });
   }
+  /* ---- 도움말(?) 팝오버가 가로로 삐져나가 문서를 넓히는 문제 (owner 2026-10-08) -------
+     .iq-help-pop 은 숨겨져 있어도(opacity:0) 레이아웃에는 남는다. 트리거가 화면 오른쪽에 있으면
+     팝오버가 viewport 밖으로 나가고, 모바일 브라우저는 이걸 따라 레이아웃 viewport 자체를 넓힌다
+     (375px 에서 문서 폭 662px 실측). 그러면 오른쪽 끝에 고정된 "오류 제보" 버튼과 모달이 화면
+     밖으로 밀려 "오른쪽으로 넘겨야 튀어나오는" 증상이 된다. 열 때가 아니라 **항상** 화면 안으로
+     밀어 둔다. 값이 안 바뀌면 쓰지 않는다 — 아래 MutationObserver 가 style 변경을 듣기 때문. */
+  function clampHelpPops(){
+    var pops = document.querySelectorAll('.iq-help-pop');
+    if(!pops.length) return;
+    var vw = document.documentElement.clientWidth, M = 8, i, r, cur, s, left, right, shifts = [];
+    for(i = 0; i < pops.length; i++){
+      r = pops[i].getBoundingClientRect(); cur = pops[i]._iqShift || 0; s = 0;
+      if(r.width > 0){
+        left = r.left - cur; right = r.right - cur;
+        if(right > vw - M) s = vw - M - right;
+        if(left + s < M) s = M - left;
+        s = Math.round(s);
+      }
+      shifts.push(s);
+    }
+    for(i = 0; i < pops.length; i++){
+      cur = pops[i]._iqShift || 0;
+      if(shifts[i] !== cur){
+        pops[i]._iqShift = shifts[i];
+        pops[i].style.transform = shifts[i] ? 'translateX(' + shifts[i] + 'px)' : '';
+      }
+    }
+  }
+  document.addEventListener('pointerenter', function(e){ if(e.target && e.target.closest && e.target.closest('.iq-help')) clampHelpPops(); }, true);
+  document.addEventListener('focusin', function(e){ if(e.target && e.target.closest && e.target.closest('.iq-help')) clampHelpPops(); });
+
+  /* ---- 모바일 섹션 바로가기 FAB (owner 2026-10-08) --------------------------------
+     우하단 햄버거 버튼 -> 위로 열리는 시트. 상단 가로 네비(.section-nav)는 스크롤하면 숨어
+     찾기 어려워서 모바일에서는 CSS 가 감추고 이 버튼이 대신한다(폭 판정은 전부 CSS).
+     항목의 출처(계약):
+       (a) .section-nav a[href^="#"]  — is-na 는 흐리게 '미공시', 누를 수 없음
+       (b) 그런 네비가 없는 페이지: id 와 data-section-label 이 둘 다 있는 요소(값=라벨).
+           렌더되지 않은(높이 0) 요소는 목록에서 뺀다.
+     항목이 2개 미만이거나 누를 수 있는 항목이 없으면 만들지도 보이지도 않는다. */
+  var _secFab = null, _secSheet = null, _secSig = '', _secOpen = false, _secItems = [];
+  function secItems(){
+    var out = [], nav = document.querySelector('.section-nav');
+    if(nav){
+      [].slice.call(nav.querySelectorAll('a[href^="#"]')).forEach(function(a){
+        var id = (a.getAttribute('href') || '').slice(1); if(!id) return;
+        var label = (a.textContent || '').trim(); if(!label) return;
+        out.push({ id:id, el:document.getElementById(id), label:label, na:a.classList.contains('is-na') });
+      });
+    } else {
+      [].slice.call(document.querySelectorAll('[id][data-section-label]')).forEach(function(el){
+        var label = (el.getAttribute('data-section-label') || '').trim(); if(!label) return;
+        if(!(el.getBoundingClientRect().height > 0) || hasStub(el)) return;
+        out.push({ id:el.id, el:el, label:label, na:false });
+      });
+    }
+    return out;
+  }
+  function secEl(tag, cls){ var e = document.createElement(tag); if(cls) e.className = cls; return e; }
+  function ensureSecFab(){
+    if(_secFab || !document.body) return;
+    _secFab = secEl('button', 'iq-secnav-fab');
+    _secFab.type = 'button'; _secFab.id = 'iqSecFab';
+    _secFab.setAttribute('aria-label', '섹션 바로가기');
+    _secFab.setAttribute('aria-expanded', 'false');
+    _secFab.setAttribute('aria-controls', 'iqSecSheet');
+    _secFab.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">'
+      + '<path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>';
+    _secSheet = secEl('nav', 'iq-secnav-sheet');
+    _secSheet.id = 'iqSecSheet'; _secSheet.hidden = true;
+    _secSheet.setAttribute('aria-label', '섹션 바로가기');
+    _secFab.addEventListener('click', function(){ if(_secOpen) closeSec(true); else openSec(); });
+    _secSheet.addEventListener('click', function(e){
+      var a = e.target.closest ? e.target.closest('a[data-sec]') : null;
+      if(!a) return;
+      e.preventDefault();
+      goSec(a.getAttribute('data-sec'));
+    });
+    document.body.appendChild(_secFab);
+    document.body.appendChild(_secSheet);
+    /* 바깥을 누르거나 Esc 로 닫는다 — capture 라 페이지가 이벤트를 삼켜도 닫힌다. */
+    document.addEventListener('pointerdown', function(e){
+      if(!_secOpen) return;
+      if(_secSheet.contains(e.target) || _secFab.contains(e.target)) return;
+      closeSec(false);
+    }, { capture:true, passive:true });
+    document.addEventListener('keydown', function(e){ if(_secOpen && e.key === 'Escape'){ e.preventDefault(); closeSec(true); } });
+  }
+  function renderSecSheet(items){
+    _secSheet.textContent = '';
+    var t = secEl('div', 'iq-secnav-title'); t.textContent = '섹션 바로가기'; t.setAttribute('aria-hidden', 'true');
+    var ul = secEl('ul');
+    items.forEach(function(it){
+      var li = secEl('li'), n;
+      if(it.na){
+        n = secEl('span', 'iq-secnav-item is-na'); n.setAttribute('aria-disabled', 'true');
+        n.textContent = it.label + ' ';
+        var tag = secEl('small'); tag.textContent = '미공시'; n.appendChild(tag);
+      } else {
+        n = secEl('a', 'iq-secnav-item'); n.href = '#' + it.id; n.setAttribute('data-sec', it.id);
+        n.textContent = it.label;
+      }
+      li.appendChild(n); ul.appendChild(li);
+    });
+    _secSheet.appendChild(t); _secSheet.appendChild(ul);
+  }
+  function syncSecFab(){
+    var items = secItems(), live = items.filter(function(it){ return !it.na; });
+    var show = items.length >= 2 && live.length >= 1;
+    if(!show){
+      if(_secFab){ _secFab.hidden = true; if(_secOpen) closeSec(false); }
+      document.documentElement.classList.remove('iq-has-secfab');
+      _secItems = [];
+      return;
+    }
+    ensureSecFab();
+    _secItems = items;
+    _secFab.hidden = false;
+    document.documentElement.classList.add('iq-has-secfab');
+    var sig = items.map(function(it){ return it.id + '|' + it.label + '|' + (it.na ? 1 : 0); }).join('\n');
+    if(sig !== _secSig){ _secSig = sig; renderSecSheet(items); if(_secOpen) markSecActive(); }
+  }
+  function markSecActive(){
+    if(!_secSheet) return;
+    var anchor = hdrH() + 20, active = null, i, it;
+    for(i = 0; i < _secItems.length; i++){
+      it = _secItems[i];
+      if(it.na || !it.el) continue;
+      if(!active) active = it;
+      if(it.el.getBoundingClientRect().top <= anchor) active = it;
+    }
+    if(active && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2){
+      for(i = _secItems.length - 1; i >= 0; i--){ if(!_secItems[i].na && _secItems[i].el){ active = _secItems[i]; break; } }
+    }
+    var id = active ? active.id : null;
+    [].slice.call(_secSheet.querySelectorAll('a[data-sec]')).forEach(function(a){
+      var on = a.getAttribute('data-sec') === id;
+      a.classList.toggle('is-current', on);
+      if(on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+    });
+  }
+  function openSec(){
+    if(!_secFab || _secFab.hidden) return;
+    _secOpen = true; _secSheet.hidden = false;
+    _secFab.setAttribute('aria-expanded', 'true');
+    markSecActive();
+    var cur = _secSheet.querySelector('a.is-current') || _secSheet.querySelector('a[data-sec]');
+    if(cur){
+      try{ cur.focus({ preventScroll:true }); }catch(e){ cur.focus(); }
+      if(cur.scrollIntoView) cur.scrollIntoView({ block:'nearest' });
+    }
+  }
+  function closeSec(returnFocus){
+    if(!_secSheet) return;
+    _secOpen = false; _secSheet.hidden = true;
+    _secFab.setAttribute('aria-expanded', 'false');
+    if(returnFocus){ try{ _secFab.focus(); }catch(e){} }
+  }
+  function goSec(id){
+    var t = id ? document.getElementById(id) : null;
+    closeSec(false);
+    if(!t) return;
+    var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    /* scrollIntoView 는 html 의 scroll-padding-top(헤더 높이+12px)을 반영한다. 해시는 건드리지 않는다
+       (compare.html 처럼 주소를 상태로 쓰는 페이지가 있다). */
+    t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block:'start' });
+    if(!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+    try{ t.focus({ preventScroll:true }); }catch(e){}
+  }
+
+  /* ---- 차트 툴팁 바깥 탭으로 닫기 (owner 2026-10-08) ----------------------------------
+     터치에는 mouseout 이 없어 한 번 탭해 뜬 툴팁이 영영 안 닫히고 차트를 가린다. 터치/펜으로
+     차트 **바깥**을 누르면 그 차트의 활성 요소와 툴팁을 비운다. 마우스는 건드리지 않는다(hover 가
+     이미 알아서 닫는다). Chart.js(전역 Chart.instances)와 ECharts(echarts.getInstanceByDom) 모두.
+     차트 안을 탭하는 동작은 그대로 라이브러리가 처리한다.                                          */
+  function hideChartTips(target){
+    var k, c, act, tip;
+    if(window.Chart && window.Chart.instances){
+      for(k in window.Chart.instances){
+        c = window.Chart.instances[k];
+        if(!c || !c.canvas || !c.tooltip) continue;
+        if(c.canvas === target || c.canvas.contains(target)) continue;
+        try{
+          act = c.getActiveElements ? c.getActiveElements() : [];
+          tip = c.tooltip.getActiveElements ? c.tooltip.getActiveElements() : [];
+          if((act && act.length) || (tip && tip.length)){
+            c.setActiveElements([]);
+            c.tooltip.setActiveElements([], { x:0, y:0 });
+            c.update('none');
+          }
+        }catch(e){}
+      }
+    }
+    if(window.echarts && window.echarts.getInstanceByDom){
+      var boxes = document.querySelectorAll('.echarts, [_echarts_instance_]'), i, inst;
+      for(i = 0; i < boxes.length; i++){
+        if(boxes[i] === target || boxes[i].contains(target)) continue;
+        try{
+          inst = window.echarts.getInstanceByDom(boxes[i]);
+          if(inst){ inst.dispatchAction({ type:'hideTip' }); inst.dispatchAction({ type:'downplay' }); }
+        }catch(e){}
+      }
+    }
+  }
+  document.addEventListener('pointerdown', function(e){
+    if(e.pointerType === 'mouse') return;
+    hideChartTips(e.target);
+  }, { capture:true, passive:true });
+
   function boot(){ mount(); syncSectionNav(); watchForRerender(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 

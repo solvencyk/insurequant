@@ -159,6 +159,8 @@
   .lrps-sp{width:32px}
   .lrps-bar-btn{min-height:32px}
   #lrWrap .chart-container{height:380px}
+  .iq-help{position:static}
+  .iq-help-pop{left:8px;right:8px;top:auto;margin-top:28px;width:auto;max-width:none}
 }
 </style>
 </head>
@@ -167,12 +169,12 @@
     <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">IFRS17 분석·시각화</span></a>
     <div class="header-row">
       <div class="tabs">
+        <a href="compare.html" class="tab">사별 비교</a>
         <a href="K-ICS.html" class="tab">K-ICS</a>
         <a href="IFRS17.html" class="tab active" aria-current="page">IFRS17</a>
         <a href="공시보고서.html" class="tab">기타공시</a>
-        <a href="compare.html" class="tab">사별 비교</a>
       </div>
-      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ 테이블 다운로드(.xlsx)</button>
+      <button id="downloadMasterBtn" type="button" class="download-cta">⬇ <span class="dl-full">테이블 다운로드(.xlsx)</span><span class="dl-short">다운로드(xlsx)</span></button>
     </div>
     <div class="header-select-row">
       <label class="header-select-label" for="company">보험사 선택
