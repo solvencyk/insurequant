@@ -469,6 +469,7 @@
         /* 아직 화면에 안 들어와 투명(.will-reveal)이거나 나타나는 중인 패널도 또렷하게 찍는다 */
         onclone:function(doc){
           [].forEach.call(doc.querySelectorAll('.will-reveal, .revealed'), function(el){ el.style.opacity = '1'; el.style.transform = 'none'; el.style.animation = 'none'; });
+          if(typeof cfg.onclone === 'function') cfg.onclone(doc);
         } };
       if(!full){ opt.x = window.scrollX; opt.y = window.scrollY; opt.width = window.innerWidth; opt.height = window.innerHeight; opt.windowHeight = window.innerHeight; }
       window.html2canvas(full ? root : document.body, opt).then(function(cv){

@@ -13,8 +13,9 @@
 - 기말 CSM: CSM_waterfall.json 항목 6 (억원)
 - 신계약 CSM 배수: NB_CSM_multiple.json 신계약CSM배수_연누계
 - 보험손익/당기순이익(당분기, 억원): PL_breakdown.json 항목 1/24, 값_당분기, 비면 누계 차분(백만원 -> 억원 /100)
+- 기본 지표 해약환급금준비금(IFRS17_BS 5, 적립 잔액, 백만원 -> 억원)은 ROE 다음 기본 목록에 들어간다(owner 2026-10-08).
 - 추가 지표(화면 기본 목록에는 없고 사용자가 끌어다 넣는 것, default=false): 지급여력금액(K-ICS 1)·지급여력기준금액(K-ICS 14)·신계약 CSM(NB_CSM_multiple 신계약CSM_연누계)·
-  투자손익(PL 17 당분기)·자본총계(IFRS17_BS 3)·자산총계(IFRS17_BS 1)·해약환급금준비금(IFRS17_BS 5, 적립 잔액). 전부 금액이라 중앙값은 만들지 않는다.
+  투자손익(PL 17 당분기)·자본총계(IFRS17_BS 3)·자산총계(IFRS17_BS 1). 전부 금액이라 중앙값은 만들지 않는다.
 - ROE(연환산): 당기순이익 누계(항목 24) x 4/q / 평균(직전 4Q 자본, 당분기말 자본)(IFRS17_BS 항목 3), 두 자본 > 0 일 때만, 2024.1Q 부터
 - 유지율 13/25/37/61회차: master_persistency.json 회차별 채널행 합산 Σ유지/Σ대상 (원문오기 SWAPPED=맞교환, INCONSISTENT=제외). 화면에서는 한 차트에 모아 비교
 - 손해율: master_loss_ratio.json 합계/합계/현재가치 Σ예상보험금/Σ위험보험료 (세그먼트 합산)
@@ -366,6 +367,11 @@ METRICS = [
          defn="당기순이익 누계 연환산 ÷ 평균자본(직전 결산말·당분기말)",
          note="공시 ROE와 같은 정의로 계산했고 2024.1Q부터 가능합니다. 자본이 0 이하인 구간은 산출하지 않습니다. 1Q는 4배, 2Q는 2배로 연환산해 계절성이 있습니다.",
          v=roe),
+    dict(id="surrender_reserve", group="IFRS17 · 손익", label="해약환급금준비금", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False,
+         defn="해약환급금준비금 적립 잔액(분기말, 별도 기준)",
+         note="적립액 잔액입니다(그 분기에 새로 쌓은 금액이 아님). 생명보험 중심 항목이고 공시하지 않는 회사는 n/a 입니다. 금액이라 회사 규모에 비례합니다.",
+         v=surrender_eok),
     *[dict(id=f"persist{n}", group="유지율 · 손해율", label=f"{n}회차 유지율", unit="%", kind="pct", dec=1,
            period="반기", connect=True, median=True, clip=False,
            chart_group="persist", chart_label="유지율 (회차별)", sub=f"{n}회차",
@@ -408,11 +414,6 @@ METRICS = [
          defn="IFRS17 재무상태표 자산총계, 분기말 별도 기준",
          note="금액이라 회사 규모에 비례합니다.",
          v=assets_eok),
-    dict(id="surrender_reserve", group="IFRS17 · 손익", label="해약환급금준비금", unit="억원", kind="eok", dec=0,
-         period="분기", median=False, clip=False, default=False,
-         defn="해약환급금준비금 적립 잔액(분기말, 별도 기준)",
-         note="적립액 잔액입니다(그 분기에 새로 쌓은 금액이 아님). 생명보험 중심 항목이고 공시하지 않는 회사는 n/a 입니다. 금액이라 회사 규모에 비례합니다.",
-         v=surrender_eok),
 ]
 
 
