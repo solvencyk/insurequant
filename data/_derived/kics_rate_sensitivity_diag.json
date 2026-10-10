@@ -609,5 +609,7 @@
   "KR1108|2026.1Q": "absent_section",
   "KR1108|2025.4Q": "absent_section",
   "KR1108|2025.3Q": "absent_section",
-  "KR1108|2025.2Q": "absent_section"
+  "KR1108|2025.2Q": "absent_section",
+  "KR1107|2024.4Q": "extracted",
+  "KR1107|2025.2Q": "extracted"
 }
