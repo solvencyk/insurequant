@@ -1,0 +1,3134 @@
+[
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 1,
+    "새값": 116674.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 116674.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 2,
+    "새값": 14974.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 14974.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 3,
+    "새값": 89256.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 89256.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 4,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 5,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 6,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 7,
+    "새값": 20419.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 20419.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 8,
+    "새값": 241323.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=281,545.9억, gap=40,222.9억 = 16.7% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [116674, 14974, 89256, 20419]가 이 값과 동일(별개 문서 재독)] Scan-only PDF (page images / glyph paths, no text layer). Table has no VFA columns (same as 2025.2Q master convention: items 4-6 = 0). Negative shown in parentheses: (9,407) -> -9407. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2025.1Q",
+      "값": 241323.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.1Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5) 무저해지상품 해지율 예외모형 사용에 관한 사항: - 해당사항 없음",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2025.1Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 1,
+    "새값": 105163.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 105163.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 2,
+    "새값": 15173.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 15173.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 3,
+    "새값": 93939.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 93939.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 4,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 5,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 6,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 7,
+    "새값": 20472.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 20472.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 8,
+    "새값": 234747.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2025년 3분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=276,212.8억, gap=41,465.8억 = 17.7% of item8)] [C5 텍스트층 교차: n/a]  Scan-only PDF (no text layer). Table has no VFA columns (items 4-6 = 0 per 2025.2Q master convention). Negative shown as minus sign: -9,931. Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2025.3Q",
+      "값": 234747.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.3Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5) 무저해지상품 해지율 예외모형 사용에 관한 사항: - 해당사항 없음",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2025.3Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 1,
+    "새값": 92563.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 92563.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 2,
+    "새값": 14598.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 14598.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 3,
+    "새값": 92850.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 92850.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 4,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 5,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 6,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 7,
+    "새값": 20386.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 20386.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2025.4Q",
+    "항목번호": 8,
+    "새값": 220397.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0010_KB손해보험.pdf",
+      "쪽": "40-41 (표가 쪽 경계에 걸림: 상세행 p40, 합계행 p41 상단)",
+      "표제": "4-6-2) 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=262,197.0억, gap=41,800.0억 = 19.0% of item8)] [C5 텍스트층 교차: n/a]  Annual (결산) template, 136 pages, mostly outlined glyphs (text layer only on some pages and none for this table). Located via top-strip OCR locator (keyword hit on p41), values read by eye from 240dpi clips. Detail rows on p40, 합계 row on p41. No VFA columns (items 4-6 = 0).",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2025.4Q",
+      "값": 220397.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 1,
+    "새값": 73404.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 73404.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 2,
+    "새값": 14460.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 14460.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 3,
+    "새값": 94776.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 94776.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 4,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 5,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 6,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 7,
+    "새값": 21356.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 21356.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 8,
+    "새값": 203996.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 8,
+      "표제": "2-4) 회계모형별, 포트폴리오별 보험부채 현황 <2026년 1분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=246,515.2억, gap=42,519.2억 = 20.8% of item8)] [C5 텍스트층 교차: n/a]  Scan-only/outlined-glyph PDF (only 900 chars of text layer on whole file). No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2026.1Q",
+      "값": 203996.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.1Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5) 무저해지상품 해지율 예외모형 사용에 관한 사항: - 해당사항 없음 (다음 쪽 상단)",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2026.1Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 1,
+    "새값": 44394.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 44394.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 2,
+    "새값": 15157.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 15157.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 3,
+    "새값": 107216.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 107216.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 4,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 5,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 6,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 7,
+    "새값": 22176.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 22176.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 8,
+    "새값": 188943.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 9,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026년 2분기>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 14행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=232,490.4억, gap=43,547.4억 = 23.0% of item8)] [C5 텍스트층 교차: n/a]  Pure image/outlined PDF: 0 text chars on all 64 pages. No VFA columns (items 4-6 = 0). Column sums of all 14 detail rows reproduce the 합계 row. BEL falls sharply vs 2026.1Q (73,404 -> 44,394) while CSM rises (94,776 -> 107,216); the same pattern is stated in the filing's own 2-2 narrative, so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2026.2Q",
+      "값": 188943.0
+    }
+  },
+  {
+    "원보험사코드": "KR0010",
+    "공시분기": "2026.2Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0010_KB손해보험.pdf",
+      "쪽": 11,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지상품 해지율 예외모형 사용에 관한 사항: - 해당사항 없음 (표 다음다음 쪽)",
+    "행": {
+      "원보험사코드": "KR0010",
+      "원수사명": "KB손해보험",
+      "티커": "002550",
+      "생손보여부": "손해보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2026.2Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 1,
+    "새값": 137651.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 137651.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 2,
+    "새값": 2853.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 2853.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 3,
+    "새값": 17398.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 17398.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 4,
+    "새값": 99039.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 99039.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 5,
+    "새값": 953.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 953.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 6,
+    "새값": 3449.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 3449.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 8,
+    "새값": 261343.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 12행 열합: OK(rounding-tol; diffs={'GMM_BEL': 2, 'GMM_CSM': 2, 'VFA_BEL': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,504.1억, gap=4,161.1억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)] [C6 후속 공시 교차: 2026.1Q 공시 p9 전년동기 비교표 <2025.1Q> 합계행 [137651, 2853, 17398, 99039, 953, 3449, 0]가 이 값과 동일(별개 문서 재독)] Table is split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows are transcribed. 합계 is computed by the issuer from unrounded data: detail sums differ by +2 (GMM BEL 137,653 vs 137,651), +2 (GMM CSM 17,400 vs 17,398) and -1 (VFA BEL 99,038 vs 99,039) -> within 0.5 per non-blank cell. PAA column is blank in every row and in the 합계 row (item7 = 0).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2025.1Q",
+      "값": 261343.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.1Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": 10,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지상품 해지율 예외모형 사용에 관한 사항: 해당 사항 없음.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2025.1Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 1,
+    "새값": 134523.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.2Q",
+      "값": 134523.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 2,
+    "새값": 2990.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.2Q",
+      "값": 2990.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 3,
+    "새값": 17763.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.2Q",
+      "값": 17763.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 4,
+    "새값": 102798.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.2Q",
+      "값": 102798.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 5,
+    "새값": 987.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.2Q",
+      "값": 987.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 6,
+    "새값": 4089.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.2Q",
+      "값": 4089.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.2Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 8,
+    "새값": 263150.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=267,269.2억, gap=4,119.2억 = 1.6% of item8)] [C5 텍스트층 교차: n/a] [C6 후속 공시 교차: 2026.2Q 공시 p10 전년동기 비교표 <2025.2Q> 합계행 [134523, 2990, 17763, 102798, 987, 4089, 0]가 이 값과 동일(별개 문서 재독)] Table split over pages 8-9 with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 2,991 vs 2,990) and +1 (GMM CSM 17,764 vs 17,763); BEL columns and VFA columns reconcile exactly. PAA column blank in every row and in the 합계 row (item7 = 0). Hidden text layer on this file is merged/garbled (not usable as cross-check).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2025.2Q",
+      "값": 263150.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.2Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": 11,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지상품 해지율 예외모형 사용에 관한 사항: 해당 사항 없음.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2025.2Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 1,
+    "새값": 131630.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 131630.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 2,
+    "새값": 3099.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 3099.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 3,
+    "새값": 18477.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 18477.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 4,
+    "새값": 110170.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 110170.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 5,
+    "새값": 1010.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 1010.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 6,
+    "새값": 4852.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 4852.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.3Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 8,
+    "새값": 269238.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (25.3Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -1, 'GMM_RA': -1, 'GMM_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=273,420.7억, gap=4,182.7억 = 1.6% of item8)] [C5 텍스트층 교차: OK (text layer p8 == image read)]  Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by -1 (GMM BEL 131,629 vs 131,630), -1 (GMM RA 3,098 vs 3,099), +1 (GMM CSM 18,478 vs 18,477); VFA columns reconcile exactly. PAA column blank (item7 = 0). NOTE: the 2-3 narrative on p6 says 최선추정부채 24.59조원 whereas the table's BEL (GMM+VFA) is 241,800억 = 24.18조원; narrative RA 0.41조 and CSM 2.33조 do match the table (4,109 / 23,329). 24.59 = BEL + RA, i.e. the narrative's BEL figure looks like BEL+RA; the table is internally closed and item8 is 98.5% of BS item20 (gap ~4.2k억 = LIC, same as the 1Q/2Q gaps), so the table values are kept.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2025.3Q",
+      "값": 269238.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.3Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf",
+      "쪽": 10,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지상품 해지율 예외모형 사용에 관한 사항: 해당 사항 없음.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2025.3Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 1,
+    "새값": 127178.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 127178.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 2,
+    "새값": 3008.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 3008.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 3,
+    "새값": 15318.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 15318.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 4,
+    "새값": 114055.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 114055.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 5,
+    "새값": 1020.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 1020.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 6,
+    "새값": 5266.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 5266.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2025.4Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 8,
+    "새값": 265845.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "24-25 (표가 쪽 경계에 걸림: 상세행 p24~p25 상단, 합계행 p25 상단)",
+      "표제": "나. 회계모형별, 포트폴리오별 보험부채 현황 <2025년> (결산공시 양식; 분기공시의 2-4에 해당)",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_BEL': -2, 'GMM_RA': 1, 'VFA_BEL': 1, 'VFA_CSM': 1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=269,967.0억, gap=4,122.0억 = 1.6% of item8)] [C5 텍스트층 교차: OK (p307-308 (같은 파일 재무제표 주석 (3) 회계모형별, 포트폴리오별 보험부채 현황, 단위 백만원, 텍스트층): 합계 row and all 13 detail rows of the finer-unit text-layer table, /100 rounded, equal the image read)]  Annual (결산) template, 564 pages: body p1-134 is image-only (outlined glyphs, located with a top-strip OCR locator: keyword hit on p24/p25), audited FS + notes p189-564 carry a text layer. The same table also exists in the FS notes (p307-308, 백만원): its 합계 row and all 13 detail rows divided by 100 and rounded reproduce the image read cell for cell (so the body table is exactly round(notes/100)). 합계 of the body table comes from unrounded issuer data: detail sums differ by -2 (GMM BEL 127,176 vs 127,178), +1 (GMM RA 3,009 vs 3,008), +1 (VFA BEL 114,056 vs 114,055), +1 (VFA CSM 5,267 vs 5,266); GMM CSM and VFA RA reconcile exactly. PAA column blank (item7 = 0). The 2024 comparative table on p25-p26 (합계 133,169 / 2,821 / 16,910 / 100,648 / 1,012 / 3,872) equals the notes' 전기 합계 /100 (13,316,878 / 282,094 / 1,690,982 / 10,064,838 / 101,193 / 387,230).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2025.4Q",
+      "값": 265845.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2025.4Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0079_미래에셋생명.pdf",
+      "쪽": 55,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 바. 무저해지상품 해지율 예외모형 사용에 관한 사항: - 해당 사항 없음 (결산공시 양식에서는 표와 떨어진 p55에 위치, 같은 파일 본문)",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2025.4Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 1,
+    "새값": 117441.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 117441.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 2,
+    "새값": 3121.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 3121.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 3,
+    "새값": 16326.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 16326.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 4,
+    "새값": 114632.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 114632.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 5,
+    "새값": 1032.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 1032.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 6,
+    "새값": 5180.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 5180.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 8,
+    "새값": 257732.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "7-8 (표가 쪽 경계에 걸림: 상세행 p7~p8 상단, 합계행 p8)",
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <해당 분기 (26.1Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_RA': 1, 'GMM_CSM': 1, 'VFA_RA': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=261,994.3억, gap=4,262.3억 = 1.7% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q1_p008_300dpi_clip08-20-96-25.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 7-8 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ by +1 (GMM RA 3,122 vs 3,121), +1 (GMM CSM 16,327 vs 16,326), -1 (VFA RA 1,031 vs 1,032); GMM BEL, VFA BEL and VFA CSM reconcile exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). NOTE: the 2-3 narrative (p6) quotes 최선추정부채 23.63조원 while table BEL (GMM+VFA) = 232,073억 = 23.21조원; narrative RA 0.42조 and CSM 2.15조 match the table (4,153 / 21,506); 23.63 = BEL + RA (same pattern as 2025.3Q). Table kept (internally closed, item8 = 98.4% of BS item20).",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2026.1Q",
+      "값": 257732.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.1Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf",
+      "쪽": 10,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지상품 해지율 예외모형 사용에 관한 사항: 해당 사항 없음",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2026.1Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 1,
+    "새값": 111446.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 111446.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 2,
+    "새값": 3252.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 3252.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 3,
+    "새값": 15198.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 15198.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 4,
+    "새값": 140108.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 140108.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 5,
+    "새값": 1170.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 1170.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 6,
+    "새값": 8113.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 8113.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 8,
+    "새값": 279287.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": "8-9 (표가 쪽 경계에 걸림: 상세행 p8~p9 상단, 합계행 p9)",
+      "표제": "2-4. 회계 모형 별, 포트폴리오별 보험 부채 현황 <해당 분기 (26.2Q)>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 13행 열합: OK(rounding-tol; diffs={'GMM_CSM': -1})] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=283,544.1억, gap=4,257.1억 = 1.5% of item8)] [C5 텍스트층 교차: n/a]  합계행은 300dpi 타이트 클립(img/KR0079_FY2026_Q2_p009_300dpi_clip08-28-96-32.png)으로 2차 독해해 1차와 동일 확인. Table split over pages 8-9 (rows) with many blank portfolio rows; only non-blank rows transcribed. 합계 comes from unrounded issuer data: detail sums differ only by -1 in GMM CSM (15,197 vs 15,198); every other column reconciles exactly. PAA blank (item7 = 0). The text layer of this file is merged/garbled (not usable). Big VFA step-up vs 2026.1Q (VFA BEL 114,632 -> 140,108, VFA CSM 5,180 -> 8,113) moves in step with the BS item20 (+21,550억) and item8 (+21,555억), and the 2-3 narrative on p7 states the same CSM 2.33조 (table 23,311억) and RA 0.45조 (table 4,422억; narrative BEL 25.58조 vs table 25.16조 = BEL + RA again), so it is source behaviour, not a misread.",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2026.2Q",
+      "값": 279287.0
+    }
+  },
+  {
+    "원보험사코드": "KR0079",
+    "공시분기": "2026.2Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0079_미래에셋생명.pdf",
+      "쪽": 11,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지상품 해지율 예외모형 사용에 관한 사항: 해당 사항 없음",
+    "행": {
+      "원보험사코드": "KR0079",
+      "원수사명": "미래에셋생명보험",
+      "티커": "085620",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2026.2Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 1,
+    "새값": 202841.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 202841.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 2,
+    "새값": 4711.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 4711.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 3,
+    "새값": 24964.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 24964.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 4,
+    "새값": 14969.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 14969.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 5,
+    "새값": 183.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 183.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 6,
+    "새값": 142.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 142.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.1Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 8,
+    "새값": 247810.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 7,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.1Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=265,843.7억, gap=18,033.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2026.1Q",
+      "값": 247810.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.1Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지 상품 해지율 예외모형 사용에 관한 사항 해당 없습니다.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2026.1Q",
+      "값": 0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 1,
+    "새값": 190996.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 1,
+      "항목명": "일반모형_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 190996.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 2,
+    "새값": 5023.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 2,
+      "항목명": "일반모형_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 5023.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 3,
+    "새값": 25870.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 3,
+      "항목명": "일반모형_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 25870.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 4,
+    "새값": 19265.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 4,
+      "항목명": "변동수수료접근법_최선추정부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 19265.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 5,
+    "새값": 213.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 5,
+      "항목명": "변동수수료접근법_위험조정",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 213.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 6,
+    "새값": 587.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 6,
+      "항목명": "변동수수료접근법_보험계약마진",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 587.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 7,
+    "새값": 0.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 7,
+      "항목명": "보험료배분접근법_보험부채",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 2,
+      "공시분기": "2026.2Q",
+      "값": 0.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 8,
+    "새값": 241954.0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 8,
+      "표제": "2-4. 회계모형별, 포트폴리오별 보험부채 현황 <2026.2Q>",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "[C1 합계행 vs 상세행 15행 열합: OK] [C2 item8 = item1..7 합(표에 합계 열 없음)] [C3 BS item20 교차: OK (item20=259,713.7억, gap=17,759.7억 = 7.3% of item8)] [C5 텍스트층 교차: n/a]  Digital-outline PDF (no text layer, vector glyph paths); render is crisp. Direct-Par rows are labelled 변액사망/변액연금저축 in this filing (2026.1Q: 무배당사망/무배당연금저축). Column sums of all 15 detail rows reproduce the 합계 row digit for digit.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 8,
+      "항목명": "보험부채_합계",
+      "섹션": "보험부채_모형별구성",
+      "레벨": 1,
+      "공시분기": "2026.2Q",
+      "값": 241954.0
+    }
+  },
+  {
+    "원보험사코드": "KR0087",
+    "공시분기": "2026.2Q",
+    "항목번호": 9,
+    "새값": 0,
+    "옛값": null,
+    "근거": {
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0087_동양생명.pdf",
+      "쪽": 9,
+      "표제": "2-5. 무.저해지 상품 해지율 예외모형 사용에 관한 사항",
+      "단위환산": "억원 -> 억원 (환산 없음)",
+      "방법": "image-read"
+    },
+    "비고": "2-5 절 문구 직독: 2-5. 무저해지 상품 해지율 예외모형 사용에 관한 사항: 사용과 관련하여 해당사항 없습니다.",
+    "행": {
+      "원보험사코드": "KR0087",
+      "원수사명": "동양생명",
+      "티커": "082640",
+      "생손보여부": "생명보험",
+      "항목번호": 9,
+      "항목명": "무저해지상품_해지율_예외모형_사용여부",
+      "섹션": "해지율_예외모형",
+      "레벨": 1,
+      "공시분기": "2026.2Q",
+      "값": 0
+    }
+  }
+]
