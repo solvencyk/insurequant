@@ -7,6 +7,25 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- 사별 비교: 모바일 손해율 curve 재정비 · 손익 연 누계(YTD) 전환 · 테스트 선언 보정
+
+티켓 `inbox/designer/20261011T0300Z__orchestrator__MULTI_2025.4Q-2026.2Q__compare_mobile_curve_restyle_and_ytd_pl.md`.
+
+- **모바일 curve**: SVG 오른쪽 라벨 여백(96px)·선 끝 라벨 삭제 -> 카드 폭 100%, 선은 전부 실선(3px), 회사 구분은 색만. 눈금 숫자는 선 위에 얹고 배경색 테두리(paint-order)로 가림 방지. 업계 중앙값 회색 점선·표(색 견본=선 색) 유지.
+- **색 규칙**(`compare.html` `assignLineColors`/`lineColors`, 데스크톱 Chart.js·모바일 SVG·표 견본 공통): 회사 키컬러(`theme.js` `IQTheme.keyColors`, IFRS17.html 의 맵을 이관 — IFRS17 동작 동일) 우선. 배경과 대비 3:1 미만이면 색상·채도 유지하고 밝기만 이동(라이트 `#ffffff`·다크 `#151615`). 키컬러가 없거나 먼저 고른 회사 색과 CIEDE2000 20 미만(라이트·다크 중 작은 쪽)이면 파스텔 팔레트(틸·살몬·블루·머스터드)에서 안 겹치는 첫 색. 키컬러 회사끼리 비슷하면 먼저 고른 회사가 키컬러를 지킨다. 배정은 테마와 무관, 표시 색만 테마별.
+- **YTD**: `viz_build_compare_panel.py` 의 보험손익·당기순이익·투자손익을 PL `값`(연 누계)으로(`값_당분기`·누계 차분 폐기). 카드 제목 「… · 연 누계」, 정의·도움말에 YTD 명시, 최신 공시 줄에 기간(상반기(1~2Q) 누계 등), 오래된 값 분기 칩 툴팁에 기간. 값이 생긴 칸 +11/+2/+56(차분이 불가능했던 칸). ROE 값 불변(입력이 이미 YTD, 1Q×4·2Q×2·3Q×4/3·4Q×1).
+- **테스트**: `tests/test_push_gate_wiring.py` — `LIVE_ARTIFACT_READERS` 에 `data/company_segment.json`(읽는 쪽 `viz_build_compare_panel`), `NOT_A_MASTER`(분류표)·`MASTER_SHEET_PENDING`(`insurance_liability_portfolio.json`, 시트 없음 — 시트가 생기면 선언 삭제를 강제하는 검사 포함).
+
+## 2026-10-11 -- IFRS17 섹션 3 모바일 단순형 (CSM 막대 + 신계약 CSM 선)
+
+티켓 `inbox/designer/20261011T0200Z__orchestrator__MULTI_2025.2Q-2026.2Q__combo_mobile_simple_csm_line.md`. IFRS17.html 만.
+
+- `max-width:640px`(`matchMedia`)에서만 `hcSimpleChart()`: 막대=기말 CSM(r[0]+r[1], 표 CSM 행과 같은 값, 주축 0 시작, 회사 키컬러·없으면 에메랄드), 꺾은선=신계약 CSM(`y1`, 연도=누계·분기=당분기). 범례 2개(`CSM 잔액 (좌)`·`신계약 CSM (우)`), 제목 「CSM 잔액 · 신계약 CSM (조원|억원)」 1줄, x축 `26.2Q`·연도 `2023`(회전 0), 막대 위 값(꺾은선 점과 겹치면 막대 안쪽으로, 배경색 테두리). 값은 터치 툴팁에도(연도 모드 누계 푸터).
+- 표 캡션(`#histTableCap`): 모바일은 「값(억원) · 음수 △ · 기준 설명 ?」 한 줄 + 팝오버(`#help-hc-cap`)에 기존 전문 이동. † 안내는 「† 소급재작성 비교 기준」으로 줄이고 사유 팝오버는 그대로. 모바일에 없는 빗금·줄무늬·구성 미분리·축 생략 안내문은 모바일에서만 제외, 구성 없는 연말 안내는 모바일 문구로 대체.
+- 검증: 39사 × (연도·분기) 78조합 모바일 오류 0, 데스크톱 시그니처(라벨·데이터·제목·축·캡션·표·안내·aria) 해시가 수정 전 사본과 동일(70480515). 모바일 375px 라이트·다크·연도·분기 스크린샷 확인.
+
+---
+
 ## 2026-10-11 -- IFRS17 섹션 3 콤보: 2-4 구성이 없는 연말(2023) 막대 채움
 
 티켓 `inbox/designer/20261011T0000Z__orchestrator__MULTI_2023.4Q-2024.4Q__combo_backfill_2023_year_end.md`. IFRS17.html · `scripts/viz_build_csm_combo_panel.py` · `scripts/viz_build_compare_panel.py`(문구 1건). 마스터 JSON 읽기만, 커밋·push 안 함.

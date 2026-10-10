@@ -538,7 +538,23 @@
   function boot(){ mount(); mountShare(); syncSectionNav(); watchForRerender(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
+  /* 회사 키컬러 (KEYCOLOR-V1, owner 확정 2026-06-12) — 표시명 -> 색. 회사 키컬러의 단일 정의다.
+     IFRS17.html(차트 주선·워터폴 막대)과 compare.html(손해율 가정 curve)이 같은 맵을 읽는다. 맵에 없는 회사는 키컬러가 없는 것이다. */
+  var KEY_COLORS = {
+    "삼성생명":"#1428A0", "삼성생명보험":"#1428A0", "삼성화재":"#1428A0", "삼성화재해상보험":"#1428A0",
+    "한화생명":"#F37321", "한화생명보험":"#F37321", "한화손해보험":"#F37321",
+    "신한라이프":"#0046FF", "신한라이프생명보험":"#0046FF", "신한이지손해보험":"#0046FF",
+    "KB손해보험":"#FFBC00", "케이비손해보험":"#FFBC00", "KB라이프생명":"#FFBC00", "케이비라이프생명보험":"#FFBC00",
+    "NH농협생명":"#00A05E", "엔에이치농협생명":"#00A05E", "NH농협손해보험":"#00A05E", "엔에이치농협손해보험":"#00A05E",
+    "미래에셋생명":"#F58220", "미래에셋생명보험":"#F58220",
+    "DB손해보험":"#0E8C3A", "디비손해보험":"#0E8C3A", "DB생명":"#0E8C3A", "디비생명보험":"#0E8C3A",
+    "현대해상":"#F47920", "현대해상화재보험":"#F47920",
+    "교보생명":"#0B5D52", "교보생명보험":"#0B5D52",
+    "메리츠화재":"#E60012", "메리츠화재해상보험":"#E60012",
+    "롯데손해보험":"#DA291C"
+  };
+
   window.IQTheme={ isDark:function(){ return effective()==='dark'; }, current:effective, set:set, toggle:toggle,
                    chart:chart, applyChartJs:applyChartJs, echartsTooltip:echartsTooltip,
-                   syncSectionNav:syncSectionNav };
+                   syncSectionNav:syncSectionNav, keyColors:KEY_COLORS };
 })();

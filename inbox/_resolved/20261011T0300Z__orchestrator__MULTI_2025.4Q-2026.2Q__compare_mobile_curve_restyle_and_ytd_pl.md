@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T0300Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2025.4Q-2026.2Q
@@ -38,4 +38,4 @@ owner: 「사별 비교에 보여주는 손익 관련 항목은 당분기 말고
 - 색 배정 규칙(키컬러/파스텔, 유사색 판정 방식)과 확인한 조합(키컬러 있는 회사끼리·없는 회사 포함·유사 파랑 둘, 라이트·다크, 375px 와 데스크톱), YTD 전환 결과(보험손익·당기순이익·ROE 샘플 값과 도움말), 테스트 통과, 스크린샷 경로, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+디자이너 완료(2026-10-11, designer Sonnet, 약 20분, 토큰 282k): 모바일 curve 폭 100%·라벨 없음·색만, 키컬러 맵 theme.js IQTheme.keyColors 공유화(키컬러 우선·유사색은 파스텔 교체, CIEDE2000<20), 데스크톱 curve 도 같은 색, 보험손익·당기순이익·투자손익 YTD 전환(ROE 불변), test_push_gate_wiring 선언 보정(company_segment NOT_A_MASTER, panel_csm_combo MASTER_SHEET_PENDING). 후속: ILP xlsx 시트 신설(publishing), theme.js 함께 배포.

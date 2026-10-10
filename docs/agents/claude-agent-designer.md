@@ -144,7 +144,7 @@ Full baseline table + audit methodology: **[`docs/a11y_baseline.md`](../a11y_bas
 
 1. **Negative numbers → △ (samo)** — Korean accounting; top-priority owner directive. Lives in JS formatters (`fmtNum`/`samo`/`fmtEok`), every new table/chart must apply it.
 2. **Tier1 capital donut "100%+"** — issuance ÷ recognised-cap can legitimately exceed 100%; show "100%+" with real value in tooltip.
-3. **현대해상 key color = orange `#F47920`** (KEY_COLORS map).
+3. **현대해상 key color = orange `#F47920`** (KEY_COLORS map — 정의는 `theme.js` 의 `IQTheme.keyColors` 한 곳, IFRS17.html·compare.html 이 읽는다).
 4. **Mobile = current-period only** (see 5.4).
 
 The `frontend-design` skill (or any redesign) must treat these four as fixed constraints.
