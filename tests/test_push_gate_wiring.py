@@ -406,6 +406,8 @@ LIVE_ARTIFACT_READERS = {
     "data/persistency/panel_persistency.json": ["viz_build_persistency_lossratio_panels"],
     # 2026-10-08 compare.html(사별 비교). 검사기 = 빌더의 `--check`(마스터 7종에서 다시 만든 바이트 == 디스크 패널 JSON + 크기 예산).
     "data/compare/panel_compare.json": ["viz_build_compare_panel"],
+    # 2026-10-10 IFRS17.html 섹션 3 콤보 차트·표. 검사기 = 빌더의 `--check`(마스터 3종에서 다시 만든 바이트 == 디스크 패널 JSON + 크기 예산).
+    "data/csm_combo/panel_csm_combo.json": ["viz_build_csm_combo_panel"],
     # `/` 로 끝나면 **접두 선언**이다 — 그 폴더 아래 전부를 한 검사기가 덮는다는 뜻.
     # `public_exports/` 는 사용자가 내려받는 12개 스냅샷인데(download-survey.js), 파일 목록이
     # `export_public_sheets.MASTERS` 하나에서 나오고 `validate_live_artifacts` 도 그 목록을
@@ -613,6 +615,8 @@ PANEL_DERIVED_FROM = {
                                                   "PL_breakdown.json", "IFRS17_BS.json",
                                                   "data/persistency/master_persistency.json",
                                                   "data/loss_ratio/master_loss_ratio.json"),
+    # 2026-10-10 IFRS17.html 섹션 3. 잔여보장요소(경영공시 2-4) + 기말 CSM 대조(CSM_waterfall) + BS 보험계약부채(IFRS17_BS item 20). scripts/viz_build_csm_combo_panel.py
+    "data/csm_combo/panel_csm_combo.json":       ("insurance_liability_portfolio.json", "CSM_waterfall.json", "IFRS17_BS.json"),
 }
 
 

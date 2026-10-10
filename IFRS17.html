@@ -58,6 +58,10 @@
     .coming-soon p{font-size:16px;margin:0}
     .table-container{margin-top:32px;}
     .chart-sm{height:380px}
+    .hist-ctrls{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;margin:10px 0;font-size:14px}
+    .hist-ctrls label{display:inline-flex;gap:6px;align-items:center}
+    .hist-fs{border:0;padding:0;margin:0;display:inline-flex;gap:6px 14px;flex-wrap:wrap;align-items:center}
+    .hist-fs legend{float:left;padding:0 6px 0 0;font-size:14px;color:var(--muted)}
     .placeholder-empty{text-align:center;padding:44px 16px;color:var(--muted);font-size:16px}
     .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:8px;background:var(--bg)}
     .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:13px}
@@ -293,7 +297,22 @@
       <h2>3) CSM 시계열 (<span id="histRange">…</span>)</h2>
       <div class="small-muted" id="histCap">분기별 CSM 추이 · 단위 조원 · 신계약 CSM은 당기 증분(YTD를 분기로 환산)</div>
       <div id="histStub" class="stub-msg" style="display:none"></div>
-      <div class="chart-container"><canvas id="canvasHist" role="img" aria-label="CSM 시계열 차트"></canvas></div>
+      <div id="histCombo" style="display:none">
+        <div class="hist-ctrls">
+          <fieldset id="histVfaRow" class="hist-fs"><legend>VFA 표시</legend>
+            <label><input type="radio" name="histVfa" value="merge" checked/> CSM·BEL·RA 에 합산(기본)</label>
+            <label><input type="radio" name="histVfa" value="block"/> VFA 를 한 덩어리로 따로</label>
+          </fieldset>
+          <label id="histPaaLab"><input type="checkbox" id="histPaa"/> PAA 접기</label>
+          <label><input type="checkbox" id="histLic" checked/> 발생사고요소(추정) 막대</label>
+          <label><input type="checkbox" id="histBrk" checked/> 세로축 일부 생략(~)</label>
+        </div>
+        <div class="chart-container"><canvas id="canvasHistCombo" role="img" aria-label="CSM 시계열 차트(잔여보장요소 누적 막대와 신계약 CSM 꺾은선)"></canvas></div>
+        <div class="small-muted" id="histComboNote" style="margin-top:8px"></div>
+        <div class="small-muted" id="histTableCap" style="margin-top:14px"></div>
+        <div class="table-wrap" id="histTable"></div>
+      </div>
+      <div class="chart-container" id="histOldBox"><canvas id="canvasHist" role="img" aria-label="CSM 시계열 차트"></canvas></div>
     </div>
     <div class="panel" id="sec-amort" data-pane="amort">
       <h2>4) CSM 상각 스케줄 (연도별)</h2>
@@ -408,6 +427,8 @@
     // 섹션 8·9 패널 JSON — 마스터(손해율·유지율 시트)의 파생. 빌더 scripts/viz_build_persistency_lossratio_panels.py
     lr: [resolveUrl("data/loss_ratio/panel_loss_ratio.json")],
     ps: [resolveUrl("data/persistency/panel_persistency.json")],
+    // 섹션 3 콤보 차트·표 — 빌더 scripts/viz_build_csm_combo_panel.py (잔여보장요소 2-4 + 발생사고요소 추정)
+    cc: [resolveUrl("data/csm_combo/panel_csm_combo.json")],
   };
 
   const NB_LOOKUP = {
@@ -446,6 +467,7 @@
     '비엔피파리바카디프생명보험':'BNP카디프생명', '교보라이프플래닛생명보험':'교보라이프플래닛',
     '처브라이프생명보험':'처브라이프', '메트라이프생명보험':'메트라이프', '악사손해보험':'악사손보',
     '신한라이프생명보험':'신한라이프', '푸본현대생명보험':'푸본현대',
+    '스위스리아시아':'스위스리', '알지에이리인슈어런스':'RGA', '마이브라운반려동물전문보험':'마이브라운',
   };
   function shortName(n){
     if (!n) return n;
@@ -1492,6 +1514,7 @@
   // 패널 JSON 2개(빌더 scripts/viz_build_persistency_lossratio_panels.py)를 fetch 한다 — HTML 에 인라인하지 않는다.
   // 회사 → 공시분기 중첩. 값이 null 인 칸은 '-' 로 쓰고 선은 끊는다(0 과 미공시를 섞지 않는다).
   const LRPS = { lr:null, ps:null };
+  const CSMC = { panel:null };   // 섹션 3 콤보 패널(JSON fetch, 인라인 금지)
   const LR_YEARS = ["1년","2년","3년","4년","5년","6년","7년","8년","9년","10년","11~15년","16~20년","21~25년","26~30년","30년 이후","현재가치"];
   const LR_RANK = {}; LR_YEARS.forEach((y,i)=>{ LR_RANK[y]=i; }); LR_RANK["1~10년"] = -1;   // 미래에셋은 1~10년을 한 칸으로 공시
   // 섹션 8 차트 x축: 이 폭 이하(모바일)는 칸마다 같은 폭, 초과(PC·태블릿)는 경과 연수에 비례. owner 가 바꾸려면 이 한 줄.
@@ -2283,6 +2306,174 @@
       return tbl;
     }
 
+    // ===== 섹션 3: CSM 시계열 = 묶음 누적 막대(잔여보장요소 | 발생사고요소 추정) + 보조축 신계약 CSM 꺾은선 + 값 표 =====
+    // 데이터: data/csm_combo/panel_csm_combo.json (scripts/viz_build_csm_combo_panel.py). 회사코드는 JSON 키로만 쓰고 화면에 안 낸다.
+    // 이 패널에 없는 회사(재보사 등)는 옛 CSM 시계열 선 차트로 폴백한다.
+    const HC_UI = { vfa:"merge", paa:false, lic:true, brk:true };   // 회사·다크 전환으로 다시 그려도 토글 상태 유지
+    function hcSamo(v,d){ const a=Math.abs(v).toLocaleString("ko-KR",{minimumFractionDigits:d,maximumFractionDigits:d}); return (v<0 && Number(a.replace(/,/g,""))!==0) ? "△"+a : a; }
+    function hcFmt(v,unit){ return unit==="조" ? hcSamo(v/10000,2)+"조" : hcSamo(v,0)+"억"; }
+    function hcHatch(color,bg){
+      const c=document.createElement("canvas"); c.width=c.height=10; const x=c.getContext("2d");
+      x.fillStyle=bg; x.fillRect(0,0,10,10); x.strokeStyle=color; x.lineWidth=2.5;
+      x.beginPath(); x.moveTo(0,10); x.lineTo(10,0); x.moveTo(-2,2); x.lineTo(2,-2); x.moveTo(8,12); x.lineTo(12,8); x.stroke();
+      return x.createPattern(c,"repeat");
+    }
+    // CSM = 회사 키 컬러(currentKey) 그대로, 키 미등록사는 사이트 키컬러(에메랄드 --primary). 색을 밝히거나 섞지 않는다(owner 2026-10-10). BEL·RA·PAA·VFA 는 일부러 탁한 톤.
+    function hcColors(){
+      const t=(window.IQTheme&&IQTheme.chart())||{};
+      const csm=currentKey.isKey?currentKey.primary:(t.primary||"#0f6e68");
+      return { csm, bel:t.dark?"#7d8794":"#9aa3ae", ra:t.dark?"#8c8272":"#a99b83", paa:t.dark?"#5b6b66":"#6b7c76", vfa:t.dark?"#7d8760":"#8f9a6a",
+               ink:t.ink||"#3f4347", bg:t.bg||"#fff", muted:t.muted||"#63666b" };
+    }
+    // 축 생략: 조각선형 변환. B 이하(CSM 이 있는 곳)는 실제 눈금, 위는 k 배로 압축, 음수는 압축 안 함. 막대 조각 높이 = 누적 경계의 변환값 차이.
+    const hcF=(B,k)=>v=>v<=B?v:B+(v-B)*k, hcInv=(B,k)=>u=>u<=B?u:B+(u-B)/k;
+    function hcNice(range,n){ const raw=range/n, p=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/p; return (f<=1?1:f<=2?2:f<=5?5:10)*p; }
+    const hcBreakPlugin={ id:"axisBreak", afterDatasetsDraw(ch){
+      const o=ch.options.plugins.axisBreak; if(!o||!o.on) return;
+      const ctx=ch.ctx, a=ch.chartArea, yb=ch.scales.y.getPixelForValue(o.B);
+      ctx.save();
+      ctx.fillStyle=o.shade; ctx.fillRect(a.left,a.top,a.right-a.left,yb-a.top);
+      ctx.fillStyle=o.muted; ctx.font="11px sans-serif"; ctx.textAlign="left"; ctx.fillText("▲ 압축 구간(축 일부 생략)",a.left+6,a.top+13);
+      const wave=(x0,x1,yc)=>{
+        const n=Math.max(2,Math.round((x1-x0)/6)), st=(x1-x0)/n, py=(i,off)=>yc+off+((i%2)?1.5:-1.5);
+        ctx.beginPath(); ctx.moveTo(x0,py(0,-4));
+        for(let i=1;i<=n;i++) ctx.lineTo(x0+i*st,py(i,-4));
+        for(let i=n;i>=0;i--) ctx.lineTo(x0+i*st,py(i,4));
+        ctx.closePath(); ctx.fillStyle=o.bg; ctx.fill(); ctx.strokeStyle=o.ink; ctx.lineWidth=1;
+        [-4,4].forEach(off=>{ ctx.beginPath(); ctx.moveTo(x0,py(0,off)); for(let j=1;j<=n;j++) ctx.lineTo(x0+j*st,py(j,off)); ctx.stroke(); });
+      };
+      wave(a.left-14,a.left+4,yb);
+      o.bars.forEach(b=>{ const el=ch.getDatasetMeta(b.di).data[b.i]; if(el) wave(el.x-el.width/2-1,el.x+el.width/2+1,yb); });
+      ctx.restore();
+    }};
+
+    function renderHistCombo(host, company){
+      const P=CSMC.panel, co=P&&P.companies[company];
+      const box=q(host,"#histCombo"), old=q(host,"#histOldBox");
+      if(!co){ if(box) box.style.display="none"; if(old) old.style.display=""; return false; }
+      if(box) box.style.display=""; if(old) old.style.display="none";
+      const Q=P.meta.quarters;
+      const rangeEl=q(host,"#histRange"); if(rangeEl) rangeEl.textContent=Q[0]+"~"+Q[Q.length-1];
+      const capEl=q(host,"#histCap"); if(capEl) capEl.textContent="분기별 잔여보장요소(LRC) 기준 · 경영공시 2-4(2025.1Q부터) · 신계약 CSM은 당기 증분(우측 축) · 음수 △";
+      const rVfa=host.querySelectorAll("input[name=histVfa]"), cPaa=q(host,"#histPaa"), cLic=q(host,"#histLic"), cBrk=q(host,"#histBrk");
+      rVfa.forEach(r=>{ r.checked=(r.value===HC_UI.vfa); r.onchange=()=>{ HC_UI.vfa=r.value; drawHistCombo(host,company); }; });
+      cPaa.checked=HC_UI.paa; cLic.checked=HC_UI.lic; cBrk.checked=HC_UI.brk;
+      cPaa.onchange=()=>{ HC_UI.paa=cPaa.checked; drawHistCombo(host,company); };
+      cLic.onchange=()=>{ HC_UI.lic=cLic.checked; drawHistCombo(host,company); };
+      cBrk.onchange=()=>{ HC_UI.brk=cBrk.checked; drawHistCombo(host,company); };
+      drawHistCombo(host,company);
+      return true;
+    }
+    function drawHistCombo(host, company){
+      const P=CSMC.panel, co=P.companies[company], Q=P.meta.quarters, C=hcColors(), N=v=>v==null?0:v;
+      const coName=codeToName[company]||co.n;
+      const rows=Q.map(qq=>co.q[qq]||null);
+      const pend=P.meta.pending.filter(p=>p[0]===company).map(p=>p[1]);
+      const mism=P.meta.csm_mismatch.filter(m=>m[0]===company).map(m=>m[1]);
+      const hasVfa=rows.some(r=>r&&(N(r[1])||N(r[3])||N(r[5]))), hasPaa=rows.some(r=>r&&N(r[6])!==0), hasNb=rows.some(r=>r&&r[8]!=null);
+      const hasLic=HC_UI.lic&&rows.some(r=>r&&r[9]!=null);
+      const block=HC_UI.vfa==="block"&&hasVfa, hidePaa=HC_UI.paa;
+      const vfaRow=q(host,"#histVfaRow"); if(vfaRow) vfaRow.style.display=hasVfa?"":"none";
+      const paaLab=q(host,"#histPaaLab"); if(paaLab) paaLab.style.display=hasPaa?"":"none";
+      const segs=[];
+      if(!block) segs.push({label:"CSM",idx:[0,1],color:C.csm,stack:"LRC"},{label:"BEL (최선추정부채)",idx:[2,3],color:C.bel,stack:"LRC"},{label:"RA (위험조정)",idx:[4,5],color:C.ra,stack:"LRC"});
+      else segs.push({label:"CSM · 일반모형",idx:[0],color:C.csm,stack:"LRC"},{label:"BEL · 일반모형",idx:[2],color:C.bel,stack:"LRC"},{label:"RA · 일반모형",idx:[4],color:C.ra,stack:"LRC"},{label:"VFA 한 덩어리 (BEL+RA+CSM)",idx:[1,3,5],color:C.vfa,stack:"LRC"});
+      if(hasPaa&&!hidePaa) segs.push({label:"PAA 부채 (보험료배분접근법)",idx:[6],color:C.paa,stack:"LRC"});
+      if(hasLic) segs.push({label:"발생사고요소 (추정)",lic:true,idx:[9],stack:"LIC"});
+      segs.forEach(sg=>{ sg.tv=rows.map(r=>r?(sg.idx.every(i=>r[i]==null)?null:sg.idx.reduce((a,i)=>a+N(r[i]),0)):null); });
+      let maxCsm=0,maxPos=0,maxNeg=0,nbMax=0;
+      rows.forEach((r,i)=>{ if(!r) return; const pos={},neg={};
+        segs.forEach(sg=>{ const v=sg.tv[i]; if(v==null) return; const m=v>=0?pos:neg; m[sg.stack]=(m[sg.stack]||0)+Math.abs(v); });
+        Object.values(pos).forEach(x=>{maxPos=Math.max(maxPos,x);}); Object.values(neg).forEach(x=>{maxNeg=Math.max(maxNeg,x);});
+        maxCsm=Math.max(maxCsm,N(r[0])+N(r[1])); if(r[8]!=null) nbMax=Math.max(nbMax,Math.abs(r[8])); });
+      const unit=Math.max(maxPos,maxNeg,nbMax)>=10000?"조":"억", div=unit==="조"?10000:1, tu=unit==="조"?"조원":"억원";
+      // 생략: 전체가 기준선(B=전체 CSM 최대의 1.6배)의 1.8배를 넘을 때만.
+      const B=Math.max(maxCsm*1.6,1e-9), brkOn=HC_UI.brk&&maxCsm>0&&maxPos>B*1.8; let k=1; if(brkOn) k=Math.min(1,B/(maxPos-B));
+      const f=brkOn?hcF(B,k):(v=>v), finv=brkOn?hcInv(B,k):(u=>u);
+      const topT=[]; segs.forEach(sg=>{ sg.th=[]; });
+      rows.forEach((r,i)=>{ const cp={},cn={};
+        segs.forEach(sg=>{ const v=sg.tv[i]; if(v==null){ sg.th[i]=null; return; }
+          const c=v>=0?cp:cn, s=sg.stack, from=c[s]||0, to=from+v; c[s]=to; sg.th[i]=(f(to)-f(from))/div; });
+        Object.keys(cp).forEach(s=>topT.push({stack:s,i,top:f(cp[s])})); });
+      const ds=segs.map(sg=>({type:"bar",label:sg.label,stack:sg.stack,yAxisID:"y",data:sg.th,_tv:sg.tv,
+        backgroundColor:sg.lic?hcHatch(C.ra,C.bel):sg.color,borderColor:sg.lic?C.muted:C.bg,borderWidth:sg.lic?1.5:1}));
+      if(hasNb) ds.push({type:"line",label:"신계약 CSM (당기 증분, 우축)",yAxisID:"y1",order:0,data:rows.map(r=>r&&r[8]!=null?r[8]/div:null),
+        borderColor:C.ink,backgroundColor:C.ink,borderWidth:2.5,pointRadius:4,pointStyle:"rectRot",tension:0.15,spanGaps:false});
+      const barsCut=[]; topT.forEach(t=>{ if(brkOn&&t.top>B){ const di=ds.findIndex(d=>d.stack===t.stack&&d.data&&d.data[t.i]!=null); if(di>=0) barsCut.push({di,i:t.i}); } });
+      const lowStep=hcNice(brkOn?B:Math.max(maxPos,1),5), tickVals=[], lim=brkOn?B:maxPos;
+      for(let v=0; v<=lim+1e-9; v+=lowStep) tickVals.push(v);
+      if(brkOn){ const hi=hcNice(maxPos-B,3); for(let w=Math.ceil((B+lowStep*0.4)/hi)*hi; w<=maxPos+1e-9; w+=hi) tickVals.push(w); }
+      if(maxNeg>0){ const ns=hcNice(maxNeg,3); for(let nv=ns; nv<=maxNeg+1e-9; nv+=ns) tickVals.unshift(-nv); }
+      const yMax=f(maxPos)/div*1.05, yMin=maxNeg>0?-maxNeg/div*1.05:0;
+      const axDec=unit==="조"?(lowStep<10000?1:0):0, nbDec=unit==="조"?2:(nbMax>=100?0:nbMax>=10?1:2);
+      const th=(window.IQTheme&&IQTheme.chart())||{}, mob=window.innerWidth<640;
+      try{ charts.hist&&charts.hist.destroy(); }catch(e){}
+      charts.hist=new Chart(canvasCtx(host,"#canvasHistCombo"),{
+        type:"bar",data:{labels:Q.map(qq=>pend.indexOf(qq)>=0?qq+"*":qq),datasets:ds},plugins:[hcBreakPlugin],
+        options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:brkOn?10:0}},interaction:{mode:"index",intersect:false},
+          plugins:{
+            axisBreak:{on:brkOn,B:B/div,bars:barsCut,bg:C.bg,ink:C.ink,muted:C.muted,shade:th.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.035)"},
+            title:{display:true,text:"CSM 시계열 · "+shortName(coName)+" · 잔여보장요소 기준"+(hasLic?" (+ 발생사고요소 추정)":"")},
+            legend:{position:mob?"bottom":"top",labels:{boxWidth:14}},
+            tooltip:{callbacks:{
+              title:items=>items[0].label.replace("*","")+(items[0].label.indexOf("*")>=0?" (발행사 합계 행 확인 중)":""),
+              label:c=>{ const d=c.dataset; if(d.type==="line") return c.parsed.y==null?null:d.label+": "+hcFmt(c.parsed.y*div,unit); const t=d._tv[c.dataIndex]; return t==null?null:d.label+": "+hcFmt(t,unit); },
+              footer:items=>{ const r=rows[items[0].dataIndex]; if(!r) return ""; const out=["잔여보장요소 합계: "+hcFmt(N(r[7]),unit)];
+                if(!block&&hasVfa) out.push("  VFA 포함분 — CSM "+hcFmt(N(r[1]),unit)+" · BEL "+hcFmt(N(r[3]),unit)+" · RA "+hcFmt(N(r[5]),unit));
+                if(block) out.push("  VFA 한 덩어리 안에 CSM "+hcFmt(N(r[1]),unit)+" 이 들어 있어 CSM 막대는 일반모형분만. 전체 CSM "+hcFmt(N(r[0])+N(r[1]),unit));
+                if(hidePaa&&N(r[6])) out.push("  (PAA "+hcFmt(N(r[6]),unit)+" 은 접어서 안 보임)");
+                if(brkOn) out.push("※ 세로축 일부 생략 — 위 값은 실제 값");
+                if(hasLic&&r[9]!=null) out.push("발생사고요소는 추정 = BS 보험계약부채 − 잔여보장요소");
+                return out; }}}
+          },
+          scales:{
+            x:{stacked:true,title:{display:true,text:"분기"}},
+            y:{stacked:true,min:yMin,max:yMax,position:"left",title:{display:true,text:"잔여보장요소 · 발생사고요소 ("+tu+(brkOn?", 축 일부 생략":"")+")"},
+               afterBuildTicks:ax=>{ ax.ticks=tickVals.map(v=>({value:f(v)/div})); },
+               ticks:{callback:u=>hcSamo(finv(u*div)/div,axDec)+unit}},
+            y1:{display:hasNb,type:"linear",position:"right",beginAtZero:true,title:{display:true,text:"신계약 CSM (당기 증분, "+tu+")",color:C.ink},
+                ticks:{callback:v=>hcSamo(v,nbDec)+unit,color:C.ink},grid:{drawOnChartArea:false}}
+          }}
+      });
+      const last=rows[rows.length-1], cv=q(host,"#canvasHistCombo");
+      if(cv) cv.setAttribute("aria-label",shortName(coName)+" CSM 시계열: "+Q[0]+"부터 "+Q[Q.length-1]+"까지 분기별 잔여보장요소(CSM·BEL·RA) 누적 막대와 신계약 CSM 꺾은선"+(brkOn?". 세로축 일부를 생략해 표시선 위쪽은 줄여 그렸고 값은 실제 값":"")+(last?". 최신 분기 CSM "+hcFmt(N(last[0])+N(last[1]),unit):"")+". 아래 표에 같은 값이 있습니다.");
+      const msg=[];
+      if(brkOn) msg.push("세로축 일부를 생략했습니다(~ 표시): 표시선 아래(CSM 포함)는 실제 눈금 그대로이고 위쪽은 약 "+Math.round(1/k)+"분의 1로 줄여 그렸습니다. 툴팁·표의 값은 실제 값입니다.");
+      if(pend.length) msg.push("* "+pend.join(", ")+": 발행사 합계 행을 확인하는 중이라 값이 바뀔 수 있습니다.");
+      if(mism.length) msg.push("※ "+mism.join(", ")+": 경영공시 2-4 의 CSM 이 섹션 2 의 기말 CSM 과 다릅니다(원천 확인 중).");
+      if(!hasNb) msg.push("이 회사는 신계약 CSM 시계열이 없어 꺾은선을 그리지 않습니다.");
+      if(HC_UI.lic&&!hasLic) msg.push("이 회사는 BS 보험계약부채 값이 없어 발생사고요소 추정 막대를 그리지 않습니다.");
+      if(rows.some(r=>r&&N(r[7])<0)) msg.push("잔여보장요소 합계가 음수(BEL 음수)인 분기가 있어 발생사고요소 추정이 크게 보일 수 있습니다.");
+      if(rows.some(r=>r&&(N(r[2])+N(r[3])<0))) msg.push("BEL 합계가 음수인 분기는 BEL 막대가 0 선 아래로 내려갑니다(CSM 은 항상 0 선 위).");
+      const note=q(host,"#histComboNote"); if(note) note.textContent=msg.join(" ");
+      renderHistTable(host,rows,Q,block,hasVfa,hasPaa,hasLic,pend);
+    }
+    function renderHistTable(host, rows, Q, block, hasVfa, hasPaa, hasLic, pend){
+      const boxT=q(host,"#histTable"), capT=q(host,"#histTableCap"); if(!boxT) return; boxT.innerHTML="";
+      const N=v=>v==null?0:v, cell=fn=>rows.map(r=>{ if(!r) return "—"; const v=fn(r); return v==null?"—":hcSamo(v,0); });
+      const sum=(r,idx)=>idx.every(i=>r[i]==null)?null:idx.reduce((a,i)=>a+N(r[i]),0);
+      if(capT) capT.textContent="값(억원) · 음수 △ · 잔여보장요소(LRC)는 경영공시 2-4, 발생사고요소는 추정(= BS 보험계약부채 − 잔여보장요소), 보험계약부채 합계는 재무상태표 값"+(block?" · VFA 한 덩어리 보기":" · CSM·BEL·RA 는 일반모형+VFA 합산");
+      const defs=[];
+      const row=(label,fn,o)=>defs.push(Object.assign({label,cells:cell(fn)},o||{}));
+      if(!block){
+        // 표는 BEL → RA → CSM 순(owner 2026-10-10). 차트는 CSM 이 맨 아래.
+        row("BEL (최선추정부채)",r=>sum(r,[2,3]));
+        row("RA (위험조정)",r=>sum(r,[4,5]));
+        row("CSM (일반모형+VFA)",r=>sum(r,[0,1]),{bold:true});
+        if(hasPaa) row("PAA 부채 (보험료배분접근법)",r=>r[6]);
+      } else {
+        row("BEL · 일반모형",r=>r[2]); row("RA · 일반모형",r=>r[4]); row("CSM · 일반모형",r=>r[0],{bold:true});
+        row("VFA 합계 (BEL+RA+CSM)",r=>sum(r,[1,3,5]),{isToggle:true,toggleGroup:"g_vfa"});
+        row("VFA · BEL",r=>r[3],{level:2,group:"g_vfa",hidden:true}); row("VFA · RA",r=>r[5],{level:2,group:"g_vfa",hidden:true}); row("VFA · CSM",r=>r[1],{level:2,group:"g_vfa",hidden:true});
+        row("CSM 합계 (일반모형+VFA)",r=>sum(r,[0,1]),{bold:true});
+        if(hasPaa) row("PAA 부채 (보험료배분접근법)",r=>r[6]);
+      }
+      row("잔여보장요소 합계",r=>r[7],{bold:true});
+      if(rows.some(r=>r&&r[9]!=null)) row("발생사고요소 (추정)",r=>r[9]);
+      row("보험계약부채 합계 (재무상태표)",r=>r[10],{bold:true});
+      boxT.appendChild(buildBsTableDom(["구분"].concat(Q.map(qq=>pend.indexOf(qq)>=0?qq+"*":qq)),defs));
+    }
+
     function renderCompany(company){   // company = 회사코드(KR0001…)
     const coName = codeToName[company] || company;  // 표시용 이름
     currentKey = keyColorOf(coName);
@@ -2498,8 +2689,9 @@
     // 기존 이력 스냅샷(정적 파일)은 stale(2025.3Q·2026.1Q 결측, 초기 2023 미교정)이라 폐기했고,
     // 2026-08-30 owner 지시로 파일 자체를 저장소에서 삭제했다 — 재생성 빌더가 이미 아카이브돼
     // 되살릴 경로가 없고, 게이트가 그 죽은 사본을 검사해 YELLOW 976건을 만들고 있었다.
-    const wfHistName = ix.wfx.has(company) ? company : null;
-    stub(q(host,"#histStub"), !wfHistName, (PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신규 CSM waterfall 데이터 미수록 보험사입니다.");
+    const _histCombo = CSMC.panel ? renderHistCombo(host, company) : false;   // 콤보(+표) 그렸으면 옛 선 차트는 건너뜀
+    const wfHistName = (ix.wfx.has(company) && !_histCombo) ? company : null;
+    stub(q(host,"#histStub"), !wfHistName && !_histCombo, (PAA_ONLY.has(company) || PAA_ONLY.has(coName)) ? PAA_NOTE : "신규 CSM waterfall 데이터 미수록 보험사입니다.");
     if (wfHistName){
       // D6/D7/D9: 축 윈도잉 — 분기→직전5분기, 연도→연말+최신부분, 모바일→최신1시점. (분기 미제공사는 연 fallback)
       const compAsc = wfQuartersOf(wfHistName).slice().reverse();   // wfQuartersOf=desc → asc
@@ -2642,15 +2834,16 @@
     // D10: 9개 JSON을 직렬 await → Promise.all 병렬(진입 로딩 지연 경감). 로딩 힌트 표시.
     const _eh=document.getElementById("emptyHint");
     if (_eh) _eh.textContent="데이터 불러오는 중…";
-    const [wf, amort, plx, senx, nbx, wfxRaw, plxRaw, nbmRaw, eqxRaw, lrRaw, psRaw] = await Promise.all([
+    const [wf, amort, plx, senx, nbx, wfxRaw, plxRaw, nbmRaw, eqxRaw, lrRaw, psRaw, ccRaw] = await Promise.all([
       fetchJsonSafe(PATHS.wf), fetchJsonSafe(PATHS.amort), fetchJsonSafe(PATHS.pl),
       fetchJsonSafe(PATHS.sen), fetchJsonSafe(PATHS.nb),
       fetchJsonSafe(PATHS.wfx), fetchJsonSafe(PATHS.plx), fetchJsonSafe(PATHS.nbm),
       fetchJsonSafe(PATHS.eqx),
-      fetchJsonSafe(PATHS.lr), fetchJsonSafe(PATHS.ps),
+      fetchJsonSafe(PATHS.lr), fetchJsonSafe(PATHS.ps), fetchJsonSafe(PATHS.cc),
     ]);
     LRPS.lr = (lrRaw && lrRaw.companies) ? lrRaw : null;
     LRPS.ps = (psRaw && psRaw.companies) ? psRaw : null;
+    CSMC.panel = (ccRaw && ccRaw.companies && ccRaw.meta) ? ccRaw : null;
     if (_eh) _eh.textContent="보험사를 선택해 주세요";
 
     payload.wf=wf; payload.amort=amort; payload.pl=plx; payload.sen=senx; payload.nb=nbx;

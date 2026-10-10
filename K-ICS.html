@@ -343,6 +343,7 @@
       '비엔피파리바카디프생명보험':'BNP카디프생명', '교보라이프플래닛생명보험':'교보라이프플래닛',
       '처브라이프생명보험':'처브라이프', '메트라이프생명보험':'메트라이프', '악사손해보험':'악사손보',
       '신한라이프생명보험':'신한라이프', '푸본현대생명보험':'푸본현대',
+      '스위스리아시아':'스위스리', '알지에이리인슈어런스':'RGA', '마이브라운반려동물전문보험':'마이브라운',
     };
     function shortName(n){
       if (!n) return n;
@@ -1448,6 +1449,12 @@
             byMode[mode][m] = sensShockValues(modeRows.find(r => r['measure구분'] === m));
           });
         }
+      });
+      // 경과조치 비적용사(외국 재보험사 지점 등)는 적용후 행이 전부 0 으로 적재돼 있다 — 공시값이 아니라 빈칸이므로 그 묶음은 그리지 않는다
+      // (안 그러면 지급여력비율 0.00% 줄과 'KPI 0.00%p' 칩이 뜬다). 적용전 묶음이 그대로 남는다.
+      Object.keys(byMode).forEach(mode => {
+        const flat = SENS_MEASURES.flatMap(m => byMode[mode][m] || []).filter(v => v != null);
+        if (flat.length && flat.every(v => v === 0)) delete byMode[mode];
       });
       renderDurationCards(company, quarter);
       const postRatio = byMode['적용후'] ? byMode['적용후']['지급여력비율'] : null;

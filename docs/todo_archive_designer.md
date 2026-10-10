@@ -1,5 +1,18 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+## 2026-10-10 (2차) 밀린 Status (콤보 이식 항목이 목업 항목을 대체)
+
+- **2026-10-10 IFRS17 섹션 3 콤보 차트 — 1차 목업(배포 금지)** — 분기마다 막대 두 개(왼쪽 잔여보장요소 CSM→BEL→RA→PAA, 2차: 색·축 생략·VFA 기본 합산 반영, 오른쪽 발생사고요소 **추정** = BS 보험계약부채 − 잔여보장요소) + 보조축 신계약 CSM 꺾은선, 주축 0부터.
+  `IFRS17_sec3_combo_mock.html`(`?co=회사명&vfa=split&paa=hide&bel=hide`) · `scripts/viz_build_csm_combo_panel.py`(`--check`) · `data/csm_combo/panel_csm_combo.json`. IFRS17.html 은 아직 안 건드렸다. owner 가 목업을 보고 정한 뒤 딥다이브. 남은 것: 아래 「owner 결정」.
+
+## 2026-10-10 밀린 Status (콤보 목업·재보 3분류 항목이 들어오며 최신 3개에서 밀림)
+
+- **2026-10-08 사별 비교 `compare.html` 신규** — 회사 1~4곳의 최신 공시 값을 지표별 막대로 비교(지급여력비율·기본자본비율·기말 CSM·신계약 CSM 배수·보험손익·당기순이익·ROE·유지율 13/25/37/61회차 한 차트·손해율), 같은 유형(생보/손보) 업계 중앙값, 검색창 추천(기말 CSM 위 2·아래 1, 기준은 화면에 안 보임).
+  파일 `compare.html`·`data/compare/panel_compare.json`·`scripts/viz_build_compare_panel.py`(`--check`)·5개 페이지 탭·`sitemap.xml`·테스트 배선. owner 직접 지시로 orchestrator 가 작성·배포. 라이브 커밋 `git log origin/main -- compare.html`.
+  남은 것: 모바일 실기기 확인, 막대 색(틸+회색)·지표 목록 owner 확인, 서치콘솔 sitemap 재제출.
+- **2026-10-08 IFRS17 섹션 8·9 (손해율 가정 · 판매채널별 유지율), 라이브** — 두 표를 접이식 [+] 트리(기본 접힘, 모두 펼치기/접기)로, 손해율 곡선은 monotone 곡선 + 경과연수 비례 x축(640px 이하 모바일은 칸 균등), 9 제목은 "9) 판매채널별 유지율" + 작은 설명줄. 파일 `IFRS17.html`·`scripts/viz_build_persistency_lossratio_panels.py`·패널 JSON 2개·`tests/test_push_gate_wiring.py`·docs 2.
+  라이브 main `c72359f`·`0a07663`·`58dff57`. 상세 `docs/changelog_designer.md` 2026-10-08 (3차).
+
 ## 2026-10-08 (5차) 밀린 Status (사별 비교 차트·모바일 수정 항목이 들어오며 최신 3개에서 밀림) + 닫은 열린 일
 
 - **2026-10-08 index 마켓맵 보조 목록(`#ratio-sr-list`, `.sr-only`)** — 회사별 "K-ICS 지급여력비율 X%, 기본자본비율 Y%" 를 한 줄씩 글자로(토글로만 보이던 기본자본비율 보강).

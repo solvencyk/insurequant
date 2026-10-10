@@ -1,11 +1,23 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-10-08 · Stage 5/5 — designer
+> Last updated: 2026-10-10 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
 
 ---
+
+## 2026-10-10 -- 재보험·보증 3분류(index·compare) + 새 재보사 8곳 점검 + IFRS17 섹션 3 콤보 차트 1차 목업
+
+**3분류.** `data/company_segment.json`(코드→구분: 코리안리·서울보증·KR1101~1107 = 재보험·보증, 나머지는 마스터 생손보여부)을 index.html 과 `scripts/viz_build_compare_panel.py` 가 읽는다. 마스터 셀은 안 고침.
+index: 트리맵(재보험·보증 칸은 합이 4% 안팎이라 최소 18% 면적 보장, 제목에 "칸 크기는 이 업권 안에서만 비교"), 모바일 목록(재보험·보증은 접기 없음), 업권 필터, KPI 모집단, 버블맵(재보 버블은 NB 배수 분모가 없어 0개 — 생기면 필터·범례가 자동 노출), 약칭.
+compare: 유형 `재보·보증` 신설(같은 구분끼리만 비교, 업계 중앙값·손해율 중앙값 없음, 안내 문구). K-ICS.html: 이름 약칭, 경과조치 비적용사의 적용후 0 행 묶음은 그리지 않음. IFRS17.html·공시보고서.html·report-widget.js: 약칭만.
+확인(로컬 `?iq_internal=1`, 데스크톱 1280·모바일 375): 콘솔 오류 0, 화면에 회사코드 0, K-ICS 8곳 전부 NaN·0.00% 없음, compare 재보사 선택·검색창 3그룹. 재현: `python scripts/viz_build_compare_panel.py --check`.
+
+**IFRS17 섹션 3 콤보 이식(owner 채택, 미배포).** IFRS17.html `#sec-hist`: 묶음 누적 막대(잔여보장요소 | 발생사고요소 추정) + 보조축 신계약 CSM + 세로축 일부 생략(조각선형 변환·물결 표시, 기준선 아래 실제 눈금, 음수 비압축) + VFA 합산(기본)/한 덩어리 토글 + PAA·추정 막대·축 생략 토글(회사·다크 전환에도 유지). CSM=회사 키 컬러.
+막대 아래에 값 표(억원, △): CSM·BEL·RA·PAA·잔여보장요소 합계·발생사고요소(추정)·보험계약부채(BS), VFA 한 덩어리일 때 VFA 세부 3행을 [+] 로. 패널 JSON `data/csm_combo/panel_csm_combo.json`(회사코드 키, `bs20`·`lic_basis`·`csm_mismatch` 포함) · 빌더 `--check`. 발생사고요소 추정은 빌더 `lic_estimate()` 한 곳. 패널에 없는 회사는 옛 선 차트 폴백(현재 해당 회사 0).
+**사후 정정(owner, orchestrator 직접 수정).** ① 다크에서 어두운 키 컬러를 흰색과 섞어 밝히던 코드(`hcMix`)를 제거해 삼성 등이 보라빛으로 보이던 것을 고쳤다 — CSM 은 회사 키 컬러 그대로, 미등록사는 사이트 키컬러(에메랄드 `--primary`). ② 값 표 행 순서를 BEL → RA → CSM 으로(차트 쌓기는 CSM 이 맨 아래 그대로). 확인: 삼성생명 CSM `#1428A0`, 카카오페이손보 `#54b3aa`(사이트 에메랄드), 콘솔 오류 0.
+owner 정정으로 「CSM 증감」 띠·증감 행·라벨은 만들지 않음. 확인: 삼성생명·카카오페이손보·AIG·코리안리·하나생명 데스크톱, AIG 375px, 콘솔 오류 0, 회사코드 0. 테스트 `test_deploy_assets`(12)·`test_push_gate_wiring`(62) 통과.
 
 ## 2026-10-08 (5차) -- 사별 비교 차트·편집·공유 + 모바일 공통 수정 (owner 직접 지시, orchestrator 가 병렬 에이전트로 진행)
 

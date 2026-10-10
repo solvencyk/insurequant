@@ -165,6 +165,7 @@
                 <option value="ALL">전체</option>
                 <option value="Life">생명보험</option>
                 <option value="Non-Life">손해보험</option>
+                <option value="Re">재보험·보증</option>
               </select>
             </label>
           </div>
@@ -202,11 +203,13 @@
             <option value="ALL">전체</option>
             <option value="Life">생명보험</option>
             <option value="Non-Life">손해보험</option>
+            <option value="Re" id="bubble-opt-re" hidden>재보험·보증</option>
           </select>
         </label>
         <div class="bubble-legend">
           <span style="color:var(--primary);font-weight:700">● 생명</span>
           <span style="color:#15803d;font-weight:700">● 손해</span>
+          <span id="bubble-leg-re" hidden><span style="color:var(--warn);font-weight:700">●</span> <b>재보험·보증</b></span>
           <span>크기: 기말 CSM</span>
           <span id="bubble-meta"></span>
         </div>
@@ -250,6 +253,23 @@
     let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
     let allData = [];
     let GROUPED = {};
+    // 업권 3분류(생명·손해·재보험/보증). 마스터 셀(생손보여부)은 고치지 않고 data/company_segment.json 의 코드->구분 매핑으로 덮는다.
+    // 매핑에 없는 회사는 마스터 생손보여부를 따른다. 회사코드는 매핑 키로만 쓰고 화면에는 절대 내보내지 않는다.
+    // 매핑 파일을 못 읽으면 재보사가 마스터 분류(생보/손보)로 섞여 보이므로 콘솔에 경고를 남긴다.
+    let SEG = {};
+    const SEG_ORDER = ['Life', 'Non-Life', 'Re'];
+    const SEG_LABEL = { 'Life': '생명보험', 'Non-Life': '손해보험', 'Re': '재보험·보증' };
+    const SEG_SHORT = { 'Life': '생명', 'Non-Life': '손해', 'Re': '재보·보증' };
+    const SEG_READY = fetch(resolveUrl('data/company_segment.json'))
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(j => { SEG = (j && j.by_code) || {}; })
+      .catch(e => { console.warn('업권 매핑(data/company_segment.json) 로드 실패 — 재보험·보증이 생보/손보에 섞여 보입니다:', e); });
+    function segOf(code, masterType) {
+      const m = code && SEG[code];
+      if (m && m.seg) return m.seg;
+      return masterType === '생명보험' ? 'Life' : 'Non-Life';
+    }
+    function emptyGrouped() { return { 'Life': [], 'Non-Life': [], 'Re': [] }; }
     // D-2 20260818(owner): NB 배수(Y축) 분모(월납초회)가 재수집 보류돼 2026.1Q에 고정돼 있었다 —
     // 그때 "2026.1Q" 리터럴이 여러 곳에 복붙돼 있던 걸 이 상수 하나로 모았다.
     // 2026-09-02(owner): 보류 해제 — 보험개발원(KIDI) 2026.6월(202606) 월납환산 신계약보험료가
@@ -315,7 +335,7 @@
       const latestQuarter = getLatestQuarter(data);
       if (!latestQuarter) {
         console.warn('최신 분기 데이터를 찾을 수 없습니다.');
-        return { "Life": [], "Non-Life": [] };
+        return emptyGrouped();
       }
 
       // 최신 분기 데이터만 필터링
@@ -334,7 +354,7 @@
         if (!companyMap[company]) {
           companyMap[company] = {
             company: company,
-            sector: insuranceType === '생명보험' ? 'Life' : 'Non-Life',
+            sector: segOf(row['원보험사코드'], insuranceType),
             ratio: null,
             required: null,
             basicCapitalRatio: null
@@ -367,7 +387,7 @@
       });
       
       // Life와 Non-Life로 분류
-      const grouped = { "Life": [], "Non-Life": [] };
+      const grouped = emptyGrouped();
       
       Object.values(companyMap).forEach(company => {
         // 필수 데이터가 있는 경우만 추가
@@ -377,8 +397,7 @@
       });
       
       // required 기준으로 정렬 (내림차순)
-      grouped["Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
-      grouped["Non-Life"].sort((a, b) => (b.required || 0) - (a.required || 0));
+      SEG_ORDER.forEach(s => grouped[s].sort((a, b) => (b.required || 0) - (a.required || 0)));
       return grouped;
     }
     
@@ -430,7 +449,7 @@
     }
     function updateKpis(){
       const setT=(id,html)=>{ const el=document.getElementById(id); if(el) el.innerHTML=html; };
-      const comps = [...(GROUPED.Life||[]), ...(GROUPED['Non-Life']||[])];
+      const comps = SEG_ORDER.flatMap(s => GROUPED[s] || []);
       const med = _median(comps.map(c=>c.ratio));
       if(med!=null) countUp(document.getElementById('kpiRatio'), med, v=>samoNum(v,0)+'<span class="u">%</span>');
       if(comps.length) countUp(document.getElementById('kpiCount'), comps.length, v=>Math.round(v)+'<span class="u">社</span>');
@@ -463,7 +482,7 @@
     // JSON 데이터 로드 — file:// 또는 잘못된 서버 경로면 fetch 실패
     function loadData() {
       if (window.location.protocol === 'file:') {
-        GROUPED = { Life: [], 'Non-Life': [] };
+        GROUPED = emptyGrouped();
         setMapStatus(
           'K-ICS JSON을 불러오지 못했습니다 (file:// 차단).\n' +
           'repo root에서 python -m http.server 8765 실행 후\n' +
@@ -474,7 +493,7 @@
         return;
       }
       setMapStatus('K-ICS 데이터 로딩 중… (약 3MB, 수 초 소요)', false);
-      fetch(jsonPath)
+      SEG_READY.then(() => fetch(jsonPath))
         .then(response => {
           if (!response.ok) {
             throw new Error(`HTTP ${response.status} — ${jsonPath}`);
@@ -488,7 +507,7 @@
           allData = data;
           _footerKicsQ = getLatestQuarter(data); refreshFooterQuarter();
           GROUPED = processJsonData(data);
-          const total = (GROUPED.Life?.length || 0) + (GROUPED['Non-Life']?.length || 0);
+          const total = SEG_ORDER.reduce((n, s) => n + (GROUPED[s]?.length || 0), 0);
           if (total === 0) {
             setMapStatus('표시할 K-ICS 데이터가 없습니다. kics_disclosure.json 내용을 확인하세요.', true);
           } else {
@@ -503,7 +522,7 @@
         })
         .catch(e => {
           console.error('JSON 파일을 불러오는 중 오류 발생:', e);
-          GROUPED = { Life: [], 'Non-Life': [] };
+          GROUPED = emptyGrouped();
           setMapStatus(
             'K-ICS JSON을 불러오지 못했습니다.\n' +
             'repo root: python -m http.server 8765 → http://localhost:8765/templates/index.html\n' +
@@ -578,6 +597,7 @@
       '비엔피파리바카디프생명보험':'BNP카디프생명', '교보라이프플래닛생명보험':'교보라이프플래닛',
       '처브라이프생명보험':'처브라이프', '메트라이프생명보험':'메트라이프', '악사손해보험':'악사손보',
       '신한라이프생명보험':'신한라이프', '푸본현대생명보험':'푸본현대',
+      '스위스리아시아':'스위스리', '알지에이리인슈어런스':'RGA', '마이브라운반려동물전문보험':'마이브라운',
     };
     function shortName(n){
       if (!n) return n;
@@ -632,8 +652,16 @@
         if (sum>0) groups.push({ key:s, sum, rows });
       }
       const grand = groups.reduce((a,b)=>a+b.sum,0) || 1;
+      // 재보험·보증은 지급여력기준금액 합이 전체의 4% 안팎이라 비례 면적으로는 한 줄(53px)이 돼 칸이 안 보인다.
+      // 업권이 여럿일 때만 최소 면적 비중(RE_MIN_SHARE)을 보장한다 — 그 업권 안의 칸끼리만 크기 비교가 되므로
+      // 제목에 그 사실을 적는다(group.floored).
+      const RE_MIN_SHARE = 0.18;
       const gItems = groups
-        .map(g => ({ value: g.sum/grand, data: g }))
+        .map(g => {
+          const share = g.sum/grand;
+          g.floored = groups.length > 1 && g.key === 'Re' && share < RE_MIN_SHARE;
+          return { value: g.floored ? RE_MIN_SHARE : share, data: g };
+        })
         .sort((a,b)=>b.value-a.value);
 
       const gRects = recsplit(gItems, rect);
@@ -648,7 +676,7 @@
         const groupW = Math.max(0, Math.min(gr.w, rect.w - groupX));
         const groupH = Math.max(0, Math.min(gr.h, rect.h - groupY));
         
-        out.push({ type:"group", sector: gData.key, x: groupX, y: groupY, w: groupW, h: groupH });
+        out.push({ type:"group", sector: gData.key, floored: !!gData.floored, x: groupX, y: groupY, w: groupW, h: groupH });
 
         // Inner recsplit for companies
         const padOuter = 6, titleH = 22, padInner = 6;
@@ -677,7 +705,7 @@
           ((it.value / groupSum) * innerArea >= MIN_CELL_AREA ? majors : minors).push(it);
         }
         let tiled = items;
-        if (minors.length >= 2 && majors.length) {
+        if (minors.length >= 2 && majors.length && gData.key !== 'Re') {   // 재보험·보증은 10곳 안팎이라 '기타'로 묶지 않고 전부 칸으로 둔다
           tiled = majors.concat([{
             value: minors.reduce((a, b) => a + b.value, 0),
             data: { isOther: true, count: minors.length, list: minors.map(m => m.data) }
@@ -768,7 +796,7 @@
           g.style.height = finalGroupH + "px";
           const title = document.createElement("div");
           title.className = "group-title";
-          title.textContent = r.sector === "Life" ? "생명보험" : "손해보험";
+          title.textContent = (SEG_LABEL[r.sector] || r.sector) + (r.floored ? ' · 칸 크기는 이 업권 안에서만 비교' : '');
           g.appendChild(title);
           el.appendChild(g);
         } else if (r.type === "cell") {
@@ -880,7 +908,9 @@
     // Shown instead of the treemap on narrow screens (CSS @media <=640px).
     // MOB-INDEX-FOLD: 생보/손보 각각 top 5 + 더보기, maxV 섹터 독립.
     const FOLD = 5;
+    // 재보험·보증은 최대 10곳 안팎이라 접지 않고 전부 보인다(owner 요청).
     let lifeExpanded = false, nonlifeExpanded = false;
+    const FOLDABLE = { 'Life': true, 'Non-Life': true, 'Re': false };
     function renderList(sector){
       const host = document.getElementById('map-list');
       if (!host) return;
@@ -892,7 +922,7 @@
 
       for (const s of sKeys){
         if (sector !== 'ALL' && s !== sector) continue;
-        const expanded = s === 'Life' ? lifeExpanded : nonlifeExpanded;
+        const expanded = FOLDABLE[s] === false ? true : (s === 'Life' ? lifeExpanded : nonlifeExpanded);
 
         const items = (GROUPED[s] || []).map(d => {
           const v = ratioType === 'basicCapital'
@@ -906,7 +936,7 @@
 
         const head = document.createElement('div');
         head.className = 'li-sector';
-        head.textContent = s === 'Life' ? '생명보험' : '손해보험';
+        head.textContent = SEG_LABEL[s] || s;
         host.appendChild(head);
 
         for (const { d, v } of visible){
@@ -939,7 +969,7 @@
           host.appendChild(row);
         }
 
-        if (isMob && items.length > FOLD){
+        if (isMob && FOLDABLE[s] !== false && items.length > FOLD){
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
           btn.textContent = expanded ? '접기' : `더보기 (${items.length - FOLD}개사)`;
@@ -975,8 +1005,8 @@
       head.textContent = '보험사별 K-ICS 지급여력비율·기본자본비율' + (q ? ` (${q} 기준, 경과조치 적용 후 값 우선)` : '');
       host.appendChild(head);
       const ul = document.createElement('ul');
-      const SECTOR_LABEL = { Life: '생명보험', 'Non-Life': '손해보험' };
-      for (const s of ['Life', 'Non-Life']) {
+      const SECTOR_LABEL = SEG_LABEL;
+      for (const s of SEG_ORDER) {
         for (const d of (GROUPED[s] || [])) {
           const parts = [];
           if (Number.isFinite(d.ratio)) parts.push(`K-ICS 지급여력비율 ${samoNum(d.ratio, 1)}%`);
@@ -1075,11 +1105,11 @@
       const xAxisMax = Math.max(...xVals) * xPad;
       const maxClosing = Math.max(...rows.map(r => r.closing || 0), 1);
       const SECTOR_COLOR = (function(){ var t = (window.IQTheme && IQTheme.chart()) || {};
-      return { 'Life': t.primary || '#0f6e68', 'Non-Life': t.pos || '#4b7f2a' }; })();
-      const sectors = ['Life', 'Non-Life'].filter(s => sectorFilter === 'ALL' || sectorFilter === s);
+      return { 'Life': t.primary || '#0f6e68', 'Non-Life': t.pos || '#4b7f2a', 'Re': t.warn || '#c98a12' }; })();
+      const sectors = SEG_ORDER.filter(s => (sectorFilter === 'ALL' || sectorFilter === s) && rows.some(r => r.sector === s));
       const ESTIMATED_NAME = '추정 (연1회 공시)';
 
-      const legendData = sectorFilter === 'ALL' ? ['생명보험', '손해보험'] : [];
+      const legendData = sectorFilter === 'ALL' ? sectors.map(s => SEG_LABEL[s]) : [];
       legendData.push(ESTIMATED_NAME);                     // 섹터 필터와 무관하게 항상 노출
 
       const TH = window.IQTheme ? IQTheme.chart() : { text:'#212529', muted:'#6a737a', ink:'#495057', bg:'#fff', grid:'#eef0f2' };
@@ -1092,7 +1122,7 @@
           formatter: p => {
             const d = p.data.d;
             const cq = d.closingK ? (Math.floor(d.closingK/10)+'.'+(d.closingK%10)+'Q') : '—';
-            const lines = [`<b>${shortName(d.name)}</b> · ${d.sector === 'Life' ? '생명' : '손해'}`];
+            const lines = [`<b>${shortName(d.name)}</b> · ${SEG_SHORT[d.sector] || d.sector}`];
             // D-2 후속(20260818T0210Z): X(신계약CSM)와 Y(배수)의 기준 분기가 서로 달라질 수 있어
             // 각 줄이 자기 분기를 직접 표기 — 더는 하나의 if/else로 묶지 않는다.
             const xNote = d.estimated ? `${d.srcQ} 연누계 ÷2 추정` : `${d.srcQ} 연누계`;
@@ -1119,7 +1149,7 @@
         },
         series: [
           ...sectors.map(sec => ({
-            name: sec === 'Life' ? '생명보험' : '손해보험',
+            name: SEG_LABEL[sec],
             type: 'scatter',
             labelLayout: { hideOverlap: true, moveOverlap: 'shiftY' },
             labelLine: { show: true, length2: 4, lineStyle: { color: TH.grid, width: 1 } },
@@ -1169,7 +1199,7 @@
         const sel = params.selected || {};
         bubbleShowEst = sel[ESTIMATED_NAME] !== false; writeMeta();
         const visible = rows.filter(r => {
-          const name = r.estimated ? ESTIMATED_NAME : (r.sector === 'Life' ? '생명보험' : '손해보험');
+          const name = r.estimated ? ESTIMATED_NAME : SEG_LABEL[r.sector];
           return sel[name] !== false;
         });
         const xv2 = visible.map(r => r.nbCsm).filter(v => Number.isFinite(v) && v > 0);
@@ -1189,7 +1219,7 @@
       const wfClosing = {}, wfNbItem = {}, wfMeta = {};    // wfNbItem: code -> {qkey -> {v,q}} 항목2(신계약CSM) — NB에 행 자체가 없는 사 fallback
       for (const r of (wfRows || [])) {
         const code = r['원보험사코드']; if (!code) continue;
-        if (!wfMeta[code]) wfMeta[code] = { name: r['원수사명'], sector: r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life' };
+        if (!wfMeta[code]) wfMeta[code] = { name: r['원수사명'], sector: segOf(code, r['생손보여부']) };
         const v = Number(r['값']); if (!Number.isFinite(v)) continue;
         const k = qkey(r['공시분기']);
         if (r['항목번호'] === 6) (wfClosing[code] || (wfClosing[code] = {}))[k] = v;
@@ -1250,7 +1280,7 @@
         out.push({
           name: meta.name || (mr && mr['원수사명']),
           code,
-          sector: meta.sector || (mr && (mr['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life')),
+          sector: meta.sector || (mr && segOf(code, mr['생손보여부'])),
           period: xSrcQ, srcQ: xSrcQ,           // X축(신계약CSM) 기준 분기 — 캡션/커버리지표가 참조
           multPeriod, multEstimated,            // Y축(배수) 기준 분기/추정여부 — X와 분리 표기용
           nbCsmRaw, nbCsm, multiple,
@@ -1266,9 +1296,9 @@
       const tbody = document.getElementById('csm-coverage-tbody');
       if (!tbody || !bubbleRows) return;
       tbody.innerHTML = '';
-      const SECTOR_LABEL = { Life: '생명보험', 'Non-Life': '손해보험' };
+      const SECTOR_LABEL = SEG_LABEL;
       const rows = [...bubbleRows].sort((a, b) => {
-        if (a.sector !== b.sector) return a.sector === 'Life' ? -1 : 1;  // 생보 → 손보
+        if (a.sector !== b.sector) return SEG_ORDER.indexOf(a.sector) - SEG_ORDER.indexOf(b.sector);  // 생보 → 손보 → 재보험·보증
         return (b.closing || 0) - (a.closing || 0);                     // 그룹 내 기말 CSM desc
       });
       const countEl = document.getElementById('csm-coverage-count');
@@ -1318,7 +1348,7 @@
       host.innerHTML = '';
       const sectorFilter = document.getElementById('bubble-sector')?.value || 'ALL';
       const SECTOR_COLOR = (function(){ var t = (window.IQTheme && IQTheme.chart()) || {};
-      return { 'Life': t.primary || '#0f6e68', 'Non-Life': t.pos || '#4b7f2a' }; })();
+      return { 'Life': t.primary || '#0f6e68', 'Non-Life': t.pos || '#4b7f2a', 'Re': t.warn || '#c98a12' }; })();
 
       const nbLatest = {};                               // code -> 배수 있는 최신 NB 행
       for (const r of (nbRowsRaw || [])) {
@@ -1337,7 +1367,7 @@
       const items = [];
       for (const code in nbLatest) {
         const r = nbLatest[code];
-        const sec = r['생손보여부'] === '생명보험' ? 'Life' : 'Non-Life';
+        const sec = segOf(code, r['생손보여부']);
         if (sectorFilter !== 'ALL' && sec !== sectorFilter) continue;
         const wc = wfLatest[code];
         items.push({
@@ -1349,17 +1379,17 @@
 
       const isMob = window.innerWidth < 640;
       let total = 0;
-      for (const sec of ['Life', 'Non-Life']) {
+      for (const sec of SEG_ORDER) {
         const allRows = items.filter(it => it.sector === sec).sort((a, b) => (b.closing || 0) - (a.closing || 0));
         if (!allRows.length) continue;
-        const expanded = sec === 'Life' ? bubbleLifeExpanded : bubbleNonlifeExpanded;
+        const expanded = FOLDABLE[sec] === false ? true : (sec === 'Life' ? bubbleLifeExpanded : bubbleNonlifeExpanded);
         const rows = (isMob && !expanded) ? allRows.slice(0, FOLD) : allRows;
         // 막대 스케일: 표시 그룹 내 최대 **NB 배수** 기준 (섹터·fold 독립 → outlier 무압축).
         // 실측 배수 범위 0.01~22.85, 음수 0건이라 그대로 폭에 쓴다.
         const maxMult = Math.max(0.01, ...rows.map(it => Number(it.multiple) || 0));
         const head = document.createElement('div');
         head.className = 'li-sector';
-        head.textContent = sec === 'Life' ? '생명보험' : '손해보험';
+        head.textContent = SEG_LABEL[sec] || sec;
         host.appendChild(head);
         for (const it of rows) {
           total++;
@@ -1398,7 +1428,7 @@
           });
           host.appendChild(row);
         }
-        if (isMob && allRows.length > FOLD) {
+        if (isMob && FOLDABLE[sec] !== false && allRows.length > FOLD) {
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
           btn.textContent = expanded ? '접기' : `더보기 (${allRows.length - FOLD}개사)`;
@@ -1427,11 +1457,16 @@
       Promise.all([
         fetchFirst([resolveUrl('../NB_CSM_multiple.json'), resolveUrl('NB_CSM_multiple.json')]),
         fetchFirst([resolveUrl('../CSM_waterfall.json'), resolveUrl('CSM_waterfall.json')]),
+        SEG_READY,
       ]).then(([nbRows, wfRows]) => {
         nbRowsRaw = nbRows;
         wfRowsRaw = wfRows;
         _footerWfQ = globalMaxQuarter(wfRows); refreshFooterQuarter();
         bubbleRows = buildBubbleData(nbRows, wfRows);
+        // 재보험·보증은 NB CSM 배수 분모(월납초회보험료)가 없어 버블이 0개다 — 버블이 생길 때만 필터·범례에 노출(데이터에서 도출).
+        const hasReBubble = bubbleRows.some(r => r.sector === 'Re' && Number.isFinite(r.nbCsm) && r.nbCsm > 0 && Number.isFinite(r.multiple));
+        const optRe = document.getElementById('bubble-opt-re'); if (optRe) optRe.hidden = !hasReBubble;
+        const legRe = document.getElementById('bubble-leg-re'); if (legRe) legRe.hidden = !hasReBubble;
         renderBubbleDesc();
         renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
         renderBubbleList();
