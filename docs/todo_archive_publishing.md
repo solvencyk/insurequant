@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-06 라이브 `main` `420cdc3`(owner 폰 Termux 배포)** — `kics_disclosure.json` + public_exports 5종(K-ICS공시·손익분해PL·자본비율전망·
+  자본성증권발행현황·manifest). build_id `54ec835`. 그 전 배포는 2026-09-28 `0187cf4`(자본비율전망 과거콜 미상환 교정).
+
 - **2026-09-23 자본비율전망 '콜 지났는데 미상환' 처리** — 콜 경과 미상환 채권은 법정만기 기준 계단식 체감(인정표 빌더의 `tier2_recognition_rate` 를 import).
   8개사 40칸 상승(구 모델이 과대차감). 악사손해 JPY 사모 459억은 만기 미공시라 종전 동작 유지. `60ca347`.
 

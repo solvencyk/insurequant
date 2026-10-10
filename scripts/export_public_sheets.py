@@ -91,10 +91,16 @@ MASTERS = [
     # 2026-09-22 신설(owner 지시). 경영공시 금리위험액 현황 표의 자산·부채총계 6시나리오와
     # 거기서 낸 자산D·부채D·듀레이션갭. K-ICS.html 금리민감도 패널이 이 마스터를 읽는다.
     ("kics_duration_gap.json", "금리듀레이션갭"),
+    # 2026-10-11 신설(owner 승인). 잔여보장요소(LRC) + 발생사고요소(LIC) = 보험계약부채. IFRS17.html 섹션 3 콤보의
+    # 원천. 기준표시·비고·단위 열은 build_master_xlsx.FLATTEN 이 붙인다(영문 provenance 코드는 한글 문구로 옮겨 나간다).
+    ("insurance_liability_portfolio.json", "보험계약부채"),
 ]
 
 
-def main():
+def main(only=None):
+    """`only` = 시트 이름 하나. 주면 그 시트 파일만 쓰고 manifest 는 **그 시트 항목만** 추가/갱신한다
+    (나머지 시트 파일·manifest 의 다른 항목·generated_at_utc·build_id 는 그대로). 다른 세션이 아직
+    마스터를 바꾸는 중일 때 새 시트 하나만 먼저 내보내기 위한 것이다(2026-10-11 보험계약부채)."""
     OUT_DIR.mkdir(exist_ok=True)
     # license / build_id: 지문(fingerprint) 키 — 스냅샷이 돌아다닐 때 이용조건·빌드 시점이 같이 간다
     # (artifacts/legal/ip_protection_report_20260911.md §6-6). download-survey.js 는 sheets ·
@@ -115,7 +121,16 @@ def main():
         "build_id": build_id,
         "sheets": {},
     }
+    if only is not None:
+        if only not in {sn for _jn, sn in MASTERS}:
+            raise SystemExit(f"REFUSE: '{only}' 는 MASTERS 에 없다")
+        mp = OUT_DIR / "manifest.json"
+        if not mp.exists():
+            raise SystemExit("REFUSE: --only 는 기존 manifest.json 이 있어야 한다(전체 실행을 먼저)")
+        manifest = json.loads(mp.read_text(encoding="utf-8"))   # 최상위 키·다른 시트 항목 보존
     for json_name, sheet_name in MASTERS:
+        if only is not None and sheet_name != only:
+            continue
         rows = read_committed_json(json_name)
         flatten = FLATTEN.get(json_name)
         if flatten is not None:
@@ -140,4 +155,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    _only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
+    main(only=_only)

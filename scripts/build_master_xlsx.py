@@ -81,6 +81,16 @@ MASTERS = [
      "위험보험료 대비 예상보험금 (결산 공시, 미래 손해율 가정) — 경과차년 x 구분·상품구분·포트폴리오, "
      "손해율 = 예상보험금 ÷ 위험보험료 x 100. 공시분기 Y.4Q = Y.4Q PDF 의 <Y> 블록(다음 해 PDF 가 "
      "다르게 다시 찍으면 그 값)"),
+    # 2026-10-11 신설 (owner 승인: 「발생사고요소(LIC)도 마스터 테이블 만들어야지」). IFRS17.html 섹션 3 콤보의
+    # 원천인데 시트가 없어 tests/test_push_gate_wiring.py 에 MASTER_SHEET_PENDING 으로 선언돼 있던 것.
+    # 잔여보장요소(LRC)와 발생사고요소(LIC)를 한 시트에 담는다 — 구분은 항목번호·섹션·레벨 열.
+    ("insurance_liability_portfolio.json", "보험계약부채",
+     "보험계약부채 구성 = 잔여보장요소(LRC) + 발생사고요소(LIC, 지급준비금 포함). 항목 1~8 = 경영공시 "
+     "회계모형별(일반모형·변동수수료접근법·보험료배분접근법) 잔여보장요소 구성(최선추정·위험조정·보험계약마진)과 합계, "
+     "9 = 무·저해지상품 해지율 예외모형 사용 여부(1=사용), 10~15 = DART 주석 기준 발생사고요소(합계·최선추정·위험조정·미분리)·"
+     "잔여보장요소 합계·보험계약부채 합계, 16·17 = 비PAA 발생사고요소의 최선추정·위험조정 계산값(직접 공시값 아님). "
+     "값 단위 억원(항목 9 제외, 단위 열 참조). 기준표시 열 = 값을 읽은 공시·기준, 비고 열 = 소급재작성·순액·계산값 설명. "
+     "원문에 표가 없어 적재하지 않은 (회사, 분기, 항목)은 행 자체가 없다"),
 ]
 
 NUMERIC_COLS = {"값", "-100bp", "-50bp", "base", "+50bp", "+100bp",
@@ -107,7 +117,9 @@ TEXT_COLS = {"원보험사코드", "원수사명", "티커", "생손보여부", 
              "기준일", "순번", "위험구분", "충격수준", "비고",
              # 2026-10-08 유지율·손해율 시트의 행 식별 열
              "회차구분", "채널대분류", "채널소분류", "상품구분", "포트폴리오",
-             "세그먼트", "단위"}
+             "세그먼트", "단위",
+             # 2026-10-11 보험계약부채 시트(출처 공시·기준 표시)
+             "기준표시"}
 
 
 def coerce(df):
@@ -398,7 +410,109 @@ def _drop_loss_ratio_cols(rows):
     return _drop_provenance(rows, extra=("원문구분", "원문포트폴리오"))
 
 
+# ---------------------------------------------------------------------------
+# 보험계약부채 시트 (insurance_liability_portfolio.json) — 2026-10-11.
+# 마스터는 이미 long-format 이다. 여기서 붙이는 것은 세 열뿐이다: 단위(항목 9 만 0/1 플래그라
+# 억원이 아니다) · 기준표시(값을 어느 공시·기준에서 읽었나) · 비고(소급재작성·순액·계산값).
+# 기준표시는 insurance_liability_portfolio_provenance.json 의 `basis` 를 한글로 옮긴 것이고,
+# 영문 코드(latest_filing_comparative_restatable 등)는 공개 다운로드에 그대로 나가지 않게 한다.
+# 항목 블록마다 근거 목록이 다르다: 1~8 = lrc_model_cells, 9 = item9_cells(또는 lrc_model_cells),
+# 10~15 = cells, 16·17 = indirect_lic_cells. 근거가 없는 셀은 추측하지 않고 비운다 — 단, 2-4/2-5 표가
+# 생긴 2025.1Q 이후의 1~9 는 provenance scope("items 1-9 are the 경영공시 2-4/2-5 extract")와
+# 검증 게이트(R2_CENSUS)가 정의하는 대로 그 분기 공시 자체다.
+# ---------------------------------------------------------------------------
+_ILP_PROVENANCE = "insurance_liability_portfolio_provenance.json"
+_ILP_FIRST_OWN_FILING_QUARTER = "2025.1Q"   # 경영공시 2-4/2-5 신설 분기 (validate_insurance_liability_portfolio.py)
+
+_ILP_LRC_BASIS_LABEL = {
+    "own_filing": "해당 분기 공시",
+    "latest_filing_comparative": "최신 공시 비교열",
+    "latest_filing_comparative_restatable": "최신 공시 비교열(소급재작성)",
+}
+_ILP_LIC_BASIS_LABEL = {"liability": "부채 기준", "net": "순액 기준"}
+_ILP_NOTE_RESTATED = ("최신 공시의 소급재작성 비교 잔액이다 — 당시 원 공시 잔액과 다를 수 있다 "
+                      "(재작성 사유는 원문 감사보고서 강조사항)")
+_ILP_NOTE_NET = ("보험계약자산을 차감한 순부채(순액)만 공시돼 있어 재무상태표 보험계약부채보다 "
+                 "그 상계액만큼 작다")
+_ILP_NOTE_DERIVED = ("직접 공시값이 아닌 계산값 — 측정요소별 변동표의 기말 {what} 합계에서 잔여보장요소 {what}"
+                     "(항목 {lrc})를 뺀 간접 산출. 단일열로 공시된 발생사고요소(항목 13)를 허용오차 안에서 "
+                     "재현하는 경우만 적재")
+_ILP_UNIT_FLAG = "여부(1=사용, 0=미사용)"
+
+
+def _ilp_provenance_index() -> dict:
+    """provenance 를 (회사코드, 분기) 로 색인. 파일이 없으면 조용히 빈 기준표시를 내지 않고 실패한다."""
+    doc = json.loads((REPO / _ILP_PROVENANCE).read_text(encoding="utf-8"))
+
+    def by_cell(key: str) -> dict:
+        return {(x["company_code"], x["quarter"]): x for x in doc.get(key, [])}
+
+    return {"lrc": by_cell("lrc_model_cells"), "lic": by_cell("cells"),
+            "indirect": by_cell("indirect_lic_cells"), "item9": by_cell("item9_cells")}
+
+
+def _ilp_lrc_label(cell: dict) -> str:
+    basis = cell.get("basis")
+    if basis is not None:
+        return _ILP_LRC_BASIS_LABEL[basis]        # 모르는 값이면 KeyError — 조용히 비우지 않는다
+    # 연말 4-6-2 표(basis 미기재): 비교열에서 읽었는지가 published_in 에 적혀 있다
+    return ("최신 공시 비교열" if "comparative column" in (cell.get("published_in") or "")
+            else "해당 분기 공시")
+
+
+def _ilp_basis_note(item: int, key: tuple, ix: dict) -> tuple:
+    """(기준표시, 비고) — 근거가 없으면 ('', '')."""
+    own_filing_era = key[1] >= _ILP_FIRST_OWN_FILING_QUARTER   # '2025.1Q' 형은 문자열 비교로 충분
+    if 1 <= item <= 8:
+        c = ix["lrc"].get(key)
+        if c is None:
+            return ("해당 분기 공시", "") if own_filing_era else ("", "")
+        label = _ilp_lrc_label(c)
+        return label, (_ILP_NOTE_RESTATED if c.get("basis") == "latest_filing_comparative_restatable" else "")
+    if item == 9:
+        c = ix["lrc"].get(key)
+        if c is not None and c.get("item9") is not None:
+            return _ilp_lrc_label(c), ""
+        if key in ix["item9"]:
+            return "공시 본문 문구(예외모형 선택)", ""
+        return ("해당 분기 공시", "") if own_filing_era else ("", "")
+    if 10 <= item <= 15:
+        c = ix["lic"].get(key)
+        if c is None:
+            return "", ""
+        label = _ILP_LIC_BASIS_LABEL[c["basis"]]
+        notes = []
+        if "original_basis" in c:                  # 소급재작성 셀: 원 공시 기준값을 따로 보관 중인 8셀
+            label += "(소급재작성)"
+            notes.append(_ILP_NOTE_RESTATED)
+        if c["basis"] == "net":
+            notes.append(_ILP_NOTE_NET)
+        return label, " / ".join(notes)
+    if item in (16, 17):
+        c = ix["indirect"].get(key)
+        if c is None:
+            return "", ""
+        return "계산값(간접 산출)", (_ILP_NOTE_DERIVED.format(what="최선추정", lrc="1+4") if item == 16
+                      else _ILP_NOTE_DERIVED.format(what="위험조정", lrc="2+5"))
+    return "", ""
+
+
+def _flatten_insurance_liability_portfolio(rows: list) -> list:
+    ix = _ilp_provenance_index()
+    out = []
+    for r in rows:
+        row = dict(r)
+        item = int(r["항목번호"])
+        label, note = _ilp_basis_note(item, (r["원보험사코드"], r["공시분기"]), ix)
+        row["단위"] = _ILP_UNIT_FLAG if item == 9 else "억원"
+        row["기준표시"] = label
+        row["비고"] = note
+        out.append(row)
+    return out
+
+
 FLATTEN = {
+    "insurance_liability_portfolio.json": _flatten_insurance_liability_portfolio,
     "data/persistency/master_persistency.json": _drop_provenance,
     "data/loss_ratio/master_loss_ratio.json": _drop_loss_ratio_cols,
     "kics_capital_securities.json": _flatten_capital_securities,

@@ -10,6 +10,14 @@
 
 ---
 
+## 2026-10-11 — 보험계약부채 마스터 시트 · 공개 스냅샷 신설 + KB라이프 소진율 도넛 이름 수정
+
+- **xlsx**: 시트 `보험계약부채` 6,111행 x 13열(마스터 10열 + 단위·기준표시·비고). `sync_master_xlsx_sheet.py` 시트 단위만 — 기존 16시트의 행 수·값 SHA-256 전후 동일, 요약 시트 행 1개 추가. 백업 `insurequant_master_tables.xlsx.bak_20261011_ilp`.
+- **공개 스냅샷**: `export_public_sheets.py` MASTERS 15개로, `--only <시트>` 옵션 신설(그 시트 파일 + manifest 항목만). `public_exports/보험계약부채.json` 6,111행, 게이트 발견 0.
+- **선언**: `build_master_xlsx.MASTERS`·TEXT_COLS(`기준표시`)·FLATTEN, `MASTER_XLSX_SHEETS` 17, `PUBLIC_EXPORT_SHEETS` 15, `MASTER_SHEET_PENDING` 비움, `android_push_and_deploy.sh` NEW_FILES.
+- **KB라이프**: tier1/tier2 배포본·빌더 20262Q 산출물의 `company` 1칸 `케이비라이프생명보험` -> `KB라이프생명`(K-ICS.html 매칭 이름). 컴퓨트 스크립트 재실행 시 옛 이름 부활 위험은 남음.
+- 상세 `data/disclosure/_meta/ilp_master_sheet_runlog.md`. designer 필요 변경: `download-survey.js` SHEETS 1줄.
+
 ## 2026-10-11 — 재보사 8곳(KR1101~KR1108) 자본비율 Forward Outlook · 자본성증권 소진율 추가
 
 - **원인 = 데이터 부재.** 재보사는 2026-10-09 에 `kics_disclosure.json` 에 들어왔고 `kics_forward_capital.json`(9/23)·`kics_tier{1,2}_utilization.json`(9/1)은 그 전 산출이라 8곳 행이 없었다. 화면은 「forward simulation 데이터 없음」·도넛 「데이터 없음」. 이름 매칭은 문제 아님(드롭다운 value = 원수사명 전체, 약칭은 라벨만).
