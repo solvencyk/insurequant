@@ -5,22 +5,21 @@
 
 ## Status (최신 3개)
 
+- **2026-10-11 재작성 비교열 3셀 적재(owner 「최신 공시 쓰기」)** — `insurance_liability_portfolio.json` +24행(3,811 → 3,835, 기존 행 바이트 동일): 라이나 KR0074·미래에셋 KR0079·KB라이프 KR0099 의 2023.4Q 항목 1~8, 원천 FY2024 비교열(4-6-2 `<2023년>`/DART 주석 전기말). provenance `basis=latest_filing_comparative_restatable`.
+  FY2023 원문과의 차이 = 항목 8 이 −19,288.9 / −1,374.2 / +1,623.4억(FY2024 재무상태표 전기말 열의 보험계약부채 변화와 일치 → 재작성 확정). LIC 검산기 RED 0·YELLOW 11 → 14(새 R-LIC2 3건), 포트폴리오 검증기 RED 4 불변, 사이드카 갱신 불필요. 커밋 안 함.
+  근거·표·재현 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §9 · 드라이버 `scripts/load_ilp_latest3_2023_4q.py`.
 - **2026-10-10~11 ILP 소급 적재 — 2024.4Q·2023.4Q(owner 우선순위; 나머지 6분기는 다음 라운드)** — `insurance_liability_portfolio.json` +928행(2,883 → 3,811, 기존 행 바이트 동일): 2024.4Q +540(항목 1~8 39셀·9 24셀·10~15 39셀) / 2023.4Q +388(항목 1~8 23셀·10~15 39셀). 「BEL·RA 는 2025.1Q 부터」는 틀렸다 — 모형별 표는 FY2024 결산 경영공시(4-6-2)에 신설됐고(회사 자기 문구), 발생사고·측정요소별 BEL·RA 는 DART 주석에 2023.1Q 부터 있다. LIC 검산기 RED 0·YELLOW 11. 커밋 안 함.
   남은 것: 2024.1Q~3Q(2025 분기 경영공시 전년동기 표 25~26사 + DART 69셀)·2023.1Q~3Q(DART 69셀 중 8셀 셀별 처리, 항목 1~8 원천 부재) 적재 · 재작성 비교열 3셀(라이나·미래에셋·KB라이프 2023.12.31) owner 결정 · validation: 포트폴리오 검증기 R3 의 KR0029 2024.4Q 「10배 규칙」 RED(값은 맞음) · designer 패널 재빌드(2024.4Q·2023.4Q 39사, 사이드카 6셀).
   근거·census(40사×8분기, 렌더링 증거)·재현 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` · 드라이버 `scripts/load_ilp_backfill_pre2025.py`.
 - **2026-10-10 후속(1b) IBK연금 2-4 6분기 48칸 정정 · KR0011 중복 9행 제거 · 예별 PL 다리 10칸 정정** — ILP 2,883행·중복 키 0, LIC 검산기 R-LIC2 YELLOW 해소(RED 0·YELLOW 7). 예별 2024.4Q·2025.4Q 항목 2·3·8 채움 + 13·14 부호·범위 정정(폐쇄식이 손익계산서 보험손익과 ±0.001 백만원으로 닫힘) → `MASTER_HOLE` 2건 해소, `coverage_hole 5→3PL`·pl_bridge 31F→29F.
   남은 것: `PL_YTD_COLLAPSE_TO_ZERO` 예별 2025.3Q(= validation r2 V2-1, 신설법인 제1기 기준 혼합, owner/validation 결정) · xlsx `손익분해PL`·public_exports 10칸 재동기화(publishing) · designer `panel_csm_combo.json` 재빌드(KR1011 6분기) · `test_master_tables_golden --update`(validation).
   커밋 안 함. 근거·재현·전후 수치 `data/disclosure/_meta/lic_load_runlog_stage1b.md` · 스크립트 `scripts/fix_20261010_{ilp_kr1011_ibk_total_row,ilp_kr0011_dedup_2025_3q,pl_kr0004_lob_legs}.py`.
-- **2026-10-10 발생사고요소(LIC) BEL·RA 1단계 적재** — `insurance_liability_portfolio.json` 항목 10~15 +832행(158셀: A1 53·A2 47·T 58, 억원, owner 정정으로 신규 마스터 아님) + 현대해상 2-4 2025.1Q~3Q 12칸 정정(PAA 합이 VFA 열로·PDF 쪽번호가 VFA CSM 으로 읽혀 있었다). 커밋 안 함.
-  검산 `scripts/validate_insurance_liability_lic.py` RED 0(R-LIC1 부채 146셀 최대 2.7ppm + 순액 7셀, R-LIC2 155/156, R-LIC3 158/158) · 미적재 1(예별 4Q, 계약이전 범위 단절) · 원천 부재 75 · 사이드카 `data/_derived/ilp_includes_lic.json`(ABL·KDB생명·푸본현대).
-  남은 것: 2단계 간접값 16·17(사전시험 28셀 통과) · 3단계(라이나·처브 PDF·하나손보 별첨·예별) · 재현·근거 `data/disclosure/_meta/lic_load_runlog_stage1.md`(IBK 정정은 1b 에서 끝남).
 
 ## 열린 일
 
 - [ ] **ILP 소급 적재 잔여 6분기 — 오케스트레이터 발주 대기** — 2024.1Q~3Q 먼저(항목 10~15 = DART 23사×3 = 69셀 전부 닫힘, 항목 1~8 = 2025.1Q~3Q 경영공시 전년동기 표 25~26사 + 미판독 11~13사 렌더링), 이어서 2023.1Q~3Q(항목 10~15 69셀 중 8셀 셀별 처리: 메리츠 2023.3Q·한화손보 2023.1Q·롯데 2023.1Q·현대해상 2023.1Q·2Q·DB손보 2023.3Q·코리안리 2023.1Q·2Q, 항목 1~8 은 원천 부재라 빈 칸).
   재작성 비교열 규칙(R-LIC2·CSM 불일치면 보류)을 그대로 적용. 규모·소요는 런로그 §6.
-- [ ] **재작성 비교열 3셀 owner 결정** — 라이나 KR0074·미래에셋 KR0079·KB라이프 KR0099 의 2023.12.31 모형별 값(항목 1~8)은 FY2024 비교열이 FY2023 원문과 달라(라이나 보험계약부채 6,980 → 5,249억 재작성 등) 적재를 보류했다. 값은 provenance `lrc_model_not_loaded.detail`.
-  라이나는 마스터 CSM·PL 2023.4Q 가 이미 재작성 기준이고 BS 항목 20·LIC 는 원문 기준이라 기준이 이미 섞여 있다 — 한쪽으로 통일할지 결정. 근거 런로그 §5.
+- [ ] **재작성 3셀의 기준 혼재 정리(owner)** — 항목 1~8 은 재작성(최신 공시), 항목 10~15·BS 항목 20 은 FY2023 원문이다(라이나는 재작성 LIC 약 4,444억 vs 마스터 항목 10 597억, 항목 8+LIC 가 BS 와 안 닫힘; 미래에셋·KB라이프는 LRC 만 재작성이라 닫힘). 통일할지·designer 안내 문구는 owner 결정. 근거 런로그 §9.
 
 - [ ] **예별(KR0004) 2025.3Q `PL_YTD_COLLAPSE_TO_ZERO` RED = validation r2 V2-1(기준 혼합) — owner/validation 결정 대기** — 원문이 `제1(당)3분기 2025-06-16~09-30`(신설 예별손해보험(주) 제1기)이고 법인세는 `-` 라 0.0 이 인쇄값이다. 2Q(구 MG 제13기 8,079.7)와 보고주체가 다른 단절이라 값을 바꿔도 다른 RED 가 된다.
   결정지 ① 되돌리기(10-09 에 만든 4행 + 사이드카 1셀 삭제, `MASTER_HOLE(통째)` 복귀) ② 유지 + 근거를 단 셀 단위 등재. 증거 4줄·절차는 런로그 1b §3.3. V2-4(골든 `--update` 보류)가 이 결정에 걸려 있다.

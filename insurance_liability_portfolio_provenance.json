@@ -19052,6 +19052,222 @@
    "flags": [],
    "evidence": null,
    "published_in": "FY2024 year-end 경영공시 / 사업보고서 (comparative column)"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2023.4Q",
+   "item_block": "lrc_model_table_4-6-2",
+   "source_id": "PDF",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR0074_라이나생명보험.pdf",
+   "page": 21,
+   "table": null,
+   "table_year": 2023,
+   "table_year_src": "marker",
+   "unit_in_source": "억원",
+   "printed_run": [
+    -57580.0,
+    6368.0,
+    32302.0
+   ],
+   "run_kind": "gmm",
+   "text_source": "pdfplumber",
+   "items_eok": {
+    "1": -57580.0,
+    "2": 6368.0,
+    "3": 32302.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": -18910.0
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "dart_note_crosscheck": {
+    "file": "data/dart/FY2024_Q4/raw/KR0074_라이나생명보험_20250409002702/20250409002702_00760.xml",
+    "table": 117,
+    "unit": "천원",
+    "items": {
+     "1": -57580.0401,
+     "2": 6368.4942,
+     "3": 32301.6158,
+     "4": null,
+     "5": null,
+     "6": null,
+     "7": null
+    },
+    "max_abs_diff_eok": 0.49
+   },
+   "flags": [],
+   "basis": "latest_filing_comparative_restatable",
+   "basis_note": "owner decision 2026-10-11: latest filing's comparative column (FY2024 year-end <2023년>), which RESTATES the 2023-12-31 balances; differs from the FY2023 original -- the other items of this cell (10-15, BS item 20, and for KR0079/KR0099 the CSM_waterfall) are FY2023 original basis",
+   "vs_fy2023_original": {
+    "item8_comparative": -18910.0,
+    "net_lrc_fy2023_dart": 378.92,
+    "item8_minus_orig": -19288.92,
+    "csm_3plus6_comparative": 32302.0,
+    "csm_waterfall_2023_4Q": 32301.6,
+    "csm_minus_wf": 0.4,
+    "item15_fy2023": 6980.48,
+    "bs_item20_fy2023": 6980.48,
+    "bs_fy2023_liab_asset": [
+     6980.48,
+     2148.58
+    ],
+    "bs_fy2024_prior_col_liab_asset": [
+     5249.05,
+     19715.26
+    ],
+    "bs_fy2024_prior_file": "data/dart/FY2024_Q4/raw/KR0074_라이나생명보험_20250409002702/20250409002702_00760.xml",
+    "bs_restated_net": -14466.21,
+    "bs_restatement_delta_liab": -1731.43,
+    "item8_plus_lic_fy2023_minus_bs_restated_net": -3846.82,
+    "implied_restated_lic_eok": 4443.79,
+    "lic_item10_in_master_fy2023_basis": 596.97
+   },
+   "previously_withheld_reason": "FY2024 comparative (2023-12-31) disagrees with the FY2023 original basis of the other items of this cell -> restated comparative or other basis, not mixed in: item 8 -18,910.0 vs DART net LRC of the FY2023 filing 378.92 (diff -19,288.9, tol 1.9)",
+   "published_in": "FY2024 year-end 경영공시 / 사업보고서 (comparative column, restated)"
+  },
+  {
+   "company_code": "KR0079",
+   "quarter": "2023.4Q",
+   "item_block": "lrc_model_table_4-6-2",
+   "source_id": "DART_note",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
+   "page": null,
+   "table": 448,
+   "table_year": 2023,
+   "table_year_src": null,
+   "unit_in_source": "백만원",
+   "printed_run": null,
+   "run_kind": null,
+   "text_source": null,
+   "items_eok": {
+    "1": 127223.5,
+    "2": 2620.06,
+    "3": 15473.55,
+    "4": 101389.84,
+    "5": 1137.0,
+    "6": 4740.97,
+    "7": 0.0,
+    "8": 252584.92
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "dart_note_crosscheck": null,
+   "flags": [
+    "pdf_not_readable"
+   ],
+   "basis": "latest_filing_comparative_restatable",
+   "basis_note": "owner decision 2026-10-11: latest filing's comparative column (FY2024 year-end <2023년>), which RESTATES the 2023-12-31 balances; differs from the FY2023 original -- the other items of this cell (10-15, BS item 20, and for KR0079/KR0099 the CSM_waterfall) are FY2023 original basis",
+   "vs_fy2023_original": {
+    "item8_comparative": 252584.92,
+    "net_lrc_fy2023_dart": 253959.14,
+    "item8_minus_orig": -1374.22,
+    "csm_3plus6_comparative": 20214.52,
+    "csm_waterfall_2023_4Q": 20214.5,
+    "csm_minus_wf": 0.02,
+    "item15_fy2023": 257829.55,
+    "bs_item20_fy2023": 257829.55,
+    "bs_fy2023_liab_asset": [
+     257829.55,
+     0.0
+    ],
+    "bs_fy2024_prior_col_liab_asset": [
+     256455.34,
+     0.0
+    ],
+    "bs_fy2024_prior_file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228_00760.xml",
+    "bs_restated_net": 256455.34,
+    "bs_restatement_delta_liab": -1374.21,
+    "item8_plus_lic_fy2023_minus_bs_restated_net": -0.01,
+    "implied_restated_lic_eok": 3870.42,
+    "lic_item10_in_master_fy2023_basis": 3870.41
+   },
+   "previously_withheld_reason": "FY2024 comparative (2023-12-31) disagrees with the FY2023 original basis of the other items of this cell -> restated comparative or other basis, not mixed in: item 8 252,584.9 vs DART net LRC of the FY2023 filing 253,959.14 (diff -1,374.2, tol 1,269.8)",
+   "published_in": "FY2024 year-end 경영공시 / 사업보고서 (comparative column, restated)"
+  },
+  {
+   "company_code": "KR0099",
+   "quarter": "2023.4Q",
+   "item_block": "lrc_model_table_4-6-2",
+   "source_id": "PDF",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR0099_케이비라이프생명보험.pdf",
+   "page": 30,
+   "table": null,
+   "table_year": 2023,
+   "table_year_src": "order",
+   "unit_in_source": "억원",
+   "printed_run": [
+    151802.0,
+    3724.0,
+    25816.0,
+    50103.0,
+    654.0,
+    5982.0,
+    0.0
+   ],
+   "run_kind": "full",
+   "text_source": "pdfplumber",
+   "items_eok": {
+    "1": 151802.0,
+    "2": 3724.0,
+    "3": 25816.0,
+    "4": 50103.0,
+    "5": 654.0,
+    "6": 5982.0,
+    "7": 0.0,
+    "8": 238081.0
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "dart_note_crosscheck": {
+    "file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905.xml",
+    "table": 449,
+    "unit": "백만원",
+    "items": {
+     "1": 151802.23,
+     "2": 3722.47,
+     "3": 25815.68,
+     "4": 50103.18,
+     "5": 653.29,
+     "6": 5982.58,
+     "7": null
+    },
+    "max_abs_diff_eok": 1.53
+   },
+   "flags": [],
+   "basis": "latest_filing_comparative_restatable",
+   "basis_note": "owner decision 2026-10-11: latest filing's comparative column (FY2024 year-end <2023년>), which RESTATES the 2023-12-31 balances; differs from the FY2023 original -- the other items of this cell (10-15, BS item 20, and for KR0079/KR0099 the CSM_waterfall) are FY2023 original basis",
+   "vs_fy2023_original": {
+    "item8_comparative": 238081.0,
+    "net_lrc_fy2023_dart": 236457.59,
+    "item8_minus_orig": 1623.41,
+    "csm_3plus6_comparative": 31798.0,
+    "csm_waterfall_2023_4Q": 30176.4,
+    "csm_minus_wf": 1621.6,
+    "item15_fy2023": 238697.44,
+    "bs_item20_fy2023": 238697.43,
+    "bs_fy2023_liab_asset": [
+     238697.43,
+     0.0
+    ],
+    "bs_fy2024_prior_col_liab_asset": [
+     240319.27,
+     0.0
+    ],
+    "bs_fy2024_prior_file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905_00760.xml",
+    "bs_restated_net": 240319.27,
+    "bs_restatement_delta_liab": 1621.84,
+    "item8_plus_lic_fy2023_minus_bs_restated_net": 1.58,
+    "implied_restated_lic_eok": 2238.27,
+    "lic_item10_in_master_fy2023_basis": 2239.85
+   },
+   "previously_withheld_reason": "FY2024 comparative (2023-12-31) disagrees with the FY2023 original basis of the other items of this cell -> restated comparative or other basis, not mixed in: item 8 238,081.0 vs DART net LRC of the FY2023 filing 236,457.59 (diff +1,623.4, tol 1,182.3); CSM items 3+6 31,798.0 vs CSM_waterfall closing 30,176.4",
+   "published_in": "FY2024 year-end 경영공시 / 사업보고서 (comparative column, restated)"
   }
  ],
  "lrc_model_not_loaded": [
@@ -19140,6 +19356,12 @@
     "source": "PDF",
     "file": "data/disclosure/FY2024_Q4/raw/KR0074_라이나생명보험.pdf",
     "page": 21
+   },
+   "resolved": {
+    "at": "20261010T1525Z",
+    "how": "loaded from the latest filing's comparative column (owner decision 2026-10-11)",
+    "see": "lrc_model_cells[basis=latest_filing_comparative_restatable]",
+    "emitted_by": "scripts/load_ilp_latest3_2023_4q.py"
    }
   },
   {
@@ -19161,6 +19383,12 @@
     "source": "DART_note",
     "file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
     "page": null
+   },
+   "resolved": {
+    "at": "20261010T1525Z",
+    "how": "loaded from the latest filing's comparative column (owner decision 2026-10-11)",
+    "see": "lrc_model_cells[basis=latest_filing_comparative_restatable]",
+    "emitted_by": "scripts/load_ilp_latest3_2023_4q.py"
    }
   },
   {
@@ -19188,6 +19416,12 @@
     "source": "PDF",
     "file": "data/disclosure/FY2024_Q4/raw/KR0099_케이비라이프생명보험.pdf",
     "page": 30
+   },
+   "resolved": {
+    "at": "20261010T1525Z",
+    "how": "loaded from the latest filing's comparative column (owner decision 2026-10-11)",
+    "see": "lrc_model_cells[basis=latest_filing_comparative_restatable]",
+    "emitted_by": "scripts/load_ilp_latest3_2023_4q.py"
    }
   },
   {
@@ -19223,6 +19457,13 @@
    "emitted_by": "scripts/load_ilp_backfill_pre2025.py",
    "ticket": "inbox/parser/20261010T1600Z__orchestrator__MULTI_2023.1Q-2024.4Q__ilp_backfill_pre2025.md",
    "note": "items 1-8(/9) from the FY2024 year-end 경영공시 4-6-2 (PDF; DART note where the PDF is an image or unreadable) -> lrc_model_cells; items 10-15 from the DART roll-forward of the year -> cells (same schema as stage 1)"
+  },
+  {
+   "stage": "2023.4Q-latest3",
+   "at": "20261010T1525Z",
+   "emitted_by": "scripts/load_ilp_latest3_2023_4q.py",
+   "ticket": "inbox/parser/20261011T0010Z__orchestrator__KR0074-KR0079-KR0099_2023.4Q__ilp_latest_filing_comparative.md",
+   "note": "items 1-8 of KR0074/KR0079/KR0099 2023.4Q from the FY2024 comparative column (restated 2023-12-31 balances); basis=latest_filing_comparative_restatable"
   }
  ]
 }

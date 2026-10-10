@@ -1,5 +1,11 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 (3셀 최신 공시) 정리 — 밀린 Status (무수정)
+
+- **2026-10-10 발생사고요소(LIC) BEL·RA 1단계 적재** — `insurance_liability_portfolio.json` 항목 10~15 +832행(158셀: A1 53·A2 47·T 58, 억원, owner 정정으로 신규 마스터 아님) + 현대해상 2-4 2025.1Q~3Q 12칸 정정(PAA 합이 VFA 열로·PDF 쪽번호가 VFA CSM 으로 읽혀 있었다). 커밋 안 함.
+  검산 `scripts/validate_insurance_liability_lic.py` RED 0(R-LIC1 부채 146셀 최대 2.7ppm + 순액 7셀, R-LIC2 155/156, R-LIC3 158/158) · 미적재 1(예별 4Q, 계약이전 범위 단절) · 원천 부재 75 · 사이드카 `data/_derived/ilp_includes_lic.json`(ABL·KDB생명·푸본현대).
+  남은 것: 2단계 간접값 16·17(사전시험 28셀 통과) · 3단계(라이나·처브 PDF·하나손보 별첨·예별) · 재현·근거 `data/disclosure/_meta/lic_load_runlog_stage1.md`(IBK 정정은 1b 에서 끝남).
+
 ## 2026-10-11 (ILP 소급) 정리 — 밀린 Status (무수정)
 
 - **2026-10-09 전사 BS/PL 공란 백필(owner 10-08)** — BS 공란 25+부분 5 → 0(184칸, 경영공시 요약표·4-1표·별도BS, 10사), PL 공란 29 → 1(126칸, 12사·28(회사,분기)).

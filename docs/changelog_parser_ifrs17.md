@@ -3,6 +3,16 @@
 > Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-11 (ILP 3셀) — 재작성 비교열 3셀 최신 공시로 적재
+
+미커밋. push 안 함. 발주 `inbox/parser/20261011T0010Z__orchestrator__KR0074-KR0079-KR0099_2023.4Q__ilp_latest_filing_comparative.md`(고치지 않았다). owner 결정 「최신 공시 쓰기」.
+
+- `insurance_liability_portfolio.json` +24행(3,811 → 3,835; 기존 행 바이트 동일, 중복 키 0): 라이나 KR0074(PDF p21)·미래에셋 KR0079(DART 주석, PDF 이미지)·KB라이프 KR0099(PDF p30)의 2023.4Q 항목 1~8. 백업 `data/_derived/ilp_backup_20261010_pre_latest3.json`(+provenance 백업).
+- provenance `lrc_model_cells` 3레코드 `basis=latest_filing_comparative_restatable` + FY2023 원문과의 차이. 이전 보류 기록에는 `resolved` 표지.
+- 차이(항목 8 − FY2023 원문 순 LRC): −19,288.9 / −1,374.2 / +1,623.4억. FY2024 재무상태표 전기말 열의 보험계약부채 변화(−1,731.4 부채·순 −19,298.1 / −1,374.21 / +1,621.84)와 일치 → 재작성 확정. KB라이프는 CSM 만(+1,621.6), 미래에셋은 BEL·RA 만(CSM 동일).
+- 검산: LIC 검산기 RED 0·YELLOW 11 → 14(이 3셀 R-LIC2), 포트폴리오 검증기 RED 4 불변. 항목 8 + LIC(원문) vs FY2024 BS 전기말 순액: 미래에셋 −0.01 · KB라이프 +1.58 · 라이나 −3,846.8(재작성 LIC 약 4,444억). 사이드카(`ilp_includes_lic.json`) 불변.
+- 기준 혼재(항목 1~8 재작성 / 항목 10~15·BS 항목 20 원문)는 owner·designer 몫으로 남겼다. 근거·표·재현 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §9 · `scripts/load_ilp_latest3_2023_4q.py`.
+
 ## 2026-10-11 (ILP 소급) — 포트폴리오 마스터 2024.4Q·2023.4Q 적재 + 2023.1Q~2024.4Q 가용성 census
 
 미커밋. **push 안 함.** 발주 `inbox/parser/20261010T1600Z__orchestrator__MULTI_2023.1Q-2024.4Q__ilp_backfill_pre2025.md`(오케스트레이터 종결 대기). 진행 중 우선순위 변경 수신: census 는 전 셀, 적재는 2024.4Q → 2023.4Q 두 시점만. 전체 근거·표·재현은 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md`.
