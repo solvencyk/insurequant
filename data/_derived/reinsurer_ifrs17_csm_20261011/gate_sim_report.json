@@ -1,0 +1,310 @@
+{
+ "validate_master_tables": {
+  "baseline": {
+   "closing_pass": 363,
+   "closing_fail": 0,
+   "closing_skip": 0,
+   "wf_holes": 0,
+   "dup": 0,
+   "spike": 1,
+   "cont": 1,
+   "wfy": 0,
+   "zamort": 0,
+   "csm_amort_identity_fail": 0,
+   "csm_amort_identity_pass": 354
+  },
+  "with_wf_rows": {
+   "closing_pass": 381,
+   "closing_fail": 0,
+   "closing_skip": 0,
+   "wf_holes": 0,
+   "dup": 0,
+   "spike": 1,
+   "cont": 1,
+   "wfy": 0,
+   "zamort": 0,
+   "csm_amort_identity_fail": 0,
+   "csm_amort_identity_pass": 354
+  }
+ },
+ "baseline": {
+  "red": 0,
+  "yellow": 93
+ },
+ "variant_A_new": [
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "뮌헨재보험",
+   "quarter": "2023.4Q",
+   "message": "CSM_waterfall 상각 158.5억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "뮌헨재보험",
+   "quarter": "2024.4Q",
+   "message": "CSM_waterfall 상각 203.2억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "뮌헨재보험",
+   "quarter": "2025.4Q",
+   "message": "CSM_waterfall 상각 118.1억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "스위스리아시아",
+   "quarter": "2023.4Q",
+   "message": "CSM_waterfall 상각 1,153.0억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "스위스리아시아",
+   "quarter": "2024.4Q",
+   "message": "CSM_waterfall 상각 1,167.9억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "스위스리아시아",
+   "quarter": "2025.4Q",
+   "message": "CSM_waterfall 상각 745.9억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "스코리재보험",
+   "quarter": "2023.4Q",
+   "message": "CSM_waterfall 상각 319.1억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "스코리재보험",
+   "quarter": "2024.4Q",
+   "message": "CSM_waterfall 상각 262.3억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "스코리재보험",
+   "quarter": "2025.4Q",
+   "message": "CSM_waterfall 상각 252.2억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "알지에이리인슈어런스",
+   "quarter": "2023.4Q",
+   "message": "CSM_waterfall 상각 245.6억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "알지에이리인슈어런스",
+   "quarter": "2024.4Q",
+   "message": "CSM_waterfall 상각 357.6억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "제네럴재보험",
+   "quarter": "2023.4Q",
+   "message": "CSM_waterfall 상각 19.6억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "제네럴재보험",
+   "quarter": "2024.4Q",
+   "message": "CSM_waterfall 상각 33.0억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "제네럴재보험",
+   "quarter": "2025.4Q",
+   "message": "CSM_waterfall 상각 41.4억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "퍼시픽라이프리",
+   "quarter": "2024.4Q",
+   "message": "CSM_waterfall 상각 149.0억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "퍼시픽라이프리",
+   "quarter": "2025.4Q",
+   "message": "CSM_waterfall 상각 122.2억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_BUCKET_ABSENT_VS_WATERFALL",
+   "company": "하노버재보험",
+   "quarter": "2023.4Q",
+   "message": "CSM_waterfall 상각 13.7억 인데 PL_breakdown 에 이 (회사,분기) 버킷이 통째로 없다 — 교차대조가 아예 돌지 못한다. 커버리지 baseline 에 없다 — 신규 결손이다 (data/_gold/pl_amort_coverage_baseline.json)"
+  }
+ ],
+ "variant_B_new": [
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "뮌헨재보험",
+   "quarter": "2023.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 158.5억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "뮌헨재보험",
+   "quarter": "2024.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 203.2억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "뮌헨재보험",
+   "quarter": "2025.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 118.1억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "스위스리아시아",
+   "quarter": "2023.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 1,153.0억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "스위스리아시아",
+   "quarter": "2024.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 1,167.9억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "스위스리아시아",
+   "quarter": "2025.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 745.9억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "스코리재보험",
+   "quarter": "2023.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 319.1억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "스코리재보험",
+   "quarter": "2024.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 262.3억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "스코리재보험",
+   "quarter": "2025.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 252.2억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "알지에이리인슈어런스",
+   "quarter": "2023.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 245.6억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "알지에이리인슈어런스",
+   "quarter": "2024.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 357.6억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "제네럴재보험",
+   "quarter": "2023.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 19.6억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "제네럴재보험",
+   "quarter": "2024.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 33.0억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "제네럴재보험",
+   "quarter": "2025.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 41.4억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "퍼시픽라이프리",
+   "quarter": "2024.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 149.0억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "퍼시픽라이프리",
+   "quarter": "2025.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 122.2억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  },
+  {
+   "severity": "RED",
+   "master": "PL_breakdown",
+   "rule": "PL_CSM_AMORT_VS_WATERFALL",
+   "company": "하노버재보험",
+   "quarter": "2023.4Q",
+   "message": "PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 13.7억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)"
+  }
+ ]
+}

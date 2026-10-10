@@ -1,0 +1,130 @@
+{
+  "_what": "재보사 CSM 워터폴 상각 ≥ 10억 (회사,분기) 건별 등재 후보. 등재는 owner 만 한다(이 파일은 제안일 뿐, data/_gold 는 건드리지 않았다).",
+  "_which_ledger": {
+    "pl_amort_coverage_baseline.json": "PL 에 (회사,분기) 버킷이 통째로 없을 때(지금 상태, 룰 PL_BUCKET_ABSENT_VS_WATERFALL)",
+    "pl_csm_amort_missing_ledger.json": "재보사 PL 버킷이 생겼는데 항목 4 가 비었을 때(룰 PL_CSM_AMORT_VS_WATERFALL) — 같은 키·같은 박제값"
+  },
+  "_alternative": "건별 등재 대신 게이트 3z/3z-b 가 `source_id == DISCLOSURE` 계보의 워터폴 셀(감사보고서)은 PL 대조 대상에서 빼는 설계 변경(owner/validation, Opus)",
+  "n_entries": 17,
+  "entries": {
+    "뮌헨재보험|2023.4Q": {
+      "wf_amort_eok": 158.47,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf p[58] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 158.47억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "뮌헨재보험|2024.4Q": {
+      "wf_amort_eok": 203.23,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf p[59] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 203.23억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "뮌헨재보험|2025.4Q": {
+      "wf_amort_eok": 118.15,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf p[58] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 118.15억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "스위스리아시아|2023.4Q": {
+      "wf_amort_eok": 1152.95,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf p[67] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 1,152.95억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "스위스리아시아|2024.4Q": {
+      "wf_amort_eok": 1167.88,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf p[70] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 1,167.88억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "스위스리아시아|2025.4Q": {
+      "wf_amort_eok": 745.91,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf p[69] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 745.91억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "제네럴재보험|2023.4Q": {
+      "wf_amort_eok": 19.64,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf p[52] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 19.64억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "제네럴재보험|2024.4Q": {
+      "wf_amort_eok": 33.05,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf p[51] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 33.05억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "제네럴재보험|2025.4Q": {
+      "wf_amort_eok": 41.42,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf p[54] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 41.42억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "하노버재보험|2023.4Q": {
+      "wf_amort_eok": 13.67,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf p[120] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 13.67억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "알지에이리인슈어런스|2023.4Q": {
+      "wf_amort_eok": 245.56,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf p[186] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 245.56억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "알지에이리인슈어런스|2024.4Q": {
+      "wf_amort_eok": 357.63,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf p[185] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 357.63억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "스코리재보험|2023.4Q": {
+      "wf_amort_eok": 319.13,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf p[51] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 319.13억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "스코리재보험|2024.4Q": {
+      "wf_amort_eok": 262.35,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf p[52] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 262.35억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "스코리재보험|2025.4Q": {
+      "wf_amort_eok": 252.21,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf p[51, 52] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 252.21억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "퍼시픽라이프리|2024.4Q": {
+      "wf_amort_eok": 149.04,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf p[52] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 149.04억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    },
+    "퍼시픽라이프리|2025.4Q": {
+      "wf_amort_eok": 122.22,
+      "status": "UNADJUDICATED",
+      "suggested_status": "REINSURER_PL_ITEM4_NOT_LOADABLE",
+      "note": "재보험사 국내지점(DART 비대상). 워터폴 상각은 감사보고서 주석(수재 일반모형 CSM 열) data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf p[51] 의 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' = 122.22억이다. PL_breakdown 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 1·16·22·23·24 로 제한해 이 계보로 채울 수 없다.",
+      "routed": "inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md"
+    }
+  }
+}

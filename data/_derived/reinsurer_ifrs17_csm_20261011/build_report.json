@@ -1,0 +1,1757 @@
+{
+  "amort_conflicts": [
+    {
+      "code": "KR1104",
+      "year": 2024,
+      "older": "FY2024_Q4",
+      "newer": "FY2025_Q4",
+      "diffs": [
+        [
+          5,
+          8.1,
+          6.0
+        ],
+        [
+          8,
+          6.35,
+          7.0
+        ],
+        [
+          9,
+          5.88,
+          8.0
+        ]
+      ],
+      "older_y": [
+        10.8,
+        10.7,
+        10.03,
+        9.36,
+        8.74,
+        8.1,
+        7.5,
+        6.83,
+        6.35,
+        5.88
+      ],
+      "older_total": 144.49,
+      "newer_y": [
+        11.0,
+        11.0,
+        10.0,
+        9.0,
+        9.0,
+        6.0,
+        7.0,
+        7.0,
+        7.0,
+        8.0
+      ],
+      "newer_total": 144.0
+    }
+  ],
+  "amort_unreadable": [],
+  "amort_p462_mismatch": [],
+  "sens_conflicts": [
+    {
+      "code": "KR1101",
+      "year": 2024,
+      "older": "FY2024_Q4",
+      "newer": "FY2025_Q4",
+      "n_diffs": 23,
+      "diffs": [
+        [
+          "사망률",
+          "보험계약마진",
+          -26.0,
+          -7.0
+        ],
+        [
+          "사망률",
+          "당기손익",
+          -15.0,
+          -20.0
+        ],
+        [
+          "사망률",
+          "기타포괄손익",
+          null,
+          -3.0
+        ],
+        [
+          "장해질병(정액보상)",
+          "보험계약마진",
+          -68.0,
+          -54.0
+        ],
+        [
+          "장해질병(정액보상)",
+          "당기손익",
+          -14.0,
+          -35.0
+        ],
+        [
+          "장해질병(정액보상)",
+          "기타포괄손익",
+          null,
+          -6.0
+        ],
+        [
+          "장해질병(실손보상)",
+          "보험계약마진",
+          -68.0,
+          -54.0
+        ],
+        [
+          "장해질병(실손보상)",
+          "당기손익",
+          -14.0,
+          -35.0
+        ],
+        [
+          "장해질병(실손보상)",
+          "기타포괄손익",
+          null,
+          -6.0
+        ],
+        [
+          "해지율(상승)",
+          "이행현금흐름",
+          59.0,
+          53.0
+        ],
+        [
+          "해지율(상승)",
+          "보험계약마진",
+          -47.0,
+          -23.0
+        ],
+        [
+          "해지율(상승)",
+          "당기손익",
+          -17.0,
+          -25.0
+        ],
+        [
+          "해지율(상승)",
+          "기타포괄손익",
+          null,
+          -4.0
+        ],
+        [
+          "해지율(하락)",
+          "이행현금흐름",
+          0.0,
+          -79.0
+        ],
+        [
+          "해지율(하락)",
+          "보험계약마진",
+          0.0,
+          57.0
+        ],
+        [
+          "해지율(하락)",
+          "당기손익",
+          0.0,
+          16.0
+        ],
+        [
+          "해지율(하락)",
+          "기타포괄손익",
+          null,
+          6.0
+        ],
+        [
+          "사업비(수준)",
+          "보험계약마진",
+          -16.0,
+          -11.0
+        ],
+        [
+          "사업비(수준)",
+          "당기손익",
+          -4.0,
+          -7.0
+        ],
+        [
+          "사업비(수준)",
+          "기타포괄손익",
+          null,
+          -1.0
+        ],
+        [
+          "사업비(인플레이션)",
+          "보험계약마진",
+          -16.0,
+          -11.0
+        ],
+        [
+          "사업비(인플레이션)",
+          "당기손익",
+          -4.0,
+          -7.0
+        ],
+        [
+          "사업비(인플레이션)",
+          "기타포괄손익",
+          null,
+          -1.0
+        ]
+      ]
+    },
+    {
+      "code": "KR1102",
+      "year": 2024,
+      "older": "FY2024_Q4",
+      "newer": "FY2025_Q4",
+      "n_diffs": 4,
+      "diffs": [
+        [
+          "사업비(수준)",
+          "이행현금흐름",
+          17.0,
+          9.0
+        ],
+        [
+          "사업비(수준)",
+          "보험계약마진",
+          -11.0,
+          -6.0
+        ],
+        [
+          "사업비(수준)",
+          "당기손익",
+          -7.0,
+          -3.0
+        ],
+        [
+          "사업비(수준)",
+          "기타포괄손익",
+          2.0,
+          null
+        ]
+      ]
+    },
+    {
+      "code": "KR1103",
+      "year": 2024,
+      "older": "FY2024_Q4",
+      "newer": "FY2025_Q4",
+      "n_diffs": 2,
+      "diffs": [
+        [
+          "사망률",
+          "당기손익",
+          0.28,
+          3.0
+        ],
+        [
+          "해지율(상승)",
+          "당기손익",
+          0.09,
+          null
+        ]
+      ]
+    },
+    {
+      "code": "KR1104",
+      "year": 2024,
+      "older": "FY2024_Q4",
+      "newer": "FY2025_Q4",
+      "n_diffs": 14,
+      "diffs": [
+        [
+          "사망률",
+          "이행현금흐름",
+          3.29,
+          4.0
+        ],
+        [
+          "사망률",
+          "보험계약마진",
+          -3.29,
+          -4.0
+        ],
+        [
+          "사망률",
+          "당기손익",
+          -0.63,
+          0.0
+        ],
+        [
+          "장해질병(정액보상)",
+          "이행현금흐름",
+          45.48,
+          61.0
+        ],
+        [
+          "장해질병(정액보상)",
+          "보험계약마진",
+          -45.48,
+          -56.0
+        ],
+        [
+          "장해질병(정액보상)",
+          "당기손익",
+          -13.9,
+          -7.0
+        ],
+        [
+          "장해질병(정액보상)",
+          "기타포괄손익",
+          1.38,
+          2.0
+        ],
+        [
+          "해지율(상승)",
+          "보험계약마진",
+          -15.77,
+          -17.0
+        ],
+        [
+          "해지율(상승)",
+          "당기손익",
+          -0.77,
+          0.0
+        ],
+        [
+          "해지율(하락)",
+          "보험계약마진",
+          17.66,
+          20.0
+        ],
+        [
+          "해지율(하락)",
+          "당기손익",
+          0.89,
+          -1.0
+        ],
+        [
+          "사업비(수준)",
+          "이행현금흐름",
+          3.86,
+          9.0
+        ],
+        [
+          "사업비(수준)",
+          "보험계약마진",
+          -3.86,
+          -9.0
+        ],
+        [
+          "사업비(수준)",
+          "기타포괄손익",
+          0.25,
+          1.0
+        ]
+      ]
+    },
+    {
+      "code": "KR1107",
+      "year": 2024,
+      "older": "FY2024_Q4",
+      "newer": "FY2025_Q4",
+      "n_diffs": 15,
+      "diffs": [
+        [
+          "장기재물기타",
+          "이행현금흐름",
+          null,
+          51.0
+        ],
+        [
+          "장기재물기타",
+          "보험계약마진",
+          null,
+          -51.0
+        ],
+        [
+          "장기재물기타",
+          "당기손익",
+          null,
+          -6.0
+        ],
+        [
+          "해지율(상승)",
+          "이행현금흐름",
+          51.0,
+          -59.0
+        ],
+        [
+          "해지율(상승)",
+          "보험계약마진",
+          -51.0,
+          59.0
+        ],
+        [
+          "해지율(상승)",
+          "당기손익",
+          -6.0,
+          6.0
+        ],
+        [
+          "해지율(하락)",
+          "이행현금흐름",
+          -59.0,
+          39.0
+        ],
+        [
+          "해지율(하락)",
+          "보험계약마진",
+          59.0,
+          -39.0
+        ],
+        [
+          "해지율(하락)",
+          "당기손익",
+          6.0,
+          -4.0
+        ],
+        [
+          "사업비(수준)",
+          "이행현금흐름",
+          39.0,
+          0.0
+        ],
+        [
+          "사업비(수준)",
+          "보험계약마진",
+          -39.0,
+          0.0
+        ],
+        [
+          "사업비(수준)",
+          "당기손익",
+          -4.0,
+          0.0
+        ],
+        [
+          "사업비(인플레이션)",
+          "이행현금흐름",
+          39.0,
+          0.0
+        ],
+        [
+          "사업비(인플레이션)",
+          "보험계약마진",
+          -39.0,
+          0.0
+        ],
+        [
+          "사업비(인플레이션)",
+          "당기손익",
+          -4.0,
+          0.0
+        ]
+      ]
+    }
+  ],
+  "sens_grid_errors": [],
+  "sens_skipped": [
+    {
+      "code": "KR1104",
+      "year": 2023,
+      "reason": "FY2024 공시 2023 열: 당기손익·기타포괄손익이 이행현금흐름 변동보다 크고(예 사망률 +4.35 대 -20.70) 어느 부호 규약으로도 항등식이 안 닫히며 기준 CSM 261.75 도 4-6-2 의 254.77 과 다르다"
+    }
+  ],
+  "wf_p462_mismatch": [
+    {
+      "code": "KR1101",
+      "quarter": "2023.4Q",
+      "audit_close": 502.41,
+      "filing": "FY2024_Q4",
+      "csm_eok": -502.0,
+      "diff": 1004.41
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2023.4Q",
+      "audit_close": 258.73,
+      "filing": "FY2024_Q4",
+      "csm_eok": 254.77,
+      "diff": 3.96
+    }
+  ],
+  "wf_conflicts": [
+    {
+      "code": "KR1104",
+      "year": 2023,
+      "older": "FY2023_Q4",
+      "newer": "FY2024_Q4",
+      "diffs_eok": {
+        "open": [
+          259.10687,
+          263.06045
+        ],
+        "close": [
+          254.77476,
+          258.72834
+        ]
+      }
+    }
+  ],
+  "wf_skipped": [
+    {
+      "code": "KR1107",
+      "year": 2023,
+      "reason": "2023.1.1 영업양수도 개시연도: 기초 0 이고 이전 유입 약 1,069억이 어느 항목에도 없어 잔차(가정 및 경험 조정)가 가정 변동이 아닌 포트폴리오 이전분을 담게 된다"
+    }
+  ],
+  "wf_provenance": [
+    {
+      "code": "KR1101",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "pages": [
+        58
+      ],
+      "unit": "원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": 46.65493,
+      "explicit_csm_adjusting_rows_eok": 46.65493,
+      "interest_row": "int_total",
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": -502.0,
+        "diff": 1004.41
+      },
+      "amort_abs_eok": 158.47454
+    },
+    {
+      "code": "KR1101",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "pages": [
+        59
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": -90.19481,
+      "explicit_csm_adjusting_rows_eok": -90.19481,
+      "interest_row": "int_total",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 352.0,
+        "diff": 0.32
+      },
+      "amort_abs_eok": 203.23347
+    },
+    {
+      "code": "KR1101",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "pages": [
+        58
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": null,
+      "item4_residual_eok": 48.15291,
+      "explicit_csm_adjusting_rows_eok": 48.15291,
+      "interest_row": "int_total",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 369.0,
+        "diff": 0.03
+      },
+      "amort_abs_eok": 118.1468
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+      "pages": [
+        67
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": -316.3023,
+      "explicit_csm_adjusting_rows_eok": -316.3023,
+      "interest_row": "int_net",
+      "p462_check": null,
+      "amort_abs_eok": 1152.95376
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+      "pages": [
+        70
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": 252.58607,
+      "explicit_csm_adjusting_rows_eok": 252.58607,
+      "interest_row": "int_net",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 2889.0,
+        "diff": -0.75
+      },
+      "amort_abs_eok": 1167.88498
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+      "pages": [
+        69
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": null,
+      "item4_residual_eok": -1828.45507,
+      "explicit_csm_adjusting_rows_eok": -1828.45507,
+      "interest_row": "int_net",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 2209.0,
+        "diff": -0.46
+      },
+      "amort_abs_eok": 745.91417
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "pages": [
+        52
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": 12.28608,
+      "explicit_csm_adjusting_rows_eok": 12.28607,
+      "interest_row": "int_split",
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": 191.29,
+        "diff": 0.0
+      },
+      "amort_abs_eok": 19.63996
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2024.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "pages": [
+        51
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": null,
+      "item4_residual_eok": 200.51234,
+      "explicit_csm_adjusting_rows_eok": 200.51234,
+      "interest_row": "int_split",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 372.0,
+        "diff": -0.36
+      },
+      "amort_abs_eok": 33.0473
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "pages": [
+        54
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": null,
+      "item4_residual_eok": -95.13742,
+      "explicit_csm_adjusting_rows_eok": -95.13743,
+      "interest_row": "vision",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 266.0,
+        "diff": -0.36
+      },
+      "amort_abs_eok": 41.41656
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "pages": [
+        120
+      ],
+      "unit": "원",
+      "unit_source": "override_anchor_4-6-2",
+      "decision": "공시 간 상충: 최신 공시 전기 칸 채택",
+      "item4_residual_eok": 1.83991,
+      "explicit_csm_adjusting_rows_eok": 1.83991,
+      "interest_row": "int_split",
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": 254.77,
+        "diff": 3.96
+      },
+      "amort_abs_eok": 13.67201
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2024.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "pages": [
+        119
+      ],
+      "unit": "원",
+      "unit_source": "override_anchor_4-6-2",
+      "decision": null,
+      "item4_residual_eok": -121.2675,
+      "explicit_csm_adjusting_rows_eok": -115.5097,
+      "interest_row": "int_split",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 144.0,
+        "diff": 0.49
+      },
+      "amort_abs_eok": 2.47708
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "pages": [
+        186
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": 2242.00211,
+      "explicit_csm_adjusting_rows_eok": 2180.32104,
+      "interest_row": "int_E",
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": 5571.0,
+        "diff": 0.3
+      },
+      "amort_abs_eok": 245.55534
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2024.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "pages": [
+        185
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": null,
+      "item4_residual_eok": 3341.74272,
+      "explicit_csm_adjusting_rows_eok": 3315.46155,
+      "interest_row": "int_E",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 9301.0,
+        "diff": 0.44
+      },
+      "amort_abs_eok": 357.6288
+    },
+    {
+      "code": "KR1106",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "pages": [
+        51
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": -275.7389,
+      "explicit_csm_adjusting_rows_eok": -275.7389,
+      "interest_row": "int_net",
+      "p462_check": null,
+      "amort_abs_eok": 319.12643
+    },
+    {
+      "code": "KR1106",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "pages": [
+        52
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": -1978.9808,
+      "explicit_csm_adjusting_rows_eok": -1978.9808,
+      "interest_row": "int_net",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 4653.0,
+        "diff": 0.1
+      },
+      "amort_abs_eok": 262.34872
+    },
+    {
+      "code": "KR1106",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "pages": [
+        51,
+        52
+      ],
+      "unit": "천원",
+      "unit_source": "printed",
+      "decision": null,
+      "item4_residual_eok": -1042.09158,
+      "explicit_csm_adjusting_rows_eok": -1042.09158,
+      "interest_row": "int_net",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 3871.0,
+        "diff": 3.36
+      },
+      "amort_abs_eok": 252.2093
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "pages": [
+        52
+      ],
+      "unit": "원",
+      "unit_source": "printed",
+      "decision": "다른 공시와 동일",
+      "item4_residual_eok": -1.10665,
+      "explicit_csm_adjusting_rows_eok": -1.10665,
+      "interest_row": "int_plain",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 939.0,
+        "diff": -0.29
+      },
+      "amort_abs_eok": 149.03638
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "pages": [
+        51
+      ],
+      "unit": "원",
+      "unit_source": "printed",
+      "decision": null,
+      "item4_residual_eok": -144.4859,
+      "explicit_csm_adjusting_rows_eok": -144.4859,
+      "interest_row": "int_plain",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 983.0,
+        "diff": 0.26
+      },
+      "amort_abs_eok": 122.22324
+    }
+  ],
+  "amort_provenance": [
+    {
+      "code": "KR1101",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1101_뮌헨재보험.pdf",
+      "pages": [
+        20
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 352.0,
+      "sum_diff_printed": 4.0,
+      "decision": "다른 공시와 동일",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 352.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1101",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1101_뮌헨재보험.pdf",
+      "pages": [
+        19
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 369.0,
+      "sum_diff_printed": 4.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 369.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "pages": [
+        21
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A",
+        "row_A"
+      ],
+      "segments": [
+        "[생명보험]",
+        "[손해보험]"
+      ],
+      "total_eok": 2889.0,
+      "sum_diff_printed": -2.0,
+      "decision": "다른 공시와 동일",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 2889.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "pages": [
+        20
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A",
+        "row_A"
+      ],
+      "segments": [
+        "[생명보험]",
+        "[손해보험]"
+      ],
+      "total_eok": 2209.0,
+      "sum_diff_printed": 0.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 2209.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1103_제네럴재보험.pdf",
+      "pages": [
+        11
+      ],
+      "unit": "백만원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 191.29,
+      "sum_diff_printed": 0.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": 191.29,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 3,
+      "precision": "백만원 공시(억원 환산 소수 2자리)"
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2024.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1103_제네럴재보험.pdf",
+      "pages": [
+        11
+      ],
+      "unit": "백만원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 371.64,
+      "sum_diff_printed": 0.0,
+      "decision": "반올림 차이(상충 아님): 더 정밀한 값 채택",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 372.0,
+        "diff": -0.36
+      },
+      "tail_buckets_in_filing": 3,
+      "precision": "백만원 공시(억원 환산 소수 2자리)"
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf",
+      "pages": [
+        11
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 266.0,
+      "sum_diff_printed": 1.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 266.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "pages": [
+        18
+      ],
+      "unit": "백만원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 254.77,
+      "sum_diff_printed": 1.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": 254.77,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "백만원 공시(억원 환산 소수 2자리)"
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "pages": [
+        19
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 144.0,
+      "sum_diff_printed": 2.0,
+      "decision": "공시 간 상충: 최신 공시 전기 칸 채택",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 144.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "pages": [
+        19
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 213.0,
+      "sum_diff_printed": 1.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 213.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "pages": [
+        20
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 5571.0,
+      "sum_diff_printed": 0.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": 5571.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "pages": [
+        19
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 9300.0,
+      "sum_diff_printed": 0.0,
+      "decision": "다른 공시와 동일",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 9301.0,
+        "diff": -1.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "pages": [
+        18
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 9005.0,
+      "sum_diff_printed": 0.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 9007.0,
+        "diff": -2.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1106",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1106_스코리재보험.pdf",
+      "pages": [
+        17
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 4653.0,
+      "sum_diff_printed": 0.0,
+      "decision": "다른 공시와 동일",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 4653.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1106",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1106_스코리재보험.pdf",
+      "pages": [
+        17
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_A"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 3874.0,
+      "sum_diff_printed": 0.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 3871.0,
+        "diff": 3.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "pages": [
+        15
+      ],
+      "unit": "억원",
+      "methods": [
+        "sum_of_4_rows"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 987.0,
+      "sum_diff_printed": -2.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2024_Q4",
+        "csm_eok": 989.0,
+        "diff": -2.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "pages": [
+        24
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_B"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 939.0,
+      "sum_diff_printed": 0.0,
+      "decision": "다른 공시와 동일",
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 939.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "pages": [
+        23
+      ],
+      "unit": "억원",
+      "methods": [
+        "row_B"
+      ],
+      "segments": [
+        null
+      ],
+      "total_eok": 983.0,
+      "sum_diff_printed": -3.0,
+      "decision": null,
+      "p462_check": {
+        "filing": "FY2025_Q4",
+        "csm_eok": 983.0,
+        "diff": 0.0
+      },
+      "tail_buckets_in_filing": 5,
+      "precision": "억원 정수 공시"
+    }
+  ],
+  "sens_provenance": [
+    {
+      "code": "KR1101",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1101_뮌헨재보험.pdf",
+      "page": 26,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [],
+      "decision": "공시 간 상충: 최신 공시 전기 칸 채택(옛 값은 FY2024 공시)",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최 선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. * 회계기준은 IFRS17 과IFRS9 입니다. ② 금리위험",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1101",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1101_뮌헨재보험.pdf",
+      "page": 26,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "-2,089"
+        ],
+        [
+          "369"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최 선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. * 회계기준은 IFRS17 과IFRS9 입니다. <2024년>",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 23,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "(5,305)"
+        ],
+        [
+          "2,267"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. 23  ② 금리위험",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 28,
+      "unit": "억원",
+      "merged": {
+        "12": false,
+        "67": false
+      },
+      "base": [
+        [
+          "(5,135)"
+        ],
+        [
+          "2,670"
+        ]
+      ],
+      "decision": "공시 간 상충: 최신 공시 전기 칸 채택(옛 값은 FY2024 공시)",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. ② 금리위험",
+      "n_rows": 8
+    },
+    {
+      "code": "KR1102",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 27,
+      "unit": "억원",
+      "merged": {
+        "12": false,
+        "67": false
+      },
+      "base": [
+        [
+          "(5,535)"
+        ],
+        [
+          "2,011"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. 27  년> <2024",
+      "n_rows": 8
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1103_제네럴재보험.pdf",
+      "page": 15,
+      "unit": "백만원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "(51,955)"
+        ],
+        [
+          "19,129"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. ② 금리위험",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf",
+      "page": 15,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "(684)"
+        ],
+        [
+          "372"
+        ]
+      ],
+      "decision": "공시 간 상충: 최신 공시 전기 칸 채택(옛 값은 FY2024 공시)",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. ② 금리위험",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1103",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf",
+      "page": 14,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "(533)"
+        ],
+        [
+          "266"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. 14 2025 General Reinsurance Seoul Branch | 년 경영공시 2024년",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 25,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "(236)"
+        ],
+        [
+          "144"
+        ]
+      ],
+      "decision": "공시 간 상충: 최신 공시 전기 칸 채택(옛 값은 FY2024 공시)",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분 및 보험계약마진 상각 감소를 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. 금리위험 ②",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1104",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 24,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "(265)"
+        ],
+        [
+          "213"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분 및 보험계약마진 상각 감소를 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. 24 | P a g e <2024 년> (단위: 억원)",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 26,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "-7,715"
+        ],
+        [
+          "5,571"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주 1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며 , 계리적 가정의 충 격 수준은 감독기준상 위험조정 산출기준신뢰수준 ( 75%) 을 준용하였습니다 . 주 2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생 시키는 최선추정부채 증가분을 의미합니다. 주 3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다 . ② 금리위험",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2024.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 25,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "-10,851"
+        ],
+        [
+          "9,301"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주 1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며 , 계리적 가정의 충 격 수준은 감독기준상 위험조정 산출기준신뢰수준 ( 75%) 을 준용하였습니다 . 주 2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생 시키는 최선추정부채 증가분을 의미합니다. 주 3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다 . - 25 - <2023 년 >",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1105",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 24,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "-10,098"
+        ],
+        [
+          "9,007"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감 독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생 시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. - 24 - <2024년>",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1106",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1106_스코리재보험.pdf",
+      "page": 23,
+      "unit": "억원",
+      "merged": {
+        "12": false,
+        "67": false
+      },
+      "base": [
+        [
+          "-5,549"
+        ],
+        [
+          "4,653"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준 상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. ② 금리위험",
+      "n_rows": 8
+    },
+    {
+      "code": "KR1106",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1106_스코리재보험.pdf",
+      "page": 23,
+      "unit": "억원",
+      "merged": {
+        "12": false,
+        "67": false
+      },
+      "base": [
+        [
+          "-6,042"
+        ],
+        [
+          "3,874"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준 상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분을 의미합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. <2024년>",
+      "n_rows": 8
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2023.4Q",
+      "filing": "FY2024_Q4",
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 18,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "-2,335"
+        ],
+        [
+          "989"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진 상각액의 변동분으로 추정하였습니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. ② 금리위험",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2024.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 45,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "-1,627"
+        ],
+        [
+          "939"
+        ]
+      ],
+      "decision": "공시 간 상충: 최신 공시 전기 칸 채택(옛 값은 FY2024 공시)",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진 상각액의 변동분으로 추정하였습니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. ② 금리위험",
+      "n_rows": 6
+    },
+    {
+      "code": "KR1107",
+      "quarter": "2025.4Q",
+      "filing": "FY2025_Q4",
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 44,
+      "unit": "억원",
+      "merged": {
+        "12": true,
+        "67": true
+      },
+      "base": [
+        [
+          "-1,472"
+        ],
+        [
+          "983"
+        ]
+      ],
+      "decision": "단일 원천 또는 동일 값",
+      "footnote": "주1) 원수보험 및 수재보험계약의 잔여보장요소에 대한 민감도 분석이며, 계리적 가정의 충격 수준은 감독기준상 위험조정 산출기준(신뢰수준 75%)을 준용하였습니다. 주2) 당기손익 영향은 가정변동으로 인해 보험계약마진의 장부금액을 초과하여 손실을 발생시키는 최선추정부채 증가분 및 보험계약마진 상각의 변동금액을 포함합니다. 주3) 이행현금흐름 중 위험조정에는 충격을 적용하지 않았습니다. <2024년>",
+      "n_rows": 6
+    }
+  ]
+}
