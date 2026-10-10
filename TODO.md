@@ -14,6 +14,11 @@
 
 ## 열린 일
 
+- [ ] **밤샘 스윕(owner 2026-10-11 취침 중, 오케스트레이터 자율 진행)** — 원칙: 동시 에이전트 ≤3, 완료 알림마다 다음 대기열 발사, 같은 마스터를 두 에이전트가 쓰지 않는다, 예외 등재·이력 정리 등 owner 승인 사항은 하지 않고 보고만, 끝나면 커밋 + 작업 브랜치 push(훅 통과 시), **라이브 `main` 배포는 owner 기상 후**(폰 Termux 또는 명시 지시).
+  1파 실행 중: designer D1(`inbox/designer/20261011T0300Z__*` 모바일 curve 색·YTD 손익·테스트 선언) · parser-ifrs17 P1(`inbox/parser/20261011T0310Z__*` BS·PL granularity 전수 재채움, 하나손보 선례) · parser-ifrs17 P2(`…T0320Z__*` ILP 나머지 분기·LIC 2·3단계·재보사 4-6-2).
+  2파 대기(티켓 작성 완료): designer D2(`inbox/designer/20261011T0400Z__*` 공유 스크린샷 전체 복구 + 섹션별 공유 버튼) · publishing(`inbox/publishing/20261011T0410Z__*` 재보사 Forward Outlook·자본성증권 소진율, 스코리 우하향) · parser-kics(`inbox/parser/20261011T0420Z__*` IRR 6셀·퍼시픽 금리민감도·스위스리 2023.2Q·추출기 재현성) · parser-ifrs17 P3(`…T0430Z__*` 재보사 CSM_amortization·sensitivity·waterfall).
+  마무리 순서: P1 보고의 별첨 필요 목록 → downloader 발주 → validation(최종 게이트·LIC 검산기·등재 후보 보고만) → publishing 2차(xlsx 시트·`public_exports`·패널 재빌드 `viz_build_csm_combo_panel.py`/`viz_build_compare_panel.py`) → 커밋 → push 훅.
+  owner 확인 대기: ① `data/loss_ratio/risk_premium_vs_expected_claims.json`(77MB) 원격 이력 처리(강제 push 필요 여부) ② 기존 `RS1/RS2/RS5_EXCEPTIONS` 새 장치 이전 ③ 스위스리아시아 2023.3Q 적재(새 RED 2 → 등재) ④ KR0100 R3·KR0029 「10배 규칙」 예외 등재 ⑤ compare 선 대비(키컬러 전환으로 해소될 수 있음).
 - [ ] **신규 도메인: 채널별 유지율 · 손해율 추이 + 사별 비교 기능(owner 팀장 요청 2026-10-07)** — 추출 진행 중.
   인수인계 `docs/handoff_20261007_persistency_lossratio_compare.md`(상태·census·남은 순서), 명세는 `inbox/parser/20261007T0*` 티켓 3개.
   비교 기능은 owner 의 핵심 지표 목록 대기.
