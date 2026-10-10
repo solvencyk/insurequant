@@ -7,6 +7,17 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- 다운로드 목록 시트 3개 추가 · K-ICS 자본비율 전망 빈 상태 문구 정정
+
+티켓 `inbox/designer/20261011T0830Z__orchestrator__MULTI__download_list_ilp_and_kics_text.md`(공유 티켓, 종결은 오케스트레이터). 마스터·`public_exports` 무수정, push 안 함.
+
+- **`download-survey.js` `SHEETS` 12 → 15개**: `보험계약부채`(code `ILP`, 「보험계약부채 (잔여보장·발생사고요소)」) + `자본성증권발행현황`(`CAPSEC`, 「자본성증권 발행현황 (증권별)」) + `금리듀레이션갭`(`DGAP`, 「K-ICS 금리 듀레이션 갭」). 순서는 `export_public_sheets.MASTERS` 와 같다. `code` 는 파일명에만 들어가 화면엔 안 보인다(기존 `T1`·`FWD` 와 같은 관행).
+- **판단 근거(후자 둘)**: 둘 다 `public_exports/manifest.json` 에 있고 `export_public_sheets.MASTERS` 에 등재돼 `validate_live_artifacts` 의 공개 시트 검사를 통과한다. 목록에서만 빠졌고 제외했다는 기록·사유가 어디에도 없다(`git log -S` 로 `download-survey.js` 이력도 없음) -> 의도된 비공개가 아니라 누락으로 보고 넣었다.
+- **`K-ICS.html` 전망 패널 빈 상태**: 「forward simulation 데이터 없음 (19사 cohort 외)」 를 `forwardEmptyText()` 로 교체. 행이 있으나 `status != ok`(현재 0건) = 「지급여력 공시 값이 부족」, 행이 없는 서울보증 = 「보험료배분접근법(PAA)만 적용하는 보증보험이라 제외 + 자본성증권 소진율은 위 패널」, 그 밖 = 「전망 대상이 아닙니다」. 문구에 회사 수를 박지 않는다. 옛 `status=…` 내부 필드 노출도 사라졌다.
+- **서울보증 이유는 티켓 추정과 다르다**: 「자본성증권 발행 없음」 이 아니다. `kics_forward_capital.json` 46행 중 신종·후순위 잔액이 0인 회사가 19곳(삼성화재·삼성생명·재보사 7곳 등) 나온다. 서울보증 행이 없는 이유는 `scripts/forward_capital_simulation.py` `EXCLUDE_PAA = {"KR0150"}`(PAA 적용 회사 의도 제외)다. 자본성증권 소진율 도넛은 서울보증도 정상(기본자본 0 / 한도 2,152억, 보완자본 43 / 7,173억).
+- **남은 약점**: 서울보증 분기가 이름(`includes('서울보증')`) 기반이다. 제외 사유를 데이터가 말하게 하려면 publishing 이 전망 파일에 제외 행(`status` + 사유 문구)을 넣어야 한다(데이터 변경이라 이번엔 안 함). 부수 발견: `findForwardRow` 의 부분일치가 `insurer_name` 없는 stub 행(`missing_kics_baseline`)에서 터진다 — 현재 데이터엔 stub 이 없어 무증상.
+- **검증**: 헤드리스 Chromium(`scratchpad/verify_dl.py`·`verify_kics.py`, 로컬 서버, 수집기·GA 요청 차단) — 4페이지×1280·375 모두 라벨 15개, 잘림·겹침·가로 넘침 0, 콘솔 오류 0(차단한 GA 요청 제외). 새 3시트+K-ICS 선택 다운로드 xlsx: 요약·K-ICS공시 29,890행·자본성증권발행현황 124행·금리듀레이션갭 317행·보험계약부채 6,112행(헤더 포함, 스냅샷 123·316·6,111과 일치). K-ICS 회사 전환: 서울보증 = 새 문구, 삼성화재·뮌헨재보험·코리안리 = 차트. `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` 77 통과·1 skip.
+
 ## 2026-10-11 -- 공유 스크린샷: 헤더 메뉴 페이지 전체 복구 · 섹션별 공유 버튼
 
 티켓 `inbox/designer/20261011T0400Z__orchestrator__MULTI_2026.2Q__share_screenshot_fullpage_and_per_section.md`. 마스터·패널 JSON 무수정, 커밋·push 안 함.

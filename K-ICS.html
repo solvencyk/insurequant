@@ -1103,6 +1103,19 @@
       note.innerHTML = notes.join(' &nbsp;|&nbsp; ');
     }
 
+    // 전망 패널이 비는 이유를 사실대로 말한다. 모집단은 `kics_forward_capital.json` 이 정하므로 「N사」
+    // 같은 숫자를 문구에 쓰지 않는다(2026-10-11: 회사 수를 박은 옛 문구가 재보사 8곳 추가 뒤 틀려졌다).
+    // 행이 아예 없는 회사는 현재 서울보증보험 하나뿐이고, 이유는 생성 스크립트의 의도된 제외
+    // (`forward_capital_simulation.py` EXCLUDE_PAA — 보험료배분접근법만 적용)다. 자본성증권이 없어서가 아니다
+    // (신종·후순위 잔액이 0인 회사 19곳이 이 패널에 그대로 나온다).
+    function forwardEmptyText(company, row) {
+      if (row) return `${company}: 자본비율 전망을 산출하지 못했습니다 (기준이 되는 지급여력 공시 값이 부족합니다).`;
+      if (company.includes('서울보증')) {
+        return `${company}: 보험료배분접근법(PAA)만 적용하는 보증보험이라 이 전망의 대상에서 제외했습니다. 자본성증권 소진율은 위 패널에서 볼 수 있습니다.`;
+      }
+      return `${company}: 자본비율 전망 대상이 아닙니다.`;
+    }
+
     function updateForwardPanel() {
       const company = document.getElementById('company').value;
       const placeholder = document.getElementById('forward-placeholder');
@@ -1121,7 +1134,7 @@
       const row = findForwardRow(company);
       if (!row || row.status !== 'ok' || !Array.isArray(row.projections) || !row.projections.length) {
         placeholder.style.display = 'block';
-        placeholder.textContent = row ? `${company}: forward simulation 데이터 없음 (status=${row.status})` : `${company}: forward simulation 데이터 없음 (19사 cohort 외)`;
+        placeholder.textContent = forwardEmptyText(company, row);
         wrap.style.display = 'none';
         note.innerHTML = '';
         if (forwardChart) { forwardChart.destroy(); forwardChart = null; }
