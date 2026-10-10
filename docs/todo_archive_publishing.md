@@ -1,5 +1,7 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-09-23 자본성증권 후순위 체감 기준을 콜 → 법정만기로 교정** + `법정만기일` 열 신설. 2026.2Q 보완자본 인정액 106,084 → 208,011억. `b3fd1ff`.
+
 ## 2026-10-07 정리 — 정리 전 `TODO_publishing.md` 전문 (무수정)
 
 # Insurequant Publishing TODO (Stage 4)
