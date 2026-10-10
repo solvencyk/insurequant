@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261010T1600Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2024.4Q
@@ -29,4 +29,4 @@ IFRS17.html 섹션 3 콤보 차트가 「연도」 모드에서 2023.4Q·2024.4Q
 - 4Q 두 시점(2023.4Q·2024.4Q)이 먼저 끝나는 대로 오케스트레이터에게 중간 요약을 보내 달라(SendMessage 대신 런로그 맨 위 「중간 결과」 절 갱신으로 충분).
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+백필 1차 완료(2026-10-11, parser-ifrs17 Sonnet, 약 2시간, 토큰 947k): BEL·RA 는 2025.1Q 이전에도 공시됨(DART 주석 2023.1Q~, 경영공시 4-6-2 는 FY2024 결산부터). 2024.4Q +540행(39셀)·2023.4Q +388행(항목 1~8 23셀·LIC 39셀) 적재, BS 항목 20 대조 닫음. 미적재: 2023.4Q 항목 1~8 17셀(원천 부재 12사·라이나/미래에셋/KB라이프 3셀은 FY2024 비교열이 FY2023 원문과 안 맞아 owner 결정 대기·캐롯/카카오 2). 다음 round: 2024.1Q~3Q(약 1일, DART 69셀)·2023.1Q~3Q(약 0.5일). 런로그 data/disclosure/_meta/ilp_backfill_pre2025_runlog.md.

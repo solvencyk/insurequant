@@ -1,7 +1,20 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-10-10 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-10-11 (ILP 소급) — 포트폴리오 마스터 2024.4Q·2023.4Q 적재 + 2023.1Q~2024.4Q 가용성 census
+
+미커밋. **push 안 함.** 발주 `inbox/parser/20261010T1600Z__orchestrator__MULTI_2023.1Q-2024.4Q__ilp_backfill_pre2025.md`(오케스트레이터 종결 대기). 진행 중 우선순위 변경 수신: census 는 전 셀, 적재는 2024.4Q → 2023.4Q 두 시점만. 전체 근거·표·재현은 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md`.
+
+- **owner 의문에 대한 사실 답.** 「BEL·RA 는 2025.1Q 부터만」은 우리 마스터가 경영공시 2-4 만 읽은 한계였다. ① 모형별(일반모형·변동수수료·PAA 의 BEL·RA·CSM) 표 자체는 **FY2024 결산 경영공시 4-6-2 에 신설**(2025-03; 삼성화재 p37 「당기 신규 추가된 주석이며 비교표시 대상에서 제외」·교보 p21 「2023년: 비교기간 정보는 산출할 수 없음」·AIG 「전기 비교 공시는 ‘25.4Q부터」·AIA p28 「올해부터 공시 대상… 전년 동기 수치는 생략」, 렌더링·텍스트 층). 2023.1Q~2024.3Q 분기 경영공시에는 없다(38~40사 텍스트 + 이미지 PDF 렌더링).
+  후속 공시의 비교열로는 있다: 2023.4Q 는 FY2024 결산 4-6-2 `<2023년>` 24사(+DART 주석 2사), 2024.1Q~3Q 는 2025.1Q~3Q 경영공시 「전년 동기」 표 25~26사(읽힘). ② 발생사고요소 BEL·RA·측정요소별 BEL·RA·CSM 은 **DART 주석에 2023.1Q 부터** 있다(분기 23사, 4Q 39사).
+- **적재(append-only, 셀 단위 guard, 백업)**: `insurance_liability_portfolio.json` 2,883 → 3,811행(+928, 기존 행 바이트 동일·중복 키 0). 2024.4Q +540(항목 1~8 39셀·9 24셀·10~15 39셀), 2023.4Q +388(항목 1~8 23셀·10~15 39셀). 항목 1~8 = 결산 경영공시 4-6-2(PDF) / DART 주석표(이미지 쪽) / 렌더링 판독(카카오페이 p15, PAA 칸이 천원), 항목 10~15 = 해당 연도 DART 롤포워드.
+  provenance 는 `lrc_model_cells`·`lrc_model_not_loaded`·`backfills` 새 키(기존 `cells` 에는 항목 10~15 셀 78개 추가), 사이드카에 ABL·KDB생명·푸본현대 두 시점 6셀.
+- **검산**: PDF 4-6-2 ↔ DART 주석표 31사 대조(동양생명 BEL 256억 한 건 제외 반올림 이내) · 항목 15 vs BS 항목 20 ±1.7 ppm(소형·순액 예외 명기) · R-LIC2(항목 8 vs DART 순 LRC) 2024.4Q 37/39·2023.4Q 23/23(적재분) · CSM vs 워터폴 거의 전부 ≤ 1.4억. LIC 검산기 **RED 0·YELLOW 11**. 포트폴리오 검증기(validation 소관, 미수정) RED 3 → 4(`KR0029 2024.4Q` 「10배 규칙」: 순 LRC 가 0 근처인 AIG 의 규칙 한계).
+- **재작성 비교열 3셀 보류**: 2023.12.31 값을 FY2024 비교열에서 읽는 2023.4Q 는 R-LIC2·CSM 이 FY2023 원문과 안 맞으면 보류(라이나 −18,910 vs +379·미래에셋 0.54 %·KB라이프 0.69 %/CSM +5.4 %). 같은 셀에 두 기준을 섞지 않는다. owner 결정 대기. 원천 부재 12사·해당없음(캐롯)·대시(카카오페이)는 빈 칸(칸 단위 사유 런로그 §5).
+- **엔진**: `extract_insurance_liability_lic.py` 에 repair 사다리(평범한 읽기가 닫히지 않은 셀에만; `continuity` 롤포워드 기초 = 전기 기말로 당기·전기 짝짓기 / `loose_roles` 빈 그룹 칸 머리글 / `reins_sentence` 순액 전용 재보험표 / `floor_neg` 음수 부채행)와 2023~2024 분기 맵 추가 — **2025.1Q~2026.2Q 159셀 재실행 결과가 전 필드 동일**(`p16_compare_dumps.py`). 새 모듈 `extract_insurance_liability_model_xml.py`(회계모형별 주석표 판독: 당기/전기 짝·행 블록·별도·원수) · `extract_insurance_liability_model_pdf.py`(결산 4-6-2 의 모든 합계 행, 소수점, 쪽 번호 줄 제거) · 드라이버 `load_ilp_backfill_pre2025.py`. `emit_ilp_includes_lic.py`(EXTRA_QUARTERS)·`validate_insurance_liability_lic.py`(격자 분기)는 새 분기를 포함하도록 최소 수정.
+- **census(40사 × 8분기, 증거 포함)**: 런로그 §2. 다음 라운드(2024.1Q~3Q 69+α셀, 2023.1Q~3Q 69셀 중 8셀 셀별 처리)의 규모·소요는 §6. 포트폴리오 검증기·게이트·예외 등재부·골든·HTML·xlsx·public_exports 는 안 건드렸다.
 
 ## 2026-10-10 (후속 1b) — IBK연금 2-4 6분기 48칸 정정 · KR0011 중복 9행 제거 · 예별(KR0004) PL 다리 10칸 정정
 

@@ -49,8 +49,10 @@ PROV = REPO / "insurance_liability_portfolio_provenance.json"
 SIDECAR = REPO / "data" / "_derived" / "ilp_includes_lic.json"
 DART = REPO / "data" / "dart"
 
-QUARTERS = ["2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q", "2026.2Q"]
-FY_OF = {"2025.1Q": "FY2025_Q1", "2025.2Q": "FY2025_Q2", "2025.3Q": "FY2025_Q3",
+# 2026-10-10 backfill (ticket 20261010T1600Z): the grid grows with every pre-2025 quarter that is loaded (staged: the year-end
+# points first, the six interim quarters in a later round).  Add a quarter here only together with its rows.
+QUARTERS = ["2023.4Q", "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q", "2026.2Q"]
+FY_OF = {"2023.4Q": "FY2023_Q4", "2024.4Q": "FY2024_Q4", "2025.1Q": "FY2025_Q1", "2025.2Q": "FY2025_Q2", "2025.3Q": "FY2025_Q3",
          "2025.4Q": "FY2025_Q4", "2026.1Q": "FY2026_Q1", "2026.2Q": "FY2026_Q2"}
 LIC_ITEMS = (10, 11, 12, 13, 14, 15)
 TOL_R1 = 0.001

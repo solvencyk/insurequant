@@ -1,13 +1,15 @@
 {
  "name": "ilp_includes_lic",
- "generated_at": "20261010T1053Z",
+ "generated_at": "20261010T1442Z",
  "emitted_by": "scripts/emit_ilp_includes_lic.py",
  "meaning": "insurance_liability_portfolio.json item 8 (보험부채_합계, 경영공시 2-4) of these companies already contains the 발생사고요소(LIC) although the 2-4 footnote says it was prepared for the 잔여보장요소 only. For them item 8 ~ item 15 (LRC+LIC) ~ IFRS17_BS item 20. Master cells are not changed; the designer shows a notice on the left bar.",
- "criterion": "all 6 quarters: |item8-item15| <= max(5억, 0.01%) and |item8-item14| > 1% and |item8*100/BS20-1| <= 0.01%",
+ "criterion": "all 6 quarters 2025.1Q~2026.2Q: |item8-item15| <= max(5억, 0.01%) and |item8-item14| > 1% and |item8*100/BS20-1| <= 0.01%; the pre-2025 year-end points (EXTRA_QUARTERS) are added per cell when the same three tests pass",
  "companies": {
   "KR0070": {
    "원수사명": "에이비엘생명보험",
    "quarters": [
+    "2023.4Q",
+    "2024.4Q",
     "2025.1Q",
     "2025.2Q",
     "2025.3Q",
@@ -19,6 +21,8 @@
   "KR0072": {
    "원수사명": "케이디비생명보험",
    "quarters": [
+    "2023.4Q",
+    "2024.4Q",
     "2025.1Q",
     "2025.2Q",
     "2025.3Q",
@@ -30,6 +34,8 @@
   "KR0083": {
    "원수사명": "푸본현대생명보험",
    "quarters": [
+    "2023.4Q",
+    "2024.4Q",
     "2025.1Q",
     "2025.2Q",
     "2025.3Q",
@@ -40,6 +46,30 @@
   }
  },
  "cells": [
+  {
+   "company_code": "KR0070",
+   "quarter": "2023.4Q",
+   "item8_eok": 157376.0,
+   "item15_eok": 157375.35,
+   "item14_eok": 151318.9,
+   "item10_eok": 6056.45,
+   "bs20_eok": 157375.35,
+   "item8_vs_bs20_pct": 0.00041,
+   "item8_vs_item15_pct": 0.00041,
+   "lic_share_of_item8_pct": 3.85
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2024.4Q",
+   "item8_eok": 172141.0,
+   "item15_eok": 172140.44,
+   "item14_eok": 165854.28,
+   "item10_eok": 6286.16,
+   "bs20_eok": 172140.44,
+   "item8_vs_bs20_pct": 0.00032,
+   "item8_vs_item15_pct": 0.00033,
+   "lic_share_of_item8_pct": 3.65
+  },
   {
    "company_code": "KR0070",
    "quarter": "2025.1Q",
@@ -114,6 +144,30 @@
   },
   {
    "company_code": "KR0072",
+   "quarter": "2023.4Q",
+   "item8_eok": 163391.0,
+   "item15_eok": 163391.72,
+   "item14_eok": 153715.69,
+   "item10_eok": 9676.03,
+   "bs20_eok": 163391.72,
+   "item8_vs_bs20_pct": -0.00044,
+   "item8_vs_item15_pct": -0.00044,
+   "lic_share_of_item8_pct": 5.92
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2024.4Q",
+   "item8_eok": 168384.0,
+   "item15_eok": 168384.2,
+   "item14_eok": 159040.88,
+   "item10_eok": 9343.32,
+   "bs20_eok": 168384.2,
+   "item8_vs_bs20_pct": -0.00012,
+   "item8_vs_item15_pct": -0.00012,
+   "lic_share_of_item8_pct": 5.55
+  },
+  {
+   "company_code": "KR0072",
    "quarter": "2025.1Q",
    "item8_eok": 171490.0,
    "item15_eok": 171489.03,
@@ -183,6 +237,30 @@
    "item8_vs_bs20_pct": 0.00102,
    "item8_vs_item15_pct": 0.00101,
    "lic_share_of_item8_pct": 5.39
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2023.4Q",
+   "item8_eok": 80485.0,
+   "item15_eok": 80484.9,
+   "item14_eok": 79345.43,
+   "item10_eok": 1139.47,
+   "bs20_eok": 80484.9,
+   "item8_vs_bs20_pct": 0.00013,
+   "item8_vs_item15_pct": 0.00012,
+   "lic_share_of_item8_pct": 1.42
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2024.4Q",
+   "item8_eok": 84731.0,
+   "item15_eok": 84732.2,
+   "item14_eok": 83421.11,
+   "item10_eok": 1311.09,
+   "bs20_eok": 84732.2,
+   "item8_vs_bs20_pct": -0.00142,
+   "item8_vs_item15_pct": -0.00142,
+   "lic_share_of_item8_pct": 1.55
   },
   {
    "company_code": "KR0083",
@@ -281,5 +359,6 @@
    },
    "reading": "DART 측정요소별 합계 == 2-4 (item 1+4, 2+5, 3+6) x100 within 억원 rounding (<= 100 백만원 each) => 2-4 holds the whole BEL/RA/CSM"
   }
- ]
+ ],
+ "extra_quarters_not_included": []
 }

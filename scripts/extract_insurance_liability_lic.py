@@ -70,7 +70,13 @@ OUT_PROV = REPO / "insurance_liability_portfolio_provenance.json"
 BACKUP_DIR = REPO / "data" / "_derived"
 
 FY_DIRS = ["FY2025_Q1", "FY2025_Q2", "FY2025_Q3", "FY2025_Q4", "FY2026_Q1", "FY2026_Q2"]
-QMAP = {"FY2025_Q1": "2025.1Q", "FY2025_Q2": "2025.2Q", "FY2025_Q3": "2025.3Q",
+# 2026-10-10 backfill (ticket 20261010T1600Z): the same engine reads the 2023-2024 filings.  FY_DIRS (the default of
+# build_all / --write) stays the stage-1 set so the existing 158 cells are never re-derived by accident.
+FY_DIRS_PRE2025 = ["FY2023_Q1", "FY2023_Q2", "FY2023_Q3", "FY2023_Q4",
+                   "FY2024_Q1", "FY2024_Q2", "FY2024_Q3", "FY2024_Q4"]
+QMAP = {"FY2023_Q1": "2023.1Q", "FY2023_Q2": "2023.2Q", "FY2023_Q3": "2023.3Q", "FY2023_Q4": "2023.4Q",
+        "FY2024_Q1": "2024.1Q", "FY2024_Q2": "2024.2Q", "FY2024_Q3": "2024.3Q", "FY2024_Q4": "2024.4Q",
+        "FY2025_Q1": "2025.1Q", "FY2025_Q2": "2025.2Q", "FY2025_Q3": "2025.3Q",
         "FY2025_Q4": "2025.4Q", "FY2026_Q1": "2026.1Q", "FY2026_Q2": "2026.2Q"}
 QUARTER_END = {"1Q": "03-31", "2Q": "06-30", "3Q": "09-30", "4Q": "12-31"}
 
@@ -239,13 +245,15 @@ def col_paths(g, h):
     return paths
 
 
-def role_of(path: str):
+def role_of(path: str, loose: bool = False):
     """column role from the compact header path.
     LRC/LC            잔여보장요소 (손실요소 제외 / 손실요소)
     LIC_BEL/LIC_RA    발생사고요소 미래현금흐름의 현재가치 추정치 / 비금융위험에 대한 위험조정
     LIC_TOT           발생사고요소 단일열 (BEL/RA 미분리)
     TOT               합계열        SUB   소계열 (never summed)
-    CSM / BEL_LRC / RA_LRC   measurement-element tables only (kind 'ME')"""
+    CSM / BEL_LRC / RA_LRC   measurement-element tables only (kind 'ME')
+    loose=True is the REPAIR reading (assemble_cell tries it only after the plain reading failed to close a cell):
+    a BEL/RA leaf whose 발생사고 group cell is blank, and a single 발생사고 column headed by the model name."""
     p = path
     if PRIOR_COL.search(p):
         return None
@@ -284,6 +292,36 @@ def role_of(path: str):
         if "손실요소" in p or "손실회수요소" in p:
             return "LC"
         return "LRC"
+    if loose:
+        if "잔여보장" not in p and "마진" not in p:
+            if ra:
+                return "LIC_RA"
+            if bel:
+                return "LIC_BEL"
+        if lic and re.search(r"일반모형|변동수수료|보험료배분", leaf):
+            return "LIC_TOT"
+    return None
+
+
+def classify_open(label: str):
+    """opening-balance row class (기초/기시 ...): NET / LIAB / ASSET, the counterpart of classify_row for the closing
+    rows; used only by the roll-forward continuity repair (this year's opening == last year's closing)"""
+    l = comp(label)
+    if not re.search(r"기초|기시", l) or "재보험" in l:
+        return None
+    if "자산및부채" in l or "자산과부채" in l:
+        return "NET"
+    if "부채인" in l:
+        return "LIAB"
+    if "자산인" in l:
+        return "ASSET"
+    if "보험계약자산" in l:
+        return "ASSET"
+    if ("순장부금액" in l or "순보험계약부채" in l or "보험계약부채(자산)" in l or "순부채" in l
+            or "총장부금액" in l):
+        return "NET"
+    if "보험계약부채" in l:
+        return "LIAB"
     return None
 
 
@@ -473,8 +511,10 @@ def harvest_file(path) -> list:
             if "발생사고" in flat and "잔여보장" in flat and has_open:
                 paths = col_paths(g, h)
                 roles = [role_of(p) if k >= nl else None for k, p in enumerate(paths)]
+                roles_loose = [role_of(p, loose=True) if k >= nl else None for k, p in enumerate(paths)]
                 hdrflat = comp(" ".join(" ".join(r) for r in g[:max(h, 1)]))
                 rows, rows_p = {}, {}
+                open_rows = {}
                 tag_ctx, tag_ctx_p = {}, {}
                 mode = None
                 for ri in range(h, len(g)):
@@ -484,6 +524,12 @@ def harvest_file(path) -> list:
                         mode = "open"
                     elif "말" in lab:
                         mode = "close"
+                    if mode == "open":
+                        ocls = classify_open(lab)
+                        if ocls and ocls not in open_rows:
+                            ovals = [parse_num(c) if k >= nl else None for k, c in enumerate(r)]
+                            if any(v is not None for v in ovals):
+                                open_rows[ocls] = {"label": lab[:60], "vals": ovals}
                     cls = classify_row(lab)
                     bare = False
                     if not cls and mode == "close":
@@ -527,6 +573,7 @@ def harvest_file(path) -> list:
                     "nrows": len(g), "ncols": len(g[0]), "h": h, "nl": nl,
                     "hdr": hdrflat[:300],
                     "paths": paths, "roles": roles, "rows": rows,
+                    "roles_loose": roles_loose, "open_rows": open_rows,
                     "period_cue": explicit_period(prev_small + " " + pre[-140:]),
                 }
                 if rows_p:
@@ -749,10 +796,80 @@ def is_con(t: dict) -> bool:
     return ("연결" in t["note"]) or ("연결" in t["top"])
 
 
-def annotate_tables(tabs: list) -> list:
+INTRO_RE = re.compile(r"다음과\s*같")
+
+
+def _intro_is_reins(pre: str):
+    """True/False when the text in front of the table holds an '... 다음과 같습니다' sentence and that sentence
+    does / does not name the reinsurance book (재보험계약, 출재); None when there is no such sentence"""
+    ms = list(INTRO_RE.finditer(pre or ""))
+    if not ms:
+        return None
+    seg = GENERIC_BOTH.sub(" ", pre[:ms[-1].start()][-140:])
+    return bool(REINS_RE.search(seg))
+
+
+def _mark_reins_by_sentence(tabs: list) -> None:
+    """repair 'reins_sentence': a table WITHOUT a 부채인/자산인 row (NET-only) that follows an introducing sentence
+    naming the 재보험계약 (the sentence is carried over the headingless tables of the same run) is a held-reinsurance
+    table.  The plain reading only inspects the caption AFTER the sentence and misses it."""
+    carry = None
+    for t in tabs:
+        v = _intro_is_reins(t["pre"])
+        if v is not None:
+            carry = v
+        rows = closing_rows(t)
+        if carry and "LIAB" not in rows and "ASSET" not in rows:
+            t["reins"] = True
+            t["reins_src"] = "sentence"
+
+
+def _table_totals(t: dict, which: str) -> dict:
+    """{class: total column value} of the opening ('open') or closing ('close') rows of the table, in its own unit"""
+    rows = closing_rows(t) if which == "close" else (t.get("open_rows") or {})
+    return {c: _roles_sum(t, r["vals"])["tot"] for c, r in rows.items()}
+
+
+def _chains(oa: dict, cb: dict) -> bool:
+    """opening balances of table A == closing balances of table B (B is A's prior-year table): every class present in
+    both with a non-trivial value agrees within rounding, and at least one of them is >= 1000 (own unit)"""
+    common = [c for c in ("NET", "LIAB", "ASSET") if c in oa and c in cb]
+    live = [c for c in common if max(abs(oa[c]), abs(cb[c])) >= 1.0]
+    if not any(max(abs(oa[c]), abs(cb[c])) >= 1000.0 for c in live):
+        return False
+    return all(abs(oa[c] - cb[c]) <= max(2.0, 2e-6 * abs(cb[c])) for c in live)
+
+
+def _apply_continuity(tabs: list) -> None:
+    """repair 'continuity' (year-end filings): a roll-forward runs 1 Jan -> 31 Dec, so the CURRENT-year table opens with
+    the balances the PRIOR-year table closed with.  Where table A opens with what table B closed with (A and B in the
+    same unit, the match unique both ways), A is 'cur' and B is 'prior' -- whatever the captions say (a footnote that
+    mentions '전기말' must not turn a whole section into prior-period tables)."""
+    cand = [t for t in tabs if not t["reins"] and not t["con"] and t["kind"] == "RF" and not t.get("rows_p")]
+    op = {t["i"]: _table_totals(t, "open") for t in cand}
+    cl = {t["i"]: _table_totals(t, "close") for t in cand}
+    prior_of, claimed = {}, {}
+    for a in cand:
+        hits = [b for b in cand if b["i"] != a["i"] and b["unit"] == a["unit"] and _chains(op[a["i"]], cl[b["i"]])]
+        if len(hits) == 1:
+            prior_of[a["i"]] = hits[0]["i"]
+            claimed.setdefault(hits[0]["i"], []).append(a["i"])
+    for a_i, b_i in prior_of.items():
+        if len(claimed[b_i]) != 1:
+            continue                          # B closes into several A's: ambiguous, leave as is
+        for t in tabs:
+            if t["i"] == a_i:
+                t["period"], t["period_src"] = "cur", "continuity"
+            elif t["i"] == b_i:
+                t["period"], t["period_src"] = "prior", "continuity"
+
+
+def annotate_tables(tabs: list, repair=frozenset()) -> list:
     """period (cur/prior), unit, reinsurance, scope and kind per table, in document order.
     period: tag > explicit cue in the table caption > carried cue (same note) > headingless second-of-a-pair > cur.
-    Tables that stack 당기 and 전기 row blocks (rows_p) are 'cur' and read from their cur block."""
+    Tables that stack 당기 and 전기 row blocks (rows_p) are 'cur' and read from their cur block.
+    repair (assemble_cell only, after the plain reading failed to close the cell): any of 'loose_roles',
+    'reins_sentence', 'continuity' -- see role_of(loose=True), _mark_reins_by_sentence, _apply_continuity."""
     out = []
     last_note, prev, expl, last_unit = None, None, None, None
     for t in tabs:
@@ -792,6 +909,14 @@ def annotate_tables(tabs: list) -> list:
         t["con"] = is_con(t)
         t["kind"] = "ME" if "CSM" in t["roles"] else "RF"
         out.append(t)
+    if "loose_roles" in repair:
+        for t in out:
+            t["roles"] = list(t.get("roles_loose") or t["roles"])
+            t["kind"] = "ME" if "CSM" in t["roles"] else "RF"
+    if "reins_sentence" in repair:
+        _mark_reins_by_sentence(out)
+    if "continuity" in repair:
+        _apply_continuity(out)
     return out
 
 
@@ -982,11 +1107,14 @@ def tag_crosscheck(t: dict):
     return {"cells": n, "mismatch": bad, "cols": cols}
 
 
-def _evaluate(rows_t: list, kvals: list):
+def _evaluate(rows_t: list, kvals: list, floor_neg: bool = False):
     """scale every table to 백만원, apply the net-asset floor, de-duplicate
-    -> (aggs, keep, floor, notes, total)"""
+    -> (aggs, keep, floor, notes, total).  floor_neg (repair 'floor_neg'): a table whose liability-basis total is
+    negative (the filer printed the net ASSET in the liability row, e.g. 카카오페이 일반모형 계약) counts 0 as well"""
     aggs = [scaled(r["a"], k) for r, k in zip(rows_t, kvals)]
     floor = [a["basis"] == "NET" and a["tot"] < -1e-9 for a in aggs]
+    if floor_neg:
+        floor = [f or a["tot"] < -1e-9 for f, a in zip(floor, aggs)]
     idx = [i for i, f in enumerate(floor) if not f]
     keep_sub, notes = reduce_tables([aggs[i] for i in idx]) if idx else ([], [])
     keep = [False] * len(aggs)
@@ -1029,15 +1157,17 @@ def _me_split(ann: list, k_default: float, lic_tot: float):
             "gap_mm": bel + ra - lic_tot}
 
 
-def _assemble_cell(code: str, fy: str, files: list, bs20_mm, filing_anchor_mm):
+def _assemble_cell(code: str, fy: str, files: list, bs20_mm, filing_anchor_mm, repair=frozenset()):
     """files = [(relpath, harvested tabs)] of one DART directory.  Returns the cell record.
-    status: loaded | not_loaded.  Every decision is recorded in rec['flags'] / rec['tables']."""
+    status: loaded | not_loaded.  Every decision is recorded in rec['flags'] / rec['tables'].
+    repair: frozenset of repair names (see REPAIR_ORDER); empty = the plain reading used for every stage-1 cell."""
     quarter = QMAP[fy]
+    fneg = "floor_neg" in repair
     rec = {"code": code, "fy": fy, "quarter": quarter, "status": "not_loaded", "reason": None,
            "flags": [], "bs20_mm": bs20_mm, "filing_anchor_mm": filing_anchor_mm}
     used = None
     for fn, tabs in sorted(files, key=lambda x: file_priority(x[0])):
-        ann = annotate_tables(tabs or [])
+        ann = annotate_tables(tabs or [], repair)
         el = eligible_tables(ann, "RF")
         if el:
             used = (fn, ann, el)
@@ -1069,7 +1199,7 @@ def _assemble_cell(code: str, fy: str, files: list, bs20_mm, filing_anchor_mm):
         hits = []
         for cand in UNIT_CANDIDATES:
             kv = [r["k"] if r["k"] is not None else cand for r in rows_t]
-            if _close(_evaluate(rows_t, kv)[4], anchor):
+            if _close(_evaluate(rows_t, kv, fneg)[4], anchor):
                 hits.append((cand, kv))
         if len(hits) != 1:
             rec["reason"] = f"unit cue missing; {len(hits)} candidate scales close to {anchor_name}"
@@ -1077,12 +1207,12 @@ def _assemble_cell(code: str, fy: str, files: list, bs20_mm, filing_anchor_mm):
         kvals = hits[0][1]
         unit_source = f"inferred_from_{anchor_name}"
         rec["flags"].append("unit_inferred:" + UNIT_NAME[hits[0][0]])
-    aggs, keep, floor, notes, total = _evaluate(rows_t, kvals)
+    aggs, keep, floor, notes, total = _evaluate(rows_t, kvals, fneg)
     if anchor and not _close(total, anchor):
         for pw in POWERS:      # a wrong unit cue shows up as an exact power-of-ten ratio
             if _close(total / pw, anchor):
                 kvals = [k / pw for k in kvals]
-                aggs, keep, floor, notes, total = _evaluate(rows_t, kvals)
+                aggs, keep, floor, notes, total = _evaluate(rows_t, kvals, fneg)
                 unit_source = f"inferred_from_{anchor_name}(cue contradicted x{pw:g})"
                 rec["flags"].append("unit_cue_contradicted")
                 break
@@ -1213,9 +1343,35 @@ NOT_LOADED_RULES = {
 }
 
 
+# Repairs are tried ONLY for a cell the plain reading could not close (so every stage-1 cell is untouched), smallest
+# combination first; the first combination that closes item 15 against the anchor on the LIABILITY basis (and passes
+# R-LIC3) wins and is recorded in rec['repair'] / rec['flags'].  Each one fixes a documented, content-based defect:
+#   loose_roles     header variants: a BEL/RA leaf under a blank 발생사고 group cell; a 발생사고 column headed by the model name
+#   continuity      current/prior tables paired by roll-forward continuity (opening == last year's closing), not captions
+#   reins_sentence  NET-only tables introduced by a sentence naming the 재보험계약 are held-reinsurance tables
+#   floor_neg       a table whose liability row is negative is a net asset (counts 0 on the liability side)
+REPAIR_ORDER = ("loose_roles", "continuity", "reins_sentence", "floor_neg")
+
+
 def assemble_cell(code: str, fy: str, files: list, bs20_mm, filing_anchor_mm):
-    """_assemble_cell + the recorded per-cell exclusion rules (NOT_LOADED_RULES)."""
+    """_assemble_cell + the repair ladder (REPAIR_ORDER) for cells the plain reading could not close
+    + the recorded per-cell exclusion rules (NOT_LOADED_RULES)."""
+    import itertools
     rec = _assemble_cell(code, fy, files, bs20_mm, filing_anchor_mm)
+    if rec["status"] != "loaded" and (code, rec["quarter"]) not in NOT_LOADED_RULES:
+        plain_reason = rec["reason"]
+        done = False
+        for n in range(1, len(REPAIR_ORDER) + 1):
+            for combo in itertools.combinations(REPAIR_ORDER, n):
+                r2 = _assemble_cell(code, fy, files, bs20_mm, filing_anchor_mm, frozenset(combo))
+                if r2["status"] == "loaded" and r2.get("basis") == "liability":
+                    r2["repair"] = list(combo)
+                    r2["flags"].append("repair:" + "+".join(combo))
+                    r2["plain_reason"] = plain_reason
+                    rec, done = r2, True
+                    break
+            if done:
+                break
     why = NOT_LOADED_RULES.get((code, rec["quarter"]))
     if why and rec["status"] == "loaded":
         rec["withheld_items_mm"] = rec.get("items_mm")

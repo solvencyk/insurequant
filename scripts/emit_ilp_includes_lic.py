@@ -33,6 +33,10 @@ BS = REPO / "IFRS17_BS.json"
 PROV = REPO / "insurance_liability_portfolio_provenance.json"
 OUT = REPO / "data" / "_derived" / "ilp_includes_lic.json"
 QUARTERS = ["2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q", "2026.2Q"]
+# 2026-10-10 backfill (ticket 20261010T1600Z): the company set is still decided on the six stage-1 quarters; the year-end
+# points loaded before 2025 are then tested cell by cell for the companies in that set (a cell that fails is reported, the
+# company is NOT dropped).  Extend this list when another pre-2025 quarter is loaded.
+EXTRA_QUARTERS = ["2023.4Q", "2024.4Q"]
 
 
 def abl_spot_check():
@@ -103,7 +107,33 @@ def main() -> int:
         if ok_all and len(rows) == len(QUARTERS):
             chosen.append(c)
             cells += rows
+    # pre-2025 year-end points: same three tests, cell by cell, for the companies already chosen
+    extra_q = {c: [] for c in chosen}
+    extra_not = []
+    for c in chosen:
+        for q in EXTRA_QUARTERS:
+            d = v.get((c, q), {})
+            i8, i14, i15, i10 = d.get(8), d.get(14), d.get(15), d.get(10)
+            b = b20.get((c, q))
+            if None in (i8, i14, i15, i10) or b is None:
+                if any(n in d for n in (1, 8, 10, 14, 15)):
+                    extra_not.append({"company_code": c, "quarter": q, "why": "items missing (8/10/14/15) or no BS item 20"})
+                continue          # quarter not loaded at all: nothing to test
+            c1 = abs(i8 - i15) <= max(5.0, 1e-4 * abs(i15))
+            c2 = abs(i8 - i14) > 0.01 * abs(i14)
+            c3 = abs(i8 * 100.0 / b - 1) <= 1e-4
+            if c1 and c2 and c3:
+                extra_q[c].append(q)
+                cells.append({"company_code": c, "quarter": q, "item8_eok": i8, "item15_eok": i15, "item14_eok": i14, "item10_eok": i10,
+                              "bs20_eok": round(b / 100.0, 2),
+                              "item8_vs_bs20_pct": round((i8 * 100.0 / b - 1) * 100, 5),
+                              "item8_vs_item15_pct": round((i8 / i15 - 1) * 100, 5),
+                              "lic_share_of_item8_pct": round(i10 / i8 * 100, 2)})
+            else:
+                extra_not.append({"company_code": c, "quarter": q, "why": f"criterion fails: c1={c1} c2={c2} c3={c3}"})
     print("companies whose 2-4 total contains the LIC:", [(c, names[c]) for c in chosen])
+    if extra_not:
+        print("extra quarters NOT included:", extra_not)
     for r in cells:
         print(f"  {r['company_code']} {r['quarter']}: item8 {r['item8_eok']:,.1f} item15 {r['item15_eok']:,.2f} LRC-only {r['item14_eok']:,.2f} "
               f"| vs BS20 {r['item8_vs_bs20_pct']:+.5f}% | vs item15 {r['item8_vs_item15_pct']:+.5f}% | LIC share {r['lic_share_of_item8_pct']}%")
@@ -122,9 +152,11 @@ def main() -> int:
         "meaning": ("insurance_liability_portfolio.json item 8 (보험부채_합계, 경영공시 2-4) of these companies already contains the 발생사고요소(LIC) "
                     "although the 2-4 footnote says it was prepared for the 잔여보장요소 only. For them item 8 ~ item 15 (LRC+LIC) ~ IFRS17_BS item 20. "
                     "Master cells are not changed; the designer shows a notice on the left bar."),
-        "criterion": "all 6 quarters: |item8-item15| <= max(5억, 0.01%) and |item8-item14| > 1% and |item8*100/BS20-1| <= 0.01%",
-        "companies": {c: {"원수사명": names[c], "quarters": QUARTERS} for c in chosen},
-        "cells": cells, "spot_checks": [spot_rec] if spot_rec else [],
+        "criterion": ("all 6 quarters 2025.1Q~2026.2Q: |item8-item15| <= max(5억, 0.01%) and |item8-item14| > 1% and |item8*100/BS20-1| <= 0.01%; "
+                      "the pre-2025 year-end points (EXTRA_QUARTERS) are added per cell when the same three tests pass"),
+        "companies": {c: {"원수사명": names[c], "quarters": sorted(extra_q[c]) + QUARTERS} for c in chosen},
+        "cells": sorted(cells, key=lambda x: (x["company_code"], x["quarter"])), "spot_checks": [spot_rec] if spot_rec else [],
+        "extra_quarters_not_included": extra_not,
     }
     if args.write:
         OUT.parent.mkdir(parents=True, exist_ok=True)
