@@ -1,0 +1,1245 @@
+{
+  "cells": {
+    "KR1103|1|2023.1Q": {
+      "값": 137970.528,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2023.2Q": {
+      "값": 141320.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "cbdfc73fe538ba8c679b712c42357767acefb6e1a9b8d844be80620f126ec8f3",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p4 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2023.3Q": {
+      "값": 148100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "eb5061d3c1a5cfe18a86558f59d1a9fb66a3ccf6c47d2adc8859416e234dff10",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p4 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2023.4Q": {
+      "값": 159748.282385,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2024.1Q": {
+      "값": 151313.479,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2024.2Q": {
+      "값": 155493.033,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 17,
+      "sha256": "9b1e7968e4e9e49dda93c3af90ab8f726f652838f01635acab5578d14bf5b511",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:untested_ok",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p17 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2024.3Q": {
+      "값": 165153.331,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:untested_ok",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2024.4Q": {
+      "값": 170770.458022,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2025.1Q": {
+      "값": 163011.952,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 12,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p12 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2025.2Q": {
+      "값": 133122.904,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2025.3Q": {
+      "값": 138452.996,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2025.4Q": {
+      "값": 140010.257352,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「자산총계」 140,010,257,352원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2026.1Q": {
+      "값": 131402.552,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|1|2026.2Q": {
+      "값": 133354.803,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2023.1Q": {
+      "값": 61007.257,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2023.2Q": {
+      "값": 64600.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "cbdfc73fe538ba8c679b712c42357767acefb6e1a9b8d844be80620f126ec8f3",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p4 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2023.3Q": {
+      "값": 72100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "eb5061d3c1a5cfe18a86558f59d1a9fb66a3ccf6c47d2adc8859416e234dff10",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p4 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2023.4Q": {
+      "값": 75126.442797,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2024.1Q": {
+      "값": 66703.76,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2024.2Q": {
+      "값": 70823.214,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 17,
+      "sha256": "9b1e7968e4e9e49dda93c3af90ab8f726f652838f01635acab5578d14bf5b511",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:untested_ok",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p17 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2024.3Q": {
+      "값": 73898.957,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:untested_ok",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2024.4Q": {
+      "값": 67588.155821,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2025.1Q": {
+      "값": 59782.077,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 12,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p12 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2025.2Q": {
+      "값": 61506.562,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2025.3Q": {
+      "값": 70771.362,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2025.4Q": {
+      "값": 64682.896017,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「부채총계」 64,682,896,017원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2026.1Q": {
+      "값": 55827.849,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|2|2026.2Q": {
+      "값": 58277.046,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2023.1Q": {
+      "값": 76963.271,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2023.2Q": {
+      "값": 76720.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "cbdfc73fe538ba8c679b712c42357767acefb6e1a9b8d844be80620f126ec8f3",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p4 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2023.3Q": {
+      "값": 76000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "eb5061d3c1a5cfe18a86558f59d1a9fb66a3ccf6c47d2adc8859416e234dff10",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p4 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2023.4Q": {
+      "값": 84621.839588,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2024.1Q": {
+      "값": 84609.719,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2024.2Q": {
+      "값": 84669.818,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 17,
+      "sha256": "9b1e7968e4e9e49dda93c3af90ab8f726f652838f01635acab5578d14bf5b511",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p17 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2024.3Q": {
+      "값": 91254.374,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2024.4Q": {
+      "값": 103182.302201,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2025.1Q": {
+      "값": 103229.875,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 12,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p12 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2025.2Q": {
+      "값": 71616.342,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2025.3Q": {
+      "값": 67681.634,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2026.1Q": {
+      "값": 75574.702,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2026.2Q": {
+      "값": 75077.756,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2023.1Q": {
+      "값": 69.897,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2023.4Q": {
+      "값": -485.663052,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2024.1Q": {
+      "값": -426.488,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2024.2Q": {
+      "값": -477.013,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 17,
+      "sha256": "9b1e7968e4e9e49dda93c3af90ab8f726f652838f01635acab5578d14bf5b511",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p17 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2024.3Q": {
+      "값": -489.256,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2024.4Q": {
+      "값": -699.963909,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2025.1Q": {
+      "값": -716.507,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 12,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p12 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2025.2Q": {
+      "값": -555.845,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2025.3Q": {
+      "값": -670.903,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2026.1Q": {
+      "값": -807.777,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2026.2Q": {
+      "값": -780.732,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2023.1Q": {
+      "값": 17644.405,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2023.2Q": {
+      "값": 22240.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "cbdfc73fe538ba8c679b712c42357767acefb6e1a9b8d844be80620f126ec8f3",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p4 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2023.3Q": {
+      "값": 27200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "eb5061d3c1a5cfe18a86558f59d1a9fb66a3ccf6c47d2adc8859416e234dff10",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p4 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2023.4Q": {
+      "값": 32734.636611,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2024.1Q": {
+      "값": 21010.574,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2024.3Q": {
+      "값": 37055.455,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:untested_ok",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2024.4Q": {
+      "값": 17975.12311,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2025.1Q": {
+      "값": 5228.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p5 라벨「10:현금및예치금」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2025.2Q": {
+      "값": 6809.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p5 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2025.3Q": {
+      "값": 10585.379,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2025.4Q": {
+      "값": 15928.597119,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「현금및현금성자산」 15,928,597,119원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2026.1Q": {
+      "값": 8380.281,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2026.2Q": {
+      "값": 10252.874,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2023.3Q": {
+      "값": 104500.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "eb5061d3c1a5cfe18a86558f59d1a9fb66a3ccf6c47d2adc8859416e234dff10",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p4 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2023.4Q": {
+      "값": 104601.1065,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI[sum_all]:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「12:FVOCI[sum_all]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2024.4Q": {
+      "값": 130200.722,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI[sum_all]:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「12:FVOCI[sum_all]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2025.1Q": {
+      "값": 130183.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2025.2Q": {
+      "값": 100484.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2025.3Q": {
+      "값": 101300.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2025.4Q": {
+      "값": 100906.045,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:기타포괄손익-공정가치측정금융자산:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「기타포괄손익-공정가치측정금융자산」 100,906,045,000원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2026.1Q": {
+      "값": 100500.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 4,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p4 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|13|2023.4Q": {
+      "값": 1583.194149,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|13|2024.4Q": {
+      "값": 1176.152898,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|13|2025.4Q": {
+      "값": 1262.16904,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:상각후원가측정금융자산:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「상각후원가측정금융자산」 1,262,169,040원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|15|2023.4Q": {
+      "값": 67.184839,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|15|2024.4Q": {
+      "값": 35.459307,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|15|2025.4Q": {
+      "값": 77.274593,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「유형자산」 77,274,593원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2023.1Q": {
+      "값": 43396.981,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2023.4Q": {
+      "값": 57322.502412,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2024.1Q": {
+      "값": 49269.672,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2024.2Q": {
+      "값": 53247.635,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 17,
+      "sha256": "9b1e7968e4e9e49dda93c3af90ab8f726f652838f01635acab5578d14bf5b511",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p17 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2024.3Q": {
+      "값": 56078.961,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2024.4Q": {
+      "값": 45319.747683,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2025.1Q": {
+      "값": 39412.508,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 12,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p12 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2025.2Q": {
+      "값": 43588.946,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2025.3Q": {
+      "값": 52681.932,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2025.4Q": {
+      "값": 46892.481303,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「보험계약부채」 46,892,481,303원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2026.1Q": {
+      "값": 38481.218,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|20|2026.2Q": {
+      "값": 40795.603,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|24|2023.4Q": {
+      "값": 7558.373767,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|24|2024.4Q": {
+      "값": 7558.373767,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|24|2025.4Q": {
+      "값": 7558.373767,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「기타부채」 7,558,373,767원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2023.1Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2023.4Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2024.1Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2024.2Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 6,
+      "sha256": "9b1e7968e4e9e49dda93c3af90ab8f726f652838f01635acab5578d14bf5b511",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.2Q B/S상 자기자본 p6 라벨「30:자본금」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2024.3Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2024.4Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2025.1Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 12,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p12 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2025.2Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 7,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.3Q 공시본 B/S상 자기자본 표 p7 의 전분기 열(2025.2Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2025.3Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2026.1Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2026.2Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2023.1Q": {
+      "값": 59893.374,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "b15cee1a7dba7e68481ecc0379aeb78ed54d9be87d4f80464f71b48951b7ed30",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p10 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2023.4Q": {
+      "값": 68107.50264,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "5126bc2901a61f08a96b3076ae8d6549ed86c9466c1a9971ab0cfc18a298b00d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p7 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2024.1Q": {
+      "값": 68036.207,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 10,
+      "sha256": "501f2104adade816219993e66270bc5213c7fa3a41183c7c9a342dac22694842",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p10 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2024.2Q": {
+      "값": 68146.832,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 17,
+      "sha256": "9b1e7968e4e9e49dda93c3af90ab8f726f652838f01635acab5578d14bf5b511",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p17 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2024.3Q": {
+      "값": 74743.63,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "5b8c89514f5ada21e6b007fb728669b9bfb56752a69981e72b99b210a24219e3",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p11 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2024.4Q": {
+      "값": 86882.26611,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "d4e35fb600228fd5de61399dd450d0d194a06b52d752c39b1f301d68ed5b3bf1",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p7 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2025.1Q": {
+      "값": 86946.382,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 12,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p12 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2025.2Q": {
+      "값": 55172.187,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2025.3Q": {
+      "값": 51352.537,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p11 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2026.1Q": {
+      "값": 59382.479,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 11,
+      "sha256": "a735a30b9379338dec2b636af6728eef158ab2f5f1eb9a18738e302d9d37fc9d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p11 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2026.2Q": {
+      "값": 58858.488,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 18,
+      "sha256": "df75fb630ac5e7b22728779e4cdf07689d9465cf22ba6b52655a9d112c63f6e9",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p18 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|3|2025.4Q": {
+      "값": 75327.361335,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「자본총계」 75,327,361,335원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|4|2025.4Q": {
+      "값": -593.523259,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:기타자본구성요소:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「기타자본구성요소」 -593,523,259원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|10|2024.2Q": {
+      "값": 26496.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p5 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2025.2Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2024.1Q": {
+      "값": 104246.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "2cb605de89b041275bf56cae4081aaf2e9c422ccd72e08ce7b648d3713ff1764",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2025.1Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2024.2Q": {
+      "값": 104383.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "334969ca57ea9c56086d272a8b62c3b0fbd290a3e0fcea1cf41055acc9e7d3cc",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2025.2Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|12|2024.3Q": {
+      "값": 104800.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+      "page": 5,
+      "sha256": "50f762f70969f1bbf92200ac65e9e7baa676e4dfbe57434e94d7dc1c1a1f935e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2025.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|30|2025.4Q": {
+      "값": 17000.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「자본금」 17,000,000,000원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1103|31|2025.4Q": {
+      "값": 58920.884594,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+      "page": 7,
+      "sha256": "626cf70ee9ba6b849537bb8e417d8439d9cd0bd8d3fefcd89869171dec273526",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:manual",
+      "근거": "제네럴재보험 서울지점 감사보고서(FY2025, raw_aux/KR1103_제네럴재보험__audit.pdf) p7 재무상태표(별도, 단위 원) 라인「이익잉여금」 58,920,884,594원. 이 PDF 는 텍스트층이 깨져(글자 코드 비표준) 페이지를 렌더링해 육안 판독했다. 검산: 자산 7행 합 = 자산총계, 부채 8행 합 = 부채총계, 자본 3행 합 = 자본총계, 자산 = 부채 + 자본이 원 단위까지 일치. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

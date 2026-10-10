@@ -1,0 +1,955 @@
+{
+  "cells": {
+    "KR0051|4|2023.1Q": {
+      "값": 343.922304,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2023.2Q": {
+      "값": 185.982735,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2023.3Q": {
+      "값": -95.516401,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2024.1Q": {
+      "값": 588.15219,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2024.2Q": {
+      "값": 728.810981,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2024.3Q": {
+      "값": 469.62238,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2025.1Q": {
+      "값": 205.551649,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p20 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2025.2Q": {
+      "값": 85.066776,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2026.1Q": {
+      "값": -5538.83251,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|4|2026.2Q": {
+      "값": -6155.115921,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2023.1Q": {
+      "값": 90753.149996,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2023.2Q": {
+      "값": 91491.559113,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2023.3Q": {
+      "값": 71051.940337,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2024.1Q": {
+      "값": 50877.60773,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2024.2Q": {
+      "값": 15402.460484,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2024.3Q": {
+      "값": 21529.799181,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2025.2Q": {
+      "값": 10939.413368,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2025.3Q": {
+      "값": 16031.083949,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "da311a41e262bfb9cb9b87e64a5d8a264d4558dda5798d12263c15583041a974",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2026.1Q": {
+      "값": 6130.040257,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2026.2Q": {
+      "값": 8318.608256,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2023.1Q": {
+      "값": 19837.28857,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2023.2Q": {
+      "값": 9860.563193,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2023.3Q": {
+      "값": 16301.500265,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2024.1Q": {
+      "값": 37935.094748,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2024.2Q": {
+      "값": 53812.157246,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2024.3Q": {
+      "값": 49060.356413,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2025.2Q": {
+      "값": 125557.854911,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2025.3Q": {
+      "값": 93869.289539,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "da311a41e262bfb9cb9b87e64a5d8a264d4558dda5798d12263c15583041a974",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2026.1Q": {
+      "값": 56877.578879,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|11|2026.2Q": {
+      "값": 46804.21523,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2023.1Q": {
+      "값": 9953.867308,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2023.2Q": {
+      "값": 10283.216418,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2023.3Q": {
+      "값": 14712.522798,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2024.1Q": {
+      "값": 15157.384696,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2024.2Q": {
+      "값": 15317.099946,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2024.3Q": {
+      "값": 5084.808225,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2025.1Q": {
+      "값": 5163.641429,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p20 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2025.2Q": {
+      "값": 35536.209891,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2025.3Q": {
+      "값": 49806.735766,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "da311a41e262bfb9cb9b87e64a5d8a264d4558dda5798d12263c15583041a974",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2026.1Q": {
+      "값": 88043.724639,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|12|2026.2Q": {
+      "값": 87352.729076,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2023.1Q": {
+      "값": 25957.490702,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2023.2Q": {
+      "값": 25590.847041,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2023.3Q": {
+      "값": 23161.2482,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2024.1Q": {
+      "값": 34597.554969,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2024.2Q": {
+      "값": 48418.185189,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2024.3Q": {
+      "값": 67935.884915,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2025.3Q": {
+      "값": 98547.340676,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "da311a41e262bfb9cb9b87e64a5d8a264d4558dda5798d12263c15583041a974",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2026.1Q": {
+      "값": 117077.867096,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|14|2026.2Q": {
+      "값": 122247.605868,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2023.1Q": {
+      "값": 4056.761636,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2023.2Q": {
+      "값": 4353.935166,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2023.3Q": {
+      "값": 4237.623127,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2024.1Q": {
+      "값": 6094.477108,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2024.2Q": {
+      "값": 5914.198442,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2024.3Q": {
+      "값": 5406.752043,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2025.3Q": {
+      "값": 3421.529974,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "da311a41e262bfb9cb9b87e64a5d8a264d4558dda5798d12263c15583041a974",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2026.1Q": {
+      "값": 2715.157197,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|15|2026.2Q": {
+      "값": 2425.718744,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2023.1Q": {
+      "값": 85284.390364,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2023.2Q": {
+      "값": 84226.742041,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2023.3Q": {
+      "값": 90796.401627,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2024.1Q": {
+      "값": 112192.009114,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2024.2Q": {
+      "값": 128348.453759,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2024.3Q": {
+      "값": 146726.220674,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2025.1Q": {
+      "값": 162414.147494,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p20 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2025.2Q": {
+      "값": 167459.685071,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "4871db39411b5b92b302ccf92d94b74aa146afaec060b8a58a32610a71df42e6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2025.3Q": {
+      "값": 171581.8311,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "da311a41e262bfb9cb9b87e64a5d8a264d4558dda5798d12263c15583041a974",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2026.1Q": {
+      "값": 169526.194236,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|20|2026.2Q": {
+      "값": 161707.704691,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|21|2024.3Q": {
+      "값": 16.443345,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|21|2026.1Q": {
+      "값": 0.000188,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2023.1Q": {
+      "값": 106206.815,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2023.2Q": {
+      "값": 106206.815,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2023.3Q": {
+      "값": 106206.815,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2024.1Q": {
+      "값": 106206.815,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2024.2Q": {
+      "값": 106206.815,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2024.3Q": {
+      "값": 106206.815,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2026.1Q": {
+      "값": 191125.29,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|30|2026.2Q": {
+      "값": 191125.29,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2023.1Q": {
+      "값": -12497.912242,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 16,
+      "sha256": "599a375cb101dec320c629d9024d109fde6211b99a86a79635c62d51f4836133",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p16 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2023.2Q": {
+      "값": -12909.56779,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 41,
+      "sha256": "dbe3780f74dd0766def2f2a835fdf9f277bb7fadb4f9780ffff2cc3b6d816f3f",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p41 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2023.3Q": {
+      "값": -16791.706104,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 15,
+      "sha256": "074b6616752726ad2040df953bda222dde354844385d13620bdac4f14877d617",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p15 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2023.4Q": {
+      "값": -19500.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR0051_신한이지손해보험.pdf",
+      "page": 21,
+      "sha256": "a4273f1565b9f8bc05b62f836b9046c330e2ba44c781ec4eb207d966694f743b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.4Q B/S상 자기자본 p21 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2024.1Q": {
+      "값": -20504.057986,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p19 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2024.2Q": {
+      "값": -25589.516965,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p46 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2024.3Q": {
+      "값": -33553.348838,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p19 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2024.4Q": {
+      "값": -37000.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0051_신한이지손해보험.pdf",
+      "page": 27,
+      "sha256": "c5a1b89ae760b95898384c01daf9d38e0728e8394a5a6190c8853c05a016ff86",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.4Q B/S상 자기자본 p27 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2025.4Q": {
+      "값": -69275.861035,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0051_신한이지손해보험.pdf",
+      "page": 71,
+      "sha256": "5d0877af35f3eb7d69d242950735298bccc4c4c8eceb856ffafd3e2ef2c1f0de",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p71 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2026.1Q": {
+      "값": -78958.72787,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "a4efbfda3dfc49f1fa42e14b49e78eedfd41c55be72a2515d6a3f029313a28dc",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p19 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|31|2026.2Q": {
+      "값": -87439.534262,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 45,
+      "sha256": "ccf40ebe9ca3a61fe2bf423ec9a49c6fa0e7fcf410d523f32ebfd9f426cbcdc4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p45 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|10|2025.1Q": {
+      "값": 111538.371403,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 20,
+      "sha256": "76304018f7092fb479db23e43b5f3be848e7b2e71c23f2f876d156e2f0cac2fb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.1Q 8-1 재무상태표(단위 원) p20 라인「Ⅰ. 현금 및 예치금」111,538,371,403원(= 1,115.38억)을 렌더링해 육안 확인. 전기말 191.0억(인쇄 19,101,715,054원, 마스터와 동일)에서 약 5.8배로 늘었으나 같은 분기 자본금이 1,062.1억에서 1,911.3억으로 +849.2억 증가(증자)하고 자산총계도 2,898.7억에서 3,814.1억으로 늘어 현금 급증과 방향·크기가 맞으며, 다음 분기 109.4억으로 돌아오면서 당기손익-공정가치측정금융자산이 552.8억에서 1,255.6억으로 늘어(투자 집행) 설명된다. 전분기 대비 변동 보류(HOLD_QOQ)를 해제. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|13|2024.1Q": {
+      "값": 69974.981112,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "6ad19d75bad94c38f43d60b348b889b2cdaca70c5e5bb27ee9f63da64a1910fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_SEC+대출채권:bracket_ok",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1, 단위 원) p19 라벨 규칙「13:AC_SEC+대출채권」 = 699.75억. 연말 앵커 브래킷 승인: 이 규칙이 전 기간 단일 규칙으로는 불합격이지만(2025.2Q 공시의 2024.4Q 열 0.0 대 마스터 599.8억; 2025.4Q 공시의 2025.4Q 열 200.0 대 마스터 244.5억; 2025.4Q 공시의 2024.4Q 열 0.0 대 마스터 599.8억; 2026.1Q 공시의 2025.4Q 열 200.0 대 마스터 244.5억), 2024회계연도 앞뒤 연말 앵커 2023.4Q·2024.4Q 를 같은 규칙이 모두 재현한다(전년말 앵커 3개 열 · 당해 연말 앵커 2개 열 전부 일치) -- 마스터의 이 항목 정의가 그 회계연도 내내 이 규칙이라는 뜻이다. 앵커 사이 분기 흐름 연속 확인. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|13|2024.2Q": {
+      "값": 69971.405606,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf",
+      "page": 46,
+      "sha256": "7690fa6f5906e9515666a268ab9b44184c2e1c3e356622517ce559428f0eaa8e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_SEC+대출채권:bracket_ok",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1, 단위 원) p46 라벨 규칙「13:AC_SEC+대출채권」 = 699.71억. 연말 앵커 브래킷 승인: 이 규칙이 전 기간 단일 규칙으로는 불합격이지만(2025.2Q 공시의 2024.4Q 열 0.0 대 마스터 599.8억; 2025.4Q 공시의 2025.4Q 열 200.0 대 마스터 244.5억; 2025.4Q 공시의 2024.4Q 열 0.0 대 마스터 599.8억; 2026.1Q 공시의 2025.4Q 열 200.0 대 마스터 244.5억), 2024회계연도 앞뒤 연말 앵커 2023.4Q·2024.4Q 를 같은 규칙이 모두 재현한다(전년말 앵커 3개 열 · 당해 연말 앵커 2개 열 전부 일치) -- 마스터의 이 항목 정의가 그 회계연도 내내 이 규칙이라는 뜻이다. 앵커 사이 분기 흐름 연속 확인. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0051|13|2024.3Q": {
+      "값": 69969.264831,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf",
+      "page": 19,
+      "sha256": "5d126f85abd40634f1c287b296b41900e5b0f8c0e07cb3bad9365dfd4371c799",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_SEC+대출채권:bracket_ok",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1, 단위 원) p19 라벨 규칙「13:AC_SEC+대출채권」 = 699.69억. 연말 앵커 브래킷 승인: 이 규칙이 전 기간 단일 규칙으로는 불합격이지만(2025.2Q 공시의 2024.4Q 열 0.0 대 마스터 599.8억; 2025.4Q 공시의 2025.4Q 열 200.0 대 마스터 244.5억; 2025.4Q 공시의 2024.4Q 열 0.0 대 마스터 599.8억; 2026.1Q 공시의 2025.4Q 열 200.0 대 마스터 244.5억), 2024회계연도 앞뒤 연말 앵커 2023.4Q·2024.4Q 를 같은 규칙이 모두 재현한다(전년말 앵커 3개 열 · 당해 연말 앵커 2개 열 전부 일치) -- 마스터의 이 항목 정의가 그 회계연도 내내 이 규칙이라는 뜻이다. 앵커 사이 분기 흐름 연속 확인. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

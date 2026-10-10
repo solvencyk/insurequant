@@ -1,0 +1,63 @@
+{
+ "_what": "PL_YTD_COLLAPSE_TO_ZERO RED 3건(경영공시 재보사 법인세 0.0) 의 owner 확정 셀 등재 후보. 이 파일은 제안일 뿐 data/_gold 는 건드리지 않았다. 등재 형식은 data/_gold/user_pl_confirmed_cells.json 의 기존 항목(예별손해보험 2025.3Q 법인세)과 같고, verify 마커는 게이트(공백 제거 부분문자열)로 재현 확인했다.",
+ "cells": [
+  {
+   "master": "PL_breakdown",
+   "company": "스위스리아시아",
+   "quarter": "2023.2Q",
+   "item": "법인세",
+   "value": 0.0,
+   "rule": "PL_YTD_COLLAPSE_TO_ZERO",
+   "approved": "PROPOSED (parser-ifrs17 2026-10-11) -- owner approval required before registering",
+   "note": "2023.2Q 요약 포괄손익계산서(억원) 법인세비용(수익) 해당 분기 0(반올림, 절대값 0.5억 미만), 세전 509 = 당기순이익 509(같은 열 항등식 닫힘). 직전 2023.1Q 누계는 -9억(수익)이었고 이후 2023.3Q 138억으로 다시 쌓인다 -- 재빌드 결손이 아니라 인쇄값이다. 직전분기 누계 -900.0(백만원). 근거: data/disclosure/_meta/bspl_granularity_runlog.md",
+   "verify": {
+    "file": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+    "pages": [
+     5
+    ],
+    "present_markers": [
+     "법인세비용(수익)000당기순이익(손실)509",
+     "법인세비용차감전순이익(손실)509-6731,182"
+    ]
+   }
+  },
+  {
+   "master": "PL_breakdown",
+   "company": "퍼시픽라이프리",
+   "quarter": "2024.4Q",
+   "item": "법인세",
+   "value": 0.0,
+   "rule": "PL_YTD_COLLAPSE_TO_ZERO",
+   "approved": "PROPOSED (parser-ifrs17 2026-10-11) -- owner approval required before registering",
+   "note": "FY2024 감사받은 포괄손익계산서(원) VI. 법인세비용 당기 '-', 전기 '-'; 세전 4,334,865,096원 = 당기순이익 4,334,865,096원. 2024.3Q 누계 5억은 분기 요약표의 중간 추정이고 연간 감사 재무제표에서는 법인세비용이 인쇄되지 않았다. 직전분기 누계 500.0(백만원). 근거: data/disclosure/_meta/bspl_granularity_runlog.md",
+   "verify": {
+    "file": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+    "pages": [
+     8
+    ],
+    "present_markers": [
+     "VI.법인세비용28--VII.당기순이익(손실)4,334,865,096"
+    ]
+   }
+  },
+  {
+   "master": "PL_breakdown",
+   "company": "퍼시픽라이프리",
+   "quarter": "2025.4Q",
+   "item": "법인세",
+   "value": 0.0,
+   "rule": "PL_YTD_COLLAPSE_TO_ZERO",
+   "approved": "PROPOSED (parser-ifrs17 2026-10-11) -- owner approval required before registering",
+   "note": "FY2025 감사받은 포괄손익계산서(원) VI. 법인세비용 당기 '-', 전기 '-'; 세전 (12,066,580,579)원 = 당기순이익 (12,066,580,579)원. 2025.3Q 누계 2억은 분기 요약표의 중간 추정이고 연간 감사 재무제표에서는 법인세비용이 인쇄되지 않았다. 직전분기 누계 200.0(백만원). 근거: data/disclosure/_meta/bspl_granularity_runlog.md",
+   "verify": {
+    "file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+    "pages": [
+     8
+    ],
+    "present_markers": [
+     "VI.법인세비용28--VII.당기순이익(손실)(12,066,580,579)4,334,865,096"
+    ]
+   }
+  }
+ ]
+}

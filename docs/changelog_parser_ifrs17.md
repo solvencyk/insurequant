@@ -3,6 +3,51 @@
 > Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-11 (BS·PL 세부 백필) — 정기경영공시 PDF 에서 BS 17항목·PL 5항목 세부 채움 (비상장 15사 + 재보사 8곳)
+
+미커밋. push 안 함. 발주 `inbox/parser/20261011T0310Z__orchestrator__MULTI_2023.1Q-2026.2Q__bspl_granularity_from_disclosure.md`(고치지 않았다, 오케스트레이터 종결 대기). 전 과정·표·재현·충돌·첨부 목록 `data/disclosure/_meta/bspl_granularity_runlog.md`.
+
+- **적재(새 키만, 기존 행 값·바이트 변경 0, HEAD 대조)**: `IFRS17_BS.json` 9,030 → 10,651행(+1,621: 비상장 15사 536 · 재보사 8곳 1,027 · 상장 구멍 58) · `PL_breakdown.json` 12,941 → 13,458행(+517 신규 + 23 null 채움 = 540칸: 재보사 502 · 예별 항목 16 ×11 · 상장 27; 항목 1·16·22·23·24 만, §3d). 계보 `bs_manual_overrides.json`(오버레이)·`bs_from_disclosure.json`·`PL_breakdown_provenance.json`(+103블록) + 회사별 part 파일 `*_agent_gran.json`.
+- **방법**: PDF 텍스트층을 단어 좌표로 행 재구성(주석 번호 열·분리된 부호 칸·캡션 열·다쪽 표·라벨 변형 처리, 부호 불명은 `unsure` 로 읽지 않음) → 표 종류 분류(요약 BS·B/S상 자기자본·8-1·요약 PL·감사 재무제표) → 단위 확정(마스터 총계·KPI 대조·캡션) → 라인-항목 매핑을 마스터 DART/owner 값(앵커)으로 보정, 재보사는 연말 감사 재무제표 라인이 앵커 → 후보 → 셀 단위 적재기(dry-run 기본, 라운드별 백업, 쓰기 직전 재읽기 가드, 마스터를 마지막에 씀).
+- **재보사 규칙**: owner 2026-10-09 「충돌 시 최신 공시 전기·전년동기 칸」을 재보사에만 적용(하노버 2023.4Q 5칸·스코리 2024.4Q 1칸이 R1 값), 자체 공시가 없는 분기는 다음 해 같은 분기 전년동기 열(요약 BS 비중 100%·A = L + E 확인), 발행사 공시 오타 1건 기각. 뒷채움 없음.
+- **검산**: 적재 1,621 중 1,543 이 Stage B 에서 재현(`EXISTS_SAME`), 나머지는 비교열 채움 72·R1 재작성 6. 항등식(A = L + E, 책임준비금 3종, 코어 군) 시뮬 실패 0. 전분기 대비 ×3 보류 6칸은 원문 렌더링으로 인쇄값 확인 후 해제. 감사 PDF 텍스트층이 깨진 제네럴 2025.4Q 자기자본 8칸은 렌더링 육안 판독(합이 원 단위로 닫힘).
+- **게이트**: `validate_master_tables --no-build` pl_bridge 29F/0NEW 불변(실패는 기존), closing 363 → 381P(CSM 레인 몫). `validate_data_contract` RED 0 → 34: 이 적재 몫은 `PL_YTD_COLLAPSE_TO_ZERO` 3(정당한 인쇄 0.0, 등재 후보 파일 작성) + `MASTER_HOLE` 하노버 2025.3Q PL(원천 미게시); 17 `PL_CSM_AMORT_VS_WATERFALL` 은 CSM 레인이 05:36 에 올린 `PL_BUCKET_ABSENT_VS_WATERFALL` 17 과 같은 칸(PL 버킷이 생겨 룰 이름만 바뀜); xlsx 12(17BS 1,621행·손익분해PL 517행은 이 적재 몫) + K-ICS 레인 신규 `KICS_CENSUS_EXEMPTION_INERT` 1. YELLOW 133 → 151(`BS_KICS_BASELINE_BREAK` +17: 17BS 자기자본 항등식은 닫히고 K-ICS 초기분기 값이 다른 기준 · `R_RSV_9` +2 · `BS_CENSUS_NO_SOURCE_COMPANY` −1). `tests/test_master_tables_golden.py` 는 SUMMARY 이동으로 실패(예상, `--update` 안 함), BS·PL 골든은 안 돌림.
+- **보류(틀린 값 대신 빈 칸)**: BS 500(마스터 정의 재현 실패 312 · 앵커 없는 라인 182[0 값 125] · 하노버 2025.3Q 자기자본 조각 4 · 책임준비금 3종/정의 혼재 2) · PL 항목 1 17칸(pl_bridge 레그 부분, 2026-10-09 보류 15 + 이번 2). **충돌**(마스터 유지): BS 14(처브 항목 20 정의 혼재 4 · KR1098 자본금 2026.2Q 마스터 2,000 대 공시 3,000 이상치 포함)·PL 135(경영공시 요약 PL 은 업무보고서 기준이라 정의 차이). **참고 대기**: PL 항목 17·20·21 855칸 `pl_reference_only_staged_20261011.json`(적재 안 함).
+- **라운드 10·11(+15칸)**: 메트라이프 항목 20 10칸(마스터 정의 = 일반계정 보험계약부채 + 특별계정부채, 연말 앵커 3개를 7개 공시에서 재현) · 연말 앵커 브래킷 승인 5칸(신한이지 항목 13 2024.1Q~3Q · 교보라이프플래닛 항목 21 2025.1Q·3Q; opt-in `--bracket`, 별도 폴더).
+- **인쇄값 대조**: BS 비영·비합성 1,447칸 전부 인용 쪽에 숫자가 그대로 인쇄(다쪽 표 127칸은 `page` 를 실제 쪽으로 정정, `bspl_granularity_fix_pages.py`), 합성 18칸·0 값 141칸은 대조 불가, PL 540칸 전부 일치.
+- **발견·수정한 결함**: 요약 PL 한 행의 천단위 분리 숫자(`1, 001`, KR0080 2026.2Q 세전이익 전년동기)가 열을 밀어 1억으로 읽힘 — `pdfrows._merge_split_thousands` 로 수정(적재 셀 영향 0, 표 페이지 3,000쪽 전수 스캔으로 다른 사례 없음). 자기자본 표 전분기 열로 채운 27칸의 근거 문구가 엉뚱한 공시 분기를 가리키던 것을 정정(`bspl_granularity_fix_basis.py`, 값 불변). 라운드 4 적용 중 `bs_manual_overrides.json` 쓰기에서 일시 파일 잠금(OSError 22) → `bspl_granularity_resume_bs.py` 로 복구 후 적재기를 원자적 교체로 변경.
+- **못 한 것·owner/validation/downloader 몫**: RED 정리(위 + `pl_csm_amort_missing_ledger.json` 17건 등재 또는 게이트 설계 변경, 3칸 owner 확정 등재, 하노버 2025.3Q 면제) · KR1098 자본금 2026.2Q 이상치 · 마스터 정의가 연도별로 바뀐 회사의 정의 확정 · 골든 `--update` · xlsx 동기화(publishing) · 별첨/원천(하나손보 9분기 · 악사 3 · BNP 11 · 하노버 6 · RGA 4 등, 런로그 「첨부·원천이 필요한 칸」).
+- 빌더(`build_root_masters.py`·`build_ifrs17_bs.py`)·게이트·예외 등재부(data/_gold)·HTML·xlsx·public_exports·`insurance_liability_portfolio*`·`CSM_*`·K-ICS 파일은 안 건드렸다.
+
+## 2026-10-11 (재보사 CSM) — 재보사 8곳 CSM 상각·민감도·워터폴 + 경영지표 마스터 적재
+
+미커밋. push 안 함. 발주 `inbox/parser/20261011T0430Z__orchestrator__KR1101-KR1108_2024.4Q-2026.2Q__reinsurer_csm_masters.md`(고치지 않았다, 오케스트레이터 종결 대기). owner 지적 「재보사 IFRS17 지표도 경영공시에 있는데 왜 스윕 안 했나」. 전 과정·표·결정·owner 질문 `data/disclosure/_meta/reinsurer_ifrs17_csm_runlog.md`, 스테이징 `data/_derived/reinsurer_ifrs17_csm_20261011/`.
+
+- **적재(추가 행만, 기존 행 바이트 동일·기존 회사 변경 0, git HEAD 접두 증명)**: `CSM_amortization.json` 390 → 570행(+180, 18 회사×분기 × 경과차년 1~10) · `CSM_sensitivity.json` 195 → 311행(+116) · `CSM_waterfall.json` 2,178 → 2,286행(+108, 항목 1~6 × 18 회사×분기) + `CSM_waterfall_provenance.json` +18셀(`source_id=DISCLOSURE`, 감사보고서 경로·기준일) · `management_indicators.json` 7,665 → 8,924행(+1,259, 티켓 ④). 백업 `data/_derived/reinsurer_csm_backup_20261011/`. 적재기 `scripts/load_reinsurer_csm_masters_20261011.py`·`load_reinsurer_mi_20261011.py`(바이트 왕복 guard·충돌 중단·멱등·`--revert`).
+- **원천·매핑**: 상각 = 경영공시 4-6-3 ② 합계 행(스위스리 생명+손해 합산, 퍼시픽 FY2024 포트폴리오 4행 합산, 제네럴·하노버 FY2024 백만원 ÷100), 1~10년만 적재 · 민감도 = 4-6-5 ① (CSM변동 = 변동금액 보험계약마진, 당기손익영향, **자본영향 = 당기손익 + 기타포괄손익**, 병합셀은 1행, 원문 `-` = null) · 워터폴 = **감사보고서 주석 CSM 변동표**(수재 일반모형 CSM 열 합, 항목 3 = 순보험금융비용, 항목 4 = 잔차, 연 1회라 4Q 행만·값_당분기는 기말만; 제네럴 FY2025 는 글리프 깨짐 → 렌더링 판독) · MI = 1-1·1-2·5-1(PDF `find_tables` 셀 격자, 마스터 자체 추출기는 이 양식을 못 읽어 쓰지 않음).
+- **검산**: 상각 18건 합 = 4-6-2 일반모형 CSM 전건 허용 안 · 워터폴 폐쇄식 18건 통과(`validate_master_tables` 폐쇄식 363 → 381, 실패 0)·기말 CSM 대 4-6-2 16건 중 14건 허용 안(예외 2건 사유 런로그)·신계약 CSM 대 4-6-3 ① 일치(대조 가능한 제네럴·스코리·뮌헨·퍼시픽 일치, 스위스리만 불일치) · 민감도·상각표 PDF 렌더링 육안 대조 불일치 0 · MI 는 K-ICS 레인 kpi_summary 652/657, IFRS17_BS 304/306, kics_disclosure 항목 27 171/171 일치.
+- **owner 규칙 적용**: 최신 공시 전기 칸 채택(상충: 하노버 상각 2024, 민감도 뮌헨·스위스리·하노버·퍼시픽 2024 등), 반올림 차이는 정밀값, 0 인쇄는 비영값을 안 덮음, 같은 문서 안 표 간 불일치(MI 1-1 대 5-1)는 둘 다 빼고 다른 공시로, 값이 방향 미확정이면 빈 칸(제네럴 민감도 전 칸, 하노버 2023 민감도 보류). 스코리 당기손익은 원문이 손실=(+) 표기라 부호 반전 적재(항등식 근거, 비고 명기).
+- **게이트**: data-contract RED 0 → 24 중 이 적재 몫 새 17(`PL_BUCKET_ABSENT_VS_WATERFALL`, 재보사 PL 항목 4 계보 한계 — §3d 가 경영공시 계보 PL 항목을 1·16·22·23·24 로 제한) + `MASTER_XLSX_ROW_MISSING` 3(민감도·워터폴·상각 시트, publishing). 등재 후보 `proposed_registry_entries.json`(등재는 owner). `validate_management_indicators` 커버리지 구멍 121 → 23·하드 RED 불변.
+- **못 한 것**: 하노버·RGA 2025.4Q 워터폴(FY2025 본 PDF 에 IFRS17 감사보고서 없음 → downloader) · 퍼시픽 2023 워터폴(영업양수도 개시연도) · 1Q~3Q 워터폴(연 1회 `no_filing`) · 마이브라운 CSM 계열 전부(PAA 전용) · 4-6-4 손해율·합산비율(별도 도메인) · 4-6-5 ② 금리위험(K-ICS 레인).
+- 빌더·골든·게이트·예외 등재부·HTML·xlsx·public_exports·viz 패널·P1/P2 마스터는 안 건드렸다. 재빌드(`build_csm_sensitivity.py`·`build_tidy_exports.py --only amort`)는 이 행을 지우니 돌린 뒤 적재기를 다시 돌릴 것.
+
+## 2026-10-11 (ILP 라운드 3) — 나머지 6분기 · LIC 2·3단계 · 재보사 8곳 · 검산기 · 추출기 보강
+
+미커밋. 발주 `inbox/parser/20261011T0320Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_remaining_backfill_lic23_reinsurers.md`(고치지 않았다). 상세·표·재현 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §11~§16, 헬퍼·증거 `data/disclosure/_meta/ilp_round3_20261011/`.
+
+- **데이터** `insurance_liability_portfolio.json` 3,835 → 6,111행(+2,276, 기존 행 바이트 동일·중복 키 0, CRLF 유지; 단계마다 백업 `data/_derived/ilp_backup_20261010_pre_*.json`):
+  ① 나머지 6분기 +1,348(2024.1Q +336 · 2Q +328 · 3Q +336: 항목 1~8 27/26/27셀 + 항목 10~15 23셀씩; 2023.1Q~3Q +112/+118/+118: 항목 10~15 22/23/23셀), 재작성 5셀(교보 2024.1Q·2Q, 미래에셋 2024.1Q~3Q)은 최신 공시 기준으로 통일 ·
+  ② LIC 2단계 항목 16·17 125셀 +250(판정 기준: 측정요소 표 창 + 간접 BEL+RA = 항목 13 ± max(500백만원, 0.05 %); 15셀은 자산 상계 보정) ·
+  ③ LIC 3단계 라이나 8셀·처브 3셀 +50 ·
+  ④ 재보사 8곳 항목 1~9 62셀 +538, LIC 14셀 +84(뮌헨 7·하노버 4·퍼시픽 3) ·
+  ⑤ 롯데손보 항목 9 +6(PDF 문구 확인).
+- **provenance** `cells` 236 → 398, `lrc_model_cells` 65 → 207, `lrc_model_not_loaded` 18 → 76, `not_loaded` 1 → 2, `backfills` 4 → 15, 새 목록 `indirect_lic_cells`(125)·`item9_cells`(6). 사이드카 `ilp_restated_comparative.json` 3 → 8셀, `ilp_includes_lic.json` 24 → 30셀.
+- **새 스크립트** `load_ilp_interim_2023_2024.py` · `extract_insurance_liability_model_pdf_interim.py`(분기 2-4 읽기 + 열합 검산 `footing_mixed`) · `extract_insurance_liability_lic_indirect.py` · `load_ilp_lic_stage3_pdf.py` · `load_ilp_reinsurers.py` · `load_ilp_reinsurers_lic.py` · `fix_20261011_ilp_kr0003_item9.py`. 수정: `validate_insurance_liability_lic.py`(재작성·BS 불일치 앵커, 격자 14분기, R-LIC9, PDF 셀) · `validate_insurance_liability_portfolio.py`(재보사 범위 해제, R5 복사·R6 급변) · `emit_ilp_includes_lic.py`(분기 확장).
+- **재보사 규칙**(런로그 §14.1): 합계 행 = 항목 1~7(+8 합), 스위스리는 생명·손해 두 절 합, 합계 행을 상세 행 열합으로 검산, 두 공시가 다르면 최신 공시의 전기 칸(owner 2026-10-09), 뮌헨·하노버·퍼시픽은 같은 공시 재무상태표의 순 LRC 로 항목 8 을 독립 교차검산(13셀 통과, 하노버 2026.2Q 불일치 → 미적재). 미적재: 스위스리 2026.1Q(발행사 합계가 Indirect 행 누락)·하노버 2024.3Q/2025.3Q(PDF 없음)·전기 표 없는 칸.
+- **추출기** `extract_insurance_liability_portfolio.py`: fitz 폴백 · 헤더 뒤 합계 검색/단위 창 · 공백 분리 숫자 · 소수·`N | Page` 바닥글 · `footing`(합계 대 상세 행, 3숫자 행 모호성 허용) · 이미지 헤더 후보 `find_table_by_footing` · 드라이버 단위 급변 보류. 평문 읽기가 닫히는 표는 건드리지 않는다. 회귀 `t111/t112/t121`: 279셀 재실행에서 값 동일 262셀, 달라진 17셀은 전부 새로 읽힘·틀린 값 교정·틀린 값 보류, 마스터 일치 230 → 243셀(이전에 맞던 칸 0 변동).
+- **발견·보고**: 메트라이프 PAA 소수 0.4~0.5억을 옛 추출기가 0 으로 자름(마스터 6칸, 보고만) · 현대해상 합계 열 오배정(추출기 한계, 마스터는 손질본) · 처브라이프 BS 항목 20 의 기준 혼재(중간분기 일반계정/연말 특별계정 포함 → R3 RED 5의 원인, IFRS17 레인 사안) · 항목 9 빈 국내 55칸 대조 · 하나손보 분기 별첨 11회차 미수집 · 디자이너 패널 재빌드 348셀.
+- **검증**: LIC 검산기 RED 0·YELLOW 22, 포트폴리오 검증기 RED 7(KR0100 5·KR0029 1·스위스리 2026.1Q 1), `tests/test_push_gate_wiring.py`·`tests/test_deploy_assets.py` 77 통과. 골든·`build_root_masters`·`validate_master_tables` 미실행(건드리지 않음).
+
 ## 2026-10-11 (ILP 3셀 통일) — 항목 10~15 를 FY2024 전기말(재작성) 열로 통일
 
 미커밋. 발주 `inbox/parser/20261011T0100Z__orchestrator__KR0074-KR0079-KR0099_2023.4Q__ilp_unify_restated_basis.md`(고치지 않았다).

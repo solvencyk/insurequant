@@ -1,0 +1,25 @@
+{
+  "cells": {
+    "KR0032|13|2023.1Q": {
+      "값": 2545270.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0032_NH농협손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "d32ec3de31700f129822f9e65916bf361341c49c46f50b950d8452572d51900a",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p19 라벨「13:AC_CHILDREN[ac_children]」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0032|13|2023.2Q": {
+      "값": 2546342.475714,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf",
+      "page": 49,
+      "sha256": "854ee62ba083bd816b1ab39e969692b684a6d1d71e815c6d465f6549cfbee405",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p49 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

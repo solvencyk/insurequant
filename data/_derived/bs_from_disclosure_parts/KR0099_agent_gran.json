@@ -1,0 +1,45 @@
+{
+  "cells": {
+    "KR0099|23|2023.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0099_케이비라이프생명보험.pdf",
+      "page": 19,
+      "sha256": "edf3e2838096ee188c0beb7cb6babbab6f93fed9b14458af6f4493be447a8ce7",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p19 라벨「23:차입부채」, 단위 백만원(master), 정밀도 ±0.5백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0099|23|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf",
+      "page": 52,
+      "sha256": "9dc08388dc6dc78dbeab14522d386bc84156a6c20086092533576a677ba73556",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p52 라벨「23:차입부채」, 단위 백만원(master), 정밀도 ±0.5백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0099|23|2023.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0099_케이비라이프생명보험.pdf",
+      "page": 22,
+      "sha256": "d76d600ae9007fbdda6ed4929c59e2fefe2f64d9894923e7a233096c46595263",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p22 라벨「23:차입부채」, 단위 백만원(master), 정밀도 ±0.5백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0099|23|2024.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0099_케이비라이프생명보험.pdf",
+      "page": 113,
+      "sha256": "3c07b5e2fc93e79fc89876674fc9d43c17958f1b59b1533b0e8d90ba51a94d9a",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p113 라벨「23:차입부채」, 단위 백만원(master), 정밀도 ±0.5백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

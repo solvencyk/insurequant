@@ -1,0 +1,225 @@
+{
+  "cells": {
+    "KR0049|4|2023.1Q": {
+      "값": 3700.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p20 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|4|2023.2Q": {
+      "값": 1500.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p58 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|4|2023.3Q": {
+      "값": -200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 23,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p23 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|4|2025.2Q": {
+      "값": 19900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p74 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|4|2026.2Q": {
+      "값": -21000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p73 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|12|2023.1Q": {
+      "값": 483300.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 5,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|12|2023.2Q": {
+      "값": 499400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 6,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI[sum_all]:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI[sum_all]」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|12|2023.3Q": {
+      "값": 486600.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 5,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|12|2024.1Q": {
+      "값": 501700.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 5,
+      "sha256": "bc7d0e42bcc5943469963a568a2c07243915ed928ea967a6cbe7253a5fde3620",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|20|2023.1Q": {
+      "값": 453500.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p20 라벨「20:보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|20|2023.2Q": {
+      "값": 442400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p58 라벨「20:보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|20|2025.2Q": {
+      "값": 436900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p74 라벨「20:보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|20|2025.3Q": {
+      "값": 430900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p27 라벨「20:보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|20|2026.2Q": {
+      "값": 425000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p73 라벨「20:보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|21|2023.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p20 라벨「21:재보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|21|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p58 라벨「21:재보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|21|2025.2Q": {
+      "값": 6500.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 74,
+      "sha256": "39f139e3ca05a6d950d6fc8cd6599b61ee7dca96de259dc7235eedab083220c9",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p74 라벨「21:재보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|21|2025.3Q": {
+      "값": 5500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 27,
+      "sha256": "01e31156d408bb7e633c4e5ee5813b4fc28391b74ed9b9768d8dabcdeda7c7d5",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p27 라벨「21:재보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|21|2026.2Q": {
+      "값": 4000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p73 라벨「21:재보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|31|2023.1Q": {
+      "값": 82700.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf",
+      "page": 20,
+      "sha256": "893ca34ec193c14179e9e72e967e8f31a73519fa6d9a6e14e4bdcd40c3d240ce",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p20 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|31|2023.2Q": {
+      "값": 94300.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 58,
+      "sha256": "1c6be0d8f1bf0b4f08b65d353882149b20db5e8451020cf9a389c7c06191a456",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p58 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0049|31|2023.3Q": {
+      "값": 97400.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf",
+      "page": 23,
+      "sha256": "dc09b90cd6bc93c726ce3587f4d71aba33cb0202c00687b797bc0c036a1ea698",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p23 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

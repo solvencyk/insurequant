@@ -1,0 +1,95 @@
+{
+  "cells": {
+    "KR0150|21|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0150_서울보증보험.pdf",
+      "page": 24,
+      "sha256": "7ea86648cccf1a9fc452f2a4fab078642792a440bbf2797a5b89de00fa2eba2e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p24 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|3|2023.3Q": {
+      "값": 4831500.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 37,
+      "sha256": "82ac4cb8d7ee1776c6e51dd529be643cbfb801cf91f3a1afc11d37f98e43183b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p37 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|3|2024.3Q": {
+      "값": 5104200.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 40,
+      "sha256": "46df49fd5d1b70ed1327e7400f7cac4e75d0d261b2c9bfe2de312afafa53864b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.4Q 공시본 B/S상 자기자본 표 p40 의 전분기 열(2024.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|4|2023.3Q": {
+      "값": -146100.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 37,
+      "sha256": "82ac4cb8d7ee1776c6e51dd529be643cbfb801cf91f3a1afc11d37f98e43183b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p37 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|4|2024.3Q": {
+      "값": 52900.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 40,
+      "sha256": "46df49fd5d1b70ed1327e7400f7cac4e75d0d261b2c9bfe2de312afafa53864b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.4Q 공시본 B/S상 자기자본 표 p40 의 전분기 열(2024.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|30|2023.3Q": {
+      "값": 174600.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 37,
+      "sha256": "82ac4cb8d7ee1776c6e51dd529be643cbfb801cf91f3a1afc11d37f98e43183b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p37 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|30|2024.3Q": {
+      "값": 174600.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 40,
+      "sha256": "46df49fd5d1b70ed1327e7400f7cac4e75d0d261b2c9bfe2de312afafa53864b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.4Q 공시본 B/S상 자기자본 표 p40 의 전분기 열(2024.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|31|2023.3Q": {
+      "값": 4803100.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 37,
+      "sha256": "82ac4cb8d7ee1776c6e51dd529be643cbfb801cf91f3a1afc11d37f98e43183b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p37 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|31|2024.3Q": {
+      "값": 4876800.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0150_서울보증보험.pdf",
+      "page": 40,
+      "sha256": "46df49fd5d1b70ed1327e7400f7cac4e75d0d261b2c9bfe2de312afafa53864b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.4Q 공시본 B/S상 자기자본 표 p40 의 전분기 열(2024.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

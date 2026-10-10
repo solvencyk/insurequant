@@ -1,0 +1,25 @@
+{
+  "cells": {
+    "KR0005|10|2023.1Q": {
+      "값": 75700.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0005_흥국화재_amended.pdf",
+      "page": 5,
+      "sha256": "05df06a30c89d97d2174a4e02fd9a0e89d966463fc5b439ead61651e96433c5f",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0005|14|2023.1Q": {
+      "값": 305670.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0005_흥국화재_amended.pdf",
+      "page": 23,
+      "sha256": "05df06a30c89d97d2174a4e02fd9a0e89d966463fc5b439ead61651e96433c5f",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p23 라벨「14:재보험계약자산」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

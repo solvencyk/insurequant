@@ -1,0 +1,35 @@
+{
+  "cells": {
+    "KR0075|12|2024.2Q": {
+      "값": 1509400.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+      "page": 6,
+      "sha256": "405f46af42384aaeee63a0adfeafe80e58a9a0c118c42b483c0ffcbf77c76477",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0075|31|2024.4Q": {
+      "값": -26645.915417,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "page": 174,
+      "sha256": "44524d995a439d83af9b9158106205f1698b65f39dc571f7d7ebc9cf0316eda6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p174 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0075|31|2025.4Q": {
+      "값": -51400.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0075_비엔피파리바카디프생명보험.pdf",
+      "page": 43,
+      "sha256": "9f989a5635ee2a7c0271f8b7589f640332a743f64081b22f2b1c9f22eacba38a",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p43 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

@@ -1,0 +1,1145 @@
+{
+  "cells": {
+    "KR1105|1|2023.1Q": {
+      "값": 257000.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2023.4Q": {
+      "값": 275334.291007,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.1Q": {
+      "값": 262900.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.2Q": {
+      "값": 321200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p7 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.3Q": {
+      "값": 370000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.4Q": {
+      "값": 343558.044598,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.1Q": {
+      "값": 390000.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p7 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.2Q": {
+      "값": 374600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.3Q": {
+      "값": 393600.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p7 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.4Q": {
+      "값": 342300.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 13,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2026.1Q": {
+      "값": 359500.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p7 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2026.2Q": {
+      "값": 419000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2023.1Q": {
+      "값": 68200.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2023.4Q": {
+      "값": 59944.658056,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2024.1Q": {
+      "값": 43100.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2024.2Q": {
+      "값": 79200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p7 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2024.3Q": {
+      "값": 103200.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2024.4Q": {
+      "값": 93445.65696,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2025.1Q": {
+      "값": 101300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p7 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2025.2Q": {
+      "값": 91500.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2025.3Q": {
+      "값": 110400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p7 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2025.4Q": {
+      "값": 80200.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 13,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2026.1Q": {
+      "값": 137600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p7 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2026.2Q": {
+      "값": 217700.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2023.1Q": {
+      "값": 188800.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2023.4Q": {
+      "값": 215389.632951,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2024.1Q": {
+      "값": 219800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2024.2Q": {
+      "값": 242000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p7 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2024.3Q": {
+      "값": 266900.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2024.4Q": {
+      "값": 250112.387638,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2025.1Q": {
+      "값": 288700.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p7 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2025.2Q": {
+      "값": 283100.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2025.3Q": {
+      "값": 283200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p7 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2025.4Q": {
+      "값": 262100.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 13,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2026.1Q": {
+      "값": 221900.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p7 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2026.2Q": {
+      "값": 201300.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2023.1Q": {
+      "값": -31900.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.1Q B/S상 자기자본 p7 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2023.4Q": {
+      "값": -46100.69696,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2024.1Q": {
+      "값": -47700.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 9,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.1Q B/S상 자기자본 p9 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2024.2Q": {
+      "값": -32400.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.2Q B/S상 자기자본 p10 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2024.3Q": {
+      "값": -19200.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 9,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.3Q B/S상 자기자본 p9 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2024.4Q": {
+      "값": -46658.297692,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2025.1Q": {
+      "값": -19200.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.1Q B/S상 자기자본 p12 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2025.2Q": {
+      "값": -27500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 공시본 B/S상 자기자본 표 p12 의 전분기 열(2025.2Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2025.3Q": {
+      "값": -32900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.3Q B/S상 자기자본 p12 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2025.4Q": {
+      "값": -65500.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 29,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p29 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2026.1Q": {
+      "값": -103500.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.1Q B/S상 자기자본 p12 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|4|2026.2Q": {
+      "값": -129900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.2Q B/S상 자기자본 p12 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2023.1Q": {
+      "값": 21900.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2023.4Q": {
+      "값": 57273.572171,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2024.1Q": {
+      "값": 27900.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2024.3Q": {
+      "값": 53600.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2024.4Q": {
+      "값": 58006.787923,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2025.1Q": {
+      "값": 26400.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p7 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2025.2Q": {
+      "값": 41100.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2025.3Q": {
+      "값": 65900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p7 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2025.4Q": {
+      "값": 53600.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 13,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2026.1Q": {
+      "값": 22700.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p7 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2026.2Q": {
+      "값": 61000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2023.4Q": {
+      "값": 203777.01955,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI[sum_all]:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「12:FVOCI[sum_all]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2024.1Q": {
+      "값": 203000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2024.2Q": {
+      "값": 214500.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2024.3Q": {
+      "값": 227600.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2024.4Q": {
+      "값": 237992.476546,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI[sum_all]:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「12:FVOCI[sum_all]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2025.2Q": {
+      "값": 251400.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2025.3Q": {
+      "값": 261800.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2025.4Q": {
+      "값": 259100.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 13,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2026.2Q": {
+      "값": 255200.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|13|2023.4Q": {
+      "값": 4157.086816,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|13|2024.4Q": {
+      "값": 3436.375256,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|15|2023.4Q": {
+      "값": 616.119096,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|15|2024.4Q": {
+      "값": 993.31716,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|20|2023.4Q": {
+      "값": 17226.118856,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|20|2024.4Q": {
+      "값": 12976.761857,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|21|2023.4Q": {
+      "값": 21240.359572,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|21|2024.4Q": {
+      "값": 45994.434698,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2023.4Q": {
+      "값": 5480.675863,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2024.4Q": {
+      "값": 11425.909788,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2023.1Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.1Q B/S상 자기자본 p7 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2023.3Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 17,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p17 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2023.4Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2024.1Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 9,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.1Q B/S상 자기자본 p9 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2024.2Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.2Q B/S상 자기자본 p10 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2024.3Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 9,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.3Q B/S상 자기자본 p9 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2024.4Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 135,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p135 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2025.1Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.1Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2025.2Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.3Q 공시본 B/S상 자기자본 표 p12 의 전분기 열(2025.2Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2025.3Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.3Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2025.4Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 29,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p29 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2026.1Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2026.1Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|30|2026.2Q": {
+      "값": 52000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2026.2Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2023.1Q": {
+      "값": 168700.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.1Q B/S상 자기자본 p7 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2023.4Q": {
+      "값": 209490.329911,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 224,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p224 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2024.1Q": {
+      "값": 215600.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 9,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.1Q B/S상 자기자본 p9 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2024.2Q": {
+      "값": 222400.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.2Q B/S상 자기자본 p10 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2024.3Q": {
+      "값": 234100.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 9,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.3Q B/S상 자기자본 p9 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2024.4Q": {
+      "값": 244800.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 30,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.4Q B/S상 자기자본 p30 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2025.1Q": {
+      "값": 256000.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.1Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2025.2Q": {
+      "값": 258500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.3Q 공시본 B/S상 자기자본 표 p12 의 전분기 열(2025.2Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2025.3Q": {
+      "값": 264200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.3Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2025.4Q": {
+      "값": 274600.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 29,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p29 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2026.1Q": {
+      "값": 272400.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.1Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|31|2026.2Q": {
+      "값": 278200.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 12,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.2Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2023.2Q": {
+      "값": 235600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p7 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.2Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2023.3Q": {
+      "값": 262100.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2023.2Q": {
+      "값": 57100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p7 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.2Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|2|2023.3Q": {
+      "값": 90000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2023.2Q": {
+      "값": 178500.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p7 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.2Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|3|2023.3Q": {
+      "값": 172100.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2023.3Q": {
+      "값": 41900.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|10|2024.2Q": {
+      "값": 48700.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p7 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2025.2Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2023.1Q": {
+      "값": 189400.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.1Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2023.2Q": {
+      "값": 187600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 7,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.2Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|12|2023.3Q": {
+      "값": 197700.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 6,
+      "sha256": "c222bb6654d96c379b2539f613e6a9fae4b1857dc1ffbde588e68432d47b4c30",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

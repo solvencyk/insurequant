@@ -1,0 +1,355 @@
+{
+  "cells": {
+    "KR1010|4|2023.1Q": {
+      "값": -20200.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 7,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.1Q B/S상 자기자본 p7 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|4|2023.2Q": {
+      "값": 4900.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 9,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.2Q B/S상 자기자본 p9 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|4|2023.3Q": {
+      "값": 14000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 8,
+      "sha256": "466a56831941bc2829c6b40af1c1ae4f6d55a85c6fb6198f7db1fbd57eafd27c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.3Q B/S상 자기자본 p8 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|10|2023.2Q": {
+      "값": 11700.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 6,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|10|2025.1Q": {
+      "값": 9400.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 5,
+      "sha256": "567f73669684906f7e46f0074ef0e7c8ad2583fc8d5f64389f259c1f91b835cb",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p5 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|10|2025.2Q": {
+      "값": 14300.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 6,
+      "sha256": "49303f74b9ab6a4d725f07e4659753e9a299a6a68fb8691c93dd9f8415c90437",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p6 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|10|2026.1Q": {
+      "값": 12600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 5,
+      "sha256": "ec7b8cb42e6df90bf0d9f652921b56c1270960fa6c14ebc1f37ae5e872f646fd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p5 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|10|2026.2Q": {
+      "값": 11100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 6,
+      "sha256": "99055dba6590fc64b6fc5ffb227815110bd2f2f78a89b2811c8f7116e2d3b005",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p6 라벨「10:현금및예치금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|11|2023.1Q": {
+      "값": 79500.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 4,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p4 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|11|2026.1Q": {
+      "값": 24700.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 5,
+      "sha256": "ec7b8cb42e6df90bf0d9f652921b56c1270960fa6c14ebc1f37ae5e872f646fd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|11|2026.2Q": {
+      "값": 26400.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 6,
+      "sha256": "99055dba6590fc64b6fc5ffb227815110bd2f2f78a89b2811c8f7116e2d3b005",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|13|2023.1Q": {
+      "값": 339400.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 4,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC+대출채권:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p4 라벨「13:AC_SEC+대출채권」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|13|2023.2Q": {
+      "값": 338500.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 6,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC+대출채권:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC+대출채권」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|13|2023.3Q": {
+      "값": 338500.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 5,
+      "sha256": "466a56831941bc2829c6b40af1c1ae4f6d55a85c6fb6198f7db1fbd57eafd27c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC+대출채권:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p5 라벨「13:AC_SEC+대출채권」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|13|2024.1Q": {
+      "값": 27300.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 5,
+      "sha256": "d7de15dbf25bf340c3a5c9a711415e3c22b7b6a598b265d172a0103d9420fc2e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC+대출채권:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「13:AC_SEC+대출채권」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|13|2024.2Q": {
+      "값": 26000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 6,
+      "sha256": "b29d76fe903ef22cbf8cc1675557faa4bf5ee32f35a1c5a8f0b05cf84089109f",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC+대출채권:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC+대출채권」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|13|2024.3Q": {
+      "값": 26000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 5,
+      "sha256": "b18c1e091d52d7f5cd3804d516cbfc3846e1f1dd70f292fa6a2606657ab1642b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC+대출채권:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p5 라벨「13:AC_SEC+대출채권」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|13|2026.2Q": {
+      "값": 19900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 6,
+      "sha256": "99055dba6590fc64b6fc5ffb227815110bd2f2f78a89b2811c8f7116e2d3b005",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC+대출채권:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC+대출채권」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|23|2023.4Q": {
+      "값": 533.967878,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 74,
+      "sha256": "77692a9e55d1e18183e487d10423cc50e786a9e6f49a773e96bf04ddba031891",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p74 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|23|2024.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 98,
+      "sha256": "ae656706d2ed32b767108c29bdf878407b0a42c182d971d136816335894eabff",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p98 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|31|2023.4Q": {
+      "값": -133900.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1010_교보라이프플래닛생명보험_amended.pdf",
+      "page": 24,
+      "sha256": "77692a9e55d1e18183e487d10423cc50e786a9e6f49a773e96bf04ddba031891",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.4Q B/S상 자기자본 p24 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|31|2024.4Q": {
+      "값": -163200.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 45,
+      "sha256": "ae656706d2ed32b767108c29bdf878407b0a42c182d971d136816335894eabff",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.4Q B/S상 자기자본 p45 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|31|2025.4Q": {
+      "값": -183300.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 45,
+      "sha256": "07f11c5fbbe0558aae35a77d5ae9bfd6bbdc4727627300cbf92f5870f4bf1329",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p45 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|12|2023.1Q": {
+      "값": 234360.554991,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 22,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p22 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|12|2023.2Q": {
+      "값": 253214.91419,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 54,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p54 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|22|2023.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 22,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p22 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|22|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 54,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:untested_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p54 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|22|2023.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 25,
+      "sha256": "466a56831941bc2829c6b40af1c1ae4f6d55a85c6fb6198f7db1fbd57eafd27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:untested_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p25 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|23|2023.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 22,
+      "sha256": "98f086afaa4cdd7322964d73f83681d59edb12cd8e05450fcb84d5ea573b043d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p22 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|23|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 54,
+      "sha256": "a014e76ac26f6f8b8cb9ee419cb1a30c06203a2c04457b9d44a7e20448f4d224",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p54 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|23|2023.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 25,
+      "sha256": "466a56831941bc2829c6b40af1c1ae4f6d55a85c6fb6198f7db1fbd57eafd27c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p25 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|23|2026.1Q": {
+      "값": 10000.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 30,
+      "sha256": "ec7b8cb42e6df90bf0d9f652921b56c1270960fa6c14ebc1f37ae5e872f646fd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p30 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|23|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 60,
+      "sha256": "99055dba6590fc64b6fc5ffb227815110bd2f2f78a89b2811c8f7116e2d3b005",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p60 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|21|2025.1Q": {
+      "값": 582.504055,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 30,
+      "sha256": "567f73669684906f7e46f0074ef0e7c8ad2583fc8d5f64389f259c1f91b835cb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:bracket_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1, 단위 원) p30 라벨 규칙「21:재보험계약부채」 = 5.83억. 연말 앵커 브래킷 승인: 이 규칙이 전 기간 단일 규칙으로는 불합격이지만(2024.4Q 공시의 2023.4Q 열 5.7 대 마스터 5.3억), 2025회계연도 앞뒤 연말 앵커 2024.4Q·2025.4Q 를 같은 규칙이 모두 재현한다(전년말 앵커 4개 열 · 당해 연말 앵커 3개 열 전부 일치) -- 마스터의 이 항목 정의가 그 회계연도 내내 이 규칙이라는 뜻이다. 앵커 사이 분기 흐름 연속 확인. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1010|21|2025.3Q": {
+      "값": 382.437045,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf",
+      "page": 30,
+      "sha256": "0ca92696bb3986bdeba33bae040287ceba859daaf47de550e25a6b6bc23c4c4c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:bracket_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1, 단위 원) p30 라벨 규칙「21:재보험계약부채」 = 3.82억. 연말 앵커 브래킷 승인: 이 규칙이 전 기간 단일 규칙으로는 불합격이지만(2024.4Q 공시의 2023.4Q 열 5.7 대 마스터 5.3억), 2025회계연도 앞뒤 연말 앵커 2024.4Q·2025.4Q 를 같은 규칙이 모두 재현한다(전년말 앵커 4개 열 · 당해 연말 앵커 3개 열 전부 일치) -- 마스터의 이 항목 정의가 그 회계연도 내내 이 규칙이라는 뜻이다. 앵커 사이 분기 흐름 연속 확인. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

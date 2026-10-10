@@ -1063,10 +1063,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR0002_한화손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 8,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -1109,10 +1116,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR0002_한화손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 8,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -2040,10 +2054,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0003_롯데손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "gold_cell_override",
-   "published_items": 5,
+   "published_items": 6,
    "schema_items": 24
   },
   {
@@ -2078,10 +2099,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0003_롯데손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 10,
+   "published_items": 11,
    "schema_items": 24
   },
   {
@@ -2987,13 +3015,14 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf",
-   "published_items": 3,
+   "published_items": 4,
    "schema_items": 24,
    "source_files": [
     {
      "file": "data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf",
      "how": "disclosure_summary_pl",
      "items": [
+      16,
       22,
       23,
       24
@@ -3175,10 +3204,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR0005_흥국화재_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 13,
+   "published_items": 14,
    "schema_items": 24
   },
   {
@@ -3227,10 +3263,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0005_흥국화재_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 8,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -3613,10 +3656,17 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR0005_흥국화재.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
-   "published_items": 22,
+   "published_items": 23,
    "schema_items": 24
   },
   {
@@ -3685,10 +3735,17 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/disclosure/FY2025_Q4/raw/KR0005_흥국화재.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
-   "published_items": 22,
+   "published_items": 23,
    "schema_items": 24
   },
   {
@@ -4255,10 +4312,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR0008_삼성화재해상보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 8,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -6739,10 +6803,17 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR0010_KB손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
-   "published_items": 23,
+   "published_items": 24,
    "schema_items": 24
   },
   {
@@ -6885,10 +6956,17 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR0010_KB손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
-   "published_items": 23,
+   "published_items": 24,
    "schema_items": 24
   },
   {
@@ -8481,6 +8559,7 @@
      "file": "data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf",
      "how": "disclosure_summary_pl",
      "items": [
+      16,
       22,
       23,
       24
@@ -8488,7 +8567,7 @@
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 6,
+   "published_items": 7,
    "schema_items": 24
   },
   {
@@ -12173,10 +12252,17 @@
      "items": [
       7
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0070_에이비엘생명보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 11,
+   "published_items": 12,
    "schema_items": 24,
    "owner_override": true
   },
@@ -12241,10 +12327,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0070_에이비엘생명보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 10,
+   "published_items": 11,
    "schema_items": 24
   },
   {
@@ -12317,10 +12410,17 @@
       8,
       18
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q3/raw/KR0070_에이비엘생명보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
-   "published_items": 20,
+   "published_items": 21,
    "schema_items": 24
   },
   {
@@ -12395,10 +12495,17 @@
       8,
       18
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR0070_에이비엘생명보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
-   "published_items": 20,
+   "published_items": 21,
    "schema_items": 24
   },
   {
@@ -13364,10 +13471,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0071_흥국생명보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 12,
+   "published_items": 13,
    "schema_items": 24
   },
   {
@@ -14552,10 +14666,17 @@
      "items": [
       7
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0072_케이디비생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "gold_cell_override",
-   "published_items": 12,
+   "published_items": 13,
    "schema_items": 24,
    "owner_override": true
   },
@@ -19941,10 +20062,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0083_푸본현대생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 12,
+   "published_items": 13,
    "schema_items": 24
   },
   {
@@ -20007,10 +20135,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0083_푸본현대생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 12,
+   "published_items": 13,
    "schema_items": 24
   },
   {
@@ -22318,10 +22453,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0094_신한라이프생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 8,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -22380,10 +22522,17 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0094_신한라이프생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 8,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -31853,6 +32002,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -31860,7 +32010,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -31875,6 +32025,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -31882,7 +32033,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -31897,6 +32048,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -31904,7 +32056,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -31919,6 +32071,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -31926,7 +32079,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -31941,6 +32094,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -31948,7 +32102,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -31963,6 +32117,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -31970,7 +32125,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -31985,6 +32140,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -31992,7 +32148,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -32007,6 +32163,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -32014,7 +32171,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -32029,6 +32186,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -32036,7 +32194,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -32051,6 +32209,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -32058,7 +32217,7 @@
     }
    ],
    "resolution": "disclosure_summary_pl",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24
   },
   {
@@ -32082,10 +32241,2426 @@
    "resolution": "disclosure_summary_pl",
    "published_items": 4,
    "schema_items": 24
+  },
+  {
+   "company_code": "KR0150",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2023.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2024.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      23
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      23
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2023.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2024.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2024.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2023.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2024.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2023.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2024.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2023.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2024.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    },
+    {
+     "file": "data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1108",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1108",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1108",
+   "quarter": "2025.4Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1108",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1108",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+   "published_items": 5,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   }
  ],
  "merge_note_20260920": "경영공시 §2-1 백필 155셀(DISCLOSURE) append + DART 4Q LOB 재추출 5블록 패치. as_of_date 는 싣지 않았다 — 분기말일 기계 삽입 금지(validation 20260920T1500Z §1c), downloader 가 필링 meta 에서 채울 별도 티켓이다. 재현: scripts/merge_pl_backfill_disclosure_20260920.py --apply",
  "merge_note_20261008": "경영공시 PL 공란 백필(owner 2026-10-08) -- 12사 29(회사,분기) 중 KR0004 2025.3Q 제외 28칸 DISCLOSURE append/patch. as_of_date 는 싣지 않았다. 재현: scripts/merge_pl_backfill_disclosure_20261008.py --apply",
  "merge_note_20261009": "PL 후속 정정(D1/D6): KR0004 2025.3Q 채움 · 보험손익 15칸 보류 · 값_당분기 차분. 재현: scripts/fix_pl_backfill_followup_20261009.py --apply",
- "merge_note_20261010": "KR0004 2024.4Q/2025.4Q LOB 다리 정정(P3): 항목 2·3·8 채움(DART 주석 26-29 장기 열, 재보험 포함 순액) + 항목 13·14 부호·범위 정정(원수 PAA 만·부채부호 -> 재보험 포함 순액·손익부호). 재현: scripts/fix_20261010_pl_kr0004_lob_legs.py --write"
+ "merge_note_20261010": "KR0004 2024.4Q/2025.4Q LOB 다리 정정(P3): 항목 2·3·8 채움(DART 주석 26-29 장기 열, 재보험 포함 순액) + 항목 13·14 부호·범위 정정(원수 PAA 만·부채부호 -> 재보험 포함 순액·손익부호). 재현: scripts/fix_20261010_pl_kr0004_lob_legs.py --write",
+ "merge_note_20261011": "경영공시 BS·PL 세부(granularity) 백필(inbox/parser/20261011T0310Z) PL 라운드 1: 540칸(허용 5항목 1·16·22·23·24) DISCLOSURE append/patch. as_of_date 는 싣지 않았다. 재현: scripts/bspl_granularity_pl_candidates.py + scripts/bspl_granularity_load_pl.py --apply"
 }

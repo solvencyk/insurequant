@@ -1,0 +1,1125 @@
+{
+  "cells": {
+    "KR1104|1|2023.1Q": {
+      "값": 58295.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "1451c22cfd88f82b8a256ada775df90cd3b941e8e5fee35ffaf8d5811707e5ee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2023.2Q": {
+      "값": 60005.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "a3d208a7066940db11f2b55b829c53a8b1a5d34112933bd5475ad8c3713a615a",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2023.4Q": {
+      "값": 64983.764242,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p40 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2024.1Q": {
+      "값": 60002.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "eea21febc2816ed7310b9ad053a1c3f974c528cf36e1d9b899843320317b474c",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2024.2Q": {
+      "값": 60686.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "cf1e7eb79a21336cf902b22a2bdcffcb302eebbaf605a4112ba100363d035340",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2024.3Q": {
+      "값": 64607.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "03c22b65113aed30c316733845a81620d3633cac84296b22cf5521e26f596bee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2024.4Q": {
+      "값": 75789.651081,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2025.1Q": {
+      "값": 75325.594,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2025.2Q": {
+      "값": 75928.782,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2025.4Q": {
+      "값": 77000.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 13,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「1:자산총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2026.1Q": {
+      "값": 72745.542,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 28,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p28 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2026.2Q": {
+      "값": 70827.348,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「1:자산총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2023.1Q": {
+      "값": 23201.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "1451c22cfd88f82b8a256ada775df90cd3b941e8e5fee35ffaf8d5811707e5ee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2023.2Q": {
+      "값": 26550.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "a3d208a7066940db11f2b55b829c53a8b1a5d34112933bd5475ad8c3713a615a",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2023.4Q": {
+      "값": 22597.616521,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p70 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기 칸 채택): 최신 공시 2024.4Q 의 전기말 열 값을 채택(원 공시 2023.4Q 당기 열 값 22191.593945 백만원은 재작성으로 대체). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2024.1Q": {
+      "값": 16683.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "eea21febc2816ed7310b9ad053a1c3f974c528cf36e1d9b899843320317b474c",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2024.2Q": {
+      "값": 16044.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "cf1e7eb79a21336cf902b22a2bdcffcb302eebbaf605a4112ba100363d035340",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2024.3Q": {
+      "값": 16898.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "03c22b65113aed30c316733845a81620d3633cac84296b22cf5521e26f596bee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2024.4Q": {
+      "값": 20895.441572,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2025.1Q": {
+      "값": 18964.952,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 25,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p25 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2025.2Q": {
+      "값": 18148.793,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p40 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2025.4Q": {
+      "값": 20400.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 13,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「2:부채총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2026.1Q": {
+      "값": 16587.53,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 31,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p31 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2026.2Q": {
+      "값": 17132.384,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 41,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p41 라벨「2:부채총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2023.1Q": {
+      "값": 35094.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "1451c22cfd88f82b8a256ada775df90cd3b941e8e5fee35ffaf8d5811707e5ee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2023.2Q": {
+      "값": 33455.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "a3d208a7066940db11f2b55b829c53a8b1a5d34112933bd5475ad8c3713a615a",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2023.3Q": {
+      "값": 27694.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 16,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p16 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「3:자본총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2023.4Q": {
+      "값": 42386.147721,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p70 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기 칸 채택): 최신 공시 2024.4Q 의 전기말 열 값을 채택(원 공시 2023.4Q 당기 열 값 42792.170297 백만원은 재작성으로 대체). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2024.1Q": {
+      "값": 43319.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "eea21febc2816ed7310b9ad053a1c3f974c528cf36e1d9b899843320317b474c",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2024.2Q": {
+      "값": 44642.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "cf1e7eb79a21336cf902b22a2bdcffcb302eebbaf605a4112ba100363d035340",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2024.3Q": {
+      "값": 47709.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "03c22b65113aed30c316733845a81620d3633cac84296b22cf5521e26f596bee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「3:자본총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2024.4Q": {
+      "값": 54894.209509,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2025.1Q": {
+      "값": 56360.642,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 27,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p27 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2025.2Q": {
+      "값": 57779.989,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 42,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p42 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2025.4Q": {
+      "값": 56600.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 13,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「3:자본총계」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2026.1Q": {
+      "값": 56158.014,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 33,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p33 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|3|2026.2Q": {
+      "값": 53694.964,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 43,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p43 라벨「3:자본총계」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2023.3Q": {
+      "값": -2926.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 16,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p16 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「4:AOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2023.4Q": {
+      "값": -2431.483041,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p70 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기 칸 채택): 최신 공시 2024.4Q 의 전기말 열 값을 채택(원 공시 2023.4Q 당기 열 값 -3830.6760259999996 백만원은 재작성으로 대체). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2024.4Q": {
+      "값": -66.103911,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2025.1Q": {
+      "값": 632.628,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 27,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p27 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2025.2Q": {
+      "값": 1228.972,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 42,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p42 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2025.4Q": {
+      "값": -1100.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 28,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p28 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2026.1Q": {
+      "값": -2552.8,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 33,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p33 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|4|2026.2Q": {
+      "값": -2190.931,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 43,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p43 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|10|2025.1Q": {
+      "값": 13674.102,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|10|2025.2Q": {
+      "값": 9237.6,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|10|2026.1Q": {
+      "값": 4531.994,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 28,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p28 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|10|2026.2Q": {
+      "값": 3491.525,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「10:현금및현금성자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|11|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「11:FVPL」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|11|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「11:FVPL」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|11|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 20,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p20 라벨「11:FVPL」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|11|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「11:FVPL」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2023.1Q": {
+      "값": 29570.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "1451c22cfd88f82b8a256ada775df90cd3b941e8e5fee35ffaf8d5811707e5ee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2023.2Q": {
+      "값": 39570.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "a3d208a7066940db11f2b55b829c53a8b1a5d34112933bd5475ad8c3713a615a",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2023.4Q": {
+      "값": 49569.351338,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI[sum_all]:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p40 라벨「12:FVOCI[sum_all]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2024.1Q": {
+      "값": 49876.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "eea21febc2816ed7310b9ad053a1c3f974c528cf36e1d9b899843320317b474c",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2024.2Q": {
+      "값": 49925.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "cf1e7eb79a21336cf902b22a2bdcffcb302eebbaf605a4112ba100363d035340",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2024.3Q": {
+      "값": 49800.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "03c22b65113aed30c316733845a81620d3633cac84296b22cf5521e26f596bee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2024.4Q": {
+      "값": 49876.274857,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI[sum_all]:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「12:FVOCI[sum_all]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2025.1Q": {
+      "값": 60182.034,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「12:FVOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2025.2Q": {
+      "값": 60252.449,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「12:FVOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2025.4Q": {
+      "값": 59200.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 13,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2026.1Q": {
+      "값": 58332.14,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 28,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p28 라벨「12:FVOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2026.2Q": {
+      "값": 58148.935,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「12:FVOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|13|2023.4Q": {
+      "값": 629.54108,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p40 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|13|2024.4Q": {
+      "값": 702.366327,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|14|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「14:재보험계약자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|14|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「14:재보험계약자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|14|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 20,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p20 라벨「14:재보험계약자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|14|2026.2Q": {
+      "값": 0.69,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「14:재보험계약자산」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|15|2023.4Q": {
+      "값": 41.735048,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p40 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|15|2024.4Q": {
+      "값": 32.780434,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|20|2023.4Q": {
+      "값": 20338.309417,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p70 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기 칸 채택): 최신 공시 2024.4Q 의 전기말 열 값을 채택(원 공시 2023.4Q 당기 열 값 20074.806225 백만원은 재작성으로 대체). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|20|2024.4Q": {
+      "값": 17261.718589,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|20|2025.1Q": {
+      "값": 15058.872,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 25,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p25 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|20|2025.2Q": {
+      "값": 14596.217,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p40 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|20|2026.1Q": {
+      "값": 14322.816,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 31,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p31 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|20|2026.2Q": {
+      "값": 14944.181,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 41,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p41 라벨「20:보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|21|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|21|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|21|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 20,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p20 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|21|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|22|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「22:투자계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|22|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「22:투자계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|22|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 20,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p20 라벨「22:투자계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|22|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「22:투자계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|23|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 21,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p21 라벨「23:차입부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|23|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 36,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p36 라벨「23:차입부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|23|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 20,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p20 라벨「23:차입부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|23|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 37,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p37 라벨「23:차입부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|24|2023.4Q": {
+      "값": 45.78886,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p40 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|24|2024.4Q": {
+      "값": 45.81323,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2023.3Q": {
+      "값": 25000.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 16,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p16 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「30:자본금」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2023.4Q": {
+      "값": 25000.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 40,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p40 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2024.4Q": {
+      "값": 32463.115,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2025.1Q": {
+      "값": 32463.115,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 27,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p27 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2025.2Q": {
+      "값": 32463.115,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 42,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p42 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2025.4Q": {
+      "값": 32500.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 28,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p28 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2026.1Q": {
+      "값": 32463.115,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 33,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p33 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|30|2026.2Q": {
+      "값": 32463.115,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 43,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p43 라벨「30:자본금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2023.3Q": {
+      "값": 5620.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 16,
+      "sha256": "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.4Q 공시본 B/S상 자기자본 표 p16 의 전분기 열(2023.3Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「31:이익잉여금」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2023.4Q": {
+      "값": 19817.630762,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.4Q 재무상태표(8-1) p70 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기 칸 채택): 최신 공시 2024.4Q 의 전기말 열 값을 채택(원 공시 2023.4Q 당기 열 값 21622.846322999998 백만원은 재작성으로 대체). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2024.4Q": {
+      "값": 22497.19842,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 70,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.4Q 재무상태표(8-1) p70 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2025.1Q": {
+      "값": 23264.899,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 27,
+      "sha256": "ac619036267448625639d3d7bb7570a7c653434c37d5b61a099094b9cf661707",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p27 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2025.2Q": {
+      "값": 24087.902,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 42,
+      "sha256": "69c3e1b83c477e36690e7b4606d61616b2b9845b30cba0908a9d6b4f23e3bc1a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p42 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2025.4Q": {
+      "값": 25200.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 28,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p28 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2026.1Q": {
+      "값": 26247.699,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf",
+      "page": 33,
+      "sha256": "200f0228f860ea440cf659cb1bb8070c8fa4068e0e196d7691dcd19a7887ae71",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p33 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|31|2026.2Q": {
+      "값": 23422.78,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 43,
+      "sha256": "a8050a4fa28a93312f6224d1a5c28f4687852588ae47783c09fa2857d51e76e6",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p43 라벨「31:이익잉여금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|1|2023.3Q": {
+      "값": 66433.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "03c22b65113aed30c316733845a81620d3633cac84296b22cf5521e26f596bee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:1:자산총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「1:자산총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|2|2023.3Q": {
+      "값": 38739.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "03c22b65113aed30c316733845a81620d3633cac84296b22cf5521e26f596bee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:2:부채총계:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「2:부채총계」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1104|12|2023.3Q": {
+      "값": 49602.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "03c22b65113aed30c316733845a81620d3633cac84296b22cf5521e26f596bee",
+      "축척": "백만원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 백만원(master), 정밀도 ±0.5백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). R1(owner 2026-10-09 재보사 최신 공시 전기·전년동기 칸 채택): 이 분기 자체 공시에서는 쓸 수 있는 값이 없거나 재작성돼, 최신 공시 2024.3Q 의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

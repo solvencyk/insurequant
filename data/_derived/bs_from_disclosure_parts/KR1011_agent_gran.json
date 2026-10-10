@@ -1,0 +1,375 @@
+{
+  "cells": {
+    "KR1011|4|2023.2Q": {
+      "값": -136500.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 9,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.2Q B/S상 자기자본 p9 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2025.1Q": {
+      "값": 276783.065716,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2025.2Q": {
+      "값": 277441.54888,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 46,
+      "sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2025.3Q": {
+      "값": 288399.552136,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 25,
+      "sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p25 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|15|2025.1Q": {
+      "값": 10118.769729,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|15|2025.2Q": {
+      "값": 8782.449904,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 46,
+      "sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|15|2025.3Q": {
+      "값": 8002.879729,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 25,
+      "sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p25 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|15|2026.1Q": {
+      "값": 6877.075425,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "774cfd9de87fb9362782b7ac3af53b83df42d357edda5c96cae849700bfbda51",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p26 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|20|2025.1Q": {
+      "값": 8004906.762987,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|20|2025.2Q": {
+      "값": 8078578.564871,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 46,
+      "sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|20|2025.3Q": {
+      "값": 8114122.71744,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 25,
+      "sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p25 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|20|2026.1Q": {
+      "값": 7785562.406559,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "774cfd9de87fb9362782b7ac3af53b83df42d357edda5c96cae849700bfbda51",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p26 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|22|2025.1Q": {
+      "값": 3256277.293033,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|22|2025.2Q": {
+      "값": 3279806.774118,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 46,
+      "sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|22|2025.3Q": {
+      "값": 3239570.334411,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 25,
+      "sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p25 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|22|2026.1Q": {
+      "값": 3594220.105309,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "774cfd9de87fb9362782b7ac3af53b83df42d357edda5c96cae849700bfbda51",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p26 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|23|2025.1Q": {
+      "값": 359255.658888,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|23|2025.2Q": {
+      "값": 359274.625398,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 46,
+      "sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|23|2025.3Q": {
+      "값": 359294.050826,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 25,
+      "sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p25 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|23|2026.1Q": {
+      "값": 359333.964014,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "774cfd9de87fb9362782b7ac3af53b83df42d357edda5c96cae849700bfbda51",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p26 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|30|2023.1Q": {
+      "값": 340000.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 8,
+      "sha256": "cc5ec57b6de26c6ec695b349d96df2af1353d929a7f187b3ac083f877eca6cfc",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.1Q B/S상 자기자본 p8 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|30|2023.2Q": {
+      "값": 340000.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 9,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.2Q B/S상 자기자본 p9 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|30|2023.3Q": {
+      "값": 340000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 8,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.3Q B/S상 자기자본 p8 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2023.2Q": {
+      "값": 143861.207763,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 36,
+      "sha256": "dad4b4e8f2e167c7b2dfa2cb97f4c9058b16a52f30ce510e9cb2b199b81dd67c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p36 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2023.3Q": {
+      "값": 188471.835211,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 19,
+      "sha256": "571e689599f005261bf26149296130ea39fb1dc11508f611f49e162ffe2272d4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2024.1Q": {
+      "값": 326803.335883,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "35279fde9bd40292ce43d4d3c86a4787ee31ecc2f5c091a6df7356f977439665",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p23 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2024.2Q": {
+      "값": 261348.660455,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 42,
+      "sha256": "633cb8ecd6cc19a6053f5d6cf17fdc5330034df80d4f4dd150993862d941333d",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p42 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2024.3Q": {
+      "값": 287424.845944,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 23,
+      "sha256": "a20f0e4acf8364e6014934c50479fe686b7accd9e147b83cdf05dc27ade5fc0b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p23 라벨「10:현금및예치금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|11|2025.1Q": {
+      "값": 1897565.901574,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|11|2025.2Q": {
+      "값": 1910092.50578,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 46,
+      "sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|11|2025.3Q": {
+      "값": 1961119.014732,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 25,
+      "sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p25 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|11|2026.1Q": {
+      "값": 1996691.997993,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "774cfd9de87fb9362782b7ac3af53b83df42d357edda5c96cae849700bfbda51",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p26 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|12|2025.1Q": {
+      "값": 4988182.681181,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "9d009dd6ec0744065c6264fe8fe64f12a6fc7ea6b8b13de76c17242b4cf478af",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|12|2025.2Q": {
+      "값": 5051876.780308,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf",
+      "page": 46,
+      "sha256": "977564efdc5e6895cc423de9dfaccaf450f676a6cde7da6229903b0d87236f7b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p46 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|12|2025.3Q": {
+      "값": 5194318.96182,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf",
+      "page": 25,
+      "sha256": "9eb5d13fa10bc7145f93d5bb9327008ba9a7f1a20708a696d7c9eae399bdadcd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p25 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|12|2026.1Q": {
+      "값": 5388103.783702,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "774cfd9de87fb9362782b7ac3af53b83df42d357edda5c96cae849700bfbda51",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p26 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1011|10|2026.1Q": {
+      "값": 135527.750202,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf",
+      "page": 26,
+      "sha256": "774cfd9de87fb9362782b7ac3af53b83df42d357edda5c96cae849700bfbda51",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2026.1Q 8-1 재무상태표(단위 원) p26 라인「Ⅰ.현금및예치금」135,527,750,202원(= 1,355.28억 = 현금및현금성자산 132,836,882,506원 + 상각후원가예치금 2,690,867,696원)을 렌더링해 육안 확인. 전기말은 인쇄 572,334,069,587원(= 5,723.34억)으로 마스터와 동일. 이 회사 현금및예치금은 매 4Q 말 급증했다가 1Q 에 크게 줄고(2024.1Q -43%, 2025.1Q -44%) 2023.2Q 1,438.6억 같은 저점도 있는 변동성 큰 계열이다. 전분기 대비 변동 보류(HOLD_QOQ)를 해제. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

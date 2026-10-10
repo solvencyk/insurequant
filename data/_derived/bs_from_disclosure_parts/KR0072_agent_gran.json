@@ -1,0 +1,85 @@
+{
+  "cells": {
+    "KR0072|22|2023.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0072_케이디비생명보험.pdf",
+      "page": 25,
+      "sha256": "a989970b441b67c074f65eca4eb3593d963e8947c2cb111c3198e471bac76037",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p25 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0072|22|2024.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0072_케이디비생명보험.pdf",
+      "page": 25,
+      "sha256": "3ba00c3f5344960f2d40ad35681c40df6108479e3001fc8b311aaed788f99aca",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p25 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0072|22|2024.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0072_케이디비생명보험.pdf",
+      "page": 55,
+      "sha256": "76f4c35a83f8af911d3978817961f5c922929226594afc16d0540aa19c047b79",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p55 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0072|22|2024.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0072_케이디비생명보험.pdf",
+      "page": 27,
+      "sha256": "e0c616c301d8fceef082fdcb739ca0880cb941448cc6dc08751ab22a4840949b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p27 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0072|22|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0072_케이디비생명보험.pdf",
+      "page": 29,
+      "sha256": "62695adc273e48fdb9a893e8865a023a0efec89bc73934f79d2e384b83d8ee29",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p29 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0072|22|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0072_케이디비생명보험.pdf",
+      "page": 60,
+      "sha256": "f8cfb82791cfa277b4680f028ca44475ee4bcaeda312881dbbfc35c0625ebf88",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p60 라벨「22:투자계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0072|31|2023.1Q": {
+      "값": -127036.861874,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0072_케이디비생명보험.pdf",
+      "page": 24,
+      "sha256": "94c144f895f90137c79fa321121f471eef8f7bcc32390b6c98af18b0bfaa92dd",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p24 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0072|31|2023.2Q": {
+      "값": -110501.55897,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0072_케이디비생명보험.pdf",
+      "page": 47,
+      "sha256": "b2b9986ff10ee5aba89a2ec17739265632b2f52b8e69380c46befe46fb0e5e99",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p47 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

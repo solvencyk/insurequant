@@ -1,0 +1,595 @@
+{
+  "cells": {
+    "KR0050|11|2023.1Q": {
+      "값": 363600.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "a6e1ad0464a7a59d9be0f9d4cc63989235680bb5bd141eada9f75fe7b1e16681",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2023.2Q": {
+      "값": 356900.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 6,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2023.3Q": {
+      "값": 362100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2024.1Q": {
+      "값": 384300.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "c2078c3b484e27db3a8fd64022cd6e37882db7b6a0d365882fc3b948d304e787",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2024.2Q": {
+      "값": 335700.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 6,
+      "sha256": "b0af299e1bb81994786497e02bd322a52647f6c1af2062a1e9f07fa4d0bf9ab0",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2024.3Q": {
+      "값": 399000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "f0b317a47886f05dbb6ccbe7e038fbb3b7ca297ef7f3c2baa36dbf8bd1810f56",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2025.1Q": {
+      "값": 339100.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "a2fc5b52811da9fafe061a882ec345fea19d839b08b4aca7bf0fb4b36e13c760",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2025.2Q": {
+      "값": 348200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 7,
+      "sha256": "79c7650f81af8e396c9a012def65c8a8e304a8556941a58606fec0172106ef60",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2025.3Q": {
+      "값": 340500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "30c951e42ebf3010ac6cab9fa5708bc380b3880e938b8d5698cd016b2d05fc5c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2026.1Q": {
+      "값": 339100.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "b258605786b6abfea415bb63bf72bc11ff55a58bccdd1b37a11117f16c352495",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|11|2026.2Q": {
+      "값": 479300.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 7,
+      "sha256": "67de71db057a7217791d46467df8dec4a9f1e402e190d91dde210e63462c8366",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2023.1Q": {
+      "값": 461600.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "a6e1ad0464a7a59d9be0f9d4cc63989235680bb5bd141eada9f75fe7b1e16681",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2023.2Q": {
+      "값": 475200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 6,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2023.3Q": {
+      "값": 480200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2024.1Q": {
+      "값": 542300.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "c2078c3b484e27db3a8fd64022cd6e37882db7b6a0d365882fc3b948d304e787",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2024.2Q": {
+      "값": 546200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 6,
+      "sha256": "b0af299e1bb81994786497e02bd322a52647f6c1af2062a1e9f07fa4d0bf9ab0",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2024.3Q": {
+      "값": 612500.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "f0b317a47886f05dbb6ccbe7e038fbb3b7ca297ef7f3c2baa36dbf8bd1810f56",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2025.1Q": {
+      "값": 730400.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "a2fc5b52811da9fafe061a882ec345fea19d839b08b4aca7bf0fb4b36e13c760",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2025.2Q": {
+      "값": 770900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 7,
+      "sha256": "79c7650f81af8e396c9a012def65c8a8e304a8556941a58606fec0172106ef60",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2025.3Q": {
+      "값": 839200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "30c951e42ebf3010ac6cab9fa5708bc380b3880e938b8d5698cd016b2d05fc5c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2026.1Q": {
+      "값": 1411600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "b258605786b6abfea415bb63bf72bc11ff55a58bccdd1b37a11117f16c352495",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|12|2026.2Q": {
+      "값": 1404100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 7,
+      "sha256": "67de71db057a7217791d46467df8dec4a9f1e402e190d91dde210e63462c8366",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2023.1Q": {
+      "값": 113200.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "a6e1ad0464a7a59d9be0f9d4cc63989235680bb5bd141eada9f75fe7b1e16681",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2023.2Q": {
+      "값": 103200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 6,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2023.3Q": {
+      "값": 103100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p5 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2024.1Q": {
+      "값": 89500.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "c2078c3b484e27db3a8fd64022cd6e37882db7b6a0d365882fc3b948d304e787",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2024.2Q": {
+      "값": 89800.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 6,
+      "sha256": "b0af299e1bb81994786497e02bd322a52647f6c1af2062a1e9f07fa4d0bf9ab0",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2024.3Q": {
+      "값": 89700.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 5,
+      "sha256": "f0b317a47886f05dbb6ccbe7e038fbb3b7ca297ef7f3c2baa36dbf8bd1810f56",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p5 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2025.1Q": {
+      "값": 90800.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "a2fc5b52811da9fafe061a882ec345fea19d839b08b4aca7bf0fb4b36e13c760",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2025.2Q": {
+      "값": 80900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 7,
+      "sha256": "79c7650f81af8e396c9a012def65c8a8e304a8556941a58606fec0172106ef60",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2025.3Q": {
+      "값": 71400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "30c951e42ebf3010ac6cab9fa5708bc380b3880e938b8d5698cd016b2d05fc5c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2026.1Q": {
+      "값": 62300.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 6,
+      "sha256": "b258605786b6abfea415bb63bf72bc11ff55a58bccdd1b37a11117f16c352495",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2026.1Q 요약 재무상태표(총괄) p6 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|13|2026.2Q": {
+      "값": 27600.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 7,
+      "sha256": "67de71db057a7217791d46467df8dec4a9f1e402e190d91dde210e63462c8366",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:13:AC_SEC:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「13:AC_SEC」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|20|2023.2Q": {
+      "값": 889300.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:group_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p46 라벨「20:보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 그룹 보정(책임준비금 = 항목 20+21+22 가 Q4 앵커에서 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|20|2023.3Q": {
+      "값": 865400.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:group_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「20:보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 그룹 보정(책임준비금 = 항목 20+21+22 가 Q4 앵커에서 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|21|2023.2Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:group_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p46 라벨「21:재보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 그룹 보정(책임준비금 = 항목 20+21+22 가 Q4 앵커에서 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|21|2023.3Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:group_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「21:재보험계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 그룹 보정(책임준비금 = 항목 20+21+22 가 Q4 앵커에서 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|22|2023.2Q": {
+      "값": 163200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:group_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p46 라벨「22:투자계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 그룹 보정(책임준비금 = 항목 20+21+22 가 Q4 앵커에서 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|22|2023.3Q": {
+      "값": 166200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:22:투자계약부채:group_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「22:투자계약부채」, 단위 억원(master), 정밀도 ±50.0백만원. 그룹 보정(책임준비금 = 항목 20+21+22 가 Q4 앵커에서 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2023.1Q": {
+      "값": 461100.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 7,
+      "sha256": "a6e1ad0464a7a59d9be0f9d4cc63989235680bb5bd141eada9f75fe7b1e16681",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2023.1Q B/S상 자기자본 p7 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2024.1Q": {
+      "값": 461100.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 8,
+      "sha256": "c2078c3b484e27db3a8fd64022cd6e37882db7b6a0d365882fc3b948d304e787",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.1Q B/S상 자기자본 p8 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2024.2Q": {
+      "값": 461100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 9,
+      "sha256": "b0af299e1bb81994786497e02bd322a52647f6c1af2062a1e9f07fa4d0bf9ab0",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.2Q B/S상 자기자본 p9 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2024.3Q": {
+      "값": 561100.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 8,
+      "sha256": "f0b317a47886f05dbb6ccbe7e038fbb3b7ca297ef7f3c2baa36dbf8bd1810f56",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2024.3Q B/S상 자기자본 p8 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2025.1Q": {
+      "값": 561100.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 12,
+      "sha256": "a2fc5b52811da9fafe061a882ec345fea19d839b08b4aca7bf0fb4b36e13c760",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.1Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2025.2Q": {
+      "값": 561100.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 13,
+      "sha256": "79c7650f81af8e396c9a012def65c8a8e304a8556941a58606fec0172106ef60",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.2Q B/S상 자기자본 p13 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2025.3Q": {
+      "값": 561100.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf",
+      "page": 12,
+      "sha256": "30c951e42ebf3010ac6cab9fa5708bc380b3880e938b8d5698cd016b2d05fc5c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2025.3Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2026.1Q": {
+      "값": 761100.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 12,
+      "sha256": "b258605786b6abfea415bb63bf72bc11ff55a58bccdd1b37a11117f16c352495",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2026.1Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|30|2026.2Q": {
+      "값": 761100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 13,
+      "sha256": "67de71db057a7217791d46467df8dec4a9f1e402e190d91dde210e63462c8366",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2026.2Q B/S상 자기자본 p13 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2023.1Q": {
+      "값": -50900.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 7,
+      "sha256": "a6e1ad0464a7a59d9be0f9d4cc63989235680bb5bd141eada9f75fe7b1e16681",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.1Q B/S상 자기자본 p7 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2023.2Q": {
+      "값": -60600.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 46,
+      "sha256": "62ba8f9a763953a0984f522a1822aa6f475c1fb23d061d5b45ba6c2b8bb7a327",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p46 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2023.3Q": {
+      "값": -79400.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 19,
+      "sha256": "1cb434f4acf4b0962fd3ae2750aaaec7ad6bd38549d158e2d60046514b98961b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2024.1Q": {
+      "값": -133000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 8,
+      "sha256": "c2078c3b484e27db3a8fd64022cd6e37882db7b6a0d365882fc3b948d304e787",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.1Q B/S상 자기자본 p8 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2024.2Q": {
+      "값": -146100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 9,
+      "sha256": "b0af299e1bb81994786497e02bd322a52647f6c1af2062a1e9f07fa4d0bf9ab0",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.2Q B/S상 자기자본 p9 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2024.3Q": {
+      "값": -159100.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf",
+      "page": 8,
+      "sha256": "f0b317a47886f05dbb6ccbe7e038fbb3b7ca297ef7f3c2baa36dbf8bd1810f56",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.3Q B/S상 자기자본 p8 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2025.1Q": {
+      "값": -173600.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 12,
+      "sha256": "a2fc5b52811da9fafe061a882ec345fea19d839b08b4aca7bf0fb4b36e13c760",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.1Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2025.2Q": {
+      "값": -185300.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 13,
+      "sha256": "79c7650f81af8e396c9a012def65c8a8e304a8556941a58606fec0172106ef60",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.2Q B/S상 자기자본 p13 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2025.3Q": {
+      "값": -199600.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf",
+      "page": 12,
+      "sha256": "30c951e42ebf3010ac6cab9fa5708bc380b3880e938b8d5698cd016b2d05fc5c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.3Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2026.1Q": {
+      "값": -219600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf",
+      "page": 12,
+      "sha256": "b258605786b6abfea415bb63bf72bc11ff55a58bccdd1b37a11117f16c352495",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.1Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0050|31|2026.2Q": {
+      "값": -285900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf",
+      "page": 13,
+      "sha256": "67de71db057a7217791d46467df8dec4a9f1e402e190d91dde210e63462c8366",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.2Q B/S상 자기자본 p13 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

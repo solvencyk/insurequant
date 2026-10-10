@@ -1,0 +1,355 @@
+{
+  "cells": {
+    "KR1098|4|2026.1Q": {
+      "값": -701.833464,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|10|2025.3Q": {
+      "값": 37525.825901,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 20,
+      "sha256": "23757837394d927c775aa8b480795150632479cd3fd9f366265bfa71e968f07c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|10|2026.1Q": {
+      "값": 8089.976223,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|13|2023.1Q": {
+      "값": 1357.492753,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf",
+      "page": 18,
+      "sha256": "6f4a4fe3126290f671e0b349791656e92d93f695648bae0268a869d6c6bca3f7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_FA:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「13:AC_FA」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|13|2023.2Q": {
+      "값": 1232.244805,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 32,
+      "sha256": "98d872d32f1ee9aff36270d20de52376bbf2f50a871f4178671f5ec2def4c333",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_FA:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p32 라벨「13:AC_FA」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|13|2023.3Q": {
+      "값": 1656.777148,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 20,
+      "sha256": "be7ca9a8196ce8b510e70af481269c37366f981299814130ffad95893371f5ca",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_FA:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p20 라벨「13:AC_FA」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|13|2024.1Q": {
+      "값": 1468.534658,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 21,
+      "sha256": "901dadbc59cef9bb31a7e7ebcbbbd8ae1f8a30d6c190c8bf5a34f8646c0d284b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_FA:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p21 라벨「13:AC_FA」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|13|2025.3Q": {
+      "값": 102501.92029,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 20,
+      "sha256": "23757837394d927c775aa8b480795150632479cd3fd9f366265bfa71e968f07c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_FA:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「13:AC_FA」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|13|2026.1Q": {
+      "값": 113514.149623,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_FA:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「13:AC_FA」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|14|2025.3Q": {
+      "값": 784.502166,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 20,
+      "sha256": "23757837394d927c775aa8b480795150632479cd3fd9f366265bfa71e968f07c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|14|2026.1Q": {
+      "값": 848.303419,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|15|2026.1Q": {
+      "값": 2724.335159,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|20|2023.1Q": {
+      "값": 116.650781,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf",
+      "page": 18,
+      "sha256": "6f4a4fe3126290f671e0b349791656e92d93f695648bae0268a869d6c6bca3f7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|20|2023.2Q": {
+      "값": 1724.349157,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 32,
+      "sha256": "98d872d32f1ee9aff36270d20de52376bbf2f50a871f4178671f5ec2def4c333",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p32 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|20|2023.3Q": {
+      "값": 2362.029105,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 20,
+      "sha256": "be7ca9a8196ce8b510e70af481269c37366f981299814130ffad95893371f5ca",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p20 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|20|2024.1Q": {
+      "값": 3953.591218,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 21,
+      "sha256": "901dadbc59cef9bb31a7e7ebcbbbd8ae1f8a30d6c190c8bf5a34f8646c0d284b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p21 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|20|2025.3Q": {
+      "값": 15495.780275,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 20,
+      "sha256": "23757837394d927c775aa8b480795150632479cd3fd9f366265bfa71e968f07c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|20|2026.1Q": {
+      "값": 17556.41794,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|21|2023.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf",
+      "page": 18,
+      "sha256": "6f4a4fe3126290f671e0b349791656e92d93f695648bae0268a869d6c6bca3f7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|21|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 32,
+      "sha256": "98d872d32f1ee9aff36270d20de52376bbf2f50a871f4178671f5ec2def4c333",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p32 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|21|2023.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 20,
+      "sha256": "be7ca9a8196ce8b510e70af481269c37366f981299814130ffad95893371f5ca",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p20 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|21|2024.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 21,
+      "sha256": "901dadbc59cef9bb31a7e7ebcbbbd8ae1f8a30d6c190c8bf5a34f8646c0d284b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p21 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|24|2023.1Q": {
+      "값": 2538.587779,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf",
+      "page": 18,
+      "sha256": "6f4a4fe3126290f671e0b349791656e92d93f695648bae0268a869d6c6bca3f7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|24|2023.2Q": {
+      "값": 2545.278976,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 32,
+      "sha256": "98d872d32f1ee9aff36270d20de52376bbf2f50a871f4178671f5ec2def4c333",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p32 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|24|2023.3Q": {
+      "값": 937.633392,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 20,
+      "sha256": "be7ca9a8196ce8b510e70af481269c37366f981299814130ffad95893371f5ca",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p20 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|24|2024.1Q": {
+      "값": 1136.80603,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 21,
+      "sha256": "901dadbc59cef9bb31a7e7ebcbbbd8ae1f8a30d6c190c8bf5a34f8646c0d284b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p21 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|24|2025.3Q": {
+      "값": 1561.772935,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 20,
+      "sha256": "23757837394d927c775aa8b480795150632479cd3fd9f366265bfa71e968f07c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|24|2026.1Q": {
+      "값": 3595.006508,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|30|2026.1Q": {
+      "값": 300000.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|31|2023.3Q": {
+      "값": -60172.748014,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf",
+      "page": 20,
+      "sha256": "be7ca9a8196ce8b510e70af481269c37366f981299814130ffad95893371f5ca",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p20 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|31|2024.1Q": {
+      "값": -81169.990651,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 21,
+      "sha256": "901dadbc59cef9bb31a7e7ebcbbbd8ae1f8a30d6c190c8bf5a34f8646c0d284b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p21 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|31|2025.3Q": {
+      "값": -152971.404894,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 20,
+      "sha256": "23757837394d927c775aa8b480795150632479cd3fd9f366265bfa71e968f07c",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p20 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|31|2025.4Q": {
+      "값": -170100.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 26,
+      "sha256": "e4730d90256599d493569edd21e01be5a842180f15e7c48170b115decf9c3a0c",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p26 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|31|2026.1Q": {
+      "값": -180461.659292,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 22,
+      "sha256": "dd5870fe356f91c1a576cd8df70c909a94c1ab70f03849782e13def113195c05",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p22 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1098|31|2024.4Q": {
+      "값": -117800.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf",
+      "page": 10,
+      "sha256": "42b0e3cb1111e050224fe7ed7068d4f11a5ff0fc851026c4adda0ac34502306f",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.1Q 공시본 B/S상 자기자본 표 p10 의 전분기 열(2024.4Q 값; 그 열의 자본총계 = 구성 항목 합이 닫히는 것을 확인) 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

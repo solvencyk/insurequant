@@ -1,0 +1,555 @@
+{
+  "cells": {
+    "KR1108|1|2025.2Q": {
+      "값": 11497.282478,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2025.3Q": {
+      "값": 15624.163771,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2026.1Q": {
+      "값": 19475.72202,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2026.2Q": {
+      "값": 15789.592977,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|2|2025.2Q": {
+      "값": 1779.500543,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|2|2025.3Q": {
+      "값": 2063.523526,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|2|2026.1Q": {
+      "값": 4281.091968,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|2|2026.2Q": {
+      "값": 5147.281256,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|3|2025.2Q": {
+      "값": 9717.781935,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|3|2025.3Q": {
+      "값": 13560.640245,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|3|2026.1Q": {
+      "값": 15194.630052,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|3|2026.2Q": {
+      "값": 10642.311721,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|4|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|4|2025.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|4|2025.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 22,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2025.4Q B/S상 자기자본 p22 라벨「4:AOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|4|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|4|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「4:AOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|11|2025.2Q": {
+      "값": 3006.069635,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|11|2025.3Q": {
+      "값": 2843.349484,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|11|2026.1Q": {
+      "값": 10268.453639,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|11|2026.2Q": {
+      "값": 46.565513,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|12|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|12|2025.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|12|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|12|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|15|2025.2Q": {
+      "값": 1378.164931,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|15|2025.3Q": {
+      "값": 1314.429902,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|15|2026.1Q": {
+      "값": 1180.11158,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|15|2026.2Q": {
+      "값": 1106.600407,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|20|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|20|2025.3Q": {
+      "값": 40.590403,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|20|2026.1Q": {
+      "값": 308.924058,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|20|2026.2Q": {
+      "값": 557.538723,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|21|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|21|2025.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|21|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|21|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|30|2025.2Q": {
+      "값": 13220.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|30|2025.3Q": {
+      "값": 18487.77,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|30|2026.1Q": {
+      "값": 26820.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|30|2026.2Q": {
+      "값": 26820.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|31|2025.2Q": {
+      "값": -3311.851505,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 18,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p18 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|31|2025.3Q": {
+      "값": -5975.512815,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 23,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|31|2026.1Q": {
+      "값": -12488.351693,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 27,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p27 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|31|2026.2Q": {
+      "값": -17040.670024,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 42,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p42 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2025.4Q": {
+      "값": 23265.257657,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:1:자산총계:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「1:자산총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|2|2025.4Q": {
+      "값": 4830.459165,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:2:부채총계:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「2:부채총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|3|2025.4Q": {
+      "값": 18434.798492,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:3:자본총계:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「3:자본총계」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|11|2025.4Q": {
+      "값": 8882.295807,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL[sum_all]:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「11:FVPL[sum_all]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|13|2025.4Q": {
+      "값": 553.410687,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:13:AC_CHILDREN[ac_children]:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「13:AC_CHILDREN[ac_children]」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|15|2025.4Q": {
+      "값": 185.203406,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|20|2025.4Q": {
+      "값": 125.536007,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|24|2025.4Q": {
+      "값": 89.123964,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:24:기타부채:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「24:기타부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|30|2025.4Q": {
+      "값": 26820.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|31|2025.4Q": {
+      "값": -9248.183253,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 72,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:accepted",
+      "근거": "정기경영공시 2025.4Q 재무상태표(8-1) p72 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

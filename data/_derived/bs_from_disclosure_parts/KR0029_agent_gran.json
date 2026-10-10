@@ -1,0 +1,375 @@
+{
+  "cells": {
+    "KR0029|4|2023.1Q": {
+      "값": -16145.018,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p15 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|4|2023.2Q": {
+      "값": -20534.724,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p44 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|4|2023.3Q": {
+      "값": -21843.57,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|4|2024.1Q": {
+      "값": 2298.821,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p20 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|4|2025.3Q": {
+      "값": 8643.417,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p23 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|4|2026.1Q": {
+      "값": -15968.843,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p24 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|4|2026.2Q": {
+      "값": -43031.877,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:4:AOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p55 라벨「4:AOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|10|2025.1Q": {
+      "값": 40319.923,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및예치금:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p23 라벨「10:현금및예치금」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2023.1Q": {
+      "값": 1303.516,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p15 라벨「11:FVPL」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2023.2Q": {
+      "값": 1314.779,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p44 라벨「11:FVPL」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2023.3Q": {
+      "값": 1326.006,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「11:FVPL」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2024.1Q": {
+      "값": 1400.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 5,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2024.2Q": {
+      "값": 1400.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 6,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2024.3Q": {
+      "값": 1400.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 5,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2025.1Q": {
+      "값": 1400.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 6,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2025.2Q": {
+      "값": 1400.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 7,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2025.3Q": {
+      "값": 1400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 6,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|11|2026.2Q": {
+      "값": 1500.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 7,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2023.1Q": {
+      "값": 562002.396,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p15 라벨「12:FVOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2023.2Q": {
+      "값": 586626.59,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p44 라벨「12:FVOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2023.3Q": {
+      "값": 598781.946,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 19,
+      "sha256": "ee3fcf079ba7b37e9858afb66df2ca3eb9c56439452b85049f1c10a0d637456b",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p19 라벨「12:FVOCI」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2024.1Q": {
+      "값": 663300.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 5,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2024.2Q": {
+      "값": 696500.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 6,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2024.3Q": {
+      "값": 725800.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 5,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2024.3Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2025.1Q": {
+      "값": 724700.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 6,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.1Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2025.2Q": {
+      "값": 701000.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 7,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2025.3Q": {
+      "값": 696700.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 6,
+      "sha256": "48d8fec3815480057cff39336447ffcc4a02346bd5ae5ddf0de3e16e81d67a91",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2025.3Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|12|2026.2Q": {
+      "값": 684400.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 7,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2023.1Q": {
+      "값": 4710.575,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 15,
+      "sha256": "137804a5b2f58b5e471d9e0067c0e3510d5435dc03c5c7c748942cd77c33ee7e",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p15 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2023.2Q": {
+      "값": 4051.82,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 44,
+      "sha256": "d4dea0b14387f4ccfabbfb100e2a6670c6f5ae0d5c6a397b8ef214236d6b1b3d",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p44 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2024.1Q": {
+      "값": 6388.965,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "012b6e898d7e52a829e2221a89e8ddedffa9b138d22591a824fcfae8441b72b7",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p20 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2024.2Q": {
+      "값": 4375.341,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 45,
+      "sha256": "382373e8271510e600f86ff985674569646c7ef3c225afb76ad13491c3a0ac49",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p45 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2024.3Q": {
+      "값": 328.06,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf",
+      "page": 20,
+      "sha256": "26de345bd2984810011ed3a58a85901c14b05a85ed7e89b3c2bd7d2517826bbf",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p20 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2025.1Q": {
+      "값": 457.478,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 23,
+      "sha256": "6efd47dc78e2878986edfdd5e42bfd5462e0303f23d0e5aa6d0ae42f3b3fe23b",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p23 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2025.2Q": {
+      "값": 3710.417,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 52,
+      "sha256": "7153f883cc7b6745f076696870d23327a1e84db0c1edd838eef0ab52d59610ee",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p52 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2026.1Q": {
+      "값": 3694.934,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf",
+      "page": 24,
+      "sha256": "8e73068589b6272070c9094513c22b55858596d23b22e9fd1dfa186aa59c28ab",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p24 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0029|21|2026.2Q": {
+      "값": 290.439,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf",
+      "page": 55,
+      "sha256": "0462a931a0187bb9265110e66e3edda8ac15488fe2e287a1650b5f65714dc338",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p55 라벨「21:재보험계약부채」, 단위 천원(master), 정밀도 ±0.0005백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

@@ -1,0 +1,635 @@
+{
+  "cells": {
+    "KR0004|10|2023.1Q": {
+      "값": 10373.963938,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 18,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|10|2023.2Q": {
+      "값": 10673.074268,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 53,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p53 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|10|2023.3Q": {
+      "값": 9658.938465,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p22 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|10|2024.2Q": {
+      "값": 15645.205743,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 54,
+      "sha256": "35626b5607226b59375df8f9a10cc47a1cadbfcae3009615b655214c40c7b1b4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p54 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|10|2025.1Q": {
+      "값": 19835.672526,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 26,
+      "sha256": "94381795fba2706e3be15a33564fb21fc042d3ea5cd97dc89dc8b7a25162df20",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|10|2025.2Q": {
+      "값": 14021.912693,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 63,
+      "sha256": "7b2c82c29904c5dc97737056ad7e9c0437b058c131d6a886dbac3f0b6b1489c9",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p63 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|10|2025.3Q": {
+      "값": 13414.192372,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 24,
+      "sha256": "0c4b7d74088a60500093468cb29f78b5ef3f10b51ca7a810ab30bba205afe235",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|10|2026.1Q": {
+      "값": 8260.846867,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:10:현금및현금성자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「10:현금및현금성자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|11|2023.1Q": {
+      "값": 1381800.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 5,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|11|2023.2Q": {
+      "값": 1204000.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 6,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|11|2023.3Q": {
+      "값": 1190700.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 5,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p5 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|11|2026.1Q": {
+      "값": 788670.27978,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「11:FVPL」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|11|2026.2Q": {
+      "값": 834600.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf",
+      "page": 7,
+      "sha256": "731842d1edef076e44f708497c42a785c9620aa2cbac5de5047bf885c7ff322e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:11:FVPL:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「11:FVPL」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|12|2023.1Q": {
+      "값": 1830400.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 5,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.1Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|12|2023.2Q": {
+      "값": 1926400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 6,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|12|2023.3Q": {
+      "값": 1935700.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 5,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2023.3Q 요약 재무상태표(총괄) p5 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|12|2026.1Q": {
+      "값": 2583778.897935,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「12:FVOCI」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|12|2026.2Q": {
+      "값": 2337700.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf",
+      "page": 7,
+      "sha256": "731842d1edef076e44f708497c42a785c9620aa2cbac5de5047bf885c7ff322e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:sum_bs:12:FVOCI:accepted",
+      "근거": "정기경영공시 2026.2Q 요약 재무상태표(총괄) p7 라벨「12:FVOCI」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|14|2023.1Q": {
+      "값": 105444.561305,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 18,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|14|2023.2Q": {
+      "값": 110365.512876,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 53,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p53 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|14|2023.3Q": {
+      "값": 99597.971062,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p22 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|14|2025.3Q": {
+      "값": 60357.695754,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 24,
+      "sha256": "0c4b7d74088a60500093468cb29f78b5ef3f10b51ca7a810ab30bba205afe235",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|14|2026.1Q": {
+      "값": 51855.577473,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|15|2023.1Q": {
+      "값": 9352.323515,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 18,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|15|2023.2Q": {
+      "값": 8370.078097,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 53,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p53 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|15|2023.3Q": {
+      "값": 9284.270578,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p22 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|15|2025.3Q": {
+      "값": 3959.151702,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 24,
+      "sha256": "0c4b7d74088a60500093468cb29f78b5ef3f10b51ca7a810ab30bba205afe235",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|15|2026.1Q": {
+      "값": 3652.626555,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2023.1Q": {
+      "값": 3138319.951973,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 18,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2023.2Q": {
+      "값": 3092684.164395,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 53,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p53 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2023.3Q": {
+      "값": 2903510.212326,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p22 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2024.1Q": {
+      "값": 3618935.995121,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "a6a341ade1f9426527900e03cff7999e10db0c22d24e947e7a1e614f507e4dcb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p22 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2024.2Q": {
+      "값": 3808180.606065,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 54,
+      "sha256": "35626b5607226b59375df8f9a10cc47a1cadbfcae3009615b655214c40c7b1b4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p54 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2024.3Q": {
+      "값": 4037663.63102,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 23,
+      "sha256": "e6be932039070f8541f4763c15e9183aaa005d53e0db2ed3e0a72938ceeab3ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p23 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2025.1Q": {
+      "값": 4370212.371333,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 26,
+      "sha256": "94381795fba2706e3be15a33564fb21fc042d3ea5cd97dc89dc8b7a25162df20",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2025.2Q": {
+      "값": 4247065.739365,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 63,
+      "sha256": "7b2c82c29904c5dc97737056ad7e9c0437b058c131d6a886dbac3f0b6b1489c9",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p63 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2025.3Q": {
+      "값": 4409100.671357,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 24,
+      "sha256": "0c4b7d74088a60500093468cb29f78b5ef3f10b51ca7a810ab30bba205afe235",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|20|2026.1Q": {
+      "값": 3951617.55151,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2023.1Q": {
+      "값": 961.41963,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 18,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2023.2Q": {
+      "값": 1085.164166,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 53,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p53 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2023.3Q": {
+      "값": 1364.968075,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p22 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2024.1Q": {
+      "값": 1247.193512,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "a6a341ade1f9426527900e03cff7999e10db0c22d24e947e7a1e614f507e4dcb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p22 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2024.2Q": {
+      "값": 5.02875,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 54,
+      "sha256": "35626b5607226b59375df8f9a10cc47a1cadbfcae3009615b655214c40c7b1b4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p54 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2024.3Q": {
+      "값": 224.431693,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 23,
+      "sha256": "e6be932039070f8541f4763c15e9183aaa005d53e0db2ed3e0a72938ceeab3ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p23 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2025.1Q": {
+      "값": 202.31561,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 26,
+      "sha256": "94381795fba2706e3be15a33564fb21fc042d3ea5cd97dc89dc8b7a25162df20",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2025.2Q": {
+      "값": 609.285076,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 63,
+      "sha256": "7b2c82c29904c5dc97737056ad7e9c0437b058c131d6a886dbac3f0b6b1489c9",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p63 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2025.3Q": {
+      "값": 1598.232707,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 24,
+      "sha256": "0c4b7d74088a60500093468cb29f78b5ef3f10b51ca7a810ab30bba205afe235",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|21|2026.1Q": {
+      "값": 1466.429395,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2023.1Q": {
+      "값": -190794.578322,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 18,
+      "sha256": "61fffc60b047907bba2d4dfd0ca70228402a57f65db0ef90953d4abda68587f6",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.1Q 재무상태표(8-1) p18 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2023.2Q": {
+      "값": -233553.125888,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 53,
+      "sha256": "3809d41f4d6f8a7e48806ba5fdd4bec84920adbc8de33d0eec1072335a49b0ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.2Q 재무상태표(8-1) p53 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2023.3Q": {
+      "값": -260224.072762,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "8059671f812adbfa111aabe1acef550e7a0156a25e5d4c8983b0daaba5f5a53b",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.3Q 재무상태표(8-1) p22 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2023.4Q": {
+      "값": -216200.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf",
+      "page": 28,
+      "sha256": "c209295beefe1139817b06fa3b206c58aa9d30fc1ca98d164e0332ce38ed7487",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2023.4Q B/S상 자기자본 p28 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2024.1Q": {
+      "값": -219956.611795,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 22,
+      "sha256": "a6a341ade1f9426527900e03cff7999e10db0c22d24e947e7a1e614f507e4dcb",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.1Q 재무상태표(8-1) p22 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2024.2Q": {
+      "값": -207405.536371,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 54,
+      "sha256": "35626b5607226b59375df8f9a10cc47a1cadbfcae3009615b655214c40c7b1b4",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p54 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2024.3Q": {
+      "값": -188375.330966,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 23,
+      "sha256": "e6be932039070f8541f4763c15e9183aaa005d53e0db2ed3e0a72938ceeab3ce",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.3Q 재무상태표(8-1) p23 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2024.4Q": {
+      "값": -359500.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0004_예별손해보험.pdf",
+      "page": 39,
+      "sha256": "0c9aeb5979b14e6ec7d644db86a824961eaf83a50afcf2850791775c986ecbbc",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2024.4Q B/S상 자기자본 p39 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2025.1Q": {
+      "값": -399412.250846,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 26,
+      "sha256": "94381795fba2706e3be15a33564fb21fc042d3ea5cd97dc89dc8b7a25162df20",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.1Q 재무상태표(8-1) p26 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2025.2Q": {
+      "값": -395354.260337,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf",
+      "page": 63,
+      "sha256": "7b2c82c29904c5dc97737056ad7e9c0437b058c131d6a886dbac3f0b6b1489c9",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p63 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2026.1Q": {
+      "값": -480319.837068,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「31:이익잉여금」, 단위 원(master), 정밀도 ±5e-07백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|31|2026.2Q": {
+      "값": -603100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf",
+      "page": 12,
+      "sha256": "731842d1edef076e44f708497c42a785c9620aa2cbac5de5047bf885c7ff322e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:31:이익잉여금:untested_ok",
+      "근거": "정기경영공시 2026.2Q B/S상 자기자본 p12 라벨「31:이익잉여금」, 단위 억원(master), 정밀도 ±50.0백만원. 앵커 없음 -- 단일개념 라벨 미검증 통과(표 항등식 닫힘). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|30|2025.3Q": {
+      "값": 30000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+      "page": 24,
+      "sha256": "0c4b7d74088a60500093468cb29f78b5ef3f10b51ca7a810ab30bba205afe235",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|30|2026.1Q": {
+      "값": 30000.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+      "page": 25,
+      "sha256": "277cd8edb911e9d715e07eca577759f4a4dd3b4a1c1493096d823e05e2248ef3",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:30:자본금:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「30:자본금」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0004|30|2026.2Q": {
+      "값": 30000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf",
+      "page": 12,
+      "sha256": "731842d1edef076e44f708497c42a785c9620aa2cbac5de5047bf885c7ff322e",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:equity:30:자본금:accepted",
+      "근거": "정기경영공시 2026.2Q B/S상 자기자본 p12 라벨「30:자본금」, 단위 억원(master), 정밀도 ±50.0백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}

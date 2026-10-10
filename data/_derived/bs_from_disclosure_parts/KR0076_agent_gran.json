@@ -1,0 +1,125 @@
+{
+  "cells": {
+    "KR0076|14|2025.2Q": {
+      "값": 1959.045032,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "7a5ea5d1e59ebbd96c481003a36570e7594fe4f8afd4137930d28731a5274149",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p56 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|14|2025.3Q": {
+      "값": 2174.611569,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 24,
+      "sha256": "f15d5f69729a8dc678cf04afbedd80b7a3b6117a5086c6feddf9993b59fb3d32",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|14|2026.1Q": {
+      "값": 657.593316,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 25,
+      "sha256": "6d09d668f696dc4c72f0c66e2c8a527344beb1c5719978f77106c66f2bcaec88",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|14|2026.2Q": {
+      "값": 3194.464424,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 57,
+      "sha256": "2157cc2cb39b5baf0b801b1f6fb5c320a135be4164c7f55a5fcaf7b32e1f7f17",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:14:재보험계약자산:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p57 라벨「14:재보험계약자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|15|2026.1Q": {
+      "값": 18007.943951,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 25,
+      "sha256": "6d09d668f696dc4c72f0c66e2c8a527344beb1c5719978f77106c66f2bcaec88",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2026.1Q 재무상태표(8-1) p25 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|15|2026.2Q": {
+      "값": 8262.047218,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 57,
+      "sha256": "2157cc2cb39b5baf0b801b1f6fb5c320a135be4164c7f55a5fcaf7b32e1f7f17",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:15:유형자산:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p57 라벨「15:유형자산」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|20|2024.2Q": {
+      "값": 5696159.216214,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 55,
+      "sha256": "af3dffdb1465e20e428dc3eeea9e5226d96f171a6c8f3c3ea20231f4014b38ed",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2024.2Q 재무상태표(8-1) p55 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|20|2025.2Q": {
+      "값": 6269156.08494,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "7a5ea5d1e59ebbd96c481003a36570e7594fe4f8afd4137930d28731a5274149",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p56 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|20|2025.3Q": {
+      "값": 6366969.518078,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 24,
+      "sha256": "f15d5f69729a8dc678cf04afbedd80b7a3b6117a5086c6feddf9993b59fb3d32",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:20:보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「20:보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|21|2025.3Q": {
+      "값": 11694.397426,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 24,
+      "sha256": "f15d5f69729a8dc678cf04afbedd80b7a3b6117a5086c6feddf9993b59fb3d32",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2025.3Q 재무상태표(8-1) p24 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|21|2026.2Q": {
+      "값": 29335.047079,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 57,
+      "sha256": "2157cc2cb39b5baf0b801b1f6fb5c320a135be4164c7f55a5fcaf7b32e1f7f17",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:21:재보험계약부채:accepted",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1) p57 라벨「21:재보험계약부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0076|23|2025.2Q": {
+      "값": 224547.490687,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf",
+      "page": 56,
+      "sha256": "7a5ea5d1e59ebbd96c481003a36570e7594fe4f8afd4137930d28731a5274149",
+      "축척": "원 -> 백만원",
+      "앵커항목": null,
+      "방법": "granularity:bs_full:23:차입부채:accepted",
+      "근거": "정기경영공시 2025.2Q 재무상태표(8-1) p56 라벨「23:차입부채」, 단위 원(master), 정밀도 ±5e-07백만원. 보정 통과(마스터 DART/owner 앵커와 동일 라벨→항목 매핑 재현). (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  },
+  "skips": {}
+}
