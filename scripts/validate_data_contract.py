@@ -65,8 +65,10 @@ from validate_kics_disclosure import (  # noqa: E402
     _diversification_negative,
     _exemption_provenance_findings,
     _exemption_registries,
+    _ident_issuer_inconsistent,
     _item12_equals_item1,
     _life8_issuer_inconsistent,
+    _mmult_after_life8_exempt,
     _load_life_subrisk_applicability,
     restatement_cascade_exempt,
     _load_exemption_ledger,
@@ -394,8 +396,13 @@ def check_census(res: GateResult, env: "Env") -> None:
         # 재구현하면 두 게이트가 같은 finding 에 다른 대답을 한다(§1b(ii)).
         casc_exempt, casc_red, casc_inert = restatement_cascade_exempt(
             kics_findings, env.restatement_ledger)
+        # 평문 룰 2·4·5·6 발행사 자기모순(owner 2026-10-10) — **정본은
+        # validate_kics_disclosure._ident_issuer_inconsistent** 다. 재구현하지 않고 같은 함수를 부른다.
+        ident_exempt, ident_exempt_red, _id_review, _id_detail = _ident_issuer_inconsistent(
+            kd_records, kics_findings)
         exempt_ids = {id(f) for f in tier2_exempt}
         exempt_ids |= {id(f) for f in casc_exempt}
+        exempt_ids |= {id(f) for f in ident_exempt}
         exempt_ids |= {id(f) for f in kics_findings
                        if f.get("status") == "RED" and str(f.get("rule")) == "8_life"
                        and (f.get(KEY_CODE), f.get(KEY_QUARTER)) in life8_ok}
@@ -405,7 +412,7 @@ def check_census(res: GateResult, env: "Env") -> None:
                     quarter=c.get("quarter"), rule="KICS_RESTATEMENT_CASCADE_INERT",
                     message=f"채택 연쇄 등재({c.get('rule')})가 대응하는 RED 을 못 찾았다 — "
                             f"면제가 무용해졌다. 등재를 풀어라")
-        for f in tier2_exempt_red + life8_exempt_red + casc_red:
+        for f in tier2_exempt_red + life8_exempt_red + casc_red + ident_exempt_red:
             res.add(check="census", severity="RED", master="kics_disclosure",
                     company=env.code_name.get(f.get("code"), f.get("code")),
                     quarter=f.get("quarter"), rule=f"KICS_{f.get('rule')}",
@@ -462,6 +469,11 @@ def check_census(res: GateResult, env: "Env") -> None:
     # 반환 3/2-튜플의 마지막 원소는 '계산불가 명시집계'라 차단엔 안 쓰되 리포트엔 남긴다.
     mmult_mismatch, _mmult_submissing, _mmult_skipped, mmult_unverifiable = \
         _transition_mmult_after(kd_records, env.source_readability)
+    # 축 17후 의 8_life 발행사 자기모순 면제 — K-ICS 게이트 main() 과 **같은 함수**로 뺀다(2026-10-10:
+    # 이 필터가 여기만 없어서 등재된 축 17후 RED 가 데이터계약 게이트에는 그대로 남을 뻔했다).
+    # 면제가 깨지면 `_life8_issuer_inconsistent` 의 red 가 위 위임 블록에서 이미 RED 로 올라간다.
+    mmult_mismatch, _mmult_l8_exempted = _mmult_after_life8_exempt(
+        mmult_mismatch, _life8_issuer_inconsistent(kd_records)[0])
     for c, q, n, parent, post_v, computed in mmult_mismatch:
         if not _emit(q):
             continue

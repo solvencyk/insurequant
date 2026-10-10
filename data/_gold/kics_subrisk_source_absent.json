@@ -8,7 +8,7 @@
     "verified_text_exact_phrase": "raw PDF 전문 exact-phrase('사망위험') 부재로 확인",
     "pattern_matched": "표본과 동일 위치에서 '②'+'장수위험' + 동일 보일러플레이트 패턴 일치로 판단. 개별 육안 렌더는 미실시 — 반증이 나오면 먼저 의심할 항목"
   },
-  "updated_at": "2026-09-03T10:05:25Z",
+  "updated_at": "2026-10-10T00:00:00Z",
   "source_investigation": {
     "by": "parser-kics agent, orchestrator 발주 2026-09-03",
     "task": "2023년 홀수분기(1Q/3Q) item29-35 생명장기 하위위험 결측 29개 (회사x분기) 조합 조사",
@@ -471,6 +471,82 @@
       "method": "text",
       "citation": "data/disclosure/FY2023_Q3/raw/ (KR0099_KB라이프생명*.pdf) p13",
       "reason": "② 보일러플레이트만, 표 없음."
+    },
+    {
+      "code": "KR1101",
+      "name": "뮌헨재보험",
+      "quarter": "2023.1Q",
+      "items": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "verdict": "TABLE_ABSENT",
+      "confidence": "verified_text_exact_phrase",
+      "method": "text",
+      "citation": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험.pdf p10, p12",
+      "reason": "37쪽 문서(텍스트 층 정상, 이미지 0) 전체에서 '사망위험' 0회. p10 ② 장수·사업비·해지·대재해 경과조치는 '적용하지 않아 … 동일함' 한 줄뿐(표 없음), p12 위험관리 '비례성원칙 적용현황 해당사항 없음'. item17=601>0. owner 승인 2026-10-10(재보사 단계 6 표 B), validation 단계 8 등재·fitz 재확인."
+    },
+    {
+      "code": "KR1102",
+      "name": "스위스리아시아",
+      "quarter": "2023.1Q",
+      "items": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "verdict": "TABLE_ABSENT",
+      "confidence": "verified_text_exact_phrase",
+      "method": "text",
+      "citation": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf p10, p13",
+      "reason": "24쪽 문서(이미지 0) 전체에서 '사망위험' 0회. p10 ② 경과조치는 '적용하지 않아' 한 줄뿐, p13 Ⅵ.위험관리 '비례성원칙 적용현황에 관한 사항: 해당사항 없음'(저밀도 쪽 p13·p14 는 60dpi 렌더로 텍스트 쪽임을 확인). item17=3,624>0. owner 승인 2026-10-10, validation 단계 8 등재."
+    },
+    {
+      "code": "KR1103",
+      "name": "제네럴재보험",
+      "quarter": "2023.1Q",
+      "items": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "verdict": "TABLE_ABSENT",
+      "confidence": "verified_text_exact_phrase",
+      "method": "text",
+      "citation": "data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf p7, p8",
+      "reason": "12쪽 단축양식(이미지는 표지·끝쪽 로고뿐)에 사망·장수·해지·사업비·대재해위험 표제어가 문서 전체 0회. p8 '비례성원칙 적용현황 해당 사항 없음', p8 첫 줄 '당사는 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함'. item17=324.1>0. owner 승인 2026-10-10, validation 단계 8 등재."
+    },
+    {
+      "code": "KR1103",
+      "name": "제네럴재보험",
+      "quarter": "2023.3Q",
+      "items": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "verdict": "TABLE_ABSENT",
+      "confidence": "verified_text_exact_phrase",
+      "method": "text",
+      "citation": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf p8",
+      "reason": "12쪽 단축양식에 사망·장수·해지·사업비·대재해위험 표제어가 문서 전체 0회. p8 'Ⅵ. 위험관리 해당 사항 없음'. item17=320.13>0. owner 승인 2026-10-10, validation 단계 8 등재."
     }
   ],
   "legit_zero": [

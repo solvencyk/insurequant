@@ -177,8 +177,13 @@ def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, fi
     # `item4 − item12 − item13` 으로 item2 를 재현하는 축 하나뿐이다.
     # 같은 회사 2026.2Q 는 **행 구성이 100% 동일한 표**에서 item12=300 · item13=754 로 채워
     # 다리가 잔차 -1 로 닫힌다 — 표 구조가 아니라 분기별 기재 관행 차이다.
-    assert len(registered) == 19, (
-        f"면제 레지스트리 크기가 19 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
+    # 2026-10-10: 19 -> 22. 알지에이리인슈어런스 KR1105 2025.1Q · 2026.1Q · 2026.2Q
+    # (`2_tier1_bridge` + `2_tier1_bridge_post`) 3버킷 추가 — owner 승인 2026-10-10(handoff
+    # §7-10 ①, 재보사 단계 6 표 A), validation 단계 8 등재(inbox/validation/20261010T1010Z).
+    # 4-2-2 `Ⅰ. 순자산` 행이 세 열 모두 0(대시)으로 인쇄돼 다리가 0 을 기대하는데 기본자본은
+    # 구성행 합(예 520+2,560−192+3,421=6,309)이다. 원장 근거 3건(present_rows 5개씩) 같은 날 추가.
+    assert len(registered) == 22, (
+        f"면제 레지스트리 크기가 22 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
         f"원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. "
         f"현재 키: {sorted(registered)}"
     )

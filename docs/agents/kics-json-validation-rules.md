@@ -17,6 +17,7 @@ Before advancing to the next K-ICS pipeline stage (JSON swap, template sync, HTM
 3. Any unexpected RED requires **parsing-error review** (MD source, parser scope, row mapping) before proceeding.
 4. YELLOW findings are warnings (|diff| >= 0.5 eok-won, <= tolerance); they do not block the gate but should be triaged.
 5. SKIP on rule `8_life` is expected when sub-items 29-35 are not all present (non-life insurers, partial tables). SKIP on rule `3` is expected (bridge formula deferred; Rule 1 is authoritative for item1).
+6. Documented exceptions are **residual pins, never blanket skips** (finding stays RED; only the blocking count drops, and only while the pinned input cells and residual still match at tol 0.01). Registries: `_LIFE8_ISSUER_INCONSISTENT` (8_life + mmult17 post), `_TIER2_ISSUER_INCONSISTENT` (tier2/bridge axes), `AFTER_IDENT_ISSUER_INCONSISTENT` (post identities), `IRR_DERIVE_ISSUER_INCONSISTENT` (36_irr), and since 2026-10-10 `_IDENT_ISSUER_INCONSISTENT` for the plain identity rules **2 / 4 / 5 / 6** keyed (company, quarter, rule, 적용전/적용후) — the 적용후 pin is read directly by the post mirror axes (R2/R5/R6 post identities, mmult axis 15 for rule 4). blocking RED = RED − (8_life + tier2 RED + restatement cascade + identity 2/4/5/6 pins) + cascade drift. Every registry entry needs a `VERIFIED` provenance-ledger entry (`data/_gold/kics_exemption_provenance.json`).
 
 See also: `CLAUDE.md`, `docs/flows/claude-validation-harness.md`, `docs/domains/claude-agent-kics.md`, `.claude/skills/kics-parser/`.
 

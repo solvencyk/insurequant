@@ -202,13 +202,18 @@ _TFI_MEMO_ISSUER_BLANK: frozenset[tuple[str, str, int]] = frozenset({
 # 47/48/49/50/51 은 과거 세션의 vision 판독 백필로 들어와 있어서 "표를 읽었다" 처럼 보이지만
 # 메모행은 그 백필의 스코프 밖이었다. 결측 사유가 발행사가 아니라 **우리 쪽 backlog** 이므로
 # 발행사 공란과 같은 색으로 찍으면 안 된다 — 별도 사유로 세서 매 실행 눈앞에 남긴다.
+# 2026-10-10 (validation 단계 8): (KR0010, 2025.4Q) · (KR0071, 2024.4Q) 를 지웠다 — 2026-09-11 parser 가
+# 두 버킷에 item53/54 를 raw 렌더 판독으로 적재해(KB손해 0/6,722.49 · 흥국생명 496.5/1,234.07) 메모행
+# census 가 이미 정상 평가(GREEN)되고 있어 이 등재는 발동하지 않는 죽은 핀이었다
+# (tests/test_tfi_memo_rows.py::test_not_scanned_registry_does_not_hide_readable_buckets 가 잡았다).
+# 지우기 전 시뮬레이션(단계 8 sim_tfi_memo.py): 전 버킷 finding 18,870건이 detail 까지 한 건도 안 바뀐다.
 _TFI_MEMO_TABLE_NOT_SCANNED: frozenset[tuple[str, str]] = frozenset({
     ("KR0010", "2024.1Q"), ("KR0010", "2024.3Q"), ("KR0010", "2025.1Q"),
-    ("KR0010", "2025.3Q"), ("KR0010", "2025.4Q"), ("KR0010", "2026.1Q"),
+    ("KR0010", "2025.3Q"), ("KR0010", "2026.1Q"),
     ("KR0080", "2024.4Q"), ("KR0080", "2025.1Q"), ("KR0080", "2025.2Q"),
     ("KR0080", "2025.3Q"), ("KR0080", "2025.4Q"), ("KR0080", "2026.1Q"),
     ("KR1098", "2024.2Q"), ("KR1098", "2024.3Q"), ("KR1098", "2024.4Q"),
-    ("KR0005", "2024.4Q"), ("KR0071", "2024.4Q"), ("KR0079", "2023.3Q"),
+    ("KR0005", "2024.4Q"), ("KR0079", "2023.3Q"),
     ("KR0087", "2026.1Q"), ("KR0097", "2024.2Q"),
 })
 
@@ -262,13 +267,38 @@ _COMPOSITION_SKIP_BRANCHES = frozenset({"INPUT_MISSING", "TFI_NA_NO_INPUT"})
 # 19_market 부모-자식 완전성 면제: item19 공시인데 36-40 분해가 진짜 미공시인 (회사,분기).
 # raw MD/PDF에 분해표가 실제로 없음을 교차검증한 케이스만 등록(문서화 면제). 기본 비어있음
 # = "부모 공시면 분해도 있어야 한다"가 기본, 빠지면 RED(parser gap 추정).
-MARKET_BREAKDOWN_EXEMPT: frozenset[tuple[str, str]] = frozenset()
+#
+# 2026-10-10 첫 등재(owner 승인, 재보사 단계 6 표 B "원천 부재" → 단계 8 validation 등재). 근거 원장
+# `data/_gold/kics_exemption_provenance.json` 의 `MARKET_BREAKDOWN_EXEMPT` 항목이 문서 전체에서
+# 분해표 표제어 부재(absent_markers)와 부모행 인쇄(present_rows)를 매 실행 재확인한다.
+# 부재형 면제다 — 36~40 중 하나라도 값이 생기면 위 수치검산 갈래가 먼저 돌아 면제가 저절로 꺼진다.
+#   · KR1103 제네럴 2023.2Q — 12쪽 단축양식(짝수분기인데 분해 없음). p7 `3. 시장위험액 35.2` 한
+#     줄뿐, 금리·주식·부동산·외환·자산집중위험액 표제어가 문서 전체 0회(같은 회사 2023.4Q 문서
+#     p18 에는 있다).
+#   · KR1107 퍼시픽라이프리 2025.3Q · 2026.1Q — 홀수분기라 분해 공시가 없다. p25 ③ 주식·금리
+#     경과조치 표의 금리·주식·부동산·외환·자산집중 행은 전부 0 인 자리표시이고 "적용하지 않아"
+#     문구가 붙는다. `source_has_breakdown` 키워드 스캔이 이 자리표시를 분해표로 오인해 홀수분기
+#     cadence-SKIP 이 막혔다(`외환위험액`·`자산집중위험액` 은 문서 전체 0회, 짝수분기 2025.4Q 에는 있다).
+MARKET_BREAKDOWN_EXEMPT: frozenset[tuple[str, str]] = frozenset({
+    ("KR1103", "2023.2Q"),
+    ("KR1107", "2025.3Q"),
+    ("KR1107", "2026.1Q"),
+})
 
 # 36_irr 시나리오 완전성 면제: item36 공시인데 41-46(금리위험 순자산가치 6시나리오)이 진짜 미공시인
 # (회사,분기). 41-46은 **짝수분기(2Q/4Q) 서식에만** 존재 — 홀수분기(1Q/3Q)는 시나리오표가 서식에
 # 원천부재라 SKIP이 정당(RED 아님). 짝수분기인데 item36 공시·41-46 결측이면 parser gap → RED.
 # raw에 짝수분기에도 시나리오표 없음을 교차검증한 케이스만 등록(문서화 면제). 기본 비어있음.
-IRR_SCENARIO_EXEMPT: frozenset[tuple[str, str]] = frozenset()
+#
+# 2026-10-10 첫 등재(owner 승인, 재보사 단계 6 표 B → 단계 8 validation 등재). 원장
+# `data/_gold/kics_exemption_provenance.json` `IRR_SCENARIO_EXEMPT` 항목이 매 실행 재확인한다.
+# 부재형이다 — 41~46 이 전부 생기면 위 수치검산 갈래가 먼저 돌아 면제가 꺼진다.
+#   · KR1104 하노버 2023.2Q — 34쪽 문서에 금리상승·금리하락·평균회귀·순자산가치 표제어가 문서 전체
+#     0회(텍스트 층 정상). p15 Ⅵ.위험관리 "공시대상에서 제외됨으로 위험관리 보고에 해당사항 없음".
+#     item36(9.5) 은 p14 ③ 경과조치 표의 `금리위험` 950 백만원. 같은 회사 2024.2Q 문서 p20·p21 에는 표가 있다.
+IRR_SCENARIO_EXEMPT: frozenset[tuple[str, str]] = frozenset({
+    ("KR1104", "2023.2Q"),
+})
 
 # 36_irr 내부모형 면제. **2026-08-21 전건 해제 — 등재사유가 raw 대조에서 거짓으로 확인됐다.**
 #

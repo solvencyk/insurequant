@@ -2,6 +2,7 @@
 from: validation
 to: parser
 lane: ifrs17
+created: 20261009T0700Z
 status: open
 date: 2026-10-09
 re: 20261008T1427Z bspl_blank_cells_from_disclosure (round 2)

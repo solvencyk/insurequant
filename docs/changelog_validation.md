@@ -1,9 +1,41 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-10-06 · Stage 3/5 — validation
+> Last updated: 2026-10-10 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-10-10 (19차) -- 재보사·마이브라운(KR1101~KR1108) K-ICS 스윕 1~8단계 요약 + 단계 8: 룰 2·4·5·6 잔차 박제 장치 신설 · owner 승인 29건 등재
+
+- **스윕 1~8단계(2026-10-08~10)**: downloader 가 7개 지점 + 마이브라운의 경영공시 PDF 를 회사 사이트에서 수집(매니페스트 `data/disclosure/_meta/reinsurer_KR11##_manifest.json`),
+  parser-kics 가 적재(1a·1b) → 패치(2) → 공백 보충(3) → validation 기계 검산(4) → owner 결정 1~8 반영 수정(5) → validation 독립 재검증·스코리 적용사 편입·골든 재생성·
+  남은 RED 분류(6) → parser 의 R1 미완·되돌림·하노버 2023.3Q 비전 적재(7) → validation 등재·게이트(8). 기존 39사 25,522행은 전 단계 내내 git HEAD 와 `list ==`.
+  런로그 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_{1a,1b,2,3,4,5,6,7,8}.md`. 게이트 RED 80(단계 5 시작) → 71 → 65 → **57**, blocking 44 → 35 → 29 → **0**.
+- **새 장치 `_IDENT_ISSUER_INCONSISTENT`**(scripts/validate_kics_disclosure.py): 룰 2 순자산합·4 기본요구자본·5 기준금액·6 분산효과에 잔차 박제 장치가 없던 구멍을 막았다.
+  등재 단위 (회사, 분기, 룰, 적용전/후) → 박제 잔차(tol `AFTER_IDENT_PIN_TOL` 0.01) + 입력 셀 박제. 적용전은 룰엔진 diff, 적용후는 거울 축(R2후·R5후·R6후·mmult 축15후)이
+  같은 식으로 직접 대조. 셀·잔차가 움직이면 RED 복귀, 축이 닫히면 INERT. K-ICS 게이트와 데이터계약 게이트가 같은 함수(+ 축17후 8_life 공유 필터 `_mmult_after_life8_exempt`)를 부른다.
+  시뮬: 기존 회사 finding 변화 0 · 변이 178건(셀 154 · 잔차 24) 전부 RED 복귀 · 게이트 단위 사본 변이로 blocking 0→5 재현.
+- **등재 29건**(owner 2026-10-10): 발행사 자기모순 21(신규 장치 17 · `_TIER2_*` KR1105 3 · `_LIFE8_*` KR1103 2025.2Q 1) + 원천 부재 8
+  (`MARKET_BREAKDOWN_EXEMPT` 3 · `IRR_SCENARIO_EXEMPT` 1 · `kics_subrisk_source_absent.json` 4). 원장 `kics_exemption_provenance.json` +23건(VERIFIED, 행 귀속 마커).
+  퍼시픽 KR1107 2023.3Q·4Q 는 owner 미결정이라 등재 안 함. 등재부 `docs/kics_gate_exceptions.md` 맨 위 절.
+- 골든 `--update` 2종(룰 629버킷·18,870 / 적용후 553·7,113, 기존 39사 슬라이스 sha HEAD 일치). pytest 7 실패 중 5 수정:
+  stale-table `_KNOWN` KR1107 2026.1Q(오탐, raw p22 근거) · `_TFI_MEMO_TABLE_NOT_SCANNED` 죽은 핀 2(시뮬 변화 0) · xlsx 시트 선언 14→16 ·
+  `validate_deployed_js.py` 메서드 축약 파라미터 오탐(IFRS17.html `afterDatasetsDraw(ch){`, 5페이지 시뮬 변화 = 그 1건). 발주 3: publishing(xlsx·public_exports) · parser ifrs17(예별 PL hole·master_tables 골든) · parser kics(금리민감도 provenance 25).
+- 포트폴리오 검증기: 스캔 3사 죽은 예외 삭제 · 재보사 R2 census 범위 제외(인쇄) → RED 49→3(KR0100 R3, owner 판단).
+- 남은 차단: K-ICS 게이트 exit 2 = census 헤드라인 전용 12칸(면제 장치 없음, owner 결정). 모델 Opus 5.5, 약 75분.
+
+## 2026-10-07 (18차) -- 채널별 유지율(신규 도메인) 검증 VP: verdict RED 1 · YELLOW 8
+
+- 대상 `data/persistency/`(추출 원본·census·selfcheck·errata·triage·vision v1~v4·마스터 변환) + 추출기·변환기·분류기. 산출·스크립트 무수정(mtime 불변).
+  보고서 `data/_derived/validation_20261007_persistency.md`. 재현 스크립트는 세션 scratchpad `10fdb815…/scratchpad/vp/`(a1~a16, render/locate/contact/dump).
+- 원문 충실도: 표 45개(텍스트 27·vision 18) 렌더 전체 대조 오독·열 밀림·채널 오귀속 0. 항등식 10,312행 독립 재계산(vision 포함) — errata 17칸 17/17 인쇄값,
+  보정 9건 9/9 정당, 숨은 break 0(엄격 기준 추가 32칸은 발행사 반올림, ±0.06 안). census 277칸 무사유 결측 0, ABSENT 렌더 5/5, RAW_TRUNCATED 확인. 마스터 1:1·열·채널 §5-1 일치.
+- **RED-1(false-green)**: KR0004 예별 2026.2Q p57 머리 "백만원" 인데 금액이 1/1000 규모(61회차 법인기타 대상 82,949·96,633 -> 94.18). 항등식·census·회사합이 전부 통과해
+  기존 검사가 못 봄. 잡은 수단 = 회사별 Σ대상신계약액 규모 검사 + 코호트 연속성(D(13,t)≈D(25,t+1y)) — 추출기 selfcheck 에 넣자고 제안.
+- YELLOW: KR0150 2Q raw 미수집 무티켓 · 추출기가 vision 항등식 미재계산 · triage KR0071 2023.4Q DEFINITION 근거 미달 · MI 오적재 2칸(KR0051 2024.4Q·KR1000 2024.2Q) 라우팅 누락 ·
+  대상신계약액=0 행 760 무플래그 · 금액 열 회사·분기 간 비교 불가(단위 4종 + 원문 기준 x1/12·x1/2·x4 + 원문 채널 재분류) · '건' 64행 금액 규모 · errata 표시 규칙.
+- 발주: `inbox/parser/20261007T1001Z__validation__MULTI_2023.2Q-2026.2Q__persistency_validation_findings.md` · `inbox/parser/20261007T1001Z__validation__KR0051_KR1000_2024.4Q-2024.2Q__mi_persistency_shift_addendum.md`
+  · `inbox/downloader/20261007T1001Z__validation__KR0150_2023.2Q-2025.2Q__missing_halfyear_disclosure.md`. 모델 Opus 5.5, 약 75분.
 
 ## 2026-10-06 (17차) -- `PUBLIC_EXPORT_INTERNAL_JARGON` 신설 (공개 다운로드 내부 진단 문자열 재발방지)
 

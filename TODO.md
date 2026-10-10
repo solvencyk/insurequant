@@ -15,6 +15,20 @@
 
 ## 열린 일
 
+- [ ] **신규 도메인: 채널별 유지율 · 손해율 추이 + 사별 비교 기능(owner 팀장 요청 2026-10-07)** — 추출 진행 중.
+  인수인계 `docs/handoff_20261007_persistency_lossratio_compare.md`(상태·census·남은 순서), 명세는 `inbox/parser/20261007T0*` 티켓 3개.
+  비교 기능은 owner 의 핵심 지표 목록 대기.
+- [ ] **재보사 7곳 + 마이브라운(KR1101~KR1108) K-ICS 스윕 마무리(owner 2026-10-10)** — 단계 6(validation 재검증) 완료: 게이트 RED 71(blocking 35), 기존 39사 변경 0, 스코리는 `_TRANSITION_APPLIERS` 편입·골든 재생성 끝.
+  계약 `docs/handoff_20261008_reinsurer_pipeline.md` §7, 실행 기록 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_{1a..6}.md`. 단계 7 parser 완료(2026-10-10): 게이트 RED 71→65·blocking 35→29, 신규 RED 0, 기존 39사 25,522행 HEAD 와 동일(오케스트레이터 재측정). 진행 중: 단계 8 validation(`inbox/validation/20261010T1010Z__*`, Opus: 룰 2·4·5·6 잔차 박제 장치 설계 + 승인된 29건 등재 + 골든 재생성 + pytest 분류). **퍼시픽 KR1107 2023.3Q·4Q: owner 결정 = 적재 + 새 RED 3건 예외 등재**(handoff §7-12) — validation 단계 8 이 끝난 뒤 parser 적재(계획 `reinsurer_load_20261010/stage7/plans/p9_*.json`) → validation 3건 등재 순서.
+  owner 승인 완료(2026-10-10, `docs/handoff_20261008_reinsurer_pipeline.md` §7-10): 자기모순 21건·원천 부재 8건 등재(룰 2·4·5·6 잔차 박제 장치는 새 설계라 Opus), 제네럴 보완자본→0, 스코리 27후 166.8 유지·22후 534.93, 제네럴 TIR/TER/TIRR=X, KR1107 2023.3Q·4Q 적재. parser 7단계(P1~P10) 재시작 후 validation 8단계(등재·장치·골든·pytest 분류 정리)가 이어진다.
+  **배포 선행**: 재보사 8곳이 든 마스터는 designer 의 재보험사·보증 3분류(아래)가 끝나기 전에 라이브에 올리지 않는다. 커밋 미실시(워킹트리에 다른 세션 변경 혼재).
+- [x] **index 시장지도 3컬럼: 생보 / 손보 / 재보험사·보증(owner 2026-10-10)** — designer 반영 완료(미커밋·미배포): `data/company_segment.json` 매핑으로 index·compare 3구분, 새 8곳은 K-ICS·compare·IFRS17·검색창에서 깨짐 없음 확인. 재보사 배포 선행 조건은 충족. 남은 것은 publishing 이 `scripts/android_push_and_deploy.sh` `NEW_FILES` 에 `data/company_segment.json` 을 넣는 일(`TODO_designer.md` 「publishing 이 배포 전에 해야 할 일」).
+- [ ] **재보사 IFRS17 지표 적재(다음 round, owner 2026-10-10)** — CSM 상각 스케줄·가정민감도·요약 PL/BS·4-6-2 포트폴리오. 정찰 `data/disclosure/_meta/reinsurer_ifrs17_scout_20261010.md`(우선순위 ①~④, 감사보고서 CSM 변동표는 변환이 먼저).
+- [ ] **IFRS17.html 섹션 3 CSM 시계열 → 묶음·누적 막대 + 보조축 선 콤보(owner 2026-10-10)** — 분기마다 막대 2개: 왼쪽 잔여보장요소(아래부터 CSM(주축 0 시작) · BEL · RA · 가능한 회사는 PAA·VFA 누적) + 오른쪽 **발생사고요소(BEL · RA 누적)**, 보조축 꺾은선 = 신계약 CSM. 참고 그림 `docs/design_refs/combo_stacked_column_line_reference_20261010.png`.
+  **designer 이식 완료(2026-10-10, IFRS17.html·`data/csm_combo/panel_csm_combo.json`, 미커밋·미배포)**: owner 채택 목업 + 값 표, CSM 증감 띠는 owner 정정으로 제외, 오른쪽 막대(발생사고요소)는 BS 항목 20 − 잔여보장요소의 「추정」 자리 표시(빌더 `lic_estimate()` 한 곳). 배포 시 `NEW_FILES` 에 패널 JSON 추가 필요.
+  **발생사고요소 BEL·RA 는 마스터에 없다** — 정찰 완료(`data/disclosure/_meta/lic_scout_20261010.md`): 출처 = DART XML 「잔여보장·발생사고 변동」 주석표, 직접값 159셀(24사×5분기+39사 4Q) 중 123셀이 BS 항목 20 과 닫힘, 비상장 15사 5분기 75셀은 원천 부재, BS−2-4 총액 추정은 DB손보·롯데·메리츠·하나손보에서 부정확, ABL·KDB생명·푸본현대는 2-4 가 이미 LIC 포함. 적재는 owner 결정으로 **단계 적재 + 단일열 회사 간접 계산값 사용**, 새 마스터 없이 `insurance_liability_portfolio.json` 항목 10번부터 추가(억원). 1단계(A1·A2 101셀) parser 진행 중(`inbox/parser/20261010T0945Z__*`), 2단계(단일열 간접 도출)·3단계(비상장 4Q)는 1단계 보고 후. `insurance_liability_portfolio.json`(2025.1Q~2026.2Q)은 **잔여보장요소(LRC)만**이라 BS 보험계약부채보다 작다.
+  LRC 데이터 선행은 2026-10-10 에 처리: 빈 9칸·값 의심 4건(ABL 2025.2Q 단위 100배 포함)·스캔본 13칸·하나생명 2026.2Q(상세 줄 합 43,549억, owner 승인)·아이엠라이프 2025.1Q(최신 공시 정정값, owner 승인)를 채우고(백업 `data/_derived/ilp_backup_20261010_pre_merge.json`), DB손보·AIG·서울보증 2026.2Q 가 2026.1Q 사본이던 것도 정정. 남은 것: ① 롯데손보 2026.2Q 항목 9=1 확인(마스터에 1 선례 없음, 2025.1Q~2026.1Q 항목 9 는 비어 있음) ② KR0100 R3 3건(특별계정 때문, IFRS17 레인에서 item20 정의 정리 또는 예외 등재) ③ 검증기 정비 — 스캔 3사 `DOCUMENTED_EXCEPTIONS` 삭제·재보사(KR11xx) R2 census 46건 제외(다음 round 전까지) ④ 추출기 공통 결함 7개(pdfplumber 단독·헤더 위치·5자리 공백 분리·단위 머리말·이미지 헤더 등, 런로그 `ilp_gap_runlog_textlayer_20261010.md`). 검증기는 push 게이트가 아님.
+- [ ] **PC 부하 실측(owner 2026-10-10, 틈날 때)** — docling 변환 1건의 최대 메모리·소요를 에이전트가 쉬는 시간에 재서 보고. 현재 RAM 15.5GB(증설 불가)·8코어, owner 희망 RAM 32GB·12코어(즉시 교체 아님). 한도: 동시 에이전트 ≤3 · docling ≤2.
 - [ ] **2026.3Q 정기경영공시 라운드** — 2Q 는 8/29~31 에 게시됐으니 3Q 는 11월 말 예상. 절차 `docs/flows/kics_quarterly_round.md`
   (라벨·스크립트를 3Q 로 바꿔 쓴다). owner 가 부르기 전에는 시작하지 않는다.
 - [ ] **J-ESR 10월 말 재census**(기한 2026-10-31 직후) → `TODO_jp.md`.

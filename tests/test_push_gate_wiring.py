@@ -98,6 +98,11 @@ NOT_A_PUSH_GATE = {
         "지시해 만든 마스터이고, 아직 초회 적재 단계라 RED=468 이다. 지금 push 게이트에 "
         "걸면 다른 모든 작업이 막힌다. **마스터가 닫히면 WIRED 로 승격할 것** — 그 전까지는 "
         "손으로 돌려 진척을 재는 용도다.",
+    "validate_insurance_liability_lic":
+        "같은 마스터(`insurance_liability_portfolio.json`)의 항목 10~17(발생사고요소 BEL·RA, DART 보험계약부채 변동표) "
+        "적재분의 자체 검산기(2026-10-10 신설, 1단계 적재 시 RED=0). 2단계(단일열 회사 간접 도출 16·17)와 3단계(비상장 4Q "
+        "잔여)가 끝나기 전이고 owner 가 1단계 보고를 보기 전이라 push 게이트에 걸지 않는다 — 위 "
+        "`validate_insurance_liability_portfolio` 와 같은 사유다. **3단계까지 닫히면 WIRED 승격 여부를 owner 가 정할 것.**",
     "validate_statutory_reserves":
         "직접 호출은 아니지만 `validate_data_contract.py` 가 법정준비금 절에서 이 모듈을 "
         "import 해 실제로 돌린다(구현이 한 곳에만 있고 게이트는 호출만 한다는 설계). "

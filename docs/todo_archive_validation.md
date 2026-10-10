@@ -1,5 +1,14 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-10 Status 밀림 (19차 추가로 밀려난 항목, 무수정)
+
+- **2026-09-23 (16차) `kics_duration_gap.json` 검사기 배선**(`check_kics_duration_gap`) — `test_push_gate_wiring` 이 잡은 무검사 라이브 마스터. `ec302b0`.
+
+## 2026-10-07 Status 밀림 (18차 추가로 밀려난 항목, 무수정)
+
+- **2026-09-21 (15차) 금리민감도 `RS6_PHASE_LEVEL_CENSUS`(RED) 신설 + RS2 적용후 앵커** — 구멍 31칸은 `RS6_KNOWN_HOLES`(백필 worklist)로
+  parser 발주. 신한라이프 `36_irr` 2분기는 기존 박제 예외로 판정. `f238146`·`6096f4e`.
+
 ## 2026-10-07 정리 — 정리 전 `TODO_validation.md` 전문 (무수정)
 
 # Insurequant Validation TODO (Stage 3)

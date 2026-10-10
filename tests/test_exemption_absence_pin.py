@@ -247,6 +247,7 @@ def test_every_code_pin_is_mapped_for_ledger_comparison():
     mapped = {reg for reg, _c, _q in gate._code_pin_map()}
     pinned_registries = {
         "_TIER2_ISSUER_INCONSISTENT", "_LIFE8_ISSUER_INCONSISTENT",
+        "_IDENT_ISSUER_INCONSISTENT",  # 2026-10-10 신설(평문 룰 2·4·5·6)
         "IRR_DERIVE_ISSUER_INCONSISTENT",
         "_AFTER_SUBRISK_NOT_DISCLOSED", "_POST_PARENT_NOT_DISCLOSED",
     }

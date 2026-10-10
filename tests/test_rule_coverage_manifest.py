@@ -1545,8 +1545,11 @@ MASTER_XLSX_RULES = {
 }
 
 # 실측 2026-09-02, 2026-09-22 갱신(+`금리듀레이션갭`).
+# 2026-10-10 갱신 14 -> 16: b638fa6(2026-10-08 유지율·손해율 신규 도메인)이 빌더 MASTERS 에 시트 2개를
+# 넣으면서 이 선언을 안 고쳤다. 데이터계약 게이트 MASTER_XLSX_CENSUS 실측 "선언 16 · 대조 16" —
+# 새 시트 2개도 실제로 대조되고 있다(아래 시험의 sheets_compared 단언이 그것을 다시 본다).
 # build_master_xlsx.MASTERS 길이와 같아야 한다(요약은 파생 시트라 별도).
-MASTER_XLSX_SHEETS = 14
+MASTER_XLSX_SHEETS = 16
 
 
 @pytest.fixture(scope="module")

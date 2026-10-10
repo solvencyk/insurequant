@@ -288,7 +288,20 @@ def _update() -> int:
                     "값이 사라지니 그 버킷은 평가 불가(SKIP)가 된다 — **검사를 잃은 것이 아니라 "
                     "미러링으로 지어낸 값을 평가하던 것을 그만둔 것**이다. 결측 = 미공시가 정답이다. "
                     "분쟁 4칸(동양생명 2026.1Q·2025.4Q, BNP 2024.4Q·2024.3Q)은 두 측정이 갈려 "
-                    "일부러 남겼다. 룰 코드는 안 건드렸다.")
+                    "일부러 남겼다. 룰 코드는 안 건드렸다. "
+                    "※ 2026-10-10 재보사 적재(KR1101~KR1108) 단계 6·7·8 재생성: 기존 39사 "
+                    "538버킷 16,140 finding 은 git HEAD 골든과 (rule,status) 매트릭스 sha "
+                    "a5669684… 까지 그대로다(재보사 코드를 뺀 마스터로 다시 돌려 확인, "
+                    "data/disclosure/_meta/reinsurer_load_20261010/stage7/v3_exist7.py). "
+                    "움직인 것은 전부 재보사 행이다 — 단계 6: 재보사 90버킷 신규(628버킷·18,840). "
+                    "단계 7: parser 의 칸 단위 정정 75칸 + KR1104 2023.3Q 버킷 신설 → 629버킷 · "
+                    "18,870 finding · RED 71→65. 단계 8(validation, 룰 공식은 안 건드렸다): "
+                    "owner 승인 원천부재 8건 등재 — MARKET_BREAKDOWN_EXEMPT 3(19_market) · "
+                    "IRR_SCENARIO_EXEMPT 1(36_irr) · kics_subrisk_source_absent.json 4"
+                    "(8_life_census) — 로 그 8칸이 RED→SKIP, RED 65→57. 발행사 자기모순 21건"
+                    "(룰 2·4·5·6 은 신설 _IDENT_ISSUER_INCONSISTENT, 2_tier1_bridge 는 "
+                    "_TIER2_ISSUER_INCONSISTENT, 8_life 는 _LIFE8_ISSUER_INCONSISTENT)은 "
+                    "차단집계에서만 빠지므로 finding status 는 RED 그대로다(이 골든 불변).")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

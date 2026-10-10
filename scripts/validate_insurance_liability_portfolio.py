@@ -54,21 +54,18 @@ TOL = 0.05  # 억원, rounding tolerance for the item1..7 -> item8 identity
 # ---------------------------------------------------------------------------
 DOCUMENTED_EXCEPTIONS = [
     # (원보험사코드, 공시분기 or "*", rule, reason)
-    ("KR0010", "*", "R2_CENSUS",
-     "KB손해보험: PDF has 0 extractable chars across every page in every period sampled "
-     "(scan-only image PDF). No native text layer to parse; OCR out of scope for this "
-     "master's V1 (see extractor module docstring)."),
-    ("KR0087", "*", "R2_CENSUS",
-     "동양생명: PDF has near-zero extractable text (258 chars / 59 pages at 2026.2Q; "
-     "matches the pre-existing project finding in reference_pdf_wrong_document_false_alarm "
-     "-- this is a known scan-only filer, not a wrong-document false alarm)."),
-    ("KR0079", "*", "R2_CENSUS",
-     "미래에셋생명: PDF has near-zero extractable native text (246 chars / 25 prefix pages "
-     "at 2026.2Q, 65 pages total). Same failure class already logged against this company's "
-     "item47-54 TFI table in inbox/parser/20260831T0800Z (docling OCR-scale finding) -- the "
-     "filing is scan-adjacent and needs OCR, out of scope for this master's V1 text-extraction "
-     "path (see extract_insurance_liability_portfolio.py module docstring)."),
+    # 2026-10-10 (validation 단계 8): 스캔 3사 KR0010 KB손해 · KR0079 미래에셋 · KR0087 동양생명
+    # 의 R2_CENSUS "*" 예외 3건을 지웠다 — 세 회사 모두 2025.1Q~2026.2Q 6분기에 행이 적재돼
+    # (분기당 8~9행) 예외가 한 번도 발동하지 않는 죽은 면제였다(실행 결과 exceptions applied 0).
+    # 죽은 면제를 남기면 나중에 그 회사 행이 빠져도 RED 대신 SKIP 으로 조용히 넘어간다.
 ]
+
+# R2 census 범위 밖 코드 — **다음 round 에서 재보사 IFRS17(2-4/2-5) 을 적재하기 전까지만.**
+# 2026-10-10 재보사·마이브라운(KR1101~KR1108) K-ICS 적재로 md_inbox 2025.1Q~2026.2Q 에 이 8사 MD 가
+# 생겼지만 이 마스터의 2-4/2-5 추출은 아직 그 회사들을 대상으로 돌지 않았다(재보사 스윕 1~8단계는
+# K-ICS 만). 그대로 두면 46칸이 "추출 누락" RED 로 뜨는데 그건 결함이 아니라 아직 범위에 넣지 않은
+# 것이다. 조용히 빼지 않는다 — 제외한 칸 수를 매 실행 인쇄한다. 재보사 IFRS17 적재 때 이 집합을 비운다.
+R2_CENSUS_NOT_YET_IN_SCOPE = frozenset({f"KR11{n:02d}" for n in range(1, 9)})
 
 
 def is_documented(code: str, period_label: str, rule: str) -> str | None:
@@ -178,11 +175,15 @@ def main():
     # --- R2 CENSUS ---
     grid = expected_grid()
     periods_to_check = [args.period] if args.period else sorted(grid.keys())
+    not_in_scope = []
     for q in periods_to_check:
         expected_codes = grid.get(q, set())
         for code in sorted(expected_codes):
             has_any = (code, q) in by_cq
             if has_any:
+                continue
+            if code in R2_CENSUS_NOT_YET_IN_SCOPE:
+                not_in_scope.append((code, q))
                 continue
             reason = is_documented(code, q, "R2_CENSUS")
             if reason:
@@ -256,9 +257,13 @@ def main():
     print(f"\n--- documented exceptions applied ({len(findings['exceptions'])}) ---")
     for l in findings["exceptions"]:
         print(" ", l)
+    print(f"\n--- R2_CENSUS not yet in scope (재보사 IFRS17 미적재, {len(not_in_scope)}칸) ---")
+    for code in sorted({c for c, _q in not_in_scope}):
+        qs = sorted(q for c, q in not_in_scope if c == code)
+        print(f"  {code}: {len(qs)}칸 {qs[0]}~{qs[-1]}")
 
     print(f"\nSUMMARY RED={len(findings['RED'])} YELLOW={len(findings['YELLOW'])} "
-          f"exceptions={len(findings['exceptions'])}")
+          f"exceptions={len(findings['exceptions'])} not_in_scope={len(not_in_scope)}")
     raise SystemExit(1 if findings["RED"] else 0)
 
 

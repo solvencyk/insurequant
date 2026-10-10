@@ -249,3 +249,15 @@ def test_member_calls_are_not_flagged():
     """`a.b()` · `a?.b()` 는 전역이 아니다 — 여기서 물면 오탐이 폭발한다."""
     _d, refs = G.collect(G.scan_tokens("x.없는메서드(); y?.또다른(); z['k']();"))
     assert not {n for n, _ln in refs} & {"없는메서드", "또다른"}
+
+
+def test_method_shorthand_params_are_bindings_not_calls():
+    """`{ afterDraw(ch){ … } }` 의 `ch` 는 파라미터(바인딩)다 — 값으로 건넨 함수 참조로 세면 오탐이다
+    (2026-10-10 IFRS17.html L2331 실측). 같은 자리에 **정의 없는 참조**를 넘기면 여전히 문다."""
+    d, refs = G.collect(G.scan_tokens(
+        'const p = { id: "x", afterDraw(ch){ const o = ch.options; } };'))
+    assert "ch" in d and "afterDraw" in d
+    missing = {n for n, _ln in refs} - d
+    assert "ch" not in missing
+    d2, refs2 = G.collect(G.scan_tokens("draw(없는콜백);"))
+    assert "없는콜백" in ({n for n, _ln in refs2} - d2), "값으로 건넨 미정의 참조를 놓쳤다"

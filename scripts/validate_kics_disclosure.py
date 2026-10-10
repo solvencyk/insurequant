@@ -522,6 +522,12 @@ _TRANSITION_APPLIERS = frozenset({
     "KR0083", "KR0097", "KR0100", "KR1010", "KR1011", "KR0104",
     # 손보 6: AXA손해·한화손해·롯데손해·예별손해(MG)·흥국화재·NH농협손해
     "KR0049", "KR0002", "KR0003", "KR0004", "KR0005", "KR0032",
+    # 재보 1(19번째): 스코리재보험(SCOR) — FSS 붙임-1 의 19사 중 "데이터 부재"로 빠져 있던 바로 그 사.
+    # owner 결정 2026-10-10 "스코리는 경과조치 적용사 맞다": 요구자본 경과조치 TIR(신규 보험위험 전진적
+    # 인식)을 2023.1Q~2026.2Q 14분기 전부 적용(사이드카 TIR=O, item14후<전). 추가 전 시뮬레이션
+    # (2026-10-10, validation stage 6): (회사,분기,룰) finding 변화 0건, 기존 39사 변화 0건 — 바뀌는 건
+    # 축 census 의 분모/미러 분류(R2·36_irr 적용후 scope 에서 이 회사 제외)뿐.
+    "KR1106",
 })
 
 # 회사별 경과조치 '종류' registry — 정본: FSS 2023-03-20 붙임-1(`trend20230320_3.pdf` p6,
@@ -552,7 +558,7 @@ _TRANSITION_KIND = {
     "KR0032": {"IR", "INT"},             # NH농협손보
     "KR0004": {"IR", "EQ", "INT"},       # 예별손보(MG)
     "KR0049": {"IR"},                    # AXA(악사) (보험리스크만)
-    # SCOR재보험 = {"IR"} (붙임-1), insurequant 데이터 부재로 미등재
+    "KR1106": {"IR"},                    # 스코리재보험(SCOR) (붙임-1: IR 만; 2026-10-10 재보사 적재로 데이터 확보)
 }
 
 # 비율항목 → (분자item, 분모item): 적용후 정합(항등식) 검사용. 27=지급여력비율(item1/item14)·
@@ -822,6 +828,14 @@ def _transition_mmult_after(records: list[dict], readability: dict | None = None
                 tol = (_eff_tol(c) if tol_kind == "flat"
                        else max(_eff_tol(c), DIVERSIFIED_SQRT_TOL_REL * abs(exp)))
                 if abs(post_p - exp) > tol:
+                    # 룰 4 의 적용후 거울(축 15) 발행사 자기모순 박제(owner 2026-10-10). 잔차가
+                    # 박제값과 같을 때만 빠진다 — 이탈하면 그대로 mismatch(RED)다.
+                    pin = _ident_after_pin(c, q, f"mmult{parent}")
+                    if pin is not None and abs((post_p - exp) - pin) <= AFTER_IDENT_PIN_TOL:
+                        # 태그 이름에 'DOCUMENTED_EXEMPT' 를 쓰지 않는다 — 그 이름은 축을 통째로 빼던
+                        # 옛 부재 면제 태그라 test_exemption_absence_pin 이 금지한다. 이건 잔차 일치다.
+                        skipped[f"item{parent}:IDENT_RESIDUAL_PIN_MATCH(룰4 적용후, 잔차 박제 일치)"] += 1
+                        continue
                     mismatch.append((c, q, name.get(c, c), parent, round(post_p, 1), round(exp, 1)))
             elif _all_missing_are_pinned(subs, m, absent, add_item):
                 # 결측 셀이 **전부** 박제된 부재 셀 → 이 축만 미판정. 셀 번호를 세어 인쇄한다
@@ -872,6 +886,179 @@ AFTER_IDENT_ISSUER_INCONSISTENT: dict[tuple[str, str, str], float] = {
     ("KR0073", "2026.1Q", "R5_기준금액"): 938.25,
 }
 AFTER_IDENT_PIN_TOL = 0.01
+
+
+# ---------------------------------------------------------------------------
+# documented exception 5번째 — 평문 항등식 룰 2·4·5·6 의 **발행사 자기모순** (owner 승인 2026-10-10)
+# ---------------------------------------------------------------------------
+# 룰엔진의 평문 항등식 4개(2 순자산합 · 4 기본요구자본 R4 · 5 기준금액 · 6 분산효과)에는 잔차 박제
+# 장치가 **아예 없었다**. 8_life(`_LIFE8_*`) · tier2/다리(`_TIER2_*`) · 적용후 항등식
+# (`AFTER_IDENT_*`) · 36_irr(`IRR_DERIVE_*`)에는 있는데 이 넷만 비어 있어서, 발행사가 표에 자기
+# 산식과 안 맞는 숫자를 인쇄해도(재보사 KR1103·KR1104·KR1105·KR1106, validation 단계 6 표 A)
+# owner 가 등재를 승인할 자리가 없었다(`data/disclosure/_meta/reinsurer_runlog_KR1101-1108_6.md` §4-3).
+#
+# **설계 — 다른 박제 장치와 같은 사상, 통째 skip 금지.**
+#   키 = (회사, 분기) → `findings` 의 "룰|컬럼"(예 "6|적용전", "4|적용후") → 박제 잔차.
+#   즉 등재 단위가 (회사, 분기, 룰, 적용전/후) 이고, 원장 `expected_residual` 의 키 모양
+#   (`룰|적용전`)과 그대로 같다 — `_code_pin_map` 이 원장과 대조한다.
+#   ① `cells`    — 그 항등식의 입력 셀을 마스터 값 그대로 박는다. 한 칸이라도 움직이면
+#                  `IDENT_EXEMPTION_INPUT_DRIFT`, 결측이면 `IDENT_EXEMPTION_INPUT_MISSING` RED.
+#   ② `findings` — 잔차를 박는다. 적용전은 룰엔진 finding 의 diff, 적용후는 그 룰의 적용후 거울
+#                  축(아래 `_IDENT_RULE_AFTER_AXIS`)이 재는 잔차와 같은 식으로 다시 잰다.
+#                  `AFTER_IDENT_PIN_TOL`(0.01) 밖이면 `IDENT_EXEMPTION_RESIDUAL_DRIFT` RED,
+#                  그 축이 더는 안 깨지면 `IDENT_EXEMPTION_INERT` review("등재를 풀어라").
+#   finding 은 지우지 않는다 — status 도 그대로 RED 이고, 차단집계(blocking)에서만 뺀다.
+#   **적용후도 같이 박는다**(owner 2026-07-07 "모든 룰은 적용전·적용후 둘 다"). 적용후 거울은
+#   `_transition_identities_after`(R2/R5/R6)와 `_transition_mmult_after` 축 15(룰 4)가 이 표를
+#   직접 읽는다 — 두 게이트(K-ICS · 데이터계약)가 같은 함수를 부르므로 대답이 갈리지 않는다.
+#   적용후가 실제로 닫히는 버킷(스코리 KR1106: 16후는 결정 8 의 파생값이라 잔차 0)은 박지 않는다
+#   — 깨지지 않는 축을 박으면 그 자체가 죽은 핀이다.
+# 다른 룰(1·7·8 등)로 넓히지 않는다: 이 표에 다른 룰을 적으면 `IDENT_EXEMPTION_MALFORMED` RED.
+_IDENT_RULE_AFTER_AXIS = {"2": "R2_순자산합", "4": "mmult15", "5": "R5_기준금액", "6": "R6_item16"}
+_IDENT_AFTER_AXIS_RULE = {v: k for k, v in _IDENT_RULE_AFTER_AXIS.items()}
+# 각 룰의 입력 항목(박제 셀이 이것을 다 덮어야 한다 — 구조 시험이 강제한다).
+_IDENT_RULE_INPUTS = {"2": (4, 5, 6, 7, 8, 9, 10, 11), "4": (15, 17, 18, 19, 20, 21),
+                      "5": (14, 15, 22, 23), "6": (15, 16, 17, 18, 19, 20, 21)}
+
+_IDENT_ISSUER_INCONSISTENT: dict[tuple[str, str], dict] = {
+    # --- 제네럴재보험 KR1103 2026.2Q (룰 4·5·6, 적용전·적용후) ---------------------------
+    # raw FY2026_Q2 p9 4-2-2 당분기 열: `나. 지급여력기준금액` 341.44 (2025.2Q 값 그대로)와
+    # `Ⅰ. 기본요구자본` 295 를 같이 인쇄한다. 위험액 340+11+32+0+23=406, 분산효과 34 로 닫으면
+    # 기본요구자본은 372, 법인세조정액 77 을 빼면 기준금액 295(같은 쪽 공통적용 표의 지급여력기준
+    # 금액 295 와 같다) — 두 행이 한 칸씩 어긋나 인쇄됐다. 마스터는 공시 그대로(14=15=295).
+    # 경과조치 비적용사라 적용후 = 적용전이고 적용후 거울 축(R5후·R6후·mmult15후)도 같은 잔차다.
+    ("KR1103", "2026.2Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {14: {"값": 295.0, "값_적용후": 295.0}, 15: {"값": 295.0, "값_적용후": 295.0},
+                  16: {"값": 34.0, "값_적용후": 34.0}, 17: {"값": 340.0, "값_적용후": 340.0},
+                  18: {"값": 11.0, "값_적용후": 11.0}, 19: {"값": 32.0, "값_적용후": 32.0},
+                  20: {"값": 0.0, "값_적용후": 0.0}, 21: {"값": 23.0, "값_적용후": 23.0},
+                  22: {"값": 77.0, "값_적용후": 77.0}, 23: {"값": 0.0, "값_적용후": 0.0}},
+        "findings": {"4|적용전": -77.8014, "4|적용후": -77.8014, "5|적용전": 77.0,
+                     "5|적용후": 77.0, "6|적용전": -77.0, "6|적용후": -77.0},
+    },
+    # --- 하노버재보험 KR1104 2026.2Q (룰 2, 적용전·적용후) ---------------------------------
+    # raw FY2026_Q2 p16 4-2-2 이익잉여금 224 인데 같은 문서 p15 재무상태표 이익잉여금은 234.
+    # 325+224−22+42 = 569 ≠ 인쇄된 순자산 579 (234 면 닫힌다). 최신 공시라 후속 전기 칸이 없다.
+    ("KR1104", "2026.2Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {4: {"값": 579.0, "값_적용후": 579.0}, 5: {"값": 325.0, "값_적용후": 325.0},
+                  6: {"값": 0.0, "값_적용후": 0.0}, 7: {"값": 224.0, "값_적용후": 224.0},
+                  8: {"값": 0.0, "값_적용후": 0.0}, 9: {"값": -22.0, "값_적용후": -22.0},
+                  10: {"값": 0.0, "값_적용후": 0.0}, 11: {"값": 42.0, "값_적용후": 42.0}},
+        "findings": {"2|적용전": 10.0, "2|적용후": 10.0},
+    },
+    # --- 알지에이리인슈어런스 KR1105 2025.1Q · 2026.1Q · 2026.2Q (룰 2, 적용전·적용후) ------
+    # 4-2-2 `Ⅰ. 순자산` 행이 세 열 모두 대시(0)로 인쇄되는데 구성행(보통주·이익잉여금·AOCI·
+    # 조정준비금)과 기본자본은 실재한다(2025.1Q p16: 520+2,560−192+3,421 = 6,309 = 기본자본).
+    # 결정 3("0 인쇄는 덮지 않는다")의 대상이 아니라 당분기 열 자체의 인쇄 — 공시 그대로 둔다.
+    # 같은 자기모순이 `2_tier1_bridge` 에도 나며 그쪽은 `_TIER2_ISSUER_INCONSISTENT` 에 박는다.
+    ("KR1105", "2025.1Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {4: {"값": 0.0, "값_적용후": 0.0}, 5: {"값": 520.0, "값_적용후": 520.0},
+                  6: {"값": 0.0, "값_적용후": 0.0}, 7: {"값": 2560.0, "값_적용후": 2560.0},
+                  8: {"값": 0.0, "값_적용후": 0.0}, 9: {"값": -192.0, "값_적용후": -192.0},
+                  10: {"값": 0.0, "값_적용후": 0.0}, 11: {"값": 3421.0, "값_적용후": 3421.0}},
+        "findings": {"2|적용전": -6309.0, "2|적용후": -6309.0},
+    },
+    ("KR1105", "2026.1Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {4: {"값": 0.0, "값_적용후": 0.0}, 5: {"값": 520.0, "값_적용후": 520.0},
+                  6: {"값": 0.0, "값_적용후": 0.0}, 7: {"값": 2724.0, "값_적용후": 2724.0},
+                  8: {"값": 0.0, "값_적용후": 0.0}, 9: {"값": -1035.0, "값_적용후": -1035.0},
+                  10: {"값": 0.0, "값_적용후": 0.0}, 11: {"값": 3560.0, "값_적용후": 3560.0}},
+        "findings": {"2|적용전": -5769.0, "2|적용후": -5769.0},
+    },
+    ("KR1105", "2026.2Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {4: {"값": 0.0, "값_적용후": 0.0}, 5: {"값": 520.0, "값_적용후": 520.0},
+                  6: {"값": 0.0, "값_적용후": 0.0}, 7: {"값": 2782.0, "값_적용후": 2782.0},
+                  8: {"값": 0.0, "값_적용후": 0.0}, 9: {"값": -1299.0, "값_적용후": -1299.0},
+                  10: {"값": 0.0, "값_적용후": 0.0}, 11: {"값": 3496.0, "값_적용후": 3496.0}},
+        "findings": {"2|적용전": -5499.0, "2|적용후": -5499.0},
+    },
+    # --- 스코리재보험 KR1106 10분기 (룰 6, 적용전만) -------------------------------------
+    # 인쇄된 분산효과가 같은 열의 `(1+2+3+4+5) − Ⅰ` (표 자신의 행 라벨 산식)과 안 닫힌다. 각
+    # 분기 값을 인쇄한 문서 2~3개(자기 분기 + 이후 분기의 전기 칸)가 **모두 같은 비폐쇄값**이다
+    # (2023.1Q 만 자기 문서 1,716 · 2023.3Q 문서 1,741 로 갈리고 둘 다 안 닫힌다 — 마스터는 결정
+    # 1 로 1,741). 원인 미규명: "생명장기 내부 분산효과(Σ29~35 − 17)가 섞였다" 가설은 10분기
+    # 전부 반증됐다(차 −260~−837, 단계 8 scor_hyp.py). 같은 발행사 2023.2Q·2025.4Q~2026.2Q 는
+    # 닫힌다. 적용후(16후)는 결정 8 의 파생값이라 닫히므로 박지 않는다.
+    ("KR1106", "2023.1Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 4235.0}, 16: {"값": 1741.0}, 17: {"값": 3511.0}, 18: {"값": 747.0},
+                  19: {"값": 514.86}, 20: {"값": 78.69}, 21: {"값": 435.0}},
+        "findings": {"6|적용전": 689.45},
+    },
+    ("KR1106", "2023.3Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 4496.0}, 16: {"값": 1824.0}, 17: {"값": 3627.0}, 18: {"값": 690.0},
+                  19: {"값": 733.0}, 20: {"값": 92.0}, 21: {"값": 497.0}},
+        "findings": {"6|적용전": 681.0},
+    },
+    ("KR1106", "2023.4Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5168.0}, 16: {"값": 1975.0}, 17: {"값": 4262.0}, 18: {"값": 662.0},
+                  19: {"값": 769.0}, 20: {"값": 104.0}, 21: {"값": 542.0}},
+        "findings": {"6|적용전": 804.0},
+    },
+    ("KR1106", "2024.1Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5120.0}, 16: {"값": 1941.0}, 17: {"값": 4159.0}, 18: {"값": 569.0},
+                  19: {"값": 901.0}, 20: {"값": 111.0}, 21: {"값": 549.0}},
+        "findings": {"6|적용전": 772.0},
+    },
+    ("KR1106", "2024.2Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5348.0}, 16: {"값": 2055.0}, 17: {"값": 4415.0}, 18: {"값": 702.0},
+                  19: {"값": 856.0}, 20: {"값": 110.0}, 21: {"값": 526.0}},
+        "findings": {"6|적용전": 794.0},
+    },
+    ("KR1106", "2024.3Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5404.0}, 16: {"값": 2181.0}, 17: {"값": 4467.0}, 18: {"값": 547.0},
+                  19: {"값": 901.0}, 20: {"값": 106.0}, 21: {"값": 540.0}},
+        "findings": {"6|적용전": 1024.0},
+    },
+    ("KR1106", "2024.4Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5734.0}, 16: {"값": 2416.0}, 17: {"값": 4749.0}, 18: {"값": 578.0},
+                  19: {"값": 1017.0}, 20: {"값": 109.0}, 21: {"값": 539.0}},
+        "findings": {"6|적용전": 1158.0},
+    },
+    ("KR1106", "2025.1Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5785.0}, 16: {"값": 2332.0}, 17: {"값": 4776.0}, 18: {"값": 632.0},
+                  19: {"값": 1059.0}, 20: {"값": 140.0}, 21: {"값": 525.0}},
+        "findings": {"6|적용전": 985.0},
+    },
+    ("KR1106", "2025.2Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5353.0}, 16: {"값": 2030.0}, 17: {"값": 4388.0}, 18: {"값": 673.0},
+                  19: {"값": 1004.0}, 20: {"값": 106.0}, 21: {"값": 496.0}},
+        "findings": {"6|적용전": 716.0},
+    },
+    ("KR1106", "2025.3Q"): {
+        "approved": "owner 2026-10-10",
+        "cells": {15: {"값": 5368.0}, 16: {"값": 2189.0}, 17: {"값": 4458.0}, 18: {"값": 662.0},
+                  19: {"값": 921.0}, 20: {"값": 109.0}, 21: {"값": 483.0}},
+        "findings": {"6|적용전": 924.0},
+    },
+}
+
+
+def _ident_after_pin(code: str, quarter: str, axis: str) -> float | None:
+    """적용후 거울 축(`R2_순자산합`·`R5_기준금액`·`R6_item16`·`mmult15`)의 박제 잔차.
+
+    `_IDENT_ISSUER_INCONSISTENT` 의 `"룰|적용후"` 를 축 이름으로 찾아 준다. 없으면 None —
+    박제가 없으면 그 축은 평소대로 RED 를 낸다(이 함수는 skip 을 만들지 않는다)."""
+    rule = _IDENT_AFTER_AXIS_RULE.get(axis)
+    if rule is None:
+        return None
+    spec = _IDENT_ISSUER_INCONSISTENT.get((code, quarter))
+    if not spec:
+        return None
+    return (spec.get("findings") or {}).get(f"{rule}|적용후")
 
 
 def _transition_identities_after(records: list[dict]) -> tuple[list, Counter, list]:
@@ -926,6 +1113,9 @@ def _transition_identities_after(records: list[dict]) -> tuple[list, Counter, li
             if abs(diff) > tol:
                 row = (c, q, name.get(c, c), rule, round(exp, 2), round(tv, 2), round(diff, 2))
                 pinned = AFTER_IDENT_ISSUER_INCONSISTENT.get((c, q, rule))
+                if pinned is None:
+                    # 평문 룰 2·5·6 의 적용후 거울 박제(owner 2026-10-10) — 같은 잔차 대조.
+                    pinned = _ident_after_pin(c, q, rule)
                 if pinned is not None and abs(diff - pinned) <= AFTER_IDENT_PIN_TOL:
                     pinned_matches.append(row)
                     skipped[f"DOCUMENTED_EXEMPT_PINNED({rule} 잔차 박제 일치)"] += 1
@@ -2072,6 +2262,11 @@ def _after_parent_missing_child_present(records: list[dict]) -> list[tuple]:
 # 적용전만 면제하면 적용후가 그대로 막는다 — '적용후가 최대 검증사각' 의 거울상이다.
 _LIFE8_ISSUER_INCONSISTENT: dict[tuple[str, str], dict[str, float]] = {
     ("KR0079", "2023.2Q"): {"적용전": 1367.4049866571877, "적용후": 1367.4049866571877},
+    # 제네럴재보험 KR1103 2025.2Q (owner 승인 2026-10-10, 재보사 단계 6 표 A). 같은 문서 안에서
+    # p9 4-2-2 `1. 생명장기손해보험위험액` 391.87 과 p11 ②표 29~35(사망 46.85 · 장수 0.49 ·
+    # 장해질병 213.56 · 장기재물 4.78 · 해지 115.33 · 사업비 129.57 · 대재해 97.70)의 R7 합성
+    # 404.5966 이 어긋난다. 경과조치 비적용사라 적용후 = 적용전이고 mmult 축 17후도 같은 잔차다.
+    ("KR1103", "2025.2Q"): {"적용전": -12.726625418453068, "적용후": -12.726625418453068},
 }
 # 박제 허용오차. 마스터 셀은 소수 2자리라 재계산이 결정론적이다 — 느슨하게 잡는 순간
 # '박제' 가 아니라 또 하나의 blanket skip 이 된다.
@@ -2707,6 +2902,40 @@ _TIER2_ISSUER_INCONSISTENT: dict[tuple[str, str], dict] = {
             "2_tier1_bridge": {"flag": "item2 ==", "residual": -58.0},
         },
     },
+    # --- 알지에이리인슈어런스 KR1105 2025.1Q · 2026.1Q · 2026.2Q (owner 승인 2026-10-10) ------
+    # 재보사 단계 6 표 A. 4-2-2 의 `Ⅰ. 순자산` 행이 세 열 모두 대시(0)인데 기본자본은 구성행
+    # 합과 같다(2025.1Q p16: 520 + 2,560 − 192 + 3,421 = 6,309 = 기본자본 = 지급여력금액).
+    # 다리 item2 == item4 − (item12 − 초과) − item13 = 0 이 6,309 와 어긋난다 — 순자산 0 인쇄가
+    # 원인이고 룰 2(순자산합)의 같은 잔차는 `_IDENT_ISSUER_INCONSISTENT` 에 박는다.
+    # 경과조치 비적용사라 적용후 컬럼도 같은 값이고 `2_tier1_bridge_post`(관계식 미확립 → YELLOW)도
+    # 같은 잔차라 함께 박는다(등급은 안 바뀐다 — 재검산만 켜진다).
+    ("KR1105", "2025.1Q"): {
+        "cells": {1: {"값": 6309.0, "값_적용후": 6309.0}, 2: {"값": 6309.0, "값_적용후": 6309.0},
+                  3: {"값": 0.0, "값_적용후": 0.0}, 4: {"값": 0.0, "값_적용후": 0.0},
+                  12: {"값": 0.0, "값_적용후": 0.0}, 13: {"값": 0.0, "값_적용후": 0.0}},
+        "findings": {
+            "2_tier1_bridge": {"flag": "item2 ==", "residual": 6309.0},
+            "2_tier1_bridge_post": {"flag": "item2 ==", "residual": 6309.0},
+        },
+    },
+    ("KR1105", "2026.1Q"): {
+        "cells": {1: {"값": 5769.0, "값_적용후": 5769.0}, 2: {"값": 5769.0, "값_적용후": 5769.0},
+                  3: {"값": 0.0, "값_적용후": 0.0}, 4: {"값": 0.0, "값_적용후": 0.0},
+                  12: {"값": 0.0, "값_적용후": 0.0}, 13: {"값": 0.0, "값_적용후": 0.0}},
+        "findings": {
+            "2_tier1_bridge": {"flag": "item2 ==", "residual": 5769.0},
+            "2_tier1_bridge_post": {"flag": "item2 ==", "residual": 5769.0},
+        },
+    },
+    ("KR1105", "2026.2Q"): {
+        "cells": {1: {"값": 5499.0, "값_적용후": 5499.0}, 2: {"값": 5499.0, "값_적용후": 5499.0},
+                  3: {"값": 0.0, "값_적용후": 0.0}, 4: {"값": 0.0, "값_적용후": 0.0},
+                  12: {"값": 0.0, "값_적용후": 0.0}, 13: {"값": 0.0, "값_적용후": 0.0}},
+        "findings": {
+            "2_tier1_bridge": {"flag": "item2 ==", "residual": 5499.0},
+            "2_tier1_bridge_post": {"flag": "item2 ==", "residual": 5499.0},
+        },
+    },
 }
 
 
@@ -2884,6 +3113,146 @@ def _tier2_issuer_inconsistent(records: list[dict], findings: list[dict]):
                 accepted.append(f)
     return accepted, red, review, detail
 
+
+def _ident_after_residual(rule: str, m: dict) -> float | None:
+    """룰 2·4·5·6 의 **적용후** 잔차를, 그 룰의 적용후 거울 축과 같은 식으로 잰다.
+
+    식은 재타이핑하지 않는다 — R2/R5/R6 는 `_TRANS_AFTER_IDENT`, 룰 4 는 `_TRANS_PARENT_SUBS[15]`
+    (R4 행렬은 룰엔진 import)에서 그대로 꺼낸다. 축과 다른 식으로 재면 박제가 축과 어긋난다.
+    `m` = {item: 값_적용후}. 입력이 하나라도 결측이면 None."""
+    axis = _IDENT_RULE_AFTER_AXIS[rule]
+    if axis == "mmult15":
+        subs, mat, add_item, _tk = _TRANS_PARENT_SUBS[15]
+        vals = [m.get(i) for i in subs]
+        if m.get(15) is None or m.get(add_item) is None or any(v is None for v in vals):
+            return None
+        return m[15] - (_diversified_sqrt(np.array(vals, dtype=float), mat) + m[add_item])
+    for name_, tgt, ins, fn, _is_ratio in _TRANS_AFTER_IDENT:
+        if name_ != axis:
+            continue
+        if m.get(tgt) is None or any(m.get(i) is None for i in ins):
+            return None
+        exp = fn(m)
+        return None if exp is None else m[tgt] - exp
+    return None
+
+
+def _ident_issuer_inconsistent(records: list[dict], findings: list[dict]):
+    """`_IDENT_ISSUER_INCONSISTENT`(룰 2·4·5·6 발행사 자기모순) 를 매 실행 재검산한다.
+
+    두 겹(`_tier2_issuer_inconsistent` 와 같은 계약):
+      ① `cells`    — 마스터 셀이 박제값 그대로인가(데이터가 움직였는가).
+      ② `findings` — "룰|적용전" 은 룰엔진 RED finding 의 diff 가, "룰|적용후" 는 거울 축과 같은
+                     식으로 다시 잰 잔차가 박제값과 같은가(룰이 움직였는가).
+    반환 (accepted_findings, red, review, detail)
+      accepted_findings — 차단집계에서 뺄 **적용전** RED finding 객체(셀·잔차 둘 다 통과한 것만).
+                          적용후는 거울 축이 `_ident_after_pin` 으로 직접 뺀다(finding 객체가 없다).
+      red    IDENT_EXEMPTION_MALFORMED / INPUT_MISSING / INPUT_DRIFT / RESIDUAL_DRIFT
+      review IDENT_EXEMPTION_INERT  — 박제한 축이 더는 안 깨진다(등재를 풀어라)
+      detail (code, name, quarter, rule, column, pinned, actual, delta) — 인쇄·리포트용."""
+    tol = AFTER_IDENT_PIN_TOL
+
+    def _num(v):
+        try:
+            return float(str(v).replace(",", ""))
+        except (TypeError, ValueError):
+            return None
+
+    byq: dict[tuple, dict] = {}
+    name: dict[str, str] = {}
+    for r in records:
+        c, q, it = r.get(KEY_CODE), r.get(KEY_QUARTER), r.get(KEY_ITEM)
+        name[c] = r.get(KEY_NAME, c)
+        try:
+            it = int(it)
+        except (TypeError, ValueError):
+            continue
+        if c and q:
+            byq.setdefault((c, q), {})[it] = {KEY_VALUE: _num(r.get(KEY_VALUE)),
+                                              KEY_VALUE_POST: _num(r.get(KEY_VALUE_POST))}
+    accepted, red, review, detail = [], [], [], []
+    for (c, q), spec in sorted(_IDENT_ISSUER_INCONSISTENT.items()):
+        nm = name.get(c, c)
+        m = byq.get((c, q))
+        if m is None:
+            red.append({"rule": "IDENT_EXEMPTION_INPUT_MISSING", "code": c, "quarter": q,
+                        "detail": "면제 등재분인데 마스터에 그 (회사,분기) 버킷이 없다"})
+            continue
+        cells_ok = True
+        for item, cols in sorted((spec.get("cells") or {}).items()):
+            row = m.get(item)
+            for col, pinned in cols.items():
+                actual = None if row is None else row.get(col)
+                if actual is None:
+                    cells_ok = False
+                    red.append({"rule": "IDENT_EXEMPTION_INPUT_MISSING", "code": c, "quarter": q,
+                                "item": item, "column": col,
+                                "detail": f"item{item} [{col}] 결측 — 박제값 {pinned} 확인 불가. "
+                                          "결측은 SKIP 이 아니라 RED 다"})
+                elif abs(actual - pinned) > tol:
+                    cells_ok = False
+                    red.append({"rule": "IDENT_EXEMPTION_INPUT_DRIFT", "code": c, "quarter": q,
+                                "item": item, "column": col,
+                                "detail": f"item{item} [{col}] 박제 {pinned} -> 실측 {actual} "
+                                          f"(delta {actual - pinned:+.4f}, tol {tol}). "
+                                          "owner 판단의 전제(원문 그대로)가 바뀌었다 — 면제 무효"})
+        post = {it: v.get(KEY_VALUE_POST) for it, v in m.items()}
+        for key, pinned in sorted((spec.get("findings") or {}).items()):
+            rule, _, col = key.partition("|")
+            if rule not in _IDENT_RULE_AFTER_AXIS or col not in (_PIN_COL_PRE, _PIN_COL_POST):
+                red.append({"rule": "IDENT_EXEMPTION_MALFORMED", "code": c, "quarter": q,
+                            "axis": key,
+                            "detail": f"'{key}' — 이 장치는 룰 2·4·5·6 × 적용전/적용후 만 받는다"})
+                continue
+            if col == _PIN_COL_PRE:
+                hit = [f for f in findings
+                       if f.get("status") == "RED" and str(f.get("rule")) == rule
+                       and f.get(KEY_CODE) == c and f.get(KEY_QUARTER) == q]
+                if not hit:
+                    review.append({"rule": "IDENT_EXEMPTION_INERT", "code": c, "quarter": q,
+                                   "axis": key,
+                                   "detail": f"박제한 축 {key} 에 RED 가 없다 — 데이터가 수렴했거나 "
+                                             "룰 허용오차가 바뀌었다. 면제가 무용해졌으면 등재를 풀어라"})
+                    continue
+                f = hit[0]
+                actual = _num(f.get("diff"))
+            else:
+                actual = _ident_after_residual(rule, post)
+                f = None
+            detail.append((c, nm, q, rule, col, pinned,
+                           None if actual is None else round(actual, 4),
+                           None if actual is None else round(actual - pinned, 4)))
+            if actual is None:
+                red.append({"rule": "IDENT_EXEMPTION_INPUT_MISSING", "code": c, "quarter": q,
+                            "axis": key,
+                            "detail": f"{key} 잔차를 잴 수 없다(입력 결측) — 박제 {pinned} 확인 불가"})
+                continue
+            if abs(actual - pinned) > tol:
+                red.append({"rule": "IDENT_EXEMPTION_RESIDUAL_DRIFT", "code": c, "quarter": q,
+                            "axis": key,
+                            "detail": f"{key} 박제 {pinned} -> 실측 {actual:.4f} (tol {tol}). "
+                                      "owner 판단의 전제가 바뀌었다 — 면제 무효"})
+                continue
+            if col == _PIN_COL_POST and abs(actual) <= _eff_tol(c):
+                review.append({"rule": "IDENT_EXEMPTION_INERT", "code": c, "quarter": q,
+                               "axis": key,
+                               "detail": f"적용후 잔차 {actual:.4f} 가 축 허용오차 {_eff_tol(c)} 안이다 "
+                                         "— 박제할 RED 가 없다. 등재를 풀어라"})
+                continue
+            if f is not None and cells_ok:
+                accepted.append(f)
+    return accepted, red, review, detail
+
+
+def _mmult_after_life8_exempt(mmult_mismatch: list, life8_ok: set) -> tuple[list, list]:
+    """적용후 mmult 축 17 의 RED 중 `_LIFE8_ISSUER_INCONSISTENT` 가 두 컬럼 모두 재검산을 통과한
+    (회사,분기)만 떼어 낸다 → (남길 것, 면제된 것). K-ICS 게이트와 데이터계약 게이트가 **같은
+    함수**를 부른다 — 한쪽만 빼면 같은 finding 에 두 게이트가 다른 대답을 한다(2026-10-10 단계 8:
+    데이터계약 게이트에는 이 필터가 없어 KR1103 2025.2Q 축 17후가 등재 후에도 RED 로 남을 뻔했다)."""
+    exempted = [row for row in mmult_mismatch if row[3] == 17 and (row[0], row[1]) in life8_ok]
+    kept = [row for row in mmult_mismatch if row not in exempted]
+    return kept, exempted
+
 def _irr_pin_recheck(records: list[dict]) -> tuple[list, list]:
     """`IRR_DERIVE_ISSUER_INCONSISTENT` 를 매 실행 마스터에 대고 **인쇄용으로** 재검산한다.
 
@@ -2953,6 +3322,8 @@ def _exemption_registries() -> dict[str, frozenset]:
         "_LIFE8_ISSUER_INCONSISTENT": frozenset(_LIFE8_ISSUER_INCONSISTENT),
         # 잔차 박제형 면제 3번째 (tier2/다리 발행사 자기모순, owner 위임 2026-08-24).
         "_TIER2_ISSUER_INCONSISTENT": frozenset(_TIER2_ISSUER_INCONSISTENT),
+        # 잔차 박제형 면제 5번째 (평문 룰 2·4·5·6 발행사 자기모순, owner 승인 2026-10-10).
+        "_IDENT_ISSUER_INCONSISTENT": frozenset(_IDENT_ISSUER_INCONSISTENT),
         # 잔차 박제형 면제 2번째. 룰엔진에 살지만 근거 검사는 여기서 받는다 — 레지스트리를
         # 여기 등록하지 않으면 그 면제는 근거 없이 조용히 산다.
         "IRR_DERIVE_ISSUER_INCONSISTENT": frozenset(IRR_DERIVE_ISSUER_INCONSISTENT),
@@ -3379,6 +3750,10 @@ def _code_pin_map() -> dict[tuple[str, str, str], dict]:
         }
     for (c, q), pins in _LIFE8_ISSUER_INCONSISTENT.items():
         out[("_LIFE8_ISSUER_INCONSISTENT", c, q)] = {"expected_residual": dict(pins)}
+    for (c, q), spec in _IDENT_ISSUER_INCONSISTENT.items():
+        # 키가 이미 원장 모양("룰|적용전")이다.
+        out[("_IDENT_ISSUER_INCONSISTENT", c, q)] = {
+            "expected_residual": dict(spec.get("findings") or {})}
     for (c, q), pins in IRR_DERIVE_ISSUER_INCONSISTENT.items():
         out[("IRR_DERIVE_ISSUER_INCONSISTENT", c, q)] = {"expected_residual": dict(pins)}
     for (c, q), cells in _AFTER_SOURCE_ABSENT_CELLS.items():
@@ -3959,9 +4334,7 @@ def main() -> int:
         ],
     }
     life8_ok, life8_red, life8_review, life8_detail = _life8_issuer_inconsistent(records)
-    mmult_exempted = [row for row in mmult_mismatch
-                      if row[3] == 17 and (row[0], row[1]) in life8_ok]
-    mmult_mismatch = [row for row in mmult_mismatch if row not in mmult_exempted]
+    mmult_mismatch, mmult_exempted = _mmult_after_life8_exempt(mmult_mismatch, life8_ok)
     report["transition_mmult_after"] = {
         "scope": "all 39 filers x 3 axes (15/17/19) — 2026-08-21 widened from 18 appliers x 2 axes",
         "mismatch_red": [
@@ -3989,7 +4362,8 @@ def main() -> int:
         "not_evaluated": dict(sorted(after_ident_skipped.items())),
         "documented_exception": {
             "doc": ("발행사 자기모순 documented exception — blanket skip 아니라 기대잔차 박제 "
-                    "(owner 2026-09-17 승인). registry=AFTER_IDENT_ISSUER_INCONSISTENT"),
+                    "(owner 2026-09-17 승인). registry=AFTER_IDENT_ISSUER_INCONSISTENT "
+                    "+ _IDENT_ISSUER_INCONSISTENT 의 '룰|적용후'(R2/R5/R6, owner 2026-10-10)"),
             "pin_tolerance": AFTER_IDENT_PIN_TOL,
             "matched": [
                 {"code": c, "quarter": q, "name": n, "rule": rule,
@@ -4205,8 +4579,45 @@ def main() -> int:
         "residual_drift_red": casc_red,
         "inert": [f"{c.get('company')} {c.get('quarter')} {c.get('rule')}" for c in casc_inert],
     }
+    # documented exception 5번째 — 평문 룰 2·4·5·6 발행사 자기모순(owner 2026-10-10). 같은 층에서
+    # 뺀다(findings 매트릭스는 그대로, 차단집계에서만). 적용후 거울은 축 함수가 직접 뺐다.
+    ident_accept, ident_red, ident_review, ident_detail = _ident_issuer_inconsistent(
+        records, findings)
+    ident_accept_red = [f for f in ident_accept if f.get("status") == "RED"]
     red_blocking = (red - len(life8_exempt_findings) - len(tier2_accept_red)
-                    - len(casc_accept_red) + len(casc_red))
+                    - len(casc_accept_red) + len(casc_red) - len(ident_accept_red))
+    report["ident_issuer_inconsistent_exception"] = {
+        "doc": ("평문 항등식 룰 2·4·5·6 발행사 자기모순 documented exception (owner 승인 2026-10-10) "
+                "— blanket skip 이 아니라 두 겹 박제다. ① 입력 셀을 매 실행 재확인(INPUT_DRIFT/"
+                "INPUT_MISSING RED) ② 적용전은 룰엔진 finding 의 diff, 적용후는 거울 축(R2후·R5후·"
+                "R6후·mmult15후)과 같은 식으로 잰 잔차가 박제값(tol 0.01)과 같은지(RESIDUAL_DRIFT RED"
+                " · INERT review). finding 은 지우지 않고 차단집계에서만 뺀다."),
+        "registry": {
+            f"{c}|{q}": {"approved": spec.get("approved"),
+                         "cells": {f"item{it}": cols for it, cols in sorted(spec["cells"].items())},
+                         "findings": spec["findings"]}
+            for (c, q), spec in sorted(_IDENT_ISSUER_INCONSISTENT.items())
+        },
+        "pin_tolerance": AFTER_IDENT_PIN_TOL,
+        "residual_recheck": [
+            {"code": c, "name": n, "quarter": q, "rule": rule, "column": col,
+             "pinned": p, "actual": a, "delta": d}
+            for c, n, q, rule, col, p, a, d in ident_detail
+        ],
+        "red": ident_red,
+        "review": ident_review,
+        "exempted_findings": [
+            {"rule": f.get("rule"), "code": f.get(KEY_CODE), "quarter": f.get(KEY_QUARTER),
+             "diff": f.get("diff"), "expected": f.get("expected"), "actual": f.get("actual")}
+            for f in ident_accept
+        ],
+        "blocking_equation": {
+            "red_total": red, "life8": len(life8_exempt_findings),
+            "tier2_red": len(tier2_accept_red), "cascade": len(casc_accept_red),
+            "cascade_drift": len(casc_red), "ident": len(ident_accept_red),
+            "blocking": red_blocking,
+        },
+    }
     report["tier2_issuer_inconsistent_exception"] = {
         "doc": ("tier2/다리 축 발행사 자기모순 documented exception — blanket skip 이 아니라 "
                 "**두 겹 박제**다. ① raw 로 판독한 마스터 셀을 매 실행 재확인(INPUT_DRIFT/"
@@ -4294,7 +4705,9 @@ def main() -> int:
     if _LIFE8_ISSUER_INCONSISTENT:
         print(f"  documented exception (발행사 자기모순, 잔차 박제): "
               f"blocking RED={red_blocking} (= {red} − 8_life {len(life8_exempt_findings)}건 "
-              f"− tier2 RED {len(tier2_accept_red)}건; tier2 YELLOW 박제 "
+              f"− tier2 RED {len(tier2_accept_red)}건 − 재작성 연쇄 {len(casc_accept_red)}건 "
+              f"+ 연쇄 이탈 {len(casc_red)}건 − 항등식(2·4·5·6) {len(ident_accept_red)}건; "
+              f"tier2 YELLOW 박제 "
               f"{len(tier2_accept) - len(tier2_accept_red)}건은 차감 대상 아님) "
               f"· 적용후 mmult item17 면제 {len(mmult_exempted)}건")
         for c, n, q, col, p, a, d in life8_detail:
@@ -4319,6 +4732,22 @@ def main() -> int:
                   f"{' item' + str(r['item']) if r.get('item') else ''}"
                   f"{' ' + r['axis'] if r.get('axis') else ''}: {r.get('detail')}")
         for r in tier2_review:
+            print(f"    REVIEW [{r['rule']}] {r.get('quarter')} {r.get('code')} "
+                  f"{r.get('axis', '')}: {r.get('detail')}")
+    if _IDENT_ISSUER_INCONSISTENT:
+        print(f"  항등식 룰 2·4·5·6 발행사 자기모순 documented exception (잔차 박제, 두 겹, owner 2026-10-10): "
+              f"{len(_IDENT_ISSUER_INCONSISTENT)}버킷 · 박제 "
+              f"{sum(len(s['findings']) for s in _IDENT_ISSUER_INCONSISTENT.values())}축 재검산"
+              f"(적용전 RED 면제 {len(ident_accept_red)}건 · 적용후는 거울 축이 직접 대조)")
+        for c, n, q, rule, col, p, a, d in ident_detail:
+            verdict = "DRIFT" if (a is None or abs(d) > AFTER_IDENT_PIN_TOL) else "일치"
+            print(f"    {q} {c} {n} [룰 {rule} {col}] 박제잔차={p} 실측={a} Δ={d} "
+                  f"(tol {AFTER_IDENT_PIN_TOL}) → {verdict}")
+        for r in ident_red:
+            print(f"    RED [{r['rule']}] {r.get('quarter')} {r.get('code')}"
+                  f"{' item' + str(r['item']) if r.get('item') else ''}"
+                  f"{' ' + r['axis'] if r.get('axis') else ''}: {r.get('detail')}")
+        for r in ident_review:
             print(f"    REVIEW [{r['rule']}] {r.get('quarter')} {r.get('code')} "
                   f"{r.get('axis', '')}: {r.get('detail')}")
     print(
@@ -4691,6 +5120,7 @@ def main() -> int:
                  or after_incomplete or div_negative or post_parent_red
                  # 메타룰(2026-08-21): 판정하지 않은 축·적용사 미러링 오염·근거 없는 면제는 '통과'가 아니다.
                  or axis_red or axis_mirror_red or exempt_red or life8_red or tier2_red
+                 or ident_red
                  # 사이드카가 최신 분기를 안 담으면 그 축은 '통과'가 아니라 '미판정'이다.
                  or sidecar_red
                  # 동어반복 축의 'FAIL 0' 도 통과가 아니다 — 되맞춘 값은 룰을 영원히 통과시킨다.

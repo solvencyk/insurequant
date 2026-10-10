@@ -1,18 +1,23 @@
 # Insurequant Validation TODO (Stage 3)
 
-> 갱신 2026-10-07 · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
+> 갱신 2026-10-10 · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
 > 2026-10-07 정리 전 전문(V1~V19 블록 포함)은 `docs/todo_archive_validation.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-10 (19차) 재보사 단계 8 — 룰 2·4·5·6 잔차 박제 장치 `_IDENT_ISSUER_INCONSISTENT` 신설 + owner 승인 29건 등재** — K-ICS 게이트
+  RED 65→57 · blocking 29→**0** · 설명 안 되는 RED 0(exit 2 는 census 헤드라인 전용 12칸). 기존 39사 finding 변화 0, 골든 2종 `--update`.
+  미커밋. 남은 것: census 12칸 owner 결정 · pytest (다) 발주분 · 포트폴리오 R3 KR0100 3건 owner 판단. 런로그 `reinsurer_runlog_KR1101-1108_8.md`.
+- **2026-10-07 (18차) 채널별 유지율 검증(VP) — verdict RED 1 · YELLOW 8** — 표 45개 렌더 대조 오독 0, errata 17/17·보정 9/9 정당, 마스터 1:1.
+  RED = KR0004 2026.2Q 금액 44행 1/1000 규모인데 단위 '백만원' 무플래그. 보고서 `data/_derived/validation_20261007_persistency.md`(미커밋).
+  발주 parser `20261007T1001Z`x2 · downloader `20261007T1001Z`(KR0150).
 - **2026-10-06 (17차) `PUBLIC_EXPORT_INTERNAL_JARGON` 신설** — `validate_live_artifacts.py` 가 공개 다운로드 전 열의 문자열에서
   내부 진단 문자열 4패턴을 RED 로 막는다. 사고 직전 스냅샷 660행 전부 검출, 현재 14시트 0건. `54ec835`.
-- **2026-09-23 (16차) `kics_duration_gap.json` 검사기 배선**(`check_kics_duration_gap`) — `test_push_gate_wiring` 이 잡은 무검사 라이브 마스터. `ec302b0`.
-- **2026-09-21 (15차) 금리민감도 `RS6_PHASE_LEVEL_CENSUS`(RED) 신설 + RS2 적용후 앵커** — 구멍 31칸은 `RS6_KNOWN_HOLES`(백필 worklist)로
-  parser 발주. 신한라이프 `36_irr` 2분기는 기존 박제 예외로 판정. `f238146`·`6096f4e`.
 
 ## 열린 일
 
+- [ ] **유지율 VP 재검증** — parser 가 `inbox/parser/20261007T1001Z__validation__MULTI_2023.2Q-2026.2Q__persistency_validation_findings.md`
+  를 answered 하면 RED-1(KR0004 2026.2Q 단위)·YELLOW-2/4/6/8 재확인, MI 보강 티켓(KR0051·KR1000)·downloader KR0150 도 같이. 재현 스크립트는 보고서 머리 경로.
 - [ ] **금리위험 순자산가치 등식 게이트** — `자산총계 − 부채총계 == item41~46`(또는 형제 시나리오 배율 plausibility).
   AIA 2024.4Q 항목46 100배가 `max(base−steep,0)` 뒤에 숨어 `36_irr` 가 구조적으로 못 봤고 듀레이션갭 역검산만 잡았다(2026-10-06).
 - [ ] **UH-26 배포 페이지 런타임 스모크(헤드리스)** — 배선 전에 타당성부터: CDN 4종 로컬 캐시 SRI 일치, 브라우저 없는 클론에서

@@ -573,6 +573,22 @@ REGISTRY: dict[str, dict] = {
                   "박아 두는 장치다. blanket skip 은 그 뒤에 생기는 새 오류까지 같이 가려 버린다.",
         "mutation": "inline",
     },
+    "ident_pinned_residual": {
+        "statement": "평문 항등식 룰 2·4·5·6 이 깨진 칸 중 **발행사 자기모순으로 owner 가 등재를 승인한 것**은 "
+                     "(회사,분기,룰,적용전/후) 별로 잔차를 박제하고, 입력 셀과 잔차가 둘 다 박제값과 "
+                     "같을 때만 차단집계에서 뺀다: |실측잔차 − 박제잔차| <= AFTER_IDENT_PIN_TOL. 적용전은 "
+                     "룰엔진 finding 의 diff, 적용후는 거울 축(R2후·R5후·R6후·mmult15후)과 같은 식.",
+        "impl": [("scripts/validate_kics_disclosure.py", "_ident_issuer_inconsistent"),
+                 ("scripts/validate_kics_disclosure.py", "_ident_after_residual")],
+        "kind": "IDENTITY",
+        "tol": {"abs": 0.01, "rel": 0.0, "unit": "억원"},
+        "tol_from": [("validate_kics_disclosure", "AFTER_IDENT_PIN_TOL", 0.01)],
+        "measured": "등재 15버킷 · 24축(적용전 17 · 적용후 7), 2026-10-10 라이브 마스터에서 전부 Δ 0.0000. "
+                    "박제 셀 154칸·잔차 24축을 하나씩 0.02 옮기면 전부 RED 로 돌아온다(변이시험).",
+        "reason": "AFTER_IDENT_ISSUER_INCONSISTENT 와 같은 '잔차 고정' 장치를 적용전 평문 룰까지 넓힌 것이다. "
+                  "통째 skip 이 아니라 셀·잔차 두 겹을 매 실행 재검산한다.",
+        "mutation": "tests/test_ident_issuer_inconsistent_exemption.py",
+    },
     "9": {
         "statement": "경과조치 방향성: item2_적용후 >= item2_적용전 (준비금 경과조치는 "
                      "가용자본을 올리지 내리지 않는다)",

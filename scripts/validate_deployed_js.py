@@ -410,8 +410,12 @@ def collect(toks: list[Tok]) -> tuple[set[str], list[tuple[str, int]]]:
             after = tk(end + 1)
             if after is not None and after.kind == "punct" and after.val == "{":
                 # `foo(a){ … }` = 객체 메서드 축약 / 클래스 메서드 / get·set 접근자.
-                # 호출이 아니라 **정의**다.
+                # 호출이 아니라 **정의**다. 괄호 안 `a` 는 `function` 파라미터와 같은 **바인딩**이다
+                # (2026-10-10 실측: IFRS17.html `afterDatasetsDraw(ch){` 의 `ch` 를 아래 '값으로 건네는
+                # 함수 참조' 규칙이 호출로 셌다 = 오탐 RED 1. 전 5페이지 시뮬레이션: 새로 바인딩되는 이름은
+                # 그 `ch` 1개, 사라지는 finding 도 그 1건뿐).
                 defined.add(v)
+                defined |= _names_in(toks, i + 2, end)
             else:
                 calls.append((v, t.line))
         elif (not member and v not in RESERVED

@@ -55,6 +55,7 @@ _TRANSITION_APPLIERS = frozenset({
     "KR0070", "KR0071", "KR0072", "KR0073", "KR0076", "KR0082",
     "KR0083", "KR0097", "KR0100", "KR1010", "KR1011", "KR0104",
     "KR0049", "KR0002", "KR0003", "KR0004", "KR0005", "KR0032",
+    "KR1106",  # 스코리재보험 — owner 2026-10-10, validate_kics_disclosure.py 와 동기화
 })
 
 # raw 도출 불가로 이미 확정된 (회사,분기) — 손대지 않는다.
