@@ -1,11 +1,23 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-10-07 · Stage: cross-stage
+> Last updated: 2026-10-11 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
 
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
+
+---
+
+## 2026-10-11 — 재보사 8곳 K-ICS 스윕 + IFRS17 섹션 3 콤보(발생사고요소) + 모바일 손해율 curve (orchestrator, 작업 브랜치 push `6841689`)
+
+owner 지시: 외국 재보사 국내지점 7곳 + 마이브라운(KR1101~KR1108)을 K-ICS 마스터에 편입하고(기존 39사 25,522행 git HEAD 와 동일 유지), 새 8곳이 든 마스터를 라이브에 올리기 전에 index/compare 를 생보·손보·재보험사·보증 3분류로 나누며, IFRS17.html 섹션 3 을 묶음·누적 막대 콤보(잔여보장요소 + 발생사고요소)로 보강.
+
+- **K-ICS 스윕**: parser-kics 단계 1~11(+ 퍼시픽 2023.3Q·4Q·2024.3Q, 스위스리아시아 2023.4Q 완성본, 금리민감도·듀레이션갭 재보사)·validation 단계 6~10. 새 게이트 장치 3종 — `_IDENT_ISSUER_INCONSISTENT`(룰 2·4·5·6 잔차 박제), `_CENSUS_SOURCE_ABSENT`(census 원천 부재, raw sha·매니페스트·근거 원장 재검증), `rs_pinned_exemptions`(금리민감도 RS1·RS5). 모두 「근거가 깨지면 다시 RED」. 승인 등재: 자기모순 21·원천 부재 8·census 8·퍼시픽 2023.3Q 1·예별 2025.3Q 법인세 1·금리민감도 5.
+- **IFRS17 LIC**: 새 마스터 없이 `insurance_liability_portfolio.json` 항목 10~15(발생사고요소, 억원) 적재 + 2024.4Q·2023.4Q 백필(BEL·RA 는 DART 주석에 2023.1Q 부터 공시돼 있었음 — 「2025.1Q 부터」는 우리 마스터의 한계였음), 재작성 3사 FY2024 비교열 통일 + 사이드카. IBK연금 2-4 정정 48칸.
+- **화면**: index·compare 3분류(`data/company_segment.json`), 섹션 3 콤보(CSM 키컬러·BEL→RA→CSM 표·기준 토글 따라 기간·2023 연말 구성 없는 회사 처리·재작성 †), compare 모바일 손해율 curve 안 A.
+- **교훈**: ① 검증 단계에서 데이터계약 게이트만 재면 도메인 게이트(금리민감도·듀레이션갭) 차단을 놓친다 — push 훅 전체를 돌려야 한다 ② 에이전트가 `python -`(stdin heredoc)로 부른 맨 python 이 고아 CPU 스핀을 두 번 만들었다 ③ 개인 문서·77MB 파일은 전체 커밋 지시에도 add -A 금지(`data/loss_ratio/risk_premium_vs_expected_claims.json` 77MB 가 `78471c0` 으로 올라감 — 후속 판단).
+- 라이브 `main` 배포는 owner 가 폰에서(`scripts/android_push_and_deploy.sh --from-origin --branch fix/csm-product-segmented-columns`).
 
 ---
 

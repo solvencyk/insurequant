@@ -1,5 +1,10 @@
 # TODO archive — `TODO.md` (Status 이력, 읽기 지연)
 
+- **2026-10-06 AIA생명 2024.4Q 항목46 단위 정정(3607646 → 36076.46) + `PUBLIC_EXPORT_INTERNAL_JARGON` 신설.**
+  라이브 `main` `420cdc3`(build_id `54ec835`, owner 폰 배포). 상세 `docs/changelog_parser_kics.md`·`docs/changelog_validation.md` 2026-10-06.
+- **2026-09-22 금리 듀레이션갭 마스터 신설** — `kics_duration_gap.json`(39사 × 짝수분기 270셀, 분모 = 금리위험액 현황 자산총계)
+  + 라이나생명 2023.4Q PL 20칸. 라이브 `22e2471`. 상세는 archive.
+
 ## 2026-10-07 정리 — 정리 전 `TODO.md` 전문 (무수정, 예외 등재부·라운드 절차는 별도 문서로 이동)
 
 # Insurequant TODO
