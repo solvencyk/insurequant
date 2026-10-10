@@ -1,0 +1,413 @@
+{
+ "_note": "경영공시 PDF 요약 포괄손익계산서(감독회계 총괄) -> PL_breakdown 공란 칸 파트. 마스터 미반영(병합은 단일 병합자). 단위 억원->백만원(x100). 값=연누계. 17/20/21 은 투자손익<->영업외손익 재분류로 마스터 개념과 달라 싣지 않는다(check_only).",
+ "company": "KR0008",
+ "cells": [
+  {
+   "공시분기": "2023.2Q",
+   "status": "OK",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0008_삼성화재해상보험_amended.pdf",
+   "page": 5,
+   "sha256": "cef133b66f9213b87343b1f5ae79704e097cd1f5097f8a61f6d2b384d60ee5ba",
+   "scale": "원문 억원 x100 = 백만원",
+   "items": {
+    "22": {
+     "항목명": "세전이익",
+     "값": 1586800.0,
+     "값_억원": 15868.0,
+     "raw_label": "법인세비용차감전순이익",
+     "raw_value": "15,868",
+     "extraction_method": "geometry_table(fitz find_tables)",
+     "값_당분기": 770924.0,
+     "당분기_근거": "누계 - 2023.1Q 마스터 누계(815876.0)"
+    },
+    "23": {
+     "항목명": "법인세",
+     "값": 402300.0,
+     "값_억원": 4023.0,
+     "raw_label": "법인세비용",
+     "raw_value": "4,023",
+     "extraction_method": "geometry_table(fitz find_tables)",
+     "값_당분기": 166563.0,
+     "당분기_근거": "누계 - 2023.1Q 마스터 누계(235737.0)"
+    },
+    "24": {
+     "항목명": "당기순이익",
+     "값": 1184500.0,
+     "값_억원": 11845.0,
+     "raw_label": "당기순이익",
+     "raw_value": "11,845",
+     "extraction_method": "geometry_table(fitz find_tables)",
+     "값_당분기": 604362.0,
+     "당분기_근거": "누계 - 2023.1Q 마스터 누계(580138.0)"
+    }
+   },
+   "reference_check_only": {
+    "1": {
+     "항목명": "보험손익",
+     "값": 1205600.0,
+     "값_억원": 12056.0,
+     "raw_label": "보험손익",
+     "raw_value": "12,056",
+     "extraction_method": "geometry_table(fitz find_tables)",
+     "skipped": true,
+     "skip_reason": "마스터 개념과 불일치(겹침 0/8 통과, ±0.5%)"
+    },
+    "16": {
+     "항목명": "기타사업비용",
+     "값": 172700.0,
+     "값_억원": 1727.0,
+     "raw_label": "(기타사업비용)",
+     "raw_value": "1,727",
+     "extraction_method": "geometry_table(fitz find_tables)",
+     "skipped": true,
+     "skip_reason": "마스터 개념과 불일치(겹침 0/8 통과, ±0.5%)"
+    },
+    "17": {
+     "항목명": "투자손익",
+     "값": 364100.0,
+     "raw_value": "3,641",
+     "check_only": true,
+     "reason": "감독회계 투자손익은 마스터 #17(투자이익+보험금융손익)과 다른 개념"
+    },
+    "20": {
+     "항목명": "영업이익",
+     "값": 1569700.0,
+     "raw_value": "15,697",
+     "check_only": true,
+     "reason": "감독회계 투자손익은 마스터 #17(투자이익+보험금융손익)과 다른 개념"
+    },
+    "21": {
+     "항목명": "영업외손익",
+     "값": 17100.0,
+     "raw_value": "171",
+     "check_only": true,
+     "reason": "감독회계 투자손익은 마스터 #17(투자이익+보험금융손익)과 다른 개념"
+    }
+   },
+   "checks": {
+    "22-23=24": 0.0,
+    "1+17=20": 0.0,
+    "20+21=22": 0.0
+   }
+  }
+ ],
+ "calibration": {
+  "1": [
+   {
+    "period": "2023.1Q",
+    "disclosure": 585000.0,
+    "master": 567547.0,
+    "diff_pct": 3.08,
+    "ok": false
+   },
+   {
+    "period": "2023.3Q",
+    "disclosure": 1739100.0,
+    "master": 1686253.9,
+    "diff_pct": 3.13,
+    "ok": false
+   },
+   {
+    "period": "2023.4Q",
+    "disclosure": 1933400.0,
+    "master": 1863078.8,
+    "diff_pct": 3.77,
+    "ok": false
+   },
+   {
+    "period": "2024.1Q",
+    "disclosure": 603700.0,
+    "master": 585810.3,
+    "diff_pct": 3.05,
+    "ok": false
+   },
+   {
+    "period": "2024.2Q",
+    "disclosure": 1170500.0,
+    "master": 1135414.9,
+    "diff_pct": 3.09,
+    "ok": false
+   },
+   {
+    "period": "2024.3Q",
+    "disclosure": 1647500.0,
+    "master": 1595781.4,
+    "diff_pct": 3.24,
+    "ok": false
+   },
+   {
+    "period": "2024.4Q",
+    "disclosure": 1849100.0,
+    "master": 1780370.4,
+    "diff_pct": 3.86,
+    "ok": false
+   },
+   {
+    "period": "2025.1Q",
+    "disclosure": 498900.0,
+    "master": 481593.3,
+    "diff_pct": 3.59,
+    "ok": false
+   }
+  ],
+  "16": [
+   {
+    "period": "2023.1Q",
+    "disclosure": 75200.0,
+    "master": 92608.0,
+    "diff_pct": -18.8,
+    "ok": false
+   },
+   {
+    "period": "2023.3Q",
+    "disclosure": 255400.0,
+    "master": 308198.4,
+    "diff_pct": -17.13,
+    "ok": false
+   },
+   {
+    "period": "2023.4Q",
+    "disclosure": 330000.0,
+    "master": 400302.7,
+    "diff_pct": -17.56,
+    "ok": false
+   },
+   {
+    "period": "2024.1Q",
+    "disclosure": 26100.0,
+    "master": 44019.6,
+    "diff_pct": -40.71,
+    "ok": false
+   },
+   {
+    "period": "2024.2Q",
+    "disclosure": 83400.0,
+    "master": 118513.5,
+    "diff_pct": -29.63,
+    "ok": false
+   },
+   {
+    "period": "2024.3Q",
+    "disclosure": 117200.0,
+    "master": 168943.5,
+    "diff_pct": -30.63,
+    "ok": false
+   },
+   {
+    "period": "2024.4Q",
+    "disclosure": 177100.0,
+    "master": 245761.3,
+    "diff_pct": -27.94,
+    "ok": false
+   },
+   {
+    "period": "2025.1Q",
+    "disclosure": 28600.0,
+    "master": 45766.9,
+    "diff_pct": -37.51,
+    "ok": false
+   }
+  ],
+  "22": [
+   {
+    "period": "2023.1Q",
+    "disclosure": 815900.0,
+    "master": 815876.0,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2023.3Q",
+    "disclosure": 2145500.0,
+    "master": 2145520.1,
+    "diff_pct": -0.0,
+    "ok": true
+   },
+   {
+    "period": "2023.4Q",
+    "disclosure": 2361100.0,
+    "master": 2361056.4,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.1Q",
+    "disclosure": 894800.0,
+    "master": 894749.5,
+    "diff_pct": 0.01,
+    "ok": true
+   },
+   {
+    "period": "2024.2Q",
+    "disclosure": 1674500.0,
+    "master": 1674513.2,
+    "diff_pct": -0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.3Q",
+    "disclosure": 2420500.0,
+    "master": 2420499.8,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.4Q",
+    "disclosure": 2704100.0,
+    "master": 2704084.4,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2025.1Q",
+    "disclosure": 755000.0,
+    "master": 754957.1,
+    "diff_pct": 0.01,
+    "ok": true
+   }
+  ],
+  "23": [
+   {
+    "period": "2023.1Q",
+    "disclosure": 235800.0,
+    "master": 235737.0,
+    "diff_pct": 0.03,
+    "ok": true
+   },
+   {
+    "period": "2023.3Q",
+    "disclosure": 557800.0,
+    "master": 557788.1,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2023.4Q",
+    "disclosure": 605700.0,
+    "master": 605682.1,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.1Q",
+    "disclosure": 210900.0,
+    "master": 210878.9,
+    "diff_pct": 0.01,
+    "ok": true
+   },
+   {
+    "period": "2024.2Q",
+    "disclosure": 397300.0,
+    "master": 397306.0,
+    "diff_pct": -0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.3Q",
+    "disclosure": 586100.0,
+    "master": 586069.5,
+    "diff_pct": 0.01,
+    "ok": true
+   },
+   {
+    "period": "2024.4Q",
+    "disclosure": 656300.0,
+    "master": 656303.1,
+    "diff_pct": -0.0,
+    "ok": true
+   },
+   {
+    "period": "2025.1Q",
+    "disclosure": 199400.0,
+    "master": 199323.2,
+    "diff_pct": 0.04,
+    "ok": true
+   }
+  ],
+  "24": [
+   {
+    "period": "2023.1Q",
+    "disclosure": 580100.0,
+    "master": 580138.0,
+    "diff_pct": -0.01,
+    "ok": true
+   },
+   {
+    "period": "2023.3Q",
+    "disclosure": 1587700.0,
+    "master": 1587732.1,
+    "diff_pct": -0.0,
+    "ok": true
+   },
+   {
+    "period": "2023.4Q",
+    "disclosure": 1755400.0,
+    "master": 1755374.3,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.1Q",
+    "disclosure": 683900.0,
+    "master": 683870.6,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.2Q",
+    "disclosure": 1277200.0,
+    "master": 1277207.2,
+    "diff_pct": -0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.3Q",
+    "disclosure": 1834400.0,
+    "master": 1834430.4,
+    "diff_pct": -0.0,
+    "ok": true
+   },
+   {
+    "period": "2024.4Q",
+    "disclosure": 2047800.0,
+    "master": 2047781.2,
+    "diff_pct": 0.0,
+    "ok": true
+   },
+   {
+    "period": "2025.1Q",
+    "disclosure": 555600.0,
+    "master": 555633.8,
+    "diff_pct": -0.01,
+    "ok": true
+   }
+  ]
+ },
+ "gate": {
+  "1": {
+   "n_overlap": 8,
+   "n_ok": 0,
+   "pass": false
+  },
+  "16": {
+   "n_overlap": 8,
+   "n_ok": 0,
+   "pass": false
+  },
+  "22": {
+   "n_overlap": 8,
+   "n_ok": 8,
+   "pass": true
+  },
+  "23": {
+   "n_overlap": 8,
+   "n_ok": 8,
+   "pass": true
+  },
+  "24": {
+   "n_overlap": 8,
+   "n_ok": 8,
+   "pass": true
+  }
+ }
+}

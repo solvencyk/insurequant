@@ -2985,11 +2985,22 @@
    "company_code": "KR0004",
    "quarter": "2023.4Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf",
+   "published_items": 3,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0004",
@@ -4229,10 +4240,19 @@
       8,
       12
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0008_삼성화재해상보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 5,
+   "published_items": 8,
    "schema_items": 24
   },
   {
@@ -5108,10 +5128,21 @@
      "items": [
       2
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0009_현대해상.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 1,
+   "published_items": 6,
    "schema_items": 24
   },
   {
@@ -5151,10 +5182,21 @@
      "items": [
       2
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0009_현대해상.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      16,
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 1,
+   "published_items": 6,
    "schema_items": 24
   },
   {
@@ -8428,10 +8470,19 @@
       3,
       8
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 3,
+   "published_items": 6,
    "schema_items": 24
   },
   {
@@ -10967,11 +11018,23 @@
    "company_code": "KR0069",
    "quarter": "2023.1Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR0069_삼성생명.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0069_삼성생명.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0069",
@@ -11013,11 +11076,23 @@
    "company_code": "KR0069",
    "quarter": "2023.2Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0069_삼성생명.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0069_삼성생명.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0069",
@@ -13327,11 +13402,23 @@
    "company_code": "KR0071",
    "quarter": "2023.2Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0071",
@@ -15580,11 +15667,23 @@
    "company_code": "KR0073",
    "quarter": "2023.1Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR0073_교보생명보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0073_교보생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0073",
@@ -15622,11 +15721,23 @@
    "company_code": "KR0073",
    "quarter": "2023.2Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0073_교보생명보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0073_교보생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0073",
@@ -16938,10 +17049,20 @@
       3,
       7
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 2,
+   "published_items": 6,
    "schema_items": 24,
    "owner_override": true
   },
@@ -23307,11 +23428,23 @@
    "company_code": "KR0095",
    "quarter": "2023.4Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q4/raw/KR0095_메트라이프생명보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q4/raw/KR0095_메트라이프생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0095",
@@ -23705,10 +23838,20 @@
       8,
       12
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0099_케이비라이프생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 5,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -23764,10 +23907,20 @@
       8,
       12
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 5,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -25019,11 +25172,23 @@
    "company_code": "KR0104",
    "quarter": "2023.1Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR0104_농협생명보험.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0104_농협생명보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0104",
@@ -25065,11 +25230,23 @@
    "company_code": "KR0104",
    "quarter": "2023.2Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": null,
-   "unresolved_reason": "NO_PUBLISHED_VALUE_IN_BLOCK",
-   "published_items": 0,
-   "schema_items": 24
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0104_농협생명보험_amended.pdf",
+   "published_items": 4,
+   "schema_items": 24,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0104_농협생명보험_amended.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl"
   },
   {
    "company_code": "KR0104",
@@ -26549,10 +26726,20 @@
       8,
       12
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 5,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -26597,10 +26784,20 @@
       8,
       12
      ]
+    },
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      16,
+      22,
+      23,
+      24
+     ]
     }
    ],
    "resolution": "raw_filing_derived",
-   "published_items": 5,
+   "published_items": 9,
    "schema_items": 24
   },
   {
@@ -31637,7 +31834,251 @@
    "resolution": "disclosure_summary_pl",
    "published_items": 5,
    "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2023.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2023.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2023.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2024.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2024.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2024.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2025.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2025.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2026.1Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2026.2Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
+  },
+  {
+   "company_code": "KR0004",
+   "quarter": "2025.3Q",
+   "item_block": "income_statement",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf",
+     "how": "disclosure_summary_pl",
+     "items": [
+      1,
+      22,
+      23,
+      24
+     ]
+    }
+   ],
+   "resolution": "disclosure_summary_pl",
+   "published_items": 4,
+   "schema_items": 24
   }
  ],
- "merge_note_20260920": "경영공시 §2-1 백필 155셀(DISCLOSURE) append + DART 4Q LOB 재추출 5블록 패치. as_of_date 는 싣지 않았다 — 분기말일 기계 삽입 금지(validation 20260920T1500Z §1c), downloader 가 필링 meta 에서 채울 별도 티켓이다. 재현: scripts/merge_pl_backfill_disclosure_20260920.py --apply"
+ "merge_note_20260920": "경영공시 §2-1 백필 155셀(DISCLOSURE) append + DART 4Q LOB 재추출 5블록 패치. as_of_date 는 싣지 않았다 — 분기말일 기계 삽입 금지(validation 20260920T1500Z §1c), downloader 가 필링 meta 에서 채울 별도 티켓이다. 재현: scripts/merge_pl_backfill_disclosure_20260920.py --apply",
+ "merge_note_20261008": "경영공시 PL 공란 백필(owner 2026-10-08) -- 12사 29(회사,분기) 중 KR0004 2025.3Q 제외 28칸 DISCLOSURE append/patch. as_of_date 는 싣지 않았다. 재현: scripts/merge_pl_backfill_disclosure_20261008.py --apply",
+ "merge_note_20261009": "PL 후속 정정(D1/D6): KR0004 2025.3Q 채움 · 보험손익 15칸 보류 · 값_당분기 차분. 재현: scripts/fix_pl_backfill_followup_20261009.py --apply"
 }

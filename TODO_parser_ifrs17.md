@@ -5,10 +5,12 @@
 
 ## Status (최신 3개)
 
+- **2026-10-09 전사 BS/PL 공란 백필(owner 10-08)** — BS 공란 25+부분 5 → 0(184칸, 경영공시 요약표·4-1표·별도BS, 10사), PL 공란 29 → 1(126칸, 12사·28(회사,분기)).
+  후속 10-09: KR0004 2025.3Q 채움(법인세 0 → `PL_YTD_COLLAPSE_TO_ZERO` RED, 등재는 validation/owner) · 보험손익 15칸 보류(pl_bridge 0NEW 복귀) · 당분기 17칸 차분 · xlsx 2시트 동기화. 커밋 안 함.
+  재현 `scripts/fix_pl_backfill_followup_20261009.py`·`merge_pl_backfill_disclosure_20261008.py` · 기록 `data/disclosure/_meta/bspl_backfill_runlog_merge.md`(후속 절에 미해결 D2·D4·D5·D8·D9).
 - **2026-09-22 라이나생명 2023.4Q PL 20칸 신규 충전** — FY2024 사업보고서 전기 비교컬럼 + 주석23(2024.4Q·2025.4Q 와 같은 재작성 기준).
   FY2023 은 소급재작성됐다(자기 보고서 순이익 463,997 vs 채택값 511,309). PL 골든·입력지문 재생성 `a0f0607`.
 - **2026-09-20 (92차) 경영공시 PL 백필 775칸 병합** — 15사 × 5항목, 덮어쓴 셀 0 + DART 4Q LOB 결손 3건(AIG 2024.4Q·2025.4Q, 신한이지 2024.4Q) 원문 재추출. `e83b619`·`4faf083`.
-- **2026-09-20 (91차) PL provenance 사이드카 셀 단위 재발행**(638 → 748셀, `source_file` 730/748). `fa08bfe`.
 
 ## 열린 일
 

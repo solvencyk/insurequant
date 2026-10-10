@@ -1,5 +1,9 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-09 정리 — 밀린 Status (무수정)
+
+- **2026-09-20 (91차) PL provenance 사이드카 셀 단위 재발행**(638 → 748셀, `source_file` 730/748). `fa08bfe`.
+
 ## 2026-10-07 정리 — 정리 전 `TODO_parser_ifrs17.md` 전문 (무수정)
 
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
