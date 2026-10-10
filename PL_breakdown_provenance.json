@@ -3042,6 +3042,9 @@
      "how": "raw_filing",
      "items": [
       1,
+      2,
+      3,
+      8,
       15,
       16,
       17,
@@ -3056,7 +3059,7 @@
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 11,
+   "published_items": 14,
    "schema_items": 24
   },
   {
@@ -3099,6 +3102,9 @@
      "how": "raw_filing",
      "items": [
       1,
+      2,
+      3,
+      8,
       15,
       16,
       17,
@@ -3113,7 +3119,7 @@
     }
    ],
    "resolution": "raw_filing",
-   "published_items": 11,
+   "published_items": 14,
    "schema_items": 24
   },
   {
@@ -32080,5 +32086,6 @@
  ],
  "merge_note_20260920": "경영공시 §2-1 백필 155셀(DISCLOSURE) append + DART 4Q LOB 재추출 5블록 패치. as_of_date 는 싣지 않았다 — 분기말일 기계 삽입 금지(validation 20260920T1500Z §1c), downloader 가 필링 meta 에서 채울 별도 티켓이다. 재현: scripts/merge_pl_backfill_disclosure_20260920.py --apply",
  "merge_note_20261008": "경영공시 PL 공란 백필(owner 2026-10-08) -- 12사 29(회사,분기) 중 KR0004 2025.3Q 제외 28칸 DISCLOSURE append/patch. as_of_date 는 싣지 않았다. 재현: scripts/merge_pl_backfill_disclosure_20261008.py --apply",
- "merge_note_20261009": "PL 후속 정정(D1/D6): KR0004 2025.3Q 채움 · 보험손익 15칸 보류 · 값_당분기 차분. 재현: scripts/fix_pl_backfill_followup_20261009.py --apply"
+ "merge_note_20261009": "PL 후속 정정(D1/D6): KR0004 2025.3Q 채움 · 보험손익 15칸 보류 · 값_당분기 차분. 재현: scripts/fix_pl_backfill_followup_20261009.py --apply",
+ "merge_note_20261010": "KR0004 2024.4Q/2025.4Q LOB 다리 정정(P3): 항목 2·3·8 채움(DART 주석 26-29 장기 열, 재보험 포함 순액) + 항목 13·14 부호·범위 정정(원수 PAA 만·부채부호 -> 재보험 포함 순액·손익부호). 재현: scripts/fix_20261010_pl_kr0004_lob_legs.py --write"
 }

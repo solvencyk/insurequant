@@ -3,6 +3,25 @@
 > Last updated: 2026-10-10 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-10 (후속 1b) — IBK연금 2-4 6분기 48칸 정정 · KR0011 중복 9행 제거 · 예별(KR0004) PL 다리 10칸 정정
+
+미커밋. **push 안 함.** 발주 `inbox/parser/20261010T1330Z__orchestrator__KR1011_2025.1Q-2026.2Q__ilp_ibk_fix_dups_and_kr0004_pl_holes.md` + 그 안의 `20261010T1100Z__validation__KR0004_…pl_holes_master_tables_golden.md`
+(둘 다 오케스트레이터 종결 대기). 전체 실측·재현·전후 수치는 `data/disclosure/_meta/lic_load_runlog_stage1b.md`.
+
+- **P1 IBK연금(KR1011) 2-4 항목 1~8 · 6분기 48칸.** stage1 §10 정정안을 6분기 PDF 합계 행(120 dpi 렌더링 + 텍스트 레이어, 유배당·무배당·변액 행 합 = 합계 행)과 다시 대조해 **다른 칸 0**, 적용.
+  원인은 합계 행의 첫 숫자(일반모형 BEL) 한 칸을 정수로 반올림해 항목 7(PAA)=항목 8 로 읽은 것. 독립 앵커: 2025.4Q 78,938.6 = DART 잔여보장요소 78,938.7, 2-4 CSM 5,203.7 = `CSM_waterfall` 5,203.8, BS−항목 8 = LIC 규모(448.1·489.4억).
+  LIC 검산기 R-LIC2 `{155 pass, 1 DIFF}` → `{156 pass}`(YELLOW 8→7, RED 0), 포트폴리오 검증기 RED 3(KR0100, 이전부터)·YELLOW 227 불변. `scripts/fix_20261010_ilp_kr1011_ibk_total_row.py`(옛 값 guard + 실행 때마다 PDF 재독 검사, 백업 `ilp_backup_20261010_pre_ibk.json`).
+- **P2 KR0011 2025.3Q 중복 9행.** 항목 1~9 가 열 개 필드까지 같은 쌍으로 2번 들어 있었다(`8f5e3b8` 판부터). 뒤쪽 사본만 제거 → 2,892→2,883행, 중복 키 0. `scripts/fix_20261010_ilp_kr0011_dedup_2025_3q.py`(백업 `…_pre_dedup.json`). 패널 값 불변.
+- **P3 예별 PL 다리.** `MASTER_HOLE` 부분 2건 = 항목 2(생명장기 손익)와 자식 3·8 결손. DART 주석 26~29 의 장기|일반|자동차 열로 **재보험 포함 순액·손익 부호**의 2·3·8·13·14 를 계산해 루트 `PL_breakdown.json` 10칸 + 사이드카 2블록에 셀 단위로 적용
+  (`scripts/fix_20261010_pl_kr0004_lob_legs.py`, 옛 값 guard·백업·교차검증: FY2025 전기 열 = FY2024 당기 열, 주석 합 = 손익계산서 줄). 폐쇄식 `1 = 2+13+14+15−16` 이 손익계산서 보험손익과 −210원(2024)·+32원(2025)으로 닫힌다.
+  **옛 13·14 가 틀렸던 원인**: `extract_tier2_yebyeol` 이 PAA 변동내역 `보험서비스결과 소계` 마지막 열을 읽는데 ① 원수 PAA 만(재보험 없음) ② FY2024·FY2025 보고서는 부채 부호(자동차 +7,179,117·+1,133,870 / 일반 (12,479,214)·(14,235,271)), FY2023 보고서는 손익 부호 — 08-29 에 "폐쇄식 불일치로 미확정" 이던 이유.
+  게이트: `coverage_hole 5→3PL` · pl_bridge `3348P/31F/2021S → 3352P/29F/2019S`(신규 0) · data-contract `MASTER_HOLE` 예별 2건 해소. 새로 생긴 `MASTER_XLSX_DRIFT 손익분해PL`(10셀)은 publishing 동기화 몫.
+  **빌더·골든·gold·등재부·2023.4Q 는 안 건드렸다**(대가: 빌더 산출의 13·14 는 옛 값이라 `build_pl()` 이 되돌린다 → 핸들러 후속, PL 골든 재생성 동반).
+- **`PL_YTD_COLLAPSE_TO_ZERO` 예별 2025.3Q — 값 오류가 아니라 보고주체 단절(= validation r2 V2-1 기준 혼합).** 원문: 2025.3Q PDF p25~26 `제1(당)3분기 2025-06-16~09-30 예별손해보험 주식회사`·법인세비용 `-`, 2025.2Q p66 `제13(당) 2분기` 법인세 8,079,681,110원,
+  2025.4Q p9 `2025.06.16 발기 … 2025.07.31 유상증자 … 자본금 3,000,000천원, 예금보험공사 100%`. 세 칸의 보고주체·기간이 달라 게이트 룰이 아는 사건(재빌드 결손)이 아니다. 값을 바꿔도 다른 RED 가 되므로 **되돌리지도 등재하지도 않았다** —
+  결정지(① 10-09 에 만든 4행+사이드카 1셀 삭제 ② 유지+셀 단위 등재)와 근거는 런로그 1b §3.3, 결정은 owner/validation.
+- **P4 예별 2025.4Q LIC 계속 미적재.** ILP 예별 2-4(39,280억)는 신설 예별(주) 경영공시이고 DART 보험계약부채 0 은 잔여법인 엠지라 보고주체가 다르다. 예별 2025.4Q 경영공시 PDF(91쪽, 전 쪽 텍스트 레이어)에도 발생사고요소 BEL·RA 표가 없다.
+
 ## 2026-10-10 — 발생사고요소(LIC) BEL·RA 1단계 적재(ILP 항목 10~15 +832행) + 현대해상 2-4 12칸 정정
 
 미커밋. **push 안 함.** 발주 `inbox/parser/20261010T0945Z__orchestrator__MULTI_2025.1Q-2026.2Q__lic_load_stage1.md`(오케스트레이터 종결 대기). 근거 정찰 `data/disclosure/_meta/lic_scout_20261010.md`.
