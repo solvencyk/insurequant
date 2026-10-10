@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261010T1840Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2024.4Q-2025.4Q
@@ -33,4 +33,4 @@ owner 결정(2026-10-10): 모바일 손해율 비교 목업 중 **안 A**(한 �
 - 모바일 손해율 카드 변경 요약, 제거한 것(짚은 시점 열·터치 가이드), 회사 수 상한 처리, 색 규칙 적용 결과, 확인한 조합(곡선이 다른 조합·비슷한 조합 각 1, 다크 1)과 375px·데스크톱 비교 스크린샷 경로, 콘솔 404 원인, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+디자이너 반영 완료(2026-10-11, designer Sonnet, 약 15분, 토큰 210k): compare.html 모바일(640px 이하) 손해율 카드를 안 A(겹침 curve, 선 끝 라벨, 회사·현재가치 표)로 교체, 짚은 시점 열·터치 가이드 제거, 4선 상한 코드. 데스크톱 불변. 색은 데스크톱과 같은 선택 순서 팔레트(compare 에 회사 키컬러 없음). 후속: panel_compare.json loss_curve.note 문구 중립화(빌더), 선 대비 2.1~2.6:1 owner 확인 큐.

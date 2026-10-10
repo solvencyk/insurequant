@@ -1,9 +1,24 @@
 # Insurequant Changelog — Designer Stage
 
-> Last updated: 2026-10-10 · Stage 5/5 — designer
+> Last updated: 2026-10-11 · Stage 5/5 — designer
 > Prompt: docs/agents/claude-agent-designer.md · TODO: TODO_designer.md
 
 Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. Master JSON content is **publishing** ([`changelog_publishing.md`](changelog_publishing.md)) — designer reads them but does not modify. Cross-stage history: `docs/claude-changelog.md`.
+
+---
+
+## 2026-10-11 -- 사별 비교 모바일 손해율 가정 curve 카드 실제 반영(안 A, owner 수정 반영)
+
+티켓 `inbox/designer/20261010T1840Z__orchestrator__MULTI_2024.4Q-2025.4Q__compare_mobile_loss_curve_ship_optionA.md`. compare.html 만 변경(마스터·패널 JSON 읽기만, 커밋·push 안 함).
+
+- 모바일(641px 미만, `!WIDE.matches`): 손해율 가정 카드가 막대 대신 `lossMobile()` — 한 차트(SVG)에 선택 회사 곡선 겹침, 점 표식·x 눈금 숫자 없음, 선 끝 회사명+끝값 직접 라벨(겹치면 27px 간격으로 밀어냄), 세로 눈금 2~4개(100% 선 굵게), 같은 유형 업계 중앙값 점선, 아래에 「회사 · 현재가치」 표(중앙값 행 포함, 선이 없는 회사는 색 표시만 비움·값은 그대로, 오래된 공시는 분기 칩). 제목·정의·`?` 도움말·가이드 이름은 데스크톱 curve 와 같은 `loss_curve` 값을 쓴다(`curveOn()`·`unitName()`).
+- 뺀 것(owner): 「짚은 시점」 열, 터치·드래그 세로 가이드선과 값 표시, 터치를 설명하는 안내 문장. 정적 차트라 포인터 핸들러 없음.
+- 색: 데스크톱 curve 가 회사 키컬러가 아니라 선택 순서 팔레트 `PAL_LINE`(틸·살몬·블루·머스터드)이므로 티켓의 「데스크톱이 다르면 데스크톱을 따른다」에 따라 모바일도 `PAL_LINE[선택 순서]`. 선 모양 `MOB_DASH`(실선·파선·점선·일점쇄선)로 색 외 구분, 표에도 같은 모양 견본. 보라 없음. 목업 전용 `--l0~3` 색은 쓰지 않음.
+- 상한: `MOB_LINES=4` 곳까지 선, 더 많으면 나머지는 표에만 두고 「모바일에서는 4곳까지 겹쳐 봅니다」 안내. 현재 `MAXC=4` 라 선택으로는 안 걸린다(상수를 3 으로 낮춘 임시 사본에서 4번째 회사가 표에만 남고 안내가 뜨는 것 확인 후 사본 삭제). 업계 중앙값 점선은 이 상한 밖.
+- 접근성: SVG `role=img`+요약 `aria-label`(회사별 시작→끝 값·중앙값·표 안내), 표 `caption`(sr-only)·`th scope=col`, 음수 △ 헬퍼(`nfs`), 하드코딩 분기 없음(`Q[asof]`). 라이트 배경 선 대비 2.1~2.6:1 은 데스크톱과 같은 팔레트의 기존 한계라 owner 확인 큐에 올림(TODO).
+- 확인(로컬 서버 `?iq_internal=1`, 임시 서버는 종료·포트 닫힘): 375px 라이트 곡선이 다른 조합(메리츠화재·삼성화재·하나손보·신한EZ손해), 375px 다크 비슷한 조합(한화생명·삼성생명·교보생명·신한라이프), 미래에셋생명(1~10년 한 구간)·IBK연금보험(n/a)·교보라이프플래닛(8자 이름), 코리안리+서울보증(중앙값 없음), 가로 넘침 0(scrollWidth 375), 콘솔 오류 0, 모바일 다른 카드 막대 그대로, 데스크톱 Chart.js 그대로(1280 캡처), 데스크톱→모바일 폭 전환 시 재렌더. `tests/test_deploy_assets.py`+`tests/test_push_gate_wiring.py` 76 passed·1 skipped.
+- 콘솔 404: 목업 페이지에 `<link rel="icon">` 이 없어 브라우저가 `/favicon.ico` 를 요청해 생긴 것. compare.html 은 data: 아이콘이 있어 콘솔 오류가 없다(서버 로그의 favicon 404 는 브라우저 창 자체 요청이며 페이지 오류 아님).
+- 스크린샷: `artifacts/designer/compare_loss_mobile_ship_diff_light_20261011.jpg`, `compare_loss_mobile_ship_sim_dark_20261011.jpg`, `compare_loss_desktop_unchanged_20261011.png`.
 
 ---
 

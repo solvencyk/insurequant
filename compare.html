@@ -94,6 +94,18 @@
     .card .na-list{margin:8px 0 0 0;padding:0;list-style:none;font-size:12px;color:var(--muted);line-height:1.6}
     .card .na-list b{color:var(--text);font-weight:600}
     .card .clipnote{margin:6px 0 0 0;font-size:12px;color:var(--muted)}
+    /* 모바일 손해율 가정(정적 SVG 꺾은선 + 회사·현재가치 표) */
+    .lcs svg{display:block;width:100%;height:auto}
+    .lcs svg text{font-family:inherit}
+    .lcs svg .t{fill:var(--text)}
+    .lcs svg .m{fill:var(--muted)}
+    .lcm table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+    .lcm th{font-weight:600;font-size:12px;color:var(--muted);text-align:right;padding:3px 0;background:none;border:0;border-bottom:1px solid var(--border)}
+    .lcm th:first-child,.lcm td:first-child{text-align:left}
+    .lcm td{padding:6px 0;text-align:right;font-variant-numeric:tabular-nums;border:0;border-bottom:1px solid var(--border)}
+    .lcm tr:last-child td{border-bottom:none}
+    .lcm td:first-child{font-weight:600;word-break:keep-all}
+    .lcm td .sw{display:inline-block;width:22px;height:8px;margin-right:6px;vertical-align:middle}
     .empty{display:flex;align-items:center;justify-content:center;text-align:center;height:110px;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:13px;padding:0 16px}
     .msg{padding:24px;text-align:center;color:var(--muted)}
     .foot{font-size:12px;color:var(--muted);margin:8px 0 32px 0;line-height:1.6}
@@ -510,6 +522,8 @@
   var PT = ['circle', 'triangle', 'rect', 'rectRot'];            /* 색만으로 구분하지 않도록 표식 모양도 다르게 */
   var LR_END_X = 33;                                             /* '30년 이후'의 x 위치(경과 연수에 비례, 26~30년 다음 5칸) */
   function chartsOn(){ return !!(window.Chart && WIDE.matches); }
+  /* 손해율 가정 curve 카드: 넓은 화면은 Chart.js 꺾은선, 좁은 화면(641px 미만)은 SVG 꺾은선(lossMobile). 넓은 화면인데 Chart.js 가 없으면 예전 막대 카드 */
+  function curveOn(){ return !!DATA.loss_curve && (chartsOn() || !WIDE.matches); }
   function readTheme(){
     TH = window.IQTheme ? IQTheme.chart() : {text:'#18181b', muted:'#63666b', border:'#e4e4e2', bg:'#ffffff'};
     if(window.Chart){
@@ -691,6 +705,106 @@
     if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
   }
 
+  /* 좁은 화면(~640px) 손해율 가정: 한 차트에 선택한 회사 곡선을 겹친 정적 SVG(점 표식·x 눈금 숫자 없음, 선 끝 직접 라벨) + 회사·현재가치 표.
+     색·선 순서는 위 넓은 화면 꺾은선과 같은 규칙(PAL_LINE[선택 순서]); 색 외에 선 모양(실선·파선·점선)으로도 구분한다. 터치 상호작용은 없다. */
+  var MOB_LINES = 4;                                             /* 겹쳐 그리는 회사 선 상한(업계 중앙값 점선은 별도). 표에는 선택한 회사 전부 */
+  var MOB_DASH = ['', '6 3', '2 3', '10 3 2 3'];
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function nfs(v, d){ return (v < 0 ? '△' : '') + nf(Math.abs(v), d); }   /* 음수는 △ */
+  function svgEl(n, a, txt){ var e = document.createElementNS(SVGNS, n); for(var k in a) e.setAttribute(k, a[k]); if(txt != null) e.textContent = txt; return e; }
+  function swatch(color, dash){
+    return '<svg class="sw" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><line x1="1" x2="21" y1="4" y2="4" stroke="' + color + '" stroke-width="3" stroke-linecap="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/></svg>';
+  }
+  function lossMobile(card, m){
+    var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
+    var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
+    var items = [], nas = [], stale = [], coarse = [], any = false;
+    S.sel.forEach(function(s, k){
+      var nm = CO[s.code].short, byQ = C.v[s.code] || {}, row = null, qi = -1;
+      for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
+      var it = {nm: nm, k: k, pv: cellFor(m, s.code, asof), pts: null, line: false};
+      items.push(it);
+      if(!row){ nas.push('<li><b>' + esc(nm) + '</b> n/a — ' + esc(naReason(m, s.code)) + '</li>'); return; }
+      any = true;
+      var co = row[nstd] != null; it.pts = [];
+      for(i = 0; i < nstd; i++) it.pts.push(co && i < 10 ? row[nstd] : row[i]);   /* 1~10년을 한 구간으로 공시한 회사 */
+      if(co) coarse.push(nm);
+      if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
+    });
+    if(!any){ card.insertAdjacentHTML('beforeend', '<div class="empty">선택한 회사 모두 이 지표를 공시하지 않습니다.</div>'); notes(card, []); return; }
+    var drawn = items.filter(function(it){ return it.pts; }), capped = drawn.length > MOB_LINES;
+    drawn.slice(0, MOB_LINES).forEach(function(it){ it.line = true; it.col = PAL_LINE[it.k % 4]; it.dash = MOB_DASH[it.k % 4]; });
+    var lines = drawn.filter(function(it){ return it.line; });
+    var med = null, medPv = null, mq;
+    if(S.med && C.med && C.med[type]){
+      for(j = asof; j >= 0; j--){ mq = C.med[type][Q[j]]; if(mq && mq.some(function(x){ return x != null; })){ med = mq; break; } }
+      if(med && m.median) medPv = medCell(m, type, asof);
+    }
+
+    var all = []; lines.forEach(function(it){ it.pts.forEach(function(v){ if(v != null) all.push(v); }); }); if(med) med.forEach(function(v){ if(v != null) all.push(v); });
+    var lo = Math.floor((Math.min.apply(null, all) - 2) / 10) * 10, hi = Math.ceil((Math.max.apply(null, all) + 2) / 10) * 10;
+    var wrap = document.createElement('div'); wrap.className = 'lcm'; card.appendChild(wrap);
+    var box = document.createElement('div'); box.className = 'lcs'; wrap.appendChild(box);
+    var W = box.clientWidth || 300, H = 240, ml = 4, mr = 96, mt = 16, mb = 26, pw = W - ml - mr, ph = H - mt - mb;
+    function X(x){ return ml + pw * x / LR_END_X; }
+    function Y(v){ return mt + ph * (1 - (v - lo) / (hi - lo)); }
+    function pathOf(pts){
+      var d = '', pen = false;
+      pts.forEach(function(v, n){ if(v == null){ pen = false; return; } d += (pen ? 'L' : 'M') + X(xs[n]).toFixed(1) + ' ' + Y(v).toFixed(1); pen = true; });
+      return d;
+    }
+    function lastOf(pts){ for(var n = pts.length - 1; n >= 0; n--) if(pts[n] != null) return {n: n, v: pts[n]}; return null; }
+    function firstOf(pts){ for(var n = 0; n < pts.length; n++) if(pts[n] != null) return pts[n]; return null; }
+    var label = '손해율 가정 경과차년별 꺾은선. ' + lines.map(function(it){ return it.nm + ' ' + nfs(firstOf(it.pts), 1) + '%에서 ' + nfs(lastOf(it.pts).v, 1) + '%'; }).join('. ') +
+      (med ? '. ' + type + ' 업계 중앙값 ' + nfs(firstOf(med), 1) + '%에서 ' + nfs(lastOf(med).v, 1) + '%' : '') + '. 현재가치 손해율은 아래 표에 있습니다.';
+    var svg = svgEl('svg', {viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label});
+    var step = (hi - lo) > 80 ? 40 : (hi - lo) > 30 ? 20 : 10;
+    for(var v = Math.ceil(lo / step) * step; v <= hi; v += step){
+      svg.appendChild(svgEl('line', {x1: ml, x2: ml + pw, y1: Y(v), y2: Y(v), stroke: 'var(--border)', 'stroke-width': v === 100 ? 1.5 : 1, 'stroke-dasharray': v === 100 ? '' : '2 3'}));
+      svg.appendChild(svgEl('text', {x: ml + 2, y: Y(v) - 3, 'font-size': 11, class: 'm'}, nfs(v, 0) + '%'));
+    }
+    if(med) svg.appendChild(svgEl('path', {d: pathOf(med), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.5, 'stroke-dasharray': '1 4', 'stroke-linecap': 'round'}));
+    lines.forEach(function(it){
+      var a = {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+      if(it.dash) a['stroke-dasharray'] = it.dash;
+      svg.appendChild(svgEl('path', a));
+    });
+    svg.appendChild(svgEl('text', {x: ml + 2, y: H - 8, 'font-size': 11, class: 'm'}, '1년'));
+    svg.appendChild(svgEl('text', {x: ml + pw / 2, y: H - 8, 'font-size': 11, class: 'm', 'text-anchor': 'middle'}, '경과차년 →'));
+    svg.appendChild(svgEl('text', {x: ml + pw, y: H - 8, 'font-size': 11, class: 'm', 'text-anchor': 'end'}, '30년 이후'));
+    /* 선 끝 직접 라벨(회사명 + 끝점 값). 서로 겹치면 아래로 밀어낸다 */
+    var ends = lines.map(function(it){ var l = lastOf(it.pts); return {nm: it.nm, col: it.col, x: l ? xs[l.n] : null, v: l ? l.v : null}; });
+    if(med){ var ml2 = lastOf(med); if(ml2) ends.push({nm: type + ' 중앙값', col: 'var(--muted)', x: xs[ml2.n], v: ml2.v}); }
+    ends = ends.filter(function(e){ return e.v != null; }).map(function(e){ e.y = Y(e.v); return e; });
+    ends.sort(function(a, b){ return a.y - b.y; });
+    for(i = 1; i < ends.length; i++){ if(ends[i].y - ends[i - 1].y < 27) ends[i].y = ends[i - 1].y + 27; }
+    var over = ends.length ? ends[ends.length - 1].y - (H - mb) : 0; if(over > 0) ends.forEach(function(e){ e.y -= over; });
+    ends.forEach(function(e){
+      var x0 = ml + pw + 6;
+      svg.appendChild(svgEl('line', {x1: X(e.x), y1: Y(e.v), x2: x0, y2: e.y, stroke: e.col, 'stroke-width': 1}));
+      svg.appendChild(svgEl('text', {x: x0 + 2, y: e.y - 1, 'font-size': e.nm.length > 7 ? 10 : 11, 'font-weight': 600, class: 't'}, e.nm));
+      svg.appendChild(svgEl('text', {x: x0 + 2, y: e.y + 11, 'font-size': 11, class: 'm'}, nfs(e.v, 1) + '%'));
+    });
+    box.appendChild(svg);
+
+    /* 현재가치 표: 선택한 회사 전부(선이 없는 회사는 색 표시만 비움) */
+    var tr = items.map(function(it){
+      var sw = it.line ? swatch(it.col, it.dash) : '<span class="sw sw0"></span>';
+      var chip = (it.pv && it.pv.i !== asof) ? ' ' + qchip(it.pv.i, asof) : '';
+      return '<tr><td>' + sw + esc(it.nm) + chip + '</td><td><b>' + (it.pv ? nfs(it.pv.v, 1) + '%' : 'n/a') + '</b></td></tr>';
+    });
+    if(med && medPv) tr.push('<tr><td>' + swatch('var(--muted)', '1 4') + esc(type) + ' 중앙값' + (medPv.i !== asof ? ' ' + qchip(medPv.i, asof) : '') + '</td><td><b>' + nfs(medPv.v, 1) + '%</b></td></tr>');
+    wrap.insertAdjacentHTML('beforeend', '<table><caption class="sr-only">손해율 가정 현재가치 손해율</caption><thead><tr><th scope="col">회사</th><th scope="col">현재가치</th></tr></thead><tbody>' + tr.join('') + '</tbody></table>');
+
+    var foot = ['현재가치 손해율은 선에 넣지 않고 아래 표에 함께 둡니다.'];
+    if(capped) foot.push('모바일에서는 ' + MOB_LINES + '곳까지 겹쳐 봅니다. 나머지 회사는 아래 표에만 있습니다.');
+    if(coarse.length) foot.push(esc(coarse.join(', ')) + '은 경과 1~10년을 한 구간으로 공시해 평평하게 그렸습니다.');
+    if(stale.length) foot.push('최신 결산(' + Q[asof] + ')보다 오래된 공시: ' + esc(stale.join(', ')) + '.');
+    if(S.med && !med) foot.push(type === RE_T ? '재보험·보증은 업계 중앙값을 만들지 않습니다.' : '값이 있는 ' + esc(type) + '사가 5곳 미만이라 업계 중앙값을 그리지 않습니다.');
+    notes(card, foot);
+    if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
+  }
+
   /* ---------- 공유 메뉴·스크린샷은 사이트 공통(theme.js + common.css)이다. 사별 비교는 이미지에서 뺄 것과 레이아웃 보정만 알려 준다. ---------- */
   window.IQShareConfig = {
     container: '.container',
@@ -707,7 +821,7 @@
   var EDIT = window.matchMedia ? window.matchMedia('(min-width:1080px)') : {matches:true};
   function canEdit(){ return EDIT.matches; }
   /* 넓은 화면의 손해율 카드는 제목이 '손해율 가정 (경과차년별)' 이라 가이드 이름도 맞춘다 */
-  function unitName(u){ return (u.id === 'loss_pv' && chartsOn() && DATA.loss_curve) ? DATA.loss_curve.label : u.label; }
+  function unitName(u){ return (u.id === 'loss_pv' && curveOn()) ? DATA.loss_curve.label : u.label; }
   function buildUnits(){
     UNITS = []; UNIT = {}; UNIT_OF = {}; DEF = [];
     DATA.metrics.forEach(function(m){
@@ -1003,8 +1117,8 @@
     S.units.forEach(function(id){
       var ms = UNIT[id].ms;
       var m0 = ms[0], grouped = ms.length > 1;
-      var curve = (chartsOn() && m0.id === 'loss_pv' && DATA.loss_curve) ? DATA.loss_curve : null;
-      var chartMode = !!curve || (chartsOn() && grouped && m0.chart_group === 'persist');
+      var curve = (m0.id === 'loss_pv' && curveOn()) ? DATA.loss_curve : null;
+      var chartMode = (!!curve && chartsOn()) || (chartsOn() && grouped && m0.chart_group === 'persist');
       var title = curve ? curve.label : (grouped ? m0.chart_label : m0.label);
       var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title);
       var asofs = ms.map(mLast), amax = Math.max.apply(null, asofs), bt = (!grouped && m0.basis) ? (S.basis === 'pre' ? ' · 적용 전' : ' · 적용 후') : '';
@@ -1013,6 +1127,7 @@
         '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? curve.note : m0.note) + '</span></span></h3>' +
         '<p class="def">' + esc(curve ? curve.defn : m0.defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] : '없음') + '</p>';
       grid.appendChild(card);
+      if(curve && !chartsOn()){ lossMobile(card, m0); return; }
       if(chartMode){ card.classList.add('wide'); if(curve) lossChart(card, m0); else persistChart(card, ms); return; }
       var nas = [];
       var secs = ms.map(function(m, k){

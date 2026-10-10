@@ -1,5 +1,10 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 밀린 Status (모바일 손해율 curve 항목이 들어오며 최신 3개에서 밀림)
+
+- **2026-10-10 IFRS17 섹션 3 콤보 차트·표 이식 완료(IFRS17.html, 미배포·미커밋)** — 묶음 누적 막대(왼쪽 잔여보장요소 CSM=회사 키 컬러·BEL/RA/PAA 탁한 톤, 오른쪽 발생사고요소 **추정**)+보조축 신계약 CSM+세로축 일부 생략(~)+VFA 합산(기본)/한 덩어리 토글, 아래에 값 표(CSM·BEL·RA·PAA·잔여보장요소 합계·발생사고요소(추정)·보험계약부채(BS)).
+  owner 정정: CSM 증감 띠·증감 행은 만들지 않음 / CSM 색은 회사 키 컬러 그대로(없으면 사이트 에메랄드, 밝히거나 섞지 않음) / 값 표는 BEL→RA→CSM 순(차트는 CSM 이 맨 아래). 패널 `data/csm_combo/panel_csm_combo.json`(`scripts/viz_build_csm_combo_panel.py --check`), 발생사고요소 추정은 빌더 `lic_estimate()` 한 곳(실공시 확보 시 교체). 목업 파일은 삭제.
+
 ## 2026-10-10 (4차) 밀린 Status (섹션 3 기간·컨트롤 항목이 들어오며 최신 3개에서 밀림)
 
 - **2026-10-10 재보험·보증 3분류 반영 완료** — index 시장지도(트리맵·목록·필터·버블)와 compare.html 이 `data/company_segment.json`(코드→구분 매핑, 마스터 셀 무변경)으로 생명/손해/재보험·보증 3구분. 재보험·보증은 접기 없이 전부 표시, 업계 중앙값은 만들지 않음.
