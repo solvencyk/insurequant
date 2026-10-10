@@ -1,17 +1,20 @@
 # Insurequant Parser TODO — K-ICS lane (Stage 2)
 
-> 갱신 2026-10-07 · 프롬프트 `docs/agents/claude-agent-parser.md` + 도메인 `docs/domains/claude-agent-kics.md` · 이력 `docs/changelog_parser_kics.md`
+> 갱신 2026-10-10 · 프롬프트 `docs/agents/claude-agent-parser.md` + 도메인 `docs/domains/claude-agent-kics.md` · 이력 `docs/changelog_parser_kics.md`
 > 2026-10-07 정리 전 전문은 `docs/todo_archive_parser_kics.md` 맨 위에 있다. IFRS17 레인은 `TODO_parser_ifrs17.md`(별도 세션).
 
 ## Status (최신 3개)
 
+- **2026-10-10 (20회차) 재보사 스윕 단계 7(R1 완결) — 마스터 값 75칸 변경 + 49행 신설, 사이드카 18칸, 스테이징 15건**: 스위스리·제네럴·스코리 R1 14칸 반영 · 항등식 되돌림 6건 · 제네럴 정밀값 17칸 ·
+  하노버 2023.3Q 비전 적재 · 결측 행 1 · owner 승인 P7·P8·P10 · 게이트 RED 71→65(blocking 35→29, 신규 RED 0) · 기존 39사 25,522행 불변. 미반영: 스위스리 2024.4Q 14칸·퍼시픽 2023.3Q/4Q(새 RED → owner 재결정).
+  커밋 없음(오케스트레이터). 남은 것: 예외 등재 29건 · 골든 2종 재생성(validation) · xlsx 동기화(publishing). 근거·칸별 전후 = `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_7.md`.
 - **2026-10-06 (19회차) AIA생명 2024.4Q 항목46 단위 100배 정정** — `값`·`값_적용후` 3607646 → 36076.46(원문 PDF p25 이미지 대조).
   `market_subrisk_recovered_gold.json` 동반 정정, 듀레이션갭 audit 9 → 8. `73eb328`, 라이브 `420cdc3`.
 - **2026-09-21 (18회차) item14 `값_적용후` 역산치 30칸 → 원문 헤드라인 정수** + 흥국생명 item23 후 R5 재폐쇄(5분기). `32ebfb0`.
-- **2026-09-21 (17회차) 라이나생명 2026.2Q 금리민감도 원문 대조 0건 수정** + 적용후 결손 3사(KR0050·KR0069·KR1098) 9칸 미러. `a03ac79`.
 
 ## 열린 일
 
+- [ ] **재보사 스윕 owner 결정 2건**(runlog 7 §3·§5): 스위스리 2024.4Q 재작성 열 14칸 채택 여부(권고 = 원공시 유지, 채택 시 새 RED 2+후 1 박제 필요), 퍼시픽 2023.3Q·4Q 전기 칸 적재 여부(새 RED 3, 두 분기 경영공시를 받으면 해소).
 - [ ] **금리민감도 phase 구멍 31칸** — `inbox/parser/20260921T1400Z` §A. 분기별 raw 각주로 전==후를 확인한 뒤 미러하거나, 원천부재면 파일·페이지 근거를 회신.
 - [ ] **item13/메리츠 티켓 잔여** — `inbox/parser/20260919T1400Z`: (2) 메리츠화재 2026.2Q item2/3 적용후가 적용전 복사(원문 p18 54,329.57 / 91,102.49억)
   → 고친 뒤 56번째 item13 셀 재측정, (3) 코리안리 2023.4Q·2024.2Q 기준선 확인, (4) 못 잰 29버킷.

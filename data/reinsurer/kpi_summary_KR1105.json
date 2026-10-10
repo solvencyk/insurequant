@@ -1,0 +1,3114 @@
+{
+ "company": "알지에이리인슈어런스컴파니 한국지점(RGA)",
+ "dirname": "KR1105_알지에이리인슈어런스",
+ "built_utc": "2026-10-08T21:01:57Z",
+ "scope": "경영공시 PDF 자체 표만 사용(fitz 텍스트층). 원문 단위가 억원이라 환산 없음. basis: 1Q=분기, 2Q=반기누계, 3Q=3분기누계, 4Q=연간. 값 = 해당 문서 '당기' 열. ROE/ROA 는 원문 % 그대로. 쪽 간 값이 다르면 alt 에 병기하고 value 는 비움. CSM 은 표(원수·수재 잔여보장요소)와 서술(보험부채) 값이 크게 달라 value 를 비우고 alt/note 에 둘 다 기록.",
+ "periods": [
+  "2026.2Q",
+  "2026.1Q",
+  "2025.4Q",
+  "2025.3Q",
+  "2025.2Q",
+  "2025.1Q",
+  "2024.4Q",
+  "2024.3Q",
+  "2024.2Q",
+  "2024.1Q",
+  "2023.4Q",
+  "2023.3Q",
+  "2023.2Q",
+  "2023.1Q"
+ ],
+ "identity_checks": [
+  {
+   "period": "2026.2Q",
+   "check": "자산=부채+자본",
+   "lhs": 4190.0,
+   "rhs": 4190.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2026.2Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 45.0,
+   "rhs": 45.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2026.2Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 36.0,
+   "rhs": 36.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2026.2Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 36.0,
+   "rhs": 36.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2026.1Q",
+   "check": "자산=부채+자본",
+   "lhs": 3595.0,
+   "rhs": 3595.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2026.1Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": -28.0,
+   "rhs": -28.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2026.1Q",
+   "check": "세전-법인세=순이익",
+   "lhs": -22.0,
+   "rhs": -22.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2026.1Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": -22.0,
+   "rhs": -22.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.4Q",
+   "check": "자산=부채+자본",
+   "lhs": 3423.0,
+   "rhs": 3423.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.4Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 396.0,
+   "rhs": 397.0,
+   "diff": -1.0,
+   "ok": true
+  },
+  {
+   "period": "2025.4Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 298.0,
+   "rhs": 298.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.4Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 298.0,
+   "rhs": 298.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.3Q",
+   "check": "자산=부채+자본",
+   "lhs": 3936.0,
+   "rhs": 3936.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.3Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 252.0,
+   "rhs": 251.0,
+   "diff": 1.0,
+   "ok": true
+  },
+  {
+   "period": "2025.3Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 194.0,
+   "rhs": 194.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.3Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 194.0,
+   "rhs": 194.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.2Q",
+   "check": "자산=부채+자본",
+   "lhs": 3746.0,
+   "rhs": 3746.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.2Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 178.0,
+   "rhs": 178.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.2Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 138.0,
+   "rhs": 138.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.2Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 138.0,
+   "rhs": 138.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.1Q",
+   "check": "자산=부채+자본",
+   "lhs": 3900.0,
+   "rhs": 3900.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.1Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 147.0,
+   "rhs": 147.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.1Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 112.0,
+   "rhs": 112.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2025.1Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 112.0,
+   "rhs": 112.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.4Q",
+   "check": "자산=부채+자본",
+   "lhs": 3436.0,
+   "rhs": 3435.0,
+   "diff": 1.0,
+   "ok": true
+  },
+  {
+   "period": "2024.4Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 466.0,
+   "rhs": 466.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.4Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 352.0,
+   "rhs": 353.0,
+   "diff": -1.0,
+   "ok": true
+  },
+  {
+   "period": "2024.4Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 353.0,
+   "rhs": 353.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.3Q",
+   "check": "자산=부채+자본",
+   "lhs": 3700.0,
+   "rhs": 3701.0,
+   "diff": -1.0,
+   "ok": true
+  },
+  {
+   "period": "2024.3Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 329.0,
+   "rhs": 328.0,
+   "diff": 1.0,
+   "ok": true
+  },
+  {
+   "period": "2024.3Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 246.0,
+   "rhs": 246.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.3Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 246.0,
+   "rhs": 246.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.2Q",
+   "check": "자산=부채+자본",
+   "lhs": 3212.0,
+   "rhs": 3212.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.2Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 165.0,
+   "rhs": 165.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.2Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 129.0,
+   "rhs": 129.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.2Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 129.0,
+   "rhs": 129.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.1Q",
+   "check": "자산=부채+자본",
+   "lhs": 2629.0,
+   "rhs": 2629.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.1Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 76.0,
+   "rhs": 76.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2024.1Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 60.0,
+   "rhs": 61.0,
+   "diff": -1.0,
+   "ok": true
+  },
+  {
+   "period": "2024.1Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 61.0,
+   "rhs": 61.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.4Q",
+   "check": "자산=부채+자본",
+   "lhs": 2753.0,
+   "rhs": 2753.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.4Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 187.0,
+   "rhs": 186.0,
+   "diff": 1.0,
+   "ok": true
+  },
+  {
+   "period": "2023.4Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 155.0,
+   "rhs": 155.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.4Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 155.0,
+   "rhs": 155.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.3Q",
+   "check": "자산=부채+자본",
+   "lhs": 3062.0,
+   "rhs": 3062.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.3Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 154.0,
+   "rhs": 155.0,
+   "diff": -1.0,
+   "ok": true
+  },
+  {
+   "period": "2023.3Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 124.0,
+   "rhs": 124.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.3Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 124.0,
+   "rhs": 124.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.2Q",
+   "check": "자산=부채+자본",
+   "lhs": 2705.0,
+   "rhs": 2705.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.2Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": 50.0,
+   "rhs": 50.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.2Q",
+   "check": "세전-법인세=순이익",
+   "lhs": 38.0,
+   "rhs": 38.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.2Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": 38.0,
+   "rhs": 38.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.1Q",
+   "check": "자산=부채+자본",
+   "lhs": 2570.0,
+   "rhs": 2570.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.1Q",
+   "check": "보험손익+투자손익≈영업이익",
+   "lhs": -29.0,
+   "rhs": -29.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.1Q",
+   "check": "세전-법인세=순이익",
+   "lhs": -30.0,
+   "rhs": -30.0,
+   "diff": 0.0,
+   "ok": true
+  },
+  {
+   "period": "2023.1Q",
+   "check": "손익표 순이익=주요지표 순이익",
+   "lhs": -30.0,
+   "rhs": -30.0,
+   "diff": 0.0,
+   "ok": true
+  }
+ ],
+ "restatement_or_comparator_mismatch": [
+  {
+   "period": "2023.3Q",
+   "metric": "assets",
+   "as_published": 3062.0,
+   "comparator_in_next_year_doc": 2621.0,
+   "next_doc": "2024.3Q"
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "equity",
+   "as_published": 1483.0,
+   "comparator_in_next_year_doc": 1721.0,
+   "next_doc": "2024.3Q"
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "net_income",
+   "as_published": 124.0,
+   "comparator_in_next_year_doc": 137.0,
+   "next_doc": "2024.3Q"
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "roe",
+   "as_published": 10.0,
+   "comparator_in_next_year_doc": 9.67,
+   "next_doc": "2024.3Q"
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "roa",
+   "as_published": 5.8,
+   "comparator_in_next_year_doc": 6.56,
+   "next_doc": "2024.3Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "assets",
+   "as_published": 2705.0,
+   "comparator_in_next_year_doc": 2356.0,
+   "next_doc": "2024.2Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "liabilities",
+   "as_published": 1184.0,
+   "comparator_in_next_year_doc": 571.0,
+   "next_doc": "2024.2Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "equity",
+   "as_published": 1521.0,
+   "comparator_in_next_year_doc": 1785.0,
+   "next_doc": "2024.2Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "net_income",
+   "as_published": 38.0,
+   "comparator_in_next_year_doc": 56.0,
+   "next_doc": "2024.2Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "roe",
+   "as_published": 4.6,
+   "comparator_in_next_year_doc": 5.88,
+   "next_doc": "2024.2Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "roa",
+   "as_published": 2.9,
+   "comparator_in_next_year_doc": 4.26,
+   "next_doc": "2024.2Q"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "roe",
+   "as_published": -6.4,
+   "comparator_in_next_year_doc": -5.9,
+   "next_doc": "2024.1Q"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "roa",
+   "as_published": -4.6,
+   "comparator_in_next_year_doc": -4.48,
+   "next_doc": "2024.1Q"
+  }
+ ],
+ "rows": [
+  {
+   "period": "2026.2Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 4190.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 2177.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2013.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": -11.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 56.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 45.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 47.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 11.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 36.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 3.1,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 1.89,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p8;p6",
+   "source_table": "2-4 회계모형별 보험부채 현황 + 2-2 재무정보 요약사항",
+   "alt": {
+    "표_2-4_합계_일반모형_CSM": 8915.0,
+    "표_2-4_합계_BEL_RA_CSM": [
+     -9425.0,
+     1180.0,
+     8915.0
+    ],
+    "서술_보험부채_CSM": 5031.0,
+    "서술_총CSM(상각전)": 5144.0
+   },
+   "note": "p8 2-4 회계모형별·포트폴리오별 보험부채 현황 표(원수·수재 잔여보장요소 기준) 합계행 CSM=8915 / p6 서술 문장: '보험부채는 최선추정부채 –4,429억원, 위험조정 654억원, 보험계약마진 5,031억원입니다. 전년 동기 대비 최선추정부채의 주요변동원인은 계리적 가정 중 위험률 93억원, 해지율 -497억원, ' / 표 CSM과 서술 CSM의 값이 크게 달라 기말 CSM 값은 비움(총량 vs 순액 등 기준 차이 미확인)"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "csm_new",
+   "label": "신계약 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p6",
+   "source_table": "2-2 재무정보 요약사항(서술)",
+   "alt": {
+    "서술_신계약": 221.0
+   },
+   "note": "서술 문장에만 있음(표 아님): 보험계약마진의 주요 변동 원인은 신계약 221억원"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3595.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 1376.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2219.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": -57.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 29.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": -28.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": -28.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": -6.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": -3.63,
+   "unit": "%",
+   "basis": "분기",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": -2.51,
+   "unit": "%",
+   "basis": "분기",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p9;p6",
+   "source_table": "2-4 회계모형별 보험부채 현황 + 2-2 재무정보 요약사항",
+   "alt": {
+    "표_2-4_합계_일반모형_CSM": 9158.0,
+    "표_2-4_합계_BEL_RA_CSM": [
+     -10538.0,
+     1254.0,
+     9158.0
+    ],
+    "서술_보험부채_CSM": 5172.0,
+    "서술_총CSM(상각전)": 5172.0
+   },
+   "note": "p9 2-4 회계모형별·포트폴리오별 보험부채 현황 표(원수·수재 잔여보장요소 기준) 합계행 CSM=9158 / p6 서술 문장: '보험부채는 최선추정부채 억원 위험조정 억원 보험계약마진 억원입니다 전년 -5,275 , 693 , 5,172 . 동기 대비 최선추정부채의 주요변동원인은 계리적 가정 중 위험률 억원 해지율 억원 96' (텍스트 추출에서 숫자 순서가 흩어져 쌍 확정은 문장 뒤 3수치 기준) / 표 CSM과 서술 CSM의 값이 크게 달라 기말 CSM 값은 비움(총량 vs 순액 등 기준 차이 미확인)"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3423.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p13",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 802.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p13",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2621.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p13",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 291.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 105.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 397.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 404.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 106.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 298.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 11.64,
+   "unit": "%",
+   "basis": "연간",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 8.69,
+   "unit": "%",
+   "basis": "연간",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p15;p12",
+   "source_table": "2-4 회계모형별 보험부채 현황 + 2-2 재무정보 요약사항",
+   "alt": {
+    "표_2-4_합계_일반모형_CSM": 9007.0,
+    "표_2-4_합계_BEL_RA_CSM": [
+     -11491.0,
+     1393.0,
+     9007.0
+    ],
+    "서술_보험부채_CSM": 5122.0,
+    "서술_총CSM(상각전)": 5350.0
+   },
+   "note": "p15 2-4 회계모형별·포트폴리오별 보험부채 현황 표(원수·수재 잔여보장요소 기준) 합계행 CSM=9007 / p12 서술 문장: '보험부채는 최선추정부채 -5,526억원, 위험조정 770억원, 보험계약마진 5,122억원입니다. 전기 대비 최선추정부채의 주요변동원인은 계리적 가정 중 위험률 93억원, 해지율 -497억원, 사업비' / 표 CSM과 서술 CSM의 값이 크게 달라 기말 CSM 값은 비움(총량 vs 순액 등 기준 차이 미확인)"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "csm_new",
+   "label": "신계약 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p12",
+   "source_table": "2-2 재무정보 요약사항(서술)",
+   "alt": {
+    "서술_신계약": 541.0
+   },
+   "note": "서술 문장에만 있음(표 아님): 보험계약마진의 주요 변동 원인은 신계약 541억원"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3936.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 1104.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2832.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": null,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "alt": {
+    "요약손익표": 173.0,
+    "서술(2-2/4-1)": 172.0
+   },
+   "note": "요약 포괄손익계산서(p4)와 재무정보 요약사항 서술(p6)의 값이 다르다. 임의 선택하지 않고 비움.",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 79.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 251.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 252.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 58.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 194.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 9.7,
+   "unit": "%",
+   "basis": "3분기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 7.02,
+   "unit": "%",
+   "basis": "3분기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p9;p6",
+   "source_table": "2-4 회계모형별 보험부채 현황 + 2-2 재무정보 요약사항",
+   "alt": {
+    "표_2-4_합계_일반모형_CSM": 8385.0,
+    "표_2-4_합계_BEL_RA_CSM": [
+     -11137.0,
+     1350.0,
+     8385.0
+    ],
+    "서술_보험부채_CSM": 4749.0,
+    "서술_총CSM(상각전)": 4749.0
+   },
+   "note": "p9 2-4 회계모형별·포트폴리오별 보험부채 현황 표(원수·수재 잔여보장요소 기준) 합계행 CSM=8385 / p6 서술 문장: '보험부채는 최선추정부채 –5,339억원, 위험조정 747억원, 보험계약마진 4,749억원입니다. 전년 동 기 대비 최선추정부채의 주요변동원인은 계리적 가정 중 위험률 -76억원, 해지율 –1,022' / 표 CSM과 서술 CSM의 값이 크게 달라 기말 CSM 값은 비움(총량 vs 순액 등 기준 차이 미확인)"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "csm_new",
+   "label": "신계약 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p6",
+   "source_table": "2-2 재무정보 요약사항(서술)",
+   "alt": {
+    "서술_신계약": 375.0
+   },
+   "note": "서술 문장에만 있음(표 아님): 보험계약마진의 주요 변동 원인은 신계약 375억원"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3746.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 915.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2831.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 125.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 53.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 178,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 비움(쪽 간 불일치 {\"요약손익표\": 178.0, \"서술(2-2/4-1)\": 179.0}) from 2025.2Q",
+   "note": "규칙(2) 이후 공시 비교 칸으로 보충(2026-10-09 owner). 이전 note: 요약 포괄손익계산서(p5)와 재무정보 요약사항 서술(p6)의 값이 다르다. 임의 선택하지 않고 비움.",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 5,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 179.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 41.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 138.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 10.31,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 7.67,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p8;p6",
+   "source_table": "2-4 회계모형별 보험부채 현황 + 2-2 재무정보 요약사항",
+   "alt": {
+    "표_2-4_합계_일반모형_CSM": 8451.0,
+    "표_2-4_합계_BEL_RA_CSM": [
+     -11501.0,
+     1332.0,
+     8451.0
+    ],
+    "서술_보험부채_CSM": 4807.0,
+    "서술_총CSM(상각전)": 4193.0
+   },
+   "note": "p8 2-4 회계모형별·포트폴리오별 보험부채 현황 표(원수·수재 잔여보장요소 기준) 합계행 CSM=8451 / p6 서술 문장: '보험부채는 최선추정부채 -5,667억원, 위험조정 736억원, 보험계약마진 4,807억원입니다. 전년 동기 대비 최선추정부채의 주요변동원인은 계리적 가정 중 위험률 -76억원, 해지율 -1,022억' / 표 CSM과 서술 CSM의 값이 크게 달라 기말 CSM 값은 비움(총량 vs 순액 등 기준 차이 미확인)"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "csm_new",
+   "label": "신계약 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p6",
+   "source_table": "2-2 재무정보 요약사항(서술)",
+   "alt": {
+    "서술_신계약": 393.0
+   },
+   "note": "서술 문장에만 있음(표 아님): 보험계약마진의 주요 변동 원인은 신계약 393억원"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3900.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 1013.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2887.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 119.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 28.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 147.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 146.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 34.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 112.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 16.6,
+   "unit": "%",
+   "basis": "분기",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 12.2,
+   "unit": "%",
+   "basis": "분기",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.1Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p9;p6",
+   "source_table": "2-4 회계모형별 보험부채 현황 + 2-2 재무정보 요약사항",
+   "alt": {
+    "표_2-4_합계_일반모형_CSM": 8875.0,
+    "표_2-4_합계_BEL_RA_CSM": [
+     -12374.0,
+     1390.0,
+     8875.0
+    ],
+    "서술_보험부채_CSM": 5037.0,
+    "서술_총CSM(상각전)": 5092.0
+   },
+   "note": "p9 2-4 회계모형별·포트폴리오별 보험부채 현황 표(원수·수재 잔여보장요소 기준) 합계행 CSM=8875 / p6 서술 문장: '보험부채는 최선추정부채 억원위험조정 억원보험계약마진 억원입니다전년 동 6,313 , 762 , 5,037 . – 기 대비 최선추정부채의 주요변동원인은 계리적 가정 중 위험률 억원해지율 억원사 -76' (텍스트 추출에서 숫자 순서가 흩어져 쌍 확정은 문장 뒤 3수치 기준) / 표 CSM과 서술 CSM의 값이 크게 달라 기말 CSM 값은 비움(총량 vs 순액 등 기준 차이 미확인)"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3436.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p13",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 934.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p13",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2501.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p13",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 381.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 85.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 466.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 472.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 120.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 353.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 15.16,
+   "unit": "%",
+   "basis": "연간",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 11.4,
+   "unit": "%",
+   "basis": "연간",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.4Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p16;p12",
+   "source_table": "2-4 회계모형별 보험부채 현황 + 2-2 재무정보 요약사항",
+   "alt": {
+    "표_2-4_합계_일반모형_CSM": 9301.0,
+    "표_2-4_합계_BEL_RA_CSM": [
+     -12204.0,
+     1353.0,
+     9301.0
+    ],
+    "서술_보험부채_CSM": 5366.0,
+    "서술_총CSM(상각전)": 5571.0
+   },
+   "note": "p16 2-4 회계모형별·포트폴리오별 보험부채 현황 표(원수·수재 잔여보장요소 기준) 합계행 CSM=9301 / p12 서술 문장: '보험부채는 최선추정부채 억원위험조정 억원보험계약마진 억원입니다전분기 -5,892 , 743 , 5,366 . 대비 최선추정부채의 주요변동원인은 계리적 가정 중 위험률 억원해지율 억원사업 -76 , ' (텍스트 추출에서 숫자 순서가 흩어져 쌍 확정은 문장 뒤 3수치 기준) / 표 CSM과 서술 CSM의 값이 크게 달라 기말 CSM 값은 비움(총량 vs 순액 등 기준 차이 미확인)"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3700.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p6",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 1032.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p6",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2669.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p6",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 261.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 68.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 328.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 331.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 85.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 246.0,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 13.59,
+   "unit": "%",
+   "basis": "3분기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 10.16,
+   "unit": "%",
+   "basis": "3분기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.3Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": null,
+   "source_table": null,
+   "note": "경영공시 본문에 CSM 수치 표·서술 없음(키워드는 회계정책 설명뿐)"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 3212.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 792.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2420.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p7",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 121.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 44.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 165.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 166.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 37.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 129.0,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": "p5",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 11.3,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 8.66,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.2Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": null,
+   "source_table": null,
+   "note": "경영공시 본문에 CSM 수치 표·서술 없음(키워드는 회계정책 설명뿐)"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 2629.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p6",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 431.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p6",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2198.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p6",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 54.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 22.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 76.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 78.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 18.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 61.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 11.17,
+   "unit": "%",
+   "basis": "분기",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 9.04,
+   "unit": "%",
+   "basis": "분기",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2024.1Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": null,
+   "source_table": null,
+   "note": "경영공시 본문에 CSM 수치 표·서술 없음(키워드는 회계정책 설명뿐)"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 2753.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p11",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 599.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p11",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 2154.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p11",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 114.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 73.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 186.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 194.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 39.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 155.0,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": "p10",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 7.36,
+   "unit": "%",
+   "basis": "연간",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 5.44,
+   "unit": "%",
+   "basis": "연간",
+   "source_page": "p3",
+   "source_table": "1-1 주요 경영지표",
+   "note": "원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.4Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "연간",
+   "source_page": null,
+   "source_table": null,
+   "note": "결산 주석(천원 단위 CSM 변동 표)이 있으나 이번 단계에서는 미추출"
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 2621,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 3062 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 900,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 1579 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 1721,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 1483 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 123,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 4,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 102 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 46,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 4,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 52 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 168,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 4,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 155 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 175,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 4,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 161 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 38,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 4,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 37 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 137,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 124 from 2023.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 9.67,
+   "unit": "%",
+   "basis": "3분기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 10 from 2023.3Q"
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 6.56,
+   "unit": "%",
+   "basis": "3분기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "prior_col",
+   "from_period": "2024.3Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 5.8 from 2023.3Q"
+  },
+  {
+   "period": "2023.3Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "3분기누계",
+   "source_page": null,
+   "source_table": null,
+   "note": "경영공시 본문에 CSM 수치 표·서술 없음(키워드는 회계정책 설명뿐)"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 2356,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 2705 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 571,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 1184 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 1785,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 1521 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": 10,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 5,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 19 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 35,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 5,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 31 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": 45,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 5,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 50 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": 46,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 5,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 50 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": -11,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 5,
+   "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기",
+   "alt": "당기칸 12 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": 56,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 38 from 2023.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": 5.88,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 4.6 from 2023.2Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": 4.26,
+   "unit": "%",
+   "basis": "반기누계",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "prior_col",
+   "from_period": "2024.2Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 2.9 from 2023.2Q"
+  },
+  {
+   "period": "2023.2Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "반기누계",
+   "source_page": null,
+   "source_table": null,
+   "note": "경영공시 본문에 CSM 수치 표·서술 없음(키워드는 회계정책 설명뿐)"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "assets",
+   "label": "자산총계",
+   "value": 2570.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p5",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "liabilities",
+   "label": "부채총계",
+   "value": 682.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p5",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "equity",
+   "label": "자본총계",
+   "value": 1888.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p5",
+   "source_table": "요약 재무상태표(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "insurance_result",
+   "label": "보험손익",
+   "value": -44.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "investment_result",
+   "label": "투자손익",
+   "value": 15.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "operating_income",
+   "label": "영업이익",
+   "value": -29.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "pretax_income",
+   "label": "법인세비용차감전순이익",
+   "value": -30.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "income_tax",
+   "label": "법인세비용",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "net_income",
+   "label": "당기순이익",
+   "value": -30.0,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": "p4",
+   "source_table": "요약 포괄손익계산서(감독회계 총괄)",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "roe",
+   "label": "자기자본수익률(ROE)",
+   "value": -5.9,
+   "unit": "%",
+   "basis": "분기",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "prior_col",
+   "from_period": "2024.1Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 -6.4 from 2023.1Q"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "roa",
+   "label": "총자산수익률(ROA)",
+   "value": -4.48,
+   "unit": "%",
+   "basis": "분기",
+   "source_table": "1-1 주요경영지표 전년동기/전기",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 원문 % 그대로(연환산 여부 원문 표기 없음)",
+   "source_kind": "prior_col",
+   "from_period": "2024.1Q",
+   "from_page": 3,
+   "from_table": "1-1 주요경영지표 전년동기/전기",
+   "alt": "당기칸 -4.6 from 2023.1Q"
+  },
+  {
+   "period": "2023.1Q",
+   "metric": "csm_end",
+   "label": "기말 CSM",
+   "value": null,
+   "unit": "억원",
+   "basis": "분기",
+   "source_page": null,
+   "source_table": null,
+   "note": "경영공시 본문에 CSM 수치 표·서술 없음(키워드는 회계정책 설명뿐)"
+  }
+ ],
+ "recon_20261009": {
+  "rule": "owner 2026-10-09: (1) 상충=최신 공시의 전기·전년동기·직전분기 칸 채택, (2) 빈 분기 보충",
+  "flipped": [
+   {
+    "period": "2023.3Q",
+    "metric": "assets",
+    "current_value": 3062,
+    "adopt_value": 2621,
+    "from_period": "2024.3Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "liabilities",
+    "current_value": 1579,
+    "adopt_value": 900,
+    "from_period": "2024.3Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "equity",
+    "current_value": 1483,
+    "adopt_value": 1721,
+    "from_period": "2024.3Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "insurance_result",
+    "current_value": 102,
+    "adopt_value": 123,
+    "from_period": "2024.3Q",
+    "from_page": 4,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "investment_result",
+    "current_value": 52,
+    "adopt_value": 46,
+    "from_period": "2024.3Q",
+    "from_page": 4,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "operating_income",
+    "current_value": 155,
+    "adopt_value": 168,
+    "from_period": "2024.3Q",
+    "from_page": 4,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "pretax_income",
+    "current_value": 161,
+    "adopt_value": 175,
+    "from_period": "2024.3Q",
+    "from_page": 4,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "income_tax",
+    "current_value": 37,
+    "adopt_value": 38,
+    "from_period": "2024.3Q",
+    "from_page": 4,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "net_income",
+    "current_value": 124,
+    "adopt_value": 137,
+    "from_period": "2024.3Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "roe",
+    "current_value": 10,
+    "adopt_value": 9.67,
+    "from_period": "2024.3Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.3Q",
+    "metric": "roa",
+    "current_value": 5.8,
+    "adopt_value": 6.56,
+    "from_period": "2024.3Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "assets",
+    "current_value": 2705,
+    "adopt_value": 2356,
+    "from_period": "2024.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "liabilities",
+    "current_value": 1184,
+    "adopt_value": 571,
+    "from_period": "2024.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "equity",
+    "current_value": 1521,
+    "adopt_value": 1785,
+    "from_period": "2024.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "insurance_result",
+    "current_value": 19,
+    "adopt_value": 10,
+    "from_period": "2024.2Q",
+    "from_page": 5,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "investment_result",
+    "current_value": 31,
+    "adopt_value": 35,
+    "from_period": "2024.2Q",
+    "from_page": 5,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "operating_income",
+    "current_value": 50,
+    "adopt_value": 45,
+    "from_period": "2024.2Q",
+    "from_page": 5,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "pretax_income",
+    "current_value": 50,
+    "adopt_value": 46,
+    "from_period": "2024.2Q",
+    "from_page": 5,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "income_tax",
+    "current_value": 12,
+    "adopt_value": -11,
+    "from_period": "2024.2Q",
+    "from_page": 5,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "net_income",
+    "current_value": 38,
+    "adopt_value": 56,
+    "from_period": "2024.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "roe",
+    "current_value": 4.6,
+    "adopt_value": 5.88,
+    "from_period": "2024.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.2Q",
+    "metric": "roa",
+    "current_value": 2.9,
+    "adopt_value": 4.26,
+    "from_period": "2024.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.1Q",
+    "metric": "roe",
+    "current_value": -6.4,
+    "adopt_value": -5.9,
+    "from_period": "2024.1Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   },
+   {
+    "period": "2023.1Q",
+    "metric": "roa",
+    "current_value": -4.6,
+    "adopt_value": -4.48,
+    "from_period": "2024.1Q",
+    "from_page": 3,
+    "from_table": "1-1 주요경영지표 전년동기/전기"
+   }
+  ],
+  "filled": [
+   {
+    "period": "2025.2Q",
+    "metric": "operating_income",
+    "value": 178,
+    "from_period": "2026.2Q",
+    "from_page": 5,
+    "from_table": "2-1 요약 포괄손익계산서(총괄) 전년동기/전기"
+   }
+  ],
+  "still_blank": [
+   {
+    "period": "2025.3Q",
+    "metric": "insurance_result",
+    "reason": "공시 요약손익표와 서술문 값이 달라 비움(이전 note). 이후 공시(2025.4Q~2026.2Q) 중 이 분기 3분기누계를 싣는 비교 칸 없음(26.3Q 공시 미발행). 당기 칸 후보 173(요약손익표) 대 172(서술)."
+   }
+  ],
+  "identity_checks_after": [
+   {
+    "period": "2026.2Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2026.2Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2026.2Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2026.1Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2026.1Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2026.1Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.4Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.4Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": -1.0
+   },
+   {
+    "period": "2025.4Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.3Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.3Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.2Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.2Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.2Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.1Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.1Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2025.1Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.4Q",
+    "check": "자산=부채+자본",
+    "diff": 1.0
+   },
+   {
+    "period": "2024.4Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.4Q",
+    "check": "세전-법인세=순이익",
+    "diff": -1.0
+   },
+   {
+    "period": "2024.3Q",
+    "check": "자산=부채+자본",
+    "diff": -1.0
+   },
+   {
+    "period": "2024.3Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 1.0
+   },
+   {
+    "period": "2024.3Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.2Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.2Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.2Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.1Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.1Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2024.1Q",
+    "check": "세전-법인세=순이익",
+    "diff": -1.0
+   },
+   {
+    "period": "2023.4Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2023.4Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 1.0
+   },
+   {
+    "period": "2023.4Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2023.3Q",
+    "check": "자산=부채+자본",
+    "diff": 0
+   },
+   {
+    "period": "2023.3Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 1
+   },
+   {
+    "period": "2023.3Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0
+   },
+   {
+    "period": "2023.2Q",
+    "check": "자산=부채+자본",
+    "diff": 0
+   },
+   {
+    "period": "2023.2Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0
+   },
+   {
+    "period": "2023.2Q",
+    "check": "세전-법인세=순이익",
+    "diff": 1
+   },
+   {
+    "period": "2023.1Q",
+    "check": "자산=부채+자본",
+    "diff": 0.0
+   },
+   {
+    "period": "2023.1Q",
+    "check": "보험손익+투자손익≈영업이익",
+    "diff": 0.0
+   },
+   {
+    "period": "2023.1Q",
+    "check": "세전-법인세=순이익",
+    "diff": 0.0
+   }
+  ],
+  "identity_violations_gt1": []
+ }
+}

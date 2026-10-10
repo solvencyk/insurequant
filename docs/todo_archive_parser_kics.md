@@ -1,5 +1,7 @@
 # TODO archive — `TODO_parser_kics.md` (Status 이력, 읽기 지연)
 
+- **2026-09-21 (17회차) 라이나생명 2026.2Q 금리민감도 원문 대조 0건 수정** + 적용후 결손 3사(KR0050·KR0069·KR1098) 9칸 미러. `a03ac79`.
+
 ## 2026-10-07 정리 — 정리 전 `TODO_parser_kics.md` 전문 (무수정)
 
 # Insurequant Parser TODO — K-ICS lane (Stage 2)

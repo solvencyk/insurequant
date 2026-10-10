@@ -1,0 +1,1374 @@
+{
+ "company": "KR1108 마이브라운반려동물전문보험",
+ "generated_utc": "2026-10-09T05:06:51Z",
+ "unit": "억원(비율은 %)",
+ "source": "각 분기 경영공시 PDF(fitz 텍스트층, 쪽 번호는 PDF 쪽); md_inbox MD는 K-ICS 절만 포함하므로 1-1·2-1은 PDF 직접 판독",
+ "note": "마스터 JSON 미반영 스테이징. 신설 소액단기전문보험사: 2025.6 본인가·2025.7 영업개시. 손익은 모두 누계(당기 1.1~기말), 임의로 당분기를 만들지 않음. 원문 음수 표기는 '-'(마이너스, △ 아님), 단독 '-'는 0/해당없음. 수입보험료·원수/수재/출재 구분 미공시(보험수익만), 일반/장기 구분 없음(보험료배분접근법 단일). 2025.1Q·이전은 공시 없음(not_posted). [2026-10-09 recon] 상충 16건은 최신 공시 전기 칸으로 뒤집음(source_kind=prior_col, alt 에 당기 칸 값). 2025.1Q 는 비교 칸에도 없어 빈 칸.",
+ "rows": [
+  {
+   "period": "2026.2Q",
+   "metric": "자산총계",
+   "value": 158,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "부채총계",
+   "value": 52,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "자본총계",
+   "value": 106,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "보험손익",
+   "value": -69.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "투자손익",
+   "value": -8.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 -8(투자수익 2-투자비용 10). 서술은 -9로 어긋남, 표 채택",
+   "alt": {
+    "2-2 서술(6쪽) 투자이익": -9
+   }
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "영업이익",
+   "value": -78.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "영업외손익",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "법인세비용차감전순이익",
+   "value": -78.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "법인세비용",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "당기순이익",
+   "value": -78.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "보험수익",
+   "value": 26.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서 (보험부문 보험수익)",
+   "source_kind": "current_col",
+   "note": "수입보험료·원수/수재/출재 구분 미공시, 보험수익(IFRS17)만 공시. 장기/일반 구분 없음(PAA 단일)."
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "지급여력금액(가용자본)",
+   "value": 46.97,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 19,
+   "source_table": "4-2-2 지급여력비율 경과조치 적용에 관한 사항(백만원 표)/÷100",
+   "source_kind": "current_col",
+   "note": "억원 표는 47 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용)."
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "지급여력기준금액(요구자본)",
+   "value": 20.32,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 19,
+   "source_table": "4-2-2 지급여력비율 경과조치 적용에 관한 사항(백만원 표)/÷100",
+   "source_kind": "current_col",
+   "note": "억원 표는 20 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용)."
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "value": 231.11,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 총괄표 p14",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "value": 231.11,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 총괄표 p14",
+   "source_kind": "current_col",
+   "note": "경과조치 미적용(TFI·TAC·TIR·TER·TIRR 전부 X)이라 전=후"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "ROA",
+   "value": -79.81,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2026.2Q",
+   "metric": "ROE",
+   "value": -107.2,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "자산총계",
+   "value": 195,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "부채총계",
+   "value": 43,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "자본총계",
+   "value": 152,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "보험손익",
+   "value": -28.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "투자손익",
+   "value": -4.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "영업이익",
+   "value": -32.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "영업외손익",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "법인세비용차감전순이익",
+   "value": -32.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "법인세비용",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "당기순이익",
+   "value": -32.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 5,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "보험수익",
+   "value": 10.0,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서 (보험부문 보험수익)",
+   "source_kind": "current_col",
+   "note": "수입보험료·원수/수재/출재 구분 미공시, 보험수익(IFRS17)만 공시. 장기/일반 구분 없음(PAA 단일)."
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "지급여력금액(가용자본)",
+   "value": 89.79,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-1(26.1Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 89.79 는 백만원 표 ÷100. 이전 note: 억원 표는 90 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 90 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2026.1Q)"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "지급여력기준금액(요구자본)",
+   "value": 17.48,
+   "unit": "억원",
+   "basis": "분기(1~3월)",
+   "source_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-1(26.1Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 17.48 은 백만원 표 ÷100. 이전 note: 억원 표는 17 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 17 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2026.1Q)"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "value": 513.77,
+   "unit": "%",
+   "basis": "분기(1~3월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 총괄표 p14",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "value": 513.77,
+   "unit": "%",
+   "basis": "분기(1~3월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 총괄표 p14",
+   "source_kind": "current_col",
+   "note": "경과조치 미적용(TFI·TAC·TIR·TER·TIRR 전부 X)이라 전=후"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "ROA",
+   "value": -60.65,
+   "unit": "%",
+   "basis": "분기(1~3월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2026.1Q",
+   "metric": "ROE",
+   "value": -77.08,
+   "unit": "%",
+   "basis": "분기(1~3월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "자산총계",
+   "value": 233,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "부채총계",
+   "value": 48,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "자본총계",
+   "value": 184,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col",
+   "note": "자산 233-부채 48=185와 1억 차이(원문 표기 그대로, 반올림)"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "보험손익",
+   "value": -75.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 12,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "투자손익",
+   "value": -8.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 12,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "영업이익",
+   "value": -84.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 12,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 -84 인쇄, 보험손익 -75+투자손익 -8=-83이고 -83+영업외 2=세전 -81로 닫힘. 발행사 표 내부 불일치(1억 반올림)라 표 값을 그대로 둠",
+   "alt": {
+    "4-1 서술(14쪽) 영업이익": -83,
+    "항등식 보험손익+투자손익": -83
+   }
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "영업외손익",
+   "value": 2.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 12,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "법인세비용차감전순이익",
+   "value": -81.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 12,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "법인세비용",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 12,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "당기순이익",
+   "value": -81.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 13,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "보험수익",
+   "value": 4.0,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 12,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서 (보험부문 보험수익)",
+   "source_kind": "current_col",
+   "note": "수입보험료·원수/수재/출재 구분 미공시, 보험수익(IFRS17)만 공시. 장기/일반 구분 없음(PAA 단일)."
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력금액(가용자본)",
+   "value": 119.76,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 119.76 은 백만원 표 ÷100. 이전 note: 억원 표는 120 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 120 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2025.4Q)"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력기준금액(요구자본)",
+   "value": 12.76,
+   "unit": "억원",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 12.76 은 백만원 표 ÷100. 이전 note: 억원 표는 13 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 13 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2025.4Q)"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "value": 938.23,
+   "unit": "%",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 18,
+   "alt": "당기칸 938.2 from 2025.4Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "value": 938.23,
+   "unit": "%",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸",
+   "source_kind": "prior_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 경과조치 미적용(TFI·TAC·TIR·TER·TIRR 전부 X)이라 전=후",
+   "from_period": "2026.2Q",
+   "from_page": 18,
+   "alt": "당기칸 938.2 from 2025.4Q"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "ROA",
+   "value": -69.91,
+   "unit": "%",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "ROE",
+   "value": -88.23,
+   "unit": "%",
+   "basis": "연간(2025.1.1~12.31)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "자산총계",
+   "value": 156,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "부채총계",
+   "value": 20,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "자본총계",
+   "value": 136,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "보험손익",
+   "value": -45.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "투자손익",
+   "value": -4.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "영업이익",
+   "value": -49.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "영업외손익",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "법인세비용차감전순이익",
+   "value": -49.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "법인세비용",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "당기순이익",
+   "value": -49.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "보험수익",
+   "value": 1.0,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서 (보험부문 보험수익)",
+   "source_kind": "current_col",
+   "note": "수입보험료·원수/수재/출재 구분 미공시, 보험수익(IFRS17)만 공시. 장기/일반 구분 없음(PAA 단일)."
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력금액(가용자본)",
+   "value": 67.02,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 67.02 는 백만원 표 ÷100. 이전 note: 억원 표는 67 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 67 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2025.3Q)"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력기준금액(요구자본)",
+   "value": 6.19,
+   "unit": "억원",
+   "basis": "3분기누계(1~9월)",
+   "source_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 6.19 는 백만원 표 ÷100. 이전 note: 억원 표는 6 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 6 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2025.3Q)"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "value": 1083.54,
+   "unit": "%",
+   "basis": "3분기누계(1~9월)",
+   "source_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸",
+   "source_kind": "prior_col",
+   "from_period": "2026.1Q",
+   "from_page": 14,
+   "alt": "당기칸 1083.5 from 2025.3Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "value": 1083.54,
+   "unit": "%",
+   "basis": "3분기누계(1~9월)",
+   "source_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸",
+   "source_kind": "prior_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 경과조치 미적용(TFI·TAC·TIR·TER·TIRR 전부 X)이라 전=후",
+   "from_period": "2026.1Q",
+   "from_page": 14,
+   "alt": "당기칸 1083.5 from 2025.3Q"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "ROA",
+   "value": -46.61,
+   "unit": "%",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "ROE",
+   "value": -50.87,
+   "unit": "%",
+   "basis": "3분기누계(1~9월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "current_col",
+   "note": "공시 표기값(연환산 여부 문서에 명시 없음)"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "자산총계",
+   "value": 115,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "부채총계",
+   "value": 18,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "자본총계",
+   "value": 97,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 3,
+   "source_table": "1-1 주요 경영지표 / 2-3-1 요약 재무상태표",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "보험손익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "투자손익",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "영업이익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "영업외손익",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "법인세비용차감전순이익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "법인세비용",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col",
+   "note": "표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "당기순이익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "current_col"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "보험수익",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": 4,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서 (보험부문 보험수익)",
+   "source_kind": "current_col",
+   "note": "수입보험료·원수/수재/출재 구분 미공시, 보험수익(IFRS17)만 공시. 장기/일반 구분 없음(PAA 단일). 표 '-' 표기를 0으로 적음"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "지급여력금액(가용자본)",
+   "value": 34.2,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_table": "4-2 [지급여력비율 총괄] 당분기-2(25.2Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 34.2 는 백만원 표 ÷100. 이전 note: 억원 표는 34 정수(반올림), 백만원 표 값÷100. 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 34 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2025.2Q)"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "지급여력기준금액(요구자본)",
+   "value": 1.25,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_table": "4-2 [지급여력비율 총괄] 당분기-2(25.2Q) 칸",
+   "source_kind": "current_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 억원 정수 표기. 당기 칸 1.25 는 백만원 표 ÷100. 이전 note: 억원 표는 1 정수(반올림), 백만원 표 값÷100. 3,420÷2,726.2로 역산하면 약 1.25억(125.45백만원)이라 인쇄 ratio와 미세 차이(반올림). 경과조치 전=후(미적용).",
+   "alt": "최신 공시 전기 칸 1 은 같은 값의 반올림 표기라 정밀값 유지 (owner 2026-10-09 handoff §7-2, from 2025.2Q)"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "value": 2726.21,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_table": "1-1 주요 경영지표(전년동기·전기 칸)",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "alt": "당기칸 2726.2 from 2025.2Q",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner)."
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "value": 2726.21,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_table": "1-1 주요 경영지표(전년동기·전기 칸)",
+   "source_kind": "prior_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 경과조치 미적용(TFI·TAC·TIR·TER·TIRR 전부 X)이라 전=후",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "alt": "당기칸 2726.2 from 2025.2Q"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "ROA",
+   "value": -76.4,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_table": "1-1 주요 경영지표(전년동기·전기 칸)",
+   "source_kind": "prior_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 공시 표기값(연환산 여부 문서에 명시 없음)",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "alt": "당기칸 -2.3 from 2025.2Q"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "ROE",
+   "value": -90.4,
+   "unit": "%",
+   "basis": "반기누계(1~6월)",
+   "source_table": "1-1 주요 경영지표(전년동기·전기 칸)",
+   "source_kind": "prior_col",
+   "note": "규칙(1) 최신 공시 전기 칸 채택(2026-10-09 owner). 이전 note: 공시 표기값(연환산 여부 문서에 명시 없음)",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "alt": "당기칸 -2.7 from 2025.2Q"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "자산총계",
+   "value": 115.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "부채총계",
+   "value": 18.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "자본총계",
+   "value": 97.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "당기순이익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "1-1 주요 경영지표",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 3,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "보험손익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 5,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "투자손익",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 5,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "영업이익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 5,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "법인세비용차감전순이익",
+   "value": -22.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 5,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "법인세비용",
+   "value": 0.0,
+   "unit": "억원",
+   "basis": "반기누계(1~6월)",
+   "source_page": null,
+   "source_table": "2-1-1 감독회계 기준 총괄계정 요약 포괄손익계산서",
+   "source_kind": "prior_col",
+   "from_period": "2026.2Q",
+   "from_page": 5,
+   "note": "2026.2Q 공시의 '2025년 상반기' 전년동기 칸"
+  }
+ ],
+ "prior_check": [
+  {
+   "period": "2025.2Q",
+   "metric": "자산총계",
+   "current": 115,
+   "prior_col": 115.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "부채총계",
+   "current": 18,
+   "prior_col": 18.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "자본총계",
+   "current": 97,
+   "prior_col": 97.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "당기순이익",
+   "current": -22.0,
+   "prior_col": -22.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "ROA",
+   "current": -2.3,
+   "prior_col": -76.4,
+   "from_period": "2026.2Q",
+   "match": false
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "ROE",
+   "current": -2.7,
+   "prior_col": -90.4,
+   "from_period": "2026.2Q",
+   "match": false
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "current": 2726.2,
+   "prior_col": 2726.21,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "current": 2726.2,
+   "prior_col": 2726.21,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "보험손익",
+   "current": -22.0,
+   "prior_col": -22.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "투자손익",
+   "current": 0.0,
+   "prior_col": 0.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "영업이익",
+   "current": -22.0,
+   "prior_col": -22.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "법인세비용차감전순이익",
+   "current": -22.0,
+   "prior_col": -22.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.2Q",
+   "metric": "법인세비용",
+   "current": 0.0,
+   "prior_col": 0.0,
+   "from_period": "2026.2Q",
+   "match": true
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "current": 1083.5,
+   "prior_col": 1083.54,
+   "from_period": "2026.1Q",
+   "match": true
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "current": 1083.5,
+   "prior_col": 1083.54,
+   "from_period": "2026.1Q",
+   "match": true
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력금액(가용자본)",
+   "current": 67.02,
+   "prior_col": 67.0,
+   "from_period": "2026.1Q",
+   "match": true
+  },
+  {
+   "period": "2025.3Q",
+   "metric": "지급여력기준금액(요구자본)",
+   "current": 6.19,
+   "prior_col": 6.0,
+   "from_period": "2026.1Q",
+   "match": true
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력비율(경과조치 전)",
+   "current": 938.2,
+   "prior_col": 938.23,
+   "from_period": "2026.1Q",
+   "match": true
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력비율(경과조치 후)",
+   "current": 938.2,
+   "prior_col": 938.23,
+   "from_period": "2026.1Q",
+   "match": true
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력금액(가용자본)",
+   "current": 119.76,
+   "prior_col": 120.0,
+   "from_period": "2026.1Q",
+   "match": true
+  },
+  {
+   "period": "2025.4Q",
+   "metric": "지급여력기준금액(요구자본)",
+   "current": 12.76,
+   "prior_col": 13.0,
+   "from_period": "2026.1Q",
+   "match": true
+  }
+ ],
+ "recon_20261009": {
+  "rule": "owner 2026-10-09: (1) 상충=최신 공시 전기 칸 채택, (2) 빈 분기 보충",
+  "flipped": [
+   {
+    "period": "2025.2Q",
+    "metric": "지급여력금액(가용자본)",
+    "current_value": 34.2,
+    "adopt_value": 34,
+    "from_period": "2025.4Q",
+    "from_page": 24,
+    "from_table": "4-2 [지급여력비율 총괄] 당분기-2(25.2Q) 칸"
+   },
+   {
+    "period": "2025.2Q",
+    "metric": "지급여력기준금액(요구자본)",
+    "current_value": 1.25,
+    "adopt_value": 1,
+    "from_period": "2025.4Q",
+    "from_page": 24,
+    "from_table": "4-2 [지급여력비율 총괄] 당분기-2(25.2Q) 칸"
+   },
+   {
+    "period": "2025.2Q",
+    "metric": "지급여력비율(경과조치 전)",
+    "current_value": 2726.2,
+    "adopt_value": 2726.21,
+    "from_period": "2026.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요 경영지표(전년동기·전기 칸)"
+   },
+   {
+    "period": "2025.2Q",
+    "metric": "지급여력비율(경과조치 후)",
+    "current_value": 2726.2,
+    "adopt_value": 2726.21,
+    "from_period": "2026.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요 경영지표(전년동기·전기 칸)"
+   },
+   {
+    "period": "2025.2Q",
+    "metric": "ROA",
+    "current_value": -2.3,
+    "adopt_value": -76.4,
+    "from_period": "2026.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요 경영지표(전년동기·전기 칸)"
+   },
+   {
+    "period": "2025.2Q",
+    "metric": "ROE",
+    "current_value": -2.7,
+    "adopt_value": -90.4,
+    "from_period": "2026.2Q",
+    "from_page": 3,
+    "from_table": "1-1 주요 경영지표(전년동기·전기 칸)"
+   },
+   {
+    "period": "2025.3Q",
+    "metric": "지급여력금액(가용자본)",
+    "current_value": 67.02,
+    "adopt_value": 67,
+    "from_period": "2026.1Q",
+    "from_page": 14,
+    "from_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸"
+   },
+   {
+    "period": "2025.3Q",
+    "metric": "지급여력기준금액(요구자본)",
+    "current_value": 6.19,
+    "adopt_value": 6,
+    "from_period": "2026.1Q",
+    "from_page": 14,
+    "from_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸"
+   },
+   {
+    "period": "2025.3Q",
+    "metric": "지급여력비율(경과조치 전)",
+    "current_value": 1083.5,
+    "adopt_value": 1083.54,
+    "from_period": "2026.1Q",
+    "from_page": 14,
+    "from_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸"
+   },
+   {
+    "period": "2025.3Q",
+    "metric": "지급여력비율(경과조치 후)",
+    "current_value": 1083.5,
+    "adopt_value": 1083.54,
+    "from_period": "2026.1Q",
+    "from_page": 14,
+    "from_table": "4-2 [지급여력비율 총괄] 당분기-2(25.3Q) 칸"
+   },
+   {
+    "period": "2025.4Q",
+    "metric": "지급여력금액(가용자본)",
+    "current_value": 119.76,
+    "adopt_value": 120,
+    "from_period": "2026.2Q",
+    "from_page": 17,
+    "from_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸"
+   },
+   {
+    "period": "2025.4Q",
+    "metric": "지급여력기준금액(요구자본)",
+    "current_value": 12.76,
+    "adopt_value": 13,
+    "from_period": "2026.2Q",
+    "from_page": 18,
+    "from_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸"
+   },
+   {
+    "period": "2025.4Q",
+    "metric": "지급여력비율(경과조치 전)",
+    "current_value": 938.2,
+    "adopt_value": 938.23,
+    "from_period": "2026.2Q",
+    "from_page": 18,
+    "from_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸"
+   },
+   {
+    "period": "2025.4Q",
+    "metric": "지급여력비율(경과조치 후)",
+    "current_value": 938.2,
+    "adopt_value": 938.23,
+    "from_period": "2026.2Q",
+    "from_page": 18,
+    "from_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-2(25.4Q) 칸"
+   },
+   {
+    "period": "2026.1Q",
+    "metric": "지급여력금액(가용자본)",
+    "current_value": 89.79,
+    "adopt_value": 90,
+    "from_period": "2026.2Q",
+    "from_page": 17,
+    "from_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-1(26.1Q) 칸"
+   },
+   {
+    "period": "2026.1Q",
+    "metric": "지급여력기준금액(요구자본)",
+    "current_value": 17.48,
+    "adopt_value": 17,
+    "from_period": "2026.2Q",
+    "from_page": 18,
+    "from_table": "4-2-2 지급여력비율 세부(경과조치 적용 전) 당분기-1(26.1Q) 칸"
+   }
+  ],
+  "filled": [],
+  "still_blank": [
+   {
+    "period": "2025.1Q",
+    "metric": "전 지표",
+    "reason": "보험업 본인가 2025.6 취득 전. 확인: 2025.2Q p3,p14,p15(해당 분기(25.2Q)만 작성), 2025.3Q p3,p15(25.3Q와 25.2Q만 작성), 2025.4Q p22,p24(25.4Q,25.3Q,25.2Q), 2026.1Q p3,p14(26.1Q,25.4Q,25.3Q, 전년동기 칸 비어 있음), 2026.2Q p3,p5,p17-20(2025 상반기·2025.4Q 만). 25.1Q 칸 없음"
+   }
+  ]
+ },
+ "reconciled_utc": "2026-10-09",
+ "note_recon_undo": "2026-10-09: 반올림 차이뿐인 전기 칸 덮어쓰기 8건을 정밀값으로 복원(handoff §7-2)"
+}

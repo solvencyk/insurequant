@@ -148,6 +148,14 @@ def make_quarter_column_picker(quarter: str) -> Callable[[list[str]], int | None
                 for x in ("-1", "-2", "-3", "1\ubd84\uae30", "2\ubd84\uae30", "3\ubd84\uae30")
             ):
                 return i
+        # Last resort (2026-10-09, KR1103 Gen Re Seoul 1Q/3Q short form): header
+        # cells are bare calendar quarter-end months, 'YYYY 년 M 월' x3 with no
+        # 당분기/분기 wording.  Whole-cell exact match only, and only reached when
+        # every rule above found nothing, so no previously-resolved table moves.
+        _end_month = {"1": "3", "2": "6", "3": "9", "4": "12"}[q_num]
+        for i, cell in enumerate(header_cells):
+            if cell.replace(" ", "") == f"{y_full}년{_end_month}월":
+                return i
         return None
 
     return _pick
