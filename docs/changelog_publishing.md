@@ -10,6 +10,16 @@
 
 ---
 
+## 2026-10-11 — 재보사 8곳(KR1101~KR1108) 자본비율 Forward Outlook · 자본성증권 소진율 추가
+
+- **원인 = 데이터 부재.** 재보사는 2026-10-09 에 `kics_disclosure.json` 에 들어왔고 `kics_forward_capital.json`(9/23)·`kics_tier{1,2}_utilization.json`(9/1)은 그 전 산출이라 8곳 행이 없었다. 화면은 「forward simulation 데이터 없음」·도넛 「데이터 없음」. 이름 매칭은 문제 아님(드롭다운 value = 원수사명 전체, 약칭은 라벨만).
+- 추가만(기존 38/39행 `==` 동일 증명): `capital_securities_fy2026h1.json` 빈 레코드 8개(「스캔 후 무발행」 명시, 안 하면 게이트 `CAPSEC_COVERAGE_REGRESSION` RED) · tier1/tier2 산출+배포본 8행 · forward 빌더를 라이브와 같은 인자(`--baseline-quarter 2026.2Q --tier-quarter 2026.2Q --bonds-source …fy2026h1.json`)로 재실행해 38→46행. 도구 `scripts/add_reinsurers_to_capsec_panels.py`(멱등; `build_capital_securities_fy2026h1.py` 를 다시 돌리면 이것도 다시 돌린다).
+- 스코리(요구자본 경과조치 적용사) 190.13%→187.80→185.53→183.31→181.15%(2030), 시작=K-ICS 적용후 공시, 2032 적용전 종점 176.97%(공시 176.99). 나머지 7곳 flat.
+- 소진율: 7곳 0%. **스위스리 보완자본만 빈 칸** — 보완자본 4,274억(순자산 재분류분)인데 한도 적용 전·한도 '-' 라 확정 불가("틀린 값을 싣느니 빈 칸"). RGA 는 발행사 표의 한도 적용 전 5,499(=지급여력금액)가 보완자본 0 과 모순이라 0 + 원값 보존.
+- 남은 것: xlsx 3시트(기본자본소진율 80행·보완자본소진율 112행·자본비율전망 440행) 동기 + public_exports 재생성(안 하면 `MASTER_XLSX_ROW_MISSING`), KB라이프 tier 행 이름 불일치(기존 행이라 이번엔 안 건드림). runlog `data/disclosure/_meta/reinsurer_forward_capsec_runlog.md`.
+
+---
+
 ## 2026-09-23 — main 배포 7차 `22e2471`: K-ICS 금리 민감도 패널 교체 + 금리듀레이션갭 마스터 신설 (owner GO)
 
 - 배포 4파일: `K-ICS.html` · `kics_duration_gap.json`(신규 270행) · `PL_breakdown.json`(라이나생명 2023.4Q 20칸) · `public_exports/manifest.json`(build_id `fa21ec9`). main `a5118f3..22e2471`.

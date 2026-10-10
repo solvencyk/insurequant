@@ -2,7 +2,7 @@
   "as_of": "mixed (per-company; see each company's as_of + each bond's as_of/source_file)",
   "source": "FY2025 annual (data/bonds/capital_securities_fy2025.json) carried forward, overridden per-company by FY2026 H1 반기보고서 (data/dart/FY2026_Q2/raw) where cleanly extractable — see docstring of scripts/build_capital_securities_fy2026h1.py",
   "unit": "백만원 (mn)",
-  "n_companies": 39,
+  "n_companies": 47,
   "companies": [
     {
       "code": "KR0068",
@@ -2367,6 +2367,118 @@
         }
       ],
       "notes": "2026-08-03 raw 직접확인(CAPSEC_COVERAGE_REGRESSION 대응, inbox/parser/20260803T0546Z continuation): '17.금융부채' 주석 후순위채권 1건 — JPY 5,000,000,000엔(1매, 사모), 투자자 AXA Life Insurance Co.,Ltd(AXA Life Japan, 그룹 계열사향 사모), 표면금리 1~5년차 1.57% 고정/6년차~만기 1yr z-Tibor+1.37% 변동, 최종만기 10년, 콜옵션 발행일로부터 5년 경과 후 매 이자지급일. 장부가액(당기말, KRW환산) 45,881,500천원=458.815억 (전기말 46,824,000천원 — 차액은 discount 상각 아닌 JPY/KRW 환산차로 추정, 액면 JPY 고정·표면금리 조항에 discount 발행 근거 없음). ⚠️ **발행일(절대연도)이 disclosure에 없음** — 당기말/전기말 모두 안정적 잔액으로 존재해 장기 보유 포지션으로 추정되나 정확한 발행연도 불명. call_date를 as_of(2025-12-31)로 보수적 추정(콜 가능 시점이 이미 도래했을 가능성이 높다는 가정, 5년 콜옵션+안정적 잔액 근거) — 실제 콜 가능일과 다를 수 있음, 정확한 발행일 확인되면 재조정 필요."
+    },
+    {
+      "code": "KR1101",
+      "company": "뮌헨재보험",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1101_뮌헨재보험.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 0 · 보완자본 0. 경과조치표의 '보완자본 한도 적용 전'·'기발행' 칸이 공란이라 item47 이 마스터에 없다 -> 보완자본 0 이고 한도>0 이므로 한도 적용 전도 0 으로 도출."
+    },
+    {
+      "code": "KR1102",
+      "company": "스위스리아시아",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1102_스위스리아시아.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 '-' · 보통주 이외의 자본증권 (3)억(마이너스 계정, 발행 아님) · 기발행 신종/후순위 '-'. 단 보완자본이 4,274억(= '보완자본으로 재분류하는 항목' 4,274억)이고 '보완자본 한도 적용 전·한도'가 모두 '-' 라 보완자본 소진율은 확정 불가 -> 빈 칸. 기본자본 자본증권 소진율은 0%."
+    },
+    {
+      "code": "KR1103",
+      "company": "제네럴재보험",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1103_제네럴재보험.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 '-' · 기발행 신종/후순위 '-' · 보완자본 공란/'-'. 마스터 item47=0."
+    },
+    {
+      "code": "KR1104",
+      "company": "하노버재보험",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1104_하노버재보험.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 '-' · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 신종/후순위 0 · 후순위채권 '-' · 신종자본증권 '-'. 마스터 item47=0."
+    },
+    {
+      "code": "KR1105",
+      "company": "알지에이리인슈어런스",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1105_알지에이리인슈어런스.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 '-' · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 칸 공란. 경과조치표 '보완자본 한도 적용 전' 5,499억은 같은 표의 지급여력금액(5,499)과 같은 값인데 보완자본·보완자본 한도는 0 이라 발행사가 칸을 잘못 채운 것으로 본다 -> 0 으로 두고 원값은 item47_raw 에 보존."
+    },
+    {
+      "code": "KR1106",
+      "company": "스코리재보험",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1106_스코리재보험.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 0 · 기발행 신종/후순위 0 · 보완자본 0. 마스터 item47=0. 요구자본 경과조치 적용사(item14 값 3,897 > 값_적용후 3,627.26)."
+    },
+    {
+      "code": "KR1107",
+      "company": "퍼시픽라이프리",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1107_퍼시픽라이프리.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 0 · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 신종/후순위 0 · 한도 적용 전 0(원문). 마스터에 item47 이 없어 보완자본 0 + 한도>0 으로 0 도출(원문 표값과 일치)."
+    },
+    {
+      "code": "KR1108",
+      "company": "마이브라운반려동물전문보험",
+      "as_of": "2026-06-30",
+      "source_file": "kics_disclosure.json (2026.2Q item6/item47/item53/item54; 원문 md_inbox/FY2026_Q2/KR1108_마이브라운반려동물전문보험.md)",
+      "has_capital_securities": false,
+      "bs_hybrid_mn": 0,
+      "bs_subordinated_mn": 0,
+      "total_hybrid_outstanding_mn": 0,
+      "total_subordinated_outstanding_mn": 0,
+      "confidence": "medium",
+      "bonds": [],
+      "notes": "재보사(2026-10-11 추가). DART per-bond 원천 없음 — K-ICS 경영공시 기준 무발행 확인. 신종자본증권 '-' · 보통주 이외의 자본증권 '-' · 보완자본 '-' · 한도 적용 전 '-' · 기발행 '-'. 마스터에 item47 이 없어 보완자본 0 + 한도>0 으로 0 도출."
     }
   ]
 }

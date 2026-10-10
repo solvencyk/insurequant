@@ -30,6 +30,9 @@ PER-BOND level: every bond carries its own `as_of` + `source_file`, and every co
 
 Run:  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/build_capital_securities_fy2026h1.py
       (writes data/bonds/capital_securities_fy2026h1.json; prints a per-company refresh report)
+      This rewrites the whole file, so the 8 reinsurer no-issuance records (KR1101~KR1108, added
+      2026-10-11) vanish -- re-run `scripts/add_reinsurers_to_capsec_panels.py --apply
+      --backup-dir <dir>` afterwards (idempotent).
 """
 import io
 import json
