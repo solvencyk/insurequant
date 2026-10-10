@@ -1,5 +1,10 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-10 Status 밀림 (20차 추가로 밀려난 항목, 무수정)
+
+- **2026-10-06 (17차) `PUBLIC_EXPORT_INTERNAL_JARGON` 신설** — `validate_live_artifacts.py` 가 공개 다운로드 전 열의 문자열에서
+  내부 진단 문자열 4패턴을 RED 로 막는다. 사고 직전 스냅샷 660행 전부 검출, 현재 14시트 0건. `54ec835`.
+
 ## 2026-10-10 Status 밀림 (19차 추가로 밀려난 항목, 무수정)
 
 - **2026-09-23 (16차) `kics_duration_gap.json` 검사기 배선**(`check_kics_duration_gap`) — `test_push_gate_wiring` 이 잡은 무검사 라이브 마스터. `ec302b0`.

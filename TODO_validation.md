@@ -5,16 +5,20 @@
 
 ## Status (최신 3개)
 
+- **2026-10-10 (20차) 재보사 단계 9 — census 원천부재 면제 장치 `_CENSUS_SOURCE_ABSENT` 신설 + 8칸 · KR1107 2023.3Q 문서 미수집 · 예별 PL YTD 셀 등재** — K-ICS 게이트
+  RED 57 · blocking 0 · census 0 · **exit 0**, 데이터계약 RED 3(xlsx). 골든 4종·입력지문 재생성(기존 39사 슬라이스 불변). 미커밋.
+  push 훅은 BLOCKED: xlsx·public_exports(publishing) · 듀레이션 갭 46·금리민감도 40(parser 신규 발주). 런로그 `reinsurer_runlog_KR1101-1108_10.md` §6.
 - **2026-10-10 (19차) 재보사 단계 8 — 룰 2·4·5·6 잔차 박제 장치 `_IDENT_ISSUER_INCONSISTENT` 신설 + owner 승인 29건 등재** — K-ICS 게이트
   RED 65→57 · blocking 29→**0** · 설명 안 되는 RED 0(exit 2 는 census 헤드라인 전용 12칸). 기존 39사 finding 변화 0, 골든 2종 `--update`.
   미커밋. 남은 것: census 12칸 owner 결정 · pytest (다) 발주분 · 포트폴리오 R3 KR0100 3건 owner 판단. 런로그 `reinsurer_runlog_KR1101-1108_8.md`.
 - **2026-10-07 (18차) 채널별 유지율 검증(VP) — verdict RED 1 · YELLOW 8** — 표 45개 렌더 대조 오독 0, errata 17/17·보정 9/9 정당, 마스터 1:1.
   RED = KR0004 2026.2Q 금액 44행 1/1000 규모인데 단위 '백만원' 무플래그. 보고서 `data/_derived/validation_20261007_persistency.md`(미커밋).
   발주 parser `20261007T1001Z`x2 · downloader `20261007T1001Z`(KR0150).
-- **2026-10-06 (17차) `PUBLIC_EXPORT_INTERNAL_JARGON` 신설** — `validate_live_artifacts.py` 가 공개 다운로드 전 열의 문자열에서
-  내부 진단 문자열 4패턴을 RED 로 막는다. 사고 직전 스냅샷 660행 전부 검출, 현재 14시트 0건. `54ec835`.
 
 ## 열린 일
+
+- [ ] **재보사 push 차단 재측정** — parser `20261010T1700Z`(금리민감도 RED 40)·`20261010T1705Z`(듀레이션 갭 46)와 publishing `20261010T1100Z`(xlsx·public_exports)가
+  answered 되면 `prepush_check.py --full` 재실행. 교훈: 단계 종결 전 도메인 게이트까지 훅 전체를 잰다(단계 8 은 데이터계약만 재서 3·4 를 놓쳤다).
 
 - [ ] **유지율 VP 재검증** — parser 가 `inbox/parser/20261007T1001Z__validation__MULTI_2023.2Q-2026.2Q__persistency_validation_findings.md`
   를 answered 하면 RED-1(KR0004 2026.2Q 단위)·YELLOW-2/4/6/8 재확인, MI 보강 티켓(KR0051·KR1000)·downloader KR0150 도 같이. 재현 스크립트는 보고서 머리 경로.

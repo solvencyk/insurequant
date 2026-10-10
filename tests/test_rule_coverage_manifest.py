@@ -2019,3 +2019,41 @@ def test_rate_sens_is_wired_into_prepush_and_blocks():
     assert "return 0 if red_total == 0 else 2" in src, "검증기가 RED 를 exit 2 로 올리지 않는다"
     assert "red_total = len(rs1) + len(rs2) + len(rs5) + len(rs6)" in src, \
         "RS6 가 gate RED 집계에 들어가지 않는다 — YELLOW 로 강등됐다면 이 선언도 같이 고쳐라"
+
+
+# ---------------------------------------------------------------------------
+# census 원천부재 면제 장치 (`_CENSUS_SOURCE_ABSENT`, owner 승인 2026-10-10, 재보사 단계 9)
+# ---------------------------------------------------------------------------
+# coverage census MISSING_CELLS 중 원천에 채울 것이 없는 (회사,분기)만 매 실행 재검산 후 뺀다.
+# 이 절이 강제하는 것: ① 장치가 내는 룰 id 가 선언과 같은가 ② 등재 칸 수·사유 종류 분포가 선언과
+# 같은가(늘거나 줄면 여기서 갱신을 강제 — 조용히 넓어지는 면제를 막는다). 칸마다의 변이시험은
+# `tests/test_census_source_absent_exemption.py`.
+CENSUS_SOURCE_ABSENT_RULES = {
+    "CENSUS_EXEMPTION_MALFORMED": "RED — 사유 종류·승인일·raw 박제 모양이 계약과 다르다",
+    "CENSUS_EXEMPTION_INERT": "RED — 마스터에 그 분기 버킷이 생겼다(등재를 풀어라, 남기면 버킷 유실을 덮는다)",
+    "CENSUS_EXEMPTION_RAW_CHANGED": "RED — raw 폴더 파일 집합·sha256 이 박제와 다르다(새 문서 도착)",
+    "CENSUS_EXEMPTION_MANIFEST_DRIFT": "RED — 다운로더 매니페스트의 status·sha·versions 가 사유와 어긋난다",
+    "CENSUS_EXEMPTION_LEDGER_DISAGREE": "RED — 근거 원장 기록 없음·claim_kind 불일치·인용 원천 재확인 실패",
+}
+# (등재 칸 수, {사유 종류: 칸 수}) — 실측 2026-10-10.
+CENSUS_SOURCE_ABSENT_CENSUS = (8, {"DOCUMENT_PENDING_NOTICE": 5, "NOT_POSTED": 1, "COLLECTION_POLICY": 2})
+
+
+def test_census_source_absent_rule_ids_match_manifest():
+    import re
+    src = (ROOT / "scripts" / "validate_kics_disclosure.py").read_text(encoding="utf-8")
+    found = set(re.findall(r'"(CENSUS_EXEMPTION_\w+)"', src))
+    assert found == set(CENSUS_SOURCE_ABSENT_RULES), (
+        f"게이트 {sorted(found)} != 매니페스트 {sorted(CENSUS_SOURCE_ABSENT_RULES)} — "
+        "룰을 추가·개명·삭제했으면 이 선언도 같이 고쳐라")
+
+
+def test_census_source_absent_census_matches_manifest():
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import validate_kics_disclosure as K
+    from collections import Counter
+    reg = K._CENSUS_SOURCE_ABSENT
+    got = (len(reg), dict(Counter(v["kind"] for v in reg.values())))
+    assert got == CENSUS_SOURCE_ABSENT_CENSUS, (
+        f"실측 {got} != 선언 {CENSUS_SOURCE_ABSENT_CENSUS}. 등재를 늘리거나 풀었다면 owner 승인 근거와 함께 "
+        "이 선언을 갱신하라")

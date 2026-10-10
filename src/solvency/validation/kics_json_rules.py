@@ -999,10 +999,16 @@ def _validate_life_subrisk_census(
     # 여기서 실제로 lookup 한다.
     absent = (life_subrisk_source_absent or {}).get((bucket.code, bucket.quarter))
     if absent:
+        # 등재 사유가 둘이다: 원문에 표가 없음(TABLE_ABSENT) / 그 분기 문서 자체를 받지 않음
+        # (DOCUMENT_NOT_COLLECTED, owner 승인 2026-10-10 KR1107 2023.3Q). 후자를 "원문에 표가 없다"
+        # 로 인쇄하면 다음 사람이 원천 부재로 오독한다 — 사유를 그대로 찍는다.
+        why = ("그 분기 경영공시 문서 미수집(owner 승인 등재 — 원천 부재와 다른 사유)"
+               if absent.get("verdict") == "DOCUMENT_NOT_COLLECTED"
+               else "원문에 4-2-2 ②표 자체가 없음(등재부 확인)")
         findings.append(_finding(
             bucket, "8_life_census", status=STATUS_SKIP,
             expected=n_total, actual=n_present, diff=None,
-            detail=("원문에 4-2-2 ②표 자체가 없음(등재부 확인) — "
+            detail=(f"{why} — "
                     f"신뢰도={absent.get('confidence')} 근거={absent.get('citation')}"),
         ))
         return

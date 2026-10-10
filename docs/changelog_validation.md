@@ -5,6 +5,27 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-10-10 (20차) -- 재보사 단계 9: census 원천부재 면제 장치 `_CENSUS_SOURCE_ABSENT` 신설 · 8칸 등재
+
+- **새 장치**(scripts/validate_kics_disclosure.py `_census_source_absent`): coverage census `MISSING_CELLS` 에는 면제 경로가 없어 원천에 채울 것이 없는 재보사
+  헤드라인 전용 분기가 영구 RED 였다. 등재 키 (회사, 분기) · 사유 종류 3(`DOCUMENT_PENDING_NOTICE`·`NOT_POSTED`·`COLLECTION_POLICY`) · raw 폴더 sha 박제.
+  매 실행 ① 여전히 결측인가(버킷 생기면 `CENSUS_EXEMPTION_INERT` RED) ② raw 파일 집합·sha ③ 다운로더 매니페스트 status·sha·versions ④ 근거 원장 VERIFIED·claim_kind·
+  인용 원천 마커 재확인 ⑤ 형식 — 하나라도 깨지면 면제 없이 census RED + 장치 RED(exit). 면제 칸은 두 게이트가 매 실행 목록 인쇄. 데이터계약 게이트 `check_census` 가 같은 함수를 부른다.
+- **등재 8칸**(owner 2026-10-10): KR1102 2023.2Q·3Q · KR1104 2023.4Q·2024.1Q · KR1105 2023.2Q(공시 예정) · KR1104 2025.3Q(미게시) · KR1107 2023.1Q·2Q(수집 정책).
+  원장 +8 VERIFIED(한계: 회사 사이트 기준, 협회 미확인). census 10→2(남은 2 = 새 문서 수령분, parser 적재 대기).
+- **데이터계약 게이트 룰엔진 위임 입력 정합**: `tfi_applicability`·`life_subrisk_source_absent` 를 안 넘겨 원천부재 등재부가 K-ICS 게이트에서만 먹히는 구조였다.
+  넘기도록 고침(시뮬 차이 0 — 표시 분기 등재가 그때까지 없어 안 드러났다).
+- 시뮬: 기존 39사 finding·report 절 변화 0 · 원장 없으면 면제 0(fail-closed) · 사본 버킷 추가 변이 → INERT RED. 변이시험 69건(`tests/test_census_source_absent_exemption.py`),
+  매니페스트 2건·배선 1건 추가.
+- **KR1107 P9 신규 RED**: 2023.4Q `8_life_census`·`19_market` 은 FY2024_Q2 p11·p13 「직전 반기(2023.4Q)」 열에 값이 있어(시뮬 8_life Δ0.04 · 19_market Δ0.31) 등재하지 않고
+  parser 발주(`20261010T1215Z`) → parser 가 29~46 적재해 닫힘. 2023.3Q `8_life_census` 는 `kics_subrisk_source_absent.json` 에 verdict `DOCUMENT_NOT_COLLECTED`(owner 승인)로 등재,
+  룰 SKIP 문구에 사유 분기(`kics_json_rules.py`).
+- **예별 PL `PL_YTD_COLLAPSE_TO_ZERO`(owner 결정 ② 유지+셀 등재)**: `user_pl_confirmed_cells.json` 에 `rule`·`verify` 필드를 확장해 2025.3Q 법인세 0.0 등재(신설법인 제1기 6/16~9/30 문구 마커).
+  값 박제·마커 재확인 통과 시만 YELLOW. 변이시험 8건. `pl_bridge_baseline.json` FIXED? 2줄 삭제.
+- **골든**: kics_rules(633버킷·18,990)·post_transition(555·7,123)·master_tables(KR0004 + ba32077 몫)·PL 빌더(마스터 바이트 불변, 진단 KR0074 1행) `--update`, 입력지문 4항목(17BS·dividend 는 골든 실행 통과로 산출 불변 확인). 기존 39사 슬라이스 sha 불변.
+- **최종(kics sha 4f2eb284…)**: K-ICS 게이트 RED 57 · blocking 0 · exit 0 · 데이터계약 RED 3(xlsx). push 훅 BLOCKED — publishing(xlsx·public_exports) + parser 신규 발주 2건
+  (금리민감도 재보사 RED 40 단위·적용후 0 · 듀레이션 갭 재보사 46칸). 3·4 는 단계 8 이 도메인 게이트를 안 재서 놓친 것. 런로그 `reinsurer_runlog_KR1101-1108_10.md`. 모델 Opus 5.5, 약 2시간.
+
 ## 2026-10-10 (19차) -- 재보사·마이브라운(KR1101~KR1108) K-ICS 스윕 1~8단계 요약 + 단계 8: 룰 2·4·5·6 잔차 박제 장치 신설 · owner 승인 29건 등재
 
 - **스윕 1~8단계(2026-10-08~10)**: downloader 가 7개 지점 + 마이브라운의 경영공시 PDF 를 회사 사이트에서 수집(매니페스트 `data/disclosure/_meta/reinsurer_KR11##_manifest.json`),

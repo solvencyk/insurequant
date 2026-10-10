@@ -4,6 +4,44 @@
 > 현재 게이트 상태는 `scripts/validate_kics_disclosure.py` 출력이 정본이다. 아래 날짜가 붙은 스냅샷("RED 19건", "blocking RED 18건" 등)은 그 날짜 기준이다.
 > 등재는 owner 만 한다(`CLAUDE.md` §6). 스크립트 주석·티켓의 "`TODO.md` L…" / "TODO.md §36_irr 표" 는 이 파일을 가리킨다.
 
+## 2026-10-10 coverage census 원천부재 등재 8칸 — 새 장치 `_CENSUS_SOURCE_ABSENT` (validation 단계 9)
+
+> 승인: owner **2026-10-10** 「등재 장치 신설」 (발주 `inbox/validation/20261010T1300Z`). 근거: downloader 재확인
+> 런로그 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9d.md`(2026-10-10 11:16~11:40 UTC, 사이트 게시 판 재수령
+> sha256 동일), 실행 기록 `reinsurer_runlog_KR1101-1108_10.md`.
+> **장치**: `scripts/validate_kics_disclosure.py::_census_source_absent` — 등재 키 (회사, 분기), 값 = 사유 종류 ·
+> 승인일 · raw 폴더 박제({파일: sha256}). 통째 skip 이 아니다. 매 실행 ① 그 칸이 여전히 census 결측인지(버킷이
+> 생기면 `CENSUS_EXEMPTION_INERT` **RED** = 등재를 풀어라) ② `data/disclosure/FY{Y}_Q{n}/raw/{code}_*` 파일 집합·sha256
+> 이 박제와 같은지(`…_RAW_CHANGED`) ③ 다운로더 매니페스트 status·sha·새 판(`versions`)이 사유와 맞는지(`…_MANIFEST_DRIFT`)
+> ④ 근거 원장 `kics_exemption_provenance.json`(registry `_CENSUS_SOURCE_ABSENT`)이 VERIFIED·같은 claim_kind 이고 인용
+> 원천을 다시 열어 근거 문구가 그대로인지(`…_LEDGER_DISAGREE`) ⑤ 형식(`…_MALFORMED`)을 확인한다. 하나라도 깨지면 그 칸은
+> census RED 로 남고 장치 RED 가 exit code 에 들어간다. 면제된 칸은 두 게이트가 매 실행 「원천부재 면제 n칸」 목록으로
+> 인쇄한다(데이터계약 게이트는 `MISSING_FILER_CELL_SOURCE_ABSENT` YELLOW). 두 게이트가 같은 함수를 부른다.
+> 변이시험 `tests/test_census_source_absent_exemption.py`(69건). **결과**: census MISSING_CELLS 10 → 2.
+> **한계(원장 note 에 같이 적음)**: 원천 부재 근거는 회사 사이트 기준이다 — 협회(생보·손보협회) 공시 시스템은 확인하지 못했다.
+
+| company | quarter | 사유 종류 | 근거 (원장 verify) | raw 박제 |
+|---|---|---|---|---|
+| KR1102 스위스리아시아 | 2023.2Q | `DOCUMENT_PENDING_NOTICE` 공시 예정 | p3·p9 "지급여력비율은 9월말 공시 예정임(보험업감독규정 부칙 제3조)" · 문서 전체 기본요구자본·생명장기손해보험위험액·기본자본·보완자본 0회 | FY2023_Q2 `85fa01f9…` |
+| KR1102 스위스리아시아 | 2023.3Q | 〃 | p3·p8 "12월말 공시 예정임" (값은 2023.4Q 신판 p19 전분기 열에 있으나 2023.3Q 원문이 아님) | FY2023_Q3 `a54fc7ff…` |
+| KR1104 하노버재보험 | 2023.4Q | 〃 | p5·p17·p21·p22 "4월말 공시 예정임" 8곳 | FY2023_Q4 `039d989e…` |
+| KR1104 하노버재보험 | 2024.1Q | 〃 | p4·p10·p11 "6월말 공시 예정임" (파일명 'before K-ICS') | FY2024_Q1 `eea21feb…` |
+| KR1104 하노버재보험 | 2025.3Q | `NOT_POSTED` 사이트 미게시 | 매니페스트 status not_posted + 2026-10-10 첫손 재확인(2025 게시 = 1Q·2Q·4Q) | 없음(폴더에 파일이 생기면 RED) |
+| KR1105 알지에이리 | 2023.2Q | `DOCUMENT_PENDING_NOTICE` | p3·p9 "지급여력비율은 월말 공시 예정임 보험업감독규정 부칙"(텍스트층에서 월 숫자 9 가 떨어져 나옴) | FY2023_Q2 `a39db5f2…` |
+| KR1107 퍼시픽라이프리 | 2023.1Q | `COLLECTION_POLICY` **owner 수집 정책**(원천 부재 아님) | 매니페스트 skipped_prior_col — owner 규칙 2026-10-09 "다음 회기 공시의 전기 칸에 값이 있으면 별도 수집 안 함"(헤드라인은 2024.1Q 1-1표 전년동기 칸) | 없음 |
+| KR1107 퍼시픽라이프리 | 2023.2Q | 〃 | 〃 (2024.2Q 1-1표 전년동기 칸) | 없음 |
+
+**등재하지 않은 것**: KR1102 2023.4Q · KR1107 2024.3Q(새 문서 수령 → parser 가 적재해 census 에서 빠짐).
+KR1107 2023.4Q `8_life_census`·`19_market`(P9 신규 RED) — **고칠 수 있어서** 등재하지 않았다: FY2024_Q2 문서 p11·p13 「직전 반기(2023.4Q)」 열에
+29~35·36~40·41~46 이 인쇄돼 있다(시뮬: 8_life Δ0.04 · 19_market Δ0.31). parser 가 `inbox/parser/20261010T1215Z__validation__KR1107_2023.4Q__…` 로 적재해 닫혔다.
+**최종(마스터 sha `4f2eb284…`, 29,889행)**: census 결측 8 = 면제 8 → MISSING_CELLS 0 · K-ICS 게이트 RED 57 · blocking 0 · exit 0.
+
+**추가 1건 — `kics_subrisk_source_absent.json` (8_life_census), 사유 「그 분기 문서 미수집」(원천 부재와 다른 사유)**
+
+| company | quarter | rule | 사유 | 근거 |
+|---|---|---|---|---|
+| KR1107 퍼시픽라이프리 | 2023.3Q | `8_life_census` | owner 승인 2026-10-10(handoff §7-12): P9 로 헤드라인(FY2024_Q1 p8 4-2-2 전기 칸)만 적재, 2023.3Q 원문은 수집 정책상 미수집. 수집 문서 중 2023.3Q 하위위험을 인쇄한 것이 없다(FY2024_Q1·Q3 6-2 는 당기만, 4-2-2 ②표는 미적용 문구) | table_absent verdict `DOCUMENT_NOT_COLLECTED`. 룰 SKIP 문구가 "문서 미수집(원천 부재와 다른 사유)" 로 찍힌다(`kics_json_rules.py`). 원문을 받으면 등재를 풀 것 |
+
 ## 2026-10-10 재보사·마이브라운(KR1101~KR1108) owner 승인 등재 29건 (validation 단계 8)
 
 > 승인: owner **2026-10-10** (`docs/handoff_20261008_reinsurer_pipeline.md` §7-10 ①②). 발주

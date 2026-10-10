@@ -359,6 +359,29 @@ def test_dewired_check_has_a_reason_and_a_home():
         )
 
 
+def test_census_source_absent_device_is_wired_into_both_blocking_gates():
+    """census 원천부재 면제 장치(owner 2026-10-10)는 두 push 차단 게이트에 **같은 함수**로 걸려 있어야
+    하고, 장치 RED(깨진 등재)가 두 게이트의 차단 판정으로 이어져야 한다.
+
+    ① 데이터계약 게이트: WIRED 인 `check_census` 본문이 `_census_source_absent(` 를 부르고 그 RED 를
+       severity="RED" 로 올린다(run_gate 가 res.red 로 exit 2).
+    ② K-ICS 게이트(prepush ①b): main() 의 census 차단 수가 장치를 거친 값이고, 장치 RED 가 exit 식에 있다."""
+    src = _dc_src()
+    assert DATA_CONTRACT_CHECKS["check_census"].startswith("WIRED")
+    m = re.search(r"^def check_census\(.*?\n(.*?)^def ", src, re.M | re.S)
+    assert m, "check_census 본문을 못 찾았다"
+    body = m.group(1)
+    assert "_census_source_absent(" in body, "데이터계약 census 가 면제 장치를 안 부른다(재구현/누락)"
+    assert re.search(r"for f in census_exempt_red:\s*\n\s*res\.add\(check=\"census\", severity=\"RED\"",
+                     body), "깨진 census 면제가 데이터계약 게이트에서 RED 로 안 올라간다"
+    gsrc = (ROOT / "scripts" / "validate_kics_disclosure.py").read_text(encoding="utf-8")
+    assert "census_red = len(census_kept)" in gsrc
+    assert re.search(r"or ident_red or census_exempt_red", gsrc), \
+        "깨진 census 면제가 K-ICS 게이트 exit code 에 안 들어간다"
+    hook = (ROOT / "scripts" / "prepush_check.py").read_text(encoding="utf-8")
+    assert "validate_kics_disclosure" in hook and "validate_data_contract" in hook
+
+
 # ---------------------------------------------------------------------------
 # 라이브 아티팩트 배선 매트릭스 (2026-08-25 신설) — 불변식 1번을 기계가 강제한다
 # ---------------------------------------------------------------------------

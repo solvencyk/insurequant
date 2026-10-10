@@ -301,7 +301,15 @@ def _update() -> int:
                     "(8_life_census) — 로 그 8칸이 RED→SKIP, RED 65→57. 발행사 자기모순 21건"
                     "(룰 2·4·5·6 은 신설 _IDENT_ISSUER_INCONSISTENT, 2_tier1_bridge 는 "
                     "_TIER2_ISSUER_INCONSISTENT, 8_life 는 _LIFE8_ISSUER_INCONSISTENT)은 "
-                    "차단집계에서만 빠지므로 finding status 는 RED 그대로다(이 골든 불변).")
+                    "차단집계에서만 빠지므로 finding status 는 RED 그대로다(이 골든 불변). "
+                    "※ 2026-10-10 단계 9 재생성(마스터 sha 4f2eb284…, 29,889행): parser 적재 "
+                    "KR1107 2023.3Q·2023.4Q 버킷 신설(전기 칸) + KR1102 2023.4Q(자기 분기 신판 "
+                    "v20240510) · KR1107 2024.3Q 버킷 신설 + KR1107 2023.4Q 29~46(FY2024_Q2 직전 "
+                    "반기 열) → 629→633버킷 · 18,870→18,990 finding. validation: KR1107 2023.3Q 8_life_census 를 "
+                    "kics_subrisk_source_absent.json 에 「문서 미수집」(DOCUMENT_NOT_COLLECTED, "
+                    "owner 2026-10-10) 등재 → RED→SKIP, RED 58→57. 룰 공식은 안 건드렸다"
+                    "(8_life_census SKIP 문구에 사유만 인쇄). 기존 39사 538버킷 sha a5669684… "
+                    "그대로(v3_exist7.py).")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

@@ -119,6 +119,227 @@ def _coverage_census(records: list[dict]) -> dict:
     }
 
 
+# ---------------------------------------------------------------------------
+# census 원천부재 documented exception (owner 승인 2026-10-10, 재보사 단계 9)
+# ---------------------------------------------------------------------------
+# `_coverage_census` 의 MISSING_CELLS 는 "정기 공시사가 그 분기 버킷을 통째로 안 갖고 있다" 다.
+# 재보사 지점(KR11xx)에는 **그 분기 경영공시에 K-ICS 표가 원래 없거나(제도 시행 첫해 "지급여력
+# 비율은 N월말 공시 예정임(보험업감독규정 부칙 제3조)"), 회사 사이트에 그 분기 공시가 아예 게시돼
+# 있지 않거나, owner 수집 정책으로 받지 않은** 칸이 있다. 이 칸들은 파싱 결손이 아니라 원천에
+# 채울 것이 없는 칸이라, census 가 영원히 RED 를 내면 push 가 영구히 막히고 다음 사람은 census 를
+# 느슨하게 만드는 쪽으로 푼다 — 그 우회가 더 위험하다.
+#
+# 그래서 **통째 skip 이 아니라 근거 박제**로 뺀다. 등재 키 = (회사, 분기). 매 실행 다음을 전부
+# 다시 확인하고, 하나라도 깨지면 그 칸은 면제되지 않고(census RED 그대로) 장치 RED 가 같이 뜬다:
+#   ① 그 칸이 여전히 census 결측인가  — 마스터에 버킷이 생겼으면 `CENSUS_EXEMPTION_INERT` RED
+#      ("등재를 풀어라"). review 가 아니라 RED 인 이유: 남겨 두면 그 버킷이 나중에 동시 세션의
+#      통째 덮어쓰기로 사라질 때 이 등재가 조용히 덮는다(2026-08-21 lost update 전례).
+#   ② raw 폴더 상태가 박제 그대로인가 — `data/disclosure/FY{Y}_Q{n}/raw/{code}_*` 파일 집합과
+#      sha256 이 박제와 같아야 한다. 새 문서가 들어오거나(예: 스위스리 2023.4Q 신판 v20240510)
+#      파일이 바뀌면 `CENSUS_EXEMPTION_RAW_CHANGED` RED — parser 가 적재하고 등재를 풀 차례다.
+#   ③ 다운로더 매니페스트가 같은 사유를 말하는가 — 그 분기 항목의 status 가 사유 종류와 맞고
+#      (공시 예정=ok·not_posted·skipped_prior_col), 공시 예정형은 매니페스트 sha256 이 박제와 같고
+#      새 판(`versions`)이 없어야 한다. 아니면 `CENSUS_EXEMPTION_MANIFEST_DRIFT` RED.
+#   ④ 근거 원장(`kics_exemption_provenance.json`, registry `_CENSUS_SOURCE_ABSENT`)에 VERIFIED
+#      기록이 있고 claim_kind 가 코드와 같으며, 인용 원천을 **게이트가 다시 열어** 근거 문구가 그대로
+#      있는가(`_verify_absent_markers`). 아니면 `CENSUS_EXEMPTION_LEDGER_DISAGREE` RED.
+#   ⑤ 등재 형식(사유 종류·승인일·매니페스트·raw 박제 모양) — 아니면 `CENSUS_EXEMPTION_MALFORMED` RED.
+# 면제된 칸은 조용해지지 않는다 — 두 게이트가 매 실행 「원천부재 면제 n칸」 과 회사·분기 목록을 인쇄한다.
+# K-ICS 게이트와 데이터계약 게이트가 **같은 함수**(`_census_source_absent`)를 부른다.
+#
+# 사유 종류 → 매니페스트 status · raw 박제 모양:
+_CENSUS_KINDS: dict[str, dict] = {
+    # 그 분기 문서는 있는데 K-ICS 표 대신 "지급여력비율은 N월말 공시 예정임" 만 있다.
+    "DOCUMENT_PENDING_NOTICE": {"manifest_status": "ok", "raw_required": True},
+    # 회사 사이트 목록에 그 분기 공시 항목 자체가 없다(첫손 확인).
+    "NOT_POSTED": {"manifest_status": "not_posted", "raw_required": False},
+    # owner 수집 정책(2026-10-09): 다음 회기 공시의 전기 칸에 헤드라인이 있으면 별도 수집 안 함.
+    # 원천 부재가 아니라 **수집하지 않은 것**이다 — 사유가 다르므로 종류를 따로 둔다.
+    "COLLECTION_POLICY": {"manifest_status": "skipped_prior_col", "raw_required": False},
+}
+_CENSUS_LEDGER_REGISTRY = "_CENSUS_SOURCE_ABSENT"
+_REINSURER_MANIFEST = "data/disclosure/_meta/reinsurer_{code}_manifest.json"
+
+# 근거: downloader 재확인 런로그 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9d.md`
+# (2026-10-10 11:16~11:40 UTC, 회사 사이트 게시 판 재수령 sha256 동일 확인). 한계: 협회 공시
+# 시스템은 확인하지 못했다 — 회사 사이트 기준의 원천 부재다(원장 note 에 같이 적었다).
+_CENSUS_SOURCE_ABSENT: dict[tuple[str, str], dict] = {
+    # --- 스위스리아시아 KR1102 -------------------------------------------------------
+    # p3·p9 "지급여력비율은 9월말 공시 예정임(보험업감독규정 부칙 제3조)", 목록에 추가 문서 없음.
+    ("KR1102", "2023.2Q"): {
+        "kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10",
+        "raw": {"data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf":
+                "85fa01f9126b1a6908525e73bc7bb157812ad53ad7244beaf2e422bbf405d4e0"}},
+    # p3·p8 "지급여력비율은 12월말 공시 예정임". 값은 2023.4Q 신판 p19 전분기 열에 있으나 그 문서가
+    # 2023.3Q 원문은 아니다 — 채울지는 parser/owner 몫(채우면 ① 이 이 등재를 풀라고 RED 를 낸다).
+    ("KR1102", "2023.3Q"): {
+        "kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10",
+        "raw": {"data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf":
+                "a54fc7ff76b519338d6c92e92a2dab3ca3c17a965ac329eaf4c03f4c3289576c"}},
+    # --- 하노버재보험 KR1104 ---------------------------------------------------------
+    # p5·p17·p21·p22 "지급여력비율은 4월말 공시 예정임" 8곳, 별도 K-ICS 문서 목록에 없음.
+    ("KR1104", "2023.4Q"): {
+        "kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10",
+        "raw": {"data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf":
+                "039d989eae4455ea9e85aa944d447cc8a95e6d1c0ce0f0808af83f52dbac837e"}},
+    # 파일명부터 "before K-ICS". p4·p10·p11 "6월말 공시 예정임", 6월말 후속판 목록에 없음.
+    ("KR1104", "2024.1Q"): {
+        "kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10",
+        "raw": {"data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf":
+                "eea21febc2816ed7310b9ad053a1c3f974c528cf36e1d9b899843320317b474c"}},
+    # 2025 게시 항목이 1Q·2Q·4Q 뿐(owner 2026-10-09 확인 + downloader 2026-10-10 첫손 재확인).
+    ("KR1104", "2025.3Q"): {"kind": "NOT_POSTED", "approved": "owner 2026-10-10", "raw": {}},
+    # --- 알지에이리인슈어런스 KR1105 -------------------------------------------------
+    # p3·p9·p11~13 "…월말 공시 예정임" 10곳(텍스트층에서 월 숫자 '9' 가 떨어져 나온다).
+    ("KR1105", "2023.2Q"): {
+        "kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10",
+        "raw": {"data/disclosure/FY2023_Q2/raw/KR1105_알지에이리인슈어런스.pdf":
+                "a39db5f20e77ba04ec2de9cf24857f639df011f74407b125a58d2fb97ed29369"}},
+    # --- 퍼시픽라이프리 KR1107 — owner 수집 정책(원천 부재 아님) -----------------------
+    # 2024.1Q·2024.2Q 문서 1-1표 전년동기 칸에서 헤드라인만 확보(매니페스트 skipped_prior_col).
+    ("KR1107", "2023.1Q"): {"kind": "COLLECTION_POLICY", "approved": "owner 2026-10-10", "raw": {}},
+    ("KR1107", "2023.2Q"): {"kind": "COLLECTION_POLICY", "approved": "owner 2026-10-10", "raw": {}},
+}
+
+
+def _census_raw_state(code: str, quarter: str, root: Path | None = None) -> dict[str, str] | None:
+    """그 (회사,분기)의 raw 폴더 파일 → {저장소 상대경로: sha256}. 분기 문자열이 이상하면 None."""
+    import hashlib
+    m = re.match(r"^(\d{4})\.([1-4])Q$", str(quarter))
+    if not m:
+        return None
+    base = root or ROOT
+    d = base / "data" / "disclosure" / f"FY{m.group(1)}_Q{m.group(2)}" / "raw"
+    out: dict[str, str] = {}
+    if d.is_dir():
+        for p in sorted(d.glob(f"{code}[._]*")):
+            if p.is_file():
+                out[p.relative_to(base).as_posix()] = hashlib.sha256(p.read_bytes()).hexdigest()
+    return out
+
+
+def _census_manifest_entry(code: str, quarter: str, root: Path | None = None):
+    """다운로더 매니페스트의 그 분기 항목 → (entry | None, 사유 문자열)."""
+    p = (root or ROOT) / _REINSURER_MANIFEST.format(code=code)
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return None, f"매니페스트 없음: {p.name}"
+    except Exception as e:  # noqa: BLE001 — 깨진 매니페스트는 근거가 아니다
+        return None, f"매니페스트 파싱 불가: {p.name} ({type(e).__name__})"
+    periods = data.get("periods") if isinstance(data, dict) else None
+    hits = [e for e in (periods or []) if isinstance(e, dict) and e.get("period") == quarter]
+    if len(hits) != 1:
+        return None, f"{p.name} periods 에 {quarter} 항목이 {len(hits)}개(1개여야 한다)"
+    return hits[0], ""
+
+
+def _census_source_absent(records: list[dict], missing_rows: list[tuple],
+                          registry: dict | None = None, ledger=None,
+                          root: Path | None = None):
+    """census 결측 중 원천부재 등재분을 매 실행 재검산해 뺀다(위 블록 주석 ①~⑤).
+
+    반환 (kept, exempted, red)
+      kept     — 여전히 census RED 인 결측 행 [(quarter, code, name)] (등재 안 됐거나 재검산 실패)
+      exempted — 면제된 행 [(quarter, code, name, kind, approved)] — 매 실행 인쇄용
+      red      — 장치 RED [{rule, code, quarter, detail}] (깨진 등재. 그 칸은 kept 에도 남는다)
+    `registry=None` 이면 `_CENSUS_SOURCE_ABSENT`, `ledger=None` 이면 근거 원장을 읽는다."""
+    reg = _CENSUS_SOURCE_ABSENT if registry is None else registry
+    if ledger is None:
+        ledger = _load_exemption_ledger()
+    led = {}
+    if isinstance(ledger, dict) and not ledger.get("_unreadable"):
+        for e in ledger.get("entries") or []:
+            if isinstance(e, dict) and e.get("registry") == _CENSUS_LEDGER_REGISTRY:
+                led[(e.get("company"), e.get("quarter"))] = e
+    present = {(r.get(KEY_CODE), r.get(KEY_QUARTER)) for r in records}
+    missing_by_key = {(c, q): (q, c, n) for q, c, n in missing_rows}
+    red: list[dict] = []
+    ok_keys: dict[tuple, tuple] = {}
+    for (c, q), spec in sorted(reg.items()):
+        def _red(rule, detail):
+            red.append({"rule": rule, "code": c, "quarter": q, "detail": detail})
+        kind = (spec or {}).get("kind")
+        k = _CENSUS_KINDS.get(kind)
+        raw_pin = (spec or {}).get("raw")
+        if (k is None or not (spec or {}).get("approved") or not isinstance(raw_pin, dict)
+                or bool(raw_pin) != k["raw_required"]):
+            _red("CENSUS_EXEMPTION_MALFORMED",
+                 f"사유 종류 {kind!r} · 승인 {(spec or {}).get('approved')!r} · raw 박제 "
+                 f"{'있음' if raw_pin else '없음'} — 종류는 {sorted(_CENSUS_KINDS)} 중 하나, "
+                 "공시 예정형만 raw 박제를 갖는다")
+            continue
+        # ① 여전히 census 결측인가
+        if (c, q) not in missing_by_key:
+            _red("CENSUS_EXEMPTION_INERT",
+                 ("마스터에 그 분기 버킷이 생겼다" if (c, q) in present
+                  else "census 가 이 칸을 결측으로 세지 않는다(정기 공시사 집합이 바뀌었다)")
+                 + " — 면제가 무용해졌다. 등재를 풀어라(남겨 두면 버킷이 다시 사라질 때 조용히 덮는다)")
+            continue
+        broken = False
+        # ② raw 폴더 상태
+        have = _census_raw_state(c, q, root)
+        if have is None:
+            _red("CENSUS_EXEMPTION_MALFORMED", f"분기 문자열 {q!r} 해석 불가")
+            continue
+        if have != raw_pin:
+            new = sorted(set(have) - set(raw_pin))
+            gone = sorted(set(raw_pin) - set(have))
+            moved = sorted(p for p in set(have) & set(raw_pin) if have[p] != raw_pin[p])
+            _red("CENSUS_EXEMPTION_RAW_CHANGED",
+                 f"raw 폴더가 박제와 다르다 — 새 파일 {new} · 사라진 파일 {gone} · sha 바뀜 {moved}. "
+                 "그 분기 문서가 새로 들어왔거나 바뀌었다 — parser 적재 후 등재를 풀어라")
+            broken = True
+        # ③ 매니페스트
+        entry, why = _census_manifest_entry(c, q, root)
+        if entry is None:
+            _red("CENSUS_EXEMPTION_MANIFEST_DRIFT", why)
+            broken = True
+        else:
+            st = entry.get("status")
+            probs = []
+            if st != k["manifest_status"]:
+                probs.append(f"status {st!r} ≠ 사유 종류 {kind} 의 {k['manifest_status']!r}")
+            if k["raw_required"]:
+                f = str(entry.get("file") or "")
+                if f not in raw_pin:
+                    probs.append(f"매니페스트 file {f!r} 가 raw 박제에 없다")
+                elif entry.get("sha256") != raw_pin[f]:
+                    probs.append(f"매니페스트 sha256 {str(entry.get('sha256'))[:12]}… ≠ 박제")
+                if entry.get("versions"):
+                    probs.append(f"새 판 {len(entry['versions'])}건이 매니페스트에 기록됐다")
+            if probs:
+                _red("CENSUS_EXEMPTION_MANIFEST_DRIFT", " · ".join(probs))
+                broken = True
+        # ④ 근거 원장
+        e = led.get((c, q))
+        if e is None:
+            _red("CENSUS_EXEMPTION_LEDGER_DISAGREE",
+                 f"근거 원장에 registry {_CENSUS_LEDGER_REGISTRY} 기록이 없다")
+            broken = True
+        else:
+            probs = []
+            if e.get("status") != "VERIFIED":
+                probs.append(f"status={e.get('status')!r}")
+            if e.get("claim_kind") != kind:
+                probs.append(f"claim_kind {e.get('claim_kind')!r} ≠ 코드 {kind!r}")
+            v = e.get("verify") or {}
+            if not _verify_markers_ran(v):
+                probs.append("verify 마커가 대조되지 않았다(파일 부재 또는 마커 없음)")
+            else:
+                contradicted, w = _verify_absent_markers(v)
+                if contradicted:
+                    probs.append(f"인용 원천 재확인 실패 — {w}")
+            if probs:
+                _red("CENSUS_EXEMPTION_LEDGER_DISAGREE", " · ".join(probs))
+                broken = True
+        if not broken:
+            ok_keys[(c, q)] = (kind, spec.get("approved"))
+    kept = [row for row in missing_rows if (row[1], row[0]) not in ok_keys]
+    exempted = [(q, c, n) + ok_keys[(c, q)] for q, c, n in missing_rows if (c, q) in ok_keys]
+    return kept, exempted, red
+
+
 # 보완자본 한도 3줄(47/48/49) 축 — 룰별 상태 + **결측 사유별 집계**를 인쇄한다.
 #
 # 왜 따로 인쇄하나: 이 세 항목은 2026-08-21 에 1,299칸 적재됐는데 게이트가 exit 0 이었다.
@@ -3324,6 +3545,9 @@ def _exemption_registries() -> dict[str, frozenset]:
         "_TIER2_ISSUER_INCONSISTENT": frozenset(_TIER2_ISSUER_INCONSISTENT),
         # 잔차 박제형 면제 5번째 (평문 룰 2·4·5·6 발행사 자기모순, owner 승인 2026-10-10).
         "_IDENT_ISSUER_INCONSISTENT": frozenset(_IDENT_ISSUER_INCONSISTENT),
+        # census 원천부재 (회사,분기) 등재 (owner 승인 2026-10-10). 장치 자신도 원장을 재검산하지만,
+        # 여기 등록해야 근거 없는 등재가 EXEMPTION_PROVENANCE_MISSING 으로 두 게이트에서 막힌다.
+        _CENSUS_LEDGER_REGISTRY: frozenset(_CENSUS_SOURCE_ABSENT),
         # 잔차 박제형 면제 2번째. 룰엔진에 살지만 근거 검사는 여기서 받는다 — 레지스트리를
         # 여기 등록하지 않으면 그 면제는 근거 없이 조용히 산다.
         "IRR_DERIVE_ISSUER_INCONSISTENT": frozenset(IRR_DERIVE_ISSUER_INCONSISTENT),
@@ -4270,6 +4494,10 @@ def main() -> int:
     out_path.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
 
     census = _coverage_census(records)
+    # 원천부재 등재분은 매 실행 재검산을 통과할 때만 빠진다(통째 skip 아님) — 데이터계약 게이트도
+    # 같은 함수를 부른다.
+    census_kept, census_exempt, census_exempt_red = _census_source_absent(
+        records, census["missing_rows"])
     report["coverage_census"] = {
         "regular_filers": census["regular_filers"],
         "median_filers_per_q": census["median_filers_per_q"],
@@ -4277,6 +4505,15 @@ def main() -> int:
         "missing_rows": [
             {"quarter": q, "code": c, "name": n} for q, c, n in census["missing_rows"]
         ],
+        "blocking_missing_count": len(census_kept),
+        "source_absent_exemption": {
+            "doc": ("census 원천부재 documented exception (owner 승인 2026-10-10) — 통째 skip 이 아니라 "
+                    "(회사,분기)마다 raw 폴더 sha·다운로더 매니페스트 status·근거 원장 마커를 매 실행 "
+                    "재검산하고, 통과한 칸만 차단집계에서 뺀다. 버킷이 생기면 INERT RED(등재를 풀어라)."),
+            "exempted": [{"quarter": q, "code": c, "name": n, "kind": k, "approved": a}
+                         for q, c, n, k, a in census_exempt],
+            "red": census_exempt_red,
+        },
         "collapsed_quarters": census["collapsed_quarters"],
     }
     tooling_fail = _market_tooling_fail(records)
@@ -4541,7 +4778,7 @@ def main() -> int:
     red = int(by_status.get("RED", 0))
     yellow = int(by_status.get("YELLOW", 0))
     err = int(by_status.get("ERROR", 0))
-    census_red = len(census["missing_rows"])
+    census_red = len(census_kept)
 
     # documented exception(잔차 박제) — 룰엔진 8_life RED 중 면제분만 **차단집계에서** 뺀다.
     # findings 매트릭스와 report 는 손대지 않는다: 골든이 고정하는 것도, 다음 사람이 읽는 것도
@@ -4754,16 +4991,24 @@ def main() -> int:
         f"Coverage census: regular_filers={census['regular_filers']} "
         f"median/q={census['median_filers_per_q']} "
         f"MISSING_CELLS(RED)={census_red} "
+        f"(결측 {len(census['missing_rows'])} − 원천부재 면제 {len(census_exempt)}) "
         f"collapsed_quarters={census['collapsed_quarters']}"
     )
-    if census["missing_rows"]:
-        by_q_missing = Counter(q for q, _, _ in census["missing_rows"])
+    if census_kept:
+        by_q_missing = Counter(q for q, _, _ in census_kept)
         print("  missing filers by quarter:")
         for q, cnt in sorted(by_q_missing.items()):
             sample = ", ".join(
-                n for qq, _, n in census["missing_rows"] if qq == q
+                n for qq, _, n in census_kept if qq == q
             )
             print(f"    {q}: {cnt} missing — {sample[:160]}")
+    if _CENSUS_SOURCE_ABSENT:
+        print(f"  원천부재 면제 {len(census_exempt)}칸 (등재 {len(_CENSUS_SOURCE_ABSENT)}칸, owner 2026-10-10, "
+              f"매 실행 raw sha·매니페스트·원장 마커 재검산 — 통과한 칸만 뺀다):")
+        for q, c, n, k, a in census_exempt:
+            print(f"    {q} {c} {n} [{k}] ({a})")
+        for r in census_exempt_red:
+            print(f"    RED [{r['rule']}] {r['quarter']} {r['code']}: {r['detail']}")
     if tooling_fail:
         print(f"Market localizer TOOLING_FAIL (re-localize, still-gap): {len(tooling_fail)}")
         for c, q, s, n in tooling_fail:
@@ -5120,7 +5365,7 @@ def main() -> int:
                  or after_incomplete or div_negative or post_parent_red
                  # 메타룰(2026-08-21): 판정하지 않은 축·적용사 미러링 오염·근거 없는 면제는 '통과'가 아니다.
                  or axis_red or axis_mirror_red or exempt_red or life8_red or tier2_red
-                 or ident_red
+                 or ident_red or census_exempt_red
                  # 사이드카가 최신 분기를 안 담으면 그 축은 '통과'가 아니라 '미판정'이다.
                  or sidecar_red
                  # 동어반복 축의 'FAIL 0' 도 통과가 아니다 — 되맞춘 값은 룰을 영원히 통과시킨다.

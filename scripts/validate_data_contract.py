@@ -61,6 +61,7 @@ from validate_kics_disclosure import (  # noqa: E402
     _axis_eval_findings,
     _axis_evaluation_census,
     _axis_mirror_findings,
+    _census_source_absent,
     _coverage_census,
     _diversification_negative,
     _exemption_provenance_findings,
@@ -70,6 +71,8 @@ from validate_kics_disclosure import (  # noqa: E402
     _life8_issuer_inconsistent,
     _mmult_after_life8_exempt,
     _load_life_subrisk_applicability,
+    _load_life_subrisk_source_absent,
+    _load_tfi_applicability,
     restatement_cascade_exempt,
     _load_exemption_ledger,
     _other_capital_children_sum,
@@ -85,6 +88,8 @@ from validate_kics_disclosure import (  # noqa: E402
     _transition_irr_after,
     _transition_mmult_after,
     _transition_ratio_after_capture,
+    _verify_absent_markers,
+    _verify_markers_ran,
 )
 from _quarter_horizon import display_quarters, quarter_horizon  # noqa: E402
 from validate_master_tables import (  # noqa: E402
@@ -348,12 +353,31 @@ def check_census(res: GateResult, env: "Env") -> None:
     # --- 1a. K-ICS filer × quarter census (reuse validate_kics_disclosure._coverage_census) ---
     kd_records = env.kics_records
     census = _coverage_census(kd_records)
-    for q, c, n in census["missing_rows"]:
+    # census 원천부재 documented exception(owner 2026-10-10) — **정본은
+    # validate_kics_disclosure._census_source_absent** 다. 재구현하지 않고 같은 함수를 부른다
+    # (두 게이트가 같은 칸에 다른 대답을 하지 않게). 재검산을 통과한 칸만 빠지고, 깨진 등재는
+    # 아래에서 RED 로 나간다(스코프 무관 — 깨진 면제는 표시 분기가 아니어도 차단한다).
+    census_kept, census_exempt, census_exempt_red = _census_source_absent(
+        kd_records, census["missing_rows"], registry=env.census_source_absent,
+        ledger=env.exemption_ledger)
+    for q, c, n in census_kept:
         if not _emit(q):
             continue
         res.add(check="census", severity="RED", master="kics_disclosure", company=n, quarter=q,
                 rule="MISSING_FILER_CELL",
                 message=f"regular filer {n} ({c}) missing in {q} (expected by census grid)")
+    for q, c, n, kind, approved in census_exempt:
+        if not _emit(q):
+            continue
+        res.add(check="census", severity="YELLOW", master="kics_disclosure", company=n, quarter=q,
+                rule="MISSING_FILER_CELL_SOURCE_ABSENT",
+                message=f"원천부재 면제 [{kind}] ({approved}) — {n} ({c}) {q} 버킷 없음. raw sha·"
+                        f"매니페스트·원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)")
+    for f in census_exempt_red:
+        res.add(check="census", severity="RED", master="kics_disclosure",
+                company=env.code_name.get(f["code"], f["code"]), quarter=f["quarter"],
+                rule=f"KICS_{f['rule']}",
+                message=f"census 원천부재 면제 재검산 실패: {f['detail']}")
     for q, n_filers in census["collapsed_quarters"]:
         if not _emit(q):
             continue
@@ -376,9 +400,16 @@ def check_census(res: GateResult, env: "Env") -> None:
     # drift (spec §0/§4) we DELEGATE to it and lift only its completeness REDs, rather than re-
     # deriving with a blanket "children all missing" rule (which over-fires on cadence-legit cells).
     if env.delegate_kics:
+        # 룰엔진 입력은 K-ICS 게이트 main() 과 **같은 4종**이어야 한다. 2026-10-10(단계 9) 전까지
+        # `tfi_applicability`·`life_subrisk_source_absent` 를 안 넘겨서, 원천부재 등재부
+        # (kics_subrisk_source_absent.json)가 K-ICS 게이트에서는 8_life_census 를 SKIP 시키는데
+        # 여기서는 같은 칸이 RED 로 남는 구조였다(표시 분기 등재가 그때까지 없어 드러나지 않았다 —
+        # 전 버킷 시뮬레이션: 넘기기 전후 이 게이트 finding 차이 0).
         kics_report = kics_run_validation(
             kd_records, source_has_breakdown=_scan_breakdown_presence(kd_records),
-            life_subrisk_applicability=_load_life_subrisk_applicability())
+            tfi_applicability=_load_tfi_applicability(),
+            life_subrisk_applicability=_load_life_subrisk_applicability(),
+            life_subrisk_source_absent=_load_life_subrisk_source_absent())
         kics_findings = kics_report.get("findings", [])
         # documented exception 도 **같이 위임한다.** 룰만 위임하고 면제를 안 위임하면 두 게이트가
         # 같은 finding 을 놓고 서로 다른 대답을 한다 — K-ICS 게이트는 '차단 안 함', 여기서는
@@ -723,11 +754,42 @@ def check_census(res: GateResult, env: "Env") -> None:
     # **_DISPLAY_QUARTERS 스코프 미적용**(CSM 연속성 룰과 동일 판단): 붕괴는 중간분기에서 일어나고
     # 그 여파가 표시분기의 `값_당분기`를 음수로 뒤집는다. 스코프를 걸면 원인 분기가 통째로 사각이 된다
     # (실제로 흥국화재·KB손해 2024.3Q 2건이 그렇게 숨어 있었다). YELLOW라 push는 막지 않는다.
+    # owner 확정 셀(2026-10-10 신설 경로): `user_pl_confirmed_cells.json` 에서 `rule` 이 이 룰인 셀만,
+    # **값 박제 일치 + 인용 원천 마커 재확인** 둘 다 통과할 때 RED 대신 YELLOW 로 매 실행 인쇄한다.
+    # 하나라도 깨지면 RED 그대로(사유를 덧붙인다). 통째 skip 이 아니다. 첫 등재 = 예별손해보험 2025.3Q
+    # 법인세(신설법인 제1기 6/16~9/30 손익계산서, 보고주체 단절 — owner 결정 ②).
+    ytd_ok = _ytd_collapse_confirmed_cells(env)
+    ytd_hit: set = set()
     for co, q, item, prev in _pl_ytd_collapse(env.pl):
+        key = (_norm_ws(co), str(q), _norm_ws(item))
+        cell = ytd_ok.get(key)
+        why = None
+        if cell is not None:
+            ytd_hit.add(key)
+            v = cell.get("verify") or {}
+            if not _owner_confirmed(_load_owner_confirmed(), "PL_breakdown", co, q, item, 0.0):
+                why = f"등재 값 {cell.get('value')} 와 마스터 0.0 불일치"
+            elif not _verify_markers_ran(v):
+                why = "등재 근거 verify 마커가 대조되지 않았다(파일 부재·마커 없음)"
+            else:
+                bad, w = _verify_absent_markers(v)
+                if bad:
+                    why = f"등재 근거 재확인 실패 — {w}"
+            if why is None:
+                res.add(check="census", severity="YELLOW", master="PL_breakdown", company=co,
+                        quarter=q, rule="PL_YTD_COLLAPSE_OWNER_CONFIRMED",
+                        message=f"{item} 누계 {prev:,.1f} → 0.0 — owner 확정 셀({cell.get('approved')}). "
+                                f"값 박제·원천 문구({v.get('file')} p{v.get('pages')}) 재확인 통과, 비차단")
+                continue
         res.add(check="census", severity="RED", master="PL_breakdown", company=co, quarter=q,
                 rule="PL_YTD_COLLAPSE_TO_ZERO",
                 message=f"{item} 누계가 직전분기 {prev:,.1f} → 이번분기 정확히 0.0 — FY 누계는 "
-                        f"이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심")
+                        f"이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심"
+                        + (f" [owner 확정 등재 무효: {why}]" if why else ""))
+    for key in sorted(set(ytd_ok) - ytd_hit):
+        res.add(check="census", severity="YELLOW", master="PL_breakdown", company=key[0],
+                quarter=key[1], rule="PL_YTD_COLLAPSE_CONFIRMED_INERT",
+                message=f"{key[2]} — owner 확정 등재가 있는데 이 셀이 더는 붕괴로 안 잡힌다. 등재를 풀어라")
     # CSM 상대규모 plausibility (parser 20260730T0040Z, PM-2026-07-30 UH-6). 항등식은 스케일과
     # 무관하게 닫히므로 단위오류(×100)를 closure 검사로는 절대 못 잡는다 — 회사 규모로 정규화한
     # 비율만이 잡는다. 초기 YELLOW(관찰 1~2 릴리스 후 RED 전환, UH-3 sidecar 선례).
@@ -833,6 +895,20 @@ def _load_owner_confirmed() -> tuple[dict, float, float]:
     out = {(c["master"], _norm_ws(c["company"]), str(c["quarter"]), _norm_ws(c["item"])): float(c["value"])
            for c in d.get("cells", [])}
     return out, float(d.get("tolerance_abs", 2.0)), float(d.get("tolerance_rel", 0.01))
+
+
+def _ytd_collapse_confirmed_cells(env) -> dict:
+    """`user_pl_confirmed_cells.json` 중 `rule == "PL_YTD_COLLAPSE_TO_ZERO"` 인 PL 셀 → {(회사,분기,항목): 셀}.
+    selftest(inject)는 빈 맵 — 합성 데이터에 라이브 등재가 새지 않게. 파일이 깨지면 빈 맵(= 면제 없음, RED 유지)."""
+    if env.inject or not _OWNER_CONFIRMED_GOLD.exists():
+        return {}
+    try:
+        d = json.loads(_OWNER_CONFIRMED_GOLD.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    return {(_norm_ws(c["company"]), str(c["quarter"]), _norm_ws(c["item"])): c
+            for c in d.get("cells", [])
+            if c.get("rule") == "PL_YTD_COLLAPSE_TO_ZERO" and c.get("master") == "PL_breakdown"}
 
 
 def _owner_confirmed(confirmed, master, co, q, item, value) -> bool:
@@ -2287,6 +2363,10 @@ class Env:
             "exemption_registries", (lambda: {}) if self.inject else _exemption_registries)
         self.exemption_ledger = self._get(
             "exemption_ledger", (lambda: None) if self.inject else _load_exemption_ledger)
+        # census 원천부재 등재부 — selftest 는 빈 맵(합성 데이터에 라이브 등재가 INERT RED 로 새지 않게),
+        # 라이브는 None = `_census_source_absent` 가 정본 레지스트리를 읽는다.
+        self.census_source_absent = self._get(
+            "census_source_absent", (lambda: {}) if self.inject else (lambda: None))
         # 부재 박제(셀 단위) / 코드 박제 — selftest 주입용. 주입은 **추가만** 하고 기본 동작을
         # 안 바꾼다(기본값 None = 게이트가 라이브 레지스트리를 그대로 본다).
         self.absence_pins = self._get("absence_pins", lambda: None)
