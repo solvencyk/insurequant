@@ -1,7 +1,16 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-09-18 · Stage 1/5 — downloader
+> Last updated: 2026-10-10 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
+
+## 2026-10-10 -- 재보사(외국 재보험사 국내지점) 헤드라인 전용 12칸 재확인 (2칸 해소)
+
+inbox `20261010T1230Z`(orchestrator, route: refetch): KR1102·1104·1105·1107 의 K-ICS 문서 부재 12칸(validation 단계 8 런로그 §7-1)이 지금 받을 수 있는지 재확인.
+
+- **받음 2칸:** KR1102 스위스리 2023.4Q — 사이트 목록에 게시된 판(20240510, 85쪽, 1,599,798 B, sha db423931…)이 기존 보유 판(20240329, 60쪽, "4월말 공시 예정")과 다른 K-ICS 완성본이라 `KR1102_스위스리아시아_v20240510.pdf` 로 병존 저장(기존 보존, `_versions.json` 기록). KR1107 퍼시픽라이프리 2024.3Q — 15쪽, 362,112 B, sha 30ba5b4d…, 회사의 다른 공개 호스트(mo-ams.pacificlife.com)에서 수령(www 는 Incapsula 확인창, 풀지 않음). 이 수령으로 KR1107 2023.3Q 의 `source_unavailable` 사유도 해소(2024.3Q 문서 전년동기 칸).
+- **여전히 부재 6:** KR1102 2023.2Q·3Q, KR1104 2023.4Q·2024.1Q, KR1105 2023.2Q = 사이트 게시 판 재수령 sha 동일 + "지급여력비율은 N월말 공시 예정임(부칙 제3조)" 쪽 번호 증거, 후속 문서 없음. KR1104 2025.3Q = 사이트 목록에 항목 없음(첫손 확인). **수집 정책 4:** KR1107 2023.1Q~4Q(owner 규칙 2026-10-09, 정책 불변).
+- 이번 하노버 목록 페이지는 curl 200(10-08 에는 403) — 목록 JSON 을 직접 파싱. 스위스리 목록은 curl/WebFetch 403 이지만 브라우저 탭으로 정상 열림(확인창 없음).
+- 증거·재현: `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9d.md`. parser(kics) 티켓 2건 `inbox/parser/20261010T1135Z__downloader__KR1102_2023.4Q__…` · `…KR1107_2024.3Q__…`.
 
 ## 2026-09-18 -- KR0150 서울보증 8분기 정기경영공시 재확인 (신규 결측 아님, 기존 판정 재확정)
 

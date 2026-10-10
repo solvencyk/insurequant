@@ -1,5 +1,9 @@
 # TODO archive — `TODO_downloader.md` (Status 이력, 읽기 지연)
 
+## 2026-10-10 이동 — Status 에서 밀려난 항목 (무수정)
+
+- **2026-09-12 정정본 병존 저장(`save_versioned_pdf`)** + KR0075 2023.4Q 0.08% 차이 조사 — 정정공시 없음 확정.
+
 ## 2026-10-07 정리 — 정리 전 `TODO_downloader.md` 전문 (무수정)
 
 # Insurequant TODO — Downloader Stage

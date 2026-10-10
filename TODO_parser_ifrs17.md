@@ -1,18 +1,24 @@
 # Insurequant Parser TODO — IFRS17 lane (Stage 2)
 
-> 갱신 2026-10-07 · 프롬프트 `docs/agents/claude-agent-parser.md` + 도메인 `docs/domains/claude-agent-ifrs17.md` · 이력 `docs/changelog_parser_ifrs17.md`
+> 갱신 2026-10-10 · 프롬프트 `docs/agents/claude-agent-parser.md` + 도메인 `docs/domains/claude-agent-ifrs17.md` · 이력 `docs/changelog_parser_ifrs17.md`
 > 2026-10-07 정리 전 전문(88~92차 Status 포함)은 `docs/todo_archive_parser_ifrs17.md` 맨 위에 있다. K-ICS 레인은 `TODO_parser_kics.md`.
 
 ## Status (최신 3개)
 
+- **2026-10-10 발생사고요소(LIC) BEL·RA 1단계 적재** — `insurance_liability_portfolio.json` 항목 10~15 +832행(158셀: A1 53·A2 47·T 58, 억원, owner 정정으로 신규 마스터 아님) + 현대해상 2-4 2025.1Q~3Q 12칸 정정(PAA 합이 VFA 열로·PDF 쪽번호가 VFA CSM 으로 읽혀 있었다). 커밋 안 함.
+  검산 `scripts/validate_insurance_liability_lic.py` RED 0(R-LIC1 부채 146셀 최대 2.7ppm + 순액 7셀, R-LIC2 155/156, R-LIC3 158/158) · 미적재 1(예별 4Q, 계약이전 범위 단절) · 원천 부재 75 · 사이드카 `data/_derived/ilp_includes_lic.json`(ABL·KDB생명·푸본현대).
+  남은 것: IBK연금 2-4 6분기 오류 정정 허가 · 2단계 간접값 16·17(사전시험 28셀 통과) · 3단계(라이나·처브 PDF·하나손보 별첨·예별) · 재현·근거 `data/disclosure/_meta/lic_load_runlog_stage1.md`.
 - **2026-10-09 전사 BS/PL 공란 백필(owner 10-08)** — BS 공란 25+부분 5 → 0(184칸, 경영공시 요약표·4-1표·별도BS, 10사), PL 공란 29 → 1(126칸, 12사·28(회사,분기)).
   후속 10-09: KR0004 2025.3Q 채움(법인세 0 → `PL_YTD_COLLAPSE_TO_ZERO` RED, 등재는 validation/owner) · 보험손익 15칸 보류(pl_bridge 0NEW 복귀) · 당분기 17칸 차분 · xlsx 2시트 동기화. 커밋 안 함.
   재현 `scripts/fix_pl_backfill_followup_20261009.py`·`merge_pl_backfill_disclosure_20261008.py` · 기록 `data/disclosure/_meta/bspl_backfill_runlog_merge.md`(후속 절에 미해결 D2·D4·D5·D8·D9).
 - **2026-09-22 라이나생명 2023.4Q PL 20칸 신규 충전** — FY2024 사업보고서 전기 비교컬럼 + 주석23(2024.4Q·2025.4Q 와 같은 재작성 기준).
   FY2023 은 소급재작성됐다(자기 보고서 순이익 463,997 vs 채택값 511,309). PL 골든·입력지문 재생성 `a0f0607`.
-- **2026-09-20 (92차) 경영공시 PL 백필 775칸 병합** — 15사 × 5항목, 덮어쓴 셀 0 + DART 4Q LOB 결손 3건(AIG 2024.4Q·2025.4Q, 신한이지 2024.4Q) 원문 재추출. `e83b619`·`4faf083`.
 
 ## 열린 일
+
+- [ ] **ILP 항목 1~9 — IBK연금(KR1011) 경영공시 2-4 6분기 정정(허가 대기, 2026-10-10 발견)** — 마스터는 항목 1~6=0·항목 7=항목 8(72,887 등)인데 2025.4Q PDF p21 합계 행은 일반모형 72,887.3/480.8/4,694.9 + 변동수수료접근법 319.1/47.7/508.8(합 78,938.6 = DART LRC 78,938.7).
+  6분기 모두 같은 오류이고 정정안(PDF 합계 행)을 런로그 §10 에 확정해 뒀다. 티켓이 항목 1~9 수정을 P3 외에 금지해 고치지 않았다.
+- [ ] **LIC 2단계(단일열 간접 도출 항목 16·17)·3단계(비상장 잔여: 라이나·처브 PDF, 하나손보 별첨, 예별 4Q 결정)** — 판정 기준·사전시험·선결 사항은 런로그 §8·§9. 발주 대기(오케스트레이터).
 
 - [ ] **PL 골든 실패** — `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py` 에서 `sha256_coverage` 만 어긋난다(master 바이트는 같음).
   KR0074 라이나 2023.4Q 1행: 디스크 coverage 는 `no_income_statement`·missing 21·tier2 `partial`, 빌더 재실행은 missing `[4]`·tier2 `ok`.

@@ -1,0 +1,285 @@
+{
+ "name": "ilp_includes_lic",
+ "generated_at": "20261010T1053Z",
+ "emitted_by": "scripts/emit_ilp_includes_lic.py",
+ "meaning": "insurance_liability_portfolio.json item 8 (보험부채_합계, 경영공시 2-4) of these companies already contains the 발생사고요소(LIC) although the 2-4 footnote says it was prepared for the 잔여보장요소 only. For them item 8 ~ item 15 (LRC+LIC) ~ IFRS17_BS item 20. Master cells are not changed; the designer shows a notice on the left bar.",
+ "criterion": "all 6 quarters: |item8-item15| <= max(5억, 0.01%) and |item8-item14| > 1% and |item8*100/BS20-1| <= 0.01%",
+ "companies": {
+  "KR0070": {
+   "원수사명": "에이비엘생명보험",
+   "quarters": [
+    "2025.1Q",
+    "2025.2Q",
+    "2025.3Q",
+    "2025.4Q",
+    "2026.1Q",
+    "2026.2Q"
+   ]
+  },
+  "KR0072": {
+   "원수사명": "케이디비생명보험",
+   "quarters": [
+    "2025.1Q",
+    "2025.2Q",
+    "2025.3Q",
+    "2025.4Q",
+    "2026.1Q",
+    "2026.2Q"
+   ]
+  },
+  "KR0083": {
+   "원수사명": "푸본현대생명보험",
+   "quarters": [
+    "2025.1Q",
+    "2025.2Q",
+    "2025.3Q",
+    "2025.4Q",
+    "2026.1Q",
+    "2026.2Q"
+   ]
+  }
+ },
+ "cells": [
+  {
+   "company_code": "KR0070",
+   "quarter": "2025.1Q",
+   "item8_eok": 180548.0,
+   "item15_eok": 180546.85,
+   "item14_eok": 174180.27,
+   "item10_eok": 6366.58,
+   "bs20_eok": 180546.85,
+   "item8_vs_bs20_pct": 0.00064,
+   "item8_vs_item15_pct": 0.00064,
+   "lic_share_of_item8_pct": 3.53
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2025.2Q",
+   "item8_eok": 179858.75,
+   "item15_eok": 179858.74,
+   "item14_eok": 173446.13,
+   "item10_eok": 6412.61,
+   "bs20_eok": 179858.74,
+   "item8_vs_bs20_pct": 0.0,
+   "item8_vs_item15_pct": 1e-05,
+   "lic_share_of_item8_pct": 3.57
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2025.3Q",
+   "item8_eok": 182248.0,
+   "item15_eok": 182247.58,
+   "item14_eok": 175219.8,
+   "item10_eok": 7027.78,
+   "bs20_eok": 182247.58,
+   "item8_vs_bs20_pct": 0.00023,
+   "item8_vs_item15_pct": 0.00023,
+   "lic_share_of_item8_pct": 3.86
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2025.4Q",
+   "item8_eok": 178240.0,
+   "item15_eok": 178240.1,
+   "item14_eok": 171480.16,
+   "item10_eok": 6759.94,
+   "bs20_eok": 178240.1,
+   "item8_vs_bs20_pct": -6e-05,
+   "item8_vs_item15_pct": -6e-05,
+   "lic_share_of_item8_pct": 3.79
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2026.1Q",
+   "item8_eok": 174243.0,
+   "item15_eok": 174242.09,
+   "item14_eok": 167602.01,
+   "item10_eok": 6640.08,
+   "bs20_eok": 174242.09,
+   "item8_vs_bs20_pct": 0.00052,
+   "item8_vs_item15_pct": 0.00052,
+   "lic_share_of_item8_pct": 3.81
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2026.2Q",
+   "item8_eok": 173063.0,
+   "item15_eok": 173062.45,
+   "item14_eok": 166647.38,
+   "item10_eok": 6415.07,
+   "bs20_eok": 173062.45,
+   "item8_vs_bs20_pct": 0.00032,
+   "item8_vs_item15_pct": 0.00032,
+   "lic_share_of_item8_pct": 3.71
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2025.1Q",
+   "item8_eok": 171490.0,
+   "item15_eok": 171489.03,
+   "item14_eok": 162249.51,
+   "item10_eok": 9239.52,
+   "bs20_eok": 171489.03,
+   "item8_vs_bs20_pct": 0.00056,
+   "item8_vs_item15_pct": 0.00057,
+   "lic_share_of_item8_pct": 5.39
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2025.2Q",
+   "item8_eok": 168806.0,
+   "item15_eok": 168806.72,
+   "item14_eok": 159955.17,
+   "item10_eok": 8851.55,
+   "bs20_eok": 168806.72,
+   "item8_vs_bs20_pct": -0.00043,
+   "item8_vs_item15_pct": -0.00043,
+   "lic_share_of_item8_pct": 5.24
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2025.3Q",
+   "item8_eok": 167322.0,
+   "item15_eok": 167321.69,
+   "item14_eok": 158838.88,
+   "item10_eok": 8482.81,
+   "bs20_eok": 167321.69,
+   "item8_vs_bs20_pct": 0.00019,
+   "item8_vs_item15_pct": 0.00019,
+   "lic_share_of_item8_pct": 5.07
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2025.4Q",
+   "item8_eok": 160871.0,
+   "item15_eok": 160871.18,
+   "item14_eok": 152477.58,
+   "item10_eok": 8393.6,
+   "bs20_eok": 160871.17,
+   "item8_vs_bs20_pct": -0.00011,
+   "item8_vs_item15_pct": -0.00011,
+   "lic_share_of_item8_pct": 5.22
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2026.1Q",
+   "item8_eok": 152598.0,
+   "item15_eok": 152599.82,
+   "item14_eok": 144400.51,
+   "item10_eok": 8199.31,
+   "bs20_eok": 152599.82,
+   "item8_vs_bs20_pct": -0.00119,
+   "item8_vs_item15_pct": -0.00119,
+   "lic_share_of_item8_pct": 5.37
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2026.2Q",
+   "item8_eok": 148313.0,
+   "item15_eok": 148311.5,
+   "item14_eok": 140323.69,
+   "item10_eok": 7987.81,
+   "bs20_eok": 148311.49,
+   "item8_vs_bs20_pct": 0.00102,
+   "item8_vs_item15_pct": 0.00101,
+   "lic_share_of_item8_pct": 5.39
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2025.1Q",
+   "item8_eok": 86434.0,
+   "item15_eok": 86435.33,
+   "item14_eok": 85141.21,
+   "item10_eok": 1294.12,
+   "bs20_eok": 86435.32,
+   "item8_vs_bs20_pct": -0.00153,
+   "item8_vs_item15_pct": -0.00154,
+   "lic_share_of_item8_pct": 1.5
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2025.2Q",
+   "item8_eok": 87427.0,
+   "item15_eok": 87427.68,
+   "item14_eok": 86076.96,
+   "item10_eok": 1350.72,
+   "bs20_eok": 87427.68,
+   "item8_vs_bs20_pct": -0.00078,
+   "item8_vs_item15_pct": -0.00078,
+   "lic_share_of_item8_pct": 1.54
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2025.3Q",
+   "item8_eok": 85298.0,
+   "item15_eok": 85298.91,
+   "item14_eok": 83934.68,
+   "item10_eok": 1364.23,
+   "bs20_eok": 85298.91,
+   "item8_vs_bs20_pct": -0.00107,
+   "item8_vs_item15_pct": -0.00107,
+   "lic_share_of_item8_pct": 1.6
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2025.4Q",
+   "item8_eok": 81855.0,
+   "item15_eok": 81858.14,
+   "item14_eok": 80476.52,
+   "item10_eok": 1381.62,
+   "bs20_eok": 81858.14,
+   "item8_vs_bs20_pct": -0.00384,
+   "item8_vs_item15_pct": -0.00384,
+   "lic_share_of_item8_pct": 1.69
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2026.1Q",
+   "item8_eok": 77945.0,
+   "item15_eok": 77945.41,
+   "item14_eok": 76620.55,
+   "item10_eok": 1324.86,
+   "bs20_eok": 77945.41,
+   "item8_vs_bs20_pct": -0.00052,
+   "item8_vs_item15_pct": -0.00053,
+   "lic_share_of_item8_pct": 1.7
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2026.2Q",
+   "item8_eok": 77509.0,
+   "item15_eok": 77509.98,
+   "item14_eok": 76113.77,
+   "item10_eok": 1396.21,
+   "bs20_eok": 77509.98,
+   "item8_vs_bs20_pct": -0.00127,
+   "item8_vs_item15_pct": -0.00126,
+   "lic_share_of_item8_pct": 1.8
+  }
+ ],
+ "spot_checks": [
+  {
+   "file": "data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml",
+   "tables": [
+    667,
+    669,
+    671,
+    673
+   ],
+   "bel_mm": 15929245.0,
+   "ra_mm": 306588.0,
+   "csm_mm": 1070412.0,
+   "two_four_x100_mm": {
+    "bel": 15929300.0,
+    "ra": 306600.0,
+    "csm": 1070400.0
+   },
+   "diff_mm": {
+    "bel": -55.0,
+    "ra": -12.0,
+    "csm": 12.0
+   },
+   "reading": "DART 측정요소별 합계 == 2-4 (item 1+4, 2+5, 3+6) x100 within 억원 rounding (<= 100 백만원 each) => 2-4 holds the whole BEL/RA/CSM"
+  }
+ ]
+}

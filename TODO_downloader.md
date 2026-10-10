@@ -1,14 +1,15 @@
 # Insurequant TODO — Downloader Stage (Stage 1)
 
-> 갱신 2026-10-07 · 프롬프트 `docs/agents/claude-agent-downloader.md` (+ `docs/agents/source-catalog.yaml`) · 이력 `docs/changelog_downloader.md`
+> 갱신 2026-10-10 · 프롬프트 `docs/agents/claude-agent-downloader.md` (+ `docs/agents/source-catalog.yaml`) · 이력 `docs/changelog_downloader.md`
 > 2026-10-07 정리 전 전문(완료 행 포함)은 `docs/todo_archive_downloader.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-10 재보사 헤드라인 전용 12칸 재확인** — 2칸 해소(KR1102 2023.4Q K-ICS 완성본 `_v20240510` · KR1107 2024.3Q 원문), 원천 부재 6 · 수집 정책 4(KR1107 2023.x).
+  parser(kics) 티켓 2건, 런로그 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9d.md`. 남은 것: KR1107 www 호스트 Incapsula 확인창(우회 안 함) · 다른 호스트 사용 여부는 owner 판단.
 - **2026-09-18 서울보증 8분기 PDF 재확인** — 신규 결측이 아니라 `audit_all_periods.py` `SGI_QUARTERLY_STRUCTURAL` 그대로. SGIC 공시 페이지는
   "연간 + 최신 1분기" 만 노출하고 지난 분기는 롤오프한다. 원천 부재 재확인, 재수집 대상 없음.
 - **2026-09-12 J-ESR 킥오프 census 79사** — posted 15 / not_yet 62 / not_found 2, `J-ESR/fy2025_esr_census_20260912.csv`. 손보 11건이 "10월 말 공표 예정".
-- **2026-09-12 정정본 병존 저장(`save_versioned_pdf`)** + KR0075 2023.4Q 0.08% 차이 조사 — 정정공시 없음 확정.
 
 ## 열린 일
 
