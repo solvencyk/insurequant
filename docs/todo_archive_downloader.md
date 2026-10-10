@@ -1,5 +1,9 @@
 # TODO archive — `TODO_downloader.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 이동 — Status 에서 밀려난 항목 (무수정)
+
+- **2026-09-12 J-ESR 킥오프 census 79사** — posted 15 / not_yet 62 / not_found 2, `J-ESR/fy2025_esr_census_20260912.csv`. 손보 11건이 "10월 말 공표 예정".
+
 ## 2026-10-10 이동 — Status 에서 밀려난 항목 (무수정)
 
 - **2026-09-12 정정본 병존 저장(`save_versioned_pdf`)** + KR0075 2023.4Q 0.08% 차이 조사 — 정정공시 없음 확정.

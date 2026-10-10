@@ -2,7 +2,7 @@
 from: orchestrator
 to: downloader
 created: 20261011T0830Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -43,4 +43,4 @@ owner 지시(2026-10-11, 밤새 처리): 경영공시 BS·PL 세부(자산 아�
 - (회사, 분기)별 결과표(받음 / 불가 + 사유 + 근거), 받은 파일 수·용량·경로, 매니페스트 변경, parser 로 보낸 티켓, `TODO_downloader.md` Status + `docs/changelog_downloader.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+answered by downloader (2026-10-11): 70칸 중 별첨 11칸 수령(하나손보 14분기 전부, 신한이지 2, 카카오페이 2; 60건·약 90MB, data/disclosure/FY*/attachments/), 25칸은 raw에 이미 있으나 이미지 쪽(BNP 9·하나생명 9·RGA 4·AXA 3 → parser 판독), 연말 5칸은 data/dart 감사 XML 있음, 원천 부재 7(하노버 6·BNP 2024.2Q), 정책상 미수집 4(퍼시픽라이프리 2023.x), 해당 없음 9(마이브라운 설립 전). 새 판 3건(AXA 2024.3Q K-ICS 완성본·신한이지 2025.3Q·하나손보 2025.4Q) 병존 저장. parser 티켓 2건 발행(20261010T2350Z·T2351Z). 오케스트레이터 검증 후 종결.

@@ -1,18 +1,20 @@
 # Insurequant TODO — Downloader Stage (Stage 1)
 
-> 갱신 2026-10-10 · 프롬프트 `docs/agents/claude-agent-downloader.md` (+ `docs/agents/source-catalog.yaml`) · 이력 `docs/changelog_downloader.md`
+> 갱신 2026-10-11 · 프롬프트 `docs/agents/claude-agent-downloader.md` (+ `docs/agents/source-catalog.yaml`) · 이력 `docs/changelog_downloader.md`
 > 2026-10-07 정리 전 전문(완료 행 포함)은 `docs/todo_archive_downloader.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-11 경영공시 BS·PL 별첨 수집(70칸)** — 별첨 60건(90MB, `FY*/attachments/`; 하나손보 14분기 별도·연결 FS, 신한이지 결산공고·감사보고서, 카카오페이 Q4 감사보고서) 수령. **25칸은 8-1/8-2 가 이미지 쪽으로 raw 에 이미 있음**(BNP 9·하나생명 9·RGA 4·AXA 3), 원천 부재 7·정책 4·해당없음 9.
+  새 판 3건 raw/`_v`(AXA 2024.3Q K-ICS 완성본 등), parser 티켓 2건(`inbox/parser/20261010T2350Z…`·`…2351Z…`), KR0075 2024.2Q 는 회사 파일 자체가 잘림(honest gap). 런로그 `data/disclosure/_meta/attachments_fetch_runlog_20261011.md`. 공유 티켓 `20261011T0830Z` 는 오케스트레이터가 종결.
 - **2026-10-10 재보사 헤드라인 전용 12칸 재확인** — 2칸 해소(KR1102 2023.4Q K-ICS 완성본 `_v20240510` · KR1107 2024.3Q 원문), 원천 부재 6 · 수집 정책 4(KR1107 2023.x).
   parser(kics) 티켓 2건, 런로그 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9d.md`. 남은 것: KR1107 www 호스트 Incapsula 확인창(우회 안 함) · 다른 호스트 사용 여부는 owner 판단.
 - **2026-09-18 서울보증 8분기 PDF 재확인** — 신규 결측이 아니라 `audit_all_periods.py` `SGI_QUARTERLY_STRUCTURAL` 그대로. SGIC 공시 페이지는
   "연간 + 최신 1분기" 만 노출하고 지난 분기는 롤오프한다. 원천 부재 재확인, 재수집 대상 없음.
-- **2026-09-12 J-ESR 킥오프 census 79사** — posted 15 / not_yet 62 / not_found 2, `J-ESR/fy2025_esr_census_20260912.csv`. 손보 11건이 "10월 말 공표 예정".
 
 ## 열린 일
 
+- [ ] **(제안) 사이트 현행판 vs raw 전수 대조** — 2026-10-11 에 대상 11사만 대조해서 새 판 3건(AXA 2024.3Q K-ICS 완성본 등)이 나왔다. 나머지 사의 2023.1Q~2026.2Q 도 같은 방식(sha256 대조 → 다르면 `_v` 병존)으로 훑을지는 발주 판단. 방법·스크립트: `data/disclosure/_meta/attachments_20261011/`.
 - [ ] **2026.3Q 정기경영공시 수집** — 루트 `TODO.md` 라운드. 생보는 분기 다운로더를 복제해 기간 라벨만 올리고, 수집분은 내용검증(신선도·기간·문서형) 3종을 통과해야 수집으로 친다.
 
 ## 백로그

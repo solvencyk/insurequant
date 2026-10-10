@@ -1,7 +1,28 @@
 # Insurequant Changelog — Downloader Stage
 
-> Last updated: 2026-10-10 · Stage 1/5 — downloader
+> Last updated: 2026-10-11 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
+
+## 2026-10-11 -- 경영공시 BS·PL 별첨 수집 70칸 (별첨 60건 수령, 25칸은 원문이 이미 raw 에 있음)
+
+inbox `20261011T0830Z`(orchestrator, route: backfill; 공유 티켓이라 종결은 오케스트레이터) + 옛 티켓 `20261007T1400Z`(KR0075 2024.2Q 잘린 PDF, 답변 작성 `answered`).
+대상 = `data/_derived/bspl_granularity_20261011/attachments_needed_20261011.json` 의 nofull 56 + nodoc 14.
+
+| 분류 | 칸 | 비고 |
+|---|---|---|
+| 별첨 수령 | 11 | 하나손보 7(14분기 전부 수령) · 신한이지 2 · 카카오페이 2 |
+| 원문이 raw 에 이미 있음(8-1/8-2 이미지 쪽) | 25 | BNP 9 · 하나생명 9 · RGA 4 · AXA 3 — 텍스트층 기준 「8-1 없음」 판정이 틀렸음. 렌더링으로 확인, 판독은 parser |
+| 연말(감사 XML 이 data/dart 에 이미 있음) | 5 | |
+| 스캔 PDF 가 원천 · 통째 스캔 | 4+3 | 카카오 2024.2Q·3Q, 하노버 2023.3Q, 하나생명 2024.2Q / AIA 3 |
+| BS 는 있으나 줄 자체가 없음 | 2 | 카카오 2025.1Q·2026.2Q (상각후원가 금융자산만 보유) |
+| 원천 부재 | 7 | 하노버 6(8-1 없음 5 + 2025.3Q 미게시) · BNP 2024.2Q(회사 파일 잘림) |
+| 수집 정책 · 해당 없음 | 4 · 9 | 퍼시픽 2023.x(owner 규칙) · 마이브라운 2023.1Q~2025.1Q(설립 전) |
+
+- **저장 위치:** `data/disclosure/FY*/attachments/KR####_<이름>_attachment_<종류>.pdf` — raw/ 가 아니다. raw/ 는 `KR####_*.pdf` 글롭과 `run_harness` `normalize_tree(pdf_root, "*.pdf")` 가 전부 만져서 별첨이 섞이면 안 된다. 매니페스트 `data/disclosure/_meta/attachments_manifest.json`(60건, sha256·쪽수·표지 확인).
+- **새 판 3건(raw/ `_v`):** KR0049 2024.3Q `_v20251020`(K-ICS 완성본, 경과조치 후 286.5%, 기존 raw 는 「공시 예정」) · KR0051 2025.3Q `_v20260429` · KR0050 2025.4Q `_v20261010`. parser(kics) 티켓.
+- **방법:** 하나손보 `POST getRegularMngDisclosure.json` · BNP `POST selectRegularNoticeDocList.do`(JSON 본문, 폼 본문은 점검 페이지로 302) · 카카오 `papi.kakaoinsure.com/notilus/v1/notices?categoryId=11` · 신한이지 `hpgpub0001r`(탭 4=결산공고) + `POST /cmn/fileDown` · 하노버는 curl 403 이지만 내장 브라우저로 목록 DOM 전수(2025.3Q 미게시 첫손 확인) · 생보협회 `/FileDown.do?fileNo&seq` 로 교차 대조.
+- **실수·복구:** 신한이지 zip 내부 파일명(cp949)을 못 읽어 감사보고서를 잘못 분류해 저장 → 12개를 `data/_archive/<stamp>/` 로 옮기고 재분류(삭제 없음, `attachments_20261011/archive_log.txt`). 맨 `python3 -` 를 한 번 잘못 실행해 CPU 점유 프로세스가 생겨 내 것만 `taskkill`.
+- 런로그·칸별 결과 `data/disclosure/_meta/attachments_fetch_runlog_20261011.md` · `attachments_20261011/census_result.json`. parser 티켓 `inbox/parser/20261010T2350Z__downloader__…attachments_raw_ready_bspl.md`(ifrs17) · `…20261010T2351Z__downloader__KR0049-KR0051-KR0050__newer_site_editions_kics.md`(kics).
 
 ## 2026-10-10 -- 재보사(외국 재보험사 국내지점) 헤드라인 전용 12칸 재확인 (2칸 해소)
 
