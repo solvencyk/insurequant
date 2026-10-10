@@ -10,7 +10,9 @@ Writes:
 
 Row layout (억원, null = no value):
     [csm_gen, csm_vfa, bel_gen, bel_vfa, ra_gen, ra_vfa, paa, lrc_total, nb_csm, lic_total, bs20,
-     lic_bel, lic_ra, lic_unsplit, lic_bel_calc, lic_ra_calc, lic_kind]
+     lic_bel, lic_ra, lic_unsplit, lic_bel_calc, lic_ra_calc, lic_kind, lrc_dart]
+    lrc_dart   = 항목 14 = DART 주석 부채 기준 잔여보장요소 합계 (2-4 의 보험계약자산 상계 후 순액과 기준이 다르다). 2-4 구성(0~7)이 없는
+                 분기(예: 2023.4Q 일부 회사)에서 화면이 「CSM(CSM_waterfall 기말) + 그 외 = lrc_dart」로 쌓는 데 쓴다.
     bs20       = BS 보험계약부채(IFRS17_BS item 20, 백만원 -> 억원)
     lic_total  = 발생사고요소 합계 (lic_kind 로 출처가 갈린다)
     lic_kind   = 1 실공시(항목 10) / 0 추정(= bs20 - lrc_total) / 2 사이드카(lic_total 은 실공시 참고값, 2-4 합계에 이미 포함 -> 오른쪽 막대 안 그림) / null 값 없음
@@ -123,6 +125,8 @@ def main(check: bool) -> int:
         total = d.get(8)
         csm = (d.get(3) or 0.0) + (d.get(6) or 0.0)
         e = end_csm.get((c, q))
+        if all(d.get(i) is None for i in range(1, 8)):
+            e = None   # 2-4 구성(항목 1~7)이 없는 분기는 대조할 CSM 이 없다 -- 화면이 CSM_waterfall 기말 CSM 으로 채운다
         if e is not None:
             cmp_n += 1
             if abs(csm - e) > max(2.0, abs(e) * 0.005):
@@ -131,11 +135,12 @@ def main(check: bool) -> int:
         b = None if b is None else round(b / 100.0, 1)   # 백만원 -> 억원
         if e is not None and abs(csm - e) > max(2.0, abs(e) * 0.005):
             mism.append([c, q, round(csm, 1), e])
-        lic = lic_cells(d, b, total, q in side_q.get(c, ()), est_ok[c])
+        # 사이드카 = 「2-4 합계가 발생사고요소를 이미 포함」. 2-4 합계(항목 8)가 없는 분기는 포함 여부를 따질 대상이 없어 일반 실공시(1)로 둔다.
+        lic = lic_cells(d, b, total, q in side_q.get(c, ()) and total is not None, est_ok[c])
         kinds[lic[6]] += 1
         if d.get(10) is not None and lic[3] is not None and lic[3] < -0.5:
             split_bad += 1
-        row = [d.get(3), d.get(6), d.get(1), d.get(4), d.get(2), d.get(5), d.get(7), total, nb.get((c, q)), lic[0], b] + lic[1:]
+        row = [d.get(3), d.get(6), d.get(1), d.get(4), d.get(2), d.get(5), d.get(7), total, nb.get((c, q)), lic[0], b] + lic[1:] + [d.get(14)]
         co = companies.setdefault(c, {"n": name_of[c], "type": "생보" if type_of[c] == "생명보험" else "손보", "q": {}})
         co["q"][q] = row
 
@@ -144,7 +149,7 @@ def main(check: bool) -> int:
             "unit": "억원",
             "quarters": quarters,
             "columns": ["csm_gen", "csm_vfa", "bel_gen", "bel_vfa", "ra_gen", "ra_vfa", "paa", "lrc_total", "nb_csm", "lic_total", "bs20",
-                        "lic_bel", "lic_ra", "lic_unsplit", "lic_bel_calc", "lic_ra_calc", "lic_kind"],
+                        "lic_bel", "lic_ra", "lic_unsplit", "lic_bel_calc", "lic_ra_calc", "lic_kind", "lrc_dart"],
             "lic_kind": {"0": "추정", "1": "실공시", "2": "2-4 에 이미 포함"},
             "lic_basis": LIC_BASIS,
             "basis": "잔여보장요소(LRC) 기준 — 경영공시 2-4. 발생사고요소(LIC)는 DART 주석 실공시(항목 10~13)를 우선하고, 없는 분기만 lic_total 에 추정(BS 보험계약부채 - LRC 합계)",

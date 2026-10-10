@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T0000Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2023.4Q-2024.4Q
@@ -41,4 +41,4 @@ IFRS17.html 섹션 3 콤보(연도 모드 2023 · 2024 · 2025 · 2026.2Q)에 **
 - 구성 없는 연말(2023)의 왼쪽 막대 처리 방식, 빌더 변경(항목 14), 확인 회사별 표·스크린샷 경로, 패널 `--check` 결과, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+디자이너 반영 완료(2026-10-11, designer Sonnet, 약 24분, 토큰 208k): 2023 연말 구성 없는 회사(13곳)는 CSM(섹션 2 기말 CSM)+회색 구성 미분리(항목 14−CSM) 두 조각, 패널에 lrc_dart(항목 14) 열 추가, CSM 불일치 오표시 14→3건, panel_compare loss_curve.note 문구 중립화. 후속: 라이나·미래에셋·KB라이프 재작성 기준 통일(inbox/parser/20261011T0100Z) 후 사이드카 ilp_restated_comparative.json 을 합계 행에 쓰는 마무리.

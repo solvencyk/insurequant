@@ -487,7 +487,7 @@ out = {
     "loss_curve": {
         "label": "손해율 가정 (경과차년별)", "unit": "%",
         "defn": "합계 포트폴리오의 예상보험금 ÷ 위험보험료, 경과차년별 미래 가정치",
-        "note": "결산 시점의 미래 손해율 가정이지 실적이 아닙니다. 선 하나는 그 회사의 가장 최근 결산 공시이고, 현재가치 기준 손해율은 선에 넣지 않고 범례 옆 숫자로 적었습니다. 위험보험료가 작은 소규모사는 값이 흔들립니다.",
+        "note": "결산 시점의 미래 손해율 가정이지 실적이 아닙니다. 선 하나는 그 회사의 가장 최근 결산 공시이고, 현재가치 기준 손해율은 선에 넣지 않고 숫자로 적었습니다. 위험보험료가 작은 소규모사는 값이 흔들립니다.",
         "labels": LR_SLOTS, "n_std": len(LR_LABELS),
         "v": {c: dict(sorted(loss_curve_v[c].items(), key=lambda kv: qkey(kv[0]))) for c in sorted(loss_curve_v)},
         "med": loss_curve_med,

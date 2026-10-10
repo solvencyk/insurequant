@@ -7,6 +7,16 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- IFRS17 섹션 3 콤보: 2-4 구성이 없는 연말(2023) 막대 채움
+
+티켓 `inbox/designer/20261011T0000Z__orchestrator__MULTI_2023.4Q-2024.4Q__combo_backfill_2023_year_end.md`. IFRS17.html · `scripts/viz_build_csm_combo_panel.py` · `scripts/viz_build_compare_panel.py`(문구 1건). 마스터 JSON 읽기만, 커밋·push 안 함.
+
+- 패널 행은 있는데 2-4 구성(인덱스 0~7)이 전부 비면(`noComp`, 데이터로 판정·날짜 하드코딩 없음) CSM 은 CSM_waterfall 기말 CSM(섹션 2 와 같은 값)으로 채우고, 패널에 새로 넣은 항목 14(DART 주석 부채 기준 잔여보장요소 합계)가 있으면 「그 외 잔여보장요소(구성 미분리) = 항목 14 − CSM」을 위에 쌓는다(회색). CSM 이 없으면 항목 14 전체가 미분리. BEL·RA·PAA 는 ‘—’. 패널 행 자체가 없는 시점의 「CSM 만」 처리(`csmOnly`)는 그대로.
+- 표: 해당 열에만 「그 외 잔여보장요소 (미분리)」·「잔여보장요소 합계 (DART 기준)」 두 행(2-4 합계 행과 기준이 달라 한 행에 섞지 않음). `hcDiff` 는 2-4 합계가 없으면 항목 14 로 보험계약자산 상계 차이를 계산. 안내문·캡션·툴팁에 부채 기준(상계 전)이라 다른 시점 2-4 순액과 기준이 다르다고 적음.
+- 빌더: 열 `lrc_dart`(인덱스 17, 항목 14) 추가, 2-4 구성이 없는 분기는 CSM 대조에서 제외(불일치 14→3건; 구성 없는 열이 「경영공시 CSM 이 다릅니다」 오표시되던 것), 2-4 합계가 없는 분기는 사이드카(kind 2)가 아니라 실공시(kind 1)로 둠. 패널 40.9→43.2KB.
+- 실측: 2023.4Q 구성 없는 회사 13곳(삼성화재·DB손보·삼성생명·카카오페이 등). 연도·분기 두 모드 + 375px 확인, 콘솔 오류 0. `viz_build_csm_combo_panel.py --check` · `viz_build_compare_panel.py --check` OK, `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` 76 passed 1 skipped.
+- `data/compare/panel_compare.json` `loss_curve.note` 의 「범례 옆 숫자」를 「숫자로 적었습니다」로(변경 1건, 숫자 불변).
+
 ## 2026-10-11 -- 사별 비교 모바일 손해율 가정 curve 카드 실제 반영(안 A, owner 수정 반영)
 
 티켓 `inbox/designer/20261010T1840Z__orchestrator__MULTI_2024.4Q-2025.4Q__compare_mobile_loss_curve_ship_optionA.md`. compare.html 만 변경(마스터·패널 JSON 읽기만, 커밋·push 안 함).
