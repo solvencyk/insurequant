@@ -5,6 +5,7 @@ Reads (READ ONLY, never written):
     CSM_waterfall.json                  (기말 CSM item 6 / 신계약 CSM 당기 증분 item 2 값_당분기, 억원)
     IFRS17_BS.json                      (item 20 보험계약부채, 백만원 -> 억원; LIC 추정·상계 차이에 쓴다)
     data/_derived/ilp_includes_lic.json (사이드카: 2-4 합계가 이미 LIC 를 포함한 회사·분기 -- ABL·KDB생명·푸본현대)
+    data/_derived/ilp_restated_comparative.json (사이드카: FY2024 결산에서 소급재작성된 2023.4Q 3셀 -- 재작성 BS 보험계약부채·사유. 그 셀의 bs20 = 이 값, meta.restated 에 원 공시값·사유)
 Writes:
     data/csm_combo/panel_csm_combo.json   (company code -> {n, type, q:{disclosure quarter -> array row}}; codes are JSON keys only, never rendered)
 
@@ -48,6 +49,7 @@ LIC_BASIS = ("발생사고요소(LIC): 실공시 = 포트폴리오 마스터 항
              "추정 = BS 보험계약부채(item 20) − 잔여보장요소(2-4 item 8), 실공시가 없는 분기만")
 EST_TOL = 0.15   # 같은 회사에서 실공시가 있는 분기의 추정이 실공시와 15% 넘게 다르면 그 회사의 다른 분기 추정은 믿을 수 없어 그리지 않는다
 SIDECAR = "data/_derived/ilp_includes_lic.json"
+RESTATED = "data/_derived/ilp_restated_comparative.json"   # FY2024 결산에서 소급재작성된 2023.4Q 비교 기준 셀(라이나·미래에셋·KB라이프): BS 보험계약부채는 항목 20(원 공시) 대신 이 값
 
 
 def lic_estimate(bs20_eok, lrc_total):
@@ -100,6 +102,11 @@ def main(check: bool) -> int:
             raise SystemExit(f"포트폴리오 항목 {no} 이름이 '{item_name[no]}' -- 계산값 BEL·RA 가 아닌 듯해 중단")
     side = load(SIDECAR)["companies"]
     side_q = {c: set(v["quarters"]) for c, v in side.items()}
+    # 재작성 사이드카: (회사, 분기) -> [재작성 BS 보험계약부채(억원), 원 공시 항목 20(억원), 사유]. 화면은 meta.restated 만 읽는다.
+    restated = {}
+    for cell in load(RESTATED)["cells"]:
+        restated[(cell["company_code"], cell["quarter"])] = [round(cell["restated_bs_insurance_contract_liability_eok"], 2),
+                                                             round(cell["bs_item20_fy2023_original_eok"], 2), cell["restatement_reason"]]
     nb = {(r["원보험사코드"], r["공시분기"]): num(r.get("값_당분기")) for r in wf if r["항목번호"] == 2}
     end_csm = {(r["원보험사코드"], r["공시분기"]): num(r["값"]) for r in wf if r["항목번호"] == 6}
     bs20 = {(r["원보험사코드"], r["공시분기"]): num(r["값"]) for r in bs if r["항목번호"] == 20}
@@ -133,6 +140,8 @@ def main(check: bool) -> int:
                 cmp_bad += 1
         b = bs20.get((c, q))
         b = None if b is None else round(b / 100.0, 1)   # 백만원 -> 억원
+        if (c, q) in restated:
+            b = restated[(c, q)][0]   # 재작성 기준 BS 보험계약부채(원 공시 항목 20 대신)
         if e is not None and abs(csm - e) > max(2.0, abs(e) * 0.005):
             mism.append([c, q, round(csm, 1), e])
         # 사이드카 = 「2-4 합계가 발생사고요소를 이미 포함」. 2-4 합계(항목 8)가 없는 분기는 포함 여부를 따질 대상이 없어 일반 실공시(1)로 둔다.
@@ -154,12 +163,13 @@ def main(check: bool) -> int:
             "lic_basis": LIC_BASIS,
             "basis": "잔여보장요소(LRC) 기준 — 경영공시 2-4. 발생사고요소(LIC)는 DART 주석 실공시(항목 10~13)를 우선하고, 없는 분기만 lic_total 에 추정(BS 보험계약부채 - LRC 합계)",
             "includes_lic": {c: sorted(v) for c, v in side_q.items()},
+            "restated": {c: {q: v for (cc, q), v in sorted(restated.items()) if cc == c} for c in sorted({c for c, _ in restated})},
             "est_unreliable": sorted(c for c, ok in est_ok.items() if not ok),
             "pending": [[code_of[n], q] for n, q in PENDING_NAMES if n in code_of],
             "csm_mismatch": mism,
             "csm_recon": f"포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 {cmp_n}건 중 불일치 {cmp_bad}건(허용 0.5%)",
             "lic_recon": f"발생사고요소 셀: 실공시 {kinds[1]} · 사이드카(2-4 에 포함) {kinds[2]} · 추정 {kinds[0]} · 없음 {kinds[None]}",
-            "sources": ["insurance_liability_portfolio.json", "CSM_waterfall.json", "IFRS17_BS.json", SIDECAR],
+            "sources": ["insurance_liability_portfolio.json", "CSM_waterfall.json", "IFRS17_BS.json", SIDECAR, RESTATED],
         },
         "companies": companies,
     }

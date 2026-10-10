@@ -15,6 +15,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 - 표: 해당 열에만 「그 외 잔여보장요소 (미분리)」·「잔여보장요소 합계 (DART 기준)」 두 행(2-4 합계 행과 기준이 달라 한 행에 섞지 않음). `hcDiff` 는 2-4 합계가 없으면 항목 14 로 보험계약자산 상계 차이를 계산. 안내문·캡션·툴팁에 부채 기준(상계 전)이라 다른 시점 2-4 순액과 기준이 다르다고 적음.
 - 빌더: 열 `lrc_dart`(인덱스 17, 항목 14) 추가, 2-4 구성이 없는 분기는 CSM 대조에서 제외(불일치 14→3건; 구성 없는 열이 「경영공시 CSM 이 다릅니다」 오표시되던 것), 2-4 합계가 없는 분기는 사이드카(kind 2)가 아니라 실공시(kind 1)로 둠. 패널 40.9→43.2KB.
 - 실측: 2023.4Q 구성 없는 회사 13곳(삼성화재·DB손보·삼성생명·카카오페이 등). 연도·분기 두 모드 + 375px 확인, 콘솔 오류 0. `viz_build_csm_combo_panel.py --check` · `viz_build_compare_panel.py --check` OK, `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` 76 passed 1 skipped.
+- 소급재작성 3셀(2023.4Q 라이나·미래에셋·KB라이프): 빌더가 사이드카 `data/_derived/ilp_restated_comparative.json` 을 읽어 그 셀의 bs20 을 재작성 BS 보험계약부채로 바꾸고 `meta.restated`(원 공시 항목 20·사유)를 패널에 넣는다(패널 44.4KB). 화면: 표 「보험계약부채 합계」 해당 칸에 †, 캡션 † 설명 + ? 팝오버(사유), 안내문·툴팁에 「원 공시 → 재작성」. 상계 차이 행은 미래에셋·KB라이프 사라지고 라이나만 23,600억(보험계약자산 상계).
 - `data/compare/panel_compare.json` `loss_curve.note` 의 「범례 옆 숫자」를 「숫자로 적었습니다」로(변경 1건, 숫자 불변).
 
 ## 2026-10-11 -- 사별 비교 모바일 손해율 가정 curve 카드 실제 반영(안 A, owner 수정 반영)
