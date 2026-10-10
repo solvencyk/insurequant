@@ -7,6 +7,17 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-10 (4차) -- IFRS17 섹션 3 콤보: 기간이 상단 「기준」을 따름 + 컨트롤 줄 제거
+
+티켓 `inbox/designer/20261010T1500Z__orchestrator__MULTI_2023.4Q-2026.2Q__combo_period_follows_header_and_drop_controls.md`. IFRS17.html 만 변경(패널 JSON·빌더 무변경, 마스터 읽기 전용, 커밋·push 안 함).
+
+- 기간: `hcLatestQ`(패널+CSM_waterfall 전체의 최신 분기)·`hcPeriods`. 분기=최신에서 거꾸로 연속 `WF_Q_WINDOW`(5), 연도=직전 `WF_WINDOW-1`(3)개 연말(회사에 패널 행 또는 CSM_waterfall 기말 CSM 이 있는 해만)+최신. 섹션 1·2 처럼 `#wfPeriod` 변경 시 `renderCompany` 재호출로 즉시 다시 그림. 제목 괄호·캡션·축 제목·aria-label 이 모드를 따름.
+- 행: 패널에 있으면 패널 행, 없으면 CSM_waterfall 기말 CSM(item 6)만 든 「CSM 전용」 행(가짜 값·추정 없음, 표 「—」, 안내문·툴팁은 데이터 유무 기준). 신계약 CSM 선: 분기=패널 당분기 증분, 연도=CSM_waterfall 연 누계(item 2 값). 최신이 4Q 가 아니면 누계·막대가 그 분기말 시점이라는 설명을 툴팁·안내에 적음.
+- 삭제: `.hist-ctrls`/`.hist-fs` CSS, 컨트롤 마크업, `HC_UI`, VFA 한 덩어리·PAA 접기 분기, 표의 VFA 세부 3행, `hcColors().vfa`. 고정 동작 = VFA 합산·PAA 쌓기·발생사고요소 막대 표시·축 생략 켜짐. `renderHistTable` 시그니처 단순화(헤더 배열 직접 전달).
+- 확인(로컬 서버, `?iq_internal=1`): 삼성생명·한화생명(VFA)·삼성화재·ABL생명·KDB생명·푸본현대(사이드카)·하나손보·코리안리·AIG·악사·카카오페이손보·서울보증·IBK연금, 분기·연도 두 모드, 콘솔 오류 0, 375px 가로 넘침 없음. `viz_build_csm_combo_panel.py --check` OK, `tests/test_deploy_assets.py`+`tests/test_push_gate_wiring.py` 76 passed·1 skipped.
+
+---
+
 ## 2026-10-10 (3차) -- IFRS17 섹션 3 콤보: 오른쪽 막대 발생사고요소 실공시값 교체
 
 티켓 `inbox/designer/20261010T1400Z__orchestrator__MULTI_*__combo_real_lic_values.md`. 마스터 읽기 전용, 패널 JSON·빌더·IFRS17.html 만 변경(커밋·push 안 함).
