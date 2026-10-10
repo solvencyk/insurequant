@@ -45,6 +45,7 @@
       primary:cssVar('--primary','#0f6e68'),
       pos:cssVar('--pos','#4b7f2a'),
       neg:cssVar('--neg','#b4443a'),
+      warn:cssVar('--warn','#c98a12'),
       grid:cssVar('--border','#e4e4e2'),
       tipBg:cssVar('--tip-bg','rgba(24,24,27,0.92)'),
       tipText:cssVar('--tip-text','#f5f5f4'),
