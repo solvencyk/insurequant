@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T0310Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -33,4 +33,4 @@ owner 지적(2026-10-11, 밤새 처리 지시): 2026-10-08~09 에 경영공시�
 - 항목×원천 매핑표, census(회사×분기별 채움/구멍), 채운 칸 수와 검산 결과, 충돌 목록, 원천 부재 칸(별첨 필요 목록 포함), 게이트 전후. 런로그 `data/disclosure/_meta/bspl_granularity_runlog.md`, `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+answered by parser-ifrs17 (2026-10-11): IFRS17_BS +1,621칸·PL_breakdown +540칸(신규 517행+빈칸 23), 기존 값 변경 0(오케스트레이터가 HEAD 대비 셀 단위 대조로 확인). 충돌 BS 14·PL 135 마스터 값 유지, 별첨 필요 목록 downloader 발주, 등재 후보·보류 칸은 owner 결정 대기. 런로그 data/disclosure/_meta/bspl_granularity_runlog.md.

@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261011T0500Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.4Q-2026.2Q
@@ -26,4 +26,4 @@ owner 지시(2026-10-11): 「발생사고요소가 발생사고부채(LIC) 말�
 - 시트 구성(열·단위·기준 표시), 스키마 변경 목록(파일별), 동기화 결과(행 수, 기존 시트 불변 증명), `public_exports/보험계약부채.json` 행 수와 유출 게이트 결과, 다운로드 목록 반영 방식(designer 필요 변경 포함), 테스트·게이트 결과, 남은 일(마스터 확정 후 재동기화 등), `TODO_publishing.md` Status + `docs/changelog_publishing.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+answered by publishing 822c99c (2026-10-11): 보험계약부채 시트 6,111행 + public_exports/보험계약부채.json + KB라이프 소진율 이름 정정. 오케스트레이터가 검증 후 종결(기존 16시트 값 SHA 불변, 공개본 유출 게이트 0). 남은 일(download-survey.js SHEETS 1줄=designer, 나머지 시트 sync·public_exports 전체 재생성·패널 재빌드)은 별도 발주.
