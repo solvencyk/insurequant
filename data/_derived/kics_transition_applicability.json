@@ -97,6 +97,38 @@
    "records": 6,
    "unknown_reasons_cleared": 6,
    "note": "stage 7 (2026-10-10): KR1103 short-form quarters TIR/TER/TIRR UNKNOWN -> X (owner approval P8); direct vs presumptive evidence is split inside each record evidence; _meta counters above NOT refreshed; see reinsurer_runlog_KR1101-1108_7.md"
+  },
+  "appended_parser_9": {
+   "what": "단계 9: 새 own-quarter 문서 2건의 레코드. KR1107 2024.3Q 는 끝에 append, KR1102 2023.4Q 는 옛 \"공시 예정\" 판(md_path 가 옛 MD, 전 플래그 UNKNOWN)의 레코드를 새 완성본(v20240510) 레코드로 같은 자리에서 교체했다. extract_transition_applicability.extract_one(공식 도구 함수)로 생성. 나머지 레코드는 그대로. 카운터(total_records 등)는 갱신하지 않았다.",
+   "appended": [
+    "KR1107 2024.3Q"
+   ],
+   "replaced": [
+    "KR1102 2023.4Q"
+   ],
+   "replaced_previous_records": [
+    {
+     "code": "KR1102",
+     "name": "스위스리아시아",
+     "quarter": "2023.4Q",
+     "md_path": "md_inbox\\FY2023_Q4\\KR1102_스위스리아시아.md",
+     "TFI": "UNKNOWN",
+     "RPT": "UNKNOWN",
+     "TAC": "UNKNOWN",
+     "TIR": "UNKNOWN",
+     "TER": "UNKNOWN",
+     "TIRR": "UNKNOWN",
+     "PCA_DEFER": "UNKNOWN",
+     "format": null,
+     "evidence": {
+      "manual_override_parser_5_unknown": "KICS_SECTION_DEFERRED: the document states the K-ICS 지급여력비율 section is \"to be disclosed\" later (보험업감독규정 부칙 제3조); it contains no 경과조치 section, table or statement at all -> applicability cannot be read from this document. [FY2023_Q4 p3 / p18 / p21: \"지급여력비율은 4월말 공시 예정임\"]",
+      "manual_override_parser_5_prev_unknown_reason": "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:RAW_PDF_TABLE_UNPARSED"
+     },
+     "unknown_reason": "KICS_SECTION_DEFERRED: the document states the K-ICS 지급여력비율 section is \"to be disclosed\" later (보험업감독규정 부칙 제3조); it contains no 경과조치 section, table or statement at all -> applicability cannot be read from this document. [FY2023_Q4 p3 / p18 / p21: \"지급여력비율은 4월말 공시 예정임\"]",
+     "pdf_fallback_used": false
+    }
+   ],
+   "reproduce": "data/disclosure/_meta/reinsurer_load_20261010/stage9/sidecar9.py apply"
   }
  },
  "records": [
@@ -14690,20 +14722,27 @@
    "code": "KR1102",
    "name": "스위스리아시아",
    "quarter": "2023.4Q",
-   "md_path": "md_inbox\\FY2023_Q4\\KR1102_스위스리아시아.md",
-   "TFI": "UNKNOWN",
-   "RPT": "UNKNOWN",
-   "TAC": "UNKNOWN",
-   "TIR": "UNKNOWN",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
-   "PCA_DEFER": "UNKNOWN",
-   "format": null,
+   "md_path": "md_inbox\\FY2023_Q4\\KR1102_스위스리아시아_v20240510.md",
+   "TFI": "X",
+   "RPT": "O",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
    "evidence": {
-    "manual_override_parser_5_unknown": "KICS_SECTION_DEFERRED: the document states the K-ICS 지급여력비율 section is \"to be disclosed\" later (보험업감독규정 부칙 제3조); it contains no 경과조치 section, table or statement at all -> applicability cannot be read from this document. [FY2023_Q4 p3 / p18 / p21: \"지급여력비율은 4월말 공시 예정임\"]",
-    "manual_override_parser_5_prev_unknown_reason": "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:RAW_PDF_TABLE_UNPARSED"
+    "summary_table_rows": [
+     "| 공통 적용 | 가용자본     | 제도시행前 기발행자본증권가용자본 인정범위 확대 (TFI)                        | X      |",
+     "| 공통 적용 | 업무보고서    | 보고 및 공시기한 연장                                           | O      |",
+     "| 선택 적용 | 가용자본     | 시가평가로 인한 자본감소분 점진적 인식 (TAC)                            | X      |",
+     "| 선택 적용 | 요구자본     | 신규도입 위험 신규 보험위험 전진적 인식 (TIR)                           | X      |",
+     "[merged-rowspan-artifact -> TER] | 선택 적용 | 요구자본     | 기존측정 위험 주식위험액 증가분 점진적 인식 (TER) 금리위험액 증가분 점진적 인식 (TIRR) | X      |",
+     "[merged-rowspan-artifact -> TIRR] | 선택 적용 | 요구자본     | 기존측정 위험 주식위험액 증가분 점진적 인식 (TER) 금리위험액 증가분 점진적 인식 (TIRR) | X      |",
+     "| 선택 적용 | K-ICS 비율 | 적기시정조치 적용 유예                                           | X      |"
+    ]
    },
-   "unknown_reason": "KICS_SECTION_DEFERRED: the document states the K-ICS 지급여력비율 section is \"to be disclosed\" later (보험업감독규정 부칙 제3조); it contains no 경과조치 section, table or statement at all -> applicability cannot be read from this document. [FY2023_Q4 p3 / p18 / p21: \"지급여력비율은 4월말 공시 예정임\"]",
+   "unknown_reason": null,
    "pdf_fallback_used": false
   },
   {
@@ -16816,6 +16855,33 @@
      "| 선택적용  | 요구자본     | 기존측정 위험 주식위험액 증가분 점진적 인식 (TER)  | X      |",
      "| 선택적용  | 요구자본     | 금리위험액 증가분 점진적 인식 (TIRR)         | X      |",
      "| 선택적용  | K-ICS 비율 | 적기시정조치 적용 유예                    | X      |"
+    ]
+   },
+   "unknown_reason": null,
+   "pdf_fallback_used": false
+  },
+  {
+   "code": "KR1107",
+   "name": "퍼시픽라이프리",
+   "quarter": "2024.3Q",
+   "md_path": "md_inbox\\FY2024_Q3\\KR1107_퍼시픽라이프리.md",
+   "TFI": "X",
+   "RPT": "O",
+   "TAC": "X",
+   "TIR": "X",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확   | 제도시행前 기발행자본증권가용자본 인정범위 확   | X      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장               | 보고 및 공시기한 연장               | O      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC) | 시가평가로 인한 자본감소분 점진적 인식(TAC) | X      |",
+     "| 선택적용  |         | 신규도입 위험                    | 신규 보험위험 전진적 인식(TIR)        | X      |",
+     "| 선택적용  | 요구자본    | 기존측정 위험                    | 주식위험액 증가분 점 진적 인식(TER)     | X      |",
+     "| 선택적용  |         | 기존측정 위험                    | 금리위험액 증가분 점 진적 인식(TIRR)    | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치                     | 적용 유예                      | X      |"
     ]
    },
    "unknown_reason": null,

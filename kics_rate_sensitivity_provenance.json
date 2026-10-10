@@ -1106,6 +1106,207 @@
       "source_id": "DISCLOSURE_MD",
       "as_of_date": "2026-06-30",
       "source_file": "md_inbox/FY2026_Q2/KR1098_카카오페이손해보험.md"
+    },
+    {
+      "company_code": "KR1101",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR1101_뮌헨재보험.md"
+    },
+    {
+      "company_code": "KR1101",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR1101_뮌헨재보험.md"
+    },
+    {
+      "company_code": "KR1101",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1101_뮌헨재보험.md"
+    },
+    {
+      "company_code": "KR1101",
+      "quarter": "2026.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2026-06-30",
+      "source_file": "md_inbox/FY2026_Q2/KR1101_뮌헨재보험.md"
+    },
+    {
+      "company_code": "KR1102",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR1102_스위스리아시아.md"
+    },
+    {
+      "company_code": "KR1102",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR1102_스위스리아시아.md"
+    },
+    {
+      "company_code": "KR1102",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1102_스위스리아시아.md"
+    },
+    {
+      "company_code": "KR1102",
+      "quarter": "2026.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2026-06-30",
+      "source_file": "md_inbox/FY2026_Q2/KR1102_스위스리아시아.md"
+    },
+    {
+      "company_code": "KR1103",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR1103_제네럴재보험.md"
+    },
+    {
+      "company_code": "KR1103",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR1103_제네럴재보험.md"
+    },
+    {
+      "company_code": "KR1103",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1103_제네럴재보험.md"
+    },
+    {
+      "company_code": "KR1104",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR1104_하노버재보험.md"
+    },
+    {
+      "company_code": "KR1104",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR1104_하노버재보험.md"
+    },
+    {
+      "company_code": "KR1104",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1104_하노버재보험.md"
+    },
+    {
+      "company_code": "KR1104",
+      "quarter": "2026.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2026-06-30",
+      "source_file": "md_inbox/FY2026_Q2/KR1104_하노버재보험.md"
+    },
+    {
+      "company_code": "KR1105",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2024-12-31",
+      "source_file": "md_inbox/FY2024_Q4/KR1105_알지에이리인슈어런스.md"
+    },
+    {
+      "company_code": "KR1105",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-06-30",
+      "source_file": "md_inbox/FY2025_Q2/KR1105_알지에이리인슈어런스.md"
+    },
+    {
+      "company_code": "KR1105",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1105_알지에이리인슈어런스.md"
+    },
+    {
+      "company_code": "KR1105",
+      "quarter": "2026.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2026-06-30",
+      "source_file": "md_inbox/FY2026_Q2/KR1105_알지에이리인슈어런스.md"
+    },
+    {
+      "company_code": "KR1106",
+      "quarter": "2024.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2024-12-31",
+      "source_file": "data/disclosure/FY2024_Q4/raw/KR1106_스코리재보험.pdf"
+    },
+    {
+      "company_code": "KR1106",
+      "quarter": "2025.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-06-30",
+      "source_file": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf"
+    },
+    {
+      "company_code": "KR1106",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1106_스코리재보험.pdf"
+    },
+    {
+      "company_code": "KR1106",
+      "quarter": "2026.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2026-06-30",
+      "source_file": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf"
+    },
+    {
+      "company_code": "KR1107",
+      "quarter": "2025.4Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2025-12-31",
+      "source_file": "md_inbox/FY2025_Q4/KR1107_퍼시픽라이프리.md"
+    },
+    {
+      "company_code": "KR1107",
+      "quarter": "2026.2Q",
+      "item_block": "rate_sensitivity",
+      "source_id": "DISCLOSURE_MD",
+      "as_of_date": "2026-06-30",
+      "source_file": "md_inbox/FY2026_Q2/KR1107_퍼시픽라이프리.md"
     }
-  ]
+  ],
+  "merge_note_20261010": "재보사 KR1101~KR1107 금리민감도 25셀의 근거 append(단계 9 P2, validation 20261010T1100Z). 기존 138셀은 그대로. 원천 판정 = 추출기와 같은 결정 트리: md_inbox MD 에 금리 민감도 분석 표가 있으면 그 MD(source_id DISCLOSURE_MD), 없어 raw PDF 폴백으로 읽은 칸(KR1106 4분기)은 그 raw PDF(source_id DISCLOSURE, 계보 data/disclosure/). 각 셀은 해당 원천을 추출기 함수로 다시 읽은 행이 마스터 행과 칸 단위로 일치함을 확인한 뒤에만 실었다. as_of_date 는 분기말(기존 규약). 재현: data/disclosure/_meta/reinsurer_load_20261010/stage9/append_p2.py --apply"
 }

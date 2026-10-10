@@ -7557,6 +7557,38 @@
    "front_scan_run": 0,
    "anchor_pages": 9,
    "section_chars_per_page": 580.2
+  },
+  "KR1102|2023.4Q": {
+   "raw": "KR1102_스위스리아시아_v20240510.pdf",
+   "bytes": 1599798,
+   "pages": 85,
+   "chars": 71792,
+   "chars_per_page": 844.6,
+   "status": "READABLE",
+   "scan_pages": 0,
+   "front_scan_run": 0,
+   "anchor_pages": 11,
+   "section_chars_per_page": 863.5
+  },
+  "KR1107|2024.3Q": {
+   "raw": "KR1107_퍼시픽라이프리.pdf",
+   "bytes": 362112,
+   "pages": 15,
+   "chars": 19888,
+   "chars_per_page": 1325.9,
+   "status": "READABLE",
+   "scan_pages": 0,
+   "front_scan_run": 0,
+   "anchor_pages": 6,
+   "section_chars_per_page": 1710.3
   }
+ },
+ "appended_parser_9": {
+  "what": "단계 9: 새 own-quarter 문서 2건의 텍스트레이어 셀을 끝에 append (build_kics_source_textlayer.py 와 같은 칸 단위 논리). 기존 셀 그대로.",
+  "cells": [
+   "KR1102|2023.4Q",
+   "KR1107|2024.3Q"
+  ],
+  "reproduce": "data/disclosure/_meta/reinsurer_load_20261010/stage9/sidecar9.py apply"
  }
 }
