@@ -78,6 +78,137 @@
     "14": 236457.59,
     "15": 238697.44
    }
+  },
+  {
+   "company_code": "KR0073",
+   "quarter": "2024.1Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2025 분기보고서 주석 「재무제표 소급재작성 효과」(20250515002967.xml): 「당사는 보험계약마진 상각을 위한 시간가치 계산의 오류로 분기순이익 과소계상을 발견하여, 비교표시된 과거 재무제표를 소급재작성하였습니다」(비교대상 전분기=제68기 1분기)",
+   "item8_restated": 860002.0,
+   "item8_minus_original_net_lrc": -3396.57,
+   "restated_bs_insurance_contract_liability_eok": 886553.61,
+   "restated_bs_source": "derived: closing total (item 15) of the restated PRIOR-period roll-forward tables of the 2025 quarterly DART filing; the 2025 interim filing carries no prior-year-quarter balance sheet",
+   "bs_item20_fy2023_original_eok": 889833.13,
+   "bs_item20_original_eok": 889833.13,
+   "bs_source_file": "data/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml",
+   "items_10_15_restated": {
+    "10": 26434.55,
+    "13": 26434.56,
+    "14": 860119.06,
+    "15": 886553.61
+   },
+   "items_10_15_original": {
+    "10": 26434.56,
+    "13": 26434.56,
+    "14": 863398.57,
+    "15": 889833.13
+   }
+  },
+  {
+   "company_code": "KR0079",
+   "quarter": "2024.1Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2025 분기보고서 주석 39 「재무제표 소급재작성 효과」(20250515001717.xml): 「전기 중 유배당 확정연금 일부 상품의 현금흐름추정 로직 오류로 인한 보험계약부채 과대계상을 발견했고 보험금융손익의 체계적배분과 관련된 회계정책을 변경하였으며, 비교표시된 과거 재무제표를 소급재작성하였습니다. 전기 중간 보고기간의 요약 분ㆍ반기 재무제표 또한 재작성되었습니다」",
+   "item8_restated": 253769.0,
+   "item8_minus_original_net_lrc": -1418.23,
+   "restated_bs_insurance_contract_liability_eok": 257841.15,
+   "restated_bs_source": "derived: closing total (item 15) of the restated PRIOR-period roll-forward tables of the 2025 quarterly DART filing; the 2025 interim filing carries no prior-year-quarter balance sheet",
+   "bs_item20_fy2023_original_eok": 259260.29,
+   "bs_item20_original_eok": 259260.29,
+   "bs_source_file": "data/FY2025_Q1/raw/KR0079_미래에셋생명/20250515001717.xml",
+   "items_10_15_restated": {
+    "10": 4073.07,
+    "13": 4073.06,
+    "14": 253768.08,
+    "15": 257841.15
+   },
+   "items_10_15_original": {
+    "10": 4073.06,
+    "13": 4073.06,
+    "14": 255187.23,
+    "15": 259260.29
+   }
+  },
+  {
+   "company_code": "KR0073",
+   "quarter": "2024.2Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2025 분기보고서 주석 「재무제표 소급재작성 효과」(20250814004112.xml): 「당사는 보험계약마진 상각을 위한 시간가치 계산의 오류로 분기순이익 과소계상을 발견하여, 비교표시된 과거 재무제표를 소급재작성하였습니다」(비교대상 전분기=제68기 반기)",
+   "item8_restated": 886342.0,
+   "item8_minus_original_net_lrc": -3444.17,
+   "restated_bs_insurance_contract_liability_eok": 912502.69,
+   "restated_bs_source": "derived: closing total (item 15) of the restated PRIOR-period roll-forward tables of the 2025 quarterly DART filing; the 2025 interim filing carries no prior-year-quarter balance sheet",
+   "bs_item20_fy2023_original_eok": 916145.21,
+   "bs_item20_original_eok": 916145.21,
+   "bs_source_file": "data/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml",
+   "items_10_15_restated": {
+    "10": 26359.02,
+    "13": 26359.03,
+    "14": 886143.67,
+    "15": 912502.69
+   },
+   "items_10_15_original": {
+    "10": 26359.04,
+    "13": 26359.03,
+    "14": 889786.17,
+    "15": 916145.21
+   }
+  },
+  {
+   "company_code": "KR0079",
+   "quarter": "2024.2Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2025 분기보고서 주석 39 「재무제표 소급재작성 효과」(20250814003532.xml): 「전기 중 유배당 확정연금 일부 상품의 현금흐름추정 로직 오류로 인한 보험계약부채 과대계상을 발견했고 보험금융손익의 체계적배분과 관련된 회계정책을 변경하였으며, 비교표시된 과거 재무제표를 소급재작성하였습니다. 전기 중간 보고기간의 요약 분ㆍ반기 재무제표 또한 재작성되었습니다」",
+   "item8_restated": 256357.0,
+   "item8_minus_original_net_lrc": -1525.54,
+   "restated_bs_insurance_contract_liability_eok": 260390.97,
+   "restated_bs_source": "derived: closing total (item 15) of the restated PRIOR-period roll-forward tables of the 2025 quarterly DART filing; the 2025 interim filing carries no prior-year-quarter balance sheet",
+   "bs_item20_fy2023_original_eok": 261916.15,
+   "bs_item20_original_eok": 261916.15,
+   "bs_source_file": "data/FY2025_Q2/raw/KR0079_미래에셋생명/xml/20250814003532.xml",
+   "items_10_15_restated": {
+    "10": 4033.6,
+    "13": 4033.6,
+    "14": 256357.37,
+    "15": 260390.97
+   },
+   "items_10_15_original": {
+    "10": 4033.62,
+    "13": 4033.6,
+    "14": 257882.54,
+    "15": 261916.16
+   }
+  },
+  {
+   "company_code": "KR0079",
+   "quarter": "2024.3Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2025 분기보고서 주석 39 「재무제표 소급재작성 효과」(20251114002791.xml): 「전기 중 유배당 확정연금 일부 상품의 현금흐름추정 로직 오류로 인한 보험계약부채 과대계상을 발견했고 보험금융손익의 체계적배분과 관련된 회계정책을 변경하였으며, 비교표시된 과거 재무제표를 소급재작성하였습니다. 전기 중간 보고기간의 요약 분ㆍ반기 재무제표 또한 재작성되었습니다」",
+   "item8_restated": 257689.0,
+   "item8_minus_original_net_lrc": -1678.56,
+   "restated_bs_insurance_contract_liability_eok": 261743.35,
+   "restated_bs_source": "derived: closing total (item 15) of the restated PRIOR-period roll-forward tables of the 2025 quarterly DART filing; the 2025 interim filing carries no prior-year-quarter balance sheet",
+   "bs_item20_fy2023_original_eok": 263423.13,
+   "bs_item20_original_eok": 263423.13,
+   "bs_source_file": "data/FY2025_Q3/raw/KR0079_미래에셋생명/xml/20251114002791.xml",
+   "items_10_15_restated": {
+    "10": 4055.57,
+    "13": 4055.57,
+    "14": 257687.79,
+    "15": 261743.35
+   },
+   "items_10_15_original": {
+    "10": 4055.57,
+    "13": 4055.56,
+    "14": 259367.56,
+    "15": 263423.13
+   }
   }
+ ],
+ "extended_at": "20261010T1756Z",
+ "extended_by": [
+  "scripts/load_ilp_interim_2023_2024.py",
+  "scripts/load_ilp_interim_2023_2024.py",
+  "scripts/load_ilp_interim_2023_2024.py"
  ]
 }

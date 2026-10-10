@@ -36,7 +36,8 @@ QUARTERS = ["2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q", "2026.2Q"]
 # 2026-10-10 backfill (ticket 20261010T1600Z): the company set is still decided on the six stage-1 quarters; the year-end
 # points loaded before 2025 are then tested cell by cell for the companies in that set (a cell that fails is reported, the
 # company is NOT dropped).  Extend this list when another pre-2025 quarter is loaded.
-EXTRA_QUARTERS = ["2023.4Q", "2024.4Q"]
+# 2026-10-11: the interim quarters of the second backfill round are tested the same way (a quarter that has no rows yet is skipped).
+EXTRA_QUARTERS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q"]
 
 
 def abl_spot_check():

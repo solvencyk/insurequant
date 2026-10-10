@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T0320Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -29,4 +29,4 @@ owner 지시(2026-10-11, 「이 round 끝나면 나머지 시점도 백필 전�
 - 단계별 적재 셀 수·검산·미적재 사유, 재보사 매핑 규칙과 적재 결과, 별첨/원천 필요 목록, owner 결정 필요 사항, 패널 재빌드 필요 (회사, 분기), `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+ILP 전담 작업 완료(2026-10-11, parser-ifrs17 Sonnet, 약 4.4시간, 토큰 823k): 마스터 3,835→6,111행(+2,276, 기존 행 바이트 동일). 1단계 2024.1Q~3Q·2023.1Q~3Q +1,348행, 2단계 LIC 계산값 항목 16·17 125셀(+250행), 3단계 라이나 8·처브 3셀(+50행), 4단계 재보사 항목 1~8 62셀(+538행)·LIC 14셀(+84행), 5단계 롯데손보 항목 9 6칸 정정(PDF 7건 근거)·추출기 보강. owner 결정 대기: 스위스리 2026.1Q 행합계 파생·하노버 2026.2Q BS 대조 149억·KR0100 R3 5건·메트라이프 PAA 소수점 6칸·국내 항목 9 빈 55칸. downloader: 하나손보 별첨 11회차·하노버 2025.3Q PDF. designer: 348셀 패널 재빌드. 런로그 data/disclosure/_meta/ilp_backfill_pre2025_runlog.md §11~§16.

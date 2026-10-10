@@ -341,14 +341,189 @@ def try_narrative_fallback(page_texts: dict) -> dict | None:
     return None
 
 
+# ---------------------------------------------------------------------------
+# Table checks added 2026-10-11 (ticket 20261011T0320Z stage 5; defects 3, 5, 6a, 8 of ilp_gap_runlog_textlayer_20261010.md).  None of them changes a value that was
+# read before: they repair a run that was no known layout, report a footing, or name a candidate table without emitting it.
+# ---------------------------------------------------------------------------
+# a number split by a space in the text layer: '1 3,601' = 13,601, '6 ,876' = 6,876
+RE_SPLIT_DIGITS = re.compile(r"(?<![\d,])(\d)\s+(\d{1,2},\d{3}|,\d{3})(?![\d,])")
+RE_TAIL_NUMS = re.compile(r"((?:\s+(?:△?\(?-?\d[\d,]*(?:\.\d+)?\)?|-))+)\s*$")
+RE_ONE_NUM = re.compile(r"△?\(?-?\d[\d,]*(?:\.\d+)?\)?|-")
+
+
+def _tail_numbers(line: str):
+    """the trailing number tokens of one text line ('-' = 0), or None when fewer than 3"""
+    m = RE_TAIL_NUMS.search(" " + line.rstrip())        # the leading blank: a line that STARTS with its first number ('(45.69) 6.35 35.93') must not lose that number
+    if not m:
+        return None
+    toks = RE_ONE_NUM.findall(m.group(1))
+    if len(toks) < 3:
+        return None
+    nums = []
+    for t in toks:
+        v = parse_number(t)
+        if v is None:
+            return None
+        nums.append(v)
+    return nums
+
+
+def _slots_by_len(nums):
+    """the stage-1 column rule applied to ONE row: 7 = GMM BEL/RA/CSM + VFA BEL/RA/CSM + PAA, 6 = no PAA, 4 = GMM + PAA, 3 = GMM only, 8 = one stray leading token"""
+    n = len(nums)
+    if n == 1:                                           # 합계 run of a filer with PAA only (KR0150): the lone number is the PAA column
+        return {1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.0, 7: nums[0]}
+    if n == 8:
+        nums, n = nums[1:], 7
+    if n == 7:
+        return {i + 1: nums[i] for i in range(7)}
+    if n == 6:
+        return {**{i + 1: nums[i] for i in range(6)}, 7: 0.0}
+    if n == 4:
+        return {1: nums[0], 2: nums[1], 3: nums[2], 4: 0.0, 5: 0.0, 6: 0.0, 7: nums[3]}
+    if n == 3:
+        return {1: nums[0], 2: nums[1], 3: nums[2], 4: 0.0, 5: 0.0, 6: 0.0, 7: 0.0}
+    return None
+
+
+def footing_of(seg: str, values: dict) -> dict:
+    """detail rows of the text segment (each placed by its own token count) vs the 합계 slots (printed units).  {'ok', 'n_rows', 'diffs'}; tolerance 0.5 per row + 1.
+    A row of exactly THREE numbers is ambiguous (GMM BEL/RA/CSM, or VFA BEL/RA/CSM when the filer leaves the GMM cells blank: IBK연금 변액연금 row): every assignment of
+    the 3-number rows is tried (up to 12 rows, else all GMM) and the table foots when ANY assignment foots."""
+    import itertools
+    fixed = {i: 0.0 for i in range(1, 8)}
+    amb, n = [], 0
+    for ln in seg.split("\n"):
+        nums = _tail_numbers(ln)
+        if nums and len(nums) == 3:
+            amb.append(nums)
+            n += 1
+            continue
+        sl = _slots_by_len(nums) if nums else None
+        if not sl:
+            # the PAA-only rows of some filers print ONE number ('일반 8,560', '자동차 -20.90'): that number is the 보험료배분접근법 column
+            m1 = re.match(r"^\s*(?:일반|자동차)\s+(△?\(?-?\d[\d,]*(?:\.\d+)?\)?)\s*$", ln)
+            v1 = parse_number(m1.group(1)) if m1 else None
+            if v1 is not None:
+                sl = {1: 0.0, 2: 0.0, 3: 0.0, 4: 0.0, 5: 0.0, 6: 0.0, 7: v1}
+        if sl:
+            n += 1
+            for i in range(1, 8):
+                fixed[i] += sl[i]
+    if n == 0:
+        return {"ok": None, "n_rows": 0}
+    tol = 0.5 * n + 1.0
+    best = None
+    masks = itertools.product((0, 1), repeat=len(amb)) if len(amb) <= 12 else [(0,) * len(amb)]
+    for mask in masks:
+        sums = dict(fixed)
+        for row, to_vfa in zip(amb, mask):
+            off = 4 if to_vfa else 1
+            for k in range(3):
+                sums[off + k] += row[k]
+        diffs = {i: round(sums[i] - values[i], 4) for i in range(1, 8)}
+        ok = all(abs(d) <= tol for d in diffs.values())
+        if best is None or ok or sum(abs(d) for d in diffs.values()) < sum(abs(d) for d in best[1].values()):
+            best = (ok, diffs)
+        if ok:
+            break
+    return {"ok": best[0], "n_rows": n, "diffs": best[1]}
+
+
+def find_table_by_footing(page_texts: dict, max_page: int = 25, min_rows: int = 8):
+    """defect 5: a filing whose 2-4 HEADER is an image (AIA) never matches RE_HEADER_24, although the numbers are text.  Look for a 합계 line with a 6/7/8-token run whose
+    column sums equal the rows above it on the same page (>= min_rows rows) -- a 7 x ~40 table that foots is not an accident.  Returns the candidate when EXACTLY ONE page
+    holds one, else None.  The unit is unknown (it sat in the image), so the caller never emits the values."""
+    found = []
+    for pi in sorted(page_texts):
+        if pi >= max_page:
+            break
+        lines = page_texts[pi].split("\n")
+        for k, ln in enumerate(lines):
+            m = RE_TOTAL_LABEL.search(ln)
+            if not m:
+                continue
+            run = _tail_numbers("x " + ln[m.end():])           # the 합계 numbers (a leading token keeps the tail regexp honest)
+            if not run or len(run) not in (6, 7, 8):
+                continue
+            tot = _slots_by_len(run)
+            rows = [_slots_by_len(nm) for nm in (_tail_numbers(x) for x in lines[max(0, k - 120):k]) if nm]
+            rows = [r for r in rows if r]
+            if len(rows) < min_rows:
+                continue
+            sums = {i: sum(r[i] for r in rows) for i in range(1, 8)}
+            tol = 0.5 * len(rows) + 1.0
+            if all(abs(sums[i] - tot[i]) <= tol for i in range(1, 8)):
+                found.append({"page": pi + 1, "n_rows": len(rows), "run": run, "values_printed_units": tot})
+    return found[0] if len(found) == 1 else None
+
+
+# ---------------------------------------------------------------------------
+# Text layer with a fitz fallback (ticket 20261011T0320Z stage 5, defect 1 of ilp_gap_runlog_textlayer_20261010.md):
+# pdfplumber alone turned every 'Unexpected EOF' PDF into a whole-filing not_found.  The fallback only runs where pdfplumber raises, so every
+# filing that read fine before reads byte-identically now.
+# ---------------------------------------------------------------------------
+def _fitz_page_text(doc, i: int) -> str:
+    """one page rebuilt row-wise from fitz words (top-to-bottom, left-to-right: the reading order pdfplumber's extract_text() gives)"""
+    rows = []                                   # [mean y, [words]]
+    for w in sorted(doc[i].get_text("words"), key=lambda w: ((w[1] + w[3]) / 2.0, w[0])):
+        yc = (w[1] + w[3]) / 2.0
+        if rows and abs(rows[-1][0] - yc) <= 2.5:
+            rows[-1][1].append(w)
+            rows[-1][0] = (rows[-1][0] * (len(rows[-1][1]) - 1) + yc) / len(rows[-1][1])
+        else:
+            rows.append([yc, [w]])
+    return "\n".join(" ".join(x[4] for x in sorted(r[1], key=lambda x: x[0])) for r in rows)
+
+
+class _Page:
+    def __init__(self, owner, i, page=None):
+        self.owner, self.i, self.page = owner, i, page
+
+    def extract_text(self):
+        if self.page is not None:
+            try:
+                return self.page.extract_text() or ""
+            except Exception:  # noqa: BLE001  (pdfminer 'Unexpected EOF' and friends)
+                self.owner.fallback_pages.append(self.i + 1)
+        return _fitz_page_text(self.owner.fitz_doc(), self.i)
+
+
+class _Pdf:
+    """pdfplumber document whose pages fall back to fitz word rows when pdfplumber raises; the whole file falls back when pdfplumber cannot open it"""
+
+    def __init__(self, path):
+        self.path, self._fz, self.fallback_pages, self.open_error = path, None, [], None
+        try:
+            self._pl = pdfplumber.open(path)
+            self.pages = [_Page(self, i, p) for i, p in enumerate(self._pl.pages)]
+            self.source = "pdfplumber"
+        except Exception as e:  # noqa: BLE001
+            self._pl, self.open_error, self.source = None, repr(e)[:120], "fitz"
+            self.pages = [_Page(self, i) for i in range(self.fitz_doc().page_count)]
+
+    def fitz_doc(self):
+        if self._fz is None:
+            import fitz
+            self._fz = fitz.open(str(self.path))
+        return self._fz
+
+    def close(self):
+        if self._pl is not None:
+            self._pl.close()
+        if self._fz is not None:
+            self._fz.close()
+
+
 def extract_section_24_25(pdf_path: Path) -> dict:
     """Returns a dict with keys:
-       status: 'ok' | 'scan_only' | 'not_found' | 'low_confidence'
+       status: 'ok' | 'scan_only' | 'not_found' | 'low_confidence' | 'image_header_candidate'
        values: {1..7: float}  (present only if status in ok/low_confidence)
        total_disclosed: float | None   (the literal 합계 row sum, if found)
        na_25: 0 | 1 | None
        unit: str
        evidence: str  (short human-readable trail for the '근거' the task demands)
+       text_source / footing / candidate: added 2026-10-11 (informational; never change values)
     """
     result = {
         "status": "not_found",
@@ -359,7 +534,7 @@ def extract_section_24_25(pdf_path: Path) -> dict:
         "evidence": "",
     }
     try:
-        pdf = pdfplumber.open(pdf_path)
+        pdf = _Pdf(pdf_path)
     except Exception as e:  # noqa: BLE001
         result["evidence"] = f"PDF open error: {e}"
         return result
@@ -379,6 +554,7 @@ def extract_section_24_25(pdf_path: Path) -> dict:
         prefix_n = min(n_pages, PREFIX_CAP)
         page_texts = {}
         start_page = None
+        start_hdr_pos = 0           # offset of the section header inside the text of start_page (the 합계 search and the unit window start THERE, not at the page top)
         for i in range(prefix_n):
             t = pdf.pages[i].extract_text() or ""
             page_texts[i] = t
@@ -406,6 +582,7 @@ def extract_section_24_25(pdf_path: Path) -> dict:
                     window += page_texts[i + 1][:250 - len(window)]
                 if RE_UNIT_MARKER.search(window):
                     start_page = i
+                    start_hdr_pos = m24.start()
                     break
                 # else: TOC-like false positive -- keep scanning subsequent pages.
 
@@ -440,6 +617,16 @@ def extract_section_24_25(pdf_path: Path) -> dict:
                             result["na_25"] = 0
                         result["evidence_25"] = w.replace("\n", " ")[:200]
                         break
+                return result
+
+            # defect 5: header text that is an IMAGE (AIA) while the numbers are text -- name the table that foots, but never emit it (the unit sat in the image)
+            cand = find_table_by_footing(page_texts)
+            if cand is not None:
+                result["status"] = "image_header_candidate"
+                result["candidate"] = cand
+                result["text_source"] = pdf.source
+                result["evidence"] = (f"no '2-4 ... 회계모형별/포트폴리오별' header in the text layer (image header?); a table that foots ({cand['n_rows']} rows x {len(cand['run'])} "
+                                      f"columns, 합계 run {cand['run']}) sits on page {cand['page']}; unit unknown -> NOT emitted, verify by rendering the page")
                 return result
 
             # Not found in the prefix -- classify scan-only vs genuinely-not-found using
@@ -478,14 +665,16 @@ def extract_section_24_25(pdf_path: Path) -> dict:
                 page_texts[pi] = pdf.pages[pi].extract_text() or ""
             blob_parts.append(page_texts[pi])
             blob = "\n".join(blob_parts)
-            m = RE_TOTAL_LABEL.search(blob)
+            # defect 2 (ilp_gap_runlog_textlayer_20261010.md): search from the header, not from the page top -- a 합계 of an EARLIER table on the same page was picked (KR1000 4Q)
+            m = RE_TOTAL_LABEL.search(blob, start_hdr_pos)
             if m:
                 total_line_idx = m.start()
                 break
 
-        unit_window = blob[:400]
+        unit_window = blob[start_hdr_pos: start_hdr_pos + 400]
         divisor, unit_label = detect_unit_divisor(unit_window)
         result["unit"] = unit_label
+        result["text_source"] = pdf.source + (f"+fitz(pages {pdf.fallback_pages})" if pdf.fallback_pages else "")
 
         # Header-text detection of has_vfa/has_paa is kept only as a soft cross-check
         # in the evidence trail -- NOT used to decide column count. Reconnaissance on
@@ -496,8 +685,8 @@ def extract_section_24_25(pdf_path: Path) -> dict:
         # PAA business, 일반 3,554 + 자동차 5,549 = 9,103, confirmed against the actual
         # 합계 row, but RE_PAA did not match the header text before 합계).
         header_window_end = len(blob) if total_line_idx is None else total_line_idx
-        header_has_vfa = bool(RE_VFA.search(blob[:header_window_end]))
-        header_has_paa = bool(RE_PAA.search(blob[:header_window_end]))
+        header_has_vfa = bool(RE_VFA.search(blob[start_hdr_pos:header_window_end]))
+        header_has_paa = bool(RE_PAA.search(blob[start_hdr_pos:header_window_end]))
 
         if total_line_idx is None:
             result["status"] = "low_confidence"
@@ -521,7 +710,9 @@ def extract_section_24_25(pdf_path: Path) -> dict:
         # blindly would corrupt a genuine repeated digit like the "00" in "1,100" on a
         # normal filing. The doubled-open-paren signature near the unit marker is the
         # detector: KR0068-style (label-only) doubling never doubles '('.
-        full_doubling = "((" in blob[:600]
+        # (the original signature looked in the first 600 characters of the PAGE; the section header may sit lower on the page, so the window behind the header is looked at too --
+        #  an extension only: every document that was detected before is detected now)
+        full_doubling = ("((" in blob[:600]) or ("((" in blob[start_hdr_pos: start_hdr_pos + 700])
         if full_doubling:
             after_label = re.sub(r"(.)\1", r"\1", after_label)
 
@@ -532,20 +723,62 @@ def extract_section_24_25(pdf_path: Path) -> dict:
         # '- 9 -'). Stopping at the first character that cannot start a number token
         # is what keeps those out: the moment we hit prose (a footnote, a new section
         # heading), the run ends.
-        NUM_TOKEN_ANCHORED = re.compile(r"\s*(△?\(?-?[\d][\d,]*\)?|-(?!\d))")
-        pos = 0
-        run = []
-        while len(run) < 10:
-            m = NUM_TOKEN_ANCHORED.match(after_label, pos)
-            if not m:
-                break
-            v = parse_number(m.group(1))
-            if v is None:
-                break
-            run.append(v)
-            pos = m.end()
+        # 2026-10-11 (ticket 20261011T0320Z stage 5): the ORIGINAL token below is tried first and its result is kept whenever it is usable.  Repairs are accepted only
+        #   (1) when the plain run is NO known layout (a number split by a space '1 3,601' / '6 ,876'; decimals '(673.16) 90.23 319.73' that the old token cut at the dot), or
+        #   (2) when the plain run IS a known layout but the detail rows above the 합계 line clearly do not foot to it (KR1011-style L=1 read of '74,076.5 376.8 ...', a page footer
+        #       '16 | Page' read as a PAA) AND a repaired reading is a known layout that DOES foot.
+        # A table that foots under the plain reading is never touched, so every cell that read right before reads byte-identically now (regression: t111/t112 on 279 cells).
+        NUM_PLAIN = re.compile(r"\s*(△?\(?-?[\d][\d,]*\)?|-(?!\d))")
+        NUM_ALT = re.compile(r"\s*(△?\(?-?[\d][\d,]*(?:\.\d+)?\)?|-(?!\d))(?![\d,])(?!\s*\|)")     # decimals + page-footer guard ((?![\d,]) keeps '16' from backtracking to '1')
+        KNOWN = (1, 3, 4, 6, 7, 8)
 
+        def read_run(text, rx=NUM_PLAIN):
+            pos, out = 0, []
+            while len(out) < 10:
+                m = rx.match(text, pos)
+                if not m:
+                    break
+                v = parse_number(m.group(1))
+                if v is None:
+                    break
+                out.append(v)
+                pos = m.end()
+            return out
+
+        seg = blob[start_hdr_pos:total_line_idx]
+        if full_doubling:
+            seg = re.sub(r"(.)\1", r"\1", seg)
+
+        def foot_state(r, repaired=False):
+            # True / False / None (not assessable) for a candidate run (printed units)
+            sl = _slots_by_len(r) if len(r) in KNOWN else None
+            if sl is None:
+                return None
+            return footing_of(RE_SPLIT_DIGITS.sub(r"\1\2", seg) if repaired else seg, sl).get("ok")
+
+        run = read_run(after_label)
         L = len(run)
+        repair_note = ""
+        fixed = RE_SPLIT_DIGITS.sub(r"\1\2", after_label)
+        cands = [("decimal/footer-aware token", read_run(after_label, NUM_ALT), False)]
+        if fixed != after_label:
+            cands += [("split-digit repair", read_run(fixed), True), ("split-digit repair + decimal token", read_run(fixed, NUM_ALT), True)]
+        cands = [(n, r, rep) for n, r, rep in cands if r and r != run]
+        if L not in KNOWN:
+            for n, r, rep in cands:
+                if len(r) in KNOWN:
+                    run, L, repair_note = r, len(r), f" [{n}: {after_label[:60].strip()!r} -> run {r}]"
+                    break
+        elif cands and foot_state(run) is False:
+            hit = next(((n, r) for n, r, rep in cands if len(r) in KNOWN and foot_state(r, rep) is True), None)
+            if hit:
+                run, L, repair_note = hit[1], len(hit[1]), f" [{hit[0]}: plain run did not foot, repaired run does: {hit[1]}]"
+            else:
+                # a differing parse exists (decimals / footer / split digits) and the plain reading does not foot: the plain reading is a truncation artifact, not a value to emit
+                result["status"] = "low_confidence"
+                result["evidence"] = (f"found '합계' at page~{start_page + 1}: the plain run {run} does not foot to its detail rows and no repaired reading ({[r for _n, r, _x in cands]}) "
+                                      f"does either -- withheld")
+                return result
         # (has_vfa, has_paa) inferred from how many value-slots the 합계 row actually
         # carried -- this is what the disclosed template supports (GMM always first,
         # then VFA, then PAA; a genuinely-empty column contributes 0 characters to the
@@ -592,8 +825,17 @@ def extract_section_24_25(pdf_path: Path) -> dict:
             else:
                 values[4] = values[5] = values[6] = 0.0
             values[7] = run[-1] if has_paa else 0.0
+        raw_values = dict(values)                       # printed units, for the footing check below
         for k in list(values):
             values[k] = values[k] / divisor
+
+        # defect 6a (ilp_gap_runlog_textlayer_20261010.md): item 8 is the sum of items 1-7, so the identity item 8 = sum(1..7) can never fail.  The independent check is
+        # the table itself: the detail rows above the 합계 line, each placed by its OWN token count, must add up to the 합계 run.  Informational (values never change); a failing
+        # footing is printed by extract_period and returned in result['footing'].
+        try:
+            result["footing"] = footing_of(RE_SPLIT_DIGITS.sub(r"\1\2", seg) if "split-digit" in repair_note else seg, raw_values)
+        except Exception as e:  # noqa: BLE001
+            result["footing"] = {"error": repr(e)[:80]}
 
         result["status"] = "ok"
         result["values"] = values
@@ -608,7 +850,7 @@ def extract_section_24_25(pdf_path: Path) -> dict:
             f"header page {start_page + 1} (0-idx {start_page}), lookahead "
             f"{j + 1} page(s), unit={unit_label}, run_len={L} -> has_vfa={has_vfa} "
             f"has_paa={has_paa}, 합계 run={run}{mismatch_note}"
-            f"{' [full char-doubling document, digits un-collapsed]' if full_doubling else ''}"
+            f"{' [full char-doubling document, digits un-collapsed]' if full_doubling else ''}{repair_note}"
         )
 
         # --- section 2-5 ---
@@ -653,6 +895,27 @@ def extract_section_24_25(pdf_path: Path) -> dict:
 # ---------------------------------------------------------------------------
 
 
+_MASTER_ITEM8 = None
+
+
+def prev_item8(code: str, label: str):
+    """(quarter label, item 8) of the company's nearest EARLIER quarter in the existing master, or None.  Read only; labels 'YYYY.NQ' sort chronologically."""
+    global _MASTER_ITEM8
+    if _MASTER_ITEM8 is None:
+        _MASTER_ITEM8 = {}
+        p = REPO_ROOT / "insurance_liability_portfolio.json"
+        if p.exists():
+            try:
+                with open(p, encoding="utf-8") as f:
+                    for r in json.load(f):
+                        if r.get("항목번호") == 8:
+                            _MASTER_ITEM8.setdefault(r["원보험사코드"], {})[r["공시분기"]] = r["값"]
+            except Exception:  # noqa: BLE001
+                _MASTER_ITEM8 = {}
+    qs = sorted(q for q in _MASTER_ITEM8.get(code, {}) if q < label)
+    return (qs[-1], _MASTER_ITEM8[code][qs[-1]]) if qs else None
+
+
 def extract_period(period: str, registry: dict, verbose: bool = True) -> tuple:
     """Returns (rows, report_lines)."""
     md_dir = MD_INBOX / period
@@ -678,6 +941,20 @@ def extract_period(period: str, registry: dict, verbose: bool = True) -> tuple:
             continue
 
         res = extract_section_24_25(pdf_path)
+        # defect 4 (the unit is read from the header phrase only; KR0070 2025.2Q printed a wrong one -> a 100x error): a scale that jumps by >= 20x against the company's
+        # previous quarter in the master is a unit/column error until proven otherwise -> the cell is withheld (documented exception), never emitted
+        if res.get("values") and res.get("total_disclosed") is not None:
+            prev = prev_item8(code, period_to_label(period))
+            if prev is not None and abs(prev[1]) >= 10.0 and res["total_disclosed"] is not None:
+                ratio = abs(res["total_disclosed"]) / abs(prev[1])
+                if ratio >= 20.0 or ratio <= 0.05:
+                    res["evidence"] = (f"{res.get('evidence')} [UNIT_SUSPECT: item 8 {res['total_disclosed']:,.1f} vs {prev[0]} {prev[1]:,.1f} (x{ratio:.3g}) -- withheld; "
+                                       f"check the unit phrase and the table]")
+                    res["status"] = "unit_suspect"
+                    res["values"] = {}
+        ft = res.get("footing")
+        if res.get("values") and ft and ft.get("ok") is False:
+            res["evidence"] = f"{res.get('evidence')} [FOOTING BAD: {ft['n_rows']} detail rows, column diffs {ft['diffs']} (printed units)]"
         status = res["status"]
         line = (
             f"[{period}] {code} {name}: status={status} unit={res.get('unit')} "

@@ -29,6 +29,9 @@ Rules:
                       for that (company,quarter) -- a silent absence of item9 alongside a
                       present item1-8 is flagged (2-5 section located but N/A-vs-used could
                       not be determined; distinct from "company genuinely not censused").
+  R5_COPY            items 1-7 identical to the company's previous loaded quarter -> RED
+                      (a filer copy / mis-picked table; R1 cannot see it: it is a tautology).
+  R6_JUMP            |item 8| moves > 50 % against the previous loaded quarter -> YELLOW.
 
 Usage:
   C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe \
@@ -65,7 +68,9 @@ DOCUMENTED_EXCEPTIONS = [
 # 생겼지만 이 마스터의 2-4/2-5 추출은 아직 그 회사들을 대상으로 돌지 않았다(재보사 스윕 1~8단계는
 # K-ICS 만). 그대로 두면 46칸이 "추출 누락" RED 로 뜨는데 그건 결함이 아니라 아직 범위에 넣지 않은
 # 것이다. 조용히 빼지 않는다 — 제외한 칸 수를 매 실행 인쇄한다. 재보사 IFRS17 적재 때 이 집합을 비운다.
-R2_CENSUS_NOT_YET_IN_SCOPE = frozenset({f"KR11{n:02d}" for n in range(1, 9)})
+# 2026-10-11 (parser-ifrs17, ticket 20261011T0320Z stage 4): 재보사 8곳의 2-4/4-6-2 가 적재됐다(scripts/load_ilp_reinsurers.py, 63칸) -> 집합을 비웠다.
+# 적재하지 않은 칸(예: KR1102 2026.1Q, 총괄표가 Indirect 행을 빠뜨린 발행사 오류 -- provenance lrc_model_not_loaded 에 사유)은 이제 R2_CENSUS RED 로 뜬다.
+R2_CENSUS_NOT_YET_IN_SCOPE = frozenset()
 
 
 def is_documented(code: str, period_label: str, rule: str) -> str | None:
@@ -243,6 +248,29 @@ def main():
                 f"사용여부) not resolved -- 2-5 section located but N/A-vs-used undetermined, "
                 f"or 2-5 header not found within lookahead window"
             )
+
+    # --- R5 COPY / R6 JUMP ---
+    # (ticket 20261011T0320Z stage 5; ilp_gap_runlog_textlayer_20261010.md defect 6.)  R1 is a tautology (the extractor computes item 8 as the sum of items 1-7), so a copied or
+    # mis-picked table passes it.  R5: items 1-7 identical to the company's previous loaded quarter (a filer copy, 3 found in the 2026-10-10 audit, all patched) -> RED.
+    # R6: |item 8| moves by more than 50 % against the previous loaded quarter (previous |item 8| >= 10억; KR0097 44,246 -> -53 was a mis-picked row) -> YELLOW, because net
+    # remaining-coverage balances around zero (AIG, reinsurers) and growing start-ups jump legitimately.  'previous' = the nearest earlier quarter with items 1-8, at most
+    # two quarters back; quarter labels sort chronologically.
+    qorder = sorted({q for (_c, q) in by_cq})
+    for code in sorted({c for (c, _q) in by_cq}):
+        have = [q for q in qorder if (code, q) in by_cq and all(i in by_cq[(code, q)] for i in range(1, 9))]
+        for prev, q in zip(have, have[1:]):
+            if qorder.index(q) - qorder.index(prev) > 2:
+                continue
+            a, b = by_cq[(code, prev)], by_cq[(code, q)]
+            va, vb = [a[i]["값"] for i in range(1, 8)], [b[i]["값"] for i in range(1, 8)]
+            if va == vb and any(va):
+                reason = is_documented(code, q, "R5_COPY")
+                if reason:
+                    findings["exceptions"].append(f"R5_COPY {code} {q}: SKIP (documented) -- {reason}")
+                else:
+                    findings["RED"].append(f"R5_COPY {code} {q}: items 1-7 identical to {prev} ({va}) -- a copied or mis-picked table")
+            elif abs(a[8]["값"]) >= 10 and abs(b[8]["값"] - a[8]["값"]) > 0.5 * abs(a[8]["값"]):
+                findings["YELLOW"].append(f"R6_JUMP {code} {q}: item 8 {a[8]['값']:,.1f} ({prev}) -> {b[8]['값']:,.1f} (> 50 %): confirm against the PDF / BS")
 
     print(f"=== insurance_liability_portfolio.json gate ===")
     print(f"rows={len(rows)}  (company,quarter) pairs={len(by_cq)}")

@@ -1,6 +1,6 @@
 {
  "name": "ilp_includes_lic",
- "generated_at": "20261010T1442Z",
+ "generated_at": "20261010T1757Z",
  "emitted_by": "scripts/emit_ilp_includes_lic.py",
  "meaning": "insurance_liability_portfolio.json item 8 (보험부채_합계, 경영공시 2-4) of these companies already contains the 발생사고요소(LIC) although the 2-4 footnote says it was prepared for the 잔여보장요소 only. For them item 8 ~ item 15 (LRC+LIC) ~ IFRS17_BS item 20. Master cells are not changed; the designer shows a notice on the left bar.",
  "criterion": "all 6 quarters 2025.1Q~2026.2Q: |item8-item15| <= max(5억, 0.01%) and |item8-item14| > 1% and |item8*100/BS20-1| <= 0.01%; the pre-2025 year-end points (EXTRA_QUARTERS) are added per cell when the same three tests pass",
@@ -9,6 +9,9 @@
    "원수사명": "에이비엘생명보험",
    "quarters": [
     "2023.4Q",
+    "2024.1Q",
+    "2024.2Q",
+    "2024.3Q",
     "2024.4Q",
     "2025.1Q",
     "2025.2Q",
@@ -22,6 +25,9 @@
    "원수사명": "케이디비생명보험",
    "quarters": [
     "2023.4Q",
+    "2024.1Q",
+    "2024.2Q",
+    "2024.3Q",
     "2024.4Q",
     "2025.1Q",
     "2025.2Q",
@@ -57,6 +63,42 @@
    "item8_vs_bs20_pct": 0.00041,
    "item8_vs_item15_pct": 0.00041,
    "lic_share_of_item8_pct": 3.85
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2024.1Q",
+   "item8_eok": 161260.0,
+   "item15_eok": 161260.15,
+   "item14_eok": 155011.92,
+   "item10_eok": 6248.23,
+   "bs20_eok": 161260.15,
+   "item8_vs_bs20_pct": -9e-05,
+   "item8_vs_item15_pct": -9e-05,
+   "lic_share_of_item8_pct": 3.87
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2024.2Q",
+   "item8_eok": 164982.66,
+   "item15_eok": 164982.66,
+   "item14_eok": 158671.73,
+   "item10_eok": 6310.93,
+   "bs20_eok": 164982.66,
+   "item8_vs_bs20_pct": -0.0,
+   "item8_vs_item15_pct": 0.0,
+   "lic_share_of_item8_pct": 3.83
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2024.3Q",
+   "item8_eok": 171058.0,
+   "item15_eok": 171057.57,
+   "item14_eok": 164744.47,
+   "item10_eok": 6313.1,
+   "bs20_eok": 171057.57,
+   "item8_vs_bs20_pct": 0.00025,
+   "item8_vs_item15_pct": 0.00025,
+   "lic_share_of_item8_pct": 3.69
   },
   {
    "company_code": "KR0070",
@@ -153,6 +195,42 @@
    "item8_vs_bs20_pct": -0.00044,
    "item8_vs_item15_pct": -0.00044,
    "lic_share_of_item8_pct": 5.92
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2024.1Q",
+   "item8_eok": 162750.0,
+   "item15_eok": 162749.98,
+   "item14_eok": 153010.28,
+   "item10_eok": 9739.7,
+   "bs20_eok": 162749.98,
+   "item8_vs_bs20_pct": 2e-05,
+   "item8_vs_item15_pct": 1e-05,
+   "lic_share_of_item8_pct": 5.98
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2024.2Q",
+   "item8_eok": 167722.0,
+   "item15_eok": 167721.22,
+   "item14_eok": 157978.29,
+   "item10_eok": 9742.93,
+   "bs20_eok": 167721.22,
+   "item8_vs_bs20_pct": 0.00047,
+   "item8_vs_item15_pct": 0.00047,
+   "lic_share_of_item8_pct": 5.81
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2024.3Q",
+   "item8_eok": 170328.0,
+   "item15_eok": 170327.81,
+   "item14_eok": 160721.59,
+   "item10_eok": 9606.22,
+   "bs20_eok": 170327.81,
+   "item8_vs_bs20_pct": 0.00011,
+   "item8_vs_item15_pct": 0.00011,
+   "lic_share_of_item8_pct": 5.64
   },
   {
    "company_code": "KR0072",
@@ -360,5 +438,66 @@
    "reading": "DART 측정요소별 합계 == 2-4 (item 1+4, 2+5, 3+6) x100 within 억원 rounding (<= 100 백만원 each) => 2-4 holds the whole BEL/RA/CSM"
   }
  ],
- "extra_quarters_not_included": []
+ "extra_quarters_not_included": [
+  {
+   "company_code": "KR0070",
+   "quarter": "2023.1Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2023.2Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0070",
+   "quarter": "2023.3Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2023.1Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2023.2Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0072",
+   "quarter": "2023.3Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2023.1Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2023.2Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2023.3Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2024.1Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2024.2Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  },
+  {
+   "company_code": "KR0083",
+   "quarter": "2024.3Q",
+   "why": "items missing (8/10/14/15) or no BS item 20"
+  }
+ ]
 }

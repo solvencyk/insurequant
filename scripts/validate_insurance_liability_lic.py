@@ -47,16 +47,21 @@ ILP = REPO / "insurance_liability_portfolio.json"
 BS = REPO / "IFRS17_BS.json"
 PROV = REPO / "insurance_liability_portfolio_provenance.json"
 SIDECAR = REPO / "data" / "_derived" / "ilp_includes_lic.json"
+RESTATED = REPO / "data" / "_derived" / "ilp_restated_comparative.json"
 DART = REPO / "data" / "dart"
 
 # 2026-10-10 backfill (ticket 20261010T1600Z): the grid grows with every pre-2025 quarter that is loaded (staged: the year-end
 # points first, the six interim quarters in a later round).  Add a quarter here only together with its rows.
-QUARTERS = ["2023.4Q", "2024.4Q", "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q", "2026.2Q"]
-FY_OF = {"2023.4Q": "FY2023_Q4", "2024.4Q": "FY2024_Q4", "2025.1Q": "FY2025_Q1", "2025.2Q": "FY2025_Q2", "2025.3Q": "FY2025_Q3",
+# 2026-10-11 (ticket 20261011T0320Z): the interim quarters follow, each added together with its rows.
+QUARTERS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q",
+            "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q", "2026.2Q"]
+FY_OF = {"2023.1Q": "FY2023_Q1", "2023.2Q": "FY2023_Q2", "2023.3Q": "FY2023_Q3", "2023.4Q": "FY2023_Q4",
+         "2024.1Q": "FY2024_Q1", "2024.2Q": "FY2024_Q2", "2024.3Q": "FY2024_Q3", "2024.4Q": "FY2024_Q4",
+         "2025.1Q": "FY2025_Q1", "2025.2Q": "FY2025_Q2", "2025.3Q": "FY2025_Q3",
          "2025.4Q": "FY2025_Q4", "2026.1Q": "FY2026_Q1", "2026.2Q": "FY2026_Q2"}
 LIC_ITEMS = (10, 11, 12, 13, 14, 15)
 TOL_R1 = 0.001
-TOL_ROUND = 0.03          # 억원: three values each rounded to 0.01
+TOL_ROUND = 0.0301        # 억원: three values each rounded to 0.01; the engine's own tolerance is 3 백만원 = 0.03억 (a hair of slack: 0.030 must not read as 0.0300000001)
 NET_BAND = (0.90, 1.0)
 
 
@@ -101,6 +106,10 @@ def main() -> int:
     bs = load(BS)
     prov = load(PROV)
     sidecar = load(SIDECAR) if SIDECAR.exists() else {"cells": []}
+    # cells whose items 1-15 are on the LATEST filing's (restated) basis: the anchor of R-LIC1 is the sidecar's restated balance, not IFRS17_BS item 20
+    # (original basis).  For the three 2023.4Q cells that value is the FY2024 balance sheet's prior-year column; for the interim cells (2024.1Q-3Q) it is derived
+    # (the 2025 interim filings print no prior-year-quarter balance sheet) and the independent check is R-LIC2 against the restated DART net LRC.
+    restated = {(c["company_code"], c["quarter"]): c for c in (load(RESTATED).get("cells", []) if RESTATED.exists() else [])}
 
     val = collections.defaultdict(dict)          # (code, q) -> {item: value}
     for r in ilp:
@@ -109,6 +118,9 @@ def main() -> int:
     pcell = {(c["company_code"], c["quarter"]): c for c in prov["cells"]}
     absent = {(c["company_code"], c["quarter"]): c["reason"] for c in prov.get("not_loaded", [])}
     incl = {(c["company_code"], c["quarter"]): c for c in sidecar.get("cells", [])}
+    sidecar_cos = set(sidecar.get("companies", {}))
+    indirect = {(c["company_code"], c["quarter"]): c for c in prov.get("indirect_lic_cells", [])}
+    r9_cells = r9_adj = 0
     inv = dart_inventory()
 
     red, yellow, info = [], [], []
@@ -125,12 +137,32 @@ def main() -> int:
         i15 = v.get(15)
         b = bs20.get((code, q))
         basis = pc["basis"]
+        rs = restated.get((code, q))
         if i15 is None:
             red.append(f"R-LIC1 {code} {q}: item 15 missing")
         else:
-            if b is not None:
+            if rs is not None:
+                rb = rs["restated_bs_insurance_contract_liability_eok"]
+                ratio = i15 / rb if rb else float("inf")
+                anchor = "restated_sidecar" + ("(derived)" if "derived" in str(rs.get("restated_bs_source", "")) else "")
+                b = rb * 100.0
+            elif pc["checks"].get("bs20_master_disagrees"):
+                # IFRS17_BS item 20 disagrees with the filing's OWN separate balance sheet (which the note tables close with to < 1 ppm): the filing is the anchor
+                ratio = pc["checks"].get("ratio_filing_bs")
+                anchor = "filing_BS"
+                b = (pc["checks"].get("filing_bs_eok") or 0.0) * 100.0 or None
+                yellow.append(f"R-LIC1 {code} {q}: IFRS17_BS item 20 = {bs20.get((code, q), 0) / 100.0:,.2f}억 disagrees with the filing's own 별도 재무상태표 "
+                              f"{pc['checks'].get('filing_bs_eok'):,.2f}억 (note tables close with the filing); anchor = filing -- BS-lane item")
+            elif b is not None:
                 ratio = i15 * 100.0 / b if b else float("inf")
                 anchor = "BS20"
+                rf_ = pc["checks"].get("ratio_filing_bs")
+                if basis == "liability" and abs(ratio - 1) > TOL_R1 and rf_ is not None and abs(rf_ - 1) <= TOL_R1:
+                    # the BS master moved after the cell was loaded (another lane writes IFRS17_BS.json) and now disagrees with the filing's own balance sheet that the
+                    # note tables closed with: report it as a BS-lane item, anchor on the filing
+                    yellow.append(f"R-LIC1 {code} {q}: IFRS17_BS item 20 = {b / 100.0:,.2f}억 disagrees with the filing's own 재무상태표 "
+                                  f"{(pc['checks'].get('filing_bs_eok') or 0):,.2f}억 that item 15 = {i15:,.2f}억 closes with; anchor = filing -- BS-lane item")
+                    ratio, anchor = rf_, "filing_BS"
             else:
                 rf = pc["checks"].get("ratio_filing_bs")
                 ratio = rf
@@ -180,6 +212,10 @@ def main() -> int:
                 tol = max(5.0, 1e-4 * abs(ref))
             else:
                 ref, refname = pc.get("net_lrc_eok"), "DART net LRC"
+                chk = (pc.get("checks_restated") or {}).get("chk_item8_minus_net_lrc")
+                if rs is not None and chk is not None:
+                    # 2023.4Q restated cells: the provenance keeps the ORIGINAL-basis net LRC; the restated one was recorded by the unify step
+                    ref, refname = round(i8 - chk, 2), "DART net LRC (restated prior-year column)"
                 alt = pc.get("net_lrc_alt_eok")
                 if ref is not None and alt is not None and abs(i8 - alt) < abs(i8 - ref):
                     # the table has no NET row and an ASSET row of unknown sign convention: the closer candidate
@@ -203,9 +239,37 @@ def main() -> int:
             yellow.append(f"R-LIC8 {code} {q}: source_file not on disk: {pc['source_file']}")
         if pc["checks"].get("tag_mismatch"):
             red.append(f"R-LIC7 {code} {q}: {pc['checks']['tag_mismatch']} XBRL role mismatch(es) recorded")
+        # ---------------- R-LIC9: items 16/17 (stage 2, indirect BEL/RA, owner 2026-10-10 「계산값 사용」) ----------------
+        i16, i17, i13 = v.get(16), v.get(17), v.get(13)
+        if i16 is not None or i17 is not None:
+            ic = indirect.get((code, q))
+            if i16 is None or i17 is None:
+                red.append(f"R-LIC9 {code} {q}: only one of items 16/17 present")
+            elif ic is None:
+                red.append(f"R-LIC9 {code} {q}: items 16/17 without an indirect_lic_cells provenance record")
+            else:
+                r9_cells += 1
+                r9_adj += 1 if ic.get("asset_offset_adjusted") else 0
+                if code in sidecar_cos:
+                    red.append(f"R-LIC9 {code} {q}: items 16/17 for a company whose 2-4 total contains the LIC (never derived)")
+                if ic.get("basis") != "derived":
+                    red.append(f"R-LIC9 {code} {q}: provenance basis {ic.get('basis')!r} is not 'derived'")
+                if i13 is None:
+                    red.append(f"R-LIC9 {code} {q}: items 16/17 present but no direct single-column LIC (item 13) to reproduce")
+                else:
+                    tol9 = max(5.0, 5e-4 * abs(i13)) + 0.03      # owner criterion max(500 백만원, 0.05 %) + the rounding of two 0.01억 values
+                    if abs(i16 + i17 - i13) > tol9:
+                        red.append(f"R-LIC9 {code} {q}: item 16 + 17 = {i16 + i17:,.2f} vs item 13 = {i13:,.2f} (tol {tol9:.2f}억)")
+                for n, mv in ((16, i16), (17, i17)):
+                    pv = (ic.get("items_eok") or {}).get(str(n))
+                    if pv is None or abs(pv - mv) > 1e-9:
+                        red.append(f"R-LIC9 {code} {q} item {n}: master {mv} vs provenance {pv}")
     for k in pcell:
         if k not in set(cells):
             red.append(f"R-LIC6 {k[0]} {k[1]}: provenance cell without master rows")
+    for k in indirect:
+        if (v_ := val.get(k, {})).get(16) is None or v_.get(17) is None:
+            red.append(f"R-LIC9 {k[0]} {k[1]}: indirect_lic_cells record without master items 16/17")
 
     # ---------------- CENSUS ----------------
     codes = sorted({r["원보험사코드"] for r in bs})          # the 39-company universe of IFRS17_BS.json
@@ -225,7 +289,10 @@ def main() -> int:
             gaps.append(k)
     for k in gaps:
         red.append(f"CENSUS {k[0]} {k[1]}: DART filing exists but the cell is neither loaded nor documented as not loaded")
-    extra = sorted(loaded - set(expected))
+    # cells of the two non-listed filers whose 경영공시 PDF carries the incurred-claims component (stage 3: 라이나 notes, 처브 balance sheet) have no DART filing by
+    # design: their provenance says source_id = "PDF"
+    pdf_cells = {k for k, c in pcell.items() if c.get("source_id") == "PDF"}
+    extra = sorted(loaded - set(expected) - pdf_cells)
     for k in extra:
         red.append(f"CENSUS {k[0]} {k[1]}: rows loaded for a cell without a DART filing")
     grid_cells = len(codes) * len(QUARTERS)
@@ -240,12 +307,13 @@ def main() -> int:
     out.append(f"census: grid {len(codes)} companies x {len(QUARTERS)} quarters = {grid_cells}; DART filing {len(expected)}; "
                f"loaded {len(loaded & set(expected))}; documented not-loaded {len(documented)}; "
                f"source-absent (normal blank, not a gap) {len(source_absent)} = {len(absent_marked)} with a no_filing marker + "
-               f"{len(source_absent) - len(absent_marked)} without any DART directory; undocumented gaps {len(gaps)}")
+               f"{len(source_absent) - len(absent_marked)} without any DART directory; undocumented gaps {len(gaps)}; PDF-sourced cells (no DART filing by design) {len(pdf_cells)}")
     for k, why in documented:
         out.append(f"  documented not-loaded {k[0]} {k[1]}: {why}")
     out.append(f"R-LIC1 results: {dict(r1)}")
     out.append(f"R-LIC2 results: {dict(r2)}  (sidecar cells: {len(incl)})")
     out.append(f"R-LIC3 checked cells: {len(rows_r3)}")
+    out.append(f"R-LIC9 (items 16/17, indirect BEL/RA) checked cells: {r9_cells}  (of which 보험계약자산 상계 보정 {r9_adj})")
     out.append(f"\n--- RED ({len(red)}) ---")
     out += ["  " + x for x in red]
     out.append(f"\n--- YELLOW ({len(yellow)}) ---")
