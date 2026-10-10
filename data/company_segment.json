@@ -1,0 +1,15 @@
+{
+  "_doc": "Display segment override (designer, 2026-10-10). Master cells (생손보여부) are NOT edited; a company not listed here follows its master 생손보여부 (생명보험 -> Life, otherwise Non-Life). Read by index.html and scripts/viz_build_compare_panel.py. Codes are internal: never render them.",
+  "segments": {"Life": "생명보험", "Non-Life": "손해보험", "Re": "재보험·보증"},
+  "by_code": {
+    "KR1000": {"seg": "Re", "tag": "재보험"},
+    "KR0150": {"seg": "Re", "tag": "보증"},
+    "KR1101": {"seg": "Re", "tag": "재보험"},
+    "KR1102": {"seg": "Re", "tag": "재보험"},
+    "KR1103": {"seg": "Re", "tag": "재보험"},
+    "KR1104": {"seg": "Re", "tag": "재보험"},
+    "KR1105": {"seg": "Re", "tag": "재보험"},
+    "KR1106": {"seg": "Re", "tag": "재보험"},
+    "KR1107": {"seg": "Re", "tag": "재보험"}
+  }
+}
