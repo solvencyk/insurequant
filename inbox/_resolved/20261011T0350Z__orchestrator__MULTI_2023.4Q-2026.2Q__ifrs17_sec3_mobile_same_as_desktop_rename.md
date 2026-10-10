@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T0350Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.4Q-2026.2Q
@@ -32,4 +32,4 @@ owner 가 폰에서 **데스크톱 모드로 IFRS17.html 을 열어 보고**(스
 - 되돌린 모바일 전용 코드 목록, 모바일 콤보가 데스크톱과 같게 보이는 방식(범례·높이·라벨·팝오버), 데스크톱 불변 증명, 바뀐 문구 목록(파일별), 375px·데스크톱(1280px) 스크린샷 경로(분기·연도, 라이트·다크, 라이나·DB손보·KDB생명 등), 테스트 결과, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+디자이너 완료(2026-10-11, designer Sonnet, 약 49분, 토큰 287k): 모바일 단순형 철회, 모바일도 데스크톱 묶음 누적 콤보(높이 420px·범례 9px 가로 나열), 긴 설명 모바일·데스크톱 모두 한 줄 + ? 팝오버, 「보험계약부채 시계열」 개명, 섹션 4·7 긴 공시 원문 설명도 접음. 데스크톱 차트 78조합 해시 불변. 후속: ILP 마스터 확정 후 패널 재빌드(--check 현재 FAIL: ILP 진행 중).

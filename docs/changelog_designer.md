@@ -7,6 +7,17 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- IFRS17 섹션 3: 모바일도 데스크톱 콤보 그대로 · 긴 설명 「?」 · 이름 「보험계약부채 시계열」
+
+티켓 `inbox/designer/20261011T0350Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_sec3_mobile_same_as_desktop_rename.md`. IFRS17.html 만(마스터·패널 JSON 무수정, 커밋·push 안 함).
+
+- **되돌린 것(직전 모바일 단순형)**: `hcSimpleChart()` 함수 통째, `simple` 분기(차트 생성·aria-label·안내문 `!simple` 조건 6곳·구성 없는 연말 모바일 문구), 표 캡션의 `fl.simple` 분기, 모바일 높이 300px CSS. `KEY_COLORS`→`IQTheme.keyColors`(theme.js) 변경은 유지(통째 checkout 안 함, 손으로 제거).
+- **모바일(≤640px, `matchMedia`)도 같은 묶음 누적 콤보**: 같은 `new Chart` 한 벌에서 크기만 다르게(`mo()`) — 컨테이너를 패널 가장자리까지(`margin:-14px`, 좌우 테두리 제거)·높이 420px(기존 360), 범례 위 가로·9px·박스 8px(8항목 2~3줄), x 라벨 회전 0·10px·분기 모드 `25.2Q`(연도 모드 `2023`·`2026.2Q`)·x 축 제목 숨김, y·y1 축 제목 10px(y1 은 「신계약 CSM (조원)」), 제목 13px 두 줄(「보험계약부채 시계열 · 회사」/기준). `mob` 은 `innerWidth<640` → `matchMedia(≤640)` 로 통일(CSS·재렌더 리스너와 같은 기준).
+- **긴 설명은 두 환경 모두 한 줄 + 「?」**(`hcHelp()`, common.css `.iq-help`, JS 추가 파일 없음): 차트 위 줄은 「연도 기준(각 연말 + 최신 분기) · 음수 △」, 차트 아래 줄(`#histComboNote`)은 이 회사에 해당하는 경고만 짧게(모바일 약 19자·데스크톱 약 70자까지, 넘으면 「외 N건」, 시점 3개 이상은 「N개 시점」) 없으면 「막대·축 읽는 법」, 전문(옛 안내문 전부 + 옛 위 줄 문구)은 그 「?」 팝오버 문단으로 이동. 표 위 캡션은 「값(억원) · 음수 △ ?」(전문·상계 차이 설명은 팝오버), 재작성 3사는 「† 소급재작성 비교 기준 ?」 한 줄 유지(「2023」 리터럴 대신 열 라벨에서 도출).
+- **IFRS17.html 다른 캡션**(375px·1280px, 39사×연도·분기 78조합 실측): 4줄 이상은 섹션 7 가정민감도 공시 각주(최대 8줄)뿐이었고, `foldCap()` 으로 110자 초과 DART 원문 설명(섹션 4 `#amortCap`·섹션 7 각주/헤더)을 「공시 원문 설명|각주 ?」 + 팝오버로 접음. 접은 뒤 모바일 최대 3줄·데스크톱 최대 2줄. 이미 「?」 가 있던 섹션 1·5·7 헤더·8·9 는 그대로.
+- **이름 변경(보이는 문구)**: 섹션 제목 `3) 보험계약부채 시계열 (…)`, 섹션 내비 항목(`.section-nav`, 375px 에서도 같은 라벨), 차트 제목(데스크톱·모바일), 캔버스 정적 `aria-label`·동적 `aria-label`(콤보·옛 폴백), 옛 폴백 선 차트 제목(「… · CSM 기준」)·`aria-label`. 코드 식별자·앵커(`#sec-hist`·`canvasHist*`·`histCombo`)는 불변. `공시보고서.html`·`index.html`·`compare.html`·`K-ICS.html`·`theme.js`·`report-widget.js` 에는 해당 문구 없음. 「신계약 CSM 시계열」(범례·안내)은 다른 개념이라 유지(`tests/regression_dashboards.py` 가 검사). 「CSM 증감」 잔존 0.
+- **검증**: 데스크톱 차트(라벨·데이터·제목·축·범례·값 표) 시그니처 해시가 수정 전과 동일(`83c990fa`, 39사×2모드 78조합, 이름은 정규화), 1280px 78조합·375px 78조합 콘솔 오류 0·x 회전 0. 375px·1280px 라이트·다크, 연도·분기, 라이나·DB손보·KDB생명 스크린샷 확인. `tests/test_deploy_assets.py`+`tests/test_push_gate_wiring.py` 77 passed 1 skipped. `viz_build_csm_combo_panel.py --check` 는 FAIL(패널≠신규 빌드): 다른 세션이 `insurance_liability_portfolio.json`·`data/_derived/ilp_*` 사이드카를 수정 중인 입력 변화이고 이 변경과 무관.
+
 ## 2026-10-11 -- 사별 비교: 모바일 손해율 curve 재정비 · 손익 연 누계(YTD) 전환 · 테스트 선언 보정
 
 티켓 `inbox/designer/20261011T0300Z__orchestrator__MULTI_2025.4Q-2026.2Q__compare_mobile_curve_restyle_and_ytd_pl.md`.
@@ -17,6 +28,8 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 - **테스트**: `tests/test_push_gate_wiring.py` — `LIVE_ARTIFACT_READERS` 에 `data/company_segment.json`(읽는 쪽 `viz_build_compare_panel`), `NOT_A_MASTER`(분류표)·`MASTER_SHEET_PENDING`(`insurance_liability_portfolio.json`, 시트 없음 — 시트가 생기면 선언 삭제를 강제하는 검사 포함).
 
 ## 2026-10-11 -- IFRS17 섹션 3 모바일 단순형 (CSM 막대 + 신계약 CSM 선)
+
+> **철회됨**: 같은 날 owner 지시로 되돌렸다(위 「모바일도 데스크톱 콤보 그대로」 항목). 아래는 당시 기록.
 
 티켓 `inbox/designer/20261011T0200Z__orchestrator__MULTI_2025.2Q-2026.2Q__combo_mobile_simple_csm_line.md`. IFRS17.html 만.
 
