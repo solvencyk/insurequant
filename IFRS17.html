@@ -239,7 +239,7 @@
         <div class="kpi7-card"><div class="kpi7-val" id="kpi7NbMult">—</div><div class="kpi7-lab">NB CSM 배수</div></div>
       </div>
     </div>
-        <div class="panel" id="sec-bs" data-pane="bs">
+        <div class="panel" id="sec-bs" data-pane="bs" data-share-section="재무상태표">
       <!-- 2026-08-14 owner 발주(inbox/designer/20260814T1250Z, bs_taccount_top_panel): 최상단 이동
            + T자(왼쪽 자산·우상단 부채·우하단 자본) + 섹션당 2단계 드릴다운(총계→세부). 데이터는
            IFRS17_BS.json에 parser가 추가 예정인 섹션/레벨 2열 계약으로 구동 — 항목번호 하드코딩 없이
@@ -288,14 +288,14 @@
         </div>
       </div>
     </div>
-        <div class="panel" id="sec-wf" data-pane="wf">
+        <div class="panel" id="sec-wf" data-pane="wf" data-share-section="CSM 이동">
       <h2>2) CSM 이동 (Waterfall)</h2>
       <div class="small-muted" style="margin-bottom:10px" id="wfMeta"></div>
       <div id="wfStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><div id="chartWf" style="width:100%;height:100%" role="img" aria-label="CSM 이동(Waterfall) 차트"></div></div>
       <div class="table-wrap" id="wfTable" style="margin-top:12px"></div>
     </div>
-    <div class="panel" id="sec-hist" data-pane="hist">
+    <div class="panel" id="sec-hist" data-pane="hist" data-share-section="보험계약부채 시계열">
       <h2>3) 보험계약부채 시계열 (<span id="histRange">…</span>)</h2>
       <div class="small-muted" id="histCap">분기별 CSM 추이 · 단위 조원 · 신계약 CSM은 당기 증분(YTD를 분기로 환산)</div>
       <div id="histStub" class="stub-msg" style="display:none"></div>
@@ -307,31 +307,31 @@
       </div>
       <div class="chart-container" id="histOldBox"><canvas id="canvasHist" role="img" aria-label="보험계약부채 시계열 차트(CSM 기준)"></canvas></div>
     </div>
-    <div class="panel" id="sec-amort" data-pane="amort">
+    <div class="panel" id="sec-amort" data-pane="amort" data-share-section="CSM 상각 스케줄">
       <h2>4) CSM 상각 스케줄 (연도별)</h2>
       <div class="small-muted" id="amortCap"></div>
       <div id="amortStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><canvas id="canvasAmort" role="img" aria-label="CSM 상각 스케줄(연도별) 차트"></canvas></div>
     </div>
-    <div class="panel" id="sec-pl" data-pane="pl">
+    <div class="panel" id="sec-pl" data-pane="pl" data-share-section="손익 워터폴">
       <h2>5) 당기순이익 → 총포괄손익 워터폴 (장기원수 세부 분해)</h2>
       <div class="small-muted" id="plCap"></div>
       <div id="plStub" class="stub-msg" style="display:none"></div>
       <div class="chart-container chart-sm"><div id="chartPl" style="width:100%;height:100%" role="img" aria-label="당기순이익에서 총포괄손익까지의 워터폴(장기원수 세부 분해·기타포괄손익) 차트"></div></div>
       <div class="table-wrap" id="plTable" style="margin-top:12px"></div>
     </div>
-    <div class="panel" id="sec-nb" data-pane="nb">
+    <div class="panel" id="sec-nb" data-pane="nb" data-share-section="NB 배수">
       <h2>6) NB · CSM 배수 시계열 (신계약 CSM ÷ 월납월초)</h2>
       <div id="nbStub" class="stub-msg"></div>
       <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb" role="img" aria-label="NB·CSM 배수 시계열 차트"></canvas></div></div>
     </div>
-    <div class="panel" id="sec-sens" data-pane="sens">
+    <div class="panel" id="sec-sens" data-pane="sens" data-share-section="민감도">
       <h2>7) 민감도(ΔCSM)</h2>
       <div class="small-muted" id="senCap"></div>
       <div id="senStub" class="stub-msg" style="display:none"></div>
       <div class="table-wrap" id="senTable"></div>
     </div>
-    <div class="panel" id="sec-lr" data-pane="lr">
+    <div class="panel" id="sec-lr" data-pane="lr" data-share-section="손해율 가정">
       <h2>8) 손해율 가정 (위험보험료 대비 예상보험금)</h2>
       <div id="lrStub" class="stub-msg" style="display:none"></div>
       <div id="lrWrap">
@@ -347,7 +347,7 @@
         <div class="table-wrap lrps-table" id="lrTable"></div>
       </div>
     </div>
-    <div class="panel" id="sec-ps" data-pane="ps">
+    <div class="panel" id="sec-ps" data-pane="ps" data-share-section="판매채널별 유지율">
       <h2>9) 판매채널별 유지율</h2>
       <div class="small-muted lrps-desc" id="psDesc">해지율 가정의 근거가 되는 실적입니다.</div>
       <div id="psStub" class="stub-msg" style="display:none"></div>

@@ -7,6 +7,19 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- 공유 스크린샷: 헤더 메뉴 페이지 전체 복구 · 섹션별 공유 버튼
+
+티켓 `inbox/designer/20261011T0400Z__orchestrator__MULTI_2026.2Q__share_screenshot_fullpage_and_per_section.md`. 마스터·패널 JSON 무수정, 커밋·push 안 함.
+
+- **회귀 원인**: `1082fd1`(2026-10-08) 사별 비교 전용 공유는 `.container` 전체를 찍었다. 같은 날 `8c997cb` 가 공유 메뉴를 theme.js 공통으로 올리며 「본문 `scrollHeight <= 6000` 이면 전체, 아니면 현재 화면(`opt.x/y/width/height = scroll·inner`)」 분기를 넣었다(긴 페이지 캔버스 한도 걱정). 삼성생명 기준 실측으로 IFRS17 은 데스크톱 6,355px·모바일 6,084px 로 임계값을 넘어 늘 현재 화면만 찍혔고(K-ICS 3.4~3.5천 px·compare 2~3.5천 px 는 아직 아래였지만 표를 펼치거나 지표 카드를 늘리면 같은 길로 빠진다), 임계값 위 페이지는 구조적으로 전체가 불가능했다. 이미지를 실제로 만들어 보는 검사가 없어 이틀 뒤 owner 가 눈으로 잡았다.
+- **전체 캡처(theme.js `shRender`/`shPlan`)**: 본문(`.section-body`→`.container`)을 한 장으로. 임계값 분기 폐기. 만들기 전에 높이를 재서 scale 을 `min(2, dpr, 한 변 16,000/높이, √(면적한도/(폭×높이)))` 로 낮춘다(면적 한도: 터치 1,600만 px = iOS Safari, 그 외 6,400만 px). scale 하한 0.75 밑이면(약 2.1만 css px 초과) 위쪽만 담고 이미지에 「페이지가 매우 길어 위쪽 일부만」 문구·토스트. 이어 붙이기(여러 장 공유)는 제안만. 합성 14,000px(→ scale 1.13, 높이 16,000)·40,000px(→ scale 0.75, 잘림 표시, 높이 15,999) 실측.
+- 제목(페이지 · 섹션 · 회사)을 위에, 출처(`InsureQuant · www.insurequant.com/경로 · 날짜` / `자료: 푸터 문구 · 회사 · 최신 공시 분기` / 가공 값 고지)를 아래에 캔버스로 직접 그린다(좁은 화면은 짧은 형식, 폭에 맞춰 줄바꿈). 섹션 네비는 지우지 않고 숨긴다(지우면 격자 첫 칸을 본문이 차지). 고정 헤더·플로팅 버튼·공유 메뉴·오류 제보 버튼은 제외, `.sr-only` 숨김 select 가 흰 덩어리로 찍히던 것 제거, 다크/라이트 현재 테마 유지, 기존 애니메이션 동결·글꼴 대기 유지.
+- **섹션별 공유**: 마크업 `data-share-section="이름"` 만 달면 theme.js `mountSectionShare` 가 제목 뒤에 우상단 버튼(아이콘 18px·타깃 44px·`aria-label` 「이 섹션 스크린샷 공유」·제목 오른쪽 44px 비움)을 붙인다. 렌더 후 새로 생기는 섹션(IFRS17 템플릿, compare 카드 재그리기)은 기존 MutationObserver 가 60ms 뒤 마운트. 좁은 화면에서 가로 스크롤되는 표는 섹션 이미지에서만 그 폭만큼 이미지를 넓혀 열이 잘리지 않게 했다(페이지 전체 이미지는 폰 폭 유지). 보험사 미선택(K-ICS)이면 「보험사를 먼저 선택해 주세요」.
+- 버튼을 단 섹션: K-ICS 4(지급여력비율 추이·자본성증권 소진율·금리 민감도·자본비율 전망) · IFRS17 9(1~9, 통합 현황·KPI 띠는 섹션이 아니라 제외) · 사별 비교 지표 카드 전부(`renderCards` 의 `article.card`). compare 의 `IQShareConfig` 는 `.section-body` + 대상 회사(`context`)로 정리(has-section-nav 클래스 제거 꼼수 삭제).
+- 검증: `scripts/check_share_screenshot.py`(Playwright, 1280·375 × 라이트·다크, 페이지 3종 전체+섹션 3~4곳+실제 메뉴·버튼 클릭 다운로드+캔버스 한도) 통과, 이미지는 `artifacts/designer/share_shots_20261011/`. 회귀 `tests/test_share_screenshot.py`. `test_deploy_assets`·`test_push_gate_wiring`·`validate_deployed_js` 통과.
+
+---
+
 ## 2026-10-11 -- IFRS17 섹션 3: 모바일도 데스크톱 콤보 그대로 · 긴 설명 「?」 · 이름 「보험계약부채 시계열」
 
 티켓 `inbox/designer/20261011T0350Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_sec3_mobile_same_as_desktop_rename.md`. IFRS17.html 만(마스터·패널 JSON 무수정, 커밋·push 안 함).

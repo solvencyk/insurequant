@@ -138,6 +138,7 @@ Full baseline table + audit methodology: **[`docs/a11y_baseline.md`](../a11y_bas
 - **Legend density:** ≤2 series → legend top, inline. ≥3 series → top legend desktop; on mobile hide the legend and label via tooltip/axis-title. Datapoint value labels: desktop on, mobile off (`label:{show:!isMobile}`).
 - **Mobile pass scope (owner round3 D9):** mobile (≤640px) shows **current period only** — time-series → latest 1 point, waterfall → latest 1 bucket. Desktop windows: quarter = last 5 quarters, year = latest + prior 3 year-ends (`selectPeriods`; BS 는 `eqYearPeriods` 하드캡).
 - **Period axis must be data-driven, label-variant-tolerant.** K-ICS 지급여력비율은 긴 라벨(`'다. 지급여력비율 : 가 ÷ 나 × 100'`)과 짧은 라벨(`'지급여력비율'`)을 둘 다 받는다. Never exact-match a single label string for a series that spans quarters.
+- **공유 스크린샷(theme.js, 2026-10-11)**: 헤더 메뉴 = 본문 전체(길이로 현재 화면과 갈라 쓰지 말 것 — `tests/test_share_screenshot.py`), 캔버스 한도는 `shPlan` 이 scale 을 낮춘다. 섹션 공유 버튼은 마크업 `data-share-section="이름"` 만 달면 붙는다(새 섹션·카드를 만들 때 달 것). 검증 `scripts/check_share_screenshot.py`.
 - **`0` 과 "정보없음"(미공시)은 다르다** — null 은 `—`/정보없음, 공시된 0 만 0 으로 그린다.
 
 ### 5.5 Preserved owner decisions (LOCKED — never refactor away)

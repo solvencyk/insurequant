@@ -187,7 +187,7 @@
       </ul>
     </nav>
     <div class="section-body">
-    <div class="panel" id="sec-trend">
+    <div class="panel" id="sec-trend" data-share-section="지급여력비율 추이">
       <h2>원보험사별 K-ICS 지급여력비율 변동 추이</h2>
       <div class="controls">
         <div class="control-group">
@@ -226,7 +226,7 @@
       <div class="table-container" id="table-container"></div>
     </div>
 
-    <div class="panel" id="donut-section-panel">
+    <div class="panel" id="donut-section-panel" data-share-section="자본성증권 소진율">
       <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
       <ul class="subtitle">
         <li>기본자본 자본증권(보통주 제외): 공시 인정액 / (SCR &times; 15%)</li>
@@ -246,7 +246,7 @@
       <div class="donut-note" id="donut-note"></div>
     </div>
 
-    <div class="panel" id="sec-sens">
+    <div class="panel" id="sec-sens" data-share-section="금리 민감도">
       <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 · 자산/부채 듀레이션 갭)</span></h2>
       <div class="controls" style="justify-content:flex-start">
         <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
@@ -260,7 +260,7 @@
       <div class="donut-note" id="sens-note"></div>
     </div>
 
-    <div class="panel" id="sec-forward">
+    <div class="panel" id="sec-forward" data-share-section="자본비율 전망">
       <h2>자본비율 Forward Outlook <span style="color:var(--muted);font-size:13px;font-weight:400">(보수 시나리오, 2026~2030)</span></h2>
       <ul class="subtitle">
         <li>보수적인 가정 두 가지를 놓고 계산한 전망치입니다<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="전망에 쓴 가정 두 가지" aria-describedby="help-forward-assump">?</button><span class="iq-help-pop" role="tooltip" id="help-forward-assump"><b>지급여력기준금액</b> — 2032년까지 경과조치 효과가 줄어든다고 보고, 적용후 값에서 적용전 값으로 선형 보간했습니다.<br><b>지급여력금액</b> — 이미 발행한 자본성증권의 콜옵션을 전부 행사하고 신규 발행은 없다고 보아, 콜이 도래하는 5년 시점에 가용자본에서 뺐습니다.</span></span></li>

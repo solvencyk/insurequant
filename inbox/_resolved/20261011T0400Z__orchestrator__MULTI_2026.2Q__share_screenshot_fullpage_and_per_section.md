@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T0400Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -33,4 +33,4 @@ owner 지시(2026-10-11): 헤더 공유 메뉴의 **스크린샷 기능이 예�
 - 회귀 원인(언제부터 왜), 전체 캡처 구현 방식과 한계 처리, 섹션별 버튼을 단 섹션 목록(페이지별), 출처 문구, 검증 스크린샷 경로, 테스트 결과, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+디자이너 완료(2026-10-11, designer Sonnet, 약 44분, 토큰 272k): 회귀 원인 = 2026-10-08 공유 메뉴 공통화 커밋(8c997cb)의 「본문 6000px 초과 시 현재 화면만」 임계값 → 제거, 전체 캡처(캔버스 한도 16,000px·터치 1,600만px 안에서 배율 자동, 초과 시 잘림 표시), 섹션별 공유 버튼(K-ICS 4·IFRS17 9·사별 비교 카드 전부, 출처 문구 이미지에 포함), 검증 스크립트 scripts/check_share_screenshot.py·tests/test_share_screenshot.py.

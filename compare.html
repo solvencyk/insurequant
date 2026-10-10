@@ -873,14 +873,12 @@
     if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
   }
 
-  /* ---------- 공유 메뉴·스크린샷은 사이트 공통(theme.js + common.css)이다. 사별 비교는 이미지에서 뺄 것과 레이아웃 보정만 알려 준다. ---------- */
+  /* ---------- 공유 메뉴·스크린샷은 사이트 공통(theme.js + common.css)이다. 사별 비교는 이미지에서 뺄 것과 "대상 회사"만 알려 준다.
+             전체 스크린샷의 본문은 .section-body(제목·옵션·모든 지표 카드), 카드마다 우상단 공유 버튼은 card 의 data-share-section 이 만든다. ---------- */
   window.IQShareConfig = {
-    container: '.container',
-    ignore: ['.add-wrap', '.count-note', '.opts', '.msg', '.section-nav', '#co-pop'],
-    onclone: function(doc){
-      var bar = doc.querySelector('.cmp-bar'); if(bar) bar.style.position = 'static';
-      var pg = doc.querySelector('.container'); if(pg) pg.classList.remove('has-section-nav');   /* 레일을 뺐으니 본문이 좁은 열로 밀리지 않게 */
-    }
+    container: '.section-body',
+    ignore: ['.count-note', '.opts', '.msg', '#co-pop'],
+    context: function(){ return S.sel.map(function(s){ return CO[s.code] ? CO[s.code].short : ''; }).filter(Boolean).join(' · '); }
   };
 
   /* ---------- 지표 가이드(좌측 레일) ----------
@@ -1188,7 +1186,7 @@
       var curve = (m0.id === 'loss_pv' && curveOn()) ? DATA.loss_curve : null;
       var chartMode = (!!curve && chartsOn()) || (chartsOn() && grouped && m0.chart_group === 'persist');
       var title = curve ? curve.label : (grouped ? m0.chart_label : m0.label);
-      var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title);
+      var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title); card.setAttribute('data-share-section', title);
       var asofs = ms.map(mLast), amax = Math.max.apply(null, asofs), bt = (!grouped && m0.basis) ? (S.basis === 'pre' ? ' · 적용 전' : ' · 적용 후') : '';
       card.innerHTML = '<span class="anc" id="c-' + esc(id) + '"></span><h3>' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
         '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + m0.id + '">?</button>' +
