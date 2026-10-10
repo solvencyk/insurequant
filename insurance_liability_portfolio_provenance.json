@@ -14152,7 +14152,7 @@
    "item_block": "lic_dart_note",
    "source_id": "DART",
    "as_of_date": "2023-12-31",
-   "source_file": "data/dart/FY2023_Q4/raw/KR0074_라이나생명보험_20240409003674/20240409003674_00760.xml",
+   "source_file": "data/dart/FY2024_Q4/raw/KR0074_라이나생명보험_20250409002702/20250409002702_00760.xml",
    "scope": "separate",
    "period": "current",
    "class": "T",
@@ -14176,9 +14176,7 @@
    ],
    "dropped_tables": [],
    "dedupe": [],
-   "flags": [
-    "repair:continuity"
-   ],
+   "flags": [],
    "checks": {
     "r_lic1": "pass",
     "bs20_eok": 6980.48,
@@ -14193,11 +14191,62 @@
    "net_lrc_eok": 378.92,
    "net_lrc_alt_eok": 12388.1,
    "items_eok": {
+    "10": 558.94,
+    "13": 558.94,
+    "14": 4690.1,
+    "15": 5249.05
+   },
+   "original_basis": {
+    "source_file": "data/dart/FY2023_Q4/raw/KR0074_라이나생명보험_20240409003674/20240409003674_00760.xml",
+    "basis": "liability",
+    "unit": "천원",
+    "unit_source": "cue",
+    "items_eok": {
+     "10": 596.97,
+     "13": 596.97,
+     "14": 6383.51,
+     "15": 6980.48
+    },
+    "checks": {
+     "r_lic1": "pass",
+     "bs20_eok": 6980.48,
+     "ratio_bs20": 1.0,
+     "filing_bs_eok": 6980.48,
+     "ratio_filing_bs": 1.0,
+     "r_lic3_gap_eok": -0.0,
+     "tag_tables": 0,
+     "tag_cells": 0,
+     "tag_mismatch": 0
+    },
+    "net_lrc_eok": 378.92
+   },
+   "original_basis_value": {
     "10": 596.97,
     "13": 596.97,
     "14": 6383.51,
     "15": 6980.48
-   }
+   },
+   "basis_note": "items 10-15 unified on the FY2024 filing prior-year-end (2023-12-31, restated) column; original FY2023 values kept in original_basis_value / original_basis (ticket 20261011T0100Z)",
+   "restated_tables": [
+    [
+     124,
+     true,
+     5249.05
+    ]
+   ],
+   "restated_bs_prior_col": {
+    "liab_eok": 5249.05,
+    "asset_eok": 19715.26,
+    "source_file": "data/dart/FY2024_Q4/raw/KR0074_라이나생명보험_20250409002702/20250409002702_00760.xml"
+   },
+   "checks_restated": {
+    "chk_15_minus_10_14": 0.01,
+    "chk_15_minus_bs_liab": 0.0,
+    "chk_item8_minus_net_lrc": -0.07,
+    "chk_item8_plus_10_minus_bs_net": -3884.85
+   },
+   "unified_at": "20261010T1543Z",
+   "period_basis": "latest_filing_comparative_restatable"
   },
   {
    "company_code": "KR0075",
@@ -14308,7 +14357,7 @@
    "item_block": "lic_dart_note",
    "source_id": "DART",
    "as_of_date": "2023-12-31",
-   "source_file": "data/dart/FY2023_Q4/raw/KR0079_미래에셋생명_20240320002014/20240320002014.xml",
+   "source_file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
    "rcept_no": "20240320002014",
    "report_kind": "사업보고서",
    "corp_code": "00112332",
@@ -14387,9 +14436,80 @@
    "items_eok": {
     "10": 3870.41,
     "13": 3870.41,
+    "14": 252584.93,
+    "15": 256455.34
+   },
+   "original_basis": {
+    "source_file": "data/dart/FY2023_Q4/raw/KR0079_미래에셋생명_20240320002014/20240320002014.xml",
+    "basis": "liability",
+    "unit": "백만원",
+    "unit_source": "cue",
+    "items_eok": {
+     "10": 3870.41,
+     "13": 3870.41,
+     "14": 253959.14,
+     "15": 257829.55
+    },
+    "checks": {
+     "r_lic1": "pass",
+     "bs20_eok": 257829.55,
+     "ratio_bs20": 1.0,
+     "filing_bs_eok": 257829.55,
+     "ratio_filing_bs": 1.0,
+     "r_lic3_gap_eok": 0.0,
+     "tag_tables": 0,
+     "tag_cells": 0,
+     "tag_mismatch": 0
+    },
+    "net_lrc_eok": 253959.14
+   },
+   "original_basis_value": {
+    "10": 3870.41,
+    "13": 3870.41,
     "14": 253959.14,
     "15": 257829.55
-   }
+   },
+   "basis_note": "items 10-15 unified on the FY2024 filing prior-year-end (2023-12-31, restated) column; original FY2023 values kept in original_basis_value / original_basis (ticket 20261011T0100Z)",
+   "restated_tables": [
+    [
+     434,
+     true,
+     53099.93
+    ],
+    [
+     435,
+     true,
+     34526.68
+    ],
+    [
+     436,
+     true,
+     98922.62
+    ],
+    [
+     437,
+     true,
+     69725.68
+    ],
+    [
+     438,
+     true,
+     180.43
+    ]
+   ],
+   "restated_bs_prior_col": {
+    "liab_eok": 256455.34,
+    "asset_eok": 0.0,
+    "source_file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228_00760.xml"
+   },
+   "checks_restated": {
+    "chk_15_minus_10_14": 0.0,
+    "chk_15_minus_bs_liab": 0.0,
+    "chk_item8_minus_net_lrc": -0.01,
+    "chk_item8_plus_10_minus_bs_net": -0.01
+   },
+   "unified_at": "20261010T1543Z",
+   "period_basis": "latest_filing_comparative_restatable"
   },
   {
    "company_code": "KR0080",
@@ -14800,7 +14920,7 @@
    "item_block": "lic_dart_note",
    "source_id": "DART",
    "as_of_date": "2023-12-31",
-   "source_file": "data/dart/FY2023_Q4/raw/KR0099_케이비라이프생명보험_20240314000804/20240314000804.xml",
+   "source_file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905.xml",
    "rcept_no": "20240314000804",
    "report_kind": "사업보고서",
    "corp_code": "00160393",
@@ -14845,7 +14965,9 @@
    ],
    "dropped_tables": [],
    "dedupe": [],
-   "flags": [],
+   "flags": [
+    "net_asset_tables_floored:T457"
+   ],
    "checks": {
     "r_lic1": "pass",
     "bs20_eok": 238697.43,
@@ -14861,9 +14983,65 @@
    "items_eok": {
     "10": 2239.85,
     "13": 2239.85,
+    "14": 238079.44,
+    "15": 240319.29
+   },
+   "original_basis": {
+    "source_file": "data/dart/FY2023_Q4/raw/KR0099_케이비라이프생명보험_20240314000804/20240314000804.xml",
+    "basis": "liability",
+    "unit": "백만원",
+    "unit_source": "cue",
+    "items_eok": {
+     "10": 2239.85,
+     "13": 2239.85,
+     "14": 236457.59,
+     "15": 238697.44
+    },
+    "checks": {
+     "r_lic1": "pass",
+     "bs20_eok": 238697.43,
+     "ratio_bs20": 1.0,
+     "filing_bs_eok": 238697.43,
+     "ratio_filing_bs": 1.0,
+     "r_lic3_gap_eok": 0.0,
+     "tag_tables": 0,
+     "tag_cells": 0,
+     "tag_mismatch": 0
+    },
+    "net_lrc_eok": 236457.59
+   },
+   "original_basis_value": {
+    "10": 2239.85,
+    "13": 2239.85,
     "14": 236457.59,
     "15": 238697.44
-   }
+   },
+   "basis_note": "items 10-15 unified on the FY2024 filing prior-year-end (2023-12-31, restated) column; original FY2023 values kept in original_basis_value / original_basis (ticket 20261011T0100Z)",
+   "restated_tables": [
+    [
+     451,
+     true,
+     240319.29
+    ],
+    [
+     457,
+     false,
+     -39.26
+    ]
+   ],
+   "restated_bs_prior_col": {
+    "liab_eok": 240319.27,
+    "asset_eok": 0.0,
+    "source_file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905_00760.xml"
+   },
+   "checks_restated": {
+    "chk_15_minus_10_14": 0.0,
+    "chk_15_minus_bs_liab": 0.02,
+    "chk_item8_minus_net_lrc": 129.14,
+    "chk_item8_plus_10_minus_bs_net": 1.58
+   },
+   "unified_at": "20261010T1543Z",
+   "period_basis": "latest_filing_comparative_restatable"
   },
   {
    "company_code": "KR0100",
@@ -19464,6 +19642,13 @@
    "emitted_by": "scripts/load_ilp_latest3_2023_4q.py",
    "ticket": "inbox/parser/20261011T0010Z__orchestrator__KR0074-KR0079-KR0099_2023.4Q__ilp_latest_filing_comparative.md",
    "note": "items 1-8 of KR0074/KR0079/KR0099 2023.4Q from the FY2024 comparative column (restated 2023-12-31 balances); basis=latest_filing_comparative_restatable"
+  },
+  {
+   "stage": "2023.4Q-unify-restated",
+   "at": "20261010T1543Z",
+   "emitted_by": "scripts/unify_ilp_restated_3cells_2023_4q.py",
+   "ticket": "inbox/parser/20261011T0100Z__orchestrator__KR0074-KR0079-KR0099_2023.4Q__ilp_unify_restated_basis.md",
+   "note": "items 10-15 of the three 2023.4Q cells set to the FY2024 prior-year-end column; originals kept as original_basis_value"
   }
  ]
 }

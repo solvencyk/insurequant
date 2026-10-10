@@ -1,0 +1,83 @@
+{
+ "purpose": "Restated 2023-12-31 balances (FY2024 filing comparative column) of three 2023.4Q cells. For these cells use restated_bs_insurance_contract_liability_eok as the balance-sheet total instead of IFRS17_BS item 20 (original FY2023 basis; master unchanged).",
+ "unit": "억원",
+ "generated_at": "20261010T1543Z",
+ "emitted_by": "scripts/unify_ilp_restated_3cells_2023_4q.py",
+ "cells": [
+  {
+   "company_code": "KR0074",
+   "quarter": "2023.4Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2024 사업보고서 감사보고서 강조사항: 「기업회계기준서 제1008호 … 에 따라 갱신형 보험의 보험부채 평가 시 현금흐름 추정 대상기간을 수정하여 비교표시된 과거 재무제표를 소급재작성 하였습니다」(주석 34); 이익잉여금처분계산서 「비교표시 재무제표 재작성의 효과 1,595,957,634,143원」",
+   "item8_restated": -18910.0,
+   "item8_minus_fy2023_original": -19288.92,
+   "restated_bs_insurance_contract_liability_eok": 5249.05,
+   "restated_bs_insurance_contract_asset_eok": 19715.26,
+   "restated_bs_net_eok": -14466.21,
+   "bs_item20_fy2023_original_eok": 6980.48,
+   "bs_source_file": "data/dart/FY2024_Q4/raw/KR0074_라이나생명보험_20250409002702/20250409002702_00760.xml",
+   "items_10_15_restated": {
+    "10": 558.94,
+    "13": 558.94,
+    "14": 4690.1,
+    "15": 5249.05
+   },
+   "items_10_15_fy2023_original": {
+    "10": 596.97,
+    "13": 596.97,
+    "14": 6383.51,
+    "15": 6980.48
+   }
+  },
+  {
+   "company_code": "KR0079",
+   "quarter": "2023.4Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2024 감사보고서(20250318001228_00760.xml) 강조사항: 「주석 44에 기술하고 있는 바와 같이 회사는 현금흐름추정 로직 오류를 수정하여 비교표시된 과거 재무제표를 소급재작성 하였습니다」; 요약재무정보 「회계정책 변경 및 오류수정으로 제37(전)기 재무상태표 재작성」",
+   "item8_restated": 252584.92,
+   "item8_minus_fy2023_original": -1374.22,
+   "restated_bs_insurance_contract_liability_eok": 256455.34,
+   "restated_bs_insurance_contract_asset_eok": 0.0,
+   "restated_bs_net_eok": 256455.34,
+   "bs_item20_fy2023_original_eok": 257829.55,
+   "bs_source_file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228_00760.xml",
+   "items_10_15_restated": {
+    "10": 3870.41,
+    "13": 3870.41,
+    "14": 252584.93,
+    "15": 256455.34
+   },
+   "items_10_15_fy2023_original": {
+    "10": 3870.41,
+    "13": 3870.41,
+    "14": 253959.14,
+    "15": 257829.55
+   }
+  },
+  {
+   "company_code": "KR0099",
+   "quarter": "2023.4Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2024 사업보고서 주석 45 「재무제표 소급재작성 효과」(20250314000905_00760.xml): 「당기 중 보험금융손익의 체계적 배분 등과 관련된 회계정책을 변경하였으며, 비교표시된 전기 재무제표를 소급재작성하였습니다」",
+   "item8_restated": 238081.0,
+   "item8_minus_fy2023_original": 1623.41,
+   "restated_bs_insurance_contract_liability_eok": 240319.27,
+   "restated_bs_insurance_contract_asset_eok": 0.0,
+   "restated_bs_net_eok": 240319.27,
+   "bs_item20_fy2023_original_eok": 238697.43,
+   "bs_source_file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905_00760.xml",
+   "items_10_15_restated": {
+    "10": 2239.85,
+    "13": 2239.85,
+    "14": 238079.44,
+    "15": 240319.29
+   },
+   "items_10_15_fy2023_original": {
+    "10": 2239.85,
+    "13": 2239.85,
+    "14": 236457.59,
+    "15": 238697.44
+   }
+  }
+ ]
+}

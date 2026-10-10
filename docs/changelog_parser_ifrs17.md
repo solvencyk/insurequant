@@ -3,6 +3,16 @@
 > Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-11 (ILP 3셀 통일) — 항목 10~15 를 FY2024 전기말(재작성) 열로 통일
+
+미커밋. 발주 `inbox/parser/20261011T0100Z__orchestrator__KR0074-KR0079-KR0099_2023.4Q__ilp_unify_restated_basis.md`(고치지 않았다).
+
+- `insurance_liability_portfolio.json` 셀 단위 교체 8값(라이나 10·13·14·15, 미래에셋 14·15, KB라이프 14·15; 4값은 재작성 후에도 동일), guard·백업 `data/_derived/ilp_backup_20261010_pre_unify.json`, 전후 대조로 바뀐 키 8개만 확인(3,835행 불변).
+- provenance 3셀: `original_basis_value`·`period_basis`·`checks_restated`. 사이드카 `data/_derived/ilp_restated_comparative.json` 신설. `IFRS17_BS.json` 불변.
+- 검산: 항목 15 = BS 전기말 보험계약부채 3/3(KB +0.02). 항목 8 + 10 대 BS 순액: 미래에셋 −0.01 · KB +1.58 · 라이나 −3,884.85(자산 행 LIC −3,884.78 때문, 값 정상).
+- LIC 검산기 RED 0 → 3(R-LIC1, 원문 BS 항목 20 대비 — validation 이 사이드카 앵커로 분기해야 함). 포트폴리오 검증기 불변.
+- 상세·재현 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §10.
+
 ## 2026-10-11 (ILP 3셀) — 재작성 비교열 3셀 최신 공시로 적재
 
 미커밋. push 안 함. 발주 `inbox/parser/20261011T0010Z__orchestrator__KR0074-KR0079-KR0099_2023.4Q__ilp_latest_filing_comparative.md`(고치지 않았다). owner 결정 「최신 공시 쓰기」.

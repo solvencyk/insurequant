@@ -5,6 +5,8 @@
 
 ## Status (최신 3개)
 
+- **2026-10-11 재작성 3셀 기준 통일** — 라이나 KR0074·미래에셋 KR0079·KB라이프 KR0099 2023.4Q 항목 10~15 를 FY2024 전기말(재작성) 열로 교체(값 8개 변경·4개 동일, 행 수 불변), 옛 값은 provenance `original_basis_value`. 사이드카 `data/_derived/ilp_restated_comparative.json` 신설(재작성 BS 보험계약부채 5,249.05 / 256,455.34 / 240,319.27억). 커밋 안 함.
+  남은 것: LIC 검산기 R-LIC1 RED 3(항목 15 대 원문 BS 항목 20)은 validation 이 사이드카 앵커로 분기 · 라이나 항목 8+10 대 BS 순액 −3,884.85억(자산 행 LIC −3,884.78억, 값 정상) · designer 패널 재빌드. 근거 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §10 · `scripts/unify_ilp_restated_3cells_2023_4q.py`.
 - **2026-10-11 재작성 비교열 3셀 적재(owner 「최신 공시 쓰기」)** — `insurance_liability_portfolio.json` +24행(3,811 → 3,835, 기존 행 바이트 동일): 라이나 KR0074·미래에셋 KR0079·KB라이프 KR0099 의 2023.4Q 항목 1~8, 원천 FY2024 비교열(4-6-2 `<2023년>`/DART 주석 전기말). provenance `basis=latest_filing_comparative_restatable`.
   FY2023 원문과의 차이 = 항목 8 이 −19,288.9 / −1,374.2 / +1,623.4억(FY2024 재무상태표 전기말 열의 보험계약부채 변화와 일치 → 재작성 확정). LIC 검산기 RED 0·YELLOW 11 → 14(새 R-LIC2 3건), 포트폴리오 검증기 RED 4 불변, 사이드카 갱신 불필요. 커밋 안 함.
   근거·표·재현 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §9 · 드라이버 `scripts/load_ilp_latest3_2023_4q.py`.
