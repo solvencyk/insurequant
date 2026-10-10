@@ -1,5 +1,11 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 Status 밀림 (21차 추가로 밀려난 항목, 무수정)
+
+- **2026-10-07 (18차) 채널별 유지율 검증(VP) — verdict RED 1 · YELLOW 8** — 표 45개 렌더 대조 오독 0, errata 17/17·보정 9/9 정당, 마스터 1:1.
+  RED = KR0004 2026.2Q 금액 44행 1/1000 규모인데 단위 '백만원' 무플래그. 보고서 `data/_derived/validation_20261007_persistency.md`(미커밋).
+  발주 parser `20261007T1001Z`x2 · downloader `20261007T1001Z`(KR0150).
+
 ## 2026-10-10 Status 밀림 (20차 추가로 밀려난 항목, 무수정)
 
 - **2026-10-06 (17차) `PUBLIC_EXPORT_INTERNAL_JARGON` 신설** — `validate_live_artifacts.py` 가 공개 다운로드 전 열의 문자열에서

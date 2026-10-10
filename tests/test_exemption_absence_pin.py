@@ -250,6 +250,7 @@ def test_every_code_pin_is_mapped_for_ledger_comparison():
         "_IDENT_ISSUER_INCONSISTENT",  # 2026-10-10 신설(평문 룰 2·4·5·6)
         "IRR_DERIVE_ISSUER_INCONSISTENT",
         "_AFTER_SUBRISK_NOT_DISCLOSED", "_POST_PARENT_NOT_DISCLOSED",
+        "_RS1_ISSUER_INCONSISTENT",  # 2026-10-10 신설(금리민감도 RS1 잔차 박제)
     }
     assert pinned_registries <= mapped, f"원장 대조에서 빠진 레지스트리: {pinned_registries - mapped}"
 

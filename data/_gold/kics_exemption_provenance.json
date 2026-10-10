@@ -3180,6 +3180,125 @@
       "registered_by": "owner 승인 2026-10-10 (inbox/validation/20261010T1300Z 「등재 장치 신설」) — validation 단계 9 등재. 근거 = downloader 재확인 data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9d.md (2026-10-10 11:16~11:40 UTC)",
       "scope": "KR1107 2023.2Q 의 coverage census MISSING_CELLS (K-ICS 게이트·데이터계약 게이트 공통 `_census_source_absent`).",
       "prior_column_source": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf"
+    },
+    {
+      "registry": "_RS1_ISSUER_INCONSISTENT",
+      "company": "KR1103",
+      "quarter": "2026.2Q",
+      "claim": "제네럴재보험 2026.2Q 경영공시 p16 「2) 금리민감도 분석」 표가 +100bp 컬럼에 지급여력금액 856 · 지급여력기준금액 270 · 지급여력비율 319.78 을 인쇄한다(경과조치 전·후 두 블록 같은 숫자). 856/270×100 = 317.04 라 표 안에서 닫히지 않는다 — 발행사 자기모순이고 파싱 오류가 아니다. 공시 그대로 적재했다.",
+      "claim_kind": "ISSUER_INCONSISTENT",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+        "pages": [
+          16
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf",
+        "pages": [
+          16
+        ],
+        "present_markers": [
+          "경과조치전지급여력비율294.19268.19281.44307.16319.78지급여력금액869874871866856지급여력기준금액295326309282270",
+          "경과조치후지급여력비율294.19268.19281.44307.16319.78지급여력금액869874871866856지급여력기준금액295326309282270",
+          "100bp상승시25%p상승"
+        ]
+      },
+      "note": "validation 단계 10 fitz 재확인(p16 텍스트층 + 단어 좌표 행 대조): 두 블록이 위 숫자를 행 순서대로 인쇄한다. 나머지 4개 컬럼은 RS1 허용 안(−100bp 874/326=268.10 대 268.19 · −50bp 281.88 대 281.44 · base 294.58 대 294.19 · +50bp 307.09 대 307.16). 서술문 「100bp상승시 25%p 상승」은 비율 행(319.78 − 294.19 = 25.59)과 맞고 금액·기준금액 행은 정수 억원이라 어긋난다 — 어느 행이 틀렸는지는 원문으로 확정할 수 없어 파생값으로 갈아끼우지 않는다(owner 결정 10-① 과 같은 원칙). 잔차 = 비율 − 금액/기준금액×100 = 319.78 − 317.037 = +2.743.",
+      "registered_by": "owner 승인 2026-10-10 (inbox/validation/20261010T1830Z 「RS1·RS5 면제 장치」 (가)·(나)) — validation 단계 10(런로그 reinsurer_runlog_KR1101-1108_12.md) 등재. 근거 = parser 단계 11 런로그 data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md §1.4·§1.5",
+      "expected_residual": {
+        "RS1|적용전|+100bp": 2.743,
+        "RS1|적용후|+100bp": 2.743
+      },
+      "pin_tolerance": 0.01,
+      "not_a_blanket_skip": "금리민감도 게이트가 매 실행 박제 셀 6칸(두 블록 × 비율·금액·기준금액)과 잔차를 마스터에 대고 재검산하고, raw sha·다운로더 매니페스트·이 원장의 마커를 다시 확인한다. 하나라도 깨지면 RS_EXEMPTION_* RED 와 원래 RS1 RED 가 같이 돌아오고, RS1 이 더는 발화하지 않으면 RS_EXEMPTION_INERT RED(등재를 풀어라).",
+      "scope": "KR1103 2026.2Q 의 RS1_RATIO_IDENTITY +100bp × 적용전·적용후(2칸). 다른 컬럼·분기·룰로 넓히지 않는다.",
+      "release_condition": "발행사가 다음 공시 전기 칸에서 이 분기를 닫히게 재인쇄하면 최신 공시 채택(결정 1) 후 셀이 바뀌어 CELL_DRIFT → 재판정, 닫히면 INERT 로 풀린다."
+    },
+    {
+      "registry": "_RS5_SOURCE_ABSENT",
+      "company": "KR1108",
+      "quarter": "2025.2Q",
+      "claim": "마이브라운 2025.2Q 경영공시(19쪽, 2025년 6월 본인가 직후 첫 공시)에 금리민감도 표가 없다. p17 「Ⅵ. 위험관리 6-1~6-4 : 해당사항 없음」으로 위험관리 절이 끝나고 6-8 위험 민감도 절 자체가 없다. kics_rate_sensitivity.json 에 이 (회사,분기) 버킷이 없는 것은 원천 부재다.",
+      "claim_kind": "SECTION_ABSENT",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+        "pages": [
+          17
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+        "absent_markers": [
+          "민감도",
+          "100bp"
+        ],
+        "present_markers": [
+          "6-4.시장위험관리:해당사항없음"
+        ]
+      },
+      "note": "validation 단계 10 fitz: 19쪽 전부 텍스트층(쪽당 111~1,887자, 저밀도 p1·p2 는 표지), 문서 전체 「민감도」 0회 · 「100bp」 0회. 같은 회사 2025.4Q·2026.2Q 문서는 6-8 절에 「금리 민감도 분석 : 해당사항 없음」을 인쇄한다(대조). raw sha256 은 게이트 코드 박제 `_RS5_SOURCE_ABSENT` 와 다운로더 매니페스트가 같이 갖는다.",
+      "registered_by": "owner 승인 2026-10-10 (inbox/validation/20261010T1830Z 「RS1·RS5 면제 장치」 (가)·(나)) — validation 단계 10(런로그 reinsurer_runlog_KR1101-1108_12.md) 등재. 근거 = parser 단계 11 런로그 data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md §1.4·§1.5",
+      "not_a_blanket_skip": "금리민감도 게이트가 매 실행 raw 폴더 sha·다운로더 매니페스트·이 원장의 마커를 다시 확인한다. 새 판이 들어오거나 마커가 반증되면 RS_EXEMPTION_* RED 와 원래 RS5 RED 가 같이 돌아오고, 금리민감도 행이 생기면 RS_EXEMPTION_INERT RED(등재를 풀어라).",
+      "scope": "KR1108 2025.2Q 의 RS5_DISCLOSURE_COVERAGE 1건. 다른 분기·룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_RS5_SOURCE_ABSENT",
+      "company": "KR1108",
+      "quarter": "2025.4Q",
+      "claim": "마이브라운 2025.4Q 경영공시 p50 「6-8. 위험 민감도 … 2) 금리 민감도 분석 : 해당사항 없음 · 3) 환율 민감도 분석 : 해당사항 없음」. 발행사가 표를 인쇄하지 않았다. kics_rate_sensitivity.json 에 이 (회사,분기) 버킷이 없는 것은 원천 부재다.",
+      "claim_kind": "STATED_NOT_APPLICABLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+        "pages": [
+          50
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+        "absent_markers": [
+          "100bp",
+          "50bp"
+        ],
+        "present_markers": [
+          "2)금리민감도분석:해당사항없음"
+        ]
+      },
+      "note": "validation 단계 10 fitz: 164쪽 문서 전체 「100bp」·「50bp」 0회(충격 시나리오 표가 어디에도 없다), 근거 문구 p50 1곳. 6-4 금리위험액 현황 표는 있다(듀레이션 갭은 적재됨) — 민감도 분석만 해당사항 없음. raw sha256 은 게이트 코드 박제 `_RS5_SOURCE_ABSENT` 와 다운로더 매니페스트가 같이 갖는다.",
+      "registered_by": "owner 승인 2026-10-10 (inbox/validation/20261010T1830Z 「RS1·RS5 면제 장치」 (가)·(나)) — validation 단계 10(런로그 reinsurer_runlog_KR1101-1108_12.md) 등재. 근거 = parser 단계 11 런로그 data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md §1.4·§1.5",
+      "not_a_blanket_skip": "금리민감도 게이트가 매 실행 raw 폴더 sha·다운로더 매니페스트·이 원장의 마커를 다시 확인한다. 새 판이 들어오거나 마커가 반증되면 RS_EXEMPTION_* RED 와 원래 RS5 RED 가 같이 돌아오고, 금리민감도 행이 생기면 RS_EXEMPTION_INERT RED(등재를 풀어라).",
+      "scope": "KR1108 2025.4Q 의 RS5_DISCLOSURE_COVERAGE 1건. 다른 분기·룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_RS5_SOURCE_ABSENT",
+      "company": "KR1108",
+      "quarter": "2026.2Q",
+      "claim": "마이브라운 2026.2Q 경영공시 p34 「6-8. 위험 민감도 … 2) 금리 민감도 분석 : 해당사항 없음」. 발행사가 표를 인쇄하지 않았다. kics_rate_sensitivity.json 에 이 (회사,분기) 버킷이 없는 것은 원천 부재다.",
+      "claim_kind": "STATED_NOT_APPLICABLE",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+        "pages": [
+          34
+        ]
+      },
+      "verify": {
+        "file": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+        "absent_markers": [
+          "100bp",
+          "50bp"
+        ],
+        "present_markers": [
+          "2)금리민감도분석:해당사항없음"
+        ]
+      },
+      "note": "validation 단계 10 fitz: 44쪽 문서 전체 「100bp」·「50bp」 0회, 근거 문구 p34 1곳. raw sha256 은 게이트 코드 박제 `_RS5_SOURCE_ABSENT` 와 다운로더 매니페스트가 같이 갖는다.",
+      "registered_by": "owner 승인 2026-10-10 (inbox/validation/20261010T1830Z 「RS1·RS5 면제 장치」 (가)·(나)) — validation 단계 10(런로그 reinsurer_runlog_KR1101-1108_12.md) 등재. 근거 = parser 단계 11 런로그 data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md §1.4·§1.5",
+      "not_a_blanket_skip": "금리민감도 게이트가 매 실행 raw 폴더 sha·다운로더 매니페스트·이 원장의 마커를 다시 확인한다. 새 판이 들어오거나 마커가 반증되면 RS_EXEMPTION_* RED 와 원래 RS5 RED 가 같이 돌아오고, 금리민감도 행이 생기면 RS_EXEMPTION_INERT RED(등재를 풀어라).",
+      "scope": "KR1108 2026.2Q 의 RS5_DISCLOSURE_COVERAGE 1건. 다른 분기·룰로 넓히지 않는다."
     }
   ],
   "_residual_pin_contract": "일부 면제는 '이 셀을 보지 마라'가 아니라 '이 잔차인 동안만 차단하지 마라'다(_LIFE8_ISSUER_INCONSISTENT). 기대잔차를 값으로 박제하고 게이트가 매 실행 마스터에서 재계산한다 — 잔차가 tol을 벗어나면 LIFE8_EXEMPTION_RESIDUAL_DRIFT RED, 입력이 결측이면 LIFE8_EXEMPTION_INPUT_MISSING RED. blanket skip은 그 셀을 영구 사각지대로 만들기 때문에 금지. **2026-08-24 — 이 숫자는 이제 기계가 읽는다.** 게이트 `validate_kics_disclosure._pin_ledger_agreement_findings` 가 매 실행 코드 박제(`_TIER2_ISSUER_INCONSISTENT` / `_LIFE8_ISSUER_INCONSISTENT` / `IRR_DERIVE_ISSUER_INCONSISTENT` 의 residual, `_AFTER_SOURCE_ABSENT_CELLS` / `_POST_PARENT_SOURCE_ABSENT_CELLS` 의 absent_cells)와 이 원장을 대조한다. 축 목록·잔차값·부재셀집합 중 하나라도 어긋나면 `EXEMPTION_PIN_LEDGER_DISAGREE` RED 다. 정본은 코드(게이트를 실제로 움직이는 쪽)이고 원장은 반드시 일치해야 하는 사본이다. 그 전까지 `expected_residual` 을 읽는 코드가 **하나도 없어서** 원장 숫자는 장식이었고, 실제로 KR0075 3분기의 축 목록이 어긋난 채 아무도 못 보고 있었다. `expected_residual_alt_reading` 은 종전 읽기의 보존 기록이라 대조 대상이 아니다."

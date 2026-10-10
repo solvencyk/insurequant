@@ -589,6 +589,20 @@ REGISTRY: dict[str, dict] = {
                   "통째 skip 이 아니라 셀·잔차 두 겹을 매 실행 재검산한다.",
         "mutation": "tests/test_ident_issuer_inconsistent_exemption.py",
     },
+    "rate_sens_pinned_residual": {
+        "statement": "금리민감도 RS1(비율 == 금액/기준금액×100)이 깨진 칸 중 **발행사 자기모순으로 owner 가 등재를 "
+                     "승인한 것**은 (회사,분기,경과조치,컬럼) 별로 잔차(비율 − 금액/기준금액×100)와 입력 셀 3칸을 "
+                     "박제하고, 둘 다 박제값과 같을 때만 RED 목록에서 뺀다: |실측 − 박제| <= _RS_PIN_TOL.",
+        "impl": [("scripts/validate_kics_rate_sensitivity.py", "rs_pinned_exemptions")],
+        "kind": "IDENTITY",
+        "tol": {"abs": 0.01, "rel": 0.0, "unit": "%p(셀은 억원)"},
+        "tol_from": [("validate_kics_rate_sensitivity", "_RS_PIN_TOL", 0.01)],
+        "measured": "등재 1버킷 · 2칸(제네럴재보험 2026.2Q +100bp 적용전·적용후), 2026-10-10 라이브 마스터 "
+                    "박제 2.743 · 실측 2.74296(Δ 0.0000). 셀·잔차·원장·raw·매니페스트를 흔들면 RED 로 돌아온다.",
+        "reason": "_IDENT_ISSUER_INCONSISTENT 와 같은 '잔차 고정' 장치를 금리민감도 게이트에 둔 것이다. "
+                  "통째 skip 이 아니라 셀·잔차·근거를 매 실행 재검산한다(원천 부재 RS5 는 등식이 아니라 박제만).",
+        "mutation": "tests/test_rate_sens_pinned_exemption.py",
+    },
     "9": {
         "statement": "경과조치 방향성: item2_적용후 >= item2_적용전 (준비금 경과조치는 "
                      "가용자본을 올리지 내리지 않는다)",

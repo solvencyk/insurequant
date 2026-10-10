@@ -1,9 +1,24 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-10-10 · Stage 3/5 — validation
+> Last updated: 2026-10-11 · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-10-11 (21차) -- 재보사 단계 10: 금리민감도 RS1·RS5 근거 박제 면제 장치 `rs_pinned_exemptions` 신설 · owner 승인 5건 등재
+
+- **새 장치**(scripts/validate_kics_rate_sensitivity.py): 이 게이트의 등재부(RS1/RS2/RS5_EXCEPTIONS)는 근거를 다시 보지 않는 키 집합이었다. 새 등재부
+  `_RS1_ISSUER_INCONSISTENT`(입력 셀 3칸 × 컬럼 + 잔차 비율 − 금액/기준금액×100 박제) · `_RS5_SOURCE_ABSENT`(`SECTION_ABSENT`/`STATED_NOT_APPLICABLE`, raw sha 박제).
+  매 실행 형식 · 여전히 발화하는가(아니면 `RS_EXEMPTION_INERT` RED) · 셀·잔차 ±0.01 · raw sha·매니페스트(K-ICS census 장치와 같은 함수) · 근거 원장(VERIFIED·claim_kind·expected_residual·마커 재확인).
+  깨지면 원래 RED + 장치 RED 가 gate RED 에 들어간다. 면제분은 `PIN` 줄·산출 JSON 에 매 실행 남는다.
+- **집계 게이트 전수 조사**: RS1·RS5 를 세는 곳은 금리민감도 게이트뿐(데이터계약=사이드카, 라이브=듀레이션 갭, K-ICS=미참조) → 장치를 `run()` 안에 둬 main·매니페스트 시험이 같은 답을 받게 했다.
+  두 번째 겹으로 K-ICS 게이트 `_exemption_registries()`·`_code_pin_map()` 에 등록 → 원장 누락·잔차 불일치를 K-ICS·데이터계약 게이트가 한 번 더 막는다.
+- **등재 5건**(owner 2026-10-10): 제네럴 KR1103 2026.2Q +100bp 적용전·적용후(p16 856/270 = 317.04 대 인쇄 319.78, 잔차 +2.743) · 마이브라운 KR1108 2025.2Q(민감도 절 없음)·2025.4Q(p50)·2026.2Q(p34) 「해당사항 없음」.
+  원장 +5 VERIFIED, 대조군 4/4 반증. 문서화 `docs/kics_gate_exceptions.md` 맨 위 절.
+- 시뮬: 변경 전후 금리민감도 결과는 5칸 이동뿐 · 원장 없으면 면제 0(RED 9) · K-ICS finding 변화 0 · 데이터계약 finding 134=134(원장 제거 시 RED +4). 변이시험 70건(`tests/test_rate_sens_pinned_exemption.py`, 훅 오프라인 묶음 편입).
+  매니페스트(등재부 크기·배선 문자열)·원장 대조 대상·항등식 레지스트리(`_RS_PIN_TOL`) 갱신. 골든 재생성 불필요(통과).
+- **하노버 KR1104 적용후 12행 독립 검산 통과**: 비적용사(`_TRANSITION_APPLIERS` 밖) · 같은 문서 「전·후 동일」 명문 · 헤드라인 1·2·14·27·50·52 후 == 전 · 후 블록 0 은 0/0 빈 블록 → 미러 정당, parser 발주 없음.
+- **최종**: 금리민감도 RED 5→0 · K-ICS exit 0 · 데이터계약 RED 0 · 라이브 RED 0 · 나머지 훅 게이트 전부 exit 0. 런로그 `reinsurer_runlog_KR1101-1108_12.md`. 모델 Opus 5.5.
 
 ## 2026-10-10 (20차) -- 재보사 단계 9: census 원천부재 면제 장치 `_CENSUS_SOURCE_ABSENT` 신설 · 8칸 등재
 

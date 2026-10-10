@@ -4,6 +4,33 @@
 > 현재 게이트 상태는 `scripts/validate_kics_disclosure.py` 출력이 정본이다. 아래 날짜가 붙은 스냅샷("RED 19건", "blocking RED 18건" 등)은 그 날짜 기준이다.
 > 등재는 owner 만 한다(`CLAUDE.md` §6). 스크립트 주석·티켓의 "`TODO.md` L…" / "TODO.md §36_irr 표" 는 이 파일을 가리킨다.
 
+## 2026-10-10 금리민감도 게이트 RS1·RS5 등재 5건 — 새 장치 `rs_pinned_exemptions` (validation 단계 10)
+
+> 승인: owner **2026-10-10** (발주 `inbox/validation/20261010T1830Z` (가)·(나)). 근거: parser 단계 11 런로그
+> `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md` §1.4·§1.5, 실행 기록 `reinsurer_runlog_KR1101-1108_12.md`.
+> **장치**: `scripts/validate_kics_rate_sensitivity.py::rs_pinned_exemptions` — 등재부 `_RS1_ISSUER_INCONSISTENT`
+> (발행사 표 자기모순, 잔차·입력 셀 박제)·`_RS5_SOURCE_ABSENT`(원천 부재, raw 박제). 등재 키 (회사, 분기), 값 = 사유
+> 종류 · 승인일 · raw 폴더 박제({파일: sha256}) · (RS1) 박제 셀 「경과조치|measure|컬럼」 · 박제 잔차 「RS1|경과조치|컬럼」.
+> 통째 skip 이 아니다. 매 실행 ① 형식(`RS_EXEMPTION_MALFORMED`) ② 박제한 RED 가 지금도 발화하는지(안 하면
+> `RS_EXEMPTION_INERT` **RED** = 등재를 풀어라) ③ (RS1) 입력 셀·잔차(비율 − 금액/기준금액×100)가 박제값 ±0.01 인지
+> (`…_CELL_MISSING`·`…_CELL_DRIFT`·`…_RESIDUAL_DRIFT`) ④ raw 폴더 sha·다운로더 매니페스트(`…_RAW_CHANGED`·`…_MANIFEST_DRIFT`,
+> K-ICS census 장치와 같은 함수) ⑤ 근거 원장(registry 같은 이름)이 VERIFIED·같은 claim_kind·(RS1) 같은 expected_residual 이고
+> 인용 원천을 다시 열어 마커가 그대로인지(`…_LEDGER_DISAGREE`)를 확인한다. 하나라도 깨지면 원래 RS1/RS5 RED 가 돌아오고
+> 장치 RED 가 gate RED 에 더해진다. 면제된 칸은 매 실행 `PIN` 줄로 인쇄되고 산출 JSON `RS1_pinned_exemptions`·
+> `RS5_pinned_exemptions` 에 남는다. 두 번째 겹: 두 등재부가 K-ICS 게이트 `_exemption_registries()`·`_code_pin_map()` 에
+> 등록돼 원장 기록이 없거나 원장 잔차가 코드와 다르면 K-ICS 게이트·데이터계약 게이트가 `EXEMPTION_PROVENANCE_MISSING`·
+> `EXEMPTION_PIN_LEDGER_DISAGREE` 로 한 번 더 막는다. 변이시험 `tests/test_rate_sens_pinned_exemption.py`(70건, 훅 오프라인 묶음).
+> **결과**: 금리민감도 게이트 RED 5 → 0(exit 0). 기존 등재부(RS1/RS2/RS5_EXCEPTIONS·RS6_KNOWN_HOLES)는 손대지 않았다.
+
+| company | quarter | 룰 | 사유 종류 | 근거 (원장 verify) | 박제 | raw |
+|---|---|---|---|---|---|---|
+| KR1103 제네럴재보험 | 2026.2Q | RS1 +100bp 적용전·적용후 | `ISSUER_INCONSISTENT` 발행사 자기모순 | p16 두 블록이 같은 행 순서로 비율 294.19·268.19·281.44·307.16·**319.78** / 금액 869·874·871·866·**856** / 기준금액 295·326·309·282·**270** 인쇄(present 마커), 서술문 「100bp상승시 25%p 상승」 | 셀 6칸(두 블록 × 3행) · 잔차 +2.743 ×2 (856/270×100 = 317.04) | FY2026_Q2 `df75fb63…` |
+| KR1108 마이브라운 | 2025.2Q | RS5 | `SECTION_ABSENT` | p17 「6-4. 시장위험관리: 해당사항 없음」(present) · 문서 전체 「민감도」·「100bp」 0회(absent), 6-8 절 없음 | — | FY2025_Q2 `b76a53d5…` |
+| KR1108 마이브라운 | 2025.4Q | RS5 | `STATED_NOT_APPLICABLE` | p50 「2) 금리 민감도 분석 : 해당사항 없음」(present) · 164쪽 전체 「100bp」·「50bp」 0회(absent) | — | FY2025_Q4 `d1580930…` |
+| KR1108 마이브라운 | 2026.2Q | RS5 | `STATED_NOT_APPLICABLE` | p34 같은 문구 · 44쪽 전체 「100bp」·「50bp」 0회 | — | FY2026_Q2 `b6fd31d4…` |
+
+대조군(마커 변별력): 같은 마커를 하노버 2026.2Q 문서(표 있음)에 대면 부재 주장이 반증되고, 마이브라운 2026.1Q 문서(문구 없음)·제네럴 2025.4Q 문서(다른 숫자)에서는 근거 문장이 소실로 잡힌다.
+
 ## 2026-10-10 coverage census 원천부재 등재 8칸 — 새 장치 `_CENSUS_SOURCE_ABSENT` (validation 단계 9)
 
 > 승인: owner **2026-10-10** 「등재 장치 신설」 (발주 `inbox/validation/20261010T1300Z`). 근거: downloader 재확인

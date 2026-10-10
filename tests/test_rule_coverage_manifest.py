@@ -1854,7 +1854,10 @@ RATE_SENS_RULES = {
 RATE_SENS_RS6_KINDS = {"ROW_MISSING", "NULL_CELLS", "UNKNOWN_LABEL", "ORPHAN"}
 # 등재부 크기 실측 2026-09-21. 등재를 추가·해제하면 여기도 고쳐야 한다.
 RATE_SENS_LEDGERS = {"RS1_EXCEPTIONS": 1, "RS2_EXCEPTIONS": 2, "RS5_EXCEPTIONS": 17,
-                     "RS6_KNOWN_HOLES": 11}
+                     "RS6_KNOWN_HOLES": 11,
+                     # 근거 박제형 등재부(2026-10-10, owner 승인 재보사 5건: 제네럴 2026.2Q RS1 1버킷·2칸 ·
+                     # 마이브라운 RS5 3버킷). 변이시험은 tests/test_rate_sens_pinned_exemption.py.
+                     "_RS1_ISSUER_INCONSISTENT": 1, "_RS5_SOURCE_ABSENT": 3}
 RATE_SENS_KNOWN_HOLE_ROWS = 31        # 10 버킷 × 3 ROW_MISSING + 서울보증 2024.4Q NULL_CELLS 1
 
 
@@ -1883,6 +1886,7 @@ def _rs_live():
                   if RS._in_regime(cq[1]) and have[cq] == full
                   and cq not in RS.RS5_EXCEPTIONS
                   and not any(k[:2] == cq for k in RS.RS6_KNOWN_HOLES)
+                  and not any(cq in reg for reg in RS.RS_EXEMPTION_REGISTRIES.values())
                   and cohort.get(cq) not in excepted_names), None)
     assert clean is not None, "변이시험에 쓸 깨끗한 (회사,분기) 버킷이 없다"
     return RS, rs_rows, kd_rows, res, clean
@@ -2017,8 +2021,9 @@ def test_rate_sens_is_wired_into_prepush_and_blocks():
     assert re.search(r"blocked\s*=.*\bn_dom\b", hook), "n_dom 이 blocked 판정에 들어가지 않는다"
     src = (ROOT / "scripts" / "validate_kics_rate_sensitivity.py").read_text(encoding="utf-8")
     assert "return 0 if red_total == 0 else 2" in src, "검증기가 RED 를 exit 2 로 올리지 않는다"
-    assert "red_total = len(rs1) + len(rs2) + len(rs5) + len(rs6)" in src, \
-        "RS6 가 gate RED 집계에 들어가지 않는다 — YELLOW 로 강등됐다면 이 선언도 같이 고쳐라"
+    assert "red_total = len(rs1) + len(rs2) + len(rs5) + len(rs6) + len(pin_red)" in src, \
+        "RS6 또는 RS1·RS5 박제 면제 장치의 깨진 등재(pin_red)가 gate RED 집계에 들어가지 않는다 — " \
+        "YELLOW 로 강등됐다면 이 선언도 같이 고쳐라"
 
 
 # ---------------------------------------------------------------------------

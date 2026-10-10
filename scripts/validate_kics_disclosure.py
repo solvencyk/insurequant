@@ -3551,7 +3551,20 @@ def _exemption_registries() -> dict[str, frozenset]:
         # 잔차 박제형 면제 2번째. 룰엔진에 살지만 근거 검사는 여기서 받는다 — 레지스트리를
         # 여기 등록하지 않으면 그 면제는 근거 없이 조용히 산다.
         "IRR_DERIVE_ISSUER_INCONSISTENT": frozenset(IRR_DERIVE_ISSUER_INCONSISTENT),
+        # 금리민감도 게이트의 RS1·RS5 근거 박제 면제(owner 승인 2026-10-10, 재보사 단계 10). 장치는
+        # `validate_kics_rate_sensitivity.rs_pinned_exemptions` 에 살고 원장도 스스로 재검산하지만,
+        # 여기 등록해야 원장 기록이 없을 때 K-ICS·데이터계약 게이트가 한 겹 더 막는다.
+        **{name: frozenset(reg) for name, reg in _rate_sens_registries().items()},
     }
+
+
+def _rate_sens_registries() -> dict:
+    """금리민감도 게이트의 박제 면제 등재부(지연 import — 그쪽도 이 모듈을 지연 import 한다)."""
+    here = str(Path(__file__).resolve().parent)
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    import validate_kics_rate_sensitivity as _rs  # noqa: PLC0415
+    return _rs.RS_EXEMPTION_REGISTRIES
 
 
 def _load_exemption_ledger(path: Path | None = None):
@@ -3980,6 +3993,10 @@ def _code_pin_map() -> dict[tuple[str, str, str], dict]:
             "expected_residual": dict(spec.get("findings") or {})}
     for (c, q), pins in IRR_DERIVE_ISSUER_INCONSISTENT.items():
         out[("IRR_DERIVE_ISSUER_INCONSISTENT", c, q)] = {"expected_residual": dict(pins)}
+    # 금리민감도 RS1 잔차 박제(키 "RS1|경과조치|컬럼" — 원장 모양 그대로).
+    for (c, q), spec in _rate_sens_registries()["_RS1_ISSUER_INCONSISTENT"].items():
+        out[("_RS1_ISSUER_INCONSISTENT", c, q)] = {
+            "expected_residual": dict(spec.get("findings") or {})}
     for (c, q), cells in _AFTER_SOURCE_ABSENT_CELLS.items():
         out[("_AFTER_SUBRISK_NOT_DISCLOSED", c, q)] = {"absent_cells": sorted(cells)}
     for (c, q), cells in _POST_PARENT_SOURCE_ABSENT_CELLS.items():
