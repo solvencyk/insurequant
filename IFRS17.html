@@ -138,9 +138,9 @@
 .lrps-table td.num{white-space:nowrap}
 .lrps-table td.empty{color:var(--muted)}
 .lrps-desc{margin:-4px 0 12px}
-#lrCap,#psCap{position:relative}
-#lrCap .iq-help,#psCap .iq-help{position:static}
-#lrCap .iq-help-pop,#psCap .iq-help-pop{max-width:min(340px,calc(100vw - 64px))}
+#lrCap,#psCap,#histTableCap{position:relative}
+#lrCap .iq-help,#psCap .iq-help,#histTableCap .iq-help{position:static}
+#lrCap .iq-help-pop,#psCap .iq-help-pop,#histTableCap .iq-help-pop{max-width:min(340px,calc(100vw - 64px))}
 .lrps-treebar{display:flex;gap:6px;align-items:center;margin:12px 0 6px}
 .lrps-treebar[hidden]{display:none}
 .lrps-bar-btn{font:inherit;font-size:12px;min-height:28px;padding:2px 10px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--ink-strong);cursor:pointer}
@@ -304,7 +304,7 @@
             <label><input type="radio" name="histVfa" value="block"/> VFA 를 한 덩어리로 따로</label>
           </fieldset>
           <label id="histPaaLab"><input type="checkbox" id="histPaa"/> PAA 접기</label>
-          <label><input type="checkbox" id="histLic" checked/> 발생사고요소(추정) 막대</label>
+          <label id="histLicLab"><input type="checkbox" id="histLic" checked/> 발생사고요소 막대</label>
           <label><input type="checkbox" id="histBrk" checked/> 세로축 일부 생략(~)</label>
         </div>
         <div class="chart-container"><canvas id="canvasHistCombo" role="img" aria-label="CSM 시계열 차트(잔여보장요소 누적 막대와 신계약 CSM 꺾은선)"></canvas></div>
@@ -2306,7 +2306,7 @@
       return tbl;
     }
 
-    // ===== 섹션 3: CSM 시계열 = 묶음 누적 막대(잔여보장요소 | 발생사고요소 추정) + 보조축 신계약 CSM 꺾은선 + 값 표 =====
+    // ===== 섹션 3: CSM 시계열 = 묶음 누적 막대(잔여보장요소 | 발생사고요소: 실공시·계산값·추정) + 보조축 신계약 CSM 꺾은선 + 값 표 =====
     // 데이터: data/csm_combo/panel_csm_combo.json (scripts/viz_build_csm_combo_panel.py). 회사코드는 JSON 키로만 쓰고 화면에 안 낸다.
     // 이 패널에 없는 회사(재보사 등)는 옛 CSM 시계열 선 차트로 폴백한다.
     const HC_UI = { vfa:"merge", paa:false, lic:true, brk:true };   // 회사·다크 전환으로 다시 그려도 토글 상태 유지
@@ -2323,7 +2323,7 @@
       const t=(window.IQTheme&&IQTheme.chart())||{};
       const csm=currentKey.isKey?currentKey.primary:(t.primary||"#0f6e68");
       return { csm, bel:t.dark?"#7d8794":"#9aa3ae", ra:t.dark?"#8c8272":"#a99b83", paa:t.dark?"#5b6b66":"#6b7c76", vfa:t.dark?"#7d8760":"#8f9a6a",
-               ink:t.ink||"#3f4347", bg:t.bg||"#fff", muted:t.muted||"#63666b" };
+               un:t.dark?"#5e656e":"#c2c6cb", ink:t.ink||"#3f4347", bg:t.bg||"#fff", muted:t.muted||"#63666b" };
     }
     // 축 생략: 조각선형 변환. B 이하(CSM 이 있는 곳)는 실제 눈금, 위는 k 배로 압축, 음수는 압축 안 함. 막대 조각 높이 = 누적 경계의 변환값 차이.
     const hcF=(B,k)=>v=>v<=B?v:B+(v-B)*k, hcInv=(B,k)=>u=>u<=B?u:B+(u-B)/k;
@@ -2370,25 +2370,39 @@
       const rows=Q.map(qq=>co.q[qq]||null);
       const pend=P.meta.pending.filter(p=>p[0]===company).map(p=>p[1]);
       const mism=P.meta.csm_mismatch.filter(m=>m[0]===company).map(m=>m[1]);
+      const kindOf=r=>r?r[16]:null;   // 1 실공시 · 0 추정 · 2 경영공시 2-4 에 이미 포함(사이드카) · null 없음
       const hasVfa=rows.some(r=>r&&(N(r[1])||N(r[3])||N(r[5]))), hasPaa=rows.some(r=>r&&N(r[6])!==0), hasNb=rows.some(r=>r&&r[8]!=null);
-      const hasLic=HC_UI.lic&&rows.some(r=>r&&r[9]!=null);
+      const nSc=rows.filter(r=>kindOf(r)===2).length, nRows=rows.filter(r=>r).length, allSc=nSc>0&&nSc===nRows, anySc=nSc>0;
       const block=HC_UI.vfa==="block"&&hasVfa, hidePaa=HC_UI.paa;
       const vfaRow=q(host,"#histVfaRow"); if(vfaRow) vfaRow.style.display=hasVfa?"":"none";
       const paaLab=q(host,"#histPaaLab"); if(paaLab) paaLab.style.display=hasPaa?"":"none";
+      const licLab=q(host,"#histLicLab"); if(licLab) licLab.style.display=rows.some(r=>kindOf(r)===0||kindOf(r)===1)?"":"none";
       const segs=[];
       if(!block) segs.push({label:"CSM",idx:[0,1],color:C.csm,stack:"LRC"},{label:"BEL (최선추정부채)",idx:[2,3],color:C.bel,stack:"LRC"},{label:"RA (위험조정)",idx:[4,5],color:C.ra,stack:"LRC"});
       else segs.push({label:"CSM · 일반모형",idx:[0],color:C.csm,stack:"LRC"},{label:"BEL · 일반모형",idx:[2],color:C.bel,stack:"LRC"},{label:"RA · 일반모형",idx:[4],color:C.ra,stack:"LRC"},{label:"VFA 한 덩어리 (BEL+RA+CSM)",idx:[1,3,5],color:C.vfa,stack:"LRC"});
       if(hasPaa&&!hidePaa) segs.push({label:"PAA 부채 (보험료배분접근법)",idx:[6],color:C.paa,stack:"LRC"});
-      if(hasLic) segs.push({label:"발생사고요소 (추정)",lic:true,idx:[9],stack:"LIC"});
-      segs.forEach(sg=>{ sg.tv=rows.map(r=>r?(sg.idx.every(i=>r[i]==null)?null:sg.idx.reduce((a,i)=>a+N(r[i]),0)):null); });
+      // 오른쪽 막대(발생사고요소): 실공시=꽉 찬 색, 계산값=같은 색 줄무늬(바탕은 흰색), 추정=촘촘한 빗금. 사이드카(kind 2)는 그리지 않는다.
+      if(HC_UI.lic){
+        const lic1=r=>kindOf(r)===1;
+        const licSegs=[
+          {label:"발생사고요소 · BEL",pat:"real",color:C.bel,fn:r=>lic1(r)?r[11]:null},
+          {label:"발생사고요소 · BEL (계산값)",pat:"calc",color:C.bel,fn:r=>lic1(r)?r[14]:null},
+          {label:"발생사고요소 · RA",pat:"real",color:C.ra,fn:r=>lic1(r)?r[12]:null},
+          {label:"발생사고요소 · RA (계산값)",pat:"calc",color:C.ra,fn:r=>lic1(r)?r[15]:null},
+          {label:"발생사고요소 · 미분리",pat:"real",color:C.un,fn:r=>lic1(r)?r[13]:null},
+          {label:"발생사고요소 (추정)",pat:"est",color:C.bel,fn:r=>kindOf(r)===0?r[9]:null}];
+        licSegs.forEach(sg=>{ if(rows.some(r=>r&&Math.abs(N(sg.fn(r)))>=0.5)){ sg.lic=true; sg.stack="LIC"; segs.push(sg); } });
+      }
+      const hasLic=segs.some(sg=>sg.lic), anyEst=rows.some(r=>kindOf(r)===0), anyCalc=rows.some(r=>kindOf(r)===1&&(r[14]!=null||r[15]!=null));
+      segs.forEach(sg=>{ sg.tv=rows.map(r=>r?(sg.fn?sg.fn(r):(sg.idx.every(i=>r[i]==null)?null:sg.idx.reduce((a,i)=>a+N(r[i]),0))):null); });
       let maxCsm=0,maxPos=0,maxNeg=0,nbMax=0;
       rows.forEach((r,i)=>{ if(!r) return; const pos={},neg={};
         segs.forEach(sg=>{ const v=sg.tv[i]; if(v==null) return; const m=v>=0?pos:neg; m[sg.stack]=(m[sg.stack]||0)+Math.abs(v); });
         Object.values(pos).forEach(x=>{maxPos=Math.max(maxPos,x);}); Object.values(neg).forEach(x=>{maxNeg=Math.max(maxNeg,x);});
         maxCsm=Math.max(maxCsm,N(r[0])+N(r[1])); if(r[8]!=null) nbMax=Math.max(nbMax,Math.abs(r[8])); });
       const unit=Math.max(maxPos,maxNeg,nbMax)>=10000?"조":"억", div=unit==="조"?10000:1, tu=unit==="조"?"조원":"억원";
-      // 생략: 전체가 기준선(B=전체 CSM 최대의 1.6배)의 1.8배를 넘을 때만.
-      const B=Math.max(maxCsm*1.6,1e-9), brkOn=HC_UI.brk&&maxCsm>0&&maxPos>B*1.8; let k=1; if(brkOn) k=Math.min(1,B/(maxPos-B));
+      // 생략: 전체가 기준선(B=전체 CSM 최대의 1.6배)의 1.8배를 넘을 때만. 실제로 줄여 그릴 때(압축 10% 이상)만 생략한다 — 1:1 로 그리면서 ~ 만 찍으면 오해를 부른다.
+      const B=Math.max(maxCsm*1.6,1e-9), kc=maxPos>B?B/(maxPos-B):1, brkOn=HC_UI.brk&&maxCsm>0&&maxPos>B*1.8&&kc<0.9; let k=1; if(brkOn) k=Math.min(1,kc);
       const f=brkOn?hcF(B,k):(v=>v), finv=brkOn?hcInv(B,k):(u=>u);
       const topT=[]; segs.forEach(sg=>{ sg.th=[]; });
       rows.forEach((r,i)=>{ const cp={},cn={};
@@ -2396,7 +2410,8 @@
           const c=v>=0?cp:cn, s=sg.stack, from=c[s]||0, to=from+v; c[s]=to; sg.th[i]=(f(to)-f(from))/div; });
         Object.keys(cp).forEach(s=>topT.push({stack:s,i,top:f(cp[s])})); });
       const ds=segs.map(sg=>({type:"bar",label:sg.label,stack:sg.stack,yAxisID:"y",data:sg.th,_tv:sg.tv,
-        backgroundColor:sg.lic?hcHatch(C.ra,C.bel):sg.color,borderColor:sg.lic?C.muted:C.bg,borderWidth:sg.lic?1.5:1}));
+        backgroundColor:sg.pat==="est"?hcHatch(C.ra,C.bel):sg.pat==="calc"?hcHatch(sg.color,C.bg):sg.color,
+        borderColor:sg.lic?C.muted:C.bg,borderWidth:sg.pat==="est"?1.5:1}));
       if(hasNb) ds.push({type:"line",label:"신계약 CSM (당기 증분, 우축)",yAxisID:"y1",order:0,data:rows.map(r=>r&&r[8]!=null?r[8]/div:null),
         borderColor:C.ink,backgroundColor:C.ink,borderWidth:2.5,pointRadius:4,pointStyle:"rectRot",tension:0.15,spanGaps:false});
       const barsCut=[]; topT.forEach(t=>{ if(brkOn&&t.top>B){ const di=ds.findIndex(d=>d.stack===t.stack&&d.data&&d.data[t.i]!=null); if(di>=0) barsCut.push({di,i:t.i}); } });
@@ -2407,28 +2422,34 @@
       const yMax=f(maxPos)/div*1.05, yMin=maxNeg>0?-maxNeg/div*1.05:0;
       const axDec=unit==="조"?(lowStep<10000?1:0):0, nbDec=unit==="조"?2:(nbMax>=100?0:nbMax>=10?1:2);
       const th=(window.IQTheme&&IQTheme.chart())||{}, mob=window.innerWidth<640;
+      const basisTxt=allSc?"경영공시 2-4 기준 (발생사고요소 포함)":"잔여보장요소 기준";
+      const licTxt=hasLic?(anyEst&&!rows.some(r=>kindOf(r)===1)?" (+ 발생사고요소 추정)":anyEst?" (+ 발생사고요소, 일부 분기 추정)":" (+ 발생사고요소)"):"";
       try{ charts.hist&&charts.hist.destroy(); }catch(e){}
       charts.hist=new Chart(canvasCtx(host,"#canvasHistCombo"),{
         type:"bar",data:{labels:Q.map(qq=>pend.indexOf(qq)>=0?qq+"*":qq),datasets:ds},plugins:[hcBreakPlugin],
         options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:brkOn?10:0}},interaction:{mode:"index",intersect:false},
           plugins:{
             axisBreak:{on:brkOn,B:B/div,bars:barsCut,bg:C.bg,ink:C.ink,muted:C.muted,shade:th.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.035)"},
-            title:{display:true,text:"CSM 시계열 · "+shortName(coName)+" · 잔여보장요소 기준"+(hasLic?" (+ 발생사고요소 추정)":"")},
+            title:{display:true,text:mob?["CSM 시계열 · "+shortName(coName),basisTxt+licTxt]:"CSM 시계열 · "+shortName(coName)+" · "+basisTxt+licTxt},
             legend:{position:mob?"bottom":"top",labels:{boxWidth:14}},
             tooltip:{callbacks:{
               title:items=>items[0].label.replace("*","")+(items[0].label.indexOf("*")>=0?" (발행사 합계 행 확인 중)":""),
               label:c=>{ const d=c.dataset; if(d.type==="line") return c.parsed.y==null?null:d.label+": "+hcFmt(c.parsed.y*div,unit); const t=d._tv[c.dataIndex]; return t==null?null:d.label+": "+hcFmt(t,unit); },
-              footer:items=>{ const r=rows[items[0].dataIndex]; if(!r) return ""; const out=["잔여보장요소 합계: "+hcFmt(N(r[7]),unit)];
+              footer:items=>{ const r=rows[items[0].dataIndex]; if(!r) return ""; const kd=kindOf(r), out=[(kd===2?"2-4 합계 (발생사고요소 포함): ":"잔여보장요소 합계: ")+hcFmt(N(r[7]),unit)];
                 if(!block&&hasVfa) out.push("  VFA 포함분 — CSM "+hcFmt(N(r[1]),unit)+" · BEL "+hcFmt(N(r[3]),unit)+" · RA "+hcFmt(N(r[5]),unit));
                 if(block) out.push("  VFA 한 덩어리 안에 CSM "+hcFmt(N(r[1]),unit)+" 이 들어 있어 CSM 막대는 일반모형분만. 전체 CSM "+hcFmt(N(r[0])+N(r[1]),unit));
                 if(hidePaa&&N(r[6])) out.push("  (PAA "+hcFmt(N(r[6]),unit)+" 은 접어서 안 보임)");
                 if(brkOn) out.push("※ 세로축 일부 생략 — 위 값은 실제 값");
-                if(hasLic&&r[9]!=null) out.push("발생사고요소는 추정 = BS 보험계약부채 − 잔여보장요소");
+                if(kd===1){ out.push("발생사고요소 합계: "+hcFmt(N(r[9]),unit)+" (DART 주석 공시값)");
+                  if(r[14]!=null||r[15]!=null) out.push("  BEL·RA 중 줄무늬는 계산값 = 측정요소별 BEL·RA − 2-4");
+                  const df=hcDiff(r); if(hcBig(r,df)) out.push("보험계약자산 상계 등 차이: "+hcFmt(df,unit)); }
+                else if(kd===0) out.push("발생사고요소는 추정 = BS 보험계약부채 − 잔여보장요소 (공시값 아님)");
+                else if(kd===2) out.push("이 중 발생사고요소 "+hcFmt(N(r[9]),unit)+" (DART 공시값) — 이미 위 합계에 들어 있어 오른쪽 막대는 없음");
                 return out; }}}
           },
           scales:{
             x:{stacked:true,title:{display:true,text:"분기"}},
-            y:{stacked:true,min:yMin,max:yMax,position:"left",title:{display:true,text:"잔여보장요소 · 발생사고요소 ("+tu+(brkOn?", 축 일부 생략":"")+")"},
+            y:{stacked:true,min:yMin,max:yMax,position:"left",title:{display:true,text:mob?tu+(brkOn?" (축 일부 생략)":""):(allSc?"경영공시 2-4 합계":"잔여보장요소"+(hasLic?" · 발생사고요소":""))+" ("+tu+(brkOn?", 축 일부 생략":"")+")"},
                afterBuildTicks:ax=>{ ax.ticks=tickVals.map(v=>({value:f(v)/div})); },
                ticks:{callback:u=>hcSamo(finv(u*div)/div,axDec)+unit}},
             y1:{display:hasNb,type:"linear",position:"right",beginAtZero:true,title:{display:true,text:"신계약 CSM (당기 증분, "+tu+")",color:C.ink},
@@ -2436,25 +2457,44 @@
           }}
       });
       const last=rows[rows.length-1], cv=q(host,"#canvasHistCombo");
-      if(cv) cv.setAttribute("aria-label",shortName(coName)+" CSM 시계열: "+Q[0]+"부터 "+Q[Q.length-1]+"까지 분기별 잔여보장요소(CSM·BEL·RA) 누적 막대와 신계약 CSM 꺾은선"+(brkOn?". 세로축 일부를 생략해 표시선 위쪽은 줄여 그렸고 값은 실제 값":"")+(last?". 최신 분기 CSM "+hcFmt(N(last[0])+N(last[1]),unit):"")+". 아래 표에 같은 값이 있습니다.");
+      if(cv) cv.setAttribute("aria-label",shortName(coName)+" CSM 시계열: "+Q[0]+"부터 "+Q[Q.length-1]+"까지 분기별 "+(allSc?"경영공시 2-4 합계(발생사고요소 포함)":"잔여보장요소(CSM·BEL·RA)"+(hasLic?"와 발생사고요소":""))+" 누적 막대와 신계약 CSM 꺾은선"+(brkOn?". 세로축 일부를 생략해 표시선 위쪽은 줄여 그렸고 값은 실제 값":"")+(last?". 최신 분기 CSM "+hcFmt(N(last[0])+N(last[1]),unit):"")+". 아래 표에 같은 값이 있습니다.");
       const msg=[];
       if(brkOn) msg.push("세로축 일부를 생략했습니다(~ 표시): 표시선 아래(CSM 포함)는 실제 눈금 그대로이고 위쪽은 약 "+Math.round(1/k)+"분의 1로 줄여 그렸습니다. 툴팁·표의 값은 실제 값입니다.");
       if(pend.length) msg.push("* "+pend.join(", ")+": 발행사 합계 행을 확인하는 중이라 값이 바뀔 수 있습니다.");
       if(mism.length) msg.push("※ "+mism.join(", ")+": 경영공시 2-4 의 CSM 이 섹션 2 의 기말 CSM 과 다릅니다(원천 확인 중).");
       if(!hasNb) msg.push("이 회사는 신계약 CSM 시계열이 없어 꺾은선을 그리지 않습니다.");
-      if(HC_UI.lic&&!hasLic) msg.push("이 회사는 BS 보험계약부채 값이 없어 발생사고요소 추정 막대를 그리지 않습니다.");
-      if(rows.some(r=>r&&N(r[7])<0)) msg.push("잔여보장요소 합계가 음수(BEL 음수)인 분기가 있어 발생사고요소 추정이 크게 보일 수 있습니다.");
+      if(anySc) msg.push("이 회사의 경영공시 2-4 는 발생사고요소를 이미 포함한 값이라 왼쪽 막대에 발생사고요소가 섞여 있습니다. 그래서 "+(allSc?"":"해당 분기는 ")+"오른쪽 막대를 그리지 않았고, 발생사고요소 공시값은 표의 ‘이 중 발생사고요소’ 행에 따로 적었습니다.");
+      if(HC_UI.lic){
+        const noBar=Q.filter((qq,i)=>rows[i]&&kindOf(rows[i])==null);
+        if(noBar.length){ const unrel=(P.meta.est_unreliable||[]).indexOf(company)>=0&&rows.some(r=>kindOf(r)===1);
+          msg.push("발생사고요소 오른쪽 막대 없음: "+noBar.join(", ")+(unrel?" — 공시 원천이 없고, 재무상태표로 어림한 추정은 이 회사의 공시값과 크게 달라 그리지 않습니다.":" — 공시 원천이 없고 추정에 쓸 재무상태표 값도 없습니다.")); }
+        if(anyEst) msg.push("빗금 막대는 추정입니다. 발생사고요소 공시값이 없는 분기만 재무상태표 보험계약부채 − 잔여보장요소로 어림했습니다.");
+        if(anyCalc) msg.push("줄무늬 BEL·RA 는 계산값입니다(측정요소별 BEL·RA − 2-4). 꽉 찬 색은 회사가 직접 나눠 공시한 값입니다.");
+      }
+      if(anyEst&&rows.some(r=>r&&N(r[7])<0)) msg.push("잔여보장요소 합계가 음수(BEL 음수)인 분기가 있어 발생사고요소 추정이 크게 보일 수 있습니다.");
       if(rows.some(r=>r&&(N(r[2])+N(r[3])<0))) msg.push("BEL 합계가 음수인 분기는 BEL 막대가 0 선 아래로 내려갑니다(CSM 은 항상 0 선 위).");
       const note=q(host,"#histComboNote"); if(note) note.textContent=msg.join(" ");
-      renderHistTable(host,rows,Q,block,hasVfa,hasPaa,hasLic,pend);
+      renderHistTable(host,rows,Q,block,hasVfa,hasPaa,pend,{allSc,anySc,anyEst,anyCalc});
     }
-    function renderHistTable(host, rows, Q, block, hasVfa, hasPaa, hasLic, pend){
+    // 보험계약자산 상계 등 차이 = BS 보험계약부채 − 2-4 합계 − 발생사고요소 합계 (실공시 분기만. 추정은 정의상 0, 사이드카는 2-4 에 이미 포함)
+    function hcDiff(r){ return (r&&r[16]===1&&r[10]!=null&&r[7]!=null&&r[9]!=null)?r[10]-r[7]-r[9]:null; }
+    // 반올림 수준(재무상태표 0.1% 또는 5억 이내)의 차이는 「차이」로 안 친다 — 행·툴팁·안내를 띄우지 않는다.
+    function hcBig(r,df){ return df!=null&&Math.abs(df)>=Math.max(5,0.001*Math.abs(r[10]||0)); }
+    function renderHistTable(host, rows, Q, block, hasVfa, hasPaa, pend, fl){
       const boxT=q(host,"#histTable"), capT=q(host,"#histTableCap"); if(!boxT) return; boxT.innerHTML="";
       const N=v=>v==null?0:v, cell=fn=>rows.map(r=>{ if(!r) return "—"; const v=fn(r); return v==null?"—":hcSamo(v,0); });
       const sum=(r,idx)=>idx.every(i=>r[i]==null)?null:idx.reduce((a,i)=>a+N(r[i]),0);
-      if(capT) capT.textContent="값(억원) · 음수 △ · 잔여보장요소(LRC)는 경영공시 2-4, 발생사고요소는 추정(= BS 보험계약부채 − 잔여보장요소), 보험계약부채 합계는 재무상태표 값"+(block?" · VFA 한 덩어리 보기":" · CSM·BEL·RA 는 일반모형+VFA 합산");
+      const kd=r=>r?r[16]:null;
+      const diffs=rows.map(hcDiff), showDiff=diffs.some((v,i)=>hcBig(rows[i],v));
+      if(capT){ capT.textContent="값(억원) · 음수 △ · 잔여보장요소(LRC)는 경영공시 2-4(보험계약자산 상계 후 순액), 발생사고요소는 DART 주석 공시값(부채 기준)"
+        +(rows.some(r=>r&&r[16]===1&&N(r[13])>=0.5)?" · ‘미분리’ 는 BEL·RA 로 나누지 않고 합계만 공시한 몫":"")+(fl.anyEst?" · ‘추정’ 행은 BS 보험계약부채 − 잔여보장요소(공시값 아님)":"")+(fl.anyCalc?" · ‘계산값’ 행은 측정요소별 BEL·RA − 2-4":"")
+        +" · 보험계약부채 합계는 재무상태표 값"+(block?" · VFA 한 덩어리 보기":" · CSM·BEL·RA 는 일반모형+VFA 합산")+" ";
+        if(showDiff){ const hp=document.createElement("span"); hp.className="iq-help";
+          hp.innerHTML='<button type="button" class="iq-help-btn" aria-label="보험계약자산 상계 차이 설명" aria-describedby="help-hc-recon">?</button><span class="iq-help-pop" role="tooltip" id="help-hc-recon">왼쪽(경영공시 2-4)은 보험계약자산을 서로 상계한 순액이고, 오른쪽(발생사고요소)은 DART 주석의 부채 기준입니다. 기준이 달라 두 합이 재무상태표 보험계약부채와 다를 수 있으며, 그 차이(재무상태표 − 위 두 합계)를 ‘보험계약자산 상계 등 차이’ 행에 적었습니다. 차이가 큰 회사는 보험계약자산이 큰 회사입니다.</span>';
+          capT.appendChild(hp); } }
       const defs=[];
       const row=(label,fn,o)=>defs.push(Object.assign({label,cells:cell(fn)},o||{}));
+      const anyVal=fn=>rows.some(r=>r&&fn(r)!=null&&Math.abs(fn(r))>=0.5);
       if(!block){
         // 표는 BEL → RA → CSM 순(owner 2026-10-10). 차트는 CSM 이 맨 아래.
         row("BEL (최선추정부채)",r=>sum(r,[2,3]));
@@ -2468,12 +2508,21 @@
         row("CSM 합계 (일반모형+VFA)",r=>sum(r,[0,1]),{bold:true});
         if(hasPaa) row("PAA 부채 (보험료배분접근법)",r=>r[6]);
       }
-      row("잔여보장요소 합계",r=>r[7],{bold:true});
-      if(rows.some(r=>r&&r[9]!=null)) row("발생사고요소 (추정)",r=>r[9]);
+      row(fl.allSc?"2-4 합계 (발생사고요소 포함)":fl.anySc?"잔여보장요소 합계 (일부 분기는 발생사고요소 포함)":"잔여보장요소 합계",r=>r[7],{bold:true});
+      if(fl.anySc) row("이 중 발생사고요소",r=>kd(r)===2?r[9]:null,{level:1});
+      // 발생사고요소: 부분(BEL → RA → 미분리) 다음에 합계. 실공시/계산값/추정은 행을 나눠 어느 칸이 어느 출처인지 한눈에 보이게 한다.
+      const L1=r=>kd(r)===1;
+      if(anyVal(r=>L1(r)?r[11]:null)) row("발생사고요소 · BEL",r=>L1(r)?r[11]:null);
+      if(anyVal(r=>L1(r)?r[14]:null)) row("발생사고요소 · BEL (계산값)",r=>L1(r)?r[14]:null);
+      if(anyVal(r=>L1(r)?r[12]:null)) row("발생사고요소 · RA",r=>L1(r)?r[12]:null);
+      if(anyVal(r=>L1(r)?r[15]:null)) row("발생사고요소 · RA (계산값)",r=>L1(r)?r[15]:null);
+      if(anyVal(r=>L1(r)?r[13]:null)) row("발생사고요소 · 미분리",r=>L1(r)?r[13]:null);
+      if(rows.some(L1)) row("발생사고요소 합계",r=>L1(r)?r[9]:null,{bold:true});
+      if(fl.anyEst) row("발생사고요소 합계 (추정)",r=>kd(r)===0?r[9]:null);
+      if(showDiff) defs.push({label:"보험계약자산 상계 등 차이",cells:rows.map((r,i)=>diffs[i]==null?"—":hcSamo(diffs[i],0))});
       row("보험계약부채 합계 (재무상태표)",r=>r[10],{bold:true});
       boxT.appendChild(buildBsTableDom(["구분"].concat(Q.map(qq=>pend.indexOf(qq)>=0?qq+"*":qq)),defs));
     }
-
     function renderCompany(company){   // company = 회사코드(KR0001…)
     const coName = codeToName[company] || company;  // 표시용 이름
     currentKey = keyColorOf(coName);

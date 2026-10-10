@@ -7,6 +7,15 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-10 (3차) -- IFRS17 섹션 3 콤보: 오른쪽 막대 발생사고요소 실공시값 교체
+
+티켓 `inbox/designer/20261010T1400Z__orchestrator__MULTI_*__combo_real_lic_values.md`. 마스터 읽기 전용, 패널 JSON·빌더·IFRS17.html 만 변경(커밋·push 안 함).
+- 빌더 `scripts/viz_build_csm_combo_panel.py`: `lic_estimate()` 단독 → `lic_cells()`(실공시 항목 10~13, 계산값 항목 16·17 은 있을 때만, 없으면 추정). 행 17열(+BEL·RA·미분리·계산 BEL·RA·종류). 사이드카 `ilp_includes_lic.json` 을 `meta.includes_lic` 로 구움. 항목 16·17 이름이 BEL·RA 가 아니면 중단.
+  추정 신뢰 규칙: 실공시 분기에서 추정이 EST_TOL(15%) 넘게 틀린 회사는 다른 분기 추정을 그리지 않음(`meta.est_unreliable`).
+- 화면: 실공시=꽉 찬 BEL·RA·미분리(미분리는 별도 옅은 회색), 계산값=같은 색 줄무늬, 추정=빗금. 툴팁·값 표(행을 출처별로 분리)·범례·안내 구분. 사이드카 3사는 오른쪽 막대 없음 + 안내 + 표 「이 중 발생사고요소」. 「보험계약자산 상계 등 차이」 행은 BS − 2-4 합 − 발생사고요소 합이 BS 0.1%·5억을 넘는 회사만(?설명). 모바일은 차트 제목 2줄·세로축 제목 단축.
+- 부수 수정: 세로축 생략(~)은 실제로 10% 이상 줄여 그릴 때만(1:1 인데 "1분의 1로 줄였다" 문구가 나오던 것).
+- 확인(로컬 서버, `?iq_internal=1`): 삼성생명·삼성화재·메리츠·DB손보·코리안리·AIA·AIG·라이나·교보라이프플래닛·하나생명·IBK연금·예별·ABL·KDB생명·푸본현대, 데스크톱+모바일 375, 라이트+다크, 콘솔 오류 0, 회사코드 노출 0.
+
 ## 2026-10-10 -- 재보험·보증 3분류(index·compare) + 새 재보사 8곳 점검 + IFRS17 섹션 3 콤보 차트 1차 목업
 
 **3분류.** `data/company_segment.json`(코드→구분: 코리안리·서울보증·KR1101~1107 = 재보험·보증, 나머지는 마스터 생손보여부)을 index.html 과 `scripts/viz_build_compare_panel.py` 가 읽는다. 마스터 셀은 안 고침.

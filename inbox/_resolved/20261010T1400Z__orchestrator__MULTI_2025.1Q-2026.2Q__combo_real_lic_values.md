@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261010T1400Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2025.1Q-2026.2Q
@@ -44,4 +44,4 @@ IFRS17.html 섹션 3 콤보 차트(`#sec-hist`, 빌더 `scripts/viz_build_csm_co
 - 실값/추정/계산값 구분 방식, 사이드카 3사 처리, 상계 차이 설명 방식, 확인한 회사(대형 생보·손보·사이드카 3사 중 1·원천 부재 회사 1·IBK연금), 스크린샷 경로, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+디자이너 반영 완료(2026-10-10, designer Sonnet, 약 21분, 토큰 268k, 미커밋 → 오케스트레이터 커밋). 실값(BEL·RA·미분리)/계산값(항목 16·17, 아직 마스터에 없음 — 합성 데이터로만 확인)/추정(빗금) 구분, 사이드카 3사(ABL·KDB·푸본)는 오른쪽 막대 없이 안내, 상계 차이 행·팝오버, 추정 15% 초과 회사는 추정 막대 생략(designer 판단 기준). 새 배포 파일 없음.
