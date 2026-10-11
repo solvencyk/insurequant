@@ -74,6 +74,8 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 JSON_PATH = REPO / "kics_disclosure.json"
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # scripts/ — 공통 판 선택 헬퍼
+from _disclosure_pdf_paths import md_files_latest  # noqa: E402  (등재부가 최신 판을 지정한 회사는 그 판의 MD 만 — 2026-10-11)
 MD_INBOX = REPO / "md_inbox"
 
 _PERIOD_RE = re.compile(r"^FY(\d{4})_Q([1-4])$")
@@ -1359,7 +1361,7 @@ def _process_period(
     companies = 0
     log: list[str] = [f"=== {period_label} ({quarter}) ==="]
 
-    for md_path in sorted(md_dir.glob("*.md")):
+    for md_path in md_files_latest(md_dir):
         code = md_path.stem.split("_", 1)[0]
         text = md_path.read_text(encoding="utf-8")
         tables = _scan_tables_with_context(text)

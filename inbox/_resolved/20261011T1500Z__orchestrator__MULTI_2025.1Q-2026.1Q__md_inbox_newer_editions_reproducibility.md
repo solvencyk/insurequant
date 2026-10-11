@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T1500Z
-status: open
+status: resolved
 route: reparse
 company: KR0004 · KR0032 · KR0073
 period: 2025.1Q · 2025.3Q · 2025.4Q · 2026.1Q
@@ -28,4 +28,4 @@ iter: 1
 - 변환한 MD 5개(쪽 수·소요), 헬퍼 변경과 기존 선택 불변 증명, 재현성 비교 결과(같음/다름 칸), 마스터 sha256 전후, `TODO_parser_kics.md` Status + `docs/changelog_parser_kics.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(parser-kics, orchestrator 검증·종결 2026-10-11) 신판 5개 MD 변환(`<이름>_v20261011.md`, 옛 MD 병존), 판 선택 등재 `data/_derived/kics_edition_choice.json`(16칸) + `scripts/_disclosure_pdf_paths.py` 헬퍼 + `fill_*` 5종 MD 반복문 교체. 645개 (회사,분기) 선택 전후: 변경은 등재 16칸뿐. 재현성(마스터 사본): 412칸 중 384 동일·형만 다름 10·반올림 13·다름 5(전부 항목 48, `fill_period --refresh` 의 기존 결함 — 전 기간 --refresh 금지, fill_tfi --apply 로 47~54 재생성), 옛 MD 대조군은 66칸이 옛 값으로 되돌아감. 마스터 4종 sha256 전후 동일(HEAD 대조 확인). 금리민감도 provenance 2칸 source_file 을 새 MD 경로로 갱신. validation 후속: `tests/test_post_transition_golden.py` 가 `*.md` 를 직접 글롭해 병존 MD 를 이중 집계(7,144→7,269) — 헬퍼 사용으로 고친 뒤 골든 --update; 다른 `*.md` 직접 글롭 도구 목록은 runlog 13.6. KB손보 2칸 MD 미변환(티켓 밖).

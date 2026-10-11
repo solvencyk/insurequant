@@ -17,7 +17,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))   # scripts/ — 공통 PDF 해석기
-from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
+from _disclosure_pdf_paths import latest_disclosure_pdfs, md_files_latest  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 JSON_PATH = REPO / "kics_disclosure.json"
 MD_INBOX = REPO / "md_inbox"
 DISCLOSURE = REPO / "data" / "disclosure"
@@ -408,7 +408,7 @@ def main(argv):
         if not md_dir.is_dir():
             print(f"  {period}: no md_inbox, skip"); continue
         n36 = n41 = 0
-        for md_path in sorted(md_dir.glob("*.md")):
+        for md_path in md_files_latest(md_dir):
             code = md_path.stem.split("_", 1)[0]
             meta = _meta_for(rows, code)
             if not meta:

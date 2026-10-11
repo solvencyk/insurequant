@@ -81,6 +81,47 @@ def _period_label(period: str) -> str:
     return f"{period[2:6]}.{period[-1]}Q"
 
 
+EDITION_REGISTRY = ROOT / "data" / "_derived" / "kics_edition_choice.json"
+
+
+def registry_latest_name(period: str, code: str) -> str | None:
+    """K-ICS 레인 판 선택 등재부(`data/_derived/kics_edition_choice.json`, 2026-10-11)가 이 (분기, 회사)의 **쓸 판**이라고 적은 PDF 파일명. 없으면 None.
+
+    같은 (분기, 회사)에 원본과 사이트 재게시 판(`_v20261011`)이 병존하는 16칸만 적혀 있다. 등재 안 된 칸·읽기 실패는 None 이라 종전 동작이 그대로다.
+    """
+    try:
+        data = json.loads(EDITION_REGISTRY.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    ent = (data.get("cells") or {}).get(f"{code}|{_period_label(period)}")
+    name = ent.get("use") if isinstance(ent, dict) else None
+    return Path(str(name)).name if name else None
+
+
+def md_files_latest(md_dir: Path) -> list[Path]:
+    """`sorted(md_dir.glob("*.md"))` 와 같되, 등재부(`registry_latest_name`)가 최신 판을 지정한 회사는 그 판의 MD 하나만 남긴다.
+
+    MD 이름은 docling 이 PDF 이름을 따라 짓는다(`KR0004_예별손해보험_v20261011.md`). 같은 회사 MD 가 둘 이상이고 등재된 판의 MD 가 있을 때만 옛 MD 를 뺀다 —
+    등재 안 된 회사·등재 판 MD 가 아직 없는 칸은 종전 목록 그대로다. (재보사 매니페스트 판 선택은 여기서 쓰지 않는다: KR1102 2023.4Q 의 종전 동작 보존.)
+    """
+    files = sorted(md_dir.glob("*.md"))
+    period = md_dir.name
+    by_code: dict[str, list[Path]] = {}
+    for f in files:
+        by_code.setdefault(f.name.split("_", 1)[0], []).append(f)
+    drop: set[Path] = set()
+    for code, grp in by_code.items():
+        if len(grp) < 2:
+            continue
+        name = registry_latest_name(period, code)
+        if not name:
+            continue
+        keep = [f for f in grp if f.stem == Path(name).stem]
+        if keep:
+            drop.update(f for f in grp if f not in keep)
+    return [f for f in files if f not in drop]
+
+
 def manifest_latest_name(period: str, code: str, root: Path | None = None) -> str | None:
     """다운로더 매니페스트(`<disclosure>/_meta/reinsurer_<code>_manifest.json`)가 이 (분기, 회사)의 **쓸 판**이라고 적은 파일명(basename). 없으면 None.
 
@@ -89,6 +130,10 @@ def manifest_latest_name(period: str, code: str, root: Path | None = None) -> st
       > ``file``(주 파일). ``alternates``(원본 등 비주 판)는 보지 않는다 — 뮌헨 2023.1Q·2Q 는 K-ICS 정정본이 주 파일(`file`)이고 옛 원본이 `_v` 로 병존한다.
     매니페스트가 없는 회사(기존 39사)는 항상 None 이라 종전 동작이 그대로다.
     """
+    if root is None:
+        reg = registry_latest_name(period, code)
+        if reg:
+            return reg
     mf = (root or DISCLOSURE) / "_meta" / f"reinsurer_{code}_manifest.json"
     if not mf.is_file():
         return None

@@ -1,4 +1,7 @@
 # TODO archive — `TODO_parser_kics.md` (Status 이력, 읽기 지연)
+- **2026-10-11 (23회차) 재보사 스윕 단계 13 — 미뤘던 6건 처리**: IRR 잔액 기존 6셀 열 뒤바뀜 정정(+듀레이션갭 6행) · 스위스리 2023.2Q 적재(마스터 +46행) · 금리민감도·IRR 추출기가 수작업 정정을 스스로 재현(재보사 168행·IRR 301셀 = 마스터 동일, 기존 39사 불변 증명) · 이중 raw PDF 공통 헬퍼(15개 도구) · census 40칸 적재(6,048칸 중 빈칸 1,595 전부 사유 분류). 퍼시픽 금리민감도·정밀값은 이미 적재돼 있었음.
+  커밋 없음. K-ICS 게이트 RED 57·blocking 0 불변, 단 exit 2 = `CENSUS_EXEMPTION_INERT KR1102 2023.2Q` 1건(티켓이 예고). 남은 것: validation(등재 해제 · 룰 골든 `--update` · 마이브라운 소액 오탐) · publishing(xlsx `K-ICS공시`·`금리듀레이션갭` + public_exports 3종) · owner(전기 열 적재 후보 4버킷).
+  근거 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_13.md`.
 
 - **2026-10-10 (22회차) 재보사 금리민감도 RED 40 → 5 · 듀레이션 갭 재보사 46칸 적재**: 금리민감도 +24행 · 값 정정 28행(단위 19 · 하노버 후 0 행 미러 9), 근거 +3셀, IRR 잔액 +46셀 → 듀레이션 갭 +46행(`DURGAP_CENSUS_MISSING` 46 → 0). 기존 39사 전 파일 HEAD 와 동일, K-ICS 게이트 RED 57·blocking 0 불변.
   커밋 없음. 남은 것: validation 등재 5건(제네럴 2026.2Q +100bp RS1 2 · 마이브라운 RS5 3) · publishing xlsx 금리민감도·금리듀레이션갭 재동기화 · 기존 6셀 IRR 열 뒤바뀜(카카오페이손보 5 · 하나손보 2025.2Q) 적용 결정.

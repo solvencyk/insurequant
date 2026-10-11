@@ -149,6 +149,7 @@ MD_INBOX = REPO / "md_inbox"
 sys.path.insert(0, str(REPO / "scripts"))
 sys.path.insert(0, str(REPO / "src"))
 
+from _disclosure_pdf_paths import md_files_latest  # noqa: E402  (등재부가 최신 판을 지정한 회사는 그 판의 MD 만 — 2026-10-11)
 from fill_post_transition_to_disclosure import (  # noqa: E402
     _scan_tables_with_context,
     _pick_pre_post_columns,
@@ -558,7 +559,7 @@ def _process_period(
     bucket_reports: list[dict] = []
     warnings: list[str] = []
 
-    for md_path in sorted(md_dir.glob("*.md")):
+    for md_path in md_files_latest(md_dir):
         code = md_path.stem.split("_", 1)[0]
         if code not in meta_by_code:
             warnings.append(f"{period_label} {code}: no baseline metadata in master (skip)")

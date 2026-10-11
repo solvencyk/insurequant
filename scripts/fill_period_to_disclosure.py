@@ -8,6 +8,8 @@ sys.path.insert(0, str(REPO / "src"))
 from solvency.parser.kics_baseline_match import match_baseline_value_or_zero
 from solvency.parser.kics_disclosure_parser import build_label_lookups, extract_kics_detail_rows, normalise_item_value
 JSON_PATH = REPO / "kics_disclosure.json"
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # scripts/ — 공통 판 선택 헬퍼
+from _disclosure_pdf_paths import md_files_latest  # noqa: E402  (등재부가 최신 판을 지정한 회사는 그 판의 MD 만 — 2026-10-11)
 MD_INBOX = REPO / "md_inbox"
 _PERIOD_RE = re.compile(r"^FY(\d{4})_Q([1-4])$")
 STALE_DELETES = [("KR0005", "2025.4Q", range(18, 27))]
@@ -137,7 +139,7 @@ def _process(rows, periods, refresh, F, target_quarter=None):
         for r in rows:
             if r.get(F["quarter"]) == tq:
                 index[(r[F["code"]], r[F["item"]], r[F["name"]])] = r
-        for md_path in sorted(md_dir.glob("*.md")):
+        for md_path in md_files_latest(md_dir):
             code = md_path.stem.split("_", 1)[0]
             baseline = _baseline_for_company(rows, code, tq, bq, F)
             if not baseline:

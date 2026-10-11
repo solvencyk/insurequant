@@ -2,6 +2,16 @@
 
 > Last updated: 2026-10-11 · Stage 2/5 — parser (kics lane)
 
+## 2026-10-11 — 신판 5곳 재현성: MD 변환 · 판 선택 등재부 · `fill_*` 재현 증명 (kics 레인, 커밋·푸시 없음)
+
+계약: orchestrator 티켓 `inbox/parser/20261011T1500Z__orchestrator__MULTI_2025.1Q-2026.1Q__md_inbox_newer_editions_reproducibility.md`(공유 티켓, 오케스트레이터가 종결). 상세·재현 명령 `data/disclosure/_meta/kics_newer_editions_apply_runlog_20261011.md` §13.
+
+- **MD 5개 변환**: `run_harness.py --stage parse --workers 1`(PDF 한 개씩 임시 폴더에 복사해 입력, 한 번에 docling 1프로세스, 끝날 때마다 종료 확인). 농협 2025.1Q 50KB/194초 · 교보 2025.3Q 51KB/204초 · 교보 2026.1Q 50KB/224초 · 예별 2025.4Q 87KB/572초 · 교보 2025.4Q(638쪽) 192KB/1,008초. 전부 SUCCESS, 누락 쪽 0. 이름은 PDF 를 따라 `…_v20261011.md`, 옛 MD 는 그대로 둠(재보사 `_v20240510` 선례; 옛 MD 를 옮기면 금리민감도 출처 사이드카와 `validate_data_contract` 의 source_file 존재 검사가 깨짐). `md_inbox` · `data/disclosure` 는 gitignore 라 이 PC 에만 있음.
+- **판 선택**: 등재부 `data/_derived/kics_edition_choice.json`(16칸, 판 선택 기록 `edition_choice_newer_20261011.json` 에서 생성, 옛/새 sha256 포함)을 `scripts/_disclosure_pdf_paths.py` 가 읽는다(`registry_latest_name` → `manifest_latest_name` 맨 앞, 기본 트리만). `latest_disclosure_pdfs` · `prefer_latest_edition` 이 새 판을 고르고, 신설 `md_files_latest(md_dir)` 는 등재된 회사에 한해 옛 MD 를 뺀다. `fill_period` · `fill_subitems` · `fill_market_subitems` · `fill_post_transition` · `fill_tfi_table` 의 MD 루프가 이것을 쓴다. 증명: 645조합 전후 선택 diff 에서 바뀐 것은 정확히 등재 16칸, 나머지 629 동일(PDF 목록·MD 선택 모두). 재보사 매니페스트 경로(KR1102 2023.4Q 병존 MD)는 건드리지 않음.
+- **재현성(마스터를 쓰지 않음)**: `kics_disclosure.json` 사본에서 `fill_period --refresh` → `fill_subitems --refresh` → `fill_market_subitems` → `fill_post_transition`(+ 별도 `fill_tfi --apply`)을 FY2025_Q1 · Q3 · Q4 · FY2026_Q1 에 실행하고 마스터와 칸 단위 비교. 5개 (회사, 분기)에서 같음 384 · 숫자 동일(형 차이) 10 · 반올림 차(≤1) 13 · 다름 5(전부 항목 48). 옛 MD 만 쓰는 대조군은 66칸이 옛 값으로 되돌아감(예별 10 · 농협 8 · 교보 8/23/17). 반올림 차는 마스터가 소수 정밀값(27 · 52 · 22후 · 23후 · 16후)을 쥐고 `fill_*` 가 정수 인쇄값을 쓰는 것. 항목 48 은 `fill_period --refresh` 가 오매칭('2', '9943' 등)하는 기존 결함으로 4개 분기 다른 회사에서도 128칸 발생(옛/새 MD 실행 동일); `fill_tfi --apply` 는 47~54 72칸을 마스터와 정확히 재생성. 5곳 밖 행은 옛/새 MD 실행에서 서로 동일. `fill_*` 를 전체 기간에 `--refresh` 로 돌리지 말 것(항목 48 포함 611칸 이동).
+- **금리민감도**: 추출기를 사본에서 범위 실행(예별 · 교보 2025.4Q)하면 12행이 마스터와 완전 동일(옛 MD 대조군은 10행이 옛 값). `kics_rate_sensitivity_provenance.json` 의 `source_file` 두 칸(KR0004 · KR0073 2025.4Q)을 신판 MD 경로로 바꿈(같은 `md_inbox/…md` 형식, 계보 `DISCLOSURE_MD` 불변, 파일 존재). 에미터가 다른 곳에서 내는 차이는 KR1106 4칸(PDF 폴백 → MD, 기존 상태)뿐이라 두지 않음.
+- **불변 증명**: `kics_disclosure.json` `4ce39b259814…` · 금리민감도 `6bacac612b56…` · 듀레이션갭 `5027bd1b9f64…` · IRR 잔액 `c3c59a3eeec2…` 전후 동일. 테스트 `test_deploy_assets` · `test_disclosure_raw_pdf_wiring`(기존 `bspl_apply_*` 2건 실패는 이 변경과 무관) · `unit/test_disclosure_pdf_*` 통과, `test_post_transition_golden` 은 앞 티켓부터 실패였고 이번에는 `*.md` 글롭이 병존 MD 를 이중 집계해 cells 7,144 → 7,269 (validation 몫: 골든 함수에 `md_files_latest` 적용 뒤 `--update`).
+
 ## 2026-10-11 — 사이트 신판 16칸 대조·적재: 예별·농협·교보 3분기 정정, KB손보 신판 대조 (kics 레인, 커밋·푸시 없음)
 
 계약: downloader 티켓 `inbox/parser/20261011T1210Z__downloader__MULTI_2023.1Q-2026.2Q__newer_site_editions_census_kics.md`(공유 티켓, 오케스트레이터가 종결). 상세·재현·칸별 전후 `data/disclosure/_meta/kics_newer_editions_apply_runlog_20261011.md`, 도구·계획·증거 `data/disclosure/_meta/kics_newer_editions_20261011/`.

@@ -1,0 +1,101 @@
+{
+ "_doc": "K-ICS lane edition registry (parser decision, 2026-10-11, ticket 20261011T1500Z). Same (company, quarter) holds two raw PDFs (original + site re-post _v20261011). 'use' = basename of the edition the lane reads. Read by scripts/_disclosure_pdf_paths.manifest_latest_name() (default tree only) so latest_disclosure_pdfs()/prefer_latest_edition()/md_files_latest() pick it; cells absent here are unaffected. NEW/NEW_TEXT_LAYER/NO_MASTER_CHANGE -> new file; NO_KICS_CHANGE (non-K-ICS numbers moved only) -> original file. Source record: data/disclosure/_meta/kics_newer_editions_20261011/edition_choice_newer_20261011.json.",
+ "cells": {
+  "KR0004|2025.4Q": {
+   "use": "KR0004_예별손해보험_v20261011.pdf",
+   "decision": "NEW",
+   "old_sha256": "67d995fc0e3cfee44b9196de4ced950f51ff0580f55682eab2db92f52a419f7c",
+   "new_sha256": "4d62146f68ee326eb50b0fdb8f37b5652c2df14f0b3aeb8d18bc7618211ad907"
+  },
+  "KR0032|2025.1Q": {
+   "use": "KR0032_NH농협손해보험_v20261011.pdf",
+   "decision": "NEW",
+   "old_sha256": "ea52daaabe66184bb7e092f9bbf5e4f8302167431b69d54efcdd939b01f88640",
+   "new_sha256": "98da978804bc0902dd52cc2412fce066ba25db40d65a9a5315ff3fe2f5d43ac7"
+  },
+  "KR0072|2025.3Q": {
+   "use": "KR0072_케이디비생명보험_v20261011.pdf",
+   "decision": "NO_MASTER_CHANGE",
+   "old_sha256": "30640d47e3a08be3ed0b7d90a0a571cefbd4fdb477caf15a06c7532572ab2726",
+   "new_sha256": "27fa17507ecefad765713bb68e97defb984443bd8ff81ed9d28b4d86e37b08d0"
+  },
+  "KR0073|2024.3Q": {
+   "use": "KR0073_교보생명보험_v20261011.pdf",
+   "decision": "NO_MASTER_CHANGE",
+   "old_sha256": "661dc3b43375058dd12c45977bc8e7bae17a6d042de33ac9936100826225c72d",
+   "new_sha256": "e145e08dccca2e66e48f8917324068885b295e87b08111ac02b0cba3da1b4687"
+  },
+  "KR0073|2025.3Q": {
+   "use": "KR0073_교보생명보험_v20261011.pdf",
+   "decision": "NEW",
+   "old_sha256": "ba086754ce25f82cee1e6b857ca04a92fa51cdd500988c95e041e987749a74eb",
+   "new_sha256": "029e4c674dacb26ba17d04bb9e22d1f5451be8c301fafd6268b82af99975ede6"
+  },
+  "KR0073|2025.4Q": {
+   "use": "KR0073_교보생명보험_v20261011.pdf",
+   "decision": "NEW",
+   "old_sha256": "d76493b7f469f4cddc9c8c7614f92513fb86287e72665366353e43b3913e0b6d",
+   "new_sha256": "1f750bd31e3a0664918aa4a27be27bb7fe2f3efb8932c90c1ae2ee898a05001d"
+  },
+  "KR0073|2026.1Q": {
+   "use": "KR0073_교보생명보험_v20261011.pdf",
+   "decision": "NEW",
+   "old_sha256": "54bb36790f9f0c3fa0d749d3cd609b119cce73e9d40e69c8a9e87610e0b410ac",
+   "new_sha256": "5e63abc11e7920f399c4d2cd758e568b2960535d68e251943f872b50d60255a8"
+  },
+  "KR0010|2025.4Q": {
+   "use": "KR0010_KB손해보험_v20261011.pdf",
+   "decision": "NEW_TEXT_LAYER",
+   "old_sha256": "e8fbae1142bb219b3c027144362cc73d8d0e11d6f3c2d2519118d09d0e26a106",
+   "new_sha256": "63ed19bcc2a0f6100ebb59eaca5f0a5b1836d452ce1641208d4b5b45ed87be43"
+  },
+  "KR0010|2026.2Q": {
+   "use": "KR0010_KB손해보험_v20261011.pdf",
+   "decision": "NEW_TEXT_LAYER",
+   "old_sha256": "095afd9395df4b2f837131e0204e401e00959f576634bea0c94a7093ccfa8094",
+   "new_sha256": "5d55e7110228559282d1a4cf54341decfb34d4f55cbc5429f48f77fbf0fb6095"
+  },
+  "KR0009|2023.4Q": {
+   "use": "KR0009_현대해상_amended.pdf",
+   "decision": "NO_KICS_CHANGE",
+   "old_sha256": "bfdd5f42839b72c9f362e9aac83031fa811dd27f5cd9d0bd5132ce8fe02f308a",
+   "new_sha256": "feb22000373480f84f3f5939e914b051d8f074d89c021db7f3acb7745e0e65e6"
+  },
+  "KR0009|2024.4Q": {
+   "use": "KR0009_현대해상.pdf",
+   "decision": "NO_KICS_CHANGE",
+   "old_sha256": "2f4475b62ec3c8d310b70a5aa54f348612eedd4dbc71e643598b955b41c6bd92",
+   "new_sha256": "cf354695cd79f3e54f801ad95db29854c7a47b9e51ab8306ebc84a324756e6ef"
+  },
+  "KR0009|2025.2Q": {
+   "use": "KR0009_현대해상_amended.pdf",
+   "decision": "NO_KICS_CHANGE",
+   "old_sha256": "fda75732c2bb1940aebd8946afd728ada06c35eb6119fb734cab0abd7a4b8702",
+   "new_sha256": "67d1826df07be5456b942a80174958ed7ce2ce03c6831effcad587291de465df"
+  },
+  "KR0068|2025.4Q": {
+   "use": "KR0068_한화생명.pdf",
+   "decision": "NO_KICS_CHANGE",
+   "old_sha256": "367bdbc7124fc4f39c0d4636ad346abd10738d433db0e36f43fb25c37ed1f299",
+   "new_sha256": "f9180169c1d72e9526574951f60ef47587f0dde0c284bbf09fd953f43752f8cd"
+  },
+  "KR0068|2026.1Q": {
+   "use": "KR0068_한화생명.pdf",
+   "decision": "NO_KICS_CHANGE",
+   "old_sha256": "8276f5f70ed16bafd6f5c9749eab2b1157bdf8ae09cdc33ef39dee1e7b036352",
+   "new_sha256": "af55742f6c138d8c91f19a39cf4a503235ad7ee3e11b807b3d8f4d42d4dfa16b"
+  },
+  "KR0097|2024.4Q": {
+   "use": "KR0097_하나생명보험.pdf",
+   "decision": "NO_KICS_CHANGE",
+   "old_sha256": "b5f85599f465582562cccccc6168a9e70d9d39f5946fcab7e7680cfb85bff509",
+   "new_sha256": "b8cd09ab473e802927aa4ca458cbf9aa70d9702d4822972382ad1a5d88093b61"
+  },
+  "KR0099|2026.2Q": {
+   "use": "KR0099_케이비라이프생명보험.pdf",
+   "decision": "NO_KICS_CHANGE",
+   "old_sha256": "c0bda03d9607abe2398c4b377ac3f926f98c4487c9f765d9989baae09bf4ae3c",
+   "new_sha256": "9fb65025723f5f790ba9f23091cfdd795ee58773dff518c71902079665caf7ab"
+  }
+ }
+}
