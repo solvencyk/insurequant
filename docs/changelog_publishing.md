@@ -10,6 +10,16 @@
 
 ---
 
+## 2026-10-12 — 미니 재동기화 2차 (재보사 PL·BS·CSM 재스윕 반영, 커밋만, push·배포 보류)
+
+티켓 `inbox/publishing/20261012T0500Z__orchestrator__MULTI_2023.1Q-2026.2Q__mini_resync_2_reinsurer_resweep.md`. 마스터 JSON 은 읽기만 했다(3727438·57b7d78).
+- xlsx 7시트를 시트별로 동기화(`sync_master_xlsx_sheet.py`, 기존 행 삭제 0): 손익분해PL 13,491→13,794(+303행, 값 변경 25칸 = 15행·KR1102/1103/1105 전부 값→값) · 17BS +49 · CSM워터폴 +18 · CSM상각 +15 · 가정민감도 +6 · 보험계약부채 +110 · 신계약CSM배수 +3. 마스터 diff 와 칸 단위로 일치, 다른 10시트 SHA 동일, 요약 시트는 행수 칸만 변경. 드리프트 RED 7→0.
+- `NB_CSM_multiple.json` 390→393(재보사 KR1104 2025.4Q·KR1105 2025.4Q·KR1107 2023.4Q, 배수 null). 기존 390행 변경 0.
+- 패널: ifrs17 viz 4패널·csm_waterfall 바이트 동일(재보사 상각·민감도는 최신 분기만 싣는데 신규 행이 모두 2023.4Q). csm_combo 52노드·compare 137리프 변경, 전부 재보사(다른 회사 0). compare 의 손해율 항목은 직전 라운드 재보사 행을 처음 반영한 것.
+- `public_exports/` 7시트+manifest 재생성(build_id b4b6a71). 게이트: data-contract RED 102(전부 CONCEPT_MIXED_DISCLOSURE_INTO_DART, MASTER_XLSX_* 0), live_artifacts RED 0·YELLOW 25(baseline), 테스트 142 passed/1 skipped, viz 골든 2종 통과.
+- 커밋 `b4b6a71`(xlsx·NB·패널·증거), `5079688`(public_exports). 상세 `data/_derived/mini_resync_20261012/runlog.md`.
+
+
 ## 2026-10-12 — 재보사 손해율 패널 확장 + 예실차 블록 + xlsx `손해율` 동기화 (커밋만, push·배포 보류)
 
 - `scripts/viz_build_persistency_lossratio_panels.py`: `build_ae()` 추가(읽기 `data/loss_ratio/claims_ae_ratio.json`). 패널 최상위에 `ae` 블록: `ae[회사코드]={n, q:{공시분기:[[기준연도, 사업구분, 예상손해율%, 실제손해율%, 예실차비율%p, [플래그]]]}}` — 값은 마스터 그대로, 공시값 '-'는 null, 플래그는 마스터 `플래그` + `identity_break`/`dash`. `companies` 처리 코드는 바꾸지 않았다(재보사는 마스터에 행이 들어와 자동 편입).

@@ -5,14 +5,14 @@
 
 ## Status (최신 3개)
 
+- **2026-10-12 미니 재동기화 2차(재보사 재스윕 반영, 커밋만 · push 보류)** — xlsx 7시트(`손익분해PL` +303행·25칸, `17BS` +49, `CSM워터폴` +18, `CSM상각` +15, `가정민감도` +6, `보험계약부채` +110, `신계약CSM배수` +3)·NB 마스터 +3행(재보사, 배수 null)·combo/compare 재빌드(재보사만)·`public_exports`(`b4b6a71`·`5079688`). 드리프트 0, data-contract RED 102(전부 `CONCEPT_MIXED_DISCLOSURE_INTO_DART`), live_artifacts RED 0.
+  남은 것: ① `CONCEPT_MIXED_DISCLOSURE_INTO_DART` 102 는 validation ② ifrs17 viz 4패널·csm_waterfall 은 바이트 동일(신규 재보사 행이 전부 최신 분기 아님) ③ compare 패널 손해율 항목은 직전 라운드(`66e6156`) 재보사 행을 이번에 처음 반영. 상세 `data/_derived/mini_resync_20261012/runlog.md`.
+
 - **2026-10-12 재보사 손해율 패널·xlsx 동기화(커밋만 · push 보류)** — `panel_loss_ratio.json` 37→44사(재보사 7곳 추가·기존 37사 바이트 동일)+최상위 `ae` 블록(예실차 162행·44사), xlsx `손해율` +1,904행(변경 셀 0).
   남은 것: ① designer 가 `ae` 를 화면에 표시(`meta.note` 참조) ② 예실차(`claims_ae_ratio.json`)·긴 형식 표(`risk_premium_vs_expected_claims.json`)는 xlsx 시트가 없다 → 신설은 owner 승인(`build_master_xlsx.py` 스키마) ③ `public_exports/` 는 다른 마스터가 끝난 뒤 마감 라운드에서.
 
 - **2026-10-11 미니 재동기화(라이나 CSM·PL 항목 4·상각 정정, 커밋만 · push 보류)** — xlsx 4시트(`5d320c9`)·NB 마스터 재빌드·combo/compare 재빌드·`public_exports`(`812b007`). 드리프트 0, data-contract RED 0, live_artifacts RED 8(`INSPL_CENSUS_MISSING` 뿐, `NB_CENSUS_MISSING` 0).
   남은 것: ① 골든 `test_viz_ifrs17_panels_golden`(`csm_amort_schedule` 해시만)·지문 `--update` 는 validation ② 라이나 상각 스케줄은 패널에 안 간다(패널 행이 DART 원천) — 화면에 싸지 owner 판단. 상세 `data/disclosure/_meta/mini_resync_runlog_20261011.md`.
-
-- **2026-10-11 마감 라운드(커밋만, push·배포 보류)** — xlsx 12시트 동기화(`8848cb8`, 드리프트 0)·`public_exports` 재생성(`61babb6`)·IFRS17 viz 상각/민감도에 재보사 7곳(`17dca81`)·csm_combo(48사)/compare 재빌드(`89ecf9a`)·서울보증 forward 제외 행·tier 스크립트 회사명 수정. 게이트 data-contract RED 22(알려진 것만), `MASTER_XLSX_*` 0.
-  남은 것: ① 골든 `test_viz_ifrs17_panels_golden`(+7/+7 행)·지문 `--update` 는 validation ② `validate_live_artifacts` 새 RED 26 = `INSPL_CENSUS_MISSING` 8(`NB_CENSUS_MISSING` 18 은 orchestrator 승인으로 NB 마스터 +18행(`1412aaf`)·xlsx/공개본(`04ea6c6`)으로 해소)(보험손익 원표 viz 는 DART 표라 재보사 없음) — 마스터 추가 승인 또는 게이트 면제는 owner/validation ③ designer 티켓 2건(K-ICS `exclusion_reason` 읽기, IFRS17 상각 차트 y축 100배 작게 찍힘 — 라이브에도 있는 것으로 보임). 상세 `data/disclosure/_meta/final_resync_runlog_20261011.md`.
 
 ## 열린 일
 

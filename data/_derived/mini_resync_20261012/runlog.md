@@ -3,7 +3,9 @@
 Ticket: `inbox/publishing/20261012T0500Z__orchestrator__MULTI_2023.1Q-2026.2Q__mini_resync_2_reinsurer_resweep.md` (not edited). Branch fix/csm-product-segmented-columns. No push/deploy/subagents/docling/golden --update/exception registration.
 
 ## Interim result (top)
-- Steps 1-3 DONE (preflight, xlsx 7 sheets, NB). Steps 4-6 pending.
+- ALL STEPS DONE. Commits: `b4b6a71` (xlsx 7 sheets + NB master + combo/compare panels + evidence), `5079688` (public_exports, manifest build_id b4b6a71), docs commit separate.
+- Gates: validate_data_contract SUMMARY RED=102 (all CONCEPT_MIXED_DISCLOSURE_INTO_DART; before the round 109 = 102 + MASTER_XLSX 7), YELLOW 147; MASTER_XLSX_* 0 (drift 0 cells, 120,507 rows); validate_live_artifacts RED=0, YELLOW 25 baselined (INSPL_CENSUS_MISSING 15 etc.), NB_CENSUS_MISSING 0, public_exports section 0 findings.
+- Tests: test_deploy_assets + test_push_gate_wiring + test_prepush_scope 142 passed, 1 skipped. Golden viz (ifrs17 panels + csm_waterfall) 2 passed (the earlier csm_amort_schedule sha failure was already resolved by validation).
 
 ## 1. Preflight
 - Masters == HEAD (git status: only data/_derived/qoq_warn.json modified, not a master). Latest data commit 3727438 (+ 57b7d78 CSM family).
@@ -31,3 +33,14 @@ Ticket: `inbox/publishing/20261012T0500Z__orchestrator__MULTI_2023.1Q-2026.2Q__m
 - `viz_build_csm_waterfall.py`: byte-identical (reads data/dart/extracted only; reinsurers not in this panel by design).
 - `viz_build_csm_combo_panel.py` (+ --check OK): 52 nodes changed, reinsurers only (KR1101, KR1103, KR1104, KR1105, KR1107): older-quarter columns filled from the new ILP rows (portfolio liability columns and the 2023.4Q column). meta csm_recon 281 -> 287 matched, mismatches 6 unchanged; lic_recon real 388 -> 401, estimated 78 -> 83, none 59 -> 52. Lina and all 42 other companies unchanged.
 - `viz_build_compare_panel.py` (+ --check OK): 137 leaves changed, reinsurers only, no other company. By metric: 기말 CSM (2) 3, 보험손익 (4) 1, 당기순이익 (5) 4 (PL corrections), 신계약 CSM (15) 3, 투자손익 (16) 101 (new PL item 17 rows), 손해율 PV (12) 18 + loss_curve 7 reinsurers. Metric 12 and loss_curve come from the previous round's panel_loss_ratio reinsurer rows (66e6156), which the compare panel had not picked up yet; not this round's data.
+
+## 5. public_exports (`export_public_sheets.py` after commit b4b6a71)
+- Changed: 17BS 11,016 / CSM워터폴 2,358 / CSM상각 635 / 가정민감도 317 / 신계약CSM배수 393 / 손익분해PL 13,794 / 보험계약부채 6,335 + manifest.json (build_id 5d320c9 -> b4b6a71, generated_at_utc 2026-10-11T19:21:54Z). Other sheets byte-identical. Commit `5079688`.
+
+## 6. Gates and tests
+See the interim block at the top. Full hook prepush_check.py and full pytest not run (as ticket says). Outputs: gate_data_contract_before.txt / gate_data_contract.txt / gate_live_artifacts.txt / gate_tests.txt / gate_golden_viz.txt.
+
+## Reporting notes
+- Ticket said PL corrections = 정정 11 + 파생 4; actual = 25 cells (값 11 + 값_당분기 14) in 15 rows (KR1102 10, KR1103 7, KR1105 8 cells).
+- ifrs17 viz panels need a builder rule if the screen should show reinsurer history quarters: the master-only branch carries only the latest quarter per reinsurer. Builder not touched.
+- Own mistakes: none that touched data.
