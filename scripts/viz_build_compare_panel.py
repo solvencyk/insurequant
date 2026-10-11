@@ -12,11 +12,12 @@
 - 지급여력비율/기본자본비율: kics_disclosure.json 항목 27/28, 적용후 = 값_적용후 ?? 값, 적용전 = 값
 - 기말 CSM: CSM_waterfall.json 항목 6 (억원)
 - 신계약 CSM 배수: NB_CSM_multiple.json 신계약CSM배수_연누계
-- 보험손익/당기순이익(당분기, 억원): PL_breakdown.json 항목 1/24, 값_당분기, 비면 누계 차분(백만원 -> 억원 /100)
+- 보험손익/당기순이익/투자손익(연 누계 YTD, 억원): PL_breakdown.json 항목 1/24/17 의 `값`(백만원 -> 억원 /100). 1Q=1Q, 2Q=1~2Q 누계, 3Q=1~3Q 누계, 4Q=연간.
+  당분기 값(`값_당분기`)·누계 차분은 쓰지 않는다(owner 2026-10-11: 손익은 당분기가 아니라 YTD 기준).
 - 기본 지표 해약환급금준비금(IFRS17_BS 5, 적립 잔액, 백만원 -> 억원)은 ROE 다음 기본 목록에 들어간다(owner 2026-10-08).
 - 추가 지표(화면 기본 목록에는 없고 사용자가 끌어다 넣는 것, default=false): 지급여력금액(K-ICS 1)·지급여력기준금액(K-ICS 14)·신계약 CSM(NB_CSM_multiple 신계약CSM_연누계)·
-  투자손익(PL 17 당분기)·자본총계(IFRS17_BS 3)·자산총계(IFRS17_BS 1). 전부 금액이라 중앙값은 만들지 않는다.
-- ROE(연환산): 당기순이익 누계(항목 24) x 4/q / 평균(직전 4Q 자본, 당분기말 자본)(IFRS17_BS 항목 3), 두 자본 > 0 일 때만, 2024.1Q 부터
+  투자손익(PL 17 연 누계)·자본총계(IFRS17_BS 3)·자산총계(IFRS17_BS 1). 전부 금액이라 중앙값은 만들지 않는다.
+- ROE(연환산): 당기순이익 연 누계(항목 24) x 4/q (1Q x4 · 2Q x2 · 3Q x4/3 · 4Q x1) / 평균(직전 4Q 자본, 당분기말 자본)(IFRS17_BS 항목 3), 두 자본 > 0 일 때만, 2024.1Q 부터
 - 유지율 13/25/37/61회차: master_persistency.json 회차별 채널행 합산 Σ유지/Σ대상 (원문오기 SWAPPED=맞교환, INCONSISTENT=제외). 화면에서는 한 차트에 모아 비교
 - 손해율: master_loss_ratio.json 합계/합계/현재가치 Σ예상보험금/Σ위험보험료 (세그먼트 합산)
 - 손해율 가정 곡선(loss_curve): 같은 합계/합계 행을 경과차년(1~10년·11~15·16~20·21~25·26~30·30년 이후)별로 같은 방식으로 합산.
@@ -163,48 +164,29 @@ for r in nb:
 
 pl = load("PL_breakdown.json")
 ytd = {}
-qgiven = {}
 for r in pl:
     if r["원보험사코드"] not in roster or r["공시분기"] not in QI:
         continue
     it = int(r["항목번호"]) if str(r["항목번호"]).isdigit() else None
     if it in (1, 17, 24):
         ytd[(it, r["원보험사코드"], r["공시분기"])] = num(r["값"])
-        qgiven[(it, r["원보험사코드"], r["공시분기"])] = num(r.get("값_당분기"))
 
 
-def quarterly_eok(item):
+def ytd_eok(item):
+    """연 누계(YTD) 손익, 억원. PL_breakdown `값` 이 이미 1Q=1Q · 2Q=1~2Q · 3Q=1~3Q · 4Q=연간 누계다."""
     out = {}
-    mism = 0
-    cmp_n = 0
     for c in roster:
         arr = [None] * NQ
         for q in QUARTERS:
-            y, n = qkey(q)
-            given = qgiven.get((item, c, q))
-            cur = ytd.get((item, c, q))
-            derived = None
-            if cur is not None:
-                if n == 1:
-                    derived = cur
-                else:
-                    prev = ytd.get((item, c, f"{y}.{n-1}Q"))
-                    if prev is not None:
-                        derived = cur - prev
-            if given is not None and derived is not None:
-                cmp_n += 1
-                if abs(given - derived) > 1.5:
-                    mism += 1
-            v = given if given is not None else derived
-            arr[QI[q]] = None if v is None else v / 100.0
+            v = ytd.get((item, c, q))
+            arr[QI[q]] = None if v is None else v / 100.0   # 백만원 -> 억원
         out[c] = arr
-    print(f"  PL item {item}: given-vs-derived compared {cmp_n}, mismatch(>1.5백만) {mism}")
     return out
 
 
-ins_profit = quarterly_eok(1)
-net_income = quarterly_eok(24)
-inv_profit = quarterly_eok(17)
+ins_profit = ytd_eok(1)
+net_income = ytd_eok(24)
+inv_profit = ytd_eok(17)
 
 bs = load("IFRS17_BS.json")
 equity = {}
@@ -362,20 +344,20 @@ METRICS = [
          defn="신계약 CSM ÷ 월납환산 초회보험료, 연 누계",
          note="연 누계라 1Q에서 4Q로 갈수록 해당 연도 누적분이 쌓인 값입니다. 재보험·보증은 구조상 산출하지 않습니다.",
          v=nb_mult),
-    dict(id="ins_profit", group="IFRS17 · 손익", label="보험손익", unit="억원", kind="eok", dec=0,
-         period="분기", connect=True, median=False, clip=False,
-         defn="보험서비스 결과, 별도 기준 당분기",
-         note="당분기 값이 없는 결산 분기는 연 누계에서 3Q 누계를 뺀 값입니다. 연 1회 공시사의 1~3Q는 경영공시 요약값이라 억원 단위로 반올림돼 있습니다.",
+    dict(id="ins_profit", group="IFRS17 · 손익", label="보험손익 · 연 누계", unit="억원", kind="eok", dec=0,
+         period="분기", connect=True, median=False, clip=False, ytd=True,
+         defn="보험서비스 결과, 별도 기준 연 누계(YTD)",
+         note="그 해 1분기부터 해당 분기까지 쌓은 연 누계(YTD)입니다. 1Q는 1분기, 2Q는 상반기(1~2Q), 3Q는 1~3Q, 4Q는 연간 값이라 분기가 갈수록 커지며, 당분기만의 값이 아닙니다. 연 1회 공시사의 1~3Q는 경영공시 요약값이라 억원 단위로 반올림돼 있습니다.",
          v=ins_profit),
-    dict(id="net_income", group="IFRS17 · 손익", label="당기순이익", unit="억원", kind="eok", dec=0,
-         period="분기", connect=True, median=False, clip=False,
-         defn="별도 기준 당분기",
-         note="당분기 값이 없는 결산 분기는 연 누계에서 3Q 누계를 뺀 값입니다.",
+    dict(id="net_income", group="IFRS17 · 손익", label="당기순이익 · 연 누계", unit="억원", kind="eok", dec=0,
+         period="분기", connect=True, median=False, clip=False, ytd=True,
+         defn="별도 기준 연 누계(YTD)",
+         note="그 해 1분기부터 해당 분기까지 쌓은 연 누계(YTD)입니다. 1Q는 1분기, 2Q는 상반기(1~2Q), 3Q는 1~3Q, 4Q는 연간 값이라 분기가 갈수록 커지며, 당분기만의 값이 아닙니다.",
          v=net_income),
     dict(id="roe", group="IFRS17 · 손익", label="ROE (연환산)", unit="%", kind="pct", dec=1,
          period="분기", connect=True, median=True, clip=True,
-         defn="당기순이익 누계 연환산 ÷ 평균자본(직전 결산말·당분기말)",
-         note="공시 ROE와 같은 정의로 계산했고 2024.1Q부터 가능합니다. 자본이 0 이하인 구간은 산출하지 않습니다. 1Q는 4배, 2Q는 2배로 연환산해 계절성이 있습니다.",
+         defn="당기순이익 연 누계 연환산 ÷ 평균자본(직전 결산말·당분기말)",
+         note="입력은 당기순이익 연 누계(YTD)이고, 1Q는 4배·2Q는 2배·3Q는 4/3배·4Q는 1배로 연환산합니다. 공시 ROE와 같은 정의로 계산했고 2024.1Q부터 가능합니다. 자본이 0 이하인 구간은 산출하지 않습니다. 분기마다 연환산 배수가 달라 계절성이 있습니다.",
          v=roe),
     dict(id="surrender_reserve", group="IFRS17 · 손익", label="해약환급금준비금", unit="억원", kind="eok", dec=0,
          period="분기", median=False, clip=False,
@@ -409,10 +391,10 @@ METRICS = [
          defn="해당 연도 누적 신계약 CSM",
          note="연 누계라 1Q에서 4Q로 갈수록 해당 연도 누적분이 쌓인 값입니다. 재보험·보증은 구조상 산출하지 않습니다.",
          v=nb_amt),
-    dict(id="inv_profit", group="IFRS17 · 손익", label="투자손익", unit="억원", kind="eok", dec=0,
-         period="분기", median=False, clip=False, default=False,
-         defn="투자이익에서 보험금융비용을 뺀 값, 별도 기준 당분기",
-         note="당분기 값이 없는 결산 분기는 연 누계에서 3Q 누계를 뺀 값입니다.",
+    dict(id="inv_profit", group="IFRS17 · 손익", label="투자손익 · 연 누계", unit="억원", kind="eok", dec=0,
+         period="분기", median=False, clip=False, default=False, ytd=True,
+         defn="투자이익에서 보험금융비용을 뺀 값, 별도 기준 연 누계(YTD)",
+         note="그 해 1분기부터 해당 분기까지 쌓은 연 누계(YTD)입니다. 1Q는 1분기, 2Q는 상반기(1~2Q), 3Q는 1~3Q, 4Q는 연간 값이라 분기가 갈수록 커지며, 당분기만의 값이 아닙니다.",
          v=inv_profit),
     dict(id="equity", group="IFRS17 · 손익", label="자본총계", unit="억원", kind="eok", dec=0,
          period="분기", median=False, clip=False, default=False,

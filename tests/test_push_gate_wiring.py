@@ -436,6 +436,10 @@ LIVE_ARTIFACT_READERS = {
     "data/compare/panel_compare.json": ["viz_build_compare_panel"],
     # 2026-10-10 IFRS17.html 섹션 3 콤보 차트·표. 검사기 = 빌더의 `--check`(마스터 3종에서 다시 만든 바이트 == 디스크 패널 JSON + 크기 예산).
     "data/csm_combo/panel_csm_combo.json": ["viz_build_csm_combo_panel"],
+    # 2026-10-10 index.html·compare.html 의 재보험·보증 3분류. 코드 -> 업권 수기 매핑이라 마스터가 아니다(아래 NOT_A_MASTER).
+    # 읽는 검사기 = compare 패널 빌더(`SEG_MAP = load("data/company_segment.json")`): 매핑이 바뀌면 type/중앙값 모집단이 달라져
+    # 패널 JSON 바이트가 변하므로 `--check` 가 diff 로 잡는다. index.html 의 같은 파일 읽기는 별도 검사기가 없다(화면 분류만 좌우).
+    "data/company_segment.json": ["viz_build_compare_panel"],
     # `/` 로 끝나면 **접두 선언**이다 — 그 폴더 아래 전부를 한 검사기가 덮는다는 뜻.
     # `public_exports/` 는 사용자가 내려받는 12개 스냅샷인데(download-survey.js), 파일 목록이
     # `export_public_sheets.MASTERS` 하나에서 나오고 `validate_live_artifacts` 도 그 목록을
@@ -648,6 +652,16 @@ PANEL_DERIVED_FROM = {
 }
 
 
+# 마스터 시트가 없는 화면 파일 중 **마스터가 아닌 것**(수기 매핑·설정). 이유를 사실대로 적는다 — 데이터가 아니라 분류표다.
+NOT_A_MASTER = {
+    "data/company_segment.json": "회사코드 -> 업권(생명/손해/재보험·보증) 수기 매핑. 측정값이 아니라 분류표라 xlsx 시트에 담을 데이터가 없다(owner 가 코드 단위로 고침)",
+}
+# 패널의 원천 데이터 JSON 인데 **xlsx 시트가 아직 없는 것**(owner 상시 규칙 위반 상태 — 시트 신설 후 이 항목을 지워야 한다).
+# 시트가 생기면(MASTERS 에 들어오면) 아래 테스트가 이 선언을 죽은 선언으로 막는다.
+# 2026-10-11: `insurance_liability_portfolio.json` 은 `보험계약부채` 시트가 생겨(MASTERS 등재) 선언을 지웠다.
+MASTER_SHEET_PENDING = {}
+
+
 def _as_tuple(v):
     """PANEL_DERIVED_FROM 의 값(마스터 1개 문자열 또는 여러 개 튜플)을 항상 튜플로."""
     return () if not v else ((v,) if isinstance(v, str) else tuple(v))
@@ -670,8 +684,10 @@ def test_every_live_fetched_artifact_lands_in_a_master_sheet():
         base = f.lstrip("./")
         if base.startswith("public_exports/"):
             continue          # 마스터의 공개 사본 — 원본이 이미 검사된다
+        if base in NOT_A_MASTER:
+            continue          # 분류표 — 담을 데이터가 없다(사유는 NOT_A_MASTER)
         masters = (base,) if base in sheet_of else _as_tuple(PANEL_DERIVED_FROM.get(base))
-        if not masters or any(mm not in sheet_of for mm in masters):
+        if not masters or any(mm not in sheet_of and mm not in MASTER_SHEET_PENDING for mm in masters):
             gaps.append(base)
     assert not gaps, (
         f"화면이 그리는데 마스터 시트가 없는 데이터 {gaps} — owner 상시 규칙 위반. "
@@ -681,7 +697,13 @@ def test_every_live_fetched_artifact_lands_in_a_master_sheet():
 
     # 선언만 하고 실제로는 화면이 더는 안 읽는 항목도 막는다(죽은 선언 방지).
     seen = {f.lstrip("./") for f in fetched} | _worktree_fetches()   # 배포 대기 중인 화면 파일 포함
-    ghost = sorted(k for k in PANEL_DERIVED_FROM if k not in seen)
+    ghost = sorted(k for k in list(PANEL_DERIVED_FROM) + list(NOT_A_MASTER) if k not in seen)
     assert not ghost, (
-        f"PANEL_DERIVED_FROM 에만 있고 화면이 더는 fetch 하지 않는 것 {ghost} — 선언을 지워라."
+        f"PANEL_DERIVED_FROM / NOT_A_MASTER 에만 있고 화면이 더는 fetch 하지 않는 것 {ghost} — 선언을 지워라."
+    )
+    # 시트가 생긴 뒤에도 남은 "시트 대기" 선언 / 어느 패널도 안 쓰는 대기 선언은 죽은 선언이다.
+    used = {mm for v in PANEL_DERIVED_FROM.values() for mm in _as_tuple(v)}
+    stale = sorted(k for k in MASTER_SHEET_PENDING if k in sheet_of or k not in used)
+    assert not stale, (
+        f"MASTER_SHEET_PENDING 에 있는데 이미 MASTERS 시트가 있거나 어느 패널도 쓰지 않는 것 {stale} — 선언을 지워라."
     )

@@ -96,7 +96,7 @@
     .card .clipnote{margin:6px 0 0 0;font-size:12px;color:var(--muted)}
     /* 모바일 손해율 가정(정적 SVG 꺾은선 + 회사·현재가치 표) */
     .lcs svg{display:block;width:100%;height:auto}
-    .lcs svg text{font-family:inherit}
+    .lcs svg text{font-family:inherit;paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round}
     .lcs svg .t{fill:var(--text)}
     .lcs svg .m{fill:var(--muted)}
     .lcm table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
@@ -316,8 +316,12 @@
     var s = xs.slice().sort(function(a,b){ return a-b; }), h = s.length >> 1;
     return s.length % 2 ? s[h] : (s[h-1] + s[h]) / 2;
   }
-  function qchip(i, ref){
-    return '<span class="qchip" title="이 값의 공시 분기는 ' + Q[i] + '입니다. 지표의 최신 공시는 ' + Q[ref] + '입니다.">' + qshort(Q[i]) + '</span>';
+  /* 연 누계(YTD) 지표: 그 분기까지 쌓인 기간 이름 (1Q=1분기, 2Q=상반기, 3Q=1~3Q, 4Q=연간) */
+  var YSPAN = ['', '1분기 누계', '상반기(1~2Q) 누계', '1~3Q 누계', '연간(1~4Q) 누계'];
+  function ytdSpan(i){ return YSPAN[+Q[i].charAt(5)] || ''; }
+  function qchip(i, ref, m){
+    var basis = (m && m.ytd) ? ' 이 값은 ' + qshort(Q[i]) + ' 기준 ' + ytdSpan(i) + '입니다(최신 공시는 ' + ytdSpan(ref) + ').' : '';
+    return '<span class="qchip" title="이 값의 공시 분기는 ' + Q[i] + '입니다. 지표의 최신 공시는 ' + Q[ref] + '입니다.' + basis + '">' + qshort(Q[i]) + '</span>';
   }
 
   /* ---------- 데이터 접근 ---------- */
@@ -518,8 +522,85 @@
   var WIDE = window.matchMedia ? window.matchMedia('(min-width:641px)') : {matches:true};
   var CHARTS = [], TH = null, FONT = '';
   var PAL_BAR  = ['#8ccfc6', '#f6b49f', '#a8c1f0', '#e6d27e'];   /* 파스텔 막대: 처음 고른 회사 = 사이트 기본 틸 계열 */
-  var PAL_LINE = ['#4fb0a5', '#ee8f72', '#7b9fe6', '#cdb04a'];   /* 선·표식은 같은 색을 조금 진하게(밝은 배경에서도 보이게) */
-  var PT = ['circle', 'triangle', 'rect', 'rectRot'];            /* 색만으로 구분하지 않도록 표식 모양도 다르게 */
+  var PAL_LINE = ['#4fb0a5', '#ee8f72', '#7b9fe6', '#cdb04a'];   /* 키컬러가 없는 회사의 파스텔 선 색(틸·살몬·블루·머스터드, 보라 없음). 막대 팔레트를 조금 진하게 한 것 */
+  var PT = ['circle', 'triangle', 'rect', 'rectRot'];            /* 넓은 화면 꺾은선의 표식 모양(선택 순서) */
+
+  /* ---------- 손해율 가정 선 색 (넓은 화면 Chart.js · 좁은 화면 SVG · 현재가치 표 견본이 모두 같은 색) ----------
+     규칙: ① 회사 키컬러가 있으면 그 색(맵은 theme.js 의 IQTheme.keyColors 한 곳). 배경과 대비가 3:1 보다 낮으면 같은 색상(hue)·채도로 밝기만 옮긴다.
+           ② 키컬러가 없거나, 앞서 고른 회사 색과 너무 비슷하면(CIEDE2000 20 미만, 라이트·다크 둘 다에서 잰 작은 쪽) 파스텔 팔레트에서 아직 안 쓴 색, 겹치지 않는 것을 순서대로 쓴다.
+           키컬러가 있는 회사끼리 비슷하면 먼저 고른 회사가 키컬러를 지키고 나중 회사가 팔레트로 간다. 색 배정은 라이트·다크와 무관하게 같고 표시 색만 테마에 맞춘다. */
+  var LC_MIN_DE = 20, LC_MIN_CR = 3, BG_LIGHT = '#ffffff', BG_DARK = '#151615';   /* 배경은 common.css --bg 라이트·다크 값 */
+  function hexRgb(h){ var m = /^#?([0-9a-f]{6})$/i.exec(h || ''); if(!m) return null; var n = parseInt(m[1], 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
+  function rgbHex(c){ return '#' + c.map(function(v){ v = Math.max(0, Math.min(255, Math.round(v))); return (v < 16 ? '0' : '') + v.toString(16); }).join(''); }
+  function lin(v){ v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }
+  function lumOf(c){ return 0.2126 * lin(c[0]) + 0.7152 * lin(c[1]) + 0.0722 * lin(c[2]); }
+  function contrast(a, b){ var x = lumOf(hexRgb(a)), y = lumOf(hexRgb(b)); if(x < y){ var t = x; x = y; y = t; } return (x + 0.05) / (y + 0.05); }
+  function toHsl(c){
+    var r = c[0] / 255, g = c[1] / 255, b = c[2] / 255, mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2, h = 0, s = 0, d = mx - mn;
+    if(d){ s = l > 0.5 ? d / (2 - mx - mn) : d / (mx + mn); h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h /= 6; }
+    return [h, s, l];
+  }
+  function fromHsl(h, s, l){
+    function f(p, q, t){ if(t < 0) t += 1; if(t > 1) t -= 1; return t < 1 / 6 ? p + (q - p) * 6 * t : t < 1 / 2 ? q : t < 2 / 3 ? p + (q - p) * (2 / 3 - t) * 6 : p; }
+    if(!s) return [l * 255, l * 255, l * 255];
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+    return [f(p, q, h + 1 / 3) * 255, f(p, q, h) * 255, f(p, q, h - 1 / 3) * 255];
+  }
+  /* 키컬러를 배경 위에서 보이게: 대비가 모자라면 색상·채도는 두고 밝기만 배경과 멀어지는 쪽으로 옮긴다 */
+  function visibleOn(hex, bg){
+    if(contrast(hex, bg) >= LC_MIN_CR) return hex;
+    var hsl = toHsl(hexRgb(hex)), up = lumOf(hexRgb(bg)) < 0.5, l = hsl[2], out = hex;
+    for(var i = 0; i < 50 && contrast(out, bg) < LC_MIN_CR; i++){ l += up ? 0.02 : -0.02; if(l <= 0 || l >= 1) break; out = rgbHex(fromHsl(hsl[0], hsl[1], l)); }
+    return out;
+  }
+  function toLab(hex){
+    var c = hexRgb(hex).map(lin), X = (0.4124 * c[0] + 0.3576 * c[1] + 0.1805 * c[2]) / 0.95047, Y = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2], Z = (0.0193 * c[0] + 0.1192 * c[1] + 0.9505 * c[2]) / 1.08883;
+    function f(t){ return t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116; }
+    return [116 * f(Y) - 16, 500 * (f(X) - f(Y)), 200 * (f(Y) - f(Z))];
+  }
+  function deltaE00(p, q){   /* CIEDE2000 */
+    var rad = Math.PI / 180, L1 = p[0], a1 = p[1], b1 = p[2], L2 = q[0], a2 = q[1], b2 = q[2];
+    var Cb = (Math.hypot(a1, b1) + Math.hypot(a2, b2)) / 2, G = 0.5 * (1 - Math.sqrt(Math.pow(Cb, 7) / (Math.pow(Cb, 7) + Math.pow(25, 7))));
+    var a1p = (1 + G) * a1, a2p = (1 + G) * a2, C1 = Math.hypot(a1p, b1), C2 = Math.hypot(a2p, b2);
+    var h1 = (Math.atan2(b1, a1p) / rad + 360) % 360, h2 = (Math.atan2(b2, a2p) / rad + 360) % 360;
+    var dL = L2 - L1, dC = C2 - C1, dh = 0, hb;
+    if(C1 * C2){ dh = h2 - h1; if(dh > 180) dh -= 360; else if(dh < -180) dh += 360; }
+    var dH = 2 * Math.sqrt(C1 * C2) * Math.sin(dh * rad / 2), Lb = (L1 + L2) / 2, Cbp = (C1 + C2) / 2;
+    if(!(C1 * C2)) hb = h1 + h2; else if(Math.abs(h1 - h2) <= 180) hb = (h1 + h2) / 2; else hb = h1 + h2 < 360 ? (h1 + h2 + 360) / 2 : (h1 + h2 - 360) / 2;
+    var T = 1 - 0.17 * Math.cos((hb - 30) * rad) + 0.24 * Math.cos(2 * hb * rad) + 0.32 * Math.cos((3 * hb + 6) * rad) - 0.2 * Math.cos((4 * hb - 63) * rad);
+    var Rc = 2 * Math.sqrt(Math.pow(Cbp, 7) / (Math.pow(Cbp, 7) + Math.pow(25, 7))), Rt = -Math.sin(2 * 30 * Math.exp(-Math.pow((hb - 275) / 25, 2)) * rad) * Rc;
+    var Sl = 1 + 0.015 * Math.pow(Lb - 50, 2) / Math.sqrt(20 + Math.pow(Lb - 50, 2)), Sc = 1 + 0.045 * Cbp, Sh = 1 + 0.015 * Cbp * T;
+    return Math.sqrt(Math.pow(dL / Sl, 2) + Math.pow(dC / Sc, 2) + Math.pow(dH / Sh, 2) + Rt * (dC / Sc) * (dH / Sh));
+  }
+  function keyHexOf(c){ var K = (window.IQTheme && IQTheme.keyColors) || {}; return K[c.name] || K[c.short] || K['NH' + c.short] || null; }   /* 농협생명은 맵에 NH농협생명 으로 있다 */
+  function lcShown(c, dark){ return c.key ? visibleOn(c.base, dark ? BG_DARK : BG_LIGHT) : c.base; }
+  function lcDist(a, b){ return Math.min(deltaE00(toLab(lcShown(a, false)), toLab(lcShown(b, false))), deltaE00(toLab(lcShown(a, true)), toLab(lcShown(b, true)))); }
+  function lcMinDist(c, taken){ var d = 999; taken.forEach(function(t){ d = Math.min(d, lcDist(c, t)); }); return d; }
+  /* 선택한 회사 전부의 색 배정 {code: {base, key}} */
+  function assignLineColors(){
+    var out = {}, taken = [], pending = [];
+    S.sel.forEach(function(s){
+      var kh = keyHexOf(CO[s.code]);
+      if(kh){ var c = {base: kh, key: true}; if(lcMinDist(c, taken) >= LC_MIN_DE){ out[s.code] = c; taken.push(c); return; } }
+      pending.push(s.code);
+    });
+    pending.forEach(function(code){
+      var best = null, bd = -1;
+      for(var i = 0; i < PAL_LINE.length; i++){
+        var c = {base: PAL_LINE[i], key: false}, d = lcMinDist(c, taken);
+        if(d >= LC_MIN_DE){ best = c; break; }
+        if(d > bd){ bd = d; best = c; }
+      }
+      out[code] = best; taken.push(best);
+    });
+    return out;
+  }
+  /* 지금 테마에서 그릴 색 {code: '#rrggbb'} */
+  function lineColors(){
+    var as = assignLineColors(), dark = !!(TH && TH.dark), o = {};
+    Object.keys(as).forEach(function(code){ o[code] = lcShown(as[code], dark); });
+    return o;
+  }
   var LR_END_X = 33;                                             /* '30년 이후'의 x 위치(경과 연수에 비례, 26~30년 다음 5칸) */
   function chartsOn(){ return !!(window.Chart && WIDE.matches); }
   /* 손해율 가정 curve 카드: 넓은 화면은 Chart.js 꺾은선, 좁은 화면(641px 미만)은 SVG 꺾은선(lossMobile). 넓은 화면인데 Chart.js 가 없으면 예전 막대 카드 */
@@ -636,7 +717,7 @@
   function lossChart(card, m){
     var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
     var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
-    var ds = [], nas = [], stale = [], coarse = [], any = false;
+    var ds = [], nas = [], stale = [], coarse = [], any = false, LC = lineColors();
     S.sel.forEach(function(s, k){
       var nm = CO[s.code].short, byQ = C.v[s.code] || {}, row = null, qi = -1;
       for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
@@ -648,7 +729,7 @@
       var pv = cellFor(m, s.code, asof);
       if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
       ds.push({label: nm + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm, coarse: co, data: pts,
-        borderColor: PAL_LINE[k % 4], backgroundColor: PAL_LINE[k % 4], borderWidth: 3, pointStyle: PT[k % 4],
+        borderColor: LC[s.code], backgroundColor: LC[s.code], borderWidth: 3, pointStyle: PT[k % 4],
         pointRadius: co ? 0 : 4, pointHoverRadius: co ? 4 : 6, cubicInterpolationMode: 'monotone', spanGaps: false, borderDash: co ? [5, 4] : [], order: 1});
     });
     if(!any){ card.insertAdjacentHTML('beforeend', '<div class="empty">선택한 회사 모두 이 지표를 공시하지 않습니다.</div>'); notes(card, []); return; }
@@ -705,10 +786,9 @@
     if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
   }
 
-  /* 좁은 화면(~640px) 손해율 가정: 한 차트에 선택한 회사 곡선을 겹친 정적 SVG(점 표식·x 눈금 숫자 없음, 선 끝 직접 라벨) + 회사·현재가치 표.
-     색·선 순서는 위 넓은 화면 꺾은선과 같은 규칙(PAL_LINE[선택 순서]); 색 외에 선 모양(실선·파선·점선)으로도 구분한다. 터치 상호작용은 없다. */
+  /* 좁은 화면(~640px) 손해율 가정: 한 차트에 선택한 회사 곡선을 겹친 정적 SVG(카드 폭 전체, 점 표식·x 눈금 숫자·선 끝 라벨 없음) + 회사·현재가치 표.
+     회사 구분은 실선의 색만으로 한다(owner 2026-10-11). 색은 넓은 화면 꺾은선과 같은 lineColors() 이고, 아래 표의 색 견본이 선과 같은 색이라 표가 이름표다. 터치 상호작용은 없다. */
   var MOB_LINES = 4;                                             /* 겹쳐 그리는 회사 선 상한(업계 중앙값 점선은 별도). 표에는 선택한 회사 전부 */
-  var MOB_DASH = ['', '6 3', '2 3', '10 3 2 3'];
   var SVGNS = 'http://www.w3.org/2000/svg';
   function nfs(v, d){ return (v < 0 ? '△' : '') + nf(Math.abs(v), d); }   /* 음수는 △ */
   function svgEl(n, a, txt){ var e = document.createElementNS(SVGNS, n); for(var k in a) e.setAttribute(k, a[k]); if(txt != null) e.textContent = txt; return e; }
@@ -733,7 +813,8 @@
     });
     if(!any){ card.insertAdjacentHTML('beforeend', '<div class="empty">선택한 회사 모두 이 지표를 공시하지 않습니다.</div>'); notes(card, []); return; }
     var drawn = items.filter(function(it){ return it.pts; }), capped = drawn.length > MOB_LINES;
-    drawn.slice(0, MOB_LINES).forEach(function(it){ it.line = true; it.col = PAL_LINE[it.k % 4]; it.dash = MOB_DASH[it.k % 4]; });
+    var LC = lineColors();
+    drawn.slice(0, MOB_LINES).forEach(function(it){ it.line = true; it.col = LC[S.sel[it.k].code]; });
     var lines = drawn.filter(function(it){ return it.line; });
     var med = null, medPv = null, mq;
     if(S.med && C.med && C.med[type]){
@@ -745,7 +826,7 @@
     var lo = Math.floor((Math.min.apply(null, all) - 2) / 10) * 10, hi = Math.ceil((Math.max.apply(null, all) + 2) / 10) * 10;
     var wrap = document.createElement('div'); wrap.className = 'lcm'; card.appendChild(wrap);
     var box = document.createElement('div'); box.className = 'lcs'; wrap.appendChild(box);
-    var W = box.clientWidth || 300, H = 240, ml = 4, mr = 96, mt = 16, mb = 26, pw = W - ml - mr, ph = H - mt - mb;
+    var W = box.clientWidth || 300, H = 240, ml = 4, mr = 8, mt = 16, mb = 26, pw = W - ml - mr, ph = H - mt - mb;
     function X(x){ return ml + pw * x / LR_END_X; }
     function Y(v){ return mt + ph * (1 - (v - lo) / (hi - lo)); }
     function pathOf(pts){
@@ -759,37 +840,24 @@
       (med ? '. ' + type + ' 업계 중앙값 ' + nfs(firstOf(med), 1) + '%에서 ' + nfs(lastOf(med).v, 1) + '%' : '') + '. 현재가치 손해율은 아래 표에 있습니다.';
     var svg = svgEl('svg', {viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label});
     var step = (hi - lo) > 80 ? 40 : (hi - lo) > 30 ? 20 : 10;
+    var ylabs = [];
     for(var v = Math.ceil(lo / step) * step; v <= hi; v += step){
       svg.appendChild(svgEl('line', {x1: ml, x2: ml + pw, y1: Y(v), y2: Y(v), stroke: 'var(--border)', 'stroke-width': v === 100 ? 1.5 : 1, 'stroke-dasharray': v === 100 ? '' : '2 3'}));
-      svg.appendChild(svgEl('text', {x: ml + 2, y: Y(v) - 3, 'font-size': 11, class: 'm'}, nfs(v, 0) + '%'));
+      ylabs.push(svgEl('text', {x: ml + 2, y: Y(v) - 3, 'font-size': 11, class: 'm'}, nfs(v, 0) + '%'));
     }
     if(med) svg.appendChild(svgEl('path', {d: pathOf(med), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.5, 'stroke-dasharray': '1 4', 'stroke-linecap': 'round'}));
     lines.forEach(function(it){
-      var a = {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
-      if(it.dash) a['stroke-dasharray'] = it.dash;
-      svg.appendChild(svgEl('path', a));
+      svg.appendChild(svgEl('path', {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}));
     });
+    ylabs.forEach(function(t){ svg.appendChild(t); });   /* 눈금 숫자는 선 위에 얹어 선에 가려지지 않게 */
     svg.appendChild(svgEl('text', {x: ml + 2, y: H - 8, 'font-size': 11, class: 'm'}, '1년'));
     svg.appendChild(svgEl('text', {x: ml + pw / 2, y: H - 8, 'font-size': 11, class: 'm', 'text-anchor': 'middle'}, '경과차년 →'));
     svg.appendChild(svgEl('text', {x: ml + pw, y: H - 8, 'font-size': 11, class: 'm', 'text-anchor': 'end'}, '30년 이후'));
-    /* 선 끝 직접 라벨(회사명 + 끝점 값). 서로 겹치면 아래로 밀어낸다 */
-    var ends = lines.map(function(it){ var l = lastOf(it.pts); return {nm: it.nm, col: it.col, x: l ? xs[l.n] : null, v: l ? l.v : null}; });
-    if(med){ var ml2 = lastOf(med); if(ml2) ends.push({nm: type + ' 중앙값', col: 'var(--muted)', x: xs[ml2.n], v: ml2.v}); }
-    ends = ends.filter(function(e){ return e.v != null; }).map(function(e){ e.y = Y(e.v); return e; });
-    ends.sort(function(a, b){ return a.y - b.y; });
-    for(i = 1; i < ends.length; i++){ if(ends[i].y - ends[i - 1].y < 27) ends[i].y = ends[i - 1].y + 27; }
-    var over = ends.length ? ends[ends.length - 1].y - (H - mb) : 0; if(over > 0) ends.forEach(function(e){ e.y -= over; });
-    ends.forEach(function(e){
-      var x0 = ml + pw + 6;
-      svg.appendChild(svgEl('line', {x1: X(e.x), y1: Y(e.v), x2: x0, y2: e.y, stroke: e.col, 'stroke-width': 1}));
-      svg.appendChild(svgEl('text', {x: x0 + 2, y: e.y - 1, 'font-size': e.nm.length > 7 ? 10 : 11, 'font-weight': 600, class: 't'}, e.nm));
-      svg.appendChild(svgEl('text', {x: x0 + 2, y: e.y + 11, 'font-size': 11, class: 'm'}, nfs(e.v, 1) + '%'));
-    });
     box.appendChild(svg);
 
     /* 현재가치 표: 선택한 회사 전부(선이 없는 회사는 색 표시만 비움) */
     var tr = items.map(function(it){
-      var sw = it.line ? swatch(it.col, it.dash) : '<span class="sw sw0"></span>';
+      var sw = it.line ? swatch(it.col) : '<span class="sw sw0"></span>';
       var chip = (it.pv && it.pv.i !== asof) ? ' ' + qchip(it.pv.i, asof) : '';
       return '<tr><td>' + sw + esc(it.nm) + chip + '</td><td><b>' + (it.pv ? nfs(it.pv.v, 1) + '%' : 'n/a') + '</b></td></tr>';
     });
@@ -805,14 +873,12 @@
     if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
   }
 
-  /* ---------- 공유 메뉴·스크린샷은 사이트 공통(theme.js + common.css)이다. 사별 비교는 이미지에서 뺄 것과 레이아웃 보정만 알려 준다. ---------- */
+  /* ---------- 공유 메뉴·스크린샷은 사이트 공통(theme.js + common.css)이다. 사별 비교는 이미지에서 뺄 것과 "대상 회사"만 알려 준다.
+             전체 스크린샷의 본문은 .section-body(제목·옵션·모든 지표 카드), 카드마다 우상단 공유 버튼은 card 의 data-share-section 이 만든다. ---------- */
   window.IQShareConfig = {
-    container: '.container',
-    ignore: ['.add-wrap', '.count-note', '.opts', '.msg', '.section-nav', '#co-pop'],
-    onclone: function(doc){
-      var bar = doc.querySelector('.cmp-bar'); if(bar) bar.style.position = 'static';
-      var pg = doc.querySelector('.container'); if(pg) pg.classList.remove('has-section-nav');   /* 레일을 뺐으니 본문이 좁은 열로 밀리지 않게 */
-    }
+    container: '.section-body',
+    ignore: ['.count-note', '.opts', '.msg', '#co-pop'],
+    context: function(){ return S.sel.map(function(s){ return CO[s.code] ? CO[s.code].short : ''; }).filter(Boolean).join(' · '); }
   };
 
   /* ---------- 지표 가이드(좌측 레일) ----------
@@ -1088,7 +1154,7 @@
           return;
         }
         h += '<li class="' + cls + '"><div class="bname"><span class="nm">' + esc(c.short) + '</span>' +
-          (r.i !== sc.asof ? qchip(r.i, sc.asof) : '') + '</div><div class="btrack" aria-hidden="true">' + lines + bar(r.v, c.short) +
+          (r.i !== sc.asof ? qchip(r.i, sc.asof, m) : '') + '</div><div class="btrack" aria-hidden="true">' + lines + bar(r.v, c.short) +
           '</div><div class="bval' + (r.v < 0 ? ' neg' : '') + '">' + fmt(r.v, m) + '</div></li>';
         summary.push((single ? '' : sc.label + ' ') + c.short + ' ' + fmt(r.v, m) + (r.i !== sc.asof ? '(' + Q[r.i] + ')' : ''));
       });
@@ -1120,12 +1186,12 @@
       var curve = (m0.id === 'loss_pv' && curveOn()) ? DATA.loss_curve : null;
       var chartMode = (!!curve && chartsOn()) || (chartsOn() && grouped && m0.chart_group === 'persist');
       var title = curve ? curve.label : (grouped ? m0.chart_label : m0.label);
-      var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title);
+      var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title); card.setAttribute('data-share-section', title);
       var asofs = ms.map(mLast), amax = Math.max.apply(null, asofs), bt = (!grouped && m0.basis) ? (S.basis === 'pre' ? ' · 적용 전' : ' · 적용 후') : '';
       card.innerHTML = '<span class="anc" id="c-' + esc(id) + '"></span><h3>' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
         '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + m0.id + '">?</button>' +
         '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? curve.note : m0.note) + '</span></span></h3>' +
-        '<p class="def">' + esc(curve ? curve.defn : m0.defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] : '없음') + '</p>';
+        '<p class="def">' + esc(curve ? curve.defn : m0.defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] + (m0.ytd ? ' · ' + ytdSpan(amax) : '') : '없음') + '</p>';
       grid.appendChild(card);
       if(curve && !chartsOn()){ lossMobile(card, m0); return; }
       if(chartMode){ card.classList.add('wide'); if(curve) lossChart(card, m0); else persistChart(card, ms); return; }

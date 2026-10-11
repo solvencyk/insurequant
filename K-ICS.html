@@ -187,7 +187,7 @@
       </ul>
     </nav>
     <div class="section-body">
-    <div class="panel" id="sec-trend">
+    <div class="panel" id="sec-trend" data-share-section="지급여력비율 추이">
       <h2>원보험사별 K-ICS 지급여력비율 변동 추이</h2>
       <div class="controls">
         <div class="control-group">
@@ -226,7 +226,7 @@
       <div class="table-container" id="table-container"></div>
     </div>
 
-    <div class="panel" id="donut-section-panel">
+    <div class="panel" id="donut-section-panel" data-share-section="자본성증권 소진율">
       <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
       <ul class="subtitle">
         <li>기본자본 자본증권(보통주 제외): 공시 인정액 / (SCR &times; 15%)</li>
@@ -246,7 +246,7 @@
       <div class="donut-note" id="donut-note"></div>
     </div>
 
-    <div class="panel" id="sec-sens">
+    <div class="panel" id="sec-sens" data-share-section="금리 민감도">
       <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 · 자산/부채 듀레이션 갭)</span></h2>
       <div class="controls" style="justify-content:flex-start">
         <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
@@ -260,7 +260,7 @@
       <div class="donut-note" id="sens-note"></div>
     </div>
 
-    <div class="panel" id="sec-forward">
+    <div class="panel" id="sec-forward" data-share-section="자본비율 전망">
       <h2>자본비율 Forward Outlook <span style="color:var(--muted);font-size:13px;font-weight:400">(보수 시나리오, 2026~2030)</span></h2>
       <ul class="subtitle">
         <li>보수적인 가정 두 가지를 놓고 계산한 전망치입니다<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="전망에 쓴 가정 두 가지" aria-describedby="help-forward-assump">?</button><span class="iq-help-pop" role="tooltip" id="help-forward-assump"><b>지급여력기준금액</b> — 2032년까지 경과조치 효과가 줄어든다고 보고, 적용후 값에서 적용전 값으로 선형 보간했습니다.<br><b>지급여력금액</b> — 이미 발행한 자본성증권의 콜옵션을 전부 행사하고 신규 발행은 없다고 보아, 콜이 도래하는 5년 시점에 가용자본에서 뺐습니다.</span></span></li>
@@ -1103,6 +1103,19 @@
       note.innerHTML = notes.join(' &nbsp;|&nbsp; ');
     }
 
+    // 전망 패널이 비는 이유를 사실대로 말한다. 모집단은 `kics_forward_capital.json` 이 정하므로 「N사」
+    // 같은 숫자를 문구에 쓰지 않는다(2026-10-11: 회사 수를 박은 옛 문구가 재보사 8곳 추가 뒤 틀려졌다).
+    // 행이 아예 없는 회사는 현재 서울보증보험 하나뿐이고, 이유는 생성 스크립트의 의도된 제외
+    // (`forward_capital_simulation.py` EXCLUDE_PAA — 보험료배분접근법만 적용)다. 자본성증권이 없어서가 아니다
+    // (신종·후순위 잔액이 0인 회사 19곳이 이 패널에 그대로 나온다).
+    function forwardEmptyText(company, row) {
+      if (row) return `${company}: 자본비율 전망을 산출하지 못했습니다 (기준이 되는 지급여력 공시 값이 부족합니다).`;
+      if (company.includes('서울보증')) {
+        return `${company}: 보험료배분접근법(PAA)만 적용하는 보증보험이라 이 전망의 대상에서 제외했습니다. 자본성증권 소진율은 위 패널에서 볼 수 있습니다.`;
+      }
+      return `${company}: 자본비율 전망 대상이 아닙니다.`;
+    }
+
     function updateForwardPanel() {
       const company = document.getElementById('company').value;
       const placeholder = document.getElementById('forward-placeholder');
@@ -1121,7 +1134,7 @@
       const row = findForwardRow(company);
       if (!row || row.status !== 'ok' || !Array.isArray(row.projections) || !row.projections.length) {
         placeholder.style.display = 'block';
-        placeholder.textContent = row ? `${company}: forward simulation 데이터 없음 (status=${row.status})` : `${company}: forward simulation 데이터 없음 (19사 cohort 외)`;
+        placeholder.textContent = forwardEmptyText(company, row);
         wrap.style.display = 'none';
         note.innerHTML = '';
         if (forwardChart) { forwardChart.destroy(); forwardChart = null; }
