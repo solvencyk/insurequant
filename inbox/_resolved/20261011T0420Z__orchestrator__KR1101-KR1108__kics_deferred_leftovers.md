@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T0420Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -29,4 +29,4 @@ owner 지시(2026-10-11, 밤새 처리): 「다음 round 로 미뤄 놨던 거 *
 - 단계별 결과(정정 6셀 전후, 적재 행 수, 추출기 재현성 증명, 도구 수정 내용), 새 RED/등재 풀 대상, census 구멍 목록, 게이트 전후, `TODO_parser_kics.md` Status + `docs/changelog_parser_kics.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+answered by parser-kics b80d16a (2026-10-11): IRR 6셀 정정(기존 39사 그 외 변경 0, 전수 대조), KR1102 2023.2Q 46행 적재(+86행 전체, 새 RED 0), 퍼시픽 금리민감도는 이미 적재(스테이징 오기만 정정), 추출기 재현성·최신판 공통 헬퍼(15개 도구), census 재점검(재보사 빈칸 1,595 사유 분류·40칸 적재). 오케스트레이터가 HEAD 대비 셀 단위 대조로 확인 후 종결. 후속: validation(KR1102 2023.2Q census 면제 해제·kics_rules 골든 --update), publishing(xlsx·public_exports 재동기화), owner 판단(하노버 2023.4Q·2024.1Q, RGA 2023.2Q, 스위스리 2023.3Q, 퍼시픽 경과조치 16칸).
