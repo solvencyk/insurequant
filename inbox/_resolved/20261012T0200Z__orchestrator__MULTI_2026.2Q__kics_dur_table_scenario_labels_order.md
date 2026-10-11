@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T0200Z
-status: open
+status: resolved
 route: display
 company: MULTI
 period: 2026.2Q
@@ -29,3 +29,4 @@ owner 지시(2026-10-12 채팅): 「K-ICS 순자산 금리민감도 테이블에
 - 변경 위치(줄), 같은 이름을 쓰던 다른 곳 목록, 점검 결과, 커밋 해시를 2~3줄로. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(designer 1a9a105, orchestrator 종결 2026-10-12) K-ICS 시나리오별 금리부 자산·부채·순자산 표: 컬럼을 충격전·평균회귀·금리상승·금리하락·금리평탄·금리경사 순서·공시 이름 그대로로 변경(평탄화·경사화와 해설 문장 삭제). 표 아래 「자료:」 줄·갭 카드 분모/부호 문장·비고를 모두 ? 팝오버 안으로 이동(눈에 보이는 안내 문장 없음). 다른 곳에 같은 임의 이름 없음, 충격전 순자산=자산−부채 검산 일치(61,292), 375px 가로 스크롤·콘솔 오류 0. 보고만: 금리 민감도 영역 sens-note(1741행)에 같은 스타일의 「자료:」 줄이 하나 더 있음(미변경).

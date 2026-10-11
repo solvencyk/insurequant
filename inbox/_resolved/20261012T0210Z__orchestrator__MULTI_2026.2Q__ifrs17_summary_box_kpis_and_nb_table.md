@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T0210Z
-status: open
+status: resolved
 route: display
 company: MULTI
 period: 2026.2Q
@@ -30,3 +30,4 @@ owner: 「nb csm 배수 섹션에 그래프 밑에도 테이블 추가해라 (�
 - 항목별 변경 위치(줄), 점검 결과, 커밋 해시를 3~4줄 존댓말로. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(designer 46d4a3a·8c8b43b, orchestrator 종결 2026-10-12) IFRS17.html: (1) 「통합 현황」 박스 하나가 기준 토글과 요약 4칸(기말 CSM 잔액·CSM 상각·신계약 CSM·NB CSM 배수)을 함께 담도록 변경, (2) 섹션 6 NB CSM 배수 차트 아래에 월납월초보험료·신계약 CSM·신계약 CSM 배수 표 추가(연도 보기=연누계, 분기 보기=당분기, 시점은 차트와 동일). 삼성생명·라이나 1280px/375px 가로 넘침·콘솔 오류 0, 라이나 신계약 CSM 2,192 가 요약 칸과 일치. 스위스리 「미수록」 경로는 목록 이름 불일치로 직접 확인 못함(코드 미변경). 시험 3종은 이후 예실차 커밋(8c07a59) 작업에서 통과 확인.

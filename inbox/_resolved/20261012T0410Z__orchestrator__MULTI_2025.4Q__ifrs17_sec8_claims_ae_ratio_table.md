@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T0410Z
-status: open
+status: resolved
 route: display
 company: MULTI
 period: 2024.4Q-2025.4Q
@@ -26,3 +26,4 @@ owner 지시(2026-10-12 채팅): 「스위스리 경영공시에 손해율 예�
 - 변경 위치(줄), 사업구분 처리 방식, 점검 결과·스크린샷 경로, 커밋 해시를 3~4줄 존댓말로. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(designer 8c07a59, orchestrator 종결 2026-10-12) IFRS17.html 섹션 8 손해율 표 아래에 보험금 예실차비율 표 추가(drawLrAe, #lrAeBox): 이름 공시 그대로(예상손해율·실제손해율·보험금 예실차비율), 열=기준연도, % / %p, 소수 2자리, 음수 △, 정의·연 1회 공시 설명은 ? 팝오버(help-lrae)에만. 선택 공시시점 이하 최근 연말 공시 표시, ae 없는 회사·구판 패널은 표 숨김. 사업구분 여럿인 회사(코리안리: 공동재보험/전통형재보험)는 구분 이름 행 아래 3행씩 블록. 스위스리·뮌헨·삼성생명·코리안리·예별·카카오페이 375px/1280px 콘솔 오류·가로 넘침 0, 서울보증은 표 숨김 확인. 시험 3종(12·65·65) 통과. 미확인: ? 팝오버를 열어 본 화면(기존 팝오버 CSS 재사용).
