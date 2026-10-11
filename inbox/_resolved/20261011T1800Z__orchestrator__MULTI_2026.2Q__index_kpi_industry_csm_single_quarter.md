@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T1800Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -27,4 +27,4 @@ owner 지시(2026-10-11): 「업계 26.2Q CSM 은 142조로 바꾸자.」 index.
 - KPI 새 원천·기준 분기 규칙·표시 문구, 값 확인(142.2조), 폴백 동작, 다른 CSM 합계 표기 유무, 스크린샷 경로, 테스트 결과, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(designer 49f8573, orchestrator 종결 2026-10-11) index.html KPI 「업계 총 기말 CSM」: 원천 `panel_csm_combo.json` 의 `csm_gen+csm_vfa` 합, 기준 분기 = 값 보유 회사가 80% 이상인 가장 늦은 분기(코드 주석), 표시 「2026.2Q 기준 · 46사」(데이터 도출) + ? 팝오버, 값 142.2조 확인(2026.1Q 138.0·2025.4Q 133.7), 패널 404·열 이름 없음 시 옛 `totalClosingCsmEok()` 폴백(141조·「회사별 최신 공시 분기 합」). `.rise` 애니메이션 fill both→backwards(팝오버 가려짐 방지). 배포 순서: 새 판 panel_csm_combo(48사·14분기)가 함께 올라가야 142조. 테스트 77 통과.
