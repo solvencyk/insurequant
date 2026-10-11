@@ -35115,6 +35115,138 @@
     }
    ],
    "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2023.3Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 53,
+     "printed": "(340,727,998)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2024.1Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 51,
+     "printed": "(104,707,301)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2024.2Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 76,
+     "printed": "(207,843,428)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2024.3Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 52,
+     "printed": "(308,702,166)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2025.1Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 57,
+     "printed": "(86,351,816)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2025.2Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 83,
+     "printed": "(170,494,252)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
   }
  ],
  "merge_note_20260920": "경영공시 §2-1 백필 155셀(DISCLOSURE) append + DART 4Q LOB 재추출 5블록 패치. as_of_date 는 싣지 않았다 — 분기말일 기계 삽입 금지(validation 20260920T1500Z §1c), downloader 가 필링 meta 에서 채울 별도 티켓이다. 재현: scripts/merge_pl_backfill_disclosure_20260920.py --apply",
@@ -35125,5 +35257,6 @@
  "merge_note_20261011_A1_kr0008": "round-3 PL 정정(inbox/parser/20261011T1130Z, round A1_kr0008, 2026-10-11 11:37): 1칸 값 정정/채움 + 파생 값_당분기 2칸 재계산. 계보 블록의 원천 파일은 그대로(같은 파일이 같은 칸을 설명한다), 정정 전후 값·근거는 data/_derived/bspl_apply_20261011/ 의 spec·manifest. 재현: scripts/bspl_apply_pl_fix.py --spec <spec> --round A1_kr0008 --apply",
  "merge_note_20261011_A2_kr0072": "round-3 PL 정정(inbox/parser/20261011T1130Z, round A2_kr0072, 2026-10-11 11:41): 36칸 값 정정/채움 + 파생 값_당분기 45칸 재계산. 계보 블록의 원천 파일은 그대로(같은 파일이 같은 칸을 설명한다), 정정 전후 값·근거는 data/_derived/bspl_apply_20261011/ 의 spec·manifest. 재현: scripts/bspl_apply_pl_fix.py --spec <spec> --round A2_kr0072 --apply",
  "merge_note_20261011_item16_reinsurers": "round-5 PL 항목 16 기타사업비용(inbox/parser/20261011T1730Z, 2026-10-11 17:43): 재보사 7칸 신규 적재(KR1101 2023.1Q·2Q·3Q·2024.1Q, KR1103 2023.3Q·2024.1Q·2025.4Q) -- 경영공시 2-1 요약 포괄손익계산서의 (기타사업비용) 인쇄값, 보험손익 다리(보험수익-보험서비스비용+재보험수익-재보험서비스비용-기타사업비용)로 부호·단위 검산. 해당 7개 블록의 published_items +1 · source_files items 에 16 추가. 근거·재현 data/_derived/bspl_apply_20261011/item16/spec_item16.json · scripts/bspl_apply_item16_reinsurers.py",
- "merge_note_20261011_item4_reinsurers": "round-6 PL 항목 4(원수 CSM상각 슬롯) 적재(오케스트레이터 보정·범위 추가, 2026-10-11 18:34): (A) 순수 재보사 17칸 = KR1101 2023/2024/2025.4Q · KR1102 3 · KR1103 3 · KR1104 2023.4Q · KR1105 2023/2024.4Q · KR1106 3 · KR1107 2024/2025.4Q 의 감사보고서 주석(수재 일반모형 보험계약마진 열, 행 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' 합계); (B) 라이나생명 KR0074 2025.3Q · 2026.1Q · 2026.2Q 3칸 = 경영공시 PDF 에 첨부된 재무제표 주석 '제공한 서비스 반영 인식한 보험계약마진' 합계(유배당 + 유배당 외, 천원). 값 = 인쇄값(원/천원 -> 백만원, 양수, 누계), CSM_waterfall 항목 5(억원, 음수)와 |값|/100 이 0.00002억 이내로 일치. 계보: 경영공시 §2-1 요약 PL 이 아니라 재무제표·감사보고서 주석이다 -- 그러나 source_file 경로가 data/disclosure/ 라 게이트의 경로 계보 판정은 DISCLOSURE 로 귀착한다(source_id=DISCLOSURE 만이 CHECK 2 를 통과한다). 그래서 validate_data_contract §3d(CONCEPT_MIXED_DISCLOSURE_INTO_DART, 허용항목 1·16·22·23·24)가 이 20개 contract_notes 블록의 항목 4 를 막는다 -- how=resolution=fs_note_csm_amort 로 구분 표기했고 게이트 예외(또는 새 계보 id)는 validation 몫이다. 근거·재현 data/_derived/bspl_apply_20261011/item4_reinsurers/spec_item4.json · scripts/bspl_apply_item4_reinsurers.py"
+ "merge_note_20261011_item4_reinsurers": "round-6 PL 항목 4(원수 CSM상각 슬롯) 적재(오케스트레이터 보정·범위 추가, 2026-10-11 18:34): (A) 순수 재보사 17칸 = KR1101 2023/2024/2025.4Q · KR1102 3 · KR1103 3 · KR1104 2023.4Q · KR1105 2023/2024.4Q · KR1106 3 · KR1107 2024/2025.4Q 의 감사보고서 주석(수재 일반모형 보험계약마진 열, 행 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' 합계); (B) 라이나생명 KR0074 2025.3Q · 2026.1Q · 2026.2Q 3칸 = 경영공시 PDF 에 첨부된 재무제표 주석 '제공한 서비스 반영 인식한 보험계약마진' 합계(유배당 + 유배당 외, 천원). 값 = 인쇄값(원/천원 -> 백만원, 양수, 누계), CSM_waterfall 항목 5(억원, 음수)와 |값|/100 이 0.00002억 이내로 일치. 계보: 경영공시 §2-1 요약 PL 이 아니라 재무제표·감사보고서 주석이다 -- 그러나 source_file 경로가 data/disclosure/ 라 게이트의 경로 계보 판정은 DISCLOSURE 로 귀착한다(source_id=DISCLOSURE 만이 CHECK 2 를 통과한다). 그래서 validate_data_contract §3d(CONCEPT_MIXED_DISCLOSURE_INTO_DART, 허용항목 1·16·22·23·24)가 이 20개 contract_notes 블록의 항목 4 를 막는다 -- how=resolution=fs_note_csm_amort 로 구분 표기했고 게이트 예외(또는 새 계보 id)는 validation 몫이다. 근거·재현 data/_derived/bspl_apply_20261011/item4_reinsurers/spec_item4.json · scripts/bspl_apply_item4_reinsurers.py",
+ "merge_note_20261011_item4_lina6": "round-7 PL 항목 4(원수 CSM상각) 라이나생명 KR0074 6칸 적재(오케스트레이터 후속 발주, 2026-10-11 19:16): 2023.3Q(FY2024_Q3 전기 열 = 소급재작성 기준) · 2024.1Q · 2024.2Q · 2024.3Q · 2025.1Q · 2025.2Q. 값 = 경영공시 PDF 에 첨부된 재무제표 주석 '당(반)분기 및 전(반)분기 중 보험계약부채(자산)의 측정요소별 변동내역(단위:천원)' 의 '제공한 서비스 반영 인식한 보험계약마진' 합계(CSM 3열 합), 천원 -> 백만원, 양수, 누계. 라이나 2023.1Q·2Q 는 소급재작성 전 기준만 인쇄돼 owner 결정 대기라 안 채웠다. 계보 표식은 라운드 6 과 같다 (source_id=DISCLOSURE = 경로 계보, how=resolution=fs_note_csm_amort, 쪽·인쇄값 동반). 근거·재현 data/_derived/bspl_apply_20261011/item4_reinsurers_lina6/spec_lina6.json · scripts/bspl_apply_item4_lina6.py"
 }
