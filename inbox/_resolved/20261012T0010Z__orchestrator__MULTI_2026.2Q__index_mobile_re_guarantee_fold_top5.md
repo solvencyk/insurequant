@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T0010Z
-status: open
+status: resolved
 route: display
 company: MULTI
 period: 2026.2Q
@@ -29,3 +29,4 @@ owner 지시(2026-10-12 채팅): 「모바일에 index.html 에서 보증·재�
 - 변경 위치(줄), 점검 결과·스크린샷 경로, 커밋 해시를 2~3줄로. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(designer 98efc95, orchestrator 검증·종결 2026-10-12) 모바일 재보험·보증 그룹도 상위 5개 + 더보기/접기(FOLDABLE 제외 설정 삭제, 섹터 키 맵 listExpanded/bubbleExpanded). 375px K-ICS 리스트에서 생보 17·손보 11·재보험·보증 4개사 더보기 동작 확인, 콘솔 오류·가로 스크롤 0. CSM 버블 하단 리스트는 같은 코드 경로이나 현재 배수가 있는 재보험·보증사가 없어 직접 확인 불가(데이터가 생기면 자동 적용). 테스트 3종 통과.

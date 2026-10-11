@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T0000Z
-status: open
+status: resolved
 route: display
 company: MULTI
 period: 2026.2Q
@@ -25,3 +25,4 @@ owner 지시(2026-10-12 채팅): 「index.html 에 기말 CSM 에 주절주절 �
 - 변경 위치(줄), 점검 결과, 커밋 해시를 2~3줄로. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(designer 34a758d, orchestrator 검증·종결 2026-10-12) 홈 KPI 「업계 총 기말 CSM」 카드에서 부가 문구(기준 분기·회사 수)와 ? 팝오버 제거 — 값+라벨만. 합산·모집단·폴백 로직 불변, 미사용 .kpi-sub CSS 2줄 제거. 데스크톱 4칸 높이 83px 동일, 모바일 375px 2×2 가로 스크롤 0, 값 142조, 콘솔 오류 0. 테스트 3종 통과.
