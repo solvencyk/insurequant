@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261012T0600Z
-status: open
+status: resolved
 route: gate-change
 company: KR1101-KR1108
 period: 2023.1Q-2026.2Q
@@ -31,3 +31,4 @@ iter: 1
 - 허용 규칙 전후(RED 102→0)·시뮬레이션·변이시험 결과, 골든별 `--update` 여부·이동 칸 수·이유, 훅 항목별 결과표(「이 상태로 push 하면 훅이 통과하는가」 한 줄 결론), 보고만 항목 표, 커밋 해시. `TODO_validation.md` Status + `docs/changelog_validation.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(validation 6cb0577·6233594, orchestrator 종결 2026-10-12) 재보사 PL 계보 허용: how=disclosure_summary_pl_reinsurer, 항목 17·20·21만, DART 계보 PL 셀이 하나도 없는 회사(KR1101~KR1108)에 한해 §3d 제한에서 제외(소득계산서 블록·등재된 how·쪽수·항목별 인쇄값 필요). 데이터계약 RED 102→0, 새로 깨진 것 없음. 변이시험 14건(11 변이 전부 검출)·selftest 92→102, 훅 묶음에 배선. 골든 --update 3종(master_tables SUMMARY, ifrs17_bs 10,967→11,016행, 입력지문); PL 골든·viz 2종·kics 룰·post_transition·dividend 불변. prepush_check --full 직접 실행 exit 0 gate-clear(오프라인 795 통과·1 skip). PL_YTD_COLLAPSE RED 0. 보고만(owner 결정): 인쇄된 0 7칸, R1 정정 15행 확인, 서울보증 PL 2024.2Q·3Q 구멍, 스위스리 「발행 없음」 표시, 포트폴리오 이름 매핑, 퍼시픽 2023.4Q 영업양수분, 뮌헨 2023.4Q ILP 부호. 관측: verify_provenance_sidecar 가 블록을 가리지 않는 폴백 매칭(현재 무해). 훅 시험 34분은 낡은 python3.13 고아 5개(CPU 100%) 때문 — 오케스트레이터가 정리.

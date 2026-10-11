@@ -1,5 +1,9 @@
 # TODO archive — `TODO.md` (Status 이력, 읽기 지연)
 
+- **2026-10-10 LIC(발생사고요소) 적재 + 백필.** `insurance_liability_portfolio.json` 항목 10~15 + 2024.4Q·2023.4Q 백필(BEL·RA 는 2025.1Q 이전에도 공시, DART 주석 2023.1Q~), 재작성 3사(라이나·미래에셋·KB라이프) FY2024 비교열 통일(사이드카 `ilp_restated_comparative.json`), IBK연금 2-4 정정 48칸.
+
+- [ ] **밤샘 2차(owner 2026-10-12 취침 중, 오케스트레이터 자율 진행 — 라이브 `main` 배포는 owner 폰, 예외 등재·owner 결정 사항은 하지 않고 보고만)** — 동시 에이전트 ≤4(RAM 4GB 여유 실측, 명령 지연 시 줄임), 완료 알림마다 다음 대기열 발사. 1파 실행: parser-ifrs17 ×3(손해율 가정 `inbox/parser/20261012T0100Z` · PL/BS 공란 `T0110Z` · CSM/ILP/민감도 `T0120Z`, RGA·하노버 2025.4Q 최우선) + designer(K-ICS 시나리오 컬럼명·듀레이션 주석 `inbox/designer/20261012T0200Z` → IFRS17 통합 현황 박스·NB 표 `T0210Z`). 대기: parser-kics 재보사 자본성증권 소진율 재확인(`inbox/parser/20261012T0130Z`, 스위스리 재분류 4,274) · validation 게이트 속도(`inbox/validation/20261012T0300Z`, 풀 훅 26분 중 매니페스트 시험 18.7분 = 게이트 1회마다 PDF 2,372쪽 재독) · publishing 마감(xlsx 시트·손해율/예실차 패널·NB·csm 패널·public_exports) · designer(보험금 예실차비율 IFRS17 섹션 8 표시 — 마스터 `claims_ae_ratio.json` 은 37사 있으나 화면 없음, 재보사 7곳·IBK연금 추가분 포함; 재보사 유지율 「공시 없음」→「해당 없음」 문구) · validation 최종(재보사 PL 항목 17·21 계보 허용, 골든 `--update`) · 커밋 · 작업 브랜치 push(훅). 예실차 사전답사: 2025.4Q 연말 공시 44/47사 인쇄(AIA·서울보증·마이브라운 제외), 2026.2Q 반기는 0사.
+
 - **2026-10-07 문서·inbox 정리.** TODO 8개를 열린 일 위주로 다시 썼다(정리 전 전문은 각 `docs/todo_archive_*.md` 맨 위).
   K-ICS 예외 등재부 → `docs/kics_gate_exceptions.md`, 분기 라운드 절차 → `docs/flows/kics_quarterly_round.md`. inbox 활성 10 → 4.
   서브에이전트 모델을 `sonnet`/`opus` 별칭으로 바꿔 최신 모델을 따라가게 했다.
