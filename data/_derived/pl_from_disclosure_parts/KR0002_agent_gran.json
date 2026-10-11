@@ -1,0 +1,22 @@
+{
+  "cells": {
+    "KR0002|16|2023.1Q": {
+      "값": 39900.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0002_한화손해보험.pdf",
+      "page": 4,
+      "sha256": "05e8217cef759e6c911388ac9db10787c7a137122f58a1c94fe9abf8f8082814",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0002|16|2023.2Q": {
+      "값": 84500.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0002_한화손해보험.pdf",
+      "page": 5,
+      "sha256": "d9fccd290208ec2401f5fc58f25b12eed4b859cb4e637df4e2fc35848c6bae59",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

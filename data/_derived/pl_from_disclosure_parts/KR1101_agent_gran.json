@@ -1,0 +1,598 @@
+{
+  "cells": {
+    "KR1101|1|2023.1Q": {
+      "값": 43300.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 4,
+      "sha256": "cdc347eca2ce7c204f2e47b23f591d126094cfa00f88623c8ea523f2c6991340",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2023.2Q": {
+      "값": 55400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 5,
+      "sha256": "e600bff8b3a73c05d37490163c164d57de9e01e7a033c8e263a617ff918e0466",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2023.3Q": {
+      "값": 74900.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "763285c6a18ce6f245f93ca3e45b9d83a645ef7a02ba86dc9e2975103fef215f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2023.4Q": {
+      "값": 73179.1361,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "d496fe7ecfc4d922eaaad4215187c72716d15623bcedc2a8696fe6cad2679c89",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2023.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「보험손익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2024.1Q": {
+      "값": 17400.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "4bab18d754dd10c7c2accdebc5e2a6e990653f02ba1a544688851e91404a5dce",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2024.2Q": {
+      "값": 22200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "04c432eba4c10d9657c3d02d67d31319763aa02020b34f7d6d52f5db2db79b8f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2024.3Q": {
+      "값": 29900.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "74ed9e25e6f7c78e7073d8269db369fcfc0798f368b48feab6ebe8fff615f85f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2024.4Q": {
+      "값": 35223.753359,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "922a4785298da193ae953cb7c7bb2cc211b1571957536a227dfd7444f794b67f",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「보험손익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2025.1Q": {
+      "값": 8500.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "c8de2a6209b9becf18f2533621feed250e6050c392024c1703b84ddc9dbf3819",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2025.2Q": {
+      "값": 13600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "12aa1ef45b8fce04a180ebb74e5c8752b5df4fed8449981aa522761aec5d3f16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2025.3Q": {
+      "값": 21000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "64ad1f226aaa9d8874f353c5fee85980fd95ee653fed287b824aa9f1538e9251",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2025.4Q": {
+      "값": 42244.590921,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "3359d37e865017d7add56609ae21e03e78e993f27d11f212db0db3bf9c99cd9e",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「보험손익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2026.1Q": {
+      "값": 1900.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "3ed6441541fadbb43bee6703b03583650ce633d04340b9dad5e65ff0a8f4da43",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|1|2026.2Q": {
+      "값": 11900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "88058733d0c40d67864230477caaf8f02bd0e2c66e2656ee2049053bc33d2e4b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2023.4Q": {
+      "값": 3240.386884,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "d496fe7ecfc4d922eaaad4215187c72716d15623bcedc2a8696fe6cad2679c89",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2023.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「기타사업비용」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2024.2Q": {
+      "값": -800.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "12aa1ef45b8fce04a180ebb74e5c8752b5df4fed8449981aa522761aec5d3f16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2024.3Q": {
+      "값": -1200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "64ad1f226aaa9d8874f353c5fee85980fd95ee653fed287b824aa9f1538e9251",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2024.4Q": {
+      "값": -124.90631,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "922a4785298da193ae953cb7c7bb2cc211b1571957536a227dfd7444f794b67f",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「기타사업비용」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2025.1Q": {
+      "값": -500.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "3ed6441541fadbb43bee6703b03583650ce633d04340b9dad5e65ff0a8f4da43",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2025.2Q": {
+      "값": -800.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "12aa1ef45b8fce04a180ebb74e5c8752b5df4fed8449981aa522761aec5d3f16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2025.3Q": {
+      "값": -800.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "64ad1f226aaa9d8874f353c5fee85980fd95ee653fed287b824aa9f1538e9251",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2025.4Q": {
+      "값": -859.628363,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "3359d37e865017d7add56609ae21e03e78e993f27d11f212db0db3bf9c99cd9e",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「기타사업비용」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2026.1Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "3ed6441541fadbb43bee6703b03583650ce633d04340b9dad5e65ff0a8f4da43",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|16|2026.2Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "88058733d0c40d67864230477caaf8f02bd0e2c66e2656ee2049053bc33d2e4b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2023.1Q": {
+      "값": 44500.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 4,
+      "sha256": "cdc347eca2ce7c204f2e47b23f591d126094cfa00f88623c8ea523f2c6991340",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2023.2Q": {
+      "값": 54100.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 5,
+      "sha256": "e600bff8b3a73c05d37490163c164d57de9e01e7a033c8e263a617ff918e0466",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2023.3Q": {
+      "값": 73200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "763285c6a18ce6f245f93ca3e45b9d83a645ef7a02ba86dc9e2975103fef215f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2023.4Q": {
+      "값": 73290.717824,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "d496fe7ecfc4d922eaaad4215187c72716d15623bcedc2a8696fe6cad2679c89",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2023.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「세전이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2024.1Q": {
+      "값": 18000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "4bab18d754dd10c7c2accdebc5e2a6e990653f02ba1a544688851e91404a5dce",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2024.2Q": {
+      "값": 24000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "04c432eba4c10d9657c3d02d67d31319763aa02020b34f7d6d52f5db2db79b8f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2024.3Q": {
+      "값": 35100.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "74ed9e25e6f7c78e7073d8269db369fcfc0798f368b48feab6ebe8fff615f85f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2024.4Q": {
+      "값": 44013.389399,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "922a4785298da193ae953cb7c7bb2cc211b1571957536a227dfd7444f794b67f",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「세전이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2025.1Q": {
+      "값": 11100.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "c8de2a6209b9becf18f2533621feed250e6050c392024c1703b84ddc9dbf3819",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2025.2Q": {
+      "값": 20400.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "12aa1ef45b8fce04a180ebb74e5c8752b5df4fed8449981aa522761aec5d3f16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2025.3Q": {
+      "값": 29600.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "64ad1f226aaa9d8874f353c5fee85980fd95ee653fed287b824aa9f1538e9251",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2025.4Q": {
+      "값": 52844.733344,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "3359d37e865017d7add56609ae21e03e78e993f27d11f212db0db3bf9c99cd9e",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「세전이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2026.1Q": {
+      "값": 4600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "3ed6441541fadbb43bee6703b03583650ce633d04340b9dad5e65ff0a8f4da43",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|22|2026.2Q": {
+      "값": 15700.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "88058733d0c40d67864230477caaf8f02bd0e2c66e2656ee2049053bc33d2e4b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2023.1Q": {
+      "값": 9800.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 4,
+      "sha256": "cdc347eca2ce7c204f2e47b23f591d126094cfa00f88623c8ea523f2c6991340",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2023.2Q": {
+      "값": 12000.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 5,
+      "sha256": "e600bff8b3a73c05d37490163c164d57de9e01e7a033c8e263a617ff918e0466",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2023.3Q": {
+      "값": 16400.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "763285c6a18ce6f245f93ca3e45b9d83a645ef7a02ba86dc9e2975103fef215f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2023.4Q": {
+      "값": 17150.160858,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "d496fe7ecfc4d922eaaad4215187c72716d15623bcedc2a8696fe6cad2679c89",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2023.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「법인세」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2024.1Q": {
+      "값": 3700.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "4bab18d754dd10c7c2accdebc5e2a6e990653f02ba1a544688851e91404a5dce",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2024.2Q": {
+      "값": 5100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "04c432eba4c10d9657c3d02d67d31319763aa02020b34f7d6d52f5db2db79b8f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2024.3Q": {
+      "값": 7700.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "74ed9e25e6f7c78e7073d8269db369fcfc0798f368b48feab6ebe8fff615f85f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2024.4Q": {
+      "값": 9149.871328,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "922a4785298da193ae953cb7c7bb2cc211b1571957536a227dfd7444f794b67f",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「법인세」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2025.1Q": {
+      "값": 2300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "c8de2a6209b9becf18f2533621feed250e6050c392024c1703b84ddc9dbf3819",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2025.2Q": {
+      "값": 4200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "12aa1ef45b8fce04a180ebb74e5c8752b5df4fed8449981aa522761aec5d3f16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2025.3Q": {
+      "값": 5900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "64ad1f226aaa9d8874f353c5fee85980fd95ee653fed287b824aa9f1538e9251",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2025.4Q": {
+      "값": 12404.810934,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "3359d37e865017d7add56609ae21e03e78e993f27d11f212db0db3bf9c99cd9e",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「법인세」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2026.1Q": {
+      "값": 800.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "3ed6441541fadbb43bee6703b03583650ce633d04340b9dad5e65ff0a8f4da43",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|23|2026.2Q": {
+      "값": 3200.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "88058733d0c40d67864230477caaf8f02bd0e2c66e2656ee2049053bc33d2e4b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2023.1Q": {
+      "값": 34700.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 4,
+      "sha256": "cdc347eca2ce7c204f2e47b23f591d126094cfa00f88623c8ea523f2c6991340",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2023.2Q": {
+      "값": 42100.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 5,
+      "sha256": "e600bff8b3a73c05d37490163c164d57de9e01e7a033c8e263a617ff918e0466",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2023.3Q": {
+      "값": 56800.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "763285c6a18ce6f245f93ca3e45b9d83a645ef7a02ba86dc9e2975103fef215f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2023.4Q": {
+      "값": 56140.556966,
+      "pdf": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "d496fe7ecfc4d922eaaad4215187c72716d15623bcedc2a8696fe6cad2679c89",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2023.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「당기순이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2024.1Q": {
+      "값": 14200.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "4bab18d754dd10c7c2accdebc5e2a6e990653f02ba1a544688851e91404a5dce",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2024.2Q": {
+      "값": 18900.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "04c432eba4c10d9657c3d02d67d31319763aa02020b34f7d6d52f5db2db79b8f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2024.3Q": {
+      "값": 27500.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "74ed9e25e6f7c78e7073d8269db369fcfc0798f368b48feab6ebe8fff615f85f",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2024.4Q": {
+      "값": 34863.518071,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "922a4785298da193ae953cb7c7bb2cc211b1571957536a227dfd7444f794b67f",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「당기순이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2025.1Q": {
+      "값": 8800.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "c8de2a6209b9becf18f2533621feed250e6050c392024c1703b84ddc9dbf3819",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2025.2Q": {
+      "값": 16300.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "12aa1ef45b8fce04a180ebb74e5c8752b5df4fed8449981aa522761aec5d3f16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2025.3Q": {
+      "값": 23700.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "64ad1f226aaa9d8874f353c5fee85980fd95ee653fed287b824aa9f1538e9251",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2025.4Q": {
+      "값": 40439.92241,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+      "page": 8,
+      "sha256": "3359d37e865017d7add56609ae21e03e78e993f27d11f212db0db3bf9c99cd9e",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「당기순이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2026.1Q": {
+      "값": 3800.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 4,
+      "sha256": "3ed6441541fadbb43bee6703b03583650ce633d04340b9dad5e65ff0a8f4da43",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1101|24|2026.2Q": {
+      "값": 12500.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 5,
+      "sha256": "88058733d0c40d67864230477caaf8f02bd0e2c66e2656ee2049053bc33d2e4b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

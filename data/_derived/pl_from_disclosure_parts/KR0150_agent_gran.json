@@ -1,0 +1,49 @@
+{
+  "cells": {
+    "KR0150|1|2024.1Q": {
+      "값": 1300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf",
+      "page": 4,
+      "sha256": "3b314ee7cb32ce1a3e980eed52fddade2ace754e5401b50b5fe92abe32dab03c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|16|2024.1Q": {
+      "값": 8300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf",
+      "page": 4,
+      "sha256": "3b314ee7cb32ce1a3e980eed52fddade2ace754e5401b50b5fe92abe32dab03c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|22|2024.1Q": {
+      "값": 38100.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf",
+      "page": 4,
+      "sha256": "3b314ee7cb32ce1a3e980eed52fddade2ace754e5401b50b5fe92abe32dab03c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|23|2024.1Q": {
+      "값": 8600.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf",
+      "page": 4,
+      "sha256": "3b314ee7cb32ce1a3e980eed52fddade2ace754e5401b50b5fe92abe32dab03c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0150|24|2024.1Q": {
+      "값": 29500.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf",
+      "page": 4,
+      "sha256": "3b314ee7cb32ce1a3e980eed52fddade2ace754e5401b50b5fe92abe32dab03c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

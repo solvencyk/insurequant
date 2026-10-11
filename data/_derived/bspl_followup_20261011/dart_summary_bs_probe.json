@@ -1,0 +1,2272 @@
+[
+ {
+  "code": "KR0001",
+  "quarter": "2023.1Q",
+  "xml": "20230515002118.xml",
+  "tables_with_totals": 5,
+  "tied": [
+   {
+    "line": 4995,
+    "basis_marker": "OFS",
+    "caption": "주1) 상기 연결요약재무정보는 한국채택국제회계기준에 따라 작성되었습니다.주2) 제103기 1분기 및 제102",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0001",
+  "quarter": "2023.2Q",
+  "xml": "20230814002723.xml",
+  "tables_with_totals": 7,
+  "tied": [
+   {
+    "line": 8431,
+    "basis_marker": "OFS",
+    "caption": "3. 요약재무상태표",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0002",
+  "quarter": "2023.1Q",
+  "xml": "20230515002513.xml",
+  "tables_with_totals": 7,
+  "tied": []
+ },
+ {
+  "code": "KR0002",
+  "quarter": "2023.2Q",
+  "xml": "20230814001853.xml",
+  "tables_with_totals": 7,
+  "tied": []
+ },
+ {
+  "code": "KR0003",
+  "quarter": "2023.1Q",
+  "xml": "20230515002687.xml",
+  "tables_with_totals": 3,
+  "tied": [
+   {
+    "line": 4834,
+    "basis_marker": "OFS",
+    "caption": "가. 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 832572.0,
+      "master": 832572.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 74755.0,
+      "master": 74755.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 4810400.0,
+      "master": 4810400.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 363.0,
+      "master": 363.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 13731.0,
+      "master": 13731.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 204604.0,
+      "master": 204604.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 310336.0,
+      "master": 310336.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 478798.0,
+      "master": 478798.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0003",
+  "quarter": "2023.2Q",
+  "xml": "20230814002928.xml",
+  "tables_with_totals": 5,
+  "tied": [
+   {
+    "line": 4837,
+    "basis_marker": "OFS",
+    "caption": "가. 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 521804.0,
+      "master": 521803.871017
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 68040.0,
+      "master": 68039.5485
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 4474804.0,
+      "master": 4474803.536742
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 270.0,
+      "master": 270.378065
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 12091.0,
+      "master": 12091.260705
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 204924.0,
+      "master": 204924.390424
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 310336.0,
+      "master": 310336.32
+     },
+     "31": {
+      "state": "BLANK",
+      "dart": 511613.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "quarter": "2023.1Q",
+  "xml": "20230515002741.xml",
+  "tables_with_totals": 4,
+  "tied": [
+   {
+    "line": 2895,
+    "basis_marker": "OFS",
+    "caption": "가. 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 158250.0,
+      "master": 158250.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 9131048.0,
+      "master": 9131048.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 14.0,
+      "master": 14.0
+     },
+     "24": {
+      "state": "BLANK",
+      "dart": 106989.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 605872.0,
+      "master": 605872.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 325821.0,
+      "master": 325821.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "quarter": "2023.2Q",
+  "xml": "20230814003024.xml",
+  "tables_with_totals": 4,
+  "tied": [
+   {
+    "line": 4109,
+    "basis_marker": "OFS",
+    "caption": "가. 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 156810.0,
+      "master": 156810.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 8884056.0,
+      "master": 8884056.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 14.0,
+      "master": 14.0
+     },
+     "24": {
+      "state": "BLANK",
+      "dart": 97571.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 568992.0,
+      "master": 568992.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 325821.0,
+      "master": 325821.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0008",
+  "quarter": "2023.1Q",
+  "xml": "20230515002508.xml",
+  "tables_with_totals": 10,
+  "tied": [
+   {
+    "line": 6468,
+    "basis_marker": "OFS",
+    "caption": "(1) 부문별 자산/부채 요약1) 제74기 1분기",
+    "items": {}
+   },
+   {
+    "line": 7595,
+    "basis_marker": "OFS",
+    "caption": "(2) 요약별도재무정보",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 658307.0,
+      "master": 658306.75347
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 51597278.0,
+      "master": 51597278.237825
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 159.0,
+      "master": 159.312346
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 370311.0,
+      "master": 370311.511905
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 2696843.0,
+      "master": 2696841.869185
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 26473.0,
+      "master": 26473.4185
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 10849226.0,
+      "master": 10849200.0
+     }
+    }
+   },
+   {
+    "line": 34469,
+    "basis_marker": "CFS",
+    "caption": "41. 영업부문공시 연결실체의 부문별정보는 지역별부문에 관한 정보를 나타냅니다. 사업부문의 주요 구분은 최고",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0008",
+  "quarter": "2023.2Q",
+  "xml": "20230814002808.xml",
+  "tables_with_totals": 10,
+  "tied": [
+   {
+    "line": 7771,
+    "basis_marker": "OFS",
+    "caption": "1) 제74(당)기 반기말",
+    "items": {}
+   },
+   {
+    "line": 8872,
+    "basis_marker": "OFS",
+    "caption": "(2) 요약별도재무정보",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 661520.0,
+      "master": 661519.422201
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 50600482.0,
+      "master": 50600481.907821
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 497885.0,
+      "master": 497885.044327
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 3458952.0,
+      "master": 3458950.268253
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 26473.0,
+      "master": 26473.4185
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 11461022.0,
+      "master": 11461000.0
+     }
+    }
+   },
+   {
+    "line": 38019,
+    "basis_marker": "OFS",
+    "caption": "41. 영업부문공시연결실체의 부문별정보는 지역별부문에 관한 정보를 나타냅니다. 사업부문의 주요 구분은 최고영",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0009",
+  "quarter": "2023.1Q",
+  "xml": "20230515002873.xml",
+  "tables_with_totals": 2,
+  "tied": [
+   {
+    "line": 3368,
+    "basis_marker": "?",
+    "caption": "(단위 : 천원)",
+    "items": {
+     "10": {
+      "state": "BLANK",
+      "dart": 898679.146
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 861798.042,
+      "master": 861798.041683
+     },
+     "20": {
+      "state": "BLANK",
+      "dart": 27896092.964
+     },
+     "21": {
+      "state": "BLANK",
+      "dart": 1260.466
+     },
+     "24": {
+      "state": "DIFF",
+      "dart": 358918.682,
+      "master": 1955543.550407
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -200047.022,
+      "master": -200047.02175
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 44700.0,
+      "master": 44700.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 7417220.536,
+      "master": 7417200.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0009",
+  "quarter": "2023.2Q",
+  "xml": "20230814003156.xml",
+  "tables_with_totals": 2,
+  "tied": [
+   {
+    "line": 5016,
+    "basis_marker": "?",
+    "caption": "(단위 : 천원)",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 772318.502,
+      "master": 772318.502295
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 866199.891,
+      "master": 866199.891344
+     },
+     "20": {
+      "state": "BLANK",
+      "dart": 27450838.515
+     },
+     "21": {
+      "state": "BLANK",
+      "dart": 1515.623
+     },
+     "24": {
+      "state": "DIFF",
+      "dart": 347456.252,
+      "master": 2094551.465595
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -105060.11,
+      "master": -105060.11008
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 44700.0,
+      "master": 44700.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 7662993.99,
+      "master": 7663000.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0010",
+  "quarter": "2023.1Q",
+  "xml": "20230515001575.xml",
+  "tables_with_totals": 10,
+  "tied": [
+   {
+    "line": 4802,
+    "basis_marker": "?",
+    "caption": "주1) 상기 요약연결재무정보는 한국채택국제회계기준에 따라 작성되었습니다.주2) 상기 제65기(전기) 요약연결",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 434698.0,
+      "master": 434698.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 480233.0,
+      "master": 480233.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 22967394.0,
+      "master": 22967394.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 3229.0,
+      "master": 3229.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 197467.0,
+      "master": 197467.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 254431.0,
+      "master": 254431.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 33250.0,
+      "master": 33250.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 5126616.0,
+      "master": 5126600.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0010",
+  "quarter": "2023.2Q",
+  "xml": "20230814001763.xml",
+  "tables_with_totals": 10,
+  "tied": [
+   {
+    "line": 6276,
+    "basis_marker": "OFS",
+    "caption": "주1) 상기 요약연결재무정보는 한국채택국제회계기준에 따라 작성되었습니다.주2) 상기 제65기(전기) 요약연결",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 516231.0,
+      "master": 516231.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 475619.0,
+      "master": 475619.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 22558507.0,
+      "master": 22558507.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 3379.0,
+      "master": 3379.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 98204.0,
+      "master": 98204.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 254571.0,
+      "master": 254571.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 33250.0,
+      "master": 33250.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 5408551.0,
+      "master": 5408500.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0011",
+  "quarter": "2023.1Q",
+  "xml": "20230515002856.xml",
+  "tables_with_totals": 8,
+  "tied": []
+ },
+ {
+  "code": "KR0011",
+  "quarter": "2023.2Q",
+  "xml": "20230814003012.xml",
+  "tables_with_totals": 11,
+  "tied": [
+   {
+    "line": 9481,
+    "basis_marker": "OFS",
+    "caption": "나. 요약재무정보",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 459898.0,
+      "master": 459898.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 27043613.0,
+      "master": 27043613.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 30.0,
+      "master": 30.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 225883.0,
+      "master": 225883.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 77475.0,
+      "master": 77475.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 35400.0,
+      "master": 35400.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 8564682.0,
+      "master": 8564682.0
+     }
+    }
+   },
+   {
+    "line": 41577,
+    "basis_marker": "OFS",
+    "caption": "51-2. 연결포괄손익계산서재무제표 재작성으로 1분기 연결포괄손익계산서에 미치는 영향은 다음과 같습니다.",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 459897.681,
+      "master": 459898.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 27043613.493,
+      "master": 27043613.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 30.211,
+      "master": 30.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 225882.748,
+      "master": 225883.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 77475.205,
+      "master": 77475.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 35400.0,
+      "master": 35400.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 8564682.463,
+      "master": 8564682.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0032",
+  "quarter": "2023.1Q",
+  "xml": "20230515002460.xml",
+  "tables_with_totals": 3,
+  "tied": [
+   {
+    "line": 5415,
+    "basis_marker": "OFS",
+    "caption": "가. 요약재무상태표",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0032",
+  "quarter": "2023.2Q",
+  "xml": "20230814001056.xml",
+  "tables_with_totals": 3,
+  "tied": [
+   {
+    "line": 5302,
+    "basis_marker": "OFS",
+    "caption": "가. 요약재무상태표",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0068",
+  "quarter": "2023.1Q",
+  "xml": "20230515002940.xml",
+  "tables_with_totals": 6,
+  "tied": [
+   {
+    "line": 30026,
+    "basis_marker": "OFS",
+    "caption": "나. 요약재무정보(1) 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 1081980.0,
+      "master": 1081979.994286
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 828976.0,
+      "master": 828976.069675
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 87332957.0,
+      "master": 87332957.383427
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 30053.0,
+      "master": 30052.676338
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 66441.0,
+      "master": 66440.558532
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 4342650.0,
+      "master": 4342650.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 5931717.0,
+      "master": 5931716.812628
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0068",
+  "quarter": "2023.2Q",
+  "xml": "20230814002953.xml",
+  "tables_with_totals": 7,
+  "tied": [
+   {
+    "line": 35178,
+    "basis_marker": "OFS",
+    "caption": "나. 요약재무정보(1) 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "DIFF",
+      "dart": 1081513.0,
+      "master": 1143319.863479
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 844765.0,
+      "master": 844765.471443
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 85104548.0,
+      "master": 85104547.733795
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 28090.0,
+      "master": 28089.600039
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 15711.0,
+      "master": 15711.987804
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 4342650.0,
+      "master": 4342650.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 6079580.0,
+      "master": 6079580.648258
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "quarter": "2023.1Q",
+  "xml": "20230515002761.xml",
+  "tables_with_totals": 13,
+  "tied": [
+   {
+    "line": 11140,
+    "basis_marker": "OFS",
+    "caption": "1) 요약별도재무상태표",
+    "items": {
+     "10": {
+      "state": "BLANK",
+      "dart": 2640534.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 410576.0,
+      "master": 410576.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 184275020.0,
+      "master": 184275020.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 539303.0,
+      "master": 539303.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 312785.0,
+      "master": 312785.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 23061512.0,
+      "master": 23061512.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 100000.0,
+      "master": 100000.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 12589855.0,
+      "master": 12589855.0
+     }
+    }
+   },
+   {
+    "line": 40338,
+    "basis_marker": "OFS",
+    "caption": "(1) 재무상태표",
+    "items": {
+     "10": {
+      "state": "BLANK",
+      "dart": 2640534.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 410576.0,
+      "master": 410576.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 184275020.0,
+      "master": 184275020.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 539303.0,
+      "master": 539303.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 312785.0,
+      "master": 312785.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 23061512.0,
+      "master": 23061512.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 100000.0,
+      "master": 100000.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 12589855.0,
+      "master": 12589855.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "quarter": "2023.2Q",
+  "xml": "20230814002621.xml",
+  "tables_with_totals": 13,
+  "tied": [
+   {
+    "line": 12932,
+    "basis_marker": "OFS",
+    "caption": "1) 요약별도재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 2101849.0,
+      "master": 2101849.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 405861.0,
+      "master": 405861.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 180393241.0,
+      "master": 180393241.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 493907.0,
+      "master": 493907.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 252114.0,
+      "master": 252114.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 26556056.0,
+      "master": 26556056.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 100000.0,
+      "master": 100000.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 12652939.0,
+      "master": 12652939.0
+     }
+    }
+   },
+   {
+    "line": 41007,
+    "basis_marker": "OFS",
+    "caption": "(1) 재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 2101849.0,
+      "master": 2101849.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 405861.0,
+      "master": 405861.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 180393241.0,
+      "master": 180393241.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 493907.0,
+      "master": 493907.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 252114.0,
+      "master": 252114.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 26556056.0,
+      "master": 26556056.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 100000.0,
+      "master": 100000.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 12652939.0,
+      "master": 12652939.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "quarter": "2023.1Q",
+  "xml": "20230515002903.xml",
+  "tables_with_totals": 2,
+  "tied": [
+   {
+    "line": 3390,
+    "basis_marker": "CFS",
+    "caption": "1) 요약연결재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 245924.0,
+      "master": 245924.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 101833.0,
+      "master": 101833.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 15316346.0,
+      "master": 15316346.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 52892.0,
+      "master": 52892.0
+     },
+     "24": {
+      "state": "DIFF",
+      "dart": 81279.0,
+      "master": 9739.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 15534.0,
+      "master": 15534.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "quarter": "2023.2Q",
+  "xml": "20230814002908.xml",
+  "tables_with_totals": 2,
+  "tied": [
+   {
+    "line": 3427,
+    "basis_marker": "CFS",
+    "caption": "1) 요약연결재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 266940.0,
+      "master": 266940.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 102408.0,
+      "master": 102408.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 15230152.0,
+      "master": 15230152.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 46806.0,
+      "master": 46806.0
+     },
+     "24": {
+      "state": "DIFF",
+      "dart": 97391.0,
+      "master": 46146.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 15534.0,
+      "master": 15534.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0071",
+  "quarter": "2023.1Q",
+  "xml": "20230515002959.xml",
+  "tables_with_totals": 6,
+  "tied": [
+   {
+    "line": 3345,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 202301.305,
+      "master": 202301.305318
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 325342.63,
+      "master": 325342.629733
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 19464137.542,
+      "master": 19464137.541871
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 93010.188,
+      "master": 93010.188163
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 58060.336,
+      "master": 58060.335574
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 80119.74,
+      "master": 80119.74
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 627494.289,
+      "master": 627494.289086
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0071",
+  "quarter": "2023.2Q",
+  "xml": "20230814003083.xml",
+  "tables_with_totals": 6,
+  "tied": [
+   {
+    "line": 4111,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 166384.576,
+      "master": 166384.575972
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 331975.411,
+      "master": 331975.410836
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 18774640.522,
+      "master": 18774640.522145
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 90972.716,
+      "master": 90972.715862
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 41480.611,
+      "master": 41480.610904
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 80119.74,
+      "master": 80119.74
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 614256.051,
+      "master": 614256.050913
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "quarter": "2023.1Q",
+  "xml": "20230515002450.xml",
+  "tables_with_totals": 4,
+  "tied": [
+   {
+    "line": 3338,
+    "basis_marker": "OFS",
+    "caption": "나. 요약재무정보(1) 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 201523.0,
+      "master": 201523.301938
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 53095.0,
+      "master": 53095.058468
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 15805352.0,
+      "master": 15805352.451669
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 28634.0,
+      "master": 28633.812402
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 10606.0,
+      "master": 10606.097473
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -286943.0,
+      "master": -286942.994452
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 474325.0,
+      "master": 474324.8
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "quarter": "2023.2Q",
+  "xml": "20230814003052.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 4569,
+    "basis_marker": "OFS",
+    "caption": "나. 요약재무정보(1) 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 307015.0,
+      "master": 307015.386101
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 51123.0,
+      "master": 51123.591379
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 15398157.0,
+      "master": 15398156.555099
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 26431.0,
+      "master": 26430.67369
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 11044.0,
+      "master": 11044.302568
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -116743.0,
+      "master": -116742.694959
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 474325.0,
+      "master": 474324.8
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "quarter": "2023.1Q",
+  "xml": "20230515002764.xml",
+  "tables_with_totals": 6,
+  "tied": [
+   {
+    "line": 4169,
+    "basis_marker": "OFS",
+    "caption": "라. 요약재무상태표",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "quarter": "2023.2Q",
+  "xml": "20230814002761.xml",
+  "tables_with_totals": 6,
+  "tied": [
+   {
+    "line": 5864,
+    "basis_marker": "OFS",
+    "caption": "라. 요약재무상태표",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0079",
+  "quarter": "2023.1Q",
+  "xml": "20230515002900.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 2831,
+    "basis_marker": "CFS",
+    "caption": "(1) 요약연결재무상태표",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0079",
+  "quarter": "2023.2Q",
+  "xml": "20230814003137.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 3896,
+    "basis_marker": "CFS",
+    "caption": "(1) 요약연결재무상태표",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR0082",
+  "quarter": "2023.1Q",
+  "xml": "20230515002932.xml",
+  "tables_with_totals": 7,
+  "tied": [
+   {
+    "line": 4149,
+    "basis_marker": "OFS",
+    "caption": "(1) 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 33493.0,
+      "master": 33492.815011
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 6830338.0,
+      "master": 6830337.543495
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 44811.0,
+      "master": 44811.338797
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 103961.0,
+      "master": 103960.612663
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -160301.0,
+      "master": -160300.508358
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 253334.0,
+      "master": 253333.575
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 1621232.0,
+      "master": 1621232.047588
+     }
+    }
+   },
+   {
+    "line": 20943,
+    "basis_marker": "OFS",
+    "caption": "분기연결재무제표는 연차재무제표에서 요구되는 모든 재무위험관리와 공시사항을 포함하지 않으므로 2022년 12월",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 33492.815,
+      "master": 33492.815011
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 6830337.543,
+      "master": 6830337.543495
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 44811.339,
+      "master": 44811.338797
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 103960.613,
+      "master": 103960.612663
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -160300.508,
+      "master": -160300.508358
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 253333.575,
+      "master": 253333.575
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 1621232.048,
+      "master": 1621232.047588
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0082",
+  "quarter": "2023.2Q",
+  "xml": "20230814002739.xml",
+  "tables_with_totals": 7,
+  "tied": [
+   {
+    "line": 4084,
+    "basis_marker": "OFS",
+    "caption": "(1) 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 32719.0,
+      "master": 32718.950098
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 6665576.0,
+      "master": 6665575.883383
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 43069.0,
+      "master": 43068.757669
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 92860.0,
+      "master": 92860.057161
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -86676.0,
+      "master": -86675.604284
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 253334.0,
+      "master": 253333.575
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 1668233.0,
+      "master": 1668233.352
+     }
+    }
+   },
+   {
+    "line": 21527,
+    "basis_marker": "OFS",
+    "caption": "반기연결재무제표는 연차재무제표에서 요구되는 모든 재무위험관리와 공시사항을 포함하지 않으므로 2022년 12월",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 32718.95,
+      "master": 32718.950098
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 6665575.883,
+      "master": 6665575.883383
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 43068.758,
+      "master": 43068.757669
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 92860.057,
+      "master": 92860.057161
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -86675.604,
+      "master": -86675.604284
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 253333.575,
+      "master": 253333.575
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 1668233.352,
+      "master": 1668233.352
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "quarter": "2023.1Q",
+  "xml": "20230515002882.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 3567,
+    "basis_marker": "CFS",
+    "caption": "(1) 요약연결재무상태표",
+    "items": {
+     "10": {
+      "state": "DIFF",
+      "dart": 830925.0,
+      "master": 830664.356461
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 17359.0,
+      "master": 17358.785182
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 7590883.0,
+      "master": 7590883.140619
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 5276.0,
+      "master": 5275.571234
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -488650.0,
+      "master": -488650.785593
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 1137632.0,
+      "master": 1137632.47
+     }
+    }
+   },
+   {
+    "line": 4022,
+    "basis_marker": "OFS",
+    "caption": "(2) 요약연결포괄손익계산서",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 830665.0,
+      "master": 830664.356461
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 17359.0,
+      "master": 17358.785182
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 7590883.0,
+      "master": 7590883.140619
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 5276.0,
+      "master": 5275.571234
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -488650.0,
+      "master": -488650.785593
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 1137632.0,
+      "master": 1137632.47
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "quarter": "2023.2Q",
+  "xml": "20230814001755.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 5253,
+    "basis_marker": "CFS",
+    "caption": "(1) 요약연결재무상태표",
+    "items": {
+     "10": {
+      "state": "DIFF",
+      "dart": 451296.0,
+      "master": 451033.654809
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 16747.0,
+      "master": 16747.123207
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 7605388.0,
+      "master": 7605387.823419
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 11192.0,
+      "master": 11191.791201
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -433355.0,
+      "master": -433356.092988
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 1137632.0,
+      "master": 1137632.47
+     }
+    }
+   },
+   {
+    "line": 5712,
+    "basis_marker": "OFS",
+    "caption": "(2) 요약연결포괄손익계산서",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 451034.0,
+      "master": 451033.654809
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 16747.0,
+      "master": 16747.123207
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 7605388.0,
+      "master": 7605387.823419
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 11192.0,
+      "master": 11191.791201
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -433355.0,
+      "master": -433356.092988
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 1137632.0,
+      "master": 1137632.47
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0087",
+  "quarter": "2023.1Q",
+  "xml": "20230515002788.xml",
+  "tables_with_totals": 5,
+  "tied": [
+   {
+    "line": 7760,
+    "basis_marker": "OFS",
+    "caption": "나. 요약 별도 재무정보 (1) 요약 별도 재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 266365.0,
+      "master": 266364.642616
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 49284.0,
+      "master": 49283.706381
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 26141995.0,
+      "master": 26141994.719972
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 8381.0,
+      "master": 8380.529934
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 162374.0,
+      "master": 162373.558037
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 229663.0,
+      "master": 229663.391144
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 806793.0,
+      "master": 806792.925
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 1232806.0,
+      "master": 1232806.211026
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0087",
+  "quarter": "2023.2Q",
+  "xml": "20230814002443.xml",
+  "tables_with_totals": 5,
+  "tied": [
+   {
+    "line": 7803,
+    "basis_marker": "OFS",
+    "caption": "나. 요약 별도 재무정보 (1) 요약 별도 재무상태표",
+    "items": {
+     "10": {
+      "state": "EQUAL",
+      "dart": 457633.0,
+      "master": 457633.257411
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 47343.0,
+      "master": 47342.887464
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 25158263.0,
+      "master": 25158262.792063
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 7951.0,
+      "master": 7951.429292
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 220843.0,
+      "master": 220842.674798
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 393031.0,
+      "master": 393030.536628
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 806793.0,
+      "master": 806792.925
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 1276560.0,
+      "master": 1276559.77807
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "quarter": "2023.1Q",
+  "xml": "20230515002845.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 4197,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "DIFF",
+      "dart": 717654.0,
+      "master": 1416796.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 82890.0,
+      "master": 82890.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 43970987.0,
+      "master": 43970987.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 94745.0,
+      "master": 94745.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 39878.0,
+      "master": 39878.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 311077.0,
+      "master": 311077.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 578274.0,
+      "master": 578274.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 6296752.0,
+      "master": 6296752.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "quarter": "2023.2Q",
+  "xml": "20230814003007.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 6055,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "10": {
+      "state": "DIFF",
+      "dart": 666105.0,
+      "master": 1577487.0
+     },
+     "15": {
+      "state": "EQUAL",
+      "dart": 80587.0,
+      "master": 80587.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 42994833.0,
+      "master": 42994833.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 75660.0,
+      "master": 75660.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 38265.0,
+      "master": 38265.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 343503.0,
+      "master": 343503.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 578274.0,
+      "master": 578274.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 6469227.0,
+      "master": 6469227.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "quarter": "2023.1Q",
+  "xml": "20230515002204.xml",
+  "tables_with_totals": 10,
+  "tied": [
+   {
+    "line": 4743,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 63703.0,
+      "master": 63703.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 22628936.0,
+      "master": 22628936.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 7728.0,
+      "master": 7728.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 117225.0,
+      "master": 117225.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 1446545.0,
+      "master": 1446545.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 162015.0,
+      "master": 162015.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 2813835.0,
+      "master": 2813835.0
+     }
+    }
+   },
+   {
+    "line": 21529,
+    "basis_marker": "OFS",
+    "caption": "가. 재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 63703.0,
+      "master": 63703.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 22628936.0,
+      "master": 22628936.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 7728.0,
+      "master": 7728.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 117225.0,
+      "master": 117225.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 1446545.0,
+      "master": 1446545.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 162015.0,
+      "master": 162015.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 2813835.0,
+      "master": 2813835.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "quarter": "2023.2Q",
+  "xml": "20230814002592.xml",
+  "tables_with_totals": 10,
+  "tied": [
+   {
+    "line": 5930,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 67540.0,
+      "master": 67540.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 22102765.0,
+      "master": 22102765.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 7380.0,
+      "master": 7380.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 104065.0,
+      "master": 104065.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 1504121.0,
+      "master": 1504121.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 162015.0,
+      "master": 162015.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 2918170.0,
+      "master": 2918170.0
+     }
+    }
+   },
+   {
+    "line": 24038,
+    "basis_marker": "OFS",
+    "caption": "가. 재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 67540.0,
+      "master": 67540.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 22102765.0,
+      "master": 22102765.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 7380.0,
+      "master": 7380.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 104065.0,
+      "master": 104065.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": 1504121.0,
+      "master": 1504121.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 162015.0,
+      "master": 162015.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 2918170.0,
+      "master": 2918170.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "quarter": "2023.1Q",
+  "xml": "20230515002904.xml",
+  "tables_with_totals": 4,
+  "tied": [
+   {
+    "line": 4412,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 278953.0,
+      "master": 278953.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 46243518.0,
+      "master": 46243518.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 70455.0,
+      "master": 70455.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 30790.0,
+      "master": 30790.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -1180228.0,
+      "master": -1180228.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 698969.0,
+      "master": 698969.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 2113450.0,
+      "master": 2113450.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "quarter": "2023.2Q",
+  "xml": "20230814001979.xml",
+  "tables_with_totals": 8,
+  "tied": [
+   {
+    "line": 3975,
+    "basis_marker": "CFS",
+    "caption": "가. 요약연결재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 287918.0,
+      "master": 287918.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 44696096.0,
+      "master": 44696095.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 56238.0,
+      "master": 56238.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 18887.0,
+      "master": 18888.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -1140059.0,
+      "master": -1140059.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 698969.0,
+      "master": 698969.0
+     },
+     "31": {
+      "state": "DIFF",
+      "dart": 2094496.0,
+      "master": 2122398.0
+     }
+    }
+   },
+   {
+    "line": 4489,
+    "basis_marker": "OFS",
+    "caption": "다. 요약재무상태표",
+    "items": {
+     "15": {
+      "state": "EQUAL",
+      "dart": 287918.0,
+      "master": 287918.0
+     },
+     "20": {
+      "state": "EQUAL",
+      "dart": 44696095.0,
+      "master": 44696095.0
+     },
+     "21": {
+      "state": "EQUAL",
+      "dart": 56238.0,
+      "master": 56238.0
+     },
+     "24": {
+      "state": "EQUAL",
+      "dart": 18888.0,
+      "master": 18888.0
+     },
+     "4": {
+      "state": "EQUAL",
+      "dart": -1140059.0,
+      "master": -1140059.0
+     },
+     "30": {
+      "state": "EQUAL",
+      "dart": 698969.0,
+      "master": 698969.0
+     },
+     "31": {
+      "state": "EQUAL",
+      "dart": 2122398.0,
+      "master": 2122398.0
+     }
+    }
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "quarter": "2023.1Q",
+  "xml": "20230515002794.xml",
+  "tables_with_totals": 4,
+  "tied": [
+   {
+    "line": 4972,
+    "basis_marker": "OFS",
+    "caption": "나. 요약 별도재무정보",
+    "items": {}
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "quarter": "2023.2Q",
+  "xml": "20230814003146.xml",
+  "tables_with_totals": 5,
+  "tied": [
+   {
+    "line": 5140,
+    "basis_marker": "OFS",
+    "caption": "나. 요약 별도재무정보",
+    "items": {}
+   }
+  ]
+ }
+]

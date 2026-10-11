@@ -1,0 +1,22 @@
+{
+  "cells": {
+    "KR0010|16|2024.4Q": {
+      "값": 60900.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR0010_KB손해보험.pdf",
+      "page": 25,
+      "sha256": "d1b42efa3538253540bd986d57807169952284fb9491d7d35edbda82bf5c9309",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p25 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0010|16|2025.2Q": {
+      "값": 33300.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR0010_KB손해보험.pdf",
+      "page": 5,
+      "sha256": "f09010a2cef3f1f546fdefb1e88047d3219ae92f6e38746448dbc09ac5393685",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

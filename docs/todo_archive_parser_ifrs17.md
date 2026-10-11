@@ -1,5 +1,11 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 (BS·PL 정정·별첨 적재 20261011T1130Z) 정리 — 밀린 Status (무수정)
+
+- **2026-10-11 BS·PL 세부(granularity) 경영공시 백필(티켓 20261011T0310Z)** — 비상장 15사 + 재보사 8곳(+상장 구멍): `IFRS17_BS.json` 9,030 → 10,651행(+1,621) · `PL_breakdown.json` 12,941 → 13,458행(+517 신규·23 null 채움, 항목 1·16·22·23·24 만 — §3d), 기존 행 값·바이트 변경 0. 대상 23사 BS 2,198 → 3,761칸 · PL 1,035 → 1,548칸, 항등식·코어 census 시뮬 실패 0. 커밋 안 함.
+  남은 것: data-contract RED 0 → 34(이 적재 몫 `PL_YTD_COLLAPSE_TO_ZERO` 3[법인세 정당 0.0, owner 등재 후보 파일] + `MASTER_HOLE` 하노버 2025.3Q PL[원천 not_posted]; 17 `PL_CSM_AMORT_VS_WATERFALL` 은 CSM 레인이 올린 17 RED 와 같은 칸[룰 이름만 바뀜]; xlsx 12 는 publishing·K-ICS, K-ICS 레인 신규 1) · `test_master_tables_golden` 예상 실패(`--update` 안 함)·BS 골든 미실행 · 충돌 BS 10(KR1098 자본금 2026.2Q 마스터 2,000 이상치 포함)·PL 135 · 보류 BS 500(규칙 불일치 312·앵커 없음 182) · PL 항목 1 보류 17 · PL 17·20·21 855칸 대기 · downloader 별첨(하나손보 9분기·악사 3·BNP 11 등).
+  근거·재현·되돌리기 `data/disclosure/_meta/bspl_granularity_runlog.md` · 도구 `scripts/bspl_granularity*.py`.
+
 ## 2026-10-11 (ILP 남은 칸 20261011T1000Z) 정리 — 밀린 Status (무수정)
 
 - **2026-10-11 재보사 8곳(KR1101~KR1108) CSM 계열·경영지표 마스터 적재(티켓 20261011T0430Z)** — `CSM_amortization` +180행(390 → 570) · `CSM_sensitivity` +116행(195 → 311) · `CSM_waterfall` +108행(2,178 → 2,286, 사이드카 +18셀) · `management_indicators` +1,259행(7,665 → 8,924, 티켓 ④), 기존 행 바이트 동일(git HEAD 접두 일치·기존 회사 변경 0). 상각표 18건 합 = 4-6-2 CSM 전건 허용 안 · 민감도 116행과 상각표 6공시 PDF 렌더링 대조 불일치 0 · MI 는 kpi_summary 652/657 · IFRS17_BS 304/306 · kics 171/171 일치, MI 검증기 커버리지 구멍 121 → 23. 커밋 안 함.

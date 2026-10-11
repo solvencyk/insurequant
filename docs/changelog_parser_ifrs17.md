@@ -3,6 +3,16 @@
 > Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-11 (BS·PL 정정 제안 적용 · 별첨·이미지 원천 적재) — A 정정 8항 · B 별첨/이미지 원천 · 보류 재평가
+
+미커밋. push 안 함. 발주 `inbox/parser/20261011T1130Z__orchestrator__MULTI_2023.1Q-2026.2Q__bspl_apply_proposals_and_attachments.md`(겸 downloader 티켓 `20261010T2350Z`; 고치지 않았다, 오케스트레이터 종결 대기). 전 과정·표·재현·증거 `data/disclosure/_meta/bspl_granularity_runlog.md` 맨 위 「중간 결과 — 3차」 · 명세·판독·매니페스트·게이트 전후·보류 목록 `data/_derived/bspl_apply_20261011/` · 백업 `data/_derived/bspl_apply_backup_20261011/`. 서브에이전트·docling 안 씀. 마스터 쓰기는 전부 셀 단위 + 옛 값 guard + 라운드별 백업(적용기 `bspl_apply_bs_fix.py`·`bspl_apply_pl_fix.py`), `build_*` 빌더·`validate_master_tables` 인자 없는 실행 없음.
+
+- **(A) 정정(기존 칸 변경은 이것뿐)**: BS 70칸 = ABL생명 KR0070·미래에셋생명 KR0079 2023.1Q·2Q 총계·줄이 연결(CFS) 표 값이던 것을 같은 DART XML 의 별도(OFS) 표로 33칸 정정(+신규 5) · 항목 10 에 현금및예치금(`dart_CashAndDuefromBanks` 등)이 들어간 KR1000·KR0001·KR0071 36칸을 현금및현금성자산 줄로(원인: `_extract_from_list` 가 알파벳 순 첫 행을 집음) · 한화생명 KR0068 2023.2Q 항목 10 1,143,319.9 → 1,081,513.2. PL 37칸 = 삼성화재 KR0008 2023.2Q 항목 14 일반손익 354,530 → 161,674(DART 보험종목별 표 재계산, 파생 값_당분기 2칸) · KDB생명 KR0072 3개월/누적 쌍 표 열 혼입 36칸(제안 4칸 + 형제 다리·잔차 항목 7·12 + 2026.2Q 빈 칸 9·10, 파생 값_당분기 45칸). 미적용: 처브 KR0100 항목 20(owner 결정) · 흥국화재 KR0005 항목 24 2칸(정의 10배 차) · 삼성화재 2023.2Q 항목 1·15·16 DART 기준 맞춤(제안 파일만).
+- **(B) 적재 185칸**: 하나손보 KR0050 69칸(별도 재무제표 첨부, 연말 앵커 보정; 유형자산 2023.1Q~3Q 는 사용권자산 제외로 3칸 정정) · RGA KR1105 45칸(이미지 8-1 판독 40 + 요약표 5; 판독 `bspl_apply_vision_spec2.py` — 폐합 + 전기말 열 앵커 + 재보사 최신 공시 전기 칸 R1 + 두 공시 교차; 2023.2Q·3Q 는 재작성 판이라 보류) · 카카오페이 KR1098 26칸(스캔본 2분기 판독 6 · 텍스트 8-1 0 증명 15 · DART 감사 XML 5) · 하나생명 KR0097 10칸(2026.1Q 이미지 8-1 + 2025.4Q 연말 두 줄 합) · 하노버 KR1104 2023.3Q 6칸(AI801 서식) · 악사 KR0049 6칸 · AIA KR0080 2025.3Q 7칸 · 신한이지 2 · 라이나·처브 연말 2 · DART 별도 7 · ABL·미래에셋 신규 5.
+- **보류(적재 안 함, 쪽·사유 `hold_list_B_20261011.json`)**: RGA 2025.1Q·2Q·2026.1Q·2Q 항목 13/14/15(자산 줄 합 불일치) · RGA 2023.2Q·3Q(재작성 판) · BNP KR0075 항목 10/11/13/20/24(8-1 줄 = 일반계정, 마스터 = 특별계정 포함 DART; 3개 연말 불일치 증거) · 악사 10/13/20/21/24 · 하노버 2023.3Q 10/13/15/24. 후속 보류 378칸 중 32칸이 이번 적재로 해소(하나손보 15 · RGA 8 · 하나생명 3 · 신한이지 2 · 현대해상·삼성생명·ABL 4).
+- **검증**: 기존 칸 변경 0(BS 값 변경 70·PL 37 = 전부 (A) 정정) · `bspl_followup_master_integrity.py` 통과 · `validate_data_contract` RED 38 → 38(신규 RED 0)·YELLOW 151 → 150(신규 2 = ABL 2023.1Q·2Q AOCI 가 K-ICS 마스터와 15%, K-ICS 레인 확인 필요) · `validate_master_tables --no-build` closing 381P/0F · pl_bridge 3455P → 3456P · 29F·0NEW 동일. 골든은 안 돌렸고 `--update` 도 안 했다(BS 골든 고정 9,030행 → 현재 10,962행, validation 재생성).
+- **남은 것**: owner(KR0008 DART 기준 제안 · PL 직접 정정 37칸 gold 등재 `proposed_gold_overlay_pl_20261011.json` · 처브 항목 20 · IBK연금 항목 13 정의) · K-ICS 레인(ABL AOCI) · publishing(17BS 시트 행 누락 1,932 + 드리프트 93 · 손익분해PL 드리프트 121) · 빌더 결함 3건(항목 10 행 선택 · FS-API 013 폴백 표 선택 · KR0072 핸들러) · 하나생명 2026.1Q 부채 4칸(150dpi 화면 캡처, 정밀도 ±0.01백만원)은 재작성본 수령 시 재독.
+
 ## 2026-10-11 (ILP 남은 칸) — 하나손보 별첨 항목 10~15 · 라이나·처브 2023 분기 · 메트라이프 소수 정정 · 현대해상 추출기 · RED 7 사실 · raw 글롭 배선
 
 미커밋. push 안 함. 발주 `inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md`(고치지 않았다, 오케스트레이터 종결 대기) + 코디네이터 추가 지시(`test_disclosure_raw_pdf_wiring` 실패 7건). 전 과정·표·재현·증거 `data/disclosure/_meta/ilp_leftovers_runlog_20261011.md`. 서브에이전트·docling 안 씀.

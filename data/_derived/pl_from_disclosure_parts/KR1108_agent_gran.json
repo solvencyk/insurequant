@@ -1,0 +1,229 @@
+{
+  "cells": {
+    "KR1108|1|2025.2Q": {
+      "값": -2200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2025.3Q": {
+      "값": -4500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2025.4Q": {
+      "값": -7500.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 12,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p12 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2026.1Q": {
+      "값": -2800.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|1|2026.2Q": {
+      "값": -6900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 5,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|16|2025.2Q": {
+      "값": 2200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|16|2025.3Q": {
+      "값": 3900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|16|2025.4Q": {
+      "값": 6300.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 12,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p12 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|16|2026.1Q": {
+      "값": 2300.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|16|2026.2Q": {
+      "값": 5900.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 5,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|22|2025.2Q": {
+      "값": -2200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|22|2025.3Q": {
+      "값": -4900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|22|2025.4Q": {
+      "값": -8100.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 12,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p12 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|22|2026.1Q": {
+      "값": -3200.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|22|2026.2Q": {
+      "값": -7800.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 5,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|23|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|23|2025.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|23|2025.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 12,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p12 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|23|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|23|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 5,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|24|2025.2Q": {
+      "값": -2200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "b76a53d5a06c980324eb7c1518a7195bc7d1cd6558f4463dd9d387e1367eeed7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|24|2025.3Q": {
+      "값": -4900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "082079328ec1853b6dad0207dcef9a96ffee568b6c48982fe936a9fbb4d16f26",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|24|2025.4Q": {
+      "값": -8100.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 12,
+      "sha256": "d15809306d91bf32ae3c82db44e05a83f320cbefb7b4efcef815bca2b3f0ee7a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p12 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|24|2026.1Q": {
+      "값": -3200.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 4,
+      "sha256": "27cf0837ed18ecc04f354b732c131b00a2d9cf0a92d822a8df3442517f103946",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1108|24|2026.2Q": {
+      "값": -7800.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf",
+      "page": 5,
+      "sha256": "b6fd31d4c395f0abe65ce3c74bf49ce394083cdc25d87bb1545f570b0a8127a4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

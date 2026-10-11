@@ -1,0 +1,7002 @@
+[
+ {
+  "master": "BS",
+  "code": "KR0001",
+  "name": "메리츠화재해상보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 60312.5,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "PARTIAL"
+ },
+ {
+  "master": "BS",
+  "code": "KR0002",
+  "name": "한화손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 773694.575,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0003",
+  "name": "롯데손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q"
+  ],
+  "value": 310336.32,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0003",
+  "name": "롯데손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 310336.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0004",
+  "name": "예별손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 124770.535,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0004",
+  "name": "예별손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 30000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0005",
+  "name": "흥국화재",
+  "item": 21,
+  "item_name": "재보험계약부채",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q"
+  ],
+  "value": 14.0,
+  "class": "MOVING_BALANCE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 14.0,
+    "reproduced": true,
+    "kind": "bs_full",
+    "unit": "백만원"
+   },
+   {
+    "quarter": "2023.2Q",
+    "status": null,
+    "value_mn": null,
+    "reproduced": false,
+    "kind": null,
+    "unit": null
+   }
+  ],
+  "verdict": "PARTIAL"
+ },
+ {
+  "master": "BS",
+  "code": "KR0005",
+  "name": "흥국화재",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 325821.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0008",
+  "name": "삼성화재해상보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 26473.4185,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0009",
+  "name": "현대해상",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 44700.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0010",
+  "name": "KB손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 33250.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "PARTIAL"
+ },
+ {
+  "master": "BS",
+  "code": "KR0011",
+  "name": "DB손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 35400.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0029",
+  "name": "AIG손해보험",
+  "item": 11,
+  "item_name": "당기손익-공정가치측정금융자산",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 1400.0,
+  "class": "MOVING_BALANCE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 1400.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   },
+   {
+    "quarter": "2024.2Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 1400.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   },
+   {
+    "quarter": "2024.3Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 1400.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0029",
+  "name": "AIG손해보험",
+  "item": 11,
+  "item_name": "당기손익-공정가치측정금융자산",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 1400.0,
+  "class": "MOVING_BALANCE",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 1400.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   },
+   {
+    "quarter": "2025.2Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 1400.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   },
+   {
+    "quarter": "2025.3Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 1400.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0029",
+  "name": "AIG손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 61757.915,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0032",
+  "name": "NH농협손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 100912.5,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0049",
+  "name": "악사손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 250900.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0049",
+  "name": "악사손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 250900.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0049",
+  "name": "악사손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 250900.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "item": 21,
+  "item_name": "재보험계약부채",
+  "field": "값",
+  "quarters": [
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 200.0,
+  "class": "MOVING_BALANCE",
+  "evidence": [
+   {
+    "quarter": "2023.2Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 200.0,
+    "reproduced": true,
+    "kind": "bs_full",
+    "unit": "억원"
+   },
+   {
+    "quarter": "2023.3Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 200.0,
+    "reproduced": true,
+    "kind": "bs_full",
+    "unit": "억원"
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 461100.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 461100.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 561100.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 761100.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0051",
+  "name": "신한이지손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q"
+  ],
+  "value": 106206.815,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0051",
+  "name": "신한이지손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 191125.29,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0051",
+  "name": "신한이지손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 191125.29,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0068",
+  "name": "한화생명",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 4342650.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0069",
+  "name": "삼성생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 100000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0070",
+  "name": "에이비엘생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 15534.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0070",
+  "name": "에이비엘생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 15533.68,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0071",
+  "name": "흥국생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 80119.74,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0072",
+  "name": "케이디비생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q"
+  ],
+  "value": 474324.8,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0072",
+  "name": "케이디비생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q"
+  ],
+  "value": 199309.195,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0072",
+  "name": "케이디비생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 498325.645,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0072",
+  "name": "케이디비생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 583073.355,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0073",
+  "name": "교보생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 102500.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0074",
+  "name": "라이나생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 34860.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0075",
+  "name": "비엔피파리바카디프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 201351.9,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0076",
+  "name": "아이엠라이프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q"
+  ],
+  "value": 290649.565,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0076",
+  "name": "아이엠라이프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 302281.525,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0079",
+  "name": "미래에셋생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 990714.745,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "PARTIAL"
+ },
+ {
+  "master": "BS",
+  "code": "KR0080",
+  "name": "에이아이에이생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 603289.32,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "PARTIAL"
+ },
+ {
+  "master": "BS",
+  "code": "KR0082",
+  "name": "DB생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 253333.575,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0083",
+  "name": "푸본현대생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q"
+  ],
+  "value": 1137632.47,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0083",
+  "name": "푸본현대생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 1530132.47,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0083",
+  "name": "푸본현대생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 2230132.47,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0087",
+  "name": "동양생명",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 806792.925,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0087",
+  "name": "동양생명",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 806793.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "PARTIAL"
+ },
+ {
+  "master": "BS",
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 578274.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0095",
+  "name": "메트라이프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 141570.32,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0097",
+  "name": "하나생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 207026.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0097",
+  "name": "하나생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q"
+  ],
+  "value": 299626.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 162015.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0100",
+  "name": "처브라이프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q"
+  ],
+  "value": 285085.5,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0100",
+  "name": "처브라이프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q"
+  ],
+  "value": 285215.5,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0100",
+  "name": "처브라이프생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 285215.5,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0104",
+  "name": "농협생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 698969.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0104",
+  "name": "농협생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 698968.75,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR0150",
+  "name": "서울보증보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 174553.995,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1000",
+  "name": "코리안리재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 70411.4695,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1000",
+  "name": "코리안리재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 82683.763,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1000",
+  "name": "코리안리재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 97410.5155,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1010",
+  "name": "교보라이프플래닛생명보험",
+  "item": 13,
+  "item_name": "상각후원가측정금융자산",
+  "field": "값",
+  "quarters": [
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 338500.0,
+  "class": "MOVING_BALANCE",
+  "evidence": [
+   {
+    "quarter": "2023.2Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 338500.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   },
+   {
+    "quarter": "2023.3Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 338500.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1010",
+  "name": "교보라이프플래닛생명보험",
+  "item": 13,
+  "item_name": "상각후원가측정금융자산",
+  "field": "값",
+  "quarters": [
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 26000.0,
+  "class": "MOVING_BALANCE",
+  "evidence": [
+   {
+    "quarter": "2024.2Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 26000.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   },
+   {
+    "quarter": "2024.3Q",
+    "status": "EXISTS_SAME",
+    "value_mn": 26000.0,
+    "reproduced": true,
+    "kind": "sum_bs",
+    "unit": "억원"
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1010",
+  "name": "교보라이프플래닛생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2022.4Q",
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q",
+   "2023.4Q"
+  ],
+  "value": 244000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2022.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1010",
+  "name": "교보라이프플래닛생명보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 369000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 7,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1011",
+  "name": "IBK연금보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 340000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1011",
+  "name": "IBK연금보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 490000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 8,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1098",
+  "name": "카카오페이손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q"
+  ],
+  "value": 100000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1098",
+  "name": "카카오페이손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 200000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 0,
+    "reproduced": false,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 0,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "PARTIAL"
+ },
+ {
+  "master": "BS",
+  "code": "KR1098",
+  "name": "카카오페이손해보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 300000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1101",
+  "name": "뮌헨재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 121714.869,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1101",
+  "name": "뮌헨재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 121714.869,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1101",
+  "name": "뮌헨재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 121714.869,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1101",
+  "name": "뮌헨재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 121714.869,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1102",
+  "name": "스위스리아시아",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 249400.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1102",
+  "name": "스위스리아시아",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 249400.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1102",
+  "name": "스위스리아시아",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 249400.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1102",
+  "name": "스위스리아시아",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 474600.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1103",
+  "name": "제네럴재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 17000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1104",
+  "name": "하노버재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.3Q",
+   "2023.4Q"
+  ],
+  "value": 25000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 0,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1104",
+  "name": "하노버재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 32463.115,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1104",
+  "name": "하노버재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 32463.115,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1105",
+  "name": "알지에이리인슈어런스",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.3Q",
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q",
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q",
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 52000.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 5,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 0,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": false
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 1,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1106",
+  "name": "스코리재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2023.1Q",
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 161270.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2023.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2023.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1106",
+  "name": "스코리재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 161270.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1106",
+  "name": "스코리재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 279346.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1106",
+  "name": "스코리재보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 279346.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1107",
+  "name": "퍼시픽라이프리",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 176800.921,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1107",
+  "name": "퍼시픽라이프리",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 176800.921,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 4,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "own_filing_obs": 1,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1107",
+  "name": "퍼시픽라이프리",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 207761.861,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "BS",
+  "code": "KR1108",
+  "name": "마이브라운반려동물전문보험",
+  "item": 30,
+  "item_name": "자본금",
+  "field": "값",
+  "quarters": [
+   "2025.4Q",
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 26820.0,
+  "class": "CONSTANT_LINE",
+  "evidence": [
+   {
+    "quarter": "2025.4Q",
+    "own_filing_obs": 2,
+    "any_obs": 6,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.1Q",
+    "own_filing_obs": 2,
+    "any_obs": 3,
+    "reproduced": true,
+    "own_reproduced": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "own_filing_obs": 2,
+    "any_obs": 2,
+    "reproduced": true,
+    "own_reproduced": true
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR0002",
+  "name": "한화손해보험",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": -28.871,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0005",
+  "name": "흥국화재",
+  "item": 10,
+  "item_name": "재보험 위험조정 변동",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.3Q",
+   "2025.4Q"
+  ],
+  "value": -666.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0050",
+  "name": "하나손해보험",
+  "item": 23,
+  "item_name": "법인세",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": 100.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2024.2Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2024.3Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR0051",
+  "name": "신한이지손해보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 400.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0068",
+  "name": "한화생명",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 34.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0072",
+  "name": "케이디비생명보험",
+  "item": 10,
+  "item_name": "재보험 위험조정 변동",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": -162.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0074",
+  "name": "라이나생명보험",
+  "item": 23,
+  "item_name": "법인세",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 33000.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0075",
+  "name": "비엔피파리바카디프생명보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 2500.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0075",
+  "name": "비엔피파리바카디프생명보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 2400.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0076",
+  "name": "아이엠라이프생명보험",
+  "item": 23,
+  "item_name": "법인세",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 5500.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "item": 29,
+  "item_name": "FVOCI 지분증권 평가손익",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 322.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": -1617.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": -3494.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "item": 10,
+  "item_name": "재보험 위험조정 변동",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.3Q",
+   "2024.4Q"
+  ],
+  "value": -69.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "item": 21,
+  "item_name": "영업외손익",
+  "field": "값",
+  "quarters": [
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": -362.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "item": 28,
+  "item_name": "위험회피 파생상품 평가손익",
+  "field": "값_당분기",
+  "quarters": [
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q"
+  ],
+  "value": 33.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR0104",
+  "name": "농협생명보험",
+  "item": 5,
+  "item_name": "원수 위험조정 변동",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 10937.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR1011",
+  "name": "IBK연금보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 1300.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR1101",
+  "name": "뮌헨재보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": -800.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "quarter": "2025.2Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.3Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR1101",
+  "name": "뮌헨재보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 200.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2026.2Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR1102",
+  "name": "스위스리아시아",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 2400.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR1104",
+  "name": "하노버재보험",
+  "item": 23,
+  "item_name": "법인세",
+  "field": "값_당분기",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 100.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR1105",
+  "name": "알지에이리인슈어런스",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": 200.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "quarter": "2025.2Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.3Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR1105",
+  "name": "알지에이리인슈어런스",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 200.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR1105",
+  "name": "알지에이리인슈어런스",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 100.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR1106",
+  "name": "스코리재보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값",
+  "quarters": [
+   "2023.2Q",
+   "2023.3Q"
+  ],
+  "value": 3900.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "quarter": "2023.2Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2023.3Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR1106",
+  "name": "스코리재보험",
+  "item": 22,
+  "item_name": "세전이익",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 15400.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR1106",
+  "name": "스코리재보험",
+  "item": 24,
+  "item_name": "당기순이익",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 12200.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "n_own": 1,
+    "reproduced": true,
+    "statuses": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "verdict": "CONFIRMED"
+ },
+ {
+  "master": "PL",
+  "code": "KR1107",
+  "name": "퍼시픽라이프리",
+  "item": 22,
+  "item_name": "세전이익",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 4300.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ },
+ {
+  "master": "PL",
+  "code": "KR1107",
+  "name": "퍼시픽라이프리",
+  "item": 24,
+  "item_name": "당기순이익",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 4300.0,
+  "class": "PL_FLOW",
+  "evidence": [
+   {
+    "note": "no disclosure lineage for this item/field (DART FS-API or Tier-2 note, or a derived 당분기): manual source look"
+   }
+  ],
+  "verdict": "MANUAL"
+ }
+]

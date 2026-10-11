@@ -1,0 +1,13 @@
+{
+  "cells": {
+    "KR0008|16|2023.2Q": {
+      "값": 172900.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR0008_삼성화재해상보험_amended.pdf",
+      "page": 5,
+      "sha256": "5014b41794f398402f22d934897e6fc7fb7216ac002a8cbc24418ad0eb9d6963",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

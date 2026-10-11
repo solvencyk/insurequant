@@ -1,0 +1,634 @@
+{
+  "cells": {
+    "KR1102|1|2023.1Q": {
+      "값": -23300.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "c30d08ca13c6607d22bb7d8213afdb66bb3c2f56e36dbf1e06191c6ebd4c7123",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2023.2Q": {
+      "값": 39200.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 5,
+      "sha256": "85fa01f9126b1a6908525e73bc7bb157812ad53ad7244beaf2e422bbf405d4e0",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2023.3Q": {
+      "값": 59500.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a54fc7ff76b519338d6c92e92a2dab3ca3c17a965ac329eaf4c03f4c3289576c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2023.4Q": {
+      "값": 118500.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf",
+      "page": 10,
+      "sha256": "db4239312c1276a4627095161650dbc471c23fe402a9fc7acf82d2d9c9dbaafb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2024.1Q": {
+      "값": 36200.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "d54fa7ac1928363058779744fe0e214dd143a1c7548e8096afce8110a028d71c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2024.2Q": {
+      "값": 69200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "cbab18edd9f809e587807aabf786edda142b37531a96a6e71cb76991d638c161",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2024.3Q": {
+      "값": 91900.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "ab0c3cc4f5e9db474b1dc437a383c71e0525a4eb22a290a71255bea457a8b775",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2024.4Q": {
+      "값": 62900.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "5f0e1ab210e1361b774b078198a7868ac003bcc164a85d59e7136e8114102f72",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2025.1Q": {
+      "값": -14000.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "2795ca60a2d200d98de37d06480b8812082c48b9f5bf57d57e07b890d55ef394",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2025.2Q": {
+      "값": -27300.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "bd5255d51a7dec3473350b17c4b5ca704752acf50a7911bc511c83eeee43c626",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2025.3Q": {
+      "값": -115300.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a2a716211952109cc9ab1bc126d9306d354768e2284566ac21913f0e01bdf9c7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2025.4Q": {
+      "값": -222600.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "16e2fd96fd419aafdc5ff6dcc8ce4735a237cafe3cceeaac580bbaeb374050a1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2026.1Q": {
+      "값": -47200.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "26615ef5288724f1d983e55efe4551e47eb43f9c554d36f90a326f45e8d04798",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|1|2026.2Q": {
+      "값": -38100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "7d9d5e8a7f78cfeed36433c947eab7592ad30b3b9b877ce9c13981d886510d6e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2023.1Q": {
+      "값": 1300.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "c30d08ca13c6607d22bb7d8213afdb66bb3c2f56e36dbf1e06191c6ebd4c7123",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2023.2Q": {
+      "값": 4400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 5,
+      "sha256": "85fa01f9126b1a6908525e73bc7bb157812ad53ad7244beaf2e422bbf405d4e0",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2023.3Q": {
+      "값": 5000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a54fc7ff76b519338d6c92e92a2dab3ca3c17a965ac329eaf4c03f4c3289576c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2023.4Q": {
+      "값": 6200.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf",
+      "page": 10,
+      "sha256": "db4239312c1276a4627095161650dbc471c23fe402a9fc7acf82d2d9c9dbaafb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2024.1Q": {
+      "값": 900.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "d54fa7ac1928363058779744fe0e214dd143a1c7548e8096afce8110a028d71c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2024.2Q": {
+      "값": 2600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "cbab18edd9f809e587807aabf786edda142b37531a96a6e71cb76991d638c161",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2024.3Q": {
+      "값": 4700.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "ab0c3cc4f5e9db474b1dc437a383c71e0525a4eb22a290a71255bea457a8b775",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2024.4Q": {
+      "값": 6500.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "5f0e1ab210e1361b774b078198a7868ac003bcc164a85d59e7136e8114102f72",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2025.1Q": {
+      "값": 2400.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "2795ca60a2d200d98de37d06480b8812082c48b9f5bf57d57e07b890d55ef394",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2025.2Q": {
+      "값": 4800.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "bd5255d51a7dec3473350b17c4b5ca704752acf50a7911bc511c83eeee43c626",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2025.3Q": {
+      "값": 8600.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a2a716211952109cc9ab1bc126d9306d354768e2284566ac21913f0e01bdf9c7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2025.4Q": {
+      "값": 14400.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "16e2fd96fd419aafdc5ff6dcc8ce4735a237cafe3cceeaac580bbaeb374050a1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2026.1Q": {
+      "값": 4700.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "26615ef5288724f1d983e55efe4551e47eb43f9c554d36f90a326f45e8d04798",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|16|2026.2Q": {
+      "값": 9800.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "7d9d5e8a7f78cfeed36433c947eab7592ad30b3b9b877ce9c13981d886510d6e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2023.1Q": {
+      "값": -23100.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "c30d08ca13c6607d22bb7d8213afdb66bb3c2f56e36dbf1e06191c6ebd4c7123",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2023.2Q": {
+      "값": 50900.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 5,
+      "sha256": "85fa01f9126b1a6908525e73bc7bb157812ad53ad7244beaf2e422bbf405d4e0",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2023.3Q": {
+      "값": 59800.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a54fc7ff76b519338d6c92e92a2dab3ca3c17a965ac329eaf4c03f4c3289576c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2023.4Q": {
+      "값": 130200.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf",
+      "page": 10,
+      "sha256": "db4239312c1276a4627095161650dbc471c23fe402a9fc7acf82d2d9c9dbaafb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2024.1Q": {
+      "값": 38800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "d54fa7ac1928363058779744fe0e214dd143a1c7548e8096afce8110a028d71c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2024.2Q": {
+      "값": 72200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "cbab18edd9f809e587807aabf786edda142b37531a96a6e71cb76991d638c161",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2024.3Q": {
+      "값": 103200.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "ab0c3cc4f5e9db474b1dc437a383c71e0525a4eb22a290a71255bea457a8b775",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2024.4Q": {
+      "값": 81600.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "5f0e1ab210e1361b774b078198a7868ac003bcc164a85d59e7136e8114102f72",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2025.1Q": {
+      "값": -12300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "2795ca60a2d200d98de37d06480b8812082c48b9f5bf57d57e07b890d55ef394",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2025.2Q": {
+      "값": -17600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "bd5255d51a7dec3473350b17c4b5ca704752acf50a7911bc511c83eeee43c626",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2025.3Q": {
+      "값": -119400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a2a716211952109cc9ab1bc126d9306d354768e2284566ac21913f0e01bdf9c7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2025.4Q": {
+      "값": -229700.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "16e2fd96fd419aafdc5ff6dcc8ce4735a237cafe3cceeaac580bbaeb374050a1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2026.1Q": {
+      "값": -46800.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "26615ef5288724f1d983e55efe4551e47eb43f9c554d36f90a326f45e8d04798",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|22|2026.2Q": {
+      "값": -49300.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "7d9d5e8a7f78cfeed36433c947eab7592ad30b3b9b877ce9c13981d886510d6e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2023.1Q": {
+      "값": -900.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "c30d08ca13c6607d22bb7d8213afdb66bb3c2f56e36dbf1e06191c6ebd4c7123",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 5,
+      "sha256": "85fa01f9126b1a6908525e73bc7bb157812ad53ad7244beaf2e422bbf405d4e0",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2023.3Q": {
+      "값": 13800.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a54fc7ff76b519338d6c92e92a2dab3ca3c17a965ac329eaf4c03f4c3289576c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2023.4Q": {
+      "값": 29600.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf",
+      "page": 10,
+      "sha256": "db4239312c1276a4627095161650dbc471c23fe402a9fc7acf82d2d9c9dbaafb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2024.1Q": {
+      "값": 9000.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "d54fa7ac1928363058779744fe0e214dd143a1c7548e8096afce8110a028d71c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2024.2Q": {
+      "값": 16700.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "cbab18edd9f809e587807aabf786edda142b37531a96a6e71cb76991d638c161",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2024.3Q": {
+      "값": 23800.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "ab0c3cc4f5e9db474b1dc437a383c71e0525a4eb22a290a71255bea457a8b775",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2024.4Q": {
+      "값": 19300.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "5f0e1ab210e1361b774b078198a7868ac003bcc164a85d59e7136e8114102f72",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "2795ca60a2d200d98de37d06480b8812082c48b9f5bf57d57e07b890d55ef394",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "bd5255d51a7dec3473350b17c4b5ca704752acf50a7911bc511c83eeee43c626",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2025.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a2a716211952109cc9ab1bc126d9306d354768e2284566ac21913f0e01bdf9c7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2025.4Q": {
+      "값": -51500.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "16e2fd96fd419aafdc5ff6dcc8ce4735a237cafe3cceeaac580bbaeb374050a1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2026.1Q": {
+      "값": -9900.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "26615ef5288724f1d983e55efe4551e47eb43f9c554d36f90a326f45e8d04798",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|23|2026.2Q": {
+      "값": -2100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "7d9d5e8a7f78cfeed36433c947eab7592ad30b3b9b877ce9c13981d886510d6e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2023.1Q": {
+      "값": -22100.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "c30d08ca13c6607d22bb7d8213afdb66bb3c2f56e36dbf1e06191c6ebd4c7123",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2023.2Q": {
+      "값": 50900.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 5,
+      "sha256": "85fa01f9126b1a6908525e73bc7bb157812ad53ad7244beaf2e422bbf405d4e0",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2023.3Q": {
+      "값": 46000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a54fc7ff76b519338d6c92e92a2dab3ca3c17a965ac329eaf4c03f4c3289576c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2023.4Q": {
+      "값": 100600.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf",
+      "page": 10,
+      "sha256": "db4239312c1276a4627095161650dbc471c23fe402a9fc7acf82d2d9c9dbaafb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2024.1Q": {
+      "값": 29800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "d54fa7ac1928363058779744fe0e214dd143a1c7548e8096afce8110a028d71c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2024.2Q": {
+      "값": 55500.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "cbab18edd9f809e587807aabf786edda142b37531a96a6e71cb76991d638c161",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2024.3Q": {
+      "값": 79400.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "ab0c3cc4f5e9db474b1dc437a383c71e0525a4eb22a290a71255bea457a8b775",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2024.4Q": {
+      "값": 62300.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "5f0e1ab210e1361b774b078198a7868ac003bcc164a85d59e7136e8114102f72",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2025.1Q": {
+      "값": -12300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "2795ca60a2d200d98de37d06480b8812082c48b9f5bf57d57e07b890d55ef394",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2025.2Q": {
+      "값": -17600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "bd5255d51a7dec3473350b17c4b5ca704752acf50a7911bc511c83eeee43c626",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2025.3Q": {
+      "값": -119400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "a2a716211952109cc9ab1bc126d9306d354768e2284566ac21913f0e01bdf9c7",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2025.4Q": {
+      "값": -178200.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf",
+      "page": 10,
+      "sha256": "16e2fd96fd419aafdc5ff6dcc8ce4735a237cafe3cceeaac580bbaeb374050a1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2026.1Q": {
+      "값": -36900.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "26615ef5288724f1d983e55efe4551e47eb43f9c554d36f90a326f45e8d04798",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1102|24|2026.2Q": {
+      "값": -47200.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf",
+      "page": 4,
+      "sha256": "7d9d5e8a7f78cfeed36433c947eab7592ad30b3b9b877ce9c13981d886510d6e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

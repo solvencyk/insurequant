@@ -1,0 +1,634 @@
+{
+  "cells": {
+    "KR1107|1|2023.1Q": {
+      "값": -2300.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2023.2Q": {
+      "값": -7000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2023.3Q": {
+      "값": -7900.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2023.4Q": {
+      "값": -23900.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 9,
+      "sha256": "641dcf7cdc01a680d21db3f0e16e3b4dc412347025834f6b61ec06df85b7e1d4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p9 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2024.1Q": {
+      "값": -700.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2024.2Q": {
+      "값": 10900.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2024.3Q": {
+      "값": -1400.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2024.4Q": {
+      "값": -13300.085367,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "cac18d675a51d4ad49e75b342805445d871ad689a5a9fa609c8b72fe18b65e22",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「보험손익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "484b9a01af51241f8fe964ed0a3f9a0f679d4f871641396f1fc4add0f13a5613",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2025.2Q": {
+      "값": 2900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "56230166732b5400d5f0f115faba073e8e5321ba52ef22eb43c41d06a639e94a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2025.3Q": {
+      "값": -6400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "e6fe81261cc163c64fc73c2a771c8dd324415bee61af4536d3c10527dde0c748",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2025.4Q": {
+      "값": -13985.857353,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "533b55f5238a42e7d1748fd62176e0a4356702e095167d655fa216fa574630a5",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「보험손익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2026.1Q": {
+      "값": 3200.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "2adf45fc7d3236ebea8b1c34d93e08feca5772e195a4f138ecfb1dde14d17afb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|1|2026.2Q": {
+      "값": 4600.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "dfc5152a9e04d078d1387754f8d97154cf40d91613c4b3d02d08bc44977b7b91",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2023.1Q": {
+      "값": 500.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2023.2Q": {
+      "값": 1200.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2023.3Q": {
+      "값": 1800.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2023.4Q": {
+      "값": 2500.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 9,
+      "sha256": "641dcf7cdc01a680d21db3f0e16e3b4dc412347025834f6b61ec06df85b7e1d4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p9 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2024.1Q": {
+      "값": 800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2024.2Q": {
+      "값": 1300.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2024.3Q": {
+      "값": 2000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2024.4Q": {
+      "값": 2600.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 10,
+      "sha256": "124ee4e61562f774fbdba8c39b1096893197f3cc4e324beaea254f51668a2308",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:R1_tiebreak",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. R1: summary 2800 vs audit 2620 disagree; the later filing 2025.4Q comparative decides. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2025.1Q": {
+      "값": 600.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "484b9a01af51241f8fe964ed0a3f9a0f679d4f871641396f1fc4add0f13a5613",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2025.2Q": {
+      "값": 1100.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "56230166732b5400d5f0f115faba073e8e5321ba52ef22eb43c41d06a639e94a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2025.3Q": {
+      "값": 1700.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "e6fe81261cc163c64fc73c2a771c8dd324415bee61af4536d3c10527dde0c748",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2025.4Q": {
+      "값": 3485.463871,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "533b55f5238a42e7d1748fd62176e0a4356702e095167d655fa216fa574630a5",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「기타사업비용」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2026.1Q": {
+      "값": 900.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "2adf45fc7d3236ebea8b1c34d93e08feca5772e195a4f138ecfb1dde14d17afb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|16|2026.2Q": {
+      "값": 2000.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "dfc5152a9e04d078d1387754f8d97154cf40d91613c4b3d02d08bc44977b7b91",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2023.1Q": {
+      "값": 6500.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2023.2Q": {
+      "값": -1100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2023.3Q": {
+      "값": -4500.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2023.4Q": {
+      "값": -3800.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 9,
+      "sha256": "641dcf7cdc01a680d21db3f0e16e3b4dc412347025834f6b61ec06df85b7e1d4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p9 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2024.1Q": {
+      "값": 600.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2024.2Q": {
+      "값": 18000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2024.3Q": {
+      "값": 13200.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2024.4Q": {
+      "값": 4334.865096,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "cac18d675a51d4ad49e75b342805445d871ad689a5a9fa609c8b72fe18b65e22",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「세전이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2025.1Q": {
+      "값": 4300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "484b9a01af51241f8fe964ed0a3f9a0f679d4f871641396f1fc4add0f13a5613",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2025.2Q": {
+      "값": 8600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "56230166732b5400d5f0f115faba073e8e5321ba52ef22eb43c41d06a639e94a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2025.3Q": {
+      "값": -900.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "e6fe81261cc163c64fc73c2a771c8dd324415bee61af4536d3c10527dde0c748",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2025.4Q": {
+      "값": -12066.580579,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "533b55f5238a42e7d1748fd62176e0a4356702e095167d655fa216fa574630a5",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「세전이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2026.1Q": {
+      "값": -1300.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "2adf45fc7d3236ebea8b1c34d93e08feca5772e195a4f138ecfb1dde14d17afb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|22|2026.2Q": {
+      "값": -100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "dfc5152a9e04d078d1387754f8d97154cf40d91613c4b3d02d08bc44977b7b91",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2023.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2023.3Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2023.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 9,
+      "sha256": "641dcf7cdc01a680d21db3f0e16e3b4dc412347025834f6b61ec06df85b7e1d4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p9 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2024.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2024.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2024.3Q": {
+      "값": 500.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2024.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "cac18d675a51d4ad49e75b342805445d871ad689a5a9fa609c8b72fe18b65e22",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「법인세」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2025.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "484b9a01af51241f8fe964ed0a3f9a0f679d4f871641396f1fc4add0f13a5613",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2025.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "56230166732b5400d5f0f115faba073e8e5321ba52ef22eb43c41d06a639e94a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2025.3Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "e6fe81261cc163c64fc73c2a771c8dd324415bee61af4536d3c10527dde0c748",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2025.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "533b55f5238a42e7d1748fd62176e0a4356702e095167d655fa216fa574630a5",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「법인세」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2026.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "2adf45fc7d3236ebea8b1c34d93e08feca5772e195a4f138ecfb1dde14d17afb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|23|2026.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "dfc5152a9e04d078d1387754f8d97154cf40d91613c4b3d02d08bc44977b7b91",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2023.1Q": {
+      "값": 6500.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2023.2Q": {
+      "값": -1100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2023.3Q": {
+      "값": -4500.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2023.4Q": {
+      "값": -3800.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 9,
+      "sha256": "641dcf7cdc01a680d21db3f0e16e3b4dc412347025834f6b61ec06df85b7e1d4",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p9 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2024.1Q": {
+      "값": 600.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2024.2Q": {
+      "값": 18000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 3,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p3 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2024.3Q": {
+      "값": 12600.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2024.4Q": {
+      "값": 4334.865096,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "cac18d675a51d4ad49e75b342805445d871ad689a5a9fa609c8b72fe18b65e22",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「당기순이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2025.1Q": {
+      "값": 4300.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "484b9a01af51241f8fe964ed0a3f9a0f679d4f871641396f1fc4add0f13a5613",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2025.2Q": {
+      "값": 8600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "56230166732b5400d5f0f115faba073e8e5321ba52ef22eb43c41d06a639e94a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2025.3Q": {
+      "값": -1100.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "e6fe81261cc163c64fc73c2a771c8dd324415bee61af4536d3c10527dde0c748",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2025.4Q": {
+      "값": -12066.580579,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "page": 8,
+      "sha256": "533b55f5238a42e7d1748fd62176e0a4356702e095167d655fa216fa574630a5",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「당기순이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2026.1Q": {
+      "값": -1300.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "2adf45fc7d3236ebea8b1c34d93e08feca5772e195a4f138ecfb1dde14d17afb",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1107|24|2026.2Q": {
+      "값": -100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "dfc5152a9e04d078d1387754f8d97154cf40d91613c4b3d02d08bc44977b7b91",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

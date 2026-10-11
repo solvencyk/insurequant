@@ -1,0 +1,263 @@
+[
+ {
+  "key": "KR0005|31|2023.1Q",
+  "rule": "31:이익잉여금",
+  "value_mn": 294400.0,
+  "n_same_year_evidence": 3,
+  "n_bad": 0,
+  "n_year_end": 1,
+  "totals_disagree": 0,
+  "evidence": [
+   [
+    "2023.3Q",
+    "2023.3Q",
+    0,
+    "equity",
+    true,
+    365600.0,
+    365612.0
+   ],
+   [
+    "2023.4Q",
+    "2023.4Q",
+    0,
+    "equity",
+    true,
+    495300.0,
+    495273.0
+   ],
+   [
+    "2023.4Q",
+    "2023.3Q",
+    1,
+    "equity",
+    true,
+    365600.0,
+    365612.0
+   ]
+  ],
+  "independent_check": {
+   "residual_억_by_quarter": {
+    "2023.1Q": 2119.88,
+    "2023.2Q": 2119.84,
+    "2023.3Q": 2120.0,
+    "2023.4Q": 2120.0
+   },
+   "spread_억": 0.16
+  },
+  "ok": true
+ },
+ {
+  "key": "KR0005|31|2023.2Q",
+  "rule": "31:이익잉여금",
+  "value_mn": 356900.0,
+  "n_same_year_evidence": 3,
+  "n_bad": 0,
+  "n_year_end": 1,
+  "totals_disagree": 0,
+  "evidence": [
+   [
+    "2023.3Q",
+    "2023.3Q",
+    0,
+    "equity",
+    true,
+    365600.0,
+    365612.0
+   ],
+   [
+    "2023.4Q",
+    "2023.4Q",
+    0,
+    "equity",
+    true,
+    495300.0,
+    495273.0
+   ],
+   [
+    "2023.4Q",
+    "2023.3Q",
+    1,
+    "equity",
+    true,
+    365600.0,
+    365612.0
+   ]
+  ],
+  "independent_check": {
+   "residual_억_by_quarter": {
+    "2023.1Q": 2119.88,
+    "2023.2Q": 2119.84,
+    "2023.3Q": 2120.0,
+    "2023.4Q": 2120.0
+   },
+   "spread_억": 0.16
+  },
+  "ok": true
+ },
+ {
+  "key": "KR0008|31|2023.1Q",
+  "rule": "31:이익잉여금",
+  "value_mn": 10849200.0,
+  "n_same_year_evidence": 3,
+  "n_bad": 0,
+  "n_year_end": 1,
+  "totals_disagree": 0,
+  "evidence": [
+   [
+    "2023.3Q",
+    "2023.3Q",
+    0,
+    "equity",
+    true,
+    11864300.0,
+    11864232.259
+   ],
+   [
+    "2023.4Q",
+    "2023.4Q",
+    0,
+    "equity",
+    true,
+    12079500.0,
+    12079484.138
+   ],
+   [
+    "2023.4Q",
+    "2023.3Q",
+    1,
+    "equity",
+    true,
+    11864300.0,
+    11864232.259
+   ]
+  ],
+  "independent_check": {
+   "residual_억_by_quarter": {
+    "2023.1Q": -5442.44,
+    "2023.2Q": -5442.48,
+    "2023.3Q": -5442.7,
+    "2023.4Q": -5442.7
+   },
+   "spread_억": 0.26
+  },
+  "ok": true
+ },
+ {
+  "key": "KR0008|31|2023.2Q",
+  "rule": "31:이익잉여금",
+  "value_mn": 11461000.0,
+  "n_same_year_evidence": 3,
+  "n_bad": 0,
+  "n_year_end": 1,
+  "totals_disagree": 0,
+  "evidence": [
+   [
+    "2023.3Q",
+    "2023.3Q",
+    0,
+    "equity",
+    true,
+    11864300.0,
+    11864232.259
+   ],
+   [
+    "2023.4Q",
+    "2023.4Q",
+    0,
+    "equity",
+    true,
+    12079500.0,
+    12079484.138
+   ],
+   [
+    "2023.4Q",
+    "2023.3Q",
+    1,
+    "equity",
+    true,
+    11864300.0,
+    11864232.259
+   ]
+  ],
+  "independent_check": {
+   "residual_억_by_quarter": {
+    "2023.1Q": -5442.44,
+    "2023.2Q": -5442.48,
+    "2023.3Q": -5442.7,
+    "2023.4Q": -5442.7
+   },
+   "spread_억": 0.26
+  },
+  "ok": true
+ },
+ {
+  "key": "KR1010|12|2023.3Q",
+  "rule": "12:FVOCI",
+  "value_mn": 266900.0,
+  "n_same_year_evidence": 1,
+  "n_bad": 0,
+  "n_year_end": 1,
+  "totals_disagree": 0,
+  "evidence": [
+   [
+    "2023.4Q",
+    "2023.4Q",
+    0,
+    "sum_bs",
+    true,
+    550500.0,
+    550577.065
+   ]
+  ],
+  "independent_check": {
+   "remaining_asset_lines_억": 211.1,
+   "neighbours_억": {
+    "2023.1Q": 219.45,
+    "2023.2Q": 199.95,
+    "2023.4Q": 228.47
+   }
+  },
+  "ok": true
+ },
+ {
+  "key": "KR0004|13|2025.3Q",
+  "rule": "13:AC_CHILDREN[ac_children]",
+  "value_mn": 145452.663786,
+  "n_same_year_evidence": 2,
+  "n_bad": 0,
+  "n_year_end": 2,
+  "totals_disagree": 0,
+  "evidence": [
+   [
+    "2025.1Q",
+    "2024.4Q",
+    1,
+    "bs_full",
+    true,
+    181320.998,
+    181320.998
+   ],
+   [
+    "2025.2Q",
+    "2024.4Q",
+    1,
+    "bs_full",
+    true,
+    181320.998,
+    181320.998
+   ]
+  ],
+  "independent_check": {
+   "ac_lines_2025.2Q": [
+    "상각후원가측정대출채권",
+    "상각후원가측정기타수취채권"
+   ],
+   "ac_lines_2025.3Q": [
+    "상각후원가측정대출채권",
+    "상각후원가측정기타수취채권"
+   ]
+  },
+  "ok": true
+ }
+]

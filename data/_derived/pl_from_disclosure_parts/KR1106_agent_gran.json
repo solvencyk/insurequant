@@ -1,0 +1,634 @@
+{
+  "cells": {
+    "KR1106|1|2023.1Q": {
+      "값": -14100.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "affb2a58c45b77043e5925d9df7400b8a737ff384a52e4e5dcaebd4ac41807ec",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2023.2Q": {
+      "값": 35800.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "016010c7abe4daa388c1cf0c99cbb73ec1035883f251f479a9e1ef4783ea7524",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2023.3Q": {
+      "값": 40700.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "2df23181dc1821efeaa0114f2211fff4bc039045b17cb37d27e472cd42cf644e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2023.4Q": {
+      "값": 35400.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf",
+      "page": 8,
+      "sha256": "14d0be9c90626c50aa80ff95ae71795207c64e51f0841f2b7d6ba52f3ed416f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p8 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2024.1Q": {
+      "값": -1700.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "cb5bff83c4f59f5223f7c7b6be7c5d65334716af5acfa5f9034b5c4a89df06d6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2024.2Q": {
+      "값": 20000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "84c5aaefd5c63b21bac958281759663aa61e17cf8d40cc330f944878adbb7453",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2024.3Q": {
+      "값": 18100.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "7c18d815b869da62650d33d4f07750b9083e9e6a76c6a21efe307527bb903f2b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2024.4Q": {
+      "값": -1688.396959,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "be5a93e1b0b9c4e6dbc7e2cfbe92ea84178011d368549fae83c0c13eb4ad7580",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「보험손익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2025.1Q": {
+      "값": 6200.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "9b0e8df3c157a9afa07e79551d00916ad220df687e397e202f7ff40369578682",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2025.2Q": {
+      "값": 8600.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "d9789718c2ccb323ca54f5882ccd069795c862c1719f6560b4b1e4b7a4ea32f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2025.3Q": {
+      "값": 20500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "8c58f0d4abe6fa03e8227302b5627b4a8c12fe7d9573bd6434da09cb267ffae6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2025.4Q": {
+      "값": 15270.220857,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "c8b133b3bc5f95e99d4f422755864b8290b470d7afcb8053a2305055467fe7a6",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「보험손익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2026.1Q": {
+      "값": 8300.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "d5ee1fb374eb416747a8f8952c001983fac72645bd4c2a31fc7ef45ea557b86a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|1|2026.2Q": {
+      "값": -6400.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "df0dcc0fc1c203474e0eba9de3c65c5c176c2f11be6b0a123116de7e458833ea",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2023.1Q": {
+      "값": 1400.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "affb2a58c45b77043e5925d9df7400b8a737ff384a52e4e5dcaebd4ac41807ec",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2023.2Q": {
+      "값": 3900.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "016010c7abe4daa388c1cf0c99cbb73ec1035883f251f479a9e1ef4783ea7524",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2023.3Q": {
+      "값": 3900.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "2df23181dc1821efeaa0114f2211fff4bc039045b17cb37d27e472cd42cf644e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2023.4Q": {
+      "값": 7400.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf",
+      "page": 8,
+      "sha256": "14d0be9c90626c50aa80ff95ae71795207c64e51f0841f2b7d6ba52f3ed416f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p8 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2024.1Q": {
+      "값": 2500.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "cb5bff83c4f59f5223f7c7b6be7c5d65334716af5acfa5f9034b5c4a89df06d6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2024.2Q": {
+      "값": 3600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "84c5aaefd5c63b21bac958281759663aa61e17cf8d40cc330f944878adbb7453",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2024.3Q": {
+      "값": 5000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "7c18d815b869da62650d33d4f07750b9083e9e6a76c6a21efe307527bb903f2b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2024.4Q": {
+      "값": 8016.058821,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "be5a93e1b0b9c4e6dbc7e2cfbe92ea84178011d368549fae83c0c13eb4ad7580",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「기타사업비용」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2025.1Q": {
+      "값": 1500.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "9b0e8df3c157a9afa07e79551d00916ad220df687e397e202f7ff40369578682",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2025.2Q": {
+      "값": 3100.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "d9789718c2ccb323ca54f5882ccd069795c862c1719f6560b4b1e4b7a4ea32f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2025.3Q": {
+      "값": 5100.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "8c58f0d4abe6fa03e8227302b5627b4a8c12fe7d9573bd6434da09cb267ffae6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2025.4Q": {
+      "값": 8454.716805,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "c8b133b3bc5f95e99d4f422755864b8290b470d7afcb8053a2305055467fe7a6",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「기타사업비용」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2026.1Q": {
+      "값": 900.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "d5ee1fb374eb416747a8f8952c001983fac72645bd4c2a31fc7ef45ea557b86a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|16|2026.2Q": {
+      "값": 2400.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "df0dcc0fc1c203474e0eba9de3c65c5c176c2f11be6b0a123116de7e458833ea",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2023.1Q": {
+      "값": -12700.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "affb2a58c45b77043e5925d9df7400b8a737ff384a52e4e5dcaebd4ac41807ec",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2023.2Q": {
+      "값": 37000.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "016010c7abe4daa388c1cf0c99cbb73ec1035883f251f479a9e1ef4783ea7524",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2023.3Q": {
+      "값": 49000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "2df23181dc1821efeaa0114f2211fff4bc039045b17cb37d27e472cd42cf644e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2023.4Q": {
+      "값": 43800.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf",
+      "page": 8,
+      "sha256": "14d0be9c90626c50aa80ff95ae71795207c64e51f0841f2b7d6ba52f3ed416f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p8 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2024.1Q": {
+      "값": 2400.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "cb5bff83c4f59f5223f7c7b6be7c5d65334716af5acfa5f9034b5c4a89df06d6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2024.2Q": {
+      "값": 18600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "84c5aaefd5c63b21bac958281759663aa61e17cf8d40cc330f944878adbb7453",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2024.3Q": {
+      "값": 33800.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "7c18d815b869da62650d33d4f07750b9083e9e6a76c6a21efe307527bb903f2b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2024.4Q": {
+      "값": 3270.036573,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "be5a93e1b0b9c4e6dbc7e2cfbe92ea84178011d368549fae83c0c13eb4ad7580",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「세전이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2025.1Q": {
+      "값": 15400.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "9b0e8df3c157a9afa07e79551d00916ad220df687e397e202f7ff40369578682",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2025.2Q": {
+      "값": 15400.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "d9789718c2ccb323ca54f5882ccd069795c862c1719f6560b4b1e4b7a4ea32f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2025.3Q": {
+      "값": 28200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "8c58f0d4abe6fa03e8227302b5627b4a8c12fe7d9573bd6434da09cb267ffae6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2025.4Q": {
+      "값": 27274.077979,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "c8b133b3bc5f95e99d4f422755864b8290b470d7afcb8053a2305055467fe7a6",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「세전이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2026.1Q": {
+      "값": 8100.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "d5ee1fb374eb416747a8f8952c001983fac72645bd4c2a31fc7ef45ea557b86a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|22|2026.2Q": {
+      "값": -1800.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "df0dcc0fc1c203474e0eba9de3c65c5c176c2f11be6b0a123116de7e458833ea",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2023.1Q": {
+      "값": -4200.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "affb2a58c45b77043e5925d9df7400b8a737ff384a52e4e5dcaebd4ac41807ec",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2023.2Q": {
+      "값": 7900.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "016010c7abe4daa388c1cf0c99cbb73ec1035883f251f479a9e1ef4783ea7524",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2023.3Q": {
+      "값": 10000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "2df23181dc1821efeaa0114f2211fff4bc039045b17cb37d27e472cd42cf644e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2023.4Q": {
+      "값": 8900.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf",
+      "page": 8,
+      "sha256": "14d0be9c90626c50aa80ff95ae71795207c64e51f0841f2b7d6ba52f3ed416f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p8 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2024.1Q": {
+      "값": 500.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "cb5bff83c4f59f5223f7c7b6be7c5d65334716af5acfa5f9034b5c4a89df06d6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2024.2Q": {
+      "값": 4300.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "84c5aaefd5c63b21bac958281759663aa61e17cf8d40cc330f944878adbb7453",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2024.3Q": {
+      "값": 7800.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "7c18d815b869da62650d33d4f07750b9083e9e6a76c6a21efe307527bb903f2b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2024.4Q": {
+      "값": -3447.839452,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "be5a93e1b0b9c4e6dbc7e2cfbe92ea84178011d368549fae83c0c13eb4ad7580",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「법인세」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2025.1Q": {
+      "값": 3200.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "9b0e8df3c157a9afa07e79551d00916ad220df687e397e202f7ff40369578682",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2025.2Q": {
+      "값": 3300.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "d9789718c2ccb323ca54f5882ccd069795c862c1719f6560b4b1e4b7a4ea32f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2025.3Q": {
+      "값": 4200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "8c58f0d4abe6fa03e8227302b5627b4a8c12fe7d9573bd6434da09cb267ffae6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2025.4Q": {
+      "값": 6359.471515,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "c8b133b3bc5f95e99d4f422755864b8290b470d7afcb8053a2305055467fe7a6",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「법인세」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2026.1Q": {
+      "값": 1600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "d5ee1fb374eb416747a8f8952c001983fac72645bd4c2a31fc7ef45ea557b86a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|23|2026.2Q": {
+      "값": -500.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "df0dcc0fc1c203474e0eba9de3c65c5c176c2f11be6b0a123116de7e458833ea",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2023.1Q": {
+      "값": -8500.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "affb2a58c45b77043e5925d9df7400b8a737ff384a52e4e5dcaebd4ac41807ec",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2023.2Q": {
+      "값": 29100.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "016010c7abe4daa388c1cf0c99cbb73ec1035883f251f479a9e1ef4783ea7524",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2023.3Q": {
+      "값": 39000.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "2df23181dc1821efeaa0114f2211fff4bc039045b17cb37d27e472cd42cf644e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2023.4Q": {
+      "값": 34900.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf",
+      "page": 8,
+      "sha256": "14d0be9c90626c50aa80ff95ae71795207c64e51f0841f2b7d6ba52f3ed416f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p8 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2024.1Q": {
+      "값": 1800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "cb5bff83c4f59f5223f7c7b6be7c5d65334716af5acfa5f9034b5c4a89df06d6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2024.2Q": {
+      "값": 14300.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "84c5aaefd5c63b21bac958281759663aa61e17cf8d40cc330f944878adbb7453",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2024.3Q": {
+      "값": 26000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "7c18d815b869da62650d33d4f07750b9083e9e6a76c6a21efe307527bb903f2b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2024.4Q": {
+      "값": 6717.876025,
+      "pdf": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "be5a93e1b0b9c4e6dbc7e2cfbe92ea84178011d368549fae83c0c13eb4ad7580",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2024.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「당기순이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2025.1Q": {
+      "값": 12200.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "9b0e8df3c157a9afa07e79551d00916ad220df687e397e202f7ff40369578682",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2025.2Q": {
+      "값": 12200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "d9789718c2ccb323ca54f5882ccd069795c862c1719f6560b4b1e4b7a4ea32f6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2025.3Q": {
+      "값": 24000.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "8c58f0d4abe6fa03e8227302b5627b4a8c12fe7d9573bd6434da09cb267ffae6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2025.4Q": {
+      "값": 20914.606464,
+      "pdf": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+      "page": 8,
+      "sha256": "c8b133b3bc5f95e99d4f422755864b8290b470d7afcb8053a2305055467fe7a6",
+      "축척": "원 -> 백만원",
+      "방법": "granularity:pl_full:audit_exact",
+      "근거": "정기경영공시 2025.4Q 감사받은 재무제표 포괄손익계산서 p8 라벨「당기순이익」 단위 원, 정밀도 ±5e-07백만원. 연말 감사보고서의 원 단위 값(요약표와 1.5억 이내 일치). (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2026.1Q": {
+      "값": 6600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf",
+      "page": 4,
+      "sha256": "d5ee1fb374eb416747a8f8952c001983fac72645bd4c2a31fc7ef45ea557b86a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1106|24|2026.2Q": {
+      "값": -1300.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf",
+      "page": 5,
+      "sha256": "df0dcc0fc1c203474e0eba9de3c65c5c176c2f11be6b0a123116de7e458833ea",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

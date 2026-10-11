@@ -1,0 +1,632 @@
+{
+  "_readme": [
+    "[2026-10-11] round3(inbox/parser/20261011T1130Z) 정정·신규 칸의 계보 -- scripts/bspl_apply_bs_fix.py 가 쓴다. scripts/merge_bs_disclosure_parts.py 가 이 파일을 다른 파트와 같이 사이드카·오버레이로 합친다."
+  ],
+  "cells": {
+    "KR0050|10|2023.1Q": {
+      "값": 36886.612174,
+      "pdf": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 36,886,612,174원 = 36,886.612174백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|14|2023.1Q": {
+      "값": 28175.076784,
+      "pdf": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「9. 재보험계약자산」 28,175,076,784원 = 28,175.076784백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|15|2023.1Q": {
+      "값": 10679.859861,
+      "pdf": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 35,
+      "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:attachment_separate_fs_ppe_ex_rou",
+      "근거": "정정 2026-10-11(round 3, B1 후속): 같은 라운드에서 적재한 값 23,948.842861백만원은 2023.1Q 분기재무제표 첨부(별도) 재무상태표 「유형자산」 줄 그대로인데, 2023 분기 재무제표는 사용권자산을 유형자산 줄 안에 표시한다(주석 14 p35: 「사용권자산은 유형자산에 포함되어 재무제표에 표시됩니다」, 사용권자산 장부금액 13,268,983천원). 마스터 항목 15 의 정의는 자기 소유 유형자산이다(연말 DART 감사 앵커 2023.4Q 103.40억 = 유형자산 줄이고 사용권자산은 별도 줄 11,700.245백만원; 2024.1Q 첨부 전기말 열이 이를 재현). 그래서 2023.1Q 값 = 유형자산 줄 23,948.842861 − 사용권자산 13,268.983(주석 14, 천원 정밀도 ±0.0005) = 10,679.859861백만원. 같은 주석의 토지·건물·비품·임차점포시설물 장부금액 합 10,679.861백만원과 일치. 계열: 2022-12 11,432.754 → 2023.1Q 10,679.9 → 2023.4Q 10,340.348 → 2024.1Q 9,591.349.",
+      "정정전값": 23948.842861
+    },
+    "KR0050|20|2023.1Q": {
+      "값": 902553.417866,
+      "pdf": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 902,553,417,866원 = 902,553.417866백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|21|2023.1Q": {
+      "값": 199.546472,
+      "pdf": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 199,546,472원 = 199.546472백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|22|2023.1Q": {
+      "값": 132618.690499,
+      "pdf": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 132,618,690,499원 = 132,618.690499백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|24|2023.1Q": {
+      "값": 2668.471146,
+      "pdf": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「7. 기타부채」 2,668,471,146원 = 2,668.471146백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|10|2023.2Q": {
+      "값": 68213.326878,
+      "pdf": "data/disclosure/FY2023_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "33eb07e6d321165e28d0e134f5cbbcfbad8b8c27e6a669e663a2fd4dcea648d9",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 68,213,326,878원 = 68,213.326878백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|15|2023.2Q": {
+      "값": 11828.185163,
+      "pdf": "data/disclosure/FY2023_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 35,
+      "sha256": "33eb07e6d321165e28d0e134f5cbbcfbad8b8c27e6a669e663a2fd4dcea648d9",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:attachment_separate_fs_ppe_ex_rou",
+      "근거": "정정 2026-10-11(round 3, B1 후속): 같은 라운드에서 적재한 값 23,211.208163백만원은 2023.2Q 분기재무제표 첨부(별도) 재무상태표 「유형자산」 줄 그대로인데, 2023 분기 재무제표는 사용권자산을 유형자산 줄 안에 표시한다(주석 14 p35: 「사용권자산은 유형자산에 포함되어 재무제표에 표시됩니다」, 사용권자산 장부금액 11,383,023천원). 마스터 항목 15 의 정의는 자기 소유 유형자산이다(연말 DART 감사 앵커 2023.4Q 103.40억 = 유형자산 줄이고 사용권자산은 별도 줄 11,700.245백만원; 2024.1Q 첨부 전기말 열이 이를 재현). 그래서 2023.2Q 값 = 유형자산 줄 23,211.208163 − 사용권자산 11,383.023(주석 14, 천원 정밀도 ±0.0005) = 11,828.185163백만원. 같은 주석의 토지·건물·비품·임차점포시설물 장부금액 합 11,828.187백만원과 일치. 계열: 2022-12 11,432.754 → 2023.2Q 11,828.2 → 2023.4Q 10,340.348 → 2024.1Q 9,591.349.",
+      "정정전값": 23211.208163
+    },
+    "KR0050|24|2023.2Q": {
+      "값": 2475.509248,
+      "pdf": "data/disclosure/FY2023_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "33eb07e6d321165e28d0e134f5cbbcfbad8b8c27e6a669e663a2fd4dcea648d9",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「7. 기타부채」 2,475,509,248원 = 2,475.509248백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|10|2023.3Q": {
+      "값": 24939.755196,
+      "pdf": "data/disclosure/FY2023_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "8822a3da8338b5bc112eba52ad2a3f5b58ba782727b29771a4f7359fa682d30b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 24,939,755,196원 = 24,939.755196백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|15|2023.3Q": {
+      "값": 10922.84938,
+      "pdf": "data/disclosure/FY2023_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 34,
+      "sha256": "8822a3da8338b5bc112eba52ad2a3f5b58ba782727b29771a4f7359fa682d30b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:attachment_separate_fs_ppe_ex_rou",
+      "근거": "정정 2026-10-11(round 3, B1 후속): 같은 라운드에서 적재한 값 23,998.902380백만원은 2023.3Q 분기재무제표 첨부(별도) 재무상태표 「유형자산」 줄 그대로인데, 2023 분기 재무제표는 사용권자산을 유형자산 줄 안에 표시한다(주석 14 p34: 「사용권자산은 유형자산에 포함되어 재무제표에 표시됩니다」, 사용권자산 장부금액 13,076,053천원). 마스터 항목 15 의 정의는 자기 소유 유형자산이다(연말 DART 감사 앵커 2023.4Q 103.40억 = 유형자산 줄이고 사용권자산은 별도 줄 11,700.245백만원; 2024.1Q 첨부 전기말 열이 이를 재현). 그래서 2023.3Q 값 = 유형자산 줄 23,998.902380 − 사용권자산 13,076.053(주석 14, 천원 정밀도 ±0.0005) = 10,922.849380백만원. 같은 주석의 토지·건물·비품·임차점포시설물 장부금액 합 10,922.850백만원과 일치. 계열: 2022-12 11,432.754 → 2023.3Q 10,922.8 → 2023.4Q 10,340.348 → 2024.1Q 9,591.349.",
+      "정정전값": 23998.90238
+    },
+    "KR0050|24|2023.3Q": {
+      "값": 2076.581474,
+      "pdf": "data/disclosure/FY2023_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "8822a3da8338b5bc112eba52ad2a3f5b58ba782727b29771a4f7359fa682d30b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2023.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「7. 기타부채」 2,076,581,474원 = 2,076.581474백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 해 첨부는 전기말 열이 2022-12-31 이라 마스터 앵커가 없다. 2024~2026 첨부에서 검증된 같은 라벨 매핑 + 자산 = 부채 + 자본 원 단위 폐합 + 번호 줄 합 = 총계 + 마스터에 이미 있는 경영공시 요약 자본총계와 억 반올림 안에서 일치로 대체."
+    },
+    "KR0050|10|2024.1Q": {
+      "값": 35204.18058,
+      "pdf": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 35,204,180,580원 = 35,204.180580백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2024.1Q": {
+      "값": 44487.889912,
+      "pdf": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 44,487,889,912원 = 44,487.889912백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2024.1Q": {
+      "값": 9591.348788,
+      "pdf": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 9,591,348,788원 = 9,591.348788백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2024.1Q": {
+      "값": 924023.366263,
+      "pdf": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 924,023,366,263원 = 924,023.366263백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2024.1Q": {
+      "값": 105.760199,
+      "pdf": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 105,760,199원 = 105.760199백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2024.1Q": {
+      "값": 317202.47894,
+      "pdf": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 317,202,478,940원 = 317,202.478940백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2024.1Q": {
+      "값": 2461.865901,
+      "pdf": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「9. 기타부채」 2,461,865,901원 = 2,461.865901백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|10|2024.2Q": {
+      "값": 106042.431978,
+      "pdf": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 106,042,431,978원 = 106,042.431978백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2024.2Q": {
+      "값": 41708.813721,
+      "pdf": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 41,708,813,721원 = 41,708.813721백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2024.2Q": {
+      "값": 9696.959115,
+      "pdf": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 9,696,959,115원 = 9,696.959115백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2024.2Q": {
+      "값": 935704.070887,
+      "pdf": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 935,704,070,887원 = 935,704.070887백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2024.2Q": {
+      "값": 105.440167,
+      "pdf": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 105,440,167원 = 105.440167백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2024.2Q": {
+      "값": 324102.644806,
+      "pdf": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 324,102,644,806원 = 324,102.644806백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2024.2Q": {
+      "값": 2426.636402,
+      "pdf": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「8. 기타부채」 2,426,636,402원 = 2,426.636402백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|10|2024.3Q": {
+      "값": 61484.242882,
+      "pdf": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 61,484,242,882원 = 61,484.242882백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2024.3Q": {
+      "값": 37539.802839,
+      "pdf": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 37,539,802,839원 = 37,539.802839백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2024.3Q": {
+      "값": 9626.945196,
+      "pdf": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 9,626,945,196원 = 9,626.945196백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2024.3Q": {
+      "값": 946600.91221,
+      "pdf": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 946,600,912,210원 = 946,600.912210백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2024.3Q": {
+      "값": 33.1526,
+      "pdf": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 33,152,600원 = 33.152600백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2024.3Q": {
+      "값": 326743.524127,
+      "pdf": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 326,743,524,127원 = 326,743.524127백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2024.3Q": {
+      "값": 3384.649352,
+      "pdf": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2024.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「8. 기타부채」 3,384,649,352원 = 3,384.649352백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2023) 열이 DART 감사 마스터 2023.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|10|2025.1Q": {
+      "값": 81431.381722,
+      "pdf": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 81,431,381,722원 = 81,431.381722백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2025.1Q": {
+      "값": 50078.763622,
+      "pdf": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 50,078,763,622원 = 50,078.763622백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2025.1Q": {
+      "값": 8968.700041,
+      "pdf": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 8,968,700,041원 = 8,968.700041백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2025.1Q": {
+      "값": 957660.244034,
+      "pdf": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 957,660,244,034원 = 957,660.244034백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2025.1Q": {
+      "값": 0.7919,
+      "pdf": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 791,900원 = 0.791900백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2025.1Q": {
+      "값": 494306.861629,
+      "pdf": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 494,306,861,629원 = 494,306.861629백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2025.1Q": {
+      "값": 3861.543779,
+      "pdf": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「9. 기타부채」 3,861,543,779원 = 3,861.543779백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|10|2025.2Q": {
+      "값": 130675.079611,
+      "pdf": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 130,675,079,611원 = 130,675.079611백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2025.2Q": {
+      "값": 51414.444126,
+      "pdf": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 51,414,444,126원 = 51,414.444126백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2025.2Q": {
+      "값": 8483.48567,
+      "pdf": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 8,483,485,670원 = 8,483.485670백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2025.2Q": {
+      "값": 921734.528792,
+      "pdf": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 921,734,528,792원 = 921,734.528792백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2025.2Q": {
+      "값": 0.445781,
+      "pdf": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 445,781원 = 0.445781백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2025.2Q": {
+      "값": 598677.270124,
+      "pdf": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 598,677,270,124원 = 598,677.270124백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2025.2Q": {
+      "값": 3222.799647,
+      "pdf": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「9. 기타부채」 3,222,799,647원 = 3,222.799647백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|10|2025.3Q": {
+      "값": 88224.237775,
+      "pdf": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 88,224,237,775원 = 88,224.237775백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2025.3Q": {
+      "값": 51064.82216,
+      "pdf": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 51,064,822,160원 = 51,064.822160백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2025.3Q": {
+      "값": 7906.143882,
+      "pdf": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 7,906,143,882원 = 7,906.143882백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2025.3Q": {
+      "값": 894453.546349,
+      "pdf": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 894,453,546,349원 = 894,453.546349백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2025.3Q": {
+      "값": 0.67566,
+      "pdf": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 675,660원 = 0.675660백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2025.3Q": {
+      "값": 678040.820205,
+      "pdf": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 678,040,820,205원 = 678,040.820205백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2025.3Q": {
+      "값": 3410.918323,
+      "pdf": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2025.3Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「9. 기타부채」 3,410,918,323원 = 3,410.918323백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2024) 열이 DART 감사 마스터 2024.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|10|2026.1Q": {
+      "값": 106011.906687,
+      "pdf": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 106,011,906,687원 = 106,011.906687백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2026.1Q": {
+      "값": 48154.187655,
+      "pdf": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 48,154,187,655원 = 48,154.187655백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2026.1Q": {
+      "값": 7476.015621,
+      "pdf": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 7,476,015,621원 = 7,476.015621백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2026.1Q": {
+      "값": 832119.269533,
+      "pdf": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 832,119,269,533원 = 832,119.269533백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2026.1Q": {
+      "값": 264.99655,
+      "pdf": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 264,996,550원 = 264.996550백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2026.1Q": {
+      "값": 1251816.471873,
+      "pdf": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 1,251,816,471,873원 = 1,251,816.471873백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2026.1Q": {
+      "값": 3159.592629,
+      "pdf": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.1Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「9. 기타부채」 3,159,592,629원 = 3,159.592629백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|10|2026.2Q": {
+      "값": 176500.05508,
+      "pdf": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 현금및현금성자산」 176,500,055,080원 = 176,500.055080백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|14|2026.2Q": {
+      "값": 52608.26818,
+      "pdf": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「10. 재보험계약자산」 52,608,268,180원 = 52,608.268180백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|15|2026.2Q": {
+      "값": 7193.483756,
+      "pdf": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「11. 유형자산」 7,193,483,756원 = 7,193.483756백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|20|2026.2Q": {
+      "값": 834360.514814,
+      "pdf": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「1. 보험계약부채」 834,360,514,814원 = 834,360.514814백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|21|2026.2Q": {
+      "값": 131.53958,
+      "pdf": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「2. 재보험계약부채」 131,539,580원 = 131.539580백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|22|2026.2Q": {
+      "값": 1373568.04486,
+      "pdf": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「3. 투자계약부채」 1,373,568,044,860원 = 1,373,568.044860백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    },
+    "KR0050|24|2026.2Q": {
+      "값": 3374.863398,
+      "pdf": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+      "page": 2,
+      "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fill:attachment_separate_fs",
+      "근거": "신규 2026-10-11(round 3, B1): 하나손해보험 KR0050 2026.2Q 분기재무제표 첨부(별도, 단위 원) 재무상태표 p2 「9. 기타부채」 3,374,863,398원 = 3,374.863398백만원. 경영공시 PDF 는 재무제표를 「첨부 파일 참조」로만 둬 이 항목이 비어 있었다. 첨부 수령: downloader inbox/parser/20261010T2350Z, 매니페스트 data/disclosure/_meta/attachments_manifest.json. 보정: 이 분기 표 자체의 전기말(31 Dec 2025) 열이 DART 감사 마스터 2025.4Q 값 16개 항목을 0.0015백만원 이내로 재현."
+    }
+  },
+  "skips": {}
+}

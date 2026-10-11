@@ -1,0 +1,2781 @@
+[
+ {
+  "code": "KR0001",
+  "concept": "1:자산총계|S",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 35789800.0,
+    "master": 35812118.533,
+    "rel": -0.0006232117482643155
+   }
+  ]
+ },
+ {
+  "code": "KR0001",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 35,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 342300.0,
+    "master": 52157.354,
+    "rel": 5.5628329228511095
+   }
+  ]
+ },
+ {
+  "code": "KR0002",
+  "concept": "1:자산총계|S",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 17529600.0,
+    "master": 17529363.084,
+    "rel": 1.3515379815332741e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0002",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 35,
+  "bad": [
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2024.1Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 2396400.0,
+    "master": 2396522.543,
+    "rel": -5.1133672978791306e-05
+   },
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2024.2Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 2522900.0,
+    "master": 2522798.7,
+    "rel": 4.015381805921088e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0003",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 34,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.1Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 137500.0,
+    "master": 478798.0,
+    "rel": -0.7128225264098847
+   },
+   {
+    "pdf_quarter": "2025.1Q",
+    "period": "2024.3Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 419400.0,
+    "master": 463260.048,
+    "rel": -0.09467694913332998
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "1:자산총계|S",
+  "status": "rejected",
+  "n": 19,
+  "bad": [
+   {
+    "pdf_quarter": "2025.1Q",
+    "period": "2024.1Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 11708900.0,
+    "master": 11680240.0,
+    "rel": 0.0024537167044512784
+   },
+   {
+    "pdf_quarter": "2026.1Q",
+    "period": "2026.1Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 11936800.0,
+    "master": 11936905.0,
+    "rel": -8.796249949212129e-06
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "2:부채총계|S",
+  "status": "rejected",
+  "n": 19,
+  "bad": [
+   {
+    "pdf_quarter": "2025.1Q",
+    "period": "2024.1Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 10603600.0,
+    "master": 10581620.0,
+    "rel": 0.002077186668959951
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 10,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 1368531.0,
+    "master": 1360675.0,
+    "rel": 0.005773605012218201
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 10,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 356044.0,
+    "master": 327581.0,
+    "rel": 0.08688843370036724
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 36,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2024.2Q",
+    "col": 1,
+    "kind": "equity",
+    "observed": -197300.0,
+    "master": -242885.0,
+    "rel": 0.18768141301438954
+   },
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2024.1Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 55500.0,
+    "master": 19430.0,
+    "rel": 1.856407617086979
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "11:FVPL|S",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 3357100.0,
+    "master": 3358459.0,
+    "rel": -0.00040464987066985184
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "11:FVPL[sum_all]|S",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 3357100.0,
+    "master": 3358459.0,
+    "rel": -0.00040464987066985184
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 9,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 7227.0,
+    "master": 15428.0,
+    "rel": -0.5315659839253306
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "31:이익잉여금|K",
+  "status": "rejected",
+  "n": 9,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 474666.0,
+    "master": 495273.0,
+    "rel": -0.041607355943085934
+   }
+  ]
+ },
+ {
+  "code": "KR0005",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 30,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2024.2Q",
+    "col": 1,
+    "kind": "equity",
+    "observed": 555600.0,
+    "master": 595814.0,
+    "rel": -0.06749421799420624
+   },
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2024.1Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 513500.0,
+    "master": 541369.0,
+    "rel": -0.05147875109213863
+   }
+  ]
+ },
+ {
+  "code": "KR0008",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 37,
+  "bad": [
+   {
+    "pdf_quarter": "2026.2Q",
+    "period": "2026.2Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 20923400.0,
+    "master": 20923501.581,
+    "rel": -4.854875729427671e-06
+   }
+  ]
+ },
+ {
+  "code": "KR0008",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 31,
+  "bad": [
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2023.3Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 11909000.0,
+    "master": 11864232.259,
+    "rel": 0.0037733365314085417
+   }
+  ]
+ },
+ {
+  "code": "KR0009",
+  "concept": "2:부채총계|S",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2023.1Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 36063700.0,
+    "master": 34757803.79,
+    "rel": 0.03757130968026565
+   },
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 35635100.0,
+    "master": 34332719.551,
+    "rel": 0.03793408928952926
+   }
+  ]
+ },
+ {
+  "code": "KR0010",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2024.3Q",
+    "col": 1,
+    "kind": "equity",
+    "observed": -485400.0,
+    "master": -569569.0,
+    "rel": 0.1477766521703253
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2024.2Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": -390000.0,
+    "master": -473523.0,
+    "rel": 0.17638636349237524
+   }
+  ]
+ },
+ {
+  "code": "KR0010",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2024.3Q",
+    "col": 1,
+    "kind": "equity",
+    "observed": 6061000.0,
+    "master": 6147602.0,
+    "rel": -0.0140871188473164
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2024.2Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 5890500.0,
+    "master": 5977837.0,
+    "rel": -0.014610134066887404
+   }
+  ]
+ },
+ {
+  "code": "KR0011",
+  "concept": "1:자산총계|S",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 44560000.0,
+    "master": 44616958.479,
+    "rel": -0.001276610529756549
+   },
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 44354300.0,
+    "master": 44226600.0,
+    "rel": 0.0028874026038628337
+   }
+  ]
+ },
+ {
+  "code": "KR0011",
+  "concept": "2:부채총계|S",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 36098800.0,
+    "master": 36079466.519,
+    "rel": 0.0005358582835424531
+   },
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 36192500.0,
+    "master": 35663622.0,
+    "rel": 0.01482962106316627
+   }
+  ]
+ },
+ {
+  "code": "KR0011",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 34,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 214900.0,
+    "master": 77475.0,
+    "rel": 1.7737979993546305
+   },
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2025.2Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": -2343100.0,
+    "master": -2343226.0,
+    "rel": 5.377202199019642e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0011",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 34,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 8026100.0,
+    "master": 8564682.0,
+    "rel": -0.06288406271242762
+   }
+  ]
+ },
+ {
+  "code": "KR0032",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 206230.157,
+    "master": 166041.272,
+    "rel": 0.24204153892533423
+   }
+  ]
+ },
+ {
+  "code": "KR0032",
+  "concept": "31:이익잉여금|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 919006.214,
+    "master": 959195.098,
+    "rel": -0.041898550236335715
+   }
+  ]
+ },
+ {
+  "code": "KR0032",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 39,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2024.3Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 1116100.0,
+    "master": 1116204.549,
+    "rel": -9.366473205451475e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0049",
+  "concept": "11:FVPL|S",
+  "status": "rejected",
+  "n": 7,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.4Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 158200.0,
+    "master": 152069.666,
+    "rel": 0.04031266827402648
+   },
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 158200.0,
+    "master": 152069.666,
+    "rel": 0.04031266827402648
+   }
+  ]
+ },
+ {
+  "code": "KR0050",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 9,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2025.4Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": -33300.0,
+    "master": -33184.577,
+    "rel": -0.003478212182725804
+   }
+  ]
+ },
+ {
+  "code": "KR0051",
+  "concept": "2:부채총계|S",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2023.1Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 91200.0,
+    "master": 94358.144,
+    "rel": -0.03346975540341277
+   },
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 96200.0,
+    "master": 97380.607,
+    "rel": -0.012123635663926428
+   }
+  ]
+ },
+ {
+  "code": "KR0068",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": -1349279.0,
+    "master": -1362642.518,
+    "rel": 0.009807060783347673
+   }
+  ]
+ },
+ {
+  "code": "KR0068",
+  "concept": "10:현금및현금성자산|K",
+  "status": "rejected",
+  "n": 13,
+  "bad": [
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 1081513.2,
+    "master": 1143319.863,
+    "rel": -0.05405894273350864
+   }
+  ]
+ },
+ {
+  "code": "KR0068",
+  "concept": "30:자본금|S",
+  "status": "rejected",
+  "n": 36,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2024.3Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 4342800.0,
+    "master": 4342650.0,
+    "rel": 3.454112120479431e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0068",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 36,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.2Q",
+    "col": 1,
+    "kind": "equity",
+    "observed": 6284500.0,
+    "master": 6079580.648,
+    "rel": 0.03370616558354437
+   },
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 6284500.0,
+    "master": 6079580.648,
+    "rel": 0.03370616558354437
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "concept": "1:자산총계|K",
+  "status": "rejected",
+  "n": 11,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 10000.0,
+    "master": 279474086.0,
+    "rel": -0.9999642185071856
+   },
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 10000.0,
+    "master": 275321056.0,
+    "rel": -0.9999636787678164
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 10,
+  "bad": [
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 922.0,
+    "master": 25097358.0,
+    "rel": -0.9999632630653792
+   },
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 30488497.0,
+    "master": 25097358.0,
+    "rel": 0.21480902491808102
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 6,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 18492149.0,
+    "master": 13101010.0,
+    "rel": 0.41150560147652737
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 30,
+  "bad": [
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 26556200.0,
+    "master": 26556056.0,
+    "rel": 5.422491954377563e-06
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "concept": "12:FVOCI|K",
+  "status": "rejected",
+  "n": 11,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 6033.0,
+    "master": 166226450.0,
+    "rel": -0.9999637061370197
+   },
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 5999.0,
+    "master": 161933749.0,
+    "rel": -0.9999629539855833
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "concept": "12:FVOCI[sum_all]|K",
+  "status": "rejected",
+  "n": 11,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 6033.0,
+    "master": 166226450.0,
+    "rel": -0.9999637061370197
+   },
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 5999.0,
+    "master": 161933749.0,
+    "rel": -0.9999629539855833
+   }
+  ]
+ },
+ {
+  "code": "KR0069",
+  "concept": "13:AC_CHILDREN[ac_children]|K",
+  "status": "rejected",
+  "n": 8,
+  "bad": [
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2025.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 0.0,
+    "master": 43113870.0,
+    "rel": -1.0
+   },
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 0.0,
+    "master": 45371811.0,
+    "rel": -1.0
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 10,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 394299.0,
+    "master": 405211.0,
+    "rel": -0.02692918010616691
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 286192.688,
+    "master": 309152.043,
+    "rel": -0.07426557747185898
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "concept": "10:현금및현금성자산|K",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 328676.0,
+    "master": 320472.0,
+    "rel": 0.02559974038293517
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "concept": "11:FVPL|K",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 5092816.0,
+    "master": 5217738.0,
+    "rel": -0.023941792401228273
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "concept": "13:AC_CHILDREN[ac_children]|K",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 1602075.0,
+    "master": 1432881.0,
+    "rel": 0.11807958930294979
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "concept": "13:AC_FA|K",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 1602075.0,
+    "master": 1432881.0,
+    "rel": 0.11807958930294979
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "concept": "15:유형자산|K",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 100277.0,
+    "master": 99108.0,
+    "rel": 0.011795213302659724
+   }
+  ]
+ },
+ {
+  "code": "KR0070",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 12,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 5160.0,
+    "master": 4370.0,
+    "rel": 0.18077803203661327
+   }
+  ]
+ },
+ {
+  "code": "KR0071",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 9,
+  "bad": [
+   {
+    "pdf_quarter": "2025.3Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 48163.541,
+    "master": 0.0,
+    "rel": null
+   }
+  ]
+ },
+ {
+  "code": "KR0071",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 27,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 627300.0,
+    "master": 627494.289,
+    "rel": -0.00030962672235569904
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "1:자산총계|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 17498444.892,
+    "master": 17457340.347,
+    "rel": 0.002354570867209191
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 17498444.892,
+    "master": 17457340.347,
+    "rel": 0.002354570867209191
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "2:부채총계|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 17112920.364,
+    "master": 17071709.758,
+    "rel": 0.0024139706323607676
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 17112920.364,
+    "master": 17071709.758,
+    "rel": 0.0024139706323607676
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "10:현금및현금성자산|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 204120.912,
+    "master": 200767.089,
+    "rel": 0.01670504372357565
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 204120.912,
+    "master": 200767.089,
+    "rel": 0.01670504372357565
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "11:FVPL|K",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 4865231.786,
+    "master": 4936899.651,
+    "rel": -0.014516775722893723
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 4865231.786,
+    "master": 4936899.651,
+    "rel": -0.014516775722893723
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "13:AC_CHILDREN[ac_children]|K",
+  "status": "rejected",
+  "n": 23,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 3261448.324,
+    "master": 3155958.447,
+    "rel": 0.033425622919806414
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 3261448.324,
+    "master": 3155958.447,
+    "rel": 0.033425622919806414
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "13:AC_FA|K",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 3261448.324,
+    "master": 3155958.447,
+    "rel": 0.033425622919806414
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 3261448.324,
+    "master": 3155958.447,
+    "rel": 0.033425622919806414
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "23:차입부채|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 467408.383,
+    "master": 426270.864,
+    "rel": 0.09650558476828004
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 467408.383,
+    "master": 426270.864,
+    "rel": 0.09650558476828004
+   }
+  ]
+ },
+ {
+  "code": "KR0072",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 33,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.3Q",
+    "col": 1,
+    "kind": "equity",
+    "observed": -150400.0,
+    "master": -190161.118,
+    "rel": 0.2090917345153597
+   },
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2023.3Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": -150400.0,
+    "master": -190161.118,
+    "rel": 0.2090917345153597
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "2:부채총계|K",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 105026788.69,
+    "master": 105317246.584,
+    "rel": -0.0027579328497573503
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 105026788.69,
+    "master": 105317246.584,
+    "rel": -0.0027579328497573503
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 9975755.36,
+    "master": 9762391.97,
+    "rel": 0.021855646716057716
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 9975755.36,
+    "master": 9762391.97,
+    "rel": 0.021855646716057716
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "10:현금및예치금|K",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.4Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 3982700.0,
+    "master": 4265642.709,
+    "rel": -0.06633061611161767
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "11:FVPL[sum_all]|K",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.4Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 19548300.0,
+    "master": 34153491.484,
+    "rel": -0.42763392114221005
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "13:AC_CHILDREN[ac_children]|K",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 20632429.699,
+    "master": 21546250.164,
+    "rel": -0.04241204191190694
+   },
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.4Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 1263500.0,
+    "master": 21463504.771,
+    "rel": -0.9411326335805533
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "20:보험계약부채|K",
+  "status": "rejected",
+  "n": 16,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 87242878.594,
+    "master": 87533336.488,
+    "rel": -0.0033182545719575964
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 87242878.594,
+    "master": 87533336.488,
+    "rel": -0.0033182545719575964
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 17,
+  "bad": [
+   {
+    "pdf_quarter": "2023.4Q",
+    "period": "2023.4Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 1893100.0,
+    "master": 97681.928,
+    "rel": 18.380248104849034
+   }
+  ]
+ },
+ {
+  "code": "KR0073",
+  "concept": "31:이익잉여금|K",
+  "status": "rejected",
+  "n": 16,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 6427125.882,
+    "master": 6213762.493,
+    "rel": 0.03433722953530346
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 6427125.882,
+    "master": 6213762.493,
+    "rel": 0.03433722953530346
+   }
+  ]
+ },
+ {
+  "code": "KR0074",
+  "concept": "3:자본총계|S",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 5591100.0,
+    "master": 4153787.443,
+    "rel": 0.3460245803916067
+   }
+  ]
+ },
+ {
+  "code": "KR0075",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 6,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2025.4Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 1300.0,
+    "master": 1430.457,
+    "rel": -0.09119952574596797
+   }
+  ]
+ },
+ {
+  "code": "KR0076",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 13,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 5450.322,
+    "master": 2537.511,
+    "rel": 1.1479008366860282
+   }
+  ]
+ },
+ {
+  "code": "KR0082",
+  "concept": "1:자산총계|S",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 9782500.0,
+    "master": 9778130.119,
+    "rel": 0.00044690354360369506
+   }
+  ]
+ },
+ {
+  "code": "KR0082",
+  "concept": "2:부채총계|S",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 7948000.0,
+    "master": 7943581.238,
+    "rel": 0.0005562682457204455
+   }
+  ]
+ },
+ {
+  "code": "KR0082",
+  "concept": "13:AC_CHILDREN[ac_children]|K",
+  "status": "rejected",
+  "n": 19,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 222063.641,
+    "master": 0.0,
+    "rel": null
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 222063.641,
+    "master": 0.0,
+    "rel": null
+   }
+  ]
+ },
+ {
+  "code": "KR0082",
+  "concept": "13:AC_FA|K",
+  "status": "rejected",
+  "n": 19,
+  "bad": [
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 222063.641,
+    "master": 0.0,
+    "rel": null
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 222063.641,
+    "master": 0.0,
+    "rel": null
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 23,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 485618.299,
+    "master": 486690.638,
+    "rel": -0.0022033277738947965
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "concept": "12:FVOCI|S",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2024.2Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 7398600.0,
+    "master": 7398464.25,
+    "rel": 1.8348402507993466e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "concept": "12:FVOCI[sum_all]|S",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2024.2Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 7398600.0,
+    "master": 7398464.25,
+    "rel": 1.8348402507993466e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "concept": "13:AC_CHILDREN[ac_children]|S",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 3931300.0,
+    "master": 7192740.817,
+    "rel": -0.4534350534766391
+   },
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.3Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 3931300.0,
+    "master": 7192740.817,
+    "rel": -0.4534350534766391
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "concept": "13:AC_SEC|K",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 3931292.356,
+    "master": 7192740.817,
+    "rel": -0.45343611621477947
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "concept": "13:AC_SEC|S",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 3931300.0,
+    "master": 7192740.817,
+    "rel": -0.4534350534766391
+   },
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.3Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 3931300.0,
+    "master": 7192740.817,
+    "rel": -0.4534350534766391
+   }
+  ]
+ },
+ {
+  "code": "KR0083",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 27,
+  "bad": [
+   {
+    "pdf_quarter": "2025.2Q",
+    "period": "2024.4Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": -374400.0,
+    "master": -362335.562,
+    "rel": -0.03329631221789934
+   }
+  ]
+ },
+ {
+  "code": "KR0087",
+  "concept": "1:자산총계|S",
+  "status": "rejected",
+  "n": 13,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2025.4Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 35313900.0,
+    "master": 35315258.0,
+    "rel": -3.845363383724961e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0087",
+  "concept": "2:부채총계|S",
+  "status": "rejected",
+  "n": 13,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2025.4Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 33775500.0,
+    "master": 33781287.0,
+    "rel": -0.0001713078604731667
+   }
+  ]
+ },
+ {
+  "code": "KR0087",
+  "concept": "3:자본총계|S",
+  "status": "rejected",
+  "n": 43,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2025.4Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 1538400.0,
+    "master": 1533971.0,
+    "rel": 0.0028872775300184945
+   }
+  ]
+ },
+ {
+  "code": "KR0087",
+  "concept": "4:AOCI|S",
+  "status": "rejected",
+  "n": 30,
+  "bad": [
+   {
+    "pdf_quarter": "2025.1Q",
+    "period": "2024.3Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": -941900.0,
+    "master": -975421.016,
+    "rel": 0.034365689738224736
+   }
+  ]
+ },
+ {
+  "code": "KR0087",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 30,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2024.4Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 1561600.0,
+    "master": 1561498.238,
+    "rel": 6.516946194601105e-05
+   },
+   {
+    "pdf_quarter": "2025.1Q",
+    "period": "2024.3Q",
+    "col": 2,
+    "kind": "equity",
+    "observed": 1510400.0,
+    "master": 1543857.982,
+    "rel": -0.021671670833774966
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "concept": "1:자산총계|K",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 57988645.884,
+    "master": 57988646.0,
+    "rel": -2.000391536338681e-09
+   },
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 57222543.138,
+    "master": 57222543.0,
+    "rel": 2.4116369058070453e-09
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "concept": "11:FVPL|K",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 6664232.314,
+    "master": 11938853.0,
+    "rel": -0.44180296767202004
+   },
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 6556445.195,
+    "master": 11838490.0,
+    "rel": -0.446175551527264
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "concept": "11:FVPL[sum_all]|K",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 6664232.314,
+    "master": 11938853.0,
+    "rel": -0.44180296767202004
+   },
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 6556445.195,
+    "master": 11838490.0,
+    "rel": -0.446175551527264
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "concept": "14:재보험계약자산|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 52897.254,
+    "master": 52897.0,
+    "rel": 4.80178460027629e-06
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "concept": "15:유형자산|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2023.3Q",
+    "period": "2023.3Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 79246.515,
+    "master": 79247.0,
+    "rel": -6.1201054929597596e-06
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "concept": "21:재보험계약부채|K",
+  "status": "rejected",
+  "n": 21,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 94745.126,
+    "master": 94745.0,
+    "rel": 1.329885482124035e-06
+   },
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 75659.681,
+    "master": 75660.0,
+    "rel": -4.216230504931843e-06
+   }
+  ]
+ },
+ {
+  "code": "KR0094",
+  "concept": "22:투자계약부채|K",
+  "status": "rejected",
+  "n": 22,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 2469852.753,
+    "master": 2480183.0,
+    "rel": -0.004165114832252287
+   },
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 2381328.001,
+    "master": 2391085.0,
+    "rel": -0.004080573881731447
+   }
+  ]
+ },
+ {
+  "code": "KR0095",
+  "concept": "12:FVOCI|S",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2026.2Q",
+    "period": "2026.2Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 8863600.0,
+    "master": 8863748.725,
+    "rel": -1.677901806716971e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0095",
+  "concept": "12:FVOCI[sum_all]|S",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2026.2Q",
+    "period": "2026.2Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 8863600.0,
+    "master": 8863748.725,
+    "rel": -1.677901806716971e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0095",
+  "concept": "31:이익잉여금|S",
+  "status": "rejected",
+  "n": 39,
+  "bad": [
+   {
+    "pdf_quarter": "2026.2Q",
+    "period": "2026.2Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 3400000.0,
+    "master": 3400105.801,
+    "rel": -3.111697288033234e-05
+   }
+  ]
+ },
+ {
+  "code": "KR0097",
+  "concept": "3:자본총계|S",
+  "status": "rejected",
+  "n": 9,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 580500.0,
+    "master": 588007.744,
+    "rel": -0.012768103952045824
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "concept": "1:자산총계|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2024.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 31792313.0,
+    "master": 31792304.0,
+    "rel": 2.8308737863100455e-07
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "concept": "2:부채총계|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2024.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 26820926.0,
+    "master": 26820917.0,
+    "rel": 3.355589967337806e-07
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 26270632.0,
+    "master": 26151264.0,
+    "rel": 0.0045645212407323795
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 5363506.0,
+    "master": 5482874.0,
+    "rel": -0.02177106386176301
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 1336551.0,
+    "master": 1404468.0,
+    "rel": -0.04835781235314724
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "concept": "20:보험계약부채|K",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 24031927.0,
+    "master": 23869743.0,
+    "rel": 0.0067945432005698594
+   }
+  ]
+ },
+ {
+  "code": "KR0099",
+  "concept": "31:이익잉여금|K",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 2998852.0,
+    "master": 2963776.0,
+    "rel": 0.011834902502753245
+   }
+  ]
+ },
+ {
+  "code": "KR0100",
+  "concept": "11:FVPL|K",
+  "status": "rejected",
+  "n": 8,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 45324.3,
+    "master": 321033.781,
+    "rel": -0.8588176613102283
+   }
+  ]
+ },
+ {
+  "code": "KR0100",
+  "concept": "11:FVPL[sum_all]|K",
+  "status": "rejected",
+  "n": 8,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 45324.3,
+    "master": 321033.781,
+    "rel": -0.8588176613102283
+   }
+  ]
+ },
+ {
+  "code": "KR0100",
+  "concept": "13:AC_CHILDREN[ac_children]|K",
+  "status": "rejected",
+  "n": 8,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 0.0,
+    "master": 38902.853,
+    "rel": -1.0
+   }
+  ]
+ },
+ {
+  "code": "KR0100",
+  "concept": "20:보험계약부채|K",
+  "status": "rejected",
+  "n": 6,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 906447.518,
+    "master": 1222488.069,
+    "rel": -0.25852240117036257
+   }
+  ]
+ },
+ {
+  "code": "KR0100",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 8,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 52944.478,
+    "master": 1312.704,
+    "rel": 39.33238110038516
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 4841590.246,
+    "master": 4873141.655,
+    "rel": -0.006474551990013921
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": -2142301.168,
+    "master": -2110749.758,
+    "rel": -0.014947963338816666
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "11:FVPL|S",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 6971700.0,
+    "master": 7247833.0,
+    "rel": -0.038098697914259336
+   },
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.3Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 6560800.0,
+    "master": 6794319.0,
+    "rel": -0.034369743310551065
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "11:FVPL[sum_all]|S",
+  "status": "rejected",
+  "n": 24,
+  "bad": [
+   {
+    "pdf_quarter": "2024.2Q",
+    "period": "2023.2Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 6971700.0,
+    "master": 7247833.0,
+    "rel": -0.038098697914259336
+   },
+   {
+    "pdf_quarter": "2024.3Q",
+    "period": "2023.3Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 6560800.0,
+    "master": 6794319.0,
+    "rel": -0.034369743310551065
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "13:AC_SEC|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 9388101.0,
+    "master": 16106434.0,
+    "rel": -0.41712107099560336
+   },
+   {
+    "pdf_quarter": "2023.2Q",
+    "period": "2023.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 9210326.0,
+    "master": 15749591.0,
+    "rel": -0.4152022106478829
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "20:보험계약부채|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2026.1Q",
+    "period": "2026.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 47040700.716,
+    "master": 43665846.579,
+    "rel": 0.0772881874829617
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "23:차입부채|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2026.2Q",
+    "period": "2026.2Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 101073.209,
+    "master": 1108593.329,
+    "rel": -0.9088275146927209
+   },
+   {
+    "pdf_quarter": "2026.2Q",
+    "period": "2025.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 94884.664,
+    "master": 1108448.34,
+    "rel": -0.914398659300622
+   }
+  ]
+ },
+ {
+  "code": "KR0104",
+  "concept": "31:이익잉여금|K",
+  "status": "rejected",
+  "n": 20,
+  "bad": [
+   {
+    "pdf_quarter": "2024.1Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 2287674.87,
+    "master": 2315578.484,
+    "rel": -0.01205038576442398
+   },
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 2287674.87,
+    "master": 2315578.484,
+    "rel": -0.01205038576442398
+   }
+  ]
+ },
+ {
+  "code": "KR0150",
+  "concept": "15:유형자산|K",
+  "status": "rejected",
+  "n": 6,
+  "bad": [
+   {
+    "pdf_quarter": "2025.1Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 136340.43,
+    "master": 192654.513,
+    "rel": -0.29230606707874013
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "1:자산총계|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 11005796.836,
+    "master": 11017223.0,
+    "rel": -0.0010371183373524167
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "1:자산총계|S",
+  "status": "rejected",
+  "n": 16,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 11005900.0,
+    "master": 11017223.0,
+    "rel": -0.0010277544531866153
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "2:부채총계|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 7911404.643,
+    "master": 8301593.0,
+    "rel": -0.047001624507489084
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "2:부채총계|S",
+  "status": "rejected",
+  "n": 16,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 7911400.0,
+    "master": 8301593.0,
+    "rel": -0.04700218379773617
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 3094392.193,
+    "master": 2715630.0,
+    "rel": 0.13947488906809838
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 156893.984,
+    "master": 149592.0,
+    "rel": 0.04881266377881168
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "11:FVPL|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 1977830.182,
+    "master": 127105.0,
+    "rel": 14.560600936233822
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "15:유형자산|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 96123.934,
+    "master": 114454.0,
+    "rel": -0.1601522533070055
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "20:보험계약부채|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 7282935.111,
+    "master": 7661996.0,
+    "rel": -0.04947286438155285
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 461469.839,
+    "master": 469087.0,
+    "rel": -0.01623826923363901
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "30:자본금|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": 70411.469,
+    "master": 70411.0,
+    "rel": 6.6608910539166104e-06
+   }
+  ]
+ },
+ {
+  "code": "KR1000",
+  "concept": "31:이익잉여금|K",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2023.1Q",
+    "period": "2023.1Q",
+    "col": 0,
+    "kind": "bs_full",
+    "observed": -139770.768,
+    "master": 1905005.0,
+    "rel": -1.073370289316826
+   }
+  ]
+ },
+ {
+  "code": "KR1010",
+  "concept": "3:자본총계|K",
+  "status": "rejected",
+  "n": 19,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 61306.793,
+    "master": 61432.491,
+    "rel": -0.002046115955154805
+   }
+  ]
+ },
+ {
+  "code": "KR1010",
+  "concept": "3:자본총계|S",
+  "status": "rejected",
+  "n": 38,
+  "bad": [
+   {
+    "pdf_quarter": "2025.3Q",
+    "period": "2024.3Q",
+    "col": 2,
+    "kind": "sum_bs",
+    "observed": 157900.0,
+    "master": 158828.692,
+    "rel": -0.005847129937958628
+   }
+  ]
+ },
+ {
+  "code": "KR1010",
+  "concept": "4:AOCI|K",
+  "status": "rejected",
+  "n": 21,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": -43371.182,
+    "master": -46890.874,
+    "rel": 0.07506134349297909
+   }
+  ]
+ },
+ {
+  "code": "KR1010",
+  "concept": "12:FVOCI|S",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2024.4Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 556500.0,
+    "master": 556609.702,
+    "rel": -0.0001970896296019799
+   }
+  ]
+ },
+ {
+  "code": "KR1010",
+  "concept": "12:FVOCI[sum_all]|S",
+  "status": "rejected",
+  "n": 18,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2024.4Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 556500.0,
+    "master": 556609.702,
+    "rel": -0.0001970896296019799
+   }
+  ]
+ },
+ {
+  "code": "KR1010",
+  "concept": "14:재보험계약자산|K",
+  "status": "rejected",
+  "n": 21,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 4648.257,
+    "master": 4740.295,
+    "rel": -0.019416091192636844
+   }
+  ]
+ },
+ {
+  "code": "KR1010",
+  "concept": "21:재보험계약부채|K",
+  "status": "rejected",
+  "n": 21,
+  "bad": [
+   {
+    "pdf_quarter": "2024.4Q",
+    "period": "2023.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 567.628,
+    "master": 533.968,
+    "rel": 0.06303748539238323
+   }
+  ]
+ },
+ {
+  "code": "KR1011",
+  "concept": "3:자본총계|S",
+  "status": "rejected",
+  "n": 14,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2025.4Q",
+    "col": 0,
+    "kind": "sum_bs",
+    "observed": 751700.0,
+    "master": 751582.575,
+    "rel": 0.00015623699099203648
+   },
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2025.4Q",
+    "col": 0,
+    "kind": "equity",
+    "observed": 751700.0,
+    "master": 751582.575,
+    "rel": 0.00015623699099203648
+   }
+  ]
+ },
+ {
+  "code": "KR1011",
+  "concept": "24:기타부채|K",
+  "status": "rejected",
+  "n": 13,
+  "bad": [
+   {
+    "pdf_quarter": "2025.4Q",
+    "period": "2024.4Q",
+    "col": 1,
+    "kind": "bs_full",
+    "observed": 16209.218,
+    "master": 16373.733,
+    "rel": -0.010047494972588073
+   }
+  ]
+ }
+]

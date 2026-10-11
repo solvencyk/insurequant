@@ -1,0 +1,251 @@
+54 groups
+
+KR0001|13 메리츠화재해상보험  held 2: 2023.1Q..2023.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n= 19 bad= 19  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 836352.5), ('2024.4Q', 0, 's', 0.0, 1066670.4), ('2023.4Q', 2, 's', 0.0, 836352.5)]
+    13:AC_SEC|S                          rejected  n= 19 bad= 19  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 836352.5), ('2024.4Q', 0, 's', 0.0, 1066670.4), ('2023.4Q', 2, 's', 0.0, 836352.5)]
+    13:AC_SEC+대출채권|S                     rejected  n= 19 bad= 19  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 12425400.0, 836352.5), ('2024.4Q', 0, 's', 14968200.0, 1066670.4), ('2023.4Q', 2, 's', 12425400.0, 836352.5)]
+
+KR0002|10 한화손해보험  held 2: 2023.1Q..2023.2Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|S                          rejected  n= 20 bad= 20  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 391400.0, 231224.0), ('2024.4Q', 0, 's', 516800.0, 280689.3), ('2023.4Q', 2, 's', 391400.0, 231224.0)]
+    10:현금및현금성자산|K                        accepted  n=  3 bad=  0  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 231224.0, 231224.0), ('2024.4Q', 0, 'b', 280689.3, 280689.3), ('2023.4Q', 1, 'b', 231224.0, 231224.0)]
+
+KR0004|10 예별손해보험  held 1: 2026.2Q..2026.2Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|S                          rejected  n=  6 bad=  6  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 56900.0, 11950.6), ('2024.4Q', 0, 's', 26200.0, 8122.9), ('2023.4Q', 2, 's', 56900.0, 11950.6)]
+    10:현금및현금성자산|K                        accepted  n=  7 bad=  0  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 11950.6, 11950.6), ('2023.4Q', 1, 'b', 11950.6, 11950.6), ('2023.4Q', 1, 'b', 11950.6, 11950.6), ('2024.4Q', 1, 'b', 8122.9, 8122.9)]
+
+KR0004|13 예별손해보험  held 11: 2023.1Q..2026.2Q  rules ['13:AC_CHILDREN[ac_children]|bs_full|K', '13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|K        rejected  n=  5 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 221008.3, 139653.6), ('2023.4Q', 1, 'b', 221008.3, 139653.6), ('2023.4Q', 1, 'b', 221008.3, 139653.6), ('2024.4Q', 1, 'b', 181321.0, 181321.0)]
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 139653.6), ('2024.4Q', 0, 's', 0.0, 181321.0), ('2023.4Q', 2, 's', 0.0, 139653.6)]
+    13:AC_SEC|S                          rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 139653.6), ('2024.4Q', 0, 's', 0.0, 181321.0), ('2023.4Q', 2, 's', 0.0, 139653.6)]
+    13:AC_SEC+대출채권|S                     rejected  n=  3 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 139700.0, 139653.6), ('2024.4Q', 0, 's', 125800.0, 181321.0), ('2023.4Q', 2, 's', 139700.0, 139653.6)]
+
+KR0004|24 예별손해보험  held 10: 2023.1Q..2026.1Q  rules ['24:기타부채|bs_full|K']
+    24:기타부채|K                            rejected  n=  5 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 6079.2, 61388.2), ('2023.4Q', 1, 'b', 6079.2, 61388.2), ('2023.4Q', 1, 'b', 6079.2, 61388.2), ('2024.4Q', 1, 'b', 6210.6, 6210.6)]
+
+KR0005|24 흥국화재  held 1: 2023.1Q..2023.1Q  rules ['24:기타부채|bs_full|K']
+    24:기타부채|K                            rejected  n=  9 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 15428.0, 15428.0), ('2023.4Q', 1, 'b', 7227.0, 15428.0), ('2024.4Q', 1, 'b', 6551.0, 6551.0), ('2024.4Q', 1, 'b', 6551.0, 6551.0)]
+
+KR0005|31 흥국화재  held 2: 2023.1Q..2023.2Q  rules ['31:이익잉여금|equity|E']
+    31:이익잉여금|K                           rejected  n=  9 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 495273.0, 495273.0), ('2023.4Q', 1, 'b', 474666.0, 495273.0), ('2024.4Q', 1, 'b', 568486.0, 568486.0), ('2024.4Q', 1, 'b', 568486.0, 568486.0)]
+    31:이익잉여금|S                           rejected  n= 30 bad=  2  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'e', 495300.0, 495273.0), ('2023.4Q', 1, 'e', 495300.0, 495273.0), ('2023.4Q', 2, 'e', 495300.0, 495273.0)]
+
+KR0008|31 삼성화재해상보험  held 2: 2023.1Q..2023.2Q  rules ['31:이익잉여금|equity|E']
+    31:이익잉여금|S                           rejected  n= 31 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'e', 12079500.0, 12079484.1), ('2023.4Q', 1, 'e', 12079500.0, 12079484.1), ('2023.4Q', 2, 'e', 12079500.0, 12079484.1)]
+
+KR0009|10 현대해상  held 1: 2023.1Q..2023.1Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|S                          rejected  n= 16 bad= 16  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 1349900.0, 1102610.1), ('2024.4Q', 0, 's', 2118600.0, 1357812.2), ('2023.4Q', 2, 's', 1349900.0, 1102610.1)]
+
+KR0009|11 현대해상  held 2: 2023.1Q..2023.2Q  rules ['11:FVPL|sum_bs|S']
+    11:FVPL|S                            rejected  n= 14 bad= 14  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 8130200.0, 9003311.6), ('2024.4Q', 0, 's', 8452800.0, 9338046.2), ('2023.4Q', 2, 's', 8130200.0, 9003311.6), ('2025.4Q', 0, 's', 8425500.0, 9040657.8)]
+    11:FVPL[sum_all]|S                   rejected  n= 14 bad= 14  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 8130200.0, 9003311.6), ('2024.4Q', 0, 's', 8452800.0, 9338046.2), ('2023.4Q', 2, 's', 8130200.0, 9003311.6), ('2025.4Q', 0, 's', 8425500.0, 9040657.8)]
+
+KR0009|13 현대해상  held 2: 2023.1Q..2023.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n= 13 bad= 13  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 0.0, 11544378.9), ('2023.4Q', 2, 's', 0.0, 11145329.1), ('2025.4Q', 0, 's', 0.0, 10401582.8)]
+    13:AC_SEC|S                          rejected  n= 13 bad= 13  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 0.0, 11544378.9), ('2023.4Q', 2, 's', 0.0, 11145329.1), ('2025.4Q', 0, 's', 0.0, 10401582.8)]
+    13:AC_SEC+대출채권|S                     rejected  n= 13 bad= 13  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 10245600.0, 11544378.9), ('2023.4Q', 2, 's', 10397300.0, 11145329.1), ('2025.4Q', 0, 's', 9568300.0, 10401582.8)]
+
+KR0011|10 DB손해보험  held 1: 2023.1Q..2023.1Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|S                          rejected  n= 22 bad= 21  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 994200.0, 995377.4), ('2024.4Q', 0, 's', 750500.0, 752248.5), ('2023.4Q', 2, 's', 994200.0, 995377.4)]
+
+KR0011|11 DB손해보험  held 1: 2023.1Q..2023.1Q  rules ['11:FVPL|sum_bs|S']
+    11:FVPL|S                            rejected  n= 22 bad= 13  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 11174100.0, 11183349.5), ('2024.4Q', 0, 's', 11407200.0, 11418284.4), ('2023.4Q', 2, 's', 11174100.0, 11183349.5)]
+    11:FVPL[sum_all]|S                   rejected  n= 22 bad= 13  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 11174100.0, 11183349.5), ('2024.4Q', 0, 's', 11407200.0, 11418284.4), ('2023.4Q', 2, 's', 11174100.0, 11183349.5)]
+
+KR0011|13 DB손해보험  held 1: 2023.1Q..2023.1Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n= 22 bad= 22  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 11813123.8), ('2024.4Q', 0, 's', 0.0, 13714616.2), ('2023.4Q', 2, 's', 0.0, 11813123.8)]
+    13:AC_SEC|S                          rejected  n= 22 bad= 22  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 11813123.8), ('2024.4Q', 0, 's', 0.0, 13714616.2), ('2023.4Q', 2, 's', 0.0, 11813123.8)]
+    13:AC_SEC+대출채권|S                     rejected  n= 22 bad= 22  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 11177000.0, 11813123.8), ('2024.4Q', 0, 's', 13022000.0, 13714616.2), ('2023.4Q', 2, 's', 11177000.0, 11813123.8)]
+
+KR0029|13 AIG손해보험  held 11: 2023.1Q..2026.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 7883.3), ('2024.4Q', 0, 's', 0.0, 9258.6), ('2023.4Q', 2, 's', 0.0, 7883.3), ('2025.4Q', 0, 's', 0.0, 5205.0)]
+    13:AC_SEC|S                          rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 7883.3), ('2024.4Q', 0, 's', 0.0, 9258.6), ('2023.4Q', 2, 's', 0.0, 7883.3), ('2025.4Q', 0, 's', 0.0, 5205.0)]
+    13:AC_SEC+대출채권|S                     rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 7883.3), ('2024.4Q', 0, 's', 0.0, 9258.6), ('2023.4Q', 2, 's', 0.0, 7883.3), ('2025.4Q', 0, 's', 0.0, 5205.0)]
+
+KR0029|24 AIG손해보험  held 11: 2023.1Q..2026.2Q  rules ['24:기타부채|bs_full|S']
+    24:기타부채|S                            rejected  n= 13 bad= 13  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 126603.4, 17104.2), ('2023.4Q', 1, 'b', 126603.4, 17104.2), ('2023.4Q', 1, 'b', 126603.4, 17104.2), ('2023.4Q', 1, 'b', 126603.4, 17104.2)]
+
+KR0049|10 악사손해보험  held 10: 2023.1Q..2026.2Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|S                          rejected  n=  8 bad=  8  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 5200.0, 9152.0), ('2023.4Q', 1, 'b', 5200.0, 9152.0), ('2023.4Q', 1, 'b', 5200.0, 9152.0), ('2024.4Q', 1, 'b', 37900.0, 35733.6)]
+
+KR0049|11 악사손해보험  held 4: 2023.1Q..2024.1Q  rules ['11:FVPL|sum_bs|S']
+    11:FVPL|S                            rejected  n=  7 bad=  2  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 158200.0, 152069.7), ('2023.4Q', 1, 'b', 158200.0, 152069.7), ('2024.4Q', 1, 'b', 119700.0, 119718.8), ('2024.4Q', 1, 'b', 119700.0, 119718.8)]
+    11:FVPL[sum_all]|S                   rejected  n=  3 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 158200.0, 152069.7), ('2025.4Q', 0, 's', 71000.0, 71019.6), ('2024.4Q', 2, 's', 119700.0, 119718.8)]
+
+KR0049|13 악사손해보험  held 10: 2023.1Q..2026.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 78217.6), ('2025.4Q', 0, 's', 0.0, 74034.6), ('2024.4Q', 2, 's', 0.0, 80006.7)]
+    13:AC_SEC|S                          rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 78217.6), ('2025.4Q', 0, 's', 0.0, 74034.6), ('2024.4Q', 2, 's', 0.0, 80006.7)]
+    13:AC_SEC+대출채권|S                     rejected  n=  1 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 5600.0, 78217.6)]
+
+KR0049|24 악사손해보험  held 8: 2023.1Q..2026.2Q  rules ['24:기타부채|bs_full|S']
+    24:기타부채|S                            rejected  n=  5 bad=  4  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 140900.0, 73413.0), ('2023.4Q', 1, 'b', 84100.0, 73413.0), ('2024.4Q', 1, 'b', 117300.0, 106576.0), ('2024.4Q', 1, 'b', 117300.0, 106576.0)]
+
+KR0050|10 하나손해보험  held 11: 2023.1Q..2026.2Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|S                          rejected  n=  5 bad=  4  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 140500.0, 139160.1), ('2024.4Q', 0, 's', 111700.0, 110401.4), ('2023.4Q', 2, 's', 140500.0, 139160.1), ('2025.4Q', 0, 's', 234000.0, 233977.1)]
+
+KR0051|13 신한이지손해보험  held 8: 2023.1Q..2026.2Q  rules ['13:AC_SEC|bs_full|K']
+    13:AC_CHILDREN[ac_children]|K        rejected  n= 10 bad= 10  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 49980.0, 59988.4), ('2023.4Q', 1, 'b', 49980.0, 59988.4), ('2023.4Q', 1, 'b', 49980.0, 59988.4), ('2024.4Q', 1, 'b', 49970.5, 59978.1)]
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 50000.0, 59988.4), ('2024.4Q', 0, 's', 50000.0, 59978.1), ('2025.4Q', 0, 's', 20000.0, 24445.6)]
+    13:AC_SEC|K                          rejected  n= 10 bad= 10  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 49980.0, 59988.4), ('2023.4Q', 1, 'b', 49980.0, 59988.4), ('2023.4Q', 1, 'b', 49980.0, 59988.4), ('2024.4Q', 1, 'b', 49970.5, 59978.1)]
+    13:AC_SEC|S                          rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 50000.0, 59988.4), ('2024.4Q', 0, 's', 50000.0, 59978.1), ('2025.4Q', 0, 's', 20000.0, 24445.6)]
+    13:AC_SEC+대출채권|K                     rejected  n= 10 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 59988.4, 59988.4), ('2023.4Q', 1, 'b', 59988.4, 59988.4), ('2023.4Q', 1, 'b', 59988.4, 59988.4), ('2024.4Q', 1, 'b', 59978.1, 59978.1)]
+    13:AC_SEC+대출채권|S                     rejected  n=  2 bad=  1  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 60000.0, 59978.1), ('2025.4Q', 0, 's', 20000.0, 24445.6)]
+
+KR0051|24 신한이지손해보험  held 11: 2023.1Q..2026.2Q  rules ['24:기타부채|bs_full|K']
+    24:기타부채|K                            rejected  n= 10 bad= 10  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 27319.3, 19659.4), ('2023.4Q', 1, 'b', 27319.3, 19659.4), ('2023.4Q', 1, 'b', 27319.3, 19659.4), ('2024.4Q', 1, 'b', 16274.6, 9073.1)]
+
+KR0068|10 한화생명  held 1: 2023.1Q..2023.1Q  rules ['10:현금및현금성자산|bs_full|K']
+    10:현금및예치금|S                          rejected  n= 12 bad= 12  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 2126600.0, 2389065.7), ('2024.4Q', 0, 's', 1799300.0, 1337044.9), ('2025.4Q', 0, 's', 2482200.0, 1549120.0)]
+    10:현금및현금성자산|K                        rejected  n= 13 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 2389065.7, 2389065.7), ('2023.4Q', 1, 'b', 2389065.7, 2389065.7), ('2023.4Q', 1, 'b', 2389065.7, 2389065.7), ('2023.4Q', 1, 'b', 2389065.7, 2389065.7)]
+
+KR0069|10 삼성생명보험  held 1: 2023.1Q..2023.1Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|K                          rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 75.0, 3380990.0), ('2024.4Q', 1, 'b', 67.0, 2555900.0)]
+    10:현금및예치금|S                          rejected  n= 22 bad= 21  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 3272200.0, 3380990.0), ('2024.4Q', 0, 's', 2354900.0, 2555900.0), ('2023.4Q', 2, 's', 3272200.0, 3380990.0)]
+    10:현금및현금성자산|K                        accepted  n=  6 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 2555900.0, 2555900.0), ('2023.4Q', 1, 'b', 3380990.0, 3380990.0), ('2025.4Q', 0, 'b', 2672569.0, 2672569.0), ('2024.4Q', 1, 'b', 2555900.0, 2555900.0)]
+
+KR0069|13 삼성생명보험  held 2: 2023.1Q..2023.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|K        rejected  n=  8 bad=  2  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 45371811.0, 45371811.0), ('2023.4Q', 1, 'b', 49614533.0, 49614533.0), ('2024.4Q', 1, 'b', 0.0, 45371811.0), ('2025.4Q', 0, 'b', 41115626.0, 41115626.0)]
+    13:AC_CHILDREN[ac_children]|S        rejected  n= 19 bad= 19  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 49614533.0), ('2024.4Q', 0, 's', 0.0, 45371811.0), ('2023.4Q', 2, 's', 0.0, 49614533.0)]
+    13:AC_FA|K                           accepted  n=  6 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 45371811.0, 45371811.0), ('2023.4Q', 1, 'b', 49614533.0, 49614533.0), ('2025.4Q', 0, 'b', 41115626.0, 41115626.0), ('2024.4Q', 1, 'b', 45371811.0, 45371811.0)]
+    13:AC_SEC|K                          rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2024.4Q', 1, 'b', 0.0, 45371811.0)]
+    13:AC_SEC|S                          rejected  n= 19 bad= 19  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 49614533.0), ('2024.4Q', 0, 's', 0.0, 45371811.0), ('2023.4Q', 2, 's', 0.0, 49614533.0)]
+    13:AC_SEC+대출채권|S                     rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 46358400.0, 49614533.0)]
+
+KR0070|4 에이비엘생명보험  held 2: 2023.1Q..2023.2Q  rules ['4:AOCI|bs_full|K']
+    4:AOCI|K                             rejected  n= 10 bad=  2  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 309152.0, 309152.0), ('2024.4Q', 0, 'b', -221166.4, -221166.4), ('2023.4Q', 1, 'b', 286192.7, 309152.0), ('2025.4Q', 0, 'b', -323738.9, -323738.9)]
+    4:AOCI|S                             rejected  n= 32 bad=  7  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'e', 309200.0, 309152.0), ('2023.4Q', 1, 'e', 309200.0, 309152.0), ('2023.4Q', 2, 'e', 309200.0, 309152.0), ('2024.4Q', 0, 'e', -221200.0, -221166.4)]
+
+KR0075|10 비엔피파리바카디프생명보험  held 11: 2023.1Q..2026.2Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|S                          rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 22600.0, 85829.3), ('2024.4Q', 0, 's', 27100.0, 92693.9), ('2023.4Q', 2, 's', 22600.0, 85829.3), ('2025.4Q', 0, 's', 26900.0, 119275.6)]
+    10:현금및현금성자산|K                        accepted  n=  2 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 92693.9, 92693.9), ('2023.4Q', 1, 'b', 85829.3, 85829.3)]
+
+KR0075|11 비엔피파리바카디프생명보험  held 11: 2023.1Q..2026.2Q  rules ['11:FVPL|sum_bs|S']
+    11:FVPL|K                            accepted  n=  2 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 980719.6, 980719.6), ('2023.4Q', 1, 'b', 1123596.0, 1123596.0)]
+    11:FVPL|S                            rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 13300.0, 1123596.0), ('2024.4Q', 0, 's', 11200.0, 980719.6), ('2023.4Q', 2, 's', 13300.0, 1123596.0), ('2025.4Q', 0, 's', 11600.0, 1133973.3)]
+    11:FVPL[sum_all]|K                   accepted  n=  2 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 980719.6, 980719.6), ('2023.4Q', 1, 'b', 1123596.0, 1123596.0)]
+    11:FVPL[sum_all]|S                   rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 13300.0, 1123596.0), ('2024.4Q', 0, 's', 11200.0, 980719.6), ('2023.4Q', 2, 's', 13300.0, 1123596.0), ('2025.4Q', 0, 's', 11600.0, 1133973.3)]
+
+KR0075|13 비엔피파리바카디프생명보험  held 11: 2023.1Q..2026.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|K        accepted  n=  2 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 45467.7, 45467.7), ('2023.4Q', 1, 'b', 39373.0, 39373.0)]
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 39373.0), ('2024.4Q', 0, 's', 0.0, 45467.7), ('2023.4Q', 2, 's', 0.0, 39373.0), ('2025.4Q', 0, 's', 0.0, 53580.6)]
+    13:AC_SEC|S                          rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 39373.0), ('2024.4Q', 0, 's', 0.0, 45467.7), ('2023.4Q', 2, 's', 0.0, 39373.0), ('2025.4Q', 0, 's', 0.0, 53580.6)]
+    13:AC_SEC+대출채권|S                     rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 17800.0, 39373.0), ('2024.4Q', 0, 's', 31400.0, 45467.7), ('2023.4Q', 2, 's', 17800.0, 39373.0), ('2025.4Q', 0, 's', 29200.0, 53580.6)]
+
+KR0076|24 아이엠라이프생명보험  held 2: 2024.2Q..2026.2Q  rules ['24:기타부채|bs_full|K']
+    24:기타부채|K                            rejected  n= 13 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 2537.5, 2537.5), ('2023.4Q', 1, 'b', 5450.3, 2537.5), ('2024.4Q', 0, 'b', 3078.2, 3078.2), ('2023.4Q', 1, 'b', 2537.5, 2537.5)]
+
+KR0080|15 에이아이에이생명보험  held 6: 2023.1Q..2024.3Q  rules ['15:유형자산|bs_full|K']
+    15:유형자산|K                            rejected  n=  9 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 64742.7, 64742.7), ('2023.4Q', 1, 'b', 54785.2, 64742.7), ('2023.4Q', 1, 'b', 54785.2, 64742.7), ('2023.4Q', 1, 'b', 54785.2, 64742.7)]
+
+KR0095|10 메트라이프생명보험  held 11: 2023.1Q..2026.2Q  rules ['10:현금및현금성자산|bs_full|K']
+    10:현금및예치금|S                          rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 393000.0, 800231.6), ('2024.4Q', 0, 's', 812500.0, 1254948.5), ('2023.4Q', 2, 's', 393000.0, 800231.6), ('2025.4Q', 0, 's', 417200.0, 1063277.4)]
+    10:현금및현금성자산|K                        rejected  n=  8 bad=  7  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 392963.1, 800231.6), ('2023.4Q', 1, 'b', 392963.1, 800231.6), ('2023.4Q', 1, 'b', 392963.1, 800231.6), ('2024.4Q', 1, 'b', 812514.7, 1254948.5)]
+
+KR0095|11 메트라이프생명보험  held 11: 2023.1Q..2026.2Q  rules ['11:FVPL|bs_full|K', '11:FVPL|sum_bs|S']
+    11:FVPL|K                            rejected  n=  8 bad=  7  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 2051787.5, 12801789.2), ('2023.4Q', 1, 'b', 2051787.5, 12801789.2), ('2023.4Q', 1, 'b', 2051787.5, 12801789.2), ('2024.4Q', 1, 'b', 2171838.9, 13182927.7)]
+    11:FVPL|S                            rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 2051800.0, 12801789.2), ('2024.4Q', 0, 's', 2171800.0, 13182927.7), ('2023.4Q', 2, 's', 2051800.0, 12801789.2)]
+    11:FVPL[sum_all]|K                   rejected  n=  8 bad=  7  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 2084967.4, 12801789.2), ('2023.4Q', 1, 'b', 2084967.4, 12801789.2), ('2023.4Q', 1, 'b', 2084967.4, 12801789.2), ('2024.4Q', 1, 'b', 2251800.8, 13182927.7)]
+    11:FVPL[sum_all]|S                   rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 2051800.0, 12801789.2), ('2024.4Q', 0, 's', 2171800.0, 13182927.7), ('2023.4Q', 2, 's', 2051800.0, 12801789.2)]
+
+KR0095|13 메트라이프생명보험  held 10: 2023.1Q..2026.1Q  rules ['13:AC_SEC|bs_full|K']
+    13:AC_CHILDREN[ac_children]|K        accepted  n=  1 bad=  0  year-end (period,col,kind,obs,anchor): [('2025.4Q', 1, 'b', 1318109.8, 1318109.8)]
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 1164241.7), ('2025.4Q', 0, 's', 0.0, 1318109.8), ('2024.4Q', 2, 's', 0.0, 1152907.9)]
+    13:AC_SEC|K                          rejected  n=  7 bad=  7  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 0.0, 1164241.7), ('2023.4Q', 1, 'b', 0.0, 1164241.7), ('2023.4Q', 1, 'b', 0.0, 1164241.7), ('2024.4Q', 1, 'b', 0.0, 1152907.9)]
+    13:AC_SEC|S                          rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 1164241.7), ('2025.4Q', 0, 's', 0.0, 1318109.8), ('2024.4Q', 2, 's', 0.0, 1152907.9)]
+    13:AC_SEC+대출채권|S                     rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 866900.0, 1164241.7), ('2025.4Q', 0, 's', 1003800.0, 1318109.8), ('2024.4Q', 2, 's', 867500.0, 1152907.9)]
+
+KR0095|20 메트라이프생명보험  held 1: 2026.2Q..2026.2Q  rules ['20:보험계약부채|bs_full|K']
+    20:보험계약부채|K                          rejected  n=  8 bad=  8  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 6338056.0, 17756977.0), ('2023.4Q', 1, 'b', 6338056.0, 17756977.0), ('2023.4Q', 1, 'b', 6338056.0, 17756977.0), ('2024.4Q', 1, 'b', 8713514.9, 20455254.4)]
+    20:보험계약부채+특별계정부채|K                   accepted  n=  7 bad=  0  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 17756977.0, 17756977.0), ('2023.4Q', 1, 'b', 17756977.0, 17756977.0), ('2023.4Q', 1, 'b', 17756977.0, 17756977.0), ('2024.4Q', 1, 'b', 20455254.4, 20455254.4)]
+
+KR0097|10 하나생명보험  held 1: 2026.1Q..2026.1Q  rules ['10:현금및예치금|sum_bs|S']
+    10:현금및예치금|K                          accepted  n=  4 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 327943.9, 327943.9), ('2023.4Q', 1, 'b', 325732.8, 325732.8), ('2025.4Q', 0, 'b', 448173.7, 448173.7), ('2024.4Q', 1, 'b', 327943.9, 327943.9)]
+    10:현금및예치금|S                          rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 250700.0, 325732.8), ('2025.4Q', 0, 's', 345500.0, 448173.7), ('2024.4Q', 2, 's', 237100.0, 327943.9)]
+
+KR0097|11 하나생명보험  held 1: 2026.1Q..2026.1Q  rules ['11:FVPL|sum_bs|S']
+    11:FVPL|K                            accepted  n=  4 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 2356029.0, 2356029.0), ('2023.4Q', 1, 'b', 2242972.8, 2242972.8), ('2025.4Q', 0, 'b', 2290777.5, 2290777.5), ('2024.4Q', 1, 'b', 2356029.0, 2356029.0)]
+    11:FVPL|S                            rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 1143800.0, 2242972.8), ('2025.4Q', 0, 's', 1004000.0, 2290777.5), ('2024.4Q', 2, 's', 1359300.0, 2356029.0)]
+    11:FVPL[sum_all]|K                   accepted  n=  4 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 2356029.0, 2356029.0), ('2023.4Q', 1, 'b', 2242972.8, 2242972.8), ('2025.4Q', 0, 'b', 2290777.5, 2290777.5), ('2024.4Q', 1, 'b', 2356029.0, 2356029.0)]
+    11:FVPL[sum_all]|S                   rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 1143800.0, 2242972.8), ('2025.4Q', 0, 's', 1004000.0, 2290777.5), ('2024.4Q', 2, 's', 1359300.0, 2356029.0)]
+
+KR0097|20 하나생명보험  held 1: 2025.4Q..2025.4Q  rules ['20:보험계약부채|bs_full|K']
+    20:보험계약부채|K                          rejected  n=  3 bad=  1  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 4630713.5, 4630713.5), ('2023.4Q', 1, 'b', 4627719.4, 4627715.9), ('2024.4Q', 1, 'b', 1202260.1, 4630713.5)]
+
+KR0100|10 처브라이프생명보험  held 6: 2023.2Q..2025.3Q  rules ['10:현금및예치금|bs_full|K', '10:현금및예치금|bs_full|S']
+    10:현금및예치금|K                          rejected  n=  4 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 55212.7, 55212.7), ('2023.4Q', 1, 'b', 42534.5, 55212.7), ('2024.4Q', 0, 'b', 28728.8, 28728.8), ('2023.4Q', 1, 'b', 55212.7, 55212.7)]
+    10:현금및예치금|S                          rejected  n=  9 bad=  9  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 42500.0, 55212.7), ('2023.4Q', 1, 'b', 42534.5, 55212.7), ('2024.4Q', 0, 's', 15200.0, 28728.8), ('2023.4Q', 2, 's', 42500.0, 55212.7)]
+    10:현금및현금성자산|K                        rejected  n=  3 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 42534.5, 55212.7), ('2025.4Q', 1, 'b', 26897.3, 26897.3), ('2025.4Q', 1, 'b', 26897.3, 26897.3)]
+
+KR0100|11 처브라이프생명보험  held 9: 2023.1Q..2025.3Q  rules ['11:FVPL|bs_full|K', '11:FVPL|bs_full|S', '11:FVPL|sum_bs|S']
+    11:FVPL|K                            rejected  n=  8 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 321033.8, 321033.8), ('2023.4Q', 1, 'b', 45324.3, 321033.8), ('2024.4Q', 0, 'b', 358902.4, 358902.4), ('2023.4Q', 1, 'b', 321033.8, 321033.8)]
+    11:FVPL|S                            rejected  n= 11 bad= 11  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 45300.0, 321033.8), ('2023.4Q', 1, 'b', 45324.3, 321033.8), ('2024.4Q', 0, 's', 110400.0, 358902.4), ('2023.4Q', 2, 's', 45300.0, 321033.8)]
+    11:FVPL[sum_all]|K                   rejected  n=  8 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 321033.8, 321033.8), ('2023.4Q', 1, 'b', 45324.3, 321033.8), ('2024.4Q', 0, 'b', 358902.4, 358902.4), ('2023.4Q', 1, 'b', 321033.8, 321033.8)]
+    11:FVPL[sum_all]|S                   rejected  n=  7 bad=  7  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 45300.0, 321033.8), ('2024.4Q', 0, 's', 110400.0, 358902.4), ('2023.4Q', 2, 's', 45300.0, 321033.8), ('2025.4Q', 0, 's', 110300.0, 424903.6)]
+
+KR0100|13 처브라이프생명보험  held 8: 2023.1Q..2025.3Q  rules ['13:AC_SEC|bs_full|K', '13:AC_SEC|bs_full|S', '13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|K        rejected  n=  8 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 38902.9, 38902.9), ('2023.4Q', 1, 'b', 0.0, 38902.9), ('2024.4Q', 0, 'b', 35317.5, 35317.5), ('2023.4Q', 1, 'b', 38902.9, 38902.9)]
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  7 bad=  7  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 38902.9), ('2024.4Q', 0, 's', 0.0, 35317.5), ('2023.4Q', 2, 's', 0.0, 38902.9), ('2025.4Q', 0, 's', 0.0, 31813.1)]
+    13:AC_FA|K                           rejected  n=  1 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 0.0, 38902.9)]
+    13:AC_SEC|K                          rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 0.0, 38902.9), ('2025.4Q', 1, 'b', 0.0, 31813.1), ('2025.4Q', 1, 'b', 0.0, 31813.1)]
+    13:AC_SEC|S                          rejected  n= 11 bad= 11  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 38902.9), ('2023.4Q', 1, 'b', 0.0, 38902.9), ('2024.4Q', 0, 's', 0.0, 35317.5), ('2023.4Q', 2, 's', 0.0, 38902.9)]
+    13:AC_SEC+대출채권|K                     rejected  n=  1 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 0.0, 38902.9)]
+    13:AC_SEC+대출채권|S                     rejected  n= 11 bad= 11  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 38902.9), ('2023.4Q', 1, 'b', 0.0, 38902.9), ('2024.4Q', 0, 's', 0.0, 35317.5), ('2023.4Q', 2, 's', 0.0, 38902.9)]
+
+KR0100|20 처브라이프생명보험  held 1: 2023.2Q..2023.2Q  rules ['20:보험계약부채|bs_full|S']
+    20:보험계약부채|K                          rejected  n=  6 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 1222488.1, 1222488.1), ('2023.4Q', 1, 'b', 906447.5, 1222488.1), ('2024.4Q', 0, 'b', 1300424.0, 1300424.0), ('2023.4Q', 1, 'b', 1222488.1, 1222488.1)]
+    20:보험계약부채|S                          rejected  n=  4 bad=  4  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 906447.5, 1222488.1), ('2024.4Q', 1, 'b', 1013938.9, 1300424.0), ('2024.4Q', 1, 'b', 1013938.9, 1300424.0), ('2024.4Q', 1, 'b', 1013938.9, 1300424.0)]
+    20:보험계약부채+특별계정부채|K                   accepted  n=  1 bad=  0  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 1223837.9, 1222488.1)]
+    20:보험계약부채+특별계정부채|S                   accepted  n=  4 bad=  0  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 1223837.9, 1222488.1), ('2024.4Q', 1, 'b', 1301389.1, 1300424.0), ('2024.4Q', 1, 'b', 1301389.1, 1300424.0), ('2024.4Q', 1, 'b', 1301389.1, 1300424.0)]
+
+KR0100|24 처브라이프생명보험  held 6: 2023.2Q..2025.3Q  rules ['24:기타부채|bs_full|K', '24:기타부채|bs_full|S']
+    24:기타부채|K                            rejected  n=  8 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 1312.7, 1312.7), ('2023.4Q', 1, 'b', 52944.5, 1312.7), ('2024.4Q', 0, 'b', 1890.6, 1890.6), ('2023.4Q', 1, 'b', 1312.7, 1312.7)]
+    24:기타부채|S                            rejected  n=  4 bad=  4  year-end (period,col,kind,obs,anchor): [('2023.4Q', 1, 'b', 52944.5, 1312.7), ('2024.4Q', 1, 'b', 62828.8, 1890.6), ('2024.4Q', 1, 'b', 62828.8, 1890.6), ('2024.4Q', 1, 'b', 62828.8, 1890.6)]
+
+KR1010|12 교보라이프플래닛생명보험  held 1: 2023.3Q..2023.3Q  rules ['12:FVOCI|sum_bs|S']
+    12:FVOCI|K                           accepted  n= 18 bad=  0  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 550577.1, 550577.1), ('2023.4Q', 1, 'b', 550577.1, 550577.1), ('2023.4Q', 1, 'b', 550577.1, 550577.1), ('2023.4Q', 1, 'b', 550577.1, 550577.1)]
+    12:FVOCI|S                           rejected  n= 18 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 550500.0, 550577.1), ('2024.4Q', 0, 's', 556500.0, 556609.7), ('2023.4Q', 2, 's', 550500.0, 550577.1)]
+    12:FVOCI[sum_all]|K                  accepted  n= 18 bad=  0  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 550577.1, 550577.1), ('2023.4Q', 1, 'b', 550577.1, 550577.1), ('2023.4Q', 1, 'b', 550577.1, 550577.1), ('2023.4Q', 1, 'b', 550577.1, 550577.1)]
+    12:FVOCI[sum_all]|S                  rejected  n= 18 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 550500.0, 550577.1), ('2024.4Q', 0, 's', 556500.0, 556609.7), ('2023.4Q', 2, 's', 550500.0, 550577.1)]
+
+KR1011|11 IBK연금보험  held 6: 2023.1Q..2024.3Q  rules ['11:FVPL|sum_bs|S']
+    11:FVPL|K                            accepted  n=  9 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 1892728.8, 1892728.8), ('2023.4Q', 1, 'b', 1745285.0, 1745285.0), ('2024.4Q', 1, 'b', 1892728.8, 1892728.8), ('2024.4Q', 1, 'b', 1892728.8, 1892728.8)]
+    11:FVPL|S                            rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 1620200.0, 1745285.0), ('2024.4Q', 0, 's', 1720500.0, 1892728.8), ('2023.4Q', 2, 's', 1620200.0, 1745285.0), ('2025.4Q', 0, 's', 1647600.0, 1877537.6)]
+    11:FVPL[sum_all]|K                   accepted  n=  9 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 1892728.8, 1892728.8), ('2023.4Q', 1, 'b', 1745285.0, 1745285.0), ('2024.4Q', 1, 'b', 1892728.8, 1892728.8), ('2024.4Q', 1, 'b', 1892728.8, 1892728.8)]
+    11:FVPL[sum_all]|S                   rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 1620200.0, 1745285.0), ('2024.4Q', 0, 's', 1720500.0, 1892728.8), ('2023.4Q', 2, 's', 1620200.0, 1745285.0), ('2025.4Q', 0, 's', 1647600.0, 1877537.6)]
+
+KR1011|12 IBK연금보험  held 6: 2023.1Q..2024.3Q  rules ['12:FVOCI|sum_bs|S']
+    12:FVOCI|K                           accepted  n=  9 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 4623167.8, 4623167.8), ('2023.4Q', 1, 'b', 3813922.5, 3813922.5), ('2024.4Q', 1, 'b', 4623167.8, 4623167.8), ('2024.4Q', 1, 'b', 4623167.8, 4623167.8)]
+    12:FVOCI|S                           rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 3525600.0, 3813922.5), ('2024.4Q', 0, 's', 3913300.0, 4623167.8), ('2023.4Q', 2, 's', 3525600.0, 3813922.5), ('2025.4Q', 0, 's', 3913000.0, 5009758.8)]
+    12:FVOCI[sum_all]|K                  accepted  n=  9 bad=  0  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 4623167.8, 4623167.8), ('2023.4Q', 1, 'b', 3813922.5, 3813922.5), ('2024.4Q', 1, 'b', 4623167.8, 4623167.8), ('2024.4Q', 1, 'b', 4623167.8, 4623167.8)]
+    12:FVOCI[sum_all]|S                  rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 3525600.0, 3813922.5), ('2024.4Q', 0, 's', 3913300.0, 4623167.8), ('2023.4Q', 2, 's', 3525600.0, 3813922.5), ('2025.4Q', 0, 's', 3913000.0, 5009758.8)]
+
+KR1011|13 IBK연금보험  held 10: 2023.1Q..2026.1Q  rules ['13:AC_SEC|bs_full|K', '13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|K        rejected  n=  9 bad=  3  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 4984049.5, 4983735.4), ('2023.4Q', 1, 'b', 5065408.0, 1696595.2), ('2024.4Q', 1, 'b', 4984049.5, 4983735.4), ('2024.4Q', 1, 'b', 4984049.5, 4983735.4)]
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  5 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 1696600.0, 1696595.2), ('2024.4Q', 0, 's', 1645100.0, 4983735.4), ('2023.4Q', 2, 's', 1696600.0, 1696595.2), ('2025.4Q', 0, 's', 1548100.0, 5147446.5)]
+    13:AC_SEC|K                          rejected  n=  9 bad=  8  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 1645060.2, 4983735.4), ('2023.4Q', 1, 'b', 1696595.2, 1696595.2), ('2024.4Q', 1, 'b', 1645060.2, 4983735.4), ('2024.4Q', 1, 'b', 1645060.2, 4983735.4)]
+    13:AC_SEC|S                          rejected  n=  5 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 1696600.0, 1696595.2), ('2024.4Q', 0, 's', 1645100.0, 4983735.4), ('2023.4Q', 2, 's', 1696600.0, 1696595.2), ('2025.4Q', 0, 's', 1548100.0, 5147446.5)]
+    13:AC_SEC+대출채권|S                     rejected  n=  5 bad=  5  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 5310000.0, 1696595.2), ('2024.4Q', 0, 's', 5633900.0, 4983735.4), ('2023.4Q', 2, 's', 5310000.0, 1696595.2), ('2025.4Q', 0, 's', 6124000.0, 5147446.5)]
+
+KR1102|24 스위스리아시아  held 11: 2023.1Q..2026.2Q  rules ['24:기타부채|bs_full|S']
+    24:기타부채|S                            rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 'b', 189500.0, 85777.4), ('2024.4Q', 0, 'b', 140400.0, 46827.5), ('2025.4Q', 0, 'b', 336600.0, 26620.5)]
+
+KR1103|13 제네럴재보험  held 8: 2023.1Q..2026.1Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  1 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 1583.2)]
+    13:AC_SEC|S                          rejected  n=  1 bad=  1  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 1583.2)]
+
+KR1105|13 알지에이리인슈어런스  held 10: 2023.1Q..2026.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 4157.1), ('2024.4Q', 0, 's', 0.0, 3436.4)]
+    13:AC_SEC|S                          rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 4157.1), ('2024.4Q', 0, 's', 0.0, 3436.4)]
+    13:AC_SEC+대출채권|S                     rejected  n=  1 bad=  1  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 0.0, 3436.4)]
+
+KR1106|13 스코리재보험  held 2: 2026.1Q..2026.2Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 9087.6), ('2024.4Q', 0, 's', 0.0, 3516.5), ('2025.4Q', 0, 's', 0.0, 3950.2)]
+    13:AC_SEC|S                          rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 9087.6), ('2024.4Q', 0, 's', 0.0, 3516.5), ('2025.4Q', 0, 's', 0.0, 3950.2)]
+    13:AC_SEC+대출채권|S                     rejected  n=  3 bad=  3  year-end (period,col,kind,obs,anchor): [('2023.4Q', 0, 's', 0.0, 9087.6), ('2024.4Q', 0, 's', 0.0, 3516.5), ('2025.4Q', 0, 's', 0.0, 3950.2)]
+
+KR1106|24 스코리재보험  held 11: 2023.1Q..2026.2Q  rules ['24:기타부채|bs_full|S']
+    24:기타부채|S                            rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 'b', 38714.0, 6942.3), ('2025.4Q', 0, 'b', 35702.0, 6279.4)]
+
+KR1107|13 퍼시픽라이프리  held 3: 2024.1Q..2024.3Q  rules ['13:AC_SEC|sum_bs|S']
+    13:AC_CHILDREN[ac_children]|S        rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 0.0, 1770.1), ('2025.4Q', 0, 's', 0.0, 1336.8)]
+    13:AC_SEC|S                          rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 0.0, 1770.1), ('2025.4Q', 0, 's', 0.0, 1336.8)]
+    13:AC_SEC+대출채권|S                     rejected  n=  2 bad=  2  year-end (period,col,kind,obs,anchor): [('2024.4Q', 0, 's', 0.0, 1770.1), ('2025.4Q', 0, 's', 0.0, 1336.8)]

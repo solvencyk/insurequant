@@ -1,0 +1,634 @@
+{
+  "cells": {
+    "KR1105|1|2023.1Q": {
+      "값": -4400.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2023.2Q": {
+      "값": 1000.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:R1",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. R1(owner 2026-10-09 재보사 최신 공시 전년동기 칸 채택): R1: 2024.2Q 전년동기 column replaces own 1900. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2023.3Q": {
+      "값": 10200.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "f260b237bebd52d9dabd586b2382ef5c6f82b37b00fe415519ce8803704842c1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2023.4Q": {
+      "값": 11400.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.1Q": {
+      "값": 5400.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.2Q": {
+      "값": 12100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.3Q": {
+      "값": 26100.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2024.4Q": {
+      "값": 38100.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.1Q": {
+      "값": 11900.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.2Q": {
+      "값": 12500.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.3Q": {
+      "값": 17300.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2025.4Q": {
+      "값": 29100.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2026.1Q": {
+      "값": -5700.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|1|2026.2Q": {
+      "값": -1100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「보험손익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2023.1Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2023.2Q": {
+      "값": 500.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "a39db5f20e77ba04ec2de9cf24857f639df011f74407b125a58d2fb97ed29369",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2023.3Q": {
+      "값": 700.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "f260b237bebd52d9dabd586b2382ef5c6f82b37b00fe415519ce8803704842c1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2023.4Q": {
+      "값": 1000.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2024.1Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2024.2Q": {
+      "값": 400.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2024.3Q": {
+      "값": 500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2024.4Q": {
+      "값": 900.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2025.1Q": {
+      "값": 100.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2025.2Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2025.3Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2025.4Q": {
+      "값": 400.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2026.1Q": {
+      "값": 100.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|16|2026.2Q": {
+      "값": 200.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2023.1Q": {
+      "값": -3000.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2023.2Q": {
+      "값": 4600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:R1",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. R1(owner 2026-10-09 재보사 최신 공시 전년동기 칸 채택): R1: 2024.2Q 전년동기 column replaces own 5000. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2023.3Q": {
+      "값": 16100.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "f260b237bebd52d9dabd586b2382ef5c6f82b37b00fe415519ce8803704842c1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2023.4Q": {
+      "값": 19400.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2024.1Q": {
+      "값": 7800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2024.2Q": {
+      "값": 16600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2024.3Q": {
+      "값": 33100.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2024.4Q": {
+      "값": 47200.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2025.1Q": {
+      "값": 14600.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2025.2Q": {
+      "값": 17900.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2025.3Q": {
+      "값": 25200.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2025.4Q": {
+      "값": 40400.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2026.1Q": {
+      "값": -2800.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|22|2026.2Q": {
+      "값": 4700.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「세전이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2023.1Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2023.2Q": {
+      "값": -1100.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:R1",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. R1(owner 2026-10-09 재보사 최신 공시 전년동기 칸 채택): R1: 2024.2Q 전년동기 column replaces own 1200. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2023.3Q": {
+      "값": 3700.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "f260b237bebd52d9dabd586b2382ef5c6f82b37b00fe415519ce8803704842c1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2023.4Q": {
+      "값": 3900.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2024.1Q": {
+      "값": 1800.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2024.2Q": {
+      "값": 3700.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2024.3Q": {
+      "값": 8500.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2024.4Q": {
+      "값": 12000.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2025.1Q": {
+      "값": 3400.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2025.2Q": {
+      "값": 4100.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2025.3Q": {
+      "값": 5800.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2025.4Q": {
+      "값": 10600.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2026.1Q": {
+      "값": -600.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|23|2026.2Q": {
+      "값": 1100.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「법인세」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2023.1Q": {
+      "값": -3000.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "1e6baba0c333e664933d8a5cf17aeb412c135508b1f0e4e2097a25252671ef8e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2023.2Q": {
+      "값": 5600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:R1",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. R1(owner 2026-10-09 재보사 최신 공시 전년동기 칸 채택): R1: 2024.2Q 전년동기 column replaces own 3800. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2023.3Q": {
+      "값": 12400.0,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "f260b237bebd52d9dabd586b2382ef5c6f82b37b00fe415519ce8803704842c1",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2023.4Q": {
+      "값": 15500.0,
+      "pdf": "data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "85b10294b0c185d3792ba7013073fb52798e6fba9152c276f1510f474a83a27c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2024.1Q": {
+      "값": 6100.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "c1b3f79007c15156102586eb1eb1ef140b5869d52ff109e1b0d9fad8cc199b6c",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2024.2Q": {
+      "값": 12900.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "411514f57c362c03697cff4eefca0696f8f93c5f4fa655bc2d0731903b973ed6",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2024.3Q": {
+      "값": 24600.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2024.4Q": {
+      "값": 35300.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "8e1090822e80a35a3cb074a3a1f3c03dc705fb91784b6761c0b822cfb7fa6c9a",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2025.1Q": {
+      "값": 11200.0,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "8a9b35c408de143750e9f6b7df339071194193301594db9253bed4638cd5755b",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2025.2Q": {
+      "값": 13800.0,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "317c0dc776987b1078846c11f0421597afd465e172fa400e50b9d9f8a413b332",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2025.3Q": {
+      "값": 19400.0,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "a71c7aec67c6efcb886dc342975aa6fbef8bab855087292e2be81612997424bd",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2025.4Q": {
+      "값": 29800.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 10,
+      "sha256": "56d6999e4b1e6ce53b68cd509af5e51f7c04de024b6ce612c37e6cddc4a95a87",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p10 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2026.1Q": {
+      "값": -2200.0,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 4,
+      "sha256": "30c2fce1943c7f1f19ebaee1270ce64a3d67204b3166836bc1e017bf47724c94",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR1105|24|2026.2Q": {
+      "값": 3600.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
+      "page": 5,
+      "sha256": "95ac19dc20b5d2d6e4ad4eac2a24f136114fb4b55d2783227e2027eaf97b4d4d",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2026.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「당기순이익」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

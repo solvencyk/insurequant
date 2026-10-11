@@ -1,0 +1,22 @@
+{
+  "cells": {
+    "KR0003|16|2023.1Q": {
+      "값": 7000.0,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR0003_롯데손해보험.pdf",
+      "page": 4,
+      "sha256": "cbbfc20e28f5e0b2c38a5da58e4c49890cd463876f2340ee980fc5bdc6929332",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0003|16|2023.2Q": {
+      "값": 12400.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0003_롯데손해보험.pdf",
+      "page": 6,
+      "sha256": "3c9ba86daa4a1c2d3b82ba8f2a96a3338629968f75dbb532828464a2c307f38e",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p6 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}

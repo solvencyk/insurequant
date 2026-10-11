@@ -1,0 +1,352 @@
+[
+ {
+  "key": "KR0004|24|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "K",
+  "value_mn": 37147.158039999995,
+  "page": 18,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0004|24|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "K",
+  "value_mn": 37935.774903,
+  "page": 53,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0004|24|2023.3Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "K",
+  "value_mn": 38215.593442,
+  "page": 22,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0005|24|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "K",
+  "value_mn": 106989.0,
+  "page": 23,
+  "verdict": "CHAIN_FAIL",
+  "reason": "interim prior column (2022.4Q) 123,188.000 != year-end comparative 6,732.000"
+ },
+ {
+  "key": "KR0029|24|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 95890.59700000001,
+  "page": 15,
+  "verdict": "YEAR_END_FAIL",
+  "reason": "the 2023.4Q current column does not reproduce the master anchor"
+ },
+ {
+  "key": "KR0029|24|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 99573.956,
+  "page": 44,
+  "verdict": "YEAR_END_FAIL",
+  "reason": "the 2023.4Q current column does not reproduce the master anchor"
+ },
+ {
+  "key": "KR0029|24|2023.3Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 103883.725,
+  "page": 19,
+  "verdict": "YEAR_END_FAIL",
+  "reason": "the 2023.4Q current column does not reproduce the master anchor"
+ },
+ {
+  "key": "KR0049|24|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 124100.0,
+  "page": 20,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0049|24|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 122900.0,
+  "page": 58,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0049|24|2023.3Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 125400.0,
+  "page": 23,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0050|15|2023.2Q",
+  "status_before": "HOLD_UNTESTED",
+  "rule": "15:유형자산",
+  "form": "S",
+  "value_mn": 23000.0,
+  "page": 46,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0050|24|2023.2Q",
+  "status_before": "HOLD_UNTESTED",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 59500.0,
+  "page": 46,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0050|15|2023.3Q",
+  "status_before": "HOLD_UNTESTED",
+  "rule": "15:유형자산",
+  "form": "S",
+  "value_mn": 23800.0,
+  "page": 19,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0050|24|2023.3Q",
+  "status_before": "HOLD_UNTESTED",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 49100.0,
+  "page": 19,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0051|13|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "13:AC_SEC",
+  "form": "K",
+  "value_mn": 67562.86394499999,
+  "page": 16,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0051|24|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "K",
+  "value_mn": 9073.753472999999,
+  "page": 16,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0051|13|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "13:AC_SEC",
+  "form": "K",
+  "value_mn": 77669.617309,
+  "page": 41,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0051|24|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "K",
+  "value_mn": 13153.864778,
+  "page": 41,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0051|13|2023.3Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "13:AC_SEC",
+  "form": "K",
+  "value_mn": 77756.708227,
+  "page": 15,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0051|24|2023.3Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "K",
+  "value_mn": 14450.217999999999,
+  "page": 15,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0068|10|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "10:현금및현금성자산",
+  "form": "K",
+  "value_mn": 1081979.994286,
+  "page": 19,
+  "verdict": "CHAIN_OK",
+  "reason": "interim prior column (2022.4Q) 2,268,753.394 == year-end comparative 2,268,753.394; 2023.4Q current column reproduces master (2,389,065.705 = 2,389,065.705)"
+ },
+ {
+  "key": "KR0070|4|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "4:AOCI",
+  "form": "K",
+  "value_mn": 316467.0,
+  "page": 25,
+  "verdict": "TABLE_TOTALS_DISAGREE",
+  "reason": "the table's own totals disagree with the master at this quarter (another basis): 16,971,359 vs 16,986,992; 15,935,019 vs 16,096,704; 1,036,340 vs 890,288"
+ },
+ {
+  "key": "KR0070|4|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "4:AOCI",
+  "form": "K",
+  "value_mn": 313534.0,
+  "page": 56,
+  "verdict": "TABLE_TOTALS_DISAGREE",
+  "reason": "the table's own totals disagree with the master at this quarter (another basis): 16,985,900 vs 17,002,458; 15,915,678 vs 16,081,336; 1,070,222 vs 921,122"
+ },
+ {
+  "key": "KR0080|15|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "15:유형자산",
+  "form": "K",
+  "value_mn": 55258.940948999996,
+  "page": 14,
+  "verdict": "CHAIN_FAIL",
+  "reason": "interim prior column (2022.4Q) 54,400.018 != year-end comparative 66,977.194"
+ },
+ {
+  "key": "KR0080|15|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "15:유형자산",
+  "form": "K",
+  "value_mn": 53076.906106999995,
+  "page": 32,
+  "verdict": "CHAIN_FAIL",
+  "reason": "interim prior column (2022.4Q) 54,400.018 != year-end comparative 66,977.194"
+ },
+ {
+  "key": "KR0080|15|2023.3Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "15:유형자산",
+  "form": "K",
+  "value_mn": 59484.240708,
+  "page": 16,
+  "verdict": "CHAIN_FAIL",
+  "reason": "interim prior column (2022.4Q) 64,629.094 != year-end comparative 66,977.194"
+ },
+ {
+  "key": "KR0095|10|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "10:현금및현금성자산",
+  "form": "K",
+  "value_mn": 353993.092666,
+  "page": 19,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0095|11|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "11:FVPL",
+  "form": "K",
+  "value_mn": 1990465.028251,
+  "page": 19,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0095|10|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "10:현금및현금성자산",
+  "form": "K",
+  "value_mn": 347374.686923,
+  "page": 43,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0095|10|2023.3Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "10:현금및현금성자산",
+  "form": "K",
+  "value_mn": 431230.859647,
+  "page": 22,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0100|11|2023.1Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "11:FVPL",
+  "form": "K",
+  "value_mn": 20819.554653,
+  "page": 10,
+  "verdict": "CHAIN_FAIL",
+  "reason": "interim prior column (2022.4Q) 4,278.327 != year-end comparative 0.000"
+ },
+ {
+  "key": "KR0100|10|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "10:현금및예치금",
+  "form": "S",
+  "value_mn": 28032.341248999997,
+  "page": 44,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0100|11|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "11:FVPL",
+  "form": "S",
+  "value_mn": 26266.972448999997,
+  "page": 44,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0100|20|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "20:보험계약부채",
+  "form": "S",
+  "value_mn": 836476.647018,
+  "page": 44,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ },
+ {
+  "key": "KR0100|24|2023.2Q",
+  "status_before": "HOLD_REJECTED_RULE",
+  "rule": "24:기타부채",
+  "form": "S",
+  "value_mn": 29349.747672999998,
+  "page": 44,
+  "verdict": "NO_YEAR_END_COMPARATIVE",
+  "reason": "the 2023.4Q filing has no comparative (2022.4Q) value of the concept in the same group"
+ }
+]

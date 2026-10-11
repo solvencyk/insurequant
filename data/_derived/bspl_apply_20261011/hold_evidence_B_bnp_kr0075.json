@@ -1,0 +1,224 @@
+{
+ "what": "KR0075 BNP카디프생명 8-1 이미지 쪽 전기말 열(원 -> 백만원) 대 마스터 DART 연말 칸. 같은 정의면 차 0(반올림 안). 항목 12·14·15·21 은 일치(이미 적재), 10·11·13·20·24 는 불일치 -> 8-1 줄 = 일반계정(특별계정 줄 따로)이고 마스터 = DART 정의(특별계정 구성 포함)라 정의가 다르다.",
+ "year_ends": {
+  "2023.4Q": {
+   "source": "2024.1Q 정기경영공시 p26 8-1 재무상태표 전기말(2023-12-31) 열",
+   "items": {
+    "10": {
+     "line": "현금및현금성자산",
+     "statement_prior_col_mn": 22615.501518,
+     "master_mn": 85829.32721,
+     "diff_mn": -63213.826,
+     "same_definition": false
+    },
+    "11": {
+     "line": "당기손익-공정가치측정금융자산",
+     "statement_prior_col_mn": 13281.723061,
+     "master_mn": 1123596.029288,
+     "diff_mn": -1110314.306,
+     "same_definition": false
+    },
+    "12": {
+     "line": "기타포괄손익-공정가치측정금융자산",
+     "statement_prior_col_mn": 1637561.932415,
+     "master_mn": 1637561.932415,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "13": {
+     "line": "상각후원가(기타금융자산)",
+     "statement_prior_col_mn": 17800.0,
+     "master_mn": 39373.038231,
+     "diff_mn": -21573.038,
+     "same_definition": false
+    },
+    "14": {
+     "line": "재보험계약자산",
+     "statement_prior_col_mn": 11890.705759,
+     "master_mn": 11890.705759,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "15": {
+     "line": "유형자산",
+     "statement_prior_col_mn": 4940.464054,
+     "master_mn": 4940.464054,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "20": {
+     "line": "보험계약부채",
+     "statement_prior_col_mn": 1462496.534288,
+     "master_mn": 2648631.422451,
+     "diff_mn": -1186134.888,
+     "same_definition": false
+    },
+    "21": {
+     "line": "재보험계약부채",
+     "statement_prior_col_mn": 1347.05217,
+     "master_mn": 1347.05217,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "24": {
+     "line": "기타부채",
+     "statement_prior_col_mn": 34671.728067,
+     "master_mn": 10319.873588,
+     "diff_mn": 24351.854,
+     "same_definition": false
+    },
+    "20_plus_special_account": {
+     "statement_mn": 2651588.991,
+     "master_mn": 2648631.422451,
+     "diff_mn": 2957.569
+    }
+   }
+  },
+  "2024.4Q": {
+   "source": "2025.1Q 정기경영공시 p32 8-1 재무상태표 전기말(2024-12-31) 열",
+   "items": {
+    "10": {
+     "line": "현금및현금성자산",
+     "statement_prior_col_mn": 27062.661278,
+     "master_mn": 92693.946235,
+     "diff_mn": -65631.285,
+     "same_definition": false
+    },
+    "11": {
+     "line": "당기손익-공정가치측정금융자산",
+     "statement_prior_col_mn": 11251.654185,
+     "master_mn": 980719.627409,
+     "diff_mn": -969467.973,
+     "same_definition": false
+    },
+    "12": {
+     "line": "기타포괄손익-공정가치측정금융자산",
+     "statement_prior_col_mn": 1544413.867945,
+     "master_mn": 1544413.867945,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "13": {
+     "line": "상각후원가(기타금융자산)",
+     "statement_prior_col_mn": 31400.0,
+     "master_mn": 45467.670676,
+     "diff_mn": -14067.671,
+     "same_definition": false
+    },
+    "14": {
+     "line": "재보험계약자산",
+     "statement_prior_col_mn": 10959.728086,
+     "master_mn": 10959.728086,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "15": {
+     "line": "유형자산",
+     "statement_prior_col_mn": 4099.085089,
+     "master_mn": 4099.085089,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "20": {
+     "line": "보험계약부채",
+     "statement_prior_col_mn": 1386943.101276,
+     "master_mn": 2434809.490606,
+     "diff_mn": -1047866.389,
+     "same_definition": false
+    },
+    "21": {
+     "line": "재보험계약부채",
+     "statement_prior_col_mn": 1179.526699,
+     "master_mn": 1179.526699,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "24": {
+     "line": "기타부채",
+     "statement_prior_col_mn": 34032.196983,
+     "master_mn": 8952.035647,
+     "diff_mn": 25080.161,
+     "same_definition": false
+    },
+    "20_plus_special_account": {
+     "statement_mn": 2435865.891,
+     "master_mn": 2434809.490606,
+     "diff_mn": 1056.401
+    }
+   }
+  },
+  "2025.4Q": {
+   "source": "2026.1Q 정기경영공시 p33 8-1 재무상태표 전기말(2025-12-31) 열",
+   "items": {
+    "10": {
+     "line": "현금및현금성자산",
+     "statement_prior_col_mn": 26942.427641,
+     "master_mn": 119275.593351,
+     "diff_mn": -92333.166,
+     "same_definition": false
+    },
+    "11": {
+     "line": "당기손익-공정가치측정금융자산",
+     "statement_prior_col_mn": 11581.272487,
+     "master_mn": 1133973.305015,
+     "diff_mn": -1122392.033,
+     "same_definition": false
+    },
+    "12": {
+     "line": "기타포괄손익-공정가치측정금융자산",
+     "statement_prior_col_mn": 1359367.19466,
+     "master_mn": 1359367.19466,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "13": {
+     "line": "상각후원가(기타금융자산)",
+     "statement_prior_col_mn": 29200.0,
+     "master_mn": 53580.584987,
+     "diff_mn": -24380.585,
+     "same_definition": false
+    },
+    "14": {
+     "line": "재보험계약자산",
+     "statement_prior_col_mn": 9312.26213,
+     "master_mn": 9312.26213,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "15": {
+     "line": "유형자산",
+     "statement_prior_col_mn": 3587.202588,
+     "master_mn": 3587.202588,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "20": {
+     "line": "보험계약부채",
+     "statement_prior_col_mn": 1194610.818625,
+     "master_mn": 2436368.090391,
+     "diff_mn": -1241757.272,
+     "same_definition": false
+    },
+    "21": {
+     "line": "재보험계약부채",
+     "statement_prior_col_mn": 1017.953252,
+     "master_mn": 1017.953252,
+     "diff_mn": 0.0,
+     "same_definition": true
+    },
+    "24": {
+     "line": "기타부채",
+     "statement_prior_col_mn": 36819.681435,
+     "master_mn": 9268.514874,
+     "diff_mn": 27551.167,
+     "same_definition": false
+    },
+    "20_plus_special_account": {
+     "statement_mn": 2437609.867,
+     "master_mn": 2436368.090391,
+     "diff_mn": 1241.777
+    }
+   }
+  }
+ }
+}

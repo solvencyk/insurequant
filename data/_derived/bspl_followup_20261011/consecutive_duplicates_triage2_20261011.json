@@ -1,0 +1,650 @@
+[
+ {
+  "code": "KR0002",
+  "name": "한화손해보험",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": -28.871,
+  "evidence": [
+   {
+    "quarter": "2025.2Q",
+    "master_ytd": -28.871,
+    "fs_cache_ytd": -28.871,
+    "equal": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "master_ytd": -28.871,
+    "fs_cache_ytd": -28.871,
+    "equal": true
+   }
+  ],
+  "verdict": "CONFIRMED_BY_FS_CACHE"
+ },
+ {
+  "code": "KR0005",
+  "name": "흥국화재",
+  "item": 10,
+  "item_name": "재보험 위험조정 변동",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.3Q",
+   "2025.4Q"
+  ],
+  "value": -666.0,
+  "evidence": [
+   {
+    "note": "Tier-2 note-derived item (raw filing XML only): hand check"
+   }
+  ],
+  "verdict": "NOTE_ITEM"
+ },
+ {
+  "code": "KR0051",
+  "name": "신한이지손해보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 400.0,
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "ytd": 400.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "ytd": 800.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR0068",
+  "name": "한화생명",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 34.0,
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "master_ytd": 34.0,
+    "fs_cache_ytd": 34.0,
+    "equal": true
+   },
+   {
+    "quarter": "2026.2Q",
+    "master_ytd": 34.0,
+    "fs_cache_ytd": 34.0,
+    "equal": true
+   }
+  ],
+  "verdict": "CONFIRMED_BY_FS_CACHE"
+ },
+ {
+  "code": "KR0072",
+  "name": "케이디비생명보험",
+  "item": 10,
+  "item_name": "재보험 위험조정 변동",
+  "field": "값",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": -162.0,
+  "evidence": [
+   {
+    "note": "Tier-2 note-derived item (raw filing XML only): hand check"
+   }
+  ],
+  "verdict": "NOTE_ITEM"
+ },
+ {
+  "code": "KR0074",
+  "name": "라이나생명보험",
+  "item": 23,
+  "item_name": "법인세",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 33000.0,
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "ytd": 33000.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "ytd": 66000.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR0075",
+  "name": "비엔피파리바카디프생명보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 2500.0,
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "ytd": 2500.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2024.2Q",
+    "ytd": 5000.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR0075",
+  "name": "비엔피파리바카디프생명보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 2400.0,
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "ytd": 2400.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "ytd": 4800.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR0076",
+  "name": "아이엠라이프생명보험",
+  "item": 23,
+  "item_name": "법인세",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 5500.0,
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "ytd": 5500.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2024.2Q",
+    "ytd": 11000.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "item": 29,
+  "item_name": "FVOCI 지분증권 평가손익",
+  "field": "값",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 322.0,
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "master_ytd": 322.0,
+    "fs_cache_ytd": 322.0,
+    "equal": true
+   },
+   {
+    "quarter": "2025.2Q",
+    "master_ytd": 322.0,
+    "fs_cache_ytd": 322.0,
+    "equal": true
+   }
+  ],
+  "verdict": "CONFIRMED_BY_FS_CACHE"
+ },
+ {
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": -1617.0,
+  "evidence": [
+   {
+    "quarter": "2024.2Q",
+    "master_ytd": -1617.0,
+    "fs_cache_ytd": -1617.0,
+    "equal": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "master_ytd": -1617.0,
+    "fs_cache_ytd": -1617.0,
+    "equal": true
+   }
+  ],
+  "verdict": "CONFIRMED_BY_FS_CACHE"
+ },
+ {
+  "code": "KR0094",
+  "name": "신한라이프생명보험",
+  "item": 32,
+  "item_name": "기타 포괄손익(미분류)",
+  "field": "값",
+  "quarters": [
+   "2025.2Q",
+   "2025.3Q"
+  ],
+  "value": -3494.0,
+  "evidence": [
+   {
+    "quarter": "2025.2Q",
+    "master_ytd": -3494.0,
+    "fs_cache_ytd": -3494.0,
+    "equal": true
+   },
+   {
+    "quarter": "2025.3Q",
+    "master_ytd": -3494.0,
+    "fs_cache_ytd": -3494.0,
+    "equal": true
+   }
+  ],
+  "verdict": "CONFIRMED_BY_FS_CACHE"
+ },
+ {
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "item": 10,
+  "item_name": "재보험 위험조정 변동",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.3Q",
+   "2024.4Q"
+  ],
+  "value": -69.0,
+  "evidence": [
+   {
+    "note": "Tier-2 note-derived item (raw filing XML only): hand check"
+   }
+  ],
+  "verdict": "NOTE_ITEM"
+ },
+ {
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "item": 21,
+  "item_name": "영업외손익",
+  "field": "값",
+  "quarters": [
+   "2024.2Q",
+   "2024.3Q"
+  ],
+  "value": -362.0,
+  "evidence": [
+   {
+    "quarter": "2024.2Q",
+    "master_ytd": -362.0,
+    "fs_cache_ytd": -362.0,
+    "equal": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "master_ytd": -362.0,
+    "fs_cache_ytd": -362.0,
+    "equal": true
+   }
+  ],
+  "verdict": "CONFIRMED_BY_FS_CACHE"
+ },
+ {
+  "code": "KR0099",
+  "name": "KB라이프생명",
+  "item": 28,
+  "item_name": "위험회피 파생상품 평가손익",
+  "field": "값_당분기",
+  "quarters": [
+   "2023.4Q",
+   "2024.1Q",
+   "2024.2Q",
+   "2024.3Q",
+   "2024.4Q"
+  ],
+  "value": 33.0,
+  "evidence": [
+   {
+    "quarter": "2023.3Q",
+    "master_ytd": 95.0,
+    "fs_cache_ytd": 95.0,
+    "equal": true
+   },
+   {
+    "quarter": "2023.4Q",
+    "master_ytd": 128.0,
+    "fs_cache_ytd": 128.0,
+    "equal": true
+   },
+   {
+    "quarter": "2024.1Q",
+    "master_ytd": 33.0,
+    "fs_cache_ytd": 33.0,
+    "equal": true
+   },
+   {
+    "quarter": "2024.2Q",
+    "master_ytd": 66.0,
+    "fs_cache_ytd": 66.0,
+    "equal": true
+   },
+   {
+    "quarter": "2024.3Q",
+    "master_ytd": 99.0,
+    "fs_cache_ytd": 99.0,
+    "equal": true
+   },
+   {
+    "quarter": "2024.4Q",
+    "master_ytd": 132.0,
+    "fs_cache_ytd": 132.0,
+    "equal": true
+   }
+  ],
+  "verdict": "CONFIRMED_BY_FS_CACHE"
+ },
+ {
+  "code": "KR0104",
+  "name": "농협생명보험",
+  "item": 5,
+  "item_name": "원수 위험조정 변동",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 10937.0,
+  "evidence": [
+   {
+    "note": "Tier-2 note-derived item (raw filing XML only): hand check"
+   }
+  ],
+  "verdict": "NOTE_ITEM"
+ },
+ {
+  "code": "KR1011",
+  "name": "IBK연금보험",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 1300.0,
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "ytd": 1300.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2026.2Q",
+    "ytd": 2600.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR1102",
+  "name": "스위스리아시아",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 2400.0,
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "ytd": 2400.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "ytd": 4800.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR1104",
+  "name": "하노버재보험",
+  "item": 23,
+  "item_name": "법인세",
+  "field": "값_당분기",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 100.0,
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "ytd": 100.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2026.2Q",
+    "ytd": 200.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR1105",
+  "name": "알지에이리인슈어런스",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2024.1Q",
+   "2024.2Q"
+  ],
+  "value": 200.0,
+  "evidence": [
+   {
+    "quarter": "2024.1Q",
+    "ytd": 200.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2024.2Q",
+    "ytd": 400.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR1105",
+  "name": "알지에이리인슈어런스",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "field": "값_당분기",
+  "quarters": [
+   "2026.1Q",
+   "2026.2Q"
+  ],
+  "value": 100.0,
+  "evidence": [
+   {
+    "quarter": "2026.1Q",
+    "ytd": 100.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2026.2Q",
+    "ytd": 200.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR1107",
+  "name": "퍼시픽라이프리",
+  "item": 22,
+  "item_name": "세전이익",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 4300.0,
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "ytd": 4300.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "ytd": 8600.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ },
+ {
+  "code": "KR1107",
+  "name": "퍼시픽라이프리",
+  "item": 24,
+  "item_name": "당기순이익",
+  "field": "값_당분기",
+  "quarters": [
+   "2025.1Q",
+   "2025.2Q"
+  ],
+  "value": 4300.0,
+  "evidence": [
+   {
+    "quarter": "2025.1Q",
+    "ytd": 4300.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   },
+   {
+    "quarter": "2025.2Q",
+    "ytd": 8600.0,
+    "own_status": [
+     "EXISTS_SAME"
+    ]
+   }
+  ],
+  "arithmetic_ok": true,
+  "verdict": "CONFIRMED_ARITHMETIC"
+ }
+]

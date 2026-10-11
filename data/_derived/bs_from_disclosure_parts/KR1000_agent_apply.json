@@ -1,0 +1,116 @@
+{
+  "_readme": [
+    "[2026-10-11] round3(inbox/parser/20261011T1130Z) 정정·신규 칸의 계보 -- scripts/bspl_apply_bs_fix.py 가 쓴다. scripts/merge_bs_disclosure_parts.py 가 이 파일을 다른 파트와 같이 사이드카·오버레이로 합친다."
+  ],
+  "cells": {
+    "KR1000|10|2023.3Q": {
+      "값": 282114.420282,
+      "pdf": "data/dart/_fs_api_cache/00113191_2023_11014_OFS.json",
+      "sha256": "677114cbb332f5425255a8367b394df8db97d43a230afa3f396b5443ff1081ad",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 279,990.249547백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_CashAndDuefromBanks) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 282,114.420282백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2023_11014_OFS.json(sha256 677114cbb332...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 279990.249547
+    },
+    "KR1000|10|2023.4Q": {
+      "값": 443912.796209,
+      "pdf": "data/dart/_fs_api_cache/00113191_2023_11011_OFS.json",
+      "sha256": "1945c34f228d412dec3c28cb2393c2720c476e4d7e2ba4e603bae20616c97a50",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 311,609.854317백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_CashAndDuefromBanks) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 443,912.796209백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2023_11011_OFS.json(sha256 1945c34f228d...). 교차확인: 정기경영공시 2023.4Q 요약 재무상태표 p10 「현금 및 예치금」 7,555억원 대 현금및현금성자산 + 예치금 줄 7,555.2억원 (억 반올림 안에서 일치). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 311609.854317
+    },
+    "KR1000|10|2024.1Q": {
+      "값": 414963.142847,
+      "pdf": "data/dart/_fs_api_cache/00113191_2024_11013_OFS.json",
+      "sha256": "2f6385fabaf043a4700bc69dcb454ada22fe2551083f0eb8a3a42c9b171e0532",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 356,774.158296백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_CashAndDuefromBanks) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 414,963.142847백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2024_11013_OFS.json(sha256 2f6385fabaf0...). 교차확인: 정기경영공시 2024.1Q 요약 재무상태표 p5 「현금 및 예치금」 7,717억원 대 현금및현금성자산 + 예치금 줄 7,717.4억원 (억 반올림 안에서 일치). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 356774.158296
+    },
+    "KR1000|10|2024.2Q": {
+      "값": 407283.856487,
+      "pdf": "data/dart/_fs_api_cache/00113191_2024_11012_OFS.json",
+      "sha256": "8b0cb11765760d068a60def7d505b918e770daf36a64e4e74f1ac391b53c9b19",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 424,770.895156백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_CashAndDuefromBanks) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 407,283.856487백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2024_11012_OFS.json(sha256 8b0cb1176576...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 424770.895156
+    },
+    "KR1000|10|2024.3Q": {
+      "값": 425405.314274,
+      "pdf": "data/dart/_fs_api_cache/00113191_2024_11014_OFS.json",
+      "sha256": "840e42ecec85b5ac6a14b30ef2dbafe4cd2a7781a325b5e3763e2e2c7a42e2b8",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 348,322.964534백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_CashAndDuefromBanks) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 425,405.314274백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2024_11014_OFS.json(sha256 840e42ecec85...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 348322.964534
+    },
+    "KR1000|10|2024.4Q": {
+      "값": 333875.405488,
+      "pdf": "data/dart/_fs_api_cache/00113191_2024_11011_OFS.json",
+      "sha256": "63d946546fff01438add4564b0b00731859994e266edcd31836237fa6e518a97",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 239,868.974674백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_CashAndDuefromBanks) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 333,875.405488백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2024_11011_OFS.json(sha256 63d946546fff...). 교차확인: 정기경영공시 2024.4Q 요약 재무상태표 p10 「현금 및 예치금」 5,737억원 대 현금및현금성자산 + 예치금 줄 5,737.4억원 (억 반올림 안에서 일치). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 239868.974674
+    },
+    "KR1000|10|2025.1Q": {
+      "값": 323176.513894,
+      "pdf": "data/dart/_fs_api_cache/00113191_2025_11013_OFS.json",
+      "sha256": "cfb56fb9ef45e6089f7124ff854dec1c23757b78ea262759e2677f4318ba7bd5",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 272,843.412160백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_CashAndDuefromBanks) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 323,176.513894백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2025_11013_OFS.json(sha256 cfb56fb9ef45...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 272843.41216
+    },
+    "KR1000|10|2025.2Q": {
+      "값": 255970.612239,
+      "pdf": "data/dart/_fs_api_cache/00113191_2025_11012_OFS.json",
+      "sha256": "8a4e93d4bc7f4eb4b82daf1047461a7559725093fef8797296d7883cdb64ed06",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 206,503.928598백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_DueFromBanksAtAmortisedCost) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 255,970.612239백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2025_11012_OFS.json(sha256 8a4e93d4bc7f...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 206503.928598
+    },
+    "KR1000|10|2025.3Q": {
+      "값": 286790.027537,
+      "pdf": "data/dart/_fs_api_cache/00113191_2025_11014_OFS.json",
+      "sha256": "1fca9429571522d081a594af6e4eeeac79d6f7d15bb32c42fff43bc9c9f1524f",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 196,987.276974백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_DueFromBanksAtAmortisedCost) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 286,790.027537백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2025_11014_OFS.json(sha256 1fca94295715...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 196987.276974
+    },
+    "KR1000|10|2025.4Q": {
+      "값": 235581.392411,
+      "pdf": "data/dart/_fs_api_cache/00113191_2025_11011_OFS.json",
+      "sha256": "80079b31d6bdfd3954fb89af2893d6b9e38be1a97bc98c8c7e457dc40605e998",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 174,651.524338백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_DueFromBanksAtAmortisedCost) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 235,581.392411백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2025_11011_OFS.json(sha256 80079b31d6bd...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 174651.524338
+    },
+    "KR1000|10|2026.1Q": {
+      "값": 258012.38467,
+      "pdf": "data/dart/_fs_api_cache/00113191_2026_11013_OFS.json",
+      "sha256": "4995ab0d8ae4a6cf5cabe61dfe5ef71ad289a5ca5bb5d80db5503827a91ae731",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 180,442.450118백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_DueFromBanksAtAmortisedCost) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 258,012.384670백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2026_11013_OFS.json(sha256 4995ab0d8ae4...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 180442.450118
+    },
+    "KR1000|10|2026.2Q": {
+      "값": 201275.167988,
+      "pdf": "data/dart/_fs_api_cache/00113191_2026_11012_OFS.json",
+      "sha256": "e57ebec1a9cf52d0f6f845775de0807310023432e08f49a3efd501ad3bfc9804",
+      "축척": "원 -> 백만원",
+      "방법": "round3_fix:fs_api_ofs_cash_line",
+      "근거": "정정 2026-10-11(round 3, A6): 마스터 옛 값 190,834.322812백만원은 DART 재무제표 API(별도) 응답의 「예치금」(dart_DueFromBanksAtAmortisedCost) 줄이다. build_ifrs17_bs._extract_from_list 는 항목 10 에 대안 태그 3개(ifrs-full_CashAndCashEquivalents · dart_CashAndDuefromBanks · dart_DueFromBanksAtAmortisedCost) 중 응답 목록의 첫 행을 집는데 목록이 account_id 알파벳 순이라 dart_* 줄이 먼저 잡힌다. 이 회사는 현금 줄과 예치금 줄을 따로 태깅해 예치금 줄이 현금으로 들어갔다. 마스터 항목 10 의 정의(항목명 현금및현금성자산, 같은 회사 2023.1Q·2Q 와 다른 상장사 전 분기는 현금 줄)에 맞춰 같은 응답의 「현금및현금성자산」 201,275.167988백만원으로 정정. 원천: data/dart/_fs_api_cache/00113191_2026_11012_OFS.json(sha256 e57ebec1a9cf...). 원인 코드(build_ifrs17_bs.py)는 이 라운드 범위 밖이라 안 고침.",
+      "정정전값": 190834.322812
+    }
+  },
+  "skips": {}
+}

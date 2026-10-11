@@ -1,0 +1,452 @@
+[
+ {
+  "corp_code": "00113191",
+  "code": "KR1000",
+  "quarter": "2023.4Q",
+  "cash_CashAndCashEquivalents": 443912.796209,
+  "dep_CashAndDuefromBanks": 311609.854317,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   311609.854317
+  ],
+  "master_item10": 311609.854317,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00113191",
+  "code": "KR1000",
+  "quarter": "2023.3Q",
+  "cash_CashAndCashEquivalents": 282114.420282,
+  "dep_CashAndDuefromBanks": 279990.249547,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   279990.249547
+  ],
+  "master_item10": 279990.249547,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00113191",
+  "code": "KR1000",
+  "quarter": "2024.4Q",
+  "cash_CashAndCashEquivalents": 333875.405488,
+  "dep_CashAndDuefromBanks": 239868.974674,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   239868.974674
+  ],
+  "master_item10": 239868.974674,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00113191",
+  "code": "KR1000",
+  "quarter": "2024.2Q",
+  "cash_CashAndCashEquivalents": 407283.856487,
+  "dep_CashAndDuefromBanks": 424770.895156,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   424770.895156
+  ],
+  "master_item10": 424770.895156,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00113191",
+  "code": "KR1000",
+  "quarter": "2024.1Q",
+  "cash_CashAndCashEquivalents": 414963.142847,
+  "dep_CashAndDuefromBanks": 356774.158296,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   356774.158296
+  ],
+  "master_item10": 356774.158296,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00113191",
+  "code": "KR1000",
+  "quarter": "2024.3Q",
+  "cash_CashAndCashEquivalents": 425405.314274,
+  "dep_CashAndDuefromBanks": 348322.964534,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   348322.964534
+  ],
+  "master_item10": 348322.964534,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00113191",
+  "code": "KR1000",
+  "quarter": "2025.1Q",
+  "cash_CashAndCashEquivalents": 323176.513894,
+  "dep_CashAndDuefromBanks": 272843.41216,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   272843.41216
+  ],
+  "master_item10": 272843.41216,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2023.4Q",
+  "cash_CashAndCashEquivalents": 969719.738666,
+  "dep_CashAndDuefromBanks": 590151.486302,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   590151.486302
+  ],
+  "master_item10": 590151.486302,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2023.3Q",
+  "cash_CashAndCashEquivalents": 651528.382198,
+  "dep_CashAndDuefromBanks": 50007.0,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   50007.0
+  ],
+  "master_item10": 50007.0,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2024.4Q",
+  "cash_CashAndCashEquivalents": 665829.240394,
+  "dep_CashAndDuefromBanks": 183541.595015,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   183541.595015
+  ],
+  "master_item10": 183541.595015,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2024.2Q",
+  "cash_CashAndCashEquivalents": 816265.858123,
+  "dep_CashAndDuefromBanks": 402106.34176,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   402106.34176
+  ],
+  "master_item10": 402106.34176,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2024.1Q",
+  "cash_CashAndCashEquivalents": 608702.929684,
+  "dep_CashAndDuefromBanks": 150151.486302,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   150151.486302
+  ],
+  "master_item10": 150151.486302,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2024.3Q",
+  "cash_CashAndCashEquivalents": 840554.817614,
+  "dep_CashAndDuefromBanks": 80131.764549,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   80131.764549
+  ],
+  "master_item10": 80131.764549,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2025.4Q",
+  "cash_CashAndCashEquivalents": 940729.251382,
+  "dep_CashAndDuefromBanks": 530092.763563,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   530092.763563
+  ],
+  "master_item10": 530092.763563,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2025.2Q",
+  "cash_CashAndCashEquivalents": 589747.252027,
+  "dep_CashAndDuefromBanks": 330129.697145,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   330129.697145
+  ],
+  "master_item10": 330129.697145,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2025.1Q",
+  "cash_CashAndCashEquivalents": 679808.927709,
+  "dep_CashAndDuefromBanks": 50742.377464,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   50742.377464
+  ],
+  "master_item10": 50742.377464,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2025.3Q",
+  "cash_CashAndCashEquivalents": 653785.108282,
+  "dep_CashAndDuefromBanks": 178636.725402,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   178636.725402
+  ],
+  "master_item10": 178636.725402,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2026.2Q",
+  "cash_CashAndCashEquivalents": 552797.734503,
+  "dep_CashAndDuefromBanks": 420768.070107,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   420768.070107
+  ],
+  "master_item10": 420768.070107,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00117744",
+  "code": "KR0001",
+  "quarter": "2026.1Q",
+  "cash_CashAndCashEquivalents": 595549.651878,
+  "dep_CashAndDuefromBanks": 205200.58372,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "예치금",
+   205200.58372
+  ],
+  "master_item10": 205200.58372,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2023.4Q",
+  "cash_CashAndCashEquivalents": 614397.116304,
+  "dep_CashAndDuefromBanks": 808896.172151,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   808896.172151
+  ],
+  "master_item10": 808896.172151,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2024.4Q",
+  "cash_CashAndCashEquivalents": 536470.920457,
+  "dep_CashAndDuefromBanks": 649899.905199,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   649899.905199
+  ],
+  "master_item10": 649899.905199,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2024.2Q",
+  "cash_CashAndCashEquivalents": 175366.054276,
+  "dep_CashAndDuefromBanks": 308045.997171,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   308045.997171
+  ],
+  "master_item10": 308045.997171,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2024.1Q",
+  "cash_CashAndCashEquivalents": 127585.337345,
+  "dep_CashAndDuefromBanks": 263810.924417,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   263810.924417
+  ],
+  "master_item10": 263810.924417,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2024.3Q",
+  "cash_CashAndCashEquivalents": 157336.516055,
+  "dep_CashAndDuefromBanks": 251192.222454,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   251192.222454
+  ],
+  "master_item10": 251192.222454,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2025.4Q",
+  "cash_CashAndCashEquivalents": 825636.631284,
+  "dep_CashAndDuefromBanks": 1041272.903697,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   1041272.903697
+  ],
+  "master_item10": 1041272.903697,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2025.2Q",
+  "cash_CashAndCashEquivalents": 359196.425086,
+  "dep_CashAndDuefromBanks": 518379.78612,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   518379.78612
+  ],
+  "master_item10": 518379.78612,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2025.1Q",
+  "cash_CashAndCashEquivalents": 224092.629887,
+  "dep_CashAndDuefromBanks": 355242.272669,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   355242.272669
+  ],
+  "master_item10": 355242.272669,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2025.3Q",
+  "cash_CashAndCashEquivalents": 192786.397776,
+  "dep_CashAndDuefromBanks": 352566.390502,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   352566.390502
+  ],
+  "master_item10": 352566.390502,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2026.2Q",
+  "cash_CashAndCashEquivalents": 585288.020202,
+  "dep_CashAndDuefromBanks": 827620.953299,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   827620.953299
+  ],
+  "master_item10": 827620.953299,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ },
+ {
+  "corp_code": "00167068",
+  "code": "KR0071",
+  "quarter": "2026.1Q",
+  "cash_CashAndCashEquivalents": 209959.455107,
+  "dep_CashAndDuefromBanks": 488782.238963,
+  "builder_first_match": [
+   "dart_CashAndDuefromBanks",
+   "현금및예치금",
+   488782.238963
+  ],
+  "master_item10": 488782.238963,
+  "master_equals_dep": true,
+  "master_equals_cash": false
+ }
+]

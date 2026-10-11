@@ -1,0 +1,40 @@
+{
+  "cells": {
+    "KR0005|16|2023.1Q": {
+      "값": 3400.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR0005_흥국화재_amended.pdf",
+      "page": 4,
+      "sha256": "64726ceb31fc85f99b57eb2f2076c6b02d6f28d5c767839fa60080c575ccd5c9",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2024.1Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0005|16|2023.2Q": {
+      "값": 8300.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR0005_흥국화재_amended.pdf",
+      "page": 5,
+      "sha256": "450dabe6c8eca3a3b0721bab1daa7d73fa3dbc9fc24d1940be18ea3de74c728d",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2023.2Q 요약 포괄손익계산서(총괄) 2-1 p5 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0005|16|2024.3Q": {
+      "값": 18000.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR0005_흥국화재.pdf",
+      "page": 4,
+      "sha256": "ad97db7faf75c2b4d9a363ad5d15d9491d8bd2e96cd17a2411ce3d02f7f31672",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:own_summary",
+      "근거": "정기경영공시 2024.3Q 요약 포괄손익계산서(총괄) 2-1 p4 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 해당 분기 공시의 당기 열. (inbox/parser/20261011T0310Z bspl granularity)"
+    },
+    "KR0005|16|2024.4Q": {
+      "값": 27600.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR0005_흥국화재.pdf",
+      "page": 13,
+      "sha256": "52b050dc055da7c99b9cbbd57ca49a2b8aedf71be93f2bbc51da4cae5ea4c04d",
+      "축척": "억원 -> 백만원",
+      "방법": "granularity:sum_pl:later_comparative",
+      "근거": "정기경영공시 2025.4Q 요약 포괄손익계산서(총괄) 2-1 p13 라벨「기타사업비용」 단위 억원, 정밀도 ±50.0백만원. 이 분기 자체 공시에서 쓸 값이 없어 다음 해 같은 분기 공시의 전년동기 열 값을 채택. (inbox/parser/20261011T0310Z bspl granularity)"
+    }
+  }
+}
