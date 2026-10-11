@@ -7,6 +7,19 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- index KPI 「업계 총 기말 CSM」 같은 분기 합산(142조)
+
+티켓 `inbox/designer/20261011T1800Z__orchestrator__MULTI_2026.2Q__index_kpi_industry_csm_single_quarter.md`(공유 티켓, 종결은 오케스트레이터). `index.html` 만, 마스터·패널 JSON 무수정, push 안 함.
+
+- **원천 교체**: `totalClosingCsmEok()`(CSM_waterfall 항목 6, 회사별 최신 분기 합 — 연 1회 공시사가 2025.4Q 에 멈춰 분기가 섞임, 라이브 139.7조·새 마스터 141.4조) → `data/csm_combo/panel_csm_combo.json` 의 `csm_gen+csm_vfa` 를 **한 분기로** 합산(`industryCsmFromPanel`). 두 열 모두 null 인 회사 제외. 패널 fetch 는 비차단(`csmPanel`), 끝나면 `updateCsmKpi()`.
+- **기준 분기 규칙(코드 주석에 기록)**: `meta.quarters` 를 늦은 쪽부터 보며, 그 분기에 값이 있는 회사 수가 「패널에 값이 한 번이라도 있는 회사 수」의 80%(올림) 이상인 첫 분기. 한두 곳만 새 분기를 먼저 올려도 합이 급락해 보이지 않는다.
+- **표기**: 값 아래 줄 「2026.2Q 기준 · 46사」(분기·회사 수 모두 데이터 도출) + 「?」 팝오버(경영공시 2-4 보험부채 현황표의 보험계약마진 합, 연 1회 공시사도 분기별 잔액이 있어 같은 분기로 합산). 팝오버를 라벨이 아니라 이 줄 끝에 둬서 열려도 기준 줄을 가리지 않는다. 카운트업 유지.
+- **폴백**: 패널이 404·실패, 열 이름이 없음, 조건을 만족하는 분기가 없으면 옛 `totalClosingCsmEok()` 로 되돌리고 줄에 「회사별 최신 공시 분기 합」, 팝오버는 분기가 섞인다는 사실을 적는다(구판 패널 40사·8분기라 2026.2Q 가 없을 때 대비).
+- **`.rise` 의 `both`→`backwards`**: 끝난 뒤에도 애니메이션이 남아 카드마다 쌓임 맥락이 생기면 「?」 팝오버가 아래 패널에 가려지는 같은 원인(common.css `.panel.revealed` 수정과 동일).
+- **값 확인**: 실데이터 2026.2Q 46사 142.2조(표시 142조), 2026.1Q 46사 138.0조·2025.4Q 47사 133.7조(파이썬 직접 합과 일치). 헤드리스 시험: 정상(142조), 패널 404(141조 폴백), 열 누락(141조 폴백), 2026.2Q 제거(138조·2026.1Q 기준), 2026.2Q 가 1사만 있음(138조·2026.1Q 기준). 라이트·다크 × 1280·375px 가로 넘침 0, 팝오버 가려짐 0, 콘솔 오류 0.
+- **다른 CSM 합계 표기**: index.html 에는 없다(버블맵·보조표는 회사별 값, 이 티켓에서 안 건드림).
+- **테스트**: `test_deploy_assets`·`test_push_gate_wiring` 77 통과.
+
 ## 2026-10-11 -- IFRS17 섹션 3 모바일 단순형 재도입 · ? 팝오버 가려짐 · 시장지도 재보·보증 절반 · 상각 축 단위 · 전망 제외 사유
 
 티켓 `inbox/designer/20261011T1530Z__orchestrator__MULTI_2023.4Q-2026.2Q__sec3_mobile_simple_again_and_help_popover_clip.md`·`20261011T1600Z__publishing__MULTI_2026.2Q__forward_exclusion_reason_and_amort_axis.md`(공유 티켓, 종결은 오케스트레이터) + 조율자 추가 지시(index). 마스터·패널 JSON·`public_exports` 무수정, push 안 함.

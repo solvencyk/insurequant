@@ -59,8 +59,10 @@
     .kpi-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
     .kpi-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:2px}
     .kpi-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
+    .kpi-sub{margin-top:2px;font-size:11px;color:var(--muted);font-weight:500}
+    .kpi-sub .iq-help-btn{width:18px;height:18px;font-size:11px}
     @keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-    .rise{animation:riseIn .5s ease both}
+    .rise{animation:riseIn .5s ease backwards}
     @media (max-width:640px){ .kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px} .kpi{padding:12px 14px} .kpi-val{font-size:20px} }
     .toggle-switch{position:relative;display:inline-block;width:60px;height:30px}
     .toggle-input{opacity:0;width:0;height:0}
@@ -149,7 +151,7 @@
   <div class="container">
     <div class="hero">
       <div class="kpi-strip">
-        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div></div>
+        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div><div class="kpi-sub"><span id="kpiCsmSub"></span><span class="iq-help" id="kpiCsmHelp" hidden><button type="button" class="iq-help-btn" aria-label="업계 총 기말 CSM 정의" aria-describedby="help-kpi-csm">?</button><span class="iq-help-pop" role="tooltip" id="help-kpi-csm"></span></span></div></div>
         <div class="kpi rise" style="animation-delay:.08s"><div class="kpi-val" id="kpiRatio">—</div><div class="kpi-lab">K-ICS 지급여력비율 중위값</div></div>
         <div class="kpi rise" style="animation-delay:.14s"><div class="kpi-val" id="kpiCount">—</div><div class="kpi-lab">수록 보험사</div></div>
         <div class="kpi rise" style="animation-delay:.20s"><div class="kpi-val" id="kpiPeriod">—</div><div class="kpi-lab">기준 분기</div></div>
@@ -250,6 +252,10 @@
     let bubbleRows = null;
     let bubbleChart = null;
     let bubbleShowEst = false;   // owner 2026-10-08: 연1회 공시사(추정)는 기본 숨김 — 버블이 겹쳐 짜부되는 것을 막는다. 범례 '추정'을 눌러 켠다
+    // 업계 총 기말 CSM KPI 용 패널. 실패(404 등)해도 페이지는 계속 — KPI 는 옛 방식으로 폴백한다(updateCsmKpi).
+    let csmPanel;   // undefined = 로딩 중, null = 실패, 객체 = 패널
+    fetch(resolveUrl('data/csm_combo/panel_csm_combo.json')).then(r => r.ok ? r.json() : null).catch(() => null)
+      .then(p => { csmPanel = p; if (typeof updateCsmKpi === 'function') updateCsmKpi(); });
     let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
     let allData = [];
     let GROUPED = {};
@@ -435,6 +441,49 @@
       const codes=Object.keys(latest); if(!codes.length) return null;
       return codes.reduce((s,c)=>s+latest[c].v,0);
     }
+    // 업계 총 기말 CSM — 원천 = 보험계약부채 패널(data/csm_combo/panel_csm_combo.json, 경영공시 2-4 보험부채 현황표)의 csm_gen+csm_vfa.
+    // 연 1회 공시사도 분기별 잔액이 있어 **전 회사를 같은 분기로** 합한다(옛 totalClosingCsmEok 는 회사별 최신 분기를 합해 분기가 섞였다).
+    // 기준 분기 = meta.quarters 중 가장 늦은 분기 가운데 값이 있는 회사 수가 「패널에 값이 한 번이라도 있는 회사」의 80% 이상인 첫 분기
+    //  (한두 곳만 새 분기를 먼저 올린 경우 그 분기를 기준으로 삼아 합이 급락해 보이는 것을 막는다). 두 열이 모두 null 인 회사는 제외. 단위 억원.
+    // 폴백: 패널을 못 받았거나(라이브 판이 구판이라 파일이 없거나 404) 조건을 만족하는 분기가 없으면 옛 totalClosingCsmEok() 로 되돌린다.
+    //  (구판 패널은 40사·8분기라 2026.2Q 가 없을 수 있다 — 새 판이 배포되기 전에 이 HTML 만 먼저 가도 KPI 는 깨지지 않고 옛 방식 값을 보인다.)
+
+    function industryCsmFromPanel(P){
+      try{
+        const qs=(P&&P.meta&&P.meta.quarters)||[], cols=(P&&P.meta&&P.meta.columns)||[], cos=(P&&P.companies)||{};
+        const ig=cols.indexOf('csm_gen'), iv=cols.indexOf('csm_vfa');
+        if(!qs.length||ig<0||iv<0) return null;
+        const num=v=>Number.isFinite(v)?v:null, codes=Object.keys(cos);
+        const rowSum=(co,q)=>{ const r=co&&co.q&&co.q[q]; if(!r) return null; const a=num(r[ig]), b=num(r[iv]); return (a==null&&b==null)?null:(a||0)+(b||0); };
+        const withData=codes.filter(c=>qs.some(q=>rowSum(cos[c],q)!=null)).length;
+        if(!withData) return null;
+        for(let i=qs.length-1;i>=0;i--){
+          let n=0, tot=0;
+          for(const c of codes){ const v=rowSum(cos[c],qs[i]); if(v!=null){ n++; tot+=v; } }
+          if(n>=Math.ceil(withData*0.8)) return {eok:tot, q:qs[i], n};
+        }
+      }catch(e){ console.warn('industry CSM from panel failed:', e); }
+      return null;
+    }
+    function updateCsmKpi(){
+      if(csmPanel===undefined) return;        // 패널 로딩이 끝나면(성공·실패 모두) 다시 불린다
+      const el=document.getElementById('kpiCsm'); if(!el) return;
+      const sub=document.getElementById('kpiCsmSub'), help=document.getElementById('kpiCsmHelp'), pop=document.getElementById('help-kpi-csm');
+      const fmt=v=>samoNum(v,0)+'<span class="u">조</span>';
+      const hit=csmPanel?industryCsmFromPanel(csmPanel):null;
+      if(hit){
+        countUp(el, hit.eok/10000, fmt);
+        if(sub) sub.textContent=hit.q+' 기준 · '+hit.n+'사';
+        if(pop) pop.textContent='경영공시 2-4 보험부채 현황표의 보험계약마진(일반모형+변동수수료접근법) 합입니다. 연 1회 공시하는 회사도 분기별 잔액이 공시되어 모든 회사를 같은 분기로 합산했습니다.';
+      }else{
+        const eok=totalClosingCsmEok();       // 폴백: 회사별 최신 분기 합(분기가 섞임)
+        if(eok==null) return;
+        countUp(el, eok/10000, fmt);
+        if(sub) sub.textContent='회사별 최신 공시 분기 합';
+        if(pop) pop.textContent='회사별로 가장 최근에 공시된 기말 CSM 을 합한 값입니다. 연 1회 공시하는 회사는 직전 사업연도 말 값이라 분기가 섞여 있습니다.';
+      }
+      if(help) help.hidden=false;
+    }
     function samoNum(n,digits){               // 정수/소수 + 음수 △ (한국 회계)
       if(n==null||!Number.isFinite(n)) return '—';
       const r = digits ? n : Math.round(n);
@@ -455,8 +504,7 @@
       if(comps.length) countUp(document.getElementById('kpiCount'), comps.length, v=>Math.round(v)+'<span class="u">社</span>');
       const per = (allData&&allData.length) ? getLatestQuarter(allData) : null;
       if(per) setT('kpiPeriod', per);
-      const eok = totalClosingCsmEok();
-      if(eok!=null) countUp(document.getElementById('kpiCsm'), eok/10000, v=>samoNum(v,0)+'<span class="u">조</span>');
+      updateCsmKpi();
     }
 
     function setMapStatus(message, isError) {
