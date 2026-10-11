@@ -136,19 +136,19 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_csm_waterfall.py (관측 47개 = *_measurement.json; 패턴은 넉넉히 extracted/*.json 전체)"
   },
   "viz_ifrs17_panels": {
-   "inputs_sha256": "dbfe52d514f8b0e44dd825dea8021d9185d515c1de01475e1478ca7c3c90b20e",
+   "inputs_sha256": "67f87bb99773dc4d4472c84b7e3eeff7c6af7a60fe70d43b6af972db4af6e5cc",
    "input_files": 769,
-   "input_bytes": 51346708,
+   "input_bytes": 51363121,
    "input_files_per_pattern": {
     "data/dart/extracted/*.json": 767,
     "CSM_waterfall.json": 1,
     "data/dart/viz/sensitivity_overrides.json": 1
    },
-   "code_sha256": "c5409efd1f391ab3d49b0462ad95b87ec9d9a8abf560d3400e28b782348aa006",
+   "code_sha256": "a444bf6124165f35ae7b7947a2e6863fb6f1e3ed053720d24c7e3ab757cd6234",
    "code_files": [
     "scripts/viz_build_ifrs17_panels.py"
    ],
-   "fixture_sha256": "94047f13f46565eb7aebe25c667ee2796f4f9f0237eeddb0eb393c2020ecca07",
+   "fixture_sha256": "934ab86a35a56059c95ca8bdbb63fa9a87ed095093642009aaf29f212993f776",
    "outputs": {
     "files / bs_snapshot.json / sha256": {
      "path": "data/dart/viz/bs_snapshot.json",
@@ -157,8 +157,8 @@
     },
     "files / csm_amort_schedule.json / sha256": {
      "path": "data/dart/viz/csm_amort_schedule.json",
-     "fixture_sha256": "2c8cfdd9049a68e56f08ba34b8ab6eca263d72c26c8076bafda30dafb6bb9bde",
-     "ondisk_sha256": "2c8cfdd9049a68e56f08ba34b8ab6eca263d72c26c8076bafda30dafb6bb9bde"
+     "fixture_sha256": "2ee72b7ffc36bf3ec53532f506b0045c00b89bbe151667861d3bcf117851cbcd",
+     "ondisk_sha256": "2ee72b7ffc36bf3ec53532f506b0045c00b89bbe151667861d3bcf117851cbcd"
     },
     "files / insurance_pl_breakdown.json / sha256": {
      "path": "data/dart/viz/insurance_pl_breakdown.json",
