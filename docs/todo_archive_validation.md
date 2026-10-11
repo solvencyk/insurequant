@@ -1,5 +1,11 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-12 Status 밀림 (재보사 PL 계보 허용 항목 추가로 밀려난 항목, 무수정)
+
+- **2026-10-11 (23차) 항목 4 주석 계보 허용 + owner 승인 등재 4칸 — 데이터계약 RED 34→11(PL 범위 24 소멸·신규 0)** — `PL_FS_NOTE_LINEAGE`(how=fs_note_csm_amort, 항목 4 한정)로 §3d 20건,
+  ZERO_LEGS 23→9(src_na zleg 181→195 복귀), 법인세 0 등재 3칸(`user_pl_confirmed_cells.json`)·하노버 2025.3Q PL `MASTER_HOLE` 원천부재 장치 `_PL_SOURCE_ABSENT`(읽는 쪽 `coverage_holes(source_absent=)`).
+  변이시험 신규 pytest 37건(훅 묶음 편입) + selftest 87→92 통과. 골든 `--update` 안 함(움직이는 것: `test_master_tables_golden` 1종). 커밋 1건, push 안 함. 남은 것: 최종 라운드 `--update`.
+
 ## 2026-10-12 Status 밀림 (게이트 속도 항목 추가로 밀려난 항목, 무수정)
 
 - **2026-10-11 (22차) 최종 라운드 — 등재 해제 5묶음 · 골든 8종 정리 · 거짓 녹색 사냥 · 소유자 결정표 15건** — 데이터계약 RED 22→21(YELLOW 150→143), K-ICS 게이트 exit 2→0(blocking 0),

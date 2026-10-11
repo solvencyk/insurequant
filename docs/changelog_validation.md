@@ -1,9 +1,20 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-10-11 (24차) · Stage 3/5 — validation
+> Last updated: 2026-10-12 (재보사 PL 계보 허용) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-10-12 -- 재보사 PL 경영공시 계보 허용 + 마감 골든 (티켓 `20261012T0600Z`)
+
+- **원인**: parser `3727438` 이 재보사 8곳(KR1101~KR1108)의 PL 투자손익(17)·영업이익(20)·영업외손익(21)을 경영공시 §2-1 요약 포괄손익계산서에서 적재했다. §3d `CONCEPT_MIXED_DISCLOSURE_INTO_DART` 는 DISCLOSURE 계보 PL 셀을 동일개념 5항목(1·16·22·23·24)으로 제한해 **102건 RED**(셀 102 / 값 299). 17·20·21 이 reference_only 인 이유는 같은 회사 시계열에 DART 개념과 경영공시 개념이 섞이기 때문인데, 이 8곳은 DART 사업보고서가 없어 원천이 하나뿐이다(항목 4 주석 허용 `1db7c2d` 와 같은 구조).
+- **수정(좁게)**: `validate_data_contract.py` `PL_DISCLOSURE_REINSURER_LINEAGE = {disclosure_summary_pl_reinsurer: {17,20,21}}` + `_pl_dartless_companies`(사이드카 셀이 전부 DISCLOSURE 계보이고 마스터 발행 블록이 전부 사이드카에 정확 키로 있는 회사 -- 코드 목록이 아니라 데이터 조건) + `_pl_reinsurer_exempt_items`(income_statement · 등재 how · DISCLOSURE 경로 · 쪽 · **항목별** 인쇄값 dict). 그 entry 의 items ∩ 등재 항목 **한 칸씩**만 뺀다. 항목 4 때와 달리 셀 `resolution` 은 기본 적재 라벨(`disclosure_summary_pl`)이라 how==resolution 비교는 못 한다 -- 대신 항목별 인쇄값을 요구한다. 매 실행 건수·회사를 notes 에 인쇄한다.
+- **시뮬레이션(양방향)**: 데이터계약 RED 102 -> **0**, YELLOW 147 -> 147, 새 RED 0. 게이트가 센 수혜 = 102셀/299값/8곳 = 사이드카 `how` 사용 105 entry 중 17/20/21 포함분과 일치. 라이브 사이드카 전체에서 「DART 계보 없는 회사」 = 정확히 KR1101~KR1108 8곳.
+- **변이시험**: `tests/test_pl_reinsurer_disclosure_lineage.py` 14건(허용 삭제·항목 확대·how 검사 제거·항목별 인쇄값 제거·dict 검사 제거·쪽 검사 제거·블록 검사 제거·**회사 조건 제거**·AND->OR·발행블록 검사 제거·entry 밖 항목까지 제외 = 11 변이 + 대조군 + 범위 박제 + 라이브 사이드카 대조/트립와이어). selftest 92 -> 102(Q11~Q11j). `prepush_check.py` 오프라인 묶음에 편입.
+- **관측(미수정)**: `verify_provenance_sidecar` 가 (회사,분기) 블록불문 폴백 매칭을 해서, 마스터가 발행하는 블록이 사이드카에 정확 키로 없어도 `MISSING_PROVENANCE` 가 안 난다. 라이브는 발행 1,040블록 전부 정확 키가 있어 지금은 무해(probe `data/_derived/validation_reinsurer_pl_20261012/probe_fallback.txt`). 허용 쪽은 정확 키로 따로 막았다.
+- **골든**: `--update` 3종 = `master_tables`(closing 390->393P, pl_bridge 3456->3653P(진짜 1177->1278·구성상 1944->2040)·S 2945->2748, csm_amort_identity 380->383P, qoq_warn 262->267Y; F/NEW 불변) · `ifrs17_bs`(빌더 산출 sha = 현 마스터 sha `ef70b02`, 10,967->11,016행 = BS +49칸) · 입력지문(`ifrs17_bs` 재생성 + `viz_ifrs17_panels` 입력 5.4KB 이동 -- 산출 바이트 불변이라 지문만). 무이동: PL 골든(`RUN_PL_GOLDEN=1`, 해시 전부 일치) · viz 2종(4패널·csm_waterfall 바이트 동일) · kics 룰 · post_transition · dividend.
+- **훅**: `prepush_check.py --full` 직접 실행 = gate-clear, exit 0 (오프라인 795 통과 · 1 skip, 부하 큰 PC 에서 34분). push 는 안 함.
+- `PL_YTD_COLLAPSE_TO_ZERO` RED 0 (parser 가 인쇄된 0 7칸을 보류 -- 등재 안 함).
 
 ## 2026-10-12 -- 게이트 속도: 원문 PDF 텍스트 읽기 캐시 (티켓 `20261012T0300Z`, 판정 불변)
 
