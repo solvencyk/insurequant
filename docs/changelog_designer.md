@@ -7,6 +7,10 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- index 홈 KPI 「업계 총 기말 CSM」 부가 문구·팝오버 제거
+
+티켓 `inbox/designer/20261012T0000Z__orchestrator__MULTI_2026.2Q__index_csm_kpi_remove_sub_text.md`(공유, 종결은 오케스트레이터). `index.html` 만, 마스터 무수정. 카드의 `kpiCsmSub`·`kpiCsmHelp`·`help-kpi-csm` 마크업, `updateCsmKpi` 의 문구·팝오버 코드, 미사용 `.kpi-sub` CSS 2줄 삭제(합산·모집단·폴백 로직 불변, `iq-help` 공통 스타일 불변). 점검: 데스크톱 4칸 높이 83px 동일, 모바일 375px 2x2 68px 동일·가로 스크롤 없음, 값 142조(rAF 대체 후 확인), 콘솔 오류 0, test_deploy_assets·push_gate_wiring·prepush_scope 142 passed.
+
 ## 2026-10-11 -- 재보사 7곳 PL 항목 4 라벨 「원수」 제거 + 패널 렌더 점검
 
 티켓 `inbox/designer/20261011T2010Z__orchestrator__KR1101-KR1107__reinsurer_csm_amort_label_and_panel3.md`(공유 티켓, 종결은 오케스트레이터). `IFRS17.html` 만, 마스터 무수정, push 안 함.

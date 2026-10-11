@@ -59,8 +59,6 @@
     .kpi-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
     .kpi-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:2px}
     .kpi-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
-    .kpi-sub{margin-top:2px;font-size:11px;color:var(--muted);font-weight:500}
-    .kpi-sub .iq-help-btn{width:18px;height:18px;font-size:11px}
     @keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
     .rise{animation:riseIn .5s ease backwards}
     @media (max-width:640px){ .kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px} .kpi{padding:12px 14px} .kpi-val{font-size:20px} }
@@ -151,7 +149,7 @@
   <div class="container">
     <div class="hero">
       <div class="kpi-strip">
-        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div><div class="kpi-sub"><span id="kpiCsmSub"></span><span class="iq-help" id="kpiCsmHelp" hidden><button type="button" class="iq-help-btn" aria-label="업계 총 기말 CSM 정의" aria-describedby="help-kpi-csm">?</button><span class="iq-help-pop" role="tooltip" id="help-kpi-csm"></span></span></div></div>
+        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div></div>
         <div class="kpi rise" style="animation-delay:.08s"><div class="kpi-val" id="kpiRatio">—</div><div class="kpi-lab">K-ICS 지급여력비율 중위값</div></div>
         <div class="kpi rise" style="animation-delay:.14s"><div class="kpi-val" id="kpiCount">—</div><div class="kpi-lab">수록 보험사</div></div>
         <div class="kpi rise" style="animation-delay:.20s"><div class="kpi-val" id="kpiPeriod">—</div><div class="kpi-lab">기준 분기</div></div>
@@ -449,7 +447,7 @@
     // 기준 분기 = meta.quarters 중 가장 늦은 분기 가운데, 그 분기에 값이 있는 모집단 회사 수가 「패널에 값이 한 번이라도 있는 모집단 회사」의 80%(올림) 이상인 첫 분기
     //  (한두 곳만 새 분기를 먼저 올린 경우 그 분기를 기준으로 삼아 합이 급락해 보이는 것을 막는다).
     // 모집단 회사가 기준 분기에 값이 없으면(두 열 모두 null) 그 회사의 **기준 분기 이전 가장 최근 값**을 대신 쓰고 회사 수에는 넣는다(하노버재보험 등).
-    //  그런 회사(이름·분기)는 hit.fb 로 돌려줘 ? 팝오버 문구에 데이터에서 도출해 적는다. 기준 분기 이전에도 값이 없으면 합·회사 수에서 뺀다. 단위 억원.
+    //  그런 회사(이름·분기)는 hit.fb 에 담긴다(화면 문구는 없다 — 카드는 값+라벨만). 기준 분기 이전에도 값이 없으면 합·회사 수에서 뺀다. 단위 억원.
     // 폴백: 패널을 못 받았거나(라이브 판이 구판이라 파일이 없거나 404) 조건을 만족하는 분기가 없으면 옛 totalClosingCsmEok() 로 되돌린다.
     //  (구판 패널은 40사·8분기라 2026.2Q 가 없을 수 있다 — 새 판이 배포되기 전에 이 HTML 만 먼저 가도 KPI 는 깨지지 않고 옛 방식 값을 보인다.)
     function industryCsmFromPanel(P, universe){
@@ -478,7 +476,6 @@
     function updateCsmKpi(){
       if(csmPanel===undefined) return;        // 패널 로딩이 끝나면(성공·실패 모두) 다시 불린다
       const el=document.getElementById('kpiCsm'); if(!el) return;
-      const sub=document.getElementById('kpiCsmSub'), help=document.getElementById('kpiCsmHelp'), pop=document.getElementById('help-kpi-csm');
       const fmt=v=>samoNum(v,0)+'<span class="u">조</span>';
       // 모집단은 시장지도 KPI(수록 보험사)와 같은 회사다 — K-ICS 데이터가 아직 안 왔으면 기다린다(updateKpis 가 K-ICS 로딩 뒤 다시 부른다).
       if(!(allData&&allData.length)) return;
@@ -486,17 +483,11 @@
       const hit=csmPanel?industryCsmFromPanel(csmPanel, uni&&uni.size?uni:null):null;
       if(hit){
         countUp(el, hit.eok/10000, fmt);
-        if(sub) sub.textContent=hit.q+' 기준 · '+hit.n+'사';
-        if(pop) pop.textContent='경영공시 2-4 보험부채 현황표의 보험계약마진(일반모형+변동수수료접근법) 합입니다. 연 1회 공시하는 회사도 분기별 잔액이 공시되어 모든 회사를 같은 분기로 합산했습니다.'
-          +(hit.fb.length?' '+hit.q+' 값이 없는 회사는 직전 값으로 대신했습니다: '+hit.fb.map(f=>shortName(f.n)+'('+f.q+')').join(', ')+'.':'');
       }else{
         const eok=totalClosingCsmEok();       // 폴백: 회사별 최신 분기 합(분기가 섞임)
         if(eok==null) return;
         countUp(el, eok/10000, fmt);
-        if(sub) sub.textContent='회사별 최신 공시 분기 합';
-        if(pop) pop.textContent='회사별로 가장 최근에 공시된 기말 CSM 을 합한 값입니다. 연 1회 공시하는 회사는 직전 사업연도 말 값이라 분기가 섞여 있습니다.';
       }
-      if(help) help.hidden=false;
     }
     function samoNum(n,digits){               // 정수/소수 + 음수 △ (한국 회계)
       if(n==null||!Number.isFinite(n)) return '—';
