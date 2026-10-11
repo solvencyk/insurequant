@@ -1,0 +1,33 @@
+CSM_waterfall.json: HEAD 2340 -> live 2358 | added 18 | deleted 0 | changed 0 | HEAD rows are an exact list prefix: True
+    added by (company, quarter): KR1104/2025.4Q:6, KR1105/2025.4Q:6, KR1107/2023.4Q:6
+CSM_amortization.json: HEAD 620 -> live 635 | added 15 | deleted 0 | changed 0 | HEAD rows are an exact list prefix: True
+    added by (company, quarter): KR1101/2023.4Q:5, KR1102/2023.4Q:5, KR1106/2023.4Q:5
+CSM_sensitivity.json: HEAD 311 -> live 317 | added 6 | deleted 0 | changed 0 | HEAD rows are an exact list prefix: True
+    added by (company, quarter): KR1104/2023.4Q:6
+insurance_liability_portfolio.json: HEAD 6225 -> live 6335 | added 110 | deleted 0 | changed 0 | HEAD rows are an exact list prefix: True
+    added by (company, quarter): KR1101/2023.1Q:6, KR1101/2023.2Q:6, KR1101/2023.3Q:6, KR1101/2023.4Q:14, KR1101/2024.1Q:6, KR1101/2024.2Q:6, KR1101/2024.3Q:6, KR1103/2023.4Q:8, KR1104/2023.1Q:6, KR1104/2023.2Q:6, KR1104/2023.3Q:6, KR1104/2024.1Q:6, KR1104/2024.2Q:6, KR1104/2024.3Q:6, KR1105/2023.4Q:8, KR1107/2023.4Q:8
+CSM_waterfall_provenance.json: cells HEAD 354 -> live 357 | added 3 | deleted 0 | HEAD cells exact prefix: True
+    key master: unchanged = True
+    key generated_at: unchanged = True
+    key emitter: unchanged = True
+    list key fields_owned: HEAD 2 -> live 2 | HEAD entries exact prefix: True
+    list key fields_pending_downloader: HEAD 3 -> live 3 | HEAD entries exact prefix: True
+    new top-level keys: []
+insurance_liability_portfolio_provenance.json: cells HEAD 418 -> live 431 | added 13 | deleted 0 | HEAD cells exact prefix: True
+    key master: unchanged = True
+    key scope: unchanged = True
+    key generated_at: unchanged = True
+    key emitter: unchanged = True
+    key emitted_by: unchanged = True
+    key inputs: unchanged = True
+    list key key: HEAD 3 -> live 3 | HEAD entries exact prefix: True
+    key source_id_values: unchanged = True
+    key note: unchanged = True
+    list key not_loaded: HEAD 2 -> live 2 | HEAD entries exact prefix: True
+    list key lrc_model_cells: HEAD 207 -> live 211 | HEAD entries exact prefix: True
+    list key lrc_model_not_loaded: HEAD 76 -> live 80 | HEAD entries exact prefix: True
+    list key backfills: HEAD 17 -> live 20 | HEAD entries exact prefix: True
+    list key indirect_lic_cells: HEAD 125 -> live 125 | HEAD entries exact prefix: True
+    list key item9_cells: HEAD 6 -> live 6 | HEAD entries exact prefix: True
+    list key value_corrections: HEAD 6 -> live 6 | HEAD entries exact prefix: True
+    new top-level keys: []

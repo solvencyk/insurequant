@@ -27991,6 +27991,817 @@
     "ra": 4.79
    },
    "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.1Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-03-31",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험.pdf",
+   "page": [
+    22
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 4400.3089,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": -2100.55,
+   "items_eok": {
+    "10": 4709.64,
+    "11": 4363.84,
+    "12": 345.8,
+    "13": 0.0,
+    "14": -309.33,
+    "15": 4400.31
+   },
+   "asset_side_eok": {
+    "total": 992.9111,
+    "lrc": 1791.2225,
+    "lic": -798.3113,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [22], asset block pages [20]; 「(보험계약부채)」 summary line p22 = 4400.3089",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.2Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-06-30",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험.pdf",
+   "page": [
+    25
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 4280.8765,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": -2009.45,
+   "items_eok": {
+    "10": 4358.57,
+    "11": 3990.88,
+    "12": 367.69,
+    "13": 0.0,
+    "14": -77.69,
+    "15": 4280.88
+   },
+   "asset_side_eok": {
+    "total": 1013.2826,
+    "lrc": 1931.7628,
+    "lic": -918.4802,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [25], asset block pages [23]; 「(보험계약부채)」 summary line p25 = 4280.8765",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.3Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-09-30",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+   "page": [
+    23,
+    24
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 4135.2341,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": -2023.08,
+   "items_eok": {
+    "10": 4468.26,
+    "11": 4102.05,
+    "12": 366.21,
+    "13": 0.0,
+    "14": -333.03,
+    "15": 4135.23
+   },
+   "asset_side_eok": {
+    "total": 897.2629,
+    "lrc": 1690.0546,
+    "lic": -792.7917,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [23, 24], asset block pages [21]; 「(보험계약부채)」 summary line p23 = 4135.2341",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.4Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+   "page": [
+    25
+   ],
+   "scope": "separate",
+   "period": "prior-year-end column of the later filing",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block",
+    "prior_year_end_column_of_later_filing"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 4286.8783,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": -1908.05,
+   "items_eok": {
+    "10": 4483.81,
+    "11": 4165.48,
+    "12": 318.32,
+    "13": 0.0,
+    "14": -196.93,
+    "15": 4286.88
+   },
+   "asset_side_eok": {
+    "total": 923.247,
+    "lrc": 1711.1271,
+    "lic": -787.8801,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [
+    {
+     "fy": "FY2024_Q2",
+     "col": 1,
+     "items": {
+      "10": 4483.81,
+      "11": 4165.48,
+      "12": 318.32,
+      "13": 0.0,
+      "14": -196.93,
+      "15": 4286.88
+     }
+    },
+    {
+     "fy": "FY2024_Q1",
+     "col": 1,
+     "items": {
+      "10": 4483.81,
+      "11": 4165.48,
+      "12": 318.32,
+      "13": 0.0,
+      "14": -196.93,
+      "15": 4286.88
+     }
+    }
+   ],
+   "evidence": "liability block pages [25], asset block pages [23]; 「(보험계약부채)」 summary line p25 = 4286.8783",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.1Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-03-31",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+   "page": [
+    24
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 4116.547,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": {
+     "item8": -1805.0,
+     "net_lrc_eok": -1805.16,
+     "diff": 0.16,
+     "tol": 9.03,
+     "pass": true
+    }
+   },
+   "net_lrc_eok": -1805.16,
+   "items_eok": {
+    "10": 4292.04,
+    "11": 3980.31,
+    "12": 311.73,
+    "13": 0.0,
+    "14": -175.49,
+    "15": 4116.55
+   },
+   "asset_side_eok": {
+    "total": 1027.7808,
+    "lrc": 1629.6645,
+    "lic": -601.8837,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [24], asset block pages [22]; 「(보험계약부채)」 summary line p24 = 4116.547",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.2Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-06-30",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+   "page": [
+    52
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 4174.0777,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": {
+     "item8": -1832.0,
+     "net_lrc_eok": -1831.53,
+     "diff": -0.47,
+     "tol": 9.16,
+     "pass": true
+    }
+   },
+   "net_lrc_eok": -1831.53,
+   "items_eok": {
+    "10": 4395.46,
+    "11": 4108.52,
+    "12": 286.94,
+    "13": 0.0,
+    "14": -221.38,
+    "15": 4174.08
+   },
+   "asset_side_eok": {
+    "total": 991.9641,
+    "lrc": 1610.1517,
+    "lic": -618.1876,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [52], asset block pages [49, 50]; 「(보험계약부채)」 summary line p52 = 4174.0777",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.3Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-09-30",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+   "page": [
+    25
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 4252.144,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": -0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": {
+     "item8": -2002.0,
+     "net_lrc_eok": -2002.66,
+     "diff": 0.66,
+     "tol": 10.01,
+     "pass": true
+    }
+   },
+   "net_lrc_eok": -2002.66,
+   "items_eok": {
+    "10": 4583.82,
+    "11": 4333.02,
+    "12": 250.8,
+    "13": 0.0,
+    "14": -331.68,
+    "15": 4252.14
+   },
+   "asset_side_eok": {
+    "total": 994.1872,
+    "lrc": 1670.9862,
+    "lic": -676.799,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [25], asset block pages [23]; 「(보험계약부채)」 summary line p25 = 4252.144",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.1Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-03-31",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf",
+   "page": [
+    23
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 216.2177,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": -0.01,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": 71.44,
+   "items_eok": {
+    "10": 144.77,
+    "11": 138.59,
+    "12": 6.18,
+    "13": 0.0,
+    "14": 71.44,
+    "15": 216.22
+   },
+   "asset_side_eok": {
+    "total": 0.0,
+    "lrc": 0.0,
+    "lic": 0.0,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [23], asset block pages [21]; 「(보험계약부채)」 summary line p22 = 216.2177",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.2Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-06-30",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+   "page": [
+    25,
+    26
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 258.2954,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": -0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": -38.29,
+   "items_eok": {
+    "10": 296.59,
+    "11": 292.56,
+    "12": 4.02,
+    "13": 0.0,
+    "14": -38.29,
+    "15": 258.3
+   },
+   "asset_side_eok": {
+    "total": 0.0,
+    "lrc": 0.0,
+    "lic": 0.0,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [25, 26], asset block pages [24]; 「(보험계약부채)」 summary line p25 = 258.2954",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2024.1Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-03-31",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf",
+   "page": [
+    17,
+    18
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 145.4731,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": {
+     "item8": -315.95,
+     "net_lrc_eok": -315.95,
+     "diff": 0.0,
+     "tol": 1.58,
+     "pass": true
+    }
+   },
+   "net_lrc_eok": -315.95,
+   "items_eok": {
+    "10": 461.42,
+    "11": 445.89,
+    "12": 15.53,
+    "13": 0.0,
+    "14": -315.95,
+    "15": 145.47
+   },
+   "asset_side_eok": {
+    "total": 0.0,
+    "lrc": 0.0,
+    "lic": 0.0,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [17, 18], asset block pages [16]; 「(보험계약부채)」 summary line p17 = 145.4731",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2024.2Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-06-30",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf",
+   "page": [
+    33,
+    34
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 140.9356,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": -0.01,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": {
+     "item8": -204.0,
+     "net_lrc_eok": -220.26,
+     "diff": 16.26,
+     "tol": 1.1,
+     "pass": false
+    }
+   },
+   "net_lrc_eok": -220.26,
+   "items_eok": {
+    "10": 345.57,
+    "11": 331.26,
+    "12": 14.31,
+    "13": 0.0,
+    "14": -204.64,
+    "15": 140.94
+   },
+   "asset_side_eok": {
+    "total": 2.0428,
+    "lrc": 15.6231,
+    "lic": -13.5803,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [33, 34], asset block pages [32]; 「(보험계약부채)」 summary line p33 = 140.9356",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2024.3Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-09-30",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf",
+   "page": [
+    23,
+    24
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "validated_by_r_lic2_vs_2-4_net_lrc",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 144.3494,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": -186.22,
+   "items_eok": {
+    "10": 312.6,
+    "11": 298.49,
+    "12": 14.11,
+    "13": 0.0,
+    "14": -168.25,
+    "15": 144.35
+   },
+   "asset_side_eok": {
+    "total": 4.6167,
+    "lrc": 17.9689,
+    "lic": -13.3522,
+    "note": "보험계약자산 side of the same balance sheet; NOT in items 10-15 (liability basis), kept because the 2-4 item 8 is the net of both sides"
+   },
+   "other_readings": [],
+   "evidence": "liability block pages [23, 24], asset block pages [22]; 「(보험계약부채)」 summary line p23 = 144.3494",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.3Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-09-30",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR1104_하노버재보험.pdf",
+   "page": [
+    23,
+    24
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "printed 단위: 천원 on p20 (AI801 재무상태표); scanned PDF read by eye at 170 dpi",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "reinsurer_branch_balance_sheet_block",
+    "scanned_pdf_no_text_layer_read_by_eye"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "filing_bs_eok": 380.3047,
+    "r_lic3_gap_eok": 0.0,
+    "r_lic2_vs_2_4": null
+   },
+   "net_lrc_eok": 9.44,
+   "items_eok": {
+    "10": 370.86,
+    "11": 365.06,
+    "12": 5.81,
+    "13": 0.0,
+    "14": 9.44,
+    "15": 380.3
+   },
+   "asset_side_eok": {
+    "total": 0.0,
+    "lrc": 0.0,
+    "lic": 0.0,
+    "note": "보험계약자산 side printed '-' on the same pages"
+   },
+   "other_readings": [],
+   "evidence": "pages 23-24 rendered at 170 dpi: 1. 보험계약부채 38,030,466 = 가. 잔여보장요소 944,004 (최선추정 -36,248,315 + 위험조정 4,651,137 + 보험계약마진 32,541,182) + 나. 발생사고요소 37,086,462 (최선추정 36,505,511 + 위험조정 580,951); 「(보험계약부채)」 line 38,030,466",
+   "note": "scanned 경영공시 (원본 as filed, before the FY2024 restatement of the 2023 year-end); same block definition as the other reinsurer cells"
   }
  ],
  "not_loaded": [
@@ -40169,6 +40980,276 @@
      "used": true
     }
    ]
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.4Q",
+   "item_block": "lrc_model_table_4-6-2_prior_year",
+   "source_id": "PDF",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1101_뮌헨재보험.pdf",
+   "page": 15,
+   "table": null,
+   "table_label": "<2023년>",
+   "table_year": 2023,
+   "table_year_src": "manual",
+   "unit_in_source": "억원",
+   "printed_run": [
+    -2531,
+    154,
+    502,
+    0,
+    0,
+    0,
+    -33.61
+   ],
+   "run_kind": "manual",
+   "text_source": "manual",
+   "items_eok": {
+    "1": -2531.0,
+    "2": 154.0,
+    "3": 502.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": -33.61,
+    "8": -1908.61
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "flags": [
+    "printed_sign_reversed_whole_vector_verified_by_bs_net_lrc_and_audit_csm",
+    "latest_filing_comparative_only",
+    "balance_sheet_net_lrc_agrees"
+   ],
+   "evidence": "FY2024 4-6-2 p15 <2023년> 합계 printed '2,531 -154 -502 | 33.61' (generic reading: BEL +2,531, RA -154, CSM -502, PAA 33.61 = liability-negative, the 2024 table on the same page is liability-positive). Detail rows foot (건강 127-22-29, 복합 1,607-104-361, 사망 298-21-10, 장기손해 복합 499-6-103, 일반 84.57, 자동차 -50.97). Whole vector reversed: BEL -2,531, RA +154, CSM +502, PAA -33.61. Anchors: printed sum +1,908.6 = -(balance-sheet net LRC -1,908.05, FY2024_Q1 prior-year-end column) within 0.6억; CSM 502 = audit-report CSM 502.41(liability)",
+   "published_in": "FY2024_Q4 경영공시 4-6-2 (전기 칸)",
+   "basis": "latest_filing_comparative",
+   "owner_rule": "공시 간 값 상충은 최신 공시의 전기 칸 채택 (owner 2026-10-09, 재보사·마이브라운)",
+   "alternatives": [
+    {
+     "role": "comp",
+     "fy": "FY2024_Q4",
+     "page": 15,
+     "label": "<2023년>",
+     "unit": "억원",
+     "vec_eok": {
+      "1": -2531.0,
+      "2": 154.0,
+      "3": 502.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": -33.61
+     },
+     "footing": "manual",
+     "footing_exception": null,
+     "usable": true,
+     "used": true
+    }
+   ],
+   "balance_sheet_cross_check": {
+    "item8": -1908.61,
+    "balance_sheet_net_lrc_eok": -1908.05,
+    "diff": -0.56,
+    "tol": 9.54,
+    "balance_sheet_file": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+    "balance_sheet_components_eok": {
+     "bel": -2530.89,
+     "ra": 154.03,
+     "csm": 502.41
+    }
+   }
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2023.4Q",
+   "item_block": "lrc_model_table_4-6-2_prior_year",
+   "source_id": "PDF",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1103_제네럴재보험.pdf",
+   "page": 10,
+   "table": null,
+   "table_label": null,
+   "table_year": 2023,
+   "table_year_src": "label",
+   "unit_in_source": "백만원",
+   "printed_run": [
+    -611.09,
+    91.53,
+    191.29
+   ],
+   "run_kind": "gmm",
+   "text_source": "pdfplumber",
+   "items_eok": {
+    "1": -611.09,
+    "2": 91.53,
+    "3": 191.29,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": -328.27
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "flags": [
+    "latest_filing_comparative_only"
+   ],
+   "evidence": null,
+   "published_in": "FY2024_Q4 경영공시 4-6-2 (전기 칸)",
+   "basis": "latest_filing_comparative",
+   "owner_rule": "공시 간 값 상충은 최신 공시의 전기 칸 채택 (owner 2026-10-09, 재보사·마이브라운)",
+   "alternatives": [
+    {
+     "role": "comp",
+     "fy": "FY2024_Q4",
+     "page": 10,
+     "label": null,
+     "unit": "백만원",
+     "vec_eok": {
+      "1": -611.09,
+      "2": 91.53,
+      "3": 191.29,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0
+     },
+     "footing": "ok",
+     "footing_exception": null,
+     "usable": true,
+     "used": true
+    }
+   ]
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2023.4Q",
+   "item_block": "lrc_model_table_4-6-2_prior_year",
+   "source_id": "PDF",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "page": 17,
+   "table": null,
+   "table_label": "<2023년>",
+   "table_year": 2023,
+   "table_year_src": "label",
+   "unit_in_source": "억원",
+   "printed_run": [
+    -7715.0,
+    1034.0,
+    5571.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "run_kind": "full",
+   "text_source": "pdfplumber",
+   "items_eok": {
+    "1": -7715.0,
+    "2": 1034.0,
+    "3": 5571.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": -1110.0
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "flags": [
+    "latest_filing_comparative_only"
+   ],
+   "evidence": null,
+   "published_in": "FY2024_Q4 경영공시 4-6-2 (전기 칸)",
+   "basis": "latest_filing_comparative",
+   "owner_rule": "공시 간 값 상충은 최신 공시의 전기 칸 채택 (owner 2026-10-09, 재보사·마이브라운)",
+   "alternatives": [
+    {
+     "role": "comp",
+     "fy": "FY2024_Q4",
+     "page": 17,
+     "label": "<2023년>",
+     "unit": "억원",
+     "vec_eok": {
+      "1": -7715.0,
+      "2": 1034.0,
+      "3": 5571.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0
+     },
+     "footing": "ok",
+     "footing_exception": null,
+     "usable": true,
+     "used": true
+    }
+   ]
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2023.4Q",
+   "item_block": "lrc_model_table_4-6-2_prior_year",
+   "source_id": "PDF",
+   "as_of_date": "2023-12-31",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf",
+   "page": 13,
+   "table": null,
+   "table_label": "<2023년>",
+   "table_year": 2023,
+   "table_year_src": "label",
+   "unit_in_source": "억원",
+   "printed_run": [
+    -2823.0,
+    488.0,
+    989.0
+   ],
+   "run_kind": "gmm",
+   "text_source": "pdfplumber",
+   "items_eok": {
+    "1": -2823.0,
+    "2": 488.0,
+    "3": 989.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": -1346.0
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "flags": [
+    "latest_filing_comparative_only"
+   ],
+   "evidence": null,
+   "published_in": "FY2024_Q4 경영공시 4-6-2 (전기 칸)",
+   "basis": "latest_filing_comparative",
+   "owner_rule": "공시 간 값 상충은 최신 공시의 전기 칸 채택 (owner 2026-10-09, 재보사·마이브라운)",
+   "alternatives": [
+    {
+     "role": "comp",
+     "fy": "FY2024_Q4",
+     "page": 13,
+     "label": "<2023년>",
+     "unit": "억원",
+     "vec_eok": {
+      "1": -2823.0,
+      "2": 488.0,
+      "3": 989.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0
+     },
+     "footing": "ok",
+     "footing_exception": null,
+     "usable": true,
+     "used": true
+    }
+   ]
   }
  ],
  "lrc_model_not_loaded": [
@@ -40759,6 +41840,30 @@
    "quarter": "2025.1Q",
    "items": "1-8",
    "reason": "FY2025_Q1: 마이브라운: no 2025.1Q filing was provided/collected; the company was authorised 2025.6; FY2026_Q1: no table for 2025.1Q in the filing (the filing prints only the current period)"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2023.4Q",
+   "items": "1-8",
+   "reason": "FY2023_Q4: not in scope (not published yet); FY2024_Q4: no table for 2023.4Q in the filing (the filing prints only the current period)"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.4Q",
+   "items": "1-8",
+   "reason": "FY2024_Q4 p17 prints the 2023 table (합계 (572.65) 77.05 254.77 백만원->억원; detail rows foot) but it is on the pre-restatement basis (CSM 254.77; the FY2024 audit report restates the 2023 closing CSM to 258.73) and its net remaining-coverage total (-240.83) disagrees with the balance-sheet net LRC of the FY2024_Q1 prior-year-end column (-73.43); the same filing's 4-6-1 prints a 2023 보험계약부채 of 200.75억 against 358.31억 in the FY2024_Q1 balance sheet. Latest-filing rule cannot be applied to a table without a restated twin: not loaded"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2023.4Q",
+   "items": "1-8",
+   "reason": "FY2023_Q4: not in scope (not published yet); FY2024_Q4: no table for 2023.4Q in the filing (the filing prints only the current period)"
+  },
+  {
+   "company_code": "KR1108",
+   "quarter": "2023.4Q",
+   "items": "1-8",
+   "reason": "FY2023_Q4: not in scope (not published yet); FY2024_Q4: 마이브라운 had no filing before 2025.2Q"
   }
  ],
  "backfills": [
@@ -40927,6 +42032,27 @@
    ],
    "master_backup": "ilp_backup_20261011_pre_lic_stage3b.json",
    "note": "items 10-15 of 9 pre-2025 cells of Lina (3) and Chubb (6) from the 경영공시 PDFs"
+  },
+  {
+   "stage": "reinsurers_lic_pdf_bs",
+   "at": "20261011T1557Z",
+   "emitted_by": "scripts/load_ilp_reinsurers_lic.py",
+   "ticket": "inbox/parser/20261012T0120Z__orchestrator__KR1101-KR1108_2023.1Q-2026.2Q__reinsurer_csm_ilp_sensitivity_resweep.md",
+   "note": "items 10-15 of 13 reinsurer cells (뮌헨 KR1101, 하노버 KR1104, 퍼시픽 KR1107) from the 업무보고서식 재무상태표 block of the 경영공시 PDF"
+  },
+  {
+   "stage": "reinsurers_KR1101-KR1108",
+   "at": "20261011T1605Z",
+   "emitted_by": "scripts/load_ilp_reinsurers.py",
+   "ticket": "inbox/parser/20261012T0120Z__orchestrator__KR1101-KR1108_2023.1Q-2026.2Q__reinsurer_csm_ilp_sensitivity_resweep.md",
+   "note": "items 1-8 (+9) of the eight reinsurer branches from their own 경영공시 4-6-2 / 2-4 tables (no DART filing exists); latest-filing prior-year column wins on conflict (owner 2026-10-09); items 10-15 are NOT loaded (the 경영공시 carries no LRC/LIC split)"
+  },
+  {
+   "stage": "reinsurers_lic_resweep_scan",
+   "at": "20261011T1613Z",
+   "emitted_by": "scripts/load_ilp_hannover_2023_3q_20261012.py",
+   "ticket": "inbox/parser/20261012T0120Z__orchestrator__KR1101-KR1108_2023.1Q-2026.2Q__reinsurer_csm_ilp_sensitivity_resweep.md",
+   "note": "KR1104 2023.3Q items 10-15 read by eye from the scanned FY2023_Q3 경영공시"
   }
  ],
  "indirect_lic_cells": [

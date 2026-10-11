@@ -1,0 +1,570 @@
+##############################################################################
+DATA CONTRACT GATE — Phase 1  (census + as-of/effective + cross-source guard)
+##############################################################################
+==============================================================================
+1. COMPLETENESS CENSUS (missing cell / parent-child / impossible-0)   RED=7 YELLOW=76
+==============================================================================
+  YELLOW [IFRS17_BS] R_RSV_1  롯데손해보험 2026.1Q~2026.2Q
+         2분기 연속 동일값 76,287
+  YELLOW [IFRS17_BS] R_RSV_6  롯데손해보험 2025.1Q
+         2024.4Q 1,400 → 2025.1Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  롯데손해보험 2025.3Q
+         2025.2Q 1,400 → 2025.3Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  한화생명 2026.1Q
+         2025.4Q 237,209 → 2026.1Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  케이디비생명보험 2025.2Q
+         2025.1Q 1,338 → 2025.2Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  비엔피파리바카디프생명보험 2023.4Q
+         2023.3Q 1,900 → 2023.4Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  아이엠라이프생명보험 2024.4Q
+         2024.3Q 800 → 2024.4Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  DB생명보험 2024.4Q
+         2024.3Q 39,904 → 2024.4Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_1  DB생명보험 2023.4Q~2024.3Q
+         4분기 연속 동일값 39,904 (FY경계+4Q 포함 — 결산 적립이 안 움직였다)  [BASELINE — 2026-08-20 동결된 기존 결함, 비차단]
+  YELLOW [IFRS17_BS] R_RSV_5  서울보증보험 2024.4Q
+         스케일 점프 ×0.0: 2024.3Q 1,036 → 2024.4Q 48 — 단위/자릿수 오류 의심
+  YELLOW [IFRS17_BS] R_RSV_5  서울보증보험 2025.4Q
+         스케일 점프 ×28.2: 2025.3Q 26 → 2025.4Q 736 — 단위/자릿수 오류 의심
+  YELLOW [IFRS17_BS] R_RSV_5  코리안리재보험 2025.4Q
+         스케일 점프 ×0.0: 2025.3Q 22,637 → 2025.4Q 1,028 — 단위/자릿수 오류 의심
+  YELLOW [IFRS17_BS] R_RSV_9  AIG손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  DB손해보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  NH농협손해보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  교보생명보험 -
+         첫 공시(2025.3Q) 이전 2셀 부재: 2025.1Q, 2025.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  롯데손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  메리츠화재해상보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  비엔피파리바카디프생명보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  케이디비생명보험 -
+         첫 공시(2025.1Q) 이전 8셀 부재: 2023.1Q, 2023.2Q, 2023.3Q, 2023.4Q, 2024.1Q, 2024.2Q, 2024.3Q, 2024.4Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  코리안리재보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  흥국생명보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  AIG손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  롯데손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  서울보증보험 -
+         첫 공시(2023.4Q) 이전 1셀 부재: 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  악사손해보험 -
+         첫 공시(2023.1Q) 이전 1셀 부재: 2022.4Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  코리안리재보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  AIG손해보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  롯데손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  비엔피파리바카디프생명보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  서울보증보험 -
+         첫 공시(2023.4Q) 이전 1셀 부재: 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  코리안리재보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  DB생명보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  신한라이프생명보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  케이디비생명보험 -
+         첫 공시(2024.1Q) 이전 4셀 부재: 2023.1Q, 2023.2Q, 2023.3Q, 2023.4Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_10  - 2026.2Q
+         업권 합 64,482,376 vs 보도 58,100,000 (+11.0%). 셀결측 0사[-] / 그 분기 BS부재 0사[-]
+  YELLOW [IFRS17_BS] RESERVE_RULES_SUMMARY  - -
+         법정준비금 R-RSV 룰: 신규 RED=0 · 기존 baseline=4(건별 열거, data/_gold/statutory_reserve_baseline.json) · ORANGE=44 · legit-zero 면제=37. baseline 이 0 이 되면 이 축은 완전 차단 모드가 된다
+  YELLOW [dividend] DIV_NO_FILING_COMPANY  - -
+         15개사는 전 기간 alotMatter 필링 자체가 없다(status 013 전량) — 비상장이라 이 엔드포인트가 다루지 않는 정상 상태. 기대 그리드에서 제외됨: KR0004, KR0029, KR0049, KR0050, KR0051, KR0074, KR0075, KR0076, KR0080, KR0095, KR0097, KR0100, KR1010, KR1011, KR1098
+  YELLOW [kics_disclosure] MISSING_FILER_CELL_SOURCE_ABSENT  하노버재보험 2023.4Q
+         원천부재 면제 [DOCUMENT_PENDING_NOTICE] (owner 2026-10-10) — 하노버재보험 (KR1104) 2023.4Q 버킷 없음. raw sha·매니페스트·원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  YELLOW [kics_disclosure] MISSING_FILER_CELL_SOURCE_ABSENT  하노버재보험 2025.3Q
+         원천부재 면제 [NOT_POSTED] (owner 2026-10-10) — 하노버재보험 (KR1104) 2025.3Q 버킷 없음. raw sha·매니페스트·원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-21 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf p[10, 15, 16](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-21 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf p[10, 15, 16](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.3Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.3Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf p[16, 17, 18](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf p[16, 17, 18](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.3Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.3Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.3Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.3Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf p[16, 17](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf p[16, 17](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  동양생명 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf p[16](0-idx) — 인쇄된 문구: 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험도 같은 문구). (1)공통적용 경과조치 표는 전 행 적용전=적용후 동일(지급여력기준금액 2,292,632 백만원 · 지급여력비율 189.6). [2026.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  동양생명 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf p[16](0-idx) — 인쇄된 문구: 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험도 같은 문구). (1)공통적용 경과조치 표는 전 행 적용전=적용후 동일(지급여력기준금액 2,292,632 백만원 · 지급여력비율 189.6). [2026.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  제네럴재보험 2026.2Q
+         [R5_기준금액] 공시후=295.0 계산후=218.0 diff=77.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  제네럴재보험 2026.2Q
+         [R6_item16] 공시후=34.0 계산후=111.0 diff=-77.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  하노버재보험 2026.2Q
+         [R2_순자산합] 공시후=579.0 계산후=569.0 diff=10.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  알지에이리인슈어런스 2025.1Q
+         [R2_순자산합] 공시후=0.0 계산후=6309.0 diff=-6309.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  알지에이리인슈어런스 2026.1Q
+         [R2_순자산합] 공시후=0.0 계산후=5769.0 diff=-5769.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  알지에이리인슈어런스 2026.2Q
+         [R2_순자산합] 공시후=0.0 계산후=5499.0 diff=-5499.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] EXEMPTION_VERIFIED_BY_IMAGE_ONLY  KR0079 2023.2Q
+         [_LIFE8_ISSUER_INCONSISTENT] 판독방식=PyMuPDF(fitz) 200dpi 렌더링 후 육안 판독 판독자=validation 2026-08-21 p[11, 12, 15, 16] — 기계검증 불가 사유: 이 PDF는 텍스트레이어가 존재하지만 행 단위로 잘려 있다 — p11 360자 / p15 76자 / p16 323자(58페이지 전체 4,773자)이고, 추출되는 문자열이 '3. 시장위험액9,53' 처럼 값 중간에서 끊긴다. 따라서 absent_markers 부분문자열 검사는 마커를 절대 찾지 못하고 항상 '주장 확인'으로 끝난다(검사처럼 보이는 무검사). 게이트는 대신 인용 페이지 텍스트밀도를 매 실행 재측정해 이 사유 자체를 검증한다. (인용페이지 텍스트 810자/4p 로 확인)
+  YELLOW [kics_disclosure] EXEMPTION_ABSENCE_PIN_VALUE_PRESENT  KR0097 2024.4Q
+         [_AFTER_SUBRISK_NOT_DISCLOSED] 원장은 '원천 부재' 인데 값이 있다 → 파생값이다. 이 셀들의 면제는 무효이고 해당 축은 정상 검산 중이다: item29후=230.82, item30후=0, item31후=391.46, item32후=0, item33후=1377.71, item34후=714.73, item35후=0
+  YELLOW [forward_capital] CAPSEC_AMOUNT_MISMATCH  흥국화재 2026.2Q
+         흥국화재(KR0005): 마스터 6,320.0억 ≠ 소스 7,320.0억 (all 슬라이스, tol 73.2) — 부분 유실/이중계상 의심(관찰기 YELLOW)
+  YELLOW [tier1_utilization] CAPSEC_COVERAGE_AXIS_MOVED  - 2026.2Q
+         tier1_utilization: 소스가 경영공시(item6/item47)로 바뀌어 per-bond 커버리지 대조가 성립하지 않는다 — 결측·0 검사는 CHECK 1 census 가 담당한다. 채권 커버리지 축은 forward_capital 이 계속 진다.
+  YELLOW [tier2_utilization] CAPSEC_COVERAGE_AXIS_MOVED  - 2026.2Q
+         tier2_utilization: 소스가 경영공시(item6/item47)로 바뀌어 per-bond 커버리지 대조가 성립하지 않는다 — 결측·0 검사는 CHECK 1 census 가 담당한다. 채권 커버리지 축은 forward_capital 이 계속 진다.
+  YELLOW [PL_breakdown] MASTER_HOLE_SOURCE_ABSENT  하노버재보험 2025.3Q
+         원천부재 면제 [NOT_POSTED] (owner 2026-10-11) -- 하노버재보험 2025.3Q PL 버킷 없음. 사이트 미게시 -- 마스터 버킷 부재 · raw 폴더 · 매니페스트 · 원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  RED    [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO  뮌헨재보험 2023.4Q
+         투자손익 누계가 직전분기 -1,800.0 → 이번분기 정확히 0.0 — FY 누계는 이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  스위스리아시아 2023.2Q
+         법인세 누계 -900.0 → 0.0 — owner 확정 셀(owner 2026-10-11 (채팅 승인: 「법인세는 네 제안대로 승인」, 법인세 0 은 원문에 0 으로 인쇄된 것으로 처리)). 값 박제·원천 문구(data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf p[5]) 재확인 통과, 비차단
+  RED    [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO  알지에이리인슈어런스 2023.2Q
+         영업외손익 누계가 직전분기 -100.0 → 이번분기 정확히 0.0 — FY 누계는 이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심
+  RED    [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO  알지에이리인슈어런스 2025.3Q
+         영업외손익 누계가 직전분기 100.0 → 이번분기 정확히 0.0 — FY 누계는 이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  예별손해보험 2025.3Q
+         법인세 누계 8,079.7 → 0.0 — owner 확정 셀(owner 2026-10-10). 값 박제·원천 문구(data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf p[25, 26]) 재확인 통과, 비차단
+  RED    [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO  제네럴재보험 2024.3Q
+         영업외손익 누계가 직전분기 22.0 → 이번분기 정확히 0.0 — FY 누계는 이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심
+  RED    [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO  제네럴재보험 2025.3Q
+         영업외손익 누계가 직전분기 -34.0 → 이번분기 정확히 0.0 — FY 누계는 이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  퍼시픽라이프리 2024.4Q
+         법인세 누계 500.0 → 0.0 — owner 확정 셀(owner 2026-10-11 (채팅 승인: 「법인세는 네 제안대로 승인」, 법인세 0 은 원문에 0 으로 인쇄된 것으로 처리)). 값 박제·원천 문구(data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf p[8]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  퍼시픽라이프리 2025.4Q
+         법인세 누계 200.0 → 0.0 — owner 확정 셀(owner 2026-10-11 (채팅 승인: 「법인세는 네 제안대로 승인」, 법인세 0 은 원문에 0 으로 인쇄된 것으로 처리)). 값 박제·원천 문구(data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf p[8]) 재확인 통과, 비차단
+  RED    [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO  퍼시픽라이프리 2023.3Q
+         영업외손익 누계가 직전분기 70.0 → 이번분기 정확히 0.0 — FY 누계는 이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심
+  RED    [PL_breakdown] PL_YTD_COLLAPSE_TO_ZERO  퍼시픽라이프리 2025.3Q
+         영업외손익 누계가 직전분기 100.0 → 이번분기 정확히 0.0 — FY 누계는 이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심
+==============================================================================
+2. AS-OF MATCH + EFFECTIVE-LIST (stale baseline / donut bug)   RED=0 YELLOW=1
+==============================================================================
+  YELLOW [capital_securities_effective_list] EFFECTIVE_LIST_NA_DISCLOSURE  - -
+         DISCLOSURE 계보(소진율 분자=경영공시 item6/item47)는 채권별 effective 필터 개념이 없다 — 이 축은 forward_capital(DART)이 진다.
+==============================================================================
+3. CROSS-SOURCE same-concept tolerance + different-concept guard   RED=105 YELLOW=57
+==============================================================================
+  YELLOW [PL_breakdown] CSM_AMORT_IDENTITY_PINNED  DB손해보험 2023.1Q
+         PL(원수+수재) CSM상각 3,294.66억 vs 워터폴 상각 3,118.50억 — 잔차 +176.16억 (5.649%), 허용 1.56억. 등재부 박제 [RESTATEMENT_BASIS] — 루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 
+  YELLOW [PL_breakdown] CSM_AMORT_IDENTITY_PINNED  DB손해보험 2023.2Q
+         PL(원수+수재) CSM상각 6,706.47억 vs 워터폴 상각 6,193.40억 — 잔차 +513.07억 (8.284%), 허용 3.10억. 등재부 박제 [RESTATEMENT_BASIS] — 루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 
+  YELLOW [PL_breakdown] CSM_AMORT_IDENTITY_PINNED  DB손해보험 2023.3Q
+         PL(원수+수재) CSM상각 9,411.68억 vs 워터폴 상각 9,357.90억 — 잔차 +53.78억 (0.575%), 허용 4.68억. 등재부 박제 [RESTATEMENT_BASIS] — 루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 
+  YELLOW [PL_breakdown] CSM_AMORT_IDENTITY_PINNED  교보생명보험 2026.1Q
+         PL(원수+수재) CSM상각 1,537.34억 vs 워터폴 상각 1,541.70억 — 잔차 -4.36억 (0.283%), 허용 0.77억. 등재부 박제 [UNRESOLVED] — 원인 미규명(파고들었으나 확정 못함). raw 재확인(inbox/parser/20260825T1520Z): '17-5) 출재' 소블록 + <유배당계약>/<무배당계약>/<변액계약> 3-그룹 배당합산 
+  YELLOW [PL_breakdown] PL_CSM_AMORT_MISSING_DOCUMENTED  롯데손해보험 2023.1Q
+         PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 392.8억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재된 예외 [NOT_DISCLOSED_SOURCE] — data/dart/FY2023_Q1/raw/KR0003_롯데손해보험/xml/20230515002687.xml (rcept 20230515002687) L4816-5242 확인: '4.재무제표'~'5
+  RED    [PL_breakdown] PL_CSM_AMORT_VS_WATERFALL  알지에이리인슈어런스 2025.4Q
+         PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 397.3억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)
+  YELLOW [PL_breakdown] PL_CSM_AMORT_MISSING_DOCUMENTED  에이아이에이생명보험 2023.4Q
+         PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 1,417.0억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재된 예외 [NOT_DISCLOSED_SOURCE] — raw data/dart/FY2023_Q4/raw/KR0080_에이아이에이생명보험_20240409002583/20240409002583_00760.xml 전체를 훑어 확인(TODO_parser_if
+  RED    [PL_breakdown] PL_CSM_AMORT_VS_WATERFALL  퍼시픽라이프리 2023.4Q
+         PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 117.8억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)
+  YELLOW [PL_breakdown] CSM_AMORT_IDENTITY_PINNED  하나생명보험 2024.4Q
+         PL(원수+수재) CSM상각 398.57억 vs 워터폴 상각 403.70억 — 잔차 -5.13억 (1.271%), 허용 0.20억. 등재부 박제 [RESTATEMENT_BASIS] — 원인 미규명 — 처리 중 부작용 발견 후 원복. build_csm() 재실행 시 diag(더 최신, item5=-398.6=PL과 소수 첫째자리까지 일치)로 자동 동기화되는 것을 확인했으나, 그 값
+  RED    [PL_breakdown] PL_CSM_AMORT_VS_WATERFALL  하노버재보험 2025.4Q
+         PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 30.4억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재부에 없다 — 신규 결손이다 (data/_gold/pl_csm_amort_missing_ledger.json)
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2023.1Q
+         KR1101 2023.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2023.2Q
+         KR1101 2023.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2023.3Q
+         KR1101 2023.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2023.4Q
+         KR1101 2023.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2024.1Q
+         KR1101 2024.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2024.2Q
+         KR1101 2024.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2024.3Q
+         KR1101 2024.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2024.4Q
+         KR1101 2024.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2025.1Q
+         KR1101 2025.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2025.2Q
+         KR1101 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2025.3Q
+         KR1101 2025.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2025.4Q
+         KR1101 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2026.1Q
+         KR1101 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1101 2026.2Q
+         KR1101 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2023.1Q
+         KR1102 2023.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2023.2Q
+         KR1102 2023.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2023.3Q
+         KR1102 2023.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2023.4Q
+         KR1102 2023.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2024.1Q
+         KR1102 2024.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2024.2Q
+         KR1102 2024.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2024.3Q
+         KR1102 2024.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2024.4Q
+         KR1102 2024.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2025.1Q
+         KR1102 2025.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2025.2Q
+         KR1102 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2025.3Q
+         KR1102 2025.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2025.4Q
+         KR1102 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2026.1Q
+         KR1102 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1102 2026.2Q
+         KR1102 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2023.1Q
+         KR1103 2023.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2023.2Q
+         KR1103 2023.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2023.3Q
+         KR1103 2023.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2023.4Q
+         KR1103 2023.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2024.1Q
+         KR1103 2024.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2024.2Q
+         KR1103 2024.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2024.3Q
+         KR1103 2024.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2024.4Q
+         KR1103 2024.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2025.1Q
+         KR1103 2025.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2025.2Q
+         KR1103 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2025.3Q
+         KR1103 2025.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2025.4Q
+         KR1103 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2026.1Q
+         KR1103 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1103 2026.2Q
+         KR1103 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2023.1Q
+         KR1104 2023.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2023.2Q
+         KR1104 2023.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2023.3Q
+         KR1104 2023.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2023.4Q
+         KR1104 2023.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2024.1Q
+         KR1104 2024.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2024.2Q
+         KR1104 2024.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2024.3Q
+         KR1104 2024.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2024.4Q
+         KR1104 2024.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2025.1Q
+         KR1104 2025.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2025.2Q
+         KR1104 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2025.4Q
+         KR1104 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2026.1Q
+         KR1104 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1104 2026.2Q
+         KR1104 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2023.1Q
+         KR1105 2023.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2023.2Q
+         KR1105 2023.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2023.3Q
+         KR1105 2023.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2023.4Q
+         KR1105 2023.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2024.1Q
+         KR1105 2024.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2024.2Q
+         KR1105 2024.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2024.3Q
+         KR1105 2024.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2024.4Q
+         KR1105 2024.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2025.1Q
+         KR1105 2025.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2025.2Q
+         KR1105 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2025.3Q
+         KR1105 2025.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2025.4Q
+         KR1105 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2026.1Q
+         KR1105 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1105 2026.2Q
+         KR1105 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2023.1Q
+         KR1106 2023.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2023.2Q
+         KR1106 2023.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2023.3Q
+         KR1106 2023.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2023.4Q
+         KR1106 2023.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2024.1Q
+         KR1106 2024.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2024.2Q
+         KR1106 2024.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2024.3Q
+         KR1106 2024.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2024.4Q
+         KR1106 2024.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2025.1Q
+         KR1106 2025.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2025.2Q
+         KR1106 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2025.3Q
+         KR1106 2025.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2025.4Q
+         KR1106 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2026.1Q
+         KR1106 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1106 2026.2Q
+         KR1106 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2023.1Q
+         KR1107 2023.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2023.2Q
+         KR1107 2023.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2023.3Q
+         KR1107 2023.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2023.4Q
+         KR1107 2023.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2024.1Q
+         KR1107 2024.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2024.2Q
+         KR1107 2024.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2024.3Q
+         KR1107 2024.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2024.4Q
+         KR1107 2024.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2025.1Q
+         KR1107 2025.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2025.2Q
+         KR1107 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2025.3Q
+         KR1107 2025.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2025.4Q
+         KR1107 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2026.1Q
+         KR1107 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1107 2026.2Q
+         KR1107 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1108 2025.2Q
+         KR1108 2025.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1108 2025.3Q
+         KR1108 2025.3Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1108 2025.4Q
+         KR1108 2025.4Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1108 2026.1Q
+         KR1108 2026.1Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  RED    [PL_breakdown] CONCEPT_MIXED_DISCLOSURE_INTO_DART  KR1108 2026.2Q
+         KR1108 2026.2Q income_statement: 경영공시(감독회계) 계보 셀에 항목 [17, 20, 21] 가 실렸다 — CONCEPT_REGISTRY['pl_disclosure_vs_dart'] 의 reference_only 다(경영공시 투자손익=투자수익−투자비용 vs 마스터 투자손익=투자이익+보험금융손익). 허용 항목은 §2-1 5개 [1, 16, 22, 23, 24] 뿐이다. 검산에만 쓰고 값은 싣지 마라
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  하나손해보험 2023.1Q
+         이익잉여금: 17BS -509억 vs K-ICS -703억 (이탈 27.6%, 이 회사 평소 6.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  신한이지손해보험 2023.3Q
+         이익잉여금: 17BS -168억 vs K-ICS -157억 (이탈 6.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.1Q
+         이익잉여금: 17BS 55,555억 vs K-ICS 38,946억 (이탈 29.9%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.2Q
+         이익잉여금: 17BS 56,959억 vs K-ICS 40,194억 (이탈 29.4%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  미래에셋생명보험 2023.3Q
+         이익잉여금: 17BS 17,475억 vs K-ICS 18,200억 (이탈 4.0%, 이 회사 평소 0.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이아이에이생명보험 2023.1Q
+         이익잉여금: 17BS 11,380억 vs K-ICS 22,193억 (이탈 48.7%, 이 회사 평소 3.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  IBK연금보험 2023.1Q
+         이익잉여금: 17BS 4,478억 vs K-ICS 4,675억 (이탈 4.2%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  IBK연금보험 2023.2Q
+         이익잉여금: 17BS 4,339억 vs K-ICS 4,488억 (이탈 3.3%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  뮌헨재보험 2023.1Q
+         이익잉여금: 17BS 1,313억 vs K-ICS 1,497억 (이탈 12.3%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  뮌헨재보험 2023.2Q
+         이익잉여금: 17BS 1,387억 vs K-ICS 1,628억 (이탈 14.8%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  뮌헨재보험 2023.3Q
+         이익잉여금: 17BS 1,534억 vs K-ICS 1,695억 (이탈 9.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  제네럴재보험 2023.1Q
+         이익잉여금: 17BS 599억 vs K-ICS 658억 (이탈 9.0%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  하노버재보험 2026.2Q
+         이익잉여금: 17BS 234억 vs K-ICS 224억 (이탈 4.4%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2026.2Q
+         이익잉여금: 17BS 2,638억 vs K-ICS 2,557억 (이탈 3.1%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.1Q
+         이익잉여금: 17BS 1,465억 vs K-ICS 3,404억 (이탈 57.0%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.3Q
+         이익잉여금: 17BS 1,940억 vs K-ICS 3,772억 (이탈 48.6%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2024.2Q
+         이익잉여금: 17BS 2,517억 vs K-ICS 1,998억 (이탈 20.6%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  메리츠화재해상보험 2023.3Q
+         AOCI: 17BS 5,427억 vs K-ICS 2,415억 (이탈 55.5%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  한화손해보험 2023.4Q
+         AOCI: 17BS 190억 vs K-ICS 179억 (이탈 6.0%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  롯데손해보험 2023.1Q
+         AOCI: 17BS 2,046억 vs K-ICS 3,538억 (이탈 42.2%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  롯데손해보험 2023.2Q
+         AOCI: 17BS 2,049억 vs K-ICS 3,582억 (이탈 42.8%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  예별손해보험 2025.4Q
+         AOCI: 17BS -20억 vs K-ICS -469억 (이탈 95.8%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  현대해상 2023.3Q
+         AOCI: 17BS 924억 vs K-ICS 1,734억 (이탈 46.7%, 이 회사 평소 5.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  현대해상 2023.1Q
+         AOCI: 17BS -2,000억 vs K-ICS -1,174억 (이탈 41.3%, 이 회사 평소 5.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  현대해상 2023.2Q
+         AOCI: 17BS -1,051억 vs K-ICS -242억 (이탈 77.0%, 이 회사 평소 5.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  KB손해보험 2024.3Q
+         AOCI: 17BS -5,696억 vs K-ICS -4,831억 (이탈 15.2%, 이 회사 평소 0.6%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB손해보험 2023.4Q
+         AOCI: 17BS 1,041억 vs K-ICS -1,464억 (이탈 171.1%, 이 회사 평소 38.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB손해보험 2023.1Q
+         AOCI: 17BS 590억 vs K-ICS -749억 (이탈 178.8%, 이 회사 평소 38.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  한화생명 2024.1Q
+         AOCI: 17BS 834억 vs K-ICS 49억 (이탈 94.1%, 이 회사 평소 16.9%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  한화생명 2026.2Q
+         AOCI: 17BS 134억 vs K-ICS -2,149억 (이탈 106.3%, 이 회사 평소 16.9%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2026.2Q
+         AOCI: 17BS 1,235,558억 vs K-ICS 865,137억 (이탈 30.0%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2023.2Q
+         AOCI: 17BS 265,561억 vs K-ICS 283,989억 (이탈 6.5%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2023.3Q
+         AOCI: 17BS 271,223억 vs K-ICS 289,452억 (이탈 6.3%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2026.1Q
+         AOCI: 17BS 606,840억 vs K-ICS 434,646억 (이탈 28.4%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2023.1Q
+         AOCI: 17BS 230,615억 vs K-ICS 249,731억 (이탈 7.7%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2025.4Q
+         AOCI: 17BS 433,581억 vs K-ICS 306,324억 (이탈 29.4%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이비엘생명보험 2023.1Q
+         AOCI: 17BS 3,722억 vs K-ICS 3,165억 (이탈 15.0%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이비엘생명보험 2023.2Q
+         AOCI: 17BS 3,680억 vs K-ICS 3,135억 (이탈 14.8%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  흥국생명보험 2024.1Q
+         AOCI: 17BS 662억 vs K-ICS -532억 (이탈 180.3%, 이 회사 평소 32.4%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.1Q
+         AOCI: 17BS -312억 vs K-ICS 1,519억 (이탈 120.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.2Q
+         AOCI: 17BS 369억 vs K-ICS 1,956억 (이탈 81.1%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이아이에이생명보험 2023.1Q
+         AOCI: 17BS 2,106억 vs K-ICS -2,741억 (이탈 176.9%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB생명보험 2023.2Q
+         AOCI: 17BS -867억 vs K-ICS -1,051억 (이탈 17.5%, 이 회사 평소 2.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB생명보험 2023.3Q
+         AOCI: 17BS -508억 vs K-ICS -716억 (이탈 29.1%, 이 회사 평소 2.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  처브라이프생명보험 2023.3Q
+         AOCI: 17BS 573억 vs K-ICS 1,015억 (이탈 43.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  농협생명보험 2026.2Q
+         AOCI: 17BS -15,653억 vs K-ICS -15,171억 (이탈 3.1%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  IBK연금보험 2023.3Q
+         AOCI: 17BS -1,837억 vs K-ICS -1,777억 (이탈 3.3%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.1Q
+         AOCI: 17BS -423억 vs K-ICS -74억 (이탈 82.5%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.3Q
+         AOCI: 17BS -796억 vs K-ICS -124억 (이탈 84.4%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.2Q
+         AOCI: 17BS -679억 vs K-ICS -703억 (이탈 3.3%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+==============================================================================
+4. DOMAIN IDENTITY (capital recognition-limit 분모=SCR×50% / 소진율≤100%)   RED=0 YELLOW=8
+==============================================================================
+  YELLOW [CSM_waterfall] CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED  하나생명보험 2024.4Q
+         기초 CSM 3,089 != 2023.4Q 기말 3,016 [Δ+73] — 등재된 예외(raw 확정 소급재작성, 데이터 정정으로 못 닫음, 박제 재검산 통과): FY2025 사업보고서(rcept 20260325000201) note 38 '재무제표 재작성': 보험금융수익(비용) 인식 회계정책을 K-IFRS 1008호에 따라 소급 적용, 비교표시된 전기(FY2024) 재무제표를 재작성. 재무상태표 영향표(line 25567-25570/25811-25815)가 전기말(2024.12.31) 보험계약부채 +5,726,404천원(+57.26억), 전기초(2024.1.1) +7,292,841천원(+72.93억)를 명문 공시 — 델타의 소재도 CSM '이외모든계약' 서브컬럼(주석 14-4)으로 정확히 일치 확인(둘 다 소수점 둘째자리까지 일치). 2024.4Q 6항목은 FY2025 필링의 <전기> 비교표(주석 14-4)에서 전부 단일 표로 가져왔다 — 기초/신계약/이자/조정/상각/기말 어느 것도 plug 아님(조정=그 표 자신의 '보험계약마진을 조정하는 추정치의 변동분' 행). 그래서 2025.4Q 와는 닫히지만(같은 표 내부 자기정합), 2023.4Q(FY2023 원본 필링 주석 13-3 자기 값) 와는 이 재작성 때문에 +73억 못 닫는다. note 38 이 재작성한 대차대조표 시점은 2024.1.1/2024.12.31 뿐(2023 이전 소급 없음) — 이 경계를 닫으려면 어느 필링에도 없는 숫자를 지어내야 한다(금지). [validation iter4 정정] 종전 이 자리에 있던 'FY2024 필링의 <전기> 비교표와 완전 일치' 라는 문장은 실측상 과장이었다: FY2024 필링 <전기> 표는 조정 -750.59 / 상각 -279.56 / 기말 3,016.13 을 인쇄하는데 FY2023 자기 표는 -751.05(기타행 -41,413천원 포함) / -279.14 / 3,016.09 다(최대 0.46억 차, 마스터 소수 1자리에서 2셀이 갈린다). 결론은 안 바뀐다 — 어느 쪽을 쓰든 2023.4Q 기말은 3,016.1 이고 이 경계 Δ 는 +73.0 이다. inbox/parser/20260825T0230Z(iter2·iter4) 및 TODO_parser_ifrs17.md 참조.
+  YELLOW [CSM_waterfall] CSM_SIGN_CONVENTION_EXCEPTED  예별손해보험 2025.4Q
+         신계약CSM=-11.7 — 등재된 예외: raw 확인(20260406003175): 이 회사는 손실부담계약 전입/환입을 **CSM 열 안에** 표시한다(표준 표기는 CSM 열을 비운다 — 라이나 동일 표 대조). 그래서 신계약인식효과 행이 onerous 분을 net 한 (1,166,995)천원으로 찍힌다. PV +380,349 / RA +786,646 / CSM (1,166,995) 합계 0 으로 행이 닫히고, 같은 필링의 상각은 (17,399,016) 로 **정상 부호**라 2023.4Q 식 부호역전이 아니다. 공시 표기를 그대로 옮긴 값.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  NH농협손해보험 2026.2Q
+         보완자본 인정한도 소진율 117.7% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  IBK연금보험 2026.2Q
+         보완자본 인정한도 소진율 120.4% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  한화생명 2026.2Q
+         보완자본 인정한도 소진율 222.4% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  푸본현대생명보험 2026.2Q
+         보완자본 인정한도 소진율 130.1% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  동양생명 2026.2Q
+         보완자본 인정한도 소진율 105.0% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  미래에셋생명 2026.2Q
+         보완자본 인정한도 소진율 112.4% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+==============================================================================
+5. GENERIC ANOMALY DISCOVERY (metric-agnostic; learned from cohort)   [게이트에서 분리됨 2026-08-25]
+==============================================================================
+  YELLOW 전용(RED 0)이라 push 를 막은 적이 없고 게이트 YELLOW 의 75%를 혼자 만들었다.
+  손으로 돌린다: scripts/scan_generic_anomalies.py  (스캔 + 트리아지 + 리뷰 큐)
+==============================================================================
+6. GOLD OVERLAY vs BUILDER SOURCE (몇 칸이 조용히 덮여 있는가)   RED=0 YELLOW=2
+==============================================================================
+  YELLOW [CSM] GOLD_OVERLAY_REDUNDANT  - -
+         CSM gold 오버레이 276칸 중 **86칸이 소스와 같다**(마스크: SAME_EXACT=28 · SAME_AT_1DP=58, 9개사). 나머지 = LOAD_BEARING 170 · ROW_ABSENT 18 · NULL_IN_SOURCE 2 · GOLD_SUPPRESSES 0. 박제 86칸 — 박제된 칸만 회귀 탐지가 된다
+  YELLOW [PL] GOLD_OVERLAY_REDUNDANT  - -
+         PL gold 오버레이 203칸 중 **29칸이 소스와 같다**(마스크: SAME_EXACT=26 · SAME_AT_1DP=3, 7개사). 나머지 = LOAD_BEARING 37 · ROW_ABSENT 0 · NULL_IN_SOURCE 137 · GOLD_SUPPRESSES 0. 박제 29칸 — 박제된 칸만 회귀 탐지가 된다
+==============================================================================
+7. K-ICS RESTATEMENT (발행사 소급재작성 / 마스터 기준이탈)   RED=0 YELLOW=2
+==============================================================================
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0073 2026.1Q
+         교보생명보험 2026.1Q: 발행사가 이 분기를 소급재작성했다 — 항목 [1, 2, 4, 11, 14, 15, 16, 19, 20, 22] 10칸(최대 Δ 항목15 105,171→106,059). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): "지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_CENSUS  - -
+         소급재작성 축 census(2026.1Q): 39사 중 재작성 1사 · 무변동 38사 · 미판독 0사. 등재 10칸을 매 실행 마스터에 대고 재검산한다 — 등재된 칸만 기준이탈 탐지가 된다
+==============================================================================
+8. MASTER XLSX (마스터 JSON ↔ insurequant_master_tables.xlsx 셀 단위)   RED=6 YELLOW=1
+==============================================================================
+  RED    [master_tables.xlsx] MASTER_XLSX_ROW_MISSING  - 가정민감도
+         마스터에 있는데 시트에 없는 행 6건 (예: [('KR1104', '하노버재보험', 'X', '생명보험', '2023.4Q', '2023-12-31', 1, '사망률', '3.27% 증가', '재보사 경영공시 FY2024 4-6-5 ①(2023 열, 백만원→억원 소수 2자리); 자본영향=당기손익+기타포괄손익(세전); 당기손익 정의에 CSM 상각 변동 포함(원문 주2); 원문 이행현금흐름 변동 4.35; 렌더링으로 부호 확인(이행현금흐름 + 보험계약마진 = 0)'), ('KR1104', '하노버재보험', 'X', '생명보험', '2023.4Q', '2023-12-31', 2, '장해질병(정액보상+실손보상)', '정액 3.40% & 실손 2.62% 증가', '재보사 경영공시 FY2024 4-6-5 ①(2023 열, 백만원→억원 소수 2자리); 자본영향=당기손익+기타포괄손익(세전); 당기손익 정의에 CSM 상각 변동 포함(원문 주2); 원문 이행현금흐름 변동 49; 렌더링으로 부호 확인(이행현금흐름 + 보험계약마진 = 0)'), ('KR1104', '하노버재보험', 'X', '생명보험', '2023.4Q', '2023-12-31', 3, '장기재물기타', '4.19% 증가', "재보사 경영공시 FY2024 4-6-5 ①(2023 열, 백만원→억원 소수 2자리); 자본영향=당기손익+기타포괄손익(세전); 당기손익 정의에 CSM 상각 변동 포함(원문 주2); 원문 공란/'-' (값 없음)"), ('KR1104', '하노버재보험', 'X', '생명보험', '2023.4Q', '2023-12-31', 4, '해지율(상승)', '9.16% 증가', '재보사 경영공시 FY2024 4-6-5 ①(2023 열, 백만원→억원 소수 2자리); 자본영향=당기손익+기타포괄손익(세전); 당기손익 정의에 CSM 상각 변동 포함(원문 주2); 원문 이행현금흐름 변동 26.85; 렌더링으로 부호 확인(이행현금흐름 + 보험계약마진 = 0)'), ('KR1104', '하노버재보험', 'X', '생명보험', '2023.4Q', '2023-12-31', 5, '해지율(하락)', '9.16% 감소', '재보사 경영공시 FY2024 4-6-5 ①(2023 열, 백만원→억원 소수 2자리); 자본영향=당기손익+기타포괄손익(세전); 당기손익 정의에 CSM 상각 변동 포함(원문 주2); 원문 이행현금흐름 변동 -29.94; 렌더링으로 부호 확인(이행현금흐름 + 보험계약마진 = 0)')]) — 기대 그리드는 마스터다. python scripts/sync_master_xlsx_sheet.py "가정민감도"
+  RED    [master_tables.xlsx] MASTER_XLSX_ROW_MISSING  - CSM워터폴
+         마스터에 있는데 시트에 없는 행 18건 (예: [('KR1104', '하노버재보험', 'X', '생명보험', 1, '기초 CSM', '2025.4Q'), ('KR1104', '하노버재보험', 'X', '생명보험', 2, '신계약 CSM', '2025.4Q'), ('KR1104', '하노버재보험', 'X', '생명보험', 3, '이자 부리', '2025.4Q'), ('KR1104', '하노버재보험', 'X', '생명보험', 4, '가정 및 경험 조정', '2025.4Q'), ('KR1104', '하노버재보험', 'X', '생명보험', 5, 'CSM 상각', '2025.4Q')]) — 기대 그리드는 마스터다. python scripts/sync_master_xlsx_sheet.py "CSM워터폴"
+  RED    [master_tables.xlsx] MASTER_XLSX_ROW_MISSING  - CSM상각
+         마스터에 있는데 시트에 없는 행 15건 (예: [('KR1101', '뮌헨재보험', 'X', '손해보험', '2023.4Q', 1), ('KR1101', '뮌헨재보험', 'X', '손해보험', '2023.4Q', 2), ('KR1101', '뮌헨재보험', 'X', '손해보험', '2023.4Q', 3), ('KR1101', '뮌헨재보험', 'X', '손해보험', '2023.4Q', 4), ('KR1101', '뮌헨재보험', 'X', '손해보험', '2023.4Q', 5)]) — 기대 그리드는 마스터다. python scripts/sync_master_xlsx_sheet.py "CSM상각"
+  RED    [master_tables.xlsx] MASTER_XLSX_ROW_MISSING  - 손익분해PL
+         마스터에 있는데 시트에 없는 행 307건 (예: [('KR1101', '뮌헨재보험', 'X', '손해보험', 17, '투자손익', '2023.1Q'), ('KR1101', '뮌헨재보험', 'X', '손해보험', 20, '영업이익', '2023.1Q'), ('KR1101', '뮌헨재보험', 'X', '손해보험', 21, '영업외손익', '2023.1Q'), ('KR1101', '뮌헨재보험', 'X', '손해보험', 17, '투자손익', '2023.2Q'), ('KR1101', '뮌헨재보험', 'X', '손해보험', 20, '영업이익', '2023.2Q')]) — 기대 그리드는 마스터다. python scripts/sync_master_xlsx_sheet.py "손익분해PL"
+  RED    [master_tables.xlsx] MASTER_XLSX_ROW_MISSING  - 손해율
+         마스터에 있는데 시트에 없는 행 1904건 (예: [('KR1101', '뮌헨재보험', None, '손해보험', '2024.4Q', '1년', '합계', None, '합계', None, '억원'), ('KR1101', '뮌헨재보험', None, '손해보험', '2024.4Q', '2년', '합계', None, '합계', None, '억원'), ('KR1101', '뮌헨재보험', None, '손해보험', '2024.4Q', '3년', '합계', None, '합계', None, '억원'), ('KR1101', '뮌헨재보험', None, '손해보험', '2024.4Q', '4년', '합계', None, '합계', None, '억원'), ('KR1101', '뮌헨재보험', None, '손해보험', '2024.4Q', '5년', '합계', None, '합계', None, '억원')]) — 기대 그리드는 마스터다. python scripts/sync_master_xlsx_sheet.py "손해율"
+  RED    [master_tables.xlsx] MASTER_XLSX_ROW_MISSING  - 보험계약부채
+         마스터에 있는데 시트에 없는 행 110건 (예: [('KR1101', '뮌헨재보험', 'X', '손해보험', 10, '발생사고요소_합계', '보험부채_발생사고요소', 1, '2023.1Q', '억원', '부채 기준', None), ('KR1101', '뮌헨재보험', 'X', '손해보험', 11, '발생사고요소_최선추정부채', '보험부채_발생사고요소', 2, '2023.1Q', '억원', '부채 기준', None), ('KR1101', '뮌헨재보험', 'X', '손해보험', 12, '발생사고요소_위험조정', '보험부채_발생사고요소', 2, '2023.1Q', '억원', '부채 기준', None), ('KR1101', '뮌헨재보험', 'X', '손해보험', 13, '발생사고요소_미분리', '보험부채_발생사고요소', 2, '2023.1Q', '억원', '부채 기준', None), ('KR1101', '뮌헨재보험', 'X', '손해보험', 14, '잔여보장요소_합계', '보험부채_발생사고요소', 1, '2023.1Q', '억원', '부채 기준', None)]) — 기대 그리드는 마스터다. python scripts/sync_master_xlsx_sheet.py "보험계약부채"
+  YELLOW [master_tables.xlsx] MASTER_XLSX_CENSUS  - -
+         insurequant_master_tables.xlsx census: 선언 시트 17 · 대조 시트 17 · 대조 행 120459 · 드리프트 셀 0. 대조 시트 수가 선언보다 적으면 그만큼이 무검사다
+------------------------------------------------------------------------------
+notes:
+  - PL_breakdown provenance: published 1037셀 검증 (빌더파생 면제 1셀) · 사이드카 1043셀 중 as_of_date 부재 1043셀 → 그만큼 STALE_AS_OF 축이 침묵한다(downloader 가 필링 meta 의 보고기간 종료일을 채워야 살아난다)
+  - cross_source comparable (DART↔IR CSM steps): 36 step-pairs checked (IR JSON present)
+  - cross_source guard (tier2 Face↔BS reference-only): 0 wrong-concept penalties detected (must be 0)
+  - cross_source guard (경영공시↔DART PL 개념): DISCLOSURE 계보 307셀 / 1744값 검사 · 허용항목 [1, 16, 22, 23, 24] · reference_only [17, 20, 21] 혼입 0 이어야 한다
+  - cross_source guard (경영공시 계보 PL 의 재무제표 주석 허용): 26셀 / 26값 제외 · 허용 {how: 항목} = {'fs_note_csm_amort': [4]} · 그 항목 값은 워터폴과 별도 대조(PL_CSM_AMORT_VS_WATERFALL)
+  - cross_source 17BS↔K-ICS 자본계정: 회사별 기준선 대비 이탈 + 한쪽만 0 축. 절대 허용오차를 안 쓰는 이유는 17BS 별도 ↔ K-ICS 연결 혼재(전수 p90 17~28%)다
+##############################################################################
+SUMMARY  RED=118  YELLOW=147  provisional=False
+##############################################################################

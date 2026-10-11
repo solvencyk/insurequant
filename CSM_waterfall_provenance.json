@@ -2231,6 +2231,30 @@
       "source_id": "DISCLOSURE",
       "source_file": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
       "as_of_date": "2025-06-30"
+    },
+    {
+      "company_code": "KR1104",
+      "quarter": "2025.4Q",
+      "item_block": "csm_waterfall",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "as_of_date": "2025-12-31"
+    },
+    {
+      "company_code": "KR1105",
+      "quarter": "2025.4Q",
+      "item_block": "csm_waterfall",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+      "as_of_date": "2025-12-31"
+    },
+    {
+      "company_code": "KR1107",
+      "quarter": "2023.4Q",
+      "item_block": "csm_waterfall",
+      "source_id": "DISCLOSURE",
+      "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+      "as_of_date": "2023-12-31"
     }
   ]
 }
