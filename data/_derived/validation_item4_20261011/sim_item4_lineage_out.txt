@@ -1,0 +1,31 @@
+(a) 3d CONCEPT_MIXED_DISCLOSURE_INTO_DART  current RED cells=20  proposed RED cells=0
+    closed (20): items [(4,)]
+      - ('KR0074', '2025.3Q', 'contract_notes') [4]
+      - ('KR0074', '2026.1Q', 'contract_notes') [4]
+      - ('KR0074', '2026.2Q', 'contract_notes') [4]
+      - ('KR1101', '2023.4Q', 'contract_notes') [4]
+      - ('KR1101', '2024.4Q', 'contract_notes') [4]
+      - ('KR1101', '2025.4Q', 'contract_notes') [4]
+      - ('KR1102', '2023.4Q', 'contract_notes') [4]
+      - ('KR1102', '2024.4Q', 'contract_notes') [4]
+      - ('KR1102', '2025.4Q', 'contract_notes') [4]
+      - ('KR1103', '2023.4Q', 'contract_notes') [4]
+      - ('KR1103', '2024.4Q', 'contract_notes') [4]
+      - ('KR1103', '2025.4Q', 'contract_notes') [4]
+      - ('KR1104', '2023.4Q', 'contract_notes') [4]
+      - ('KR1105', '2023.4Q', 'contract_notes') [4]
+      - ('KR1105', '2024.4Q', 'contract_notes') [4]
+      - ('KR1106', '2023.4Q', 'contract_notes') [4]
+      - ('KR1106', '2024.4Q', 'contract_notes') [4]
+      - ('KR1106', '2025.4Q', 'contract_notes') [4]
+      - ('KR1107', '2024.4Q', 'contract_notes') [4]
+      - ('KR1107', '2025.4Q', 'contract_notes') [4]
+    newly broken (0): []
+    still RED (0): []
+(b) 2b ZERO_LEGS  current flag=23 src_na zleg=181 legcov=269  proposed flag=9 src_na zleg=195 legcov=269  (item-4-hidden buckets=22)
+    closed (14): [('라이나생명보험', '2025.3Q'), ('라이나생명보험', '2026.1Q'), ('라이나생명보험', '2026.2Q'), ('뮌헨재보험', '2024.4Q'), ('뮌헨재보험', '2025.4Q'), ('스위스리아시아', '2024.4Q'), ('스위스리아시아', '2025.4Q'), ('스코리재보험', '2024.4Q'), ('스코리재보험', '2025.4Q'), ('알지에이리인슈어런스', '2024.4Q'), ('제네럴재보험', '2024.4Q'), ('제네럴재보험', '2025.4Q'), ('퍼시픽라이프리', '2024.4Q'), ('퍼시픽라이프리', '2025.4Q')]
+    newly broken (0): []
+    still flagged (9): [('아이엠라이프생명보험', '2024.4Q'), ('아이엠라이프생명보험', '2025.4Q'), ('에이아이에이생명보험', '2024.4Q'), ('예별손해보험', '2024.4Q'), ('예별손해보험', '2025.4Q'), ('카카오페이손해보험', '2024.4Q'), ('카카오페이손해보험', '2025.4Q'), ('하나손해보험', '2024.4Q'), ('하나손해보험', '2025.4Q')]
+    sidecar how histogram: {'raw_filing': 389, 'owner_gold_overlay': 92, 'fs_api_tier1': 282, 'raw_filing_derived': 298, 'disclosure_summary_pl': 317, 'gold_cell_override': 51, 'life_lob_zero_builder_rule': 206, 'fs_note_csm_amort': 20}
+    published item-4 rows in contract_notes with DISCLOSURE lineage but NOT fs_note:
+      count 0

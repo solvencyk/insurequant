@@ -339,6 +339,59 @@ def _census_source_absent(records: list[dict], missing_rows: list[tuple],
     return kept, exempted, red
 
 
+# ---------------------------------------------------------------------------
+# PL_breakdown 원천부재 (회사,분기) 등재 (owner 승인 2026-10-11, 하노버 2025.3Q 한 칸)
+# ---------------------------------------------------------------------------
+# K-ICS 의 `_CENSUS_SOURCE_ABSENT` 는 **K-ICS census 만** 덮는다 -- 같은 (회사,분기) 문서가 게시되지
+# 않았어도 PL_breakdown 의 `MASTER_HOLE` 은 그 등재와 무관하게 RED 로 남는다(2026-10-11 실측: 하노버
+# 2025.3Q 한 버킷). 그래서 PL 쪽에 **같은 종류의 별도 등재부**를 둔다. 새 구현이 아니라 위
+# `_census_source_absent` 를 그대로 부른다(같은 ①~⑤ 재검산 -- 버킷 여전히 부재 · raw 폴더 박제 ·
+# 다운로더 매니페스트 사유 · 근거 원장 VERIFIED + 인용 원천 재오픈). 원장은 registry `_PL_SOURCE_ABSENT`
+# 로 따로 적는다(K-ICS 등재의 원장 기록으로 PL 을 덮지 못하게).
+#
+# **읽는 쪽(lookup 분기)**: `validate_master_tables.coverage_holes(source_absent=)` 가 이 함수의 결과를
+# 받아 「통째」 hole 에서만 빼고, 두 게이트(`validate_master_tables._check_coverage` · `validate_data_contract`
+# CHECK 1 의 1c)가 둘 다 같은 함수를 부른다. 등재부만 쓰고 읽는 분기가 없으면 다음 라운드에 샌다
+# (`tests/test_pl_source_absent_exemption.py` 가 읽는 쪽을 변이시험한다).
+_PL_LEDGER_REGISTRY = "_PL_SOURCE_ABSENT"
+_PL_SOURCE_ABSENT: dict[tuple[str, str], dict] = {
+    # 하노버재보험 KR1104 2025.3Q -- 사이트 공시 목록에 2025 3/4분기 항목이 없다(1Q·2Q·4Q 만 게시).
+    # K-ICS 쪽 `_CENSUS_SOURCE_ABSENT[("KR1104","2025.3Q")]` 와 같은 사실(문서 자체가 없다)이지만 게이트는
+    # 별개이므로 PL 에도 따로 등재한다. owner 2026-10-11 채팅: 「하노버 25.3q만 예외 승인」.
+    ("KR1104", "2025.3Q"): {"kind": "NOT_POSTED", "approved": "owner 2026-10-11", "raw": {}},
+}
+
+
+def pl_source_absent_exemptions(present_cells, code_name: dict, registry: dict | None = None,
+                                ledger=None, root: Path | None = None):
+    """PL_breakdown 원천부재 등재분을 `_census_source_absent` 로 재검산 -> (ok, red).
+
+    present_cells = PL 마스터에 값이 있는 (원보험사코드, 공시분기) 집합. code_name = 코드 -> PL 의 원수사명.
+    ok  = {(code, quarter): (kind, approved)} -- 재검산을 통과해 PL `MASTER_HOLE` 에서 빼도 되는 칸
+    red = [{rule, code, quarter, detail}] -- 깨진 등재. 규칙 이름은 PL_SOURCE_ABSENT_* 로 바꾼다
+          (그 칸은 ok 에 안 들어가므로 hole 은 그대로 남는다).
+    registry=None 이면 `_PL_SOURCE_ABSENT`, ledger=None 이면 근거 원장을 읽는다."""
+    reg = _PL_SOURCE_ABSENT if registry is None else registry
+    if not reg:
+        return {}, []
+    if ledger is None:
+        ledger = _load_exemption_ledger()
+    if isinstance(ledger, dict) and ledger.get("_unreadable"):
+        view = {"_unreadable": True}
+    else:
+        entries = [dict(e, registry=_CENSUS_LEDGER_REGISTRY)
+                   for e in ((ledger or {}).get("entries") or [])
+                   if isinstance(e, dict) and e.get("registry") == _PL_LEDGER_REGISTRY]
+        view = {"entries": entries}
+    present = set(present_cells)
+    missing = [(q, c, code_name.get(c, c)) for (c, q) in sorted(reg) if (c, q) not in present]
+    records = [{KEY_CODE: c, KEY_QUARTER: q} for c, q in sorted(present)]
+    _kept, exempted, red = _census_source_absent(records, missing, registry=reg, ledger=view, root=root)
+    for r in red:
+        r["rule"] = str(r["rule"]).replace("CENSUS_EXEMPTION_", "PL_SOURCE_ABSENT_")
+    return {(c, q): (kind, approved) for q, c, _n, kind, approved in exempted}, red
+
+
 # 보완자본 한도 3줄(47/48/49) 축 — 룰별 상태 + **결측 사유별 집계**를 인쇄한다.
 #
 # 왜 따로 인쇄하나: 이 세 항목은 2026-08-21 에 1,299칸 적재됐는데 게이트가 exit 0 이었다.
@@ -3549,6 +3602,8 @@ def _exemption_registries() -> dict[str, frozenset]:
         # census 원천부재 (회사,분기) 등재 (owner 승인 2026-10-10). 장치 자신도 원장을 재검산하지만,
         # 여기 등록해야 근거 없는 등재가 EXEMPTION_PROVENANCE_MISSING 으로 두 게이트에서 막힌다.
         _CENSUS_LEDGER_REGISTRY: frozenset(_CENSUS_SOURCE_ABSENT),
+        # PL_breakdown 쪽 같은 종류의 등재부 (owner 승인 2026-10-11) -- 원장 기록이 없으면 막는다.
+        _PL_LEDGER_REGISTRY: frozenset(_PL_SOURCE_ABSENT),
         # 잔차 박제형 면제 2번째. 룰엔진에 살지만 근거 검사는 여기서 받는다 — 레지스트리를
         # 여기 등록하지 않으면 그 면제는 근거 없이 조용히 산다.
         "IRR_DERIVE_ISSUER_INCONSISTENT": frozenset(IRR_DERIVE_ISSUER_INCONSISTENT),

@@ -114,4 +114,30 @@ def test_inert_registration_is_reported(live_cell, monkeypatch):
 def test_only_owner_approved_cells_use_this_path():
     d = json.loads((ROOT / "data" / "_gold" / "user_pl_confirmed_cells.json").read_text(encoding="utf-8"))
     ytd = [(c["company"], c["quarter"], c["item"]) for c in d["cells"] if c.get("rule") == "PL_YTD_COLLAPSE_TO_ZERO"]
-    assert ytd == [KEY], f"등재 범위가 owner 승인(2026-10-10, 1칸)과 다르다: {ytd}"
+    approved = {
+        KEY,                                                    # owner 2026-10-10 (예별 2025.3Q, 보고주체 단절)
+        ("스위스리아시아", "2023.2Q", "법인세"),                  # owner 2026-10-11 (원문에 0 인쇄)
+        ("퍼시픽라이프리", "2024.4Q", "법인세"),                  # owner 2026-10-11 (감사보고서 당기법인세 '-')
+        ("퍼시픽라이프리", "2025.4Q", "법인세"),
+    }
+    assert len(ytd) == len(set(ytd)) and set(ytd) == approved, (
+        f"등재 범위가 owner 승인(2026-10-10 1칸 + 2026-10-11 3칸)과 다르다: {sorted(ytd)}")
+
+
+def test_every_registered_cell_is_reconfirmed_against_its_source():
+    """등재 4칸 전부가 라이브 마스터·원문 PDF 로 재확인된다 -- 값/마커가 어긋난 칸이 하나라도 있으면 RED 가 돌아와 깨진다.
+    (데이터가 채워져 붕괴가 사라진 칸은 게이트가 INERT YELLOW 로 알리는 일이라 여기서는 막지 않는다.)"""
+    import validate_master_tables as VM
+    pl = VM.load_long(VM.PL_PATH)
+    env = _Env()
+    env.pl = pl
+    env.wf = {}
+    res = dc.GateResult()
+    _ytd_block(res, env)
+    reds = [(f.company, f.quarter, f.message) for f in res.findings
+            if f.severity == "RED" and f.rule == "PL_YTD_COLLAPSE_TO_ZERO"]
+    assert not reds, reds
+    seen = {(f.company, f.quarter) for f in res.findings
+            if f.rule in ("PL_YTD_COLLAPSE_OWNER_CONFIRMED", "PL_YTD_COLLAPSE_CONFIRMED_INERT")}
+    assert seen >= {("스위스리아시아", "2023.2Q"), ("퍼시픽라이프리", "2024.4Q"), ("퍼시픽라이프리", "2025.4Q"),
+                    ("예별손해보험", "2025.3Q")}, sorted(seen)

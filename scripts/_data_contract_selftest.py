@@ -832,6 +832,67 @@ def f_pl_concept_allowed_is_clean():
                        pl_builder_derived_cells=base_pl_cells()["pl_builder_derived_cells"])
 
 
+def _fs_note_cell(items, *, how="fs_note_csm_amort", resolution="fs_note_csm_amort",
+                  evidence=True, block="contract_notes"):
+    """재무제표·감사보고서 주석 계보 셀(2026-10-11, PL_FS_NOTE_LINEAGE) -- 경영공시 PDF 경로 + 주석 how."""
+    entry = {"file": DISCLOSURE_SOURCE, "how": how, "items": items}
+    if evidence:
+        entry.update({"page": 58, "printed": "(15,847,454,365)", "unit": "원"})
+    return [{"company_code": "KR9003", "quarter": LATEST, "item_block": block,
+             "source_id": "DISCLOSURE", "source_file": DISCLOSURE_SOURCE,
+             "source_files": [entry], "resolution": resolution},
+            *_pl_base_cells()]
+
+
+def _fs_note_inject(items, published=None, **kw):
+    pub = dict(base_pl_cells()["pl_published_items"])
+    pub[("KR9003", LATEST, kw.get("block", "contract_notes"))] = list(published or items)
+    return base_inject(provenance_sidecars=_pl_sidecar(_fs_note_cell(items, **kw)),
+                       pl_published_items=pub, pl_published_cells=sorted(pub),
+                       pl_builder_derived_cells=base_pl_cells()["pl_builder_derived_cells"])
+
+
+def f_pl_fs_note_item4_is_clean():
+    """오탐 금지: how=fs_note_csm_amort + 쪽·인쇄값이 있는 **항목 4** 는 경영공시 PDF 경로여도 정상이다
+    (재무제표·감사보고서 주석 계보, owner 2026-10-11)."""
+    return _fs_note_inject([4])
+
+
+def f_pl_fs_note_without_evidence():
+    """근거 필드(쪽·인쇄값) 없는 how 는 허용하지 않는다 -- how 문자열만 달아 빠져나가는 경로 차단."""
+    return _fs_note_inject([4], evidence=False)
+
+
+def f_pl_fs_note_item4_wrong_how():
+    """등재 안 된 how(`disclosure_pdf`) 의 항목 4 는 종전대로 RED."""
+    return _fs_note_inject([4], how="disclosure_pdf", resolution="disclosure_pdf")
+
+
+def f_pl_fs_note_how_resolution_mismatch():
+    """entry how 와 셀 resolution 이 다르면(= 한쪽만 고쳐 단 것) 허용하지 않는다."""
+    return _fs_note_inject([4], resolution="disclosure_summary_pl")
+
+
+def f_pl_fs_note_reference_only_item():
+    """how 가 fs_note 여도 reference_only 항목 17(투자손익)은 못 빠진다 -- 허용은 항목 4 한 개다."""
+    return _fs_note_inject([17])
+
+
+def f_pl_fs_note_mixed_with_item17():
+    """한 블록에 4 와 17 이 같이 있으면 4 만 빠지고 17 은 RED 로 남는다."""
+    return _fs_note_inject([4, 17])
+
+
+def f_pl_fs_note_other_contract_note_item():
+    """contract_notes 블록의 다른 항목(5=원수 위험조정변동)도 못 빠진다 -- 항목 단위 허용."""
+    return _fs_note_inject([5])
+
+
+def f_pl_fs_note_wrong_block():
+    """income_statement 블록에 단 fs_note 는 허용하지 않는다(주석 계보는 contract_notes 블록 한정)."""
+    return _fs_note_inject([4], block="income_statement")
+
+
 def f_pl_missing_sidecar():
     """PL 사이드카가 통째로 사라지면 RED(UH-3 end-state 와 같은 규칙). 2026-09-20 이전에는
     `_fallback_note` 가 4개 마스터 분기 안에서만 도달 가능해서 **부재 RED 조차 안 났다**."""
@@ -879,6 +940,56 @@ def f_census_grid_disclosure_is_clean():
     from validate_master_tables import QS as MQS
     return base_inject(pl=_pl_active_index(),
                        pl_source_ids={("KR9001", q): "DISCLOSURE" for q in MQS})
+
+
+# --- Q10: PL 원천부재 등재(`_PL_SOURCE_ABSENT`, owner 2026-10-11)의 **읽는 쪽** 변이 케이스 -----------------
+# 등재부만 쓰고 gate 가 읽지 않으면 다음 라운드에 샌다(feedback_ledger_needs_a_gate_reader). 이 케이스들이
+# `check_census` 1c 가 주입된 재검산 결과를 실제로 읽는지 고정한다 -- 읽는 분기를 지우면 Q10b 가 깨진다.
+_ABSENT_Q = "2025.3Q"
+
+
+def _pl_hole_index():
+    """active(>=7분기) 1사에서 2025.3Q 버킷만 통째로 없다 -- 계보는 전부 경영공시라 §2-1 항목만 기대한다."""
+    pl = _pl_active_index()
+    pl.pop(("KR9001", _ABSENT_Q))
+    return pl
+
+
+def _pl_hole_inject(**extra):
+    from validate_master_tables import QS as MQS
+    return base_inject(pl=_pl_hole_index(),
+                       pl_source_ids={("KR9001", q): "DISCLOSURE" for q in MQS if q != _ABSENT_Q}, **extra)
+
+
+def f_pl_hole_whole_bucket_is_red():
+    """대조군: 등재가 없으면 통째 hole 은 종전대로 MASTER_HOLE RED."""
+    return _pl_hole_inject()
+
+
+def f_pl_hole_exempted_when_absent_verified():
+    """재검산을 통과한 원천부재 칸은 MASTER_HOLE RED 가 아니라 YELLOW(MASTER_HOLE_SOURCE_ABSENT) 로 인쇄된다."""
+    return _pl_hole_inject(pl_source_absent=({("KR9001", _ABSENT_Q): ("NOT_POSTED", "owner 2026-10-11")}, []))
+
+
+def f_pl_hole_exemption_for_other_cell_does_not_cover():
+    """등재 키가 다른 (회사,분기) 면 이 hole 은 안 가려진다 -- 키 특이성."""
+    return _pl_hole_inject(pl_source_absent=({("KR9001", "2025.2Q"): ("NOT_POSTED", "owner 2026-10-11")}, []))
+
+
+def f_pl_hole_broken_exemption_stays_red():
+    """재검산이 깨진 등재(names 비어 있음 + 장치 RED)는 hole RED 가 그대로고 장치 RED 가 같이 뜬다."""
+    return _pl_hole_inject(pl_source_absent=({}, [
+        {"rule": "PL_SOURCE_ABSENT_LEDGER_DISAGREE", "code": "KR9001", "quarter": _ABSENT_Q,
+         "detail": "근거 원장에 registry _PL_SOURCE_ABSENT 기록이 없다"}]))
+
+
+def f_pl_partial_hole_is_not_exempted():
+    """부분 hole(버킷은 있고 일부 항목만 결측)은 등재 키가 있어도 안 빠진다 -- 통째 hole 에만 적용."""
+    pl = _pl_active_index()
+    from validate_master_tables import QS as MQS
+    pl[("KR9001", _ABSENT_Q)] = {"보험손익": 1000.0}          # 당기순이익 결측 = 부분
+    return base_inject(pl=pl, pl_source_ids={("KR9001", q): "DISCLOSURE" for q in MQS},
+                       pl_source_absent=({("KR9001", _ABSENT_Q): ("NOT_POSTED", "owner 2026-10-11")}, []))
 
 
 # --- R1~R2: 17BS ↔ K-ICS 교차대조(2026-09-20 신설)의 변이 케이스 ----------------------------
@@ -965,6 +1076,20 @@ MT_CASES = [
     ("S6 DISCLOSURE 여도 추가 LOB(`2-N`) 가 있으면 검산한다",
      lambda: _mt(_MT_BARE, "DISCLOSURE", extra_lob=300.0),
      {"legcov_fail": 1, "zleg": 0, "na_legcov": 0, "na_zleg": 1}),
+    # S7~S10: 항목 4(원수CSM상각)는 「sub-leg 전부 결측」 판정에서 다리로 세지 않는다(owner 2026-10-11).
+    # 재보사·라이나의 항목 4 는 §2-1 이 아니라 재무제표·감사보고서 주석 값이다.
+    ("S7 DISCLOSURE + 항목 4 만 있으면 여전히 원천 미수록 (ZERO_LEGS 오발화 방지)",
+     lambda: _mt(dict(_MT_BARE, 원수CSM상각=14903.6), "DISCLOSURE"),
+     {"legcov_fail": 0, "zleg": 0, "na_legcov": 1, "na_zleg": 1}),
+    ("S8 DISCLOSURE + 항목 4 + 다른 다리 0.0 이면 ZERO_LEGS 가 문다 (항목 4 가 면죄부가 아니다)",
+     lambda: _mt(dict(_MT_BARE, 원수CSM상각=14903.6, 생명장기원수손익=0.0), "DISCLOSURE"),
+     {"legcov_fail": 0, "zleg": 1, "na_legcov": 1, "na_zleg": 0}),
+    ("S9 DISCLOSURE + 항목 4 + 다른 다리 실값이어도 ZERO_LEGS 가 문다",
+     lambda: _mt(dict(_MT_BARE, 원수CSM상각=14903.6, 원수위험조정변동=-250.0), "DISCLOSURE"),
+     {"legcov_fail": 0, "zleg": 1, "na_legcov": 1, "na_zleg": 0}),
+    ("S10 DART 계보는 항목 4 만 있어도 종전대로 ZERO_LEGS (면제는 DISCLOSURE 한정)",
+     lambda: _mt(dict(_MT_BARE, 원수CSM상각=14903.6), "DART"),
+     {"legcov_fail": 1, "zleg": 1, "na_legcov": 0, "na_zleg": 0}),
 ]
 
 
@@ -1126,6 +1251,22 @@ CASES = [
     ("Q5 CONCEPT_MIXED_DISCLOSURE_INTO_DART (#17 혼입)", f_pl_concept_mixed,
      {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
     ("Q5b 경영공시 §2-1 5항목만은 정상 병합 — finding 0", f_pl_concept_allowed_is_clean, set()),
+    # Q9: 재무제표·감사보고서 주석 계보 허용(PL_FS_NOTE_LINEAGE, owner 2026-10-11) -- 항목 4 한정, 양방향.
+    ("Q9  주석 계보 항목 4 (how+쪽+인쇄값) 는 정상 -- finding 0", f_pl_fs_note_item4_is_clean, set()),
+    ("Q9b 쪽·인쇄값 없는 how 는 허용 안 함 (CONCEPT_MIXED)", f_pl_fs_note_without_evidence,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
+    ("Q9c 등재 안 된 how 의 항목 4 는 RED", f_pl_fs_note_item4_wrong_how,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
+    ("Q9d how 와 resolution 불일치는 RED", f_pl_fs_note_how_resolution_mismatch,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
+    ("Q9e how 가 있어도 reference_only 항목 17 은 RED", f_pl_fs_note_reference_only_item,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
+    ("Q9f 한 블록의 4+17 은 17 때문에 RED", f_pl_fs_note_mixed_with_item17,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
+    ("Q9g contract_notes 의 다른 항목(5)도 RED -- 항목 단위 허용", f_pl_fs_note_other_contract_note_item,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
+    ("Q9h income_statement 블록의 fs_note 는 RED", f_pl_fs_note_wrong_block,
+     {"CONCEPT_MIXED_DISCLOSURE_INTO_DART"}),
     ("Q6 PL MISSING_PROVENANCE_SIDECAR (부재 = RED)", f_pl_missing_sidecar,
      {"MISSING_PROVENANCE_SIDECAR"}),
     ("Q7 계보 검사가 capsec guard 밖에서도 문다", f_lineage_check_escapes_capsec_guard,
@@ -1134,6 +1275,15 @@ CASES = [
      f_census_grid_ignores_lineage, {"MASTER_HOLE"}),
     ("Q8b 같은 결측도 경영공시 계보면 hole 아님 — finding 0",
      f_census_grid_disclosure_is_clean, set()),
+    # Q10: PL 원천부재 등재의 읽는 쪽(owner 2026-10-11) -- 양방향.
+    ("Q10  PL 통째 hole 은 등재가 없으면 MASTER_HOLE RED", f_pl_hole_whole_bucket_is_red, {"MASTER_HOLE"}),
+    ("Q10b 재검산 통과한 원천부재 칸은 RED 아님 (YELLOW 로 인쇄)", f_pl_hole_exempted_when_absent_verified,
+     set(), {"MASTER_HOLE_SOURCE_ABSENT"}),
+    ("Q10c 다른 칸의 등재로는 이 hole 이 안 가려진다", f_pl_hole_exemption_for_other_cell_does_not_cover,
+     {"MASTER_HOLE"}),
+    ("Q10d 깨진 등재는 hole RED 유지 + 장치 RED", f_pl_hole_broken_exemption_stays_red,
+     {"MASTER_HOLE", "PL_SOURCE_ABSENT_LEDGER_DISAGREE"}),
+    ("Q10e 부분 hole 은 등재 키가 있어도 안 빠진다", f_pl_partial_hole_is_not_exempted, {"MASTER_HOLE"}),
     # R: 17BS ↔ K-ICS 교차대조 — 2026-09-20 배선분의 미배선 잔여(TODO_validation.md 박제) 해소.
     ("R1 BS_KICS_HARD_ZERO (한쪽만 정확히 0)", f_bs_kics_hard_zero, {"BS_KICS_HARD_ZERO"}),
     ("R2 BS_KICS_BASELINE_BREAK (평소 붙던 회사가 이 분기만, YELLOW)",

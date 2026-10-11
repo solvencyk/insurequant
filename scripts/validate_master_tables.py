@@ -710,6 +710,37 @@ def pl_cell_source_ids(pl_path=PL_PATH, sidecar_path=PL_PROVENANCE_PATH) -> dict
     return out
 
 
+def pl_source_absent_for_coverage(pl_path=PL_PATH, registry=None, ledger=None, root=None):
+    """PL 원천부재 등재부(`validate_kics_disclosure._PL_SOURCE_ABSENT`)를 재검산해
+    -> (source_absent {(원수사명, 분기): (kind, approved)}, ok {(코드, 분기): (kind, approved)}, red [dict]).
+
+    `coverage_holes(source_absent=)` 에 넘기는 입력을 만든다. 재검산은 K-ICS census 원천부재 장치와
+    **같은 함수**(`_census_source_absent`)다: 버킷이 여전히 PL 마스터에 없는가 · raw 폴더 박제 · 다운로더
+    매니페스트 사유 · 근거 원장(registry `_PL_SOURCE_ABSENT`) VERIFIED + 인용 원천 재오픈. 하나라도 깨지면
+    그 칸은 ok 에 안 들어가고(hole 이 그대로 남는다) red 가 같이 나온다. 마스터를 못 읽으면 면제 없음."""
+    here = str(Path(__file__).resolve().parent)
+    if here not in sys.path:
+        sys.path.insert(0, here)
+    import validate_kics_disclosure as K  # noqa: PLC0415 -- 지연 import(순환 방지)
+    reg = K._PL_SOURCE_ABSENT if registry is None else registry
+    if not reg:
+        return {}, {}, []
+    try:
+        rows = json.loads((ROOT / pl_path).read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001 -- 마스터를 못 읽으면 면제를 줄 수 없다(fail-closed)
+        return {}, {}, []
+    code_name: dict = {}
+    present: set = set()
+    for r in rows:
+        c, q = r.get("원보험사코드"), r.get("공시분기")
+        if c and r.get("원수사명"):
+            code_name.setdefault(c, r["원수사명"])
+        if c and q and r.get("값") is not None:
+            present.add((c, q))
+    ok, red = K.pl_source_absent_exemptions(present, code_name, registry=reg, ledger=ledger, root=root)
+    return {(code_name.get(c, c), q): v for (c, q), v in ok.items()}, ok, red
+
+
 def pl_key_items_for(source_ids: dict, key_items):
     """`coverage_holes(key_items_for=...)` 에 넘길 per-cell 기대 항목 resolver.
 
@@ -723,7 +754,8 @@ def pl_key_items_for(source_ids: dict, key_items):
     return resolve
 
 
-def coverage_holes(idx, key_items, active_min=7, na_registry=None, key_items_for=None):
+def coverage_holes(idx, key_items, active_min=7, na_registry=None, key_items_for=None,
+                   source_absent=None, absent_out=None):
     """데이터 누락(hole) census. SKIP으로 숨기지 말고 명시.
     active 회사(핵심항목 보유 분기 >= active_min)의 빈 분기 = hole.
     그 미만(외국계·소형 = 애초에 미공시)은 structural로 분리(검증 제외).
@@ -743,7 +775,13 @@ def coverage_holes(idx, key_items, active_min=7, na_registry=None, key_items_for
     kind=="통째" 면 그대로 hole. 2026-09-12(inbox/parser/20260901T1630Z): 서울보증보험이
     item1/24(보험손익/당기순이익)을 채우다 active_min=7 문턱을 처음 넘기면서, 원래부터
     구조적으로 없는 item2(생명장기손익, 이 회사는 장기 LOB 자체가 없다)가 전 분기 일제히
-    '부분' hole 로 드러난 것이 계기 -- 등재 없이 default(None)면 기존 동작과 완전히 같다."""
+    '부분' hole 로 드러난 것이 계기 -- 등재 없이 default(None)면 기존 동작과 완전히 같다.
+
+    `source_absent` -- optional {(원수사명, 분기), ...}: **원천 부재로 재검산을 통과한** 칸
+    (`pl_source_absent_for_coverage()` 의 산출, owner 승인 2026-10-11). 그 칸이 「통째」 hole 일 때만
+    real/known 에서 빼고 `absent_out` 에 `(co, q)` 로 쌓는다 -- **이것이 등재부의 읽는 쪽(lookup 분기)** 이다.
+    「부분」 hole 은 안 뺀다(버킷이 생겼다는 뜻이라 등재가 무효 -- 장치가 INERT RED 를 낸다).
+    None 이면 종전과 바이트 동일."""
     cos = sorted({co for (co, _) in idx})
     real, known, struct = [], [], []
 
@@ -764,6 +802,10 @@ def coverage_holes(idx, key_items, active_min=7, na_registry=None, key_items_for
             ks = _keys(co, q)
             vals = [m.get(k) for k in ks]
             if all(v is None for v in vals):
+                if source_absent and (co, q) in source_absent:
+                    if absent_out is not None:
+                        absent_out.append((co, q))
+                    continue
                 kind = "통째"
             elif any(v is None for v in vals):
                 if na_legs:
@@ -1171,6 +1213,8 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
     PL_LEG_ITEMS = ["생명장기원수손익", "원수CSM상각", "원수위험조정변동", "원수예실차",
                     "기타생명장기원수손익", "생명장기재보험손익", "재보험CSM상각",
                     "재보험위험조정변동", "재보험예실차", "기타생명장기재보험손익"]
+    # 계보 DISCLOSURE 버킷의 「sub-leg 전부 결측 = 원천 미수록」 판정에서 제외하는 다리(아래 주석).
+    PL_ZLEG_NA_IGNORED_LEGS = frozenset({"원수CSM상각"})
     # 불가능-0 leg (owner 확정 2026-06-11): 장기보험 영위사면 아래 4종은 0원일 수 없다.
     # 0.0이면 추출오류 — None(coverage가 잡음)과 별개로 명시 RED.
     IMPOSSIBLE_ZERO_LEGS = ["생명장기원수손익", "기타생명장기원수손익",
@@ -1222,8 +1266,15 @@ def _check_pl_bridge(pl: dict, extra_lob: dict | None = None,
         # 조건은 leg-coverage 와 같은 폭으로 좁힌다 — **10개가 전부 결측일 때만**. 하나라도 값이
         # 있으면 그 값은 §2-1 이 준 것이 아니므로 종전대로 검사한다(계보가 통째 면제가 되면,
         # 나중에 그 버킷에 0.0 이 섞여 들어와도 이 축이 영원히 침묵한다).
+        #
+        # 항목 4(`원수CSM상각`)는 이 「전부 결측」 판정에서 다리로 세지 않는다(owner 2026-10-11). 재보사·라이나의
+        # 항목 4 는 §2-1 이 아니라 **재무제표·감사보고서 주석**에서 읽은 값(사이드카 how=fs_note_csm_amort,
+        # validate_data_contract.PL_FS_NOTE_LINEAGE)이라, 그것이 생기면서 나머지 9종의 「원천 미수록」
+        # 판정이 풀려 14버킷이 ZERO_LEGS 로 오발화했다. 면제가 아니라 판정 대상 변경이다 -- 항목 4 **외에**
+        # 값(0.0 포함)이 하나라도 있는 버킷은 그대로 아래 ZERO_LEGS 로 간다(`PL_ZLEG_NA_IGNORED_LEGS`).
         if (source_ids.get((co, q)) == PL_DISCLOSURE_SOURCE_ID
-                and all(m.get(k) is None for k in PL_LEG_ITEMS)):
+                and all(m.get(k) is None for k in PL_LEG_ITEMS
+                        if k not in PL_ZLEG_NA_IGNORED_LEGS)):
             zleg_na_rows.append((co, q))
             continue
         legit = ZLEG_LEGIT.get(co)
@@ -1553,7 +1604,7 @@ def _check_closing_identity(wf: dict) -> tuple[int, list, int]:
     return ci_pass, ci_fail, ci_skip
 
 
-def _check_coverage(wf: dict, pl: dict) -> tuple[list, list]:
+def _check_coverage(wf: dict, pl: dict, absent_out: dict | None = None) -> tuple[list, list]:
     """COVERAGE: 데이터 누락(hole) census — SKIP으로 숨기지 않고 명시.
     Prints its own section and returns (wf_holes, pl_holes). Split out of
     main() 2026-07-22; pinned by tests/test_master_tables_golden.py."""
@@ -1564,9 +1615,17 @@ def _check_coverage(wf: dict, pl: dict) -> tuple[list, list]:
     # 엄격(DART) 판정으로 떨어진다. DISCLOSURE 셀이 0 개면 이 줄은 종전과 **바이트 동일**하다.
     pl_src = pl_cell_source_ids()
     n_disc = sum(1 for v in pl_src.values() if v == PL_DISCLOSURE_SOURCE_ID)
+    # 원천부재 등재(owner 2026-10-11): 재검산을 통과한 칸만 「통째」 hole 에서 빠진다. 깨진 등재는 hole 이
+    # 그대로 남고 `원천부재 등재 무효` 행이 HOLE-PL 로 같이 나간다(= pl_holes 에 들어가 exit code 에 반영).
+    pl_absent_names, pl_absent_ok, pl_absent_red = pl_source_absent_for_coverage()
+    pl_absent_hit: list = []
     pl_holes, pl_known, pl_struct = coverage_holes(
         pl, pl_keys, na_registry=LOB_LEG_NA,
-        key_items_for=pl_key_items_for(pl_src, pl_keys))
+        key_items_for=pl_key_items_for(pl_src, pl_keys),
+        source_absent=pl_absent_names, absent_out=pl_absent_hit)
+    pl_holes = list(pl_holes) + [(r["code"], r["quarter"], f"원천부재 등재 무효 {r['rule']}") for r in pl_absent_red]
+    if absent_out is not None:
+        absent_out.update({"ok": len(pl_absent_hit), "red": len(pl_absent_red), "registered": len(pl_absent_ok) + len(pl_absent_red)})
     print("=" * 78)
     print(f"0. COVERAGE real hole(2024+)  CSM={len(wf_holes)} PL={len(pl_holes)}  | "
           f"2023 known(비노출)={len(wf_known)+len(pl_known)} | struct(미공시)제외={len(wf_struct)+len(pl_struct)}")
@@ -1578,6 +1637,10 @@ def _check_coverage(wf: dict, pl: dict) -> tuple[list, list]:
         print(f"  HOLE-CSM {co:14s} {q} ({kind})")
     for co, q, kind in pl_holes:
         print(f"  HOLE-PL  {co:14s} {q} ({kind})")
+    print(f"   PL 원천부재 면제(통째 hole 에서 제외, 재검산 통과) {len(pl_absent_hit)}칸 -- **통과가 아니라 '원천이 없다'** 이고 건별로 인쇄한다")
+    for co, q in pl_absent_hit:
+        kind, approved = pl_absent_names[(co, q)]
+        print(f"  ABSENT-PL {co:14s} {q} [{kind}] ({approved})")
     print()
     return wf_holes, pl_holes
 
@@ -1822,7 +1885,8 @@ def main() -> int:
 
     ci_pass, ci_fail, ci_skip = _check_closing_identity(wf)
 
-    wf_holes, pl_holes = _check_coverage(wf, pl)
+    pl_absent: dict = {}
+    wf_holes, pl_holes = _check_coverage(wf, pl, absent_out=pl_absent)
 
     dup_rows, spike_rows, cont_rows, wfy_rows, zamort_rows = _check_plausibility(wf)
 
@@ -1867,6 +1931,7 @@ def main() -> int:
           f"zero_legs:{len(zleg_rows)} | "
           f"src_na({PL_DISCLOSURE_SOURCE_ID}):{pl_src_na.get('legcov', 0)}legcov/"
           f"{pl_src_na.get('zleg', 0)}zleg | "
+          f"pl_src_absent:{pl_absent.get('ok', 0)}ok/{pl_absent.get('red', 0)}red | "
           f"impossible0:{len(zerolegs_rows)} | "
           f"lob_na:{len(lob_na)}NA/{len(lob_stale) + len(lob_dangle)}BAD | "
           f"csm_amort_identity:{cc_pass}P/{cc_pinned}PIN/{len(cc_fail)}F/{cc_skip}S | "

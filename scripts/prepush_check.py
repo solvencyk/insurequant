@@ -520,6 +520,13 @@ def main(argv=None) -> int:
             # 위와 같은 이유 — 등재 5칸마다 근거(원장·raw sha·매니페스트·셀·잔차·버킷)를 흔들면 RED 가
             # 돌아오는지를 매 push 확인한다. 이게 훅 밖에 있으면 장치가 키 집합으로 퇴화해도 모른다. ~13초.
             "tests/test_rate_sens_pinned_exemption.py",
+            # 데이터계약 selftest(변이 회귀 suite) + PL 주석 계보·원천부재·법인세 확정 등재의 변이시험
+            # (2026-10-11, 항목 4 주석 계보 / 하노버 2025.3Q). selftest 는 UH-4 이후 **훅이 한 번도 안 돌렸다**
+            # (호출처 0). 게이트에 케이스를 더해도 안 돌면 honor-system 이다. ~55초.
+            "tests/test_data_contract_selftest.py",
+            "tests/test_pl_fs_note_lineage.py",
+            "tests/test_pl_source_absent_exemption.py",
+            "tests/test_pl_ytd_collapse_owner_confirmed.py",
             # 분기 지평 트립와이어(2026-08-29 신설). 게이트 세 곳이 각자 분기 목록을 리터럴로
             # 들고 있었고 셋 다 2026.1Q 에서 끝나 있어서, 2026.2Q 를 배포한 날 census·qoq·
             # spike·wfy·continuity 가 **그 분기를 순회조차 안 했다**(RED=0 = "안 봤다").

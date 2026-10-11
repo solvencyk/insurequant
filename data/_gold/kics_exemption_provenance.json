@@ -3303,6 +3303,27 @@
       "registered_by": "owner 승인 2026-10-10 (inbox/validation/20261010T1830Z 「RS1·RS5 면제 장치」 (가)·(나)) — validation 단계 10(런로그 reinsurer_runlog_KR1101-1108_12.md) 등재. 근거 = parser 단계 11 런로그 data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md §1.4·§1.5",
       "not_a_blanket_skip": "금리민감도 게이트가 매 실행 raw 폴더 sha·다운로더 매니페스트·이 원장의 마커를 다시 확인한다. 새 판이 들어오거나 마커가 반증되면 RS_EXEMPTION_* RED 와 원래 RS5 RED 가 같이 돌아오고, 금리민감도 행이 생기면 RS_EXEMPTION_INERT RED(등재를 풀어라).",
       "scope": "KR1108 2026.2Q 의 RS5_DISCLOSURE_COVERAGE 1건. 다른 분기·룰로 넓히지 않는다."
+    },
+    {
+      "registry": "_PL_SOURCE_ABSENT",
+      "company": "KR1104",
+      "quarter": "2025.3Q",
+      "claim": "하노버재보험 한국지점 사이트 공시 목록에 2025년 3/4분기 항목이 없다(2025 = 1Q·2Q·4Q). 받을 문서가 없어 PL_breakdown 에도 이 분기 버킷이 없다 -- PL 의 MASTER_HOLE 은 파싱 결손이 아니라 원천 부재다.",
+      "claim_kind": "NOT_POSTED",
+      "status": "VERIFIED",
+      "citation": {
+        "file": "data/disclosure/_meta/reinsurer_KR1104_manifest.json"
+      },
+      "verify": {
+        "file": "data/disclosure/_meta/reinsurer_KR1104_manifest.json",
+        "present_markers": [
+          "\"status\": \"not_posted\", \"note\": \"owner 확인(2026-10-09): 사이트에 2025년 3/4분기 공시가 게시되어 있지 않음(원천 부재)\", \"period\": \"2025.3Q\"",
+          "\"2025.3Q\": \"목록에 없음 = not_posted 사이트 직접 확인(첫손)\""
+        ]
+      },
+      "note": "K-ICS 쪽 `_CENSUS_SOURCE_ABSENT` KR1104 2025.3Q 와 같은 사실(문서 자체가 게시되지 않음)이다. 게이트는 별개라 PL 쪽에 따로 등재한다. 인용은 다운로더 매니페스트(owner 확인 2026-10-09 + downloader 2026-10-10 목록 JSON 파싱, 게시일 2025-07-02 1Q · 2025-09-01 2Q · 2026-04-08 4Q). validation 2026-10-11 재확인: data/disclosure/FY2025_Q3/raw/ 에 KR1104 파일 없음, PL_breakdown.json 에 KR1104 2025.3Q 행 0. 회사 사이트 기준의 원천 부재이며 협회 공시 시스템 직접 확인은 하지 않았다.",
+      "registered_by": "owner 승인 2026-10-11 (채팅: 「하노버 25.3q만 예외 승인」) -- validation 이 PL 원천부재 등재부 `_PL_SOURCE_ABSENT`(validate_kics_disclosure.py) 로 등재. 읽는 쪽 = coverage_holes(source_absent=) (validate_master_tables._check_coverage · validate_data_contract 1c)",
+      "scope": "PL_breakdown KR1104 2025.3Q 의 coverage MASTER_HOLE(통째) 한 버킷. 다른 분기·회사·항목에는 적용되지 않는다."
     }
   ],
   "_residual_pin_contract": "일부 면제는 '이 셀을 보지 마라'가 아니라 '이 잔차인 동안만 차단하지 마라'다(_LIFE8_ISSUER_INCONSISTENT). 기대잔차를 값으로 박제하고 게이트가 매 실행 마스터에서 재계산한다 — 잔차가 tol을 벗어나면 LIFE8_EXEMPTION_RESIDUAL_DRIFT RED, 입력이 결측이면 LIFE8_EXEMPTION_INPUT_MISSING RED. blanket skip은 그 셀을 영구 사각지대로 만들기 때문에 금지. **2026-08-24 — 이 숫자는 이제 기계가 읽는다.** 게이트 `validate_kics_disclosure._pin_ledger_agreement_findings` 가 매 실행 코드 박제(`_TIER2_ISSUER_INCONSISTENT` / `_LIFE8_ISSUER_INCONSISTENT` / `IRR_DERIVE_ISSUER_INCONSISTENT` 의 residual, `_AFTER_SOURCE_ABSENT_CELLS` / `_POST_PARENT_SOURCE_ABSENT_CELLS` 의 absent_cells)와 이 원장을 대조한다. 축 목록·잔차값·부재셀집합 중 하나라도 어긋나면 `EXEMPTION_PIN_LEDGER_DISAGREE` RED 다. 정본은 코드(게이트를 실제로 움직이는 쪽)이고 원장은 반드시 일치해야 하는 사본이다. 그 전까지 `expected_residual` 을 읽는 코드가 **하나도 없어서** 원장 숫자는 장식이었고, 실제로 KR0075 3분기의 축 목록이 어긋난 채 아무도 못 보고 있었다. `expected_residual_alt_reading` 은 종전 읽기의 보존 기록이라 대조 대상이 아니다."

@@ -114,6 +114,7 @@ from validate_master_tables import (  # noqa: E402
     load_long,
     pl_cell_source_ids,
     pl_key_items_for,
+    pl_source_absent_for_coverage,
 )
 from solvency.validation.kics_json_rules import (  # noqa: E402
     KEY_CODE,
@@ -727,14 +728,31 @@ def check_census(res: GateResult, env: "Env") -> None:
         ("PL_breakdown", env.pl, ["보험손익", "생명장기손익", "당기순이익"], LOB_LEG_NA,
          pl_key_items_for(env.pl_source_ids, ["보험손익", "생명장기손익", "당기순이익"])),
     ):
+        # PL 만 원천부재 등재(`_PL_SOURCE_ABSENT`)를 읽는다 -- 읽는 쪽(lookup 분기)이 이 호출이다. 재검산을 통과한
+        # 「통째」 hole 만 빠지고 YELLOW 로 매 실행 인쇄된다. 깨진 등재는 hole 이 그대로 RED 이고 장치 RED 가 더해진다.
+        absent_hit: list = []
+        absent_kw = ({"source_absent": env.pl_source_absent_names, "absent_out": absent_hit}
+                     if master == "PL_breakdown" else {})
         real, _known, _struct = coverage_holes(idx, key_items, na_registry=na_reg,
-                                               key_items_for=kif)
+                                               key_items_for=kif, **absent_kw)
         for co, q, kind in real:
             if not _emit(q):
                 continue
             res.add(check="census", severity="RED", master=master, company=co, quarter=q,
                     rule="MASTER_HOLE",
                     message=f"real hole (2024+): {kind} missing for active filer {co}")
+        for co, q in absent_hit:
+            kind_a, appr_a = env.pl_source_absent_names[(co, q)]
+            res.add(check="census", severity="YELLOW", master=master, company=co, quarter=q,
+                    rule="MASTER_HOLE_SOURCE_ABSENT",
+                    message=f"원천부재 면제 [{kind_a}] ({appr_a}) -- {co} {q} PL 버킷 없음. 사이트 미게시 -- 마스터 버킷 부재 · "
+                            f"raw 폴더 · 매니페스트 · 원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)")
+        if master == "PL_breakdown":
+            for f in env.pl_source_absent_red:
+                res.add(check="census", severity="RED", master=master,
+                        company=env.code_name.get(f["code"], f["code"]), quarter=f["quarter"],
+                        rule=f["rule"],
+                        message=f"PL 원천부재 면제 재검산 실패: {f['detail']}")
 
     # --- 1d. impossible-0 in IFRS17 (spec §5.4): CSM 상각=0 with positive opening/closing ---
     for co, q, o, c, a in _csm_amort_zero(env.wf):
@@ -1045,6 +1063,34 @@ _PL_CONTRACT_NOTE_ITEMS = frozenset({4, 5, 6, 9, 10, 11, 13, 14})
 # 생보사의 자동차손익(#13)·일반손익(#14) 0 은 **어느 필링에서도 읽은 값이 아니다**.
 # 빌더 규칙이 바뀌면 여기도 바뀌어야 한다 — 그래야 면제가 매번 재정당화된다.
 _PL_LIFE_LOB_ZERO_ITEMS = frozenset({13, 14})
+
+# 경영공시 계보 PL 셀 중 **재무제표·감사보고서 주석**에서 읽은 항목의 허용 목록(owner 2026-10-11).
+# {사이드카 `how`: 허용 항목번호}. 경로 계보(`data/disclosure/`)는 경영공시 §2-1 요약 PL 과 경영공시
+# PDF 에 붙은 감사보고서 주석을 못 가르므로, 그 구분은 사이드카 `how`(= 셀 `resolution`)가 한다.
+# 이것은 면제 등재부가 아니라 **계보 규칙의 정당한 확장**이다 -- 그래서 좁게 쓴다:
+#   · 항목 4(원수CSM상각)만. 17/20/21(CONCEPT_REGISTRY reference_only)은 어떤 how 로도 못 들어온다.
+#   · 값은 별도 대조를 받는다: PL_CSM_AMORT_VS_WATERFALL(PL 항목 4 대 CSM 워터폴 항목 5).
+# 항목을 늘리려면 이 상수 + `_data_contract_selftest` 변이 케이스 + 매니페스트 테스트를 같이 고쳐야 한다.
+PL_FS_NOTE_LINEAGE: dict[str, frozenset] = {"fs_note_csm_amort": frozenset({4})}
+
+
+def _pl_fs_note_exempt_items(cell: dict) -> set:
+    """이 PL 사이드카 셀에서 `PL_FS_NOTE_LINEAGE` 가 §3d 제한에서 빼주는 항목번호 집합.
+
+    fail-closed: contract_notes 블록 · `how` == 셀 `resolution` · 등재된 how · 쪽(page/pages)과
+    인쇄값(printed)이 둘 다 있을 때만, 그 entry 의 `items` 중 등재 항목만 돌려준다."""
+    if cell.get("item_block") != "contract_notes":
+        return set()
+    out: set = set()
+    for sf in cell.get("source_files") or []:
+        how = sf.get("how")
+        allowed = PL_FS_NOTE_LINEAGE.get(how)
+        if allowed is None or how != cell.get("resolution"):
+            continue
+        if not (sf.get("page") or sf.get("pages")) or sf.get("printed") in (None, ""):
+            continue
+        out |= {int(i) for i in (sf.get("items") or []) if str(i).isdigit()} & allowed
+    return out
 
 
 def source_id_for_lineage(source_file: str | None) -> str | None:
@@ -1948,6 +1994,7 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
     _pl_side = (env.provenance_sidecars or {}).get("PL_breakdown") or {}
     _pl_allowed = set(PL_DISCLOSURE_ITEM_NOS)
     _pl_disc_cells = _pl_disc_items = 0
+    _pl_fs_note_cells = _pl_fs_note_items = 0
     for _c in _pl_side.get("cells") or []:
         _key = (_c.get("company_code"), _c.get("quarter"), _c.get("item_block"))
         _pub = set(env.pl_published_items.get(_key) or ())
@@ -1961,6 +2008,16 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
         for _sf in _c.get("source_files") or []:
             if source_id_for_lineage(_sf.get("file")) == PL_DISCLOSURE_SOURCE_ID:
                 _disc |= {int(i) for i in (_sf.get("items") or []) if str(i).isdigit()}
+        # 재무제표·감사보고서 **주석** 계보 허용(owner 2026-10-11, 항목 4 한정). 경로 계보(`data/disclosure/`)
+        # 는 "경영공시 §2-1 요약 PL" 과 "경영공시 PDF 에 붙은 감사보고서 주석" 을 못 가른다 -- 사이드카의
+        # `how` 가 가른다. 좁게 연다: ① `PL_FS_NOTE_LINEAGE` 에 등재된 how 만 ② 그 how 가 셀 `resolution` 과
+        # 같고 ③ 근거 필드(쪽·인쇄값)가 있고 ④ 항목이 등재된 항목(4)일 때만 그 **항목 하나**를 뺀다.
+        # 항목 17/20/21(reference_only)·다른 how·근거 없는 how 는 계속 RED 다(fail-closed).
+        _fs_note = _pl_fs_note_exempt_items(_c)
+        if _fs_note:
+            _pl_fs_note_cells += 1
+            _pl_fs_note_items += len(_disc & _fs_note & _pub)
+        _disc -= _fs_note
         _disc &= _pub
         if not _disc:
             continue
@@ -1980,6 +2037,12 @@ def check_cross_source(res: GateResult, env: "Env") -> None:
         f"{_pl_disc_items}값 검사 · 허용항목 {sorted(_pl_allowed)} · "
         f"reference_only {list(CONCEPT_REGISTRY['pl_disclosure_vs_dart']['reference_only_items'])} "
         f"혼입 0 이어야 한다")
+    # 허용된 주석 계보는 조용해지지 않는다 -- 매 실행 건수를 인쇄한다(0 이 아니면 "검사 대상이 아니었다" 가 아니라
+    # "주석 값이라고 사이드카가 주장해 제외했다" 는 뜻이다. 값 자체는 PL_CSM_AMORT_VS_WATERFALL 이 워터폴과 대조한다).
+    res.notes.append(
+        f"cross_source guard (경영공시 계보 PL 의 재무제표 주석 허용): {_pl_fs_note_cells}셀 / "
+        f"{_pl_fs_note_items}값 제외 · 허용 {{how: 항목}} = "
+        f"{ {k: sorted(v) for k, v in PL_FS_NOTE_LINEAGE.items()} } · 그 항목 값은 워터폴과 별도 대조(PL_CSM_AMORT_VS_WATERFALL)")
 
     # --- 3-cc. 17BS ↔ kics_disclosure 자본 계정 교차대조 (owner 2026-09-20) ---
     # 왜 필요했나: 두 마스터는 **서로 다른 원천**(17BS=DART 별도 / K-ICS=정기경영공시)인데
@@ -2420,6 +2483,16 @@ class Env:
         self.pl_builder_derived_cells = self.inject.get("pl_builder_derived_cells", set())
         if not self.inject:
             self._build_pl_cells()
+        # PL 원천부재 등재(owner 2026-10-11, 하노버 2025.3Q): 재검산 결과를 한 번만 만든다. selftest(inject)는
+        # 합성데이터 격리 -- 라이브 등재가 새지 않게 빈 결과가 기본이고, 주입하려면
+        # inject["pl_source_absent"] = ({(원수사명, 분기): (kind, approved)}, [red dict]) 를 넣는다.
+        if "pl_source_absent" in self.inject:
+            self.pl_source_absent_names, self.pl_source_absent_red = self.inject["pl_source_absent"]
+        elif self.inject:
+            self.pl_source_absent_names, self.pl_source_absent_red = {}, []
+        else:
+            _nm, _ok, _red = pl_source_absent_for_coverage()
+            self.pl_source_absent_names, self.pl_source_absent_red = _nm, _red
         self.latest_kics_quarter = self._latest_quarter(self.kics_records)
         # sensitivity heatmap target = the disclosure quarter the heatmap SHOULD be on.
         # Owner V12 anchored it to the 25.4Q 경영공시 basis. Use the latest sensitivity-bearing

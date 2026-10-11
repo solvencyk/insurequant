@@ -4,6 +4,15 @@
 > 현재 게이트 상태는 `scripts/validate_kics_disclosure.py` 출력이 정본이다. 아래 날짜가 붙은 스냅샷("RED 19건", "blocking RED 18건" 등)은 그 날짜 기준이다.
 > 등재는 owner 만 한다(`CLAUDE.md` §6). 스크립트 주석·티켓의 "`TODO.md` L…" / "TODO.md §36_irr 표" 는 이 파일을 가리킨다.
 
+## 2026-10-11 PL_breakdown 원천부재 등재 1칸 + 법인세 0 확정 3칸 (owner 승인 채팅, validation 23차)
+
+| 등재부 | 키 | 근거 |
+|---|---|---|
+| `_PL_SOURCE_ABSENT` (validate_kics_disclosure.py, 원장 registry 동명) | KR1104 하노버재보험 2025.3Q (NOT_POSTED) | 사이트 공시 목록에 2025 3/4분기 항목 없음(K-ICS 쪽 `_CENSUS_SOURCE_ABSENT` 와 같은 사실, PL 게이트는 별개라 따로 등재). 재검산 = 버킷 부재 · raw 폴더 비어 있음 · 매니페스트 `not_posted` · 원장 VERIFIED. 읽는 쪽 `coverage_holes(source_absent=)`. owner 「하노버 25.3q만 예외 승인」(2026-10-11) |
+| `user_pl_confirmed_cells.json` rule=`PL_YTD_COLLAPSE_TO_ZERO` | 스위스리아시아 2023.2Q 법인세 0.0 · 퍼시픽라이프리 2024.4Q·2025.4Q 법인세 0.0 | 원문에 0 인쇄(요약 PL 법인세 0 / 감사보고서 법인세비용 `-`). 값 박제 + 인용 마커 매 실행 재확인. owner 「법인세는 네 제안대로 승인」(2026-10-11) |
+
+경영공시 PDF 에 붙은 재무제표 주석 계보(`PL_FS_NOTE_LINEAGE`, 항목 4 한정)는 예외 등재가 아니라 계보 규칙의 확장이다 -- `docs/changelog_validation.md` 23차.
+
 ## 2026-10-11 등재 해제 5묶음 (validation 최종 라운드 — 증거 기반 해제만, 신규 등재 없음)
 
 > 해제는 owner 승인 대상이 아니라 「근거가 사라졌다」의 기계 확인이다. 해제 전후 양방향 시뮬레이션(K-ICS 게이트 finding 완전 동일 0 추가·0 삭제·0 변경, 데이터계약은 해제한 7개 finding 만 소멸)으로 새 RED 0 을 확인한 뒤 적용했다. 근거 원장 기록은 지우지 않고 `resolved_note` 가 붙은 고아 기록으로 남겼다(기존 관례). 실행 기록 `data/disclosure/_meta/final_validation_runlog_20261011.md`.

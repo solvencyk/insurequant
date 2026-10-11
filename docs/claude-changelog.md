@@ -9,6 +9,8 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+- **2026-10-11 validation 23차**: PL 항목 4 재무제표 주석 계보 허용(`PL_FS_NOTE_LINEAGE`) + 법인세 0 확정 3칸 + 하노버 2025.3Q PL 원천부재 장치 `_PL_SOURCE_ABSENT` -- 데이터계약 RED 34→11. 상세 `docs/changelog_validation.md`.
+
 ## 2026-10-11 — 재보사 8곳 K-ICS 스윕 + IFRS17 섹션 3 콤보(발생사고요소) + 모바일 손해율 curve (orchestrator, 작업 브랜치 push `6841689`)
 
 owner 지시: 외국 재보사 국내지점 7곳 + 마이브라운(KR1101~KR1108)을 K-ICS 마스터에 편입하고(기존 39사 25,522행 git HEAD 와 동일 유지), 새 8곳이 든 마스터를 라이브에 올리기 전에 index/compare 를 생보·손보·재보험사·보증 3분류로 나누며, IFRS17.html 섹션 3 을 묶음·누적 막대 콤보(잔여보장요소 + 발생사고요소)로 보강.
