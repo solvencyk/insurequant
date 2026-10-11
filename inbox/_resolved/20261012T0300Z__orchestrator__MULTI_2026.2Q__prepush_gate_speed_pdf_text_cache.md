@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261012T0300Z
-status: open
+status: resolved
 route: gate-change
 company: MULTI
 period: 2026.2Q
@@ -30,3 +30,4 @@ owner 질문(2026-10-12): 「pre push gate 가 왜 30분 남짓 걸리는지 체
 - 전/후 소요(게이트 1회 첫·재실행, 매니페스트 테스트, 추정 훅 총 시간), 판정 불변 증명, 변경 파일·커밋 해시를 2~4줄로.
 
 ## 답변 (recipient 작성 — 처리 후)
+(validation c7f676b, orchestrator 종결 2026-10-12) 원인: 게이트가 돌 때마다 등재 예외의 원문 재검산이 PDF 2,372쪽을 처음부터 다시 읽음(K-ICS 게이트 1회 40초 중 23초) × 매니페스트 전수 변이시험 49회. 해결: scripts/_pdf_text_cache.py(PDF 텍스트만 (경로, 크기, mtime_ns) 키로 1회 읽기, 판정은 매번 재계산)를 게이트 5곳에 적용. 전후: K-ICS 게이트 재실행 40초→3.5초, 매니페스트 전수 시험 1,120초→210초, 풀 훅 26.7분→약 11분(추정). 판정 불변: 같은 마스터로 전·후 각 2회, 출력 39,535B·리포트 JSON 7.5MB 4조합 바이트 동일(RED 56·YELLOW 1,935·GREEN 13,684·SKIP 3,345). 변이시험 5건(캐시를 깨뜨리면 실패)·단위시험 9건·룰 골든·selftest 통과. 남은 것: 매니페스트 시험 public_export_clean_state·master_xlsx_clean_state 2건은 재보사 재적재가 xlsx·public_exports 에 아직 동기화 안 된 상태 때문(publishing 마감 라운드 후 해소). validate_data_contract 의 주 비용은 xlsx 읽기라 이 캐시로 줄지 않음.
