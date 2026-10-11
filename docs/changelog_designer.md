@@ -7,6 +7,18 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- IFRS17 섹션 3 모바일 단순형 재도입 · ? 팝오버 가려짐 · 시장지도 재보·보증 절반 · 상각 축 단위 · 전망 제외 사유
+
+티켓 `inbox/designer/20261011T1530Z__orchestrator__MULTI_2023.4Q-2026.2Q__sec3_mobile_simple_again_and_help_popover_clip.md`·`20261011T1600Z__publishing__MULTI_2026.2Q__forward_exclusion_reason_and_amort_axis.md`(공유 티켓, 종결은 오케스트레이터) + 조율자 추가 지시(index). 마스터·패널 JSON·`public_exports` 무수정, push 안 함.
+
+- **섹션 3 모바일(≤640px) 단순형**(`IFRS17.html` `hcSimpleChart`, 커밋 `da15845` 구현을 그대로 되살리지 않고 `244fd75` 이후 것은 유지): 막대 = 기말 CSM(주축, 키컬러·없으면 에메랄드), 선 = 신계약 CSM(보조축), 범례 2개. BEL·RA·PAA·발생사고요소·구성 미분리는 차트에서만 뺌(표 그대로). 데스크톱(641px 이상)은 콤보 그대로(1280·641px 범례 8개 확인). 안내 문구는 단순형에 맞게 분기(재작성 †·사이드카·구성 없음·신계약 없음 유지, 막대와 무관한 줄무늬·빗금·BEL 음수 안내는 모바일에서 생략).
+- **축 폭 실측(375px, 삼성생명)**: 종전 좌 61px·우 64px(눈금 `0조`·`0.00조`, 눈금 9~10개) → 좌 34~43px·우 34~55px, 그림 영역 184→245px(연도 모드). 눈금은 숫자만, 단위는 축 제목 한 줄(조원/억원), 축마다 단위를 따로 고름(최대 ≥5천억이면 조원), 눈금 5개 이하, 소수 자릿수는 눈금 간격에서 결정. 막대 위 값 라벨이 선과 겹치면 막대 안쪽으로 비켜 앉힘. 확인: 삼성생명·라이나·미래에셋·KB라이프(재작성)·ABL·AIG(신계약 없음 포함) × 연도/분기 × 375px(414px 삼성) × 라이트/다크, 콘솔 오류 0.
+- **? 팝오버 가려짐 원인**: `common.css` 의 `.panel.revealed { animation: … forwards }`. 끝난 뒤에도 애니메이션이 살아 있어 패널마다 쌓임 맥락이 생겼고, 패널 아래로 삐져나온 팝오버(z-index 1800)가 그 패널 안에 갇혀 바로 아래 패널에 가려졌다. 증상 재현: K-ICS 금리 민감도 「이 표의 기준」·듀레이션 「이 표의 기준」, IFRS17 손익 「이 표 읽는 법」(모바일). 수정: forwards 제거(끝 상태는 규칙으로 직접 지정), 팝오버 z-index 1950(우하단 고정 버튼 위, 모달 아래), 하단이 잘리면 위로 뒤집기(`theme.js` `flipHelpPop`)·뒤집을 수 없는 모바일 static 규칙은 터치일 때 살짝 스크롤. K-ICS·IFRS17·compare 전 ? 헤드리스 전수(실제 hover/탭, 삼성생명·삼성화재 × 1280·375 × 라이트·다크 × 트리거가 화면 중앙·하단) 가려짐·화면 밖 0. 키보드·Esc·터치 동작 불변.
+- **index 시장지도 재보험·보증**(`6f92fb0`): `RE_MIN_SHARE` 0.18→0.07, 그룹 높이 246→122px(1280·1440 동일, 면적 약 절반). 제목의 「 · 칸 크기는 이 업권 안에서만 비교」와 `floored` 속성 삭제. 칸 이름 표시 임계(높이 46·폭 60) 때문에 이름이 보이는 칸이 9곳 중 5→2곳으로 줄고 나머지는 툴팁(호버)만 — 높이를 반으로 줄이면 불가피(0.09 로 61% 높이여도 같은 2곳).
+- **상각 차트 축**(`IFRS17.html`): `csm_amort_schedule.json` 은 억원(unit 필드)인데 백만원으로 보고 100 으로 나눠 눈금이 100배 작았고 툴팁(`fmtEok`)도 같은 가정이었다(스위스리 1년차 418억원이 「4억」). 억/조(1만억 이상) 로 고치고 △ 유지. 실측: 스위스리 눈금 `0억…450억` 툴팁 `418억원`, DB생명 `590억원`, 삼성생명 `0.0조…1.2조`·`1.03조원`.
+- **전망 빈 상태**(`K-ICS.html`): `row.status==='excluded'` 이면 `row.exclusion_reason` 그대로, 서울보증 이름 분기 삭제, `findForwardRow` 에 `insurer_name` 가드. 서울보증 선택 시 데이터 문구 표시 확인.
+- **테스트**: `test_deploy_assets`·`test_push_gate_wiring`·`test_share_screenshot`(`RUN_SHARE_SHOT=1`) 84 통과.
+
 ## 2026-10-11 -- K-ICS 「자산·부채 듀레이션」 별도 섹션 · 시나리오별 금리부 자산·부채 표
 
 티켓 `inbox/designer/20261011T1300Z__orchestrator__MULTI_2023.2Q-2026.2Q__kics_duration_section_scenario_tables.md`(공유 티켓, 종결은 오케스트레이터). `K-ICS.html` + 검증 2종의 기대 섹션 수만 수정. 마스터·`public_exports` 무수정, push·배포 안 함(owner 보류).

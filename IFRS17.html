@@ -2684,27 +2684,30 @@
           const n = (v==null) ? NaN : Number(v);
           data.push(Number.isFinite(n) ? n : null);
         }
-        titleText = "장래 " + maxY + "년 CSM 상각 예정액 (연도별, 백만원)";
+        titleText = "장래 " + maxY + "년 CSM 상각 예정액 (연도별, 억원)";
       } else {
         const ord=[["y1","1년이내"],["y1_y3","1–3년"],["y3_y5","3–5년"]];   // D8: '5년 초과' 버킷 숨김
         labels = ord.map(x=>x[1]);
         data = ord.map(([k])=>{const v=(amRow.buckets||{})[k]; const n=v==null?NaN:Number(v); return Number.isFinite(n)?n:null});
         titleText = "버킷별 상각 규모 (연도별 데이터 없음 — 구간)";
       }
-      // data 단위 = 백만원. 1억=100백만, 1조=1,000,000백만(종전 100,000은 10배 과대).
+      // data 단위 = 억원(csm_amort_schedule.json 의 unit 필드 — 빌더가 이미 억원으로 적재한다). 1조 = 10,000억.
+      // (종전에는 값을 백만원으로 보고 100 으로 나눠 눈금이 100배 작았고 툴팁도 같은 가정이었다 — 스위스리 1년차 418억원이 「4억」으로 찍혔다.)
       const amMax=Math.max(...data.filter(Number.isFinite),0);
-      const amDiv=amMax>=1000000?1000000:amMax>=100?100:1;
-      const amSfx=amMax>=1000000?'조':amMax>=100?'억':'백만';
-      const amDp=amMax>=1000000?1:0;
-      const amTitle=titleText.replace('백만원',amSfx+'원');
+      const amDiv=amMax>=10000?10000:1;
+      const amSfx=amMax>=10000?'조':'억';
+      const amDp=amMax>=10000?1:0;
+      const amTitle=titleText.replace('억원',amSfx+'원');
+      const amSamo=(x,dp)=>(x<0&&Number(Math.abs(x).toFixed(dp))!==0?"△":"")+Math.abs(x).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp});
+      const amTip=v=>Math.abs(v)>=10000?amSamo(v/10000,2)+"조원":amSamo(v,0)+"억원";
       charts.amort=new Chart(canvasCtx(host,"#canvasAmort"),{
         type:"bar",
         data:{ labels, datasets:[{ label:String(amRow.row_label||"CSM amort"), backgroundColor:currentKey.fill, data }]},
         options:{responsive:true,maintainAspectRatio:false,
           plugins:{legend:{display:false}, title:{display:true,text:amTitle},
-            // 툴팁이 원시 백만원을 그대로 뿌려 축(억/조)과 단위가 어긋나던 버그 → 위 CSM 워터폴과 같은 억원으로 통일(음수 △).
-            tooltip:{callbacks:{label:(c)=> c.parsed.y==null ? "—" : (fmtEok(c.parsed.y)+"억원")}}},
-          scales:{y:{beginAtZero:true, ticks:{ callback:(vv)=>(vv/amDiv).toFixed(amDp)+amSfx }}}}
+            // 툴팁도 축과 같은 단위: 1만억 이상이면 조원(소수 2자리), 아니면 억원. 음수 △.
+            tooltip:{callbacks:{label:(c)=> c.parsed.y==null ? "—" : amTip(c.parsed.y)}}},
+          scales:{y:{beginAtZero:true, ticks:{ callback:(vv)=>amSamo(vv/amDiv,amDp)+amSfx }}}}
       })
     }
 

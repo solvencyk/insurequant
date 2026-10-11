@@ -5,15 +5,16 @@
 
 ## Status (최신 3개)
 
+- **2026-10-11 IFRS17 섹션 3 모바일 단순형 재도입 · ? 팝오버 가려짐 수정 · 시장지도 재보·보증 절반 · 상각 축 단위 · 전망 제외 사유 완료(커밋 6f92fb0·44c7afc·후속, 미배포)** — 모바일(≤640px) = 기말 CSM 막대(주축)+신계약 CSM 선(보조축), 눈금은 숫자만·단위는 축 제목(조원/억원). 좌우 축 폭 61·64px → 34~55px(삼성생명 375px 그림 영역 184→245px).
+  원인(?): `.panel.revealed` 의 `animation … forwards` 가 패널마다 쌓임 맥락을 만들어 아래 패널이 팝오버를 덮음 → `common.css` 에서 forwards 제거, 팝오버 z-index 1950, 하단이 잘리면 위로 뒤집기/터치는 스크롤(theme.js `flipHelpPop`). index 재보·보증 높이 246→122px(`RE_MIN_SHARE` 0.07). 상각 차트 눈금·툴팁은 데이터가 억원인데 백만원으로 보던 오류 수정, 전망 빈 상태 문구는 `row.exclusion_reason`. 남은 것: 없음(배포는 owner GO).
 - **2026-10-11 K-ICS 「자산·부채 듀레이션」 별도 섹션 + 시나리오별 금리부 자산·부채 표 완료(K-ICS.html·검증 2종 기대 섹션 수 4→5, 커밋·미배포)** — 듀레이션 카드·산식 「?」·비고를 금리 민감도에서 떼어 `#sec-dur`(금리 민감도 바로 아래, 공유 버튼·목차 5번째). 표 = 열 6시나리오(충격전·금리상승·금리하락·평탄화·경사화·평균회귀) × 행 금리부자산·금리부부채·순자산, 칸 아랫줄에 충격전 대비 변화(금액·%).
   단위: 마스터 `kics_duration_gap.json` 열은 **이미 억원**이라 환산 안 함(티켓의 「백만원×0.01」은 사실과 다름 — 빌더가 ÷100 해서 적재, 삼성생명 자산−부채 156,916.32 = 항목41 순자산가치). 자체 분기 선택(2023.2Q~, 금리 민감도는 2024.4Q~). 검증 헤드리스 25조합(5사×480·768·1280·라이트/다크) 콘솔 오류 0·가로 넘침 0, 테스트 83 통과, `check_share_screenshot.py` 통과. 남은 것: 없음(배포는 owner GO).
 - **2026-10-11 다운로드 목록에 시트 3개 추가 + K-ICS 자본비율 전망 빈 상태 문구 정정 완료(`download-survey.js`·`K-ICS.html`, 커밋·미배포)** — `SHEETS` 에 보험계약부채(ILP)·자본성증권발행현황(CAPSEC)·금리듀레이션갭(DGAP) 추가(후자 둘은 공개 시트인데 목록에서만 빠져 있었음, 의도된 비공개 아님). 전망 패널 「(19사 cohort 외)」 는 숫자 없는 사실 문구로 교체, 서울보증은 「보험료배분접근법만 적용해 제외」(자본성증권 없어서가 아님).
   검증 헤드리스 8조합(4페이지×1280·375) 15개 라벨 잘림·겹침·가로 넘침 0, 새 3시트 다운로드 xlsx 시트·행수 일치, `test_deploy_assets`+`test_push_gate_wiring` 77 통과. 남은 것: 서울보증 제외 이유를 데이터가 말하게 하려면 publishing 이 전망 파일에 제외 사유를 담아야 함(지금은 이름으로 분기).
-- **2026-10-11 공유 스크린샷: 헤더 메뉴=페이지 전체 복구 + 섹션별 공유 버튼 완료(theme.js·common.css·K-ICS/IFRS17/compare, 미커밋·미배포)** — 원인: 8c997cb(2026-10-08)가 본문 6000px 초과 시 「지금 화면만」으로 막아 둠(K-ICS·IFRS17·모바일은 거의 다 초과). 임계값 폐기, 캔버스 한도는 scale 자동 하향(한 변 16,000px·터치 면적 1,600만 px, 하한 0.75 밑이면 위쪽만+안내).
-  섹션 버튼: K-ICS 4·IFRS17 9·compare 카드 전부(마크업 `data-share-section`), 이미지에 제목(페이지·섹션·회사)+출처. 검증 `scripts/check_share_screenshot.py`(1280·375·라이트·다크 통과), 회귀 `tests/test_share_screenshot.py`(`RUN_SHARE_SHOT=1` 이면 브라우저 검사). 남은 것: 아주 긴 페이지(약 2만 px 초과) 이어 붙이기는 제안만(현재 모든 페이지 1.3만 px 이하).
 
 ## publishing 이 배포 전에 해야 할 일 (2026-10-10 designer)
 
+- **2026-10-11 오후 변경 묶음**: 새 배포 파일 없음(`IFRS17.html`·`K-ICS.html`·`index.html`·`common.css`·`theme.js`). 화면 변경 = IFRS17 섹션 3 모바일 단순형, 4페이지 공통 「?」 팝오버가 패널 아래로 열려도 가려지지 않음(`common.css` 패널 reveal 애니메이션 정리 — 데스크톱 패널 표시 변화 없음), index 시장지도 재보험·보증 그룹 면적 절반·제목 문구 삭제, IFRS17 상각 차트 눈금(100배 작게 찍히던 라이브 증상) 정정. K-ICS 전망 빈 상태 문구는 `kics_forward_capital.json` 의 KR0150 행(`status=excluded`·`exclusion_reason`)을 읽으므로 **그 JSON 이 라이브에 먼저/같이 가야 한다**(없으면 「대상이 아닙니다」 일반 문구).
 - **공유 스크린샷(2026-10-11)**: 새 배포 파일·CDN 없음. 바뀐 배포 파일 = `theme.js`·`common.css`·`K-ICS.html`·`IFRS17.html`·`compare.html`(html2canvas 1.4.1·SRI 는 기존 그대로). 검증 스크립트 `scripts/check_share_screenshot.py` 는 배포 대상 아님.
 - **`data/company_segment.json` 을 배포 파일 목록에 추가** — `scripts/android_push_and_deploy.sh` 의 `NEW_FILES`(154행)에 없으면 라이브 index·compare 가 재보사를 생보/손보에 섞어 보이거나 3구분이 안 된다(index 는 로드 실패 시 콘솔 경고만 남기고 옛 2구분으로 폴백). `tests/test_push_gate_wiring.py` 출처 표에 이 파일(마스터 아님, 수기 매핑)을 넣을지는 publishing 판단.
 - **재보험·보증 3분류 반영 완료** — 8곳이 든 `kics_disclosure.json` 배포 선행 조건 충족. 같이 올릴 파일: `index.html` · `K-ICS.html` · `compare.html` · `IFRS17.html`(이름 약칭 1줄) · `공시보고서.html`(약칭 1줄) · `report-widget.js`(약칭) · `data/company_segment.json` · `data/compare/panel_compare.json`(`viz_build_compare_panel.py` 재실행 필수 — kics_disclosure.json 이 바뀌면 값이 움직인다) · `scripts/viz_build_compare_panel.py`.
