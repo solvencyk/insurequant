@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T1300Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.2Q-2026.2Q
@@ -32,4 +32,4 @@ owner 지시(2026-10-11): 「금리민감도·듀레이션 테이블을 별도�
 - 새 섹션 위치·구성(스크린샷 경로 또는 DOM 검증), 시나리오 표 열·행·단위, 빈 값 처리, 3개 너비 확인, 테스트 결과, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(designer dac5e11, orchestrator 종결 2026-10-11) K-ICS.html `#sec-dur` 신설(금리 민감도 아래·Forward 위, 공유 버튼·목차 5번째), 듀레이션 카드 이동, 시나리오별 금리부 자산·부채·순자산 표(충격전 대비 변화, 음수 △, 480/768/1280px·다크 25조합 검증, 콘솔 오류 0). 단위 정정: kics_duration_gap.json 은 이미 억원이라 환산하지 않음(삼성생명 2026.2Q 순자산 = 항목 41 일치; 티켓의 ×0.01 서술은 오기). 분기 선택은 이 섹션 자체 선택창(듀레이션 데이터가 2023.2Q부터라 금리 민감도 선택창과 분리). 테스트 83 통과. push·배포 보류(owner).
