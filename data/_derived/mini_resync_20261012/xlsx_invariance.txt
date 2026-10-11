@@ -1,0 +1,25 @@
+요약: rows 21 -> 21 DIFFERENT
+17BS: rows 10967 -> 11016 | removed 0 | added 49 {'KR1101': 11, 'KR1103': 24, 'KR1104': 6, 'KR1107': 8} | changed cells in kept rows 0 {}
+    of which value->value (old not blank): 0
+K-ICS공시: rows 29993 -> 29993 IDENTICAL
+유지율: rows 10313 -> 10313 IDENTICAL
+손해율: rows 38249 -> 38249 IDENTICAL
+CSM워터폴: rows 2340 -> 2358 | removed 0 | added 18 {'KR1104': 6, 'KR1105': 6, 'KR1107': 6} | changed cells in kept rows 0 {}
+    of which value->value (old not blank): 0
+CSM상각: rows 620 -> 635 | removed 0 | added 15 {'KR1101': 5, 'KR1102': 5, 'KR1106': 5} | changed cells in kept rows 0 {}
+    of which value->value (old not blank): 0
+신계약CSM배수: rows 390 -> 393 | removed 0 | added 3 {'KR1105': 1, 'KR1107': 1, 'KR1104': 1} | changed cells in kept rows 0 {}
+    of which value->value (old not blank): 0
+손익분해PL: rows 13491 -> 13794 | removed 0 | added 303 {'KR1101': 41, 'KR1102': 42, 'KR1103': 41, 'KR1104': 40, 'KR1105': 41, 'KR1106': 42, 'KR1107': 41, 'KR1108': 15} | changed cells in kept rows 25 {'KR1102': 10, 'KR1103': 7, 'KR1105': 8}
+    of which value->value (old not blank): 25
+배당: rows 2044 -> 2044 IDENTICAL
+기본자본소진율: rows 471 -> 471 IDENTICAL
+보완자본소진율: rows 659 -> 659 IDENTICAL
+자본비율전망: rows 2531 -> 2531 IDENTICAL
+가정민감도: rows 311 -> 317 | removed 0 | added 6 {'KR1104': 6} | changed cells in kept rows 0 {}
+    of which value->value (old not blank): 0
+금리민감도: rows 967 -> 967 IDENTICAL
+자본성증권발행현황: rows 124 -> 124 IDENTICAL
+금리듀레이션갭: rows 318 -> 318 IDENTICAL
+보험계약부채: rows 6225 -> 6335 | removed 0 | added 110 {'KR1101': 50, 'KR1104': 36, 'KR1103': 8, 'KR1105': 8, 'KR1107': 8} | changed cells in kept rows 0 {}
+    of which value->value (old not blank): 0

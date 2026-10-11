@@ -1,0 +1,6 @@
+CSM_amortization.json
+  KR1101: added quarters ['2023.4Q']; latest quarter in master 2025.4Q; added latest? False
+  KR1102: added quarters ['2023.4Q']; latest quarter in master 2025.4Q; added latest? False
+  KR1106: added quarters ['2023.4Q']; latest quarter in master 2025.4Q; added latest? False
+CSM_sensitivity.json
+  KR1104: added quarters ['2023.4Q']; latest quarter in master 2025.4Q; added latest? False

@@ -1,0 +1,12 @@
+== PL_breakdown.json: 13491 -> 13794 | added 303 {'KR1101': 41, 'KR1102': 42, 'KR1103': 41, 'KR1104': 40, 'KR1105': 41, 'KR1106': 42, 'KR1107': 41, 'KR1108': 15} | removed 0
+   changed col 값: 11 cells in 11 rows; companies ['KR1102', 'KR1103', 'KR1105']
+   changed col 값_당분기: 14 cells in 14 rows; companies ['KR1102', 'KR1103', 'KR1105']
+   added by item: [((16, '기타사업비용'), 1), ((17, '투자손익'), 101), ((20, '영업이익'), 102), ((21, '영업외손익'), 96), ((4, '원수 CSM상각'), 3)]
+== IFRS17_BS.json: 10967 -> 11016 | added 49 {'KR1101': 11, 'KR1103': 24, 'KR1104': 6, 'KR1107': 8} | removed 0
+== CSM_waterfall.json: 2340 -> 2358 | added 18 {'KR1104': 6, 'KR1105': 6, 'KR1107': 6} | removed 0
+   added keys sample: [('KR1104', '2025.4Q'), ('KR1105', '2025.4Q'), ('KR1107', '2023.4Q')]
+== CSM_amortization.json: 620 -> 635 | added 15 {'KR1101': 5, 'KR1102': 5, 'KR1106': 5} | removed 0
+   added keys sample: [('KR1101', '2023.4Q'), ('KR1102', '2023.4Q'), ('KR1106', '2023.4Q')]
+== CSM_sensitivity.json: 311 -> 317 | added 6 {'KR1104': 6} | removed 0
+   added keys sample: [('KR1104', '2023.4Q')]
+== insurance_liability_portfolio.json: 6225 -> 6335 | added 110 {'KR1101': 50, 'KR1103': 8, 'KR1104': 36, 'KR1105': 8, 'KR1107': 8} | removed 0

@@ -1,0 +1,134 @@
+=== panel_csm_combo: 52 changed leaves/nodes
+   companies/KR1101/q 22 ['ADD', 'CHG']
+   companies/KR1103/q 1 ['ADD']
+   companies/KR1104/q 16 ['ADD', 'CHG']
+   companies/KR1105/q 1 ['ADD']
+   companies/KR1107/q 10 ['ADD', 'CHG']
+   meta/csm_recon 1 ['CHG']
+   meta/lic_recon 1 ['CHG']
+    ADD companies/KR1101/q/2023.1Q null -> [null, null, null, null, null, null, null, null, null, 4709.64, 4400.3, 4363.84, 345.8, 0.0, null, null, 1, -309.33]
+    ADD companies/KR1101/q/2023.2Q null -> [null, null, null, null, null, null, null, null, null, 4358.57, 4280.9, 3990.88, 367.69, 0.0, null, null, 1, -77.69]
+    ADD companies/KR1101/q/2023.3Q null -> [null, null, null, null, null, null, null, null, null, 4468.26, 4135.2, 4102.05, 366.21, 0.0, null, null, 1, -333.03]
+    ADD companies/KR1101/q/2023.4Q null -> [502.0, 0.0, -2531.0, 0.0, 154.0, 0.0, -33.61, -1908.61, null, 4483.81, 4286.9, 4165.48, 318.32, 0.0, null, null, 1, -196.93]
+    CHG companies/KR1101/q/2024.1Q/9 null -> 4292.04
+    CHG companies/KR1101/q/2024.1Q/11 null -> 3980.31
+    CHG companies/KR1101/q/2024.1Q/12 null -> 311.73
+    CHG companies/KR1101/q/2024.1Q/13 null -> 0.0
+    CHG companies/KR1101/q/2024.1Q/16 null -> 1
+    CHG companies/KR1101/q/2024.1Q/17 null -> -175.49
+    CHG companies/KR1101/q/2024.2Q/9 null -> 4395.46
+    CHG companies/KR1101/q/2024.2Q/11 null -> 4108.52
+    CHG companies/KR1101/q/2024.2Q/12 null -> 286.94
+    CHG companies/KR1101/q/2024.2Q/13 null -> 0.0
+    CHG companies/KR1101/q/2024.2Q/16 null -> 1
+    CHG companies/KR1101/q/2024.2Q/17 null -> -221.38
+    CHG companies/KR1101/q/2024.3Q/9 null -> 4583.82
+    CHG companies/KR1101/q/2024.3Q/11 null -> 4333.02
+    CHG companies/KR1101/q/2024.3Q/12 null -> 250.8
+    CHG companies/KR1101/q/2024.3Q/13 null -> 0.0
+    CHG companies/KR1101/q/2024.3Q/16 null -> 1
+    CHG companies/KR1101/q/2024.3Q/17 null -> -331.68
+    ADD companies/KR1103/q/2023.4Q null -> [191.29, 0.0, -611.09, 0.0, 91.53, 0.0, 0.0, -328.27, null, 901.5, 573.2, null, null, null, null, null, 0, null]
+    ADD companies/KR1104/q/2023.1Q null -> [null, null, null, null, null, null, null, null, null, 144.77, null, 138.59, 6.18, 0.0, null, null, 1, 71.44]
+    ADD companies/KR1104/q/2023.2Q null -> [null, null, null, null, null, null, null, null, null, 296.59, null, 292.56, 4.02, 0.0, null, null, 1, -38.29]
+    ADD companies/KR1104/q/2023.3Q null -> [null, null, null, null, null, null, null, null, null, 370.86, 380.3, 365.06, 5.81, 0.0, null, null, 1, 9.44]
+    CHG companies/KR1104/q/2024.1Q/9 null -> 461.42
+    CHG companies/KR1104/q/2024.1Q/11 null -> 445.89
+    CHG companies/KR1104/q/2024.1Q/12 null -> 15.53
+    CHG companies/KR1104/q/2024.1Q/13 null -> 0.0
+    CHG companies/KR1104/q/2024.1Q/16 null -> 1
+    CHG companies/KR1104/q/2024.1Q/17 null -> -315.95
+    CHG companies/KR1104/q/2024.2Q/9 null -> 345.57
+    CHG companies/KR1104/q/2024.2Q/11 null -> 331.26
+    CHG companies/KR1104/q/2024.2Q/12 null -> 14.31
+    CHG companies/KR1104/q/2024.2Q/13 null -> 0.0
+    CHG companies/KR1104/q/2024.2Q/16 null -> 1
+    CHG companies/KR1104/q/2024.2Q/17 null -> -204.64
+    ADD companies/KR1104/q/2024.3Q null -> [null, null, null, null, null, null, null, null, null, 312.6, null, 298.49, 14.11, 0.0, null, null, 1, -168.25]
+    ADD companies/KR1105/q/2023.4Q null -> [5571.0, 0.0, -7715.0, 0.0, 1034.0, 0.0, 0.0, -1110.0, null, 1282.3, 172.3, null, null, null, null, null, 0, null]
+    ADD companies/KR1107/q/2023.4Q null -> [989.0, 0.0, -2823.0, 0.0, 488.0, 0.0, 0.0, -1346.0, null, null, null, null, null, null, null, null, null, null]
+    CHG companies/KR1107/q/2024.1Q/9 null -> 1699.0
+    CHG companies/KR1107/q/2024.1Q/10 null -> 585.0
+    CHG companies/KR1107/q/2024.1Q/16 null -> 0
+    CHG companies/KR1107/q/2024.2Q/9 null -> 1621.0
+    CHG companies/KR1107/q/2024.2Q/10 null -> 556.0
+    CHG companies/KR1107/q/2024.2Q/16 null -> 0
+    CHG companies/KR1107/q/2024.3Q/9 null -> 1613.0
+    CHG companies/KR1107/q/2024.3Q/10 null -> 578.0
+    CHG companies/KR1107/q/2024.3Q/16 null -> 0
+    CHG meta/csm_recon "포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 281건 중 불일치 6건(허용 0.5%)" -> "포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 287건 중 불일치 6건(허용 0.5%)"
+    CHG meta/lic_recon "발생사고요소 셀: 실공시 388 · 사이드카(2-4 에 포함) 30 · 추정 78 · 없음 59" -> "발생사고요소 셀: 실공시 401 · 사이드카(2-4 에 포함) 30 · 추정 83 · 없음 52"
+=== panel_compare: 137 changed leaves/nodes
+   loss_curve/v/KR1101 1 ['ADD']
+   loss_curve/v/KR1102 1 ['ADD']
+   loss_curve/v/KR1103 1 ['ADD']
+   loss_curve/v/KR1104 1 ['ADD']
+   loss_curve/v/KR1105 1 ['ADD']
+   loss_curve/v/KR1106 1 ['ADD']
+   loss_curve/v/KR1107 1 ['ADD']
+   metrics/12/v 18 ['CHG']
+   metrics/15/v 3 ['CHG']
+   metrics/16/v 101 ['CHG']
+   metrics/2/v 3 ['CHG']
+   metrics/4/v 1 ['CHG']
+   metrics/5/v 4 ['CHG']
+    ADD loss_curve/v/KR1101 null -> {"2024.4Q": [75.6, 79.2, 80.1, 79.9, 80.8, 81.2, 74.4, 74.4, 73.7, 73.0, 72.1, 70.1, 68.0, 67.6, 61.7, null], "2025.4Q": [75.5, 79.4, 79.4, 80.1, 80.6, 73.4, 73
+    ADD loss_curve/v/KR1102 null -> {"2024.4Q": [76.5, 76.6, 77.6, 78.2, 78.1, 79.3, 80.7, 81.8, 82.7, 82.0, 84.6, 94.5, 126.1, 143.8, 142.1, null], "2025.4Q": [94.2, 73.8, 71.9, 70.9, 70.7, 68.9,
+    ADD loss_curve/v/KR1103 null -> {"2023.4Q": [72.0, 72.6, 72.7, 72.8, 72.9, 72.9, 72.9, 74.0, 74.1, 73.7, 73.2, 70.6, 70.8, 71.1, 77.7, null], "2024.4Q": [67.3, 67.9, 68.4, 68.8, 69.2, 69.5, 69
+    ADD loss_curve/v/KR1104 null -> {"2023.4Q": [81.5, 81.3, 81.1, 81.0, 80.8, 80.7, 80.6, 80.5, 80.4, 80.2, 79.6, 78.8, 77.9, 76.9, 70.9, null], "2024.4Q": [83.5, 80.0, 99.2, 94.2, 93.3, 85.6, 84
+    ADD loss_curve/v/KR1105 null -> {"2023.4Q": [88.1, 88.3, 88.3, 88.5, 88.3, 88.5, 88.5, 88.3, 88.1, 87.9, 87.3, 85.2, 82.5, 79.9, 77.7, null], "2024.4Q": [88.1, 88.5, 88.7, 88.6, 88.7, 88.5, 88
+    ADD loss_curve/v/KR1106 null -> {"2024.4Q": [96.4, 96.4, 95.7, 95.0, 94.3, 93.8, 93.6, 93.3, 93.5, 93.4, 93.1, 92.4, 92.5, 92.3, 92.9, null], "2025.4Q": [91.2, 90.5, 89.9, 88.7, 87.6, 87.1, 86
+    ADD loss_curve/v/KR1107 null -> {"2023.4Q": [90.2, 90.3, 90.0, 88.6, 88.4, 88.7, 89.1, 89.2, 88.2, 87.6, 87.7, 85.3, 84.1, 86.5, 91.1, null], "2024.4Q": [90.0, 89.5, 89.1, 89.2, 89.2, 89.9, 90
+    CHG metrics/2/v/KR1104/11 null -> 213
+    CHG metrics/2/v/KR1105/11 null -> 9007
+    CHG metrics/2/v/KR1107/3 null -> 989
+    CHG metrics/4/v/KR1105/2 102 -> 123
+    CHG metrics/5/v/KR1102/1 509 -> 508
+    CHG metrics/5/v/KR1103/1 2 -> 3
+    CHG metrics/5/v/KR1103/2 -30 -> -29
+    CHG metrics/5/v/KR1105/2 124 -> 137
+    CHG metrics/12/v/KR1101/7 null -> 73.5
+    CHG metrics/12/v/KR1101/11 null -> 70.8
+    CHG metrics/12/v/KR1102/7 null -> 82.5
+    CHG metrics/12/v/KR1102/11 null -> 69.8
+    CHG metrics/12/v/KR1103/3 null -> 79.6
+    CHG metrics/12/v/KR1103/7 null -> 78.5
+    CHG metrics/12/v/KR1103/11 null -> 79.1
+    CHG metrics/12/v/KR1104/3 null -> 75.7
+    CHG metrics/12/v/KR1104/7 null -> 81.9
+    CHG metrics/12/v/KR1104/11 null -> 91.0
+    CHG metrics/12/v/KR1105/3 null -> 85.6
+    CHG metrics/12/v/KR1105/7 null -> 84.8
+    CHG metrics/12/v/KR1105/11 null -> 85.1
+    CHG metrics/12/v/KR1106/7 null -> 93.9
+    CHG metrics/12/v/KR1106/11 null -> 85.3
+    CHG metrics/12/v/KR1107/3 null -> 89.0
+    CHG metrics/12/v/KR1107/7 null -> 89.8
+    CHG metrics/12/v/KR1107/11 null -> 90.5
+    CHG metrics/15/v/KR1104/11 null -> 4
+    CHG metrics/15/v/KR1105/11 null -> 1078
+    CHG metrics/15/v/KR1107/3 null -> 129
+    CHG metrics/16/v/KR1101/0 null -> 12
+    CHG metrics/16/v/KR1101/1 null -> -13
+    CHG metrics/16/v/KR1101/2 null -> -18
+    CHG metrics/16/v/KR1101/4 null -> 5
+    CHG metrics/16/v/KR1101/5 null -> 17
+    CHG metrics/16/v/KR1101/6 null -> 52
+    CHG metrics/16/v/KR1101/7 null -> 88
+    CHG metrics/16/v/KR1101/8 null -> 26
+    CHG metrics/16/v/KR1101/9 null -> 69
+    CHG metrics/16/v/KR1101/10 null -> 87
+    CHG metrics/16/v/KR1101/11 null -> 106
+    CHG metrics/16/v/KR1101/12 null -> 27
+    CHG metrics/16/v/KR1101/13 null -> 39
+    CHG metrics/16/v/KR1102/0 null -> 36
+    CHG metrics/16/v/KR1102/1 null -> 137
+    CHG metrics/16/v/KR1102/2 null -> 37
+    CHG metrics/16/v/KR1102/3 null -> 118
+    CHG metrics/16/v/KR1102/4 null -> 44
+    CHG metrics/16/v/KR1102/5 null -> 71
+    CHG metrics/16/v/KR1102/6 null -> 160
+    CHG metrics/16/v/KR1102/7 null -> 251
+    CHG metrics/16/v/KR1102/8 null -> 39
+    CHG metrics/16/v/KR1102/9 null -> 94
+    CHG metrics/16/v/KR1102/10 null -> -33
