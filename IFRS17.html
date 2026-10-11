@@ -206,8 +206,6 @@
     <div class="section-body">
     <div class="panel">
       <h2>IFRS17 통합 현황</h2>
-    </div>
-    <div class="panel">
       <div class="controls">
         <div class="control-group">
           <span class="control-label" id="wfPeriod-label">기준</span>
@@ -225,20 +223,18 @@
         </div>
       </div>
       <div id="emptyHint" class="placeholder-empty">보험사를 선택해 주세요</div>
-      <div id="dashHost" style="display:none"></div>
-    </div>
-    </div>
-  </div>
-
-  <template id="dashTpl">
-    <div class="panel" data-pane="kpi7" style="padding:14px 18px">
-      <div class="kpi7-strip" id="kpi7Strip">
+      <div class="kpi7-strip" id="kpi7Strip" data-pane="kpi7" style="display:none">
         <div class="kpi7-card"><div class="kpi7-val" id="kpi7Closing">—</div><div class="kpi7-lab">기말 CSM 잔액</div></div>
         <div class="kpi7-card"><div class="kpi7-val" id="kpi7Amort">—</div><div class="kpi7-lab">CSM 상각 (당기)</div></div>
         <div class="kpi7-card"><div class="kpi7-val" id="kpi7NbCsm">—</div><div class="kpi7-lab">신계약 CSM</div></div>
         <div class="kpi7-card"><div class="kpi7-val" id="kpi7NbMult">—</div><div class="kpi7-lab">NB CSM 배수</div></div>
       </div>
     </div>
+    <div id="dashHost" style="display:none"></div>
+    </div>
+  </div>
+
+  <template id="dashTpl">
         <div class="panel" id="sec-bs" data-pane="bs" data-share-section="재무상태표">
       <!-- 2026-08-14 owner 발주(inbox/designer/20260814T1250Z, bs_taccount_top_panel): 최상단 이동
            + T자(왼쪽 자산·우상단 부채·우하단 자본) + 섹션당 2단계 드릴다운(총계→세부). 데이터는
@@ -2997,10 +2993,12 @@
       const _sw=document.getElementById("coSwatch"); if(_sw) _sw.style.background="transparent";
       const _cs=document.getElementById("company"); if(_cs){ _cs.style.borderColor=""; _cs.style.boxShadow=""; }
       dash.style.display="none"; hint.style.display="block"; dash.innerHTML="";
+      const _k7=document.getElementById("kpi7Strip"); if(_k7) _k7.style.display="none";
       if (window.IQTheme && IQTheme.syncSectionNav) IQTheme.syncSectionNav();
       return;
     }
     dash.style.display="block"; hint.style.display="none";
+    const _k7s=document.getElementById("kpi7Strip"); if(_k7s) _k7s.style.display="";
     renderCompany(v);
     // 패널이 template 에서 복제된 뒤라야 어느 섹션이 실제로 있는지 알 수 있다.
     // 없는 섹션은 감추지 않고 "미공시" 로 남긴다(owner 2026-09-20).
