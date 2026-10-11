@@ -7,6 +7,10 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- IFRS17 통합 현황 박스·NB CSM 배수 표
+
+티켓 `inbox/designer/20261012T0210Z__orchestrator__MULTI_2026.2Q__ifrs17_summary_box_kpis_and_nb_table.md`(공유). `IFRS17.html` 만. (1) 「IFRS17 통합 현황」 제목 패널 하나가 기준 토글·요약 4칸(`#kpi7Strip`, 템플릿 밖 정적 마크업, 회사 선택 전 숨김)을 담고, `#dashHost` 의 섹션 패널은 그 아래 형제로(커밋 46d4a3a). (2) 섹션 6 차트 아래 `#nbTable`(`buildBsTableDom` 재사용, 행 월납월초보험료·신계약 CSM·신계약 CSM 배수, 값 없음 —, 음수 △, 「미수록」 회사는 표 없음). 검증: 삼성생명 연도 2023·2024·2025·2026.2Q / 분기 5개, 라이나 신계약 CSM 2,192 = 요약 칸 값, 375px 가로 넘침 0, 콘솔 0.
+
 ## 2026-10-12 -- K-ICS 듀레이션 섹션 컬럼명·순서·주석 정리
 
 티켓 `inbox/designer/20261012T0200Z__orchestrator__MULTI_2026.2Q__kics_dur_table_scenario_labels_order.md`(공유). `K-ICS.html` 만. `DUR_SCEN` 을 충격전·평균회귀·금리상승·금리하락·금리평탄·금리경사(공시 이름·순서)로 바꾸고 임의 이름 평탄화·경사화와 그 해설 문장을 삭제. 표 아래 「자료:」 줄, 갭 카드 아래 분모·부호 문장·비고는 보이는 글을 없애고 각각 ? 팝오버(help-dur-table, help-dur-formula)로 이동. 같은 이름을 쓰던 다른 곳은 없음(compare·index·공시보고서·JS 전수 grep 0건). 검증: 충격전 순자산 61,292=175,248−113,957, 375px 표 가로 스크롤(689/325), 콘솔 0.

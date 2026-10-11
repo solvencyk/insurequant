@@ -319,7 +319,7 @@
     <div class="panel" id="sec-nb" data-pane="nb" data-share-section="NB 배수">
       <h2>6) NB · CSM 배수 시계열 (신계약 CSM ÷ 월납월초)</h2>
       <div id="nbStub" class="stub-msg"></div>
-      <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb" role="img" aria-label="NB·CSM 배수 시계열 차트"></canvas></div></div>
+      <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb" role="img" aria-label="NB·CSM 배수 시계열 차트"></canvas></div><div class="table-wrap" id="nbTable" style="margin-top:12px"></div></div>
     </div>
     <div class="panel" id="sec-sens" data-pane="sens" data-share-section="민감도">
       <h2>7) 민감도(ΔCSM)</h2>
@@ -2798,6 +2798,16 @@
         borderColor:currentKey.line, backgroundColor:currentKey.soft,
         borderWidth:2.5, pointRadius:4, pointHoverRadius:6, tension:0.2, spanGaps:true, fill:true,
       }];
+      // 차트 아래 표: 같은 시점(labels)·같은 기준(연도→연누계, 분기→당분기). 값 없는 칸은 —, 음수 △.
+      const nbBox=q(host,"#nbTable");
+      if(nbBox){ nbBox.innerHTML="";
+        const nbSet = useQ ? "당분기" : "연누계";
+        const nbCell=(r,k,dp)=>{ const v=r[k+"_"+nbSet]; return v==null||isNaN(Number(v)) ? "—" : hcSamo(Number(v),dp); };
+        nbBox.appendChild(buildBsTableDom(["구분"].concat(labels),[
+          {label:"월납월초보험료",cells:nbView.map(r=>nbCell(r,"월납월초보험료",0))},
+          {label:"신계약 CSM",cells:nbView.map(r=>nbCell(r,"신계약CSM",0))},
+          {label:"신계약 CSM 배수",cells:nbView.map(r=>{ const c=nbCell(r,"신계약CSM배수",2); return c==="—"?c:c+"×"; }),bold:true}
+        ])); }
       charts.nb=new Chart(canvasCtx(host,"#canvasNb"),{
         type:"line",
         data:{ labels, datasets: ds },
