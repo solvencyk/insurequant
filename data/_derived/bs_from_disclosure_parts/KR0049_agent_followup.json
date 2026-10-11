@@ -1,0 +1,17 @@
+{
+  "_readme": [
+    "[2026-10-11] 후속(inbox/parser/20261011T0900Z) 정정·신규 칸의 계보 -- scripts/bspl_followup_apply_bs_fix.py 가 쓴다. scripts/merge_bs_disclosure_parts.py 가 이 파일을 다른 파트와 같이 사이드카·오버레이로 합친다."
+  ],
+  "cells": {
+    "KR0049|24|2026.2Q": {
+      "값": 60400.0,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf",
+      "page": 73,
+      "sha256": "d49756db94469d4b2c2160cde658f8aeadfef92114d9ea64b196ccdcae9eda5d",
+      "축척": "억원 -> 백만원",
+      "방법": "followup:5c:sametable:bs_full:24:기타부채",
+      "근거": "정기경영공시 2026.2Q 재무상태표(8-1 S 구간) p73 라인「24:기타부채」 604.000억(단위 억원). 같은 표 보정 5c: 이 공시본 표의 전기말 열이 마스터의 DART 앵커를 재현(2025.4Q 69,200.00 = 69,238.15) -- 한 표의 두 열은 한 정의이므로 당기 열도 마스터 정의다(다른 해 공시본의 재작성 전기열 때문에 전 기간 보정이 불합격이어도 이 공시본 자체의 열에는 영향이 없다). 표 항등식(자산 = 부채 + 자본) 폐합 확인, 표의 자산·부채·자본 총계가 마스터와 일치. (inbox/parser/20261011T0900Z bspl follow-up, step 5c same-table calibration)"
+    }
+  },
+  "skips": {}
+}

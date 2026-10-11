@@ -3,6 +3,20 @@
 > Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-11 (BS·PL 후속) — 마스터 이상 2건 정정 · 연속 동일값 전수 · 보류 재검토(적재 121칸) · 처브 항목 20 정의표 · PL 항목 1 보류 원인
+
+미커밋. push 안 함. 발주 `inbox/parser/20261011T0900Z__orchestrator__MULTI_2023.1Q-2026.2Q__bspl_followup_anomalies_and_holds.md`(고치지 않았다, 오케스트레이터 종결 대기). 맨 위 「중간 결과 — 후속 티켓」 `data/disclosure/_meta/bspl_granularity_runlog.md` · 도구 `scripts/bspl_followup_*.py` · 산출·증거 `data/_derived/bspl_followup_20261011/` · 백업(되돌리기) `data/_derived/bspl_followup_backup_20261011/`.
+
+- **정정(셀 단위 + 옛 값 guard + 백업, `bspl_followup_apply_bs_fix.py`; 오버레이·사이드카·파트 파일에 근거 같이)**: ① 카카오페이손보 KR1098 항목 30 자본금 2026.2Q 200,000 → **300,000**백만원(원문 8-1 p44 렌더링·4-1 자기자본 3열·자본총계 108,961,937,520원 원 단위 폐합; 틀린 값의 출처는 2026-10-09 비전 판독 파트 근거 문구). ② 코리안리 KR1000 2023.1Q·2Q 22칸 정정 + 5칸 신규: 2023 보고서에서 DART 본문 XML 폴백이 별도 BS 대신 「IFRS17 전환일 연결 BS 비교표」를 골랐고(별도표 캡션의 「연결기업」으로 basis 가 CFS 로 밀림, FS-API 는 이 두 분기 status 013) 그 값이 2Q 와 같게 들어갔다. 정정값은 DART 별도 BS = 경영공시 8-1 이 원 단위까지 일치. 코리안리 2023.2Q 이익잉여금 17BS 대 K-ICS 이탈 8.7% 가 사라졌다(YELLOW 1 해소).
+- **연속 동일값 전수**(`consecutive_duplicates_20261011.json`): 정정 후 BS 93·PL 30 묶음, 복사 오류는 KR1000 한 묶음뿐(정정으로 해소), 나머지 정당(자본금 불변 · 억원 반올림 · 원천이 같은 값을 인쇄 · 당분기 = YTD 차이). PL 에서 **케이디비생명 KR0072 항목 10(재보험 위험조정 변동) 4칸이 누적 열 대신 3개월 열**로 들어온 핸들러 결함 1건 발견(마스터는 안 건드리고 `proposed_pl_corrections_kr0072_item10.json`).
+- **보류 재검토(적재 121칸 = 새 키 추가만)**: 5a 0 증명 규칙 69(요약 BS 자산 합·책임준비금 = 20+21+22 폐합) · 5b 프라이어-연말 브리지 33(인쇄 8-1 K 전기말 열 = 감사 재무제표 라인이 ≥2개 연말에서 같고 마스터 연말 칸과도 같을 때) · 5c 19 = 같은 표 보정 8(그 공시본 전기말 열이 마스터 앵커를 재현) + 2023 비교열 사슬 1(2023 전기말 IFRS4 라 앵커가 없는 해: 중간 표 전기말 열 = 연말 공시본 비교열, 연말 당기열 = 마스터) + 규칙 T 6(같은 회계연도 증거만, 나중 공시본의 재작성 비교열은 제외, 독립 폐합 확인) + 정확한 줄 합 탐색 4(IBK연금 항목 13 2025.1Q~2026.1Q = 상각후원가유가증권 + 상각후원가대출채권및기타금융자산, 마스터 연말 칸을 원 단위로 재현·상각후원가예치금은 제외). 공통 안전장치: 표의 자산·부채·자본 총계가 마스터와 어긋나면 제외(ABL생명 AOCI 2023.1Q·2Q 가 이 때문에 빠짐). 보류 BS 500 → **378**: HOLD_UNTESTED 182 → 88 · HOLD_REJECTED_RULE 312 → 285 · HOLD_TRIO 2 → 1 · HOLD_PARTIAL_GROUP 4. 사유 등재부 `hold_reasons_5c.md/json`(군 82개, 분류 8종).
+- **처브라이프 KR0100 항목 20(보험계약부채) 정의표**(`kr0100_item20_table.json`): 마스터는 일반계정(D1) 6칸 + K-IFRS 라인(D2 = D1 + 특별계정부채) 4칸이 섞임. 연말 감사 앵커 3개·2026 K 서식이 D2, 잔차(부채총계 − 항목 20 − 21)가 D2 일 때 1~6% 로 닫히고 D1 이면 23~27% 남음 → 권고 D2. 마스터 미변경(owner 결정).
+- **PL 항목 1 보류 17칸 원인**: A 9칸 생명장기손익(항목 2) 빈 칸 + 13·14 가 0.0 이라 면제도 안 걸림 · B 5칸 기타영업수익(항목 15)만 빈 칸(0.0 으로 두면 잔차 −79~+77백만원으로 닫힘, §3d 밖이라 못 넣음) · C 3칸(롯데손보 레그 전부 없음 · 예별 장기 레그 없음 · **삼성화재 KR0008 일반손익 2023.2Q 마스터 오류**: DART 반기 XML 표 재계산 161,674 대 마스터 354,530, 같은 방법이 2023.3Q 를 ±1백만원으로 재현 — 제안 `proposed_pl_correction_kr0008_item14_2023.2Q.json`). 쓰기 없음.
+- **게이트**: `validate_master_tables --no-build` SUMMARY 착수 전과 동일(closing 381P/0F, pl_bridge 3455P/29F/0NEW). `validate_data_contract` RED 34 → 37(내 몫 1 = `MASTER_XLSX_DRIFT 17BS` 23칸; 나머지 2 는 K-ICS·ILP 레인), YELLOW 151 → 151. 마스터 대조 HEAD 대비: `IFRS17_BS.json` 행 10,651 → 10,777, 추가 126 · 값 변경 23 · 삭제 0 · 그 밖의 필드 변경 0, `PL_breakdown.json` 변경 0. BS 골든·`--update` 안 함.
+- **부수 발견(미적용, 제안 파일)**: 삼성화재 PL KR0008|14|2023.2Q 일반손익 마스터 오류(위) · 케이디비생명 PL 항목 10 3개월 열 혼입 4칸 · BS 항목 10 이 현금및예치금으로 들어간 KR1000 7 · KR0001 12 · KR0071 11칸 · 한화생명 BS 항목 10 2023.2Q 마스터 오류(DART 반기 XML 별도 요약 BS 1,081,513 = 8-1 K) · **상장 2023.1Q·2Q 마스터 총계가 연결(CFS) 값인 ABL생명 KR0070·미래에셋생명 KR0079**(23사 × 2분기 전수, 나머지는 별도 표와 일치; 별도 값은 DART 요약별도재무상태표) · DART 별도 요약 BS 로 채울 수 있는 빈 칸 9 · IBK연금 항목 13 정확한 두 줄 합 정의(상각후원가예치금은 현금및예치금 쪽).
+- **사고**: 도구를 파악하다 `validate_master_tables.py` 를 `--no-build` 없이 한 번 실행(`--help` 가 argparse 가 없어 무시됨) — `build_root_masters.py` 가 cp949 인쇄 오류로 즉시 실패(rc=1), 마스터·오버레이·사이드카 sha256 불변 확인. 이후 `--no-build` 만.
+- 빌더·게이트·예외 등재부·골든·HTML·xlsx·public_exports·ILP·CSM_*·K-ICS 파일은 안 건드렸다. 서브에이전트 안 씀.
+
 ## 2026-10-11 (BS·PL 세부 백필) — 정기경영공시 PDF 에서 BS 17항목·PL 5항목 세부 채움 (비상장 15사 + 재보사 8곳)
 
 미커밋. push 안 함. 발주 `inbox/parser/20261011T0310Z__orchestrator__MULTI_2023.1Q-2026.2Q__bspl_granularity_from_disclosure.md`(고치지 않았다, 오케스트레이터 종결 대기). 전 과정·표·재현·충돌·첨부 목록 `data/disclosure/_meta/bspl_granularity_runlog.md`.

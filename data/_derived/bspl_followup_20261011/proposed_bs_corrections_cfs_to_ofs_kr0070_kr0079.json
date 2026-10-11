@@ -1,0 +1,341 @@
+{
+ "_note": "PROPOSAL ONLY -- not applied (this ticket allows no change of existing BS cells besides items 1 and 2). master = consolidated (CFS) table of the DART report, correct basis = separate (OFS) 요약별도재무상태표. 백만원.",
+ "rows": [
+  {
+   "key": "KR0070|10|2023.1Q",
+   "label": "현금및현금성자산",
+   "dart_ofs_mn": 226774.0,
+   "master_mn": 245924.0,
+   "diff_mn": 19150.0,
+   "rel_pct": 8.445
+  },
+  {
+   "key": "KR0070|15|2023.1Q",
+   "label": "유형자산",
+   "dart_ofs_mn": 100223.0,
+   "master_mn": 101833.0,
+   "diff_mn": 1610.0,
+   "rel_pct": 1.606
+  },
+  {
+   "key": "KR0070|1|2023.1Q",
+   "label": "자산총계",
+   "dart_ofs_mn": 16979381.0,
+   "master_mn": 16986992.0,
+   "diff_mn": 7611.0,
+   "rel_pct": 0.045
+  },
+  {
+   "key": "KR0070|20|2023.1Q",
+   "label": "보험계약부채",
+   "dart_ofs_mn": 15316346.0,
+   "master_mn": 15316346.0,
+   "diff_mn": 0.0,
+   "rel_pct": 0.0
+  },
+  {
+   "key": "KR0070|21|2023.1Q",
+   "label": "재보험계약부채",
+   "dart_ofs_mn": 52892.0,
+   "master_mn": 52892.0,
+   "diff_mn": 0.0,
+   "rel_pct": 0.0
+  },
+  {
+   "key": "KR0070|24|2023.1Q",
+   "label": "기타부채",
+   "dart_ofs_mn": 56113.0,
+   "master_mn": 9739.0,
+   "diff_mn": -46374.0,
+   "rel_pct": -82.644
+  },
+  {
+   "key": "KR0070|2|2023.1Q",
+   "label": "부채총계",
+   "dart_ofs_mn": 16063187.0,
+   "master_mn": 16096704.0,
+   "diff_mn": 33517.0,
+   "rel_pct": 0.209
+  },
+  {
+   "key": "KR0070|30|2023.1Q",
+   "label": "자본금",
+   "dart_ofs_mn": 15534.0,
+   "master_mn": 15534.0,
+   "diff_mn": 0.0,
+   "rel_pct": 0.0
+  },
+  {
+   "key": "KR0070|4|2023.1Q",
+   "label": "기타포괄손익누계액",
+   "dart_ofs_mn": 372203.0,
+   "master_mn": null,
+   "diff_mn": null,
+   "rel_pct": null
+  },
+  {
+   "key": "KR0070|31|2023.1Q",
+   "label": "이익잉여금",
+   "dart_ofs_mn": -472596.0,
+   "master_mn": null,
+   "diff_mn": null,
+   "rel_pct": null
+  },
+  {
+   "key": "KR0070|3|2023.1Q",
+   "label": "자본총계",
+   "dart_ofs_mn": 916194.0,
+   "master_mn": 890288.0,
+   "diff_mn": -25906.0,
+   "rel_pct": -2.828
+  },
+  {
+   "key": "KR0070|10|2023.2Q",
+   "label": "현금및현금성자산",
+   "dart_ofs_mn": 260163.0,
+   "master_mn": 266940.0,
+   "diff_mn": 6777.0,
+   "rel_pct": 2.605
+  },
+  {
+   "key": "KR0070|15|2023.2Q",
+   "label": "유형자산",
+   "dart_ofs_mn": 101040.0,
+   "master_mn": 102408.0,
+   "diff_mn": 1368.0,
+   "rel_pct": 1.354
+  },
+  {
+   "key": "KR0070|1|2023.2Q",
+   "label": "자산총계",
+   "dart_ofs_mn": 16981888.0,
+   "master_mn": 17002458.0,
+   "diff_mn": 20570.0,
+   "rel_pct": 0.121
+  },
+  {
+   "key": "KR0070|20|2023.2Q",
+   "label": "보험계약부채",
+   "dart_ofs_mn": 15230152.0,
+   "master_mn": 15230152.0,
+   "diff_mn": 0.0,
+   "rel_pct": 0.0
+  },
+  {
+   "key": "KR0070|21|2023.2Q",
+   "label": "재보험계약부채",
+   "dart_ofs_mn": 46806.0,
+   "master_mn": 46806.0,
+   "diff_mn": 0.0,
+   "rel_pct": 0.0
+  },
+  {
+   "key": "KR0070|24|2023.2Q",
+   "label": "기타부채",
+   "dart_ofs_mn": 96056.0,
+   "master_mn": 46146.0,
+   "diff_mn": -49910.0,
+   "rel_pct": -51.959
+  },
+  {
+   "key": "KR0070|2|2023.2Q",
+   "label": "부채총계",
+   "dart_ofs_mn": 16035021.0,
+   "master_mn": 16081336.0,
+   "diff_mn": 46315.0,
+   "rel_pct": 0.289
+  },
+  {
+   "key": "KR0070|30|2023.2Q",
+   "label": "자본금",
+   "dart_ofs_mn": 15534.0,
+   "master_mn": 15534.0,
+   "diff_mn": 0.0,
+   "rel_pct": 0.0
+  },
+  {
+   "key": "KR0070|4|2023.2Q",
+   "label": "기타포괄손익누계액",
+   "dart_ofs_mn": 367993.0,
+   "master_mn": null,
+   "diff_mn": null,
+   "rel_pct": null
+  },
+  {
+   "key": "KR0070|31|2023.2Q",
+   "label": "이익잉여금",
+   "dart_ofs_mn": -437712.0,
+   "master_mn": null,
+   "diff_mn": null,
+   "rel_pct": null
+  },
+  {
+   "key": "KR0070|3|2023.2Q",
+   "label": "자본총계",
+   "dart_ofs_mn": 946867.0,
+   "master_mn": 921122.0,
+   "diff_mn": -25745.0,
+   "rel_pct": -2.719
+  },
+  {
+   "key": "KR0079|10|2023.1Q",
+   "label": "[현금및현금성자산]",
+   "dart_ofs_mn": 618406.0,
+   "master_mn": 633738.528618,
+   "diff_mn": 15332.529,
+   "rel_pct": 2.479
+  },
+  {
+   "key": "KR0079|15|2023.1Q",
+   "label": "[유형자산]",
+   "dart_ofs_mn": 87271.0,
+   "master_mn": 95961.637,
+   "diff_mn": 8690.637,
+   "rel_pct": 9.958
+  },
+  {
+   "key": "KR0079|1|2023.1Q",
+   "label": "자산총계",
+   "dart_ofs_mn": 33150631.0,
+   "master_mn": 33188650.467659,
+   "diff_mn": 38019.468,
+   "rel_pct": 0.115
+  },
+  {
+   "key": "KR0079|20|2023.1Q",
+   "label": "[보험계약부채]",
+   "dart_ofs_mn": 25050886.0,
+   "master_mn": 25045177.309656,
+   "diff_mn": -5708.69,
+   "rel_pct": -0.023
+  },
+  {
+   "key": "KR0079|24|2023.1Q",
+   "label": "[기타부채]",
+   "dart_ofs_mn": 4992625.0,
+   "master_mn": 4201213.147728,
+   "diff_mn": -791411.852,
+   "rel_pct": -15.852
+  },
+  {
+   "key": "KR0079|2|2023.1Q",
+   "label": "부채총계",
+   "dart_ofs_mn": 30274400.0,
+   "master_mn": 30322482.178092,
+   "diff_mn": 48082.178,
+   "rel_pct": 0.159
+  },
+  {
+   "key": "KR0079|30|2023.1Q",
+   "label": "[자본금]",
+   "dart_ofs_mn": 990715.0,
+   "master_mn": 990714.745,
+   "diff_mn": -0.255,
+   "rel_pct": -0.0
+  },
+  {
+   "key": "KR0079|4|2023.1Q",
+   "label": "[기타포괄손익누계액]",
+   "dart_ofs_mn": 386336.0,
+   "master_mn": 351027.063786,
+   "diff_mn": -35308.936,
+   "rel_pct": -9.139
+  },
+  {
+   "key": "KR0079|31|2023.1Q",
+   "label": "[이익잉여금]",
+   "dart_ofs_mn": 1688971.0,
+   "master_mn": 1714318.249836,
+   "diff_mn": 25347.25,
+   "rel_pct": 1.501
+  },
+  {
+   "key": "KR0079|3|2023.1Q",
+   "label": "자본총계",
+   "dart_ofs_mn": 2876231.0,
+   "master_mn": 2866168.289567,
+   "diff_mn": -10062.71,
+   "rel_pct": -0.35
+  },
+  {
+   "key": "KR0079|10|2023.2Q",
+   "label": "[현금및현금성자산]",
+   "dart_ofs_mn": 505207.0,
+   "master_mn": 519507.409762,
+   "diff_mn": 14300.41,
+   "rel_pct": 2.831
+  },
+  {
+   "key": "KR0079|15|2023.2Q",
+   "label": "[유형자산]",
+   "dart_ofs_mn": 86571.0,
+   "master_mn": 94951.976061,
+   "diff_mn": 8380.976,
+   "rel_pct": 9.681
+  },
+  {
+   "key": "KR0079|1|2023.2Q",
+   "label": "자산총계",
+   "dart_ofs_mn": 32951333.0,
+   "master_mn": 33053385.020776,
+   "diff_mn": 102052.021,
+   "rel_pct": 0.31
+  },
+  {
+   "key": "KR0079|20|2023.2Q",
+   "label": "[보험계약부채]",
+   "dart_ofs_mn": 24900773.0,
+   "master_mn": 24896210.359886,
+   "diff_mn": -4562.64,
+   "rel_pct": -0.018
+  },
+  {
+   "key": "KR0079|24|2023.2Q",
+   "label": "[기타부채]",
+   "dart_ofs_mn": 1040444.0,
+   "master_mn": 268643.742823,
+   "diff_mn": -771800.257,
+   "rel_pct": -74.18
+  },
+  {
+   "key": "KR0079|2|2023.2Q",
+   "label": "부채총계",
+   "dart_ofs_mn": 30008690.0,
+   "master_mn": 30106554.59372,
+   "diff_mn": 97864.594,
+   "rel_pct": 0.326
+  },
+  {
+   "key": "KR0079|30|2023.2Q",
+   "label": "[자본금]",
+   "dart_ofs_mn": 990715.0,
+   "master_mn": 990714.745,
+   "diff_mn": -0.255,
+   "rel_pct": -0.0
+  },
+  {
+   "key": "KR0079|4|2023.2Q",
+   "label": "[기타포괄손익누계액]",
+   "dart_ofs_mn": 418718.0,
+   "master_mn": 386354.006891,
+   "diff_mn": -32363.993,
+   "rel_pct": -7.729
+  },
+  {
+   "key": "KR0079|31|2023.2Q",
+   "label": "[이익잉여금]",
+   "dart_ofs_mn": 1723001.0,
+   "master_mn": 1723001.084897,
+   "diff_mn": 0.085,
+   "rel_pct": 0.0
+  },
+  {
+   "key": "KR0079|3|2023.2Q",
+   "label": "자본총계",
+   "dart_ofs_mn": 2942643.0,
+   "master_mn": 2946830.427056,
+   "diff_mn": 4187.427,
+   "rel_pct": 0.142
+  }
+ ]
+}

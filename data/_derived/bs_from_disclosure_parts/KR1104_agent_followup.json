@@ -1,0 +1,35 @@
+{
+  "_readme": [
+    "[2026-10-11] 후속(inbox/parser/20261011T0900Z) 정정·신규 칸의 계보 -- scripts/bspl_followup_apply_bs_fix.py 가 쓴다. scripts/merge_bs_disclosure_parts.py 가 이 파일을 다른 파트와 같이 사이드카·오버레이로 합친다."
+  ],
+  "cells": {
+    "KR1104|11|2023.2Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf",
+      "page": 6,
+      "sha256": "a3d208a7066940db11f2b55b829c53a8b1a5d34112933bd5475ad8c3713a615a",
+      "축척": "백만원 -> 백만원",
+      "방법": "followup:5a:zero_proof:sum_bs:11:FVPL[sum_all]",
+      "근거": "정기경영공시 2023.2Q 요약 재무상태표(총괄) p6 라벨「11:FVPL[sum_all]」이 0(대시)으로 인쇄 -- ±0.5백만원 정밀도(인쇄단위 백만원). 0 증명(후속 5a): 자산총계 60005 = Σ lines 60005 (잔차 0 인쇄단위, 허용 2; 비영 3줄: 현금및예치금 17825, FVOCI 39570, 비운용자산 2610); 같은 표의 자산 = 부채 + 자본 폐합 확인; 대출채권·상각후원가 계열 줄도 0. 같은 항목이 다른 분기에서 0 이 아니라는 이유로는 거르지 않았다. (inbox/parser/20261011T0900Z bspl follow-up, step 5a zero-proof)"
+    },
+    "KR1104|11|2024.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 13,
+      "sha256": "97d7a4c25b0b1f1cacd1a10e637a5d498d8507d6fe54402bf69808b5f7d082a0",
+      "축척": "백만원 -> 백만원",
+      "방법": "followup:5a:zero_proof:sum_bs:11:FVPL[sum_all]",
+      "근거": "정기경영공시 2024.4Q 요약 재무상태표(총괄) p13 라벨「11:FVPL[sum_all]」이 0(대시)으로 인쇄 -- ±0.5백만원 정밀도(인쇄단위 백만원). 0 증명(후속 5a): 자산총계 75790 = Σ lines 75790 (잔차 0 인쇄단위, 허용 2; 비영 3줄: 현금및예치금 24407, FVOCI 49876, 비운용자산 1507); 같은 표의 자산 = 부채 + 자본 폐합 확인; 대출채권·상각후원가 계열 줄도 0. 같은 항목이 다른 분기에서 0 이 아니라는 이유로는 거르지 않았다. (inbox/parser/20261011T0900Z bspl follow-up, step 5a zero-proof)"
+    },
+    "KR1104|11|2025.4Q": {
+      "값": 0.0,
+      "pdf": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf",
+      "page": 13,
+      "sha256": "d7950dc5c3d93d802be7fdfe73d82cb4039a2957f39c920a94c4dceb7c9c4abd",
+      "축척": "억원 -> 백만원",
+      "방법": "followup:5a:zero_proof:sum_bs:11:FVPL",
+      "근거": "정기경영공시 2025.4Q 요약 재무상태표(총괄) p13 라벨「11:FVPL」이 0(대시)으로 인쇄 -- ±50백만원 정밀도(인쇄단위 억원). 0 증명(후속 5a): 자산총계 770 = Σ lines 770 (잔차 0 인쇄단위, 허용 2; 비영 3줄: 현금및예치금 165, FVOCI 592, 비운용자산 13); 같은 표의 자산 = 부채 + 자본 폐합 확인; 대출채권·상각후원가 계열 줄도 0. 같은 항목이 다른 분기에서 0 이 아니라는 이유로는 거르지 않았다. (inbox/parser/20261011T0900Z bspl follow-up, step 5a zero-proof)"
+    }
+  },
+  "skips": {}
+}

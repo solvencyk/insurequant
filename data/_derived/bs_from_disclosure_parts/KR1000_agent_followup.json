@@ -1,0 +1,273 @@
+{
+  "_readme": [
+    "[2026-10-11] 후속(inbox/parser/20261011T0900Z) 정정·신규 칸의 계보 -- scripts/bspl_followup_apply_bs_fix.py 가 쓴다. scripts/merge_bs_disclosure_parts.py 가 이 파일을 다른 파트와 같이 사이드카·오버레이로 합친다."
+  ],
+  "cells": {
+    "KR1000|1|2023.1Q": {
+      "값": 11005796.836069,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 11,017,223.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「자산총계」 11,005,796,836,069원 = 11,005,796.836069백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 11017223.0
+    },
+    "KR1000|2|2023.1Q": {
+      "값": 7911404.642841,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 8,301,593.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「부채총계」 7,911,404,642,841원 = 7,911,404.642841백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 8301593.0
+    },
+    "KR1000|3|2023.1Q": {
+      "값": 3094392.193228,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 2,715,630.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「자본총계」 3,094,392,193,228원 = 3,094,392.193228백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 2715630.0
+    },
+    "KR1000|4|2023.1Q": {
+      "값": 156893.984384,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 149,592.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「기타포괄손익누계액」 156,893,984,384원 = 156,893.984384백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 149592.0
+    },
+    "KR1000|10|2023.1Q": {
+      "값": 622600.32836,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 498,904.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「현금및현금성자산」 622,600,328,360원 = 622,600.328360백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합. ※ 라인 = 「Ⅰ. 현금및현금성자산」. 마스터의 2023.3Q 이후 KR1000 항목 10 칸은 같은 8-1 의 「예치금」 라인 값이다(빌더가 대안 태그 중 알파벳순 첫 행 dart_CashAndDuefromBanks 를 집음, 3사 30칸 — item10_tag_scan.json 참조, 별도 보고). (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 498904.0
+    },
+    "KR1000|11|2023.1Q": {
+      "값": 1977830.181858,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 127,105.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「당기손익-공정가치측정금융자산」 1,977,830,181,858원 = 1,977,830.181858백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 127105.0
+    },
+    "KR1000|15|2023.1Q": {
+      "값": 96123.93427,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 114,454.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「유형자산」 96,123,934,270원 = 96,123.934270백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 114454.0
+    },
+    "KR1000|20|2023.1Q": {
+      "값": 7282935.111313,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 7,661,996.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「보험계약부채」 7,282,935,111,313원 = 7,282,935.111313백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 7661996.0
+    },
+    "KR1000|21|2023.1Q": {
+      "값": 58688.813012,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "신규(앵커 정정 뒤 새로 읽을 수 있게 된 칸) 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「재보험계약부채」 58,688,813,012원 = 58,688.813012백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)"
+    },
+    "KR1000|24|2023.1Q": {
+      "값": 81303.401676,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 469,087.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「그밖의기타부채」 81,303,401,676원 = 81,303.401676백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합. ※ 라인 = 「5. 그밖의기타부채」(말단 계정, FS-API ifrs-full_OtherNonfinancialLiabilities). 2023.3Q 이후 마스터 항목 24 와 같은 정의(그 분기들의 8-1 은 말단 계정만 낸다). 부모 「Ⅳ. 기타부채」는 당기법인세·이연법인세·순확정급여·충당부채를 포함해 다른 값이다. (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 469087.0
+    },
+    "KR1000|30|2023.1Q": {
+      "값": 70411.4695,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 70,411.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「자본금」 70,411,469,500원 = 70,411.469500백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 70411.0
+    },
+    "KR1000|31|2023.1Q": {
+      "값": 2027016.495523,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf",
+      "page": 13,
+      "sha256": "1f53c0a4febcdd8a3946de54526e2bf60585b35dbbbabbbe19e3a964efd2d576",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 1,905,005.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 분기보고서 rcept 20230515002794 별도 재무상태표(제62기 1분기말) 「이익잉여금」 2,027,016,495,523원 = 2,027,016.495523백만원이며 정기경영공시 2023.1Q 재무상태표(8-1) p13 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합. ※ 이익잉여금 칸은 대손준비금·비상위험준비금·해약환급금준비금 적립액이 괄호로 이어 붙은 칸이라 첫 금액(이익잉여금 본액)을 썼다. (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 1905005.0
+    },
+    "KR1000|1|2023.2Q": {
+      "값": 10602843.171486,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 11,017,223.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「자산총계」 10,602,843,171,486원 = 10,602,843.171486백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 11017223.0
+    },
+    "KR1000|2|2023.2Q": {
+      "값": 7394065.894751,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 8,301,593.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「부채총계」 7,394,065,894,751원 = 7,394,065.894751백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 8301593.0
+    },
+    "KR1000|3|2023.2Q": {
+      "값": 3208777.276735,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 2,715,630.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「자본총계」 3,208,777,276,735원 = 3,208,777.276735백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 2715630.0
+    },
+    "KR1000|4|2023.2Q": {
+      "값": 137810.066924,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 149,592.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「기타포괄손익누계액」 137,810,066,924원 = 137,810.066924백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 149592.0
+    },
+    "KR1000|10|2023.2Q": {
+      "값": 300949.837647,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 498,904.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「현금및현금성자산」 300,949,837,647원 = 300,949.837647백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합. ※ 라인 = 「Ⅰ. 현금및현금성자산」. 마스터의 2023.3Q 이후 KR1000 항목 10 칸은 같은 8-1 의 「예치금」 라인 값이다(빌더가 대안 태그 중 알파벳순 첫 행 dart_CashAndDuefromBanks 를 집음, 3사 30칸 — item10_tag_scan.json 참조, 별도 보고). (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 498904.0
+    },
+    "KR1000|11|2023.2Q": {
+      "값": 2014348.407945,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 127,105.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「당기손익-공정가치측정금융자산」 2,014,348,407,945원 = 2,014,348.407945백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 127105.0
+    },
+    "KR1000|12|2023.2Q": {
+      "값": 1572609.796075,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "신규(앵커 정정 뒤 새로 읽을 수 있게 된 칸) 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「기타포괄손익-공정가치측정금융자산」 1,572,609,796,075원 = 1,572,609.796075백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)"
+    },
+    "KR1000|13|2023.2Q": {
+      "값": 4011776.592533,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "신규(앵커 정정 뒤 새로 읽을 수 있게 된 칸) 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「상각후원가측정금융자산」 4,011,776,592,533원 = 4,011,776.592533백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)"
+    },
+    "KR1000|14|2023.2Q": {
+      "값": 1767078.687961,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "신규(앵커 정정 뒤 새로 읽을 수 있게 된 칸) 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「재보험계약자산」 1,767,078,687,961원 = 1,767,078.687961백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)"
+    },
+    "KR1000|15|2023.2Q": {
+      "값": 95688.533311,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 114,454.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「유형자산」 95,688,533,311원 = 95,688.533311백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 114454.0
+    },
+    "KR1000|20|2023.2Q": {
+      "값": 6722224.779155,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 7,661,996.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「보험계약부채」 6,722,224,779,155원 = 6,722,224.779155백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 7661996.0
+    },
+    "KR1000|21|2023.2Q": {
+      "값": 89866.883992,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "신규(앵커 정정 뒤 새로 읽을 수 있게 된 칸) 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「재보험계약부채」 89,866,883,992원 = 89,866.883992백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)"
+    },
+    "KR1000|24|2023.2Q": {
+      "값": 128492.462124,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 464,032.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「그밖의기타부채」 128,492,462,124원 = 128,492.462124백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합. ※ 라인 = 「5. 그밖의기타부채」(말단 계정, FS-API ifrs-full_OtherNonfinancialLiabilities). 2023.3Q 이후 마스터 항목 24 와 같은 정의(그 분기들의 8-1 은 말단 계정만 낸다). 부모 「Ⅳ. 기타부채」는 당기법인세·이연법인세·순확정급여·충당부채를 포함해 다른 값이다. (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 464032.0
+    },
+    "KR1000|30|2023.2Q": {
+      "값": 70411.4695,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 70,411.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「자본금」 70,411,469,500원 = 70,411.469500백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합.  (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 70411.0
+    },
+    "KR1000|31|2023.2Q": {
+      "값": 2160381.038336,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf",
+      "page": 29,
+      "sha256": "690bb6a18390a5c988f5495d577e8bd27ff2980b09db4155945fd97e3fbea468",
+      "축척": "원 -> 백만원",
+      "방법": "followup_fix:dart_separate_bs_xml+disclosure_8-1_equal_to_won",
+      "근거": "정정 2026-10-11(inbox/parser/20261011T0900Z 단계 2): 옛 값 1,905,005.00백만원은 DART 본문 XML 폴백(build_ifrs17_bs → build_equity_composition_tier2._pick_bs_table)이 별도 재무상태표 대신 「IFRS17 전환일(2022.12.31) 재무상태표 제1104호→제1117호 비교표」를 고른 값이다(두 분기 보고서가 같은 표를 골라 두 분기 값이 소수점까지 같았고, 별도표 캡션에 '연결기업'이 끼어 basis 가 CFS 로 밀렸으며, FS-API 는 이 두 분기 status 013 무응답이라 덮어쓴 값이 없었다). 정정값 = DART 반기보고서 rcept 20230814003146 별도 재무상태표(제62기 반기말) 「이익잉여금」 2,160,381,038,336원 = 2,160,381.038336백만원이며 정기경영공시 2023.2Q 재무상태표(8-1) p29 와 원 단위까지 일치한다. 자산 = 부채 + 자본, 자본 = 구성 항목 합이 원 단위로 폐합. ※ 이익잉여금 칸은 대손준비금·비상위험준비금·해약환급금준비금 적립액이 괄호로 이어 붙은 칸이라 첫 금액(이익잉여금 본액)을 썼다. (scripts/bspl_followup_kr1000_spec.py)",
+      "정정전값": 1905005.0
+    }
+  },
+  "skips": {}
+}

@@ -1,5 +1,11 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 (BS·PL 후속 20261011T0900Z) 정리 — 밀린 Status (무수정)
+
+- **2026-10-11 ILP 라운드 3(티켓 20261011T0320Z)** — `insurance_liability_portfolio.json` 3,835 → 6,111행(+2,276, 기존 행 바이트 동일·중복 키 0): 나머지 6분기 백필 +1,348(2024.1Q~3Q 항목 1~8·10~15, 2023.1Q~3Q 항목 10~15) · LIC 2단계 항목 16·17 125셀 +250 · LIC 3단계 라이나 8·처브 3셀 +50 · 재보사 8곳 항목 1~9 62셀 +538 · 재보사 LIC 14셀 +84 · 롯데손보 항목 9 +6.
+  검산기: LIC RED 0·YELLOW 22(재작성 셀을 사이드카 앵커로 분기해 아래 Status 의 R-LIC1 RED 3 은 해소), 포트폴리오 RED 7(KR0100 5·KR0029 1 = 기존 원인, 스위스리 2026.1Q 미적재 1; R5 복사·R6 급변 규칙 추가, 재보사 범위 해제). 생산 추출기 `extract_insurance_liability_portfolio.py` 공통 결함 보강(fitz 폴백·헤더 뒤 검색·공백 분리 숫자·소수·바닥글·footing·이미지 헤더 후보·단위 급변 보류): 2025.1Q~2026.2Q 279셀 재실행에서 이전에 맞던 칸은 바이트 동일, 마스터와 일치 230 → 243셀.
+  남은 것: owner(스위스리 2026.1Q 파생합 · 하노버 2026.2Q BS 불일치 · KR0100 R3 · 메트라이프 PAA 0.4억 · 항목 9 55칸) · downloader(하나손보 별첨 11회차 · 하노버 2025.3Q PDF) · designer 패널 재빌드 348셀. 근거 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §11~16 · 커밋 안 함.
+
 ## 2026-10-11 (BS·PL 세부 백필) 정리 — 밀린 Status (무수정)
 
 - **2026-10-11 재작성 3셀 기준 통일** — 라이나 KR0074·미래에셋 KR0079·KB라이프 KR0099 2023.4Q 항목 10~15 를 FY2024 전기말(재작성) 열로 교체(값 8개 변경·4개 동일, 행 수 불변), 옛 값은 provenance `original_basis_value`. 사이드카 `data/_derived/ilp_restated_comparative.json` 신설(재작성 BS 보험계약부채 5,249.05 / 256,455.34 / 240,319.27억). 커밋 안 함.

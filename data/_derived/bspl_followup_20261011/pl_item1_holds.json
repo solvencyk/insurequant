@@ -1,0 +1,1651 @@
+[
+ {
+  "key": "KR0003|1|2023.1Q",
+  "company": "롯데손해보험",
+  "candidate_mn": 22200.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "OWNER_GOLD",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": null,
+   "일반손익": null
+  },
+  "legs_missing": [
+   "생명장기손익",
+   "자동차손익",
+   "일반손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 7000.0,
+  "residual_if_loaded": -22200.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "C_ALL_LOB_LEGS_BLANK",
+  "residual_if_item15_were_0": -29200.0,
+  "other_cells_in_bucket": [
+   "영업외손익",
+   "영업이익"
+  ],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0004|1|2023.4Q",
+  "company": "예별손해보험",
+  "candidate_mn": 17700.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": -1985.092,
+   "일반손익": 25985.002
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 3000.0,
+  "residual_if_loaded": 6299.9,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "C_OTHER",
+  "residual_if_item15_were_0": 3299.9,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.4Q": [
+    false,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2026.2Q": [
+    false,
+    false,
+    false
+   ]
+  }
+ },
+ {
+  "key": "KR0008|1|2023.2Q",
+  "company": "삼성화재해상보험",
+  "candidate_mn": 1202900.0,
+  "label": "보험손익",
+  "how": "later_comparative",
+  "lineage": "DART",
+  "legs": {
+   "생명장기손익": 953944.0,
+   "자동차손익": 262747.0,
+   "일반손익": 354530.0
+  },
+  "legs_missing": [],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 172900.0,
+  "residual_if_loaded": 368321.0,
+  "floor": 1202.9,
+  "verdict": "FAIL",
+  "group": "C_OTHER",
+  "residual_if_item15_were_0": 195421.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0032|1|2023.2Q",
+  "company": "NH농협손해보험",
+  "candidate_mn": 112100.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DART",
+  "legs": {
+   "생명장기손익": 154049.0,
+   "자동차손익": null,
+   "일반손익": null
+  },
+  "legs_missing": [
+   "자동차손익",
+   "일반손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 41900.0,
+  "residual_if_loaded": 41949.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "B_ONLY_ITEM15_BLANK",
+  "residual_if_item15_were_0": 49.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    true,
+    false,
+    false
+   ],
+   "2023.2Q": [
+    true,
+    false,
+    false
+   ],
+   "2023.3Q": [
+    true,
+    false,
+    false
+   ],
+   "2023.4Q": [
+    true,
+    false,
+    false
+   ],
+   "2024.1Q": [
+    true,
+    false,
+    false
+   ],
+   "2024.2Q": [
+    true,
+    false,
+    false
+   ],
+   "2024.3Q": [
+    true,
+    false,
+    false
+   ],
+   "2024.4Q": [
+    true,
+    false,
+    false
+   ],
+   "2025.1Q": [
+    true,
+    false,
+    false
+   ],
+   "2025.2Q": [
+    true,
+    false,
+    false
+   ],
+   "2025.3Q": [
+    true,
+    false,
+    false
+   ],
+   "2025.4Q": [
+    true,
+    false,
+    false
+   ],
+   "2026.1Q": [
+    true,
+    false,
+    false
+   ],
+   "2026.2Q": [
+    true,
+    false,
+    false
+   ]
+  }
+ },
+ {
+  "key": "KR0069|1|2023.1Q",
+  "company": "삼성생명보험",
+  "candidate_mn": 383700.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 13300.0,
+  "residual_if_loaded": -383700.0,
+  "floor": 383.7,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -397000.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0069|1|2023.2Q",
+  "company": "삼성생명보험",
+  "candidate_mn": 818300.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 22700.0,
+  "residual_if_loaded": -818300.0,
+  "floor": 818.3,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -841000.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0071|1|2023.2Q",
+  "company": "흥국생명보험",
+  "candidate_mn": 80500.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 10500.0,
+  "residual_if_loaded": -80500.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -91000.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0073|1|2023.1Q",
+  "company": "교보생명보험",
+  "candidate_mn": 139500.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 8500.0,
+  "residual_if_loaded": -139500.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -148000.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0073|1|2023.2Q",
+  "company": "교보생명보험",
+  "candidate_mn": 278200.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 17900.0,
+  "residual_if_loaded": -278200.0,
+  "floor": 278.2,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -296100.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0075|1|2023.4Q",
+  "company": "비엔피파리바카디프생명보험",
+  "candidate_mn": 2200.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "OWNER_GOLD",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 17000.0,
+  "residual_if_loaded": -2200.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -19200.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.4Q": [
+    false,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2026.2Q": [
+    false,
+    false,
+    false
+   ]
+  }
+ },
+ {
+  "key": "KR0095|1|2023.4Q",
+  "company": "메트라이프생명보험",
+  "candidate_mn": 242300.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 11500.0,
+  "residual_if_loaded": -242300.0,
+  "floor": 242.3,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -253800.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2023.4Q": [
+    false,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.2Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.3Q": [
+    false,
+    false,
+    false
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    false,
+    false,
+    false
+   ],
+   "2026.2Q": [
+    false,
+    false,
+    false
+   ]
+  }
+ },
+ {
+  "key": "KR0099|1|2023.1Q",
+  "company": "KB라이프생명",
+  "candidate_mn": 56000.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DART",
+  "legs": {
+   "생명장기손익": 65577.0,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 9500.0,
+  "residual_if_loaded": 9577.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "B_ONLY_ITEM15_BLANK",
+  "residual_if_item15_were_0": 77.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0099|1|2023.2Q",
+  "company": "KB라이프생명",
+  "candidate_mn": 135300.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DART",
+  "legs": {
+   "생명장기손익": 152021.0,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 16800.0,
+  "residual_if_loaded": 16721.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "B_ONLY_ITEM15_BLANK",
+  "residual_if_item15_were_0": -79.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0104|1|2023.1Q",
+  "company": "농협생명보험",
+  "candidate_mn": 98600.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 9200.0,
+  "residual_if_loaded": -98600.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -107800.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR0104|1|2023.2Q",
+  "company": "농협생명보험",
+  "candidate_mn": 191700.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DISCLOSURE",
+  "legs": {
+   "생명장기손익": null,
+   "자동차손익": 0.0,
+   "일반손익": 0.0
+  },
+  "legs_missing": [
+   "생명장기손익"
+  ],
+  "extra_lob_sum": 0.0,
+  "기타영업수익": null,
+  "기타사업비용": 21800.0,
+  "residual_if_loaded": -191700.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "A_LIFE_LEG_2_BLANK_13_14_ZERO",
+  "residual_if_item15_were_0": -213500.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.2Q": [
+    false,
+    true,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    true,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    true,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    true,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR1000|1|2023.1Q",
+  "company": "코리안리재보험",
+  "candidate_mn": 98200.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DART",
+  "legs": {
+   "생명장기손익": 13988.0,
+   "자동차손익": null,
+   "일반손익": 75953.0
+  },
+  "legs_missing": [
+   "자동차손익"
+  ],
+  "extra_lob_sum": 28345.0,
+  "기타영업수익": null,
+  "기타사업비용": 20100.0,
+  "residual_if_loaded": 20086.0,
+  "floor": 200.0,
+  "verdict": "FAIL",
+  "group": "B_ONLY_ITEM15_BLANK",
+  "residual_if_item15_were_0": -14.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2023.2Q": [
+    true,
+    false,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    false,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    false,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    false,
+    true
+   ]
+  }
+ },
+ {
+  "key": "KR1000|1|2023.2Q",
+  "company": "코리안리재보험",
+  "candidate_mn": 215200.0,
+  "label": "보험손익",
+  "how": "own_summary",
+  "lineage": "DART",
+  "legs": {
+   "생명장기손익": 36611.0,
+   "자동차손익": null,
+   "일반손익": 192135.0
+  },
+  "legs_missing": [
+   "자동차손익"
+  ],
+  "extra_lob_sum": 33099.0,
+  "기타영업수익": null,
+  "기타사업비용": 46600.0,
+  "residual_if_loaded": 46645.0,
+  "floor": 215.2,
+  "verdict": "FAIL",
+  "group": "B_ONLY_ITEM15_BLANK",
+  "residual_if_item15_were_0": 45.0,
+  "other_cells_in_bucket": [],
+  "neighbour_legs_present(2,13,14)": {
+   "2023.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2023.2Q": [
+    true,
+    false,
+    true
+   ],
+   "2023.3Q": [
+    true,
+    false,
+    true
+   ],
+   "2023.4Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.2Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.3Q": [
+    true,
+    false,
+    true
+   ],
+   "2024.4Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.2Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.3Q": [
+    true,
+    false,
+    true
+   ],
+   "2025.4Q": [
+    true,
+    false,
+    true
+   ],
+   "2026.1Q": [
+    true,
+    false,
+    true
+   ],
+   "2026.2Q": [
+    true,
+    false,
+    true
+   ]
+  }
+ }
+]
