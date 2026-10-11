@@ -1,5 +1,8 @@
 # TODO archive — `TODO_parser_kics.md` (Status 이력, 읽기 지연)
 
+- **2026-10-10 (22회차) 재보사 금리민감도 RED 40 → 5 · 듀레이션 갭 재보사 46칸 적재**: 금리민감도 +24행 · 값 정정 28행(단위 19 · 하노버 후 0 행 미러 9), 근거 +3셀, IRR 잔액 +46셀 → 듀레이션 갭 +46행(`DURGAP_CENSUS_MISSING` 46 → 0). 기존 39사 전 파일 HEAD 와 동일, K-ICS 게이트 RED 57·blocking 0 불변.
+  커밋 없음. 남은 것: validation 등재 5건(제네럴 2026.2Q +100bp RS1 2 · 마이브라운 RS5 3) · publishing xlsx 금리민감도·금리듀레이션갭 재동기화 · 기존 6셀 IRR 열 뒤바뀜(카카오페이손보 5 · 하나손보 2025.2Q) 적용 결정.
+  근거 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md`.
 - **2026-10-10 (21회차) 재보사 스윕 단계 9 — 마스터 +164행(퍼시픽 2023.3Q·2023.4Q·2024.3Q, 스위스리 2023.4Q 완성본), 금리민감도 근거 25칸**: sha `90cbc2c6…` → `4f2eb284…`, 시뮬레이션 = 실측 0 차이,
   기존 39사 25,522행 HEAD 와 동일. 퍼시픽 2023.4Q 하위위험 29~46 까지 채워 새 RED 3건 중 2건 해소(내 변경분 RED 57 → 58·blocking 0 → 1 = 2023.3Q `8_life_census`, validation 등재 반영 시 57·0), 데이터계약 RED 34 → 4(K-ICS 0).
   커밋 없음. 남은 것: owner — 스위스리 2023.2Q(새 RED 0)·2023.3Q(새 RED 2) 전기 칸 적재 여부 · 후속 발주 3건(아래) · xlsx 동기화(publishing). 근거 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9.md`.
