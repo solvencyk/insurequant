@@ -7,6 +7,10 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- IFRS17 섹션 8 보험금 예실차비율 표
+
+티켓 `inbox/designer/20261012T0410Z__orchestrator__MULTI_2025.4Q__ifrs17_sec8_claims_ae_ratio_table.md`(공유). `IFRS17.html` 만. `data/loss_ratio/panel_loss_ratio.json` 최상위 `ae[회사코드].q[공시분기]` 를 fetch 중인 기존 패널에서 읽어 `#lrAeBox`(`drawLrAe`)에 그린다. 선택한 공시시점 이하의 가장 최근 연말 공시를 쓰고, 열=기준연도, 행=예상손해율·실제손해율·보험금 예실차비율(셀에 %·%p, 소수 2자리, 음수 △, null 은 -). 사업구분이 있으면 구분 행 아래 3행씩 블록(실데이터에서는 코리안리 공동재보험/전통형재보험뿐). 정의·연 1회 공시 설명은 `?`(`help-lrae`)에만. `ae` 부재·해당 회사 없음·이전 공시 없음이면 박스 숨김. `identity_break` 플래그는 셀 title 만. 검증: `scripts/shot_lr_ae.py`(스크린샷 `artifacts/designer/lr_ae/`, gitignore) 6사×2뷰포트 콘솔 0·넘침 0, 서울보증 숨김 확인.
+
 ## 2026-10-12 -- IFRS17 통합 현황 박스·NB CSM 배수 표
 
 티켓 `inbox/designer/20261012T0210Z__orchestrator__MULTI_2026.2Q__ifrs17_summary_box_kpis_and_nb_table.md`(공유). `IFRS17.html` 만. (1) 「IFRS17 통합 현황」 제목 패널 하나가 기준 토글·요약 4칸(`#kpi7Strip`, 템플릿 밖 정적 마크업, 회사 선택 전 숨김)을 담고, `#dashHost` 의 섹션 패널은 그 아래 형제로(커밋 46d4a3a). (2) 섹션 6 차트 아래 `#nbTable`(`buildBsTableDom` 재사용, 행 월납월초보험료·신계약 CSM·신계약 CSM 배수, 값 없음 —, 음수 △, 「미수록」 회사는 표 없음). 검증: 삼성생명 연도 2023·2024·2025·2026.2Q / 분기 5개, 라이나 신계약 CSM 2,192 = 요약 칸 값, 375px 가로 넘침 0, 콘솔 0.

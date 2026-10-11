@@ -137,9 +137,9 @@
 .lrps-table td.num{white-space:nowrap}
 .lrps-table td.empty{color:var(--muted)}
 .lrps-desc{margin:-4px 0 12px}
-#lrCap,#psCap,#histTableCap,#histCap,#histComboNote,.cap-fold{position:relative}
-#lrCap .iq-help,#psCap .iq-help,#histTableCap .iq-help,#histCap .iq-help,#histComboNote .iq-help,.cap-fold .iq-help{position:static}
-#lrCap .iq-help-pop,#psCap .iq-help-pop,#histTableCap .iq-help-pop,#histCap .iq-help-pop,#histComboNote .iq-help-pop,.cap-fold .iq-help-pop{max-width:min(340px,calc(100vw - 64px))}
+#lrCap,#lrAeCap,#psCap,#histTableCap,#histCap,#histComboNote,.cap-fold{position:relative}
+#lrCap .iq-help,#lrAeCap .iq-help,#psCap .iq-help,#histTableCap .iq-help,#histCap .iq-help,#histComboNote .iq-help,.cap-fold .iq-help{position:static}
+#lrCap .iq-help-pop,#lrAeCap .iq-help-pop,#psCap .iq-help-pop,#histTableCap .iq-help-pop,#histCap .iq-help-pop,#histComboNote .iq-help-pop,.cap-fold .iq-help-pop{max-width:min(340px,calc(100vw - 64px))}
 #histTableCap .iq-help-pop,#histComboNote .iq-help-pop,.cap-fold .iq-help-pop{max-width:min(520px,calc(100vw - 64px))}
 .hc-pop-p{display:block}
 .hc-pop-p + .hc-pop-p{margin-top:7px}
@@ -341,6 +341,11 @@
         <div class="chart-container chart-sm"><canvas id="canvasLr" role="img" aria-label="경과차년별 손해율 가정 꺾은선 차트"></canvas></div>
         <div class="lrps-treebar" id="lrBar"><button type="button" class="lrps-bar-btn" data-act="open" aria-label="세부 표 모두 펼치기">모두 펼치기</button><button type="button" class="lrps-bar-btn" data-act="close" aria-label="세부 표 모두 접기">모두 접기</button></div>
         <div class="table-wrap lrps-table" id="lrTable"></div>
+        <div id="lrAeBox" hidden>
+          <div class="small-muted" id="lrAeCap">보험금 예실차비율
+            <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="보험금 예실차비율 읽는 법" aria-describedby="help-lrae">?</button><span class="iq-help-pop" role="tooltip" id="help-lrae"><b>보험금 예실차비율</b><br>경영공시 최적가정 ① 표입니다. 예상손해율 = 예상보험금 ÷ 실제위험보험료, 실제손해율 = (발생보험금 + 발생사고요소조정) ÷ 실제위험보험료, 보험금 예실차비율 = 예상손해율 − 실제손해율(%p)이며 공시된 값을 그대로 적었습니다. 연 1회 연말 공시에만 있고 반기·분기 공시에는 없어, 선택한 공시시점 이전의 가장 최근 연말 공시를 보여 줍니다. 값이 없는 칸은 '-' 입니다. 사업 구분이 여러 개인 회사는 구분별로 나눠 적었습니다.</span></span></div>
+          <div class="table-wrap lrps-table" id="lrAeTable"></div>
+        </div>
       </div>
     </div>
     <div class="panel" id="sec-ps" data-pane="ps" data-share-section="판매채널별 유지율">
@@ -1712,6 +1717,46 @@
       }
     }
     lrpsTree(q(host,"#lrTable"), q(host,"#lrBar"), { head:"구분 › 상품구분 › 포트폴리오", cols, nodes:roots, open:ui.open });
+    drawLrAe(host, company, qq);
+  }
+  // 보험금 예실차비율(경영공시 최적가정 ①): 패널 최상위 ae 블록을 값 그대로 연도 열로. 연 1회 연말 공시라 선택 시점 이하의 가장 최근 연말 공시를 쓴다.
+  // 구판 패널(ae 없음)·ae 없는 회사·해당 시점 이전 공시가 없으면 표 전체를 숨긴다(문구 없음).
+  function aeNum(v, unit){
+    if (v==null || !Number.isFinite(v)) return { t:"-", cls:"num empty" };
+    const a = Math.abs(v).toLocaleString("ko-KR",{minimumFractionDigits:2,maximumFractionDigits:2});
+    const neg = v<0 && Number(a.replace(/,/g,""))!==0;
+    return { t:(neg?"△":"")+a+unit, cls:"num" };
+  }
+  function drawLrAe(host, company, qq){
+    const box=q(host,"#lrAeBox"), tbox=q(host,"#lrAeTable"); if(!box||!tbox) return;
+    const ae = LRPS.lr && LRPS.lr.ae && LRPS.lr.ae[company];
+    const sel = qq && ae && ae.q ? wfParseQ(qq) : null;
+    const aq = sel ? Object.keys(ae.q).filter(k=>{ const p=wfParseQ(k); return p[0]<sel[0] || (p[0]===sel[0] && p[1]<=sel[1]); }).sort(wfCmpDesc)[0] : null;
+    const rows = aq ? ae.q[aq] : null;
+    tbox.innerHTML = "";
+    if (!rows || !rows.length){ box.hidden = true; return; }
+    box.hidden = false;
+    const years = Array.from(new Set(rows.map(r=>r[0]))).sort((a,b)=>a-b);
+    const segs = Array.from(new Set(rows.map(r=>r[1]||"")));
+    const tbl=document.createElement("table"), thead=document.createElement("thead"), htr=document.createElement("tr");
+    ["항목"].concat(years.map(String)).forEach((h,i)=>{ const th=document.createElement("th"); th.scope="col"; th.textContent=h; if(i>0) th.className="num"; htr.appendChild(th); });
+    thead.appendChild(htr); tbl.appendChild(thead);
+    const tb=document.createElement("tbody");
+    const addRow=(label, cells, cls, titles)=>{
+      const tr=document.createElement("tr"); if(cls) tr.className=cls;
+      const th=document.createElement("th"); th.scope="row"; th.textContent=label; tr.appendChild(th);
+      cells.forEach((c,i)=>{ const td=lrpsCell(tr, c.t, c.cls); if(titles && titles[i]) td.title=titles[i]; });
+      tb.appendChild(tr);
+    };
+    for (const sg of segs){
+      if (sg) addRow(sg, years.map(()=>({t:"",cls:"num"})), "lrps-grp lrps-g1");
+      const byY = {}; rows.filter(r=>(r[1]||"")===sg).forEach(r=>{ byY[r[0]]=r; });
+      const titles = years.map(y=> byY[y] && (byY[y][5]||[]).includes("identity_break") ? "공시 산식과 맞지 않는 값(공시 그대로)" : "");
+      [["예상손해율",2,"%"],["실제손해율",3,"%"],["보험금 예실차비율",4,"%p"]].forEach(([lab,ix,u])=>{
+        addRow(lab, years.map(y=> byY[y] ? aeNum(byY[y][ix],u) : {t:"-",cls:"num empty"}), "lrps-leaf", titles);
+      });
+    }
+    tbl.appendChild(tb); tbox.appendChild(tbl);
   }
   function drawLrChart(host, company, qq, cur, prev, prevQ){
     const c = LRPS.lr.companies[company];
