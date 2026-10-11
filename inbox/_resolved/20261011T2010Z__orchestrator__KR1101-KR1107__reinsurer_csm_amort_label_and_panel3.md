@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T2010Z
-status: open
+status: resolved
 route: display
 company: KR1101-KR1107
 period: 2023.4Q-2026.2Q
@@ -26,3 +26,4 @@ parser-ifrs17 이 `PL_breakdown.json` 의 **항목 4(마스터 항목명 `원수
 - 변경 파일·라벨 매핑 위치, 렌더 점검 결과(어느 버킷에서 무엇이 보였고 무엇을 바꿨는지), 스크린샷 경로. `TODO_designer.md` Status + `docs/changelog_designer.md`. 이 공유 티켓은 고치지 않는다(오케스트레이터가 종결).
 
 ## 답변 (recipient 작성 — 처리 후)
+(designer dcac354, orchestrator 검증·종결 2026-10-11) 재보사 7곳(KR1101~KR1107) PL 패널 3 라벨에서 「원수」 제거(PL_RE_ONLY·PL_RE_LABEL·PL_STEP_DEFS_RE; CSM 상각·위험조정·예실차·기타 손익; 막대·툴팁·표·캡션·aria·부제 반영). 마스터 항목명 무수정, 라이나(원수사)·코리안리(수재/출재 축)는 라벨 그대로 확인. 7곳+라이나+코리안리+삼성생명 40조합(데스크톱 1280·모바일 375) 콘솔 오류 0·가로 넘침 0. 항목 4만 있는 연말 버킷은 「CSM 상각 막대 + 회색 미공시 + 보험손익·법인세·순이익」으로 읽히고 누적 잔차 막대 없음 → 브리지 렌더 변경 없음. 별개 관찰: 투자손익·영업외(항목 17·21) 공란으로 법인세 막대가 순이익과 안 맞는 현상이 26사 269버킷 공통(이번 범위 밖, parser 가 채우면 해소). 이 라벨은 PL_breakdown.json 항목 4(0a7632e·59dc684)와 함께 배포해야 보임.
