@@ -7,6 +7,10 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- index 모바일 재보험·보증 그룹도 top 5 + 더보기
+
+티켓 `inbox/designer/20261012T0010Z__orchestrator__MULTI_2026.2Q__index_mobile_re_guarantee_fold_top5.md`(공유, 종결은 오케스트레이터). `index.html` 만. `FOLDABLE`(Re 제외) 삭제, 섹터별 펼침 상태를 `listExpanded`/`bubbleExpanded` 키 맵으로 일반화(redraw·모바일 진입·섹터 필터 변경 시 `{}` 로 초기화). 점검 375px: K-ICS 리스트 생보 `더보기 (17개사)`·손보 `(11개사)`·재보험·보증 `(4개사)` 3개, 재보험 버튼 클릭 시 `접기` 로 바뀜, 콘솔 오류 0, 가로 스크롤 0. CSM 버블 리스트는 같은 코드 경로를 쓰지만 현재 데이터에 신계약CSM배수가 있는 재보험·보증사가 없어 그 그룹 자체가 안 뜸(생보 17·손보 9 버튼 정상).
+
 ## 2026-10-12 -- index 홈 KPI 「업계 총 기말 CSM」 부가 문구·팝오버 제거
 
 티켓 `inbox/designer/20261012T0000Z__orchestrator__MULTI_2026.2Q__index_csm_kpi_remove_sub_text.md`(공유, 종결은 오케스트레이터). `index.html` 만, 마스터 무수정. 카드의 `kpiCsmSub`·`kpiCsmHelp`·`help-kpi-csm` 마크업, `updateCsmKpi` 의 문구·팝오버 코드, 미사용 `.kpi-sub` CSS 2줄 삭제(합산·모집단·폴백 로직 불변, `iq-help` 공통 스타일 불변). 점검: 데스크톱 4칸 높이 83px 동일, 모바일 375px 2x2 68px 동일·가로 스크롤 없음, 값 142조(rAF 대체 후 확인), 콘솔 오류 0, test_deploy_assets·push_gate_wiring·prepush_scope 142 passed.

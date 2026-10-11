@@ -958,11 +958,9 @@
 
     // M2: mobile list mirror of the treemap — same data, color scale, and click-nav.
     // Shown instead of the treemap on narrow screens (CSS @media <=640px).
-    // MOB-INDEX-FOLD: 생보/손보 각각 top 5 + 더보기, maxV 섹터 독립.
+    // MOB-INDEX-FOLD: 생보/손보/재보험·보증 각각 top 5 + 더보기, maxV 섹터 독립.
     const FOLD = 5;
-    // 재보험·보증은 최대 10곳 안팎이라 접지 않고 전부 보인다(owner 요청).
-    let lifeExpanded = false, nonlifeExpanded = false;
-    const FOLDABLE = { 'Life': true, 'Non-Life': true, 'Re': false };
+    let listExpanded = {};                    // 섹터 키 → 펼침 여부
     function renderList(sector){
       const host = document.getElementById('map-list');
       if (!host) return;
@@ -974,7 +972,7 @@
 
       for (const s of sKeys){
         if (sector !== 'ALL' && s !== sector) continue;
-        const expanded = FOLDABLE[s] === false ? true : (s === 'Life' ? lifeExpanded : nonlifeExpanded);
+        const expanded = !!listExpanded[s];
 
         const items = (GROUPED[s] || []).map(d => {
           const v = ratioType === 'basicCapital'
@@ -1021,13 +1019,13 @@
           host.appendChild(row);
         }
 
-        if (isMob && FOLDABLE[s] !== false && items.length > FOLD){
+        if (isMob && items.length > FOLD){
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
           btn.textContent = expanded ? '접기' : `더보기 (${items.length - FOLD}개사)`;
           btn.addEventListener('click', () => {
             const next = !expanded;
-            if (s === 'Life') lifeExpanded = next; else nonlifeExpanded = next;
+            listExpanded[s] = next;
             renderList(sector);
           });
           host.appendChild(btn);
@@ -1073,7 +1071,7 @@
     }
 
     const sel = document.getElementById("sector");
-    function redraw() { lifeExpanded = false; nonlifeExpanded = false; if (sel) render(sel.value); }
+    function redraw() { listExpanded = {}; if (sel) render(sel.value); }
     // 모바일 스크롤 시 URL바 노출/숨김 → 높이만 바뀌는 resize가 발생. 그때 redraw하면 '더보기'가 다시 접힘.
     // 폭이 실제로 바뀐 경우(회전·창 크기 변경)에만 재그림. 모바일 높이-only resize는 무시.
     let _lastW = window.innerWidth;
@@ -1392,8 +1390,8 @@
     // owner 2026-08-30: 막대가 기말 잔액에 비례하던 것을 배수로 바꿨다 — 숫자(배수)와 막대가
     // 서로 다른 것을 가리키면 한 줄 안에서 눈이 두 축을 오간다. 정렬만 잔액 기준으로 남긴다
     // (큰 회사부터 보되, 막대 길이는 '한 건당 얼마나 남기나'를 비교하게 한다).
-    // MOB: 생보 top5 + 더보기, 손보 top5 + 더보기 (FOLD=5, K-ICS 리스트와 동일).
-    let bubbleLifeExpanded = false, bubbleNonlifeExpanded = false;
+    // MOB: 생보·손보·재보험·보증 각각 top5 + 더보기 (FOLD=5, K-ICS 리스트와 동일).
+    let bubbleExpanded = {};
     function renderBubbleList() {
       const host = document.getElementById('bubble-list');
       if (!host) return;
@@ -1434,7 +1432,7 @@
       for (const sec of SEG_ORDER) {
         const allRows = items.filter(it => it.sector === sec).sort((a, b) => (b.closing || 0) - (a.closing || 0));
         if (!allRows.length) continue;
-        const expanded = FOLDABLE[sec] === false ? true : (sec === 'Life' ? bubbleLifeExpanded : bubbleNonlifeExpanded);
+        const expanded = !!bubbleExpanded[sec];
         const rows = (isMob && !expanded) ? allRows.slice(0, FOLD) : allRows;
         // 막대 스케일: 표시 그룹 내 최대 **NB 배수** 기준 (섹터·fold 독립 → outlier 무압축).
         // 실측 배수 범위 0.01~22.85, 음수 0건이라 그대로 폭에 쓴다.
@@ -1480,13 +1478,13 @@
           });
           host.appendChild(row);
         }
-        if (isMob && FOLDABLE[sec] !== false && allRows.length > FOLD) {
+        if (isMob && allRows.length > FOLD) {
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
           btn.textContent = expanded ? '접기' : `더보기 (${allRows.length - FOLD}개사)`;
           btn.addEventListener('click', () => {
             const next = !expanded;
-            if (sec === 'Life') bubbleLifeExpanded = next; else bubbleNonlifeExpanded = next;
+            bubbleExpanded[sec] = next;
             renderBubbleList();
           });
           host.appendChild(btn);
@@ -1551,14 +1549,14 @@
     // M3: 모바일 폭에서 로드되면 차트 init이 미뤄짐(renderBubble 가드) → 데스크톱 복귀 시 재렌더 + 리사이즈
     const bubbleMobileMq = window.matchMedia('(max-width:640px)');
     bubbleMobileMq.addEventListener('change', (e) => {
-      if (e.matches) { bubbleLifeExpanded = false; bubbleNonlifeExpanded = false; renderBubbleList(); return; }   // 모바일 진입: 리스트·메타 갱신
+      if (e.matches) { bubbleExpanded = {}; renderBubbleList(); return; }   // 모바일 진입: 리스트·메타 갱신
       renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
       if (bubbleChart) bubbleChart.resize();
     });
 
     const bubbleSectorSel = document.getElementById('bubble-sector');
     if (bubbleSectorSel) {
-      bubbleSectorSel.addEventListener('change', () => { bubbleLifeExpanded = false; bubbleNonlifeExpanded = false; renderBubble(bubbleSectorSel.value); renderBubbleList(); });
+      bubbleSectorSel.addEventListener('change', () => { bubbleExpanded = {}; renderBubble(bubbleSectorSel.value); renderBubbleList(); });
     }
 
     loadData();
