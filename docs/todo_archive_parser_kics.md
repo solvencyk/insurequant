@@ -1,4 +1,8 @@
 # TODO archive — `TODO_parser_kics.md` (Status 이력, 읽기 지연)
+- **2026-10-11 (24회차) 사이트 신판 3건(티켓 `20261010T2351Z`) — 악사 2024.3Q 완성본 적재**: 신판 PDF(27쪽) docling 변환(1프로세스) 뒤 KR0049 2024.3Q 마스터 +17행(항목 25·26·29~35·47~54) · `값_적용후` +9칸(15~23, 부재 박제 9칸 전부 채움). 기존 39사 25,496행·재보사 4,453행 HEAD 와 동일, 악사 2024.3Q 기존 26행은 17행 동일 · 9행에 후 키만 추가, 보류 4칸(3·4·27후: 인쇄값 2325·5215·286.5 ≠ 마스터, 쪽 근거 런로그 §1.5) · 사이드카 2칸(전환 UNKNOWN→O/O/X/O/X/X/X · 텍스트층 BORDERLINE→READABLE).
+  신한이지 2025.3Q = K-ICS 쪽 8쪽 행 단위 동일(원본 판 유지, 변경 없음) · 하나 2025.4Q = K-ICS 칸 143칸 중 달라진 쪽(대출채권 p21·22, 위험관리 서술 재쪽매김 p62~66)에서 온 것 0(충돌 0, 덮어쓴 것 없음). 커밋 없음. K-ICS 게이트 RED 57·blocking 0·exit 2 불변(YELLOW 1940→1939, 새 RED 0), 데이터계약 RED 35→36(= xlsx `K-ICS공시` DRIFT 9칸, publishing).
+  남은 것: validation(악사 부재 박제 해제 · 골든 2종 `--update`) · publishing(xlsx +103행·9칸) · owner(보류 4칸 · 하나 판 확인) · 헬퍼가 이 3쌍을 모름(`[0]`=옛 판). 근거 `data/disclosure/_meta/kics_editions_runlog_20261011.md`.
+
 - **2026-10-11 (23회차) 재보사 스윕 단계 13 — 미뤘던 6건 처리**: IRR 잔액 기존 6셀 열 뒤바뀜 정정(+듀레이션갭 6행) · 스위스리 2023.2Q 적재(마스터 +46행) · 금리민감도·IRR 추출기가 수작업 정정을 스스로 재현(재보사 168행·IRR 301셀 = 마스터 동일, 기존 39사 불변 증명) · 이중 raw PDF 공통 헬퍼(15개 도구) · census 40칸 적재(6,048칸 중 빈칸 1,595 전부 사유 분류). 퍼시픽 금리민감도·정밀값은 이미 적재돼 있었음.
   커밋 없음. K-ICS 게이트 RED 57·blocking 0 불변, 단 exit 2 = `CENSUS_EXEMPTION_INERT KR1102 2023.2Q` 1건(티켓이 예고). 남은 것: validation(등재 해제 · 룰 골든 `--update` · 마이브라운 소액 오탐) · publishing(xlsx `K-ICS공시`·`금리듀레이션갭` + public_exports 3종) · owner(전기 열 적재 후보 4버킷).
   근거 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_13.md`.
