@@ -32271,7 +32271,7 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24,
    "source_files": [
     {
@@ -32279,6 +32279,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -32293,7 +32294,7 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24,
    "source_files": [
     {
@@ -32301,6 +32302,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -32315,7 +32317,7 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24,
    "source_files": [
     {
@@ -32323,6 +32325,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -32360,7 +32363,7 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24,
    "source_files": [
     {
@@ -32368,6 +32371,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -32986,7 +32990,7 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24,
    "source_files": [
     {
@@ -32994,6 +32998,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -33031,7 +33036,7 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24,
    "source_files": [
     {
@@ -33039,6 +33044,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -33203,7 +33209,7 @@
    "item_block": "income_statement",
    "source_id": "DISCLOSURE",
    "source_file": "data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf",
-   "published_items": 4,
+   "published_items": 5,
    "schema_items": 24,
    "source_files": [
     {
@@ -33211,6 +33217,7 @@
      "how": "disclosure_summary_pl",
      "items": [
       1,
+      16,
       22,
       23,
       24
@@ -34664,5 +34671,6 @@
  "merge_note_20261010": "KR0004 2024.4Q/2025.4Q LOB 다리 정정(P3): 항목 2·3·8 채움(DART 주석 26-29 장기 열, 재보험 포함 순액) + 항목 13·14 부호·범위 정정(원수 PAA 만·부채부호 -> 재보험 포함 순액·손익부호). 재현: scripts/fix_20261010_pl_kr0004_lob_legs.py --write",
  "merge_note_20261011": "경영공시 BS·PL 세부(granularity) 백필(inbox/parser/20261011T0310Z) PL 라운드 1: 540칸(허용 5항목 1·16·22·23·24) DISCLOSURE append/patch. as_of_date 는 싣지 않았다. 재현: scripts/bspl_granularity_pl_candidates.py + scripts/bspl_granularity_load_pl.py --apply",
  "merge_note_20261011_A1_kr0008": "round-3 PL 정정(inbox/parser/20261011T1130Z, round A1_kr0008, 2026-10-11 11:37): 1칸 값 정정/채움 + 파생 값_당분기 2칸 재계산. 계보 블록의 원천 파일은 그대로(같은 파일이 같은 칸을 설명한다), 정정 전후 값·근거는 data/_derived/bspl_apply_20261011/ 의 spec·manifest. 재현: scripts/bspl_apply_pl_fix.py --spec <spec> --round A1_kr0008 --apply",
- "merge_note_20261011_A2_kr0072": "round-3 PL 정정(inbox/parser/20261011T1130Z, round A2_kr0072, 2026-10-11 11:41): 36칸 값 정정/채움 + 파생 값_당분기 45칸 재계산. 계보 블록의 원천 파일은 그대로(같은 파일이 같은 칸을 설명한다), 정정 전후 값·근거는 data/_derived/bspl_apply_20261011/ 의 spec·manifest. 재현: scripts/bspl_apply_pl_fix.py --spec <spec> --round A2_kr0072 --apply"
+ "merge_note_20261011_A2_kr0072": "round-3 PL 정정(inbox/parser/20261011T1130Z, round A2_kr0072, 2026-10-11 11:41): 36칸 값 정정/채움 + 파생 값_당분기 45칸 재계산. 계보 블록의 원천 파일은 그대로(같은 파일이 같은 칸을 설명한다), 정정 전후 값·근거는 data/_derived/bspl_apply_20261011/ 의 spec·manifest. 재현: scripts/bspl_apply_pl_fix.py --spec <spec> --round A2_kr0072 --apply",
+ "merge_note_20261011_item16_reinsurers": "round-5 PL 항목 16 기타사업비용(inbox/parser/20261011T1730Z, 2026-10-11 17:43): 재보사 7칸 신규 적재(KR1101 2023.1Q·2Q·3Q·2024.1Q, KR1103 2023.3Q·2024.1Q·2025.4Q) -- 경영공시 2-1 요약 포괄손익계산서의 (기타사업비용) 인쇄값, 보험손익 다리(보험수익-보험서비스비용+재보험수익-재보험서비스비용-기타사업비용)로 부호·단위 검산. 해당 7개 블록의 published_items +1 · source_files items 에 16 추가. 근거·재현 data/_derived/bspl_apply_20261011/item16/spec_item16.json · scripts/bspl_apply_item16_reinsurers.py"
 }
