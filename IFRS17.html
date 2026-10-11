@@ -60,7 +60,7 @@
     .chart-sm{height:380px}
     #histCombo .chart-container{margin-top:10px}
     /* 모바일: 데스크톱과 같은 묶음 누적 콤보를 패널 가장자리까지 넓혀(좌우 여백·테두리 제거) 높이를 키운다 */
-    @media (max-width:640px){ #histCombo .chart-container{height:420px;margin:10px -14px 0;padding:6px 2px 2px;border-left:0;border-right:0;border-radius:0} }
+    @media (max-width:640px){ #histCombo .chart-container{height:340px;margin:10px -14px 0;padding:6px 2px 2px;border-left:0;border-right:0;border-radius:0} }
     .placeholder-empty{text-align:center;padding:44px 16px;color:var(--muted);font-size:16px}
     .stub-msg{color:var(--muted);font-size:14px;padding:12px;border:1px dashed var(--border);border-radius:8px;background:var(--bg)}
     .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:13px}
@@ -2363,6 +2363,53 @@
       for(let k=1;k<WF_WINDOW;k++){ const yq=(ly-k)+".4Q"; if(co.q[yq]||wfVal(company,yq,6)!=null) out.unshift(yq); }
       out.push(latest); return out;
     }
+    // 모바일(≤640px) 단순형(owner 2026-10-11 재확정): 막대 = 기말 CSM 잔액(주축, 0 시작, 회사 키 컬러 — 없으면 사이트 에메랄드), 꺾은선 = 신계약 CSM(보조축).
+    //  BEL·RA·PAA·발생사고요소·구성 미분리는 차트에서 뺀다(같은 값이 아래 표에 그대로 있다). 데스크톱(묶음 누적 콤보)은 그대로.
+    //  축 폭: 눈금 라벨은 숫자만(「조」「억」 접미 없음) · 눈금 5개 이하 · 단위는 축 제목 한 줄(조원/억원)로 한 번만. 축마다 단위를 따로 고른다(최대값 ≥ 5천억이면 조원 — 눈금이 4~5자리 억 단위로 길어지지 않게) —
+    //  신계약 CSM 은 막대보다 한 자릿수 작아 같은 조원으로 쓰면 「0.00조」 같은 긴 눈금이 되기 때문이다. 음수는 △.
+    //  rows[i] 는 drawHistCombo 의 행(r[0]+r[1] = CSM 일반모형+VFA, 값 표와 같은 값).
+    function hcSimpleChart(host, o){
+      const {rows,lab,pend,Q,mode,hasNb,C}=o, N=v=>v==null?0:v;
+      const csm=rows.map(r=>r?(r[0]==null&&r[1]==null?null:N(r[0])+N(r[1])):null);
+      const nb=rows.map(r=>r&&r[8]!=null?r[8]:null);
+      const mxC=Math.max(0,...csm.filter(v=>v!=null).map(Math.abs)), mxN=Math.max(0,...nb.filter(v=>v!=null).map(Math.abs));
+      const uC=mxC>=5000?"조":"억", dC=uC==="조"?10000:1, uN=mxN>=5000?"조":"억", dN=uN==="조"?10000:1;
+      const barDec=v=>uC==="조"?(Math.abs(v)>=10?1:2):0;
+      // 눈금 소수 자릿수는 눈금 간격에서 정한다(간격 ≥1 이면 정수, ≥0.1 이면 1자리, 그 밑은 2자리).
+      const tickFmt=(v,i,t)=>{ const st=t&&t.length>1?Math.abs(t[1].value-t[0].value):1; return hcSamo(v,st>=1?0:st>=0.1?1:2); };
+      const xl=lab.map((l,i)=>(/^\d{4}\.\dQ$/.test(l)?l.slice(2):l)+(pend.indexOf(Q[i])>=0?"*":""));
+      const nbTxt=mode==="year"?"연 누계":"당분기";
+      const valPlugin={ id:"hcBarVal", afterDatasetsDraw(ch){
+        const m=ch.getDatasetMeta(0), lm=hasNb?ch.getDatasetMeta(1):null, ctx=ch.ctx; ctx.save();
+        ctx.font="600 10px sans-serif"; ctx.textAlign="center"; ctx.textBaseline="bottom"; ctx.lineJoin="round"; ctx.lineWidth=3; ctx.strokeStyle=C.bg; ctx.fillStyle=C.ink;
+        m.data.forEach((el,i)=>{ if(csm[i]==null) return; const t=hcSamo(csm[i]/dC,barDec(csm[i]/dC)), lp=lm&&lm.data[i]&&nb[i]!=null?lm.data[i].y:null;
+          // 라벨은 막대 위가 기본이고, 꺾은선 점과 겹치면 막대 안쪽으로 한 칸씩 내려 겹치지 않는 첫 자리를 쓴다(윗변 아래 → 더 아래 → 막대 바닥 위). 글자에 배경색 테두리를 둘러 읽히게 한다.
+          let y=el.y-3;
+          if(lp!=null){ const ys=[el.y-3,el.y+14,el.y+32,el.base-6]; y=ys.find((c,k)=>(k===0||c<el.base-4)&&Math.abs(lp-(c-6))>=14); if(y==null) y=el.y-3; }
+          ctx.strokeText(t,el.x,y); ctx.fillText(t,el.x,y); });
+        ctx.restore(); }};
+      const ds=[{type:"bar",label:"기말 CSM (막대·좌)",yAxisID:"y",data:csm.map(v=>v==null?null:v/dC),backgroundColor:C.csm,borderColor:C.bg,borderWidth:1,maxBarThickness:46,order:1,_tip:"기말 CSM",_div:dC,_unit:uC}];
+      if(hasNb) ds.push({type:"line",label:"신계약 CSM (선·우, "+nbTxt+")",yAxisID:"y1",order:0,data:nb.map(v=>v==null?null:v/dN),
+        borderColor:C.ink,backgroundColor:C.ink,borderWidth:2.5,pointRadius:4,pointStyle:"rectRot",tension:0.15,spanGaps:false,_tip:"신계약 CSM ("+nbTxt+")",_div:dN,_unit:uN});
+      return new Chart(canvasCtx(host,"#canvasHistCombo"),{
+        type:"bar",data:{labels:xl,datasets:ds},plugins:[valPlugin],
+        options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:4}},interaction:{mode:"index",intersect:false},
+          plugins:{
+            title:{display:true,text:["보험계약부채 시계열 · "+shortName(o.coName),"기말 CSM · 신계약 CSM"],font:{size:13},padding:{top:2,bottom:4}},
+            legend:{display:true,position:"top",labels:{boxWidth:12,boxHeight:8,padding:8,font:{size:10},sort:(a,b)=>a.datasetIndex-b.datasetIndex}},
+            tooltip:{callbacks:{
+              title:items=>{ const i=items[0].dataIndex; return (lab[i]!==Q[i]?lab[i]+"년말":lab[i])+(pend.indexOf(Q[i])>=0?" (발행사 합계 행 확인 중)":""); },
+              label:c=>c.parsed.y==null?null:c.dataset._tip+": "+hcFmt(c.parsed.y*c.dataset._div,c.dataset._unit),
+              footer:items=>{ const i=items[0].dataIndex, r=rows[i]; if(!r||!hasNb||mode!=="year"||r[8]==null) return "";
+                const qn=wfParseQ(Q[i])[1]; return qn===4?"신계약 CSM 은 해당 연도 1~4분기 누계":"신계약 CSM 은 해당 연도 1~"+qn+"분기 누계(막대도 "+qn+"분기말 값)"; }}}
+          },
+          scales:{
+            x:{ticks:{autoSkip:false,maxRotation:0,minRotation:0,font:{size:10}},grid:{display:false}},
+            y:{beginAtZero:true,min:0,grace:"12%",position:"left",title:{display:true,text:uC+"원",font:{size:10},padding:{top:0,bottom:2}},ticks:{maxTicksLimit:5,font:{size:10},padding:3,callback:tickFmt}},
+            y1:{display:hasNb,type:"linear",position:"right",beginAtZero:true,grace:"12%",title:{display:true,text:uN+"원",color:C.ink,font:{size:10},padding:{top:0,bottom:2}},ticks:{maxTicksLimit:5,font:{size:10},padding:3,color:C.ink,callback:tickFmt},grid:{drawOnChartArea:false}}
+          }}
+      });
+    }
     function drawHistCombo(host, company){
       const P=CSMC.panel, co=P.companies[company], C=hcColors(), N=v=>v==null?0:v;
       const coName=codeToName[company]||co.n;
@@ -2441,13 +2488,15 @@
       const yMax=f(maxPos)/div*1.05, yMin=maxNeg>0?-maxNeg/div*1.05:0;
       const axDec=unit==="조"?(lowStep<10000?1:0):0, nbDec=unit==="조"?2:(nbMax>=100?0:nbMax>=10?1:2);
       const th=(window.IQTheme&&IQTheme.chart())||{}, mob=window.matchMedia("(max-width:640px)").matches;
-      // 모바일(≤640px)도 데스크톱과 같은 묶음 누적 콤보. 달라지는 건 크기뿐: 범례 위·작은 글자(9px)·가로 나열, x 라벨 짧게·회전 없음, 축 제목 짧게.
+      // 모바일(≤640px)은 단순형(hcSimpleChart: 기말 CSM 막대 + 신계약 CSM 선). 아래 묶음 누적 콤보는 데스크톱(641px 이상)만 쓴다.
+      // 아래 mo() 의 모바일 분기는 이제 쓰이지 않지만 데스크톱 옵션 정의와 한 덩어리라 그대로 둔다.
+      const simple=mob;
       const mo=(base,extra)=>mob?Object.assign({},base,extra):base;
       const xShort=l=>{ const m=/^(\d{4})\.(\d)Q$/.exec(l); return (mob&&mode==="quarter"&&m)?m[1].slice(2)+"."+m[2]+"Q":l; };   // 분기 모드 25.2Q, 연도 모드는 2023·2026.2Q 그대로
       const basisTxt=allSc?"경영공시 2-4 기준 (발생사고요소 포함)":"잔여보장요소 기준";
       const licTxt=hasLic?(anyEst&&!rows.some(r=>kindOf(r)===1)?" (+ 발생사고요소 추정)":anyEst?" (+ 발생사고요소, 일부 분기 추정)":" (+ 발생사고요소)"):"";
       try{ charts.hist&&charts.hist.destroy(); }catch(e){}
-      charts.hist=new Chart(canvasCtx(host,"#canvasHistCombo"),{
+      charts.hist=simple?hcSimpleChart(host,{rows,lab,pend,Q,mode,hasNb,C,coName}):new Chart(canvasCtx(host,"#canvasHistCombo"),{
         type:"bar",data:{labels:Q.map((qq,i)=>pend.indexOf(qq)>=0?xShort(lab[i])+"*":xShort(lab[i])),datasets:ds},plugins:[hcBreakPlugin],
         options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:brkOn?10:0}},interaction:{mode:"index",intersect:false},
           plugins:{
@@ -2486,20 +2535,21 @@
           }}
       });
       const last=rows[rows.length-1], cv=q(host,"#canvasHistCombo");
-      if(cv) cv.setAttribute("aria-label",shortName(coName)+" 보험계약부채 시계열: "+lab[0]+"부터 "+lab[lab.length-1]+"까지 "+(mode==="year"?"연말과 최신 분기별 ":"분기별 ")+(allSc?"경영공시 2-4 합계(발생사고요소 포함)":"잔여보장요소(CSM·BEL·RA)"+(hasLic?"와 발생사고요소":""))+" 누적 막대와 신계약 CSM 꺾은선"+(brkOn?". 세로축 일부를 생략해 표시선 위쪽은 줄여 그렸고 값은 실제 값":"")+(last?". 최신 분기 CSM "+hcFmt(N(last[0])+N(last[1]),unit):"")+". 아래 표에 같은 값이 있습니다.");
+      if(cv&&simple) cv.setAttribute("aria-label",shortName(coName)+" 보험계약부채 시계열: "+lab[0]+"부터 "+lab[lab.length-1]+"까지 "+(mode==="year"?"연말과 최신 분기별 ":"분기별 ")+"기말 CSM 막대"+(hasNb?"와 신계약 CSM 꺾은선":"")+(last?". 최신 분기 CSM "+hcFmt(N(last[0])+N(last[1]),"억"):"")+". 아래 표에 같은 값이 있습니다.");
+      else if(cv) cv.setAttribute("aria-label",shortName(coName)+" 보험계약부채 시계열: "+lab[0]+"부터 "+lab[lab.length-1]+"까지 "+(mode==="year"?"연말과 최신 분기별 ":"분기별 ")+(allSc?"경영공시 2-4 합계(발생사고요소 포함)":"잔여보장요소(CSM·BEL·RA)"+(hasLic?"와 발생사고요소":""))+" 누적 막대와 신계약 CSM 꺾은선"+(brkOn?". 세로축 일부를 생략해 표시선 위쪽은 줄여 그렸고 값은 실제 값":"")+(last?". 최신 분기 CSM "+hcFmt(N(last[0])+N(last[1]),unit):"")+". 아래 표에 같은 값이 있습니다.");
       // 안내 = [짧은 말, 전문]. 짧은 말은 이 회사·시점에 해당할 때만 차트 아래 한 줄로 보이고, 전문은 그 줄의 「?」 팝오버에 전부 들어 있다(owner 2026-10-11: 모바일·데스크톱 공통, 내용 삭제 아님).
       // 짧은 말이 null 이면 팝오버에만 있다.
       const notes=[], nt=(s,l)=>notes.push([s,l]), few=a=>a.length<=2?a.join("·"):a.length+"개 시점";   // 짧은 말에는 시점 목록 대신 개수
-      nt(null,(mode==="year"?"연도 기준(각 연말 + 최신 분기) · 신계약 CSM은 해당 연도 누계(우측 축)":"분기 기준(최신 분기까지 5분기) · 신계약 CSM은 당분기 증분(우측 축)")+" · 잔여보장요소(LRC)는 경영공시 2-4 · 음수 △");
-      if(brkOn) nt(null,"세로축 일부를 생략했습니다(~ 표시): 표시선 아래(CSM 포함)는 실제 눈금 그대로이고 위쪽은 약 "+Math.round(1/k)+"분의 1로 줄여 그렸습니다. 툴팁·표의 값은 실제 값입니다.");
+      nt(null,(mode==="year"?"연도 기준(각 연말 + 최신 분기) · 신계약 CSM은 해당 연도 누계(우측 축)":"분기 기준(최신 분기까지 5분기) · 신계약 CSM은 당분기 증분(우측 축)")+(simple?" · 막대는 기말 CSM, BEL·RA·발생사고요소 등 나머지 구성은 아래 표 · 음수 △":" · 잔여보장요소(LRC)는 경영공시 2-4 · 음수 △"));
+      if(brkOn&&!simple) nt(null,"세로축 일부를 생략했습니다(~ 표시): 표시선 아래(CSM 포함)는 실제 눈금 그대로이고 위쪽은 약 "+Math.round(1/k)+"분의 1로 줄여 그렸습니다. 툴팁·표의 값은 실제 값입니다.");
       if(pend.length) nt("* 합계 행 확인 중","* "+pend.join(", ")+": 발행사 합계 행을 확인하는 중이라 값이 바뀔 수 있습니다.");
       if(mism.length) nt("※ CSM 불일치 확인 중","※ "+mism.join(", ")+": 경영공시 2-4 의 CSM 이 섹션 2 의 기말 CSM 과 다릅니다(원천 확인 중).");
       if(!hasNb) nt("신계약 CSM 없음","이 회사는 신계약 CSM 시계열이 없어 꺾은선을 그리지 않습니다.");
-      if(anySc) nt(allSc?"2-4 에 발생사고요소 포함":"일부 분기 2-4 에 발생사고요소 포함","이 회사의 경영공시 2-4 는 발생사고요소를 이미 포함한 값이라 왼쪽 막대에 발생사고요소가 섞여 있습니다. 그래서 "+(allSc?"":"해당 분기는 ")+"오른쪽 막대를 그리지 않았고, 발생사고요소 공시값은 표의 ‘이 중 발생사고요소’ 행에 따로 적었습니다.");
+      if(anySc) nt(allSc?"2-4 에 발생사고요소 포함":"일부 분기 2-4 에 발생사고요소 포함",simple?"이 회사의 경영공시 2-4 합계는 발생사고요소를 이미 포함한 값입니다. 차트는 CSM 만 그려 영향이 없고, 합계와 발생사고요소 공시값은 아래 표(‘이 중 발생사고요소’ 행)에 있습니다.":"이 회사의 경영공시 2-4 는 발생사고요소를 이미 포함한 값이라 왼쪽 막대에 발생사고요소가 섞여 있습니다. 그래서 "+(allSc?"":"해당 분기는 ")+"오른쪽 막대를 그리지 않았고, 발생사고요소 공시값은 표의 ‘이 중 발생사고요소’ 행에 따로 적었습니다.");
       if(anyRs){ const lo=lab.filter((l,i)=>rs[i]);
         nt("† 소급재작성 비교 기준",lo.join("·")+" 시점은 FY2024 결산에서 소급재작성된 비교 기준입니다(재무상태표 보험계약부채 합계 "+rs.filter(Boolean).map(v=>hcFmt(v[1],"억")+" → "+hcFmt(v[0],"억")).join(", ")+", 원 공시 대비). 사유는 표 위 ? 설명에 적었습니다."); }
       if(anyNc){ const lo=lab.filter((l,i)=>noComp[i]);
-        nt(few(lo)+" 구성 표 없음",lo.join("·")+" 시점은 경영공시에 BEL·RA·CSM 구성 표가 없어 CSM(섹션 2 의 기말 CSM)만 따로 그리고, "
+        nt(few(lo)+" 구성 표 없음",simple?lo.join("·")+" 시점은 경영공시에 BEL·RA·CSM 구성 표가 없어 막대는 CSM(섹션 2 의 기말 CSM)만 그립니다. 나머지(구성 미분리 등)는 아래 표에 있습니다.":lo.join("·")+" 시점은 경영공시에 BEL·RA·CSM 구성 표가 없어 CSM(섹션 2 의 기말 CSM)만 따로 그리고, "
           +(rows.some((r,i)=>noComp[i]&&r[18]!=null)?"나머지는 DART 주석 잔여보장요소 합계에서 CSM 을 뺀 ‘구성 미분리’ 한 덩어리로 쌓았습니다. 이 합계는 보험계약자산을 상계하지 않은 부채 기준이라 다른 시점의 경영공시 2-4 합계(상계 후 순액)와 기준이 다릅니다. ":"나머지 구성은 값이 없어 비워 두었습니다. ")
           +"BEL·RA·PAA 는 ‘—’입니다."); }
       if(anyOnly){ const lo=lab.filter((l,i)=>csmOnly[i]);
@@ -2507,13 +2557,13 @@
       if(mode==="year"&&hasNb) nt(null,"신계약 CSM(꺾은선)은 해당 연도 누계입니다"+(wfParseQ(Q[Q.length-1])[1]!==4?"(최신 "+Q[Q.length-1]+" 는 해당 연도 1~"+wfParseQ(Q[Q.length-1])[1]+"분기 누계이고 막대도 그 분기말 시점 값)":"")+".");
       {
         const noBar=Q.filter((qq,i)=>rows[i]&&!csmOnly[i]&&kindOf(rows[i])==null);
-        if(noBar.length){ const unrel=(P.meta.est_unreliable||[]).indexOf(company)>=0&&rows.some(r=>kindOf(r)===1);
+        if(noBar.length&&!simple){ const unrel=(P.meta.est_unreliable||[]).indexOf(company)>=0&&rows.some(r=>kindOf(r)===1);
           nt(few(noBar)+" 발생사고요소 막대 없음","발생사고요소 오른쪽 막대 없음: "+noBar.join(", ")+(unrel?" — 공시 원천이 없고, 재무상태표로 어림한 추정은 이 회사의 공시값과 크게 달라 그리지 않습니다.":" — 공시 원천이 없고 추정에 쓸 재무상태표 값도 없습니다.")); }
-        if(anyEst) nt("빗금 = 추정","빗금 막대는 추정입니다. 발생사고요소 공시값이 없는 분기만 재무상태표 보험계약부채 − 잔여보장요소로 어림했습니다.");
-        if(anyCalc) nt("줄무늬 = 계산값","줄무늬 BEL·RA 는 계산값입니다(측정요소별 BEL·RA − 2-4). 꽉 찬 색은 회사가 직접 나눠 공시한 값입니다.");
+        if(anyEst&&!simple) nt("빗금 = 추정","빗금 막대는 추정입니다. 발생사고요소 공시값이 없는 분기만 재무상태표 보험계약부채 − 잔여보장요소로 어림했습니다.");
+        if(anyCalc&&!simple) nt("줄무늬 = 계산값","줄무늬 BEL·RA 는 계산값입니다(측정요소별 BEL·RA − 2-4). 꽉 찬 색은 회사가 직접 나눠 공시한 값입니다.");
       }
-      if(anyEst&&rows.some(r=>r&&N(r[7])<0)) nt(null,"잔여보장요소 합계가 음수(BEL 음수)인 분기가 있어 발생사고요소 추정이 크게 보일 수 있습니다.");
-      if(rows.some(r=>r&&(N(r[2])+N(r[3])<0))) nt(null,"BEL 합계가 음수인 분기는 BEL 막대가 0 선 아래로 내려갑니다(CSM 은 항상 0 선 위).");
+      if(!simple&&anyEst&&rows.some(r=>r&&N(r[7])<0)) nt(null,"잔여보장요소 합계가 음수(BEL 음수)인 분기가 있어 발생사고요소 추정이 크게 보일 수 있습니다.");
+      if(!simple&&rows.some(r=>r&&(N(r[2])+N(r[3])<0))) nt(null,"BEL 합계가 음수인 분기는 BEL 막대가 0 선 아래로 내려갑니다(CSM 은 항상 0 선 위).");
       const note=q(host,"#histComboNote");
       if(note){ note.textContent=""; const sh=notes.map(n=>n[0]).filter(Boolean);
         // 한 줄에 들어가는 만큼만(모바일 약 19자, 데스크톱 약 70자) 앞에서부터 보이고 나머지는 「외 N건」 — 전부 「?」 팝오버에 있다.

@@ -233,8 +233,30 @@
       }
     }
   }
-  document.addEventListener('pointerenter', function(e){ if(e.target && e.target.closest && e.target.closest('.iq-help')) clampHelpPops(); }, true);
-  document.addEventListener('focusin', function(e){ if(e.target && e.target.closest && e.target.closest('.iq-help')) clampHelpPops(); });
+  /* 트리거가 화면 아래쪽에 있어 팝오버가 viewport 하단 밖으로 나가면(owner 2026-10-11 「잘 안 보인다」) 위로 편다.
+     위쪽에 sticky 헤더를 뺀 자리가 있고 뒤집은 결과가 실제로 화면 안에 들어올 때만 유지한다(트리거가 static 이라 팝오버가
+     트리거가 아닌 조상 기준으로 놓이는 모바일 규칙에서는 뒤집으면 엉뚱한 곳으로 가므로 되돌린다). 못 뒤집는 경우 손가락(터치) 환경은
+     페이지를 살짝 올려 팝오버가 보이게 하고, 마우스는 스크롤하면 hover 가 풀리니 그대로 둔다. */
+  function flipHelpPop(h){
+    var p = h.querySelector('.iq-help-pop'); if(!p) return;
+    p.classList.remove('iq-help-pop--up');
+    var r = p.getBoundingClientRect(); if(!r.width) return;
+    var vh = document.documentElement.clientHeight;
+    if(r.bottom <= vh - 8) return;
+    var hd = document.querySelector('header'), top = 8;
+    if(hd){ var hr = hd.getBoundingClientRect(); if(hr.bottom > 0) top = Math.max(top, Math.round(hr.bottom) + 8); }
+    p.classList.add('iq-help-pop--up');
+    var r2 = p.getBoundingClientRect();
+    if(r2.top >= top && r2.bottom <= vh - 8) return;
+    p.classList.remove('iq-help-pop--up');
+    if(window.matchMedia && window.matchMedia('(pointer:coarse)').matches){
+      var b = h.getBoundingClientRect(), want = r.bottom - (vh - 76), room = b.top - top;   /* 하단 76px = 우하단 고정 버튼 자리 */
+      var dy = Math.min(want, room);
+      if(dy > 2) window.scrollBy({ top: Math.round(dy), behavior: 'smooth' });
+    }
+  }
+  document.addEventListener('pointerenter', function(e){ var h = e.target && e.target.closest && e.target.closest('.iq-help'); if(h){ flipHelpPop(h); clampHelpPops(); } }, true);
+  document.addEventListener('focusin', function(e){ var h = e.target && e.target.closest && e.target.closest('.iq-help'); if(h){ flipHelpPop(h); clampHelpPops(); } });
   /* ? 팝오버: Esc 로 포인터·포커스를 옮기지 않고 닫는다(WCAG 1.4.13). 다시 들어오면 해제. */
   document.addEventListener('keydown', function(e){
     if(e.key !== 'Escape') return;
