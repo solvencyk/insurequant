@@ -34663,6 +34663,458 @@
     }
    ],
    "resolution": "disclosure_summary_pl"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2023.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 58,
+     "printed": "(15,847,454,365)",
+     "unit": "원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2024.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 59,
+     "printed": "(20,323,347)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1101",
+   "quarter": "2025.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 58,
+     "printed": "(11,814,680)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2023.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 67,
+     "printed": "(115,295,376)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2024.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 70,
+     "printed": "(116,788,498)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2025.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 69,
+     "printed": "(74,591,417)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2023.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 52,
+     "printed": "(1,963,996)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2024.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 51,
+     "printed": "(3,304,730)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1103",
+   "quarter": "2025.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 54,
+     "printed": "(4,141,656)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1104",
+   "quarter": "2023.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 120,
+     "printed": "(1,367,201,004)",
+     "unit": "원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2023.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 186,
+     "printed": "(24,555,534)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1105",
+   "quarter": "2024.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 185,
+     "printed": "(35,762,881)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2023.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 51,
+     "printed": "(31,912,643)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2024.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 52,
+     "printed": "(26,234,872)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1106",
+   "quarter": "2025.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 51,
+     "printed": "(25,220,930)",
+     "unit": "천원",
+     "pages": [
+      51,
+      52
+     ]
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2024.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 52,
+     "printed": "(14,903,638,011)",
+     "unit": "원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR1107",
+   "quarter": "2025.4Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 51,
+     "printed": "(12,222,323,596)",
+     "unit": "원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2025.3Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 63,
+     "printed": "(255,459,563)",
+     "unit": "천원"
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2026.1Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 66,
+     "printed": "(58,764)+(74,164,350)",
+     "unit": "천원",
+     "pages": [
+      66,
+      68
+     ]
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2026.2Q",
+   "item_block": "contract_notes",
+   "source_id": "DISCLOSURE",
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+   "published_items": 1,
+   "schema_items": 8,
+   "source_files": [
+    {
+     "file": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+     "how": "fs_note_csm_amort",
+     "items": [
+      4
+     ],
+     "page": 91,
+     "printed": "(97,956)+(140,642,468)",
+     "unit": "천원",
+     "pages": [
+      91,
+      93
+     ]
+    }
+   ],
+   "resolution": "fs_note_csm_amort"
   }
  ],
  "merge_note_20260920": "경영공시 §2-1 백필 155셀(DISCLOSURE) append + DART 4Q LOB 재추출 5블록 패치. as_of_date 는 싣지 않았다 — 분기말일 기계 삽입 금지(validation 20260920T1500Z §1c), downloader 가 필링 meta 에서 채울 별도 티켓이다. 재현: scripts/merge_pl_backfill_disclosure_20260920.py --apply",
@@ -34672,5 +35124,6 @@
  "merge_note_20261011": "경영공시 BS·PL 세부(granularity) 백필(inbox/parser/20261011T0310Z) PL 라운드 1: 540칸(허용 5항목 1·16·22·23·24) DISCLOSURE append/patch. as_of_date 는 싣지 않았다. 재현: scripts/bspl_granularity_pl_candidates.py + scripts/bspl_granularity_load_pl.py --apply",
  "merge_note_20261011_A1_kr0008": "round-3 PL 정정(inbox/parser/20261011T1130Z, round A1_kr0008, 2026-10-11 11:37): 1칸 값 정정/채움 + 파생 값_당분기 2칸 재계산. 계보 블록의 원천 파일은 그대로(같은 파일이 같은 칸을 설명한다), 정정 전후 값·근거는 data/_derived/bspl_apply_20261011/ 의 spec·manifest. 재현: scripts/bspl_apply_pl_fix.py --spec <spec> --round A1_kr0008 --apply",
  "merge_note_20261011_A2_kr0072": "round-3 PL 정정(inbox/parser/20261011T1130Z, round A2_kr0072, 2026-10-11 11:41): 36칸 값 정정/채움 + 파생 값_당분기 45칸 재계산. 계보 블록의 원천 파일은 그대로(같은 파일이 같은 칸을 설명한다), 정정 전후 값·근거는 data/_derived/bspl_apply_20261011/ 의 spec·manifest. 재현: scripts/bspl_apply_pl_fix.py --spec <spec> --round A2_kr0072 --apply",
- "merge_note_20261011_item16_reinsurers": "round-5 PL 항목 16 기타사업비용(inbox/parser/20261011T1730Z, 2026-10-11 17:43): 재보사 7칸 신규 적재(KR1101 2023.1Q·2Q·3Q·2024.1Q, KR1103 2023.3Q·2024.1Q·2025.4Q) -- 경영공시 2-1 요약 포괄손익계산서의 (기타사업비용) 인쇄값, 보험손익 다리(보험수익-보험서비스비용+재보험수익-재보험서비스비용-기타사업비용)로 부호·단위 검산. 해당 7개 블록의 published_items +1 · source_files items 에 16 추가. 근거·재현 data/_derived/bspl_apply_20261011/item16/spec_item16.json · scripts/bspl_apply_item16_reinsurers.py"
+ "merge_note_20261011_item16_reinsurers": "round-5 PL 항목 16 기타사업비용(inbox/parser/20261011T1730Z, 2026-10-11 17:43): 재보사 7칸 신규 적재(KR1101 2023.1Q·2Q·3Q·2024.1Q, KR1103 2023.3Q·2024.1Q·2025.4Q) -- 경영공시 2-1 요약 포괄손익계산서의 (기타사업비용) 인쇄값, 보험손익 다리(보험수익-보험서비스비용+재보험수익-재보험서비스비용-기타사업비용)로 부호·단위 검산. 해당 7개 블록의 published_items +1 · source_files items 에 16 추가. 근거·재현 data/_derived/bspl_apply_20261011/item16/spec_item16.json · scripts/bspl_apply_item16_reinsurers.py",
+ "merge_note_20261011_item4_reinsurers": "round-6 PL 항목 4(원수 CSM상각 슬롯) 적재(오케스트레이터 보정·범위 추가, 2026-10-11 18:34): (A) 순수 재보사 17칸 = KR1101 2023/2024/2025.4Q · KR1102 3 · KR1103 3 · KR1104 2023.4Q · KR1105 2023/2024.4Q · KR1106 3 · KR1107 2024/2025.4Q 의 감사보고서 주석(수재 일반모형 보험계약마진 열, 행 '서비스를 제공한(당기손익으로 인식한) 보험계약마진' 합계); (B) 라이나생명 KR0074 2025.3Q · 2026.1Q · 2026.2Q 3칸 = 경영공시 PDF 에 첨부된 재무제표 주석 '제공한 서비스 반영 인식한 보험계약마진' 합계(유배당 + 유배당 외, 천원). 값 = 인쇄값(원/천원 -> 백만원, 양수, 누계), CSM_waterfall 항목 5(억원, 음수)와 |값|/100 이 0.00002억 이내로 일치. 계보: 경영공시 §2-1 요약 PL 이 아니라 재무제표·감사보고서 주석이다 -- 그러나 source_file 경로가 data/disclosure/ 라 게이트의 경로 계보 판정은 DISCLOSURE 로 귀착한다(source_id=DISCLOSURE 만이 CHECK 2 를 통과한다). 그래서 validate_data_contract §3d(CONCEPT_MIXED_DISCLOSURE_INTO_DART, 허용항목 1·16·22·23·24)가 이 20개 contract_notes 블록의 항목 4 를 막는다 -- how=resolution=fs_note_csm_amort 로 구분 표기했고 게이트 예외(또는 새 계보 id)는 validation 몫이다. 근거·재현 data/_derived/bspl_apply_20261011/item4_reinsurers/spec_item4.json · scripts/bspl_apply_item4_reinsurers.py"
 }

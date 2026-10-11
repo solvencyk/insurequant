@@ -1,0 +1,9 @@
+== PL rows vs pre-apply backup: 13465 -> 13485; added 20 (item 4: 20 = reinsurer17 17 + lina3 3; other: 0); removed 0; changed 0
+   added by company: {'KR0074': 3, 'KR1101': 3, 'KR1102': 3, 'KR1103': 3, 'KR1104': 1, 'KR1105': 2, 'KR1106': 3, 'KR1107': 2} | lina3 keys: ['2025.3Q', '2026.1Q', '2026.2Q']
+   KR0074 pre-existing rows 151: changed/removed 0
+== PL rows vs HEAD (git show HEAD:PL_breakdown.json): 13465 -> 13485; added 20 (item 4: 20 = reinsurer17 17 + lina3 3; other: 0); removed 0; changed 0
+   added by company: {'KR0074': 3, 'KR1101': 3, 'KR1102': 3, 'KR1103': 3, 'KR1104': 1, 'KR1105': 2, 'KR1106': 3, 'KR1107': 2} | lina3 keys: ['2025.3Q', '2026.1Q', '2026.2Q']
+   KR0074 pre-existing rows 151: changed/removed 0
+== sidecar vs pre-apply backup: cells 1017 -> 1037; added 20 ({'contract_notes': 20}); removed 0; changed 0; top-level added ['merge_note_20261011_item4_reinsurers']; top-level changed []
+== sidecar vs HEAD: cells 1017 -> 1037; added 20 ({'contract_notes': 20}); removed 0; changed 0; top-level added ['merge_note_20261011_item4_reinsurers']; top-level changed []
+KEYDIFF OK: only the 20 item-4 rows (17 reinsurer + 3 Lina) + 20 contract_notes sidecar blocks were added; every pre-existing row/block identical

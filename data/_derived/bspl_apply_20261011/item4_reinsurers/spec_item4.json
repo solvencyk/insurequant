@@ -1,0 +1,751 @@
+{
+ "ticket": "orchestrator course-correction 2026-10-11 (item 4 main slot, not 4-1) -- pure reinsurer KR1101-KR1107 audit-report 수재 CSM amortization (17) + scope addition: Lina Life KR0074 2025.3Q/2026.1Q/2026.2Q (3)",
+ "convention": "PL item 4 = +|amortization| in 백만원 (YTD at 4Q); CSM_waterfall item 5 = -|amortization| in 억원; value/100 == |wf|",
+ "n_cells": 20,
+ "failures": [],
+ "cells": [
+  {
+   "group": "reinsurer17",
+   "company": "KR1101",
+   "name": "뮌헨재보험",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 15847.454365,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(15,847,454,365)",
+   "printed_unit": "원",
+   "printed_amount": 15847454365,
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "pages": [
+    58
+   ],
+   "table": "(4) 수재 및 출재 일반모형 변동내역 / 1) 수재 일반모형 / ② 전기",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "58": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -158.47454,
+   "value_minus_wf_eok": 4e-06,
+   "lane_amort_abs_eok": 158.47454,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2024_Q4",
+    "csm_eok": -502.0,
+    "diff": 1004.41
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1101",
+   "name": "뮌헨재보험",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 20323.347,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(20,323,347)",
+   "printed_unit": "천원",
+   "printed_amount": 20323347,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "pages": [
+    59
+   ],
+   "table": "(4) 수재 및 출재 일반모형 변동내역 / 1) 수재 일반모형 / ② 전기",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "59": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -203.23347,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 203.23347,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 352.0,
+    "diff": 0.32
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1101",
+   "name": "뮌헨재보험",
+   "quarter": "2025.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 11814.68,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(11,814,680)",
+   "printed_unit": "천원",
+   "printed_amount": 11814680,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
+   "pages": [
+    58
+   ],
+   "table": "(4) 수재 및 출재 일반모형 변동내역 / 1) 수재 일반모형 / ① 당기",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "58": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -118.1468,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 118.1468,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 369.0,
+    "diff": 0.03
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1102",
+   "name": "스위스리아시아",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 115295.376,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(115,295,376)",
+   "printed_unit": "천원",
+   "printed_amount": 115295376,
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+   "pages": [
+    67
+   ],
+   "table": "16.3 보험료배분접근법이 적용되지 않은 순보험계약부채의 측정요소별 변동내역 / ② 전기",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "67": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -1152.95376,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 1152.95376,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": null
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1102",
+   "name": "스위스리아시아",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 116788.498,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(116,788,498)",
+   "printed_unit": "천원",
+   "printed_amount": 116788498,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+   "pages": [
+    70
+   ],
+   "table": "16.3 보험료배분접근법이 적용되지 않은 순보험계약부채의 측정요소별 변동내역 / ② 전기",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "70": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -1167.88498,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 1167.88498,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 2889.0,
+    "diff": -0.75
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1102",
+   "name": "스위스리아시아",
+   "quarter": "2025.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 74591.417,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(74,591,417)",
+   "printed_unit": "천원",
+   "printed_amount": 74591417,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1102_스위스리아시아__audit.pdf",
+   "pages": [
+    69
+   ],
+   "table": "16.3 보험료배분접근법이 적용되지 않은 순보험계약부채의 측정요소별 변동내역 / ① 당기",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "69": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -745.91417,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 745.91417,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 2209.0,
+    "diff": -0.46
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1103",
+   "name": "제네럴재보험",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 1963.996,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(1,963,996)",
+   "printed_unit": "천원",
+   "printed_amount": 1963996,
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+   "pages": [
+    52
+   ],
+   "table": "(4) 보험계약부채의 측정요소별 변동내역 / (전기)",
+   "column": "합계 (= 공정가치법 1,659,909 + 그 밖의 모든 304,087)",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "52": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -19.63996,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 19.63996,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2024_Q4",
+    "csm_eok": 191.29,
+    "diff": 0.0
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1103",
+   "name": "제네럴재보험",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 3304.73,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(3,304,730)",
+   "printed_unit": "천원",
+   "printed_amount": 3304730,
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+   "pages": [
+    51
+   ],
+   "table": "(4) 보험계약부채의 측정요소별 변동내역 / (당기)",
+   "column": "합계 (= 공정가치법 2,859,338 + 그 밖의 모든 445,392)",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "51": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -33.0473,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 33.0473,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 372.0,
+    "diff": -0.36
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1103",
+   "name": "제네럴재보험",
+   "quarter": "2025.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 4141.656,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(4,141,656)",
+   "printed_unit": "천원",
+   "printed_amount": 4141656,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf",
+   "pages": [
+    54
+   ],
+   "table": "(4) 보험계약부채의 측정요소별 변동내역 / (당기)  [printed page -52-]",
+   "column": "합계 (= 공정가치법 3,543,088 + 그 밖의 모든 598,568)",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "54": true
+   },
+   "image_only": true,
+   "wf_item5_eok": -41.41656,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 41.41656,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 266.0,
+    "diff": -0.36
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1104",
+   "name": "하노버재보험",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 1367.201004,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(1,367,201,004)",
+   "printed_unit": "원",
+   "printed_amount": 1367201004,
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf",
+   "pages": [
+    120
+   ],
+   "table": "(4) 보험계약부채의 측정요소별 변동내역 / 2) 전기 (단위 문구 없음 -- 원, CSM 기말 144.5억 앵커)",
+   "column": "보험계약마진의 상각 합계",
+   "row_label": "보험계약마진의 상각",
+   "page_text_contains_printed": {
+    "120": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -13.67201,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 13.67201,
+   "lane_decision": "공시 간 상충: 최신 공시 전기 칸 채택",
+   "lane_unit_source": "override_anchor_4-6-2",
+   "lane_p462_check": {
+    "filing": "FY2024_Q4",
+    "csm_eok": 254.77,
+    "diff": 3.96
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1105",
+   "name": "알지에이리인슈어런스",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 24555.534,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(24,555,534)",
+   "printed_unit": "천원",
+   "printed_amount": 24555534,
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "pages": [
+    186
+   ],
+   "table": "보험계약부채(자산) 구성요소별 변동내역 / 2) 전기말",
+   "column": "현재서비스와 서비스의 이전을 반영하기 위해 관련된 변동분: 당기손익으로 인식한 보험계약마진 금액 합계 (= 수정소급법 17,426,130 + 공정가치법 7,129,404)",
+   "row_label": "현재서비스와 서비스의 이전을 반영하기 위해 관련된 변동분 -- 당기손익으로 인식한 보험계약마진 금액",
+   "page_text_contains_printed": {
+    "186": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -245.55534,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 245.55534,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2024_Q4",
+    "csm_eok": 5571.0,
+    "diff": 0.3
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1105",
+   "name": "알지에이리인슈어런스",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 35762.881,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(35,762,881)",
+   "printed_unit": "천원",
+   "printed_amount": 35762881,
+   "source_file": "data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf",
+   "pages": [
+    185
+   ],
+   "table": "보험계약부채(자산) 구성요소별 변동내역 / 1) 당기말",
+   "column": "같은 행 합계 (= 수정소급법 25,042,057 + 공정가치법 10,720,823 = 35,762,880, 인쇄 합계와 1천원 차)",
+   "row_label": "현재서비스와 서비스의 이전을 반영하기 위해 관련된 변동분 -- 당기손익으로 인식한 보험계약마진 금액",
+   "page_text_contains_printed": {
+    "185": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -357.6288,
+   "value_minus_wf_eok": 1e-05,
+   "lane_amort_abs_eok": 357.6288,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 9301.0,
+    "diff": 0.44
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1106",
+   "name": "스코리재보험",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 31912.643,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(31,912,643)",
+   "printed_unit": "천원",
+   "printed_amount": 31912643,
+   "source_file": "data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "pages": [
+    51
+   ],
+   "table": "11.4 일반모형 변동내역 / (1) 수재 일반모형 / <전기>",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "51": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -319.12643,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 319.12643,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": null
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1106",
+   "name": "스코리재보험",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 26234.872,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(26,234,872)",
+   "printed_unit": "천원",
+   "printed_amount": 26234872,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "pages": [
+    52
+   ],
+   "table": "11.4 일반모형 변동내역 / (1) 수재 일반모형 / <전기>",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "52": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -262.34872,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 262.34872,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 4653.0,
+    "diff": 0.1
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1106",
+   "name": "스코리재보험",
+   "quarter": "2025.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 25220.93,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(25,220,930)",
+   "printed_unit": "천원",
+   "printed_amount": 25220930,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf",
+   "pages": [
+    51,
+    52
+   ],
+   "table": "11.4 일반모형 변동내역 / (1) 수재 일반모형 / <당기>",
+   "column": "보험계약마진=합계",
+   "row_label": "서비스를 제공한(당기손익으로 인식한) 보험계약마진",
+   "page_text_contains_printed": {
+    "51": true,
+    "52": false
+   },
+   "image_only": false,
+   "wf_item5_eok": -252.2093,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 252.2093,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 3871.0,
+    "diff": 3.36
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1107",
+   "name": "퍼시픽라이프리",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 14903.638011,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(14,903,638,011)",
+   "printed_unit": "원",
+   "printed_amount": 14903638011,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+   "pages": [
+    52
+   ],
+   "table": "(3) 보험계약부채 및 재보험계약자산의 구성요소별 변동내역 / 1) 보험계약 / (전기) / 2. 당기손익 변동",
+   "column": "보험계약마진 상각 합계 (= FVA 2,965,841,503 + FRA·전환이후 11,937,796,508)",
+   "row_label": "보험계약마진 상각",
+   "page_text_contains_printed": {
+    "52": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -149.03638,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 149.03638,
+   "lane_decision": "다른 공시와 동일",
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 939.0,
+    "diff": -0.29
+   }
+  },
+  {
+   "group": "reinsurer17",
+   "company": "KR1107",
+   "name": "퍼시픽라이프리",
+   "quarter": "2025.4Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 12222.323596,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(12,222,323,596)",
+   "printed_unit": "원",
+   "printed_amount": 12222323596,
+   "source_file": "data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf",
+   "pages": [
+    51
+   ],
+   "table": "(3) 보험계약부채 및 재보험계약자산의 구성요소별 변동내역 / 1) 보험계약 / (당기) / 2. 당기손익 변동",
+   "column": "보험계약마진 상각 합계 (= FVA 2,149,287,263 + FRA·전환이후 10,073,036,333)",
+   "row_label": "보험계약마진 상각",
+   "page_text_contains_printed": {
+    "51": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -122.22324,
+   "value_minus_wf_eok": -4e-06,
+   "lane_amort_abs_eok": 122.22324,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": {
+    "filing": "FY2025_Q4",
+    "csm_eok": 983.0,
+    "diff": 0.26
+   }
+  },
+  {
+   "group": "lina3",
+   "company": "KR0074",
+   "name": "라이나생명보험",
+   "quarter": "2025.3Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 255459.563,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(255,459,563)",
+   "printed_unit": "천원",
+   "printed_amount": 255459563,
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+   "pages": [
+    63
+   ],
+   "table": "(5) 당분기(당반기) 및 전분기(전반기) 중 보험계약부채(자산)의 측정요소별 변동내역(단위:천원) / <당분기·당반기> -- 별도 재무제표 주석",
+   "column": "합계 (= 공정가치법 + 수정소급법 + 전환이후 계약 CSM 열) ; 전사 단일 표",
+   "row_label": "제공한 서비스 반영 인식한 보험계약마진",
+   "components": [
+    {
+     "account": "전사",
+     "page": 63,
+     "printed": "(255,459,563)",
+     "amount_cheonwon": 255459563,
+     "page_text_contains_printed": true
+    }
+   ],
+   "consolidated_pages_check": [
+    {
+     "account": "전사",
+     "page": 130,
+     "printed": "(255,459,563)",
+     "page_text_contains_printed": true
+    }
+   ],
+   "page_text_contains_printed": {
+    "63": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -2554.59563,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 2554.59563,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": null
+  },
+  {
+   "group": "lina3",
+   "company": "KR0074",
+   "name": "라이나생명보험",
+   "quarter": "2026.1Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 74223.114,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(58,764)+(74,164,350)",
+   "printed_unit": "천원",
+   "printed_amount": 74223114,
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+   "pages": [
+    66,
+    68
+   ],
+   "table": "(5) 당분기(당반기) 및 전분기(전반기) 중 보험계약부채(자산)의 측정요소별 변동내역(단위:천원) / <당분기·당반기> -- 별도 재무제표 주석",
+   "column": "합계 (= 공정가치법 + 수정소급법 + 전환이후 계약 CSM 열) ; 계정 유배당 + 유배당 외 합산",
+   "row_label": "제공한 서비스 반영 인식한 보험계약마진",
+   "components": [
+    {
+     "account": "유배당",
+     "page": 66,
+     "printed": "(58,764)",
+     "amount_cheonwon": 58764,
+     "page_text_contains_printed": true
+    },
+    {
+     "account": "유배당 외",
+     "page": 68,
+     "printed": "(74,164,350)",
+     "amount_cheonwon": 74164350,
+     "page_text_contains_printed": true
+    }
+   ],
+   "consolidated_pages_check": [
+    {
+     "account": "유배당",
+     "page": 137,
+     "printed": "(58,764)",
+     "page_text_contains_printed": true
+    },
+    {
+     "account": "유배당 외",
+     "page": 139,
+     "printed": "(74,164,350)",
+     "page_text_contains_printed": true
+    }
+   ],
+   "page_text_contains_printed": {
+    "66": true,
+    "68": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -742.23114,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 742.23114,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": null
+  },
+  {
+   "group": "lina3",
+   "company": "KR0074",
+   "name": "라이나생명보험",
+   "quarter": "2026.2Q",
+   "item": 4,
+   "item_name": "원수 CSM상각",
+   "value": 140740.424,
+   "value_unit": "백만원 (YTD, positive)",
+   "printed": "(97,956)+(140,642,468)",
+   "printed_unit": "천원",
+   "printed_amount": 140740424,
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+   "pages": [
+    91,
+    93
+   ],
+   "table": "(5) 당분기(당반기) 및 전분기(전반기) 중 보험계약부채(자산)의 측정요소별 변동내역(단위:천원) / <당분기·당반기> -- 별도 재무제표 주석",
+   "column": "합계 (= 공정가치법 + 수정소급법 + 전환이후 계약 CSM 열) ; 계정 유배당 + 유배당 외 합산",
+   "row_label": "제공한 서비스 반영 인식한 보험계약마진",
+   "components": [
+    {
+     "account": "유배당",
+     "page": 91,
+     "printed": "(97,956)",
+     "amount_cheonwon": 97956,
+     "page_text_contains_printed": true
+    },
+    {
+     "account": "유배당 외",
+     "page": 93,
+     "printed": "(140,642,468)",
+     "amount_cheonwon": 140642468,
+     "page_text_contains_printed": true
+    }
+   ],
+   "consolidated_pages_check": [
+    {
+     "account": "유배당",
+     "page": 161,
+     "printed": "(97,956)",
+     "page_text_contains_printed": true
+    },
+    {
+     "account": "유배당 외",
+     "page": 163,
+     "printed": "(140,642,468)",
+     "page_text_contains_printed": true
+    }
+   ],
+   "page_text_contains_printed": {
+    "91": true,
+    "93": true
+   },
+   "image_only": false,
+   "wf_item5_eok": -1407.40424,
+   "value_minus_wf_eok": 0.0,
+   "lane_amort_abs_eok": 1407.40424,
+   "lane_decision": null,
+   "lane_unit_source": "printed",
+   "lane_p462_check": null
+  }
+ ]
+}
