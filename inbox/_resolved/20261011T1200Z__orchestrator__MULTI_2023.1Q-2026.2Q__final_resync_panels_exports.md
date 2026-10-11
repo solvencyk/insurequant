@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261011T1200Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -38,4 +38,4 @@ owner 지시(2026-10-11, 밤새 처리) 전체 스윕의 **마감 publishing 라
 - 단계별 결과(시트별 추가 행·변경 칸 대 마스터 diff, 기존 시트 불변 증명), `public_exports` 변경 목록·게이트, viz 패널에 재보사가 들어갔는지(패널별 회사 수 전후), 빌더 수정 내용과 기존 39사 불변 증명, 골든 실패 사유, 패널 재빌드 변화 요약, 자본성증권 수정, 테스트·게이트 결과, `TODO_publishing.md` Status + `docs/changelog_publishing.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(publishing 8848cb8·61babb6·17dca81·89ecf9a·f218170 + NB 1412aaf·04ea6c6·d36a3ad, orchestrator 검증·종결 2026-10-11) xlsx 12시트 동기화(드리프트 434→0, 기존 값 불변·의도 외 변경 0), public_exports 13파일 재생성(manifest 15시트, 공개 게이트 0), IFRS17 viz 패널에 재보사(상각 0→7, 민감도 0→7, 콤보 0→8; 빌더 `append_master_only_companies`, 기존 39사 불변), csm_combo 40→48사·compare 재보사 채움(`--check` 통과), tier1/2 KB라이프 이름 근본 수정, `kics_forward_capital.json` 서울보증 제외 행(46→47행), NB 배수 마스터 재보사 18행(null 배수, 363→381행; owner 패턴 Group B) + 시트·공개본. 마스터(K-ICS·BS·PL·ILP·CSM) HEAD 대조 불변(54d33a0 이후), data-contract RED 22(알려진 것만)·`NB_CENSUS_MISSING` 0. 남은 것: `INSPL_CENSUS_MISSING` 8(validation 보고), `test_viz_ifrs17_panels_golden`·골든 입력지문(validation `--update`), 서울보증 제외 문구는 K-ICS.html 이 `exclusion_reason` 을 읽는 디자이너 수정과 함께 배포해야 함(designer 티켓 `20261011T1600Z`), 상각 차트 y축 100배(같은 티켓).
