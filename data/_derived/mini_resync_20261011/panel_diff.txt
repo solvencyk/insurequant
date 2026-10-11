@@ -1,0 +1,73 @@
+=== panel_csm_combo: 12 changed leaves/nodes
+   companies/KR0074/q 11 ['CHG']
+   meta/csm_recon 1 ['CHG']
+    CHG companies/KR0074/q/2023.4Q/8 null -> 1771.78153
+    CHG companies/KR0074/q/2024.1Q/8 null -> 1257.61582
+    CHG companies/KR0074/q/2024.2Q/8 null -> 1433.35461
+    CHG companies/KR0074/q/2024.3Q/8 null -> 1255.05742
+    CHG companies/KR0074/q/2024.4Q/8 null -> 1420.47215
+    CHG companies/KR0074/q/2025.1Q/8 null -> 841.2494
+    CHG companies/KR0074/q/2025.2Q/8 null -> 1019.51864
+    CHG companies/KR0074/q/2025.3Q/8 null -> 1531.87372
+    CHG companies/KR0074/q/2025.4Q/8 null -> 1225.75824
+    CHG companies/KR0074/q/2026.1Q/8 null -> 963.91242
+    CHG companies/KR0074/q/2026.2Q/8 null -> 1227.85217
+    CHG meta/csm_recon "포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 273건 중 불일치 6건(허용 0.5%)" -> "포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 281건 중 불일치 6건(허용 0.5%)"
+=== panel_compare: 53 changed leaves/nodes
+   metrics/15/v 27 ['CHG']
+   metrics/2/v 9 ['CHG']
+   metrics/3/med 8 ['CHG']
+   metrics/3/v 9 ['CHG']
+    CHG metrics/2/v/KR0074/2 null -> 35381
+    CHG metrics/2/v/KR0074/4 null -> 32004
+    CHG metrics/2/v/KR0074/5 null -> 32020
+    CHG metrics/2/v/KR0074/6 null -> 31274
+    CHG metrics/2/v/KR0074/8 null -> 27015
+    CHG metrics/2/v/KR0074/9 null -> 26777
+    CHG metrics/2/v/KR0074/10 null -> 26888
+    CHG metrics/2/v/KR0074/12 null -> 23647
+    CHG metrics/2/v/KR0074/13 null -> 20921
+    CHG metrics/3/med/생보/2 12.2 -> 12.3
+    CHG metrics/3/med/생보/4 9.1 -> 9.3
+    CHG metrics/3/med/생보/5 9.1 -> 9.2
+    CHG metrics/3/med/생보/6 9.3 -> 9.5
+    CHG metrics/3/med/생보/8 8.7 -> 9.0
+    CHG metrics/3/med/생보/9 8.4 -> 9.2
+    CHG metrics/3/med/생보/10 9.0 -> 9.9
+    CHG metrics/3/med/생보/12 11.0 -> 10.8
+    CHG metrics/3/v/KR0074/2 null -> 14.3
+    CHG metrics/3/v/KR0074/4 null -> 12.6
+    CHG metrics/3/v/KR0074/5 null -> 13.8
+    CHG metrics/3/v/KR0074/6 null -> 12.3
+    CHG metrics/3/v/KR0074/8 null -> 9.4
+    CHG metrics/3/v/KR0074/9 null -> 9.9
+    CHG metrics/3/v/KR0074/10 null -> 11.2
+    CHG metrics/3/v/KR0074/12 null -> 9.0
+    CHG metrics/3/v/KR0074/13 null -> 10.3
+    CHG metrics/15/v/KR0074/2 null -> 3961
+    CHG metrics/15/v/KR0074/4 null -> 1258
+    CHG metrics/15/v/KR0074/5 null -> 2691
+    CHG metrics/15/v/KR0074/6 null -> 3946
+    CHG metrics/15/v/KR0074/8 null -> 841
+    CHG metrics/15/v/KR0074/9 null -> 1861
+    CHG metrics/15/v/KR0074/10 null -> 3393
+    CHG metrics/15/v/KR0074/12 null -> 964
+    CHG metrics/15/v/KR0074/13 null -> 2192
+    CHG metrics/15/v/KR1101/3 null -> 240
+    CHG metrics/15/v/KR1101/7 null -> 125
+    CHG metrics/15/v/KR1101/11 null -> 75
+    CHG metrics/15/v/KR1102/3 null -> 1618
+    CHG metrics/15/v/KR1102/7 null -> 1098
+    CHG metrics/15/v/KR1102/11 null -> 1743
+    CHG metrics/15/v/KR1103/3 null -> 12
+    CHG metrics/15/v/KR1103/7 null -> 7
+    CHG metrics/15/v/KR1103/11 null -> 19
+    CHG metrics/15/v/KR1104/3 null -> 0
+    CHG metrics/15/v/KR1104/7 null -> 1
+    CHG metrics/15/v/KR1105/3 null -> 1144
+    CHG metrics/15/v/KR1105/7 null -> 544
+    CHG metrics/15/v/KR1106/3 null -> 2102
+    CHG metrics/15/v/KR1106/7 null -> 658
+    CHG metrics/15/v/KR1106/11 null -> 327
+    CHG metrics/15/v/KR1107/7 null -> 72
+    CHG metrics/15/v/KR1107/11 null -> 281
