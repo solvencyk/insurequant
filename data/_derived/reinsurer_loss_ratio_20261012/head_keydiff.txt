@@ -1,0 +1,10 @@
+risk_premium_vs_expected_claims.json: HEAD 157873 -> now 167025 (+9152); HEAD rows are an exact prefix: True; key diff (added, removed, changed): (9152, 0, 0)
+claims_ae_ratio.json: HEAD 136 -> now 162 (+26); HEAD rows are an exact prefix: True; key diff (added, removed, changed): (26, 0, 0)
+master_loss_ratio.json: HEAD 36344 -> now 38248 (+1904); HEAD rows are an exact prefix: True; key diff (added, removed, changed): (1904, 0, 0)
+census.csv: HEAD 659 lines -> now 738 (+79); HEAD lines are an exact prefix: True
+master_loss_ratio.csv: HEAD 36345 lines -> now 38249 (+1904); HEAD lines are an exact prefix: True
+period_adoption.csv: HEAD 87 lines -> now 105 (+18); HEAD lines are an exact prefix: True
+master_census.csv: HEAD 121 lines -> now 145 (+24); HEAD lines are an exact prefix: True
+portfolio_taxonomy.csv: HEAD 234 lines -> now 253 (+19); HEAD lines are an exact prefix: True
+source_errata.csv: HEAD 5 lines -> now 7 (+2); HEAD lines are an exact prefix: True
+panel_loss_ratio.json unchanged vs HEAD: True
