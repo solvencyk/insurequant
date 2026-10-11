@@ -7,6 +7,10 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- K-ICS 듀레이션 섹션 컬럼명·순서·주석 정리
+
+티켓 `inbox/designer/20261012T0200Z__orchestrator__MULTI_2026.2Q__kics_dur_table_scenario_labels_order.md`(공유). `K-ICS.html` 만. `DUR_SCEN` 을 충격전·평균회귀·금리상승·금리하락·금리평탄·금리경사(공시 이름·순서)로 바꾸고 임의 이름 평탄화·경사화와 그 해설 문장을 삭제. 표 아래 「자료:」 줄, 갭 카드 아래 분모·부호 문장·비고는 보이는 글을 없애고 각각 ? 팝오버(help-dur-table, help-dur-formula)로 이동. 같은 이름을 쓰던 다른 곳은 없음(compare·index·공시보고서·JS 전수 grep 0건). 검증: 충격전 순자산 61,292=175,248−113,957, 375px 표 가로 스크롤(689/325), 콘솔 0.
+
 ## 2026-10-12 -- index 모바일 재보험·보증 그룹도 top 5 + 더보기
 
 티켓 `inbox/designer/20261012T0010Z__orchestrator__MULTI_2026.2Q__index_mobile_re_guarantee_fold_top5.md`(공유, 종결은 오케스트레이터). `index.html` 만. `FOLDABLE`(Re 제외) 삭제, 섹터별 펼침 상태를 `listExpanded`/`bubbleExpanded` 키 맵으로 일반화(redraw·모바일 진입·섹터 필터 변경 시 `{}` 로 초기화). 점검 375px: K-ICS 리스트 생보 `더보기 (17개사)`·손보 `(11개사)`·재보험·보증 `(4개사)` 3개, 재보험 버튼 클릭 시 `접기` 로 바뀜, 콘솔 오류 0, 가로 스크롤 0. CSM 버블 리스트는 같은 코드 경로를 쓰지만 현재 데이터에 신계약CSM배수가 있는 재보험·보증사가 없어 그 그룹 자체가 안 뜸(생보 17·손보 9 버튼 정상).

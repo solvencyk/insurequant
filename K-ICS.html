@@ -1409,8 +1409,8 @@
     // 「자산·부채 듀레이션」 섹션(#sec-dur, 2026-10-11 금리 민감도에서 분리). 분기 선택은 자체 select —
     // 듀레이션 마스터는 2023.2Q 부터, 금리 민감도(반기 공시 2024.4Q 도입)보다 분기가 더 많다. 기본값은 둘 다 해당 회사의 최신 분기.
     let durGapLoaded = false, durLastCompany = null;
-    const DUR_SCEN = [['충격전', '충격전'], ['금리상승', '금리상승'], ['금리하락', '금리하락'],
-                      ['금리평탄', '평탄화'], ['금리경사', '경사화'], ['평균회귀', '평균회귀']];
+    const DUR_SCEN = [['충격전', '충격전'], ['평균회귀', '평균회귀'], ['금리상승', '금리상승'],
+                      ['금리하락', '금리하락'], ['금리평탄', '금리평탄'], ['금리경사', '금리경사']];
 
     function durEsc(s) {
       return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
@@ -1522,12 +1522,10 @@
       tbl.innerHTML = html;
       h.style.display = '';
       tbl.style.display = 'block';
-      tnote.innerHTML = '자료: 정기경영공시 「금리위험액 현황」 · ' + quarter + ' 기준 · 순자산 = 금리부자산 − 금리부부채(화면 계산)'
-        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-dur-table">?</button>'
+      tnote.innerHTML = '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-dur-table">?</button>'
         + '<span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-dur-table">'
-        + '공시 표의 충격전과 5개 금리 시나리오(금리상승·금리하락·평탄화·경사화·평균회귀) 값을 그대로 옮겼습니다. 금액 단위는 억원입니다.<br>'
-        + '칸 아랫줄은 <b>충격전 대비 변화</b>(금액)와 <b>변화율</b>입니다. 충격전이 0 이하이면 변화율은 표시하지 않습니다.<br>'
-        + '평탄화·경사화는 공시 표의 「금리평탄」·「금리경사」 열입니다.'
+        + '자료: 정기경영공시 「금리위험액 현황」 · ' + quarter + ' 기준. 공시 표의 값을 그대로 옮겼으며 금액 단위는 억원입니다. 순자산 = 금리부자산 − 금리부부채(화면 계산).<br>'
+        + '칸 아랫줄은 <b>충격전 대비 변화</b>(금액)와 <b>변화율</b>입니다. 충격전이 0 이하이면 변화율은 표시하지 않습니다.'
         + '</span></span>';
     }
 
@@ -1559,20 +1557,17 @@
                    : card(num(dG, 2), '년', '듀레이션 갭', '자산D − 부채자산비율×부채D', true)
       ].join('');
       strip.style.display = 'grid';
-      let noteHtml = '분모는 경영공시 <b>금리위험액 현황</b> 표의 자산총계·부채총계입니다(건전성감독기준 재무상태표 전체가 아닙니다). '
-        + '<strong>양수 갭 = 금리가 오르면 순자산 감소(자산이 부채보다 김)</strong>, '
-        + '<strong>음수면 반대</strong>입니다.'
-        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션 갭 산식" aria-describedby="help-dur-formula">?</button>'
+      let noteHtml = '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션 갭 산식" aria-describedby="help-dur-formula">?</button>'
         + '<span class="iq-help-pop" role="tooltip" id="help-dur-formula">'
         + '자산 듀레이션 D<sub>A</sub> = (V<sub>자산,금리하락</sub> − V<sub>자산,금리상승</sub>) ÷ (2% × V<sub>자산,충격전</sub>)<br>'
         + '부채 듀레이션 D<sub>L</sub> = (V<sub>부채,금리하락</sub> − V<sub>부채,금리상승</sub>) ÷ (2% × V<sub>부채,충격전</sub>)<br>'
         + '듀레이션 갭 = D<sub>A</sub> − (부채/자산 비율 × D<sub>L</sub>)<br>'
         + 'K-ICS 충격은 평행이동이 아니라 만기별 크기가 다른 기간구조 충격이라 2%로 나누는 것은 근사입니다. '
-        + '순위·상대크기는 유효하나 절대 연수는 참고치입니다.'
+        + '순위·상대크기는 유효하나 절대 연수는 참고치입니다.<br>'
+        + '분모는 경영공시 <b>금리위험액 현황</b> 표의 자산총계·부채총계입니다(건전성감독기준 재무상태표 전체가 아닙니다). '
+        + '양수 갭 = 금리가 오르면 순자산 감소(자산이 부채보다 김), 음수면 반대입니다.'
+        + (row['비고'] ? '<br>비고: ' + durEsc(row['비고']) : '')
         + '</span></span>';
-      if (row['비고']) {
-        noteHtml += '<div style="margin-top:4px;color:var(--muted);font-size:11px">비고: ' + durEsc(row['비고']) + '</div>';
-      }
       note.innerHTML = noteHtml;
       note.style.display = 'block';
     }
