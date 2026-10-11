@@ -193,13 +193,15 @@
      K-ICS 는 부팅 시점(보험사 미선택)에 안내문이 떠 있어 3개 섹션이 "미공시" 로 찍히고
      회사를 골라도 다시 재지 않아 그대로 남았다 — 라이브에서 owner 가 잡았다.
      어느 페이지든 본문이 바뀌면 다시 재도록 관찰자를 건다(디바운스 180ms). */
-  var _navTimer = null;
+  var _navTimer = null, _secShareTimer = null;
   function watchForRerender(){
     var host = document.querySelector('.container') || document.body;
     if(!host || !window.MutationObserver) return;
     new MutationObserver(function(){
       clearTimeout(_navTimer);
       _navTimer = setTimeout(syncSectionNav, 180);
+      clearTimeout(_secShareTimer);
+      _secShareTimer = setTimeout(mountSectionShare, 60);   /* 렌더 뒤 새로 생긴 섹션(data-share-section)에 공유 버튼을 단다 */
     }).observe(host, { childList:true, subtree:true, attributes:true,
                        attributeFilter:['style','class','hidden'] });
   }
@@ -419,14 +421,30 @@
     hideChartTips(e.target);
   }, { capture:true, passive:true });
 
-  /* ---- 공유 메뉴 (owner 2026-10-08): 링크 복사 · 현재 페이지 스크린샷 ----------------------
+  /* ---- 공유 메뉴 (owner 2026-10-08): 링크 복사 · 페이지 전체 스크린샷 / 섹션별 스크린샷(2026-10-11) -------
      헤더 우상단, 테마 토글 왼쪽. 사이트 전 페이지 공통(일본어 jp/ 페이지는 제외).
      html2canvas 는 스크린샷을 누를 때만 SRI 로 불러온다(평소 로딩 영향 없음). scripts/compute_sri.py 에 등재.
-     페이지가 조정하고 싶으면 window.IQShareConfig = { container:'.container', ignore:['.add-wrap', ...] } 를
-     (누르는 시점에 읽는다) 둔다. ignore 는 스크린샷에서 뺄 요소 선택자.                                  */
+
+     페이지 계약 — window.IQShareConfig = { container, ignore, onclone, context } 를 (누르는 시점에 읽는다) 둘 수 있다.
+       container  전체 스크린샷에 담을 본문 선택자(기본 '.section-body' -> '.container')
+       ignore     스크린샷에서 뺄 요소 선택자 배열(공통: 공유·도움말·오류 제보 버튼 등은 이미 뺀다)
+       onclone    html2canvas 복제본 문서를 만지는 콜백
+       context    () => 문자열. 이미지 제목·출처에 적을 "대상 회사"(기본: #company 선택값)
+     섹션별 공유: 마크업에 data-share-section="섹션 이름" 만 달면 우상단에 버튼이 붙는다(mountSectionShare).
+
+     **전체 캡처와 캔버스 한도**: 브라우저 캔버스는 한 변 약 16,384px(모바일 Safari 는 총 면적 약 1,677만 px)을 넘으면
+     조용히 빈 이미지가 된다. 그래서 만들기 전에 높이를 재서 scale 을 자동으로 낮춘다(shPlan). 글자가 읽히는 하한
+     (SH_MIN_SCALE)보다 더 낮춰야 하는 매우 긴 페이지는 위쪽만 담고 안내 문구를 넣는다.
+     2026-10-08 첫 구현(8c997cb)에서 본문 높이가 6000px 이하일 때만 전체를 찍고 그보다 길면 "지금 화면"만 찍도록 막았다.
+     K-ICS·IFRS17·모바일은 거의 다 6000px 을 넘어 사실상 늘 현재 화면만 찍혔다(owner 2026-10-11 지적). 이 임계값은 폐기했다. */
   var H2C_URL = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
   var H2C_SRI = 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H';
-  var _shToastTimer = null;
+  var SH_MAX_DIM = 16000;          /* 캔버스 한 변 상한(px) — Chrome·Safari 의 16,384 안쪽 */
+  var SH_MAX_AREA_COARSE = 16000000;   /* 터치 기기(iOS Safari 의 16,777,216 안쪽) */
+  var SH_MAX_AREA_FINE = 64000000;
+  var SH_MIN_SCALE = 0.75;         /* 이보다 작으면 12px 글자가 9px 아래로 뭉개진다 */
+  var SH_SOURCE = '자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원';
+  var _shToastTimer = null, _shBusy = false;
   function shToast(t){
     var el = document.getElementById('iqToast');
     if(!el){
@@ -444,14 +462,14 @@
     if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, function(){ window.prompt('링크를 복사하세요', link); });
     else window.prompt('링크를 복사하세요', link);
   }
-  function shLoadH2C(ok){
+  function shLoadH2C(ok, fail){
     if(window.html2canvas){ ok(); return; }
     var s = document.createElement('script'); s.src = H2C_URL; s.integrity = H2C_SRI; s.crossOrigin = 'anonymous';
-    s.onload = ok; s.onerror = function(){ shToast('이미지 저장 도구를 불러오지 못했습니다'); };
+    s.onload = ok; s.onerror = function(){ shToast('이미지 저장 도구를 불러오지 못했습니다'); if(fail) fail(); };
     document.head.appendChild(s);
   }
-  function shSave(blob){
-    var name = 'insurequant-' + (location.pathname.split('/').pop().replace(/\.html$/, '') || 'index') + '-' + new Date().toISOString().slice(0, 10) + '.png';
+  function shSave(blob, tag){
+    var name = 'insurequant-' + (location.pathname.split('/').pop().replace(/\.html$/, '') || 'index') + (tag ? '-' + tag : '') + '-' + new Date().toISOString().slice(0, 10) + '.png';
     function download(){
       var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
       document.body.appendChild(a); a.click(); a.remove();
@@ -463,42 +481,186 @@
       navigator.share({ files:[file], title:document.title }).then(function(){}, function(e){ if(!e || e.name !== 'AbortError') download(); });
     } else download();
   }
-  function shShot(){
+  /* 이미지 제목·출처에 쓸 문맥: 페이지 이름(활성 탭) · 대상 회사 · 최신 공시 분기(푸터 #footerQ) · 자료 출처(푸터 문구) */
+  function shCtx(){
+    var cfg = window.IQShareConfig || {}, co = '';
+    if(typeof cfg.context === 'function'){ try{ co = String(cfg.context() || ''); }catch(e){} }
+    else {
+      var sel = document.getElementById('company');
+      if(sel && sel.value && sel.selectedIndex >= 0) co = (sel.options[sel.selectedIndex].textContent || '').trim();
+    }
+    var tab = document.querySelector('.tab[aria-current="page"]'), fq = document.getElementById('footerQ'), ft = document.querySelector('footer');
+    var q = fq ? (fq.textContent || '').trim() : '', m = ft ? /자료:[^—\n]*/.exec(ft.textContent || '') : null;
+    return { page:tab ? (tab.textContent || '').trim() : '', company:co, quarter:(q && q !== '—') ? q : '',
+             source:m ? m[0].replace(/\s+/g, ' ').trim() : SH_SOURCE };
+  }
+  /* 공백 단위로 줄바꿈(한 단어가 폭보다 길면 글자 단위) */
+  function shWrap(c, text, maxW){
+    var out = [], line = '', words = String(text).split(' '), i, t, k, w;
+    for(i = 0; i < words.length; i++){
+      w = words[i]; t = line ? line + ' ' + w : w;
+      if(c.measureText(t).width <= maxW){ line = t; continue; }
+      if(line){ out.push(line); line = ''; }
+      if(c.measureText(w).width <= maxW){ line = w; continue; }
+      for(k = 0; k < w.length; k++){
+        t = line + w.charAt(k);
+        if(line && c.measureText(t).width > maxW){ out.push(line); line = w.charAt(k); } else line = t;
+      }
+    }
+    if(line) out.push(line);
+    return out;
+  }
+  /* 캔버스 한도 안에서 가장 큰 scale 을 고른다. 하한 밑이면 위쪽만 담는다(cropH). 순수 함수 — 단위 검증용으로 노출한다. */
+  function shPlan(cssW, bodyH, overhead, base, coarse){
+    var maxArea = coarse ? SH_MAX_AREA_COARSE : SH_MAX_AREA_FINE;
+    function fit(H){ return Math.min(SH_MAX_DIM / H, Math.sqrt(maxArea / (cssW * H))); }
+    var H = overhead + bodyH, s = Math.min(base, fit(H));
+    if(s >= SH_MIN_SCALE) return { scale:s, cropH:0, truncated:false, cssH:H };
+    s = Math.min(base, SH_MIN_SCALE);
+    var maxH = Math.floor(Math.min(SH_MAX_DIM / s, maxArea / (cssW * s * s)));
+    return { scale:s, cropH:Math.max(200, maxH - overhead), truncated:true, cssH:maxH };
+  }
+  /* target 요소를 이미지로 만든다. 위에 제목(페이지 · 섹션 · 회사), 아래에 출처를 캔버스에 직접 그린다.
+     반환: Promise<{canvas, meta:{scale, cssW, cssH, fullBodyH, truncated}}> */
+  function shRender(target, o){
+    o = o || {};
     var cfg = window.IQShareConfig || {};
-    shToast('이미지를 만드는 중…');
+    var coarse = !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+    var ch = chart(), cs = getComputedStyle(document.body), bg = cs.backgroundColor;
+    if(!bg || bg === 'transparent' || /rgba\(0, 0, 0, 0\)/.test(bg)) bg = ch.bg;
+    var fam = cs.fontFamily, cx = document.createElement('canvas').getContext('2d'), info = shCtx();
+    var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-sec-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.iq-help', '.iq-anon-link']
+      .concat(cfg.ignore || []).join(',');
+    var rect = target.getBoundingClientRect(), cw0 = Math.ceil(rect.width), bodyH = Math.ceil(Math.max(rect.height, target.scrollHeight));
+    /* 섹션 이미지: 좁은 화면의 표는 가로로 스크롤된다. 보이는 만큼만 찍으면 오른쪽 열이 조용히 잘리므로 그만큼 이미지를 넓힌다.
+       페이지 전체 이미지는 폰 화면 폭 그대로 둔다(긴 세로 이미지가 목적이고, 한 표 때문에 전체가 3배로 넓어지면 읽을 수 없다). */
+    var extra = 0;
+    if(o.widen) [].forEach.call(target.querySelectorAll('.table-container, .table-wrap'), function(t){ extra = Math.max(extra, Math.ceil(t.scrollWidth - t.clientWidth)); });
+    var cw = cw0 + extra;
+    var PAD = (o.pad != null) ? o.pad : 12, W = cw + PAD * 2, narrow = W < 520, LH = 17;
+    /* 위 제목 */
+    cx.font = '700 15px ' + fam;
+    var head = [info.page, o.title, info.company].filter(Boolean).join(' · ') || 'InsureQuant';
+    var headLines = shWrap(cx, head, W - PAD * 2).slice(0, 3), titleH = headLines.length * 21 + 10;
+    /* 아래 출처 */
+    cx.font = '12px ' + fam;
+    var dt = new Date(), date = dt.getFullYear() + '-' + ('0' + (dt.getMonth() + 1)).slice(-2) + '-' + ('0' + dt.getDate()).slice(-2), path = location.pathname.replace(/\/index\.html$/, '/');
+    var src = narrow ? '자료: 금감원 정기경영공시·DART·보험개발원' : info.source;
+    var paras = [
+      'InsureQuant · ' + (narrow ? 'insurequant.com' : 'www.insurequant.com' + path) + ' · ' + date,
+      [src, info.company, info.quarter ? '최신 공시 ' + info.quarter : ''].filter(Boolean).join(' · '),
+      narrow ? '공시자료를 가공한 값이며 오류가 있을 수 있습니다' : '공시자료를 가공한 값이며 오류가 있을 수 있습니다. 투자 판단의 근거로 사용할 수 없습니다.'
+    ];
+    var noteLine = '※ 페이지가 매우 길어 위쪽 일부만 담았습니다. 섹션별 공유 버튼을 이용해 주세요.';
+    function footLines(withNote){
+      var ls = [], i; for(i = 0; i < paras.length; i++) ls = ls.concat(shWrap(cx, paras[i], W - PAD * 2));
+      return withNote ? ls.concat(shWrap(cx, noteLine, W - PAD * 2)) : ls;
+    }
+    var lines = footLines(false), GAP = 12;
+    var plan = shPlan(W, bodyH, PAD * 2 + titleH + GAP + lines.length * LH + 8, Math.min(2, window.devicePixelRatio || 1), coarse);
+    if(plan.truncated){
+      lines = footLines(true);
+      plan = shPlan(W, bodyH, PAD * 2 + titleH + GAP + lines.length * LH + 8, Math.min(2, window.devicePixelRatio || 1), coarse);
+    }
+    var s = plan.scale, footH = lines.length * LH + 8;
+    var fz = document.createElement('style'); fz.id = 'iqShotFreeze';
+    fz.textContent = '*,*::before,*::after{animation:none !important;transition:none !important}.will-reveal,.revealed{opacity:1 !important;transform:none !important}';
+    document.head.appendChild(fz);
+    function unfreeze(){ if(fz.parentNode) fz.parentNode.removeChild(fz); target.removeAttribute('data-iq-shot-root'); }
+    target.setAttribute('data-iq-shot-root', '1');
+    var opt = { backgroundColor:bg, scale:s, useCORS:true, logging:false, windowWidth:document.documentElement.clientWidth,
+      ignoreElements:function(el){ return !!(el.matches && el.matches(ign)); },
+      /* 아직 화면에 안 들어와 투명(.will-reveal)이거나 나타나는 중인 패널도 또렷하게 찍는다.
+         섹션 네비는 지우지 않고 숨긴다(지우면 격자 첫 칸을 본문이 차지해 폭이 달라진다). */
+      onclone:function(doc){
+        var st = doc.createElement('style');
+        st.textContent = '*,*::before,*::after{animation:none !important;transition:none !important}.section-nav{visibility:hidden !important}.sr-only{display:none !important}';
+        doc.head.appendChild(st);
+        [].forEach.call(doc.querySelectorAll('.will-reveal, .revealed'), function(el){ el.style.opacity = '1'; el.style.transform = 'none'; el.style.animation = 'none'; });
+        if(extra){
+          var rt = doc.querySelector('[data-iq-shot-root]'), isSec = rt.hasAttribute('data-share-section'), secs = isSec ? [rt] : [].slice.call(rt.querySelectorAll('[data-share-section]'));
+          secs.forEach(function(sc){ sc._w0 = sc.getBoundingClientRect().width; sc._need = 0; });
+          [].forEach.call(rt.querySelectorAll('.table-container, .table-wrap'), function(t){
+            var ov = Math.ceil(t.scrollWidth - t.clientWidth); if(ov <= 0) return;
+            t.style.overflow = 'visible'; t.style.maxWidth = 'none';
+            var sc = t.closest('[data-share-section]'); if(sc && sc._need < ov) sc._need = ov;
+          });
+          secs.forEach(function(sc){ sc.style.width = Math.ceil(sc._w0 + sc._need) + 'px'; });
+          if(!isSec) rt.style.width = cw + 'px';
+        }
+        if(typeof cfg.onclone === 'function') cfg.onclone(doc);
+      } };
+    opt.width = cw;
+    if(plan.cropH) opt.height = plan.cropH;
+    var settle = Promise.resolve(document.fonts && document.fonts.ready).then(function(){ return new Promise(function(r){ setTimeout(r, o.settle || 1200); }); });
+    return settle.then(function(){ return window.html2canvas(target, opt); }).then(function(cv){
+      unfreeze();
+      var shown = Math.round(cv.height / s);   /* 실제로 그려진 높이(scrollHeight 는 마진 때문에 조금 더 크다) */
+      var outW = Math.round(W * s), outH = Math.round((PAD * 2 + titleH + GAP + shown + footH) * s);
+      var out = document.createElement('canvas'); out.width = outW; out.height = outH;
+      var c = out.getContext('2d'); c.fillStyle = bg; c.fillRect(0, 0, outW, outH);
+      c.setTransform(s, 0, 0, s, 0, 0); c.textBaseline = 'top';
+      c.fillStyle = ch.text; c.font = '700 15px ' + fam;
+      headLines.forEach(function(l, i){ c.fillText(l, PAD, PAD + 3 + i * 21); });
+      var by = PAD + titleH;
+      c.drawImage(cv, PAD, by, cv.width / s, cv.height / s);
+      var fy = by + shown + GAP;
+      c.fillStyle = ch.border; c.fillRect(PAD, fy - 6, W - PAD * 2, 1);
+      c.fillStyle = ch.muted; c.font = '12px ' + fam;
+      lines.forEach(function(l, i){ c.fillText(l, PAD, fy + 2 + i * LH); });
+      return { canvas:out, meta:{ scale:s, cssW:W, cssH:Math.round(outH / s), fullBodyH:bodyH, truncated:plan.truncated, pxW:outW, pxH:outH, lines:lines, head:head } };
+    }, function(e){ unfreeze(); throw e; });
+  }
+  function shDo(target, o){
+    if(_shBusy){ shToast('이미지를 만드는 중입니다'); return; }
+    _shBusy = true; shToast('이미지를 만드는 중…');
+    function done(){ _shBusy = false; [].forEach.call(document.querySelectorAll('.iq-sec-share[aria-busy]'), function(b){ b.removeAttribute('aria-busy'); }); }
     shLoadH2C(function(){
-      var root = document.querySelector(cfg.container || '.container') || document.body;
-      /* 짧은 페이지는 본문 전체, 아주 긴 페이지(표·차트 수십 장)는 캔버스 한도 때문에 지금 화면만 */
-      var full = root !== document.body && root.scrollHeight <= 6000;
-      var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.iq-help']
-        .concat(cfg.ignore || []).join(',');
-      var scale = Math.min(2, window.devicePixelRatio || 1), bg = getComputedStyle(document.body).backgroundColor;
-      var fz = document.createElement('style'); fz.id = 'iqShotFreeze';
-      fz.textContent = '*,*::before,*::after{animation:none !important;transition:none !important}.will-reveal,.revealed{opacity:1 !important;transform:none !important}';
-      document.head.appendChild(fz);
-      function unfreeze(){ if(fz.parentNode) fz.parentNode.removeChild(fz); }
-      var opt = { backgroundColor:bg, scale:scale, useCORS:true, logging:false, windowWidth:document.documentElement.clientWidth,
-        ignoreElements:function(el){ return !!(el.matches && el.matches(ign)); },
-        /* 아직 화면에 안 들어와 투명(.will-reveal)이거나 나타나는 중인 패널도 또렷하게 찍는다 */
-        onclone:function(doc){
-          var st = doc.createElement('style'); st.textContent = '*,*::before,*::after{animation:none !important;transition:none !important}'; doc.head.appendChild(st);
-          [].forEach.call(doc.querySelectorAll('.will-reveal, .revealed'), function(el){ el.style.opacity = '1'; el.style.transform = 'none'; el.style.animation = 'none'; });
-          if(typeof cfg.onclone === 'function') cfg.onclone(doc);
-        } };
-      if(!full){ opt.x = window.scrollX; opt.y = window.scrollY; opt.width = window.innerWidth; opt.height = window.innerHeight; opt.windowHeight = window.innerHeight; }
-      var settle = Promise.resolve(document.fonts && document.fonts.ready).then(function(){ return new Promise(function(r){ setTimeout(r, 1200); }); });
-      settle.then(function(){ return window.html2canvas(full ? root : document.body, opt); }).then(function(cv){
-        /* 출처 한 줄을 아래에 붙인다 */
-        var pad = Math.round(30 * scale), out = document.createElement('canvas');
-        out.width = cv.width; out.height = cv.height + pad;
-        var c = out.getContext('2d'); c.fillStyle = bg; c.fillRect(0, 0, out.width, out.height); c.drawImage(cv, 0, 0);
-        c.fillStyle = chart().muted; c.font = Math.round(12 * scale) + 'px ' + getComputedStyle(document.body).fontFamily; c.textBaseline = 'middle';
-        var stamp = 'InsureQuant · www.insurequant.com' + location.pathname.replace(/\/index\.html$/, '/') + ' · ' + new Date().toISOString().slice(0, 10), full2 = stamp + ' · 공시자료를 가공한 값이며 오류가 있을 수 있습니다';
-        c.fillText(c.measureText(full2).width <= out.width - Math.round(28 * scale) ? full2 : stamp, Math.round(14 * scale), cv.height + pad / 2);   /* 좁은 화면은 짧은 출처만 */
-        unfreeze();
-        out.toBlob(function(b){ if(b) shSave(b); else shToast('이미지를 만들지 못했습니다'); }, 'image/png');
-      }, function(){ unfreeze(); shToast('이미지를 만들지 못했습니다'); });
-    });
+      shRender(target, o).then(function(r){
+        r.canvas.toBlob(function(b){
+          done();
+          if(!b){ shToast('이미지를 만들지 못했습니다'); return; }
+          shSave(b, o.tag);
+          if(r.meta.truncated) setTimeout(function(){ shToast('페이지가 매우 길어 위쪽 일부만 담았습니다. 섹션별 공유를 이용해 주세요'); }, 700);
+        }, 'image/png');
+      }, function(){ done(); shToast('이미지를 만들지 못했습니다'); });
+    }, done);
+  }
+  function shRoot(){
+    var cfg = window.IQShareConfig || {};
+    return document.querySelector(cfg.container || '.section-body') || document.querySelector('.container') || document.body;
+  }
+  /* 헤더 공유 메뉴: 페이지 전체(모든 섹션)를 한 장의 긴 이미지로 */
+  function shShot(){ shDo(shRoot(), { tag:'full' }); }
+  /* 섹션 우상단 버튼: 그 섹션만 */
+  function shSection(el, btn){
+    var sel = document.getElementById('company');
+    if(sel && !sel.value){ shToast('보험사를 먼저 선택해 주세요'); return; }
+    if(btn) btn.setAttribute('aria-busy', 'true');
+    shDo(el, shSecOpts(el));
+  }
+  function shSecOpts(el){
+    var anc = el.querySelector('.anc'), id = (el.id || (anc && anc.id) || 'section').replace(/[^A-Za-z0-9_-]/g, '');
+    return { title:el.getAttribute('data-share-section') || '', tag:id, pad:12, settle:500, widen:true };
+  }
+  var SHARE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8.4 10.9l7.2-4.1M8.4 13.1l7.2 4.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><g fill="currentColor"><circle cx="18" cy="5.5" r="2.7"/><circle cx="6" cy="12" r="2.7"/><circle cx="18" cy="18.5" r="2.7"/></g></svg>';
+  function mountSectionShare(){
+    if(ja) return;
+    var els = document.querySelectorAll('[data-share-section]'), i, j, el, has, head, b;
+    for(i = 0; i < els.length; i++){
+      el = els[i]; has = false; head = null;
+      for(j = 0; j < el.children.length; j++){
+        if(el.children[j].classList.contains('iq-sec-share')) has = true;
+        else if(!head && /^H[23]$/.test(el.children[j].tagName)) head = el.children[j];
+      }
+      if(has) continue;
+      b = document.createElement('button');
+      b.type = 'button'; b.className = 'iq-sec-share';
+      b.setAttribute('aria-label', '이 섹션 스크린샷 공유'); b.title = (el.getAttribute('data-share-section') || '이 섹션') + ' 스크린샷 공유';
+      b.innerHTML = SHARE_ICON;
+      b.addEventListener('click', (function(sec, btn){ return function(e){ e.preventDefault(); e.stopPropagation(); shSection(sec, btn); }; })(el, b));
+      if(head) head.parentNode.insertBefore(b, head.nextSibling); else el.insertBefore(b, el.firstChild);
+    }
   }
   function mountShare(){
     if(ja) return;
@@ -512,7 +674,7 @@
     btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8.4 10.9l7.2-4.1M8.4 13.1l7.2 4.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><g fill="currentColor"><circle cx="18" cy="5.5" r="2.7"/><circle cx="6" cy="12" r="2.7"/><circle cx="18" cy="18.5" r="2.7"/></g></svg>';
     var menu = document.createElement('ul');
     menu.className = 'iq-share-menu'; menu.id = 'iqShareMenu'; menu.setAttribute('role', 'menu'); menu.setAttribute('aria-label', '공유'); menu.hidden = true;
-    [['링크 복사', shCopyLink], ['현재 페이지 스크린샷', shShot]].forEach(function(it){
+    [['링크 복사', shCopyLink], ['페이지 전체 스크린샷', shShot]].forEach(function(it){
       var li = document.createElement('li'); li.setAttribute('role', 'none');
       var b = document.createElement('button'); b.type = 'button'; b.setAttribute('role', 'menuitem'); b.textContent = it[0];
       b.addEventListener('click', function(){ close(); btn.focus(); it[1](); });
@@ -535,10 +697,27 @@
     h.classList.add('has-share');
   }
 
-  function boot(){ mount(); mountShare(); syncSectionNav(); watchForRerender(); }
+  function boot(){ mount(); mountShare(); mountSectionShare(); syncSectionNav(); watchForRerender(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+
+  /* 회사 키컬러 (KEYCOLOR-V1, owner 확정 2026-06-12) — 표시명 -> 색. 회사 키컬러의 단일 정의다.
+     IFRS17.html(차트 주선·워터폴 막대)과 compare.html(손해율 가정 curve)이 같은 맵을 읽는다. 맵에 없는 회사는 키컬러가 없는 것이다. */
+  var KEY_COLORS = {
+    "삼성생명":"#1428A0", "삼성생명보험":"#1428A0", "삼성화재":"#1428A0", "삼성화재해상보험":"#1428A0",
+    "한화생명":"#F37321", "한화생명보험":"#F37321", "한화손해보험":"#F37321",
+    "신한라이프":"#0046FF", "신한라이프생명보험":"#0046FF", "신한이지손해보험":"#0046FF",
+    "KB손해보험":"#FFBC00", "케이비손해보험":"#FFBC00", "KB라이프생명":"#FFBC00", "케이비라이프생명보험":"#FFBC00",
+    "NH농협생명":"#00A05E", "엔에이치농협생명":"#00A05E", "NH농협손해보험":"#00A05E", "엔에이치농협손해보험":"#00A05E",
+    "미래에셋생명":"#F58220", "미래에셋생명보험":"#F58220",
+    "DB손해보험":"#0E8C3A", "디비손해보험":"#0E8C3A", "DB생명":"#0E8C3A", "디비생명보험":"#0E8C3A",
+    "현대해상":"#F47920", "현대해상화재보험":"#F47920",
+    "교보생명":"#0B5D52", "교보생명보험":"#0B5D52",
+    "메리츠화재":"#E60012", "메리츠화재해상보험":"#E60012",
+    "롯데손해보험":"#DA291C"
+  };
 
   window.IQTheme={ isDark:function(){ return effective()==='dark'; }, current:effective, set:set, toggle:toggle,
                    chart:chart, applyChartJs:applyChartJs, echartsTooltip:echartsTooltip,
-                   syncSectionNav:syncSectionNav };
+                   syncSectionNav:syncSectionNav, keyColors:KEY_COLORS,
+                   share:{ secOpts:shSecOpts, load:shLoadH2C, page:shShot, section:shSection, render:shRender, plan:shPlan, root:shRoot, mountSections:mountSectionShare, limits:{ maxDim:SH_MAX_DIM, minScale:SH_MIN_SCALE } } };
 })();

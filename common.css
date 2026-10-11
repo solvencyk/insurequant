@@ -194,6 +194,21 @@ header.has-share .header-row{ padding-right:84px; }
 }
 .iq-toast[hidden]{ display:none; }
 
+/* 섹션별 공유 버튼 (theme.js mountSectionShare, owner 2026-10-11): 마크업에 data-share-section 이 있는 패널·카드의 우상단.
+   아이콘은 18px 이지만 누르는 영역은 44px. 제목이 버튼 밑으로 들어가지 않게 제목 오른쪽을 비운다. 스크린샷에서는 JS 가 뺀다. */
+[data-share-section]{ position:relative; }
+[data-share-section] > h2, [data-share-section] > h3{ padding-right:44px; }
+.iq-sec-share{
+  position:absolute; top:4px; right:4px; z-index:5; width:44px; height:44px; padding:0;
+  display:inline-flex; align-items:center; justify-content:center;
+  border:none; border-radius:50%; background:transparent; color:var(--muted); cursor:pointer;
+  transition:color var(--t-fast), box-shadow var(--t-fast);
+}
+.iq-sec-share svg{ display:block; width:18px; height:18px; }
+.iq-sec-share:hover{ color:var(--primary); box-shadow:inset 0 0 0 1px var(--border); }
+.iq-sec-share[aria-busy="true"]{ opacity:.5; cursor:progress; }
+@media print{ .iq-sec-share{ display:none; } }
+
 /* — Layout container ——————————————————————————————————————————————— */
 .container{ max-width:var(--maxw); margin:0 auto; padding:16px; }
 
