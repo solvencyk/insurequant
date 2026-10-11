@@ -366,6 +366,26 @@
   {
    "name": "amortisation schedules: identities, 별도==연결, printed 계 == closing CSM (|d|<=2 천원)",
    "pass": true
+  },
+  {
+   "name": "extension: every source page (18 pages = own + later columns of 8 quarters) closes: exact in the CSM columns for the restated-basis formats, printed 1-천원 rounding tolerated only on the old-basis pages",
+   "pass": true
+  },
+  {
+   "name": "within-FY openings equal (+-5 천원) and YTD 신계약/이자/상각 monotone through the master year-end row",
+   "pass": true
+  },
+  {
+   "name": "quarter-only (당분기) 신계약 CSM >= 0 and quarter identity closes wherever derivable",
+   "pass": true
+  },
+  {
+   "name": "adopted close == insurance_liability_portfolio item 3 (일반모형 CSM), rounding",
+   "pass": true
+  },
+  {
+   "name": "amortisation schedules of the extension: identities, printed 계 == adopted closing CSM (+-2 천원)",
+   "pass": true
   }
  ],
  "ytd_monotonicity_2025": {
@@ -624,16 +644,16 @@
  },
  "existing_master_amortisation_2025.4Q": {
   "master_rows_1_to_10": [
-   2428.2,
-   2149.7,
-   1927.3,
-   1727.2,
-   1553.0,
-   1411.5,
-   1279.1,
-   1163.2,
-   null,
-   null
+   2140.88947,
+   1884.74049,
+   1661.66437,
+   1473.53301,
+   1326.86259,
+   1199.5925,
+   1095.39916,
+   1010.59239,
+   934.28301,
+   848.91505
   ],
   "pdf_2025-12-31_schedule_(당기말)_1_to_8": [
    2140.9,
@@ -656,7 +676,7 @@
    1163.2
   ],
   "master_equals_2025-12-31": false,
-  "master_equals_2024-12-31": true,
+  "master_equals_2024-12-31": false,
   "pdf_page_당기말": 245,
   "pdf_page_전기말": 246,
   "correct_2025-12-31_1_to_10_억원": [
@@ -670,6 +690,984 @@
    1010.59239,
    934.28301,
    848.91505
+  ]
+ },
+ "ext": {
+  "quarters": {
+   "2023.1Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+     "fy": "FY2023_Q1",
+     "pages": {
+      "전사": 57
+     },
+     "items": {
+      "open": 2208247318,
+      "new": 173643148,
+      "fin": 19499463,
+      "adj": -21977121,
+      "amort": -126260812,
+      "close": 2253150678,
+      "other": -1318
+     },
+     "residual": 0
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+     "fy": "FY2024_Q1",
+     "pages": {
+      "전사": 52
+     },
+     "items": {
+      "open": 2208247318,
+      "new": 173643148,
+      "fin": 19499464,
+      "adj": -21977121,
+      "amort": -126262130,
+      "close": 2253150678,
+      "other": 0
+     },
+     "residual": 1
+    },
+    "own_minus_later_천원": {
+     "open": 0,
+     "new": 0,
+     "fin": -1,
+     "adj": 0,
+     "amort": 1318,
+     "close": 0
+    },
+    "conflict": true,
+    "adopted": "later prior column (latest disclosure wins)",
+    "adopted_items_천원": {
+     "open": 2208247318,
+     "new": 173643148,
+     "fin": 19499464,
+     "adj": -21977121,
+     "amort": -126262130,
+     "close": 2253150678,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 35264.0,
+    "adopted_opening_억원": 22082.47318,
+    "own_continues_master": false,
+    "later_continues_master": false,
+    "continues_master": false,
+    "adopted_residual_천원": 1,
+    "adopted_other_row_csm_천원": 0
+   },
+   "2023.2Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+     "fy": "FY2023_Q2",
+     "pages": {
+      "전사": 84
+     },
+     "items": {
+      "open": 2208247318,
+      "new": 354784635,
+      "fin": 39918339,
+      "adj": -137568662,
+      "amort": -256110669,
+      "close": 2209270962,
+      "other": 0
+     },
+     "residual": -1
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+     "fy": "FY2024_Q2",
+     "pages": {
+      "전사": 77
+     },
+     "items": {
+      "open": 2208247317,
+      "new": 354784635,
+      "fin": 39918339,
+      "adj": -137568662,
+      "amort": -256110669,
+      "close": 2209270960,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "own_minus_later_천원": {
+     "open": 1,
+     "new": 0,
+     "fin": 0,
+     "adj": 0,
+     "amort": 0,
+     "close": 2
+    },
+    "conflict": false,
+    "adopted": "own-period column",
+    "adopted_items_천원": {
+     "open": 2208247318,
+     "new": 354784635,
+     "fin": 39918339,
+     "adj": -137568662,
+     "amort": -256110669,
+     "close": 2209270962,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 35264.0,
+    "adopted_opening_억원": 22082.47318,
+    "own_continues_master": false,
+    "later_continues_master": false,
+    "continues_master": false,
+    "adopted_residual_천원": -1,
+    "adopted_other_row_csm_천원": 0
+   },
+   "2023.3Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf",
+     "fy": "FY2023_Q3",
+     "pages": {
+      "전사": 62
+     },
+     "items": {
+      "open": 2208247318,
+      "new": 519046598,
+      "fin": 60297438,
+      "adj": -171293604,
+      "amort": -390196338,
+      "close": 2226101412,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2024_Q3",
+     "pages": {
+      "전사": 53
+     },
+     "items": {
+      "open": 3526401798,
+      "new": 396091847,
+      "fin": 84769516,
+      "adj": -128412254,
+      "amort": -340727998,
+      "close": 3538122909,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "own_minus_later_천원": {
+     "open": -1318154480,
+     "new": 122954751,
+     "fin": -24472078,
+     "adj": -42881350,
+     "amort": -49468340,
+     "close": -1312021497
+    },
+    "conflict": true,
+    "adopted": "later prior column (latest disclosure wins)",
+    "adopted_items_천원": {
+     "open": 3526401798,
+     "new": 396091847,
+     "fin": 84769516,
+     "adj": -128412254,
+     "amort": -340727998,
+     "close": 3538122909,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 35264.0,
+    "adopted_opening_억원": 35264.01798,
+    "own_continues_master": false,
+    "later_continues_master": true,
+    "continues_master": true,
+    "adopted_residual_천원": 0,
+    "adopted_other_row_csm_천원": 0
+   },
+   "2024.1Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+     "fy": "FY2024_Q1",
+     "pages": {
+      "전사": 51
+     },
+     "items": {
+      "open": 3230161577,
+      "new": 125761582,
+      "fin": 27324252,
+      "adj": -78100251,
+      "amort": -104707301,
+      "close": 3200439859,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2025_Q1",
+     "pages": {
+      "전사": 58
+     },
+     "items": {
+      "open": 3230161575,
+      "new": 125761582,
+      "fin": 27324252,
+      "adj": -78100251,
+      "amort": -104707300,
+      "close": 3200439858,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "own_minus_later_천원": {
+     "open": 2,
+     "new": 0,
+     "fin": 0,
+     "adj": 0,
+     "amort": -1,
+     "close": 1
+    },
+    "conflict": false,
+    "adopted": "own-period column",
+    "adopted_items_천원": {
+     "open": 3230161577,
+     "new": 125761582,
+     "fin": 27324252,
+     "adj": -78100251,
+     "amort": -104707301,
+     "close": 3200439859,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 32301.6,
+    "adopted_opening_억원": 32301.61577,
+    "own_continues_master": true,
+    "later_continues_master": true,
+    "continues_master": true,
+    "adopted_residual_천원": 0,
+    "adopted_other_row_csm_천원": 0
+   },
+   "2024.2Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+     "fy": "FY2024_Q2",
+     "pages": {
+      "전사": 76
+     },
+     "items": {
+      "open": 3230161576,
+      "new": 269097043,
+      "fin": 54794310,
+      "adj": -144259016,
+      "amort": -207843428,
+      "close": 3201950485,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2025_Q2",
+     "pages": {
+      "전사": 84
+     },
+     "items": {
+      "open": 3230161575,
+      "new": 269097043,
+      "fin": 54794311,
+      "adj": -144259016,
+      "amort": -207843429,
+      "close": 3201950484,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "own_minus_later_천원": {
+     "open": 1,
+     "new": 0,
+     "fin": -1,
+     "adj": 0,
+     "amort": 1,
+     "close": 1
+    },
+    "conflict": false,
+    "adopted": "own-period column",
+    "adopted_items_천원": {
+     "open": 3230161576,
+     "new": 269097043,
+     "fin": 54794310,
+     "adj": -144259016,
+     "amort": -207843428,
+     "close": 3201950485,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 32301.6,
+    "adopted_opening_억원": 32301.61576,
+    "own_continues_master": true,
+    "later_continues_master": true,
+    "continues_master": true,
+    "adopted_residual_천원": 0,
+    "adopted_other_row_csm_천원": 0
+   },
+   "2024.3Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2024_Q3",
+     "pages": {
+      "전사": 52
+     },
+     "items": {
+      "open": 3230161575,
+      "new": 394602785,
+      "fin": 82274331,
+      "adj": -270937228,
+      "amort": -308702166,
+      "close": 3127399297,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2025_Q3",
+     "pages": {
+      "전사": 64
+     },
+     "items": {
+      "open": 3230161575,
+      "new": 394602785,
+      "fin": 82274331,
+      "adj": -270937228,
+      "amort": -308702166,
+      "close": 3127399297,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "own_minus_later_천원": {
+     "open": 0,
+     "new": 0,
+     "fin": 0,
+     "adj": 0,
+     "amort": 0,
+     "close": 0
+    },
+    "conflict": false,
+    "adopted": "own-period column",
+    "adopted_items_천원": {
+     "open": 3230161575,
+     "new": 394602785,
+     "fin": 82274331,
+     "adj": -270937228,
+     "amort": -308702166,
+     "close": 3127399297,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 32301.6,
+    "adopted_opening_억원": 32301.61575,
+    "own_continues_master": true,
+    "later_continues_master": true,
+    "continues_master": true,
+    "adopted_residual_천원": 0,
+    "adopted_other_row_csm_천원": 0
+   },
+   "2025.1Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2025_Q1",
+     "pages": {
+      "전사": 57
+     },
+     "items": {
+      "open": 2764859849,
+      "new": 84124940,
+      "fin": 23116062,
+      "adj": -84247555,
+      "amort": -86351816,
+      "close": 2701501480,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2026_Q1",
+     "pages": {
+      "유배당": 67,
+      "유배당 외": 69
+     },
+     "items": {
+      "open": 2764859850,
+      "new": 84124940,
+      "fin": 23116062,
+      "adj": -84247556,
+      "amort": -86351817,
+      "close": 2701501479,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "own_minus_later_천원": {
+     "open": -1,
+     "new": 0,
+     "fin": 0,
+     "adj": 1,
+     "amort": 1,
+     "close": 1
+    },
+    "conflict": false,
+    "adopted": "own-period column",
+    "adopted_items_천원": {
+     "open": 2764859849,
+     "new": 84124940,
+     "fin": 23116062,
+     "adj": -84247555,
+     "amort": -86351816,
+     "close": 2701501480,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 27648.6,
+    "adopted_opening_억원": 27648.59849,
+    "own_continues_master": true,
+    "later_continues_master": true,
+    "continues_master": true,
+    "adopted_residual_천원": 0,
+    "adopted_other_row_csm_천원": 0
+   },
+   "2025.2Q": {
+    "own": {
+     "pdf": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2025_Q2",
+     "pages": {
+      "전사": 83
+     },
+     "items": {
+      "open": 2764859849,
+      "new": 186076804,
+      "fin": 45797722,
+      "adj": -148524181,
+      "amort": -170494252,
+      "close": 2677715942,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "later": {
+     "pdf": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+     "fy": "FY2026_Q2",
+     "pages": {
+      "유배당": 92,
+      "유배당 외": 94
+     },
+     "items": {
+      "open": 2764859850,
+      "new": 186076804,
+      "fin": 45797722,
+      "adj": -148524181,
+      "amort": -170494252,
+      "close": 2677715943,
+      "other": 0
+     },
+     "residual": 0
+    },
+    "own_minus_later_천원": {
+     "open": -1,
+     "new": 0,
+     "fin": 0,
+     "adj": 0,
+     "amort": 0,
+     "close": -1
+    },
+    "conflict": false,
+    "adopted": "own-period column",
+    "adopted_items_천원": {
+     "open": 2764859849,
+     "new": 186076804,
+     "fin": 45797722,
+     "adj": -148524181,
+     "amort": -170494252,
+     "close": 2677715942,
+     "other": 0
+    },
+    "expected_opening_억원(master)": 27648.6,
+    "adopted_opening_억원": 27648.59849,
+    "own_continues_master": true,
+    "later_continues_master": true,
+    "continues_master": true,
+    "adopted_residual_천원": 0,
+    "adopted_other_row_csm_천원": 0
+   }
+  },
+  "checks": [
+   {
+    "name": "extension: every source page (18 pages = own + later columns of 8 quarters) closes: exact in the CSM columns for the restated-basis formats, printed 1-천원 rounding tolerated only on the old-basis pages",
+    "pass": true
+   },
+   {
+    "name": "within-FY openings equal (+-5 천원) and YTD 신계약/이자/상각 monotone through the master year-end row",
+    "pass": true
+   },
+   {
+    "name": "quarter-only (당분기) 신계약 CSM >= 0 and quarter identity closes wherever derivable",
+    "pass": true
+   },
+   {
+    "name": "adopted close == insurance_liability_portfolio item 3 (일반모형 CSM), rounding",
+    "pass": true
+   },
+   {
+    "name": "amortisation schedules of the extension: identities, printed 계 == adopted closing CSM (+-2 천원)",
+    "pass": true
+   }
+  ],
+  "holds": [
+   {
+    "q": "2023.1Q",
+    "reason": "only printed on the old (pre-restatement) basis: opening 22082.47318 억원 != master 2023.4Q opening 35264.0 억원",
+    "own_continues": false,
+    "later_continues": false,
+    "which": "later prior column (latest disclosure wins)"
+   },
+   {
+    "q": "2023.2Q",
+    "reason": "only printed on the old (pre-restatement) basis: opening 22082.47318 억원 != master 2023.4Q opening 35264.0 억원",
+    "own_continues": false,
+    "later_continues": false,
+    "which": "own-period column"
+   }
+  ],
+  "notes": [],
+  "chains": {
+   "2023": {
+    "quarters": [
+     "2023.3Q",
+     "2023.4Q"
+    ],
+    "opening_minus_year_end_opening_천원": {
+     "2023.3Q": 0,
+     "2023.4Q": 0
+    },
+    "openings_equal": true,
+    "ytd_flows": {
+     "new": {
+      "seq_억원": [
+       3960.92,
+       5732.66
+      ],
+      "monotone": true
+     },
+     "fin": {
+      "seq_억원": [
+       847.7,
+       1145.24
+      ],
+      "monotone": true
+     },
+     "amort": {
+      "seq_억원": [
+       -3407.28,
+       -4431.28
+      ],
+      "monotone": true
+     }
+    }
+   },
+   "2024": {
+    "quarters": [
+     "2024.1Q",
+     "2024.2Q",
+     "2024.3Q",
+     "2024.4Q"
+    ],
+    "opening_minus_year_end_opening_천원": {
+     "2024.1Q": 2,
+     "2024.2Q": 1,
+     "2024.3Q": 0,
+     "2024.4Q": 0
+    },
+    "openings_equal": true,
+    "ytd_flows": {
+     "new": {
+      "seq_억원": [
+       1257.62,
+       2690.97,
+       3946.03,
+       5366.54
+      ],
+      "monotone": true
+     },
+     "fin": {
+      "seq_억원": [
+       273.24,
+       547.94,
+       822.74,
+       1091.08
+      ],
+      "monotone": true
+     },
+     "amort": {
+      "seq_억원": [
+       -1047.07,
+       -2078.43,
+       -3087.02,
+       -3973.47
+      ],
+      "monotone": true
+     }
+    }
+   },
+   "2025": {
+    "quarters": [
+     "2025.1Q",
+     "2025.2Q",
+     "2025.3Q",
+     "2025.4Q"
+    ],
+    "opening_minus_year_end_opening_천원": {
+     "2025.1Q": -1,
+     "2025.2Q": -1,
+     "2025.3Q": -1,
+     "2025.4Q": 0
+    },
+    "openings_equal": true,
+    "ytd_flows": {
+     "new": {
+      "seq_억원": [
+       841.25,
+       1860.77,
+       3392.64,
+       4618.37
+      ],
+      "monotone": true
+     },
+     "fin": {
+      "seq_억원": [
+       231.16,
+       457.98,
+       687.31,
+       916.04
+      ],
+      "monotone": true
+     },
+     "amort": {
+      "seq_억원": [
+       -863.52,
+       -1704.94,
+       -2554.6,
+       -3314.35
+      ],
+      "monotone": true
+     }
+    }
+   }
+  },
+  "quarter_only": {
+   "2023.3Q": {
+    "quarter_only": "not derivable (previous quarter not in the master set)",
+    "close": 35381.22909
+   },
+   "2024.1Q": {
+    "new_quarter_only": 1257.61582,
+    "identity_residual": 0.0
+   },
+   "2024.2Q": {
+    "new_quarter_only": 1433.35461,
+    "identity_residual": 1e-05
+   },
+   "2024.3Q": {
+    "new_quarter_only": 1255.05742,
+    "identity_residual": 1e-05
+   },
+   "2025.1Q": {
+    "new_quarter_only": 841.2494,
+    "identity_residual": 0.0
+   },
+   "2025.2Q": {
+    "new_quarter_only": 1019.51864,
+    "identity_residual": -0.0
+   }
+  },
+  "ilp_crosscheck": {
+   "2023.3Q": {
+    "close_억원": 35381.23,
+    "ilp_item3_억원": null,
+    "match_to_rounding": "n/a (ILP master has no item 3 for this quarter)"
+   },
+   "2024.1Q": {
+    "close_억원": 32004.4,
+    "ilp_item3_억원": 32004.0,
+    "match_to_rounding": true
+   },
+   "2024.2Q": {
+    "close_억원": 32019.5,
+    "ilp_item3_억원": 32020.0,
+    "match_to_rounding": true
+   },
+   "2024.3Q": {
+    "close_억원": 31273.99,
+    "ilp_item3_억원": 31274.0,
+    "match_to_rounding": true
+   },
+   "2025.1Q": {
+    "close_억원": 27015.01,
+    "ilp_item3_억원": 27015.0,
+    "match_to_rounding": true
+   },
+   "2025.2Q": {
+    "close_억원": 26777.16,
+    "ilp_item3_억원": 26777.0,
+    "match_to_rounding": true
+   },
+   "2023.1Q": {
+    "close_억원": 22531.51,
+    "ilp_item3_억원": null,
+    "held": true,
+    "match_to_rounding": "n/a (ILP master has no item 3 for this quarter)"
+   },
+   "2023.2Q": {
+    "close_억원": 22092.71,
+    "ilp_item3_억원": null,
+    "held": true,
+    "match_to_rounding": "n/a (ILP master has no item 3 for this quarter)"
+   }
+  },
+  "amortisation": {
+   "2025.1Q": {
+    "pdf": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+    "page": 60,
+    "format": "yearly 1..30+",
+    "printed_total_계_천원": 2701501479,
+    "closing_csm_천원": 2701501480,
+    "total_minus_close_천원": -1,
+    "buckets_1_to_10y_천원": [
+     237361427,
+     210625250,
+     188605222,
+     168875501,
+     152267172,
+     138277430,
+     125259474,
+     114085819,
+     104344413,
+     95640324
+    ],
+    "tail_buckets_11_15_16_20_21_25_26_30_30plus_천원": [
+     386677798,
+     274985557,
+     187324940,
+     124124780,
+     193046372
+    ],
+    "identity_problems": []
+   },
+   "2025.2Q": {
+    "pdf": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+    "page": 86,
+    "format": "yearly 1..30+",
+    "printed_total_계_천원": 2677715942,
+    "closing_csm_천원": 2677715942,
+    "total_minus_close_천원": 0,
+    "buckets_1_to_10y_천원": [
+     234682410,
+     208846423,
+     186542961,
+     166869369,
+     150945582,
+     137786477,
+     125048819,
+     114165327,
+     104470471,
+     95701255
+    ],
+    "tail_buckets_11_15_16_20_21_25_26_30_30plus_천원": [
+     384692506,
+     274309615,
+     183318888,
+     121990409,
+     188345430
+    ],
+    "identity_problems": []
+   },
+   "2024.1Q": {
+    "pdf": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 54,
+    "format": "coarse 5 buckets (not representable in the 1~10 year schema)",
+    "buckets_천원": [
+     379242159,
+     612257417,
+     464962450,
+     742620497,
+     1001357336
+    ],
+    "printed_total_천원": 3200439859,
+    "closing_csm_천원": 3200439859,
+    "total_minus_close_천원": 0
+   },
+   "2024.2Q": {
+    "pdf": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 79,
+    "format": "coarse 5 buckets (not representable in the 1~10 year schema)",
+    "buckets_천원": [
+     379482621,
+     613540539,
+     464863373,
+     745341055,
+     998722897
+    ],
+    "printed_total_천원": 3201950485,
+    "closing_csm_천원": 3201950485,
+    "total_minus_close_천원": 0
+   },
+   "2024.3Q": {
+    "pdf": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+    "page": 55,
+    "format": "coarse 5 buckets (not representable in the 1~10 year schema)",
+    "buckets_천원": [
+     370316873,
+     599595744,
+     453347321,
+     729843715,
+     974295644
+    ],
+    "printed_total_천원": 3127399297,
+    "closing_csm_천원": 3127399297,
+    "total_minus_close_천원": 0
+   },
+   "2023.1Q": {
+    "pdf": "data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 61,
+    "format": "coarse, old (pre-restatement) basis",
+    "status": "HOLD: printed only on the old basis; the restated 2023 interim schedule is not printed in any later filing"
+   },
+   "2023.2Q": {
+    "pdf": "data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 88,
+    "format": "coarse, old (pre-restatement) basis",
+    "status": "HOLD: printed only on the old basis; the restated 2023 interim schedule is not printed in any later filing"
+   },
+   "2023.3Q": {
+    "pdf": "data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 65,
+    "format": "coarse, old (pre-restatement) basis",
+    "status": "HOLD: printed only on the old basis; the restated 2023 interim schedule is not printed in any later filing"
+   }
+  },
+  "existing_cells_now_derivable_NOT_WRITTEN": [
+   {
+    "공시분기": "2023.4Q",
+    "항목번호": 1,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 35381.22909
+   },
+   {
+    "공시분기": "2023.4Q",
+    "항목번호": 2,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 1771.78153
+   },
+   {
+    "공시분기": "2023.4Q",
+    "항목번호": 3,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 297.50484
+   },
+   {
+    "공시분기": "2023.4Q",
+    "항목번호": 4,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -4124.87746
+   },
+   {
+    "공시분기": "2023.4Q",
+    "항목번호": 5,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -1024.02002
+   },
+   {
+    "공시분기": "2024.4Q",
+    "항목번호": 1,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 31273.99297
+   },
+   {
+    "공시분기": "2024.4Q",
+    "항목번호": 2,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 1420.47215
+   },
+   {
+    "공시분기": "2024.4Q",
+    "항목번호": 3,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 268.35669
+   },
+   {
+    "공시분기": "2024.4Q",
+    "항목번호": 4,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -4427.82772
+   },
+   {
+    "공시분기": "2024.4Q",
+    "항목번호": 5,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -886.47834
+   },
+   {
+    "공시분기": "2025.3Q",
+    "항목번호": 1,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 26777.15942
+   },
+   {
+    "공시분기": "2025.3Q",
+    "항목번호": 2,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 1531.87372
+   },
+   {
+    "공시분기": "2025.3Q",
+    "항목번호": 3,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 229.33633
+   },
+   {
+    "공시분기": "2025.3Q",
+    "항목번호": 4,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -801.1711
+   },
+   {
+    "공시분기": "2025.3Q",
+    "항목번호": 5,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -849.65311
+   },
+   {
+    "공시분기": "2025.4Q",
+    "항목번호": 1,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 26887.54526
+   },
+   {
+    "공시분기": "2025.4Q",
+    "항목번호": 2,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 1225.75824
+   },
+   {
+    "공시분기": "2025.4Q",
+    "항목번호": 3,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": 228.68645
+   },
+   {
+    "공시분기": "2025.4Q",
+    "항목번호": 4,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -3821.68709
+   },
+   {
+    "공시분기": "2025.4Q",
+    "항목번호": 5,
+    "현재_값_당분기": null,
+    "build_csm_규칙_도출값": -759.80437
+   }
   ]
  }
 }

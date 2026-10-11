@@ -42,6 +42,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 fitz.TOOLS.mupdf_display_errors(False)
 
 CODE = "KR0074"
+CORE_CTX = {"2023.4Q", "2024.4Q", "2025.4Q"}      # the year-end rows of Lina that the master held before the quarterly backfill
 CSM_ITEM_NM = {1: "기초 CSM", 2: "신계약 CSM", 3: "이자 부리", 4: "가정 및 경험 조정", 5: "CSM 상각", 6: "기말 CSM"}
 EOK = 100_000                       # 1억원 = 100,000 천원
 
@@ -366,8 +367,10 @@ def main() -> int:
         rows_by_q[q] = vals
         for no in range(1, 7):
             staged.append({**meta, "항목번호": no, "항목명": CSM_ITEM_NM[no], "공시분기": q, "값": vals[no], "값_당분기": None})
-    # derive 값_당분기 exactly like build_root_masters.build_csm() on (existing KR0074 rows + staged rows)
-    ytd = {no: {q: m_val[(q, no)] for (q, n) in m_val if n == no} for no in range(1, 7)}
+    # derive 값_당분기 exactly like build_root_masters.build_csm() on (existing KR0074 rows + staged rows).  The context is FROZEN to the
+    # year-end rows the master held when these three quarters were loaded: quarterly rows loaded later (extension) must not change the
+    # staged values of rows that are already in the master (the loader would see a collision).
+    ytd = {no: {q: m_val[(q, no)] for (q, n) in m_val if n == no and q in CORE_CTX} for no in range(1, 7)}
     for r in staged:
         ytd[r["항목번호"]][r["공시분기"]] = r["값"]
     for r in staged:
@@ -452,12 +455,39 @@ def main() -> int:
                      "source_file": str(pdf.relative_to(ROOT)).replace("\\", "/"), "as_of_date": spec["as_of"]})
     side.sort(key=lambda c: c["quarter"])
 
+    # ---------------------------------------------------------------- 7. extension: the remaining eight quarters (2023.1Q .. 2025.2Q)
+    import _lina_csm_ext_20261011 as EXT
+    cur_dangi = {(r["공시분기"], r["항목번호"]): r["값_당분기"] for r in wf_master if r["원보험사코드"] == CODE}
+    ext = EXT.run(meta=meta, m_val=m_val, cur_dangi=cur_dangi, reg_tot=reg_tot, ytd_core=ytd_ref, core_staged=staged, BR=BR)
+    report["ext"] = ext["report"]
+    for c in ext["report"]["checks"]:
+        report["checks"].append(c)
+    core_n, core_am_n, core_side_n = len(staged), len(am_rows), len(side)
+    staged_all = staged + ext["wf_rows"]                              # core rows first and unchanged, then the new quarters chronologically
+    am_all = sorted(am_rows + ext["am_rows"], key=lambda r: (r["공시분기"], r["경과차년"]))
+    side_all = sorted(side + ext["side"], key=lambda c: c["quarter"])
+
     STAGE.mkdir(parents=True, exist_ok=True)
-    (STAGE / "rows_waterfall.json").write_text(json.dumps(staged, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
-    (STAGE / "rows_amortization.json").write_text(json.dumps(am_rows, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
-    (STAGE / "sidecar_cells.json").write_text(json.dumps(side, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    (STAGE / "rows_waterfall.json").write_text(json.dumps(staged_all, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    (STAGE / "rows_amortization.json").write_text(json.dumps(am_all, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    (STAGE / "sidecar_cells.json").write_text(json.dumps(side_all, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    (STAGE / "rows_amortization_coarse.json").write_text(json.dumps(ext["coarse_rows"], ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    held_doc = {"_what": ("라이나 2023.1Q·2023.2Q CSM 워터폴: 옛(재작성 전) 기준으로만 인쇄돼 있어 적재하지 않고 보류한 행. 기초 22,082.5억 ≠ 마스터 2023.4Q 기초 35,264.0억(재작성)이라 "
+                          "같은 회계연도 기초 불일치(WITHIN_FY_OPENING_DRIFT)가 되고 한 계열에 두 기준이 섞인다. owner 가 옛 기준 적재 + 예외 등재를 정하면 그대로 적재 가능한 행."),
+                "holds": {q: {"reason": h["reason"], "adopted_print": h["which"], "pages": h["chosen"]["pages"], "pdf": h["chosen"]["pdf"]} for q, h in ext["holds"].items()},
+                "rows": ext["held_rows"]}
+    (STAGE / "held_rows_waterfall.json").write_text(json.dumps(held_doc, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
+    (STAGE / "proposed_derived_dangi_existing.json").write_text(
+        json.dumps({"_what": ("이번 확장으로 직전 분기가 마스터에 생겨 build_csm() 규칙대로 값_당분기가 도출 가능해진 기존 칸(현재 None). 기존 칸 변경 0 원칙이라 쓰지 않았다. "
+                              "승인 시 값_당분기 None → 도출값만 셀 단위 + 옛 값 guard 로 갱신."), "cells": ext["derivable_existing"]},
+                   ensure_ascii=False, indent=2), encoding="utf-8", newline="\n")
     (STAGE / "build_report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
-    print(f"staged: waterfall {len(staged)} rows ({len({r['공시분기'] for r in staged})} quarters) | amortisation {len(am_rows)} rows | sidecar {len(side)} cells")
+    print(f"staged: waterfall {len(staged_all)} rows ({len({r['공시분기'] for r in staged_all})} quarters; core {core_n} + extension {len(ext['wf_rows'])}) | "
+          f"amortisation {len(am_all)} rows (core {core_am_n} + extension {len(ext['am_rows'])}; coarse staged separately {len(ext['coarse_rows'])}) | "
+          f"sidecar {len(side_all)} cells (core {core_side_n} + extension {len(ext['side'])}) | held {len(ext['held_rows'])} rows | "
+          f"existing cells now derivable {len(ext['derivable_existing'])}")
+    for h in ext["holds"].values():
+        print("HOLD", h["q"], "-", h["reason"])
     for c in report["checks"]:
         print(("PASS " if c["pass"] else "FAIL ") + c["name"])
     return 0

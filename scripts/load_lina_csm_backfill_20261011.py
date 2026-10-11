@@ -16,7 +16,9 @@ The load is ADDITIVE and guarded (same protocol as load_reinsurer_csm_masters_20
   default      dry run (prints the plan, writes nothing)
   --apply      write
   --revert     remove exactly the staged rows again (rows that are still equal to the staged ones), leave everything else
-  --only wf,amort,side   subset (default: all three)
+  --only wf,amort,side   subset.  DEFAULT = wf,side: since the extension to all quarters the staging also holds amortisation rows that are
+                         NOT to be loaded until the orchestrator says so (another agent is correcting CSM_amortization.json), so the
+                         amortisation master is only touched with an explicit --only amort[,...]
   --amort-quarters Q,Q   which staged schedule quarters to load (default all three = 30 rows; the ticket text names only the
                          2026.2Q p96 schedule -- the 2026.1Q p71 and 2025.3Q p66 schedules are the same table type from the same
                          filings and pass the same identities; use --amort-quarters 2026.2Q for the literal 10-row scope)
@@ -99,6 +101,7 @@ def plan(staged, existing, key):
 
 
 AMORT_QUARTERS = None          # None = every staged schedule quarter (set by --amort-quarters)
+QUARTERS = None                # None = every staged quarter of the waterfall / sidecar (set by --quarters)
 
 
 def process(which, apply, revert, report):
@@ -106,6 +109,8 @@ def process(which, apply, revert, report):
     staged = json.loads((STAGE / sname).read_text(encoding="utf-8"))
     if which == "amort" and AMORT_QUARTERS is not None:
         staged = [r for r in staged if r["공시분기"] in AMORT_QUARTERS]
+    if which in ("wf", "side") and QUARTERS is not None:
+        staged = [r for r in staged if (r.get("공시분기") or r.get("quarter")) in QUARTERS]
     for r in staged:
         code = r.get("원보험사코드") or r.get("company_code")
         assert code == CODE, r                                   # this loader only ever adds Lina rows
@@ -160,12 +165,16 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--revert", action="store_true")
-    ap.add_argument("--only", default="wf,amort,side")
+    ap.add_argument("--only", default="wf,side")
+    ap.add_argument("--quarters", default="all",
+                    help="comma list of waterfall/sidecar quarters to load or revert (default all staged); e.g. revert only the extension: "
+                         "--revert --apply --only wf,side --quarters 2023.3Q,2024.1Q,2024.2Q,2024.3Q,2025.1Q,2025.2Q")
     ap.add_argument("--amort-quarters", default="all",
                     help="comma list of schedule quarters to load, e.g. 2026.2Q (the ticket names only the 2026.2Q p96 schedule); default all staged")
     a = ap.parse_args()
-    global AMORT_QUARTERS
+    global AMORT_QUARTERS, QUARTERS
     AMORT_QUARTERS = None if a.amort_quarters == "all" else {q.strip() for q in a.amort_quarters.split(",")}
+    QUARTERS = None if a.quarters == "all" else {q.strip() for q in a.quarters.split(",")}
     report = {}
     for which in [w.strip() for w in a.only.split(",")]:
         process(which, a.apply, a.revert, report)
