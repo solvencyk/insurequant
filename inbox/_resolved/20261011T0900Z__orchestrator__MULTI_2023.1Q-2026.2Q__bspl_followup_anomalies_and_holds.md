@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T0900Z
-status: open
+status: resolved
 route: rework
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -30,4 +30,4 @@ iter: 1
 - 단계별 결과(정정 셀 전후, 새로 적재한 칸 수, 남은 보류와 사유), 복사 의심 목록, KR0100 정의표, 게이트 전후(`validate_data_contract`·`validate_master_tables --no-build`), 기존 칸 변경 0 증명, `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+answered by parser-ifrs17 c2d36f8 (2026-10-11): KR1098 자본금 2026.2Q 정정, KR1000 2023.1Q/2Q 복사 오류 22칸 정정(+5칸 채움), 복사 의심 전수(BS 93·PL 30묶음, 실제 오류는 KR1000만), KR0100 항목 20 정의표(owner 결정 대기), BS 보류 500→378, PL 항목 1 보류 17칸 분류. 기존 값 변경은 위 정정 23칸뿐(오케스트레이터가 HEAD 대비 셀 단위 대조로 확인). 정정 제안 6건은 T1130Z 티켓에서 적용.
