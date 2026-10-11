@@ -5,18 +5,20 @@
 
 ## Status (최신 3개)
 
+- **2026-10-11 (24회차) 사이트 신판 3건(티켓 `20261010T2351Z`) — 악사 2024.3Q 완성본 적재**: 신판 PDF(27쪽) docling 변환(1프로세스) 뒤 KR0049 2024.3Q 마스터 +17행(항목 25·26·29~35·47~54) · `값_적용후` +9칸(15~23, 부재 박제 9칸 전부 채움). 기존 39사 25,496행·재보사 4,453행 HEAD 와 동일, 악사 2024.3Q 기존 26행은 17행 동일 · 9행에 후 키만 추가, 보류 4칸(3·4·27후: 인쇄값 2325·5215·286.5 ≠ 마스터, 쪽 근거 런로그 §1.5) · 사이드카 2칸(전환 UNKNOWN→O/O/X/O/X/X/X · 텍스트층 BORDERLINE→READABLE).
+  신한이지 2025.3Q = K-ICS 쪽 8쪽 행 단위 동일(원본 판 유지, 변경 없음) · 하나 2025.4Q = K-ICS 칸 143칸 중 달라진 쪽(대출채권 p21·22, 위험관리 서술 재쪽매김 p62~66)에서 온 것 0(충돌 0, 덮어쓴 것 없음). 커밋 없음. K-ICS 게이트 RED 57·blocking 0·exit 2 불변(YELLOW 1940→1939, 새 RED 0), 데이터계약 RED 35→36(= xlsx `K-ICS공시` DRIFT 9칸, publishing).
+  남은 것: validation(악사 부재 박제 해제 · 골든 2종 `--update`) · publishing(xlsx +103행·9칸) · owner(보류 4칸 · 하나 판 확인) · 헬퍼가 이 3쌍을 모름(`[0]`=옛 판). 근거 `data/disclosure/_meta/kics_editions_runlog_20261011.md`.
 - **2026-10-11 (23회차) 재보사 스윕 단계 13 — 미뤘던 6건 처리**: IRR 잔액 기존 6셀 열 뒤바뀜 정정(+듀레이션갭 6행) · 스위스리 2023.2Q 적재(마스터 +46행) · 금리민감도·IRR 추출기가 수작업 정정을 스스로 재현(재보사 168행·IRR 301셀 = 마스터 동일, 기존 39사 불변 증명) · 이중 raw PDF 공통 헬퍼(15개 도구) · census 40칸 적재(6,048칸 중 빈칸 1,595 전부 사유 분류). 퍼시픽 금리민감도·정밀값은 이미 적재돼 있었음.
   커밋 없음. K-ICS 게이트 RED 57·blocking 0 불변, 단 exit 2 = `CENSUS_EXEMPTION_INERT KR1102 2023.2Q` 1건(티켓이 예고). 남은 것: validation(등재 해제 · 룰 골든 `--update` · 마이브라운 소액 오탐) · publishing(xlsx `K-ICS공시`·`금리듀레이션갭` + public_exports 3종) · owner(전기 열 적재 후보 4버킷).
   근거 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_13.md`.
 - **2026-10-10 (22회차) 재보사 금리민감도 RED 40 → 5 · 듀레이션 갭 재보사 46칸 적재**: 금리민감도 +24행 · 값 정정 28행(단위 19 · 하노버 후 0 행 미러 9), 근거 +3셀, IRR 잔액 +46셀 → 듀레이션 갭 +46행(`DURGAP_CENSUS_MISSING` 46 → 0). 기존 39사 전 파일 HEAD 와 동일, K-ICS 게이트 RED 57·blocking 0 불변.
   커밋 없음. 남은 것: validation 등재 5건(제네럴 2026.2Q +100bp RS1 2 · 마이브라운 RS5 3) · publishing xlsx 금리민감도·금리듀레이션갭 재동기화 · 기존 6셀 IRR 열 뒤바뀜(카카오페이손보 5 · 하나손보 2025.2Q) 적용 결정.
   근거 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_11.md`.
-- **2026-10-10 (21회차) 재보사 스윕 단계 9 — 마스터 +164행(퍼시픽 2023.3Q·2023.4Q·2024.3Q, 스위스리 2023.4Q 완성본), 금리민감도 근거 25칸**: sha `90cbc2c6…` → `4f2eb284…`, 시뮬레이션 = 실측 0 차이,
-  기존 39사 25,522행 HEAD 와 동일. 퍼시픽 2023.4Q 하위위험 29~46 까지 채워 새 RED 3건 중 2건 해소(내 변경분 RED 57 → 58·blocking 0 → 1 = 2023.3Q `8_life_census`, validation 등재 반영 시 57·0), 데이터계약 RED 34 → 4(K-ICS 0).
-  커밋 없음. 남은 것: owner — 스위스리 2023.2Q(새 RED 0)·2023.3Q(새 RED 2) 전기 칸 적재 여부 · 후속 발주 3건(아래) · xlsx 동기화(publishing). 근거 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9.md`.
 
 ## 열린 일
 
+- [ ] **신판 3건 후속(runlog `kics_editions_runlog_20261011.md` §6)**: ① validation — 악사 2024.3Q 부재 박제 해제(`_POST_PARENT_SOURCE_ABSENT_CELLS` · 원장 `kics_exemption_provenance.json` · `docs/kics_gate_exceptions.md` 악사 절; 게이트가 `EXEMPTION_ABSENCE_PIN_VALUE_PRESENT` review 로 알림) · 골든 `test_kics_rules_golden`(이유: 단계 13 +86행·이번 +17행/+9칸)·`test_post_transition_golden`(이유: 신판 MD 추가로 555→556 company-quarter, 7,123→7,144칸; MD 를 치우면 통과) `--update` ·
+  ② publishing — xlsx `K-ICS공시` 재동기화(데이터계약 RED `MASTER_XLSX_ROW_MISSING` 103행·`MASTER_XLSX_DRIFT` 9칸) ③ owner — 악사 보류 4칸 채택 여부 · 하나 2025.4Q 판 선택 확인 ④ 헬퍼 `latest_disclosure_pdfs` 가 기존 39사 두 판 쌍을 못 가림 → 판 채택 등재부 결정(`edition_choice.json` 이 기록) ⑤ parser — `fill_post_transition_adjust_items.py` `_SKIP` 의 낡은 `KR0049 2024.3Q` 제거.
 - [ ] **재보사 단계 13 후속(runlog 13 §7)**: ① validation — `_CENSUS_SOURCE_ABSENT` 의 KR1102 2023.2Q 등재(+ 원장 항목) 해제(풀면 K-ICS 게이트 exit 0 복귀) · `tests/fixtures/kics_rules_golden.json` `--update`(이유: 단계 13 데이터 +86행; 시작 마스터에서는 골든 sha 일치) ·
   마이브라운 2025.3Q `47_tier2_census` `TIER2_LIMIT_STALE` 소액 오탐(룰 조정 또는 등재가 있으면 47·48·49·53·54 = 0 5칸을 넣을 수 있음) · 뮌헨 2026.2Q 공란 표(50·52 만 싣기 = `TFI_TIER_PARTIAL_ROWS` RED 2, 51 을 0 으로 도출하는 것은 owner 판단) ·
   퍼시픽 2025.3Q·2026.2Q 47~54 16칸(원문이 「해당사항 없음」 서식에 전 칸 0 인쇄, 머리글 지급여력금액은 2,043·1,781억 — 0 으로 싣는 시뮬은 새 RED 0 · 새 YELLOW 4 · 해소 YELLOW 4, 이웃 8분기는 50·52 = 머리글 값이라 서식 채움으로 보고 빈 칸 유지, 적재 여부는 owner)

@@ -4270,17 +4270,27 @@
    "code": "KR0049",
    "name": "악사손해보험",
    "quarter": "2024.3Q",
-   "md_path": "md_inbox\\FY2024_Q3\\KR0049_악사손해보험.md",
-   "TFI": "UNKNOWN",
-   "RPT": "UNKNOWN",
-   "TAC": "UNKNOWN",
-   "TIR": "UNKNOWN",
-   "TER": "UNKNOWN",
-   "TIRR": "UNKNOWN",
-   "PCA_DEFER": "UNKNOWN",
-   "format": null,
-   "evidence": {},
-   "unknown_reason": "TABLE_UNPARSED(경과조치 keyword present but no recognizable table/sentence) | pdf_fallback:RAW_PDF_TABLE_UNPARSED",
+   "md_path": "md_inbox\\FY2024_Q3\\KR0049_악사손해보험_v20251020.md",
+   "TFI": "O",
+   "RPT": "O",
+   "TAC": "X",
+   "TIR": "O",
+   "TER": "X",
+   "TIRR": "X",
+   "PCA_DEFER": "X",
+   "format": "summary_table_format3",
+   "evidence": {
+    "summary_table_rows": [
+     "| 공통적용  | 가용자본    | 제도시행前 기발행자본증권가용자본 인정범위 확대(TFI) | O      |",
+     "| 공통적용  | 업무보고서   | 보고 및 공시기한 연장                   | O      |",
+     "| 선택적용  | 가용자본    | 시가평가로 인한 자본감소분 점진적 인식(TAC)     | X      |",
+     "| 선택적용  | 요구자본    | 신규도입 위험 신규 보험위험 전진적 인식(TIR)    | O      |",
+     "| 선택적용  | 요구자본    | 기존측정 위험 주식위험액 증가분 점진적 인식(TER)  | X      |",
+     "| 선택적용  | 요구자본    | 금리위험액 증가분 점진적 인식(TIRR)         | X      |",
+     "| 선택적용  | K-ICS비율 | 적기시정조치 적용 유예                   | X      |"
+    ]
+   },
+   "unknown_reason": null,
    "pdf_fallback_used": false
   },
   {

@@ -2,6 +2,21 @@
 
 > Last updated: 2026-10-11 · Stage 2/5 — parser (kics lane)
 
+## 2026-10-11 — 사이트 신판 3건: 악사 2024.3Q 완성본 적재 · 신한이지 2025.3Q · 하나 2025.4Q 판 대조 (kics 레인, 커밋·푸시 없음)
+
+계약: downloader 티켓 `inbox/parser/20261010T2351Z__downloader__KR0049-KR0051-KR0050__newer_site_editions_kics.md`(공유 티켓, 오케스트레이터가 종결). 상세·재현·칸별 전후 `data/disclosure/_meta/kics_editions_runlog_20261011.md`, 도구·계획·증거 `data/disclosure/_meta/kics_editions_20261011/`.
+모든 쓰기는 칸 단위 + 옛 값/시작 sha guard + 백업 + temp 후 `os.replace`. docling 1프로세스 1회(109.6초).
+
+- **악사 KR0049 2024.3Q**: 옛 판은 K-ICS 절이 「공시 예정」 한 줄. 신판(`_v20251020`, 27쪽)은 p9~p16 에 K-ICS 절 전체(총괄 · 건전성 BS · 경과조치 표 · p14 이미지 세부표 · p15 공통적용 표 · p16 ② 표)를 싣는다. 마스터는 항목 1~24·27·28 26행(FY2024_Q4 문서 직전분기 열에서 온 값) + 15~23후 부재 박제였다.
+  프로젝트 도구 사슬(메모리 실행, 신판 MD 만) · fitz 좌표 독립 판독 · p14 렌더링 육안 판독 세 갈래가 일치해 **+17행(항목 25·26·29~35·47~54) · `값_적용후` +9칸(15~23, 박제 9칸 전부)** 을 추가만 했다. 인쇄값이 마스터와 다른 4칸(항목 3·4·27후)은 보류(덮어쓰지 않음). 36~46·금리민감도·IRR·듀레이션갭은 신판에 없어 비움(홀수분기 간이 양식).
+  사이드카: 전환 적용여부 레코드 UNKNOWN → TFI O · RPT O · TAC X · TIR O · TER X · TIRR X · PCA_DEFER X, 텍스트층 칸 BORDERLINE → READABLE(각각 1건).
+  증명: 기존 39사 25,496행·재보사 4,453행 HEAD 와 동일, 악사 2024.3Q 기존 26행은 9행에 후 키가 붙은 것 외 동일. K-ICS 룰 게이트 RED 57·blocking 0·exit 2 불변(YELLOW 1940 → 1939, 새 RED 0, 버킷 밖 변화 0), 데이터계약 RED 35 → 36(xlsx `K-ICS공시` DRIFT 9칸, publishing 몫), 테스트 실패 집합 동일(17건).
+  남은 것: 부재 박제·원장·예외 문서 해제(validation) · 골든 2종 `--update`(신판 MD 가 `test_post_transition_golden` 을 555 → 556 company-quarter, 7,123 → 7,144칸으로 옮김; MD 를 치우면 통과) · xlsx 재동기화(publishing).
+- **신한이지 KR0051 2025.3Q**: 두 판(22쪽)의 K-ICS 쪽 8쪽이 행 단위로 동일하고 달라진 5쪽은 K-ICS 와 무관(목차·수익성 각주·날짜·사회공헌·p21). 마스터의 null 아닌 70칸이 두 판에 모두 인쇄돼 있다. 사용 판 = 원본(마스터 MD 의 `source_sha256` 일치). 마스터 변경 없음.
+- **하나 KR0050 2025.4Q**: 신판 108쪽(옛 109쪽). 달라진 쪽 = 대출채권 표 p21·22(합계 4,950 → 5,127 등 정정, K-ICS 아님) + 위험관리 서술 p62~66(재쪽매김). K-ICS 레인 마스터 셀 143칸의 출처 쪽(p52~57 · p69~80 · p88 등)은 전부 두 판에서 같다 → 충돌 0, 덮어쓴 것 없음.
+- **공통 헬퍼**: `latest_disclosure_pdfs()` 는 재보사 매니페스트만 읽어 기존 39사 세 쌍은 두 판을 다 돌려준다(`[0]` = 옛 판). 이번 스크립트는 판을 파일명으로 명시했고 선택을 `edition_choice.json` 에 기록했다. 헬퍼는 고치지 않았다(공유 코드이고 하나는 owner 판단 대기).
+- **내 실수 2건(수습 완료)**: 빈 heredoc 파이썬 호출 2회(120초 정지) → 내 PID 만 종료. 첫 적용이 후 값 없는 4행에 `값_적용후: null` 을 넣어 마스터 관례(키 부재)로 보정(`fix_axa_nullkeys.py`).
+
 ## 2026-10-11 — 재보사 스윕 단계 13: 미뤘던 K-ICS 레인 6건 처리 (kics 레인, 커밋·푸시 없음)
 
 계약: orchestrator 티켓 `inbox/parser/20261011T0420Z__orchestrator__KR1101-KR1108__kics_deferred_leftovers.md`(「다음 round 로 미뤘던 거 전부」). 상세·재현·칸별 전후 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_13.md`, 스크립트 `…/reinsurer_load_20261011/stage13/`. 모든 쓰기는 칸 단위 + 해시 guard + 백업 후 temp + `os.replace`. docling 0회.

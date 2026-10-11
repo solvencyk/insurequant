@@ -1943,16 +1943,16 @@
    "section_chars_per_page": 705.6
   },
   "KR0049|2024.3Q": {
-   "raw": "KR0049_악사손해보험.pdf",
-   "bytes": 2310378,
-   "pages": 19,
-   "chars": 5685,
-   "chars_per_page": 299.2,
-   "status": "BORDERLINE",
-   "scan_pages": 4,
+   "raw": "KR0049_악사손해보험_v20251020.pdf",
+   "bytes": 4150550,
+   "pages": 27,
+   "chars": 11818,
+   "chars_per_page": 437.7,
+   "status": "READABLE",
+   "scan_pages": 5,
    "front_scan_run": 0,
-   "anchor_pages": 3,
-   "section_chars_per_page": 273.0
+   "anchor_pages": 8,
+   "section_chars_per_page": 523.6
   },
   "KR0049|2024.4Q": {
    "raw": "KR0049_악사손해보험.pdf",
