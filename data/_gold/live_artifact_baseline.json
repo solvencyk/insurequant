@@ -3,12 +3,12 @@
   "_emitted": "2026-08-25",
   "_promote": "승격 조건 — 아래를 충족하면 그 줄을 지우고 RED 로 되돌린다.\n  (1) 담당 stage 가 고쳐서 더는 실패하지 않으면 게이트가 BASELINE STALE 로 인쇄한다. 그때 그 줄을 지운다(지우지 않으면 등재부가 거짓말을 시작한다).\n  (2) 등재에 없는 새 발견은 이미 RED 다 — exit 2 로 push 를 막는다. 초기 착지만 YELLOW 이고 신규는 처음부터 RED 다.\n  (3) 기한 2026-10-31. 그때까지 남은 줄은 (a) 정당하면 legit 레지스트리로 승격, (b) 아니면 RED 로 되돌린다. 무기한 방치 금지.\n  (4) csm_waterfall_history.json 은 예외적으로 **파일 자체의 처분**이 승격 조건이다 — 빌더 재생성 또는 마스터 파생으로 교체(=drift 구조적으로 0). 그 전까지 drift 등재는 '스냅샷이 낡았다'는 사실의 박제이지 값의 승인이 아니다.\n라우팅: parser/ifrs17 (history·amort·insurance_pl·NB 부호), publishing (tier1/tier2 배포본 == 빌더 산출물 동기화, NB 배포본 분기 갱신).",
   "_counts": {
-    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING": 7,
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING": 15,
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK": 5,
     "csm_amort_schedule.json|AMORT_TOTAL_VS_CLOSING_CSM_BAND": 4,
     "insurance_pl_breakdown.json|INSPL_CSM_AMORT_BAND": 1,
     "kics_duration_gap.json|DURGAP_NAV_CROSSCHECK": 1,
-    "entries": 18
+    "entries": 25
   },
   "entries": {
     "csm_amort_schedule.json|AMORT_STATUS_NOT_OK|교보라이프플래닛생명보험": {
@@ -95,6 +95,46 @@
       "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
       "reason": "PL 마스터 39사 중 32사만 있어 7사가 원표 패널에서 빠진다. (2026-09-01: 하나손해/아이엠라이프/카카오페이손보 3사 추가로 회사수 36→39, 이 3사의 mvp 추출 완료로 패널도 29→32 — inbox 20260901T2000Z 처리, 남은 7사는 별개 사유)",
       "first_seen": "2026-08-25"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|마이브라운반려동물전문보험": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|뮌헨재보험": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|스위스리아시아": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|스코리재보험": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|알지에이리인슈어런스": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|제네럴재보험": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|퍼시픽라이프리": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
+    },
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|하노버재보험": {
+      "detail": "PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다",
+      "reason": "PL_breakdown.json 에 6841689 이후 처음 적재된 재보사 7곳+마이브라운. 보험손익 원표 패널(insurance_pl_breakdown.json)은 DART 보험손익 표로 만들어 이 회사들은 구조상 들어갈 수 없다(재보사 지점 · 마이브라운은 DART 확인 보류). 데이터 오류 아님. owner 2026-10-11 채팅 「8줄 등재 (권장)」, inbox/validation/20261011T2300Z. 게이트 코드는 좁히지 않았다.",
+      "first_seen": "2026-10-11"
     }
   }
 }

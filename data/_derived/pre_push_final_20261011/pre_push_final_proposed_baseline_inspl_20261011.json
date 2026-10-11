@@ -5,7 +5,7 @@
   "_how_to_apply": "Add the 8 keys below under entries{} in live_artifact_baseline.json with detail='PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다', first_seen=2026-10-11, bump _counts['insurance_pl_breakdown.json|INSPL_CENSUS_MISSING'] 7->15 and entries 18->26, then rerun scripts/validate_live_artifacts.py (expect RED=0, YELLOW(baselined)=25, STALE_BASELINE=0).",
   "keys": [
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|마이브라운반려동물전문보험",
-    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|뮤헨재보험",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|뮌헨재보험",
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|스위스리아시아",
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|스코리재보험",
     "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|알지에이리인슈어런스",
