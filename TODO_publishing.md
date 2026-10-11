@@ -1,19 +1,18 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> 갱신 2026-10-11 · 프롬프트 `docs/agents/claude-agent-publishing.md` · 이력 `docs/changelog_publishing.md`
+> 갱신 2026-10-12 · 프롬프트 `docs/agents/claude-agent-publishing.md` · 이력 `docs/changelog_publishing.md`
 > 2026-10-07 정리 전 전문은 `docs/todo_archive_publishing.md` 맨 위에 있다. publishing 은 마스터 JSON 만 쓰고 HTML 은 designer 몫이다.
 
 ## Status (최신 3개)
+
+- **2026-10-12 재보사 손해율 패널·xlsx 동기화(커밋만 · push 보류)** — `panel_loss_ratio.json` 37→44사(재보사 7곳 추가·기존 37사 바이트 동일)+최상위 `ae` 블록(예실차 162행·44사), xlsx `손해율` +1,904행(변경 셀 0).
+  남은 것: ① designer 가 `ae` 를 화면에 표시(`meta.note` 참조) ② 예실차(`claims_ae_ratio.json`)·긴 형식 표(`risk_premium_vs_expected_claims.json`)는 xlsx 시트가 없다 → 신설은 owner 승인(`build_master_xlsx.py` 스키마) ③ `public_exports/` 는 다른 마스터가 끝난 뒤 마감 라운드에서.
 
 - **2026-10-11 미니 재동기화(라이나 CSM·PL 항목 4·상각 정정, 커밋만 · push 보류)** — xlsx 4시트(`5d320c9`)·NB 마스터 재빌드·combo/compare 재빌드·`public_exports`(`812b007`). 드리프트 0, data-contract RED 0, live_artifacts RED 8(`INSPL_CENSUS_MISSING` 뿐, `NB_CENSUS_MISSING` 0).
   남은 것: ① 골든 `test_viz_ifrs17_panels_golden`(`csm_amort_schedule` 해시만)·지문 `--update` 는 validation ② 라이나 상각 스케줄은 패널에 안 간다(패널 행이 DART 원천) — 화면에 싸지 owner 판단. 상세 `data/disclosure/_meta/mini_resync_runlog_20261011.md`.
 
 - **2026-10-11 마감 라운드(커밋만, push·배포 보류)** — xlsx 12시트 동기화(`8848cb8`, 드리프트 0)·`public_exports` 재생성(`61babb6`)·IFRS17 viz 상각/민감도에 재보사 7곳(`17dca81`)·csm_combo(48사)/compare 재빌드(`89ecf9a`)·서울보증 forward 제외 행·tier 스크립트 회사명 수정. 게이트 data-contract RED 22(알려진 것만), `MASTER_XLSX_*` 0.
   남은 것: ① 골든 `test_viz_ifrs17_panels_golden`(+7/+7 행)·지문 `--update` 는 validation ② `validate_live_artifacts` 새 RED 26 = `INSPL_CENSUS_MISSING` 8(`NB_CENSUS_MISSING` 18 은 orchestrator 승인으로 NB 마스터 +18행(`1412aaf`)·xlsx/공개본(`04ea6c6`)으로 해소)(보험손익 원표 viz 는 DART 표라 재보사 없음) — 마스터 추가 승인 또는 게이트 면제는 owner/validation ③ designer 티켓 2건(K-ICS `exclusion_reason` 읽기, IFRS17 상각 차트 y축 100배 작게 찍힘 — 라이브에도 있는 것으로 보임). 상세 `data/disclosure/_meta/final_resync_runlog_20261011.md`.
-
-- **2026-10-11 보험계약부채 시트 신설** — `insurance_liability_portfolio.json`(6,111행) -> xlsx 시트 `보험계약부채`(17번째, 시트 sync 만, 기존 16시트 값 SHA 동일) + `public_exports/보험계약부채.json`(`--only` 로 1개 + manifest 항목 1개). 열 = 마스터 + 단위·기준표시·비고. `MASTER_SHEET_PENDING` 삭제, 시트 수 선언 17/15.
-  KB라이프 tier1/tier2 `company` 1칸 `KB라이프생명` 으로 정정(도넛 '데이터 없음' 해소). 남은 것: designer `download-survey.js` SHEETS 에 1줄 추가(없으면 다운로드 목록에 안 나옴) · 컴퓨트 스크립트 재실행 시 옛 이름 부활 방지 · 다른 에이전트 완료 후 나머지 시트 sync + public_exports 전체 재생성. 상세 `data/disclosure/_meta/ilp_master_sheet_runlog.md`.
-
 
 ## 열린 일
 

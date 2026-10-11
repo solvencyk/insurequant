@@ -3,6 +3,7 @@
 
 Reads (READ ONLY, never written):
     data/loss_ratio/master_loss_ratio.json   -> data/loss_ratio/panel_loss_ratio.json
+    data/loss_ratio/claims_ae_ratio.json     -> same panel, top-level `ae` block (actual-vs-expected claims ratio)
     data/persistency/master_persistency.json -> data/persistency/panel_persistency.json
 
 Both outputs are company -> disclosure-quarter nested with array-compressed rows, only the
@@ -25,6 +26,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LR_SRC = ROOT / "data" / "loss_ratio" / "master_loss_ratio.json"
+AE_SRC = ROOT / "data" / "loss_ratio" / "claims_ae_ratio.json"
 PS_SRC = ROOT / "data" / "persistency" / "master_persistency.json"
 LR_OUT = ROOT / "data" / "loss_ratio" / "panel_loss_ratio.json"
 PS_OUT = ROOT / "data" / "persistency" / "panel_persistency.json"
@@ -123,6 +125,26 @@ def _agg(leaves, years):
     return out
 
 
+def build_ae(names: dict) -> dict:
+    """Claims actual-vs-expected block: master values copied as-is (no rounding / recompute).
+    Row = [기준연도, 사업구분, 예상손해율, 실제손해율, 예실차비율, flags]."""
+    out: dict = {}
+    for r in _load(AE_SRC):
+        code, q = r["원보험사코드"], r["공시분기"]
+        flags = list(r.get("플래그") or [])
+        if r.get("identity_break"):
+            flags.append("identity_break")
+        if r.get("dash"):
+            flags.append("dash")
+        c = out.setdefault(code, {"n": names.get(code) or r["원수사명"], "q": {}})
+        c["q"].setdefault(q, []).append([r["기준연도"], r.get("사업구분") or "",
+                                          _num(r["예상손해율"]), _num(r["실제손해율"]), _num(r["예실차비율"]), flags])
+    for c in out.values():
+        for rows in c["q"].values():
+            rows.sort(key=lambda x: (x[0], x[1]))
+    return dict(sorted(out.items()))
+
+
 def build_loss_ratio() -> dict:
     rows = _load(LR_SRC)
     comp: dict[str, dict] = {}
@@ -193,6 +215,7 @@ def build_loss_ratio() -> dict:
         for qd in c["q"].values():
             if "c" in qd and len(set(map(tuple, qd["c"].values()))) == 1 and len(qd["c"]) == len(qd["s"]):
                 qd["c"] = list(next(iter(qd["c"].values())))
+    ae = build_ae(names)
     out = {
         "meta": {
             "source": "master_loss_ratio.json",
@@ -202,9 +225,12 @@ def build_loss_ratio() -> dict:
             "quarters": quarters,
             "note": ("q[분기]: s={세그먼트:[[구분,상품구분,포트폴리오,[손해율%...]]]}, c=열 라벨(표준 16칸이 아닐 때만, 아니면 meta.years). "
                      "행 종류: 합계=[합계,'',합계] / 구분 소계=[구분,'',''] / 상품구분 소계=[구분,상품,''] / 잎=포트폴리오 있음. "
-                     "소계 손해율=Σ예상보험금÷Σ위험보험료×100(빌더 계산, 마스터에는 소계 행 없음). 전 칸 '-' 인 행은 뺌."),
+                     "소계 손해율=Σ예상보험금÷Σ위험보험료×100(빌더 계산, 마스터에는 소계 행 없음). 전 칸 '-' 인 행은 뺌. "
+                     "ae[회사코드]={n:회사명,q:{공시분기:[[기준연도,사업구분(없으면 ''),예상손해율%,실제손해율%,예실차비율%p,[플래그...]]]}}: "
+                     "claims_ae_ratio.json 값 그대로(반올림·재계산 없음, 공시값 '-'는 null), 플래그는 마스터 플래그 + 'identity_break'/'dash'."),
         },
         "companies": comp,
+        "ae": ae,
     }
     size = _write(LR_OUT, out)
     print(f"[loss_ratio] companies={len(comp)} quarters={quarters} bytes={size:,}")
