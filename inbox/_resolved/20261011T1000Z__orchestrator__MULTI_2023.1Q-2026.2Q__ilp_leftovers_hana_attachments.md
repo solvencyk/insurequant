@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T1000Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -29,4 +29,4 @@ owner 지시(2026-10-11, 밤새 처리): 「다음 round 로 미뤄 둔 거 전�
 - 단계별 결과(적재 행 수·정정 셀 전후), 하나손보 14분기 표(항목 10~15 값과 BS 앵커 대조), 남은 보류와 사유, RED 7 사실표, 기존 칸 변경 0 증명, 검산기(`validate_insurance_liability_lic.py`·`validate_insurance_liability_portfolio.py`) 전후, `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+answered by parser-ifrs17 86b055b (2026-10-11): 하나손보 KR0050 11분기 별첨 적재(+66행), 라이나·처브 2023~24 중간분기 +48행, 메트라이프 PAA 소수 12칸 정정, 현대해상 추출기 쪽번호 결함 수정, raw 글롭 7개 배선(테스트 422 passed). 기존 값 변경은 메트라이프 12칸뿐(오케스트레이터가 HEAD 대비 대조 확인). 검산기 RED 전후 동일: LIC 0, 포트폴리오 7(KR0100 5·KR0029 1·KR1102 2026.1Q 1 = owner 결정 대기, 사실표는 런로그 ilp_leftovers_runlog_20261011.md).
