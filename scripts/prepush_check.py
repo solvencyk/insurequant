@@ -525,6 +525,8 @@ def main(argv=None) -> int:
             # (호출처 0). 게이트에 케이스를 더해도 안 돌면 honor-system 이다. ~55초.
             "tests/test_data_contract_selftest.py",
             "tests/test_pl_fs_note_lineage.py",
+            # 경영공시 요약 PL 계보 reference_only(17/20/21) 허용 -- DART 없는 회사 한정(2026-10-12, 재보사 PL 공란 채우기). ~25초.
+            "tests/test_pl_reinsurer_disclosure_lineage.py",
             "tests/test_pl_source_absent_exemption.py",
             "tests/test_pl_ytd_collapse_owner_confirmed.py",
             # 분기 지평 트립와이어(2026-08-29 신설). 게이트 세 곳이 각자 분기 목록을 리터럴로
