@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20261010T2351Z
-status: open
+status: resolved
 route: reparse
 company: KR0049 악사손해보험 · KR0051 신한이지손해보험 · KR0050 하나손해보험
 period: 2024.3Q · 2025.3Q · 2025.4Q
@@ -24,3 +24,4 @@ BS·PL 별첨 수집(`inbox/downloader/20261011T0830Z…`) 중 사이트 현행�
 같은 방식으로 **이번 티켓 대상 11사 밖의 회사는 사이트 현행본과 raw 를 대조하지 않았다.** 다른 회사에도 「나중에 K-ICS 를 채워 다시 올린 판」이 있을 수 있다(스위스리 2023.4Q·AXA 2024.3Q 가 그 사례). 전수 대조가 필요하면 다운로더에 발주.
 
 ## 답변 (recipient 작성 — 처리 후)
+answered by parser-kics a81f401 (2026-10-11): 악사 2024.3Q 신판으로 +17행·후 9칸 적재(기존 값 변경 0, 인쇄값 상이 4칸은 보류=owner), 신한이지 2025.3Q K-ICS 표 동일→원본 유지, 하나 2025.4Q K-ICS 레인 셀 영향 0(대출채권 표 p21·22 정정은 ifrs17 레인 참고). 오케스트레이터가 HEAD 대비 셀 단위 대조로 확인 후 종결.
