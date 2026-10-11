@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261011T2100Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -38,3 +38,4 @@ iter: 1
 - 단계별 결과(시트별 추가 행·변경 칸 대 마스터 diff, 기존 시트 불변 증명), NB 전후, 패널 전후 변화(회사·분기), `public_exports` 변경 목록과 게이트, 골든 실패 사유, 게이트·테스트 결과. `TODO_publishing.md` Status + `docs/changelog_publishing.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(publishing 5d320c9·812b007·65272db, orchestrator 검증·종결 2026-10-11) 시작 시 xlsx 드리프트 189칸→종료 0. 시트: 손익분해PL +33행(재보사 24·라이나 9)/2칸, CSM워터폴 +54(라이나)/15칸(빈칸→값), CSM상각 +50(라이나)/172칸, 신계약CSM배수 +9(라이나)/6칸, 삭제 0·나머지 시트 불변. NB 마스터 381→390행(라이나만 변경, 연누계 9.0~14.6배·당분기 9.0~15.2배, 2023.3Q 당분기만 공란=2023.2Q CSM 보류), 재보사 18행 null 유지, NB_CENSUS_MISSING 0. IFRS17 viz 4패널·csm_waterfall 재빌드 바이트 동일, csm_combo 라이나 신계약CSM 11칸 채움, compare 53칸 변경. public_exports 4시트+manifest(build_id 5d320c9), 공개 게이트 0. data_contract RED 0, live_artifacts RED 8(INSPL_CENSUS_MISSING 기존). 남은 것: viz 골든 csm_amort_schedule 해시(validation). 참고(owner 판단): csm_amort_schedule 패널의 라이나 행은 DART FY2025 분할표 부분합이고, 마스터에서 읽는 규칙은 재보사에만 적용되어 라이나 상각 스케줄 마스터값이 패널에 안 간다.
