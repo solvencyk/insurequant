@@ -34,7 +34,12 @@
     //  SheetJS json_to_sheet는 전 행의 키 합집합으로 헤더를 만든다 — 실측 확인 2026-08-29).
     { name: "기본자본소진율", file: "public_exports/기본자본소진율.json", code: "T1", label: "기본자본 소진율 (신종자본증권)" },
     { name: "보완자본소진율", file: "public_exports/보완자본소진율.json", code: "T2", label: "보완자본 소진율 (후순위채)" },
-    { name: "자본비율전망", file: "public_exports/자본비율전망.json", code: "FWD", label: "자본비율 5년 전망 (2026~2030)" }
+    // 2026-10-11 추가 3종. 순서는 scripts/export_public_sheets.py MASTERS 와 같다. 자본성증권발행현황·
+    // 금리듀레이션갭은 스냅샷·manifest 에 이미 있었는데 이 목록에서만 빠져 있었다(의도된 비공개 아님 —
+    // 둘 다 공개 시트로 검증 게이트를 통과한다). 보험계약부채는 IFRS17.html 섹션 3 의 원천.
+    { name: "자본성증권발행현황", file: "public_exports/자본성증권발행현황.json", code: "CAPSEC", label: "자본성증권 발행현황 (증권별)" },
+    { name: "자본비율전망", file: "public_exports/자본비율전망.json", code: "FWD", label: "자본비율 5년 전망 (2026~2030)" },
+    { name: "금리듀레이션갭", file: "public_exports/금리듀레이션갭.json", code: "DGAP", label: "K-ICS 금리 듀레이션 갭" },
   ];
   var MANIFEST_FILE = "public_exports/manifest.json";
   // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
