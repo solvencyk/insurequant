@@ -59,8 +59,6 @@
     .kpi-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.1;letter-spacing:-.01em}
     .kpi-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:2px}
     .kpi-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
-    .kpi-sub{margin-top:2px;font-size:11px;color:var(--muted);font-weight:500}
-    .kpi-sub .iq-help-btn{width:18px;height:18px;font-size:11px}
     @keyframes riseIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
     .rise{animation:riseIn .5s ease backwards}
     @media (max-width:640px){ .kpi-strip{grid-template-columns:repeat(2,1fr);gap:8px} .kpi{padding:12px 14px} .kpi-val{font-size:20px} }
@@ -151,7 +149,7 @@
   <div class="container">
     <div class="hero">
       <div class="kpi-strip">
-        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div><div class="kpi-sub"><span id="kpiCsmSub"></span><span class="iq-help" id="kpiCsmHelp" hidden><button type="button" class="iq-help-btn" aria-label="업계 총 기말 CSM 정의" aria-describedby="help-kpi-csm">?</button><span class="iq-help-pop" role="tooltip" id="help-kpi-csm"></span></span></div></div>
+        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div></div>
         <div class="kpi rise" style="animation-delay:.08s"><div class="kpi-val" id="kpiRatio">—</div><div class="kpi-lab">K-ICS 지급여력비율 중위값</div></div>
         <div class="kpi rise" style="animation-delay:.14s"><div class="kpi-val" id="kpiCount">—</div><div class="kpi-lab">수록 보험사</div></div>
         <div class="kpi rise" style="animation-delay:.20s"><div class="kpi-val" id="kpiPeriod">—</div><div class="kpi-lab">기준 분기</div></div>
@@ -449,7 +447,7 @@
     // 기준 분기 = meta.quarters 중 가장 늦은 분기 가운데, 그 분기에 값이 있는 모집단 회사 수가 「패널에 값이 한 번이라도 있는 모집단 회사」의 80%(올림) 이상인 첫 분기
     //  (한두 곳만 새 분기를 먼저 올린 경우 그 분기를 기준으로 삼아 합이 급락해 보이는 것을 막는다).
     // 모집단 회사가 기준 분기에 값이 없으면(두 열 모두 null) 그 회사의 **기준 분기 이전 가장 최근 값**을 대신 쓰고 회사 수에는 넣는다(하노버재보험 등).
-    //  그런 회사(이름·분기)는 hit.fb 로 돌려줘 ? 팝오버 문구에 데이터에서 도출해 적는다. 기준 분기 이전에도 값이 없으면 합·회사 수에서 뺀다. 단위 억원.
+    //  그런 회사(이름·분기)는 hit.fb 에 담긴다(화면 문구는 없다 — 카드는 값+라벨만). 기준 분기 이전에도 값이 없으면 합·회사 수에서 뺀다. 단위 억원.
     // 폴백: 패널을 못 받았거나(라이브 판이 구판이라 파일이 없거나 404) 조건을 만족하는 분기가 없으면 옛 totalClosingCsmEok() 로 되돌린다.
     //  (구판 패널은 40사·8분기라 2026.2Q 가 없을 수 있다 — 새 판이 배포되기 전에 이 HTML 만 먼저 가도 KPI 는 깨지지 않고 옛 방식 값을 보인다.)
     function industryCsmFromPanel(P, universe){
@@ -478,7 +476,6 @@
     function updateCsmKpi(){
       if(csmPanel===undefined) return;        // 패널 로딩이 끝나면(성공·실패 모두) 다시 불린다
       const el=document.getElementById('kpiCsm'); if(!el) return;
-      const sub=document.getElementById('kpiCsmSub'), help=document.getElementById('kpiCsmHelp'), pop=document.getElementById('help-kpi-csm');
       const fmt=v=>samoNum(v,0)+'<span class="u">조</span>';
       // 모집단은 시장지도 KPI(수록 보험사)와 같은 회사다 — K-ICS 데이터가 아직 안 왔으면 기다린다(updateKpis 가 K-ICS 로딩 뒤 다시 부른다).
       if(!(allData&&allData.length)) return;
@@ -486,17 +483,11 @@
       const hit=csmPanel?industryCsmFromPanel(csmPanel, uni&&uni.size?uni:null):null;
       if(hit){
         countUp(el, hit.eok/10000, fmt);
-        if(sub) sub.textContent=hit.q+' 기준 · '+hit.n+'사';
-        if(pop) pop.textContent='경영공시 2-4 보험부채 현황표의 보험계약마진(일반모형+변동수수료접근법) 합입니다. 연 1회 공시하는 회사도 분기별 잔액이 공시되어 모든 회사를 같은 분기로 합산했습니다.'
-          +(hit.fb.length?' '+hit.q+' 값이 없는 회사는 직전 값으로 대신했습니다: '+hit.fb.map(f=>shortName(f.n)+'('+f.q+')').join(', ')+'.':'');
       }else{
         const eok=totalClosingCsmEok();       // 폴백: 회사별 최신 분기 합(분기가 섞임)
         if(eok==null) return;
         countUp(el, eok/10000, fmt);
-        if(sub) sub.textContent='회사별 최신 공시 분기 합';
-        if(pop) pop.textContent='회사별로 가장 최근에 공시된 기말 CSM 을 합한 값입니다. 연 1회 공시하는 회사는 직전 사업연도 말 값이라 분기가 섞여 있습니다.';
       }
-      if(help) help.hidden=false;
     }
     function samoNum(n,digits){               // 정수/소수 + 음수 △ (한국 회계)
       if(n==null||!Number.isFinite(n)) return '—';
@@ -967,11 +958,9 @@
 
     // M2: mobile list mirror of the treemap — same data, color scale, and click-nav.
     // Shown instead of the treemap on narrow screens (CSS @media <=640px).
-    // MOB-INDEX-FOLD: 생보/손보 각각 top 5 + 더보기, maxV 섹터 독립.
+    // MOB-INDEX-FOLD: 생보/손보/재보험·보증 각각 top 5 + 더보기, maxV 섹터 독립.
     const FOLD = 5;
-    // 재보험·보증은 최대 10곳 안팎이라 접지 않고 전부 보인다(owner 요청).
-    let lifeExpanded = false, nonlifeExpanded = false;
-    const FOLDABLE = { 'Life': true, 'Non-Life': true, 'Re': false };
+    let listExpanded = {};                    // 섹터 키 → 펼침 여부
     function renderList(sector){
       const host = document.getElementById('map-list');
       if (!host) return;
@@ -983,7 +972,7 @@
 
       for (const s of sKeys){
         if (sector !== 'ALL' && s !== sector) continue;
-        const expanded = FOLDABLE[s] === false ? true : (s === 'Life' ? lifeExpanded : nonlifeExpanded);
+        const expanded = !!listExpanded[s];
 
         const items = (GROUPED[s] || []).map(d => {
           const v = ratioType === 'basicCapital'
@@ -1030,13 +1019,13 @@
           host.appendChild(row);
         }
 
-        if (isMob && FOLDABLE[s] !== false && items.length > FOLD){
+        if (isMob && items.length > FOLD){
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
           btn.textContent = expanded ? '접기' : `더보기 (${items.length - FOLD}개사)`;
           btn.addEventListener('click', () => {
             const next = !expanded;
-            if (s === 'Life') lifeExpanded = next; else nonlifeExpanded = next;
+            listExpanded[s] = next;
             renderList(sector);
           });
           host.appendChild(btn);
@@ -1082,7 +1071,7 @@
     }
 
     const sel = document.getElementById("sector");
-    function redraw() { lifeExpanded = false; nonlifeExpanded = false; if (sel) render(sel.value); }
+    function redraw() { listExpanded = {}; if (sel) render(sel.value); }
     // 모바일 스크롤 시 URL바 노출/숨김 → 높이만 바뀌는 resize가 발생. 그때 redraw하면 '더보기'가 다시 접힘.
     // 폭이 실제로 바뀐 경우(회전·창 크기 변경)에만 재그림. 모바일 높이-only resize는 무시.
     let _lastW = window.innerWidth;
@@ -1401,8 +1390,8 @@
     // owner 2026-08-30: 막대가 기말 잔액에 비례하던 것을 배수로 바꿨다 — 숫자(배수)와 막대가
     // 서로 다른 것을 가리키면 한 줄 안에서 눈이 두 축을 오간다. 정렬만 잔액 기준으로 남긴다
     // (큰 회사부터 보되, 막대 길이는 '한 건당 얼마나 남기나'를 비교하게 한다).
-    // MOB: 생보 top5 + 더보기, 손보 top5 + 더보기 (FOLD=5, K-ICS 리스트와 동일).
-    let bubbleLifeExpanded = false, bubbleNonlifeExpanded = false;
+    // MOB: 생보·손보·재보험·보증 각각 top5 + 더보기 (FOLD=5, K-ICS 리스트와 동일).
+    let bubbleExpanded = {};
     function renderBubbleList() {
       const host = document.getElementById('bubble-list');
       if (!host) return;
@@ -1443,7 +1432,7 @@
       for (const sec of SEG_ORDER) {
         const allRows = items.filter(it => it.sector === sec).sort((a, b) => (b.closing || 0) - (a.closing || 0));
         if (!allRows.length) continue;
-        const expanded = FOLDABLE[sec] === false ? true : (sec === 'Life' ? bubbleLifeExpanded : bubbleNonlifeExpanded);
+        const expanded = !!bubbleExpanded[sec];
         const rows = (isMob && !expanded) ? allRows.slice(0, FOLD) : allRows;
         // 막대 스케일: 표시 그룹 내 최대 **NB 배수** 기준 (섹터·fold 독립 → outlier 무압축).
         // 실측 배수 범위 0.01~22.85, 음수 0건이라 그대로 폭에 쓴다.
@@ -1489,13 +1478,13 @@
           });
           host.appendChild(row);
         }
-        if (isMob && FOLDABLE[sec] !== false && allRows.length > FOLD) {
+        if (isMob && allRows.length > FOLD) {
           const btn = document.createElement('button');
           btn.className = 'li-more-btn';
           btn.textContent = expanded ? '접기' : `더보기 (${allRows.length - FOLD}개사)`;
           btn.addEventListener('click', () => {
             const next = !expanded;
-            if (sec === 'Life') bubbleLifeExpanded = next; else bubbleNonlifeExpanded = next;
+            bubbleExpanded[sec] = next;
             renderBubbleList();
           });
           host.appendChild(btn);
@@ -1560,14 +1549,14 @@
     // M3: 모바일 폭에서 로드되면 차트 init이 미뤄짐(renderBubble 가드) → 데스크톱 복귀 시 재렌더 + 리사이즈
     const bubbleMobileMq = window.matchMedia('(max-width:640px)');
     bubbleMobileMq.addEventListener('change', (e) => {
-      if (e.matches) { bubbleLifeExpanded = false; bubbleNonlifeExpanded = false; renderBubbleList(); return; }   // 모바일 진입: 리스트·메타 갱신
+      if (e.matches) { bubbleExpanded = {}; renderBubbleList(); return; }   // 모바일 진입: 리스트·메타 갱신
       renderBubble(document.getElementById('bubble-sector')?.value || 'ALL');
       if (bubbleChart) bubbleChart.resize();
     });
 
     const bubbleSectorSel = document.getElementById('bubble-sector');
     if (bubbleSectorSel) {
-      bubbleSectorSel.addEventListener('change', () => { bubbleLifeExpanded = false; bubbleNonlifeExpanded = false; renderBubble(bubbleSectorSel.value); renderBubbleList(); });
+      bubbleSectorSel.addEventListener('change', () => { bubbleExpanded = {}; renderBubble(bubbleSectorSel.value); renderBubbleList(); });
     }
 
     loadData();
