@@ -653,14 +653,13 @@
       }
       const grand = groups.reduce((a,b)=>a+b.sum,0) || 1;
       // 재보험·보증은 지급여력기준금액 합이 전체의 4% 안팎이라 비례 면적으로는 한 줄(53px)이 돼 칸이 안 보인다.
-      // 업권이 여럿일 때만 최소 면적 비중(RE_MIN_SHARE)을 보장한다 — 그 업권 안의 칸끼리만 크기 비교가 되므로
-      // 제목에 그 사실을 적는다(group.floored).
-      const RE_MIN_SHARE = 0.18;
+      // 업권이 여럿일 때만 최소 면적 비중(RE_MIN_SHARE)을 보장한다.
+      const RE_MIN_SHARE = 0.07;
       const gItems = groups
         .map(g => {
           const share = g.sum/grand;
-          g.floored = groups.length > 1 && g.key === 'Re' && share < RE_MIN_SHARE;
-          return { value: g.floored ? RE_MIN_SHARE : share, data: g };
+          const floored = groups.length > 1 && g.key === 'Re' && share < RE_MIN_SHARE;
+          return { value: floored ? RE_MIN_SHARE : share, data: g };
         })
         .sort((a,b)=>b.value-a.value);
 
@@ -676,7 +675,7 @@
         const groupW = Math.max(0, Math.min(gr.w, rect.w - groupX));
         const groupH = Math.max(0, Math.min(gr.h, rect.h - groupY));
         
-        out.push({ type:"group", sector: gData.key, floored: !!gData.floored, x: groupX, y: groupY, w: groupW, h: groupH });
+        out.push({ type:"group", sector: gData.key, x: groupX, y: groupY, w: groupW, h: groupH });
 
         // Inner recsplit for companies
         const padOuter = 6, titleH = 22, padInner = 6;
@@ -796,7 +795,7 @@
           g.style.height = finalGroupH + "px";
           const title = document.createElement("div");
           title.className = "group-title";
-          title.textContent = (SEG_LABEL[r.sector] || r.sector) + (r.floored ? ' · 칸 크기는 이 업권 안에서만 비교' : '');
+          title.textContent = (SEG_LABEL[r.sector] || r.sector);
           g.appendChild(title);
           el.appendChild(g);
         } else if (r.type === "cell") {
