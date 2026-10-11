@@ -1,0 +1,26 @@
+[
+  {
+    "company_code": "KR0074",
+    "quarter": "2025.3Q",
+    "item_block": "csm_waterfall",
+    "source_id": "DISCLOSURE",
+    "source_file": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+    "as_of_date": "2025-09-30"
+  },
+  {
+    "company_code": "KR0074",
+    "quarter": "2026.1Q",
+    "item_block": "csm_waterfall",
+    "source_id": "DISCLOSURE",
+    "source_file": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+    "as_of_date": "2026-03-31"
+  },
+  {
+    "company_code": "KR0074",
+    "quarter": "2026.2Q",
+    "item_block": "csm_waterfall",
+    "source_id": "DISCLOSURE",
+    "source_file": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+    "as_of_date": "2026-06-30"
+  }
+]

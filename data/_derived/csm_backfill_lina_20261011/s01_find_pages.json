@@ -1,0 +1,417 @@
+{
+ "FY2023_Q1": {
+  "file": "data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+  "pages": 85,
+  "rollforward": [
+   57,
+   58
+  ],
+  "csm_adj": [
+   57,
+   58,
+   59
+  ],
+  "csm_amort": [
+   57,
+   58
+  ],
+  "exp_amort": [
+   61
+  ],
+  "text_pages": 80
+ },
+ "FY2023_Q2": {
+  "file": "data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+  "pages": 113,
+  "rollforward": [
+   84,
+   85,
+   86
+  ],
+  "csm_adj": [
+   84,
+   85,
+   86
+  ],
+  "csm_amort": [
+   84,
+   85
+  ],
+  "exp_amort": [
+   88
+  ],
+  "text_pages": 109
+ },
+ "FY2023_Q3": {
+  "file": "data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf",
+  "pages": 94,
+  "rollforward": [
+   62,
+   63,
+   67,
+   68
+  ],
+  "csm_adj": [
+   62,
+   63,
+   67,
+   68
+  ],
+  "csm_amort": [
+   62,
+   63
+  ],
+  "exp_amort": [
+   65,
+   69
+  ],
+  "text_pages": 88
+ },
+ "FY2023_Q4": {
+  "file": "data/disclosure/FY2023_Q4/raw/KR0074_라이나생명보험.pdf",
+  "pages": 189,
+  "rollforward": [
+   142,
+   143,
+   147,
+   148
+  ],
+  "csm_adj": [
+   142,
+   143,
+   147,
+   148
+  ],
+  "csm_amort": [
+   142,
+   143
+  ],
+  "exp_amort": [
+   144,
+   149
+  ],
+  "text_pages": 171
+ },
+ "FY2024_Q1": {
+  "file": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+  "pages": 83,
+  "rollforward": [
+   51,
+   52,
+   57
+  ],
+  "csm_adj": [
+   51,
+   52,
+   57,
+   58
+  ],
+  "csm_amort": [
+   51,
+   52
+  ],
+  "exp_amort": [
+   54,
+   59
+  ],
+  "text_pages": 78
+ },
+ "FY2024_Q2": {
+  "file": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+  "pages": 108,
+  "rollforward": [
+   76,
+   77,
+   82,
+   83
+  ],
+  "csm_adj": [
+   76,
+   77,
+   82,
+   83
+  ],
+  "csm_amort": [
+   76,
+   77
+  ],
+  "exp_amort": [
+   79,
+   84
+  ],
+  "text_pages": 103
+ },
+ "FY2024_Q3": {
+  "file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+  "pages": 84,
+  "rollforward": [
+   52,
+   53,
+   58,
+   59
+  ],
+  "csm_adj": [
+   52,
+   53,
+   58,
+   59
+  ],
+  "csm_amort": [
+   52,
+   53
+  ],
+  "exp_amort": [
+   55,
+   60
+  ],
+  "text_pages": 79
+ },
+ "FY2024_Q4": {
+  "file": "data/disclosure/FY2024_Q4/raw/KR0074_라이나생명보험.pdf",
+  "pages": 266,
+  "rollforward": [
+   212,
+   213,
+   223,
+   224
+  ],
+  "csm_adj": [
+   212,
+   213,
+   223,
+   224
+  ],
+  "csm_amort": [
+   212,
+   213
+  ],
+  "exp_amort": [
+   225
+  ],
+  "text_pages": 247
+ },
+ "FY2025_Q1": {
+  "file": "data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf",
+  "pages": 92,
+  "rollforward": [
+   57,
+   58,
+   64,
+   65
+  ],
+  "csm_adj": [
+   57,
+   58,
+   64,
+   65
+  ],
+  "csm_amort": [
+   57,
+   58
+  ],
+  "exp_amort": [
+   66
+  ],
+  "text_pages": 87
+ },
+ "FY2025_Q2": {
+  "file": "data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf",
+  "pages": 118,
+  "rollforward": [
+   83,
+   84,
+   90,
+   91
+  ],
+  "csm_adj": [
+   83,
+   84,
+   90,
+   91
+  ],
+  "csm_amort": [
+   83,
+   84
+  ],
+  "exp_amort": [
+   92
+  ],
+  "text_pages": 113
+ },
+ "FY2025_Q3": {
+  "file": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+  "pages": 165,
+  "rollforward": [
+   63,
+   64,
+   70,
+   71,
+   130,
+   131,
+   137,
+   138
+  ],
+  "csm_adj": [
+   63,
+   64,
+   70,
+   71,
+   130,
+   131,
+   137,
+   138
+  ],
+  "csm_amort": [
+   63,
+   64,
+   130,
+   131
+  ],
+  "exp_amort": [
+   72,
+   139
+  ],
+  "text_pages": 156
+ },
+ "FY2025_Q4": {
+  "file": "data/disclosure/FY2025_Q4/raw/KR0074_라이나생명보험.pdf",
+  "pages": 424,
+  "rollforward": [
+   232,
+   233,
+   234,
+   235,
+   249,
+   250,
+   361,
+   362,
+   363,
+   364,
+   378,
+   379
+  ],
+  "csm_adj": [
+   232,
+   233,
+   234,
+   235,
+   249,
+   250,
+   361,
+   362,
+   363,
+   364,
+   378,
+   379
+  ],
+  "csm_amort": [
+   232,
+   233,
+   234,
+   235,
+   361,
+   362,
+   363,
+   364
+  ],
+  "exp_amort": [
+   251,
+   380
+  ],
+  "text_pages": 354
+ },
+ "FY2026_Q1": {
+  "file": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+  "pages": 174,
+  "rollforward": [
+   66,
+   67,
+   68,
+   69,
+   75,
+   76,
+   137,
+   138,
+   139,
+   140,
+   146,
+   147
+  ],
+  "csm_adj": [
+   66,
+   67,
+   68,
+   69,
+   75,
+   76,
+   137,
+   138,
+   139,
+   140,
+   146,
+   147
+  ],
+  "csm_amort": [
+   66,
+   67,
+   68,
+   69,
+   137,
+   138,
+   139,
+   140
+  ],
+  "exp_amort": [
+   77,
+   148
+  ],
+  "text_pages": 165
+ },
+ "FY2026_Q2": {
+  "file": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+  "pages": 197,
+  "rollforward": [
+   91,
+   92,
+   93,
+   94,
+   100,
+   101,
+   161,
+   162,
+   163,
+   164,
+   170,
+   171
+  ],
+  "csm_adj": [
+   91,
+   92,
+   93,
+   94,
+   100,
+   101,
+   161,
+   162,
+   163,
+   164,
+   170,
+   171
+  ],
+  "csm_amort": [
+   91,
+   92,
+   93,
+   94,
+   161,
+   162,
+   163,
+   164
+  ],
+  "exp_amort": [
+   102,
+   172
+  ],
+  "text_pages": 190
+ }
+}

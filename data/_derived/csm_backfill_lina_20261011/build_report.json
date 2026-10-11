@@ -1,0 +1,675 @@
+{
+ "ticket": "20261011T1700Z csm_backfill_annual_filers (Lina only)",
+ "quarters": {
+  "2026.2Q": {
+   "pdf": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+   "pages_separate": {
+    "유배당": 91,
+    "유배당 외": 93
+   },
+   "pages_consolidated": {
+    "유배당": 161,
+    "유배당 외": 163
+   },
+   "pages_prior_comparative": {
+    "유배당": 92,
+    "유배당 외": 94
+   },
+   "per_account_천원": {
+    "유배당": {
+     "open": 1693624,
+     "new": 0,
+     "fin": 26556,
+     "adj": -666552,
+     "amort": -97956,
+     "close": 955672
+    },
+    "유배당 외": {
+     "open": 2374366289,
+     "new": 219176459,
+     "fin": 39337370,
+     "adj": -401048763,
+     "amort": -140642468,
+     "close": 2091188887
+    }
+   },
+   "sum_천원": {
+    "open": 2376059913,
+    "new": 219176459,
+    "fin": 39363926,
+    "adj": -401715315,
+    "amort": -140740424,
+    "close": 2092144559
+   },
+   "identity_residual_천원": 0,
+   "separate_equals_consolidated": true,
+   "comparative_prior_period": "2025.2Q",
+   "comparative_sum_천원": {
+    "open": 2764859850,
+    "new": 186076804,
+    "fin": 45797722,
+    "adj": -148524181,
+    "amort": -170494252,
+    "close": 2677715943
+   }
+  },
+  "2026.1Q": {
+   "pdf": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+   "pages_separate": {
+    "유배당": 66,
+    "유배당 외": 68
+   },
+   "pages_consolidated": {
+    "유배당": 137,
+    "유배당 외": 139
+   },
+   "pages_prior_comparative": {
+    "유배당": 67,
+    "유배당 외": 69
+   },
+   "per_account_천원": {
+    "유배당": {
+     "open": 1693624,
+     "new": 0,
+     "fin": 13318,
+     "adj": 40258,
+     "amort": -58764,
+     "close": 1688436
+    },
+    "유배당 외": {
+     "open": 2374366289,
+     "new": 96391242,
+     "fin": 19644164,
+     "adj": -53183246,
+     "amort": -74164350,
+     "close": 2363054099
+    }
+   },
+   "sum_천원": {
+    "open": 2376059913,
+    "new": 96391242,
+    "fin": 19657482,
+    "adj": -53142988,
+    "amort": -74223114,
+    "close": 2364742535
+   },
+   "identity_residual_천원": 0,
+   "separate_equals_consolidated": true,
+   "comparative_prior_period": "2025.1Q",
+   "comparative_sum_천원": {
+    "open": 2764859850,
+    "new": 84124940,
+    "fin": 23116062,
+    "adj": -84247556,
+    "amort": -86351817,
+    "close": 2701501479
+   }
+  },
+  "2025.3Q": {
+   "pdf": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+   "pages_separate": {
+    "전사": 63
+   },
+   "pages_consolidated": {
+    "전사": 130
+   },
+   "pages_prior_comparative": {
+    "전사": 64
+   },
+   "per_account_천원": {
+    "전사": {
+     "open": 2764859849,
+     "new": 339264176,
+     "fin": 68731355,
+     "adj": -228641291,
+     "amort": -255459563,
+     "close": 2688754526
+    }
+   },
+   "sum_천원": {
+    "open": 2764859849,
+    "new": 339264176,
+    "fin": 68731355,
+    "adj": -228641291,
+    "amort": -255459563,
+    "close": 2688754526
+   },
+   "identity_residual_천원": 0,
+   "separate_equals_consolidated": true,
+   "comparative_prior_period": "2024.3Q",
+   "comparative_sum_천원": {
+    "open": 3230161575,
+    "new": 394602785,
+    "fin": 82274331,
+    "adj": -270937228,
+    "amort": -308702166,
+    "close": 3127399297
+   }
+  }
+ },
+ "regression": {
+  "2025.4Q": {
+   "pdf": "data/disclosure/FY2025_Q4/raw/KR0074_라이나생명보험.pdf",
+   "pages": {
+    "유배당": 232,
+    "유배당 외": 234
+   },
+   "rows": {
+    "open": {
+     "pdf_천원": 2764859850,
+     "pdf_억원_1dp": 27648.6,
+     "master": 27648.6,
+     "equal_at_1dp": true
+    },
+    "new": {
+     "pdf_천원": 461837308,
+     "pdf_억원_1dp": 4618.4,
+     "master": 4618.4,
+     "equal_at_1dp": true
+    },
+    "fin": {
+     "pdf_천원": 91603652,
+     "pdf_억원_1dp": 916.0,
+     "master": 916.0,
+     "equal_at_1dp": true
+    },
+    "adj": {
+     "pdf_천원": -610805604,
+     "pdf_억원_1dp": -6108.1,
+     "master": -6108.1,
+     "equal_at_1dp": true
+    },
+    "amort": {
+     "pdf_천원": -331435293,
+     "pdf_억원_1dp": -3314.4,
+     "master": -3314.4,
+     "equal_at_1dp": true
+    },
+    "close": {
+     "pdf_천원": 2376059913,
+     "pdf_억원_1dp": 23760.6,
+     "master": 23760.6,
+     "equal_at_1dp": true
+    }
+   },
+   "note": null
+  },
+  "2024.4Q": {
+   "pdf": "data/disclosure/FY2024_Q4/raw/KR0074_라이나생명보험.pdf",
+   "pages": {
+    "전사": 212
+   },
+   "rows": {
+    "open": {
+     "pdf_천원": 3230161575,
+     "pdf_억원_1dp": 32301.6,
+     "master": 32301.6,
+     "equal_at_1dp": true
+    },
+    "new": {
+     "pdf_천원": 536653880,
+     "pdf_억원_1dp": 5366.5,
+     "master": 5366.5,
+     "equal_at_1dp": true
+    },
+    "fin": {
+     "pdf_천원": 109107590,
+     "pdf_억원_1dp": 1091.1,
+     "master": 1091.1,
+     "equal_at_1dp": true
+    },
+    "adj": {
+     "pdf_천원": -713715858,
+     "pdf_억원_1dp": -7137.2,
+     "master": -7137.2,
+     "equal_at_1dp": true
+    },
+    "amort": {
+     "pdf_천원": -397347338,
+     "pdf_억원_1dp": -3973.5,
+     "master": -3973.5,
+     "equal_at_1dp": true
+    },
+    "close": {
+     "pdf_천원": 2764859849,
+     "pdf_억원_1dp": 27648.6,
+     "master": 27648.6,
+     "equal_at_1dp": true
+    }
+   },
+   "note": null
+  },
+  "2023.4Q": {
+   "pdf": "data/disclosure/FY2024_Q4/raw/KR0074_라이나생명보험.pdf",
+   "pages": {
+    "전사": 213
+   },
+   "rows": {
+    "open": {
+     "pdf_천원": 3526401798,
+     "pdf_억원_1dp": 35264.0,
+     "master": 35264.0,
+     "equal_at_1dp": true
+    },
+    "new": {
+     "pdf_천원": 573265585,
+     "pdf_억원_1dp": 5732.7,
+     "master": 5732.7,
+     "equal_at_1dp": true
+    },
+    "fin": {
+     "pdf_천원": 114523767,
+     "pdf_억원_1dp": 1145.2,
+     "master": 1145.2,
+     "equal_at_1dp": true
+    },
+    "adj": {
+     "pdf_천원": -540901814,
+     "pdf_억원_1dp": -5409.0,
+     "master": -5409.0,
+     "equal_at_1dp": true
+    },
+    "amort": {
+     "pdf_천원": -443127761,
+     "pdf_억원_1dp": -4431.3,
+     "master": -4431.3,
+     "equal_at_1dp": true
+    },
+    "close": {
+     "pdf_천원": 3230161575,
+     "pdf_억원_1dp": 32301.6,
+     "master": 32301.6,
+     "equal_at_1dp": true
+    }
+   },
+   "note": "FY2024 filing <전기> column (restated basis, = gold overlay)"
+  },
+  "2024.4Q (from FY2025_Q4 <전기>)": {
+   "pdf": "data/disclosure/FY2025_Q4/raw/KR0074_라이나생명보험.pdf",
+   "pages": {
+    "유배당": 233,
+    "유배당 외": 235
+   },
+   "rows": {
+    "open": {
+     "pdf_천원": 3230161578,
+     "pdf_억원_1dp": 32301.6,
+     "master": 32301.6,
+     "equal_at_1dp": true
+    },
+    "new": {
+     "pdf_천원": 536653880,
+     "pdf_억원_1dp": 5366.5,
+     "master": 5366.5,
+     "equal_at_1dp": true
+    },
+    "fin": {
+     "pdf_천원": 109107589,
+     "pdf_억원_1dp": 1091.1,
+     "master": 1091.1,
+     "equal_at_1dp": true
+    },
+    "adj": {
+     "pdf_천원": -713715859,
+     "pdf_억원_1dp": -7137.2,
+     "master": -7137.2,
+     "equal_at_1dp": true
+    },
+    "amort": {
+     "pdf_천원": -397347338,
+     "pdf_억원_1dp": -3973.5,
+     "master": -3973.5,
+     "equal_at_1dp": true
+    },
+    "close": {
+     "pdf_천원": 2764859850,
+     "pdf_억원_1dp": 27648.6,
+     "master": 27648.6,
+     "equal_at_1dp": true
+    }
+   }
+  }
+ },
+ "checks": [
+  {
+   "name": "regression: reader reproduces the existing KR0074 year-end master rows (6 items, 1dp)",
+   "pass": true
+  },
+  {
+   "name": "2026.2Q identity (천원, no plug) + separate==consolidated",
+   "pass": true
+  },
+  {
+   "name": "2026.1Q identity (천원, no plug) + separate==consolidated",
+   "pass": true
+  },
+  {
+   "name": "2025.3Q identity (천원, no plug) + separate==consolidated",
+   "pass": true
+  },
+  {
+   "name": "YTD monotone (신계약, 이자, 상각 magnitude) 2025.1Q<=2Q<=3Q<=4Q and 2026.1Q<=2Q",
+   "pass": true
+  },
+  {
+   "name": "opening == master previous year-end close (1dp)",
+   "pass": true
+  },
+  {
+   "name": "2025.3Q close + derived Q4-only flows == 2025.4Q close (+-2 천원; master 1dp within 0.1)",
+   "pass": true
+  },
+  {
+   "name": "2026.2Q quarter-only (당분기) waterfall closes",
+   "pass": true
+  },
+  {
+   "name": "amortisation schedules: identities, 별도==연결, printed 계 == closing CSM (|d|<=2 천원)",
+   "pass": true
+  }
+ ],
+ "ytd_monotonicity_2025": {
+  "new": {
+   "seq_억원": [
+    841.2,
+    1860.8,
+    3392.6,
+    4618.4
+   ],
+   "monotone": true
+  },
+  "fin": {
+   "seq_억원": [
+    231.2,
+    458.0,
+    687.3,
+    916.0
+   ],
+   "monotone": true
+  },
+  "amort": {
+   "seq_억원": [
+    -863.5,
+    -1704.9,
+    -2554.6,
+    -3314.4
+   ],
+   "monotone": true
+  }
+ },
+ "ytd_monotonicity_2026": {
+  "new": {
+   "seq_억원": [
+    963.9,
+    2191.8
+   ],
+   "monotone": true
+  },
+  "fin": {
+   "seq_억원": [
+    196.6,
+    393.6
+   ],
+   "monotone": true
+  },
+  "amort": {
+   "seq_억원": [
+    742.2,
+    1407.4
+   ],
+   "monotone": true
+  }
+ },
+ "continuity_opening_vs_master_prev_year_end": {
+  "2026.2Q": {
+   "opening_억원": 23760.59913,
+   "master_prev_year_end_close": 23760.6,
+   "delta_억원": -0.00087,
+   "equal_at_1dp": true
+  },
+  "2026.1Q": {
+   "opening_억원": 23760.59913,
+   "master_prev_year_end_close": 23760.6,
+   "delta_억원": -0.00087,
+   "equal_at_1dp": true
+  },
+  "2025.3Q": {
+   "opening_억원": 27648.59849,
+   "master_prev_year_end_close": 27648.6,
+   "delta_억원": -0.00151,
+   "equal_at_1dp": true
+  }
+ },
+ "sequential_2025.3Q_to_4Q": {
+  "q4_only_flows_억원": {
+   "new": 1225.7313,
+   "fin": 228.723,
+   "adj": -3821.6431,
+   "amort": -759.7573
+  },
+  "3Q_close+q4_flows_억원": 23760.5991,
+  "master_2025.4Q_close": 23760.6,
+  "delta_억원": -0.0009
+ },
+ "pending_derived_2025.4Q_값_당분기_NOT_WRITTEN": {
+  "1": 26887.54526,
+  "2": 1225.75824,
+  "3": 228.68645,
+  "4": -3821.68709,
+  "5": -759.80437,
+  "6": 23760.6
+ },
+ "quarter_only_identity_2026.2Q_억원": 0.0,
+ "staged_waterfall_억원": {
+  "2025.3Q": {
+   "1": 27648.59849,
+   "2": 3392.64176,
+   "3": 687.31355,
+   "4": -2286.41291,
+   "5": -2554.59563,
+   "6": 26887.54526
+  },
+  "2026.1Q": {
+   "1": 23760.59913,
+   "2": 963.91242,
+   "3": 196.57482,
+   "4": -531.42988,
+   "5": -742.23114,
+   "6": 23647.42535
+  },
+  "2026.2Q": {
+   "1": 23760.59913,
+   "2": 2191.76459,
+   "3": 393.63926,
+   "4": -4017.15315,
+   "5": -1407.40424,
+   "6": 20921.44559
+  }
+ },
+ "staged_값_당분기": {
+  "2025.3Q": {
+   "1": null,
+   "2": null,
+   "3": null,
+   "4": null,
+   "5": null,
+   "6": 26887.54526
+  },
+  "2026.1Q": {
+   "1": 23760.59913,
+   "2": 963.91242,
+   "3": 196.57482,
+   "4": -531.42988,
+   "5": -742.23114,
+   "6": 23647.42535
+  },
+  "2026.2Q": {
+   "1": 23647.42535,
+   "2": 1227.85217,
+   "3": 197.06444,
+   "4": -3485.72327,
+   "5": -665.1731,
+   "6": 20921.44559
+  }
+ },
+ "amortisation": {
+  "2026.2Q": {
+   "pdf": "data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf",
+   "page": 96,
+   "page_consolidated": 166,
+   "unit": "천원",
+   "printed_total_계_천원": 2092144558,
+   "closing_csm_천원": 2092144559,
+   "total_minus_close_천원": -1,
+   "buckets_1_to_10y_천원": [
+    184374584,
+    161002568,
+    141559441,
+    126106167,
+    114192415,
+    104867998,
+    96176815,
+    88217681,
+    81481541,
+    72304999
+   ],
+   "tail_buckets_11_15_16_20_21_25_26_30_30plus_천원": [
+    288537737,
+    216976624,
+    143404948,
+    102216010,
+    170725030
+   ],
+   "tail_억원": [
+    2885.37737,
+    2169.76624,
+    1434.04948,
+    1022.1601,
+    1707.2503
+   ],
+   "identity_problems": []
+  },
+  "2026.1Q": {
+   "pdf": "data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf",
+   "page": 71,
+   "page_consolidated": 142,
+   "unit": "천원",
+   "printed_total_계_천원": 2364742535,
+   "closing_csm_천원": 2364742535,
+   "total_minus_close_천원": 0,
+   "buckets_1_to_10y_천원": [
+    207115307,
+    182268399,
+    160399505,
+    142366371,
+    128515521,
+    117888636,
+    108498808,
+    100157355,
+    92851689,
+    83493095
+   ],
+   "tail_buckets_11_15_16_20_21_25_26_30_30plus_천원": [
+    329681552,
+    245938799,
+    162652082,
+    114397146,
+    188518270
+   ],
+   "tail_억원": [
+    3296.81552,
+    2459.38799,
+    1626.52082,
+    1143.97146,
+    1885.1827
+   ],
+   "identity_problems": []
+  },
+  "2025.3Q": {
+   "pdf": "data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf",
+   "page": 66,
+   "page_consolidated": 133,
+   "unit": "천원",
+   "printed_total_계_천원": 2688754526,
+   "closing_csm_천원": 2688754526,
+   "total_minus_close_천원": 0,
+   "buckets_1_to_10y_천원": [
+    237850031,
+    211272497,
+    188291622,
+    168579173,
+    153129100,
+    139827002,
+    127225308,
+    116703601,
+    107203473,
+    97863097
+   ],
+   "tail_buckets_11_15_16_20_21_25_26_30_30plus_천원": [
+    384192659,
+    275765845,
+    178284885,
+    119346965,
+    183219268
+   ],
+   "tail_억원": [
+    3841.92659,
+    2757.65845,
+    1782.84885,
+    1193.46965,
+    1832.19268
+   ],
+   "identity_problems": []
+  }
+ },
+ "existing_master_amortisation_2025.4Q": {
+  "master_rows_1_to_10": [
+   2428.2,
+   2149.7,
+   1927.3,
+   1727.2,
+   1553.0,
+   1411.5,
+   1279.1,
+   1163.2,
+   null,
+   null
+  ],
+  "pdf_2025-12-31_schedule_(당기말)_1_to_8": [
+   2140.9,
+   1884.7,
+   1661.7,
+   1473.5,
+   1326.9,
+   1199.6,
+   1095.4,
+   1010.6
+  ],
+  "pdf_2024-12-31_schedule_(전기말)_1_to_8": [
+   2428.2,
+   2149.7,
+   1927.3,
+   1727.2,
+   1553.0,
+   1411.5,
+   1279.1,
+   1163.2
+  ],
+  "master_equals_2025-12-31": false,
+  "master_equals_2024-12-31": true,
+  "pdf_page_당기말": 245,
+  "pdf_page_전기말": 246,
+  "correct_2025-12-31_1_to_10_억원": [
+   2140.88947,
+   1884.74049,
+   1661.66437,
+   1473.53301,
+   1326.86259,
+   1199.5925,
+   1095.39916,
+   1010.59239,
+   934.28301,
+   848.91505
+  ]
+ }
+}

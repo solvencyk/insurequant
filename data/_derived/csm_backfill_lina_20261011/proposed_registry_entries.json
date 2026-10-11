@@ -1,0 +1,30 @@
+{
+  "_what": "라이나 KR0074 CSM 워터폴 분기 3칸(2025.3Q·2026.1Q·2026.2Q) 적재로 새로 생긴 PL_CSM_AMORT_VS_WATERFALL RED 3건의 건별 등재 후보. 등재는 owner 만 한다(이 파일은 제안일 뿐, data/_gold 는 건드리지 않았다).",
+  "_which_ledger": "data/_gold/pl_csm_amort_missing_ledger.json (PL 버킷은 있는데 항목 4 가 비었을 때: 룰 PL_CSM_AMORT_VS_WATERFALL). PL 에 버킷이 통째로 없는 경우가 아니라 pl_amort_coverage_baseline.json 이 아니다.",
+  "_alternative": "건별 등재 대신 게이트 3z 가 source_id == DISCLOSURE 계보의 워터폴 셀은 PL 대조 대상에서 빼는 설계 변경(owner/validation). 재보사 17건(proposed_registry_entries.json in reinsurer_ifrs17_csm_20261011)과 같은 결정이다.",
+  "_resolves_if": "PL 레인이 항목 4 를 채우면 룰이 사라진다. 단 3d 가 막고 있고 라이나는 분기 DART 필링이 없다.",
+  "n_entries": 3,
+  "entries": {
+    "라이나생명보험|2025.3Q": {
+      "wf_amort_eok": 2554.6,
+      "status": "UNADJUDICATED",
+      "suggested_cause": "DISCLOSURE_LINEAGE_PL_ITEM4_NOT_LOADABLE",
+      "note": "비상장 연 1회 DART 공시사(분기 DART 보고서 없음). 워터폴 상각은 정기경영공시 PDF data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf p63 '제공한 서비스 반영 인식한 보험계약마진'(CSM 3열 합, 유배당+유배당 외) = 2554.6억이다. PL_breakdown 에는 이 분기 버킷이 있으나 (경영공시 §2-1 계보 항목 1·16·22·23·24) 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 그 5개로 제한해 이 계보로 채울 수 없고, 분기 DART 필링이 없어 DART 계보로도 채울 수 없다(재보사 17건과 같은 구조).",
+      "routed": "inbox/parser/20261011T1700Z__orchestrator__MULTI_2023.1Q-2026.2Q__csm_backfill_annual_filers_from_disclosure.md"
+    },
+    "라이나생명보험|2026.1Q": {
+      "wf_amort_eok": 742.23,
+      "status": "UNADJUDICATED",
+      "suggested_cause": "DISCLOSURE_LINEAGE_PL_ITEM4_NOT_LOADABLE",
+      "note": "비상장 연 1회 DART 공시사(분기 DART 보고서 없음). 워터폴 상각은 정기경영공시 PDF data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf p66+68 '제공한 서비스 반영 인식한 보험계약마진'(CSM 3열 합, 유배당+유배당 외) = 742.23억이다. PL_breakdown 에는 이 분기 버킷이 있으나 (경영공시 §2-1 계보 항목 1·16·22·23·24) 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 그 5개로 제한해 이 계보로 채울 수 없고, 분기 DART 필링이 없어 DART 계보로도 채울 수 없다(재보사 17건과 같은 구조).",
+      "routed": "inbox/parser/20261011T1700Z__orchestrator__MULTI_2023.1Q-2026.2Q__csm_backfill_annual_filers_from_disclosure.md"
+    },
+    "라이나생명보험|2026.2Q": {
+      "wf_amort_eok": 1407.4,
+      "status": "UNADJUDICATED",
+      "suggested_cause": "DISCLOSURE_LINEAGE_PL_ITEM4_NOT_LOADABLE",
+      "note": "비상장 연 1회 DART 공시사(분기 DART 보고서 없음). 워터폴 상각은 정기경영공시 PDF data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf p91+93 '제공한 서비스 반영 인식한 보험계약마진'(CSM 3열 합, 유배당+유배당 외) = 1407.4억이다. PL_breakdown 에는 이 분기 버킷이 있으나 (경영공시 §2-1 계보 항목 1·16·22·23·24) 항목 4(원수CSM상각)는 validate_data_contract 3d 가 경영공시 계보 항목을 그 5개로 제한해 이 계보로 채울 수 없고, 분기 DART 필링이 없어 DART 계보로도 채울 수 없다(재보사 17건과 같은 구조).",
+      "routed": "inbox/parser/20261011T1700Z__orchestrator__MULTI_2023.1Q-2026.2Q__csm_backfill_annual_filers_from_disclosure.md"
+    }
+  }
+}

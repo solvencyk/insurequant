@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T1700Z
-status: open
+status: resolved
 route: backfill
 company: KR0004 · KR0029 · KR0049 · KR0050 · KR0074 · KR0075 · KR0076 · KR0080 · KR0095 · KR0097 · KR0100 · KR1010 · KR1011 · KR1098 · KR1101 · KR1102 · KR1103 · KR1104 · KR1105 · KR1106 · KR1107
 period: 2023.1Q-2026.2Q
@@ -39,4 +39,4 @@ owner 지시(2026-10-11): 「현재 작업 중인 라운드가 끝나면, **연 
 - 회사×분기 CSM 표 유무 센서스 표, 적재 칸 수(워터폴·상각·민감도·지표), 검산 결과(항등식·연속성·단조성), 연말 칸 불일치 목록, 새 RED·등재 후보, NB 배수 모의 결과, 기존 칸 변경 0 증명, 남은 원천 부재 목록, `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(parser-ifrs17, orchestrator HEAD 대조 검증·종결 2026-10-11) 사전조사(`data/_derived/csm_backfill_survey_20261011/`)로 범위를 라이나 KR0074 로 축소(owner 확정) 후 적재: `CSM_waterfall.json` 2,286→2,304(+18: 2025.3Q·2026.1Q·2026.2Q 항목 1~6, YTD 억원; 기말 26,887.5/23,647.4/20,921.4), `CSM_waterfall_provenance.json` +3, `CSM_amortization.json` 570→600(+30: 세 분기 스케줄 10년 합계행). 기존 칸 변경 0(HEAD 키 대조). 검산: 원문 21쪽 가로·세로 항등식 천원 단위 잔차 0, 기초=마스터 직전 연말 기말(23,760.6/27,648.6), YTD 단조성, 기존 연말 행 재현, ILP CSM 일치. NB 배수 모의(임시 폴더): 라이나 3행 실배수 11.22/9.02/10.33 — 재빌드는 publishing. 게이트: 신규 `PL_CSM_AMORT_VS_WATERFALL` 3(라이나 3분기, PL 항목 4 공란 — 재보사 17건과 같은 구조라 PL 항목 4 채움으로 해소 예정), xlsx 행 누락 2·NB 센서스 3 은 publishing. 발견(별도 티켓): `viz_build_ifrs17_panels._pick_amort_block` 이 같은 <당기말> 캡션을 물린 두 후보 중 전기말 표를 골라 15사(라이나·DB손보 등)의 상각 스케줄이 전기말 기준 — `data/_derived/csm_backfill_lina_20261011/s34_amort_panel_year_census.json`.
