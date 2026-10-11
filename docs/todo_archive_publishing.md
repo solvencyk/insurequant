@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-11 재보사 8곳(KR1101~1108) Forward Outlook·소진율 추가** — 원인=데이터 부재(재보사가 9/23·9/1 산출 뒤에 마스터 편입; 이름 불일치 아님). `scripts/add_reinsurers_to_capsec_panels.py`(추가만)로 bond 소스·tier1/2·배포본 8행씩, forward 빌더 동일 인자 재실행(38→46행). 기존 행 변경 0.
+  스코리 190.13%→181.15%(2030) 우하향, 비적용 7곳 flat. 스위스리 보완자본 소진율만 빈 칸(보완자본 4,274억인데 한도 적용 전 '-'). 남은 것: 3시트 xlsx 동기(기본자본소진율·보완자본소진율·자본비율전망)+public_exports 재생성, KB라이프 tier 행 이름(`케이비라이프생명보험`) 불일치. 상세 `data/disclosure/_meta/reinsurer_forward_capsec_runlog.md`.
+
 - **2026-10-11 재보사 정정 후속 동기화** — xlsx 금리민감도 798→966행·금리듀레이션갭 270→316행(`9369988`), panel_compare 재빌드(`6fadc86`),
   public_exports 재생성(`6fecfeb`, build_id `6fadc86`). 남은 것: ILP 백필 확정 뒤 `panel_csm_combo.json` 1회 재빌드·public_exports 재확인.
 

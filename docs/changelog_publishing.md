@@ -10,6 +10,13 @@
 
 ---
 
+## 2026-10-11 — 미니 재동기화: 라이나 CSM·PL 항목 4·상각 정정 반영 (커밋만, push·배포 보류)
+
+- **xlsx**(`5d320c9`): 손익분해PL +33행·2칸 · CSM워터폴 +54행·15칸 · CSM상각 +50행·172칸 · 신계약CSM배수 +9행·6칸, 삭제 0. 마스터 diff 와 맞고 나머지 13시트는 값 SHA 동일. 드리프트 189 -> 0.
+- **NB 마스터**: `build_nb_csm_multiple.py` 재빌드 381 -> 390행. 라이나 +9행·빈칸 3개 채움만 바뀜, 다른 회사 0 변경. `NB_CENSUS_MISSING` 0.
+- **패널**: IFRS17 viz 4개·csm_waterfall 바이트 동일(라이나는 DART 행이라 마스터 상각이 패널에 안 간다), csm_combo 라이나 nb_csm 11칸, compare 53칸(라이나 + 재보사 신계약 CSM 18칸).
+- **공개 스냅샷**(`812b007`): 4시트 + manifest(`build_id` 5d320c9). 게이트 data-contract RED 0 · live_artifacts RED 8(`INSPL_CENSUS_MISSING` 뿐). 골든 `csm_amort_schedule` 해시만 어긋남(validation `--update` 대기). 상세 `data/disclosure/_meta/mini_resync_runlog_20261011.md`.
+
 ## 2026-10-11 — 마감 라운드: xlsx 12시트 동기화 · 공개 스냅샷 · IFRS17 viz 재보사 · 패널 재빌드 · 자본성증권 정리 (커밋만, push·배포 보류)
 
 - **xlsx**(`8848cb8`): 시트 12개를 `sync_master_xlsx_sheet.py` 시트 단위로 동기화(드리프트 434 -> 0, `MASTER_XLSX_*` RED 0). 추가 행 17BS 1,937 · 손익분해PL 517 · 가정민감도 116 · CSM워터폴 108 · CSM상각 180 · K-ICS공시 103 · 금리듀레이션갭 1 · 보험계약부채 114 · 기본자본소진율 80 · 보완자본소진율 112 · 자본비율전망 440, 바뀐 칸 17BS 93 · 손익분해PL 121 · K-ICS공시 107 · 금리민감도 62 · 금리듀레이션갭 39 · 보험계약부채 12. 유지율·손해율·신계약CSM배수·배당·자본성증권발행현황은 행수·값 SHA 동일. 경영지표는 xlsx 시트가 아니다(신설 안 함).
