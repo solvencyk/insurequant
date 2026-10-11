@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-11 재보사 정정 후속 동기화** — xlsx 금리민감도 798→966행·금리듀레이션갭 270→316행(`9369988`), panel_compare 재빌드(`6fadc86`),
+  public_exports 재생성(`6fecfeb`, build_id `6fadc86`). 남은 것: ILP 백필 확정 뒤 `panel_csm_combo.json` 1회 재빌드·public_exports 재확인.
+
 - **2026-10-06 라이브 `main` `420cdc3`(owner 폰 Termux 배포)** — `kics_disclosure.json` + public_exports 5종(K-ICS공시·손익분해PL·자본비율전망·
   자본성증권발행현황·manifest). build_id `54ec835`. 그 전 배포는 2026-09-28 `0187cf4`(자본비율전망 과거콜 미상환 교정).
 

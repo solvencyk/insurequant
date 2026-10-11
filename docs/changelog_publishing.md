@@ -10,6 +10,17 @@
 
 ---
 
+## 2026-10-11 — 마감 라운드: xlsx 12시트 동기화 · 공개 스냅샷 · IFRS17 viz 재보사 · 패널 재빌드 · 자본성증권 정리 (커밋만, push·배포 보류)
+
+- **xlsx**(`8848cb8`): 시트 12개를 `sync_master_xlsx_sheet.py` 시트 단위로 동기화(드리프트 434 -> 0, `MASTER_XLSX_*` RED 0). 추가 행 17BS 1,937 · 손익분해PL 517 · 가정민감도 116 · CSM워터폴 108 · CSM상각 180 · K-ICS공시 103 · 금리듀레이션갭 1 · 보험계약부채 114 · 기본자본소진율 80 · 보완자본소진율 112 · 자본비율전망 440, 바뀐 칸 17BS 93 · 손익분해PL 121 · K-ICS공시 107 · 금리민감도 62 · 금리듀레이션갭 39 · 보험계약부채 12. 유지율·손해율·신계약CSM배수·배당·자본성증권발행현황은 행수·값 SHA 동일. 경영지표는 xlsx 시트가 아니다(신설 안 함).
+- **공개 스냅샷**(`61babb6`): `export_public_sheets.py` 전체 재실행, 13파일 갱신(3개 무변), manifest `build_id` 6f92fb0 · 15시트. 공개 게이트 발견 0. `android_push_and_deploy.sh` NEW_FILES 는 main 에 없는 새 공개 시트(`보험계약부채.json`)만 필요 — 나머지 둘(금리듀레이션갭·자본성증권발행현황)은 이미 main 에 있어 추가 불필요.
+- **IFRS17 viz**(`17dca81`): `viz_build_ifrs17_panels.py` 가 마스터(CSM_amortization·CSM_sensitivity)의 재보사 7곳(마이브라운은 PAA 전용이라 해당 없음)을 DART 산출 뒤에 덧붙인다. 상각 39 -> 46, 민감도 32 -> 39, 기존 행은 JSON 동일(접두 동일), 보험손익·BS 패널은 바이트 동일. 상각은 마스터가 경과차년 1~10만 가져 total·y5_plus·y10plus 를 비운다. 민감도 provenance 사이드카에 DISCLOSURE 셀 7개(`emit_sensitivity_provenance.py`). 로컬 서버에서 8곳 전부 확인: 7곳 상각·민감도 정상, 마이브라운은 「상각 버킷 없음」·「민감도 데이터 미수록」 안내.
+- **골든**: `test_viz_ifrs17_panels_golden` 은 상각 +7·민감도 +7 행만큼 달라져 실패(`--update` 안 함, validation 몫 — 그 뒤 `validate_golden_input_fingerprints.py --update`). `test_viz_csm_waterfall_golden` 통과.
+- **패널**(`89ecf9a`): csm_combo 40 -> 48사 · 분기 8 -> 14 · `--check` OK, compare 패널 `--check` OK.
+- **자본성증권**(`8848cb8`): `compute_tier{1,2}_utilization.py` 회사명을 마스터 원수사명으로(파일명이 K-ICS.html 매칭 규칙에 안 맞을 때만 -> KB라이프 1건 외 46건 동일 증명). `kics_forward_capital.json` 서울보증보험 제외 행(`status: excluded` + `exclusion_reason`), 생성기 `EXCLUDE_PAA` 도 같은 행을 낸다. designer 가 HTML 에서 `exclusion_reason` 을 읽기 전에는 서울보증 문구가 일반 문구가 된다(티켓 `inbox/designer/20261011T1600Z…`).
+- **게이트**: `validate_data_contract` RED 22 = 알려진 것뿐. `validate_live_artifacts` RED 26 = 새 두 부류(`NB_CENSUS_MISSING` 18 · `INSPL_CENSUS_MISSING` 8) — 재보사에 NB 배수 행/보험손익 원표가 없어서(원인 구조적, 아래 TODO).
+- 상세 `data/disclosure/_meta/final_resync_runlog_20261011.md`.
+
 ## 2026-10-11 — 보험계약부채 마스터 시트 · 공개 스냅샷 신설 + KB라이프 소진율 도넛 이름 수정
 
 - **xlsx**: 시트 `보험계약부채` 6,111행 x 13열(마스터 10열 + 단위·기준표시·비고). `sync_master_xlsx_sheet.py` 시트 단위만 — 기존 16시트의 행 수·값 SHA-256 전후 동일, 요약 시트 행 1개 추가. 백업 `insurequant_master_tables.xlsx.bak_20261011_ilp`.
