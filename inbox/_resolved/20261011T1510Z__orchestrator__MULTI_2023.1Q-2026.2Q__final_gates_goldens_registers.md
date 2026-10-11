@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261011T1510Z
-status: open
+status: resolved
 route: verify
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -30,4 +30,4 @@ iter: 1
 - 게이트별 전후 RED/YELLOW 표, 분류 결과(고칠 것·owner 대기·해제), 등재 해제 내역과 시뮬레이션 결과, 골든별 `--update` 여부와 이유(이동 칸 수), 거짓 녹색 사냥 결과(표본 대조 불일치 목록), owner 결정 표, `TODO_validation.md` Status + `docs/changelog_validation.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(validation 7bd05b2, orchestrator 검증·종결 2026-10-11) 마스터 0칸 수정·신규 등재 0. 증거 기반 해제 5묶음(KR1102 2023.2Q census 원천부재·악사 2024.3Q 15~23후 부재 박제·교보 2026.1Q 후 박제 938.25와 19_market 재작성 연쇄·pl_amort_coverage_baseline 5줄; 해제 전후 K-ICS finding 변화 0). 골든 `--update` 6종(kics 룰 634버킷·post_transition·master_tables·ifrs17_bs 47사·viz 패널 재보사 추가분·입력지문 RED 10→0), kics 룰 골든 지문 키 사각(`company_code`/`quarter` 필드가 엔진에 없어 모든 행 None) 수정. 게이트: data_contract RED 22→21, K-ICS exit 2→0(RED 56 blocking 0), live_artifacts RED 8(INSPL) 불변. 거짓 녹색 사냥: 표본 레인별 20칸 불일치 8건 전부 설명(오류 0), 재보사 PL 항목16 인쇄·마스터 공란 7칸을 parser 에 발주(`20261011T1730Z`), CSM 워터폴 대 ILP 273칸 중 267 일치(차이는 예별 계약이전·교보/KB라이프/하나생명/롯데 재작성·현대 정밀도). owner 결정표 15항목은 `data/disclosure/_meta/final_validation_runlog_20261011.md` 및 오케스트레이터 owner 보고.
