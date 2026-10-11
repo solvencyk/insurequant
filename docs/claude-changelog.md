@@ -9,6 +9,7 @@ Convention: latest few entries detailed; older compressed to 1-liners (git log h
 
 ---
 
+- **2026-10-11 밤 orchestrator 마감 라운드(push 직전)**: ① 재보사 PL 항목 4(`원수CSM상각`, 전업 재보사는 사실상 수재 CSM 상각) 17버킷 + 라이나 9버킷을 감사보고서 주석에서 적재 -- `PL_CSM_AMORT_VS_WATERFALL` 예외 등재 대신 데이터로 닫음(`0a7632e`·`59dc684`) ② 라이나(KR0074) CSM 백필 전 분기 중 2023.3Q~2026.2Q 9분기(워터폴 +54칸·상각 스케줄 2025.1Q/2Q +20행·값_당분기 20칸, `6081de1`·`28b9e23`·`396faff`), 2023.1Q·2Q 는 옛 기준만 인쇄돼 보류(owner 결정) ③ 상각 스케줄 빌더가 전기말 표를 뽑던 결함 수정(`_current_period_twin`, 15사가 아니라 18사, 2025.4Q 172칸 값 정정, `cf66dce`) ④ validation: 항목 4 계보 허용·승인 등재 4건(`1db7c2d`) ⑤ designer: 재보사 PL 라벨 「원수」 제거(`dcac354`) ⑥ publishing: xlsx 4시트·NB 배수 마스터(라이나 실제 배수)·csm_combo/compare·public_exports(`5d320c9`·`812b007`). 홈 KPI 업계 총 기말 CSM 은 하드코딩 없이 `panel_csm_combo` 같은 분기 합(47사, 캐롯 제외, 하노버 직전 값)으로 계산(`49f8573`·`211e868`). 상세는 각 stage changelog.
 - **2026-10-11 validation 23차**: PL 항목 4 재무제표 주석 계보 허용(`PL_FS_NOTE_LINEAGE`) + 법인세 0 확정 3칸 + 하노버 2025.3Q PL 원천부재 장치 `_PL_SOURCE_ABSENT` -- 데이터계약 RED 34→11. 상세 `docs/changelog_validation.md`.
 
 ## 2026-10-11 — 재보사 8곳 K-ICS 스윕 + IFRS17 섹션 3 콤보(발생사고요소) + 모바일 손해율 curve (orchestrator, 작업 브랜치 push `6841689`)
