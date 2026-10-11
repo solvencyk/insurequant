@@ -1,9 +1,17 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-10-11 (23차) · Stage 3/5 — validation
+> Last updated: 2026-10-11 (24차) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-10-11 (24차) -- push 직전 최종 골든 · 훅 사전 실행 (티켓 `20261011T2200Z`)
+
+- **훅 전체 사전 실행**(`prepush_check.py`, FULL, ~28분): 데이터계약 RED 0 · K-ICS exit 0(blocking 0) · 도메인 7종 중 `validate_live_artifacts` 만 exit 2 · DART raw 0 · 지문 RED 0(`--update` 후) · JS clear · inbox 0 · 오프라인 772 통과. **막는 것은 1건**: `INSPL_CENSUS_MISSING` 8(마이브라운·뮌헨·스위스리아시아·스코리·RGA·제네럴·퍼시픽·하노버) -- 6841689 에서는 PL 마스터에 없던 회사 8곳이 첫 적재로 들어왔는데 보험손익 원표 패널(DART 표 기반)에는 구조상 못 들어간다. 데이터 오류 아님. 등재 제안만 작성(`data/_derived/pre_push_final_20261011/pre_push_final_proposed_baseline_inspl_20261011.json`, 미적용 -- owner 결정), 대안은 census 를 DART 제출사로 좁히기.
+- **골든 `--update` 3종**: viz_ifrs17_panels(`csm_amort_schedule` 2c8cfdd9 -> 2ee72b7f, `cf66dce` 의도 이동, 나머지 3패널 불변, 커밋본 = 재빌드) · master_tables SUMMARY(coverage_hole 3->2PL, `pl_src_absent:1ok/0red` 신설, closing 381->390, csm_amort_identity 22S->5S, qoq_warn 252->262Y, exit 2 유지) · builder_input_fingerprints(viz_ifrs17_panels 항목만 이동). 나머지 골든 5종 불변, PL 골든(RUN_PL_GOLDEN=1) 통과·해시 불변, BS 골든은 마스터 sha 가 골든과 같아 생략.
+- **`test_disclosure_raw_pdf_wiring` 2건**: 훅 묶음 밖(훅에 안 걸림)이지만 일회성 스크립트 2개의 raw 글롭을 `disclosure_pdfs()` 로 최소 수정, 466 통과. 예외 등재 없음.
+- **보고만**: 서울보증 2024.2Q·3Q PL 통째 구멍 2 · 라이나 CSM 2023.1Q·2Q 보류 · 분할표 5사 부분합(YELLOW 4 baselined) · 한화생명 연결 표 선택(+1.85%). 표는 런로그.
+- **모델**: Sonnet 5.5.
 
 ## 2026-10-11 (23차) -- PL 항목 4 재무제표 주석 계보 허용 + owner 승인 등재 4칸 (티켓 `20261011T2000Z`)
 

@@ -6,14 +6,15 @@ from pathlib import Path
 
 import fitz
 
+from _disclosure_pdf_paths import disclosure_pdfs
+
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = Path(__file__).resolve().parents[1]
 code = sys.argv[1]
 kw = sys.argv[2] if len(sys.argv) > 2 else "8-1.재무상태표"
 for y in (2023, 2024, 2025, 2026):
     for n in (1, 2, 3, 4):
-        base = ROOT / "data" / "disclosure" / f"FY{y}_Q{n}" / "raw"
-        for p in sorted(base.glob(f"{code}_*.pdf")):
+        for p in disclosure_pdfs(f"FY{y}_Q{n}", code):
             try:
                 doc = fitz.open(str(p))
             except Exception as e:

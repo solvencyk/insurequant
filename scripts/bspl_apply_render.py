@@ -14,6 +14,8 @@ from pathlib import Path
 
 import fitz
 
+from _disclosure_pdf_paths import disclosure_pdfs
+
 ROOT = Path(__file__).resolve().parents[1]
 sys.stdout.reconfigure(encoding="utf-8")
 SCR = Path("C:/Users/sangwook.cho/AppData/Local/Temp/claude/C--Users-sangwook-cho-Desktop-insurequant/e15a5832-0270-4430-8e3e-4cba8a1f182c/scratchpad/img")
@@ -21,10 +23,10 @@ SCR = Path("C:/Users/sangwook.cho/AppData/Local/Temp/claude/C--Users-sangwook-ch
 
 def resolve(code: str, quarter: str) -> Path:
     y, n = quarter.split(".")
-    base = ROOT / "data" / "disclosure" / f"FY{y}_Q{n[0]}" / "raw"
-    cands = sorted(p for p in base.glob(f"{code}_*.pdf") if "_v20" not in p.name and "_amended" not in p.name and "_old" not in p.name)
+    allp = disclosure_pdfs(f"FY{y}_Q{n[0]}", code)
+    cands = [p for p in allp if "_v20" not in p.name and "_amended" not in p.name and "_old" not in p.name]
     if not cands:
-        cands = sorted(base.glob(f"{code}_*.pdf"))
+        cands = allp
     if not cands:
         raise SystemExit(f"no raw pdf for {code} {quarter}")
     return cands[0]

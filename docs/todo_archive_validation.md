@@ -1,5 +1,11 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 Status 밀림 (24차 추가로 밀려난 항목, 무수정)
+
+- **2026-10-11 (21차) 재보사 단계 10 — 금리민감도 RS1·RS5 근거 박제 면제 장치 `rs_pinned_exemptions` 신설 + owner 승인 5건** — 금리민감도 게이트
+  RED 5→**0**, K-ICS 게이트 exit 0(finding 변화 0) · 데이터계약 RED 0 · 라이브 아티팩트 RED 0. 변이시험 70건(훅 묶음 편입). 하노버 적용후 12행 독립 검산 통과. 미커밋.
+  남은 것: 오케스트레이터의 `prepush_check.py --full` 1회. 런로그 `reinsurer_runlog_KR1101-1108_12.md`.
+
 ## 2026-10-11 Status 밀림 (23차 추가로 밀려난 항목, 무수정)
 
 - **2026-10-10 (20차) 재보사 단계 9 — census 원천부재 면제 장치 `_CENSUS_SOURCE_ABSENT` 신설 + 8칸 · KR1107 2023.3Q 문서 미수집 · 예별 PL YTD 셀 등재** — K-ICS 게이트

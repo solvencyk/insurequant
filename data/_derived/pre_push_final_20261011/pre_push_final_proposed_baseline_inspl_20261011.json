@@ -1,0 +1,16 @@
+{
+  "_what": "PROPOSAL ONLY (not applied). 8 new baseline lines for data/_gold/live_artifact_baseline.json so that validate_live_artifacts INSPL_CENSUS_MISSING goes RED 8 -> YELLOW(baselined) 8. Registration is an owner decision (CLAUDE.md section 6 / TODO_validation rules). Same entry type as the 7 existing INSPL_CENSUS_MISSING lines (AIG, Kyobo Planet, BNP Cardif, Seoul Guarantee, Shinhan EZ, AXA, Yebyeol).",
+  "_reason_for_all": "PL_breakdown.json gained these 8 companies after 6841689 (first PL load of 7 reinsurers + MyBrown: 25 to 73 rows each now, 0 rows at 6841689). The panel insurance_pl_breakdown.json is built from DART insurance-PL tables (data/dart/extracted); these 8 do not file one on DART (reinsurer branches and MyBrown: DART check deferred), so the panel can never contain them by construction. The data is not wrong; the census compares a DART-sourced panel against a disclosure-sourced master.",
+  "_alternative": "Instead of 8 per-company baseline lines, narrow the INSPL census in scripts/validate_live_artifacts.py (line ~343) to companies that have a DART extracted PL table. That changes gate logic (needs a mutation test) and is also an owner decision.",
+  "_how_to_apply": "Add the 8 keys below under entries{} in live_artifact_baseline.json with detail='PL 마스터에 있는 회사인데 보험손익 원표 패널에 없다', first_seen=2026-10-11, bump _counts['insurance_pl_breakdown.json|INSPL_CENSUS_MISSING'] 7->15 and entries 18->26, then rerun scripts/validate_live_artifacts.py (expect RED=0, YELLOW(baselined)=25, STALE_BASELINE=0).",
+  "keys": [
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|마이브라운반려동물전문보험",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|뮤헨재보험",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|스위스리아시아",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|스코리재보험",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|알지에이리인슈어런스",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|제네럴재보험",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|퍼시픽라이프리",
+    "insurance_pl_breakdown.json|INSPL_CENSUS_MISSING|하노버재보험"
+  ]
+}
