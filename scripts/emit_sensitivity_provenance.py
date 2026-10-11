@@ -49,6 +49,14 @@ def _period_label_to_quarter(period, as_of):
     return None
 
 
+def _master_code(name):
+    """viz 행의 company 이름 -> 마스터(CSM_sensitivity.json) 원보험사코드."""
+    for r in json.loads((REPO / "CSM_sensitivity.json").read_text(encoding="utf-8")):
+        if r.get("원수사명") == name:
+            return r.get("원보험사코드")
+    return None
+
+
 def _find_raw(rcept: str):
     """-> (company_code, source_file_repo_relative) or (None, None) if no raw dir matches."""
     hits = sorted(RAW_ROOT.glob(f"FY*_Q*/raw/*_{rcept}"))
@@ -75,6 +83,23 @@ def main():
         name = e.get("company")
         rcept = e.get("rcept_no")
         quarter = _period_label_to_quarter(e.get("period"), e.get("as_of"))
+        if e.get("_source") == "master" and quarter:
+            # 재보사(KR1101~1108): DART 공시가 아니라 경영공시 PDF 가 원천이다(viz_build_ifrs17_panels 가 마스터에서 덧붙인 행).
+            code = _master_code(name)
+            hits = sorted((REPO / "data" / "disclosure").glob(f"FY{quarter[:4]}_Q4/raw/{code}_*.pdf")) if code else []
+            if not hits:
+                missing.append((name, f"no 경영공시 PDF for {code} {quarter}"))
+                continue
+            cells.append({
+                "company_code": name,
+                "kr_code": code,
+                "quarter": quarter,
+                "item_block": "sensitivity",
+                "source_id": "DISCLOSURE",
+                "as_of_date": e.get("as_of"),
+                "source_file": str(hits[0].resolve().relative_to(REPO)).replace("\\", "/"),
+            })
+            continue
         if not (rcept and quarter):
             missing.append((name, "no rcept/resolvable quarter in source"))
             continue

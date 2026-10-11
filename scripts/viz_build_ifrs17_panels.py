@@ -1678,6 +1678,117 @@ def build_panel(
     return {"period": "annual (filings skim)", "companies": companies}
 
 
+# ---------------------------------------------------------------------------------------------
+# 재보사 8곳(KR1101~KR1108)은 DART 공시가 없어(경영공시 PDF 만) data/dart/extracted 에서 오지 않는다.
+# 그 값은 parser-ifrs17 이 루트 마스터(CSM_amortization.json · CSM_sensitivity.json)에 직접 적재했다.
+# IFRS17.html 의 상각(2)·가정민감도(7) 패널은 아래 viz 파일만 읽으므로, 위 DART 산출 뒤에 마스터에 있는
+# 재보사 행을 같은 모양으로 덧붙인다. 규칙(2026-10-11):
+#   - 추가만 한다. DART 산출 회사 행은 한 글자도 바꾸지 않는다(리스트 뒤에 붙임).
+#   - 최신 공시분기(마스터에서 회사별 max) 1개만 싣는다 — 기존 행도 회사당 최신 1건이다.
+#   - 마스터에 없는 값은 만들지 않는다: 상각은 경과차년 1~10 만 있어 total·y5_plus·y10plus 는 비운다
+#     (틀린 합계를 싣느니 빈 칸). 화면은 y1~y5 / y1·y1_y3·y3_y5 만 읽는다.
+# ---------------------------------------------------------------------------------------------
+_REINSURER_CODES = ("KR1101", "KR1102", "KR1103", "KR1104", "KR1105", "KR1106", "KR1107", "KR1108")
+
+
+_QUARTER_RE = re.compile(r"^\d{4}\.[1-4]Q$")
+
+
+def _quarter_sort_key(q: str) -> tuple[int, int]:
+    return (int(q[:4]), int(q[5]))
+
+
+def _load_master_rows(name: str) -> list[dict]:
+    data = json.loads((ROOT / name).read_text(encoding="utf-8"))  # 읽기 실패는 숨기지 않고 올린다
+    return [r for r in data if r.get("원보험사코드") in _REINSURER_CODES]
+
+
+def _latest_by_company(rows: list[dict]) -> dict[str, list[dict]]:
+    """회사 -> 그 회사의 최신 공시분기 행들(마스터 순서 유지)."""
+    latest: dict[str, str] = {}
+    for r in rows:
+        q = r.get("공시분기")
+        if isinstance(q, str) and _QUARTER_RE.match(q) and (
+                r["원수사명"] not in latest or _quarter_sort_key(q) > _quarter_sort_key(latest[r["원수사명"]])):
+            latest[r["원수사명"]] = q
+    out: dict[str, list[dict]] = {}
+    for r in rows:
+        if r.get("공시분기") == latest.get(r["원수사명"]):
+            out.setdefault(r["원수사명"], []).append(r)
+    return out
+
+
+def _period_label(quarter: str) -> str:
+    return f"FY{quarter[:4]}" if quarter.endswith("4Q") else quarter
+
+
+def _master_amort_rows(existing: set[str]) -> list[dict]:
+    out = []
+    for name, rows in sorted(_latest_by_company(_load_master_rows("CSM_amortization.json")).items()):
+        if name in existing:
+            continue
+        yearly: dict[str, float] = {}
+        for r in sorted(rows, key=lambda x: x["경과차년"]):
+            v = r.get("상각액")
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                yearly[f"y{int(r['경과차년'])}"] = float(v)
+        if not yearly:
+            continue
+        q = rows[0]["공시분기"]
+        y = yearly.get
+
+        def _sum(*ks: str) -> float | None:
+            vals = [y(k) for k in ks]
+            return round(sum(vals), 2) if all(v is not None for v in vals) else None
+
+        buckets = {k: v for k, v in (("y1", y("y1")), ("y1_y3", _sum("y2", "y3")), ("y3_y5", _sum("y4", "y5"))) if v is not None}
+        out.append({
+            "company": name, "rcept_no": None, "status": "ok", "caption": "",
+            "unit": "억원", "unit_detected": "억원", "unit_source": "master",
+            "buckets": buckets, "yearly": yearly, "granularity": "yearly",
+            "header": [], "row_label": "합 계",
+            "period": _period_label(q), "as_of": f"{q[:4]}-12-31" if q.endswith("4Q") else None,
+            "_source": "master",
+        })
+    return out
+
+
+def _master_sensitivity_rows(existing: set[str]) -> list[dict]:
+    out = []
+    for name, rows in sorted(_latest_by_company(_load_master_rows("CSM_sensitivity.json")).items()):
+        if name in existing:
+            continue
+        scenarios = [
+            {"risk": r.get("위험구분"), "shock": r.get("충격수준"),
+             "csm_delta": r.get("CSM변동"), "pl_impact": r.get("당기손익영향")}
+            for r in sorted(rows, key=lambda x: x.get("순번") or 0)
+        ]
+        if not scenarios:
+            continue
+        q = rows[0]["공시분기"]
+        out.append({
+            "company": name, "rcept_no": None, "status": "ok",
+            "period": _period_label(q), "as_of": rows[0].get("기준일"),
+            "table_kind": "sensitivity_analysis", "unit": "억원", "caption": "",
+            "scenarios": scenarios, "_source": "master",
+        })
+    return out
+
+
+_MASTER_ONLY_ROWS = {
+    "csm_amort_schedule.json": _master_amort_rows,
+    "sensitivity_heatmap.json": _master_sensitivity_rows,
+}
+
+
+def append_master_only_companies(fname: str, payload: dict) -> None:
+    fn = _MASTER_ONLY_ROWS.get(fname)
+    if fn is None:
+        return
+    existing = {c["company"] for c in payload["companies"]}
+    payload["companies"].extend(fn(existing))
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     outputs = {
@@ -1701,6 +1812,7 @@ def main() -> None:
         add_as_of = fname in ("sensitivity_heatmap.json", "csm_amort_schedule.json")
         apply_overrides = fname == "sensitivity_heatmap.json"
         payload = build_panel(pat, fn, add_as_of=add_as_of, apply_overrides=apply_overrides)
+        append_master_only_companies(fname, payload)
         out_path = OUT / fname
         out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 

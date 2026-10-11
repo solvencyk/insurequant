@@ -281,6 +281,69 @@
       "source_id": "DART",
       "as_of_date": "2025-12-31",
       "source_file": "data/dart/FY2025_Q4/raw/KR0005_흥국화재_20260319001047/20260319001047_00760.xml"
+    },
+    {
+      "company_code": "뮌헨재보험",
+      "kr_code": "KR1101",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1101_뮌헨재보험.pdf"
+    },
+    {
+      "company_code": "스위스리아시아",
+      "kr_code": "KR1102",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf"
+    },
+    {
+      "company_code": "스코리재보험",
+      "kr_code": "KR1106",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1106_스코리재보험.pdf"
+    },
+    {
+      "company_code": "알지에이리인슈어런스",
+      "kr_code": "KR1105",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf"
+    },
+    {
+      "company_code": "제네럴재보험",
+      "kr_code": "KR1103",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf"
+    },
+    {
+      "company_code": "퍼시픽라이프리",
+      "kr_code": "KR1107",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf"
+    },
+    {
+      "company_code": "하노버재보험",
+      "kr_code": "KR1104",
+      "quarter": "2025.4Q",
+      "item_block": "sensitivity",
+      "source_id": "DISCLOSURE",
+      "as_of_date": "2025-12-31",
+      "source_file": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf"
     }
   ]
 }

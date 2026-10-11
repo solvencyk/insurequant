@@ -1856,6 +1856,230 @@
       "row_label": "합계",
       "period": "FY2025",
       "as_of": "2025-12-31"
+    },
+    {
+      "company": "뮌헨재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "caption": "",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "master",
+      "buckets": {
+        "y1": 87.0,
+        "y1_y3": 66.0,
+        "y3_y5": 52.0
+      },
+      "yearly": {
+        "y1": 87.0,
+        "y2": 35.0,
+        "y3": 31.0,
+        "y4": 28.0,
+        "y5": 24.0,
+        "y6": 16.0,
+        "y7": 15.0,
+        "y8": 14.0,
+        "y9": 12.0,
+        "y10": 11.0
+      },
+      "granularity": "yearly",
+      "header": [],
+      "row_label": "합 계",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "_source": "master"
+    },
+    {
+      "company": "스위스리아시아",
+      "rcept_no": null,
+      "status": "ok",
+      "caption": "",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "master",
+      "buckets": {
+        "y1": 418.0,
+        "y1_y3": 597.0,
+        "y3_y5": 362.0
+      },
+      "yearly": {
+        "y1": 418.0,
+        "y2": 333.0,
+        "y3": 264.0,
+        "y4": 210.0,
+        "y5": 152.0,
+        "y6": 107.0,
+        "y7": 94.0,
+        "y8": 80.0,
+        "y9": 59.0,
+        "y10": 41.0
+      },
+      "granularity": "yearly",
+      "header": [],
+      "row_label": "합 계",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "_source": "master"
+    },
+    {
+      "company": "스코리재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "caption": "",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "master",
+      "buckets": {
+        "y1": 195.0,
+        "y1_y3": 365.0,
+        "y3_y5": 333.0
+      },
+      "yearly": {
+        "y1": 195.0,
+        "y2": 186.0,
+        "y3": 179.0,
+        "y4": 173.0,
+        "y5": 160.0,
+        "y6": 149.0,
+        "y7": 140.0,
+        "y8": 131.0,
+        "y9": 125.0,
+        "y10": 122.0
+      },
+      "granularity": "yearly",
+      "header": [],
+      "row_label": "합 계",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "_source": "master"
+    },
+    {
+      "company": "알지에이리인슈어런스",
+      "rcept_no": null,
+      "status": "ok",
+      "caption": "",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "master",
+      "buckets": {
+        "y1": 385.0,
+        "y1_y3": 726.0,
+        "y3_y5": 678.0
+      },
+      "yearly": {
+        "y1": 385.0,
+        "y2": 370.0,
+        "y3": 356.0,
+        "y4": 344.0,
+        "y5": 334.0,
+        "y6": 325.0,
+        "y7": 316.0,
+        "y8": 309.0,
+        "y9": 301.0,
+        "y10": 294.0
+      },
+      "granularity": "yearly",
+      "header": [],
+      "row_label": "합 계",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "_source": "master"
+    },
+    {
+      "company": "제네럴재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "caption": "",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "master",
+      "buckets": {
+        "y1": 27.0,
+        "y1_y3": 48.0,
+        "y3_y5": 42.0
+      },
+      "yearly": {
+        "y1": 27.0,
+        "y2": 25.0,
+        "y3": 23.0,
+        "y4": 22.0,
+        "y5": 20.0,
+        "y6": 18.0,
+        "y7": 16.0,
+        "y8": 13.0,
+        "y9": 11.0,
+        "y10": 10.0
+      },
+      "granularity": "yearly",
+      "header": [],
+      "row_label": "합 계",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "_source": "master"
+    },
+    {
+      "company": "퍼시픽라이프리",
+      "rcept_no": null,
+      "status": "ok",
+      "caption": "",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "master",
+      "buckets": {
+        "y1": 79.0,
+        "y1_y3": 141.0,
+        "y3_y5": 116.0
+      },
+      "yearly": {
+        "y1": 79.0,
+        "y2": 75.0,
+        "y3": 66.0,
+        "y4": 60.0,
+        "y5": 56.0,
+        "y6": 52.0,
+        "y7": 47.0,
+        "y8": 44.0,
+        "y9": 41.0,
+        "y10": 38.0
+      },
+      "granularity": "yearly",
+      "header": [],
+      "row_label": "합 계",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "_source": "master"
+    },
+    {
+      "company": "하노버재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "caption": "",
+      "unit": "억원",
+      "unit_detected": "억원",
+      "unit_source": "master",
+      "buckets": {
+        "y1": 14.0,
+        "y1_y3": 35.0,
+        "y3_y5": 30.0
+      },
+      "yearly": {
+        "y1": 14.0,
+        "y2": 18.0,
+        "y3": 17.0,
+        "y4": 16.0,
+        "y5": 14.0,
+        "y6": 13.0,
+        "y7": 12.0,
+        "y8": 11.0,
+        "y9": 10.0,
+        "y10": 9.0
+      },
+      "granularity": "yearly",
+      "header": [],
+      "row_label": "합 계",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "_source": "master"
     }
   ]
 }

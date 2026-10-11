@@ -1845,6 +1845,373 @@
         }
       ],
       "_source": "override"
+    },
+    {
+      "company": "뮌헨재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -10.0,
+          "pl_impact": -18.0
+        },
+        {
+          "risk": "장해질병(정액보상+실손보상)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": -48.0,
+          "pl_impact": -32.0
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": 0.0,
+          "pl_impact": 0.0
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -29.0,
+          "pl_impact": -21.0
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 55.0,
+          "pl_impact": 28.0
+        },
+        {
+          "risk": "사업비(수준+인플레이션)",
+          "shock": "수준 2.62% 증가 / 인플레이션 0.26%p",
+          "csm_delta": -12.0,
+          "pl_impact": -6.0
+        }
+      ],
+      "_source": "master"
+    },
+    {
+      "company": "스위스리아시아",
+      "rcept_no": null,
+      "status": "ok",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -168.0,
+          "pl_impact": -82.0
+        },
+        {
+          "risk": "장해질병(정액보상)",
+          "shock": "3.40% 증가",
+          "csm_delta": -375.0,
+          "pl_impact": -211.0
+        },
+        {
+          "risk": "장해질병(실손보상)",
+          "shock": "2.62% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -157.0,
+          "pl_impact": -45.0
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 261.0,
+          "pl_impact": -11.0
+        },
+        {
+          "risk": "사업비(수준)",
+          "shock": "2.62% 증가",
+          "csm_delta": -22.0,
+          "pl_impact": -9.0
+        },
+        {
+          "risk": "사업비(인플레이션)",
+          "shock": "0.26%p",
+          "csm_delta": -16.0,
+          "pl_impact": -6.0
+        }
+      ],
+      "_source": "master"
+    },
+    {
+      "company": "스코리재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -48.0,
+          "pl_impact": 0.0
+        },
+        {
+          "risk": "장해질병(정액보상)",
+          "shock": "3.40% 증가",
+          "csm_delta": -830.0,
+          "pl_impact": -837.0
+        },
+        {
+          "risk": "장해질병(실손보상)",
+          "shock": "2.62% 증가",
+          "csm_delta": 0.0,
+          "pl_impact": 0.0
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": 0.0,
+          "pl_impact": 0.0
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -192.0,
+          "pl_impact": 10.0
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 210.0,
+          "pl_impact": -11.0
+        },
+        {
+          "risk": "사업비(수준)",
+          "shock": "2.62% 증가",
+          "csm_delta": -10.0,
+          "pl_impact": -4.0
+        },
+        {
+          "risk": "사업비(인플레이션)",
+          "shock": "0.26%p",
+          "csm_delta": -26.0,
+          "pl_impact": -11.0
+        }
+      ],
+      "_source": "master"
+    },
+    {
+      "company": "알지에이리인슈어런스",
+      "rcept_no": null,
+      "status": "ok",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -288.0,
+          "pl_impact": -12.0
+        },
+        {
+          "risk": "장해질병(정액보상+실손보상)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": -1018.0,
+          "pl_impact": -154.0
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -499.0,
+          "pl_impact": -10.0
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 577.0,
+          "pl_impact": -36.0
+        },
+        {
+          "risk": "사업비(수준+인플레이션)",
+          "shock": "수준 2.62% 증가 / 인플레이션 0.26%p",
+          "csm_delta": -56.0,
+          "pl_impact": -4.0
+        }
+      ],
+      "_source": "master"
+    },
+    {
+      "company": "제네럴재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "장해질병(정액보상+실손보상)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "사업비(수준+인플레이션)",
+          "shock": "수준 2.62% 증가 / 인플레이션 0.26%p",
+          "csm_delta": null,
+          "pl_impact": null
+        }
+      ],
+      "_source": "master"
+    },
+    {
+      "company": "퍼시픽라이프리",
+      "rcept_no": null,
+      "status": "ok",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -12.0,
+          "pl_impact": -7.0
+        },
+        {
+          "risk": "장해질병(정액보상+실손보상)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": -293.0,
+          "pl_impact": -194.0
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -72.0,
+          "pl_impact": -16.0
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 102.0,
+          "pl_impact": -5.0
+        },
+        {
+          "risk": "사업비(수준+인플레이션)",
+          "shock": "수준 2.62% 증가 / 인플레이션 0.26%p",
+          "csm_delta": -38.0,
+          "pl_impact": -14.0
+        }
+      ],
+      "_source": "master"
+    },
+    {
+      "company": "하노버재보험",
+      "rcept_no": null,
+      "status": "ok",
+      "period": "FY2025",
+      "as_of": "2025-12-31",
+      "table_kind": "sensitivity_analysis",
+      "unit": "억원",
+      "caption": "",
+      "scenarios": [
+        {
+          "risk": "사망률",
+          "shock": "3.27% 증가",
+          "csm_delta": -7.0,
+          "pl_impact": 0.0
+        },
+        {
+          "risk": "장해질병(정액보상+실손보상)",
+          "shock": "정액 3.40% & 실손 2.62% 증가",
+          "csm_delta": -50.0,
+          "pl_impact": -4.0
+        },
+        {
+          "risk": "장기재물기타",
+          "shock": "4.19% 증가",
+          "csm_delta": null,
+          "pl_impact": null
+        },
+        {
+          "risk": "해지율(상승)",
+          "shock": "9.16% 증가",
+          "csm_delta": -31.0,
+          "pl_impact": null
+        },
+        {
+          "risk": "해지율(하락)",
+          "shock": "9.16% 감소",
+          "csm_delta": 35.0,
+          "pl_impact": -1.0
+        },
+        {
+          "risk": "사업비(수준+인플레이션)",
+          "shock": "수준 2.62% 증가 / 인플레이션 0.26%p",
+          "csm_delta": -5.0,
+          "pl_impact": 0.0
+        }
+      ],
+      "_source": "master"
     }
   ]
 }
