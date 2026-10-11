@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T1130Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -42,4 +42,4 @@ owner 지시(2026-10-11): 「경영공시로 지금 수준 granularity 는 충�
 - (A) 항목별 적용/미적용+사유, 정정 칸 전후 값, (B) 적재 칸 수(회사×분기), 판독 방식, 보류 목록, 새 항등식·게이트(`validate_data_contract`·`validate_master_tables --no-build`) 전후, 기존 칸 변경 0 증명, 남은 원천 부재 목록, `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(parser-ifrs17 b53d966, orchestrator 검증·종결 2026-10-11) (A) 정정 적용: KR0008 PL 항목14 2023.2Q 354,530→161,674, KR0072 PL 36칸, ABL·미래에셋 2023.1Q·2Q 연결→별도 33칸+신규 5, 한화생명 항목10 2023.2Q, 현금및예치금→현금및현금성자산 36칸, DART 별도 빈 칸 7/9 (흥국화재 항목24 2칸 정의 10배 차이로 보류); 처브 KR0100 항목20은 owner 결정 대기로 미접촉. (B) 별첨·이미지 적재 185칸(하나손보 69·RGA 45·카카오페이 26·하나생명 10·하노버 6·악사 6·AIA 7·신한이지 2·연말 2·기타 12). HEAD 대조: BS +185/값변경 70(전부 (A)), PL 신규 0/값변경 53셀(KR0008·KR0072만). 게이트 RED 38 불변·신규 RED 0. 남은 보류 346칸. 제안 파일: proposed_pl_kr0008_2023.2Q_dart_basis.json(항목 1·15·16 DART 기준), proposed_gold_overlay_pl_20261011.json(PL 직접 정정 37칸 gold 등재 — build_pl 재실행 시 되돌아감). owner 결정/후속 레인: 17BS 시트 동기화·BS 골든 재생성(publishing/validation), 빌더 결함 3건(항목10 행 선택·FS-API 013 분기 연결표·KR0072 핸들러).

@@ -2,7 +2,7 @@
 from: downloader
 to: parser
 created: 20261010T2350Z
-status: open
+status: resolved
 route: reparse
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -48,3 +48,5 @@ iter: 1
 마스터 쓰기는 셀 단위 + guard, 통짜 금지, `validate_master_tables.py` 는 `--no-build`. 파이썬 풀패스, 스크립트 파일만. docling 은 `run_harness --stage parse` 가 `data/disclosure/FY*/attachments/` 를 직접 안 읽으므로 `--pdf-root` 를 해당 폴더로 지정해야 한다(raw/ 와 섞지 말 것).
 
 ## 답변 (recipient 작성 — 처리 후)
+
+(parser-ifrs17 b53d966, orchestrator 종결 2026-10-11) 티켓 `20261011T1130Z` (B) 에서 함께 처리: 하나손보 KR0050 14분기 중 11분기 69칸, 신한이지 2·카카오페이 26(2칸+기존 보강 포함 집계는 런로그), 이미지 쪽 RGA 45·하나생명 10·악사 6·하노버 6, 연말 2칸 적재. 원천 부재 목록은 `data/disclosure/_meta/bspl_granularity_runlog.md` 「중간 결과 — 3차」.
