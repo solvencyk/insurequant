@@ -1,5 +1,11 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-12 Status 밀림 (게이트 속도 항목 추가로 밀려난 항목, 무수정)
+
+- **2026-10-11 (22차) 최종 라운드 — 등재 해제 5묶음 · 골든 8종 정리 · 거짓 녹색 사냥 · 소유자 결정표 15건** — 데이터계약 RED 22→21(YELLOW 150→143), K-ICS 게이트 exit 2→0(blocking 0),
+  지문 RED 10→0. 골든 `--update` 6종은 전부 오늘 적재로 설명(kics 룰 골든은 지문 키가 없는 필드라 버킷 신원을 못 보던 결함도 같이 수정). 신규 등재 0. 커밋 1건, push 안 함.
+  남은 것: 소유자 결정표(런로그 Step 5) · parser 발주 2건(PL 항목16 7칸, raw 글롭 스크립트 2개) · 법정준비금 R-RSV-4 10건을 데이터계약에 배선(parser 선행). 런로그 `data/disclosure/_meta/final_validation_runlog_20261011.md`.
+
 ## 2026-10-11 Status 밀림 (24차 추가로 밀려난 항목, 무수정)
 
 - **2026-10-11 (21차) 재보사 단계 10 — 금리민감도 RS1·RS5 근거 박제 면제 장치 `rs_pinned_exemptions` 신설 + owner 승인 5건** — 금리민감도 게이트

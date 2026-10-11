@@ -5,6 +5,15 @@
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
+## 2026-10-12 -- 게이트 속도: 원문 PDF 텍스트 읽기 캐시 (티켓 `20261012T0300Z`, 판정 불변)
+
+- **원인**: `validate_kics_disclosure.py` 가 등재 예외 근거(인용 PDF 59개, 전체쪽 읽기 16개)를 매 실행 `fitz.open`+`get_text` 로 재검산(`_verify_absent_markers`·`_row_anchor_check`·`_marker_grade_census`·`_cited_page_text_density`). 커버리지 변이시험은 마스터 값만 바꾸고 PDF 는 그대로인데 게이트를 49번 돌려 같은 PDF 를 49번 다시 읽었다.
+- **수정**: 신규 `scripts/_pdf_text_cache.py`(프로세스 내 캐시, 키=(절대경로, 크기, mtime_ns), 같은 경로 옛 키 즉시 폐기, 파일 단위 LRU 400MB 상한, 열기 실패는 캐시 안 하고 예외 그대로) + 게이트 5곳이 이 헬퍼로 읽기만 교체. **텍스트만 캐시, 판정(마커 존재·행 귀속·밀도·등급)은 매번 계산.** 마스터·등재부·골든·룰 불변.
+- **실측(같은 마스터 스냅샷, 연속 실행)**: 게이트 1회 전 40.7·40.0초 -> 후 첫 회 ~28초(프로파일 하) · 재실행 **3.5초**. `FULL_COVERAGE_SWEEP=1 test_full_gate_coverage_matches_manifest` **1,120초 -> 210초**. 판정 불변: 전/후 stdout(39,535B)·리포트 JSON(7.5MB, generated_at 제외) **바이트 동일 4/4 조합**(RED=56 YELLOW=1935 GREEN=13684 SKIP=3345).
+- **변이시험** `tests/unit/test_pdf_text_cache.py` 9건(훅 `tests/unit/` 묶음에 자동 편입): 값=fitz 직접값 · 재호출 무재오픈 · 같은 경로 다른 내용/같은 크기 새 mtime 이면 새로 읽음 · 옛 키 누수 없음 · 메모리 상한 · 실패 비캐시 · `_verify_absent_markers`/`_row_anchor_check` 판정이 파일 교체를 따라감. 키에서 크기/mtime 을 빼는 변이로 5건 FAIL 확인.
+- **추가 후보 측정**: `validate_data_contract.py` 는 PDF 가 아니라 `check_master_xlsx`(`check_master_xlsx_drift.read_workbook` openpyxl 읽기, 프로파일 100초/135초)가 지배 -- 반복이 아닌 1회 읽기라 이 캐시로 안 줄어든다(별도 과제). `_scan_breakdown_presence` MD 읽기는 재실행 ~0.3초라 생략.
+- **관측(내 변경과 무관)**: `tests/test_rule_coverage_manifest.py` 2건 FAIL(`public_export_clean_state`: CSM 워터폴 +18·ILP +110행, `master_xlsx_clean_state`: 17BS 49행) = parser 재보사 재적재가 마스터에 들어갔고 public_exports/xlsx 동기화 전 -- publishing 대기. `test_data_contract_selftest` 는 `validate_master_tables` 가 첫 임포트면 `redirect_stdout` 하에서 `sys.stdout.reconfigure` AttributeError(훅은 앞선 골든이 먼저 임포트해 가려짐; 단독 실행 시 실패하는 기존 순서 의존).
+
 ## 2026-10-11 (24차) -- push 직전 최종 골든 · 훅 사전 실행 (티켓 `20261011T2200Z`)
 
 - **훅 전체 사전 실행**(`prepush_check.py`, FULL, ~28분): 데이터계약 RED 0 · K-ICS exit 0(blocking 0) · 도메인 7종 중 `validate_live_artifacts` 만 exit 2 · DART raw 0 · 지문 RED 0(`--update` 후) · JS clear · inbox 0 · 오프라인 772 통과. **막는 것은 1건**: `INSPL_CENSUS_MISSING` 8(마이브라운·뮌헨·스위스리아시아·스코리·RGA·제네럴·퍼시픽·하노버) -- 6841689 에서는 PL 마스터에 없던 회사 8곳이 첫 적재로 들어왔는데 보험손익 원표 패널(DART 표 기반)에는 구조상 못 들어간다. 데이터 오류 아님. 등재 제안만 작성(`data/_derived/pre_push_final_20261011/pre_push_final_proposed_baseline_inspl_20261011.json`, 미적용 -- owner 결정), 대안은 census 를 DART 제출사로 좁히기.

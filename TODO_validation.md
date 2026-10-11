@@ -1,19 +1,18 @@
 # Insurequant Validation TODO (Stage 3)
 
-> 갱신 2026-10-11 (24차) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
+> 갱신 2026-10-12 (게이트 속도) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
 > 2026-10-07 정리 전 전문(V1~V19 블록 포함)은 `docs/todo_archive_validation.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-12 게이트 속도(티켓 `20261012T0300Z`) — 원문 PDF 텍스트 캐시 `scripts/_pdf_text_cache.py`, 판정 불변** — K-ICS 게이트 재실행 40초→3.5초, 매니페스트 전수 스윕 1건 1,120초→210초. 전/후 출력(stdout·리포트 7.5MB) 바이트 동일, 변이시험 9건(`tests/unit/`).
+  남은 것: `validate_data_contract` 의 지배 비용은 xlsx 읽기(`check_master_xlsx_drift`, 1회성) · 매니페스트 파일의 public_export/master_xlsx 2건 FAIL 은 재보사 재적재 후 publishing 동기화 대기(내 변경 무관).
 - **2026-10-11 (24차) push 직전 최종 골든·훅 사전 실행 — 훅 BLOCKED 1건 -> 등재로 해소(`validate_live_artifacts` `INSPL_CENSUS_MISSING` 8, 재보사 7+마이브라운이 PL 마스터에 새로 들어옴)** — 나머지 훅 항목 전부 clear
   (데이터계약 RED 0 · K-ICS exit 0 · 지문 RED 0 · 오프라인 772 통과). 골든 `--update` 3종(viz_ifrs17_panels `csm_amort_schedule` 해시=`cf66dce` 의도 이동 · master_tables SUMMARY · 입력지문), PL 골든 통과(해시 불변).
   커밋 2건(골든 · 문서), push 안 함. **후속(같은 날 밤, 티켓 `20261011T2300Z`, owner 「8줄 등재 (권장)」)**: `live_artifact_baseline.json` 에 8줄 등재(게이트 코드 불변) -> `validate_live_artifacts` RED 8->0 · YELLOW(baselined) 17->25 · STALE 0, 훅 차단 항목 해소. 제안서 키 1개 오타(뮤헨 -> 뮌헨)를 STALE 1+RED 1 로 게이트가 잡아 고침. 런로그 `data/_derived/pre_push_final_20261011/pre_push_final_runlog_20261011.md`(원본은 gitignore 된 `data/disclosure/_meta/`).
 - **2026-10-11 (23차) 항목 4 주석 계보 허용 + owner 승인 등재 4칸 — 데이터계약 RED 34→11(PL 범위 24 소멸·신규 0)** — `PL_FS_NOTE_LINEAGE`(how=fs_note_csm_amort, 항목 4 한정)로 §3d 20건,
   ZERO_LEGS 23→9(src_na zleg 181→195 복귀), 법인세 0 등재 3칸(`user_pl_confirmed_cells.json`)·하노버 2025.3Q PL `MASTER_HOLE` 원천부재 장치 `_PL_SOURCE_ABSENT`(읽는 쪽 `coverage_holes(source_absent=)`).
   변이시험 신규 pytest 37건(훅 묶음 편입) + selftest 87→92 통과. 골든 `--update` 안 함(움직이는 것: `test_master_tables_golden` 1종). 커밋 1건, push 안 함. 남은 것: 최종 라운드 `--update`.
-- **2026-10-11 (22차) 최종 라운드 — 등재 해제 5묶음 · 골든 8종 정리 · 거짓 녹색 사냥 · 소유자 결정표 15건** — 데이터계약 RED 22→21(YELLOW 150→143), K-ICS 게이트 exit 2→0(blocking 0),
-  지문 RED 10→0. 골든 `--update` 6종은 전부 오늘 적재로 설명(kics 룰 골든은 지문 키가 없는 필드라 버킷 신원을 못 보던 결함도 같이 수정). 신규 등재 0. 커밋 1건, push 안 함.
-  남은 것: 소유자 결정표(런로그 Step 5) · parser 발주 2건(PL 항목16 7칸, raw 글롭 스크립트 2개) · 법정준비금 R-RSV-4 10건을 데이터계약에 배선(parser 선행). 런로그 `data/disclosure/_meta/final_validation_runlog_20261011.md`.
 
 ## 열린 일
 

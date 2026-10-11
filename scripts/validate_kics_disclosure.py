@@ -19,6 +19,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from _disclosure_pdf_paths import (  # noqa: E402
     find_disclosure_pdf as _find_disclosure_pdf,
 )
+import _pdf_text_cache as _pdfc  # noqa: E402  (원문 텍스트 읽기 캐시 — 판정은 캐시하지 않는다)
 
 from solvency.validation.kics_json_rules import (
     IMAGE_OCR_COMPANIES,
@@ -3676,19 +3677,18 @@ def _row_anchor_check(pdf_path: Path, pages, row: str, value: str
     발행사가 값을 다른 행으로 옮기거나 행 순서를 바꾸면 이 검사가 깨진다 — 그것이
     "V 가 페이지 어딘가 있다" 와의 차이다."""
     try:
-        import fitz
+        import fitz  # noqa: F401  (없으면 종전처럼 미발견 처리)
     except Exception:
         return False, None
     try:
-        doc = fitz.open(pdf_path)
+        pc = _pdfc.page_count(pdf_path)
     except Exception:
         return False, None
     best = None
-    idx = [n - 1 for n in pages] if pages else range(doc.page_count)
-    for n in idx:
-        if not (0 <= n < doc.page_count):
-            continue
-        ws = sorted(doc[n].get_text("words"), key=lambda w: (w[5], w[6], w[7]))
+    idx = [n - 1 for n in pages] if pages else range(pc)
+    idx = [n for n in idx if 0 <= n < pc]
+    for ws0 in _pdfc.page_words_many(pdf_path, idx):
+        ws = sorted(ws0, key=lambda w: (w[5], w[6], w[7]))
         labels, values = _word_runs(ws, row), _word_runs(ws, value)
         for _lx0, ly, lx1 in labels:
             for vx0, vy, _vx1 in values:
@@ -3696,7 +3696,6 @@ def _row_anchor_check(pdf_path: Path, pages, row: str, value: str
                     d = abs(vy - ly)
                     if best is None or d < best:
                         best = d
-    doc.close()
     return (best is not None and best <= _ROW_ANCHOR_BAND), best
 
 
@@ -3705,22 +3704,20 @@ def _row_anchor_ys(pdf_path: Path, pages, row: str, value: str) -> list[float]:
     `_row_anchor_check` 하나로 하고, 이 함수는 그 내부 관측을 그대로 노출한다 —
     승격 도구가 판정기와 다른 기하를 쓰면 원장이 게이트와 다른 것을 근거로 삼게 된다."""
     try:
-        import fitz
-        doc = fitz.open(pdf_path)
+        import fitz  # noqa: F401
+        pc = _pdfc.page_count(pdf_path)
     except Exception:
         return []
     out = []
-    idx = [n - 1 for n in pages] if pages else range(doc.page_count)
-    for n in idx:
-        if not (0 <= n < doc.page_count):
-            continue
-        ws = sorted(doc[n].get_text("words"), key=lambda w: (w[5], w[6], w[7]))
+    idx = [n - 1 for n in pages] if pages else range(pc)
+    idx = [n for n in idx if 0 <= n < pc]
+    for ws0 in _pdfc.page_words_many(pdf_path, idx):
+        ws = sorted(ws0, key=lambda w: (w[5], w[6], w[7]))
         labels, values = _word_runs(ws, row), _word_runs(ws, value)
         for _lx0, ly, lx1 in labels:
             if any(vx0 >= lx1 - 1 and abs(vy - ly) <= _ROW_ANCHOR_BAND
                    for vx0, vy, _vx1 in values):
                 out.append(ly)
-    doc.close()
     return out
 
 
@@ -3774,11 +3771,10 @@ def _verify_absent_markers(spec: dict) -> tuple[bool, str]:
     pages = spec.get("pages")
     try:
         if p.suffix.lower() == ".pdf":
-            import fitz  # 인용을 실제로 든 항목에서만 임포트 — 평시 게이트는 fitz 를 안 쓴다
-            doc = fitz.open(p)
-            idx = [n - 1 for n in pages] if pages else range(doc.page_count)
-            text = "".join(doc[n].get_text() for n in idx if 0 <= n < doc.page_count)
-            doc.close()
+            import fitz  # noqa: F401  인용을 실제로 든 항목에서만 임포트 — 평시 게이트는 fitz 를 안 쓴다
+            pc = _pdfc.page_count(p)
+            idx = [n - 1 for n in pages] if pages else range(pc)
+            text = "".join(_pdfc.page_texts(p, [n for n in idx if 0 <= n < pc]))
         else:
             text = p.read_text(encoding="utf-8", errors="ignore")
     except Exception:
@@ -3825,12 +3821,11 @@ def _cited_page_text_density(spec: dict) -> tuple[int, int] | None:
         return None
     pages = spec.get("pages")
     try:
-        import fitz
-        doc = fitz.open(p)
-        idx = [n - 1 for n in pages] if pages else range(doc.page_count)
-        idx = [n for n in idx if 0 <= n < doc.page_count]
-        total = sum(len(doc[n].get_text().strip()) for n in idx)
-        doc.close()
+        import fitz  # noqa: F401
+        pc = _pdfc.page_count(p)
+        idx = [n - 1 for n in pages] if pages else range(pc)
+        idx = [n for n in idx if 0 <= n < pc]
+        total = sum(len(t.strip()) for t in _pdfc.page_texts(p, idx))
     except Exception:
         return None
     return (len(idx), total)
@@ -4168,12 +4163,11 @@ def _marker_grade_census(ledger=None) -> tuple[list, list]:
         flat = ""
         try:
             if p.suffix.lower() == ".pdf":
-                import fitz
-                doc = fitz.open(p)
-                idx = [n - 1 for n in pages] if pages else range(doc.page_count)
-                flat = "".join("".join(doc[n].get_text().split())
-                               for n in idx if 0 <= n < doc.page_count)
-                doc.close()
+                import fitz  # noqa: F401
+                pc = _pdfc.page_count(p)
+                idx = [n - 1 for n in pages] if pages else range(pc)
+                flat = "".join("".join(t.split())
+                               for t in _pdfc.page_texts(p, [n for n in idx if 0 <= n < pc]))
             else:
                 flat = "".join(p.read_text(encoding="utf-8", errors="ignore").split())
         except Exception:
