@@ -69,7 +69,8 @@
     "[2026-10-11] round3(inbox/parser/20261011T1130Z, round B6_k98_text) -- 정정 0칸(옛 값 guard) + 신규 15칸, scripts/bspl_apply_bs_fix.py 로 셀단위. 계보: data/_derived/bs_from_disclosure.json, 근거 칸에 정정 사유.",
     "[2026-10-11] round3(inbox/parser/20261011T1130Z, round B7_rga_summary) -- 정정 0칸(옛 값 guard) + 신규 5칸, scripts/bspl_apply_bs_fix.py 로 셀단위. 계보: data/_derived/bs_from_disclosure.json, 근거 칸에 정정 사유.",
     "[2026-10-11] round3(inbox/parser/20261011T1130Z, round B7_aia) -- 정정 0칸(옛 값 guard) + 신규 7칸, scripts/bspl_apply_bs_fix.py 로 셀단위. 계보: data/_derived/bs_from_disclosure.json, 근거 칸에 정정 사유.",
-    "[2026-10-11] round3(inbox/parser/20261011T1130Z, round C4_zero) -- 정정 0칸(옛 값 guard) + 신규 5칸, scripts/bspl_apply_bs_fix.py 로 셀단위. 계보: data/_derived/bs_from_disclosure.json, 근거 칸에 정정 사유."
+    "[2026-10-11] round3(inbox/parser/20261011T1130Z, round C4_zero) -- 정정 0칸(옛 값 guard) + 신규 5칸, scripts/bspl_apply_bs_fix.py 로 셀단위. 계보: data/_derived/bs_from_disclosure.json, 근거 칸에 정정 사유.",
+    "[2026-10-12] 재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z) -- 49칸 신규(KR1101 24 · KR1103 11·12·20·24 · KR1104 11·24 · KR1107 20·24), scripts/reinsurer_resweep_bs_overlay.py 로 파트 파일(KR11*_agent_resweep.json)에서 셀단위 UPSERT. 계보: data/_derived/bs_from_disclosure.json."
   ],
   "cells": {
     "KR0049|5|2023.4Q": {
@@ -17271,6 +17272,202 @@
     "KR0029|23|2023.4Q": {
       "값": 0.0,
       "근거": "신규 2026-10-11(round 4): AIG손해보험 2023.4Q 경영공시 8-2-1 재무상태표(별도, 단위 천원) p63 에 「차입부채」 줄이 없다. 부채총계 400,530,573 = 책임준비금 273,927,220 + 기타부채 126,603,353(하위 줄 11개), 자산총계 1,013,529,537 = 운용자산 746,209,240 + 비운용자산 267,320,297 이 닫히고 마스터 항목 1/2/3/4/10/11/12/14/20/21/24/30/31 이 같은 표와 일치. 줄 없음 + 폐합 = 0 증명. (새 첨부 p76~86 은 지급여력 건전성감독기준 재무상태표 감사보고서 이미지라 K-IFRS 정의와 달라 쓰지 않았다.)"
+    },
+    "KR1101|24|2023.1Q": {
+      "값": 38913.643,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 38,913.643 백만원 (원문 천원, KR1101_뮌헨재보험_v20230101.pdf p23 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2023.2Q": {
+      "값": 40149.463,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 40,149.463 백만원 (원문 천원, KR1101_뮌헨재보험_v20230101.pdf p26 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2023.3Q": {
+      "값": 35824.511,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 35,824.511 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p24 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2024.1Q": {
+      "값": 63659.494,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 63,659.494 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p25 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2024.2Q": {
+      "값": 48729.164,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 48,729.164 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p53 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2024.3Q": {
+      "값": 50010.638,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 50,010.638 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p26 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2025.1Q": {
+      "값": 66988.287,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 66,988.287 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p29 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2025.2Q": {
+      "값": 48816.792,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 48,816.792 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p53 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2025.3Q": {
+      "값": 40332.544,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 40,332.544 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p30 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2026.1Q": {
+      "값": 47754.669,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 47,754.669 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p32 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2026.2Q": {
+      "값": 40707.197,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 40,707.197 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p56 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1103|11|2023.2Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 억원, KR1103_제네럴재보험.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|11|2024.1Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 백만원, KR1103_제네럴재보험.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|11|2024.2Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 백만원, KR1103_제네럴재보험.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|11|2024.3Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 백만원, KR1103_제네럴재보험.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|11|2024.4Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 백만원, KR1103_제네럴재보험.pdf p8 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|11|2025.1Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 백만원, KR1103_제네럴재보험.pdf p5 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|11|2025.4Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 억원, KR1103_제네럴재보험.pdf p8 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|11|2026.2Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 억원, KR1103_제네럴재보험.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1103|12|2023.1Q": {
+      "값": 99631.17,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): KR1103 8-1 재무상태표(천원) line; same label equals the master in other quarters. 항목 12 기타포괄손익-공정가치측정금융자산 = 99,631.17 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 유가증권 == master 12 at 2023.1Q?/2024.1Q/2024.2Q/2025.1Q/2025.2Q (same)"
+    },
+    "KR1103|12|2023.2Q": {
+      "값": 99370.247,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): KR1103 8-1 재무상태표(천원) line; same label equals the master in other quarters. 항목 12 기타포괄손익-공정가치측정금융자산 = 99,370.247 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 유가증권 == master 12 at 2023.1Q?/2024.1Q/2024.2Q/2025.1Q/2025.2Q (same)"
+    },
+    "KR1103|12|2026.2Q": {
+      "값": 104301.09,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): KR1103 8-1 재무상태표(천원) line; same label equals the master in other quarters. 항목 12 기타포괄손익-공정가치측정금융자산 = 104,301.09 백만원 (원문 천원, KR1103_제네럴재보험.pdf p18 에서 쪽을 다시 열어 인쇄값 재현). 근거: 유가증권 == master 12 at 2023.1Q?/2024.1Q/2024.2Q/2025.1Q/2025.2Q (same)"
+    },
+    "KR1103|20|2023.2Q": {
+      "값": 47521.58,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): KR1103 8-1 재무상태표(천원) line; same label equals the master in other quarters. 항목 20 보험계약부채 = 47,521.58 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 보험계약부채 == master 20 at 2023.1Q, 2024.1Q-2026.2Q (same)"
+    },
+    "KR1103|20|2023.3Q": {
+      "값": 54751.319,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): KR1103 8-1 재무상태표(천원) line; same label equals the master in other quarters. 항목 20 보험계약부채 = 54,751.319 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 보험계약부채 == master 20 at 2023.1Q, 2024.1Q-2026.2Q (same)"
+    },
+    "KR1103|24|2023.1Q": {
+      "값": 17610.276,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 17,610.276 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2023.2Q": {
+      "값": 17083.444,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): KR1103 8-1 재무상태표(천원) line; same label equals the master in other quarters. 항목 24 기타부채 = 17,083.444 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 기타부채 == master 24 at 2023.4Q/2024.4Q (4Q audit)"
+    },
+    "KR1103|24|2023.3Q": {
+      "값": 17328.292,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): KR1103 8-1 재무상태표(천원) line; same label equals the master in other quarters. 항목 24 기타부채 = 17,328.292 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 기타부채 == master 24 at 2023.4Q/2024.4Q (4Q audit)"
+    },
+    "KR1103|24|2024.1Q": {
+      "값": 17434.088,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 17,434.088 백만원 (원문 천원, KR1103_제네럴재보험.pdf p10 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2024.2Q": {
+      "값": 17575.579,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 17,575.579 백만원 (원문 천원, KR1103_제네럴재보험.pdf p17 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2024.3Q": {
+      "값": 17819.996,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 17,819.996 백만원 (원문 천원, KR1103_제네럴재보험.pdf p11 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2025.1Q": {
+      "값": 20369.569,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 20,369.569 백만원 (원문 천원, KR1103_제네럴재보험.pdf p13 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2025.2Q": {
+      "값": 17917.617,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 17,917.617 백만원 (원문 천원, KR1103_제네럴재보험.pdf p18 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2025.3Q": {
+      "값": 18089.431,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 18,089.431 백만원 (원문 천원, KR1103_제네럴재보험.pdf p11 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2026.1Q": {
+      "값": 17346.632,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 17,346.632 백만원 (원문 천원, KR1103_제네럴재보험.pdf p11 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1103|24|2026.2Q": {
+      "값": 17481.444,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 17,481.444 백만원 (원문 천원, KR1103_제네럴재보험.pdf p18 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 7558.374 (p7, 원) / 2024.4Q 기타부채 = master 7558.374 (p7, 원)"
+    },
+    "KR1104|11|2023.1Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 백만원, KR1104_하노버재보험.pdf p6 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1104|11|2023.4Q": {
+      "값": 0.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 11 당기손익-공정가치측정금융자산 = 0.0 백만원 (원문 백만원, KR1104_하노버재보험.pdf p13 에서 쪽을 다시 열어 인쇄값 재현). 근거: printed '-' in the summary BS FVPL line; asset lines close to the printed total"
+    },
+    "KR1104|24|2025.1Q": {
+      "값": 3906.08,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 3,906.08 백만원 (원문 천원, KR1104_하노버재보험.pdf p26 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 45.789 (p40, 원) / 2024.4Q 기타부채 = master 45.813 (p70, 원)"
+    },
+    "KR1104|24|2025.2Q": {
+      "값": 3552.577,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 3,552.577 백만원 (원문 천원, KR1104_하노버재보험.pdf p41 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 45.789 (p40, 원) / 2024.4Q 기타부채 = master 45.813 (p70, 원)"
+    },
+    "KR1104|24|2026.1Q": {
+      "값": 2264.713,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 2,264.713 백만원 (원문 천원, KR1104_하노버재보험.pdf p32 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 45.789 (p40, 원) / 2024.4Q 기타부채 = master 45.813 (p70, 원)"
+    },
+    "KR1104|24|2026.2Q": {
+      "값": 2188.203,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 2,188.203 백만원 (원문 천원, KR1104_하노버재보험.pdf p42 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 45.789 (p40, 원) / 2024.4Q 기타부채 = master 45.813 (p70, 원)"
+    },
+    "KR1107|20|2024.1Q": {
+      "값": 58500.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 20 보험계약부채 = 58,500.0 백만원 (원문 억원, KR1107_퍼시픽라이프리.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: summary BS label mapped to master item; all clean-bucket anchors of this company/label match the master"
+    },
+    "KR1107|20|2024.2Q": {
+      "값": 55600.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 20 보험계약부채 = 55,600.0 백만원 (원문 억원, KR1107_퍼시픽라이프리.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: summary BS label mapped to master item; all clean-bucket anchors of this company/label match the master"
+    },
+    "KR1107|20|2024.3Q": {
+      "값": 57800.0,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 20 보험계약부채 = 57,800.0 백만원 (원문 억원, KR1107_퍼시픽라이프리.pdf p5 에서 쪽을 다시 열어 인쇄값 재현). 근거: summary BS label mapped to master item; all clean-bucket anchors of this company/label match the master"
+    },
+    "KR1107|24|2025.1Q": {
+      "값": 4025.574,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 4,025.574 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p24 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2025.2Q": {
+      "값": 5673.215,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 5,673.215 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p70 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2025.3Q": {
+      "값": 85.986,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 85.986 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p34 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2026.1Q": {
+      "값": 151.141,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 151.141 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p34 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2026.2Q": {
+      "값": 90.236,
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 90.236 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p72 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
     }
   },
   "_removed": [

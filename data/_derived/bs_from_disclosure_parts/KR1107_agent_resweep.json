@@ -1,0 +1,88 @@
+{
+  "_readme": [
+    "[2026-10-12] 재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z) 의 KR1107 신규 칸 계보 -- scripts/reinsurer_resweep_bs_apply.py 가 쓴다. scripts/merge_bs_disclosure_parts.py 가 이 파일을 다른 파트와 같이 사이드카·오버레이로 합친다."
+  ],
+  "cells": {
+    "KR1107|20|2024.1Q": {
+      "값": 58500.0,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "66f6f8e8a12f7ccda44f096bbe3e59d953b7a754f7268918e809a98db6c60282",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:C:summary_bs_reserves",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 20 보험계약부채 = 58,500.0 백만원 (원문 억원, KR1107_퍼시픽라이프리.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: summary BS label mapped to master item; all clean-bucket anchors of this company/label match the master"
+    },
+    "KR1107|20|2024.2Q": {
+      "값": 55600.0,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 4,
+      "sha256": "771390820d5427736f73a6ba51c494d2b361a51edd98d7ce0db624ec05af4a69",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:C:summary_bs_reserves",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 20 보험계약부채 = 55,600.0 백만원 (원문 억원, KR1107_퍼시픽라이프리.pdf p4 에서 쪽을 다시 열어 인쇄값 재현). 근거: summary BS label mapped to master item; all clean-bucket anchors of this company/label match the master"
+    },
+    "KR1107|20|2024.3Q": {
+      "값": 57800.0,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 5,
+      "sha256": "30ba5b4d5bc1fff3fb8a6dbfbc71eb78a7c6ae41fdf15ff112e202873f268c16",
+      "축척": "억원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:C:summary_bs_reserves",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): summary BS (감독회계 총괄 요약 재무상태표). 항목 20 보험계약부채 = 57,800.0 백만원 (원문 억원, KR1107_퍼시픽라이프리.pdf p5 에서 쪽을 다시 열어 인쇄값 재현). 근거: summary BS label mapped to master item; all clean-bucket anchors of this company/label match the master"
+    },
+    "KR1107|24|2025.1Q": {
+      "값": 4025.574,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 24,
+      "sha256": "484b9a01af51241f8fe964ed0a3f9a0f679d4f871641396f1fc4add0f13a5613",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 4,025.574 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p24 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2025.2Q": {
+      "값": 5673.215,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 70,
+      "sha256": "56230166732b5400d5f0f115faba073e8e5321ba52ef22eb43c41d06a639e94a",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 5,673.215 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p70 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2025.3Q": {
+      "값": 85.986,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 34,
+      "sha256": "e6fe81261cc163c64fc73c2a771c8dd324415bee61af4536d3c10527dde0c748",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 85.986 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p34 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2026.1Q": {
+      "값": 151.141,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 34,
+      "sha256": "2adf45fc7d3236ebea8b1c34d93e08feca5772e195a4f138ecfb1dde14d17afb",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 151.141 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p34 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    },
+    "KR1107|24|2026.2Q": {
+      "값": 90.236,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf",
+      "page": 72,
+      "sha256": "dfc5152a9e04d078d1387754f8d97154cf40d91613c4b3d02d08bc44977b7b91",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 90.236 백만원 (원문 천원, KR1107_퍼시픽라이프리.pdf p72 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2024.4Q 기타부채 = master 80.414 (p7, 원) / 2025.4Q 기타부채 = master 70.767 (p7, 원)"
+    }
+  },
+  "skips": {}
+}

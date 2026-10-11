@@ -1,0 +1,118 @@
+{
+  "_readme": [
+    "[2026-10-12] 재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z) 의 KR1101 신규 칸 계보 -- scripts/reinsurer_resweep_bs_apply.py 가 쓴다. scripts/merge_bs_disclosure_parts.py 가 이 파일을 다른 파트와 같이 사이드카·오버레이로 합친다."
+  ],
+  "cells": {
+    "KR1101|24|2023.1Q": {
+      "값": 38913.643,
+      "pdf": "data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 23,
+      "sha256": "cdc347eca2ce7c204f2e47b23f591d126094cfa00f88623c8ea523f2c6991340",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 38,913.643 백만원 (원문 천원, KR1101_뮌헨재보험_v20230101.pdf p23 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2023.2Q": {
+      "값": 40149.463,
+      "pdf": "data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf",
+      "page": 26,
+      "sha256": "e600bff8b3a73c05d37490163c164d57de9e01e7a033c8e263a617ff918e0466",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 40,149.463 백만원 (원문 천원, KR1101_뮌헨재보험_v20230101.pdf p26 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2023.3Q": {
+      "값": 35824.511,
+      "pdf": "data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 24,
+      "sha256": "763285c6a18ce6f245f93ca3e45b9d83a645ef7a02ba86dc9e2975103fef215f",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 35,824.511 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p24 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2024.1Q": {
+      "값": 63659.494,
+      "pdf": "data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 25,
+      "sha256": "4bab18d754dd10c7c2accdebc5e2a6e990653f02ba1a544688851e91404a5dce",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 63,659.494 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p25 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2024.2Q": {
+      "값": 48729.164,
+      "pdf": "data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 53,
+      "sha256": "04c432eba4c10d9657c3d02d67d31319763aa02020b34f7d6d52f5db2db79b8f",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 48,729.164 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p53 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2024.3Q": {
+      "값": 50010.638,
+      "pdf": "data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 26,
+      "sha256": "74ed9e25e6f7c78e7073d8269db369fcfc0798f368b48feab6ebe8fff615f85f",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 50,010.638 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p26 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2025.1Q": {
+      "값": 66988.287,
+      "pdf": "data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 29,
+      "sha256": "c8de2a6209b9becf18f2533621feed250e6050c392024c1703b84ddc9dbf3819",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 66,988.287 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p29 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2025.2Q": {
+      "값": 48816.792,
+      "pdf": "data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 53,
+      "sha256": "12aa1ef45b8fce04a180ebb74e5c8752b5df4fed8449981aa522761aec5d3f16",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 48,816.792 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p53 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2025.3Q": {
+      "값": 40332.544,
+      "pdf": "data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf",
+      "page": 30,
+      "sha256": "64ad1f226aaa9d8874f353c5fee85980fd95ee653fed287b824aa9f1538e9251",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 40,332.544 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p30 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2026.1Q": {
+      "값": 47754.669,
+      "pdf": "data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf",
+      "page": 32,
+      "sha256": "3ed6441541fadbb43bee6703b03583650ce633d04340b9dad5e65ff0a8f4da43",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 47,754.669 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p32 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    },
+    "KR1101|24|2026.2Q": {
+      "값": 40707.197,
+      "pdf": "data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf",
+      "page": 56,
+      "sha256": "88058733d0c40d67864230477caaf8f02bd0e2c66e2656ee2049053bc33d2e4b",
+      "축척": "천원 -> 백만원",
+      "앵커항목": null,
+      "방법": "resweep_20261012:A:engine_candidate_anchored",
+      "근거": "재보사 PL/BS 공란 재스윕(inbox/parser/20261012T0110Z): engine candidate (bspl_granularity) whose rule 기타부채 is anchored by EXISTS_SAME quarters. 항목 24 기타부채 = 40,707.197 백만원 (원문 천원, KR1101_뮌헨재보험.pdf p56 에서 쪽을 다시 열어 인쇄값 재현). 근거: 2023.4Q 기타부채 = master 19964.037 (p7, 원) / 2024.4Q 기타부채 = master 10591.718 (p7, 원) / 2025.4Q 기타부채 = master 9744.030 (p7, 원)"
+    }
+  },
+  "skips": {}
+}
