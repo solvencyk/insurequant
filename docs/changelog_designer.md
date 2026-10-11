@@ -7,6 +7,15 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-11 -- 재보사 7곳 PL 항목 4 라벨 「원수」 제거 + 패널 렌더 점검
+
+티켓 `inbox/designer/20261011T2010Z__orchestrator__KR1101-KR1107__reinsurer_csm_amort_label_and_panel3.md`(공유 티켓, 종결은 오케스트레이터). `IFRS17.html` 만, 마스터 무수정, push 안 함.
+
+- **라벨**: 전업 재보험사 7곳(뮌헨·스위스리아시아·제네럴·하노버·알지에이·스코리·퍼시픽라이프리)의 보험손익 구성 head 를 「원수 CSM상각 · 원수 위험조정 · 원수 예실차 · 기타 원수손익」 → 「CSM 상각 · 위험조정 · 예실차 · 기타 손익」. 매핑 = `PL_RE_ONLY`(회사코드 집합)·`PL_RE_LABEL`(라벨·x축 줄바꿈)·`PL_STEP_DEFS_RE`, `plStepDefsFor` 가 코드로 골라 쓴다 — 막대·툴팁·표 행·캡션 계정 흐름은 모두 이 def 의 이름에서 나오므로 한 곳. 마스터 항목명(`원수CSM상각` 등)은 불변. 같은 회사의 제목 부제 「(장기원수 세부 분해)」→「(보험손익 세부 분해)」와 차트 aria-label 도 「장기원수」를 뗐다. 코리안리(KR1000)는 수재/출재 LOB 축이라 그대로, 라이나(KR0074)는 원수사라 그대로(「원수 CSM상각」 유지) — 헤드리스로 확인.
+- **렌더 점검(헤드리스 Edge, `scripts/shot_pl_panel3.py`, `?iq_internal=1`, 데스크톱 1280·모바일 375, 연도·분기 기준)**: ① 항목 4 만 있는 4Q 버킷 — 최신이 반기라 화면 차트에는 안 뜨므로 요청 가로채기로 2025.4Q 까지만 남겨 시험(뮌헨·스코리·하노버·라이나): CSM 상각 막대 1개 + 나머지 head 4곳·투자손익·영업외 회색 「미공시」 + 보험손익 앵커 + 법인세 + 순이익. ② 항목 4 도 없는 중간분기(2026.2Q 당분기·2025.3Q): 회색 막대만.
+  **판단 = 브리지 변경 없음**: 값이 있으면 막대, 없으면 회색 미공시라는 기존 관례가 그대로 읽히고(앵커는 0 에서 다시 시작해 누적 잔차 막대가 안 뜬다), 안내 문구로 바꾸면 보험손익·법인세·순이익은 오히려 숨는다. 투자손익·영업외(항목 17·21)가 비어 법인세 막대가 순이익과 안 맞는 건 재보사 7곳만이 아니라 PL 마스터 26사 269버킷의 공통 기존 현상(parser 가 채우면 해소) — 이번 범위 밖.
+- 시험: 40조합(10사×연도/분기×데스크톱/모바일) 콘솔 오류 0·가로 넘침 0, `test_deploy_assets`+`test_push_gate_wiring` 77 통과(1 skip). 스크린샷은 `artifacts/designer/reinsurer_csm_amort/`(gitignore).
+
 ## 2026-10-11 -- index KPI 「업계 총 기말 CSM」 같은 분기 합산(142조)
 
 티켓 `inbox/designer/20261011T1800Z__orchestrator__MULTI_2026.2Q__index_kpi_industry_csm_single_quarter.md`(공유 티켓, 종결은 오케스트레이터). `index.html` 만, 마스터·패널 JSON 무수정, push 안 함.
