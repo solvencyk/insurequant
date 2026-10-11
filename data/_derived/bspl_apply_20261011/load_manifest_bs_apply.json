@@ -1265,6 +1265,36 @@
    "master_rows_before": 10955,
    "master_rows_after": 10962,
    "master_sha256_after": "a862308305a9aebf4e4822880e6358656ad72b33ff1f32cf5ba3e723e2e8fced"
+  },
+  {
+   "round": "C4_zero",
+   "stamp": "2026-10-11",
+   "replaced": [],
+   "added": [
+    {
+     "key": "KR0104|14|2025.4Q",
+     "new": 0.0
+    },
+    {
+     "key": "KR0104|22|2025.4Q",
+     "new": 0.0
+    },
+    {
+     "key": "KR0005|22|2024.4Q",
+     "new": 0.0
+    },
+    {
+     "key": "KR0029|22|2023.4Q",
+     "new": 0.0
+    },
+    {
+     "key": "KR0029|23|2023.4Q",
+     "new": 0.0
+    }
+   ],
+   "master_rows_before": 10962,
+   "master_rows_after": 10967,
+   "master_sha256_after": "fa37d88c185c302c2778229d21293766c4c2b1eaa20c8fbfcf05d4fb39c14dc6"
   }
  ]
 }

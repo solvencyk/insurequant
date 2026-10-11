@@ -1,5 +1,9 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+- **2026-10-11 BS·PL 후속(티켓 20261011T0900Z)** — `IFRS17_BS.json` 10,651 → 10,777행(추가 126 · 값 변경 23 = KR1098 자본금 2026.2Q 2,000 → 3,000억 1 + 코리안리 KR1000 2023.1Q·2Q 22[2Q 복사·잘못된 표 선택 정정], 그 밖 변경 0) · `PL_breakdown.json` 변경 0. 보류 BS 500 → 378(적재 121: 0 증명 69 · 프라이어-연말 브리지 33 · 같은 표·비교열 사슬·규칙 T·줄 합 탐색 19, 사유 등재부 `hold_reasons_5c.md`) · 연속 동일값 전수(BS 복사 오류 KR1000 1묶음) · 처브 항목 20 정의표(권고 D2) · PL 항목 1 보류 17칸 원인 3부류. 커밋 안 함.
+  남은 것: data-contract RED 34 → 37(내 몫 1 = `MASTER_XLSX_DRIFT 17BS` 23칸 · `ROW_MISSING 17BS` 1,747행, publishing 이 `sync_master_xlsx_sheet.py "17BS"`) · BS 골든(고정 9,030행) 재생성은 validation · owner 결정(처브 항목 20 D1/D2 · IBK연금 항목 13 정의 · 메트라이프·처브 특별계정 포함 정의) · 마스터 정정 후보 미적용(PL KR0008 항목 14 2023.2Q 일반손익 · PL KR0072 항목 10 4칸 · BS 항목 10 예치금 혼입 KR1000/KR0001/KR0071 30칸 · 한화생명 BS 항목 10 2023.2Q · 상장 2023.1Q·2Q 연결(CFS) 값 KR0070·KR0079 총계).
+  근거·재현·되돌리기 `data/disclosure/_meta/bspl_granularity_runlog.md` 맨 위 「중간 결과 — 후속 티켓」 · 도구 `scripts/bspl_followup_*.py` · 산출·증거·백업 `data/_derived/bspl_followup_20261011/`·`bspl_followup_backup_20261011/`.
+
 ## 2026-10-11 (BS·PL 정정·별첨 적재 20261011T1130Z) 정리 — 밀린 Status (무수정)
 
 - **2026-10-11 BS·PL 세부(granularity) 경영공시 백필(티켓 20261011T0310Z)** — 비상장 15사 + 재보사 8곳(+상장 구멍): `IFRS17_BS.json` 9,030 → 10,651행(+1,621) · `PL_breakdown.json` 12,941 → 13,458행(+517 신규·23 null 채움, 항목 1·16·22·23·24 만 — §3d), 기존 행 값·바이트 변경 0. 대상 23사 BS 2,198 → 3,761칸 · PL 1,035 → 1,548칸, 항등식·코어 census 시뮬 실패 0. 커밋 안 함.

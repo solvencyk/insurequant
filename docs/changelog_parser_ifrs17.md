@@ -3,6 +3,10 @@
 > Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-11 (4차: 사이트 신판 대조 + 별첨 감사보고서 빈 칸 점검, 티켓 20261011T1215Z)
+
+미커밋. push 안 함. 공유 티켓 미수정. 참고 칸 7개(현대해상 3 · 한화생명 2 · 하나생명 1 · KB라이프 1)의 바뀐 쪽을 줄 단위로 읽어 BS/PL 원천 쪽이 아님을 확인(정정 0). 별첨 4사 중 `IFRS17_BS.json` 에 0 증명 5칸 추가(KR0104 항목 14·22 · KR0005 항목 22 · KR0029 항목 22·23; 줄 없음 + 합이 총계로 원 단위 폐합), HEAD 대비 값 변경 0. 보류: KR0005 항목 23(사채 정의) · PL 29(없는 줄 = None 관례) · AIG PL(원천 없음). 상세·재현 `data/disclosure/_meta/bspl_granularity_runlog.md` 「중간 결과 — 4차」 · 명세 `spec_C4_zero_proofs.json`.
+
 ## 2026-10-11 (BS·PL 정정 제안 적용 · 별첨·이미지 원천 적재) — A 정정 8항 · B 별첨/이미지 원천 · 보류 재평가
 
 미커밋. push 안 함. 발주 `inbox/parser/20261011T1130Z__orchestrator__MULTI_2023.1Q-2026.2Q__bspl_apply_proposals_and_attachments.md`(겸 downloader 티켓 `20261010T2350Z`; 고치지 않았다, 오케스트레이터 종결 대기). 전 과정·표·재현·증거 `data/disclosure/_meta/bspl_granularity_runlog.md` 맨 위 「중간 결과 — 3차」 · 명세·판독·매니페스트·게이트 전후·보류 목록 `data/_derived/bspl_apply_20261011/` · 백업 `data/_derived/bspl_apply_backup_20261011/`. 서브에이전트·docling 안 씀. 마스터 쓰기는 전부 셀 단위 + 옛 값 guard + 라운드별 백업(적용기 `bspl_apply_bs_fix.py`·`bspl_apply_pl_fix.py`), `build_*` 빌더·`validate_master_tables` 인자 없는 실행 없음.
