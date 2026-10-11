@@ -21,6 +21,12 @@ owner 지시(2026-10-11, 밤새 처리) 전체 스윕의 **마감 publishing 라
 6. **자본성증권 정리**: ① `compute_tier1_utilization.py`·`compute_tier2_utilization.py` 가 입력 MD 파일명에서 회사명을 얻어 KB라이프가 `케이비라이프생명보험` 으로 되살아나는 문제 — 코드→`원수사명` 매핑을 쓰도록 근본 수정(수정 후 재실행 결과가 현재 배포본과 KB라이프 1칸 외 같아야 함) ② `kics_forward_capital.json` 에 서울보증(PAA 보증보험) 제외 행과 사유를 추가해 화면 문구가 데이터에서 나오게(designer 가 K-ICS.html 에서 `forward_capital_simulation.py::EXCLUDE_PAA` 이유를 문구로 쓰고 있다 — designer 요청: 「데이터가 사유를 말하게」). 다른 회사 행 변경 0.
 7. **게이트·테스트**: `validate_data_contract.py` 의 `MASTER_XLSX_*` RED 0 확인(다른 RED 는 아래 「알려진 RED」 외 새로 생기면 보고), `scripts/validate_live_artifacts.py`(`TIER_*` 발견), `tests/test_deploy_assets.py`·`tests/test_push_gate_wiring.py`·`tests/test_prepush_scope.py`·`tests/test_rule_coverage_manifest.py`(xlsx/public_export 관련), `tests/test_share_screenshot.py`. 풀 훅(`prepush_check.py`)은 돌리지 않는다(오케스트레이터가 별도 실행).
 
+### 추가 지시 (오케스트레이터 2026-10-11 오후, 발사 직전 — 위 본문보다 우선)
+- 마스터는 **모두 커밋 완료**(HEAD `54d33a0` 이후, 작업 트리 마스터 = HEAD). 그 사이 바뀐 것: `IFRS17_BS.json` +190칸·정정 70칸(b53d966·54d33a0), `PL_breakdown.json` 정정 53칸(KR0008·KR0072), `kics_disclosure.json` 59행/98필드 정정(예별 2025.4Q·농협손보 2025.1Q·교보 3개 분기, 4643d1d) + `kics_rate_sensitivity.json` 62필드 + `kics_duration_gap.json` 예별 1행 + `data/_derived/kics_irr_balance.json` 예별 1건. 위 1~7 단계 숫자(「+1,747칸」 등)는 이 변경을 포함해 다시 센다.
+- **xlsx 시트 목록에 `금리민감도` 를 추가**한다(K-ICS 정정으로 `MASTER_XLSX_DRIFT 금리민감도` 신규 RED 1건). `K-ICS공시`·`금리듀레이션갭` 은 정정 반영 확인.
+- **push·배포 금지는 그대로이고, 이 티켓은 커밋까지만**(owner 지시로 전체 push·배포 보류 중이다). 디자인만 담은 별도 브랜치 `deploy/design-20261011` 이 이미 origin 에 올라가 있다 — 이 브랜치는 건드리지 말 것. 이 티켓의 산출은 작업 브랜치(HEAD)에만 커밋한다.
+- 디자이너가 `K-ICS.html` 에 `#sec-dur`(듀레이션 별도 섹션, `kics_duration_gap.json` fetch)를 추가했다(`dac5e11`). `public_exports/금리듀레이션갭.json` 다운로드가 있으므로 재생성 후 manifest 와 맞는지 확인.
+
 ### 알려진 RED / 이 티켓 범위 밖 (건드리지 말 것)
 - `PL_CSM_AMORT_VS_WATERFALL` 17 · `PL_YTD_COLLAPSE_TO_ZERO` 3 · 하노버 2025.3Q PL `MASTER_HOLE` 1 — owner 등재 사항. `KICS_CENSUS_EXEMPTION_INERT` KR1102 2023.2Q 등재 해제·골든 `--update` — validation 몫.
 
