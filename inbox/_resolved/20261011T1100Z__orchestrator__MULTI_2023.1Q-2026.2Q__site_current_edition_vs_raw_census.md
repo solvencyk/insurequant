@@ -2,7 +2,7 @@
 from: orchestrator
 to: downloader
 created: 20261011T1100Z
-status: open
+status: resolved
 route: backfill
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -29,4 +29,4 @@ owner 지시(2026-10-11, 밤새 처리): 「다음 round 로 미뤄 둔 거 전�
 - 회사×분기 대조 결과표(동일 / 신판 병존 저장 / 미대조+사유), 신판 분류(a~d)와 건수, 발행한 parser 티켓, 받은 파일 수·용량, `TODO_downloader.md` Status + `docs/changelog_downloader.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(downloader, orchestrator 검증·종결 2026-10-11) 전 회사·분기 사이트 현행본 대조 완료: 645칸 중 605칸 대조(동일 558 · 새 판 23 · 바이트만 다름 16 · 서식만 6 · raw가 더 완전 2), 미대조 40(코리안리 11 TLS 차단·서울보증/캐롯 제외·퍼시픽 봇확인창·마이브라운). 새 판 `_v20261011` raw 16개(65MB)·attachments 5개(44MB) 병존 저장, 기존 파일 불변. K-ICS 수치 정정판 7칸(예별 2025.4Q 지급여력비율 △8.24→△13.53 등)은 parser(kics) 티켓 `20261011T1210Z` 로, IFRS17 참고는 `20261011T1215Z` 로 발행. 런로그 `data/disclosure/_meta/site_edition_census_runlog_20261011.md`. 남은 일: 코리안리·생보 회사 사이트 잔여 대조(TODO_downloader).

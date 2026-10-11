@@ -3,6 +3,26 @@
 > Last updated: 2026-10-11 · Stage 1/5 — downloader
 > Prompt: docs/agents/claude-agent-downloader.md · TODO: TODO_downloader.md
 
+## 2026-10-11 -- 사이트 현행판 vs raw 전수 대조 (48코드 x 14분기, 605칸 대조, 신판 21칸 저장)
+
+inbox `20261011T1100Z`(orchestrator, route: backfill, 공유 티켓이라 종결은 오케스트레이터). 직전 별첨 수집에서 11사만 대조해 새 판 3건이 나온 것의 전수판.
+방법: raw 인벤토리(sha256·쪽수) → 채널별 현행 게시본 다운로드 후 sha256 대조(동일 파일은 저장 안 함) → 다르면 쪽 단위 텍스트·숫자·렌더링(36dpi 해시, 필요 시 평균 픽셀 차) 비교 + PDF 메타 생성일로 방향 판정.
+채널: 손보 16사 회사 사이트 14분기 전수(메리츠 json.smart+클릭, 한화 직접 URL, 롯데 POST 목록, 예별 id 클릭, 흥국화재 `fn_filedownX`, 삼성화재 zip URL, 현대해상 상세 파일목록, KB 단일표, DB 상세 pdf, AIG `bomservice.do`(curl.exe), NH `downloadFile.ajax`, 악사·하나·신한이지·카카오·BNP 앞선 수집 방식) + 손보협회 kpub 결산 zip(Q4 42칸 교차, 코리안리 3칸) · 생보 22사 협회 308칸 전수 + 회사 사이트 171칸 · 재보사 매니페스트 URL 재다운로드 + 사이트 목록 재조회.
+
+| 결과 | 칸 | 비고 |
+|---|---|---|
+| 동일 | 558 | 대조 전 약 80칸 → 605칸 |
+| 신판 raw `_v20261011` | 16 | K-ICS 수치 변경 7(예별 2025.4Q · NH손보 2025.1Q · KDB 2025.3Q · 교보 4) · 그 외 수치 변경 7(현대해상 3 · 한화생명 2 · 하나생명 · KB라이프) · KB 스캔→텍스트판 2 |
+| 신판/상위집합 attachments | 5(+앞선 수집 2) | 한화손보 2025.4Q · 흥국화재 2024.4Q · AIG 2023.4Q · 농협생명 2025.4Q(감사보고서 추가) · 신한이지 2025.4Q(재배열) |
+| 바이트만 다름 · 서식만 · raw 가 더 완전 | 16 · 6 · 2 | 렌더링 해시/픽셀 차로 확인 |
+| 대조 못 함 | 40 | 코리안리 11(443 TLS 재설정) · 서울보증 6·캐롯 9(범위 밖) · 퍼시픽 9(Incapsula) · 마이브라운 5 |
+
+- **K-ICS 수치 변경 예:** 예별 2025.4Q 지급여력비율 △8.24% → △13.53%(금액 △714 → △1,171, 마스터는 옛 판 값) · 교보 2025.4Q 165.66 → 164.02. 새 판 PDF 생성일이 raw 보다 뒤인 칸은 16/16.
+- **KB손보 2025.4Q·2026.2Q raw 는 스캔**(2026.2Q 64쪽 전쪽 텍스트 없음), 사이트가 2026-09-17 에 같은 내용의 텍스트층 판으로 교체. OCR 없이 추출 가능.
+- parser 티켓: `inbox/parser/20261011T1210Z…newer_site_editions_census_kics.md`(16칸, 칸별 옛/새 파일·바뀐 쪽 숫자·마스터 현재값, 첨부 JSON `site_edition_census_parser_kics_20261011.json`) · `…T1215Z…site_editions_attachments_fyi_ifrs17.md`.
+- 한계: 생보 회사 사이트 137칸은 협회 현행본만 대조(AIA 2026.1Q 처럼 두 채널이 다른 판인 경우가 이미 있었음). 런로그 `data/disclosure/_meta/site_edition_census_runlog_20261011.md` · 칸별 결과 `site_edition_census_result_20261011.json`.
+- 실수: 빈 heredoc `python -` 를 여러 번 잘못 실행(EOF 로 즉시 종료, 고아 없음), `| head` 로 장시간 스크립트를 받다 남은 프로세스 1건 `taskkill`(내 PID).
+
 ## 2026-10-11 -- 경영공시 BS·PL 별첨 수집 70칸 (별첨 60건 수령, 25칸은 원문이 이미 raw 에 있음)
 
 inbox `20261011T0830Z`(orchestrator, route: backfill; 공유 티켓이라 종결은 오케스트레이터) + 옛 티켓 `20261007T1400Z`(KR0075 2024.2Q 잘린 PDF, 답변 작성 `answered`).

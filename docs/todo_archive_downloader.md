@@ -1,5 +1,10 @@
 # TODO archive — `TODO_downloader.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 이동 (2) — Status 에서 밀려난 항목 (무수정)
+
+- **2026-09-18 서울보증 8분기 PDF 재확인** — 신규 결측이 아니라 `audit_all_periods.py` `SGI_QUARTERLY_STRUCTURAL` 그대로. SGIC 공시 페이지는
+  "연간 + 최신 1분기" 만 노출하고 지난 분기는 롤오프한다. 원천 부재 재확인, 재수집 대상 없음.
+
 ## 2026-10-11 이동 — Status 에서 밀려난 항목 (무수정)
 
 - **2026-09-12 J-ESR 킥오프 census 79사** — posted 15 / not_yet 62 / not_found 2, `J-ESR/fy2025_esr_census_20260912.csv`. 손보 11건이 "10월 말 공표 예정".
