@@ -2,7 +2,7 @@
 from: publishing
 to: designer
 created: 20261011T1600Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -25,3 +25,5 @@ publishing 마감 라운드(커밋 완료, push 안 함)에서 데이터 쪽을 
 - `IFRS17.html` · `K-ICS.html` 만. 마스터·패널 JSON·xlsx·`public_exports`·게이트 금지. 풀 훅·push·배포 금지.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+(designer c83b9d5, orchestrator 종결 2026-10-11) ① K-ICS 전망 빈 상태가 `row.status==='excluded'` 이면 `row.exclusion_reason` 사용, 서울보증 이름 분기 삭제, `findForwardRow` insurer_name 가드. ② IFRS17 상각 차트 눈금·툴팁 모두 억원 데이터를 백만원으로 보던 100배 오류 수정(티켓은 툴팁이 맞다고 했으나 실측으로 틀렸음 → 함께 수정; 스위스리 눈금 0~450억·툴팁 418억원, 삼성생명 0.0~1.2조·1.03조원). 라이브(main)에도 있던 기존 오류. 배포 시 `kics_forward_capital.json`(서울보증 제외 행)을 함께 올려야 서울보증 칸에 데이터의 사유 문구가 뜬다(없으면 「전망 대상이 아닙니다」 일반 문구).

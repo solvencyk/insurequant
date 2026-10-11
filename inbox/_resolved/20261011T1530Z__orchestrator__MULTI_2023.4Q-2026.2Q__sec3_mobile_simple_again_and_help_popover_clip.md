@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261011T1530Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.4Q-2026.2Q
@@ -34,4 +34,4 @@ push·배포는 하지 않는다(커밋까지만; 오케스트레이터가 디�
 - ① 모바일 단순형 구성·축 라벨 폭 실측과 해결 방식·스크린샷 경로, ② 원인과 수정 위치(공통/개별)·확인한 ? 목록, 테스트 결과, `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
-(오케스트레이터가 종결한다)
+(designer 44c7afc·6f92fb0, orchestrator 종결 2026-10-11) ① IFRS17 섹션 3 모바일(640px 이하) = 기말 CSM 막대(주축)+신계약 CSM 선(보조축)만, 눈금 숫자만·단위는 축 제목 1회(축 폭 좌 61→34~43px·우 64→34~55px, 그림 영역 184→245px), 데스크톱 불변. ② ? 팝오버 가려짐 원인 = common.css `.panel.revealed` 의 `animation … forwards` 가 패널마다 쌓임 맥락을 남긴 것 → forwards 제거 + 팝오버 z-index 1950 + 하단 잘림 시 위로 뒤집기(theme.js). K-ICS·IFRS17 공통 원인, compare 는 재현 안 됨. 추가(owner): index 마켓맵 재보험·보증 그룹 면적 절반(RE_MIN_SHARE 0.18→0.07, 높이 246→122px)·「칸 크기는 이 업권 안에서만 비교」 삭제 — 부작용: 칸 이름 표시 5곳→2곳(나머지는 호버). 테스트 84 통과. push·배포 보류 중이며 디자인 전용 브랜치 `deploy/design-20261011` 에는 adeef08 로 반영.
