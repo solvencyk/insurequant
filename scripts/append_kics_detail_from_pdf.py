@@ -39,7 +39,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs, prefer_latest_edition  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 MARKER = "<!-- kics-detail appended from pdf text layer by append_kics_detail_from_pdf.py -->"
 HEADING = "## [경과조치 적용 전 지급여력비율 세부]"
@@ -215,8 +215,8 @@ def main() -> int:
     inbox = REPO / "md_inbox" / period
     n_ok = 0
     for code in codes:
-        pdfs = disclosure_pdfs(period, code)
-        mds = sorted(inbox.glob(f"{code}_*.md"))
+        pdfs = latest_disclosure_pdfs(period, code)
+        mds = prefer_latest_edition(period, code, sorted(inbox.glob(f"{code}_*.md")))   # 판이 둘이면 최신 판의 MD
         if not pdfs or not mds:
             print(f"{code}: missing pdf or md (pdf={len(pdfs)}, md={len(mds)})")
             continue

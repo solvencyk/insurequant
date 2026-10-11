@@ -56,7 +56,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "src"))
 from solvency.validation.kics_json_rules import R4, R7, MARKET_M  # noqa: E402
 sys.path.insert(0, str(REPO / "scripts"))
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 TARGET = REPO / "kics_disclosure.json"
 
@@ -123,7 +123,7 @@ def _pdf(period: str, code: str):
     # 것이 이 침묵 때문이었다(validation 발주 `inbox/parser/20260901T0500Z`). 없는 것과 안 본
     # 것은 다르다. (중간판은 raw+pdf 매치를 합쳐 파일크기로 골라 raw 우선 계약을 깰 수 있었다
     # — KR0050/FY2026_Q2 는 두 사본이 우연히 바이트까지 동일해 지금은 안 드러났을 뿐이다.)
-    pdfs = disclosure_pdfs(period, code)
+    pdfs = latest_disclosure_pdfs(period, code)
     if not pdfs:
         return None
     am = [p for p in pdfs if "_amended" in p.name]

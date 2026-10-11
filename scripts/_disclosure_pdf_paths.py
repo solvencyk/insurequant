@@ -34,6 +34,11 @@ pdf/ 로 떨어진다.
 받아 `_amended` 로 이름 붙인 것 — 병존 매커니즘 자체가 없었다). 이 함수는 **호출 시점부터**
 저장 직전에 기존 파일과 새 바이트를 비교해 다르면 원본을 그대로 둔 채 `_v<날짜>` 로 병존
 저장한다. 과거분 소급 복원은 하지 않는다.
+
+**2026-10-11 추가 (`latest_disclosure_pdfs` · `prefer_latest_edition` · `manifest_latest_name`)**: 병존 판이 생긴 뒤 `disclosure_pdfs()[0]` 이 옛 판을 고르는 문제의 수정.
+실측(2026-10-11 census): (분기, 회사) 645조합 중 PDF 가 둘 이상인 곳은 4곳 — 뮌헨 2023.1Q·2Q(주 파일 = K-ICS 정정본, 옛 원본이 `_v20230101`), 스위스리 2023.4Q(옛 60쪽 `공시 예정` 판 대
+새 85쪽 K-ICS 완성본 `_v20240510`), DB손보 2025.3Q(바이트 동일 `_amended2`). 어느 판이 최신인지는 이름순이나 파일 크기가 아니라 **다운로더 매니페스트**
+(`data/disclosure/_meta/reinsurer_<code>_manifest.json` 의 `latest` > `versions` 마지막 > `file`)가 정한다. 한 판만 읽는 도구는 이 함수를 쓴다. 매니페스트가 없는 회사는 종전과 같다.
 """
 from __future__ import annotations
 
@@ -69,6 +74,66 @@ def disclosure_pdfs(period: str, code: str, root: Path | None = None) -> list[Pa
         if hits:
             return hits
     return []
+
+
+def _period_label(period: str) -> str:
+    """'FY2023_Q4' -> '2023.4Q' (the `period` key of a downloader manifest entry)."""
+    return f"{period[2:6]}.{period[-1]}Q"
+
+
+def manifest_latest_name(period: str, code: str, root: Path | None = None) -> str | None:
+    """다운로더 매니페스트(`<disclosure>/_meta/reinsurer_<code>_manifest.json`)가 이 (분기, 회사)의 **쓸 판**이라고 적은 파일명(basename). 없으면 None.
+
+    규칙(2026-10-11, 같은 분기에 raw PDF 가 둘일 때 도구가 옛 파일을 고르던 문제 — 스위스리 2023.4Q 60쪽 대 85쪽):
+      그 분기 항목의 ``latest``(문자열 또는 ``{"file": ...}``) > ``versions`` 의 마지막 항목(다운로더가 새 판을 뒤에 덧붙인다 = 옛 `file` 을 대체하는 새 판)
+      > ``file``(주 파일). ``alternates``(원본 등 비주 판)는 보지 않는다 — 뮌헨 2023.1Q·2Q 는 K-ICS 정정본이 주 파일(`file`)이고 옛 원본이 `_v` 로 병존한다.
+    매니페스트가 없는 회사(기존 39사)는 항상 None 이라 종전 동작이 그대로다.
+    """
+    mf = (root or DISCLOSURE) / "_meta" / f"reinsurer_{code}_manifest.json"
+    if not mf.is_file():
+        return None
+    try:
+        data = json.loads(mf.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return None
+    label = _period_label(period)
+    for ent in data.get("periods", []):
+        if not isinstance(ent, dict) or ent.get("period") != label:
+            continue
+        latest = ent.get("latest")
+        if isinstance(latest, dict):
+            latest = latest.get("file")
+        if not latest:
+            vers = [v for v in (ent.get("versions") or []) if isinstance(v, dict) and v.get("file")]
+            latest = vers[-1]["file"] if vers else ent.get("file")
+        return Path(str(latest).replace("\\", "/")).name if latest else None
+    return None
+
+
+def prefer_latest_edition(period: str, code: str, candidates, root: Path | None = None) -> list[Path]:
+    """후보 파일들(PDF 든 md_inbox 의 MD 든) 중 매니페스트가 정한 최신 판의 짝만 남긴다. 후보가 1개 이하이거나 매니페스트가 판정하지 않으면 후보를 그대로 돌려준다.
+
+    MD 는 docling 이 PDF 이름을 따라 짓기 때문에(`KR1102_스위스리아시아_v20240510.md`) stem 이 같은 것을 짝으로 본다.
+    """
+    cands = list(candidates)
+    if len(cands) < 2:
+        return cands
+    name = manifest_latest_name(period, code, root)
+    if not name:
+        return cands
+    stem = Path(name).stem
+    hit = [c for c in cands if Path(c).stem == stem]
+    return hit or cands
+
+
+def latest_disclosure_pdfs(period: str, code: str, root: Path | None = None) -> list[Path]:
+    """`disclosure_pdfs()` 와 같되, 같은 (분기, 회사)에 판이 둘 이상이면 **매니페스트가 정한 최신 판 하나**만 돌려준다(`manifest_latest_name`).
+
+    "한 판만 읽는" 도구(`pdfs[0]` · `pdfs[-1]` · 정정본/최대크기 고르기)는 `disclosure_pdfs()` 대신 이것을 쓴다 — `disclosure_pdfs()` 는 모든 판을 이름순으로 줘서
+    `[0]` 이 옛 판일 수 있다(스위스리 2023.4Q: 옛 60쪽 `…아시아.pdf` 가 새 85쪽 `…_v20240510.pdf` 보다 앞선다). 매니페스트가 판정하지 않는 (분기, 회사)는
+    종전 목록 그대로라 기존 도구의 선택이 바뀌지 않는다.
+    """
+    return prefer_latest_edition(period, code, disclosure_pdfs(period, code, root), root)
 
 
 def disclosure_pdf_dirs(period: str, root: Path | None = None) -> list[Path]:

@@ -13,6 +13,7 @@ The failure modes that have actually cost time. Crystallized from user-memory (`
 - [Validation blind spots to probe](#validation-blind-spots-to-probe)
 - [Scanned PDFs: OCR is a lead, not a source](#scanned-pdfs-ocr-is-a-lead-not-a-source)
 - [Windows / encoding](#windows--encoding)
+- [Reinsurer branches (KR1101-KR1108) + two editions in one quarter](#reinsurer-branches-kr1101-kr1108--two-editions-in-one-quarter)
 
 ## Cadence: even-Q vs odd-Q
 - **2Q/4Q = 반기/연간 full form**: 시장위험 36-40, 금리위험 IRR 41-46, 생명장기 29-35 breakdowns **must exist**.
@@ -171,3 +172,21 @@ Never write it into the master on MD text alone.**
 - All docs/inbox markdown: **UTF-8 no BOM**. If Korean would garble in your write path, write English; read back the
   first line after writing ([[feedback-no-garbled-korean]]). `값_적용후` / fill_period rows: schema is inconsistent
   (most rows lack 값_적용후) — don't treat its absence as an error.
+
+## Reinsurer branches (KR1101-KR1108) + two editions in one quarter
+Foreign-reinsurer branch filings (own-site PDFs, not DART). Full contract `docs/handoff_20261008_reinsurer_pipeline.md`; run logs `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_*.md` (latest `_13.md`).
+- **Two raw PDFs for one (period, company)** = 4 of 645 pairs (뮌헨 2023.1Q·2Q, 스위스리 2023.4Q, DB손보 2025.3Q). `disclosure_pdfs()` lists them by NAME, so `[0]` is the old file (스위스리 2023.4Q: old 60-page
+  "공시 예정" edition vs the complete `_v20240510`). **Single-file readers must call `latest_disclosure_pdfs()` / `prefer_latest_edition()`** (`scripts/_disclosure_pdf_paths.py`): the downloader manifest
+  `data/disclosure/_meta/reinsurer_<code>_manifest.json` decides — `latest` > last of `versions` > `file` (alternates ignored: 뮌헨's primary `file` is the K-ICS revised edition, the older original is `_v20230101`).
+  Size/name rules pick the wrong edition for 뮌헨 2023.2Q. `tests/unit/test_disclosure_pdf_latest.py` fails if a K-ICS tool goes back to a bare `disclosure_pdfs(`.
+- **금리민감도 extractor (`extract_kics_rate_sensitivity.py`) rules** (all verified by a full re-run == master): don't trust the table's unit header (뮌헨 2025.4Q / 스위스리 2024.4Q say 「억원」 but are 백만원 / 천원) — it rescales
+  by the headline ratio (÷100, ÷100,000); 제네럴 prints 「지급여력기준금」 (truncated) and splits the table across pages (first row lands in a 6-cell row under the header); a block of all zeros is an empty block, not data;
+  a non-applier's 후 block is mirrored from 전 **only for companies listed in `NON_APPLIER_POST_MIRROR`** (하노버) — a generic rule would also rewrite the 39 companies' 31 known RS6 holes.
+- **IRR balance extractor (`extract_kics_irr_balance.py`)**: the 금리위험액 현황 column order is fixed (충격 전 | 평균회귀 | 금리상승 | 금리하락 | 금리평탄 | 금리경사 = items 41..46) — map by POSITION first. The old value-proximity
+  mapping swapped columns whenever scenario values sit within 0.55억원/3e-4 of each other (카카오페이손보, 하나손보 2025.2Q). A full re-run must equal `data/_derived/kics_irr_balance.json` byte for byte.
+- **Dash vs blank vs 「해당사항 없음」** in the 공통적용 경과조치 표 (items 47-54): a printed dash = 0 (load it); 「해당사항 없음」 with zero-filled placeholders (퍼시픽 2025.3Q·2026.2Q) = absent (지급여력금액 0 is not a value);
+  a cell that is blank (not even a dash, 뮌헨 2026.2Q) = leave blank — but the gate (`TFI_TIER_PARTIAL_ROWS`) rejects 50 without 51, so the whole table stays out.
+- **Gate heuristics that misfire on tiny numbers**: `47_tier2_census` `TIER2_LIMIT_STALE` reads 마이브라운's 48 = 0 as a carried-over value (SCR 6.19억 × 50% vs the previous quarter's 0.63 within the 1억원 tolerance) — simulate
+  every master edit through `sim13.py`-style candidate runs before applying (a new RED needs an owner exemption; report instead of loading).
+- Census discipline: classify every blank cell (no bucket / odd-Q 간이 / parent-zero / doc has no table / 해당사항 없음 / blank in print / gate-held) with page evidence; a blank B/C/D group is "odd-Q structural" only after a
+  heading-specific text check of the quarter's own document finds nothing.

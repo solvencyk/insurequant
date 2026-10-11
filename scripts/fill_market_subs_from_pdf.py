@@ -20,7 +20,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from fill_market_subitems_to_disclosure import (  # noqa: E402
     _parse_value, _to_eok, mkt_est, _meta_for, MKT_SUBS,
 )
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 JSON_PATH = REPO / "kics_disclosure.json"
 
@@ -219,7 +219,7 @@ def main(argv):
     new_rows, ok, fail, nopdf = [], [], [], 0
     for code, quarter in worklist:
         period = quarter_to_period(quarter)
-        pdfs = disclosure_pdfs(period, code)
+        pdfs = latest_disclosure_pdfs(period, code)
         if not pdfs:
             nopdf += 1
             continue

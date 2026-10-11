@@ -9,15 +9,28 @@
      A[p] - L[p] == nav[p] 가 모든 시나리오에서 성립하는 쌍을 채택한다.
      (OCR 로 행 라벨이 통째 날아간 표 대응)
   4) 최종 검산: 자산총계 - 부채총계 == 순자산가치.
+
+2026-10-11 (재보사 수작업 정정 재현 · 기존 6셀 열 뒤바뀜 수정 — runlog 13 §1·§4):
+  · 컬럼->시나리오 사상은 **위치 대응을 먼저** 시도한다. K-ICS 금리위험액 현황 표의 열 순서는 고정(충격 전 | 평균회귀 | 금리상승 | 금리하락 | 금리평탄 | 금리경사 = 항목 41..46)인데,
+    종전의 「순자산가치 값 근접(허용 0.55억원·3e-4)」 대응은 시나리오 값이 허용치 안에 모이는 표(카카오페이손보 5개·하나손보 2025.2Q 평균회귀 5011.25 대 금리하락 5009.95)에서
+    첫 미사용 열을 잡아 열이 뒤바뀌었다. 위치 대응이 앵커(항목 41·43·44)와 안 맞을 때만 종전 값 근접 대응으로 돌아간다.
+  · 같은 (분기, 회사)에 판이 둘이면 매니페스트가 정한 최신 판을 읽는다(`_disclosure_pdf_paths.prefer_latest_edition`) — 스위스리 2023.4Q 는 옛 60쪽 판이 아니라 완성본 `_v20240510`.
+  · `--codes` · `--quarters` · `--master` 옵션과 `__main__` 가드(재보사만 다시 뽑거나 후보 마스터로 시험할 수 있게). 옵션 없이 돌리면 종전과 같다.
+
+Usage: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/extract_kics_irr_balance.py [OUT.json] [--codes KR1101,KR1102] [--quarters 2023.2Q,2023.4Q] [--master kics_disclosure.json]
 """
 import json
 import os
 import re
 import sys
 from collections import Counter
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 import fitz
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # scripts/ — 공통 헬퍼
+from _disclosure_pdf_paths import prefer_latest_edition  # noqa: E402
 
 ITEMS = (41, 42, 43, 44, 45, 46)
 Q2DIR = {"2023.2Q": "FY2023_Q2", "2023.4Q": "FY2023_Q4", "2024.2Q": "FY2024_Q2",
@@ -121,8 +134,44 @@ def stitch(rows):
     return out
 
 
+_SCALES = (1.0, 0.01, 1e-5, 1e-4, 1e-8, 100.0, 10000.0)
+
+
+def match_positional(nav, m, tol_rel=3e-4):
+    """위치 대응: 항목 41+k -> k번째 열(K-ICS 표의 열 순서는 고정). 앵커 41·43·44 가 같은 배율에서 위치로 맞아야 성립하고, 42·45·46 은 맞는 것만 채운다.
+    성립하지 않으면 None (호출자는 값 근접 대응으로 돌아간다)."""
+    if len(nav) < 6:
+        return None
+    for scale in _SCALES:
+        pos, ok = {}, True
+        for it in (41, 43, 44):
+            mv = m.get(it)
+            if mv is None:
+                ok = False
+                break
+            tol = max(0.55, abs(mv) * tol_rel)
+            if abs(nav[it - 41] * scale - mv) > tol:
+                ok = False
+                break
+            pos[it] = it - 41
+        if not ok:
+            continue
+        for it in (42, 45, 46):
+            mv = m.get(it)
+            if mv is None:
+                continue
+            tol = max(0.55, abs(mv) * tol_rel)
+            if abs(nav[it - 41] * scale - mv) <= tol:
+                pos[it] = it - 41
+        return pos, scale
+    return None
+
+
 def match(nav, m, tol_rel=3e-4):
-    for scale in (1.0, 0.01, 1e-5, 1e-4, 1e-8, 100.0, 10000.0):
+    got = match_positional(nav, m, tol_rel)
+    if got:
+        return got
+    for scale in _SCALES:
         pos, used, ok = {}, set(), True
         for it in (41, 43, 44):
             mv = m.get(it)
@@ -244,8 +293,9 @@ def scan_md(path, m):
     return hit
 
 
-def main(outpath):
-    kd = json.load(open("kics_disclosure.json", encoding="utf-8"))
+def main(outpath, codes=None, quarters=None, master_path="kics_disclosure.json"):
+    """codes/quarters: 지정하면 그 회사·분기 칸만 뽑는다(없으면 전부). master_path: 앵커·대상 칸을 읽을 마스터(후보 마스터로 시험할 때)."""
+    kd = json.load(open(master_path, encoding="utf-8"))
     master, meta = {}, {}
     for r in kd:
         meta[r["원보험사코드"]] = (r["원수사명"], r["생손보여부"])
@@ -255,7 +305,7 @@ def main(outpath):
             except (TypeError, ValueError):
                 pass
     QS = list(Q2DIR)
-    files = {}          # (q, code) -> {"pdf": path, "md": path}
+    cand = {}           # (q, code, "pdf"|"md") -> [paths, 이름순]
     for q, d in Q2DIR.items():
         base = os.path.join("data/disclosure", d)
         for sub, key, ext in (("parsed", "md", ".md"), ("raw", "pdf", ".pdf")):
@@ -264,11 +314,18 @@ def main(outpath):
                 continue
             for f in sorted(os.listdir(dd)):
                 if f.lower().endswith(ext) and "_" in f:
-                    files.setdefault((q, f.split("_")[0]), {}).setdefault(key, os.path.join(dd, f))
+                    cand.setdefault((q, f.split("_")[0], key), []).append(os.path.join(dd, f))
+    files = {}          # (q, code) -> {"pdf": path, "md": path}
+    for (q, c, key), paths in cand.items():
+        # 같은 (분기, 회사)에 판이 둘이면(스위스리 2023.4Q) 매니페스트가 정한 최신 판. 판정이 없으면 종전대로 이름순 첫 파일.
+        pick = prefer_latest_edition(Q2DIR[q], c, [Path(p) for p in paths])[0]
+        files.setdefault((q, c), {})[key] = os.path.join(os.path.dirname(paths[0]), pick.name)
     out, miss = {}, []
     for qi, q in enumerate(QS):
         for (qq, c), m in sorted(master.items()):
             if qq != q or 41 not in m:
+                continue
+            if (codes is not None and c not in codes) or (quarters is not None and q not in quarters):
                 continue
             # 자기 분기 -> 다음 짝수분기(직전반기 컬럼) -> 그 다음 -> 이전 분기 순으로 탐색.
             # 어느 문서에서 찾든 앵커(항목41/43/44 일치)가 해당 분기임을 보증한다.
@@ -304,4 +361,14 @@ def main(outpath):
         print("  MISS " + q + " " + c + " " + n)
 
 
-main(sys.argv[1] if len(sys.argv) > 1 else "data/_derived/kics_irr_balance.json")
+def _opt(name):
+    return sys.argv[sys.argv.index(name) + 1] if name in sys.argv else None
+
+
+if __name__ == "__main__":
+    _pos = [a for i, a in enumerate(sys.argv[1:], start=1)
+            if not a.startswith("--") and not (i > 1 and sys.argv[i - 1] in ("--codes", "--quarters", "--master"))]
+    main(_pos[0] if _pos else "data/_derived/kics_irr_balance.json",
+         codes=set(_opt("--codes").split(",")) if _opt("--codes") else None,
+         quarters=set(_opt("--quarters").split(",")) if _opt("--quarters") else None,
+         master_path=_opt("--master") or "kics_disclosure.json")

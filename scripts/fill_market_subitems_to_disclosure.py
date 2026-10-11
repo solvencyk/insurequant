@@ -16,6 +16,8 @@ import argparse, io, json, re, sys, glob, math
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # scripts/ — 공통 PDF 해석기
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 JSON_PATH = REPO / "kics_disclosure.json"
 MD_INBOX = REPO / "md_inbox"
 DISCLOSURE = REPO / "data" / "disclosure"
@@ -402,8 +404,7 @@ def main(argv):
         # resolving exactly as before), fall back to pdf/ only when raw/ has
         # no match for that company (36 2026.2Q filers recovered, 0 cells
         # regressed -- simulated in scripts/_probes/sim_20260831_rawpdf_fallback.py).
-        pdf_dir = DISCLOSURE / period / "raw"
-        pdf_dir_fallback = DISCLOSURE / period / "pdf"
+        # (2026-10-11: 그 해석은 이제 공통 헬퍼 `latest_disclosure_pdfs()` 가 한다 — 아래 41-46 블록.)
         if not md_dir.is_dir():
             print(f"  {period}: no md_inbox, skip"); continue
         n36 = n41 = 0
@@ -446,9 +447,8 @@ def main(argv):
                     # no item19 to verify against → skip (can't self-check)
                     bad_detail.append(f"  MKT-SKIP {code} {quarter}: no item19 anchor (not stored)")
             # --- 41-46 from PDF ---
-            pdfs = sorted(glob.glob(str(pdf_dir / f"{code}_*.pdf"))) if pdf_dir.is_dir() else []
-            if not pdfs and pdf_dir_fallback.is_dir():
-                pdfs = sorted(glob.glob(str(pdf_dir_fallback / f"{code}_*.pdf")))
+            # raw/ 우선 → pdf/ 폴백(위 주석의 종전 규칙 그대로), 판이 둘이면 매니페스트가 정한 최신 판 — `latest_disclosure_pdfs`.
+            pdfs = [str(p) for p in latest_disclosure_pdfs(period, code, root=DISCLOSURE)]
             if pdfs:
                 try:
                     vals, total = extract_irr_netassets(pdfs[0])

@@ -9,12 +9,24 @@ column c. Tables are parsed absolute-first; if RS1 fails, re-interpreted as delt
 (absolute = base + cell, 흥국 계열) and re-checked. Per-(사,분기) status -> diag.
 
 Usage: PYTHONIOENCODING=utf-8 python scripts/extract_kics_rate_sensitivity.py [--dry-run]
+
+2026-10-11 (재보사 수작업 정정 8쌍을 추출기가 스스로 재현하도록 — runlog 13 §4):
+  · 단위 환산: 표 머리말 단위(「억원」으로 잘못 적힌 뮌헨·스위스리 표 포함)를 믿지 않고, 적용전 블록의 금액 base 를 kics_disclosure 헤드라인(억원)과 비교해
+    비율이 100(백만원)·100000(천원) 근처면 금액 계열 전 칸을 나눈다(`unit_factor`). 비율(%)·듀레이션·컨벡서티는 단위 불변.
+  · 잘린 라벨: 「지급여력기준금」(제네럴)도 기준금액 행으로 읽는다.
+  · 쪽 넘김: 표가 쪽 사이에서 갈라지면 첫 데이터 행이 앞 표의 6칸 행(구분 칸에 경과조치 라벨 없음)으로 떨어진다 — 머리행 바로 아래 6칸 행을 되살린다.
+  · 「0 인쇄 = 비어 있음」: 한 블록의 모든 칸이 0 이면(지급여력비율 0% · 금액 0 은 실제 값일 수 없다) 빈 블록으로 본다.
+  · 비적용사 후 블록 미러(`NON_APPLIER_POST_MIRROR`): 원문이 경과조치 비적용·전후 동일을 명문으로 적고 후 블록을 공란·0 으로 인쇄한 (회사, 분기)만, 등재부에 있을 때에 한해
+    적용전 블록을 후에 그대로 옮긴다(값을 새로 만들지 않는다). 기존 39사의 post_dash 구멍(RS6 알려진 구멍)은 등재가 없으므로 건드리지 않는다.
+  · 같은 분기에 판이 둘이면 매니페스트가 정한 최신 판을 읽는다(`_disclosure_pdf_paths.prefer_latest_edition`).
 """
 from __future__ import annotations
 import argparse, io, json, re, sys, glob
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # scripts/ — 공통 헬퍼
+from _disclosure_pdf_paths import latest_disclosure_pdfs, prefer_latest_edition  # noqa: E402
 MD_INBOX = REPO / "md_inbox"
 DISCLOSURE = REPO / "data" / "disclosure"
 DISC_JSON = REPO / "kics_disclosure.json"
@@ -61,6 +73,8 @@ def pick_md(code, period):
     hits = glob.glob(str(MD_INBOX / period / f"{code}_*.md"))
     if not hits:
         return None
+    # 같은 (분기, 회사)에 MD 가 둘이면(예: 스위스리 2023.4Q 옛 60쪽 판 + 새 `_v20240510` 판) 매니페스트가 정한 최신 판의 짝만 남긴다. 판정이 없으면 hits 그대로(종전 규칙).
+    hits = [str(p) for p in prefer_latest_edition(period, code, [Path(h) for h in hits])]
     amended = [h for h in hits if "_amended" in h]
     pool = amended or hits
     return max(pool, key=lambda h: Path(h).stat().st_size)
@@ -105,7 +119,7 @@ def find_section_table(md_text):
 def match_measure(label):
     """Canonical measure for a label cell, tolerating 지금/지급 typo and OCR spacing."""
     n = norm(label).replace("지금여력", "지급여력")
-    if "여력기준금액" in n:
+    if "여력기준금" in n:   # 「…기준금액」 + 칸 폭에 잘린 「지급여력기준금」(제네럴 2024.4Q·2025.4Q)
         return "지급여력기준금액"
     if "여력비율" in n:
         return "지급여력비율"
@@ -137,11 +151,9 @@ def extract_from_raw_pdf(code, period):
         import fitz
     except ImportError:
         return None
-    pdfs = []
-    for sub in ("pdf", "raw"):
-        pdfs = sorted((DISCLOSURE / period / sub).glob(f"{code}_*.pdf"))
-        if pdfs:
-            break
+    # raw/ 우선(없으면 pdf/), 판이 둘이면 매니페스트가 정한 최신 판 — `_disclosure_pdf_paths.latest_disclosure_pdfs`
+    # (종전: pdf/ 먼저·이름순 첫 파일. pdf/ 폴더는 raw/ 로 합쳐져 어느 분기에도 없어 선택이 달라지지 않는다 — runlog 13 §5 에서 645조합 전수 대조).
+    pdfs = latest_disclosure_pdfs(period, code, root=DISCLOSURE)
     if not pdfs:
         return None
     doc = fitz.open(str(pdfs[0]))
@@ -223,10 +235,27 @@ MANUAL_OVERRIDE = {
 
 
 def measure_rows(tbl):
-    """Rows whose measure cell (col1) maps to a measure -> (col0frag, measure, [5 vals])."""
+    """Rows whose measure cell (col1) maps to a measure -> (col0frag, measure, [5 vals]).
+
+    쪽 넘김: 표가 쪽 사이에서 갈라지면 docling 이 첫 데이터 행을 앞 표의 머리행 바로 아래 **6칸 행**
+    (`| 지급여력비율 | 258.42 | 234.00 | … |`, 구분 칸에 경과조치 라벨이 없다)으로 떨군다(제네럴 2025.4Q p27→p28). 7칸을 요구하는 종전 규칙은 이 행을 버려
+    적용전 지급여력비율이 빠졌다. 머리행(`구분` 으로 시작) 바로 다음의 6칸 행이 (측정항목 라벨, 숫자 5개)로 읽히면 ("", measure, vals) 로 되살린다.
+    """
     out = []
+    after_header = False
     for ln in tbl:
         cells = [c.strip() for c in ln.strip().strip("|").split("|")]
+        if all(set(c) <= set("-: ") for c in cells):   # `|---|---|` 구분선은 머리행 상태를 바꾸지 않는다
+            continue
+        if len(cells) == 6 and after_header:
+            after_header = False
+            m = match_measure(cells[0])
+            if m:
+                vals = [parse_value(c) for c in cells[1:6]]
+                if any(v is not None for v in vals):
+                    out.append(("", m, vals))
+            continue
+        after_header = norm(cells[0]) == "구분"
         if len(cells) < 7:
             continue
         m = match_measure(cells[1])
@@ -234,6 +263,47 @@ def measure_rows(tbl):
             vals = [parse_value(c) for c in cells[2:7]]
             out.append((cells[0], m, vals))
     return out
+
+
+# 비적용사 후 블록 미러 등재부 — 원문이 경과조치 비적용·전후 동일을 **명문으로** 적고(근거 쪽·문장 아래), 금리 민감도 표의 후 블록을 공란 또는 0 으로 인쇄한 (회사, 분기).
+# 후 블록이 공란·0(빈 블록)일 때만 같은 표의 적용전 블록을 후에 그대로 옮긴다 — 후 블록에 실제 값이 인쇄돼 있으면 문서 값이 이긴다. 값을 만들어 넣는 것이 아니다.
+# 일반 규칙(헤드라인 값_적용후 == 값, 또는 MD 의 비적용 문장)으로 만들지 않은 이유: 같은 증거가 기존 39사의 post_dash 구멍(RS6 알려진 구멍 31행 — 하나손보·삼성생명·신한이지·동양)에도
+# 있어 일반 규칙은 기존 39사 행을 바꾼다. 그 구멍은 분기별 raw 각주 확인을 거쳐 owner/validation 이 따로 정한다(inbox/parser/20260921T1400Z §A). 새 (회사, 분기)는 원문을 확인한 뒤 여기에 추가한다.
+# 근거(validation 단계 10 §4 `hannover12.py` 가 raw PDF 로 재확인): 하노버(KR1104)는 경과조치를 적용하지 않는다 — 4개 문서 모두 「당사는 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함」.
+NON_APPLIER_POST_MIRROR = {
+    ("KR1104", "2024.4Q"): "FY2024_Q4 p34·p35 + 민감도 표(p52) 주3) 「당사는 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함」; 후 블록 공란",
+    ("KR1104", "2025.2Q"): "FY2025_Q2 p18 「당사는 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함」; 후 블록(p32) 0 인쇄",
+    ("KR1104", "2025.4Q"): "FY2025_Q4 p34 「당사는 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함」; 후 블록(p52) 0 인쇄",
+    ("KR1104", "2026.2Q"): "FY2026_Q2 p18 「당사는 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함」; 후 블록(p33) 0 인쇄",
+}
+
+# 단위 환산(표 머리말 단위는 믿지 않는다 — 뮌헨 2025.4Q·스위스리 2024.4Q 는 「억원」이라 적고 실제는 백만원·천원; 같은 문서 경과조치 표(「단위: 백만원」)와 헤드라인 억원으로 확정).
+_UNIT_FACTORS = (100.0, 100000.0)      # 백만원 -> 억원 · 천원 -> 억원 (실제로 나온 단위만)
+_UNIT_TOL = 0.02                        # 헤드라인이 억원 정수/소수 2자리로 인쇄돼 있어 생기는 반올림 폭
+
+
+def unit_factor(pre_base, anchors):
+    """적용전 블록의 금액 base(지급여력금액·지급여력기준금액) 를 kics_disclosure 헤드라인(억원)과 비교해 단위 배율을 돌려준다.
+    둘(있는 것 전부)의 비율이 100 또는 100000 의 ±2% 안이면 그 배율, 아니면 1.0(억원 그대로·판정 불가는 환산하지 않는다)."""
+    ratios = []
+    for m in ("지급여력금액", "지급여력기준금액"):
+        b, a = pre_base.get(m), anchors.get(m)
+        if b is None or a is None or a == 0 or b == 0:
+            continue
+        ratios.append(b / a)
+    if not ratios:
+        return 1.0
+    for f in _UNIT_FACTORS:
+        if all(abs(r / f - 1.0) <= _UNIT_TOL for r in ratios):
+            return f
+    return 1.0
+
+
+def scale_amounts(d, factor):
+    """금액 계열(지급여력금액·지급여력기준금액)만 factor 로 나눈다. 비율(%)은 단위가 없다."""
+    if factor == 1.0:
+        return d
+    return {m: ([None if v is None else v / factor for v in vals] if m in _DC_MEASURES else vals) for m, vals in d.items()}
 
 
 def block_phase(block):
@@ -257,12 +327,15 @@ def split_blocks(rows):
 
 
 def block_dict(block):
-    """{measure: [5 vals]}; None if block is entirely empty (all-dash)."""
+    """{measure: [5 vals]}; None if block is entirely empty (all-dash/blank) **or all zero**.
+
+    「0 인쇄 = 비어 있음」: 비적용사가 후 블록을 지급여력비율 0 · 금액 0 · 기준금액 0 으로 채워 인쇄하는 표가 있다(하노버 2025.2Q·2025.4Q·2026.2Q). 0/0/0 은 값이 아니라 빈 블록 표시다
+    (지급여력비율 0% 는 실제 회사에 불가능). 전 칸이 None/0 이면 대시 블록과 같은 빈 블록으로 본다."""
     d = {}
     any_val = False
     for _frag, m, vals in block:
         d[m] = vals
-        if any(v is not None for v in vals):
+        if any(v is not None and v != 0 for v in vals):
             any_val = True
     return d if any_val else None
 
@@ -376,6 +449,8 @@ def main(argv):
     stats = {}
     touched_combos = set()  # (code, quarter) actually (re)produced this run — scoped-merge key
     fallback_used = []  # (code, quarter, method) for the run report
+    rescaled = []  # (code, quarter, factor) — 표 단위가 억원이 아니라 환산한 칸 (run report)
+    mirrored = []  # (code, quarter) — 비적용사 후 블록 미러(등재부) (run report)
 
     for period in periods:
         quarter = period_to_quarter(period)
@@ -434,17 +509,38 @@ def main(argv):
 
             emitted, encs, post_dash = 0, set(), False
             pre_base = {}
+            # 단위 배율: 마지막 적용전 블록(RS2 가 비교하는 블록)의 금액 base 대 헤드라인(억원). 같은 표의 후 블록에도 같은 배율.
+            factor = 1.0
             for ph, d in uniq:
-                if d is None:  # all-dash block
+                if ph == "적용전" and d is not None:
+                    factor = unit_factor({m: v[0] for m, v in resolve_block(d)[0].items()},
+                                         {"지급여력금액": anchor.get((code, quarter, 1)),
+                                          "지급여력기준금액": anchor.get((code, quarter, 14))})
+            if factor != 1.0:
+                rescaled.append((code, quarter, factor))
+            pre_rd, have_post = None, False
+            for ph, d in uniq:
+                if d is None:  # all-dash / blank / all-zero block
                     if ph == "적용후":
                         post_dash = True
                     continue
                 rd, enc = resolve_block(d)
+                rd = scale_amounts(rd, factor)
                 encs.add(enc)
                 if ph == "적용전":
                     pre_base = {m: v[0] for m, v in rd.items()}
+                    pre_rd = rd
+                elif ph == "적용후":
+                    have_post = True
                 out_rows.extend(emit_rows(prefix[code], quarter, ph, rd))
                 emitted += len(rd)
+            # 비적용사 후 블록 미러(등재부 NON_APPLIER_POST_MIRROR 에 있는 (회사, 분기)만): 후 블록이 공란·0 이면 같은 표의 적용전 블록을 그대로 옮긴다.
+            post_mirrored = False
+            if not have_post and pre_rd is not None and (code, quarter) in NON_APPLIER_POST_MIRROR:
+                out_rows.extend(emit_rows(prefix[code], quarter, "적용후", pre_rd))
+                emitted += len(pre_rd)
+                post_mirrored, post_dash = True, False
+                mirrored.append((code, quarter))
 
             # RS2: does the 적용전 base agree with the headline kics_disclosure?
             rs2_diff = False
@@ -464,6 +560,8 @@ def main(argv):
                 diag[key] = "rs2_base_diff"  # faithfully extracted but base != headline (basis/scope)
             elif "delta" in encs:
                 diag[key] = "delta_converted"
+            elif post_mirrored:
+                diag[key] = "post_mirrored"  # 후 블록은 문서에 값이 없고(공란·0), 등재부 근거로 적용전을 옮겼다
             elif post_dash:
                 diag[key] = "post_dash"
             else:
@@ -483,6 +581,10 @@ def main(argv):
         print(f"fallback used ({len(fallback_used)}):")
         for code, quarter, method in fallback_used:
             print(f"  {code:8s} {quarter}  {method}")
+    if rescaled:
+        print(f"unit rescaled ({len(rescaled)}): " + ", ".join(f"{c} {q} /{f:g}" for c, q, f in rescaled))
+    if mirrored:
+        print(f"post block mirrored from 적용전 ({len(mirrored)}): " + ", ".join(f"{c} {q}" for c, q in mirrored))
 
     if args.dry_run:
         print("\n(dry-run; no write)")

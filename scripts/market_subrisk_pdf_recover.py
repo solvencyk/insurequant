@@ -38,7 +38,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 from fill_market_subitems_to_disclosure import _bare_subrisk_item, _parse_value, _to_eok, mkt_est, _meta_for
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 JSON_PATH = REPO / "kics_disclosure.json"
 NAMES = {36: "3-1. 금리위험액", 37: "3-2. 주식위험액", 38: "3-3. 부동산위험액",
@@ -109,7 +109,7 @@ def main(argv):
     buckets = defaultdict(list)
     new_rows = []
     for code, quarter in worklist:
-        pdfs = disclosure_pdfs(quarter_to_period(quarter), code)
+        pdfs = latest_disclosure_pdfs(quarter_to_period(quarter), code)
         if not pdfs:
             buckets["NO_PDF"].append((code, quarter)); continue
         try:

@@ -20,7 +20,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from fill_market_subitems_to_disclosure import (  # noqa: E402
     extract_irr_netassets, derive_irr, _parse_value, _to_eok, _meta_for, IRR_SCEN,
 )
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 JSON_PATH = REPO / "kics_disclosure.json"
 
@@ -54,7 +54,7 @@ def main(argv):
 
     new_rows, ok, fail = [], [], []
     for code, q in worklist:
-        pdfs = disclosure_pdfs(quarter_to_period(q), code)
+        pdfs = latest_disclosure_pdfs(quarter_to_period(q), code)
         if not pdfs:
             continue
         try:

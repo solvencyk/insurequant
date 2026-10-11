@@ -36,7 +36,7 @@ logging.disable(logging.CRITICAL)
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 try:
     sys.stdout.reconfigure(encoding="utf-8")
 except Exception:
@@ -185,7 +185,7 @@ def build_worklist(only=None):
         work = [k for k in work if k in sel]
     targets = []
     for code, quarter in work:
-        pdfs = disclosure_pdfs(quarter_to_period(quarter), code)
+        pdfs = latest_disclosure_pdfs(quarter_to_period(quarter), code)
         if pdfs:
             targets.append((code, quarter, pdfs[0]))
     return targets, item19, name

@@ -7581,6 +7581,18 @@
    "front_scan_run": 0,
    "anchor_pages": 6,
    "section_chars_per_page": 1710.3
+  },
+  "KR1102|2023.2Q": {
+   "raw": "KR1102_스위스리아시아.pdf",
+   "bytes": 1287070,
+   "pages": 23,
+   "chars": 14500,
+   "chars_per_page": 630.4,
+   "status": "READABLE",
+   "scan_pages": 0,
+   "front_scan_run": 0,
+   "anchor_pages": 2,
+   "section_chars_per_page": 618.4
   }
  },
  "appended_parser_9": {
@@ -7590,5 +7602,12 @@
    "KR1107|2024.3Q"
   ],
   "reproduce": "data/disclosure/_meta/reinsurer_load_20261010/stage9/sidecar9.py apply"
+ },
+ "appended_parser_13": {
+  "what": "단계 13: KR1102 2023.2Q 버킷(새 완성본 v20240510 전기 열로 적재)의 텍스트레이어 셀을 끝에 append (build_kics_source_textlayer.py 와 같은 칸 단위 논리, 그 분기의 자기 문서 FY2023_Q2 raw 기준). 기존 셀 그대로.",
+  "cells": [
+   "KR1102|2023.2Q"
+  ],
+  "reproduce": "data/disclosure/_meta/reinsurer_load_20261011/stage13/apply_text13.py --apply"
  }
 }

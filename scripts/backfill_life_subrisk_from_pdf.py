@@ -17,7 +17,7 @@ from pypdf import PdfReader
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 JSON_PATH = REPO / "kics_disclosure.json"
 
@@ -114,7 +114,7 @@ def main():
     div = 100.0 if a.unit == "백만원" else 1.0
     new = []; summ = []; scanned = 0; nofile = 0
     for (code, q), miss in sorted(resid):
-        pdfs = disclosure_pdfs(_period_dir(q), code)
+        pdfs = latest_disclosure_pdfs(_period_dir(q), code)
         if not pdfs:
             nofile += 1; continue
         scanned += 1

@@ -37,7 +37,7 @@ except Exception:
 from solvency.validation.kics_json_rules import KEY_CODE, KEY_QUARTER  # noqa: E402
 
 sys.path.insert(0, str(ROOT / "scripts"))
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 OUT = ROOT / "data" / "_derived" / "kics_source_textlayer.json"
 
@@ -146,7 +146,7 @@ def main() -> int:
         # raw/ 우선, 없으면 pdf/ — 2026.2Q 부터 다운로더가 pdf/ 로 떨군다(39사 중 raw 는 1개뿐).
         # raw/ 만 보던 종전 코드는 2026.2Q 39사를 통째로 NO_RAW 로 흘려 게이트가 전원을
         # UNMEASURED(판정 불가)로 찍었다. 상세: scripts/_disclosure_pdf_paths.py
-        cands = disclosure_pdfs(_fyq(q), code)
+        cands = latest_disclosure_pdfs(_fyq(q), code)
         key = f"{code}|{q}"
         if not cands:
             out[key] = {"raw": None, "status": "NO_RAW"}

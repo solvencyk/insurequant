@@ -46,7 +46,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 TARGET = REPO / "kics_disclosure.json"
 
@@ -101,7 +101,7 @@ def quarter_to_period(q: str) -> str:
 
 
 def find_pdf(code: str, quarter: str):
-    hits = disclosure_pdfs(quarter_to_period(quarter), code)
+    hits = latest_disclosure_pdfs(quarter_to_period(quarter), code)
     if not hits:
         return None
     amended = [p for p in hits if "_amended" in p.name]

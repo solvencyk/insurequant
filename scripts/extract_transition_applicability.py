@@ -51,7 +51,7 @@ except Exception:
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs, prefer_latest_edition  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 MD_INBOX = REPO / "md_inbox"
 DISCLOSURE = REPO / "data" / "disclosure"
@@ -640,7 +640,7 @@ def pdf_fallback(period: str, code: str):
     # raw/ 우선, 없으면 pdf/ — 2026.2Q 부터 다운로더가 pdf/ 로 떨군다(39사 중 raw 는 1개뿐).
     # raw/ 만 보던 종전 코드는 2026.2Q 8사를 NO_RAW_PDF 로 흘렸다(KR0069 삼성생명 포함).
     # 상세: scripts/_disclosure_pdf_paths.py
-    pdfs = [str(p) for p in disclosure_pdfs(period, code)]
+    pdfs = [str(p) for p in latest_disclosure_pdfs(period, code)]
     if not pdfs:
         return None, None, "NO_RAW_PDF"
     try:
@@ -673,6 +673,8 @@ def _md_path(period: str, code: str) -> Path | None:
     cands = [c for c in cands if not c.name.endswith(".stale")]
     if not cands:
         return None
+    # 같은 (분기, 회사)에 MD 가 둘이면(스위스리 2023.4Q: 옛 60쪽 판 + 새 `_v20240510` 판) 매니페스트가 정한 최신 판의 짝만 남긴다(없으면 종전 규칙).
+    cands = prefer_latest_edition(period, code, cands)
     if len(cands) == 1:
         return cands[0]
     # prefer the highest amendment (amended2 > amended > base)
@@ -702,7 +704,8 @@ def _all_buckets():
             by_code.setdefault(m.group(1), []).append(f)
         for code, paths in by_code.items():
             path = _md_path(period_dir.name, code)
-            name = re.sub(r"_amended\d*$", "", path.stem.split("_", 1)[1]) if path else None
+            # 회사명에서 정정본(`_amended2`)·병존 판(`_v20240510`, `_v20240510_2`) 꼬리를 뗀다.
+            name = re.sub(r"_(amended\d*|v\d{8}(_\d+)?)$", "", path.stem.split("_", 1)[1]) if path else None
             out.append((period_dir.name, code, name, path))
     return out
 

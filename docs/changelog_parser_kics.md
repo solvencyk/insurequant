@@ -1,6 +1,20 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-10-10 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-10-11 · Stage 2/5 — parser (kics lane)
+
+## 2026-10-11 — 재보사 스윕 단계 13: 미뤘던 K-ICS 레인 6건 처리 (kics 레인, 커밋·푸시 없음)
+
+계약: orchestrator 티켓 `inbox/parser/20261011T0420Z__orchestrator__KR1101-KR1108__kics_deferred_leftovers.md`(「다음 round 로 미뤘던 거 전부」). 상세·재현·칸별 전후 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_13.md`, 스크립트 `…/reinsurer_load_20261011/stage13/`. 모든 쓰기는 칸 단위 + 해시 guard + 백업 후 temp + `os.replace`. docling 0회.
+
+- **기존 6셀 IRR 시나리오 열 뒤바뀜 정정**(owner 승인): 카카오페이손보 2023.2Q·2023.4Q·2024.4Q·2025.2Q·2026.2Q · 하나손보 2025.2Q. 원인 = 도구의 순자산가치 값 근접 대응(허용 0.55억원·3e-4)이 시나리오 값이 모이는 표에서 첫 미사용 열을 잡는 결함. 원문 6쪽을 렌더링·좌표로 확인(열 순서 고정)하고 위치 대응 값으로
+  `kics_irr_balance.json` 6셀 + `kics_duration_gap.json` 6행 정정(하나손보 2025.2Q 자산듀레이션 2.2451 → 4.7765 등). 나머지 294셀·310행은 HEAD 와 동일.
+- **스위스리 KR1102 2023.2Q 적재**: 새 완성본(v20240510)의 전기 열로 항목 1~46(+파생 28) 46행 + IRR 잔액 1셀·듀레이션갭 1행·텍스트층 1셀. 새 RED 0, 대신 `CENSUS_EXEMPTION_INERT`(등재 해제 대상, validation) 1 → K-ICS 게이트 exit 2. 2023.3Q 는 새 RED 2(룰 4 · `8_life_census`)라 적재 안 함.
+- **추출기가 수작업 정정을 스스로 재현**: 금리민감도 추출기에 단위 환산(헤드라인 비율 100·100,000, 머리말 단위 불신) · 잘린 라벨 · 쪽 넘김 6칸 행 · 0 인쇄 = 빈 블록 · 비적용사 후 블록 미러 등재부(`NON_APPLIER_POST_MIRROR`, 하노버 4분기) 추가 → 재보사 168행 = 마스터 전부 동일(전체·scoped 재실행),
+  기존 39사 817행·진단 538키 HEAD 추출기와 동일. IRR 추출기는 위치 대응 우선 + 최신 판 선택 + `--codes`/`--quarters`/`--master` → 전체 재실행이 라이브 `kics_irr_balance.json` 301셀과 바이트 동일. 퍼시픽 KR1107 금리민감도 12행·정밀값 4칸은 이미 적재돼 있었음(단계 9 §8-2 는 스테이징 `master_value` 오독).
+- **같은 분기에 raw PDF 가 둘일 때**: `scripts/_disclosure_pdf_paths.py` 에 `latest_disclosure_pdfs`·`prefer_latest_edition`·`manifest_latest_name`(매니페스트 `latest` > `versions` 마지막 > `file`) 신설, K-ICS 레인 15개 도구 연결. 645조합 중 642조합 목록 동일, 바뀌는 곳은 스위스리 2023.4Q(`[0]` 옛 판 → 완성본)·뮌헨 2023.1Q·2Q(`[-1]`·최대크기 옛 원본 → K-ICS 정정본).
+  텍스트층 빌더·전환 적용여부 추출기가 스위스리 2023.4Q 레코드를 스스로 만든다. 새 단위 시험 24건(`tests/unit/test_disclosure_pdf_latest.py` 10 · `test_extract_kics_rate_sensitivity_rules.py` 10 · `test_extract_kics_irr_balance_match.py` 4).
+- **census**: 8사 × 14분기 × 54항목 6,048칸 중 빈칸 1,595 전부 사유 분류(버킷 부재 864 · 홀수분기 간이 616 · 생명장기 0 35 · 문서에 표 없음 30 · 해당사항 없음 21 · 자기 문서 미수집 16 · 인쇄 공란 8 · 게이트가 막아 보류 5). 원천이 있는데 못 뽑았던 40칸(뮌헨 항목 37·38·47~54 · 제네럴 37·38 · 마이브라운 47·48·49·53·54 ×4분기, 대시·해당사항 없음 = 0) 적재. 프로젝트 추출기(`fill_tfi_table_to_disclosure._extract_bucket`)로 공통적용 경과조치 표를 독립 재독해 11개 (회사, 분기) 불일치 0. 퍼시픽 2025.3Q·2026.2Q 47~54 16칸은 원문이 「해당사항 없음」 서식에 전 칸 0 을 찍은 것(머리글 지급여력금액 2,043·1,781억과 모순)이라 빈 칸으로 두고, 0 으로 싣는 시뮬(새 RED 0 · 새 YELLOW 4 · 해소 YELLOW 4)을 owner 판단 자료로 남겼다.
+- **게이트**: K-ICS RED 57 → 57 · YELLOW 1928 → 1940 · blocking 0 · exit 0 → 2(`CENSUS_EXEMPTION_INERT` 1건) · 금리민감도 RED 0 불변 · 데이터계약 RED 30 → 34(xlsx 3 + INERT 1) · 라이브 아티팩트 내 몫 +3(public_exports 3종). 골든 `kics_rules_golden` 은 +86행에 반응(재생성은 validation, `--update` 안 함).
 
 ## 2026-10-10 — 재보사 스윕 단계 11: 금리민감도 RED 40 정정 · 듀레이션 갭 재보사 46칸 적재 (kics 레인, 커밋·푸시 없음)
 

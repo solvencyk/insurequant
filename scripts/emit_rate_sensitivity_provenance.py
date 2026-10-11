@@ -38,7 +38,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 
 from extract_kics_rate_sensitivity import pick_md  # noqa: E402  (needs REPO on sys.path)
-from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
+from _disclosure_pdf_paths import latest_disclosure_pdfs  # noqa: E402  (판이 둘이면 매니페스트가 정한 최신 판 — runlog 13 §5)
 
 SRC = REPO / "kics_rate_sensitivity.json"
 OUT = REPO / "kics_rate_sensitivity_provenance.json"
@@ -65,7 +65,7 @@ def resolve_source(code: str, quarter: str):
     md = pick_md(code, period)
     if md:
         return Path(md).relative_to(REPO).as_posix(), "md"
-    pdfs = disclosure_pdfs(period, code)
+    pdfs = latest_disclosure_pdfs(period, code)
     if pdfs:
         amended = [p for p in pdfs if "_amended" in p.name]
         pdf = max(amended or pdfs, key=lambda p: p.stat().st_size)
