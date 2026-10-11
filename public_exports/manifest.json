@@ -74,11 +74,6 @@
       "rows": 316,
       "quarter_min": "2023.2Q",
       "quarter_max": "2026.2Q"
-    },
-    "보험계약부채": {
-      "rows": 6111,
-      "quarter_min": "2023.1Q",
-      "quarter_max": "2026.2Q"
     }
   }
 }

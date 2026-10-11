@@ -658,8 +658,9 @@ NOT_A_MASTER = {
 }
 # 패널의 원천 데이터 JSON 인데 **xlsx 시트가 아직 없는 것**(owner 상시 규칙 위반 상태 — 시트 신설 후 이 항목을 지워야 한다).
 # 시트가 생기면(MASTERS 에 들어오면) 아래 테스트가 이 선언을 죽은 선언으로 막는다.
-# 2026-10-11: `insurance_liability_portfolio.json` 은 `보험계약부채` 시트가 생겨(MASTERS 등재) 선언을 지웠다.
-MASTER_SHEET_PENDING = {}
+MASTER_SHEET_PENDING = {
+    "insurance_liability_portfolio.json": "경영공시 2-4 잔여보장요소 표. IFRS17.html 섹션 3 콤보의 원천인데 build_master_xlsx.MASTERS 에 시트가 없다 — publishing 이 시트를 신설해야 한다(TODO_publishing)",
+}
 
 
 def _as_tuple(v):

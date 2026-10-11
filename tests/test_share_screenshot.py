@@ -48,7 +48,7 @@ def test_share_menu_label_and_section_api():
     assert ".iq-sec-share" in css and "width:44px" in css.replace(" ", "")
 
 
-@pytest.mark.parametrize("page,want", [("K-ICS.html", 4), ("IFRS17.html", 9)])
+@pytest.mark.parametrize("page,want", [("K-ICS.html", 5), ("IFRS17.html", 9)])
 def test_section_markup_complete(page, want):
     html = _read(page)
     assert len(re.findall(r'<div class="panel" id="[^"]+"[^>]*data-share-section="', html)) == want

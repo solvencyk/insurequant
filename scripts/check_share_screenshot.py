@@ -40,7 +40,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # (페이지, 회사 쿼리, 기대하는 섹션 수 — 이 수가 줄면 섹션이 빠진 것)
 PAGES = [
-    ("K-ICS.html", "", 4),                                   # 회사는 헤더 드롭다운에서 고른다(아래 SELECT_LABEL)
+    ("K-ICS.html", "", 5),                                   # 회사는 헤더 드롭다운에서 고른다(아래 SELECT_LABEL)
     ("IFRS17.html", "company=삼성생명", 9),
     ("compare.html", "c=삼성생명,한화생명,교보생명", 1),   # 지표 카드 수는 데이터에 따라 달라 하한만 본다
 ]

@@ -96,6 +96,17 @@
     .dur-sub{font-size:11px;color:var(--muted);margin-top:3px}
     .dur-note{font-size:11.5px;color:var(--muted);margin:2px 0 6px;line-height:1.5}
     @media(max-width:640px){.dur-strip{grid-template-columns:1fr}.dur-val{font-size:24px}}
+    /* 시나리오별 금리부 자산·부채 표 — 칸마다 금액(윗줄)과 충격전 대비 변화·변화율(아랫줄). 첫 열 고정은 .table-container 규칙을 그대로 쓴다. */
+    .dur-h3{font-size:14px;font-weight:700;margin:22px 0 0;color:var(--text)}
+    .dur-h3 .dur-unit{font-size:12px;font-weight:400;color:var(--muted)}
+    #dur-table{margin-top:8px}
+    #dur-table th,#dur-table td{white-space:nowrap}
+    #dur-table thead th:not(:first-child){text-align:right}
+    #dur-table td.dur-num{text-align:right;font-variant-numeric:tabular-nums;vertical-align:top}
+    #dur-table .dur-amt{display:block}
+    #dur-table .dur-chg{display:block;font-size:11.5px;color:var(--muted);margin-top:1px}
+    #dur-table tr.dur-net th,#dur-table tr.dur-net td{border-top:2px solid var(--border);font-weight:700}
+    #dur-table tr.dur-net .dur-chg{font-weight:400}
     .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:8px 14px;font-size:13px}
     .sens-kpi-delta{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;margin-left:4px}
     .sens-kpi .sub{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
@@ -183,6 +194,7 @@
         <li><a href="#sec-trend">지급여력비율 추이</a></li>
         <li><a href="#donut-section-panel">자본성증권 소진율</a></li>
         <li><a href="#sec-sens">금리 민감도</a></li>
+        <li><a href="#sec-dur">자산·부채 듀레이션</a></li>
         <li><a href="#sec-forward">자본비율 전망</a></li>
       </ul>
     </nav>
@@ -247,17 +259,28 @@
     </div>
 
     <div class="panel" id="sec-sens" data-share-section="금리 민감도">
-      <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 · 자산/부채 듀레이션 갭)</span></h2>
+      <h2>금리 민감도 <span style="color:var(--muted);font-size:13px;font-weight:400">(시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향)</span></h2>
       <div class="controls" style="justify-content:flex-start">
         <label id="sens-quarter-label" style="display:none">기준 분기: <select id="sens-quarter" class="select"></select></label>
       </div>
       <div id="sens-placeholder" class="no-data">상단의 보험사를 선택하면 금리 민감도 분석이 표시됩니다.</div>
-      <div id="dur-strip" class="dur-strip" style="display:none"></div>
-      <div id="dur-note" class="dur-note" style="display:none"></div>
       <div class="sens-chart" id="sens-chart-wrap" style="display:none"><canvas id="sens-chart" role="img" aria-label="시장금리 ±50bp·±100bp 평행이동 시 지급여력 영향 차트"></canvas></div>
       <div id="sens-kpis" class="sens-kpis" style="display:none"></div>
       <div class="table-container" id="sens-table" style="display:none"></div>
       <div class="donut-note" id="sens-note"></div>
+    </div>
+
+    <div class="panel" id="sec-dur" data-share-section="자산·부채 듀레이션">
+      <h2>자산·부채 듀레이션 <span id="dur-title-q" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
+      <div class="controls" style="justify-content:flex-start">
+        <label id="dur-quarter-label" style="display:none">기준 분기: <select id="dur-quarter" class="select"></select></label>
+      </div>
+      <div id="dur-placeholder" class="no-data">상단의 보험사를 선택하면 자산·부채 듀레이션이 표시됩니다.</div>
+      <div id="dur-strip" class="dur-strip" style="display:none"></div>
+      <div id="dur-note" class="dur-note" style="display:none"></div>
+      <h3 class="dur-h3" id="dur-table-h" style="display:none">시나리오별 금리부 자산·부채 <span class="dur-unit">(단위: 억원)</span></h3>
+      <div class="table-container" id="dur-table" tabindex="0" role="region" aria-label="시나리오별 금리부 자산·부채 표(좁은 화면에서는 가로로 스크롤)" style="display:none"></div>
+      <div class="donut-note" id="dur-table-note"></div>
     </div>
 
     <div class="panel" id="sec-forward" data-share-section="자본비율 전망">
@@ -1359,8 +1382,6 @@
       tbl.style.display = 'none';
       tbl.innerHTML = '';
       document.getElementById('sens-note').innerHTML = '';
-      document.getElementById('dur-strip').style.display = 'none';
-      document.getElementById('dur-note').style.display = 'none';
       if (sensChart) { sensChart.destroy(); sensChart = null; }
     }
 
@@ -1389,18 +1410,140 @@
       renderSensDetail();
     }
 
+    // 「자산·부채 듀레이션」 섹션(#sec-dur, 2026-10-11 금리 민감도에서 분리). 분기 선택은 자체 select —
+    // 듀레이션 마스터는 2023.2Q 부터, 금리 민감도(반기 공시 2024.4Q 도입)보다 분기가 더 많다. 기본값은 둘 다 해당 회사의 최신 분기.
+    let durGapLoaded = false, durLastCompany = null;
+    const DUR_SCEN = [['충격전', '충격전'], ['금리상승', '금리상승'], ['금리하락', '금리하락'],
+                      ['금리평탄', '평탄화'], ['금리경사', '경사화'], ['평균회귀', '평균회귀']];
+
+    function durEsc(s) {
+      return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+    }
+
+    function durHideAll(msg) {
+      const ph = document.getElementById('dur-placeholder');
+      ph.style.display = 'block';
+      ph.textContent = msg;
+      ['dur-quarter-label', 'dur-strip', 'dur-note', 'dur-table-h', 'dur-table'].forEach(id => {
+        document.getElementById(id).style.display = 'none';
+      });
+      document.getElementById('dur-table').innerHTML = '';
+      document.getElementById('dur-table-note').innerHTML = '';
+      document.getElementById('dur-title-q').textContent = '';
+    }
+
+    // 회사 변경/초기 로드: 분기 select 재구성 후 본문 렌더. 같은 회사로 재진입하면(데이터 도착 지연 등) 고른 분기를 유지한다.
+    function renderDurationSection() {
+      try {
+        const company = document.getElementById('company').value;
+        if (!company) { durHideAll('상단의 보험사를 선택하면 자산·부채 듀레이션이 표시됩니다.'); return; }
+        if (!durGapLoaded) { durHideAll('자산·부채 듀레이션을 불러오는 중입니다.'); return; }
+        const quarters = sensQuartersDesc(durGapRowsForCompany(company));
+        if (!quarters.length) {
+          durHideAll('해당 보험사는 금리위험액 현황 공시(자산·부채 듀레이션)가 아직 없습니다.');
+          return;
+        }
+        const qSelect = document.getElementById('dur-quarter');
+        const prev = qSelect.value;
+        qSelect.innerHTML = '';
+        quarters.forEach(q => {
+          const opt = document.createElement('option');
+          opt.value = q; opt.textContent = q;
+          qSelect.appendChild(opt);
+        });
+        qSelect.value = (company === durLastCompany && quarters.includes(prev)) ? prev : quarters[0];
+        durLastCompany = company;
+        document.getElementById('dur-quarter-label').style.display = '';
+        renderDurationDetail();
+      } catch (err) {
+        console.error('renderDurationSection failed', err);
+        durHideAll('자산·부채 듀레이션을 불러오는 중 오류가 발생했습니다.');
+      }
+    }
+
+    function renderDurationDetail() {
+      try {
+        const company = document.getElementById('company').value;
+        const quarter = document.getElementById('dur-quarter').value;
+        const row = durGapRowsForCompany(company).find(r => r['공시분기'] === quarter) || null;
+        if (!row) { durHideAll('해당 분기의 자산·부채 듀레이션 공시가 없습니다.'); return; }
+        document.getElementById('dur-placeholder').style.display = 'none';
+        document.getElementById('dur-quarter-label').style.display = '';
+        document.getElementById('dur-title-q').textContent = '(' + quarter + ' 기준)';
+        renderDurationCards(row);
+        renderDurationScenarioTable(row, quarter);
+      } catch (err) {
+        console.error('renderDurationDetail failed', err);
+        durHideAll('자산·부채 듀레이션을 불러오는 중 오류가 발생했습니다.');
+      }
+    }
+
+    // 시나리오별 금리부 자산·부채 표 — 마스터 열(자산_/부채_ × 6 시나리오)은 이미 억원이다(빌더 build_kics_duration_gap.py 가 공시
+    // 백만원을 ÷100 해서 적재, 충격전 자산−부채 = 항목 41 순자산가치로 검산). 그래서 화면에서 단위 환산을 하지 않는다.
+    // 화면에서 하는 계산은 순자산(자산−부채), 충격전 대비 변화(시나리오−충격전), 변화율(변화÷충격전)의 단순 사칙연산뿐이다.
+    // 충격전이 0 이하이면 변화율은 정의되지 않아 뺀다.
+    function renderDurationScenarioTable(row, quarter) {
+      const val = k => (row[k] == null || row[k] === '' || isNaN(Number(row[k]))) ? null : Number(row[k]);
+      const A = DUR_SCEN.map(([k]) => val('자산_' + k));
+      const L = DUR_SCEN.map(([k]) => val('부채_' + k));
+      const N = A.map((a, i) => (a == null || L[i] == null) ? null : a - L[i]);
+      const all = A.concat(L, N).filter(v => v != null);
+      const h = document.getElementById('dur-table-h'), tbl = document.getElementById('dur-table'), tnote = document.getElementById('dur-table-note');
+      if (!all.length) { h.style.display = 'none'; tbl.style.display = 'none'; tbl.innerHTML = ''; tnote.innerHTML = ''; return; }
+      const maxAbs = Math.max(...all.map(Math.abs));
+      const dp = maxAbs >= 1000 ? 0 : (maxAbs >= 10 ? 1 : 2); // 소규모 사(마이브라운·카카오페이 등)는 변화량이 0 으로 뭉개지지 않게 소수 자리를 늘린다
+      const fmt = (v, dp2) => {
+        const s = Math.abs(v).toLocaleString('ko-KR', {minimumFractionDigits: dp2, maximumFractionDigits: dp2});
+        return (v < 0 && Number(Math.abs(v).toFixed(dp2)) !== 0 ? '△' : '') + s;
+      };
+      const fmtDelta = d => {
+        const z = Number(Math.abs(d).toFixed(dp)) === 0;
+        return z ? '0' : (d < 0 ? '△' : '+') + fmt(Math.abs(d), dp);
+      };
+      const fmtPctDelta = p => {
+        const z = Number(Math.abs(p).toFixed(1)) === 0;
+        return z ? '0.0%' : (p < 0 ? '△' : '+') + Math.abs(p).toFixed(1) + '%';
+      };
+      let html = '<table><caption class="sr-only">' + quarter + ' 시나리오별 금리부자산·금리부부채·순자산(억원)과 충격전 대비 변화·변화율</caption>'
+        + '<thead><tr><th scope="col">구분</th>'
+        + DUR_SCEN.map(([, lab]) => '<th scope="col">' + lab + '</th>').join('') + '</tr></thead><tbody>';
+      [['금리부자산', A, false], ['금리부부채', L, false], ['순자산', N, true]].forEach(([name, vals, isNet]) => {
+        html += '<tr' + (isNet ? ' class="dur-net"' : '') + '><th scope="row">' + name + '</th>';
+        vals.forEach((v, i) => {
+          if (v == null) { html += '<td class="dur-num">—</td>'; return; }
+          let chg;
+          if (i === 0) chg = '기준';
+          else if (vals[0] == null) chg = '—';
+          else {
+            const d = v - vals[0];
+            chg = fmtDelta(d) + (vals[0] > 0 ? ' (' + fmtPctDelta(d / vals[0] * 100) + ')' : '');
+          }
+          html += '<td class="dur-num"><span class="dur-amt">' + fmt(v, dp) + '</span><span class="dur-chg">' + chg + '</span></td>';
+        });
+        html += '</tr>';
+      });
+      html += '</tbody></table>';
+      tbl.innerHTML = html;
+      h.style.display = '';
+      tbl.style.display = 'block';
+      tnote.innerHTML = '자료: 정기경영공시 「금리위험액 현황」 · ' + quarter + ' 기준 · 순자산 = 금리부자산 − 금리부부채(화면 계산)'
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-dur-table">?</button>'
+        + '<span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-dur-table">'
+        + '공시 표의 충격전과 5개 금리 시나리오(금리상승·금리하락·평탄화·경사화·평균회귀) 값을 그대로 옮겼습니다. 금액 단위는 억원입니다.<br>'
+        + '칸 아랫줄은 <b>충격전 대비 변화</b>(금액)와 <b>변화율</b>입니다. 충격전이 0 이하이면 변화율은 표시하지 않습니다.<br>'
+        + '평탄화·경사화는 공시 표의 「금리평탄」·「금리경사」 열입니다.'
+        + '</span></span>';
+    }
+
     // 자산/부채 듀레이션 갭 카드 — 마스터 `kics_duration_gap.json` 의 컬럼을 그대로 표시한다(JS 재계산 없음).
     // 산식(마스터 쪽 정의): D = (V_금리하락 − V_금리상승) ÷ (2% × V_충격전), 갭 = D_자산 − 부채자산비율×D_부채.
     // 분모는 금리위험액 현황 표의 자산총계/부채총계(건전성감독기준 재무상태표 전체가 아님) — 순자산가치
     // 변동이 금리위험 측정 대상에서만 나오므로 범위를 맞췄다. K-ICS 충격은 평행이동이 아니라 만기별
     // 기간구조 충격이라 2%로 나누는 것은 근사 — 순위·상대크기는 유효하나 절대 연수는 참고치.
     // 부호: 갭 양수 = 금리 상승 시 순자산 감소(자산 듀레이션이 부채보다 김).
-    function renderDurationCards(company, quarter) {
+    function renderDurationCards(row) {
       const strip = document.getElementById('dur-strip');
       const note = document.getElementById('dur-note');
-      const row = durGapRowsForCompany(company).find(r => r['공시분기'] === quarter) || null;
-      const has = row && row['듀레이션갭'] != null;
-      if (!has) { strip.style.display = 'none'; note.style.display = 'none'; return; }
 
       const num = (v, dg) => v == null ? '—'
         : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toFixed(dg);
@@ -1410,13 +1553,14 @@
         + '<div class="dur-lab">' + lab + '</div>'
         + '<div class="dur-sub">' + sub + '</div></div>';
 
-      const dL = row['부채듀레이션'];
+      const dA = row['자산듀레이션'], dL = row['부채듀레이션'], dG = row['듀레이션갭'];
       strip.innerHTML = [
-        card(num(row['자산듀레이션'], 2), '년', '자산 듀레이션', '금리위험액 현황 기준'),
-        dL == null
-          ? card('—', '', '부채 듀레이션', '금리부부채 ≤ 0 — 정의 안 됨')
-          : card(num(dL, 2), '년', '부채 듀레이션', '금리위험액 현황 기준'),
-        card(num(row['듀레이션갭'], 2), '년', '듀레이션 갭', '자산D − 부채자산비율×부채D', true)
+        dA == null ? card('—', '', '자산 듀레이션', '정의 안 됨')
+                   : card(num(dA, 2), '년', '자산 듀레이션', '금리위험액 현황 기준'),
+        dL == null ? card('—', '', '부채 듀레이션', '정의 안 됨')
+                   : card(num(dL, 2), '년', '부채 듀레이션', '금리위험액 현황 기준'),
+        dG == null ? card('—', '', '듀레이션 갭', '정의 안 됨', true)
+                   : card(num(dG, 2), '년', '듀레이션 갭', '자산D − 부채자산비율×부채D', true)
       ].join('');
       strip.style.display = 'grid';
       let noteHtml = '분모는 경영공시 <b>금리위험액 현황</b> 표의 자산총계·부채총계입니다(건전성감독기준 재무상태표 전체가 아닙니다). '
@@ -1431,7 +1575,7 @@
         + '순위·상대크기는 유효하나 절대 연수는 참고치입니다.'
         + '</span></span>';
       if (row['비고']) {
-        noteHtml += '<div style="margin-top:4px;color:var(--muted);font-size:11px">' + row['비고'] + '</div>';
+        noteHtml += '<div style="margin-top:4px;color:var(--muted);font-size:11px">비고: ' + durEsc(row['비고']) + '</div>';
       }
       note.innerHTML = noteHtml;
       note.style.display = 'block';
@@ -1469,7 +1613,6 @@
         const flat = SENS_MEASURES.flatMap(m => byMode[mode][m] || []).filter(v => v != null);
         if (flat.length && flat.every(v => v === 0)) delete byMode[mode];
       });
-      renderDurationCards(company, quarter);
       const postRatio = byMode['적용후'] ? byMode['적용후']['지급여력비율'] : null;
       const preRatio = byMode['적용전'] ? byMode['적용전']['지급여력비율'] : null;
 
@@ -1661,14 +1804,16 @@
       .catch(() => {});
     document.getElementById('sens-quarter').addEventListener('change', renderSensDetail);
 
-    // 자산/부채 듀레이션 갭 JSON 로드 (실패해도 카드만 숨겨지고 나머지 패널은 정상 — fail soft)
+    // 자산/부채 듀레이션 갭 JSON 로드 (실패해도 이 섹션만 안내 문구로 바뀌고 나머지 패널은 정상 — fail soft)
+    document.getElementById('dur-quarter').addEventListener('change', renderDurationDetail);
     fetch('kics_duration_gap.json')
       .then(r => r.json())
       .then(d => {
         durGapData = Array.isArray(d) ? d : [];
-        renderRateSensitivity(); // sensData/durGapData 어느 쪽이 늦게 와도 재렌더로 수렴
+        durGapLoaded = true;
+        renderDurationSection(); // 회사 선택 이후 도착한 경우 1회 재렌더
       })
-      .catch(() => {});
+      .catch(() => { durGapLoaded = true; renderDurationSection(); });
 
     fetch(jsonPath)
       .then(response => response.json())
@@ -1744,7 +1889,7 @@
         transitionToggle.sync();
 
         // 이벤트 리스너 추가
-        const refreshBottomPanels = () => { updateDonutPanel(); updateForwardPanel(); renderRateSensitivity(); };
+        const refreshBottomPanels = () => { updateDonutPanel(); updateForwardPanel(); renderRateSensitivity(); renderDurationSection(); };
         companySelect.addEventListener('change', () => { updateTable(); refreshBottomPanels(); });
         window.addEventListener('iq:themechange', () => { if (window.IQTheme && window.Chart) IQTheme.applyChartJs(window.Chart); updateTable(); refreshBottomPanels(); });
         periodSelect.addEventListener('change', updateTable);

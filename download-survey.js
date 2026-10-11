@@ -40,7 +40,6 @@
     { name: "자본성증권발행현황", file: "public_exports/자본성증권발행현황.json", code: "CAPSEC", label: "자본성증권 발행현황 (증권별)" },
     { name: "자본비율전망", file: "public_exports/자본비율전망.json", code: "FWD", label: "자본비율 5년 전망 (2026~2030)" },
     { name: "금리듀레이션갭", file: "public_exports/금리듀레이션갭.json", code: "DGAP", label: "K-ICS 금리 듀레이션 갭" },
-    { name: "보험계약부채", file: "public_exports/보험계약부채.json", code: "ILP", label: "보험계약부채 (잔여보장·발생사고요소)" }
   ];
   var MANIFEST_FILE = "public_exports/manifest.json";
   // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
