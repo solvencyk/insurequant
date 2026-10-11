@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T0500Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -33,3 +33,4 @@ iter: 1
 - 시트별 추가 행·변경 칸 대 마스터 diff·기존 불변 증명, NB 전후, 패널 전후 변화(회사·분기), `public_exports` 변경 목록·게이트, 골든 실패 사유, 게이트 RED 종류별 수, `TODO_publishing.md` Status + `docs/changelog_publishing.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(publishing b4b6a71·5079688·bf0b30a, orchestrator 종결 2026-10-12) xlsx 7시트 동기화(기존 행 삭제 0·다른 10시트 동일, 드리프트 RED 7→0): 손익분해PL +303(13,794행; 값 바뀐 칸 25 = 값 11 + 값_당분기 14, 15행 KR1102·KR1103·KR1105), 17BS +49, CSM워터폴 +18, CSM상각 +15, 가정민감도 +6, 보험계약부채 +110, 신계약CSM배수 +3. NB 마스터 390→393행(재보사 3행 null 배수, 기존 390행 변경 0, NB_CENSUS_MISSING 0). 패널: IFRS17 4패널·csm_waterfall 바이트 동일(새 재보사 행이 최신 분기가 아니라 패널에 안 실림), csm_combo 재보사 5곳 52노드, compare 재보사 137리프(직전 라운드 손해율 재보사 행 첫 반영), 다른 회사 0. public_exports 7시트+manifest(build_id b4b6a71), 공개 게이트 0. validate_data_contract RED 102 전부 CONCEPT_MIXED_DISCLOSURE_INTO_DART(validation 계보 허용 몫), MASTER_XLSX_* 0, live_artifacts RED 0. 시험 142 통과, viz 골든 2종 통과.
