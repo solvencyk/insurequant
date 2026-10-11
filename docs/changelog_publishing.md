@@ -19,6 +19,7 @@
 - **패널**(`89ecf9a`): csm_combo 40 -> 48사 · 분기 8 -> 14 · `--check` OK, compare 패널 `--check` OK.
 - **자본성증권**(`8848cb8`): `compute_tier{1,2}_utilization.py` 회사명을 마스터 원수사명으로(파일명이 K-ICS.html 매칭 규칙에 안 맞을 때만 -> KB라이프 1건 외 46건 동일 증명). `kics_forward_capital.json` 서울보증보험 제외 행(`status: excluded` + `exclusion_reason`), 생성기 `EXCLUDE_PAA` 도 같은 행을 낸다. designer 가 HTML 에서 `exclusion_reason` 을 읽기 전에는 서울보증 문구가 일반 문구가 된다(티켓 `inbox/designer/20261011T1600Z…`).
 - **게이트**: `validate_data_contract` RED 22 = 알려진 것뿐. `validate_live_artifacts` RED 26 = 새 두 부류(`NB_CENSUS_MISSING` 18 · `INSPL_CENSUS_MISSING` 8) — 재보사에 NB 배수 행/보험손익 원표가 없어서(원인 구조적, 아래 TODO).
+- **NB 재보사 18행**(orchestrator 승인, `1412aaf`·`04ea6c6`): `build_nb_csm_multiple.py` 실행 -> `NB_CSM_multiple.json` 363 -> 381행(git diff 234 추가·0 삭제, 배수 null), 신계약CSM배수 시트 +18행(기존 363 불변)·`public_exports/신계약CSM배수.json` 381행. `NB_CENSUS_MISSING` 18 -> 0, `validate_live_artifacts` RED 26 -> 8(INSPL 8만 남음).
 - 상세 `data/disclosure/_meta/final_resync_runlog_20261011.md`.
 
 ## 2026-10-11 — 보험계약부채 마스터 시트 · 공개 스냅샷 신설 + KB라이프 소진율 도넛 이름 수정
