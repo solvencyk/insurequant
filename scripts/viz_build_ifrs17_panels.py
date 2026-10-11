@@ -394,6 +394,18 @@ def _pick_amort_block(blocks):
     keep deciding those cases. Only when everything else ties (삼성생명's case,
     raw-confirmed: identical row/col counts and score between the 별도/연결 copies)
     does basis get to break it.
+
+    2026-10-11 (inbox/parser/20261011T1900Z): the same last-resort `line_no` tiebreak
+    also chose the PRIOR-year-end table. An annual filing prints the schedule twice, 당기말
+    then 전기말, with identical caption/header/row labels (the extractor hands both the
+    caption of the last descriptive paragraph; the 전기말 table is introduced only by a
+    bare `<전기말>` paragraph or a one-row `<전기말>` unit mini-table), so every score
+    ties and the LATER table won -- 18 of the 39 DART companies showed the 2024-12-31
+    schedule in the live 상각 chart (15 of them with a 2025.4Q total equal to the prior
+    year's closing CSM, 3 split-table companies with a partial total).
+    After the scoring above has chosen a table, `_current_period_twin` moves to the
+    twin that is printed first. The scoring itself is untouched, so a table that is
+    already the first one (or has no twin) is returned exactly as before.
     """
     if not blocks:
         return None
@@ -410,7 +422,59 @@ def _pick_amort_block(blocks):
             b.get('line_no', 0),
         )
 
-    return max(blocks, key=key)
+    return _current_period_twin(max(blocks, key=key), blocks)
+
+
+# 당기말/전기말 쌍둥이 표 판정 (2026-10-11). 규칙: 같은 `_source_xml`(별도/연결 사본은 파일이 다르다) + 같은 캡션 + 같은
+# 헤더 + 비슷한 행 라벨을 가진 표끼리가 한 쌍(둘 이상)이고, 문서에서 가장 먼저 나오는 표가 당기말이다 -- 연간 보고서는
+# 당기말 표를 먼저 싣는다. 근거(원문 마커 대조 = data/_derived/amort_fix_20261011/a10·a11): 표 바로 위 문단/한 줄 미니표의
+# 마커가 읽히는 쌍 64개 전부에서 먼저 나온 표가 <당기말>(제NN(당)기), 나중 표가 <전기말>(제NN(전)기)이다(예외 0). 행 라벨
+# 유사도(Jaccard)는 한화손해 FY2024처럼 캡션·헤더가 같은데 라벨이 다른(0.37) 별개 하위표를 쌍으로 오인하지 않으려는
+# 가드다 -- 실제 쌍은 1.0(한 행만 다른 쌍도 0.88 이상)이라 0.7 이 두 무리 사이에 있다.
+_TWIN_MIN_LABEL_JACCARD = 0.7
+_TWIN_CAPTION_TAG_RE = re.compile(r"<[^<>]*>")
+_TWIN_FISCAL_TAG_RE = re.compile(r"제\d+\((?:당|전)\)기")
+
+
+def _twin_shape(b: dict) -> tuple:
+    """(원본 파일, 기간 마커·공백을 뺀 캡션, 기간 마커·공백을 뺀 헤더) -- 쌍둥이 후보끼리 같아야 하는 모양."""
+    cap = re.sub(r"\s+", "", _TWIN_CAPTION_TAG_RE.sub("", str(b.get("caption") or "")))
+    hdr = _TWIN_FISCAL_TAG_RE.sub(
+        "", "|".join(re.sub(r"\s+", "", c) for c in _flatten_header(b.get("header") or [])))
+    return (b.get("_source_xml"), cap, hdr)
+
+
+def _row_stubs(b: dict) -> set:
+    """행 라벨 집합(첫 칸이 숫자가 아닌 것만). 라벨 없는 한 줄짜리 표는 빈 집합."""
+    out = set()
+    for r in b.get("rows") or []:
+        if r and isinstance(r[0], str):
+            s = re.sub(r"\s+", "", r[0])
+            if s and parse_num(s, dash_means_zero=False) is None:
+                out.add(s)
+    return out
+
+
+def _stubs_alike(a: set, b: set) -> bool:
+    if not a and not b:
+        return True  # 라벨이 없는 표끼리는 비교할 근거가 없다 -- 모양(캡션+헤더)이 같으면 쌍으로 본다
+    return len(a & b) / len(a | b) >= _TWIN_MIN_LABEL_JACCARD
+
+
+def _current_period_twin(chosen: dict, blocks: list) -> dict:
+    """`chosen` 과 쌍을 이루는 표 중 문서에서 가장 먼저 나오는 표(= 당기말)를 돌려준다. 쌍이 없거나 이미 첫 표면 `chosen` 그대로.
+
+    `line_no` 가 **엄격히 작은** 쌍만 후보다 -- 같은 값(lxml `sourceline` 이 65,535 에서 포화되는 큰 파일의 꼬리)이나 0(미상)은
+    순서를 모르는 것이므로 바꾸지 않는다."""
+    shape, stubs = _twin_shape(chosen), _row_stubs(chosen)
+    best, best_line = chosen, int(chosen.get("line_no") or 0)
+    for b in blocks:
+        if b is chosen or _twin_shape(b) != shape:
+            continue
+        ln = int(b.get("line_no") or 0)
+        if 0 < ln < best_line and _stubs_alike(stubs, _row_stubs(b)):
+            best, best_line = b, ln
+    return best
 
 
 def _extract_transposed_amort(rows):

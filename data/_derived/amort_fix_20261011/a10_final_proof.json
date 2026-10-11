@@ -1,0 +1,1028 @@
+[
+ {
+  "company": "DB생명보험",
+  "rcept": "20260327000191",
+  "moved": false,
+  "old": [
+   15336,
+   "-",
+   "-"
+  ],
+  "new": [
+   15336,
+   "-",
+   "-"
+  ],
+  "total_before": 19813.01,
+  "total_after": 19813.01,
+  "close_FY": 19813.1,
+  "close_FY-1": 17704.8,
+  "rel_old_vs_FY-1": 0.11908,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   600.94,
+   17704.87
+  ],
+  "y1_old": 590.33,
+  "y1_new": 590.33
+ },
+ {
+  "company": "DB손해보험",
+  "rcept": "20260312001222",
+  "moved": true,
+  "old": [
+   18147,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   17864,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 122317.59,
+  "total_after": 122053.43,
+  "close_FY": 122053.4,
+  "close_FY-1": 122317.6,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   7757.19,
+   122317.59
+  ],
+  "y1_old": 7757.19,
+  "y1_new": 7951.82
+ },
+ {
+  "company": "KB손해보험",
+  "rcept": "20260313001064",
+  "moved": false,
+  "old": [
+   20890,
+   "cur/adj",
+   "-"
+  ],
+  "new": [
+   20890,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 92850.33,
+  "total_after": 92850.33,
+  "close_FY": 92850.3,
+  "close_FY-1": 88204.8,
+  "rel_old_vs_FY-1": 0.05267,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   4849.75,
+   88204.82
+  ],
+  "y1_old": 5019.47,
+  "y1_new": 5019.47
+ },
+ {
+  "company": "NH농협손해보험",
+  "rcept": "20260331004099",
+  "moved": true,
+  "old": [
+   7240,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   6895,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 15132.26,
+  "total_after": 15949.17,
+  "close_FY": 15949.2,
+  "close_FY-1": 15132.3,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   1778.34,
+   15132.26
+  ],
+  "y1_old": 1233.28,
+  "y1_new": 970.98
+ },
+ {
+  "company": "교보라이프플래닛생명보험",
+  "rcept": "20260327001138",
+  "moved": false,
+  "old": [
+   null,
+   null,
+   null
+  ],
+  "new": [
+   null,
+   null,
+   null
+  ],
+  "total_before": null,
+  "total_after": null,
+  "close_FY": 276.7,
+  "close_FY-1": 202.0,
+  "rel_old_vs_FY-1": null,
+  "rel_new_vs_FY": null,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": null,
+  "y1_new": null
+ },
+ {
+  "company": "교보생명보험",
+  "rcept": "20260331004015",
+  "moved": false,
+  "old": [
+   28658,
+   "prior/far@2709",
+   "-"
+  ],
+  "new": [
+   28658,
+   "prior/far@2709",
+   "-"
+  ],
+  "total_before": 65109.6,
+  "total_after": 65109.6,
+  "close_FY": 65109.6,
+  "close_FY-1": 64380.6,
+  "rel_old_vs_FY-1": 0.01132,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   6003.4,
+   64380.5
+  ],
+  "y1_old": 3758.1,
+  "y1_new": 3758.1
+ },
+ {
+  "company": "농협생명보험",
+  "rcept": "20260331002277",
+  "moved": false,
+  "old": [
+   9311,
+   "cur/adj",
+   "-"
+  ],
+  "new": [
+   9311,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 42991.11,
+  "total_after": 42991.11,
+  "close_FY": 42991.1,
+  "close_FY-1": 45915.4,
+  "rel_old_vs_FY-1": 0.06369,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   2353.54,
+   45915.37
+  ],
+  "y1_old": 2212.16,
+  "y1_new": 2212.16
+ },
+ {
+  "company": "동양생명",
+  "rcept": "20260313001227",
+  "moved": true,
+  "old": [
+   17090,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   16715,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 26710.88,
+  "total_after": 24570.95,
+  "close_FY": 24571.0,
+  "close_FY-1": 26710.9,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   1395.38,
+   26710.89
+  ],
+  "y1_old": 1395.38,
+  "y1_new": 1384.31
+ },
+ {
+  "company": "라이나생명보험",
+  "rcept": "20260406004539",
+  "moved": true,
+  "old": [
+   15401,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   15045,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 13639.1966,
+  "total_after": 11793.274,
+  "close_FY": 23760.6,
+  "close_FY-1": 27648.6,
+  "rel_old_vs_FY-1": 0.50669,
+  "rel_new_vs_FY": 0.50366,
+  "fy24filing_cur_y1_total": [
+   2428.1881,
+   13639.1966
+  ],
+  "y1_old": 2428.1881,
+  "y1_new": 2140.8895
+ },
+ {
+  "company": "롯데손해보험",
+  "rcept": "20260319001293",
+  "moved": false,
+  "old": [
+   27541,
+   "cur/far@2",
+   "당"
+  ],
+  "new": [
+   27541,
+   "cur/far@2",
+   "당"
+  ],
+  "total_before": 24748.63,
+  "total_after": 24748.63,
+  "close_FY": 24748.6,
+  "close_FY-1": 23201.6,
+  "rel_old_vs_FY-1": 0.06668,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   1298.83,
+   23201.57
+  ],
+  "y1_old": 1378.58,
+  "y1_new": 1378.58
+ },
+ {
+  "company": "메리츠화재해상보험",
+  "rcept": "20260331003916",
+  "moved": true,
+  "old": [
+   65201,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   27195,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 111878.9,
+  "total_after": 111036.97,
+  "close_FY": 111037.0,
+  "close_FY-1": 111878.9,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   10781.1,
+   111878.9
+  ],
+  "y1_old": 10781.1,
+  "y1_new": 11032.98
+ },
+ {
+  "company": "메트라이프생명보험",
+  "rcept": "20260403003825",
+  "moved": false,
+  "old": [
+   15103,
+   "-",
+   "-"
+  ],
+  "new": [
+   15103,
+   "-",
+   "-"
+  ],
+  "total_before": 12188.1309,
+  "total_after": 12188.1309,
+  "close_FY": 26081.6,
+  "close_FY-1": 24066.9,
+  "rel_old_vs_FY-1": 0.49357,
+  "rel_new_vs_FY": 0.53269,
+  "fy24filing_cur_y1_total": [
+   1853.3335,
+   10942.0582
+  ],
+  "y1_old": 2040.5646,
+  "y1_new": 2040.5646
+ },
+ {
+  "company": "미래에셋생명",
+  "rcept": "20260318001664",
+  "moved": false,
+  "old": [
+   24122,
+   "-",
+   "-"
+  ],
+  "new": [
+   24122,
+   "-",
+   "-"
+  ],
+  "total_before": 20584.24,
+  "total_after": 20584.24,
+  "close_FY": 20584.23,
+  "close_FY-1": 20782.1,
+  "rel_old_vs_FY-1": 0.00952,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   null,
+   20782.05
+  ],
+  "y1_old": null,
+  "y1_new": null
+ },
+ {
+  "company": "비엔피파리바카디프생명보험",
+  "rcept": "20260406004430",
+  "moved": false,
+  "old": [
+   14642,
+   "prior/far@2816",
+   "-"
+  ],
+  "new": [
+   14642,
+   "prior/far@2816",
+   "-"
+  ],
+  "total_before": 224.4113,
+  "total_after": 224.4113,
+  "close_FY": 299.584,
+  "close_FY-1": 288.756,
+  "rel_old_vs_FY-1": 0.22283,
+  "rel_new_vs_FY": 0.25092,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": 48.3899,
+  "y1_new": 48.3899
+ },
+ {
+  "company": "삼성생명",
+  "rcept": "20260311004614",
+  "moved": true,
+  "old": [
+   18774,
+   "-",
+   "-"
+  ],
+  "new": [
+   18404,
+   "-",
+   "-"
+  ],
+  "total_before": 129020.23,
+  "total_after": 132178.74,
+  "close_FY": 132178.7,
+  "close_FY-1": 129020.2,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   10307.1,
+   129020.23
+  ],
+  "y1_old": 10307.1,
+  "y1_new": 8491.89
+ },
+ {
+  "company": "삼성화재해상보험",
+  "rcept": "20260312001399",
+  "moved": true,
+  "old": [
+   11348,
+   "prior/far@127",
+   "-"
+  ],
+  "new": [
+   10987,
+   "cur/far@126",
+   "-"
+  ],
+  "total_before": 140739.09,
+  "total_after": 141676.64,
+  "close_FY": 141676.6,
+  "close_FY-1": 140739.1,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   10586.1,
+   140739.09
+  ],
+  "y1_old": 10586.1,
+  "y1_new": 10479.49
+ },
+ {
+  "company": "서울보증보험",
+  "rcept": "20260323000639",
+  "moved": false,
+  "old": [
+   null,
+   null,
+   null
+  ],
+  "new": [
+   null,
+   null,
+   null
+  ],
+  "total_before": null,
+  "total_after": null,
+  "close_FY": null,
+  "close_FY-1": null,
+  "rel_old_vs_FY-1": null,
+  "rel_new_vs_FY": null,
+  "fy24filing_cur_y1_total": [
+   null,
+   null
+  ],
+  "y1_old": null,
+  "y1_new": null
+ },
+ {
+  "company": "신한라이프생명보험",
+  "rcept": "20260318001034",
+  "moved": false,
+  "old": [
+   34611,
+   "cur/far@2",
+   "당"
+  ],
+  "new": [
+   34611,
+   "cur/far@2",
+   "당"
+  ],
+  "total_before": 75548.97,
+  "total_after": 75548.97,
+  "close_FY": 75537.3,
+  "close_FY-1": 72241.1,
+  "rel_old_vs_FY-1": 0.04579,
+  "rel_new_vs_FY": 0.00015,
+  "fy24filing_cur_y1_total": [
+   4378.27,
+   72267.91
+  ],
+  "y1_old": 4415.41,
+  "y1_new": 4415.41
+ },
+ {
+  "company": "신한이지손해보험",
+  "rcept": "20260330001079",
+  "moved": false,
+  "old": [
+   11523,
+   "cur/far@2",
+   "당"
+  ],
+  "new": [
+   11523,
+   "cur/far@2",
+   "당"
+  ],
+  "total_before": 1.6932,
+  "total_after": 1.6932,
+  "close_FY": null,
+  "close_FY-1": null,
+  "rel_old_vs_FY-1": null,
+  "rel_new_vs_FY": null,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": 0.3499,
+  "y1_new": 0.3499
+ },
+ {
+  "company": "아이비케이연금보험",
+  "rcept": "20260331004893",
+  "moved": false,
+  "old": [
+   13342,
+   "cur/adj",
+   "-"
+  ],
+  "new": [
+   13342,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 5203.7625,
+  "total_after": 5203.7625,
+  "close_FY": 5203.8,
+  "close_FY-1": 4501.1,
+  "rel_old_vs_FY-1": 0.15611,
+  "rel_new_vs_FY": 1e-05,
+  "fy24filing_cur_y1_total": [
+   247.9356,
+   4501.1192
+  ],
+  "y1_old": 295.8193,
+  "y1_new": 295.8193
+ },
+ {
+  "company": "아이엠라이프생명보험",
+  "rcept": "20260406004393",
+  "moved": true,
+  "old": [
+   13687,
+   "-",
+   "전"
+  ],
+  "new": [
+   13383,
+   "-",
+   "당"
+  ],
+  "total_before": 7060.53,
+  "total_after": 7620.3,
+  "close_FY": 7620.3,
+  "close_FY-1": 7060.5,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": 339.31,
+  "y1_new": 352.19
+ },
+ {
+  "company": "악사손해보험",
+  "rcept": "20260331003812",
+  "moved": false,
+  "old": [
+   null,
+   null,
+   null
+  ],
+  "new": [
+   null,
+   null,
+   null
+  ],
+  "total_before": null,
+  "total_after": null,
+  "close_FY": 1761.5,
+  "close_FY-1": 1886.2,
+  "rel_old_vs_FY-1": null,
+  "rel_new_vs_FY": null,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": null,
+  "y1_new": null
+ },
+ {
+  "company": "에이비엘생명보험",
+  "rcept": "20260331003080",
+  "moved": true,
+  "old": [
+   26266,
+   "-",
+   "-"
+  ],
+  "new": [
+   25960,
+   "-",
+   "-"
+  ],
+  "total_before": 9374.62,
+  "total_after": 9702.51,
+  "close_FY": 9702.5,
+  "close_FY-1": 9374.6,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   532.4,
+   9374.62
+  ],
+  "y1_old": 532.4,
+  "y1_new": 507.64
+ },
+ {
+  "company": "에이아이에이생명보험",
+  "rcept": "20260407002101",
+  "moved": true,
+  "old": [
+   13536,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   13166,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 5994.99,
+  "total_after": 6094.96,
+  "close_FY": 15903.6,
+  "close_FY-1": 15096.5,
+  "rel_old_vs_FY-1": 0.60289,
+  "rel_new_vs_FY": 0.61676,
+  "fy24filing_cur_y1_total": [
+   884.46,
+   5994.99
+  ],
+  "y1_old": 884.46,
+  "y1_new": 902.13
+ },
+ {
+  "company": "에이아이지손해보험",
+  "rcept": "20260407002109",
+  "moved": true,
+  "old": [
+   11798,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   11669,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 922.6785,
+  "total_after": 928.075,
+  "close_FY": 928.07497,
+  "close_FY-1": 922.7,
+  "rel_old_vs_FY-1": 2e-05,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": 119.5806,
+  "y1_new": 117.9986
+ },
+ {
+  "company": "엠지손해보험",
+  "rcept": "20260406003175",
+  "moved": false,
+  "old": [
+   null,
+   null,
+   null
+  ],
+  "new": [
+   null,
+   null,
+   null
+  ],
+  "total_before": null,
+  "total_after": null,
+  "close_FY": 0.0,
+  "close_FY-1": 3645.0,
+  "rel_old_vs_FY-1": null,
+  "rel_new_vs_FY": null,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": null,
+  "y1_new": null
+ },
+ {
+  "company": "처브라이프생명보험",
+  "rcept": "20260408003172",
+  "moved": true,
+  "old": [
+   15777,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   15442,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 242.61,
+  "total_after": 205.42,
+  "close_FY": 869.6,
+  "close_FY-1": 980.2,
+  "rel_old_vs_FY-1": 0.75249,
+  "rel_new_vs_FY": 0.76378,
+  "fy24filing_cur_y1_total": [
+   37.18,
+   242.61
+  ],
+  "y1_old": 37.18,
+  "y1_new": 31.87
+ },
+ {
+  "company": "카카오페이손해보험",
+  "rcept": "20260323001537",
+  "moved": false,
+  "old": [
+   9853,
+   "cur/far@3",
+   "당"
+  ],
+  "new": [
+   9853,
+   "cur/far@3",
+   "당"
+  ],
+  "total_before": 3.4119,
+  "total_after": 3.4119,
+  "close_FY": 3.41188,
+  "close_FY-1": 4.6064,
+  "rel_old_vs_FY-1": 0.25931,
+  "rel_new_vs_FY": 1e-05,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": 0.2692,
+  "y1_new": 0.2692
+ },
+ {
+  "company": "케이디비생명보험",
+  "rcept": "20260331004180",
+  "moved": true,
+  "old": [
+   20185,
+   "prior/far@2",
+   "-"
+  ],
+  "new": [
+   19845,
+   "cur/far@2",
+   "-"
+  ],
+  "total_before": 8650.43,
+  "total_after": 7730.12,
+  "close_FY": 7730.1,
+  "close_FY-1": 8650.5,
+  "rel_old_vs_FY-1": 1e-05,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   420.98,
+   8650.45
+  ],
+  "y1_old": 420.98,
+  "y1_new": 372.27
+ },
+ {
+  "company": "케이비라이프생명보험",
+  "rcept": "20260313001119",
+  "moved": false,
+  "old": [
+   25042,
+   "-",
+   "-"
+  ],
+  "new": [
+   25042,
+   "-",
+   "-"
+  ],
+  "total_before": 32637.75,
+  "total_after": 32637.75,
+  "close_FY": 32637.8,
+  "close_FY-1": 30105.1,
+  "rel_old_vs_FY-1": 0.08413,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   1525.57,
+   30105.1
+  ],
+  "y1_old": 2049.54,
+  "y1_new": 2049.54
+ },
+ {
+  "company": "코리안리",
+  "rcept": "20260319001095",
+  "moved": true,
+  "old": [
+   26390,
+   "prior/far@119",
+   "-"
+  ],
+  "new": [
+   25959,
+   "cur/far@119",
+   "-"
+  ],
+  "total_before": 9046.74,
+  "total_after": 9380.8,
+  "close_FY": 9380.8,
+  "close_FY-1": 9046.7,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   309.09,
+   9046.74
+  ],
+  "y1_old": 309.09,
+  "y1_new": 328.81
+ },
+ {
+  "company": "푸본현대생명보험",
+  "rcept": "20260331002089",
+  "moved": true,
+  "old": [
+   21558,
+   "-",
+   "-"
+  ],
+  "new": [
+   21299,
+   "-",
+   "-"
+  ],
+  "total_before": 1423.5,
+  "total_after": 1906.55,
+  "close_FY": 1906.5,
+  "close_FY-1": 1423.5,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 3e-05,
+  "fy24filing_cur_y1_total": [
+   157.35,
+   1423.5
+  ],
+  "y1_old": 157.35,
+  "y1_new": 200.18
+ },
+ {
+  "company": "하나생명보험",
+  "rcept": "20260325000202",
+  "moved": false,
+  "old": [
+   10124,
+   "cur/adj",
+   "-"
+  ],
+  "new": [
+   10124,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 7268.9569,
+  "total_after": 7268.9569,
+  "close_FY": 7269.0,
+  "close_FY-1": 4446.8,
+  "rel_old_vs_FY-1": 0.63465,
+  "rel_new_vs_FY": 1e-05,
+  "fy24filing_cur_y1_total": [
+   220.7936,
+   4389.5566
+  ],
+  "y1_old": 331.9474,
+  "y1_new": 331.9474
+ },
+ {
+  "company": "하나손해보험",
+  "rcept": "20260325000538",
+  "moved": false,
+  "old": [
+   null,
+   null,
+   null
+  ],
+  "new": [
+   null,
+   null,
+   null
+  ],
+  "total_before": null,
+  "total_after": null,
+  "close_FY": 2802.0,
+  "close_FY-1": 1835.0,
+  "rel_old_vs_FY-1": null,
+  "rel_new_vs_FY": null,
+  "fy24filing_cur_y1_total": null,
+  "y1_old": null,
+  "y1_new": null
+ },
+ {
+  "company": "한화생명",
+  "rcept": "20260316001304",
+  "moved": false,
+  "old": [
+   27569,
+   "-",
+   "-"
+  ],
+  "new": [
+   27569,
+   "-",
+   "-"
+  ],
+  "total_before": 88752.04,
+  "total_after": 88752.04,
+  "close_FY": 87136.5,
+  "close_FY-1": 91091.4,
+  "rel_old_vs_FY-1": 0.02568,
+  "rel_new_vs_FY": 0.01854,
+  "fy24filing_cur_y1_total": [
+   5165.03,
+   92625.67
+  ],
+  "y1_old": 4484.27,
+  "y1_new": 4484.27
+ },
+ {
+  "company": "한화손해보험",
+  "rcept": "20260310003000",
+  "moved": true,
+  "old": [
+   19712,
+   "prior/adj",
+   "-"
+  ],
+  "new": [
+   19386,
+   "cur/adj",
+   "-"
+  ],
+  "total_before": 38032.208,
+  "total_after": 40693.817,
+  "close_FY": 40693.8,
+  "close_FY-1": 38032.2,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   null,
+   null
+  ],
+  "y1_old": 2481.8167,
+  "y1_new": 2531.3461
+ },
+ {
+  "company": "현대해상",
+  "rcept": "20260312001448",
+  "moved": false,
+  "old": [
+   12581,
+   "no_raw",
+   "-"
+  ],
+  "new": [
+   12581,
+   "no_raw",
+   "-"
+  ],
+  "total_before": 89778.4207,
+  "total_after": 89778.4207,
+  "close_FY": 89778.4,
+  "close_FY-1": 83054.9,
+  "rel_old_vs_FY-1": 0.08095,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   5604.0175,
+   83054.8726
+  ],
+  "y1_old": 6227.1686,
+  "y1_new": 6227.1686
+ },
+ {
+  "company": "흥국생명보험",
+  "rcept": "20260331004251",
+  "moved": true,
+  "old": [
+   15775,
+   "-",
+   "-"
+  ],
+  "new": [
+   15439,
+   "-",
+   "-"
+  ],
+  "total_before": 22152.05,
+  "total_after": 24494.85,
+  "close_FY": 24494.8,
+  "close_FY-1": 22152.0,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   1186.93,
+   22152.05
+  ],
+  "y1_old": 1186.93,
+  "y1_new": 1218.9
+ },
+ {
+  "company": "흥국화재",
+  "rcept": "20260319001047",
+  "moved": true,
+  "old": [
+   26399,
+   "prior/far@5",
+   "-"
+  ],
+  "new": [
+   26110,
+   "cur/far@5",
+   "-"
+  ],
+  "total_before": 24707.94,
+  "total_after": 28047.3,
+  "close_FY": 28047.3,
+  "close_FY-1": 24707.9,
+  "rel_old_vs_FY-1": 0.0,
+  "rel_new_vs_FY": 0.0,
+  "fy24filing_cur_y1_total": [
+   1174.71,
+   24707.92
+  ],
+  "y1_old": 1060.8,
+  "y1_new": 1328.91
+ }
+]
