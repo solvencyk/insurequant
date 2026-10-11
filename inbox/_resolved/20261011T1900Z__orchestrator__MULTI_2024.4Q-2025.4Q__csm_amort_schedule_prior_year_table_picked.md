@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261011T1900Z
-status: open
+status: resolved
 route: reparse
 company: MULTI (15사: 라이나 · DB손보 등 — 목록 s34_amort_panel_year_census.json)
 period: 2025.4Q (+ 같은 결함이 있는 분기)
@@ -28,4 +28,5 @@ iter: 1
 - 원인 재현 3건, 새 선택 규칙과 전 회사 선택 전후 diff, 정정 칸 수(회사×분기), 검산, 패널 전후 diff(바뀐 회사만), 빌더 골든 실패 사유, 라이브 파일과의 대조 결과.
 
 ## 답변 (recipient 작성 — 처리 후)
+(parser-ifrs17 cf66dce, orchestrator HEAD 대조 검증·종결 2026-10-11) 원인: 같은 캡션의 당기말 표와 전기말 표가 점수 동점이라 line_no 가 큰 전기말 표가 뽑힘(라이나·DB손해·삼성화재 3패턴 원문 XML 재현). 규칙: 점수로 고른 표를 같은 파일·캡션·헤더·행 라벨 유사도 0.7 이상 표 중 먼저 나오는 표(당기말)로 교체(_current_period_twin; 원문 마커가 읽히는 64쌍 전부 앞이 당기말). 대상은 15사가 아니라 18사(AIA·처브라이프·AIG손해 추가). CSM_amortization.json 2025.4Q 172칸 값만 정정(키 diff: 추가 0·삭제 0·값 변경 172·다른 필드 0; guard 180칸 통과), csm_amort_schedule 패널 46항목 중 18개 이동·나머지 3패널 바이트 동일. 정정 후 합계가 FY2025 기말 CSM 과 0.003% 이내(15사). 단위 테스트 9건 신설. 후속: viz 골든 csm_amort_schedule 해시 --update(validation), xlsx CSM상각 동기화(publishing). 범위 밖 발견: 분할표 5사(라이나·AIA·처브·메트라이프·BNP카디프) 뒷 반쪽 표 미독, 한화생명 연결 표 선택(별도 기준 대비 1.85%) — 별도 티켓 대상.
 (오케스트레이터가 종결한다)

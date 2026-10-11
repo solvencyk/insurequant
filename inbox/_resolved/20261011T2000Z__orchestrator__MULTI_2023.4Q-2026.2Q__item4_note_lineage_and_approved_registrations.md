@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261011T2000Z
-status: open
+status: resolved
 route: gate-change
 company: MULTI
 period: 2023.4Q-2026.2Q
@@ -39,3 +39,4 @@ owner 승인 문구: 「하노버 25.3q만 예외 승인」 · 「법인세는 �
 - A: 변경 전후 RED/YELLOW 표(§3d·ZERO_LEGS), 시뮬레이션·변이시험 결과, 움직이는 골든 목록. B: 등재 3+1건과 lookup 분기 위치, 등재 후 해당 RED 소멸 확인. `TODO_validation.md` Status + `docs/changelog_validation.md`. 이 공유 티켓은 고치지 않는다(오케스트레이터가 종결).
 
 ## 답변 (recipient 작성 — 처리 후)
+(validation 1db7c2d, orchestrator 검증·종결 2026-10-11) A: §3d 에서 사이드카 how=fs_note_csm_amort 이고 쪽수·인쇄값이 있는 contract_notes 블록의 항목 4 하나만 제한에서 제외(항목 17·20·21·5, 다른 how, 근거 없는 셀은 계속 RED), ZERO_LEGS 는 DISCLOSURE 계보 버킷에서 항목 4 를 다리로 세지 않음. 전후: 데이터계약 RED 34→11(PL 범위 24건 소멸, PL 신규 RED 0), §3d CONCEPT_MIXED 20→0, ZERO_LEGS/src_na 23/181→9/195. selftest 75→92, 변이시험 37건 신설 후 prepush_check 훅 묶음에 연결(selftest 는 기존에 훅 호출처 0). B: owner 승인 등재 — 법인세 0 인쇄 3칸(스위스리아시아 2023.2Q·퍼시픽 2024.4Q·2025.4Q) user_pl_confirmed_cells.json, 하노버 2025.3Q PL 원천부재 _PL_SOURCE_ABSENT(재검산 함수 공용, 읽는 쪽 coverage_holes(source_absent=)). 움직이는 골든은 test_master_tables_golden 하나(coverage_hole 3→2PL, pl_src_absent 토큰 신설). 서울보증 2024.2Q·3Q PL 통째 구멍 2건은 승인 범위 밖이라 미등재(owner 결정 대기).
