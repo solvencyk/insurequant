@@ -483,12 +483,23 @@ def _parse_company_from_filename(path: Path) -> tuple[str, str]:
     return code, name
 
 
+def _resolve_company_name(filename_name: str, master_name) -> str:
+    """K-ICS.html 은 드롭다운(마스터 원수사명)과 행 company 를 '같음 -> 한쪽이 다른 쪽을 포함' 순으로 맞춘다.
+    파일명 이름이 그 규칙으로 마스터 이름과 맞으면 그대로 두고(기존 배포본 바이트 보존),
+    맞지 않을 때만(예: 케이비라이프생명보험 vs KB라이프생명) 마스터 원수사명을 쓴다."""
+    m = str(master_name or "")
+    if not m or filename_name == m or filename_name in m or m in filename_name:
+        return filename_name
+    return m
+
+
 def compute_one(
     md_path: Path,
     quarter: str,
     proxy: dict[str, float] | None,
 ) -> UtilizationResult:
     code, company = _parse_company_from_filename(md_path)
+    company = _resolve_company_name(company, proxy.get("name") if proxy else None)
     tv_master = _tv_from_master_proxy(proxy)
     if tv_master is not None:
         tv = tv_master

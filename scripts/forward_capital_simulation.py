@@ -585,6 +585,11 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
 
 BOND_COVERAGE_VALUES = ("dart_listed", "no_bonds_in_dart", "absent_in_source")
 
+# K-ICS.html 이 전망 패널 빈 칸에 그대로 보여 주는 문구의 정본(데이터가 사유를 말한다).
+EXCLUSION_REASON_PAA = (
+    "보험료배분접근법(PAA)만 적용하는 보증보험이라 이 자본비율 전망의 대상에서 제외했습니다 (콜 도래 자본성증권을 차감하는 전망 모형이 맞지 않음). 자본성증권 소진율은 별도 패널에서 확인할 수 있습니다."
+)
+
 
 def _bond_coverage(code: str, bonds: list[dict], bonds_per_insurer: dict) -> str:
     """3-way coverage state (validation inbox 20260803T0310Z — additive, no field removed).
@@ -639,10 +644,22 @@ def main() -> int:
     insurer_codes = sorted(
         (set(bonds_per_insurer.keys()) | set(baselines.keys())) - EXCLUDE_PAA
     )
+    # 제외 회사는 행을 아예 빼지 않고 사유가 담긴 'excluded' 행으로 남긴다(화면 문구가 데이터에서 나오게).
+    excluded_rows = {}
+    for code in sorted(EXCLUDE_PAA):
+        excluded_rows[code] = {
+            "insurer_code": code,
+            "insurer_name": (baselines.get(code) or {}).get("insurer_name"),
+            "status": "excluded",
+            "exclusion_reason": EXCLUSION_REASON_PAA,
+        }
     tier1_by_code, tier2_by_code = load_utilization()
 
     results = []
-    for code in insurer_codes:
+    for code in sorted(set(insurer_codes) | set(excluded_rows)):
+        if code in excluded_rows:
+            results.append(excluded_rows[code])
+            continue
         bonds = bonds_per_insurer.get(code, [])
         bond_coverage = _bond_coverage(code, bonds, bonds_per_insurer)
         if not baselines.get(code):
