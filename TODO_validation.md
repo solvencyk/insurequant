@@ -1,22 +1,24 @@
 # Insurequant Validation TODO (Stage 3)
 
-> 갱신 2026-10-11 · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
+> 갱신 2026-10-11 (22차) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
 > 2026-10-07 정리 전 전문(V1~V19 블록 포함)은 `docs/todo_archive_validation.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-11 (22차) 최종 라운드 — 등재 해제 5묶음 · 골든 8종 정리 · 거짓 녹색 사냥 · 소유자 결정표 15건** — 데이터계약 RED 22→21(YELLOW 150→143), K-ICS 게이트 exit 2→0(blocking 0),
+  지문 RED 10→0. 골든 `--update` 6종은 전부 오늘 적재로 설명(kics 룰 골든은 지문 키가 없는 필드라 버킷 신원을 못 보던 결함도 같이 수정). 신규 등재 0. 커밋 1건, push 안 함.
+  남은 것: 소유자 결정표(런로그 Step 5) · parser 발주 2건(PL 항목16 7칸, raw 글롭 스크립트 2개) · 법정준비금 R-RSV-4 10건을 데이터계약에 배선(parser 선행). 런로그 `data/disclosure/_meta/final_validation_runlog_20261011.md`.
 - **2026-10-11 (21차) 재보사 단계 10 — 금리민감도 RS1·RS5 근거 박제 면제 장치 `rs_pinned_exemptions` 신설 + owner 승인 5건** — 금리민감도 게이트
   RED 5→**0**, K-ICS 게이트 exit 0(finding 변화 0) · 데이터계약 RED 0 · 라이브 아티팩트 RED 0. 변이시험 70건(훅 묶음 편입). 하노버 적용후 12행 독립 검산 통과. 미커밋.
   남은 것: 오케스트레이터의 `prepush_check.py --full` 1회. 런로그 `reinsurer_runlog_KR1101-1108_12.md`.
 - **2026-10-10 (20차) 재보사 단계 9 — census 원천부재 면제 장치 `_CENSUS_SOURCE_ABSENT` 신설 + 8칸 · KR1107 2023.3Q 문서 미수집 · 예별 PL YTD 셀 등재** — K-ICS 게이트
   RED 57 · blocking 0 · census 0 · **exit 0**, 데이터계약 RED 3(xlsx). 골든 4종·입력지문 재생성(기존 39사 슬라이스 불변). 미커밋.
   push 훅은 BLOCKED: xlsx·public_exports(publishing) · 듀레이션 갭 46·금리민감도 40(parser 신규 발주). 런로그 `reinsurer_runlog_KR1101-1108_10.md` §6.
-- **2026-10-10 (19차) 재보사 단계 8 — 룰 2·4·5·6 잔차 박제 장치 `_IDENT_ISSUER_INCONSISTENT` 신설 + owner 승인 29건 등재** — K-ICS 게이트
-  RED 65→57 · blocking 29→**0** · 설명 안 되는 RED 0(exit 2 는 census 헤드라인 전용 12칸). 기존 39사 finding 변화 0, 골든 2종 `--update`.
-  미커밋. 남은 것: census 12칸 owner 결정 · pytest (다) 발주분 · 포트폴리오 R3 KR0100 3건 owner 판단. 런로그 `reinsurer_runlog_KR1101-1108_8.md`.
 
 ## 열린 일
 
+- [ ] **최종 라운드 후속(22차)** — 소유자 결정 15건(런로그 Step 5) · 법정준비금 `run_components`(R-RSV-4/12) 데이터계약 배선(현재 단독 RED 10, parser-ifrs17 선행) ·
+  CSM 워터폴 대 ILP CSM 잔액 교차 게이트 `CSM_WATERFALL_VS_ILP_CSM_STOCK`(제안만, 273칸 중 6칸+롯데 군집이 기준차이로 등재 필요) · 연속성 게이트 밴드 0.5%가 숨기는 롯데 2023.4Q −105억.
 - [ ] **재보사 push 차단 최종 확인** — 단계 10 에서 훅의 게이트를 하나씩 다 쟀다(전부 exit 0, 런로그 `_12.md` §5). 남은 것은 오케스트레이터의
   `prepush_check.py --full` 1회 실측. 교훈: 단계 종결 전 도메인 게이트까지 훅 전체를 잰다(단계 8 은 데이터계약만 재서 3·4 를 놓쳤다).
 - [ ] **기존 키 집합 등재부를 박제 장치로 옮길지** — `RS1_EXCEPTIONS`(예별 2024.4Q)·`RS2_EXCEPTIONS`·`RS5_EXCEPTIONS`(17)는 근거 재확인 없이 영원히 빠진다.

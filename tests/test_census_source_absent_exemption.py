@@ -30,8 +30,9 @@ import validate_kics_disclosure as gate  # noqa: E402
 REG = gate._CENSUS_SOURCE_ABSENT
 
 # owner 승인 2026-10-10 범위 그대로 (inbox/validation/20261010T1300Z, downloader 런로그 9d §5).
+# ("KR1102", "2023.2Q") 는 2026-10-11 에 해제됐다(2023.4Q 완성본 전기 열로 46행 버킷이 적재돼 census
+# CENSUS_EXEMPTION_INERT) — 아래 RELEASED 가 「다시 등재되지 않았다」 를 지킨다.
 APPROVED = {
-    ("KR1102", "2023.2Q"): "DOCUMENT_PENDING_NOTICE",
     ("KR1102", "2023.3Q"): "DOCUMENT_PENDING_NOTICE",
     ("KR1104", "2023.4Q"): "DOCUMENT_PENDING_NOTICE",
     ("KR1104", "2024.1Q"): "DOCUMENT_PENDING_NOTICE",
@@ -41,6 +42,7 @@ APPROVED = {
     ("KR1107", "2023.2Q"): "COLLECTION_POLICY",
 }
 KEYS = sorted(APPROVED)
+RELEASED = {("KR1102", "2023.2Q")}
 
 
 @pytest.fixture(autouse=True)
@@ -99,6 +101,14 @@ def _rules_for(red, key):
 def test_registry_is_exactly_the_owner_approved_scope():
     assert {k: v["kind"] for k, v in REG.items()} == APPROVED
     assert all(v.get("approved") == "owner 2026-10-10" for v in REG.values())
+
+
+def test_released_keys_stay_released(records):
+    """해제된 칸은 다시 등재되지 않았고(가려질 일이 없다) 마스터에 실제 버킷이 있다."""
+    present = {(r.get("원보험사코드"), r.get("공시분기")) for r in records}
+    for key in RELEASED:
+        assert key not in REG, f"{key}: 해제된 등재가 되살아났다"
+        assert key in present, f"{key}: 해제 근거(마스터 버킷)가 사라졌다"
 
 
 def test_every_registered_cell_is_exempted_on_the_live_master(records, census):
@@ -233,7 +243,7 @@ def test_ledger_kind_disagreeing_with_code_is_red(records, census, ledger, key):
 def test_absent_marker_appearing_contradicts_pending_notice(records, census, ledger):
     """공시 예정형은 K-ICS 표제어 부재도 박제한다 — K-ICS 표가 실린 판이 같은 파일로 들어오면 반증된다.
     여기서는 같은 회사의 K-ICS 수록 신판(스위스리 2023.4Q v20240510)을 인용 파일로 바꿔 끼워 흉내 낸다."""
-    key = ("KR1102", "2023.2Q")
+    key = ("KR1102", "2023.3Q")
     led = copy.deepcopy(ledger)
     for e in led["entries"]:
         if e.get("registry") == "_CENSUS_SOURCE_ABSENT" and (e.get("company"), e.get("quarter")) == key:
@@ -247,9 +257,9 @@ def test_malformed_entry_is_red_not_exempt(records, census):
     reg = dict(REG)
     reg[("KR1104", "2025.3Q")] = {"kind": "SOMETHING_ELSE", "approved": "owner 2026-10-10", "raw": {}}
     reg[("KR1107", "2023.1Q")] = {"kind": "COLLECTION_POLICY", "approved": "", "raw": {}}
-    reg[("KR1102", "2023.2Q")] = {"kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10", "raw": {}}
+    reg[("KR1102", "2023.3Q")] = {"kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10", "raw": {}}
     kept, exempted, red = _run(records, census, registry=reg)
-    for key in (("KR1104", "2025.3Q"), ("KR1107", "2023.1Q"), ("KR1102", "2023.2Q")):
+    for key in (("KR1104", "2025.3Q"), ("KR1107", "2023.1Q"), ("KR1102", "2023.3Q")):
         assert "CENSUS_EXEMPTION_MALFORMED" in _rules_for(red, key)
         assert key in {(c, q) for q, c, _n in kept}
         assert key not in {(c, q) for q, c, *_x in exempted}
@@ -269,9 +279,13 @@ def test_registry_is_wired_into_provenance():
 
 
 def test_every_registered_cell_has_a_verified_ledger_entry(ledger):
+    # 해제된 칸의 고아 기록(`resolved_note`)은 레지스트리에 없으므로 게이트가 소비하지 않는다 — 제외한다.
     have = {(e.get("company"), e.get("quarter")): e for e in ledger["entries"]
-            if e.get("registry") == "_CENSUS_SOURCE_ABSENT"}
+            if e.get("registry") == "_CENSUS_SOURCE_ABSENT" and not e.get("resolved_note")}
     assert set(have) == set(REG), "원장과 코드 등재 칸이 다르다"
+    orphans = {(e.get("company"), e.get("quarter")) for e in ledger["entries"]
+               if e.get("registry") == "_CENSUS_SOURCE_ABSENT" and e.get("resolved_note")}
+    assert orphans == RELEASED, "해제 기록(고아)과 RELEASED 가 다르다"
     for key, spec in REG.items():
         e = have[key]
         assert e.get("status") == "VERIFIED"

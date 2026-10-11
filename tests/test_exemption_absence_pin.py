@@ -235,10 +235,12 @@ def test_dropping_absent_cells_from_the_ledger_is_red(ledger):
 
 def test_changing_the_absent_cell_set_is_red(ledger):
     led = _ledger_copy(ledger)
-    e = _entry(led, "_POST_PARENT_NOT_DISCLOSED", "KR0049", "2024.3Q")
-    e["absent_cells"] = list(range(1, 30))       # claim 보다 넓힌다
+    # `_POST_PARENT_NOT_DISCLOSED` 의 유일한 등재(악사 KR0049 2024.3Q)는 2026-10-11 에 해제됐다(신판 p16 이
+    # 15~23후를 싣는다). 같은 박제 장치를 쓰는 `_AFTER_SUBRISK_NOT_DISCLOSED` 의 KR0097 2024.4Q 로 시험한다.
+    e = _entry(led, "_AFTER_SUBRISK_NOT_DISCLOSED", "KR0097", "2024.4Q")
+    e["absent_cells"] = list(range(1, 60))       # claim 보다 넓힌다
     red = gate._pin_ledger_agreement_findings(ledger=led)
-    assert any(r["code"] == "KR0049" and "셀집합 불일치" in r["detail"] for r in red)
+    assert any(r["code"] == "KR0097" and "셀집합 불일치" in r["detail"] for r in red)
 
 
 def test_every_code_pin_is_mapped_for_ledger_comparison():
@@ -252,6 +254,12 @@ def test_every_code_pin_is_mapped_for_ledger_comparison():
         "_AFTER_SUBRISK_NOT_DISCLOSED", "_POST_PARENT_NOT_DISCLOSED",
         "_RS1_ISSUER_INCONSISTENT",  # 2026-10-10 신설(금리민감도 RS1 잔차 박제)
     }
+    if not gate._POST_PARENT_SOURCE_ABSENT_CELLS:
+        # 등재가 비면(2026-10-11 악사 해제) 원장 대조 지도에 항목이 없는 게 정상이다 — 장치 연결은
+        # `_code_pin_map` 소스가 그 레지스트리를 읽는지로 따로 확인한다.
+        import inspect
+        assert "_POST_PARENT_SOURCE_ABSENT_CELLS" in inspect.getsource(gate._code_pin_map)
+        pinned_registries.discard("_POST_PARENT_NOT_DISCLOSED")
     assert pinned_registries <= mapped, f"원장 대조에서 빠진 레지스트리: {pinned_registries - mapped}"
 
 

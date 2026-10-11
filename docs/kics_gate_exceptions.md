@@ -4,6 +4,20 @@
 > 현재 게이트 상태는 `scripts/validate_kics_disclosure.py` 출력이 정본이다. 아래 날짜가 붙은 스냅샷("RED 19건", "blocking RED 18건" 등)은 그 날짜 기준이다.
 > 등재는 owner 만 한다(`CLAUDE.md` §6). 스크립트 주석·티켓의 "`TODO.md` L…" / "TODO.md §36_irr 표" 는 이 파일을 가리킨다.
 
+## 2026-10-11 등재 해제 5묶음 (validation 최종 라운드 — 증거 기반 해제만, 신규 등재 없음)
+
+> 해제는 owner 승인 대상이 아니라 「근거가 사라졌다」의 기계 확인이다. 해제 전후 양방향 시뮬레이션(K-ICS 게이트 finding 완전 동일 0 추가·0 삭제·0 변경, 데이터계약은 해제한 7개 finding 만 소멸)으로 새 RED 0 을 확인한 뒤 적용했다. 근거 원장 기록은 지우지 않고 `resolved_note` 가 붙은 고아 기록으로 남겼다(기존 관례). 실행 기록 `data/disclosure/_meta/final_validation_runlog_20261011.md`.
+
+| 등재부 | 키 | 해제 근거 |
+|---|---|---|
+| `_CENSUS_SOURCE_ABSENT` | KR1102 스위스리아시아 2023.2Q | 2023.4Q 완성본 `KR1102_스위스리아시아_v20240510.pdf` 전기 열(p21·p30~31·p39~41)로 46행 버킷 적재(b80d16a). census `CENSUS_EXEMPTION_INERT` RED 가 해제를 요구. 2023.3Q 등재는 유지(여전히 결측). |
+| `_POST_PARENT_SOURCE_ABSENT_CELLS` (= `_POST_PARENT_NOT_DISCLOSED`) | KR0049 악사 2024.3Q 15~23후 | 사이트 신판 `KR0049_악사손해보험_v20251020.pdf` p16 이 15~23후를 싣고 9칸 적재(a81f401). 게이트가 `EXEMPTION_ABSENCE_PIN_VALUE_PRESENT` 로 이미 무효라고 알렸다. 이 레지스트리는 비었다(장치만 유지). |
+| `AFTER_IDENT_ISSUER_INCONSISTENT` | KR0073 교보 2026.1Q R5_기준금액 938.25 | 신판 정정(4643d1d)으로 15후 83,574.31 − 22후 14,713.2 + 23후 1,887.89 = 70,749.00 = 14후, 잔차 0. 이 레지스트리는 비었다. |
+| `kics_restatement_ledger.json` `_adoption_cascades` | KR0073 2026.1Q 19_market | 36~40 이 재작성값으로 적재돼 19_market GREEN. `KICS_RESTATEMENT_CASCADE_INERT` 소멸. 기록은 `_released_adoption_cascades` 로 이동. |
+| `pl_amort_coverage_baseline.json` | 삼성화재·NH농협손보·롯데손보 2023.1Q, KDB생명 2023.1Q, 교보라이프플래닛 2023.4Q | PL 버킷이 생겼다(`PL_BUCKET_ABSENT_BASELINE_INERT` x5). 기록은 `_released_entries` 로 이동. |
+
+해제하지 않은 것(판단): KR0010 `IMAGE_OCR_COMPANIES` 허용오차 10 — KB손보 2025.2Q 룰 6 잔차 10.0 이 이 허용오차로만 통과(KB 2025.4Q·2026.2Q 는 의존하지 않음) · KB 텍스트층 사이드카 2025.4Q/2026.2Q 칸(옛 스캔 raw 기준, 어떤 finding 도 의존하지 않음) · KR0097 2024.4Q `_AFTER_SUBRISK_NOT_DISCLOSED`(`VALUE_PRESENT` 이지만 값이 인쇄값이 아니라 파생값).
+
 ## 2026-10-10 금리민감도 게이트 RS1·RS5 등재 5건 — 새 장치 `rs_pinned_exemptions` (validation 단계 10)
 
 > 승인: owner **2026-10-10** (발주 `inbox/validation/20261010T1830Z` (가)·(나)). 근거: parser 단계 11 런로그

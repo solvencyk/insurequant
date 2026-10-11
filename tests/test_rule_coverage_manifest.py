@@ -2042,8 +2042,9 @@ CENSUS_SOURCE_ABSENT_RULES = {
     "CENSUS_EXEMPTION_MANIFEST_DRIFT": "RED — 다운로더 매니페스트의 status·sha·versions 가 사유와 어긋난다",
     "CENSUS_EXEMPTION_LEDGER_DISAGREE": "RED — 근거 원장 기록 없음·claim_kind 불일치·인용 원천 재확인 실패",
 }
-# (등재 칸 수, {사유 종류: 칸 수}) — 실측 2026-10-10.
-CENSUS_SOURCE_ABSENT_CENSUS = (8, {"DOCUMENT_PENDING_NOTICE": 5, "NOT_POSTED": 1, "COLLECTION_POLICY": 2})
+# (등재 칸 수, {사유 종류: 칸 수}) — 실측 2026-10-10 8칸, 2026-10-11 7칸(KR1102 2023.2Q 해제: 2023.4Q 완성본
+# 전기 열로 46행 버킷이 적재돼 census CENSUS_EXEMPTION_INERT 가 해제를 요구했다 — 증거 기반 해제, 신규 등재 아님).
+CENSUS_SOURCE_ABSENT_CENSUS = (7, {"DOCUMENT_PENDING_NOTICE": 4, "NOT_POSTED": 1, "COLLECTION_POLICY": 2})
 
 
 def test_census_source_absent_rule_ids_match_manifest():

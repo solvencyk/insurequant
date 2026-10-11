@@ -165,11 +165,10 @@ _REINSURER_MANIFEST = "data/disclosure/_meta/reinsurer_{code}_manifest.json"
 # 시스템은 확인하지 못했다 — 회사 사이트 기준의 원천 부재다(원장 note 에 같이 적었다).
 _CENSUS_SOURCE_ABSENT: dict[tuple[str, str], dict] = {
     # --- 스위스리아시아 KR1102 -------------------------------------------------------
-    # p3·p9 "지급여력비율은 9월말 공시 예정임(보험업감독규정 부칙 제3조)", 목록에 추가 문서 없음.
-    ("KR1102", "2023.2Q"): {
-        "kind": "DOCUMENT_PENDING_NOTICE", "approved": "owner 2026-10-10",
-        "raw": {"data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf":
-                "85fa01f9126b1a6908525e73bc7bb157812ad53ad7244beaf2e422bbf405d4e0"}},
+    # ("KR1102", "2023.2Q") 해제 2026-10-11 (validation 최종 라운드, 증거 기반): 그 분기 자체 문서는 여전히
+    #   K-ICS 표가 없지만(p3·p9 "9월말 공시 예정임") 2023.4Q 완성본 `KR1102_스위스리아시아_v20240510.pdf` 의
+    #   전기 열(p21·p30~31·p39~41)에서 항목 1~46 이 적재돼 마스터에 46행 버킷이 생겼다(커밋 b80d16a).
+    #   census 가 `CENSUS_EXEMPTION_INERT` RED 로 풀라고 요구한 칸이다. 근거 원장 기록은 고아로 남겼다.
     # p3·p8 "지급여력비율은 12월말 공시 예정임". 값은 2023.4Q 신판 p19 전분기 열에 있으나 그 문서가
     # 2023.3Q 원문은 아니다 — 채울지는 parser/owner 몫(채우면 ① 이 이 등재를 풀라고 RED 를 낸다).
     ("KR1102", "2023.3Q"): {
@@ -1103,9 +1102,11 @@ _TRANS_AFTER_IDENT = [
 # reference_issuer_inconsistent_keep_as_disclosed 와 동형) — 대신 이 잔차를 값으로 박제하고
 # 매 실행 마스터에 대고 재검산한다(통째 skip 아님, 다른 3개 documented-exception 배터리와 동형).
 # 잔차 = 실측(공시후 item14) − 기대(item15−22+23) = 70749 − 69810.75 = 938.25.
-AFTER_IDENT_ISSUER_INCONSISTENT: dict[tuple[str, str, str], float] = {
-    ("KR0073", "2026.1Q", "R5_기준금액"): 938.25,
-}
+# ("KR0073", "2026.1Q", "R5_기준금액"): 938.25 해제 2026-10-11 (validation 최종 라운드, 증거 기반):
+#   parser 가 사이트 신판 5건 정정(98필드, 커밋 4643d1d)에서 교보 2026.1Q 15후를 14후 70,749 + 22후 14,713.2
+#   - 23후 1,887.89 = 83,574.31 로 재도출해 R5 적용후가 정확히 닫힌다(83,574.31 - 14,713.2 + 1,887.89 =
+#   70,749.00, 잔차 0). 박제한 938.25 는 이제 어디에도 없다. 장치는 남기고 등재만 비웠다.
+AFTER_IDENT_ISSUER_INCONSISTENT: dict[tuple[str, str, str], float] = {}
 AFTER_IDENT_PIN_TOL = 0.01
 
 
@@ -4368,9 +4369,11 @@ _POST_CAPITAL_CORE = (1, 2, 3, 14, 27, 28)
 # 검증된 claim 은 "15~23후가 원천 부재" 였고 1/2/3/14/27/28후는 실제로 채워져 있다 —
 # claim 보다 넓은 면제였다. 이제 박제된 항목만 빠지고, 그 항목에 값이 나타나면 애초에
 # break 가 성립하지 않아 자동으로 되살아난다.
-_POST_PARENT_SOURCE_ABSENT_CELLS: dict[tuple[str, str], frozenset[int]] = {
-    ("KR0049", "2024.3Q"): frozenset(range(15, 24)),
-}
+# ("KR0049", "2024.3Q") = frozenset(range(15, 24)) 해제 2026-10-11 (validation 최종 라운드, 증거 기반):
+#   사이트 신판 `KR0049_악사손해보험_v20251020.pdf`(27쪽) p16 「② 장수·사업비·해지·대재해 경과조치 표」가
+#   15~23후를 싣고 있어 9칸이 마스터에 적재됐다(커밋 a81f401). 「원천 부재」 명제가 거짓이 됐고 게이트가
+#   `EXEMPTION_ABSENCE_PIN_VALUE_PRESENT` 로 이미 무효라고 알리고 있었다. 지금은 장치만 남기고 등재는 비었다.
+_POST_PARENT_SOURCE_ABSENT_CELLS: dict[tuple[str, str], frozenset[int]] = {}
 _POST_PARENT_NOT_DISCLOSED: frozenset = frozenset(_POST_PARENT_SOURCE_ABSENT_CELLS)
 
 _POST_PARENT_NOT_DISCLOSED_NOTES: dict = {

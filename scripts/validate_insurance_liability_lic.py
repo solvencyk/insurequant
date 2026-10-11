@@ -53,12 +53,13 @@ DART = REPO / "data" / "dart"
 # 2026-10-10 backfill (ticket 20261010T1600Z): the grid grows with every pre-2025 quarter that is loaded (staged: the year-end
 # points first, the six interim quarters in a later round).  Add a quarter here only together with its rows.
 # 2026-10-11 (ticket 20261011T0320Z): the interim quarters follow, each added together with its rows.
-QUARTERS = ["2023.1Q", "2023.2Q", "2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q",
-            "2025.1Q", "2025.2Q", "2025.3Q", "2025.4Q", "2026.1Q", "2026.2Q"]
-FY_OF = {"2023.1Q": "FY2023_Q1", "2023.2Q": "FY2023_Q2", "2023.3Q": "FY2023_Q3", "2023.4Q": "FY2023_Q4",
-         "2024.1Q": "FY2024_Q1", "2024.2Q": "FY2024_Q2", "2024.3Q": "FY2024_Q3", "2024.4Q": "FY2024_Q4",
-         "2025.1Q": "FY2025_Q1", "2025.2Q": "FY2025_Q2", "2025.3Q": "FY2025_Q3",
-         "2025.4Q": "FY2025_Q4", "2026.1Q": "FY2026_Q1", "2026.2Q": "FY2026_Q2"}
+# 2026-10-11 (validation 최종 라운드): 손으로 적은 분기 리터럴을 마스터 파생 지평으로 바꿨다 — `tests/test_quarter_horizon.py`
+# 가 게이트가 자기 분기 목록을 다시 심는 것을 막는다. 파생값은 종전 리터럴(2023.1Q~2026.2Q 14개)과 같다.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _quarter_horizon import quarter_horizon  # noqa: E402
+
+QUARTERS = quarter_horizon()
+FY_OF = {q: f"FY{q[:4]}_Q{q[5]}" for q in QUARTERS}
 LIC_ITEMS = (10, 11, 12, 13, 14, 15)
 TOL_R1 = 0.001
 TOL_ROUND = 0.0301        # 억원: three values each rounded to 0.01; the engine's own tolerance is 3 백만원 = 0.03억 (a hair of slack: 0.030 must not read as 0.0300000001)

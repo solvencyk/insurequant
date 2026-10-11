@@ -1,5 +1,11 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 Status 밀림 (22차 추가로 밀려난 항목, 무수정)
+
+- **2026-10-10 (19차) 재보사 단계 8 — 룰 2·4·5·6 잔차 박제 장치 `_IDENT_ISSUER_INCONSISTENT` 신설 + owner 승인 29건 등재** — K-ICS 게이트
+  RED 65→57 · blocking 29→**0** · 설명 안 되는 RED 0(exit 2 는 census 헤드라인 전용 12칸). 기존 39사 finding 변화 0, 골든 2종 `--update`.
+  미커밋. 남은 것: census 12칸 owner 결정 · pytest (다) 발주분 · 포트폴리오 R3 KR0100 3건 owner 판단. 런로그 `reinsurer_runlog_KR1101-1108_8.md`.
+
 ## 2026-10-11 Status 밀림 (21차 추가로 밀려난 항목, 무수정)
 
 - **2026-10-07 (18차) 채널별 유지율 검증(VP) — verdict RED 1 · YELLOW 8** — 표 45개 렌더 대조 오독 0, errata 17/17·보정 9/9 정당, 마스터 1:1.

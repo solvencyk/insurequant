@@ -68,7 +68,10 @@ def _manifest(report: dict) -> dict:
     rows = []
     for f in findings:
         rows.append([
-            f.get("company_code"), f.get("quarter"), str(f.get("rule")),
+            # 2026-10-11 수정: 종전 키 `company_code`/`quarter` 는 엔진 finding 에 없는 필드라 모든 행이
+            # [None, None, 룰, 상태] 였다 — 지문이 버킷 신원을 못 봤다(한 회사의 RED 가 다른 회사로 옮겨가도
+            # 통과). 실제 필드는 `원보험사코드`/`공시분기`.
+            f.get("원보험사코드"), f.get("공시분기"), str(f.get("rule")),
             f.get("status"),
         ])
     rows.sort(key=lambda r: (str(r[0]), str(r[1]), str(r[2])))
@@ -309,7 +312,19 @@ def _update() -> int:
                     "kics_subrisk_source_absent.json 에 「문서 미수집」(DOCUMENT_NOT_COLLECTED, "
                     "owner 2026-10-10) 등재 → RED→SKIP, RED 58→57. 룰 공식은 안 건드렸다"
                     "(8_life_census SKIP 문구에 사유만 인쇄). 기존 39사 538버킷 sha a5669684… "
-                    "그대로(v3_exist7.py).")
+                    "그대로(v3_exist7.py). "
+                    "※ 2026-10-11 최종 라운드 재생성(validation, 룰 공식은 안 건드렸다): ① 지문 키 수정 — "
+                    "종전 `company_code`/`quarter` 는 엔진 finding 에 없는 필드라 모든 행이 [None,None,룰,상태] "
+                    "였다(버킷 신원을 못 봄). 실제 필드 `원보험사코드`/`공시분기` 로 고쳐 sha 가 바뀐다. "
+                    "② 오늘 적재로 움직인 것: 633→634버킷 · 18,990→19,020 finding, RED 57→56 · YELLOW "
+                    "1,928→1,935 · GREEN 13,601→13,684 · SKIP 3,404→3,345. 움직인 버킷은 전부 오늘 커밋 "
+                    "버킷뿐 — KR1102 2023.2Q 신규(+30 finding: GREEN 13 · SKIP 13 · YELLOW 4, RED 0), "
+                    "AXA KR0049 2024.3Q 완성본(+17행: SKIP→GREEN 등 13키), "
+                    "교보 KR0073 2025.3Q·2025.4Q·2026.1Q 신판 정정(19_market RED→GREEN 포함 6키), 예별 KR0004 "
+                    "2025.4Q 신판 정정(YELLOW→GREEN 3키; 룰별 RED 이동은 19_market 1→0 하나뿐 = 교보 2026.1Q), 재보사 TFI 메모행 47~54 +40행(KR1101 18 · KR1108 20 · "
+                    "KR1103 2, 커밋 b80d16a; SKIP→GREEN/YELLOW, YELLOW 는 48_tier2_limit 한도 재현 검토). "
+                    "새 RED 0. 증명: 옛 마스터(a6ca9b5) 대 현 마스터 행 비교 — 추가 103행(KR1102 46 · AXA 17 · "
+                    "재보사 40) · 변경 68칸(교보·예별·농협·KB 신판 정정) · 삭제 0, 이동 버킷이 이 목록과 일치.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

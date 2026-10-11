@@ -15,36 +15,42 @@
     "PARSER_GAP_CONFIRMED": "원천에 노트가 실재함을 validation 이 raw 로 직접 확인했다. 진짜 구멍이고 parser 가 고칠 수 있다.",
     "UNADJUDICATED": "판정 보류. 원천 부재로 단정하지 않았다 — validation 의 노트 판별기가 회사별 표 이름 변형에 미교정이라(대조군 7건 중 5건 위음성) 이 자리에서 '없다'고 말할 근거가 없다. parser 가 회사별로 확인해야 한다."
   },
-  "entries": {
+  "entries": {},
+  "_released_entries": {
     "삼성화재해상보험|2023.1Q": {
       "wf_amort_eok": 3760.4,
       "status": "PARSER_GAP_CONFIRMED",
       "note": "원천 확인 완료 — data/dart/FY2023_Q1/raw/KR0008_삼성화재해상보험/xml/20230515002508.xml 의 '(10) 당분기와 전분기 중 주요 보종별 보험수익 및 재보험비용의 내역 · 1) 제74(당)기 1분기' 표에 구분[장기|자동차|일반|합 계] 로 '보험계약마진 상각 = 376,038백만원'(=3,760.38억)이 있고 같은 분기 워터폴 상각 3,760.4억 과 일치한다. 2023.2Q 이후는 같은 노트가 '당반기와 전반기 …/제74(당)기 반기' 표기이고 그쪽은 추출에 성공한다(2023.2Q 누적 759,126백만원) — 분기(1Q) 어미 변형을 안 태우는 것으로 보인다.",
-      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md (말미 '같은 모양이 12버킷 더 있다')"
+      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md (말미 '같은 모양이 12버킷 더 있다')",
+      "released_by": "validation 2026-10-11 (최종 라운드): 게이트 PL_BUCKET_ABSENT_BASELINE_INERT — PL 버킷이 생겼다(2023 공란 채움 라운드). 해제 전후 새 RED 0"
     },
     "NH농협손해보험|2023.1Q": {
       "wf_amort_eok": 604.6,
       "status": "UNADJUDICATED",
       "note": "PL 은 2023.2Q 부터 시작하고 워터폴은 2023.1Q 부터 있다(축이 한 분기 잘린 모양). raw 는 디스크에 있다 — data/dart/FY2023_Q1/raw/KR0032_NH농협손해보험/20230515002460.xml. 2023.1Q 에 PL 을 가진 19사는 **전원** Tier-2(원수CSM상각)가 채워져 있고 이 회사도 2023.2Q 는 채워져 있다(120,225백만원) → 회사 특성이 아니라 구멍일 가능성이 높다. 다만 validation 판별기로는 표를 특정하지 못해 판정 보류.",
-      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md"
+      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md",
+      "released_by": "validation 2026-10-11 (최종 라운드): 게이트 PL_BUCKET_ABSENT_BASELINE_INERT — PL 버킷이 생겼다(2023 공란 채움 라운드). 해제 전후 새 RED 0"
     },
     "롯데손해보험|2023.1Q": {
       "wf_amort_eok": 392.84,
       "status": "UNADJUDICATED",
       "note": "위와 같은 2023.1Q 축 결손. raw 있음 — data/dart/FY2023_Q1/raw/KR0003_롯데손해보험/xml/. 2023.2Q PL Tier-2 는 채워져 있다(80,785백만원). 단 이 회사의 2023.1Q XML 은 640KB 로 동종 대비 작고 '보험수익' 2회·'보험계약마진' 0회라 노트 자체가 축약본일 가능성이 있다 — 원천 부재가 실제로 확인되면 legit-absent 로 status 를 바꿔 달라.",
-      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md"
+      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md",
+      "released_by": "validation 2026-10-11 (최종 라운드): 게이트 PL_BUCKET_ABSENT_BASELINE_INERT — PL 버킷이 생겼다(2023 공란 채움 라운드). 해제 전후 새 RED 0"
     },
     "케이디비생명보험|2023.1Q": {
       "wf_amort_eok": 111.25,
       "status": "UNADJUDICATED",
       "note": "위와 같은 2023.1Q 축 결손. raw 있음 — data/dart/FY2023_Q1/raw/KR0072_케이디비생명보험/xml/. 2023.2Q PL Tier-2 는 채워져 있다(23,415백만원). 이 회사는 대조군(2023.2Q, 추출 성공)에서도 validation 판별기가 행 라벨을 0회로 셌다 = 판별기가 이 회사의 표 이름을 모른다. 그래서 2023.1Q 의 '0회' 는 부재의 근거가 못 된다.",
-      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md"
+      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md",
+      "released_by": "validation 2026-10-11 (최종 라운드): 게이트 PL_BUCKET_ABSENT_BASELINE_INERT — PL 버킷이 생겼다(2023 공란 채움 라운드). 해제 전후 새 RED 0"
     },
     "교보라이프플래닛생명보험|2023.4Q": {
       "wf_amort_eok": 44.1,
       "status": "UNADJUDICATED",
       "note": "PL 은 2024.4Q·2025.4Q 만 있고 워터폴은 2023.4Q 부터 셋이다. raw 있음 — data/dart/FY2023_Q4/raw/KR1010_교보라이프플래닛생명보험_20240328001011/(+_001012). 같은 회사 2024.4Q 는 추출 성공(원수CSM상각 2,155.876493백만원)이라 회사 특성으로 설명되지 않는다. 임계 10억을 갓 넘는 44.1억이라 화면 영향은 작다.",
-      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md"
+      "routed": "inbox/parser/20260826T2200Z__validation__KR0049_2023.4Q__axa_tier2_header_empty.md",
+      "released_by": "validation 2026-10-11 (최종 라운드): 게이트 PL_BUCKET_ABSENT_BASELINE_INERT — PL 버킷이 생겼다(2023 공란 채움 라운드). 해제 전후 새 RED 0"
     }
   }
 }

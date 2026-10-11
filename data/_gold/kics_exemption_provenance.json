@@ -202,7 +202,7 @@
       "quarter": "2024.3Q",
       "claim": "그 분기 공시서에 지급여력비율 섹션 자체가 없음(2024년 12월말 공시 예정). JSON 2024.3Q 값은 FY2024_Q4 공시서의 '당분기-1분기' 컬럼에서 온 것이고 그 공시서의 경과조치 표는 당분기 전용이라 15-23후는 원천 부재",
       "claim_kind": "SECTION_ABSENT",
-      "status": "VERIFIED",
+      "status": "CONTRADICTED",
       "citation": {
         "file": "data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf",
         "pages": [
@@ -243,7 +243,9 @@
         22,
         23
       ],
-      "absent_cells_note": "적용후 컬럼이 원천에 없는 항목 = 요구자본 부모 15~23 **만**. item1/2/3/14/27/28후는 FY2024_Q4 p36 [지급여력비율 총괄] 에서 확정 가능하고 실제로 마스터에 실려 있다 — 종전 (회사,분기) 통째 면제는 그 여섯까지 continuity census 밖으로 뺐다(claim 보다 넓은 면제)."
+      "absent_cells_note": "적용후 컬럼이 원천에 없는 항목 = 요구자본 부모 15~23 **만**. item1/2/3/14/27/28후는 FY2024_Q4 p36 [지급여력비율 총괄] 에서 확정 가능하고 실제로 마스터에 실려 있다 — 종전 (회사,분기) 통째 면제는 그 여섯까지 continuity census 밖으로 뺐다(claim 보다 넓은 면제).",
+      "refuted_by": "validation 2026-10-11 (최종 라운드): 사이트 신판 data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험_v20251020.pdf (27쪽) p16 「② 장수·사업비·해지·대재해 경과조치 표」가 15~23후를 싣고 p10 총괄·p15 공통적용 표가 14후·47~54를 싣는다. 9칸이 마스터에 적재됐다(커밋 a81f401, 규칙: 15후 = 14후 p10 + 22후 p16 - 23후, 16후 = Σ(17~21후) - 15후, 17~19후 = p16 정밀값, 20~23후 = 전 미러). 게이트가 EXEMPTION_ABSENCE_PIN_VALUE_PRESENT 로 면제가 이미 무효라고 알리고 있었다.",
+      "resolved_note": "2026-10-11 validation 이 이 항목을 레지스트리 `_POST_PARENT_NOT_DISCLOSED`(= `_POST_PARENT_SOURCE_ABSENT_CELLS`)에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 옛 판(19쪽 FY2024_Q3 원본)이 「공시 예정」 문서라는 사실은 여전히 참이고, 달라진 것은 같은 분기의 완성본(27쪽)이 사이트에 올라온 것뿐이다."
     },
     {
       "registry": "INTERNAL_MODEL_36IRR_EXEMPT",
@@ -2966,7 +2968,7 @@
       "quarter": "2023.2Q",
       "claim": "그 분기 경영공시(KR1102_스위스리아시아.pdf)에 K-ICS 표가 없고 \"지급여력비율은 9월말 공시 예정임(보험업감독규정 부칙 제3조)\" 만 있다. 회사 사이트 목록에 후속·추가 K-ICS 문서가 없다(재수령 sha256 동일). 마스터에 이 분기 버킷이 없는 것은 원천 부재다.",
       "claim_kind": "DOCUMENT_PENDING_NOTICE",
-      "status": "VERIFIED",
+      "status": "CONTRADICTED",
       "citation": {
         "file": "data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf",
         "pages": [
@@ -2988,7 +2990,9 @@
       },
       "note": "validation 단계 9 fitz: 근거 문구 p3·p9. 문서 전체에서 ['기본요구자본', '생명장기손해보험위험액', '기본자본', '보완자본'] 0회(같은 회사의 K-ICS 수록 문서에는 있다 — 대조군 스위스리 2023.4Q 신판 v20240510: 기본요구자본 4·기본자본 4·보완자본 6회). raw sha256 은 게이트 코드 박제 `_CENSUS_SOURCE_ABSENT` 와 다운로더 매니페스트가 같이 갖는다. 회사 사이트 기준의 원천 부재다. 협회(생명보험협회·손해보험협회) 공시 시스템에 이 지점 자료가 있는지는 검색으로 근거를 찾지 못했고 직접 확인하지 않았다.",
       "registered_by": "owner 승인 2026-10-10 (inbox/validation/20261010T1300Z 「등재 장치 신설」) — validation 단계 9 등재. 근거 = downloader 재확인 data/disclosure/_meta/reinsurer_runlog_KR1101-1108_9d.md (2026-10-10 11:16~11:40 UTC)",
-      "scope": "KR1102 2023.2Q 의 coverage census MISSING_CELLS (K-ICS 게이트·데이터계약 게이트 공통 `_census_source_absent`)."
+      "scope": "KR1102 2023.2Q 의 coverage census MISSING_CELLS (K-ICS 게이트·데이터계약 게이트 공통 `_census_source_absent`).",
+      "refuted_by": "validation 2026-10-11 (최종 라운드): 마스터에 KR1102 2023.2Q 46행 버킷이 생겼다 — 2023.4Q 완성본 KR1102_스위스리아시아_v20240510.pdf 전기 열 p21·p30~31·p39~41 에서 적재(커밋 b80d16a). census 가 CENSUS_EXEMPTION_INERT RED 로 해제를 요구했다.",
+      "resolved_note": "2026-10-11 validation 이 이 항목을 레지스트리 `_CENSUS_SOURCE_ABSENT` 에서 해제했다. 레지스트리에 없으므로 게이트는 이 기록을 더 이상 소비하지 않는다(고아 기록). 지우지 않고 남기는 이유: 그 분기 자체 문서(FY2023_Q2 KR1102_스위스리아시아.pdf)에 K-ICS 표가 없다는 사실은 여전히 참이다 — 달라진 것은 「마스터에 그 분기 버킷이 없는 것은 원천 부재다」 라는 결론뿐이고, 이 분기 값은 다른 문서(2023.4Q 완성본의 전기 열)에서 왔다. 같은 분기를 다시 비울 일이 생기면 이 기록이 근거 출발점이다."
     },
     {
       "registry": "_CENSUS_SOURCE_ABSENT",

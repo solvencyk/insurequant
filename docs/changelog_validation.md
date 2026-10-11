@@ -1,9 +1,18 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-10-11 · Stage 3/5 — validation
+> Last updated: 2026-10-11 (22차) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
+
+## 2026-10-11 (22차) -- 최종 라운드: 등재 해제 5묶음 · 골든 정리 · 거짓 녹색 사냥 (티켓 `20261011T1510Z`)
+
+- **게이트 전후**: 데이터계약 RED 22→21 · YELLOW 150→143(해제한 7 finding 만 소멸), K-ICS 게이트 exit 2→0(RED 56 · blocking 0, finding 0 추가·0 삭제·0 변경), 지문 RED 10→0, LIC 검산기 RED 0 불변, live_artifacts RED 8 불변(후보 보고만).
+- **증거 기반 해제(신규 등재 0)**: `_CENSUS_SOURCE_ABSENT` KR1102 2023.2Q · 악사 KR0049 2024.3Q 15~23후 부재 박제 · `AFTER_IDENT_ISSUER_INCONSISTENT` KR0073 2026.1Q 938.25 · 재작성 연쇄 KR0073 2026.1Q 19_market · `pl_amort_coverage_baseline` 5줄. 근거 원장은 고아 기록(`resolved_note`)으로 보존. 상세 `docs/kics_gate_exceptions.md` 맨 위 절.
+- **골든 `--update`**: kics 룰(634버킷 19,020 finding, RED 57→56 = 19_market 1→0) · post_transition(555→556 cq, 7,123→7,166셀; 옛 마스터+옛 MD 가 옛 sha 를 정확히 재현, 이동 65셀은 새 MD 4개의 6버킷뿐) · master_tables · ifrs17_bs(빌더 재빌드 == 라이브 마스터 바이트 동일 증명 후, 9,030→10,967행) · viz 패널(39→46 · 32→39사, 기존 항목 변경 0) · 입력지문. PL·dividend·viz_csm 골든은 산출 불변.
+- **결함 수정(테스트·검증기 코드)**: ① `test_kics_rules_golden` 지문 키 `company_code`/`quarter` 는 엔진이 안 내는 필드라 모든 행이 `[None,None,룰,상태]` 였다(버킷 신원 못 봄) → `원보험사코드`/`공시분기`. ② `test_post_transition_golden` 이 `*.md` 직접 글롭으로 병존 MD 를 이중 집계 → `md_files_latest`. ③ `validate_insurance_liability_lic.py` 손으로 적은 분기 목록 → `quarter_horizon()`(출력 바이트 동일). ④ 해제에 맞춰 테스트 3종(census·absence_pin·manifest 선언) 갱신.
+- **거짓 녹색 사냥**: 재보사 PL 은 실질 등식이 없다(진짜 pass 1,177 불변, 증가분 104 전부 구성상) → 원천 대조 287셀 일치, 항목16 인쇄·공란 7칸 parser 발주. 레인별 표본 20×5 중 miss 8 전부 설명됨(파생합·양식·재작성 채택·글리프). 법정준비금 R-RSV-4 10건은 데이터계약이 `run_components` 를 안 불러 미강제. 상세 런로그 Findings.
+- **CSM 워터폴 대 ILP 잔액**(코디네이터 추가): 공유 273칸 중 267칸 일치, 차이 난 칸은 전부 기준 차이(재작성 대 원공시, 예별 계약이전) — 추출 오류 0. 런로그 Section 6.
 
 ## 2026-10-11 (21차) -- 재보사 단계 10: 금리민감도 RS1·RS5 근거 박제 면제 장치 `rs_pinned_exemptions` 신설 · owner 승인 5건 등재
 

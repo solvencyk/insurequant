@@ -52,7 +52,9 @@ def _derive() -> dict:
         md_dir = mod.MD_INBOX / period
         if not md_dir.is_dir():
             continue
-        for md_path in sorted(md_dir.glob("*.md")):
+        # 운영 스크립트(`fill_post_transition_to_disclosure.main`)와 같은 MD 선택을 쓴다 — `*.md` 를 직접
+        # 글롭하면 신판 MD 가 옛 MD 옆에 병존할 때 한 (회사, 분기)를 두 번 센다(2026-10-11: 7,144 -> 7,269).
+        for md_path in mod.md_files_latest(md_dir):
             code = md_path.stem.split("_", 1)[0]
             text = md_path.read_text(encoding="utf-8")
             tables = mod._scan_tables_with_context(text)
