@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-11T06:26:16Z",
+  "generated_at_utc": "2026-10-11T07:00:26Z",
   "license": "All rights reserved. 열람·출처표기 인용·사내 분석은 자유, 자동수집(크롤링)으로 통째 긁어가기·대량 재배포·재판매는 금지.",
   "terms_url": "https://www.insurequant.com/privacy.html#terms",
   "copyright": "(c) 2026 InsureQuant (운영자 조상욱). 원천 수치의 권리는 각 공시 주체에게 있음.",
-  "build_id": "6f92fb0",
+  "build_id": "1412aaf",
   "sheets": {
     "17BS": {
       "rows": 10967,
@@ -36,7 +36,7 @@
       "quarter_max": "2025.4Q"
     },
     "신계약CSM배수": {
-      "rows": 363,
+      "rows": 381,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
