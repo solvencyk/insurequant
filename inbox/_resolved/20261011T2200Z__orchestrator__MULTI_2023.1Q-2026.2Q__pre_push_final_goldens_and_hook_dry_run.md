@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261011T2200Z
-status: open
+status: resolved
 route: verify
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -30,3 +30,4 @@ iter: 1
 - 게이트·테스트별 전후 결과, 골든별 `--update` 여부와 이동 칸 수·이유, 훅 통과 예상 결론, 보고만 항목 표. `TODO_validation.md` Status + `docs/changelog_validation.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(validation 2033a52·d01cd69·5499de0, orchestrator 검증·종결 2026-10-11) 풀 훅 사전 실행(약 28분, pytest 1491초): data_contract RED 0 · K-ICS 게이트 exit 0 · 지문 RED 0(--update 후) · 오프라인 테스트 772 통과, 막는 항목은 live_artifacts INSPL_CENSUS_MISSING 8 하나(재보사 7곳+마이브라운이 DART 표 기반 보험손익 원표 패널에 구조상 없음). 골든 --update 3종(viz_ifrs17_panels csm_amort_schedule 해시=cf66dce 의도 이동, master_tables SUMMARY, 입력지문 viz 항목); kics 룰·post_transition·dividend·csm_waterfall·PL(RUN_PL_GOLDEN)·BS 불변. test_disclosure_raw_pdf_wiring 2건은 훅 묶음 밖이지만 스크립트 글롭 최소 수정으로 해소. 보고만 항목: 서울보증 2024.2Q·3Q PL 통째 구멍 2건, 라이나 CSM 2023.1Q·2Q 보류, 분할표 5사 부분합, 한화생명 연결 표 선택. 등재 8줄은 owner 채팅 승인 후 티켓 20261011T2300Z 로 처리.

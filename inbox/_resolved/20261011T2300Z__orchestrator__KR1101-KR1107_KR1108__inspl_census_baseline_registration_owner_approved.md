@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261011T2300Z
-status: open
+status: resolved
 route: register
 company: KR1101-KR1107,MyBrown
 period: 2023.1Q-2026.2Q
@@ -22,3 +22,4 @@ iter: 1
 - 커밋 해시, `validate_live_artifacts` 전후, 테스트 결과, 「훅이 이제 통과하는가」 한 줄 결론(28분 풀 훅 사전 실행에서 이 항목 외에는 모두 clear 였으므로 전체 재실행은 불필요).
 
 ## 답변 (recipient 작성 — 처리 후)
+(validation 5499de0, orchestrator 검증·종결 2026-10-11) owner 채팅 승인(「8줄 등재」)에 따라 live_artifact_baseline.json INSPL_CENSUS_MISSING 7→15줄 등재, 게이트 코드 불변. validate_live_artifacts RED 8→0 · YELLOW(등재분) 17→25 · STALE 0. 제안서 키 오타(뮤헨재보험→뮌헨재보험)는 게이트가 잡아 고쳤고, _counts.entries 는 실제 개수 25 로 정정. test_push_gate_wiring·test_rule_coverage_manifest·test_identity_registry 178건 통과.
