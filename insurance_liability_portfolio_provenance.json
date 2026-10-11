@@ -26048,6 +26048,1949 @@
    "other_readings": [],
    "evidence": "liability block pages [69], asset block pages [67]; 「(보험계약부채)」 summary line p69 = 619.0758",
    "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 (1) 최선추정 (2) 위험조정」 of the 경영공시 PDF (천원); LIC = 나. 발생사고요소, LRC = 가. 잔여보장요소 (can be negative inside a liability-position group), total = 1. 보험계약부채"
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2023.1Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2023-03-31",
+   "source_file": "data/disclosure/FY2023_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    44,
+    48
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 44,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 5583.74,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 48,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 3441.79,
+     "model": "PAA",
+     "lob": null,
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 9025.53,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": 0.1,
+    "r_lic3_gap_eok": -0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": null,
+    "csm_vs_2_4": null,
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 3,
+     "max_abs_diff_chonwon": 21501799.0,
+     "same": false
+    }
+   },
+   "net_lrc_eok": 7847.27,
+   "items_eok": {
+    "10": 1121.37,
+    "11": 895.55,
+    "12": 69.82,
+    "13": 156.0,
+    "14": 7904.16,
+    "15": 9025.53
+   },
+   "asset_side_eok": {
+    "total": 29.29,
+    "lrc": 56.9,
+    "lic": -27.61,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 9025.5342,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "feaa9f66edee4646249318dfcfd63737164fa76489272851db8844ca2b41800d",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p44 GMM4 [534296624.0, 8477911.0, 15599586.0, 558374121.0]; p48 PAA5 [227425812.0, 20216100.0, 89554985.0, 6982399.0, 344179297.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2023.2Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2023-06-30",
+   "source_file": "data/disclosure/FY2023_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    43,
+    48,
+    49
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 43,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 5503.04,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 48,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 484.24,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 49,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2906.34,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": 8893.0,
+    "ratio_bs20": 1.00007,
+    "filing_bs_eok": 8893.63,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": 0.6,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": null,
+    "csm_vs_2_4": null,
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 3,
+     "max_abs_diff_chonwon": 0.0,
+     "same": true
+    }
+   },
+   "net_lrc_eok": 7665.24,
+   "items_eok": {
+    "10": 1160.62,
+    "11": 933.79,
+    "12": 71.26,
+    "13": 155.57,
+    "14": 7733.01,
+    "15": 8893.63
+   },
+   "asset_side_eok": {
+    "total": 41.63,
+    "lrc": 67.77,
+    "lic": -26.13,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 8893.6256,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "33eb07e6d321165e28d0e134f5cbbcfbad8b8c27e6a669e663a2fd4dcea648d9",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p43 GMM4 [526109650.0, 8637594.0, 15557177.0, 550304421.0]; p48 PAA5 [18775690.0, 3120988.0, 23390896.0, 3136467.0, 48424041.0]; p49 PAA5 [199445819.0, 17211282.0, 69987897.0, 3989102.0, 290634101.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2023.3Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2023-09-30",
+   "source_file": "data/disclosure/FY2023_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    43,
+    47,
+    48
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 43,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 5388.84,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 47,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 475.26,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 48,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2790.35,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": 8654.0,
+    "ratio_bs20": 1.000054,
+    "filing_bs_eok": 8654.46,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": -0.0,
+    "r_lic3_gap_eok": 0.01,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": null,
+    "csm_vs_2_4": null,
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 3,
+     "max_abs_diff_chonwon": 0.0,
+     "same": true
+    }
+   },
+   "net_lrc_eok": 7333.08,
+   "items_eok": {
+    "10": 1236.75,
+    "11": 974.51,
+    "12": 90.51,
+    "13": 171.73,
+    "14": 7417.72,
+    "15": 8654.46
+   },
+   "asset_side_eok": {
+    "total": 53.01,
+    "lrc": 84.63,
+    "lic": -31.62,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 8654.464,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "8822a3da8338b5bc112eba52ad2a3f5b58ba782727b29771a4f7359fa682d30b",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p43 GMM4 [513664635.0, 8046878.0, 17172968.0, 538884481.0]; p47 PAA5 [18051854.0, 3143542.0, 23060676.0, 3270389.0, 47526460.0]; p48 PAA5 [181329514.0, 17535084.0, 74390731.0, 5780126.0, 279035455.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2024.1Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2024-03-31",
+   "source_file": "data/disclosure/FY2024_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    44,
+    48,
+    49
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 44,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 6119.9,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 48,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 596.56,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 49,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2523.77,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 9240.23,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": -0.3,
+    "r_lic3_gap_eok": 0.01,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 7817.0,
+     "net_lrc_eok": 7816.38,
+     "diff": 0.62,
+     "tol": 39.08,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 1931.0,
+     "notes_net_csm_eok": 1930.65,
+     "diff": 0.35,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 3,
+     "max_abs_diff_chonwon": 0.0,
+     "same": true
+    }
+   },
+   "net_lrc_eok": 7816.38,
+   "items_eok": {
+    "10": 1267.41,
+    "11": 947.46,
+    "12": 83.83,
+    "13": 236.12,
+    "14": 7972.83,
+    "15": 9240.23
+   },
+   "asset_side_eok": {
+    "total": 112.42,
+    "lrc": 156.45,
+    "lic": -44.03,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 9240.2337,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "e7ba94079fbfe019f287d1cec888c5d12ed83e8c7c8668c92bc93cf23d0651bd",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p44 GMM4 [576930514.0, 11447352.0, 23612185.0, 611990051.0]; p48 PAA5 [26378596.0, 3809077.0, 26457499.0, 3010684.0, 59655855.0]; p49 PAA5 [168238352.0, 10478853.0, 68288234.0, 5372020.0, 252377460.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2024.2Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2024-06-30",
+   "source_file": "data/disclosure/FY2024_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    45,
+    49,
+    51
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 45,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 6349.73,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 49,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 568.42,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 51,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2438.89,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 9357.04,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": 0.1,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 7869.0,
+     "net_lrc_eok": 7868.76,
+     "diff": 0.24,
+     "tol": 39.34,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 2004.0,
+     "notes_net_csm_eok": 2004.45,
+     "diff": -0.45,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 3,
+     "max_abs_diff_chonwon": 0.0,
+     "same": true
+    }
+   },
+   "net_lrc_eok": 7868.76,
+   "items_eok": {
+    "10": 1303.41,
+    "11": 926.6,
+    "12": 80.06,
+    "13": 296.75,
+    "14": 8053.63,
+    "15": 9357.04
+   },
+   "asset_side_eok": {
+    "total": 141.92,
+    "lrc": 184.87,
+    "lic": -42.95,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 9357.0407,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "0a59418dccee7eebe1d82bb39f70366341f228a8ab5f8aaafe8473d1929b8f6e",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p45 GMM4 [593377894.0, 11919664.0, 29675270.0, 634972827.0]; p49 PAA5 [24677838.0, 4312493.0, 24962751.0, 2888909.0, 56841991.0]; p51 PAA5 [159126096.0, 11948757.0, 67697727.0, 5116674.0, 243889253.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2024.3Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2024-09-30",
+   "source_file": "data/disclosure/FY2024_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    43,
+    47,
+    49
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 43,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 6608.25,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 47,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 536.2,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 49,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2321.56,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 9466.01,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": -0.2,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 7930.0,
+     "net_lrc_eok": 7930.93,
+     "diff": -0.93,
+     "tol": 39.65,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 2029.0,
+     "notes_net_csm_eok": 2029.23,
+     "diff": -0.23,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 3,
+     "max_abs_diff_chonwon": 0.0,
+     "same": true
+    }
+   },
+   "net_lrc_eok": 7930.93,
+   "items_eok": {
+    "10": 1324.36,
+    "11": 920.56,
+    "12": 74.31,
+    "13": 329.48,
+    "14": 8141.65,
+    "15": 9466.01
+   },
+   "asset_side_eok": {
+    "total": 167.05,
+    "lrc": 210.72,
+    "lic": -43.67,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 9466.0091,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "6e9b1ddd9f897d0db7249fa805c719fff3c60705f5dedd358fa7b3e1b46888ab",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p43 GMM4 [614517900.0, 13359195.0, 32948379.0, 660825473.0]; p47 PAA5 [21767128.0, 4214433.0, 25260980.0, 2377005.0, 53619546.0]; p49 PAA5 [148564743.0, 11741519.0, 66795510.0, 5054121.0, 232155893.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2025.1Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2025-03-31",
+   "source_file": "data/disclosure/FY2025_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    45,
+    50,
+    52
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 45,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 6705.35,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 50,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 733.63,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 52,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2137.62,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 9576.6,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": -1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 7740.0,
+     "net_lrc_eok": 7741.23,
+     "diff": -1.23,
+     "tol": 38.71,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 2264.0,
+     "notes_net_csm_eok": 2264.48,
+     "diff": -0.48,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 4,
+     "max_abs_diff_chonwon": 1.0,
+     "same": true
+    }
+   },
+   "net_lrc_eok": 7741.23,
+   "items_eok": {
+    "10": 1472.85,
+    "11": 966.12,
+    "12": 106.67,
+    "13": 400.05,
+    "14": 8103.75,
+    "15": 9576.6
+   },
+   "asset_side_eok": {
+    "total": 314.61,
+    "lrc": 362.52,
+    "lic": -47.91,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 9576.6024,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "f914716e75079043814840d6570232a60b170e483667a721cf3587df3e8a6978",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p45 GMM4 [620907867.0, 9621529.0, 40005403.0, 670534798.0]; p50 PAA5 [27703965.0, 931257.0, 39278448.0, 5449385.0, 73363056.0]; p52 PAA5 [145116158.0, 6094590.0, 57333855.0, 5217786.0, 213762389.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2025.2Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2025-06-30",
+   "source_file": "data/disclosure/FY2025_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    45,
+    51,
+    53
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 45,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 6397.01,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 51,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 732.43,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 53,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2087.9,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 9217.35,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": -0.8,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 7380.0,
+     "net_lrc_eok": 7380.89,
+     "diff": -0.89,
+     "tol": 36.9,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 2413.0,
+     "notes_net_csm_eok": 2412.89,
+     "diff": 0.11,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": {
+     "next_filing": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+     "tables_prior": 4,
+     "max_abs_diff_chonwon": 1.0,
+     "same": true
+    }
+   },
+   "net_lrc_eok": 7380.89,
+   "items_eok": {
+    "10": 1429.29,
+    "11": 937.48,
+    "12": 101.37,
+    "13": 390.43,
+    "14": 7788.06,
+    "15": 9217.35
+   },
+   "asset_side_eok": {
+    "total": 352.89,
+    "lrc": 407.17,
+    "lic": -54.28,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 9217.3453,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "93cb33037d43116fda1d6dc6ab0c6e34e417d828ae549f1789a547f039cb48d5",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p45 GMM4 [589812508.0, 10845444.0, 39043062.0, 639701014.0]; p51 PAA5 [27309870.0, 1118340.0, 39580839.0, 5234320.0, 73243370.0]; p53 PAA5 [143643862.0, 6075793.0, 54167405.0, 4903084.0, 208790144.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2025.3Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2025-09-30",
+   "source_file": "data/disclosure/FY2025_Q3/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    45,
+    50,
+    52
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 45,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 6277.36,
+     "model": "GMM",
+     "lob": null,
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 50,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 688.32,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 52,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 1978.85,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 8944.54,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": -1.3,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 7170.0,
+     "net_lrc_eok": 7169.77,
+     "diff": 0.23,
+     "tol": 35.85,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 2673.0,
+     "notes_net_csm_eok": 2672.9,
+     "diff": 0.1,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": null
+   },
+   "net_lrc_eok": 7169.77,
+   "items_eok": {
+    "10": 1363.57,
+    "11": 819.58,
+    "12": 114.78,
+    "13": 429.21,
+    "14": 7580.97,
+    "15": 8944.54
+   },
+   "asset_side_eok": {
+    "total": 361.58,
+    "lrc": 411.19,
+    "lic": -49.61,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 8944.5355,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "b459a62d4c29ecd937d170e3aea6f3d87e3aef19113a838d14acc3deca189d54",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p45 GMM4 [572944665.0, 11870404.0, 42920953.0, 627736023.0]; p50 PAA5 [24058919.0, 1048257.0, 38956533.0, 4768589.0, 68832298.0]; p52 PAA5 [142090892.0, 6083456.0, 43001038.0, 6709837.0, 197885224.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2026.1Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2026-03-31",
+   "source_file": "data/disclosure/FY2026_Q1/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    47,
+    54,
+    56
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 47,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 542.6,
+     "model": "GMM",
+     "lob": null,
+     "section": "① 배당요소가 있는 보험계약 - 장기손해"
+    },
+    {
+     "table": null,
+     "page": 47,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 4914.72,
+     "model": "GMM",
+     "lob": null,
+     "section": "② 배당요소가 없는 보험계약 - 장기손해"
+    },
+    {
+     "table": null,
+     "page": 54,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 816.53,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 56,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2047.34,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 8321.19,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": 7.5,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 6327.0,
+     "net_lrc_eok": 6326.12,
+     "diff": 0.88,
+     "tol": 31.63,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 3049.0,
+     "notes_net_csm_eok": 3048.52,
+     "diff": 0.48,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": null
+   },
+   "net_lrc_eok": 6326.12,
+   "items_eok": {
+    "10": 895.35,
+    "11": 759.72,
+    "12": 120.11,
+    "13": 15.52,
+    "14": 7425.84,
+    "15": 8321.19
+   },
+   "asset_side_eok": {
+    "total": 604.66,
+    "lrc": 1099.72,
+    "lic": -495.06,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 8321.1927,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "4327fc705866fdac0c90928110ab580f1d05a07c7912687e7e5c21bf7dfdacc5",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p47 GMM4 [53836618.0, 8077.0, 415147.0, 54259842.0]; p47 GMM4 [487905993.0, 2429390.0, 1136507.0, 491471889.0]; p54 PAA5 [33475230.0, 2179893.0, 40339437.0, 5658630.0, 81653191.0]; p56 PAA5 [155663538.0, 7085330.0, 35632646.0, 6352841.0, 204734355.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0050",
+   "quarter": "2026.2Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2026-06-30",
+   "source_file": "data/disclosure/FY2026_Q2/attachments/KR0050_하나손해보험_attachment_separate_fs.pdf",
+   "page": [
+    49,
+    50,
+    56,
+    58
+   ],
+   "scope": "separate",
+   "period": "current",
+   "class": "A2",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [
+    {
+     "table": null,
+     "page": 49,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 523.68,
+     "model": "GMM",
+     "lob": null,
+     "section": "① 배당요소가 있는 보험계약 - 장기손해"
+    },
+    {
+     "table": null,
+     "page": 50,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 4846.77,
+     "model": "GMM",
+     "lob": null,
+     "section": "② 배당요소가 없는 보험계약 - 장기손해"
+    },
+    {
+     "table": null,
+     "page": 56,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 850.34,
+     "model": "PAA",
+     "lob": "일반",
+     "section": null
+    },
+    {
+     "table": null,
+     "page": 58,
+     "note": "18. 보험계약자산 및 보험계약부채",
+     "unit": "천원",
+     "unit_src": "cue",
+     "period_src": "cue",
+     "row": "LIAB",
+     "tot_eok": 2122.82,
+     "model": "PAA",
+     "lob": "자동차",
+     "section": null
+    }
+   ],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "attachment_separate_fs",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 8343.61,
+    "ratio_filing_bs": 1.0,
+    "filing_anchor_gap_chonwon": 19.2,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "r_lic2_vs_2_4": {
+     "item8": 6101.0,
+     "net_lrc_eok": 6101.48,
+     "diff": -0.48,
+     "tol": 30.51,
+     "pass": true
+    },
+    "csm_vs_2_4": {
+     "item3_plus_6": 2854.0,
+     "notes_net_csm_eok": 2854.45,
+     "diff": -0.45,
+     "pass": true
+    },
+    "comparative_in_next_year_filing": null
+   },
+   "net_lrc_eok": 6101.48,
+   "items_eok": {
+    "10": 924.35,
+    "11": 795.18,
+    "12": 109.9,
+    "13": 19.27,
+    "14": 7419.26,
+    "15": 8343.61
+   },
+   "asset_side_eok": {
+    "total": 805.7,
+    "lrc": 1317.77,
+    "lic": -512.07,
+    "note": "보험계약자산 side of the same notes (signed as printed: asset rows); NOT in items 10-15 (liability basis). Liability-basis LIC understates the economic LIC when groups with a large incurred-claims balance sit in an asset position (2026.1Q-2Q: LIC asset side about -495 / -512억)."
+   },
+   "consolidated_bs_liab_eok": 8343.6051,
+   "attachment": {
+    "kind": "separate_fs",
+    "sha256": "5ed04e64f980562ca711c64681dc976ac97c0bb8e28411b33ed0eb82ae495a1b",
+    "manifest": "data/disclosure/_meta/attachments_manifest.json",
+    "ticket_downloader": "inbox/downloader/20261011T0830Z"
+   },
+   "evidence": "closing rows 「(2) 기말/분기말/반기말 보험계약부채」 of the issued-contract LRC/LIC movement tables (note 18; GMM and PAA 일반·자동차), 천원; p49 GMM4 [51477214.0, 7935.0, 883011.0, 52368160.0]; p50 GMM4 [482275099.0, 1357391.0, 1044081.0, 484676571.0]; p56 PAA5 [32431273.0, 2968467.0, 43811311.0, 5822840.0, 85033892.0]; p58 PAA5 [164031209.0, 7377082.0, 35706717.0, 5166902.0, 212281911.0]",
+   "note": "Hana's quarterly 경영공시 PDF leaves the financial statements to an attachment (별도 재무제표 및 주석); read from that attachment. Same definitions as the DART cells (class A2)."
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2023.1Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2023-03-31",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+   "page": 54,
+   "scope": "separate",
+   "period": "current",
+   "class": "T",
+   "bel_ra_source": "none",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "latest_filing_comparative",
+    "own_filing_confirmed_by_later_comparative"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": 4711.08,
+    "ratio_bs20": 1.0,
+    "filing_bs_eok": null,
+    "ratio_filing_bs": null,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "foot_gap_chonwon": 0.0
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 581.89,
+    "13": 581.89,
+    "14": 4129.19,
+    "15": 4711.08
+   },
+   "evidence": "기말 보험계약부채 397,400,840 22,961,619 58,189,280 (7,443,907) 471,107,832",
+   "own_filing": {
+    "file": "data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 54,
+    "layout": "5col_with_iacf",
+    "closing_row_chonwon": {
+     "layout": "5col_with_iacf",
+     "lrc_ex_loss": 397400840.0,
+     "loss": 22961619.0,
+     "lic": 58189280.0,
+     "iacf": -7443907.0,
+     "total": 471107832.0
+    }
+   },
+   "later_comparative": {
+    "file": "data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 50,
+    "layout": "5col_with_iacf",
+    "closing_row_chonwon": {
+     "layout": "5col_with_iacf",
+     "lrc_ex_loss": 397400840.0,
+     "loss": 22961619.0,
+     "lic": 58189280.0,
+     "iacf": -7443907.0,
+     "total": 471107832.0
+    },
+    "equals_own": true
+   },
+   "asset_side_eok": {
+    "total": 2061.86,
+    "lrc": 5756.58,
+    "lic": -3694.71
+   },
+   "note": "closing row 「기말 보험계약부채」 of the issued-contract LRC/LIC note, 천원; item 14 = total - LIC (the 2023 layout has a 4th column 「보험취득현금흐름자산」 that sits on the LRC side, as in the DART engine); latest-filing rule: the 전분기 table of the FY2024 filing of the same quarter"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2023.2Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2023-06-30",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+   "page": 81,
+   "scope": "separate",
+   "period": "current",
+   "class": "T",
+   "bel_ra_source": "none",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "latest_filing_comparative",
+    "own_filing_confirmed_by_later_comparative"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": 4765.89,
+    "ratio_bs20": 1.0,
+    "filing_bs_eok": null,
+    "ratio_filing_bs": null,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "foot_gap_chonwon": 0.0
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 570.6,
+    "13": 570.6,
+    "14": 4195.29,
+    "15": 4765.89
+   },
+   "evidence": "기말 보험계약부채 402,571,490 24,564,273 57,059,659 (7,606,896) 476,588,526",
+   "own_filing": {
+    "file": "data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 81,
+    "layout": "5col_with_iacf",
+    "closing_row_chonwon": {
+     "layout": "5col_with_iacf",
+     "lrc_ex_loss": 402571490.0,
+     "loss": 24564273.0,
+     "lic": 57059659.0,
+     "iacf": -7606896.0,
+     "total": 476588526.0
+    }
+   },
+   "later_comparative": {
+    "file": "data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 75,
+    "layout": "5col_with_iacf",
+    "closing_row_chonwon": {
+     "layout": "5col_with_iacf",
+     "lrc_ex_loss": 402571491.0,
+     "loss": 24564273.0,
+     "lic": 57059659.0,
+     "iacf": -7606896.0,
+     "total": 476588527.0
+    },
+    "equals_own": true
+   },
+   "asset_side_eok": {
+    "total": 1952.26,
+    "lrc": 5754.22,
+    "lic": -3801.96
+   },
+   "note": "closing row 「기말 보험계약부채」 of the issued-contract LRC/LIC note, 천원; item 14 = total - LIC (the 2023 layout has a 4th column 「보험취득현금흐름자산」 that sits on the LRC side, as in the DART engine); latest-filing rule: the 전분기 table of the FY2024 filing of the same quarter"
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2023.3Q",
+   "item_block": "lic_pdf_note",
+   "source_id": "PDF",
+   "as_of_date": "2023-09-30",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+   "page": 51,
+   "scope": "separate",
+   "period": "prior-year same quarter (<전분기> table of the FY2024 filing)",
+   "class": "T",
+   "bel_ra_source": "none",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "천원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "latest_filing_comparative",
+    "restated_comparative_not_closable_with_bs20"
+   ],
+   "checks": {
+    "r_lic1": "pass_restated_sidecar",
+    "bs20_eok": 4405.19,
+    "ratio_bs20": null,
+    "filing_bs_eok": null,
+    "ratio_filing_bs": null,
+    "r_lic3_gap_eok": -0.01,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false,
+    "foot_gap_chonwon": 0.0
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 546.05,
+    "13": 546.05,
+    "14": 2297.78,
+    "15": 2843.84
+   },
+   "evidence": "분기말 보험계약부채 163,568,207 66,210,171 54,605,367 284,383,745",
+   "own_filing": {
+    "file": "data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf",
+    "page": 60,
+    "layout": "5col_with_iacf",
+    "closing_row_chonwon": {
+     "layout": "5col_with_iacf",
+     "lrc_ex_loss": 373809308.0,
+     "loss": 18548732.0,
+     "lic": 56099184.0,
+     "iacf": -7937930.0,
+     "total": 440519294.0
+    }
+   },
+   "later_comparative": {
+    "file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+    "page": 51,
+    "layout": "4col",
+    "closing_row_chonwon": {
+     "layout": "4col",
+     "lrc_ex_loss": 163568207.0,
+     "loss": 66210171.0,
+     "lic": 54605367.0,
+     "iacf": 0.0,
+     "total": 284383745.0
+    },
+    "equals_own": false
+   },
+   "asset_side_eok": {
+    "total": 16391.04,
+    "lrc": 20220.48,
+    "lic": -3829.44
+   },
+   "note": "closing row 「기말 보험계약부채」 of the issued-contract LRC/LIC note, 천원; item 14 = total - LIC (the 2023 layout has a 4th column 「보험취득현금흐름자산」 that sits on the LRC side, as in the DART engine); latest-filing rule: the 전분기 table of the FY2024 filing of the same quarter; THIS quarter is RESTATED in that table (보험계약의 경계를 만기까지로 변경, 소급 적용; FY2024_Q3 경영공시 p3) -> see data/_derived/ilp_restated_comparative.json",
+   "original_basis_value": {
+    "layout": "5col_with_iacf",
+    "lic_eok": 560.99,
+    "lrc_eok": 3844.2,
+    "total_eok": 4405.19,
+    "bs20_original_eok": 4405.19
+   }
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2023.1Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-03-31",
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+   "page": 10,
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "general_account_basis"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": 8460.17,
+    "ratio_bs20": 1.0,
+    "filing_bs_eok": 8460.17,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 210.8,
+    "11": 208.73,
+    "12": 2.07,
+    "13": 0.0,
+    "14": 8249.37,
+    "15": 8460.17
+   },
+   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 846,016,693,679 = 가. 잔여보장요소 824,937,077,335 + 나. 발생사고요소 21,079,616,344 (1) 최선추정 20,872,556,945 (2) 위험조정 207,059,399 (원)",
+   "prior_year_end_column_eok": {
+    "total": 8072.22,
+    "lic": 207.75,
+    "bel": 205.63,
+    "ra": 2.12
+   },
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2023.2Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-06-30",
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+   "page": 44,
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "general_account_basis",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 8364.77,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 207.52,
+    "11": 205.44,
+    "12": 2.08,
+    "13": 0.0,
+    "14": 8157.25,
+    "15": 8364.77
+   },
+   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 836,476,647,018 = 가. 잔여보장요소 815,725,033,962 + 나. 발생사고요소 20,751,613,057 (1) 최선추정 20,543,589,252 (2) 위험조정 208,023,805 (원)",
+   "prior_year_end_column_eok": {
+    "total": 8072.22,
+    "lic": 207.75,
+    "bel": 205.63,
+    "ra": 2.12
+   },
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2023.3Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2023-09-30",
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+   "page": 10,
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "general_account_basis",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 8153.36,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": 0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 214.57,
+    "11": 212.37,
+    "12": 2.21,
+    "13": 0.0,
+    "14": 7938.79,
+    "15": 8153.36
+   },
+   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 815,336,273,433 = 가. 잔여보장요소 793,878,866,142 + 나. 발생사고요소 21,457,407,291 (1) 최선추정 21,236,790,388 (2) 위험조정 220,616,903 (원)",
+   "prior_year_end_column_eok": {
+    "total": 8072.22,
+    "lic": 207.75,
+    "bel": 205.63,
+    "ra": 2.12
+   },
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2024.1Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-03-31",
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+   "page": 14,
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "general_account_basis"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": 9216.55,
+    "ratio_bs20": 1.0,
+    "filing_bs_eok": 9216.55,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": -0.01,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 232.32,
+    "11": 227.31,
+    "12": 5.02,
+    "13": 0.0,
+    "14": 8984.22,
+    "15": 9216.55
+   },
+   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 921,654,878,542 = 가. 잔여보장요소 898,422,436,475 + 나. 발생사고요소 23,232,442,067 (1) 최선추정 22,730,669,281 (2) 위험조정 501,772,786 (원)",
+   "prior_year_end_column_eok": {
+    "total": 9064.48,
+    "lic": 222.82,
+    "bel": 218.03,
+    "ra": 4.79
+   },
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2024.2Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-06-30",
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf",
+   "page": 56,
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "general_account_basis",
+    "bs20_master_absent_filing_anchor_used"
+   ],
+   "checks": {
+    "r_lic1": "pass_filing_anchor",
+    "bs20_eok": null,
+    "ratio_bs20": null,
+    "filing_bs_eok": 9579.2,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": -0.01,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 235.42,
+    "11": 230.46,
+    "12": 4.97,
+    "13": 0.0,
+    "14": 9343.77,
+    "15": 9579.2
+   },
+   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 957,919,799,083 = 가. 잔여보장요소 934,377,455,666 + 나. 발생사고요소 23,542,343,417 (1) 최선추정 23,045,519,225 (2) 위험조정 496,824,192 (원)",
+   "prior_year_end_column_eok": {
+    "total": 9064.48,
+    "lic": 222.82,
+    "bel": 218.03,
+    "ra": 4.79
+   },
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2024.3Q",
+   "item_block": "lic_pdf_bs",
+   "source_id": "PDF",
+   "as_of_date": "2024-09-30",
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+   "page": 29,
+   "scope": "separate",
+   "period": "current",
+   "class": "A1",
+   "bel_ra_source": "RF",
+   "basis": "liability",
+   "row_basis": [
+    "LIAB"
+   ],
+   "unit": "원",
+   "unit_source": "cue",
+   "tables": [],
+   "dropped_tables": [],
+   "dedupe": [],
+   "flags": [
+    "pdf_source_no_dart_filing",
+    "general_account_basis"
+   ],
+   "checks": {
+    "r_lic1": "pass",
+    "bs20_eok": 10012.61,
+    "ratio_bs20": 1.0,
+    "filing_bs_eok": 10012.61,
+    "ratio_filing_bs": 1.0,
+    "r_lic3_gap_eok": -0.0,
+    "tag_tables": 0,
+    "tag_cells": 0,
+    "tag_mismatch": 0,
+    "bs20_master_disagrees": false
+   },
+   "net_lrc_eok": null,
+   "items_eok": {
+    "10": 234.21,
+    "11": 229.13,
+    "12": 5.08,
+    "13": 0.0,
+    "14": 9778.4,
+    "15": 10012.61
+   },
+   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 1,001,261,488,868 = 가. 잔여보장요소 977,840,406,334 + 나. 발생사고요소 23,421,082,534 (1) 최선추정 22,913,107,371 (2) 위험조정 507,975,163 (원)",
+   "prior_year_end_column_eok": {
+    "total": 9064.48,
+    "lic": 222.82,
+    "bel": 218.03,
+    "ra": 4.79
+   },
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
   }
  ],
  "not_loaded": [
@@ -38923,6 +40866,67 @@
    "emitted_by": "scripts/fix_20261011_ilp_kr0003_item9.py",
    "ticket": "inbox/parser/20261011T0320Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_remaining_backfill_lic23_reinsurers.md",
    "note": "item 9 = 1 added for KR0003 롯데손해보험 2024.4Q, 2025.1Q-4Q, 2026.1Q (PDF statement: exception model chosen)"
+  },
+  {
+   "stage": "hana-attachments-lic",
+   "at": "20261011T0112Z",
+   "emitted_by": "scripts/load_ilp_hana_attachments.py",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "note": "items 10-15 of 11 KR0050 cells (2023.1Q, 2023.2Q, 2023.3Q, 2024.1Q, 2024.2Q, 2024.3Q, 2025.1Q, 2025.2Q, 2025.3Q, 2026.1Q, 2026.2Q) from the 별첨 별도 재무제표 및 주석; backup ilp_backup_20261011_pre_hana_attachments.json",
+   "year_end_crosscheck": {
+    "2023.4Q": {
+     "same_as_dart_master": true,
+     "attachment_reading": {
+      "10": 1336.39,
+      "11": 1032.07,
+      "12": 118.8,
+      "13": 185.52,
+      "14": 7902.1,
+      "15": 9238.48
+     }
+    },
+    "2024.4Q": {
+     "same_as_dart_master": true,
+     "attachment_reading": {
+      "10": 1343.48,
+      "11": 913.98,
+      "12": 82.37,
+      "13": 347.13,
+      "14": 7909.27,
+      "15": 9252.75
+     }
+    },
+    "2025.4Q": {
+     "same_as_dart_master": true,
+     "attachment_reading": {
+      "10": 1376.24,
+      "11": 806.02,
+      "12": 120.56,
+      "13": 449.66,
+      "14": 7157.99,
+      "15": 8534.24
+     }
+    }
+   }
+  },
+  {
+   "stage": "lic-stage3b-pdf",
+   "at": "20261011T0135Z",
+   "emitted_by": "scripts/load_ilp_lic_stage3b_pdf.py",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "added_cells": [
+    "KR0074 2023.1Q",
+    "KR0074 2023.2Q",
+    "KR0074 2023.3Q",
+    "KR0100 2023.1Q",
+    "KR0100 2023.2Q",
+    "KR0100 2023.3Q",
+    "KR0100 2024.1Q",
+    "KR0100 2024.2Q",
+    "KR0100 2024.3Q"
+   ],
+   "master_backup": "ilp_backup_20261011_pre_lic_stage3b.json",
+   "note": "items 10-15 of 9 pre-2025 cells of Lina (3) and Chubb (6) from the 경영공시 PDFs"
   }
  ],
  "indirect_lic_cells": [
@@ -44204,6 +46208,188 @@
    "page": 13,
    "evidence": "의'무·저해지상품의해지율가정산출기준'이허용하는범위내에서예외모형을선택하였으며,원칙모형을선택한경우와비교내역은다음과같습니다.(단위:억원)구분2026년1분기2025년1분기재무제표항목예외모형원칙모형예외모형원칙모형(재)보험계약",
    "note": "the section states that the exception model was chosen and prints the 예외모형 vs 원칙모형 comparison of the current period; same meaning as the master's 2026.2Q = 1"
+  }
+ ],
+ "value_corrections": [
+  {
+   "company_code": "KR0095",
+   "quarter": "2025.1Q",
+   "items": {
+    "7": {
+     "old": 0.0,
+     "new": 0.4
+    },
+    "8": {
+     "old": 211995.0,
+     "new": 211995.4
+    }
+   },
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf",
+   "page": 7,
+   "printed_row": "합계 108,113 3,141 22,583 75,760 368 2,030 0.4",
+   "printed_numbers": [
+    108113,
+    3141,
+    22583,
+    75760,
+    368,
+    2030,
+    0.4
+   ],
+   "reason": "stage-1 extractor cut the decimal of the 보험료배분접근법 column (0.4/0.5억); item 8 = sum of items 1-7",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "at": "20261011T0155Z",
+   "emitted_by": "scripts/fix_20261011_ilp_decimal_truncation.py"
+  },
+  {
+   "company_code": "KR0095",
+   "quarter": "2025.2Q",
+   "items": {
+    "7": {
+     "old": 0.0,
+     "new": 0.4
+    },
+    "8": {
+     "old": 218496.0,
+     "new": 218496.4
+    }
+   },
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf",
+   "page": 8,
+   "printed_row": "합계 108,464 3,200 21,633 82,399 391 2,409 0.4",
+   "printed_numbers": [
+    108464,
+    3200,
+    21633,
+    82399,
+    391,
+    2409,
+    0.4
+   ],
+   "reason": "stage-1 extractor cut the decimal of the 보험료배분접근법 column (0.4/0.5억); item 8 = sum of items 1-7",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "at": "20261011T0155Z",
+   "emitted_by": "scripts/fix_20261011_ilp_decimal_truncation.py"
+  },
+  {
+   "company_code": "KR0095",
+   "quarter": "2025.3Q",
+   "items": {
+    "7": {
+     "old": 0.0,
+     "new": 0.4
+    },
+    "8": {
+     "old": 231457.0,
+     "new": 231457.4
+    }
+   },
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf",
+   "page": 7,
+   "printed_row": "합계 113,421 3,290 21,911 89,591 411 2,833 0.4",
+   "printed_numbers": [
+    113421,
+    3290,
+    21911,
+    89591,
+    411,
+    2833,
+    0.4
+   ],
+   "reason": "stage-1 extractor cut the decimal of the 보험료배분접근법 column (0.4/0.5억); item 8 = sum of items 1-7",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "at": "20261011T0155Z",
+   "emitted_by": "scripts/fix_20261011_ilp_decimal_truncation.py"
+  },
+  {
+   "company_code": "KR0095",
+   "quarter": "2025.4Q",
+   "items": {
+    "7": {
+     "old": 0.0,
+     "new": 0.4
+    },
+    "8": {
+     "old": 238423.0,
+     "new": 238423.4
+    }
+   },
+   "source_file": "data/disclosure/FY2025_Q4/raw/KR0095_메트라이프생명보험.pdf",
+   "page": 24,
+   "printed_row": "합계 109,815 3,555 22,810 98,500 472 3,271 0.4",
+   "printed_numbers": [
+    109815,
+    3555,
+    22810,
+    98500,
+    472,
+    3271,
+    0.4
+   ],
+   "reason": "stage-1 extractor cut the decimal of the 보험료배분접근법 column (0.4/0.5억); item 8 = sum of items 1-7",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "at": "20261011T0155Z",
+   "emitted_by": "scripts/fix_20261011_ilp_decimal_truncation.py"
+  },
+  {
+   "company_code": "KR0095",
+   "quarter": "2026.1Q",
+   "items": {
+    "7": {
+     "old": 0.0,
+     "new": 0.5
+    },
+    "8": {
+     "old": 243420.0,
+     "new": 243420.5
+    }
+   },
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf",
+   "page": 7,
+   "printed_row": "합계 105,338 3,621 25,451 104,975 493 3,542 0.5",
+   "printed_numbers": [
+    105338,
+    3621,
+    25451,
+    104975,
+    493,
+    3542,
+    0.5
+   ],
+   "reason": "stage-1 extractor cut the decimal of the 보험료배분접근법 column (0.4/0.5억); item 8 = sum of items 1-7",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "at": "20261011T0155Z",
+   "emitted_by": "scripts/fix_20261011_ilp_decimal_truncation.py"
+  },
+  {
+   "company_code": "KR0095",
+   "quarter": "2026.2Q",
+   "items": {
+    "7": {
+     "old": 0.0,
+     "new": 0.5
+    },
+    "8": {
+     "old": 292445.0,
+     "new": 292445.5
+    }
+   },
+   "source_file": "data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf",
+   "page": 8,
+   "printed_row": "합계 115,032 3,774 23,832 143,844 597 5,366 0.5",
+   "printed_numbers": [
+    115032,
+    3774,
+    23832,
+    143844,
+    597,
+    5366,
+    0.5
+   ],
+   "reason": "stage-1 extractor cut the decimal of the 보험료배분접근법 column (0.4/0.5억); item 8 = sum of items 1-7",
+   "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
+   "at": "20261011T0155Z",
+   "emitted_by": "scripts/fix_20261011_ilp_decimal_truncation.py"
   }
  ]
 }

@@ -45,6 +45,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 import extract_insurance_liability_lic as lic  # noqa: E402
 import extract_insurance_liability_model_pdf as mp  # noqa: E402
 import extract_insurance_liability_model_xml as mx  # noqa: E402
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 STAGES = {"2024.4Q": {"lic_fy": "FY2024_Q4", "year": 2024}, "2023.4Q": {"lic_fy": "FY2023_Q4", "year": 2023}}
 PDF_FY = "FY2024_Q4"                       # the year-end 경영공시 that carries 4-6-2 (and, for most filers, the 2023 comparative)
@@ -96,8 +97,8 @@ def eok(x):
 
 
 def pdf_of(code, fy=PDF_FY):
-    g = glob.glob(str(REPO / "data" / "disclosure" / fy / "raw" / f"{code}_*.pdf"))
-    return Path(g[0]) if g else None
+    g = disclosure_pdfs(fy, code)
+    return g[0] if g else None
 
 
 # --------------------------------------------------------------------------------------------------------------------

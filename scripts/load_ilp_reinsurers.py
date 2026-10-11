@@ -26,7 +26,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import os
 import re
@@ -41,6 +40,7 @@ import extract_insurance_liability_lic as lic  # noqa: E402
 import extract_insurance_liability_model_pdf_interim as I  # noqa: E402
 import load_ilp_backfill_pre2025 as L  # noqa: E402
 import load_ilp_reinsurers_lic as LL  # noqa: E402  (balance-sheet block of the same filings: independent cross-check of item 8)
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 WORK = REPO / "data" / "disclosure" / "_meta" / "ilp_round3_20261011"
 TICKET = "inbox/parser/20261011T0320Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_remaining_backfill_lic23_reinsurers.md"
@@ -142,7 +142,7 @@ NO_PDF_NOTE = {("KR1104", "FY2025_Q3"): "KR1104 하노버 FY2025_Q3 경영공시
 # reading
 # ---------------------------------------------------------------------------------------------------------------------------------
 def pdf_of(code: str, fy: str):
-    g = sorted(glob.glob(str(REPO / "data" / "disclosure" / fy / "raw" / f"{code}_*.pdf")))
+    g = [str(p) for p in disclosure_pdfs(fy, code)]
     g = [p for p in g if "_v2" not in Path(p).name] or g
     return g[0] if g else None
 

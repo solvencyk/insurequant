@@ -19,7 +19,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import os
 import re
@@ -33,6 +32,7 @@ import pdfplumber
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 import extract_insurance_liability_lic as lic  # noqa: E402
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 PROV = REPO / "insurance_liability_portfolio_provenance.json"
 TICKET = "inbox/parser/20261011T0320Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_remaining_backfill_lic23_reinsurers.md"
@@ -40,8 +40,8 @@ NUM = r"\(?-?[\d,]+\)?"
 
 
 def pdf_of(code, fy):
-    g = glob.glob(str(REPO / "data" / "disclosure" / fy / "raw" / f"{code}_*.pdf"))
-    return Path(g[0]) if g else None
+    g = disclosure_pdfs(fy, code)
+    return g[0] if g else None
 
 
 def to_num(tok):

@@ -25,7 +25,6 @@ Usage:
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import os
 import re
@@ -37,6 +36,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 import extract_insurance_liability_lic as lic  # noqa: E402
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 TICKET = "inbox/parser/20261011T0320Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_remaining_backfill_lic23_reinsurers.md"
 PROV = REPO / "insurance_liability_portfolio_provenance.json"
@@ -53,7 +53,7 @@ RE_NUM = re.compile(r"(?:(?<=\s)|^)(-?\d[\d,]*(?:\.\d+)?|-)(?=\s|$)")
 
 
 def pdf_of(code, fy):
-    g = sorted(glob.glob(str(REPO / "data" / "disclosure" / fy / "raw" / f"{code}_*.pdf")))
+    g = [str(p) for p in disclosure_pdfs(fy, code)]
     g = [p for p in g if "_v2" not in Path(p).name] or g
     return Path(g[0]) if g else None
 

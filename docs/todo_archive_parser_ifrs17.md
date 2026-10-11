@@ -1,5 +1,11 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-11 (ILP 남은 칸 20261011T1000Z) 정리 — 밀린 Status (무수정)
+
+- **2026-10-11 재보사 8곳(KR1101~KR1108) CSM 계열·경영지표 마스터 적재(티켓 20261011T0430Z)** — `CSM_amortization` +180행(390 → 570) · `CSM_sensitivity` +116행(195 → 311) · `CSM_waterfall` +108행(2,178 → 2,286, 사이드카 +18셀) · `management_indicators` +1,259행(7,665 → 8,924, 티켓 ④), 기존 행 바이트 동일(git HEAD 접두 일치·기존 회사 변경 0). 상각표 18건 합 = 4-6-2 CSM 전건 허용 안 · 민감도 116행과 상각표 6공시 PDF 렌더링 대조 불일치 0 · MI 는 kpi_summary 652/657 · IFRS17_BS 304/306 · kics 171/171 일치, MI 검증기 커버리지 구멍 121 → 23. 커밋 안 함.
+  남은 것: data-contract 새 RED 17(`PL_BUCKET_ABSENT_VS_WATERFALL`, 재보사 PL 항목 4 계보 한계 — owner 등재 후보 `proposed_registry_entries.json` 또는 게이트 설계 변경) · `MASTER_XLSX_ROW_MISSING` 3(가정민감도·CSM워터폴·CSM상각 시트 동기화, publishing) · 하노버·RGA FY2025 IFRS17 감사보고서 별첨(downloader) · owner 질문(퍼시픽 2024 민감도 행 밀림 · 스코리 당기손익 부호 반전 · 스위스리 신계약 CSM 두 표 불일치 등 런로그 끝절) · `build_csm_sensitivity.py`·`build_tidy_exports.py --only amort` 재실행 시 행이 사라지니 `load_reinsurer_csm_masters_20261011.py --apply` 로 재적재.
+  근거·재현 `data/disclosure/_meta/reinsurer_ifrs17_csm_runlog.md` · 적재기 `scripts/load_reinsurer_csm_masters_20261011.py`·`load_reinsurer_mi_20261011.py`(되돌리기 `--revert --apply`).
+
 ## 2026-10-11 (BS·PL 후속 20261011T0900Z) 정리 — 밀린 Status (무수정)
 
 - **2026-10-11 ILP 라운드 3(티켓 20261011T0320Z)** — `insurance_liability_portfolio.json` 3,835 → 6,111행(+2,276, 기존 행 바이트 동일·중복 키 0): 나머지 6분기 백필 +1,348(2024.1Q~3Q 항목 1~8·10~15, 2023.1Q~3Q 항목 10~15) · LIC 2단계 항목 16·17 125셀 +250 · LIC 3단계 라이나 8·처브 3셀 +50 · 재보사 8곳 항목 1~9 62셀 +538 · 재보사 LIC 14셀 +84 · 롯데손보 항목 9 +6.

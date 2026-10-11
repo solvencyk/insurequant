@@ -17,7 +17,6 @@ Usage:  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/fix_2
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import os
 import re
@@ -30,6 +29,7 @@ REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 import extract_insurance_liability_lic as lic  # noqa: E402
 import load_ilp_backfill_pre2025 as L  # noqa: E402
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 
 CODE = "KR0003"
 QUARTERS = {"2024.4Q": "FY2024_Q4", "2025.1Q": "FY2025_Q1", "2025.2Q": "FY2025_Q2", "2025.3Q": "FY2025_Q3", "2025.4Q": "FY2025_Q4", "2026.1Q": "FY2026_Q1"}
@@ -39,7 +39,7 @@ TICKET = "inbox/parser/20261011T0320Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_
 
 def evidence_from_pdf(fy: str):
     import fitz
-    g = sorted(glob.glob(str(REPO / "data" / "disclosure" / fy / "raw" / f"{CODE}_*.pdf")))
+    g = [str(p) for p in disclosure_pdfs(fy, CODE)]
     if not g:
         raise SystemExit(f"abort: no PDF for {CODE} {fy}")
     doc = fitz.open(g[0])

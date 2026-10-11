@@ -347,6 +347,8 @@ def try_narrative_fallback(page_texts: dict) -> dict | None:
 # ---------------------------------------------------------------------------
 # a number split by a space in the text layer: '1 3,601' = 13,601, '6 ,876' = 6,876
 RE_SPLIT_DIGITS = re.compile(r"(?<![\d,])(\d)\s+(\d{1,2},\d{3}|,\d{3})(?![\d,])")
+# a printed page-number line ('- 9 -'): behind a 합계 row that is the LAST line of its page it continues the number run (dash, 9, dash)
+RE_PAGE_FOOTER = re.compile(r"(?m)^[ \t]*-[ \t]*\d{1,3}[ \t]*-[ \t]*$")
 RE_TAIL_NUMS = re.compile(r"((?:\s+(?:△?\(?-?\d[\d,]*(?:\.\d+)?\)?|-))+)\s*$")
 RE_ONE_NUM = re.compile(r"△?\(?-?\d[\d,]*(?:\.\d+)?\)?|-")
 
@@ -759,6 +761,17 @@ def extract_section_24_25(pdf_path: Path) -> dict:
         run = read_run(after_label)
         L = len(run)
         repair_note = ""
+        # 2026-10-11 (ticket 20261011T1000Z, 현대해상 2025.1Q-3Q): the 합계 row can be the LAST line of its page; the printed page number ('- 9 -') then continues the number run
+        # (dash, 9, dash) and the 4-number row (GMM BEL/RA/CSM + PAA) reads as 7 numbers -> the PAA total landed in the VFA BEL slot and the page number in the VFA CSM slot.
+        # Accepted only when the plain run does not foot and the run WITHOUT the page-number lines is a known layout that does; a table that foots, or a row without such a
+        # line, is never touched (regression: t111/t112 on the md_inbox roster).
+        if foot_state(run) is False:
+            _nofoot = RE_PAGE_FOOTER.sub("", after_label)
+            if _nofoot != after_label:
+                _r_nf = read_run(_nofoot, NUM_ALT)
+                if _r_nf and _r_nf != run and len(_r_nf) in KNOWN and foot_state(_r_nf) is True:
+                    repair_note = f" [page-number line removed: plain run {run} did not foot, the run without it does: {_r_nf}]"
+                    run, L = _r_nf, len(_r_nf)
         fixed = RE_SPLIT_DIGITS.sub(r"\1\2", after_label)
         cands = [("decimal/footer-aware token", read_run(after_label, NUM_ALT), False)]
         if fixed != after_label:
@@ -779,6 +792,13 @@ def extract_section_24_25(pdf_path: Path) -> dict:
                 result["evidence"] = (f"found '합계' at page~{start_page + 1}: the plain run {run} does not foot to its detail rows and no repaired reading ({[r for _n, r, _x in cands]}) "
                                       f"does either -- withheld")
                 return result
+        # 2026-10-11 (ticket 20261011T1000Z task 3, 메트라이프 2025.1Q-2026.2Q): a decimal in the 합계 row ('0.4' in the PAA column) is cut to '0' by the plain token and the run still foots
+        # within the per-row tolerance, so the plain reading stood.  When the decimal-aware token reads the SAME number of values and each differs from the plain one by less than 1, it is
+        # the same reading with its digits kept.  Only decimals can change here; a run without decimals reads exactly as before.
+        _alt = read_run(after_label, NUM_ALT)
+        if _alt and _alt != run and len(_alt) == len(run) and all(abs(a - b) < 1.0 for a, b in zip(_alt, run)):
+            repair_note += f" [decimals kept: plain run {run} -> {_alt}]"
+            run = _alt
         # (has_vfa, has_paa) inferred from how many value-slots the 합계 row actually
         # carried -- this is what the disclosed template supports (GMM always first,
         # then VFA, then PAA; a genuinely-empty column contributes 0 characters to the

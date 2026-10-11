@@ -16,7 +16,6 @@ Run:  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/extract
 from __future__ import annotations
 
 import argparse
-import glob
 import json
 import re
 import sys
@@ -26,6 +25,8 @@ import fitz
 
 ROOT = Path(__file__).resolve().parents[1]
 DISC = ROOT / "data" / "disclosure"
+sys.path.insert(0, str(ROOT / "scripts"))
+from _disclosure_pdf_paths import disclosure_pdfs  # noqa: E402
 OUT = ROOT / "data" / "_derived" / "reinsurer_ifrs17_csm_20261011" / "mi_tables.json"
 sys.stdout.reconfigure(encoding="utf-8")
 CODES = [f"KR11{n:02d}" for n in range(1, 9)]
@@ -322,7 +323,7 @@ def parse_geom(page):
 
 
 def process(code, period):
-    pdfs = sorted(glob.glob(str(DISC / period / "raw" / f"{code}_*.pdf")))
+    pdfs = [str(p) for p in disclosure_pdfs(period, code)]      # raw/ first, pdf/ as the fallback (same sorted list for every period that has raw/ files)
     if not pdfs:
         return None
     pdf = pdfs[0]

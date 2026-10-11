@@ -203,12 +203,38 @@
     "14": 259367.56,
     "15": 263423.13
    }
+  },
+  {
+   "company_code": "KR0074",
+   "quarter": "2023.3Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2024_Q3 경영공시 p3·p8: 「회사는 보험계약의 경계를 만기까지로 변경하고 기업회계기준서 제1117호의 최초 적용시점부터 소급 적용하였습니다. 따라서 비교 표시된 전년 동기 금액도 재작성 되었습니다」 (the FY2024_Q1/Q2 filings still print the 2023 comparatives on the old basis)",
+   "item8_restated": null,
+   "item8_minus_original_net_lrc": null,
+   "restated_bs_insurance_contract_liability_eok": 2843.84,
+   "restated_bs_source": "derived: closing total of the restated <전분기> LRC/LIC table of the FY2024_Q3 경영공시 (no balance sheet for 2023-09-30 is printed there)",
+   "bs_item20_fy2023_original_eok": 4405.19,
+   "bs_item20_original_eok": 4405.19,
+   "bs_source_file": "data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf",
+   "items_10_15_restated": {
+    "10": 546.05,
+    "13": 546.05,
+    "14": 2297.78,
+    "15": 2843.84
+   },
+   "items_10_15_original": {
+    "10": 560.99,
+    "13": 560.99,
+    "14": 3844.2,
+    "15": 4405.19
+   }
   }
  ],
- "extended_at": "20261010T1756Z",
+ "extended_at": "20261011T0135Z",
  "extended_by": [
   "scripts/load_ilp_interim_2023_2024.py",
   "scripts/load_ilp_interim_2023_2024.py",
-  "scripts/load_ilp_interim_2023_2024.py"
+  "scripts/load_ilp_interim_2023_2024.py",
+  "scripts/load_ilp_lic_stage3b_pdf.py"
  ]
 }

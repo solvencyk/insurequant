@@ -202,14 +202,15 @@ def read_interim(pdf_path, max_pages: int = 45, lookahead: int = 4):
 
 
 if __name__ == "__main__":
-    import glob
+    from _disclosure_pdf_paths import disclosure_pdf_dirs, disclosure_pdfs
     sys.stdout.reconfigure(encoding="utf-8")
     fy, codes = sys.argv[1], sys.argv[2:]
-    for pdf in sorted(glob.glob(str(REPO / "data" / "disclosure" / fy / "raw" / "KR*.pdf"))):
-        code = Path(pdf).name[:6]
+    # the raw/-then-pdf/ resolution of the one interpreter (2026-10-11: this loop globbed raw/ directly); same files in the same order for every period that has them under raw/
+    for code in sorted({p.name[:6] for d in disclosure_pdf_dirs(fy) for p in d.glob("KR*.pdf")}):
         if codes and code not in codes:
             continue
-        r = read_interim(pdf)
-        print(code, r["status"], "start", r["start"], r["source"], r["unit"],
-              [(t["page"], t["label"], t["kind"], len(t["run"]), (None if t.get("footing") is None else ("foot_ok" if t["footing"]["ok"] else "FOOT_BAD")),
-                t.get("n_detail_rows")) for t in r["tables"]])
+        for pdf in disclosure_pdfs(fy, code):
+            r = read_interim(str(pdf))
+            print(code, r["status"], "start", r["start"], r["source"], r["unit"],
+                  [(t["page"], t["label"], t["kind"], len(t["run"]), (None if t.get("footing") is None else ("foot_ok" if t["footing"]["ok"] else "FOOT_BAD")),
+                    t.get("n_detail_rows")) for t in r["tables"]])
