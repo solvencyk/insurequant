@@ -1,0 +1,9 @@
+### tests/test_dividend_golden.py
+.                                                                        [100%]
+1 passed in 2.13s
+### tests/test_master_tables_golden.py
+.                                                                        [100%]
+1 passed in 3.33s
+### tests/test_golden_input_fingerprint.py
+.......................                                                  [100%]
+23 passed in 3.91s

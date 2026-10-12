@@ -1,0 +1,34 @@
+### tests/test_census_source_absent_exemption.py
+..............................................................           [100%]
+62 passed in 11.11s
+real	0m15.975s
+### tests/test_exemption_absence_pin.py
+..................................                                       [100%]
+34 passed in 9.03s
+real	0m12.702s
+### tests/test_ident_issuer_inconsistent_exemption.py
+........................................................................ [ 72%]
+......................................................                   [100%]
+198 passed in 9.44s
+real	0m18.331s
+### tests/test_identity_registry.py
+..............                                                           [100%]
+14 passed in 2.53s
+real	0m6.855s
+### tests/test_identity_tautology.py
+..........                                                               [100%]
+10 passed in 1.08s
+real	0m6.650s
+### tests/test_kics_item_registry.py
+.....                                                                    [100%]
+5 passed in 0.64s
+real	0m4.385s
+### tests/test_tier2_stale_false_positive_exemption.py
+..................                                                       [100%]
+18 passed in 11.35s
+real	0m19.555s
+### tests/test_data_contract_selftest.py
+=========================== short test summary info ===========================
+FAILED tests/test_data_contract_selftest.py::test_data_contract_selftest_suite_passes
+1 failed in 0.57s
+real	0m4.216s

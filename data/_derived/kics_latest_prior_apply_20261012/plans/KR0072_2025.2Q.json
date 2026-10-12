@@ -1,0 +1,40 @@
+{
+ "name": "KR0072_2025.2Q",
+ "code": "KR0072",
+ "company": "케이디비생명보험",
+ "quarter": "2025.2Q",
+ "base_sha": "bede3bcc0bc6a1ae71cd0da293b0f4ab202e3864ec87552980c8a3ecc6acaedf",
+ "edits": [
+  {
+   "code": "KR0072",
+   "q": "2025.2Q",
+   "item": 12,
+   "field": "값",
+   "old": "0",
+   "new": "328",
+   "kind": "primary",
+   "src": "data/disclosure/FY2025_Q4/raw/KR0072_케이디비생명보험.pdf p63",
+   "col": "F(2025.4Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q4/raw/KR0072_케이디비생명보험.pdf p63",
+ "dryrun_flags": [],
+ "viewed_pages": [],
+ "evidence": [
+  {
+   "item": 12,
+   "item_name": "Ⅱ. 지급여력금액으로 불인정하는 항목 (지급이 예정된 주주배당액 등)",
+   "master_old": "0",
+   "new": "328",
+   "class": "R",
+   "own_print": "-",
+   "own_src": "FY2025_Q2/raw/KR0072_케이디비생명보험.pdf p19 [text layer row: dash, dash, dash]",
+   "f1_print": 328.0,
+   "f1_src": "FY2025_Q3/raw/KR0072_케이디비생명보험_v20261011.pdf p18 (prev col)",
+   "f2_print": 328.0,
+   "f2_src": "FY2025_Q4/raw/KR0072_케이디비생명보험.pdf p63 (prev2 col)"
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+fill_period_to_disclosure.py: rc 0 7s stdout lines 2
+fill_subitems_to_disclosure.py: rc 0 6s stdout lines 119
+fill_market_subitems_to_disclosure.py: rc 0 159s stdout lines 137
+fill_post_transition_to_disclosure.py: rc 0 6s stdout lines 2882
+live master sha unchanged: fcad5cce2ca1 | git status identical before/after: False
+   git status DIFF:
+ {'?? data/_derived/capsec_reinstate_20261012/before3/', '?? data/_derived/capsec_reinstate_20261012/y2_pre2023_evidence.py', '?? data/_derived/capsec_reinstate_20261012/y2_pre2023_evidence.txt', '?? data/_derived/capsec_reinstate_20261012/y2_pre2023_evidence.csv', '?? data/_derived/capsec_reinstate_20261012/y2_pre2023_evidence.json'}
+
+planned cells after the FULL chain on the scratch copy: kept new value 31 | reverted to old 30 | other value 4 | row missing 0
+   reverted cells by kind: {'primary': 28, 'post_mirror': 2}
+   REVERTED: (('KR0003', '2025.1Q', 13), '값', '19202', '17997')
+   REVERTED: (('KR0004', '2023.1Q', 5), '값', '1211', '1686')
+   REVERTED: (('KR0004', '2023.1Q', 6), '값', '36', '161')
+   REVERTED: (('KR0004', '2023.1Q', 11), '값', '3823', '3224')
+   REVERTED: (('KR0004', '2024.1Q', 7), '값', '-2200', '-2190')
+   REVERTED: (('KR0004', '2024.1Q', 11), '값', '2932', '2923')
+   REVERTED: (('KR0009', '2023.1Q', 1), '값', '133398', '133381')
+   REVERTED: (('KR0009', '2023.1Q', 2), '값', '73537', '68456')
+   REVERTED: (('KR0009', '2023.1Q', 3), '값', '59861', '64925')
+   REVERTED: (('KR0009', '2023.1Q', 4), '값', '127231', '127214')
+   REVERTED: (('KR0009', '2023.1Q', 6), '값', '4983', '5000')
+   REVERTED: (('KR0009', '2023.1Q', 11), '값', '48867', '48832')
+   REVERTED: (('KR0009', '2023.1Q', 13), '값', '53694', '58757')
+   REVERTED: (('KR0009', '2023.1Q', 15), '값', '98852', '98851')
+   REVERTED: (('KR0009', '2023.2Q', 6), '값', '4983', '5000')
+   REVERTED: (('KR0009', '2023.2Q', 11), '값', '50884', '50866')
+   REVERTED: (('KR0032', '2024.3Q', 13), '값', '8867', '9390')
+   REVERTED: (('KR0050', '2025.3Q', 13), '값', '4608', '4609')
+   REVERTED: (('KR0069', '2024.2Q', 1), '값', '532470', '532471')
+   REVERTED: (('KR0069', '2024.2Q', 1), '값_적용후', '532470', '532471')
+   REVERTED: (('KR0069', '2024.2Q', 2), '값', '437468', '437469')
+   REVERTED: (('KR0069', '2024.2Q', 2), '값_적용후', '437468', '437469')
+   REVERTED: (('KR0069', '2024.2Q', 10), '값', '19279', '19278')
+   REVERTED: (('KR0069', '2024.2Q', 11), '값', '77034', '77033')
+   REVERTED: (('KR0069', '2024.2Q', 16), '값', '86726', '86725')
+   REVERTED: (('KR0069', '2024.2Q', 24), '값', '22956', '22955')
+   REVERTED: (('KR0072', '2025.2Q', 12), '값', '0', '328')
+   REVERTED: (('KR0095', '2024.4Q', 2), '값', '33097', '33096')
+   REVERTED: (('KR0095', '2024.4Q', 17), '값', '14427', '14428')
+   REVERTED: (('KR0099', '2024.3Q', 11), '값', '14591', '14590')
+   OTHER   : (('KR0003', '2023.4Q', 4), '값', '2481', '24808', '24807')
+   OTHER   : (('KR0009', '2023.1Q', 27), '값', '178.6', '178.61178802', '178.58902606')
+   OTHER   : (('KR0069', '2024.2Q', 27), '값', '201.5', '201.54507672', '201.54545523')
+   OTHER   : (('KR0069', '2024.2Q', 27), '값_적용후', '201.5', '201.54507672', '201.54545523')
+   after fill_period_to_disclosure.py: kept 33 reverted 28 other 4 missing 0
+   after fill_subitems_to_disclosure.py: kept 33 reverted 28 other 4 missing 0
+   after fill_market_subitems_to_disclosure.py: kept 33 reverted 28 other 4 missing 0
+   after fill_post_transition_to_disclosure.py: kept 31 reverted 30 other 4 missing 0
+other cells the chain moves (not ticket cells; pre-existing behaviour): 1881 (inside the 16 touched buckets: 41)
+rows added/removed by the chain: 34 net

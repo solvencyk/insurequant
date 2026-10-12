@@ -1,0 +1,29 @@
+        # 58.70 \uc758 \ucd9c\ucc98\ub294 p15 TFI\ud45c item49 \uc774\uace0 **\uadf8 \ud45c\ub294 \uc790\uae30 \uc548\uc5d0\uc11c \uc644\uc804\ud788 \ub2eb\ud78c\ub2e4** \u2014 \uac19\uc740
+        # 58.70 을 보는 다른 다섯 축(3_tier2_composition · 51_tfi_tier2_composition ·
+        # 50_tfi_tier_split · 47_tier2_census · 48_tier2_limit)이 전부 GREEN 이다. 깨지는 것은
+        # `item4 \u2212 item12 \u2212 item13` \uc73c\ub85c item2 \ub97c \uc7ac\ud604\ud558\ub294 \ucd95 \ud558\ub098\ubfd0\uc774\ub2e4.
+        # 같은 회사 2026.2Q 는 **행 구성이 100% 동일한 표**에서 item12=300 · item13=754 로 채워
+        # \ub2e4\ub9ac\uac00 \uc794\ucc28 -1 \ub85c \ub2eb\ud78c\ub2e4 \u2014 \ud45c \uad6c\uc870\uac00 \uc544\ub2c8\ub77c \ubd84\uae30\ubcc4 \uae30\uc7ac \uad00\ud589 \ucc28\uc774\ub2e4.
+        # 2026-10-10: 19 -> 22. 알지에이리인슈어런스 KR1105 2025.1Q · 2026.1Q · 2026.2Q
+        # (`2_tier1_bridge` + `2_tier1_bridge_post`) 3\ubc84\ud0b7 \ucd94\uac00 \u2014 owner \uc2b9\uc778 2026-10-10(handoff
+        # §7-10 ①, 재보사 단계 6 표 A), validation 단계 8 등재(inbox/validation/20261010T1010Z).
+        # 4-2-2 `Ⅰ. 순자산` 행이 세 열 모두 0(대시)으로 인쇄돼 다리가 0 을 기대하는데 기본자본은
+        # \uad6c\uc131\ud589 \ud569(\uc608 520+2,560\u2212192+3,421=6,309)\uc774\ub2e4. \uc6d0\uc7a5 \uadfc\uac70 3\uac74(present_rows 5\uac1c\uc529) \uac19\uc740 \ub0a0 \ucd94\uac00.
+>       assert len(registered) == 22, (
+            f"면제 레지스트리 크기가 22 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
+            f"원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. "
+            f"현재 키: {sorted(registered)}"
+        )
+E       AssertionError: 면제 레지스트리 크기가 22 -> 20 로 바뀌었다. 등재를 늘렸다면 원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. 현재 키: [('KR0003', '2023.1Q'), ('KR0003', '2024.4Q'), ('KR0004', '2025.1Q'), ('KR0029', '2025.3Q'), ('KR0032', '2025.4Q'), ('KR0075', '2024.3Q'), ('KR0075', '2024.4Q'), ('KR0075', '2025.1Q'), ('KR0087', '2025.2Q'), ('KR0104', '2026.2Q'), ('KR1000', '2023.2Q'), ('KR1000', '2023.3Q'), ('KR1000', '2023.4Q'), ('KR1000', '2024.1Q'), ('KR1000', '2024.2Q'), ('KR1000', '2024.3Q'), ('KR1000', '2024.4Q'), ('KR1105', '2025.1Q'), ('KR1105', '2026.1Q'), ('KR1105', '2026.2Q')]
+E       assert 20 == 22
+E        +  where 20 = len({('KR0003', '2023.1Q'), ('KR0003', '2024.4Q'), ('KR0004', '2025.1Q'), ('KR0029', '2025.3Q'), ('KR0032', '2025.4Q'), ('KR0075', '2024.3Q'), ...})
+
+tests\test_tier2_issuer_inconsistent_exemption.py:185: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_tier2_issuer_inconsistent_exemption.py::test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 1 passed in 1.70s
+
+real	0m6.256s
+user	0m0.076s
+sys	0m0.108s

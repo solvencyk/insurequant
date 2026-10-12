@@ -1,0 +1,40 @@
+{
+ "name": "KR0032_2024.3Q",
+ "code": "KR0032",
+ "company": "NH농협손해보험",
+ "quarter": "2024.3Q",
+ "base_sha": "bede3bcc0bc6a1ae71cd0da293b0f4ab202e3864ec87552980c8a3ecc6acaedf",
+ "edits": [
+  {
+   "code": "KR0032",
+   "q": "2024.3Q",
+   "item": 13,
+   "field": "값",
+   "old": "8867",
+   "new": "9390",
+   "kind": "primary",
+   "src": "data/disclosure/FY2025_Q1/raw/KR0032_NH농협손해보험_v20261011.pdf p15",
+   "col": "F(2025.1Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.1Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q1/raw/KR0032_NH농협손해보험_v20261011.pdf p15",
+ "dryrun_flags": [],
+ "viewed_pages": [],
+ "evidence": [
+  {
+   "item": 13,
+   "item_name": "Ⅲ. 보완자본으로 재분류하는 항목 (기본자본 자본증권의 인정한도를 초과한 금액 등)",
+   "master_old": "8867",
+   "new": "9390",
+   "class": "R",
+   "own_print": 8867.0,
+   "own_src": "FY2024_Q3/raw/KR0032_NH농협손해보험_amended.pdf p12 [extractor + text layer]",
+   "f1_print": 9390.0,
+   "f1_src": "FY2024_Q4/raw/KR0032_NH농협손해보험.pdf p43 (prev col)",
+   "f2_print": 9390.0,
+   "f2_src": "FY2025_Q1/raw/KR0032_NH농협손해보험_v20261011.pdf p15 (prev2 col)"
+  }
+ ]
+}

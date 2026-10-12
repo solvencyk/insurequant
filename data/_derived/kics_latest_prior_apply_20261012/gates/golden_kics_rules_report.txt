@@ -1,0 +1,55 @@
+sha256:
+   expected 5c019d869c000fe643b3fbc2fcc70813506d98ec872e60e5353e7630026ea09e
+   before   5c019d869c000fe643b3fbc2fcc70813506d98ec872e60e5353e7630026ea09e
+   after    595c973d77594ff70fc14ba92da226e951db373109c111ed9b9c2214eefd8850
+buckets:
+   expected 634
+   before   634
+   after    634
+findings:
+   expected 19020
+   before   19020
+   after    19020
+by_status:
+   expected {'YELLOW': 1936, 'GREEN': 13705, 'SKIP': 3323, 'ERROR': 0, 'RED': 56}
+   before   {'YELLOW': 1936, 'GREEN': 13705, 'SKIP': 3323, 'ERROR': 0, 'RED': 56}
+   after    {'YELLOW': 1934, 'GREEN': 13709, 'SKIP': 3323, 'ERROR': 0, 'RED': 54}
+by_rule: expected==before True | before==after False
+
+(code, quarter, rule) findings whose status moved because of this change: 31
+   transitions: {('GREEN', 'YELLOW'): 13, ('YELLOW', 'GREEN'): 16, ('RED', 'GREEN'): 1, ('RED', 'YELLOW'): 1}
+    ('KR0003', '2023.4Q', '2') GREEN -> YELLOW
+    ('KR0003', '2023.4Q', '2_tier1_bridge') YELLOW -> GREEN
+    ('KR0003', '2025.1Q', '2_tier1_bridge') RED -> GREEN
+    ('KR0004', '2024.1Q', '2') GREEN -> YELLOW
+    ('KR0009', '2023.1Q', '2') YELLOW -> GREEN
+    ('KR0009', '2023.1Q', '2_tier1_bridge') GREEN -> YELLOW
+    ('KR0009', '2023.1Q', '2_tier1_bridge_post') GREEN -> YELLOW
+    ('KR0009', '2023.1Q', '4') YELLOW -> GREEN
+    ('KR0009', '2023.1Q', '5') GREEN -> YELLOW
+    ('KR0009', '2023.1Q', '6') GREEN -> YELLOW
+    ('KR0009', '2023.2Q', '2') YELLOW -> GREEN
+    ('KR0032', '2024.3Q', '2_tier1_bridge') RED -> YELLOW
+    ('KR0049', '2025.1Q', '1') GREEN -> YELLOW
+    ('KR0049', '2026.1Q', '2') GREEN -> YELLOW
+    ('KR0049', '2026.1Q', '2_tier1_bridge') YELLOW -> GREEN
+    ('KR0050', '2025.3Q', '2_tier1_bridge') YELLOW -> GREEN
+    ('KR0050', '2025.3Q', '2_tier1_bridge_post') YELLOW -> GREEN
+    ('KR0069', '2024.2Q', '2') GREEN -> YELLOW
+    ('KR0069', '2024.2Q', '2_tier1_bridge') YELLOW -> GREEN
+    ('KR0069', '2024.2Q', '2_tier1_bridge_post') YELLOW -> GREEN
+    ('KR0069', '2024.2Q', '6') GREEN -> YELLOW
+    ('KR0071', '2024.4Q', '2') GREEN -> YELLOW
+    ('KR0071', '2024.4Q', '2_tier1_bridge') YELLOW -> GREEN
+    ('KR0080', '2026.1Q', '1') GREEN -> YELLOW
+    ('KR0095', '2024.4Q', '1') YELLOW -> GREEN
+    ('KR0095', '2024.4Q', '2_tier1_bridge') YELLOW -> GREEN
+    ('KR0095', '2024.4Q', '2_tier1_bridge_post') YELLOW -> GREEN
+    ('KR0095', '2024.4Q', '4') YELLOW -> GREEN
+    ('KR0095', '2024.4Q', '6') YELLOW -> GREEN
+    ('KR0095', '2024.4Q', '8_life') GREEN -> YELLOW
+    ('KR0099', '2024.3Q', '2') YELLOW -> GREEN
+
+by_rule entries that changed: {'6': ({'GREEN': 377, 'YELLOW': 246, 'RED': 11}, {'GREEN': 376, 'YELLOW': 247, 'RED': 11}), '2': ({'GREEN': 427, 'YELLOW': 203, 'RED': 4}, {'GREEN': 425, 'YELLOW': 205, 'RED': 4}), '1': ({'GREEN': 536, 'YELLOW': 98}, {'GREEN': 535, 'YELLOW': 99}), '5': ({'GREEN': 520, 'YELLOW': 113, 'RED': 1}, {'GREEN': 519, 'YELLOW': 114, 'RED': 1}), '2_tier1_bridge_post': ({'SKIP': 355, 'GREEN': 227, 'YELLOW': 52}, {'SKIP': 355, 'GREEN': 229, 'YELLOW': 50}), '2_tier1_bridge': ({'YELLOW': 148, 'GREEN': 467, 'RED': 10, 'SKIP': 9}, {'YELLOW': 144, 'GREEN': 473, 'RED': 8, 'SKIP': 9}), '8_life': ({'SKIP': 146, 'GREEN': 470, 'YELLOW': 16, 'RED': 2}, {'SKIP': 146, 'GREEN': 469, 'YELLOW': 17, 'RED': 2}), '4': ({'GREEN': 404, 'YELLOW': 229, 'RED': 1}, {'GREEN': 406, 'YELLOW': 227, 'RED': 1})}
+
+expected (fixture) vs before: which manifest keys were already off BEFORE this ticket: []

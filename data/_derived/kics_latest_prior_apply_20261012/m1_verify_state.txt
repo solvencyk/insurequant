@@ -1,0 +1,11 @@
+A. master: sha fcad5cce2ca1 rows 30011 (HEAD 30011) | plan cells 65 | applied_blocks.csv rows 65
+   guard violations: 0 [] | cells differing from HEAD: 65 == planned: True | key sets equal: True
+B. ledger: entries 39 (owner 2026-10-12: 29) | expected R/T cells 29
+   missing entries: [] | unexpected entries: []
+   decision record present: True
+C. registry: HEAD 22 -> live 20 | removed: [('KR0003', '2025.1Q'), ('KR0032', '2024.3Q')] | other entries equal: True
+   validate_kics_disclosure.py diff vs HEAD: +15 / -37 lines (all inside the two released registry blocks: True)
+   provenance entries changed vs HEAD: [('_TIER2_ISSUER_INCONSISTENT', 'KR0003', '2025.1Q', ['refuted_by', 'resolved_note', 'status'], 'CONTRADICTED'), ('_TIER2_ISSUER_INCONSISTENT', 'KR0032', '2024.3Q', ['refuted_by', 'resolved_note', 'status'], 'CONTRADICTED')]
+D. xlsx sheets HEAD vs live: True 19
+   sheets whose values differ from HEAD: {'K-ICS공시': (30012, 30012, 65)}
+ALL STATE CHECKS PASSED

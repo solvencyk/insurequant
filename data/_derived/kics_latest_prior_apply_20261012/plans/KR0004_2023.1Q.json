@@ -1,0 +1,95 @@
+{
+ "name": "KR0004_2023.1Q",
+ "code": "KR0004",
+ "company": "예별손해보험",
+ "quarter": "2023.1Q",
+ "base_sha": "bede3bcc0bc6a1ae71cd0da293b0f4ab202e3864ec87552980c8a3ecc6acaedf",
+ "edits": [
+  {
+   "code": "KR0004",
+   "q": "2023.1Q",
+   "item": 5,
+   "field": "값",
+   "old": "1211",
+   "new": "1686",
+   "kind": "primary",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf p11",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0004",
+   "q": "2023.1Q",
+   "item": 6,
+   "field": "값",
+   "old": "36",
+   "new": "161",
+   "kind": "primary",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf p11",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0004",
+   "q": "2023.1Q",
+   "item": 11,
+   "field": "값",
+   "old": "3823",
+   "new": "3224",
+   "kind": "primary",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf p11",
+   "col": "F(2023.3Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2023.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf p11",
+ "dryrun_flags": [
+  "NO_OWN_CONTROL(NO_GRID)",
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ],
+ "viewed_pages": [
+  "FY2023_Q1 p9",
+  "FY2023_Q2 p11",
+  "FY2023_Q3 p11"
+ ],
+ "evidence": [
+  {
+   "item": 5,
+   "item_name": "1. 보통주",
+   "master_old": "1211",
+   "new": "1686",
+   "class": "R",
+   "own_print": 1211,
+   "own_src": "FY2023_Q1/raw/KR0004_예별손해보험.pdf p9 [text layer + 100dpi render]",
+   "f1_print": 1686.0,
+   "f1_src": "FY2023_Q2/raw/KR0004_예별손해보험.pdf p11 (prev col)",
+   "f2_print": 1686.0,
+   "f2_src": "FY2023_Q3/raw/KR0004_예별손해보험.pdf p11 (prev2 col)"
+  },
+  {
+   "item": 6,
+   "item_name": "2. 자본항목 중 보통주 이외의 자본증권",
+   "master_old": "36",
+   "new": "161",
+   "class": "R",
+   "own_print": 36,
+   "own_src": "FY2023_Q1/raw/KR0004_예별손해보험.pdf p9 [text layer + 100dpi render]",
+   "f1_print": 161.0,
+   "f1_src": "FY2023_Q2/raw/KR0004_예별손해보험.pdf p11 (prev col)",
+   "f2_print": 161.0,
+   "f2_src": "FY2023_Q3/raw/KR0004_예별손해보험.pdf p11 (prev2 col)"
+  },
+  {
+   "item": 11,
+   "item_name": "7. 조정준비금",
+   "master_old": "3823",
+   "new": "3224",
+   "class": "R",
+   "own_print": 3823,
+   "own_src": "FY2023_Q1/raw/KR0004_예별손해보험.pdf p9 [text layer + 100dpi render]",
+   "f1_print": 3224.0,
+   "f1_src": "FY2023_Q2/raw/KR0004_예별손해보험.pdf p11 (prev col)",
+   "f2_print": 3224.0,
+   "f2_src": "FY2023_Q3/raw/KR0004_예별손해보험.pdf p11 (prev2 col)"
+  }
+ ]
+}

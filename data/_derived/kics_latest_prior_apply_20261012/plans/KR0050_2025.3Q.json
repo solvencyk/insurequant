@@ -1,0 +1,57 @@
+{
+ "name": "KR0050_2025.3Q",
+ "code": "KR0050",
+ "company": "하나손해보험",
+ "quarter": "2025.3Q",
+ "base_sha": "bede3bcc0bc6a1ae71cd0da293b0f4ab202e3864ec87552980c8a3ecc6acaedf",
+ "edits": [
+  {
+   "code": "KR0050",
+   "q": "2025.3Q",
+   "item": 13,
+   "field": "값",
+   "old": "4608",
+   "new": "4609",
+   "kind": "primary",
+   "src": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf p17+18",
+   "col": "F(2026.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR0050",
+   "q": "2025.3Q",
+   "item": 13,
+   "field": "값_적용후",
+   "old": "4608",
+   "new": "4609",
+   "kind": "post_mirror",
+   "src": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf p17+18",
+   "col": "F(2026.1Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2026.1Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf p17+18",
+ "dryrun_flags": [
+  "GAPFILL_ROW_IN_DIFF(items [13]: row assigned by form order, not by label)"
+ ],
+ "viewed_pages": [
+  "FY2025_Q3 p17",
+  "FY2025_Q4 p53",
+  "FY2026_Q1 p17"
+ ],
+ "evidence": [
+  {
+   "item": 13,
+   "item_name": "Ⅲ. 보완자본으로 재분류하는 항목 (기본자본 자본증권의 인정한도를 초과한 금액 등)",
+   "master_old": "4608",
+   "new": "4609",
+   "class": "R",
+   "own_print": 4608.0,
+   "own_src": "FY2025_Q3/raw/KR0050_하나손해보험.pdf p17+18 [extractor + text layer]",
+   "f1_print": 4609.0,
+   "f1_src": "FY2025_Q4/raw/KR0050_하나손해보험.pdf p53+54 (prev col)",
+   "f2_print": 4609.0,
+   "f2_src": "FY2026_Q1/raw/KR0050_하나손해보험.pdf p17+18 (prev2 col)"
+  }
+ ]
+}

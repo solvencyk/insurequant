@@ -1,0 +1,9 @@
+live master sha bede3bcc0bc6 | rows 30011 | round-trip identical: True
+live master == git HEAD before the change: True (list equality incl. order)
+planned: 65 cell edits in 16 blocks (apply)
+verified vs live master: changed cells 65 == planned 65 exactly (no row added/removed, order unchanged)
+verified vs git HEAD: changed cells 65 == planned (no deletions, no other cells)
+rows of all companies outside ['KR0003', 'KR0004', 'KR0009', 'KR0032', 'KR0049', 'KR0050', 'KR0069', 'KR0071', 'KR0072', 'KR0080', 'KR0095', 'KR0099']: identical (list equality incl. order)
+new master bytes sha fcad5cce2ca1 | rows 30011
+backup: C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\kics_latest_prior_apply_20261012\backup\kics_disclosure_before_bede3bcc0bc6.json
+APPLIED: 65 cells in 16 blocks, rows 30011, sha fcad5cce2ca171a96013303f21b570c55e9e2c52f581e619cdd87eea693c85ab (replace attempt 1)

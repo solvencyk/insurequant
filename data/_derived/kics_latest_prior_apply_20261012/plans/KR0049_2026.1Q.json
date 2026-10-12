@@ -1,0 +1,42 @@
+{
+ "name": "KR0049_2026.1Q",
+ "code": "KR0049",
+ "company": "악사손해보험",
+ "quarter": "2026.1Q",
+ "base_sha": "bede3bcc0bc6a1ae71cd0da293b0f4ab202e3864ec87552980c8a3ecc6acaedf",
+ "edits": [
+  {
+   "code": "KR0049",
+   "q": "2026.1Q",
+   "item": 4,
+   "field": "값",
+   "old": "3821",
+   "new": "3820",
+   "kind": "primary",
+   "src": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf p17+18",
+   "col": "F(2026.2Q) 직전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2026.2Q) 직전분기 열",
+ "latest_src": "data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf p17+18",
+ "dryrun_flags": [],
+ "viewed_pages": [
+  "FY2026_Q1 p16 (printed 15)"
+ ],
+ "evidence": [
+  {
+   "item": 4,
+   "item_name": "Ⅰ. 건전성감독기준 재무상태표 상의 순자산",
+   "master_old": "3821",
+   "new": "3820",
+   "class": "C",
+   "own_print": 3820,
+   "own_src": "FY2026_Q1/raw/KR0049_악사손해보험.pdf p16 (printed p15) [image-only page, 110dpi render viewed]",
+   "f1_print": 3820.0,
+   "f1_src": "FY2026_Q2/raw/KR0049_악사손해보험.pdf p17+18 (prev col)",
+   "f2_print": null,
+   "f2_src": null
+  }
+ ]
+}

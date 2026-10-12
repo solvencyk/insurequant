@@ -1,0 +1,3 @@
+live: 109 findings (RED 0) | candidate: 111 findings (RED 2) | new 2 (RED 2) | gone 0 (10s)
+  NEW : ["census", "RED", "KICS_TIER2_EXEMPTION_INPUT_DRIFT", "NH농협손해보험", "2024.3Q", "documented exception 재검산 실패: item13 [값] 박제 8867.0 -> 실측 9390.0 (delta +523.0000, tol 0.01). owner 판단의 전제(원문 그대로)가 바뀌었다 — 면제 무효"]
+  NEW : ["census", "RED", "KICS_TIER2_EXEMPTION_INPUT_DRIFT", "롯데손해보험", "2025.1Q", "documented exception 재검산 실패: item13 [값] 박제 19202.0 -> 실측 17997.0 (delta -1205.0000, tol 0.01). owner 판단의 전제(원문 그대로)가 바뀌었다 — 면제 무효"]

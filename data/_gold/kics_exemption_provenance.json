@@ -1221,7 +1221,7 @@
       "quarter": "2025.1Q",
       "claim": "헤드라인표 안에서 `Ⅲ. 보완자본으로 재분류하는 항목` 만 나머지 행과 1,205억 어긋난다. 나머지 입력은 전부 독립 확증이 있고, 같은 발행사의 이웃 분기는 같은 식으로 정확히 닫힌다.",
       "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
-      "status": "VERIFIED",
+      "status": "CONTRADICTED",
       "citation": {
         "file": "data/disclosure/FY2025_Q1/raw/KR0003_롯데손해보험.pdf",
         "pages": [
@@ -1269,7 +1269,9 @@
       "pin_tolerance": 0.01,
       "not_a_blanket_skip": "게이트는 매 실행 **두 겹**을 다시 본다: ① 박제한 마스터 셀을 마스터에서 재확인(TIER2_EXEMPTION_INPUT_DRIFT / TIER2_EXEMPTION_INPUT_MISSING RED) ② 그 축이 실제로 그 잔차의 RED 를 내고 있는지 재확인(TIER2_EXEMPTION_RESIDUAL_DRIFT RED). RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라' 가 찍힌다. finding 자체는 안 지운다 — report 의 exempted_findings 에 그대로 남는다.",
       "registered_by": "owner 위임 2026-08-24 (validation 세션) — '두 표가 서로 다른 값을 인쇄' / '한 표가 자기 구성행과 안 닫힌다' 가 raw 로 확증된 건만 등재. orchestrator iter-9 추가 발주로 KR0075 2버킷·KR0087 1버킷 확대.",
-      "scope": "KR0003 2025.1Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다."
+      "scope": "KR0003 2025.1Q 의 위 축뿐. 다른 (회사,분기)·다른 룰로 넓히지 않는다.",
+      "refuted_by": "owner 2026-10-12 (티켓 inbox/parser/20261012T2200Z, parser-kics 최신 공시 직전 컬럼 채택 적용). 후속 공시 두 곳이 같은 칸을 같은 값으로 인쇄해 룰이 닫힌다 - 발행사 자기모순이 아니라 이후 공시의 정정이었다. 근거 쪽 · 직접 확인 기록 = data/_derived/kics_latest_prior_apply_20261012/applied_blocks.csv.",
+      "resolved_note": "2026-10-12 해제. 등재 전제('헤드라인표의 Ⅲ.재분류항목 19,202 만 나머지 행과 1,205억 어긋난다')는 마스터가 자기 공시 인쇄를 옮긴 상태에서만 참이었다. FY2025_Q2 p20(당분기-1분기 열)과 FY2025_Q3 p20(당분기-2분기 열)이 같은 칸을 17,997 로 인쇄하고 15,657 - 8 - 17,997 = -2,348 = 같은 열의 기본자본으로 정확히 닫힌다. owner 규칙 '최신 공시 직전 컬럼 채택' 으로 마스터 항목 13 을 19,202 → 17,997 로 바꿨고(`kics_restatement_ledger.json` KR0003|2025.1Q|13 as_restated) 박제 셀(항목 13)이 움직여 TIER2_EXEMPTION_INPUT_DRIFT · INERT 가 발화하므로 등재를 풀었다. 기록을 지우지 않는 이유: 같은 (회사,분기)가 다시 등재되면 status=CONTRADICTED 가 즉시 RED 를 띄운다. owner 판단이 틀렸다는 뜻이 아니다 - 당시에는 그 공시본이 마스터의 as-filed 기준이었다."
     },
     {
       "registry": "_TIER2_ISSUER_INCONSISTENT",
@@ -1580,7 +1582,7 @@
       "quarter": "2024.3Q",
       "claim": "발행사가 같은 페이지에 자기 각주 공식과 그 공식을 만족하지 않는 숫자를 함께 인쇄한다. p12 주2) 가 '기본자본 = 순자산 − 불인정항목(보완자본 한도 초과액 제외) − 보완자본 재분류' 라고 정의하는데, 같은 표의 인쇄값으로 계산하면 23,478 − 0 − 8,867 = 14,611 이고 인쇄된 기본자본은 14,089 다(차 522). 다리가 닫히려면 한도초과 = −522 여야 하는데 '한도를 초과한 금액'은 음수일 수 없고, 불인정항목(Ⅱ)이 0 이라 −522 가 식에 들어갈 자리가 없다. 마스터는 양쪽 다 원문 그대로 적재돼 있어 고칠 셀이 없다.",
       "claim_kind": "ISSUER_INTERNAL_INCONSISTENCY",
-      "status": "VERIFIED",
+      "status": "CONTRADICTED",
       "citation": {
         "file": "data/disclosure/FY2024_Q3/raw/KR0032_NH농협손해보험_amended.pdf",
         "pages": [
@@ -1632,7 +1634,9 @@
       "pin_tolerance": 0.01,
       "not_a_blanket_skip": "게이트는 매 실행 박제 셀(item2/4/12/13 등)을 마스터에서 다시 읽어 대조하고, 그 축이 실제로 이 잔차의 RED 를 내고 있는지도 확인한다. 한 칸이라도 움직이면 TIER2_EXEMPTION_INPUT_DRIFT / RESIDUAL_DRIFT RED 로 되살아나고, RED 가 사라지면 TIER2_EXEMPTION_INERT review 로 '등재를 풀어라'가 뜬다.",
       "release_condition": "**종전 조건('발행사가 정정공시로 522 의 정체를 밝히면 등재를 푼다')은 2026-08-24 에 이미 충족된 것으로 확인됐다** — 522 의 정체는 item47 − item54 = 523.54(한도적용전 중 기발행 후순위채무를 뺀 부분)이고 정수 반올림 3개(±1.5) 때문에 −522 로 관측된다. 그런데도 등재를 유지하는 이유는 **마스터가 as-disclosed 를 싣기 때문**이다: 인용한 2024.3Q 공시서의 Ⅲ행은 여전히 8,867 이고, 그 값으로는 다리가 닫히지 않는다. **새 해제조건**: owner 가 as-restated(FY2024_Q4 p43 의 9,390) 채택을 결정하고 parser 가 item13 을 9,390 으로 갈아끼우면, 박제 cells 가 움직여 TIER2_EXEMPTION_INPUT_DRIFT RED 가 자동으로 뜬다. 그때 이 등재를 푼다. 그 전까지는 as-disclosed 를 그대로 두는 것이 이 저장소의 '발행사 기재대로' 원칙과 일치한다.",
-      "registered_by": "owner 위임 2026-08-24 (validation 세션). 2026-08-24 재감사에서 registered_by 누락이 26건 중 이 항목 하나뿐이었음이 확인돼 보충했다(감사 H7)."
+      "registered_by": "owner 위임 2026-08-24 (validation 세션). 2026-08-24 재감사에서 registered_by 누락이 26건 중 이 항목 하나뿐이었음이 확인돼 보충했다(감사 H7).",
+      "refuted_by": "owner 2026-10-12 (티켓 inbox/parser/20261012T2200Z, parser-kics 최신 공시 직전 컬럼 채택 적용). 후속 공시 두 곳이 같은 칸을 같은 값으로 인쇄해 룰이 닫힌다 - 발행사 자기모순이 아니라 이후 공시의 정정이었다. 근거 쪽 · 직접 확인 기록 = data/_derived/kics_latest_prior_apply_20261012/applied_blocks.csv.",
+      "resolved_note": "2026-10-12 해제. 이 항목의 release_condition 이 충족됐다: owner 가 as-restated(FY2024_Q4 p43 의 9,390) 채택을 결정했고(최신 공시 직전 컬럼 채택, 2026-10-12) parser 가 항목 13 을 8,867 → 9,390 으로 갈아끼웠다. 후속 공시 둘(FY2024_Q4 p43 직전분기 열 · FY2025_Q1 v20261011 p15 전전분기 열)이 모두 9,390 을 인쇄하고 23,478 - 0 - 9,390 = 14,088 ~ 기본자본 14,089(잔차 +1, 반올림)로 닫힌다(`kics_restatement_ledger.json` KR0032|2024.3Q|13 as_restated). 박제 셀이 움직여 TIER2_EXEMPTION_INPUT_DRIFT · INERT 가 발화하므로 등재를 풀었다. 기록은 재등재 방지용으로 남긴다."
     },
     {
       "registry": "_TIER2_ISSUER_INCONSISTENT",
