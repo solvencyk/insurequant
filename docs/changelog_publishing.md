@@ -10,6 +10,16 @@
 
 ---
 
+## 2026-10-12 — `보험금예실차비율` xlsx 시트·공개 스냅샷 신설 (티켓 `20261012T1130Z` 3번, 커밋만, push 보류)
+
+owner 승인 「나머지는 다 승인」(스키마 변경, `TODO.md` ㉓). 소스 `data/loss_ratio/claims_ae_ratio.json`(44사, 162행). 빌더 `scripts/build_master_xlsx.py` 의 `MASTERS` 에 항목 1개 + `FLATTEN`(`_flatten_claims_ae_ratio`), `scripts/export_public_sheets.py` 의 `MASTERS` 1개.
+- 열(13): 원보험사코드 · 원수사명 · 티커 · 생손보여부 · 공시분기 · 기준연도 · 사업구분(코리안리 공동재보험 등 6행만) · 예상손해율 · 실제손해율 · 예실차비율 · 단위 · 출처쪽(PDF 쪽 번호) · 플래그(영문 코드는 한글 문구로: 기준연도 읽은 위치·전치 표·빗금 등, 모르는 코드는 KeyError). 내부 파일 경로·추출방식·원문은 JSON 에만 남긴다. 공개본은 원보험사코드 제외 12열.
+- `sync_master_xlsx_sheet.py "보험금예실차비율"` 로 그 시트만 추가(백업 `insurequant_master_tables.xlsx.bak_20261012_ae_sheet`): 162행 x 13열, 마스터와 셀 단위 일치. **다른 17시트 값 해시 동일, 요약 시트만 1행 증가(21→22)** (`data/_derived/ae_sheet_20261012/v1_other_sheets_identity.txt`).
+- 공개본 `public_exports/보험금예실차비율.json` 162행 + manifest 항목 1개(`export_public_sheets.py --only`, 다른 시트 파일·항목 불변).
+- 선언 갱신: `PUBLIC_EXPORT_SHEETS` 15→16, `MASTER_XLSX_SHEETS` 17→18(`tests/test_rule_coverage_manifest.py`), 공개본 대조 식별열에 `기준연도`·`사업구분` 추가(`validate_live_artifacts._PE_ID_COLS` — 안 하면 74행 중복으로 KEY_AMBIGUOUS), `android_push_and_deploy.sh` NEW_FILES 에 신규 파일 등재, 발행 프롬프트의 공개 파일 수(17개).
+- **designer 용 위치**: 시트 이름이 나열된 곳은 `download-survey.js` 의 시트 목록(`SHEETS`, 보험계약부채 다음 줄에 `{ name: "보험금예실차비율", file: "public_exports/보험금예실차비율.json", code: ..., label: ... }` 한 줄 추가가 필요 - 안 하면 사이트 다운로드에 안 보인다). `공시보고서.html` 등 다른 HTML 에는 시트 목록이 없다.
+- 게이트: `check_master_xlsx_drift` 새 시트 드리프트 0(전체 RED 5건은 다른 시트 - 17BS·CSM상각·손익분해PL(2)·보험계약부채 - 로 파서 ifrs17 의 미반영 마스터 변경), `validate_live_artifacts` RED 0(공개본 16시트 중 이 시트 포함), `tests/test_rule_coverage_manifest.py` 98 passed·1 failed(=위 다른 시트 드리프트), `test_push_gate_wiring` 65 passed.
+
 ## 2026-10-12 — `securities_summary` 필드 신설 (K-ICS 소진율 도넛 밑 신종·후순위 큰 셀용, 커밋만, push 보류)
 
 티켓 `inbox/publishing/20261012T1150Z__orchestrator__MULTI_2026.2Q__capital_securities_summary_fields_for_cells.md`. 산식 `scripts/capital_securities_summary.py`(순수 함수), 쓰는 곳 `scripts/apply_disclosure_utilization.py`(소진율 산출과 같은 경로, 재실행해도 소진율 변경 0건), 입력 `data/bonds/capital_securities_fy2026h1.json`(소진율 분자는 경영공시 항목이지만 발행금리·콜일은 증권 단위 자료에만 있다. 채권원장 `kics_capital_securities.json` 에는 쿠폰이 없다).

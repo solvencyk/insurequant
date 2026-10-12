@@ -1,0 +1,6 @@
+before 18 sheets, after 19 sheets
+added=['보험금예실차비율'] removed=[]
+changed (value hash differs)=['요약']
+  요약: rows 21 -> 22
+unchanged sheets: 17
+RESULT: OK

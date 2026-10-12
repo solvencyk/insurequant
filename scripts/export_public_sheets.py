@@ -94,6 +94,9 @@ MASTERS = [
     # 2026-10-11 신설(owner 승인). 잔여보장요소(LRC) + 발생사고요소(LIC) = 보험계약부채. IFRS17.html 섹션 3 콤보의
     # 원천. 기준표시·비고·단위 열은 build_master_xlsx.FLATTEN 이 붙인다(영문 provenance 코드는 한글 문구로 옮겨 나간다).
     ("insurance_liability_portfolio.json", "보험계약부채"),
+    # 2026-10-12 신설(owner 승인, 스키마 변경). IFRS17.html 손해율 패널 예실차 블록의 원천. 출처쪽·플래그 열은
+    # build_master_xlsx.FLATTEN 이 만든다(내부 파일 경로·영문 코드는 싣지 않는다). 원보험사코드는 _DROP_COLS 로 빠진다.
+    ("data/loss_ratio/claims_ae_ratio.json", "보험금예실차비율"),
 ]
 
 

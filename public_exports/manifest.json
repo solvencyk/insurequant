@@ -79,6 +79,11 @@
       "rows": 6335,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
+    },
+    "보험금예실차비율": {
+      "rows": 162,
+      "quarter_min": "2024.4Q",
+      "quarter_max": "2025.4Q"
     }
   }
 }

@@ -1129,7 +1129,8 @@ PUBLIC_EXPORT_RULES = {
 # 실측 2026-09-01. exporter 의 MASTERS 길이와 같아야 한다.
 # 12 -> 13: `자본성증권발행현황`(증권 한 건 단위 인정액) 신설.
 # 14 -> 15 (2026-10-11): `보험계약부채`(잔여보장요소 + 발생사고요소) 신설.
-PUBLIC_EXPORT_SHEETS = 15
+# 15 -> 16 (2026-10-12): `보험금예실차비율`(claims_ae_ratio.json) 신설.
+PUBLIC_EXPORT_SHEETS = 16
 
 
 def _live_gate():
@@ -1551,7 +1552,8 @@ MASTER_XLSX_RULES = {
 # 새 시트 2개도 실제로 대조되고 있다(아래 시험의 sheets_compared 단언이 그것을 다시 본다).
 # 2026-10-11 갱신 16 -> 17: `보험계약부채`(insurance_liability_portfolio.json) 신설 — 시트 단위 sync 로만 추가, 기존 16시트 값 불변.
 # build_master_xlsx.MASTERS 길이와 같아야 한다(요약은 파생 시트라 별도).
-MASTER_XLSX_SHEETS = 17
+# 2026-10-12 갱신 17 -> 18: `보험금예실차비율`(data/loss_ratio/claims_ae_ratio.json) 신설 - 시트 단위 sync 로만 추가.
+MASTER_XLSX_SHEETS = 18
 
 
 @pytest.fixture(scope="module")

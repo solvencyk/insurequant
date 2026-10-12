@@ -213,7 +213,7 @@ appears, tell designer the path and the schema delta. See [claude-agent-designer
 **Keep-list 정본 = `git ls-tree -r --name-only origin/main`.** 2026-10-07 실측(jp 10개 제외):
 `.gitignore` · `.nojekyll` · `CNAME` · `LICENSE` · `robots.txt` · `og-image.png` · `sitemap.xml` · `common.css` · `theme.js` · `download-survey.js` · `report-widget.js` ·
 `forms-config.js` · `privacy.html` · `index.html` · `K-ICS.html` · `IFRS17.html` · `공시보고서.html` · §1 표의 JSON 전부(`dividend.json`·`IFRS17_BS.json`
-포함) · `public_exports/*`(15개 + 2026-10-11 신설 `보험계약부채.json` = 16개; 신규 파일이라 `android_push_and_deploy.sh` NEW_FILES 에 등재). HTML 의 fetch 가 바뀌면 §1 명령으로 재도출하고 `tests/test_deploy_assets.py` 를 돌린다.
+포함) · `public_exports/*`(15개 + 2026-10-11 신설 `보험계약부채.json` = 16개, 2026-10-12 신설 `보험금예실차비율.json` = 17개; 신규 파일이라 `android_push_and_deploy.sh` NEW_FILES 에 등재). HTML 의 fetch 가 바뀌면 §1 명령으로 재도출하고 `tests/test_deploy_assets.py` 를 돌린다.
 
 **절차 정본 = [`docs/launch_runbook.md`](../launch_runbook.md)** (격리 워크트리에서 main 으로 cherry-push · post-push 검증 · `git revert` 롤백).
 - 같은 폴더에서 `git checkout main` 으로 브랜치를 오가는 방식은 **쓰지 않는다**(공유 워킹트리의 다른 세션 작업을 덮는다).
