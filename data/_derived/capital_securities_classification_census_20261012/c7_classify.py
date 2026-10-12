@@ -219,6 +219,28 @@ EXTRA = [
 
 
 rows_out = []
+# registry entries (capital_tier_registry.json) that belong to the rows outside the bond lists: (code, kind) -> a substring of the registry entry name
+REG_MATCH = {
+    ("KR0002", "non-bond (전환우선주)"): "채권원장에 없는 금액(신종 아님)",
+    ("KR0071", "non-bond (전환우선주)"): "전환우선주(2022-12",
+    ("KR0008", "non-bond (우선주)"): "채권원장에 신종 없음",
+    ("KR0005", "non-bond (우선주)"): "채권원장에 없는 소액",
+    ("KR0083", "non-bond (우선주)"): "채권원장에 없는 금액(2024.4Q~)",
+    ("KR0050", "registry-only hybrid"): "2026.2Q 신규 신종자본증권",
+    ("KR0076", "non-bond (전환우선주)"): "원장 밖 기발행분",
+}
+
+
+def reg_lookup(code, kind):
+    sub = REG_MATCH.get((code, kind))
+    if not sub:
+        return None
+    for sec in reg["companies"].get(code, {}).get("securities", []):
+        if sub in sec["name"]:
+            return sec
+    return None
+
+
 # evidence ids of the issuer's own K-ICS series (generated further below as K-<code>) exist for every company that has item 6 or 53 values
 HAS_K = {c for c in {r["code"] for r in inv} if item_series(c, 53) or item_series(c, 6)}
 LEG_EXTRA_EV = {"KR0076": ["F-KR0076", "F-KR0076-pref"]}
@@ -234,6 +256,7 @@ for r in inv:
         "code": code, "company": NAMES.get(code, r["company"]), "kind": "bond", "tier": tier, "name": r["name"], "issue_date": d or "", "call_date": r["call_date"] or "",
         "legal_maturity": r["legal_maturity"] or "", "coupon_pct": r["coupon_pct"], "face_eok": face, "outstanding_eok": r["outstanding_eok"], "as_of": r["as_of"] or "",
         "status": r["status"], "registry_type": r["registry_type"], "registry_unconfirmed": r["registry_unconfirmed"],
+        "registry_entry": r["registry_entry"], "registry_evidence": r["registry_evidence"],
         "ledger_tier1_eok": r["ledger_tier1_eok"], "ledger_tier2_eok": r["ledger_tier2_eok"],
     }
     if tier == "hybrid":
@@ -276,7 +299,9 @@ for e in EXTRA:
     rows_out.append({
         "code": e["code"], "company": NAMES.get(e["code"], e["code"]), "kind": e["kind"], "tier": e["tier"], "name": e["name"], "issue_date": e["issue_date"], "call_date": "",
         "legal_maturity": "", "coupon_pct": None, "face_eok": e["face_eok"], "outstanding_eok": None, "as_of": "", "status": "추가 발견(채권 목록 밖)",
-        "registry_type": e["registry_type"], "registry_unconfirmed": None, "ledger_tier1_eok": None, "ledger_tier2_eok": None,
+        "registry_type": e["registry_type"], "registry_unconfirmed": (reg_lookup(e["code"], e["kind"]) or {}).get("type_unconfirmed"),
+        "registry_entry": (reg_lookup(e["code"], e["kind"]) or {}).get("name"), "registry_evidence": (reg_lookup(e["code"], e["kind"]) or {}).get("evidence"),
+        "ledger_tier1_eok": None, "ledger_tier2_eok": None,
         "census_type": e["census_type"], "grade": e["grade"], "b_strength": e.get("b_strength", ""), "a_basis": e["a_basis"], "step_up": e["step_up"], "basis": e["basis"],
         "ev": ";".join(e["ev"] + kev(e["code"])), "issuer_treatment": e.get("treat", ""), "note": "",
     })
@@ -308,7 +333,7 @@ for r in rows_out:
 
 # ---------------------------------------------------------------------------------------------------------------- write outputs
 cols = ["code", "company", "kind", "tier", "name", "issue_date", "call_date", "legal_maturity", "coupon_pct", "face_eok", "outstanding_eok", "as_of", "status",
-        "registry_type", "registry_unconfirmed", "census_type", "grade", "b_strength", "a_basis", "step_up", "issuer_treatment", "mismatch", "mismatch_note", "basis", "ev", "note",
+        "registry_type", "registry_unconfirmed", "registry_entry", "registry_evidence", "census_type", "grade", "b_strength", "a_basis", "step_up", "issuer_treatment", "mismatch", "mismatch_note", "basis", "ev", "note",
         "ledger_tier1_eok", "ledger_tier2_eok"]
 rows_out.sort(key=lambda x: (x["code"], 0 if x["tier"] != "subordinated" else 1, x["issue_date"] or "9999", x["name"]))
 with open(HERE / "census_securities.csv", "w", encoding="utf-8-sig", newline="") as fh:
@@ -334,7 +359,7 @@ with open(HERE / "census_evidence.csv", "w", encoding="utf-8-sig", newline="") a
 # mismatch list
 mm = [r for r in rows_out if r["mismatch"] in ("DIFFERENT", "census-unknown")]
 with open(HERE / "census_mismatch.csv", "w", encoding="utf-8-sig", newline="") as fh:
-    w = csv.DictWriter(fh, fieldnames=["code", "company", "issue_date", "face_eok", "name", "registry_type", "registry_unconfirmed", "census_type", "grade", "mismatch", "mismatch_note",
+    w = csv.DictWriter(fh, fieldnames=["code", "company", "issue_date", "face_eok", "name", "registry_type", "registry_unconfirmed", "registry_entry", "registry_evidence", "census_type", "grade", "mismatch", "mismatch_note",
                                        "issuer_treatment", "basis", "ev", "ledger_tier1_eok", "ledger_tier2_eok"], extrasaction="ignore")
     w.writeheader()
     w.writerows(mm)
