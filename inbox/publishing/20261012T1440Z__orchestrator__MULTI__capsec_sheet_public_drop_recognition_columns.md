@@ -1,0 +1,27 @@
+---
+from: orchestrator
+to: publishing
+created: 20261012T1440Z
+status: open
+route: fix
+company: MULTI
+period: 2026.2Q
+iter: 1
+---
+
+## 미결 (sender 작성)
+owner 승인(2026-10-12 채팅 「3 승인」, 오케스트레이터 제안 「열만 빼고 발행일·콜일·금액만 공개」): 공개 시트 `자본성증권발행현황` 에서 **우리가 한도 계산으로 채운 열**(공시 값이 아니라 분류 판단과 같은 성격)을 공개본에서 뺀다. 마스터 JSON(`kics_capital_securities.json`)·내부 마스터 xlsx 시트는 **그대로 둔다**(내부 보관; 소진율·전망 내부 계산이 쓴다). `scripts/export_public_sheets.py` 에는 이미 「공개 스냅샷에서만 제외」하는 `_DROP_COLS` 메커니즘이 있다 — 그것을 쓴다(시트 스키마 변경 아님).
+
+### 해 줄 것
+1. 공개본(`public_exports/자본성증권발행현황.json`)에서 뺄 열: `기본자본인정액_억`·`보완자본인정액_억`(owner 가 승인한 두 열) + 이 두 값을 만들기 위한 계산 열 `기본자본한도_억`·`SCR_억`·`보완자본인정율`·`경과조치`·`경과조치종료일`(경과조치 구분도 한도 충전 계산에서 나온 것 — 실제 소스 열인지 먼저 확인하고, 공시·원문에서 온 사실 열이면 남기고 보고). **남기는 열**: 회사명·구분·종류·발행일·콜만기도래일·법정만기일·콜근거·액면가_억·잔액_억·공시분기·잔액기준일·출처 등 발행 사실. 열 목록의 최종 확정은 소스를 보고 하되 「한도·인정액 계산에서 나온 열 전부」 가 원칙이다.
+2. 이 시트가 `download-survey.js`(방명록 설문 다운로드)·`report-widget.js`·화면에서 어떻게 쓰이는지 확인해 열 제거가 깨뜨리는 곳이 없는지(소비자 목록) 보고. 열 이름을 직접 참조하는 HTML/JS 가 있으면 **고치지 말고 위치만 보고**(designer 몫).
+3. `public_exports/자본성증권발행현황.json`·`manifest.json`(열 수) 재생성·재커밋(`export_public_sheets.py` 는 커밋된 HEAD 를 읽는다). 게이트(`validate_live_artifacts`·`validate_data_contract`·`check_master_xlsx_drift` — 공개본 vs 내부 시트 대조가 이 열 제거로 깨지면 「_DROP_COLS 제외 열」 로 좁히는 방식으로, 느슨하게 풀지 말 것)·단위시험 1개(공개본에 제외 열이 없고 남기는 열은 있음)·변이시험(제외 목록에서 한 열을 빼면 실패). 새 RED 는 종류별 보고.
+4. **순서**: 현재 작업 중인 티켓 `20261012T1420Z`(비공개 3시트·루트 JSON)와 같은 파일(`export_public_sheets.py`·manifest·시험)을 만지므로 **그 티켓 뒤에** 한다. `TODO_publishing.md` Status + `docs/changelog_publishing.md`.
+
+### 규칙
+- 마스터 JSON·xlsx 시트 수정 금지(내부 보관), HTML 금지. 커밋은 자기 파일만 명시 경로(`git add -A` 금지, 루트 개인 문서·`data/_derived/qoq_warn.json`·다른 에이전트 미커밋 제외), 끝에 `Co-Authored-By:` 줄. **push·배포 금지.** 서브에이전트 금지. 파이썬은 풀패스·스크립트 파일만. 시험·게이트는 한 번에 하나씩 끝까지. 이 공유 티켓은 고치지 않는다.
+
+### 보고 (2~4줄 존댓말)
+- 뺀 열·남긴 열, 소비자 확인 결과, 게이트 결과, 커밋 해시.
+
+## 답변 (recipient 작성 — 처리 후)
