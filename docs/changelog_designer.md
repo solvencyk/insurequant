@@ -7,6 +7,16 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- IFRS17 보험금 예실차비율 별도 섹션(9) + 묶음 막대
+
+티켓 `inbox/designer/20261012T1000Z__orchestrator__MULTI__IFRS17_claims_ae_separate_section_grouped_bar.md`(공유, 오케스트레이터가 종결). `IFRS17.html` 만(+`tests/test_share_screenshot.py` 섹션 수 9→10). 8) 손해율 가정 안의 `#lrAeBox`·`drawLrAe` 제거, 새 패널 `#sec-ae`(`data-pane="ae"`, `data-share-section="보험금 예실차비율"`)를 8 뒤에 신설하고 `9) 보험금 예실차비율`, 뒤따르던 `9) 판매채널별 유지율` 은 `10)` 으로. 목차 칩 「보험금 예실차비율」 추가(앵커 `#sec-ae`; `#sec-lr`·`#sec-ps` 불변). 번호가 쓰이는 곳은 h2·목차·시험(`test_section_markup_complete`)·designer 프롬프트 §1 표뿐이었다.
+
+데이터는 그대로 `panel_loss_ratio.json` 최상위 `ae[code].q[분기] = [[기준연도, 사업구분, 예상손해율, 실제손해율, 보험금 예실차비율, 플래그[]]…]`(fetch, 새 파일·마스터 수정 없음). 선택 규칙 변경: 예전엔 8) 의 공시시점 select 를 따라 「이하 가장 최근 연말 공시」를 골랐는데, 새 섹션은 독립이라 자체 「공시시점」 select 를 두고 선택지를 그 회사 `ae` 의 분기(연말 공시, 현재 데이터 2025.4Q·2024.4Q)로 한다(기본 최신). `ae` 가 없는 회사·구판 패널이면 패널 전체 `hidden`(문구 없음, 목차 칩은 theme.js 가 흐리게). 차트: Chart.js 막대, 가로축 기준연도, 묶음 안 예상손해율(키컬러 30% 면 + 테두리) · 실제손해율(키컬러 실색) · 보험금 예실차비율(중립 회색 `TH.muted`), 값 없는 칸은 막대 없음, 음수 △(툴팁·축 눈금·막대 값 라벨 모두 `aeTxt`/`fmtNum`), 0 선 굵게, 값 라벨은 데스크톱만(자체 플러그인), `identity_break` 칸 툴팁 「공시 산식과 맞지 않는 값(공시 그대로)」, `role="img"` + 회사·구분·연도 범위·값 범위 `aria-label`. 사업 구분이 둘 이상이면(코리안리 공동재보험/전통형재보험) 구분마다 차트 하나, 표는 구분 블록. 모바일(≤640px)은 범례 아래, 높이 340px. 설명은 제목 옆 `?` 팝오버(`help-lrae`)만.
+
+검증(`scripts/shot_ae.py`, 헤드리스 Edge): 삼성생명·현대해상·코리안리·스위스리아시아·예별손보·푸본현대·서울보증(ae 없음 -> 패널 hidden, 칩 흐림) x 1280px·375px — 콘솔 오류 0, 가로 넘침 0, 8) 에 예실차 문구 0, 공시시점 토글(2025.4Q/2024.4Q) 차트·표 동기, 섹션 공유 이미지(1062x768 등) 정상, 현대해상 다크 확인. 시험 `test_share_screenshot`·`test_deploy_assets`·`test_push_gate_wiring`·`test_prepush_scope` 통과.
+
+---
+
 ## 2026-10-12 -- 모바일 섹션 공유 이미지 가로 확장 제거
 
 티켓 `inbox/designer/20261012T1040Z__orchestrator__MULTI__mobile_section_share_image_no_widen.md`(공유, 오케스트레이터가 종결). `theme.js` `shRender`: 섹션 이미지의 `o.widen`(가로 스크롤 표의 `scrollWidth-clientWidth` 만큼 이미지·복제 섹션 폭을 늘림)을 폰(`phone = coarse || clientWidth < 520`)에서는 하지 않는다. 이미 그려진 차트 canvas 는 넓어진 폭에 다시 그려지지 않아 왼쪽 1/3 만 차지하고 오른쪽이 비던 문제(뮌헨 손해율 가정, owner 스크린샷). 데스크톱·페이지 전체 이미지 경로 불변.
