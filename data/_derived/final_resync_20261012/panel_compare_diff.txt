@@ -1,0 +1,5 @@
+=== data/compare/panel_compare.json: 2 changed leaves/nodes
+   CHG/metrics/0/v 1
+   CHG/metrics/16/v 1
+    CHG metrics/0/v/KR0049/6 286.4 -> 286.5
+    CHG metrics/16/v/KR1101/3 null -> 0
