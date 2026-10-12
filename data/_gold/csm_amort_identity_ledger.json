@@ -17,33 +17,6 @@
     "ledgered": 5
   },
   "entries": {
-    "DB손해보험|2023.1Q": {
-      "residual_eok": 176.16,
-      "pl_eok": 3294.66,
-      "waterfall_eok": 3118.5,
-      "rel": 0.056489,
-      "cause": "RESTATEMENT_BASIS",
-      "note": "루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 의 2024.1/2/3Q 값 (3,118.50 / 6,193.43 / 9,357.89)이 루트의 2023.1/2/3Q 와 정확히 같다. 2024.1Q 이후는 두 마스터가 소수 둘째자리까지 일치한다. 2023 분기는 사이트 비노출.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
-    },
-    "DB손해보험|2023.2Q": {
-      "residual_eok": 513.07,
-      "pl_eok": 6706.47,
-      "waterfall_eok": 6193.4,
-      "rel": 0.082841,
-      "cause": "RESTATEMENT_BASIS",
-      "note": "루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 의 2024.1/2/3Q 값 (3,118.50 / 6,193.43 / 9,357.89)이 루트의 2023.1/2/3Q 와 정확히 같다. 2024.1Q 이후는 두 마스터가 소수 둘째자리까지 일치한다. 2023 분기는 사이트 비노출.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
-    },
-    "DB손해보험|2023.3Q": {
-      "residual_eok": 53.78,
-      "pl_eok": 9411.68,
-      "waterfall_eok": 9357.9,
-      "rel": 0.005747,
-      "cause": "RESTATEMENT_BASIS",
-      "note": "루트 CSM_waterfall 의 2023.1~3Q 상각은 2024년 필링의 비교(전기)컬럼 = 소급재작성값이고, PL 은 2023년 원 필링값이다. 근거: csm_waterfall_history 의 2024.1/2/3Q 값 (3,118.50 / 6,193.43 / 9,357.89)이 루트의 2023.1/2/3Q 와 정확히 같다. 2024.1Q 이후는 두 마스터가 소수 둘째자리까지 일치한다. 2023 분기는 사이트 비노출.",
-      "routed": "inbox/_resolved/20260825T1520Z__validation__MULTI__csm_amort_identity_28_ledgered_buckets.md"
-    },
     "교보생명보험|2026.1Q": {
       "residual_eok": -4.36,
       "pl_eok": 1537.34,

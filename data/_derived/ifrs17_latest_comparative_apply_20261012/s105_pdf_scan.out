@@ -1,0 +1,219 @@
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+MuPDF error: syntax error: unknown cid font type
+
+rows 1426
+[('COL1', 987), ('NOLABEL', 239), ('COL1/2', 55), ('NONE', 48), ('COL2', 43), ('COL1/2/3', 37), ('COL1/3', 15), ('COL3', 2)]
+--- not COL1:
+KR0005 흥국화재 2023.1Q item 16 3400.0 COL2 p4 (기타사업비용) ['51', '34', '17']
+KR0005 흥국화재 2024.4Q item 16 27600.0 COL2 p13 (기타사업비용) ['325', '276', '49']
+KR0008 삼성화재해상보험 2023.2Q item 16 172900.0 COL2 p5 (기타사업비용) ['834', '1,729', '-895']
+KR0071 흥국생명보험 2023.2Q item 22 119200.0 COL2 p53 법인세비용차감전순이익 ['-19,850,800,167', '119,182,019,348', '148,685,925,928', '248,828,271,641']
+KR0075 비엔피파리바카디 2023.4Q item 23 -5500.0 NONE p12 법인세비용 ['-55', '-71', '16']
+KR0049 악사손해보험 2026.2Q item 23 -1500.0 NONE p5 법인세비용 ['-15', '30', '-45']
+KR0050 하나손해보험 2023.1Q item 16 1300.0 NONE p4 (기타사업비용) ['(13)', '(12)', '(1)']
+KR0050 하나손해보험 2025.2Q item 23 0.0 COL1/2/3 p5 법인세비용 ['0', '1', '-1']
+KR0050 하나손해보험 2025.3Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '1', '-1']
+KR0050 하나손해보험 2026.1Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '0', '0']
+KR0050 하나손해보험 2026.2Q item 23 0.0 COL1/2/3 p5 법인세비용 ['0', '0', '0']
+KR0051 신한이지손해보험 2023.1Q item 16 100.0 COL1/2/3 p4 (기타사업비용) ['1', '2', '-1']
+KR0074 라이나생명보험 2023.1Q item 22 127600.0 NONE p82 법인세비용차감전순이익 ['119,400', '171,817']
+KR0074 라이나생명보험 2023.2Q item 22 247700.0 NONE p110 법인세비용차감전순이익 ['222,709', '345,918']
+KR0074 라이나생명보험 2023.3Q item 16 11500.0 COL2 p77 기타사업비용 ['1,998,920', '11,493,637', '4,782,310', '20,402,078']
+KR0074 라이나생명보험 2023.3Q item 22 418600.0 NONE p91 법인세비용차감전순이익 ['366,106', '543,413']
+KR0075 비엔피파리바카디 2026.1Q item 23 -900.0 NONE p4 법인세비용 ['-9', '-8', '-1']
+KR0075 비엔피파리바카디 2026.2Q item 23 -1200.0 NONE p5 법인세비용 ['-12', '-12', '0']
+KR0080 에이아이에이생명 2024.3Q item 22 125800.0 NONE p27 법인세차감전순이익 ['125,939,285,425', '156,407,139,118']
+KR0095 메트라이프생명보 2024.1Q item 23 -26200.0 NONE p4 법인세비용 ['-262', '311', '-573']
+KR0095 메트라이프생명보 2024.2Q item 23 -16500.0 NONE p5 법인세비용 ['-165', '359', '-524']
+KR0095 메트라이프생명보 2024.3Q item 23 -6500.0 NONE p4 법인세비용 ['-65', '565', '-630']
+KR0095 메트라이프생명보 2025.1Q item 23 -8000.0 NONE p4 법인세비용 ['-80', '-262', '182']
+KR0095 메트라이프생명보 2026.1Q item 23 -1200.0 NONE p4 법인세비용 ['-12', '-80', '68']
+KR0100 처브라이프생명보 2025.1Q item 23 100.0 COL1/2/3 p5 법인세비용 ['1', '19', '-18']
+KR0150 서울보증보험 2023.4Q item 22 519500.0 COL2 p23 법인세차감전손익 ['5,190', '5,195']
+KR1010 교보라이프플래닛 2023.1Q item 23 0.0 COL1/2/3 p3 법인세비용 ['0', '0', '0']
+KR1010 교보라이프플래닛 2023.2Q item 23 0.0 COL1/2/3 p5 법인세비용 ['0', '0', '0']
+KR1010 교보라이프플래닛 2023.3Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '0', '0']
+KR1011 IBK연금보험 2023.2Q item 23 -300.0 NONE p40 법인세비용 ['6,012']
+KR1011 IBK연금보험 2023.3Q item 23 -4200.0 NONE p23 법인세비용 ['7,400']
+KR1098 카카오페이손해보 2024.1Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '0', '0']
+KR0004 예별손해보험 2023.2Q item 24 -32243.541495 NONE p65 당기순이익 ['(3,395)', '10,092', '13,487']
+KR0004 예별손해보험 2023.3Q item 24 -58914.488369 NONE p34 당기순이익 ['(5,377)', '18,146', '23,523']
+KR0004 예별손해보험 2024.3Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '0', '0']
+KR0004 예별손해보험 2025.1Q item 16 -1500.0 NONE p4 (기타사업비용)△15 ['11']
+KR0004 예별손해보험 2025.2Q item 16 -900.0 NONE p5 (기타사업비용)△9 ['44']
+KR0150 서울보증보험 2024.1Q item 1 1300.0 COL2 p4 보험손익 ['27', '13', '14']
+KR0150 서울보증보험 2024.1Q item 16 8300.0 COL2 p4 (기타사업비용) ['120', '83', '37']
+KR0150 서울보증보험 2024.1Q item 22 38100.0 COL2 p22 법인세비용차감전순이익 ['25,265,908,966', '38,086,906,005']
+KR0150 서울보증보험 2024.1Q item 23 8600.0 COL2 p4 법인세비용 ['62', '86']
+KR0150 서울보증보험 2024.1Q item 24 29500.0 COL2 p3 당기순이익 ['191', '295']
+KR1101 뮌헨재보험 2023.1Q item 16 -200.0 NONE p4 (기타사업비용) ['(-2)', '(4)', '(-6)']
+KR1101 뮌헨재보험 2023.2Q item 16 -2000.0 NONE p5 (기타사업비용) ['(-20)', '(8)', '(-28)']
+KR1101 뮌헨재보험 2024.1Q item 16 -2300.0 NONE p4 (기타사업비용) ['(-23)', '(-2)', '(-21)']
+KR1101 뮌헨재보험 2024.2Q item 16 -800.0 COL3 p58 기타사업비용 ['-826,017', '-826,833', '816']
+KR1101 뮌헨재보험 2024.3Q item 16 -1200.0 NONE p35 기타사업비용 ['-814,299', '-1,242,942', '428,644']
+KR1101 뮌헨재보험 2024.4Q item 16 -124.90631 NONE p8 기타사업비용 ['(124,906,310)', '3,240,386,884']
+KR1101 뮌헨재보험 2025.1Q item 16 -500.0 NONE p37 기타사업비용 ['195,500', '-525,178', '720,678']
+KR1101 뮌헨재보험 2025.2Q item 16 -800.0 COL3 p58 기타사업비용 ['-826,017', '-826,833', '816']
+KR1101 뮌헨재보험 2025.3Q item 16 -800.0 NONE p35 기타사업비용 ['-814,299', '-1,242,942', '428,644']
+KR1101 뮌헨재보험 2025.4Q item 16 -859.628363 NONE p8 기타사업비용 ['(859,628,363)', '(124,906,310)']
+KR1102 스위스리아시아 2023.1Q item 23 -900.0 NONE p17 법인세비용 ['-9', '36', '-45']
+KR1102 스위스리아시아 2023.2Q item 23 0.0 COL1/2/3 p16 법인세비용 ['0', '0', '0']
+KR1102 스위스리아시아 2024.3Q item 1 91900.0 NONE p21 보험손익 ['918', '595', '323']
+KR1102 스위스리아시아 2024.4Q item 23 19300.0 NONE p59 법인세비용 ['192', '296', '(104)']
+KR1102 스위스리아시아 2025.4Q item 23 -51500.0 NONE p63 법인세비용 ['(515)', '192', '(707)']
+KR1102 스위스리아시아 2026.1Q item 1 -47200.0 NONE p24 보험손익 ['(473)', '(140)', '(333)']
+KR1102 스위스리아시아 2026.1Q item 23 -9900.0 NONE p24 법인세비용 ['(100)', '(100)']
+KR1102 스위스리아시아 2026.2Q item 1 -38100.0 NONE p46 보험손익 ['(380)', '(273)', '(107)']
+KR1102 스위스리아시아 2026.2Q item 23 -2100.0 NONE p46 법인세비용 ['(22)', '0', '(22)']
+KR1103 제네럴재보험 2023.2Q item 16 1564.0 COL2 p4 (기타사업비용) ['482', '1,564', '(1,082)']
+KR1103 제네럴재보험 2023.3Q item 16 2500.0 NONE p3 (기타사업비용) ['(25)']
+KR1103 제네럴재보험 2023.4Q item 16 1138.0 NONE p6 (기타사업비용) ['(1,138)', '-1,138']
+KR1103 제네럴재보험 2024.3Q item 1 2900.0 COL2 p3 보험손익 ['(68)', '29', '(97)']
+KR1103 제네럴재보험 2024.3Q item 22 6600.0 COL2 p4 법인세비용차감전순이익 ['(40)', '66', '(106)']
+KR1103 제네럴재보험 2024.3Q item 23 0.0 COL1/2/3 p4 법인세비용 ['16', '0', '16']
+KR1103 제네럴재보험 2024.3Q item 24 6600.0 COL2 p3 당기순이익 ['(55)', '66', '(122)']
+KR1103 제네럴재보험 2024.4Q item 23 4039.765675 COL2 p8 법인세비용 ['21', '4,039,765,675', '44,087,121']
+KR1103 제네럴재보험 2024.4Q item 24 18774.76347 COL2 p8 당기순이익 ['14', '18,774,763,470', '14,713,171,141']
+KR1103 제네럴재보험 2025.1Q item 16 100.0 COL1/2/3 p3 (기타사업비용) ['1', '1', '(0)']
+KR1103 제네럴재보험 2025.2Q item 16 700.0 COL2 p3 (기타사업비용) ['4', '7', '(3)']
+KR1103 제네럴재보험 2025.4Q item 23 100.0 COL1/2/3 p6 법인세비용 ['1', '40', '(39)']
+KR1103 제네럴재보험 2026.1Q item 16 100.0 COL1/2/3 p3 (기타사업비용) ['1', '1', '(0)']
+KR1103 제네럴재보험 2026.1Q item 23 0.0 COL1/2/3 p3 법인세비용 ['0', '0', '0']
+KR1103 제네럴재보험 2026.2Q item 1 -100.0 COL1/2/3 p3 보험손익 ['(1)', '(41)', '41']
+KR1103 제네럴재보험 2026.2Q item 22 -100.0 COL1/2/3 p4 법인세비용차감전순이익 ['(1)', '(17)', '16']
+KR1103 제네럴재보험 2026.2Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '0', '0']
+KR1103 제네럴재보험 2026.2Q item 24 -100.0 COL1/2/3 p3 당기순이익 ['(1)', '(17)', '16']
+KR1104 하노버재보험 2023.2Q item 23 -34.0 NONE p6 법인세비용 ['(34)', '(119)', '85']
+KR1104 하노버재보험 2023.3Q item 1 -128.0 COL2 p6 보험손익 ['(97)', '(128)', '31']
+KR1104 하노버재보험 2023.3Q item 16 697.0 COL2 p6 (기타사업비용) ['798', '697', '101']
+KR1104 하노버재보험 2023.3Q item 22 595.0 NONE p31 법인세비용차감전순이익(또는법인세비용차감전순손실) ['1,975,370']
+KR1104 하노버재보험 2023.3Q item 23 168.0 COL2 p6 법인세비용 ['37', '168', '(131)']
+KR1104 하노버재보험 2023.3Q item 24 427.0 COL2 p4 당기순이익 ['1,938', '427', '1,511']
+KR1104 하노버재보험 2024.1Q item 23 -106.0 NONE p6 법인세비용 ['(106)', '18', '(124)']
+KR1104 하노버재보험 2024.2Q item 23 -21.0 NONE p6 법인세비용 ['(21)', '(34)', '13']
+KR1104 하노버재보험 2025.4Q item 23 -0.0 COL1/2/3 p12 법인세비용 ['(0)', '3', '3']
+KR1104 하노버재보험 2026.1Q item 1 -0.0 COL1/2/3 p5 보험손익 ['(0)', '6', '(6)']
+KR1104 하노버재보험 2026.1Q item 23 100.0 COL1/2/3 p6 법인세비용 ['1', '3', '(3)']
+KR1105 알지에이리인슈어 2023.1Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '5', '(5)']
+KR1105 알지에이리인슈어 2023.2Q item 1 1000.0 COL2 p5 보험손익 ['121', '10', '111']
+KR1105 알지에이리인슈어 2023.2Q item 23 -1100.0 NONE p5 법인세비용 ['37', '-11', '48']
+KR1105 알지에이리인슈어 2023.2Q item 24 5600.0 COL2 p3 당기순이익 ['129', '56', '73']
+KR1105 알지에이리인슈어 2024.3Q item 1 26100.0 COL2 p4 보험손익 ['173', '261', '-88']
+KR1105 알지에이리인슈어 2024.3Q item 16 500.0 COL2 p4 (기타사업비용) ['2', '5', '-3']
+KR1105 알지에이리인슈어 2024.3Q item 23 8500.0 COL2 p4 법인세비용 ['58', '85', '-27']
+KR1105 알지에이리인슈어 2024.3Q item 24 24600.0 COL2 p3 당기순이익 ['194', '246', '-52']
+KR1105 알지에이리인슈어 2025.1Q item 16 100.0 COL1/2/3 p4 (기타사업비용) ['1', '2', '-1']
+KR1105 알지에이리인슈어 2026.1Q item 16 100.0 COL1/2/3 p4 (기타사업비용) ['1', '1', '0']
+KR1105 알지에이리인슈어 2026.1Q item 23 -600.0 NONE p4 법인세비용 ['-6', '34', '-40']
+KR1106 스코리재보험 2023.1Q item 23 -4200.0 NONE p4 법인세비용 ['(42)', '(4)', '(38)']
+KR1106 스코리재보험 2024.4Q item 16 8016.058821 COL2 p8 기타사업비용 ['16', '8,016,058,821', '7,410,066,000']
+KR1106 스코리재보험 2024.4Q item 23 -3447.839452 NONE p10 법인세비용 ['(3,447,839,452)', '8,941,098,360']
+KR1106 스코리재보험 2025.4Q item 16 8454.716805 COL2 p8 기타사업비용 ['18', '8,454,716,805', '8,016,058,821']
+KR1106 스코리재보험 2026.2Q item 23 -500.0 NONE p5 법인세비용 ['(5)', '33', '(38)']
+KR1107 퍼시픽라이프리 2023.1Q item 1 -2300.0 COL2 p3 보험손익 ['-7', '-23', '16']
+KR1107 퍼시픽라이프리 2023.1Q item 16 500.0 COL2 p3 (기타사업비용) ['8', '5', '3']
+KR1107 퍼시픽라이프리 2023.1Q item 23 0.0 COL1/2/3 p13 법인세비용 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2023.1Q item 24 6500.0 COL2 p3 당기순이익 ['6', '65', '-59']
+KR1107 퍼시픽라이프리 2023.2Q item 1 -7000.0 COL2 p3 보험손익 ['109', '-70', '180']
+KR1107 퍼시픽라이프리 2023.2Q item 16 1200.0 COL2 p3 (기타사업비용) ['13', '12', '2']
+KR1107 퍼시픽라이프리 2023.2Q item 24 -1100.0 COL2 p2 당기순이익 ['180', '-11', '191']
+KR1107 퍼시픽라이프리 2023.3Q item 1 -7900.0 COL2 p4 보험손익 ['-14', '-79', '65']
+KR1107 퍼시픽라이프리 2023.3Q item 16 1800.0 COL2 p4 (기타사업비용) ['20', '18', '2']
+KR1107 퍼시픽라이프리 2023.3Q item 24 -4500.0 COL2 p3 당기순이익 ['126', '-45', '172']
+KR1107 퍼시픽라이프리 2023.4Q item 1 -23900.0 COL2 p9 보험손익 ['-134', '-239', '104']
+KR1107 퍼시픽라이프리 2023.4Q item 16 2500.0 COL2 p9 (기타사업비용) ['28', '25', '3']
+KR1107 퍼시픽라이프리 2023.4Q item 23 0.0 COL1/2/3 p56 법인세비용 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2023.4Q item 24 -3800.0 COL2 p3 당기순이익 ['43', '-38', '82']
+KR1107 퍼시픽라이프리 2024.1Q item 23 0.0 COL1/2/3 p13 법인세비용 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2024.4Q item 16 2600.0 COL2 p10 (기타사업비용) ['35', '26', '9']
+KR1107 퍼시픽라이프리 2025.1Q item 1 0.0 COL1/2/3 p4 보험손익 ['0', '(7)', '7']
+KR1107 퍼시픽라이프리 2025.1Q item 23 0.0 COL1/2/3 p35 법인세비용 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2025.2Q item 22 8600.0 NONE p6 법인세차감전손익 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2025.2Q item 23 0.0 COL1/2/3 p5 법인세비용 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2026.1Q item 23 0.0 COL1/2/3 p4 법인세비용 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2026.2Q item 22 -100.0 COL1/2/3 p5 법인세비용차감전순이익 ['-1', '86', '-87']
+KR1107 퍼시픽라이프리 2026.2Q item 23 0.0 COL1/2/3 p5 법인세비용 ['0', '0', '0']
+KR1107 퍼시픽라이프리 2026.2Q item 24 -100.0 COL1/2/3 p3 당기순이익 ['-1', '86', '-88']

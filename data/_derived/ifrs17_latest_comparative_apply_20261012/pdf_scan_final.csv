@@ -1,0 +1,1427 @@
+﻿code,name,quarter,item,master,own_filing_pdf,final_class,pass,detail,pdf
+KR0002,한화손해보험,2023.1Q,16,39900.0,False,COL1,1,"p4 기타사업비용 ['399', '257']",data/disclosure/FY2024_Q1/raw/KR0002_한화손해보험.pdf
+KR0002,한화손해보험,2023.2Q,16,84500.0,False,COL1,1,"p5 기타사업비용 ['845', '529']",data/disclosure/FY2024_Q2/raw/KR0002_한화손해보험.pdf
+KR0003,롯데손해보험,2023.1Q,16,7000.0,True,COL1,1,"p4 기타사업비용 ['70', '25', '45']",data/disclosure/FY2023_Q1/raw/KR0003_롯데손해보험.pdf
+KR0003,롯데손해보험,2023.2Q,16,12400.0,True,COL1,1,"p6 기타사업비용 ['124', '46', '78']",data/disclosure/FY2023_Q2/raw/KR0003_롯데손해보험.pdf
+KR0004,예별손해보험,2023.4Q,16,3000.0,True,COL1/2,1,"p14 (기타사업비용) ['30', '30']",data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.4Q,22,-82400.0,True,COL1,2,"p14 법인세비용차감전순이익 ['△824', '△391', '△433']",data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.4Q,23,1300.0,True,COL1,1,"p14 법인세비용 ['13', '728']",data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.4Q,24,-83700.0,True,COL1,2,"p3 당기순이익 ['△837', '324', '△1,161']",data/disclosure/FY2023_Q4/raw/KR0004_예별손해보험.pdf
+KR0005,흥국화재,2023.1Q,16,3400.0,False,COL2,1,"p4 (기타사업비용) ['51', '34', '17']",data/disclosure/FY2024_Q1/raw/KR0005_흥국화재_amended.pdf
+KR0005,흥국화재,2023.2Q,16,8300.0,True,COL1,1,"p5 (기타사업비용) ['83', '398', '-315']",data/disclosure/FY2023_Q2/raw/KR0005_흥국화재_amended.pdf
+KR0005,흥국화재,2024.3Q,16,18000.0,True,COL1,1,"p4 (기타사업비용) ['180', '132', '48']",data/disclosure/FY2024_Q3/raw/KR0005_흥국화재.pdf
+KR0005,흥국화재,2024.4Q,16,27600.0,False,COL2,1,"p13 (기타사업비용) ['325', '276', '49']",data/disclosure/FY2025_Q4/raw/KR0005_흥국화재.pdf
+KR0008,삼성화재해상보험,2023.2Q,22,1586800.0,True,COL1,2,"p5 법인세비용차감전순이익 ['15,868', '12,342', '+3,526']",data/disclosure/FY2023_Q2/raw/KR0008_삼성화재해상보험_amended.pdf
+KR0008,삼성화재해상보험,2023.2Q,23,402300.0,True,COL1,1,"p5 법인세비용 ['4,023', '3,308']",data/disclosure/FY2023_Q2/raw/KR0008_삼성화재해상보험_amended.pdf
+KR0008,삼성화재해상보험,2023.2Q,24,1184500.0,True,COL1,1,"p3 당기순이익 ['11,845', '9,034']",data/disclosure/FY2023_Q2/raw/KR0008_삼성화재해상보험_amended.pdf
+KR0008,삼성화재해상보험,2023.2Q,16,172900.0,False,COL2,1,"p5 (기타사업비용) ['834', '1,729', '-895']",data/disclosure/FY2024_Q2/raw/KR0008_삼성화재해상보험_amended.pdf
+KR0009,현대해상,2023.1Q,1,258500.0,True,COL1,1,"p4 보험손익 ['2,585', '3,699', '-1,114']",data/disclosure/FY2023_Q1/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.1Q,16,4100.0,True,COL1,1,"p4 (기타사업비용) ['41', '39', '1']",data/disclosure/FY2023_Q1/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.1Q,22,435300.0,True,COL1,2,"p4 법인세비용차감전순이익 ['4,353', '4,852', '-500']",data/disclosure/FY2023_Q1/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.1Q,23,101700.0,True,COL1,1,"p4 법인세비용 ['1,017', '1,395', '-379']",data/disclosure/FY2023_Q1/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.1Q,24,333600.0,True,COL1,1,"p3 당기순이익 ['3,336', '3,457', '-121']",data/disclosure/FY2023_Q1/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.2Q,1,499500.0,True,COL1,1,"p5 보험손익 ['4,995', '7,118', '-2,123']",data/disclosure/FY2023_Q2/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.2Q,16,8800.0,True,COL1,1,"p5 (기타사업비용) ['88', '293', '-205']",data/disclosure/FY2023_Q2/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.2Q,22,765000.0,True,COL1,2,"p5 법인세비용차감전순이익 ['7,650', '9,512', '-1,862']",data/disclosure/FY2023_Q2/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.2Q,23,187000.0,True,COL1,1,"p5 법인세비용 ['1,870', '2,644', '-775']",data/disclosure/FY2023_Q2/raw/KR0009_현대해상.pdf
+KR0009,현대해상,2023.2Q,24,578000.0,True,COL1,1,"p3 당기순이익 ['5,780', '6,868', '-1,088']",data/disclosure/FY2023_Q2/raw/KR0009_현대해상.pdf
+KR0010,KB손해보험,2024.4Q,16,60900.0,True,COL1,1,"p25 (기타사업비용) ['609', '746', '-137']",data/disclosure/FY2024_Q4/raw/KR0010_KB손해보험.pdf
+KR0010,KB손해보험,2025.2Q,16,33300.0,True,COL1,1,"p5 (기타사업비용) ['333', '283', '50']",data/disclosure/FY2025_Q2/raw/KR0010_KB손해보험.pdf
+KR0032,NH농협손해보험,2023.2Q,16,41900.0,True,COL1,1,"p5 (기타사업비용) ['419', '421', '-2']",data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf
+KR0032,NH농협손해보험,2023.2Q,22,179900.0,True,COL1,1,"p50 법인세비용차감전순이익 ['179,898,855,707', '147,300,091,743']",data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf
+KR0032,NH농협손해보험,2023.2Q,23,38600.0,True,COL1,1,"p5 법인세비용 ['386', '356', '30']",data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf
+KR0032,NH농협손해보험,2023.2Q,24,141300.0,True,COL1,1,"p3 당기순이익 ['1,413', '1,117', '296']",data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf
+KR0069,삼성생명보험,2023.1Q,16,13300.0,True,COL1,1,"p4 (기타사업비용) ['133', '115', '18']",data/disclosure/FY2023_Q1/raw/KR0069_삼성생명.pdf
+KR0069,삼성생명보험,2023.1Q,22,942700.0,True,COL1,1,"p27 법인세비용차감전순이익 ['942,726', '399,161']",data/disclosure/FY2023_Q1/raw/KR0069_삼성생명.pdf
+KR0069,삼성생명보험,2023.1Q,23,147900.0,True,COL1,1,"p4 법인세비용 ['1,479', '435', '1,044']",data/disclosure/FY2023_Q1/raw/KR0069_삼성생명.pdf
+KR0069,삼성생명보험,2023.1Q,24,794800.0,True,COL1,1,"p3 당기순이익 ['7,948', '3,557', '4,391']",data/disclosure/FY2023_Q1/raw/KR0069_삼성생명.pdf
+KR0069,삼성생명보험,2023.2Q,16,22700.0,True,COL1,1,"p6 (기타사업비용) ['227', '246', '-19']",data/disclosure/FY2023_Q2/raw/KR0069_삼성생명.pdf
+KR0069,삼성생명보험,2023.2Q,22,1009500.0,True,COL1,1,"p58 법인세비용차감전순이익 ['1,009,533', '562,759']",data/disclosure/FY2023_Q2/raw/KR0069_삼성생명.pdf
+KR0069,삼성생명보험,2023.2Q,23,151600.0,True,COL1,1,"p6 법인세비용 ['1,516', '986', '530']",data/disclosure/FY2023_Q2/raw/KR0069_삼성생명.pdf
+KR0069,삼성생명보험,2023.2Q,24,857900.0,True,COL1,1,"p4 반기순이익 ['8,579', '4,641', '3,938']",data/disclosure/FY2023_Q2/raw/KR0069_삼성생명.pdf
+KR0070,에이비엘생명보험,2023.1Q,16,3500.0,True,COL1/2,1,"p6 (기타사업비용) ['35', '35']",data/disclosure/FY2023_Q1/raw/KR0070_에이비엘생명보험_amended.pdf
+KR0070,에이비엘생명보험,2023.2Q,16,13400.0,True,COL1,1,"p7 (기타사업비용) ['134', '104', '30']",data/disclosure/FY2023_Q2/raw/KR0070_에이비엘생명보험_amended.pdf
+KR0070,에이비엘생명보험,2023.3Q,16,16900.0,True,COL1,1,"p6 (기타사업비용) ['169', '136', '33']",data/disclosure/FY2023_Q3/raw/KR0070_에이비엘생명보험_amended.pdf
+KR0070,에이비엘생명보험,2023.4Q,16,26100.0,True,COL1,1,"p17 (기타사업비용) ['261', '244', '17']",data/disclosure/FY2023_Q4/raw/KR0070_에이비엘생명보험_amended.pdf
+KR0071,흥국생명보험,2023.1Q,16,4400.0,True,COL1,1,"p4 (기타사업비용) ['44', '35', '9']",data/disclosure/FY2023_Q1/raw/KR0071_흥국생명보험_amended.pdf
+KR0071,흥국생명보험,2023.2Q,16,10500.0,True,COL1,1,"p5 (기타사업비용) ['105', '70', '35']",data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf
+KR0071,흥국생명보험,2023.2Q,22,119200.0,True,COL2,1,"p53 법인세비용차감전순이익 ['-19,850,800,167', '119,182,019,348', '148,685,925,928', '248,828,271,641']",data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf
+KR0071,흥국생명보험,2023.2Q,23,26400.0,True,COL1,1,"p5 법인세비용 ['264', '557']",data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf
+KR0071,흥국생명보험,2023.2Q,24,92800.0,True,COL1,1,"p3 당기순이익 ['928', '1,931']",data/disclosure/FY2023_Q2/raw/KR0071_흥국생명보험.pdf
+KR0072,케이디비생명보험,2023.2Q,16,5400.0,True,COL1,1,"p5 (기타사업비용) ['54', '22', '32']",data/disclosure/FY2023_Q2/raw/KR0072_케이디비생명보험.pdf
+KR0073,교보생명보험,2023.1Q,16,8500.0,True,COL1,1,"p3 (기타사업비용) ['85', '73', '12']",data/disclosure/FY2023_Q1/raw/KR0073_교보생명보험.pdf
+KR0073,교보생명보험,2023.1Q,22,602000.0,True,COL1,1,"p15 법인세비용차감전순이익 ['601,986,726,112', '395,587,497,931']",data/disclosure/FY2023_Q1/raw/KR0073_교보생명보험.pdf
+KR0073,교보생명보험,2023.1Q,23,152800.0,True,COL1,1,"p4 법인세비용 ['1,528', '975', '553']",data/disclosure/FY2023_Q1/raw/KR0073_교보생명보험.pdf
+KR0073,교보생명보험,2023.1Q,24,449200.0,True,COL1,1,"p3 당기순이익 ['4,492', '2,981', '1,511']",data/disclosure/FY2023_Q1/raw/KR0073_교보생명보험.pdf
+KR0073,교보생명보험,2023.2Q,16,17900.0,True,COL1,1,"p5 (기타사업비용) ['179', '153', '27']",data/disclosure/FY2023_Q2/raw/KR0073_교보생명보험.pdf
+KR0073,교보생명보험,2023.2Q,22,881100.0,True,COL1,1,"p32 법인세비용차감전순이익 ['881,084,829,071', '702,110,420,160']",data/disclosure/FY2023_Q2/raw/KR0073_교보생명보험.pdf
+KR0073,교보생명보험,2023.2Q,23,224800.0,True,COL1,1,"p5 법인세비용 ['2,248', '1,733', '516']",data/disclosure/FY2023_Q2/raw/KR0073_교보생명보험.pdf
+KR0073,교보생명보험,2023.2Q,24,656200.0,True,COL1,1,"p3 당기순이익 ['6,562', '5,289', '1,274']",data/disclosure/FY2023_Q2/raw/KR0073_교보생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2023.4Q,16,17000.0,True,COL1,1,"p11 기타사업비용 ['170', '115']",data/disclosure/FY2023_Q4/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.4Q,22,-26300.0,True,COL1/2,1,"p13 법인세차감전손익 ['-263', '-263']",data/disclosure/FY2023_Q4/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.4Q,23,-5500.0,True,COL1,2,"p12 법인세비용 ['-55', '-71', '16']",data/disclosure/FY2023_Q4/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.4Q,24,-20800.0,True,COL1,1,"p3 당기순이익 ['-208', '-258', '50']",data/disclosure/FY2023_Q4/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0083,푸본현대생명보험,2023.1Q,16,2000.0,True,COL1,1,"p4 (기타사업비용) ['20', '337', '-317']",data/disclosure/FY2023_Q1/raw/KR0083_푸본현대생명보험.pdf
+KR0083,푸본현대생명보험,2023.2Q,16,3800.0,True,COL1/2,1,"p5 (기타사업비용) ['38', '38', '0']",data/disclosure/FY2023_Q2/raw/KR0083_푸본현대생명보험.pdf
+KR0094,신한라이프생명보험,2023.1Q,16,49700.0,True,COL1,1,"p4 (기타사업비용) ['497', '152', '345']",data/disclosure/FY2023_Q1/raw/KR0094_신한라이프생명보험.pdf
+KR0094,신한라이프생명보험,2023.2Q,16,73600.0,True,COL1,1,"p5 (기타사업비용) ['736', '350', '386']",data/disclosure/FY2023_Q2/raw/KR0094_신한라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.4Q,16,11500.0,True,COL1,1,"p13 기타사업비용 ['115', '105']",data/disclosure/FY2023_Q4/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.4Q,22,474700.0,True,COL1/2,1,"p15 법인세차감전손익 ['4,747', '4,747']",data/disclosure/FY2023_Q4/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.4Q,23,101200.0,True,COL1,1,"p14 법인세비용 ['1,012', '1,253', '241']",data/disclosure/FY2023_Q4/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.4Q,24,373500.0,True,COL1,1,"p3 당기순이익 ['3,735', '5,170', '1,436']",data/disclosure/FY2023_Q4/raw/KR0095_메트라이프생명보험.pdf
+KR0099,KB라이프생명,2023.1Q,16,9500.0,True,COL1,1,"p4 (기타사업비용) ['95', '29', '66']",data/disclosure/FY2023_Q1/raw/KR0099_케이비라이프생명보험.pdf
+KR0099,KB라이프생명,2023.1Q,22,172200.0,True,COL1,1,"p22 법인세차감전순이익 ['172,192', '129,026']",data/disclosure/FY2023_Q1/raw/KR0099_케이비라이프생명보험.pdf
+KR0099,KB라이프생명,2023.1Q,23,42400.0,True,COL1,1,"p4 법인세비용 ['424', '250', '174']",data/disclosure/FY2023_Q1/raw/KR0099_케이비라이프생명보험.pdf
+KR0099,KB라이프생명,2023.1Q,24,129800.0,True,COL1,1,"p3 당기순이익 ['1,298', '1,006', '292']",data/disclosure/FY2023_Q1/raw/KR0099_케이비라이프생명보험.pdf
+KR0099,KB라이프생명,2023.2Q,16,16800.0,True,COL1,1,"p5 (기타사업비용) ['168', '102', '66']",data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf
+KR0099,KB라이프생명,2023.2Q,22,301500.0,True,COL1,1,"p57 법인세차감전순이익 ['301,494', '126,237']",data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf
+KR0099,KB라이프생명,2023.2Q,23,66700.0,True,COL1,1,"p5 법인세비용 ['667', '217', '450']",data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf
+KR0099,KB라이프생명,2023.2Q,24,234800.0,True,COL1,1,"p3 당기순이익 ['2,348', '1,045', '1,304']",data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf
+KR0104,농협생명보험,2023.1Q,16,9200.0,True,COL1,1,"p4 (기타사업비용) ['92', '90', '2']",data/disclosure/FY2023_Q1/raw/KR0104_농협생명보험.pdf
+KR0104,농협생명보험,2023.1Q,22,170500.0,True,COL1,1,"p26 법인세비용차감전순이익 ['170,506', '90,054']",data/disclosure/FY2023_Q1/raw/KR0104_농협생명보험.pdf
+KR0104,농협생명보험,2023.1Q,23,55900.0,True,COL1,1,"p4 법인세비용 ['559', '219', '340']",data/disclosure/FY2023_Q1/raw/KR0104_농협생명보험.pdf
+KR0104,농협생명보험,2023.1Q,24,114600.0,True,COL1,1,"p3 당기순이익 ['1,146', '682', '464']",data/disclosure/FY2023_Q1/raw/KR0104_농협생명보험.pdf
+KR0104,농협생명보험,2023.2Q,16,21800.0,True,COL1,1,"p5 (기타사업비용) ['218', '193', '25']",data/disclosure/FY2023_Q2/raw/KR0104_농협생명보험_amended.pdf
+KR0104,농협생명보험,2023.2Q,22,178300.0,True,COL1,1,"p51 법인세비용차감전순이익 ['178,327', '144,324']",data/disclosure/FY2023_Q2/raw/KR0104_농협생명보험_amended.pdf
+KR0104,농협생명보험,2023.2Q,23,36800.0,True,COL1,1,"p5 법인세비용 ['368', '381', '-13']",data/disclosure/FY2023_Q2/raw/KR0104_농협생명보험_amended.pdf
+KR0104,농협생명보험,2023.2Q,24,141500.0,True,COL1,1,"p3 당기순이익 ['1,415', '1,062', '353']",data/disclosure/FY2023_Q2/raw/KR0104_농협생명보험_amended.pdf
+KR1000,코리안리재보험,2023.1Q,16,20100.0,True,COL1,1,"p4 (기타사업비용) ['201', '212', '-11']",data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf
+KR1000,코리안리재보험,2023.1Q,22,162500.0,True,COL1,1,"p14 법인세비용차감전순이익 ['162,518,526,912', '59,094,558,214', '103,423,968,698']",data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf
+KR1000,코리안리재보험,2023.1Q,23,36200.0,True,COL1,1,"p4 법인세비용 ['362', '148', '214']",data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf
+KR1000,코리안리재보험,2023.1Q,24,126300.0,True,COL1,1,"p3 당기순이익 ['1,263', '443', '820']",data/disclosure/FY2023_Q1/raw/KR1000_코리안리.pdf
+KR1000,코리안리재보험,2023.2Q,16,46600.0,True,COL1,1,"p4 (기타사업비용) ['466', '401', '65']",data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf
+KR1000,코리안리재보험,2023.2Q,22,342100.0,True,COL1,1,"p30 법인세비용차감전순이익 ['342,148,293,808', '86,573,194,667', '255,575,099,141']",data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf
+KR1000,코리안리재보험,2023.2Q,23,73200.0,True,COL1,1,"p4 법인세비용 ['732', '196', '536']",data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf
+KR1000,코리안리재보험,2023.2Q,24,268900.0,True,COL1,1,"p3 당기순이익 ['2,689', '670', '2,019']",data/disclosure/FY2023_Q2/raw/KR1000_코리안리.pdf
+KR0029,AIG손해보험,2023.1Q,1,39600.0,True,COL1,1,"p4 보험손익 ['396', '52', '344']",data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.1Q,16,4400.0,True,COL1,1,"p4 (기타사업비용) ['44', '36', '8']",data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.1Q,22,41400.0,True,COL1,1,"p4 법인세비용차감전순이익 ['414', '72', '342']",data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.1Q,23,9100.0,True,COL1,1,"p4 법인세비용 ['91', '19', '72']",data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.1Q,24,32300.0,True,COL1,1,"p3 당기순이익 ['323', '53', '270']",data/disclosure/FY2023_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.2Q,1,67000.0,True,COL1,1,"p5 보험손익 ['670', '546', '124']",data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.2Q,16,10200.0,True,COL1,1,"p5 (기타사업비용) ['102', '81', '21']",data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.2Q,22,72600.0,True,COL1,1,"p46 법인세비용차감전순이익 ['72,600,883', '58,262,514', '14,338,369']",data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.2Q,23,16300.0,True,COL1,1,"p5 법인세비용 ['163', '149', '14']",data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.2Q,24,56300.0,True,COL1,1,"p3 당기순이익 ['563', '434', '129']",data/disclosure/FY2023_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.3Q,1,77600.0,True,COL1,1,"p4 보험손익 ['776', '766', '10']",data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.3Q,16,16000.0,True,COL1,1,"p4 (기타사업비용) ['160', '131', '29']",data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.3Q,22,87800.0,True,COL1,1,"p4 법인세비용차감전순이익 ['878', '819', '59']",data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.3Q,23,19900.0,True,COL1,1,"p4 법인세비용 ['199', '153', '46']",data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2023.3Q,24,68000.0,True,COL1,1,"p3 당기순이익 ['680', '666', '14']",data/disclosure/FY2023_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.1Q,1,8900.0,True,COL1,1,"p4 보험손익 ['89', '396', '-307']",data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.1Q,16,4300.0,True,COL1,1,"p4 (기타사업비용) ['43', '44', '-1']",data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.1Q,22,13900.0,True,COL1,1,"p4 법인세비용차감전순이익 ['139', '414', '-275']",data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.1Q,23,2900.0,True,COL1,1,"p4 법인세비용 ['29', '91', '-62']",data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.1Q,24,11000.0,True,COL1,1,"p3 당기순이익 ['110', '323', '-213']",data/disclosure/FY2024_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.2Q,1,34700.0,True,COL1,1,"p5 보험손익 ['347', '670', '-323']",data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.2Q,16,9100.0,True,COL1,1,"p5 (기타사업비용) ['91', '102', '-11']",data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.2Q,22,45600.0,True,COL1,1,"p5 법인세비용차감전순이익 ['456', '726', '-270']",data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.2Q,23,11400.0,True,COL1,1,"p5 법인세비용 ['114', '163', '-49']",data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.2Q,24,34200.0,True,COL1,1,"p3 당기순이익 ['342', '563', '-221']",data/disclosure/FY2024_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.3Q,1,29100.0,True,COL1,1,"p4 보험손익 ['291', '776', '-485']",data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.3Q,16,16600.0,True,COL1,1,"p4 (기타사업비용) ['166', '160', '6']",data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.3Q,22,45400.0,True,COL1,1,"p4 법인세비용차감전순이익 ['454', '879', '-425']",data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.3Q,23,11500.0,True,COL1,1,"p4 법인세비용 ['115', '199', '-84']",data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2024.3Q,24,33900.0,True,COL1,1,"p3 당기순이익 ['339', '680', '-341']",data/disclosure/FY2024_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.1Q,1,11100.0,True,COL1,1,"p4 보험손익 ['111', '89', '22']",data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.1Q,16,8700.0,True,COL1,1,"p4 (기타사업비용) ['87', '43', '44']",data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.1Q,22,16500.0,True,COL1,1,"p4 법인세비용차감전순이익 ['165', '139', '26']",data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.1Q,23,3400.0,True,COL1,1,"p4 법인세비용 ['34', '29', '5']",data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.1Q,24,13100.0,True,COL1,1,"p3 당기순이익 ['131', '110', '21']",data/disclosure/FY2025_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.2Q,1,35300.0,True,COL1,1,"p5 보험손익 ['353', '347', '6']",data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.2Q,16,16800.0,True,COL1,1,"p5 (기타사업비용) ['168', '91', '77']",data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.2Q,22,48800.0,True,COL1,1,"p54 법인세비용차감전순이익 ['48,852,519', '45,589,580', '3,262,939']",data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.2Q,23,10800.0,True,COL1,1,"p5 법인세비용 ['108', '114', '-6']",data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.2Q,24,38000.0,True,COL1,1,"p3 당기순이익 ['380', '342', '38']",data/disclosure/FY2025_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.3Q,1,29800.0,True,COL1,1,"p4 보험손익 ['298', '291', '7']",data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.3Q,16,24800.0,True,COL1,1,"p4 (기타사업비용) ['248', '166', '82']",data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.3Q,22,49100.0,True,COL1,1,"p25 법인세비용차감전순이익 ['49,104,120', '45,351,473', '3,752,647']",data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.3Q,23,10900.0,True,COL1,1,"p4 법인세비용 ['109', '115', '-6']",data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2025.3Q,24,38200.0,True,COL1,1,"p3 당기순이익 ['382', '339', '43']",data/disclosure/FY2025_Q3/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.1Q,1,23300.0,True,COL1,1,"p4 보험손익 ['233', '111', '122']",data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.1Q,16,8000.0,True,COL1,1,"p4 (기타사업비용) ['80', '87', '-7']",data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.1Q,22,29000.0,True,COL1,1,"p26 법인세비용차감전순이익 ['28,958,338', '16,547,537', '12,410,801']",data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.1Q,23,6600.0,True,COL1,1,"p4 법인세비용 ['66', '34', '32']",data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.1Q,24,22400.0,True,COL1,1,"p3 당기순이익 ['224', '131', '93']",data/disclosure/FY2026_Q1/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.2Q,1,65500.0,True,COL1,1,"p5 보험손익 ['655', '353', '302']",data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.2Q,16,14100.0,True,COL1,1,"p5 (기타사업비용) ['141', '168', '-27']",data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.2Q,22,77900.0,True,COL1,1,"p57 법인세비용차감전순이익 ['77,916,666', '48,852,519', '29,064,147']",data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.2Q,23,18400.0,True,COL1,1,"p5 법인세비용 ['184', '109', '75']",data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf
+KR0029,AIG손해보험,2026.2Q,24,59500.0,True,COL1,1,"p3 당기순이익 ['595', '380', '215']",data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf
+KR0049,악사손해보험,2023.1Q,1,14100.0,True,COL1,1,"p4 보험손익 ['141', '241', '-100']",data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.1Q,16,1200.0,True,COL1,1,"p4 (기타사업비용) ['12', '10', '2']",data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.1Q,22,18700.0,True,COL1,1,"p21 법인세비용차감전순이익 ['187', '267', '-80']",data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.1Q,23,8400.0,True,COL1/3,1,"p4 법인세비용 ['84', '0', '84']",data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.1Q,24,10400.0,True,COL1,1,"p3 당기순이익 ['104', '267', '-164']",data/disclosure/FY2023_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.2Q,1,22900.0,True,COL1,1,"p5 보험손익 ['229', '343', '-114']",data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.2Q,16,2500.0,True,COL1,1,"p5 (기타사업비용) ['25', '24', '1']",data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.2Q,22,34300.0,True,COL1,1,"p59 법인세비용차감전순이익 ['343', '407', '-64']",data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.2Q,23,12400.0,True,COL1/3,1,"p5 법인세비용 ['124', '0', '124']",data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.2Q,24,21900.0,True,COL1,1,"p3 당기순이익 ['219', '407', '-188']",data/disclosure/FY2023_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.3Q,1,24400.0,True,COL1,1,"p4 보험손익 ['244', '165', '79']",data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.3Q,16,3500.0,True,COL1,1,"p4 (기타사업비용) ['35', '40', '-5']",data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.3Q,22,37800.0,True,COL1,1,"p4 법인세비용차감전순이익 ['378', '227', '151']",data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.3Q,23,12700.0,True,COL1/3,1,"p4 법인세비용 ['127', '0', '127']",data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2023.3Q,24,25100.0,True,COL1,1,"p3 당기순이익 ['251', '227', '24']",data/disclosure/FY2023_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.1Q,1,10000.0,True,COL1,1,"p4 보험손익 ['100', '141', '-41']",data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.1Q,16,1500.0,True,COL1,1,"p4 (기타사업비용) ['15', '12', '3']",data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.1Q,22,13100.0,True,COL1,1,"p26 법인세비용차감전순이익 ['131', '188', '-57']",data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.1Q,23,2400.0,True,COL1,1,"p4 법인세비용 ['24', '84', '-60']",data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.1Q,24,10700.0,True,COL1,1,"p3 당기순이익 ['107', '104', '3']",data/disclosure/FY2024_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.2Q,1,15800.0,True,COL1,1,"p5 보험손익 ['158', '249', '-92']",data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.2Q,16,2400.0,True,COL1,1,"p5 (기타사업비용) ['24', '25', '-1']",data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.2Q,22,24600.0,True,COL1,1,"p67 법인세비용차감전순이익 ['24,552', '36,411', '-11,859']",data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.2Q,23,3600.0,True,COL1,1,"p5 법인세비용 ['36', '124', '-88']",data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.2Q,24,21000.0,True,COL1,1,"p3 당기순이익 ['210', '240', '-30']",data/disclosure/FY2024_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.3Q,1,15000.0,True,COL1,1,"p4 보험손익 ['150', '244', '-94']",data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.3Q,16,1000.0,True,COL1,1,"p4 (기타사업비용) ['10', '35', '-25']",data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.3Q,22,28700.0,True,COL1,2,"p4 법인세비용차감전순이익 ['287', '378', '-90']",data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.3Q,23,4400.0,True,COL1,1,"p4 법인세비용 ['44', '127', '-82']",data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2024.3Q,24,24300.0,True,COL1,1,"p3 당기순이익 ['243', '251', '-8']",data/disclosure/FY2024_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.1Q,1,5900.0,True,COL1,1,"p4 보험손익 ['59', '100', '-41']",data/disclosure/FY2025_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.1Q,16,1200.0,True,COL1,1,"p4 기타사업비용 ['12', '15', '-3']",data/disclosure/FY2025_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.1Q,22,10300.0,True,COL1,1,"p4 법인세비용차감전순이익 ['103', '131', '-28']",data/disclosure/FY2025_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.1Q,23,2100.0,True,COL1,1,"p4 법인세비용 ['21', '24', '-3']",data/disclosure/FY2025_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.1Q,24,8200.0,True,COL1,1,"p3 당기순이익 ['82', '107', '-25']",data/disclosure/FY2025_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.2Q,1,2200.0,True,COL1,1,"p5 보험손익 ['22', '158', '-135']",data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.2Q,16,300.0,True,COL1,1,"p5 기타사업비용 ['3', '24', '-20']",data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.2Q,22,11700.0,True,COL1,1,"p5 법인세비용차감전순이익 ['117', '246', '-129']",data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.2Q,23,3000.0,True,COL1,1,"p5 법인세비용 ['30', '36', '-6']",data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.2Q,24,8700.0,True,COL1,1,"p3 당기순이익 ['87', '210', '-123']",data/disclosure/FY2025_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.3Q,1,-11000.0,True,COL1,1,"p4 보험손익 ['-110', '150', '-260']",data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.3Q,16,900.0,True,COL1,1,"p4 기타사업비용 ['9', '10', '-1']",data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.3Q,22,2600.0,True,COL1,1,"p4 법인세비용차감전순이익 ['26', '287', '-261']",data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.3Q,23,1100.0,True,COL1,1,"p4 법인세비용 ['11', '44', '-34']",data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2025.3Q,24,1500.0,True,COL1,1,"p3 당기순이익 ['15', '243', '-227']",data/disclosure/FY2025_Q3/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.1Q,1,3300.0,True,COL1,1,"p4 보험손익 ['33', '59', '-25']",data/disclosure/FY2026_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.1Q,16,500.0,True,COL1,1,"p4 기타사업비용 ['5', '12', '-7']",data/disclosure/FY2026_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.1Q,22,5700.0,True,COL1,1,"p4 법인세비용차감전순이익 ['57', '103', '-46']",data/disclosure/FY2026_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.1Q,23,1300.0,True,COL1,1,"p4 법인세비용 ['13', '21', '-8']",data/disclosure/FY2026_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.1Q,24,4500.0,True,COL1,1,"p3 당기순이익 ['45', '82', '-37']",data/disclosure/FY2026_Q1/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.2Q,1,-12500.0,True,COL1,1,"p5 보험손익 ['-125', '22', '-147']",data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.2Q,16,16300.0,True,COL1,1,"p5 기타사업비용 ['163', '3', '160']",data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.2Q,22,-6700.0,True,COL1,1,"p5 법인세비용차감전순이익 ['-67', '117', '-184']",data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.2Q,23,-1500.0,True,COL1,2,"p5 법인세비용 ['-15', '30', '-45']",data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf
+KR0049,악사손해보험,2026.2Q,24,-5200.0,True,COL1,1,"p3 당기순이익 ['-52', '87', '-139']",data/disclosure/FY2026_Q2/raw/KR0049_악사손해보험.pdf
+KR0050,하나손해보험,2023.1Q,1,-6500.0,True,COL1,2,"p4 보험손익 ['△65', '47', '△112']",data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.1Q,16,1300.0,True,COL1,2,"p4 기타사업비용 ['(13)', '(12)', '(1)']",data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.1Q,22,-6600.0,True,COL1,2,"p4 법인세비용차감전순이익 ['△66', '38', '△104']",data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.1Q,23,1700.0,True,COL1,1,"p4 법인세비용 ['17', '84']",data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.1Q,24,-8300.0,True,COL1,2,"p3 당기순이익 ['△83', '105', '-188']",data/disclosure/FY2023_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.2Q,1,-14600.0,True,COL1,2,"p5 보험손익 ['△146', '△111', '△35']",data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.2Q,16,2500.0,True,COL1,1,"p5 (기타사업비용) ['25', '26']",data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.2Q,22,-18300.0,True,COL1,2,"p5 법인세비용차감전순이익 ['△183', '△130', '△53']",data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.2Q,23,-300.0,True,COL1,2,"p5 법인세비용 ['△3', '△114', '111']",data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.2Q,24,-18000.0,True,COL1,2,"p3 당기순이익 ['△180', '△16', '△164']",data/disclosure/FY2023_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.3Q,1,-31400.0,True,COL1,2,"p4 보험손익 ['△314', '△279', '△35']",data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.3Q,16,4200.0,True,COL1,1,"p4 (기타사업비용) ['42', '40', '2']",data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.3Q,22,-38300.0,True,COL1,2,"p4 법인세비용차감전순이익 ['△383', '△235', '△148']",data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.3Q,23,-1500.0,True,COL1,2,"p4 법인세비용 ['△15', '△135', '120']",data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2023.3Q,24,-36800.0,True,COL1,2,"p3 당기순이익 ['△368', '△100', '△268']",data/disclosure/FY2023_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.1Q,1,-4000.0,True,COL1,2,"p4 보험손익 ['△40', '△65', '25']",data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.1Q,16,1700.0,True,COL1,1,"p4 (기타사업비용) ['17', '13', '4']",data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.1Q,22,-2400.0,True,COL1,2,"p4 법인세비용차감전순이익 ['△24', '△66', '42']",data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.1Q,23,100.0,True,COL1/2,1,"p4 법인세비용 ['1', '17']",data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.1Q,24,-2500.0,True,COL1,2,"p3 당기순이익 ['△25', '△83', '58']",data/disclosure/FY2024_Q1/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.2Q,1,-14800.0,True,COL1,2,"p5 보험손익 ['△148', '△146', '△2']",data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.2Q,16,3700.0,True,COL1,1,"p5 (기타사업비용) ['37', '25', '12']",data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.2Q,22,-15500.0,True,COL1,2,"p5 법인세비용차감전순이익 ['△155', '△183', '28']",data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.2Q,23,100.0,True,COL1/2,1,"p5 법인세비용 ['1', '4']",data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.2Q,24,-15600.0,True,COL1,2,"p3 당기순이익 ['△156', '△180', '24']",data/disclosure/FY2024_Q2/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.3Q,1,-26100.0,True,COL1,2,"p4 보험손익 ['△261', '△314', '53']",data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.3Q,16,6300.0,True,COL1,1,"p4 (기타사업비용) ['63', '42', '21']",data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.3Q,22,-25800.0,True,COL1,2,"p4 법인세비용차감전순이익 ['△258', '△383', '125']",data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.3Q,23,100.0,True,COL1/2,1,"p4 법인세비용 ['1', '16']",data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2024.3Q,24,-25900.0,True,COL1,2,"p3 당기순이익 ['△259', '△368', '109']",data/disclosure/FY2024_Q3/raw/KR0050_하나손해보험_amended.pdf
+KR0050,하나손해보험,2025.1Q,1,-7900.0,True,COL1,2,"p4 보험손익 ['△79', '△40', '△39']",data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.1Q,16,2000.0,True,COL1,1,"p4 (기타사업비용) ['20', '17', '3']",data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.1Q,22,-7200.0,True,COL1,2,"p4 법인세비용차감전순이익 ['△72', '△24', '△48']",data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.1Q,23,0.0,True,COL1/2,1,"p4 법인세비용 ['0', '1']",data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.1Q,24,-7200.0,True,COL1,2,"p3 당기순이익 ['△72', '△25', '△47']",data/disclosure/FY2025_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.2Q,1,-17600.0,True,COL1,1,"p5 보험손익 ['-176', '-148', '-28']",data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.2Q,16,4100.0,True,COL1,1,"p5 (기타사업비용) ['41', '37', '4']",data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.2Q,22,-16200.0,True,COL1,1,"p5 법인세비용차감전순이익 ['-162', '-155', '-7']",data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.2Q,23,0.0,True,COL1/2/3,1,"p5 법인세비용 ['0', '1', '-1']",data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.2Q,24,-16200.0,True,COL1,1,"p3 당기순이익 ['-162', '-156', '-6']",data/disclosure/FY2025_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.3Q,1,-29700.0,True,COL1,1,"p4 보험손익 ['-297', '-261', '-36']",data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.3Q,16,5200.0,True,COL1,1,"p4 (기타사업비용) ['52', '63', '-11']",data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.3Q,22,-27800.0,True,COL1,1,"p4 법인세비용차감전순이익 ['-278', '-258', '-20']",data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.3Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '1', '-1']",data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2025.3Q,24,-27800.0,True,COL1,1,"p3 당기순이익 ['-278', '-259', '-19']",data/disclosure/FY2025_Q3/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.1Q,1,-11500.0,True,COL1,1,"p4 보험손익 ['-115', '-79', '-36']",data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.1Q,16,2400.0,True,COL1,1,"p4 (기타사업비용) ['24', '20', '4']",data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.1Q,22,-7500.0,True,COL1,1,"p4 법인세비용차감전순이익 ['-75', '-72', '-3']",data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.1Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '0', '0']",data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.1Q,24,-7500.0,True,COL1,1,"p3 당기순이익 ['-75', '-72', '-3']",data/disclosure/FY2026_Q1/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.2Q,1,-72900.0,True,COL1,1,"p5 보험손익 ['-729', '-175', '-554']",data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.2Q,16,5600.0,True,COL1,1,"p5 (기타사업비용) ['56', '41', '15']",data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.2Q,22,-71100.0,True,COL1,1,"p5 법인세비용차감전순이익 ['-711', '-161', '-550']",data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.2Q,23,0.0,True,COL1/2/3,1,"p5 법인세비용 ['0', '0', '0']",data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf
+KR0050,하나손해보험,2026.2Q,24,-71100.0,True,COL1,1,"p5 당기순이익 ['-711', '-161', '-550']",data/disclosure/FY2026_Q2/raw/KR0050_하나손해보험.pdf
+KR0051,신한이지손해보험,2023.1Q,1,-2600.0,True,COL1,1,"p4 보험손익 ['-26', '-8', '-18']",data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.1Q,16,100.0,True,COL1/2/3,1,"p4 (기타사업비용) ['1', '2', '-1']",data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.1Q,22,-900.0,True,NOLABEL,2,,data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.1Q,24,-900.0,True,NOLABEL,2,,data/disclosure/FY2023_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.2Q,1,-4100.0,True,COL1,1,"p5 보험손익 ['-41', '-30', '-11']",data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.2Q,16,400.0,True,COL1,1,"p5 (기타사업비용) ['4', '3', '1']",data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.2Q,22,-1300.0,True,NOLABEL,2,,data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.2Q,24,-1300.0,True,NOLABEL,2,,data/disclosure/FY2023_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.3Q,1,-9100.0,True,COL1,1,"p4 보험손익 ['-91', '-72', '-19']",data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.3Q,16,600.0,True,COL1,1,"p4 (기타사업비용) ['6', '4', '2']",data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.3Q,22,-5200.0,True,NOLABEL,2,,data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2023.3Q,24,-5200.0,True,NOLABEL,2,,data/disclosure/FY2023_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.1Q,1,-1800.0,True,COL1,1,"p4 보험손익 ['-18', '-21', '3']",data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.1Q,16,500.0,True,COL1,1,"p4 (기타사업비용) ['5', '3', '2']",data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.1Q,22,-900.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.1Q,24,-900.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.2Q,1,-7500.0,True,COL1,1,"p5 보험손익 ['-75', '-35', '-40']",data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.2Q,16,800.0,True,COL1,1,"p5 (기타사업비용) ['8', '5', '3']",data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.2Q,22,-6000.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.2Q,24,-6000.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.3Q,1,-14000.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.3Q,16,1400.0,True,COL1,1,"p4 (기타사업비용) ['14', '9', '5']",data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.3Q,22,-14000.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2024.3Q,24,-14000.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.1Q,1,-2100.0,True,COL1,1,"p4 보험손익 ['-21', '-18', '-3']",data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.1Q,16,400.0,True,COL1,1,"p4 (기타사업비용) ['4', '5', '-1']",data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.1Q,22,-4600.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.1Q,24,-4600.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.2Q,1,-11400.0,True,COL1,1,"p5 보험손익 ['-114', '-75', '-39']",data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.2Q,16,800.0,True,COL1/2,1,"p5 (기타사업비용) ['8', '8', '-1']",data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.2Q,22,-15700.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.2Q,24,-15700.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.3Q,1,-20800.0,True,COL1,1,"p4 보험손익 ['-208', '-140', '-68']",data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.3Q,16,1100.0,True,COL1,1,"p4 (기타사업비용) ['11', '14', '-3']",data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.3Q,22,-27200.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2025.3Q,24,-27200.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.1Q,1,-8100.0,True,COL1,1,"p4 보험손익 ['(81)', '(21)', '(60)']",data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.1Q,16,300.0,True,COL1,1,"p4 (기타사업비용) ['3', '4', '(1)']",data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.1Q,22,-9700.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.1Q,24,-9700.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.2Q,1,-15000.0,True,COL1,1,"p5 보험손익 ['(150)', '(114)', '(36)']",data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.2Q,16,1000.0,True,COL1,1,"p5 (기타사업비용) ['10', '8', '2']",data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.2Q,22,-18200.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0051,신한이지손해보험,2026.2Q,24,-18200.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR0051_신한이지손해보험.pdf
+KR0074,라이나생명보험,2023.1Q,1,83000.0,True,COL1,1,"p4 보험손익 ['830', '1,149', '-319']",data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.1Q,16,5700.0,True,COL1,1,"p4 (기타사업비용) ['57', '81', '-24']",data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.1Q,22,127600.0,True,COL1,2,"p4 법인세비용차감전순이익 ['1,276', '1,718', '-442']",data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.1Q,23,31100.0,True,COL1,1,"p4 법인세비용 ['311', '474', '-163']",data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.1Q,24,96500.0,True,COL1,1,"p3 당기순이익 ['965', '1,244', '-279']",data/disclosure/FY2023_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.2Q,1,184900.0,True,COL1,1,"p5 보험손익 ['1,849', '2,222', '-373']",data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.2Q,16,9500.0,True,COL1,1,"p5 (기타사업비용) ['95', '156', '-61']",data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.2Q,22,247700.0,True,COL1,2,"p5 법인세비용차감전순이익 ['2,477', '3,459', '-982']",data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.2Q,23,60300.0,True,COL1,1,"p5 법인세비용 ['603', '952', '-349']",data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.2Q,24,187400.0,True,COL1,1,"p3 당기순이익 ['1,874', '2,507', '-633']",data/disclosure/FY2023_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.3Q,1,317100.0,True,COL1,1,"p4 보험손익 ['3,171', '3,461', '-290']",data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.3Q,16,11500.0,True,COL2,1,"p77 기타사업비용 ['1,998,920', '11,493,637', '4,782,310', '20,402,078']",data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.3Q,22,418600.0,True,NONE,2,"p4 법인세비용차감전순이익 ['4,1865,435', '-1,249']",data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.3Q,23,101900.0,True,COL1,1,"p4 법인세비용 ['1,019', '1,496', '-477']",data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2023.3Q,24,316700.0,True,COL1,1,"p3 당기순이익 ['3,167', '3,939', '-772']",data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.1Q,1,108000.0,True,COL1,1,"p4 보험손익 ['1,080', '830', '250']",data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.1Q,16,3800.0,True,COL1,1,"p4 (기타사업비용) ['38', '57', '-19']",data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.1Q,22,204700.0,True,COL1,2,"p4 법인세비용차감전순이익 ['2,047', '1,276', '771']",data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.1Q,23,49100.0,True,COL1,1,"p4 법인세비용 ['491', '311', '180']",data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.1Q,24,155600.0,True,COL1,1,"p3 당기순이익 ['1,556', '965', '591']",data/disclosure/FY2024_Q1/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.2Q,1,216100.0,True,COL1,1,"p5 보험손익 ['2,161', '1,848', '313']",data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.2Q,16,8000.0,True,COL1,1,"p5 (기타사업비용) ['80', '96', '-16']",data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.2Q,22,389100.0,True,COL1,2,"p5 법인세비용차감전순이익 ['3,891', '2,477', '1,414']",data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.2Q,23,93100.0,True,COL1,1,"p5 법인세비용 ['931', '603', '328']",data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.2Q,24,296000.0,True,COL1,1,"p3 당기순이익 ['2,960', '1,874', '1,086']",data/disclosure/FY2024_Q2/raw/KR0074_라이나생명보험_amended.pdf
+KR0074,라이나생명보험,2024.3Q,1,321600.0,True,COL1,1,"p4 보험손익 ['3,216', '3,394', '-178']",data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2024.3Q,16,14200.0,True,COL1,1,"p4 (기타사업비용) ['142', '116', '26']",data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2024.3Q,22,531200.0,True,COL1,2,"p4 법인세비용차감전순이익 ['5,312', '5,154', '158']",data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2024.3Q,23,127200.0,True,COL1,1,"p4 법인세비용 ['1,272', '1,255', '17']",data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2024.3Q,24,404000.0,True,COL1,1,"p3 당기순이익 ['4,040', '3,899', '141']",data/disclosure/FY2024_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.1Q,1,73100.0,True,COL1,1,"p4 보험손익 ['731', '1,080', '-349']",data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.1Q,16,3400.0,True,COL1,1,"p4 (기타사업비용) ['34', '39', '-5']",data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.1Q,22,135800.0,True,COL1,2,"p4 법인세비용차감전순이익 ['1,358', '2,047', '-689']",data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.1Q,23,33000.0,True,COL1,1,"p4 법인세비용 ['330', '491', '-161']",data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.1Q,24,102800.0,True,COL1,1,"p3 당기순이익 ['1,028', '1,556', '-528']",data/disclosure/FY2025_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.2Q,1,151000.0,True,COL1,1,"p5 보험손익 ['1,510', '2,161', '-651']",data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.2Q,16,7300.0,True,COL1,1,"p5 (기타사업비용) ['73', '80', '-7']",data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.2Q,22,271500.0,True,COL1,2,"p5 법인세비용차감전순이익 ['2,715', '3,891', '-1,176']",data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.2Q,23,66000.0,True,COL1,1,"p5 법인세비용 ['660', '931', '-271']",data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.2Q,24,205500.0,True,COL1,1,"p3 당기순이익 ['2,055', '2,960', '-905']",data/disclosure/FY2025_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.3Q,1,203800.0,True,COL1,1,"p4 보험손익 ['2,038', '3,216', '-1,178']",data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.3Q,16,11700.0,True,COL1,1,"p4 (기타사업비용) ['117', '142', '-25']",data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.3Q,22,397300.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.3Q,23,96600.0,True,COL1,1,"p4 법인세비용 ['966', '1,272', '-306']",data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2025.3Q,24,300700.0,True,COL1,1,"p3 당기순이익 ['3,007', '4,040', '-1,033']",data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.1Q,1,62200.0,True,COL1,1,"p4 보험손익 ['622', '731', '-109']",data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.1Q,16,4200.0,True,COL1,1,"p4 (기타사업비용) ['42', '34', '8']",data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.1Q,22,139300.0,True,COL1,2,"p4 법인세비용차감전순이익 ['1,393', '1,358', '35']",data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.1Q,23,34500.0,True,COL1,1,"p4 법인세비용 ['345', '330', '15']",data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.1Q,24,104800.0,True,COL1,1,"p3 당기순이익 ['1,048', '1,028', '20']",data/disclosure/FY2026_Q1/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.2Q,1,-36900.0,True,COL1,1,"p5 보험손익 ['-369', '1,510', '-1,879']",data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.2Q,16,8000.0,True,COL1,1,"p5 (기타사업비용) ['80', '73', '7']",data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.2Q,22,155300.0,True,COL1,2,"p5 법인세비용차감전순이익 ['1,553', '2,715', '-1,162']",data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.2Q,23,38300.0,True,COL1,1,"p5 법인세비용 ['383', '660', '-277']",data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf
+KR0074,라이나생명보험,2026.2Q,24,117000.0,True,COL1,1,"p3 당기순이익 ['1,170', '2,055', '-885']",data/disclosure/FY2026_Q2/raw/KR0074_라이나생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2023.1Q,1,1100.0,True,COL1/2,2,"p4 보험손익 ['11', '11', '-58', '-58']",data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2023.1Q,16,2600.0,True,COL1/2,1,"p4 (기타사업비용)(기타사업비용) ['26', '26', '25', '25']",data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2023.1Q,22,-6700.0,True,NOLABEL,2,,data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2023.1Q,23,-1400.0,True,COL1/2,2,"p4 법인세비용 ['-14', '-14', '-16', '-16']",data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2023.1Q,24,-5300.0,True,COL1/2,2,"p3 당기순이익 ['-53', '-53', '-58', '-58']",data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2023.2Q,1,6600.0,True,COL1/2,2,"p5 보험손익 ['66', '66', '-61', '-61']",data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.2Q,16,5300.0,True,COL1/2,1,"p5 (기타사업비용)(기타사업비용) ['53', '53', '49', '49']",data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.2Q,22,-4000.0,True,NOLABEL,2,,data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.2Q,23,-900.0,True,COL1/2,2,"p5 법인세비용 ['-9', '-9', '-22', '-22']",data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.2Q,24,-3100.0,True,COL1/2,2,"p3 당기순이익 ['-31', '-31', '-79', '-79']",data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.3Q,1,11100.0,True,COL1/2,2,"p4 보험손익 ['111', '111', '-75', '-75']",data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.3Q,16,8100.0,True,COL1/2,1,"p4 (기타사업비용)(기타사업비용) ['81', '81', '82', '82']",data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.3Q,22,-5900.0,True,NOLABEL,2,,data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.3Q,23,-1100.0,True,COL1/2,2,"p4 법인세비용 ['-11', '-11', '-33', '-33']",data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2023.3Q,24,-4800.0,True,COL1/2,2,"p3 당기순이익 ['-48', '-48', '-117', '-117']",data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.1Q,1,4500.0,True,COL1/2,2,"p4 보험손익 ['45', '45', '11', '11']",data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.1Q,16,2500.0,True,COL1/2,1,"p4 (기타사업비용)(기타사업비용) ['25', '25', '26', '26']",data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.1Q,22,-1900.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.1Q,23,-400.0,True,COL1/2,2,"p4 법인세비용 ['-4', '-4', '-14', '-14']",data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.1Q,24,-1500.0,True,COL1/2,2,"p3 당기순이익 ['-15', '-15', '-53', '-53']",data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.2Q,1,-4700.0,True,COL1/2,2,"p5 보험손익 ['-47', '-47', '66', '66']",data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.2Q,16,5000.0,True,COL1/2,1,"p5 (기타사업비용)(기타사업비용) ['50', '50', '53', '53']",data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.2Q,22,-4500.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.2Q,23,-1100.0,True,COL1/2,2,"p5 법인세비용 ['-11', '-11', '-9', '-9']",data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.2Q,24,-3400.0,True,COL1/2,2,"p3 당기순이익 ['-34', '-34', '-31', '-31']",data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.3Q,1,-8000.0,True,COL1/2,2,"p4 보험손익 ['-80', '-80', '111', '111']",data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.3Q,16,7300.0,True,COL1/2,1,"p4 (기타사업비용)(기타사업비용) ['73', '73', '81', '81']",data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.3Q,22,-8700.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.3Q,23,-1900.0,True,COL1/2,2,"p4 법인세비용 ['-19', '-19', '-11', '-11']",data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2024.3Q,24,-6800.0,True,COL1/2,2,"p3 당기순이익 ['-68', '-68', '-48', '-48']",data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf
+KR0075,비엔피파리바카디프생명보험,2025.1Q,1,-4900.0,True,COL1/2,2,"p4 보험손익 ['-49', '-49', '45', '45']",data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.1Q,16,2400.0,True,COL1/2,1,"p4 (기타사업비용)(기타사업비용) ['24', '24', '25', '25']",data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.1Q,22,-4200.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.1Q,23,-800.0,True,COL1/2,2,"p4 법인세비용 ['-8', '-8', '-4', '-4']",data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.1Q,24,-3400.0,True,COL1/2,2,"p3 당기순이익 ['-34', '-34', '-15', '-15']",data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.2Q,1,-8000.0,True,COL1/2,2,"p5 보험손익 ['-80', '-80', '-47', '-47']",data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.2Q,16,4800.0,True,COL1/2,1,"p5 (기타사업비용)(기타사업비용) ['48', '48', '50', '50']",data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.2Q,22,-6100.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.2Q,23,-1200.0,True,COL1/2,2,"p5 법인세비용 ['-12', '-12', '-11', '-11']",data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.2Q,24,-4900.0,True,COL1/2,2,"p3 당기순이익 ['-49', '-49', '-34', '-34']",data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.3Q,1,-12800.0,True,COL1,1,"p34 보험손익 ['(12,823,883,058)', '(8,025,380,570)']",data/disclosure/FY2025_Q3/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.3Q,16,7900.0,True,COL1/2,1,"p4 (기타사업비용)(기타사업비용) ['79', '79', '73', '73']",data/disclosure/FY2025_Q3/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.3Q,22,-10500.0,True,COL1,1,"p34 법인세차감전순이익(손실) ['(10,474,315,983)', '(8,755,569,007)']",data/disclosure/FY2025_Q3/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.3Q,23,-2200.0,True,COL1/2,2,"p4 법인세비용 ['-22', '-22', '-19', '-19']",data/disclosure/FY2025_Q3/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2025.3Q,24,-8300.0,True,COL1,1,"p34 당기순이익(손실) ['(8,341,589,754)', '(6,809,665,007)']",data/disclosure/FY2025_Q3/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.1Q,1,-4800.0,True,COL1,1,"p4 보험손익 ['-48', '-49', '1']",data/disclosure/FY2026_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.1Q,16,2500.0,True,COL1,1,"p4 (기타사업비용) ['25', '24', '1']",data/disclosure/FY2026_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.1Q,22,-4400.0,True,COL1,2,"p4 법인세비용차감전순이익 ['-44', '-42', '-2']",data/disclosure/FY2026_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.1Q,23,-900.0,True,COL1,2,"p4 법인세비용 ['-9', '-8', '-1']",data/disclosure/FY2026_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.1Q,24,-3500.0,True,COL1,1,"p3 당기순이익 ['-35', '-34', '-1']",data/disclosure/FY2026_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.2Q,1,-6000.0,True,COL1,1,"p5 보험손익 ['-60', '-80', '20']",data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.2Q,16,5300.0,True,COL1,1,"p5 (기타사업비용) ['53', '48', '5']",data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.2Q,22,-5400.0,True,COL1,2,"p5 법인세비용차감전순이익 ['-54', '-61', '7']",data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.2Q,23,-1200.0,True,COL1/2,2,"p5 법인세비용 ['-12', '-12', '0']",data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0075,비엔피파리바카디프생명보험,2026.2Q,24,-4200.0,True,COL1,1,"p3 당기순이익 ['-42', '-49', '7']",data/disclosure/FY2026_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.1Q,1,14500.0,True,COL1,1,"p4 보험손익 ['145', '126', '19']",data/disclosure/FY2023_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.1Q,16,4200.0,True,COL1,1,"p4 (기타사업비용) ['42', '32', '10']",data/disclosure/FY2023_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.1Q,22,37800.0,True,COL1,2,"p4 법인세비용차감전순이익 ['378', '179', '198']",data/disclosure/FY2023_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.1Q,23,7100.0,True,COL1,1,"p4 법인세비용 ['71', '46', '25']",data/disclosure/FY2023_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.1Q,24,30600.0,True,COL1,1,"p3 당기순이익 ['306', '133', '173']",data/disclosure/FY2023_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.2Q,1,35200.0,True,COL1,1,"p5 보험손익 ['352', '284', '67']",data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf
+KR0076,아이엠라이프생명보험,2023.2Q,16,8200.0,True,COL1,1,"p5 (기타사업비용) ['82', '65', '17']",data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf
+KR0076,아이엠라이프생명보험,2023.2Q,22,46500.0,True,COL1,2,"p5 법인세비용차감전순이익 ['465', '173', '291']",data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf
+KR0076,아이엠라이프생명보험,2023.2Q,23,6400.0,True,COL1,1,"p5 법인세비용 ['64', '42', '22']",data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf
+KR0076,아이엠라이프생명보험,2023.2Q,24,40100.0,True,COL1,1,"p3 당기순이익 ['401', '131', '270']",data/disclosure/FY2023_Q2/raw/KR0076_아이엠라이프생명보험_amended.pdf
+KR0076,아이엠라이프생명보험,2023.3Q,1,59500.0,True,COL1,1,"p4 보험손익 ['595', '419', '177']",data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.3Q,16,12600.0,True,COL1,1,"p4 (기타사업비용) ['126', '104', '22']",data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.3Q,22,66300.0,True,COL1,2,"p4 법인세비용차감전순이익 ['663', '251', '411']",data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.3Q,23,11200.0,True,COL1,1,"p4 법인세비용 ['112', '69', '44']",data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2023.3Q,24,55000.0,True,COL1,1,"p3 당기순이익 ['550', '183', '367']",data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.1Q,1,16500.0,True,COL1,1,"p5 보험손익 ['165', '144', '21']",data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.1Q,16,5200.0,True,COL1,1,"p5 (기타사업비용) ['52', '42', '10']",data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.1Q,22,16300.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.1Q,23,5500.0,True,COL1,1,"p5 법인세비용 ['55', '71', '(17)']",data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.1Q,24,10800.0,True,COL1,1,"p3 당기순이익 ['108', '306', '(198)']",data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.2Q,1,32000.0,True,COL1,1,"p6 보험손익 ['320', '352', '(32)']",data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.2Q,16,10000.0,True,COL1,1,"p6 (기타사업비용) ['100', '82', '18']",data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.2Q,22,39500.0,True,COL1,1,"p56 법인세비용차감전순이익 ['39,466,936,628', '46,482,841,765']",data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.2Q,23,11000.0,True,COL1,1,"p6 법인세비용 ['110', '64', '47']",data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.2Q,24,28400.0,True,COL1,1,"p3 당기순이익 ['284', '401', '(117)']",data/disclosure/FY2024_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.3Q,1,48300.0,True,COL1,1,"p5 보험손익 ['483', '595', '(113)']",data/disclosure/FY2024_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.3Q,16,14800.0,True,COL1,1,"p5 (기타사업비용) ['148', '126', '22']",data/disclosure/FY2024_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.3Q,22,60200.0,True,COL1,2,"p5 법인세비용차감전순이익 ['602', '663', '(61)']",data/disclosure/FY2024_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.3Q,23,15800.0,True,COL1,1,"p5 법인세비용 ['158', '112', '45']",data/disclosure/FY2024_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2024.3Q,24,44400.0,True,COL1,1,"p3 당기순이익 ['444', '550', '(106)']",data/disclosure/FY2024_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.1Q,1,14700.0,True,COL1,1,"p4 보험손익 ['147', '165', '(18)']",data/disclosure/FY2025_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.1Q,16,4600.0,True,COL1,1,"p4 (기타사업비용) ['46', '52', '(6)']",data/disclosure/FY2025_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.1Q,22,13000.0,True,COL1,2,"p4 법인세비용차감전순이익 ['130', '163', '(33)']",data/disclosure/FY2025_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.1Q,23,2900.0,True,COL1,1,"p4 법인세비용 ['29', '55', '(26)']",data/disclosure/FY2025_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.1Q,24,10100.0,True,COL1,1,"p3 당기순이익 ['101', '108', '(7)']",data/disclosure/FY2025_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.2Q,1,26100.0,True,COL1,1,"p5 보험손익 ['261', '320', '(59)']",data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.2Q,16,9800.0,True,COL1,1,"p5 (기타사업비용) ['98', '100', '(2)']",data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.2Q,22,17800.0,True,COL1,1,"p57 법인세비용차감전순이익 ['17,820,295,139', '39,466,936,628']",data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.2Q,23,4000.0,True,COL1,1,"p5 법인세비용 ['40', '110', '(70)']",data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.2Q,24,13800.0,True,COL1,1,"p3 당기순이익 ['138', '284', '(146)']",data/disclosure/FY2025_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.3Q,1,35100.0,True,COL1,1,"p4 보험손익 ['351', '483', '-132']",data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.3Q,16,15000.0,True,COL1,1,"p4 (기타사업비용) ['150', '148', '2']",data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.3Q,22,24800.0,True,COL1,1,"p25 법인세비용차감전순이익 ['24,835,503,211', '60,211,033,476']",data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.3Q,23,5600.0,True,COL1,1,"p4 법인세비용 ['56', '158', '-102']",data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2025.3Q,24,19200.0,True,COL1,1,"p3 당기순이익 ['192', '444', '-252']",data/disclosure/FY2025_Q3/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.1Q,1,12900.0,True,COL1,1,"p4 보험손익 ['129', '147', '-18']",data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.1Q,16,4700.0,True,COL1,1,"p4 (기타사업비용) ['47', '46', '1']",data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.1Q,22,21600.0,True,COL1,1,"p26 법인세비용차감전순이익 ['21,598,679,750', '12,927,234,381']",data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.1Q,23,5100.0,True,COL1,1,"p4 법인세비용 ['51', '28', '23']",data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.1Q,24,16500.0,True,COL1,1,"p3 당기순이익 ['165', '101', '64']",data/disclosure/FY2026_Q1/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.2Q,1,25200.0,True,COL1,1,"p5 보험손익 ['252', '261', '-9']",data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.2Q,16,9200.0,True,COL1,1,"p5 (기타사업비용) ['92', '98', '-6']",data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.2Q,22,23800.0,True,COL1,1,"p58 법인세비용차감전순이익 ['23,752,018,410', '17,820,295,139']",data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.2Q,23,5600.0,True,COL1,1,"p5 법인세비용 ['56', '40', '16']",data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0076,아이엠라이프생명보험,2026.2Q,24,18200.0,True,COL1,1,"p3 당기순이익 ['182', '138', '44']",data/disclosure/FY2026_Q2/raw/KR0076_아이엠라이프생명보험.pdf
+KR0080,에이아이에이생명보험,2023.1Q,1,-4000.0,True,COL1,1,"p4 보험손익 ['(40)', '142', '(182)']",data/disclosure/FY2023_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.1Q,16,40700.0,True,COL1,1,"p4 (기타사업비용) ['407', '171', '236']",data/disclosure/FY2023_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.1Q,22,31100.0,True,COL1,1,"p16 법인세비용차감전순이익 ['31,130,627,657', '60,681,461,436']",data/disclosure/FY2023_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.1Q,23,7100.0,True,COL1,1,"p4 법인세비용 ['71', '132', '(61)']",data/disclosure/FY2023_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.1Q,24,24000.0,True,COL1,1,"p3 당기순이익 ['240', '475', '(235)']",data/disclosure/FY2023_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.2Q,1,41400.0,True,COL1,1,"p4 보험손익 ['414', '507', '-93']",data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.2Q,16,40400.0,True,COL1,1,"p4 (기타사업비용) ['404', '339', '65']",data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.2Q,22,79100.0,True,COL1,1,"p34 법인세비용차감전순이익 ['79,106,537,279', '115,643,251,534']",data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.2Q,23,18200.0,True,COL1,1,"p4 법인세비용 ['182', '246', '-64']",data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.2Q,24,60900.0,True,COL1,1,"p3 당기순이익 ['609', '910', '-301']",data/disclosure/FY2023_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.3Q,1,52900.0,True,COL1,1,"p3 보험손익 ['529', '894', '-365']",data/disclosure/FY2023_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.3Q,16,59000.0,True,COL1,1,"p3 (기타사업비용) ['590', '484', '106']",data/disclosure/FY2023_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.3Q,22,104600.0,True,COL1,1,"p19 법인세비용차감전순이익 ['104,595,489,440', '61,284,877,946']",data/disclosure/FY2023_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.3Q,23,24100.0,True,COL1,1,"p4 법인세비용 ['241', '148', '93']",data/disclosure/FY2023_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2023.3Q,24,80500.0,True,COL1,1,"p3 당기순이익 ['805', '465', '340']",data/disclosure/FY2023_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.1Q,1,22400.0,True,COL1,1,"p4 보험손익 ['224', '75', '149']",data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.1Q,16,18600.0,True,COL1,1,"p5 (기타사업비용) ['186', '210', '(24)']",data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.1Q,22,43400.0,True,COL1,1,"p26 법인세차감전순이익 ['43,407,753,095', '52,890,631,812']",data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.1Q,23,13700.0,True,COL1,1,"p5 법인세비용 ['137', '122', '15']",data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.1Q,24,29700.0,True,COL1,1,"p4 당기순이익 ['297', '407', '(110)']",data/disclosure/FY2024_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.2Q,1,44600.0,True,COL1,1,"p6 보험손익 ['446', '313', '133']",data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.2Q,16,38600.0,True,COL1,1,"p6 (기타사업비용) ['386', '397', '-11']",data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.2Q,22,95600.0,True,COL1,1,"p55 법인세차감전순이익 ['95,533,549,441', '97,718,257,508']",data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.2Q,23,27300.0,True,COL1,1,"p6 법인세비용 ['273', '226', '46']",data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.2Q,24,68300.0,True,COL1,1,"p55 당기순이익 ['68,292,552,802', '75,145,340,024']",data/disclosure/FY2024_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.3Q,1,56600.0,True,COL1,1,"p5 보험손익 ['566', '630', '-64']",data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.3Q,16,60000.0,True,COL1,1,"p5 (기타사업비용) ['600', '503', '97']",data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.3Q,22,125800.0,True,COL1,2,"p5 법인세비용차감전순이익 ['1,258', '1566', '-308']",data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.3Q,23,32600.0,True,COL1,1,"p5 법인세비용 ['326', '361', '-35']",data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2024.3Q,24,93200.0,True,COL1,1,"p4 당기순이익 ['932', '1,203', '-271']",data/disclosure/FY2024_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.1Q,1,18300.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.1Q,16,13700.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.1Q,22,41700.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.1Q,23,9700.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.1Q,24,32000.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.2Q,1,42800.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.2Q,16,28300.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.2Q,22,100100.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.2Q,23,23100.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.2Q,24,77000.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.3Q,1,26000.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.3Q,16,45400.0,True,COL1,1,"p28 기타사업비용 ['45,418', '59,978']",data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.3Q,22,150000.0,True,COL1,1,"p29 법인세차감전순이익 ['150,064', '125,939']",data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.3Q,23,34600.0,True,COL1,1,"p29 법인세비용 ['34,667', '32,611']",data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2025.3Q,24,115400.0,True,COL1,1,"p29 당기순이익 ['115,397', '93,329']",data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.1Q,1,11900.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.1Q,16,14400.0,True,COL1,1,"p32 기타사업비용 ['14,400', '13,705']",data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.1Q,22,71100.0,True,COL1,1,"p32 법인세차감전순이익 ['71,151', '41,659']",data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.1Q,23,17200.0,True,COL1,1,"p32 법인세비용 ['17,219', '9,623']",data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.1Q,24,53900.0,True,COL1,1,"p32 당기순이익 ['53,932', '32,036']",data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.2Q,1,3900.0,True,COL1,1,"p6 보험손익 ['39', '428', '-389']",data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.2Q,16,29600.0,True,COL1,1,"p6 (기타사업비용) ['296', '283', '13']",data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.2Q,22,179100.0,True,COL1,1,"p58 법인세차감전순이익 ['179,080', '100,102']",data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.2Q,23,43100.0,True,COL1,1,"p6 법인세비용 ['431', '231', '200']",data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0080,에이아이에이생명보험,2026.2Q,24,136000.0,True,COL1,1,"p4 당기순이익 ['1,360', '770', '590']",data/disclosure/FY2026_Q2/raw/KR0080_에이아이에이생명보험.pdf
+KR0095,메트라이프생명보험,2023.1Q,1,53000.0,True,COL1,1,"p4 보험손익 ['530', '702', '-172']",data/disclosure/FY2023_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.1Q,16,3500.0,True,COL1,1,"p4 (기타사업비용) ['35', '19', '16']",data/disclosure/FY2023_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.1Q,22,162800.0,True,COL1,1,"p21 법인세비용차감전순이익 ['162,798,221,896', '137,847,049,819']",data/disclosure/FY2023_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.1Q,23,31100.0,True,COL1,1,"p4 법인세비용 ['311', '279', '32']",data/disclosure/FY2023_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.1Q,24,131700.0,True,COL1,1,"p3 당기순이익 ['1,317', '1,099', '217']",data/disclosure/FY2023_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.2Q,1,92300.0,True,COL1,1,"p5 보험손익 ['923', '1,092', '-169']",data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.2Q,16,6000.0,True,COL1,1,"p5 (기타사업비용) ['60', '38', '22']",data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.2Q,22,184200.0,True,COL1,1,"p45 법인세비용차감전순이익 ['184,192,263,895', '330,294,371,061']",data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.2Q,23,35900.0,True,COL1,1,"p5 법인세비용 ['359', '784', '-425']",data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.2Q,24,148300.0,True,COL1,1,"p3 당기순이익 ['1,483', '2,519', '-1,036']",data/disclosure/FY2023_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.3Q,1,178800.0,True,COL1,1,"p4 보험손익 ['1,788', '957', '831']",data/disclosure/FY2023_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.3Q,16,8100.0,True,COL1,1,"p4 (기타사업비용) ['81', '60', '21']",data/disclosure/FY2023_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.3Q,22,278300.0,True,COL1,1,"p24 법인세비용차감전순이익 ['278,300,579,700', '424,762,325,530']",data/disclosure/FY2023_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.3Q,23,56500.0,True,COL1,1,"p4 법인세비용 ['565', '982', '-417']",data/disclosure/FY2023_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2023.3Q,24,221800.0,True,COL1,1,"p3 당기순이익 ['2,218', '3,266', '-1,048']",data/disclosure/FY2023_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.1Q,1,50900.0,True,COL1,1,"p4 보험손익 ['509', '530', '-21']",data/disclosure/FY2024_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.1Q,16,3800.0,True,COL1,1,"p4 (기타사업비용) ['38', '35', '3']",data/disclosure/FY2024_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.1Q,22,-59000.0,True,COL1,1,"p26 법인세비용차감전순이익 ['-59,004,088,703', '162,798,221,896']",data/disclosure/FY2024_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.1Q,23,-26200.0,True,COL1,2,"p4 법인세비용 ['-262', '311', '-573']",data/disclosure/FY2024_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.1Q,24,-32800.0,True,COL1,1,"p3 당기순이익 ['-328', '1,317', '-1,645']",data/disclosure/FY2024_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.2Q,1,110700.0,True,COL1,1,"p5 보험손익 ['1,107', '923', '184']",data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.2Q,16,6000.0,True,COL1/2,1,"p5 (기타사업비용) ['60', '60']",data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.2Q,22,-10900.0,True,COL1,1,"p53 법인세비용차감전순이익 ['-10,853,756,586', '184,192,263,895']",data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.2Q,23,-16500.0,True,NONE,2,"p5 법인세비용 ['-165359', '-524']",data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.2Q,24,5600.0,True,COL1,1,"p3 당기순이익 ['56', '1,483', '-1,426']",data/disclosure/FY2024_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.3Q,1,161600.0,True,COL1,1,"p4 보험손익 ['1,616', '1,788', '-172']",data/disclosure/FY2024_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.3Q,16,8200.0,True,COL1,1,"p4 (기타사업비용) ['82', '81', '1']",data/disclosure/FY2024_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.3Q,22,25800.0,True,COL1,1,"p26 법인세비용차감전순이익 ['25,818,952,686', '278,300,579,700']",data/disclosure/FY2024_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.3Q,23,-6500.0,True,COL1,2,"p4 법인세비용 ['-65', '565', '-630']",data/disclosure/FY2024_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2024.3Q,24,32300.0,True,COL1,1,"p3 당기순이익 ['323', '2,218', '-1,895']",data/disclosure/FY2024_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.1Q,1,48400.0,True,COL1,1,"p4 보험손익 ['484', '509', '-25']",data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.1Q,16,3400.0,True,COL1,1,"p4 (기타사업비용) ['34', '39', '-5']",data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.1Q,22,-13500.0,True,COL1,1,"p29 법인세비용차감전순이익 ['-13,498,551,715', '-59,004,088,703']",data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.1Q,23,-8000.0,True,COL1,2,"p4 법인세비용 ['-80', '-262', '182']",data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.1Q,24,-5500.0,True,COL1,1,"p3 당기순이익 ['-55', '-328', '273']",data/disclosure/FY2025_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.2Q,1,99700.0,True,COL1,1,"p5 보험손익 ['997', '1,107', '-110']",data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.2Q,16,5800.0,True,COL1,1,"p5 (기타사업비용) ['58', '60', '-2']",data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.2Q,22,88100.0,True,COL1,1,"p60 법인세비용차감전순이익 ['88,093,798,949', '-10,853,756,586']",data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.2Q,23,15500.0,True,COL1,1,"p5 법인세비용 ['155', '-165', '319']",data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.2Q,24,72600.0,True,COL1,1,"p3 당기순이익 ['726', '56', '670']",data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.3Q,1,152800.0,True,COL1,1,"p4 보험손익 ['1,528', '1,616', '-88']",data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.3Q,16,8300.0,True,COL1,1,"p4 (기타사업비용) ['83', '82', '1']",data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.3Q,22,140500.0,True,COL1,1,"p29 법인세비용차감전순이익 ['140,490,221,633', '25,818,952,686']",data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.3Q,23,26200.0,True,COL1,1,"p4 법인세비용 ['262', '-65', '327']",data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2025.3Q,24,114300.0,True,COL1,1,"p3 당기순이익 ['1,143', '323', '820']",data/disclosure/FY2025_Q3/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.1Q,1,65800.0,True,COL1,1,"p4 보험손익 ['658', '484', '174']",data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.1Q,16,3900.0,True,COL1,1,"p4 (기타사업비용) ['39', '34', '5']",data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.1Q,22,15800.0,True,COL1,1,"p29 법인세비용차감전순이익 ['15,774,898,216', '-13,498,551,715']",data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.1Q,23,-1200.0,True,COL1,2,"p4 법인세비용 ['-12', '-80', '68']",data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.1Q,24,17000.0,True,COL1,1,"p3 당기순이익 ['170', '-55', '225']",data/disclosure/FY2026_Q1/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.2Q,1,93200.0,True,COL1,1,"p5 보험손익 ['932', '997', '-65']",data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.2Q,16,6300.0,True,COL1,1,"p5 (기타사업비용) ['63', '58', '5']",data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.2Q,22,158100.0,True,COL1,1,"p60 법인세비용차감전순이익 ['158,060,991,302', '88,093,798,949']",data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.2Q,23,37300.0,True,COL1,1,"p5 법인세비용 ['373', '155', '218']",data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0095,메트라이프생명보험,2026.2Q,24,120800.0,True,COL1,1,"p3 당기순이익 ['1,208', '726', '482']",data/disclosure/FY2026_Q2/raw/KR0095_메트라이프생명보험.pdf
+KR0097,하나생명보험,2023.1Q,1,1100.0,True,COL1,1,"p4 보험손익 ['11', '-24', '35']",data/disclosure/FY2023_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.1Q,16,3200.0,True,COL1,1,"p4 (기타사업비용) ['32', '23', '9']",data/disclosure/FY2023_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.1Q,22,6900.0,True,COL1,2,"p4 법인세비용차감전순이익 ['69', '99', '-30']",data/disclosure/FY2023_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.1Q,23,8800.0,True,COL1,1,"p4 법인세비용 ['88', '41', '47']",data/disclosure/FY2023_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.1Q,24,-2000.0,True,COL1,2,"p3 당기순이익 ['-20', '58', '-78']",data/disclosure/FY2023_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.2Q,1,1700.0,True,COL1,1,"p5 보험손익 ['17', '(16)', '33']",data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.2Q,16,7100.0,True,COL1,1,"p5 (기타사업비용) ['71', '56', '15']",data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.2Q,22,24000.0,True,COL1,2,"p5 법인세비용차감전순이익 ['240', '241', '(1)']",data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.2Q,23,10900.0,True,COL1,1,"p5 법인세비용 ['109', '67', '42']",data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.2Q,24,13100.0,True,COL1,1,"p3 당기순이익 ['131', '174', '(43)']",data/disclosure/FY2023_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.3Q,1,5000.0,True,COL1,1,"p4 보험손익 ['50', '4', '46']",data/disclosure/FY2023_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.3Q,16,10700.0,True,COL1,1,"p4 (기타사업비용) ['107', '85', '22']",data/disclosure/FY2023_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.3Q,22,26700.0,True,COL1,2,"p4 법인세비용차감전순이익 ['267', '279', '-12']",data/disclosure/FY2023_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.3Q,23,9800.0,True,COL1,1,"p4 법인세비용 ['98', '78', '20']",data/disclosure/FY2023_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2023.3Q,24,17000.0,True,COL1,1,"p3 당기순이익 ['170', '201', '-31']",data/disclosure/FY2023_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.1Q,1,4700.0,True,COL1,1,"p4 보험손익 ['47', '11', '36']",data/disclosure/FY2024_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.1Q,16,3300.0,True,COL1,1,"p4 (기타사업비용) ['33', '32', '1']",data/disclosure/FY2024_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.1Q,22,6400.0,True,COL1,2,"p4 법인세비용차감전순이익 ['64', '69', '-5']",data/disclosure/FY2024_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.1Q,23,1900.0,True,COL1,1,"p4 법인세비용 ['19', '88', '-70']",data/disclosure/FY2024_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.1Q,24,4500.0,True,COL1,1,"p3 당기순이익 ['45', '-20', '65']",data/disclosure/FY2024_Q1/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.2Q,1,14600.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.2Q,16,6100.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.2Q,22,12400.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.2Q,23,3200.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.2Q,24,9200.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.3Q,1,22400.0,True,COL1,1,"p4 보험손익 ['224', '50', '174']",data/disclosure/FY2024_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.3Q,16,9500.0,True,COL1,1,"p4 (기타사업비용) ['95', '107', '-12']",data/disclosure/FY2024_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.3Q,22,32800.0,True,COL1,2,"p4 법인세비용차감전순이익 ['328', '267', '61']",data/disclosure/FY2024_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.3Q,23,8700.0,True,COL1,1,"p4 법인세비용 ['87', '98', '-11']",data/disclosure/FY2024_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2024.3Q,24,24100.0,True,COL1,1,"p3 당기순이익 ['241', '170', '71']",data/disclosure/FY2024_Q3/raw/KR0097_하나생명보험_amended.pdf
+KR0097,하나생명보험,2025.1Q,1,8400.0,True,COL1,1,"p4 보험손익 ['84', '20', '64']",data/disclosure/FY2025_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.1Q,16,2900.0,True,COL1,1,"p4 (기타사업비용) ['29', '33', '-4']",data/disclosure/FY2025_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.1Q,22,16000.0,True,COL1,2,"p4 법인세비용차감전순이익 ['160', '7', '153']",data/disclosure/FY2025_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.1Q,23,3900.0,True,COL1,1,"p4 법인세비용 ['39', '19', '20']",data/disclosure/FY2025_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.1Q,24,12100.0,True,COL1,1,"p3 당기순이익 ['121', '-12', '133']",data/disclosure/FY2025_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.2Q,1,14700.0,True,COL1,1,"p5 보험손익 ['147', '115', '32']",data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.2Q,16,7000.0,True,COL1,1,"p5 (기타사업비용) ['70', '61', '9']",data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.2Q,22,18600.0,True,COL1,2,"p5 법인세비용차감전순이익 ['186', '40', '146']",data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.2Q,23,3800.0,True,COL1,1,"p5 법인세비용 ['38', '32', '6']",data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.2Q,24,14800.0,True,COL1,1,"p3 당기순이익 ['148', '8', '140']",data/disclosure/FY2025_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.3Q,1,25800.0,True,COL1,1,"p4 보험손익 ['258', '228', '30']",data/disclosure/FY2025_Q3/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.3Q,16,10500.0,True,COL1,1,"p4 (기타사업비용) ['105', '95', '10']",data/disclosure/FY2025_Q3/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.3Q,22,36500.0,True,COL1,2,"p4 법인세비용차감전순이익 ['365', '258', '107']",data/disclosure/FY2025_Q3/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.3Q,23,6300.0,True,COL1,1,"p4 법인세비용 ['63', '87', '-24']",data/disclosure/FY2025_Q3/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2025.3Q,24,30200.0,True,COL1,1,"p3 당기순이익 ['302', '171', '131']",data/disclosure/FY2025_Q3/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.1Q,1,8800.0,True,COL1,2,"p2 보험손익 ['88', '86', '2']",data/disclosure/FY2026_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.1Q,16,3400.0,True,COL1,1,"p2 (기타사업비용) ['34', '29', '5']",data/disclosure/FY2026_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.1Q,22,10800.0,True,COL1,2,"p2 법인세비용차감전순이익 ['108', '164', '-56']",data/disclosure/FY2026_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.1Q,23,4400.0,True,COL1,1,"p2 법인세비용 ['44', '39', '5']",data/disclosure/FY2026_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.1Q,24,6400.0,True,COL1,1,"p2 당기순이익 ['64', '125', '-61']",data/disclosure/FY2026_Q1/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.2Q,1,19300.0,True,COL1,1,"p5 보험손익 ['193', '159', '34']",data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.2Q,16,7500.0,True,COL1,1,"p5 (기타사업비용) ['75', '70', '5']",data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.2Q,22,25600.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.2Q,23,12200.0,True,COL1,1,"p5 법인세비용 ['122', '38', '84']",data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf
+KR0097,하나생명보험,2026.2Q,24,13400.0,True,COL1,1,"p3 당기순이익 ['134', '171', '37']",data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf
+KR0100,처브라이프생명보험,2023.1Q,1,200.0,True,COL1,1,"p2 보험손익 ['2', '-1', '3']",data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.1Q,16,1800.0,True,COL1,1,"p12 기타사업비용 ['1,841,352,699', '2,066,546,055']",data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.1Q,22,9000.0,True,COL1,2,"p2 법인세비용차감전순이익 ['90', '-3', '93']",data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.1Q,23,100.0,True,COL1/2,1,"p2 법인세비용 ['1', '1']",data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.1Q,24,8900.0,True,COL1,2,"p2 당기순이익 ['89', '-3', '92']",data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.2Q,1,1200.0,True,COL1,1,"p5 보험손익 ['12', '24', '-12.3']",data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.2Q,16,3300.0,True,COL1,1,"p5 (기타사업비용) ['33', '38', '-5.2']",data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.2Q,22,16200.0,True,COL1,1,"p51 법인세비용차감전순이익(또는법인세비용차감전순손실) ['16,162,513,378', '6,130,182,741']",data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.2Q,23,200.0,True,COL1,1,"p5 법인세비용 ['2', '1', '0.2']",data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.2Q,24,16000.0,True,COL1,1,"p3 당기순이익 ['160', '60', '100']",data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.3Q,1,1800.0,True,COL1,1,"p2 보험손익 ['18', '-13', '31.5']",data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.3Q,16,5100.0,True,COL1,1,"p2 200%——(기타사업비용) ['51', '132', '-80.8']",data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.3Q,22,23200.0,True,COL1,1,"p13 법인세비용차감전순이익(또는법인세비용차감전순손실) ['23,153,301,138', '10,394,789,567']",data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.3Q,23,300.0,True,COL1,1,"p2 법인세비용 ['3', '1', '1.2']",data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2023.3Q,24,22900.0,True,COL1,1,"p2 당기순이익 ['229', '103', '126']",data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2024.1Q,1,200.0,True,COL1,1,"p17 보험손익 ['154,653,022', '581,185,686']",data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.1Q,16,1300.0,True,COL1,1,"p2 (기타사업비용) ['13', '18', '-5']",data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.1Q,22,8900.0,True,COL1,1,"p21 법인세비용차감전순이익(또는법인세비용차감전순손실) ['8,949,312,931', '7,598,593,924']",data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.1Q,23,1900.0,True,COL1,1,"p2 법인세비용 ['19', '17', '2']",data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.1Q,24,7100.0,True,COL1,1,"p2 당기순이익 ['71', '59', '12']",data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.2Q,1,-600.0,True,COL1,1,"p5 보험손익 ['-6', '20', '-25']",data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2024.2Q,16,3800.0,True,COL1,1,"p5 (기타사업비용) ['38', '33', '5']",data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2024.2Q,22,14200.0,True,COL1,1,"p69 법인세비용차감전순이익(또는법인세비용차감전순손실) ['14,240,824,106', '12,985,656,832']",data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2024.2Q,23,3000.0,True,COL1,1,"p5 법인세비용 ['30', '29', '1']",data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2024.2Q,24,11300.0,True,COL1,1,"p3 당기순이익 ['113', '101', '12']",data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2024.3Q,1,-1500.0,True,COL1,1,"p4 보험손익 ['-15', '28', '-43']",data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.3Q,16,8000.0,True,COL1,1,"p4 (기타사업비용) ['80', '51', '29']",data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.3Q,22,10200.0,True,COL1,1,"p37 법인세비용차감전순이익(또는법인세비용차감전순손실) ['10,205,557,934', '19,252,493,944']",data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.3Q,23,2100.0,True,COL1,1,"p4 법인세비용 ['21', '43', '-21']",data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2024.3Q,24,8100.0,True,COL1,1,"p3 당기순이익 ['81', '150', '-69']",data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf
+KR0100,처브라이프생명보험,2025.1Q,1,-3300.0,True,COL1,1,"p5 보험손익 ['-33', '2', '-34']",data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.1Q,16,2300.0,True,COL1,1,"p5 (기타사업비용) ['23', '13', '10']",data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.1Q,22,300.0,True,COL1,1,"p42 법인세비용차감전순이익(또는법인세비용차감전순손실) ['303,260,835', '8,949,312,931']",data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.1Q,23,100.0,True,COL1/2/3,1,"p5 법인세비용 ['1', '19', '-18']",data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.1Q,24,200.0,True,COL1,1,"p3 당기순이익 ['2', '71', '-68']",data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.2Q,1,-3400.0,True,COL1,1,"p5 보험손익 ['-34', '-6', '-28']",data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.2Q,16,3700.0,True,COL1,1,"p5 (기타사업비용) ['37', '38', '-1']",data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.2Q,22,5200.0,True,COL1,1,"p69 법인세비용차감전순이익(또는법인세비용차감전순손실) ['5,153,881,663', '14,240,824,106']",data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.2Q,23,1100.0,True,COL1,1,"p5 법인세비용 ['11', '30', '-19']",data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.2Q,24,4100.0,True,COL1,1,"p3 당기순이익 ['41', '113', '-72']",data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.3Q,1,-5900.0,True,COL1,1,"p4 보험손익 ['-59', '-15', '-44']",data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.3Q,16,5100.0,True,COL1,1,"p4 (기타사업비용) ['51', '80', '-29']",data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.3Q,22,10000.0,True,COL1,1,"p41 법인세비용차감전순이익(또는법인세비용차감전순손실) ['10,007,625,889', '10,205,557,934']",data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.3Q,23,2100.0,True,COL1/2,1,"p4 법인세비용 ['21', '21', '0']",data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2025.3Q,24,7900.0,True,COL1,1,"p3 당기순이익 ['79', '81', '-2']",data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.1Q,1,-3100.0,True,COL1,1,"p4 보험손익 ['-31', '-33', '2']",data/disclosure/FY2026_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.1Q,16,1100.0,True,COL1,1,"p4 (기타사업비용) ['11', '23', '-12']",data/disclosure/FY2026_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.1Q,22,6200.0,True,COL1,1,"p28 법인세비용차감전이익(손실) ['6,239,535,909', '303,260,833']",data/disclosure/FY2026_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.1Q,23,1400.0,True,COL1,1,"p4 법인세비용 ['14', '1', '13']",data/disclosure/FY2026_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.1Q,24,4900.0,True,COL1,1,"p3 당기순이익 ['49', '2', '46']",data/disclosure/FY2026_Q1/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.2Q,1,-13700.0,True,COL1,1,"p5 보험손익 ['-137', '-34', '-104']",data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.2Q,16,2300.0,True,COL1,1,"p5 (기타사업비용) ['23', '37', '-14']",data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.2Q,22,25500.0,True,COL1,2,"p5 법인세비용차감전순이익 ['255', '52', '202']",data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.2Q,23,5600.0,True,COL1,1,"p5 법인세비용 ['56', '11', '45']",data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0100,처브라이프생명보험,2026.2Q,24,19900.0,True,COL1,1,"p3 당기순이익 ['199', '41', '158']",data/disclosure/FY2026_Q2/raw/KR0100_처브라이프생명보험.pdf
+KR0150,서울보증보험,2023.4Q,1,381700.0,True,COL1,1,"p22 보험손익 ['3,817', '6,533']",data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2023.4Q,16,50700.0,True,COL1,1,"p22 (기타사업비용) ['507', '748']",data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2023.4Q,22,519500.0,True,COL2,1,"p23 법인세차감전손익 ['5,190', '5,195']",data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2023.4Q,23,103100.0,True,COL1,1,"p22 법인세비용 ['1,031', '1,650']",data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2023.4Q,24,416400.0,True,COL1,1,"p4 당기순이익 ['4,164', '5,400']",data/disclosure/FY2023_Q4/raw/KR0150_서울보증보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.1Q,1,-4800.0,True,COL1,1,"p3 보험손익 ['-48', '-25', '-23']",data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.1Q,16,400.0,True,COL1,1,"p3 (기타사업비용) ['4', '12', '-8']",data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.1Q,22,-6100.0,True,COL1,1,"p24 법인세비용차감전순손익 ['-6,132,112,782', '-2,137,526,123']",data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.1Q,23,0.0,True,COL1/2/3,1,"p3 법인세비용 ['0', '0', '0']",data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.1Q,24,-6100.0,True,COL1,1,"p2 당기순이익 ['-61', '-21', '-40']",data/disclosure/FY2023_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.2Q,1,-6900.0,True,COL1,1,"p5 보험손익 ['-69', '-36', '-33']",data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.2Q,16,800.0,True,COL1,1,"p5 (기타사업비용) ['8', '16', '-8']",data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.2Q,22,-9100.0,True,COL1,2,"p5 법인세비용차감전순이익 ['-91', '-42', '-49']",data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.2Q,23,0.0,True,COL1/2/3,1,"p5 법인세비용 ['0', '0', '0']",data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.2Q,24,-9100.0,True,COL1,1,"p3 당기순이익 ['-91', '-42', '-49']",data/disclosure/FY2023_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.3Q,1,-9300.0,True,COL1,1,"p4 보험손익 ['-93', '-42', '-51']",data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.3Q,16,1200.0,True,COL1,1,"p4 (기타사업비용) ['12', '13', '-1']",data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.3Q,22,-12800.0,True,COL1,2,"p4 법인세비용차감전순이익 ['-128', '-61', '-67']",data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.3Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '0', '0']",data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2023.3Q,24,-12800.0,True,COL1,1,"p3 당기순이익 ['-128', '-61', '-67']",data/disclosure/FY2023_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2024.1Q,1,-2000.0,True,COL1,1,"p4 보험손익 ['-20', '-48', '28']",data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.1Q,16,800.0,True,COL1,1,"p4 (기타사업비용) ['8', '4', '4']",data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.1Q,22,-3400.0,True,COL1,1,"p28 법인세비용차감전순손익 ['-3,437,816,079', '-6,132,112,782']",data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.1Q,24,-3400.0,True,COL1,1,"p3 당기순이익 ['-34', '-61', '27']",data/disclosure/FY2024_Q1/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.2Q,1,-6300.0,True,COL1,1,"p5 보험손익 ['-63', '-69', '6']",data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.2Q,16,2400.0,True,COL1,1,"p5 (기타사업비용) ['24', '8', '16']",data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.2Q,22,-7600.0,True,COL1,1,"p55 법인세비용차감전순손익 ['-7,580,943,681', '-9,113,541,024']",data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.2Q,24,-7600.0,True,COL1,1,"p3 당기순이익 ['-76', '-91', '15']",data/disclosure/FY2024_Q2/raw/KR1010_교보라이프플래닛생명보험_amended.pdf
+KR1010,교보라이프플래닛생명보험,2024.3Q,1,-11900.0,True,COL1,1,"p4 보험손익 ['-119', '-93', '-26']",data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2024.3Q,16,4300.0,True,COL1,1,"p4 (기타사업비용) ['43', '12', '31']",data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2024.3Q,22,-11900.0,True,COL1,2,"p4 법인세비용차감전순이익 ['-119', '-128', '9']",data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2024.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2024.3Q,24,-11900.0,True,COL1,1,"p3 당기순이익 ['-119', '-128', '9']",data/disclosure/FY2024_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.1Q,1,-8600.0,True,COL1,1,"p4 보험손익 ['-86', '-24', '-62']",data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.1Q,16,1200.0,True,COL1,1,"p4 (기타사업비용) ['12', '8', '4']",data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.1Q,22,-7800.0,True,COL1,1,"p32 법인세비용차감전순이익(손실) ['-7,801,943,878', '-4,349,786,885']",data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.1Q,24,-7800.0,True,COL1,1,"p3 당기순이익 ['-78', '-43', '-35']",data/disclosure/FY2025_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.2Q,1,-10900.0,True,COL1,1,"p5 보험손익 ['-109', '-69', '-40']",data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.2Q,16,2600.0,True,COL1,1,"p5 (기타사업비용) ['26', '24', '2']",data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.2Q,22,-7900.0,True,COL1,1,"p63 법인세비용차감전순이익(손실) ['-7,924,013,189', '-9,115,701,047']",data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.2Q,24,-7900.0,True,COL1,1,"p3 당기순이익 ['-79', '-91', '12']",data/disclosure/FY2025_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.3Q,1,-11900.0,True,COL1,1,"p4 보험손익 ['-119', '-127', '8']",data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.3Q,16,3800.0,True,COL1,1,"p4 (기타사업비용) ['38', '43', '-5']",data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.3Q,22,-8600.0,True,COL1,1,"p32 법인세비용차감전순이익(손실) ['-8,557,748,259', '-13,985,093,869']",data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2025.3Q,24,-8600.0,True,COL1,1,"p3 당기순이익 ['-86', '-140', '54']",data/disclosure/FY2025_Q3/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.1Q,1,-4900.0,True,COL1,1,"p4 보험손익 ['-49', '-86', '37']",data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.1Q,16,1200.0,True,COL1/2,1,"p4 (기타사업비용) ['12', '12', '0']",data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.1Q,22,-4900.0,True,COL1,1,"p32 법인세비용차감전순이익(손실) ['-4,940,671,301', '-7,801,943,878']",data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.1Q,24,-4900.0,True,COL1,1,"p3 당기순이익 ['-49', '-78', '29']",data/disclosure/FY2026_Q1/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.2Q,1,-8500.0,True,COL1,1,"p5 보험손익 ['-85', '-109', '24']",data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.2Q,16,2500.0,True,COL1,1,"p5 (기타사업비용) ['25', '26', '-1']",data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.2Q,22,-6500.0,True,COL1,1,"p62 법인세비용차감전순이익(손실) ['-6,484,150,574', '-7,924,013,189']",data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1010,교보라이프플래닛생명보험,2026.2Q,24,-6500.0,True,COL1,1,"p3 당기순이익 ['-65', '-79', '14']",data/disclosure/FY2026_Q2/raw/KR1010_교보라이프플래닛생명보험.pdf
+KR1011,IBK연금보험,2023.1Q,1,5500.0,True,COL1,1,"p4 보험손익 ['55', '510']",data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.1Q,16,200.0,True,COL1/2,1,"p4 (기타사업비용) ['2', '187']",data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.1Q,22,26900.0,True,COL1,2,"p4 법인세비용차감전순이익 ['269', '151', '118']",data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.1Q,23,8400.0,True,COL1,1,"p4 법인세비용 ['84', '39', '45']",data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.1Q,24,18500.0,True,COL1,1,"p3 당기순이익 ['185', '112', '73']",data/disclosure/FY2023_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.2Q,1,10200.0,True,COL1,1,"p5 보험손익 ['102', '1,007']",data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.2Q,16,300.0,True,COL1/2,1,"p5 (기타사업비용) ['3', '382']",data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.2Q,22,4300.0,True,COL1,2,"p5 법인세비용차감전순이익 ['43', '300', '△257']",data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.2Q,23,-300.0,True,COL1,2,"p5 법인세비용 ['△3', '77', '△80']",data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.2Q,24,4600.0,True,COL1,1,"p3 당기순이익 ['46', '223']",data/disclosure/FY2023_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.3Q,1,14700.0,True,COL1,1,"p4 보험손익 ['147', '1,547']",data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.3Q,16,500.0,True,COL1/2,1,"p4 (기타사업비용) ['5', '575']",data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.3Q,22,-18300.0,True,COL1,2,"p4 법인세비용차감전순이익 ['△183', '458', '△641']",data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.3Q,23,-4200.0,True,COL1,2,"p4 법인세비용 ['△42', '114', '△156']",data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2023.3Q,24,-14100.0,True,COL1,2,"p3 당기순이익 ['△141', '344', '△485']",data/disclosure/FY2023_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.1Q,1,4100.0,True,COL1,1,"p4 보험손익 ['41', '55']",data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.1Q,16,700.0,True,COL1,1,"p4 (기타사업비용) ['7', '2', '5']",data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.1Q,22,11600.0,True,COL1,2,"p4 법인세비용차감전순이익 ['116', '269', '△153']",data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.1Q,23,1600.0,True,COL1,1,"p4 법인세비용 ['16', '84']",data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.1Q,24,10000.0,True,COL1,1,"p3 당기순이익 ['100', '185']",data/disclosure/FY2024_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.2Q,1,11500.0,True,COL1,1,"p5 보험손익 ['115', '102', '13']",data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.2Q,16,1500.0,True,COL1,1,"p5 (기타사업비용) ['15', '3', '12']",data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.2Q,22,25800.0,True,COL1,2,"p5 법인세비용차감전순이익 ['258', '43', '215']",data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.2Q,23,5300.0,True,COL1,1,"p5 법인세비용 ['53', '56']",data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.2Q,24,20500.0,True,COL1,1,"p3 당기순이익 ['205', '46', '159']",data/disclosure/FY2024_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.3Q,1,19800.0,True,COL1,1,"p4 보험손익 ['198', '147', '51']",data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.3Q,16,2200.0,True,COL1,1,"p4 (기타사업비용) ['22', '5', '17']",data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.3Q,22,45300.0,True,COL1,2,"p4 법인세비용차감전순이익 ['453', '△183', '636']",data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.3Q,23,10100.0,True,COL1,1,"p4 법인세비용 ['101', '143']",data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2024.3Q,24,35200.0,True,COL1,1,"p3 당기순이익 ['352', '493']",data/disclosure/FY2024_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.1Q,1,8300.0,True,COL1,1,"p4 보험손익 ['83', '41', '42']",data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.1Q,16,1300.0,True,COL1,1,"p4 (기타사업비용) ['13', '7', '6']",data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.1Q,22,6700.0,True,COL1,1,"p27 법인세비용차감전순손익 ['6,753,975,554', '11,573,311,451']",data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.1Q,23,1500.0,True,COL1,1,"p4 법인세비용 ['15', '16']",data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.1Q,24,5200.0,True,COL1,1,"p3 당기순이익 ['52', '100']",data/disclosure/FY2025_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.2Q,1,19300.0,True,COL1,1,"p5 보험손익 ['193', '115', '78']",data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.2Q,16,2700.0,True,COL1,1,"p5 (기타사업비용) ['27', '15', '12']",data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.2Q,22,19500.0,True,COL1,1,"p47 법인세비용차감전순손익 ['19,487,908,095', '25,801,327,959']",data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.2Q,23,4700.0,True,COL1,1,"p5 법인세비용 ['47', '53']",data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.2Q,24,14800.0,True,COL1,1,"p3 당기순이익 ['148', '205']",data/disclosure/FY2025_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.3Q,1,33500.0,True,COL1,1,"p4 보험손익 ['335', '198', '137']",data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.3Q,16,4100.0,True,COL1,1,"p4 (기타사업비용) ['41', '22', '19']",data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.3Q,22,21800.0,True,COL1,1,"p26 법인세비용차감전순손익 ['21,886,630,018', '45,321,947,525']",data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.3Q,23,5200.0,True,COL1,1,"p4 법인세비용 ['52', '101']",data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2025.3Q,24,16600.0,True,COL1,1,"p3 당기순이익 ['166', '352']",data/disclosure/FY2025_Q3/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.1Q,1,11900.0,True,COL1,1,"p4 보험손익 ['119', '83', '35']",data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.1Q,16,1300.0,True,COL1/2,1,"p4 (기타사업비용) ['13', '13', '1']",data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.1Q,22,2700.0,True,COL1,1,"p27 법인세비용차감전순손익 ['2,690,433,672', '6,753,975,554']",data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.1Q,23,600.0,True,COL1,1,"p4 법인세비용 ['6', '15']",data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.1Q,24,2100.0,True,COL1,1,"p3 당기순이익 ['21', '52']",data/disclosure/FY2026_Q1/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.2Q,1,26300.0,True,COL1,1,"p5 보험손익 ['263', '193', '70']",data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.2Q,16,2600.0,True,COL1,1,"p5 (기타사업비용) ['26', '27']",data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.2Q,22,21900.0,True,COL1,1,"p47 법인세비용차감전순손익 ['21,942,588,255', '19,487,908,095']",data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.2Q,23,5500.0,True,COL1,1,"p5 법인세비용 ['55', '47', '8']",data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf
+KR1011,IBK연금보험,2026.2Q,24,16400.0,True,COL1,1,"p3 당기순이익 ['164', '148', '16']",data/disclosure/FY2026_Q2/raw/KR1011_IBK연금보험.pdf
+KR1098,카카오페이손해보험,2023.1Q,1,-7800.0,True,COL1,1,p4 보험손익 ['(78)'],data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2023.1Q,16,500.0,True,COL1,1,p4 (기타사업비용) ['5'],data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2023.1Q,22,-8500.0,True,COL1,1,p4 법인세비용차감전순이익(손실) ['(85)'],data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2023.1Q,23,0.0,True,COL1,1,p4 법인세비용 ['0'],data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2023.1Q,24,-8500.0,True,COL1,1,p3 당기순이익 ['(85)'],data/disclosure/FY2023_Q1/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2023.2Q,1,-16300.0,True,COL1,1,"p5 보험손익 ['(163)', '(108)', '-55']",data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.2Q,16,1200.0,True,COL1,1,"p5 (기타사업비용) ['12', '108', '-96']",data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.2Q,22,-18100.0,True,COL1,1,"p5 법인세비용차감전순이익(손실) ['(181)', '(103)', '-78']",data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.2Q,24,-18100.0,True,COL1,1,"p3 당기순이익 ['(181)', '(103)', '-78']",data/disclosure/FY2023_Q2/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.3Q,1,-25500.0,True,COL1,1,"p4 보험손익 ['(255)', '(178)', '-77']",data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.3Q,16,1900.0,True,COL1,1,"p4 (기타사업비용) ['19', '178', '-159']",data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.3Q,22,-27900.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['-279', '-170', '-108']",data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.3Q,23,0.0,True,COL1/2,1,"p4 법인세비용 ['0', '0']",data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2023.3Q,24,-27900.0,True,COL1,1,"p3 당기순이익 ['(279)', '(170)', '-108']",data/disclosure/FY2023_Q3/raw/KR1098_카카오페이손해보험_amended.pdf
+KR1098,카카오페이손해보험,2024.1Q,1,-11100.0,True,COL1,1,"p4 보험손익 ['(111)', '(78)', '(33)']",data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.1Q,16,700.0,True,COL1,1,"p4 (기타사업비용) ['7', '5', '2']",data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.1Q,22,-11600.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['(116)', '(85)', '(31)']",data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.1Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '0', '0']",data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.1Q,24,-11600.0,True,COL1,1,"p3 당기순이익 ['(116)', '(85)', '(31)']",data/disclosure/FY2024_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.2Q,1,-20500.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2024.2Q,16,1400.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2024.2Q,22,-21800.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2024.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2024.2Q,24,-21800.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf
+KR1098,카카오페이손해보험,2024.3Q,1,-30800.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.3Q,16,2100.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.3Q,22,-34900.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2024.3Q,24,-34900.0,True,NOLABEL,2,,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.1Q,1,-12197.0,True,COL1,1,"p4 보험손익 ['(121.97)', '(110.93)', '(11.04)']",data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.1Q,16,1153.0,True,COL1,1,"p4 (기타사업비용) ['11.53', '7.15', '4.38']",data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.1Q,22,-13715.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.1Q,24,-13715.0,True,COL1,1,"p3 당기순이익 ['(137.15)', '(115.77)', '(21.37)']",data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.2Q,1,-21800.0,True,COL1,1,"p5 보험손익 ['(218)', '(205)', '(13)']",data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.2Q,16,2700.0,True,COL1,1,"p5 (기타사업비용) ['27', '14', '14']",data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.2Q,22,-24800.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.2Q,24,-24800.0,True,COL1,1,"p3 당기순이익 ['(248)', '(218)', '(29)']",data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.3Q,1,-30600.0,True,COL1,1,"p4 보험손익 ['(306)', '(308)', '1']",data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.3Q,16,4000.0,True,COL1,1,"p4 (기타사업비용) ['40', '21', '20']",data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.3Q,22,-35200.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2025.3Q,24,-35200.0,True,COL1,1,"p3 당기순이익 ['(352)', '(349)', '(2)']",data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.1Q,1,-9200.0,True,COL1,1,"p4 보험손익 ['(92)', '(122)', '30']",data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.1Q,16,1600.0,True,COL1,1,"p4 (기타사업비용) ['16', '12', '5']",data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.1Q,22,-10300.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.1Q,24,-10300.0,True,COL1,1,"p3 당기순이익 ['(103)', '(137)', '34']",data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.2Q,1,-15200.0,True,COL1,1,"p5 보험손익 ['(152)', '(218)', '65']",data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.2Q,16,2900.0,True,COL1,1,"p5 (기타사업비용) ['29', '27', '2']",data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.2Q,22,-17500.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR1098,카카오페이손해보험,2026.2Q,24,-17500.0,True,COL1,1,"p3 당기순이익 ['(175)', '(248)', '73']",data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf
+KR0004,예별손해보험,2023.1Q,1,5484.034493,True,COL1,1,"p4 보험손익 ['55', '113']",data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.1Q,16,900.0,True,COL1/2,1,"p4 (기타사업비용) ['9', '9', '0']",data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.1Q,22,10515.006062,True,COL1,1,"p20 법인세비용차감전순이익 ['10,515,006,062', '13,191,203,449']",data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.1Q,23,0.0,True,COL1/2,1,"p4 법인세비용 ['0', '2']",data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.1Q,24,10515.006062,True,COL1,1,"p3 당기순이익 ['105', '130']",data/disclosure/FY2023_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.2Q,1,12411.89081,True,COL1,1,"p5 보험손익 ['124', '120', '4']",data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.2Q,16,1700.0,True,COL1,1,"p5 (기타사업비용) ['17', '16', '1']",data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.2Q,22,-32243.541495,True,COL1,2,"p5 법인세비용차감전순이익 ['△322', '103', '△426']",data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.2Q,23,0.0,True,COL1/2,1,"p5 법인세비용 ['0', '2']",data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.2Q,24,-32243.541495,True,COL1,2,"p3 당기순이익 ['△322', '101', '△423']",data/disclosure/FY2023_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.3Q,1,6506.41456,True,COL1,1,"p4 보험손익 ['65', '215']",data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.3Q,16,2500.0,True,COL1,1,"p4 (기타사업비용) ['25', '23', '2']",data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.3Q,22,-58914.488369,True,COL1,2,"p4 법인세비용차감전순이익 ['△589', '184', '△773']",data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.3Q,23,0.0,True,COL1,1,p4 법인세비용 ['2'],data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2023.3Q,24,-58914.488369,True,COL1,2,"p3 당기순이익 ['△589', '181', '△771']",data/disclosure/FY2023_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.1Q,1,9022.802785,True,COL1,1,"p4 보험손익 ['90', '55', '35']",data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.1Q,16,1100.0,True,COL1,1,"p4 (기타사업비용) ['11', '9', '2']",data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.1Q,22,-3745.180364,True,COL1,1,"p24 법인세비용차감전순이익(손실) ['(3,745,180,364)', '10,515,006,017']",data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.1Q,24,-3745.180364,True,COL1,1,"p24 당기순이익(손실) ['(3,745,180,364)', '10,515,006,017']",data/disclosure/FY2024_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.2Q,1,18352.221728,True,COL1,1,"p5 보험손익 ['184', '124', '59']",data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.2Q,16,4400.0,True,COL1,1,"p5 (기타사업비용) ['44', '17', '27']",data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.2Q,22,8805.89506,True,COL1,1,"p56 법인세비용차감전순이익(손실) ['8,805,895,060', '(32,243,541,495)']",data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.2Q,24,8805.89506,True,COL1,1,"p3 당기순이익 ['88', '410']",data/disclosure/FY2024_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.3Q,1,36762.499499,True,COL1,1,"p4 보험손익 ['368', '65', '303']",data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.3Q,16,5200.0,True,COL1,1,"p4 (기타사업비용) ['52', '25', '26']",data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.3Q,22,27836.100465,True,COL1,1,"p26 법인세비용차감전순이익 ['27,836,100,465', '(58,914,488,369)']",data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.3Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '0', '0']",data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2024.3Q,24,27836.100465,True,COL1,1,"p3 당기순이익 ['278', '868']",data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.1Q,1,-22185.648008,True,COL1,2,"p4 보험손익 ['△222', '90', '△312']",data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.1Q,16,-1500.0,True,COL1,2,"p4 기타사업비용 ['△15', '11', '△26']",data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.1Q,22,-33338.471056,True,COL1,2,"p4 법인세비용차감전순이익 ['△333', '△37', '△296']",data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.1Q,23,6530.927927,True,COL1/3,1,"p4 법인세비용 ['65', '0', '65']",data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.1Q,24,-39869.398983,True,COL1,2,"p3 당기순이익 ['△399', '△37', '△361']",data/disclosure/FY2025_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.2Q,1,-10595.528848,True,COL1,2,"p5 보험손익 ['△106', '184', '△289']",data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.2Q,16,-900.0,True,COL1,2,"p5 기타사업비용 ['△9', '44', '△53']",data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.2Q,22,-27683.455402,True,COL1,2,"p5 법인세비용차감전순이익 ['△277', '88', '△365']",data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.2Q,23,8079.68111,True,COL1/3,1,"p5 법인세비용 ['81', '0', '81']",data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.2Q,24,-35763.136512,True,COL1,2,"p3 당기순이익 ['△358', '88', '△446']",data/disclosure/FY2025_Q2/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2026.1Q,1,4515.891952,True,COL1,1,p4 보험손익 ['45'],data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2026.1Q,16,300.0,True,COL1,1,p4 (기타사업비용) ['3'],data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2026.1Q,22,-10410.613323,True,COL1,2,p4 법인세비용차감전순이익 ['△104'],data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2026.1Q,23,232.760314,True,COL1,1,p4 법인세비용 ['2'],data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2026.1Q,24,-10643.373637,True,COL1,2,p3 당기순이익 ['△106'],data/disclosure/FY2026_Q1/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2026.2Q,1,-101755.186028,True,COL1,2,"p5 보험손익 ['△1,018']",data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf
+KR0004,예별손해보험,2026.2Q,16,800.0,True,COL1,1,p5 (기타사업비용) ['8'],data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf
+KR0004,예별손해보험,2026.2Q,22,-133860.132797,True,COL1,2,"p5 법인세비용차감전순이익 ['△1,339']",data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf
+KR0004,예별손해보험,2026.2Q,23,-392.568114,True,COL1,2,p5 법인세비용 ['△4'],data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf
+KR0004,예별손해보험,2026.2Q,24,-133467.564683,True,COL1,2,"p3 당기순이익 ['△1,335']",data/disclosure/FY2026_Q2/raw/KR0004_MG_예별손해보험.pdf
+KR0004,예별손해보험,2025.3Q,1,12730.219901,True,COL1,1,p4 보험손익 ['127'],data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.3Q,22,7322.020577,True,COL1,1,"p26 법인세비용차감전순이익 ['7,322,020,577']",data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.3Q,23,0.0,True,COL1,1,p4 법인세비용 ['0'],data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf
+KR0004,예별손해보험,2025.3Q,24,7322.020577,True,COL1,1,p3 당기순이익 ['73'],data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf
+KR0150,서울보증보험,2024.1Q,1,1300.0,False,COL2,1,"p4 보험손익 ['27', '13', '14']",data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2024.1Q,16,8300.0,False,COL2,1,"p4 (기타사업비용) ['120', '83', '37']",data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2024.1Q,22,38100.0,False,COL2,1,"p22 법인세비용차감전순이익 ['25,265,908,966', '38,086,906,005']",data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2024.1Q,23,8600.0,False,COL2,1,"p4 법인세비용 ['62', '86']",data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf
+KR0150,서울보증보험,2024.1Q,24,29500.0,False,COL2,1,"p3 당기순이익 ['191', '295']",data/disclosure/FY2025_Q1/raw/KR0150_서울보증보험.pdf
+KR1101,뮌헨재보험,2023.1Q,1,43300.0,True,COL1,1,"p26 보험손익 ['43,300,662', '2,860,214', '40,440,448']",data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.1Q,16,-200.0,True,COL1,2,"p28 기타사업비용 ['-165,735', '422,166', '-587,900']",data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.1Q,22,44500.0,True,COL1,1,"p4 법인세비용차감전순이익 ['445', '-19', '464']",data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.1Q,23,9800.0,True,COL1/3,1,"p4 법인세비용 ['98', '0', '98']",data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.1Q,24,34700.0,True,COL1,1,"p4 당기순이익 ['347', '-19', '366']",data/disclosure/FY2023_Q1/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.2Q,1,55400.0,True,COL1,1,"p29 보험손익 ['55,379,360', '20,197,416', '35,181,944']",data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.2Q,16,-2000.0,True,COL1,2,"p31 기타사업비용 ['-2,036,265']",data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.2Q,22,54100.0,True,COL1,1,"p5 법인세비용차감전순이익 ['541', '110', '431']",data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.2Q,23,12000.0,True,COL1/3,1,"p5 법인세비용 ['120', '0', '120']",data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.2Q,24,42100.0,True,COL1,1,"p5 당기순이익 ['421', '110', '310']",data/disclosure/FY2023_Q2/raw/KR1101_뮌헨재보험_v20230101.pdf
+KR1101,뮌헨재보험,2023.3Q,1,74900.0,True,COL1,1,"p27 보험손익 ['74,850,060', '-12,761,595', '87,611,655']",data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2023.3Q,16,4100.0,True,COL1,1,"p29 기타사업비용 ['4,087,557', '1,014,645', '3,072,912']",data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2023.3Q,22,73200.0,True,COL1,1,"p4 법인세비용차감전순이익 ['732', '-292', '1,024']",data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2023.3Q,23,16400.0,True,COL1,1,"p4 법인세비용 ['164', '9', '155']",data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2023.3Q,24,56800.0,True,COL1,1,"p4 당기순이익 ['568', '-302', '869']",data/disclosure/FY2023_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2023.4Q,1,73179.1361,True,COL1,1,"p8 보험손익 ['73,179,136,100', '54,309,366,871']",data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2023.4Q,16,3240.386884,True,COL1,1,"p8 기타사업비용 ['3,240,386,884', '1,204,517,250']",data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2023.4Q,22,73290.717824,True,COL1,1,"p8 법인세비용차감전순이익(손실) ['73,290,717,824', '50,817,776,215']",data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2023.4Q,23,17150.160858,True,COL1,1,"p10 법인세비용 ['17,150,160,858', '10,331,184,076']",data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2023.4Q,24,56140.556966,True,COL1,1,"p10 당기순이익(손실) ['56,140,556,966', '40,486,592,139']",data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2024.1Q,1,17400.0,True,COL1,1,"p28 보험손익 ['17,410,796', '43,300,662', '-25,889,866']",data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.1Q,16,-2300.0,True,COL1,2,"p30 기타사업비용 ['-2,263,468', '-165,735', '-2,097,734']",data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.1Q,22,18000.0,True,COL1,1,"p4 법인세비용차감전순이익 ['180', '445', '-265']",data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.1Q,23,3700.0,True,COL1,1,"p4 법인세비용 ['37', '98', '-61']",data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.1Q,24,14200.0,True,COL1,1,"p4 당기순이익(또는당기순손실) ['142', '347', '-205']",data/disclosure/FY2024_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.2Q,1,22200.0,True,COL1,1,"p56 보험손익 ['22,230,538', '55,379,360', '-33,148,822']",data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.2Q,22,24000.0,True,COL1,1,"p5 법인세비용차감전순이익 ['240', '541', '-301']",data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.2Q,23,5100.0,True,COL1,1,"p5 법인세비용 ['51', '120', '-70']",data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.2Q,24,18900.0,True,COL1,1,"p5 당기순이익(또는당기순손실) ['189', '421', '-232']",data/disclosure/FY2024_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.2Q,16,-800.0,False,COL3,1,"p58 기타사업비용 ['-826,017', '-826,833', '816']",data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.3Q,1,29900.0,True,COL1,1,"p29 보험손익 ['29,912,715', '74,850,060', '-44,937,345']",data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.3Q,22,35100.0,True,COL1,1,"p4 법인세비용차감전순이익 ['351', '732', '-381']",data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.3Q,23,7700.0,True,COL1,1,"p4 법인세비용 ['77', '164', '-88']",data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.3Q,24,27500.0,True,COL1,1,"p4 당기순이익(또는당기순손실) ['275', '568', '-293']",data/disclosure/FY2024_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.3Q,16,-1200.0,False,COL2,2,"p4 기타사업비용 ['-8', '-12', '4']",data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2024.4Q,1,35223.753359,True,COL1,1,"p8 보험손익 ['35,223,753,359', '73,179,136,100']",data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2024.4Q,16,-124.90631,True,COL1,2,"p8 기타사업비용 ['(124,906,310)']",data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2024.4Q,22,44013.389399,True,COL1,1,"p8 법인세비용차감전순이익(손실) ['44,013,389,399', '73,290,717,824']",data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2024.4Q,23,9149.871328,True,COL1,1,"p10 법인세비용 ['9,149,871,328', '17,150,160,858']",data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2024.4Q,24,34863.518071,True,COL1,1,"p10 당기순이익(손실) ['34,863,518,071', '56,140,556,966']",data/disclosure/FY2024_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2025.1Q,1,8500.0,True,COL1,1,"p32 보험손익 ['8,539,195', '17,410,796', '-8,871,601']",data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.1Q,22,11100.0,True,COL1,1,"p4 법인세비용차감전순이익 ['111', '180', '-68']",data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.1Q,23,2300.0,True,COL1,1,"p4 법인세비용 ['23', '37', '-14']",data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.1Q,24,8800.0,True,COL1,1,"p4 당기순이익(또는당기순손실) ['88', '142', '-54']",data/disclosure/FY2025_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.1Q,16,-500.0,False,COL2,2,"p4 기타사업비용 ['2', '-5', '7']",data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.2Q,1,13600.0,True,COL1,1,"p56 보험손익 ['13,578,221', '22,230,538', '-8,652,317']",data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.2Q,16,-800.0,True,COL3,1,"p58 기타사업비용 ['-826,017', '-826,833', '816']",data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.2Q,22,20400.0,True,COL1,1,"p5 법인세비용차감전순이익 ['204', '240', '-35']",data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.2Q,23,4200.0,True,COL1,1,"p64 법인세비용 ['4,155,738', '5,076,294', '-920,556']",data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.2Q,24,16300.0,True,COL1,1,"p3 당기순이익 ['163', '189', '-26']",data/disclosure/FY2025_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.3Q,1,21000.0,True,COL1,1,"p33 보험손익 ['20,955,525', '29,912,715', '-8,957,190']",data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.3Q,16,-800.0,True,COL1,2,"p4 기타사업비용 ['-8', '-12', '4']",data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.3Q,22,29600.0,True,COL1,1,"p4 법인세비용차감전순이익 ['296', '351', '-55']",data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.3Q,23,5900.0,True,COL1,1,"p41 법인세비용 ['5,902,510', '7,651,010', '-1,748,500']",data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.3Q,24,23700.0,True,COL1,1,"p3 당기순이익 ['237', '275', '-38']",data/disclosure/FY2025_Q3/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2025.4Q,1,42244.590921,True,COL1,1,"p8 보험손익 ['42,244,590,921', '35,223,753,359']",data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2025.4Q,16,-859.628363,True,COL1,2,"p8 기타사업비용 ['(859,628,363)', '(124,906,310)']",data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2025.4Q,22,52844.733344,True,COL1,1,"p8 법인세비용차감전순이익(손실) ['52,844,733,344', '44,013,389,399']",data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2025.4Q,23,12404.810934,True,COL1,1,"p10 법인세비용 ['12,404,810,934', '9,149,871,328']",data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2025.4Q,24,40439.92241,True,COL1,1,"p10 당기순이익 ['40,439,922,410', '34,863,518,071']",data/disclosure/FY2025_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf
+KR1101,뮌헨재보험,2026.1Q,1,1900.0,True,COL1,1,"p35 보험손익 ['1,887,878', '8,539,195', '-6,651,317']",data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.1Q,16,200.0,True,COL1,1,"p37 기타사업비용 ['195,500', '-525,178', '720,678']",data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.1Q,22,4600.0,True,COL1,1,"p4 법인세비용차감전순이익 ['46', '111', '-65']",data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.1Q,23,800.0,True,COL1,1,"p43 법인세비용 ['829,119', '2,287,222', '-1,458,103']",data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.1Q,24,3800.0,True,COL1,1,"p3 당기순이익 ['38', '88', '-51']",data/disclosure/FY2026_Q1/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.2Q,1,11900.0,True,COL1,1,"p59 보험손익 ['11,861,057', '13,578,221', '-1,717,164']",data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.2Q,16,200.0,True,COL1,1,"p61 기타사업비용 ['173,242', '-826,017', '999,259']",data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.2Q,22,15700.0,True,COL1,1,"p5 법인세비용차감전순이익 ['157', '204', '-48']",data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.2Q,23,3200.0,True,COL1,1,"p67 법인세비용 ['3,190,679', '4,155,738', '-965,058']",data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1101,뮌헨재보험,2026.2Q,24,12500.0,True,COL1,1,"p3 당기순이익 ['125', '163', '-38']",data/disclosure/FY2026_Q2/raw/KR1101_뮌헨재보험.pdf
+KR1102,스위스리아시아,2023.1Q,1,-23300.0,True,COL1,1,"p17 보험손익 ['-233', '131', '-364']",data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.1Q,16,1300.0,True,COL1/3,1,"p4 (기타사업비용) ['13', '0', '13']",data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.1Q,22,-23100.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['-231', '148', '-379']",data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.1Q,23,-900.0,True,COL1,2,"p4 법인세비용(수익) ['-9', '36', '-45']",data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.1Q,24,-22100.0,True,COL1,1,"p3 당기순이익 ['-221', '112', '-334']",data/disclosure/FY2023_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.2Q,1,39200.0,True,COL1,1,"p16 보험손익 ['392', '-692', '1,084']",data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.2Q,16,4400.0,True,COL1,1,"p5 (기타사업비용) ['44', '15', '29']",data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.2Q,23,0.0,True,COL1/2/3,1,"p16 법인세비용 ['0', '0', '0']",data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.3Q,1,59500.0,True,COL1,1,"p14 보험손익 ['595', '-283', '879']",data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.3Q,16,5000.0,True,COL1,1,"p4 (기타사업비용) ['50', '-22', '73']",data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.3Q,22,59800.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['598', '-545', '1,143']",data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.3Q,23,13800.0,True,COL1,1,"p14 법인세비용 ['138', '-126', '264']",data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.3Q,24,46000.0,True,COL1,1,"p3 당기순이익 ['460', '-419', '879']",data/disclosure/FY2023_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2023.4Q,1,118500.0,True,COL1,1,"p52 보험손익 ['1,185', '(1,037)', '2,222']",data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf
+KR1102,스위스리아시아,2023.4Q,16,6200.0,True,COL1,1,"p10 (기타사업비용) ['62', '27', '35']",data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf
+KR1102,스위스리아시아,2023.4Q,22,130200.0,True,COL1,1,"p10 법인세비용차감전순이익(손실) ['1,302', '(1,158)', '2,460']",data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf
+KR1102,스위스리아시아,2023.4Q,23,29600.0,True,COL1,1,"p52 법인세비용 ['296', '(215)', '511']",data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf
+KR1102,스위스리아시아,2023.4Q,24,100600.0,True,COL1,1,"p3 당기순이익 ['1,006', '(943)', '1,949']",data/disclosure/FY2023_Q4/raw/KR1102_스위스리아시아_v20240510.pdf
+KR1102,스위스리아시아,2024.1Q,1,36200.0,True,COL1,1,"p21 보험손익 ['362', '(233)', '595']",data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.1Q,16,900.0,True,COL1,1,"p4 (기타사업비용) ['9', '13', '(4)']",data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.1Q,22,38800.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['388', '(231)', '619']",data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.1Q,23,9000.0,True,COL1,1,"p21 법인세비용 ['90', '(9)', '99']",data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.1Q,24,29800.0,True,COL1,1,"p3 당기순이익 ['298', '(221)', '520']",data/disclosure/FY2024_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.2Q,1,69200.0,True,COL1,1,"p38 보험손익 ['692', '392', '300']",data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.2Q,16,2600.0,True,COL1,1,"p4 (기타사업비용) ['26', '44', '(18)']",data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.2Q,22,72200.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['722', '508', '214']",data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.2Q,23,16700.0,True,COL1/2,1,"p38 법인세비용 ['167', '167']",data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.2Q,24,55500.0,True,COL1,1,"p3 당기순이익 ['555', '509', '47']",data/disclosure/FY2024_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.3Q,1,91900.0,True,COL1,2,"p4 보험손익 ['919', '595', '324']",data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.3Q,16,4700.0,True,COL1,1,"p4 (기타사업비용) ['47', '50', '(3)']",data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.3Q,22,103200.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['1,032', '598', '434']",data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.3Q,23,23800.0,True,COL1,1,"p21 법인세비용 ['238', '138', '100']",data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.3Q,24,79400.0,True,COL1,1,"p3 당기순이익 ['794', '460', '334']",data/disclosure/FY2024_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.4Q,1,62900.0,True,COL1,1,"p59 보험손익 ['629', '1,185', '(556)']",data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.4Q,16,6500.0,True,COL1,1,"p10 (기타사업비용) ['65', '62', '3']",data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.4Q,22,81600.0,True,COL1,1,"p10 법인세비용차감전순이익(손실) ['816', '1,302', '(486)']",data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.4Q,23,19300.0,True,COL1,2,"p10 법인세비용(수익) ['193', '296', '(103)']",data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2024.4Q,24,62300.0,True,COL1,1,"p3 당기순이익 ['623', '1,006', '(383)']",data/disclosure/FY2024_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.1Q,1,-14000.0,True,COL1,1,"p24 보험손익 ['(140)', '361', '(501)']",data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.1Q,22,-12300.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['(123)', '388', '(511)']",data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.1Q,24,-12300.0,True,COL1,1,"p3 당기순이익 ['(123)', '298', '(422)']",data/disclosure/FY2025_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.2Q,1,-27300.0,True,COL1,1,"p45 보험손익 ['(273)', '692', '(965)']",data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.2Q,22,-17600.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['(176)', '722', '(898)']",data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.2Q,24,-17600.0,True,COL1,1,"p3 당기순이익 ['(176)', '555', '(731)']",data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.3Q,1,-115300.0,True,COL1,1,"p24 보험손익 ['(1,153)', '918', '(2,071)']",data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.3Q,16,8600.0,True,COL1,1,"p4 (기타사업비용) ['86', '47', '39']",data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.3Q,22,-119400.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['(1,194)', '1,032', '(2,226)']",data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.3Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.3Q,24,-119400.0,True,COL1,1,"p3 당기순이익 ['(1,194)', '794', '(1,988)']",data/disclosure/FY2025_Q3/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.4Q,1,-222600.0,True,COL1,1,"p63 보험손익 ['(2,226)', '629', '(2,855)']",data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.4Q,16,14400.0,True,COL1,1,"p10 (기타사업비용) ['144', '65', '79']",data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.4Q,22,-229700.0,True,COL1,1,"p10 법인세비용차감전순이익(손실) ['(2,297)', '816', '(3,113)']",data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.4Q,23,-51500.0,True,COL1,2,"p10 법인세비용(수익) ['(515)', '193', '(708)']",data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2025.4Q,24,-178200.0,True,COL1,1,"p3 당기순이익(손실) ['(1,782)', '623', '(2,405)']",data/disclosure/FY2025_Q4/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.1Q,1,-47200.0,True,COL1,2,"p4 보험손익 ['(472)', '(140)', '(332)']",data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.1Q,16,4700.0,True,COL1,1,"p4 (기타사업비용) ['47', '23', '24']",data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.1Q,22,-46800.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['(468)', '(123)', '(345)']",data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.1Q,23,-9900.0,True,COL1,2,p4 법인세비용(수익) ['(99)'],data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.1Q,24,-36900.0,True,COL1,1,"p3 당기순이익 ['(369)', '(123)', '(246)']",data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.2Q,1,-38100.0,True,COL1,2,"p4 보험손익 ['(381)', '(273)', '(108)']",data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.2Q,16,9800.0,True,COL1,1,"p4 (기타사업비용) ['98', '47', '51']",data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.2Q,22,-49300.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['(493)', '(176)', '(317)']",data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.2Q,23,-2100.0,True,COL1/3,2,"p4 법인세비용(수익) ['(21)', '0', '(21)']",data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf
+KR1102,스위스리아시아,2026.2Q,24,-47200.0,True,COL1,1,"p3 당기순이익 ['(472)', '(176)', '(296)']",data/disclosure/FY2026_Q2/raw/KR1102_스위스리아시아.pdf
+KR1103,제네럴재보험,2023.1Q,1,-1750.0,True,COL1,1,"p3 보험손익 ['-17.5', '-23.4', '5.9']",data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.1Q,22,-410.0,True,COL1,1,"p3 법인세비용차감전순이익 ['-4.1', '-47.9', '43.8']",data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.1Q,24,-410.0,True,COL1,1,"p3 당기순이익 ['-4.1', '-48', '43.9']",data/disclosure/FY2023_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.1Q,23,0.0,False,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.2Q,1,-1890.0,True,COL1,1,"p3 보험손익 ['-18.9', '-77.6', '58.7']",data/disclosure/FY2023_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.2Q,16,1564.0,False,COL2,1,"p4 (기타사업비용) ['482', '1,564', '(1,082)']",data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.2Q,23,0.0,False,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.3Q,1,-4000.0,True,COL1,1,"p3 보험손익 ['-40', '166', '-206']",data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.3Q,16,2500.0,True,COL1,2,p3 기타사업비용 ['(25)'],data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.3Q,22,-2150.0,True,COL1,1,"p3 법인세비용차감전순이익 ['-21.5', '172', '-193.5']",data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.3Q,23,800.0,True,COL1,1,"p3 법인세비용 ['8', '4', '4']",data/disclosure/FY2023_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.4Q,1,11364.0,True,COL1,1,"p6 보험손익 ['11,364', '9,458', '1,906']",data/disclosure/FY2023_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.4Q,16,1138.0,True,COL1,2,"p6 기타사업비용 ['(1,138)']",data/disclosure/FY2023_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.4Q,22,14757.0,True,COL1,1,"p6 법인세비용차감전순이익 ['14,757', '10,348', '4,409']",data/disclosure/FY2023_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.4Q,23,44.0,True,COL1,1,"p6 법인세비용 ['44', '1,517', '-1,473']",data/disclosure/FY2023_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2023.4Q,24,14713.0,True,COL1,1,"p3 당기순이익 ['14,713', '8,831', '5,882']",data/disclosure/FY2023_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.1Q,1,-800.0,True,COL1,1,"p3 보험손익 ['-800', '-1,750', '951']",data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.1Q,16,100.0,True,COL1/2,1,"p3 (기타사업비용) ['(100)', '(100)']",data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.1Q,22,-71.0,True,COL1,1,"p3 법인세비용차감전순이익 ['-71', '-414', '343']",data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.1Q,24,-71.0,True,COL1,1,"p3 당기순이익 ['-71', '-414', '343']",data/disclosure/FY2024_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.2Q,1,-2297.0,True,COL1,1,"p4 보험손익 ['(2,297)', '(1,894)', '(402)']",data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.2Q,16,482.0,True,COL1,1,"p4 (기타사업비용) ['482', '1,564', '(1,082)']",data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.2Q,22,39.0,True,COL1,1,"p4 법인세비용차감전순이익 ['39', '257', '(217)']",data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.2Q,24,39.0,True,COL1,1,"p3 당기순이익 ['39', '257', '-217']",data/disclosure/FY2024_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.3Q,1,2900.0,False,COL2,1,"p3 보험손익 ['(68)', '29', '(97)']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.3Q,16,800.0,False,COL1/2,1,"p4 (기타사업비용) ['8', '8', '0']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.3Q,22,6600.0,False,COL2,1,"p4 법인세비용차감전순이익 ['(40)', '66', '(106)']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.3Q,23,0.0,False,COL1/2/3,1,"p4 법인세비용 ['16', '0', '16']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.3Q,24,6600.0,False,COL2,1,"p3 당기순이익 ['(55)', '66', '(122)']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2024.4Q,1,18466.835138,True,COL1,1,"p8 보험손익 ['18,466,835,138', '11,364,104,880']",data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf
+KR1103,제네럴재보험,2024.4Q,16,1221.764796,True,COL1,1,"p63 기타사업비용 ['1,221,765', '1,137,911']",data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf
+KR1103,제네럴재보험,2024.4Q,22,22814.529145,True,COL1,1,"p8 법인세비용차감전순이익 ['22,814,529,145', '14,757,258,262']",data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf
+KR1103,제네럴재보험,2024.4Q,23,4039.765675,True,COL2,1,"p8 법인세비용 ['21', '4,039,765,675', '44,087,121']",data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf
+KR1103,제네럴재보험,2024.4Q,24,18774.76347,True,COL2,1,"p8 당기순이익 ['14', '18,774,763,470', '14,713,171,141']",data/disclosure/FY2024_Q4/raw_aux/KR1103_제네럴재보험__audit.pdf
+KR1103,제네럴재보험,2025.1Q,1,-1564.0,True,COL1,1,"p3 보험손익 ['(1,564)', '(800)', '(764)']",data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.1Q,22,64.0,True,COL1,1,"p3 법인세비용차감전순이익 ['64', '(71)', '135']",data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.1Q,24,64.0,True,COL1,1,"p3 당기순이익 ['64', '(71)', '135']",data/disclosure/FY2025_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.1Q,16,100.0,False,COL1/2/3,1,"p3 (기타사업비용) ['1', '1', '(0)']",data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.2Q,1,-4115.0,True,COL1,1,"p3 보험손익 ['(41.15)', '(22.97)', '(18.18)']",data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.2Q,22,-1710.0,True,COL1/3,1,"p4 법인세비용차감전순이익 ['(17.10)', '0.39', '(17.49)']",data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.2Q,24,-1710.0,True,COL1/3,1,"p3 당기순이익 ['(17.10)', '0.39', '(17.49)']",data/disclosure/FY2025_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.2Q,16,700.0,False,COL2,1,"p3 (기타사업비용) ['4', '7', '(3)']",data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.3Q,1,-6800.0,True,COL1,1,"p3 보험손익 ['(68)', '29', '(97)']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.3Q,16,800.0,True,COL1/2,1,"p4 (기타사업비용) ['8', '8', '0']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.3Q,22,-4000.0,True,COL1,1,"p4 법인세비용차감전순이익 ['(40)', '66', '(106)']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.3Q,23,1600.0,True,COL1/3,1,"p4 법인세비용 ['16', '0', '16']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.3Q,24,-5500.0,True,COL1,1,"p3 당기순이익 ['(55)', '66', '(122)']",data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.4Q,1,-300.0,True,COL1,1,"p6 보험손익 ['(3)', '185', '(188)']",data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.4Q,16,1200.0,True,COL1/2,1,"p6 (기타사업비용) ['12', '12']",data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.4Q,22,2200.0,True,COL1,1,"p6 법인세비용차감전순이익 ['22', '228', '(206)']",data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.4Q,23,100.0,True,COL1/2/3,1,"p6 법인세비용 ['1', '40', '(39)']",data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2025.4Q,24,2000.0,True,COL1,1,"p3 당기순이익 ['20', '188', '(167)']",data/disclosure/FY2025_Q4/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.1Q,1,700.0,True,COL1,1,"p3 보험손익 ['7', '(16)', '23']",data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.1Q,16,100.0,True,COL1/2/3,1,"p3 (기타사업비용) ['1', '1', '(0)']",data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.1Q,22,500.0,True,COL1,1,"p3 법인세비용차감전순이익 ['5', '1', '4']",data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.1Q,23,0.0,True,COL1/2/3,1,"p3 법인세비용 ['0', '0', '0']",data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.1Q,24,500.0,True,COL1,1,"p3 당기순이익 ['5', '1', '4']",data/disclosure/FY2026_Q1/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.2Q,1,-100.0,True,COL1/2/3,1,"p3 보험손익 ['(1)', '(41)', '41']",data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.2Q,16,400.0,True,COL1,1,"p3 (기타사업비용) ['4', '7', '(3)']",data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.2Q,22,-100.0,True,COL1/2/3,1,"p4 법인세비용차감전순이익 ['(1)', '(17)', '16']",data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.2Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '0', '0']",data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf
+KR1103,제네럴재보험,2026.2Q,24,-100.0,True,COL1/2/3,1,"p3 당기순이익 ['(1)', '(17)', '16']",data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf
+KR1104,하노버재보험,2023.1Q,1,393.0,True,COL1,1,"p5 보험손익 ['393', '555', '(162)']",data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.1Q,16,0.0,True,NOLABEL,2,,data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.1Q,22,711.0,True,NOLABEL,2,,data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.1Q,23,18.0,True,COL1,1,"p5 법인세비용 ['18', '11', '7']",data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.1Q,24,693.0,True,COL1,1,"p4 당기순이익 ['693', '520', '173']",data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.2Q,1,-311.0,True,COL1,1,"p6 보험손익 ['(311)', '388', '(699)']",data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.2Q,16,119.0,True,COL1/2,1,"p6 (기타사업비용) ['119', '119']",data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.2Q,22,-65.0,True,NONE,2,"p33 법인세비용차감전순이익(또는법인세비용차감전순손실) ['64,700']",data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.2Q,23,-34.0,True,COL1,2,"p33 법인세비용 ['33,940']",data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.2Q,24,-31.0,True,COL1,1,"p4 당기순이익(손실) ['(31)', '266', '(297)']",data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.3Q,1,-128.0,False,COL2,1,"p6 보험손익 ['(97)', '(128)', '31']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.3Q,16,697.0,False,COL2,1,"p6 (기타사업비용) ['798', '697', '101']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.3Q,22,595.0,False,NONE,2,"p31 법인세비용차감전순이익(또는법인세비용차감전순손실) ['1,975,370']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.3Q,23,168.0,False,COL2,1,"p6 법인세비용 ['37', '168', '(131)']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.3Q,24,427.0,False,COL2,1,"p4 당기순이익 ['1,938', '427', '1,511']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.4Q,1,-1012.0,True,COL1,1,"p12 보험손익 ['(1,012)', '(1,659)', '647']",data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.4Q,16,1091.0,True,COL1,1,"p12 (기타사업비용) ['1,091', '908', '183']",data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.4Q,22,982.0,True,COL1,1,"p41 법인세비용차감전순이익 ['981,743,358', '(241,643,501)']",data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.4Q,23,746.0,True,COL1,1,"p12 법인세비용 ['746', '(251)', '997']",data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2023.4Q,24,236.0,True,COL1,1,"p5 당기순이익(손실) ['236', '9', '227']",data/disclosure/FY2023_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.1Q,1,3.0,True,COL1,1,"p6 보험손익 ['3', '393', '(390)']",data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.1Q,16,253.0,True,COL1/2,1,"p6 (기타사업비용) ['253', '253']",data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.1Q,22,59.0,True,COL1,1,"p25 법인세비용차감전순이익(또는법인세비용차감전순손실) ['58,818', '518,066']",data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.1Q,23,-106.0,True,COL1,2,"p25 법인세비용 ['105,987']",data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.1Q,24,165.0,True,COL1,1,"p4 당기순이익 ['165', '693', '(528)']",data/disclosure/FY2024_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.2Q,1,21.0,True,COL1,1,"p6 보험손익 ['21', '(311)', '332']",data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.2Q,16,482.0,True,COL1,1,"p6 (기타사업비용) ['482', '119', '363']",data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.2Q,22,821.0,True,COL1,1,"p41 법인세비용차감전순이익(또는법인세비용차감전순손실) ['820,657']",data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.2Q,23,-21.0,True,COL1,2,"p41 법인세비용 ['21,138']",data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.2Q,24,842.0,True,COL1,1,"p4 당기순이익 ['842', '(31)', '873']",data/disclosure/FY2024_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.3Q,1,-97.0,True,COL1,1,"p6 보험손익 ['(97)', '(128)', '31']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.3Q,16,798.0,True,COL1,1,"p6 (기타사업비용) ['798', '697', '101']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.3Q,22,1975.0,True,COL1,1,"p31 법인세비용차감전순이익(또는법인세비용차감전순손실) ['1,975,370']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.3Q,23,37.0,True,COL1,1,"p6 법인세비용 ['37', '168', '(131)']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.3Q,24,1938.0,True,COL1,1,"p4 당기순이익 ['1,938', '427', '1,511']",data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.4Q,1,1353.0,True,COL1,1,"p12 보험손익 ['1,353', '(1,012)', '2,365']",data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.4Q,16,1148.0,True,COL1,1,"p12 (기타사업비용) ['1,148', '1,091', '57']",data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.4Q,22,2993.0,True,COL1,1,"p71 법인세비용차감전순이익 ['2,992,474,680', '981,743,358']",data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.4Q,23,313.0,True,COL1,1,"p12 법인세비용 ['313', '746', '(433)']",data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2024.4Q,24,2680.0,True,COL1,1,"p5 당기순이익(손실) ['2,680', '236', '2,444']",data/disclosure/FY2024_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.1Q,1,586.0,True,COL1,1,"p6 보험손익 ['586', '3', '583']",data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.1Q,16,249.0,True,COL1,1,"p6 (기타사업비용) ['249', '253', '(4)']",data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.1Q,22,1091.0,True,COL1,1,"p33 법인세비용차감전순이익(또는법인세비용차감전순손실) ['1,090,514']",data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.1Q,23,323.0,True,COL1,1,"p6 법인세비용 ['323', '(106)', '429']",data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.1Q,24,768.0,True,COL1,1,"p4 당기순이익 ['768', '165', '603']",data/disclosure/FY2025_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.2Q,1,1000.0,True,COL1/3,1,"p6 보험손익 ['10', '0', '10']",data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.2Q,16,500.0,True,COL1,1,"p5 및기타사업비용 ['5', '11']",data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.2Q,22,2000.0,True,COL1,1,"p48 법인세비용차감전순이익(또는법인세비용차감전순손실) ['1,990,735']",data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.2Q,23,400.0,True,COL1/3,1,"p6 법인세비용 ['4', '(0)', '4']",data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.2Q,24,1600.0,True,COL1,1,"p4 당기순이익 ['16', '8', '7']",data/disclosure/FY2025_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.4Q,1,300.0,True,COL1,1,"p12 보험손익 ['3', '14', '(10)']",data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.4Q,16,1100.0,True,COL1,1,"p11 기타사업비용 ['11', '69']",data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.4Q,22,2800.0,True,COL1,2,"p12 법인세비용차감전순이익 ['28', '30', '2']",data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.4Q,23,-0.0,True,COL1/2/3,1,"p12 법인세비용 ['(0)', '3', '3']",data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2025.4Q,24,2800.0,True,COL1,1,"p5 당기순이익 ['28', '27', '1']",data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.1Q,1,-0.0,True,COL1/2/3,1,"p5 보험손익 ['(0)', '6', '(6)']",data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.1Q,16,400.0,True,COL1,1,p5 및기타사업비용 ['4'],data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.1Q,22,400.0,True,COL1,1,"p39 법인세비용차감전순이익(또는법인세비용차감전순손실) ['407,929']",data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.1Q,23,100.0,True,COL1/2/3,1,"p6 법인세비용 ['1', '3', '(3)']",data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.1Q,24,300.0,True,COL1,1,"p4 당기순이익 ['3', '8', '(4)']",data/disclosure/FY2026_Q1/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.2Q,1,-2600.0,True,COL1,1,"p6 보험손익 ['(26)', '10', '(36)']",data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.2Q,16,600.0,True,COL1,1,"p6 (기타사업비용) ['6', '5', '1']",data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.2Q,22,-1700.0,True,COL1,2,"p6 법인세비용차감전순이익 ['(17)', '20', '44']",data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.2Q,23,200.0,True,COL1/3,1,"p6 법인세비용 ['2', '4', '2']",data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf
+KR1104,하노버재보험,2026.2Q,24,-1900.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR1104_하노버재보험.pdf
+KR1105,알지에이리인슈어런스,2023.1Q,1,-4400.0,True,COL1,1,"p4 보험손익 ['(44)', '11', '(55)']",data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.1Q,16,200.0,True,COL1,1,"p4 (기타사업비용) ['2', '1', '1']",data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.1Q,22,-3000.0,True,COL1,2,"p4 법인세비용차감전순이익 ['(30)', '24', '(54)']",data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.1Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '5', '(5)']",data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.1Q,24,-3000.0,True,COL1,1,"p3 당기순이익 ['(30)', '19', '(48)']",data/disclosure/FY2023_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.2Q,1,1000.0,False,COL2,1,"p5 보험손익 ['121', '10', '111']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.2Q,22,4600.0,False,COL2,2,"p5 법인세비용차감전순이익 ['166', '46', '121']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.2Q,23,-1100.0,False,COL2,2,"p5 법인세비용 ['37', '-11', '48']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.2Q,24,5600.0,False,COL2,1,"p3 당기순이익 ['129', '56', '73']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.2Q,16,500.0,True,COL1,1,"p5 (기타사업비용) ['5', '3', '2']",data/disclosure/FY2023_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.3Q,16,700.0,True,COL1,1,"p4 (기타사업비용) ['7', '4', '3']",data/disclosure/FY2023_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.4Q,1,11400.0,True,COL1,1,"p10 보험손익 ['114', '231', '-117']",data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.4Q,16,1000.0,True,COL1,1,"p10 (기타사업비용) ['10', '6', '4']",data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.4Q,22,19400.0,True,COL1,1,"p226 법인세비용차감전순이익 ['19,398,288,361', '29,739,443,689']",data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.4Q,23,3900.0,True,COL1,1,"p10 법인세비용 ['39', '58', '-19']",data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2023.4Q,24,15500.0,True,COL1,1,"p3 당기순이익 ['155', '239', '-84']",data/disclosure/FY2023_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.1Q,1,5400.0,True,COL1,1,"p4 보험손익 ['54', '(44)', '98']",data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.1Q,16,200.0,True,COL1/2,1,"p4 (기타사업비용) ['2', '2', '0']",data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.1Q,22,7800.0,True,COL1,2,"p4 법인세비용차감전순이익 ['78', '(30)', '108']",data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.1Q,23,1800.0,True,COL1/3,1,"p4 법인세비용 ['18', '0', '18']",data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.1Q,24,6100.0,True,COL1,1,"p3 당기순이익 ['61', '(30)', '91']",data/disclosure/FY2024_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.2Q,1,12100.0,True,COL1,1,"p5 보험손익 ['121', '10', '111']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.2Q,16,400.0,True,COL1,1,"p5 (기타사업비용) ['4', '5', '-1']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.2Q,22,16600.0,True,COL1,2,"p5 법인세비용차감전순이익 ['166', '46', '121']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.2Q,23,3700.0,True,COL1,1,"p5 법인세비용 ['37', '-11', '48']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.2Q,24,12900.0,True,COL1,1,"p3 당기순이익 ['129', '56', '73']",data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.3Q,1,26100.0,False,COL2,1,"p4 보험손익 ['173', '261', '-88']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.3Q,16,500.0,False,COL2,1,"p4 (기타사업비용) ['2', '5', '-3']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.3Q,22,33100.0,False,COL2,2,"p4 법인세비용차감전순이익 ['252', '331', '-79']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.3Q,23,8500.0,False,COL2,1,"p4 법인세비용 ['58', '85', '-27']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.3Q,24,24600.0,False,COL2,1,"p3 당기순이익 ['194', '246', '-52']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.4Q,1,38100.0,True,COL1,1,"p10 보험손익 ['381', '114', '267']",data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.4Q,16,900.0,True,COL1,1,"p10 (기타사업비용) ['9', '10', '-1']",data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.4Q,22,47200.0,True,COL1,1,"p137 법인세비용차감전순이익 ['47,239,850,615', '19,398,288,361']",data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.4Q,23,12000.0,True,COL1,1,"p10 법인세비용 ['120', '39', '81']",data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2024.4Q,24,35300.0,True,COL1,1,"p3 당기순이익 ['353', '155', '198']",data/disclosure/FY2024_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.1Q,1,11900.0,True,COL1,1,"p4 보험손익 ['119', '54', '65']",data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.1Q,16,100.0,True,COL1/2/3,1,"p4 (기타사업비용) ['1', '2', '-1']",data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.1Q,22,14600.0,True,NOLABEL,2,,data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.1Q,23,3400.0,True,COL1,1,"p4 법인세비용 ['34', '18', '16']",data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.1Q,24,11200.0,True,COL1,1,"p3 당기순이익 ['112', '61', '51']",data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.2Q,1,12500.0,True,COL1,1,"p5 보험손익 ['125', '121', '4']",data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.2Q,16,200.0,True,COL1,1,"p5 (기타사업비용) ['2', '4', '-2']",data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.2Q,22,17900.0,True,COL1,2,"p5 법인세비용차감전순이익 ['179', '166', '13']",data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.2Q,23,4100.0,True,COL1,1,"p5 법인세비용 ['41', '37', '4']",data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.2Q,24,13800.0,True,COL1,1,"p3 당기순이익 ['138', '129', '9']",data/disclosure/FY2025_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.3Q,1,17300.0,True,COL1,1,"p4 보험손익 ['173', '261', '-88']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.3Q,16,200.0,True,COL1,1,"p4 (기타사업비용) ['2', '5', '-3']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.3Q,22,25200.0,True,COL1,2,"p4 법인세비용차감전순이익 ['252', '331', '-79']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.3Q,23,5800.0,True,COL1,1,"p4 법인세비용 ['58', '85', '-27']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.3Q,24,19400.0,True,COL1,1,"p3 당기순이익 ['194', '246', '-52']",data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.4Q,1,29100.0,True,COL1,1,"p10 보험손익 ['291', '381', '-90']",data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.4Q,16,400.0,True,COL1,1,"p10 (기타사업비용) ['4', '9', '-5']",data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.4Q,22,40400.0,True,COL1,2,"p10 법인세비용차감전순이익 ['404', '472', '-68']",data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.4Q,23,10600.0,True,COL1,1,"p10 법인세비용 ['106', '120', '-14']",data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2025.4Q,24,29800.0,True,COL1,1,"p3 당기순이익 ['298', '353', '-55']",data/disclosure/FY2025_Q4/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.1Q,1,-5700.0,True,COL1,1,"p4 보험손익 ['-57', '119', '-176']",data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.1Q,16,100.0,True,COL1/2/3,1,"p4 (기타사업비용) ['1', '1', '0']",data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.1Q,22,-2800.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.1Q,23,-600.0,True,COL1,2,"p4 법인세비용 ['-6', '34', '-40']",data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.1Q,24,-2200.0,True,COL1,1,"p3 당기순이익 ['-22', '112', '-134']",data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.2Q,1,-1100.0,True,COL1,1,"p5 보험손익 ['-11', '125', '-136']",data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.2Q,16,200.0,True,COL1/2,1,"p5 (기타사업비용) ['2', '2', '0']",data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.2Q,22,4700.0,True,COL1,2,"p5 법인세비용차감전순이익 ['47', '179', '-132']",data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.2Q,23,1100.0,True,COL1,1,"p5 법인세비용 ['11', '41', '-30']",data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1105,알지에이리인슈어런스,2026.2Q,24,3600.0,True,COL1,1,"p3 당기순이익 ['36', '138', '-102']",data/disclosure/FY2026_Q2/raw/KR1105_알지에이리인슈어런스.pdf
+KR1106,스코리재보험,2023.1Q,1,-14100.0,True,COL1,1,"p4 보험손익 ['(141)', '13', '(154)']",data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.1Q,16,1400.0,True,COL1,1,"p4 기타사업비용 ['14', '55', '(41)']",data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.1Q,22,-12700.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['(127)', '81', '(208)']",data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.1Q,23,-4200.0,True,COL1,2,"p15 법인세비용 ['(4,191)', '(376)']",data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.1Q,24,-8500.0,True,COL1,1,"p3 당기순이익 ['(85)', '84', '(170)']",data/disclosure/FY2023_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.2Q,1,35800.0,True,COL1,1,"p4 보험손익 ['358', '147', '211']",data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.2Q,16,3900.0,True,COL1/2,1,"p4 기타사업비용 ['39', '39']",data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.2Q,22,37000.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['370', '179', '191']",data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.2Q,23,7900.0,True,COL1,1,"p4 법인세비용 ['79', '20', '59']",data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.2Q,24,29100.0,True,COL1,1,"p3 당기순이익 ['291', '159', '132']",data/disclosure/FY2023_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.3Q,1,40700.0,True,COL1,1,"p4 보험손익 ['407', '147', '260']",data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.3Q,16,3900.0,True,COL1/2,1,"p4 기타사업비용 ['39', '39']",data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.3Q,22,49000.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['490', '158', '332']",data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.3Q,23,10000.0,True,COL1,1,"p4 법인세비용 ['100', '20', '80']",data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.3Q,24,39000.0,True,COL1,1,"p3 당기순이익 ['390', '138', '253']",data/disclosure/FY2023_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.4Q,1,35400.0,True,COL1,1,"p8 보험손익 ['354', '561', '-208']",data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.4Q,16,7400.0,True,COL1,1,"p8 (기타사업비용) ['74', '75', '-1']",data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.4Q,22,43800.0,True,COL1,1,"p8 법인세비용차감전순이익 ['438', '591', '-152']",data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.4Q,23,8900.0,True,COL1,1,"p8 법인세비용 ['89', '125', '-35']",data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2023.4Q,24,34900.0,True,COL1,1,"p3 당기순이익 ['349', '466', '(117)']",data/disclosure/FY2023_Q4/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.1Q,1,-1700.0,True,COL1,1,"p4 보험손익 ['(17)', '(141)', '125']",data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.1Q,16,2500.0,True,COL1,1,"p4 기타사업비용 ['25', '14', '11']",data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.1Q,22,2400.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['24', '(127)', '151']",data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.1Q,23,500.0,True,COL1,1,"p4 법인세비용 ['5', '(42)', '47']",data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.1Q,24,1800.0,True,COL1,1,"p3 당기순이익 ['18', '(85)', '104']",data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.2Q,1,20000.0,True,COL1,1,"p4 보험손익 ['200', '358', '(158)']",data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.2Q,16,3600.0,True,COL1,1,"p4 기타사업비용 ['36', '39', '(4)']",data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.2Q,22,18600.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['186', '370', '(184)']",data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.2Q,23,4300.0,True,COL1,1,"p4 법인세비용 ['43', '79', '(36)']",data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.2Q,24,14300.0,True,COL1,1,"p3 당기순이익 ['143', '291', '(148)']",data/disclosure/FY2024_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.3Q,1,18100.0,True,COL1,1,"p4 보험손익 ['181', '407', '(226)']",data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.3Q,16,5000.0,True,COL1,1,"p4 기타사업비용 ['50', '39', '10']",data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.3Q,22,33800.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['338', '490', '(152)']",data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.3Q,23,7800.0,True,COL1,1,"p4 법인세비용 ['78', '100', '(21)']",data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.3Q,24,26000.0,True,COL1,1,"p3 당기순이익 ['260', '390', '(130)']",data/disclosure/FY2024_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2024.4Q,1,-1688.396959,True,COL1,1,"p8 보험손익 ['(1,688,396,959)', '35,367,181,300']",data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2024.4Q,16,8016.058821,True,COL2,1,"p8 기타사업비용 ['16', '8,016,058,821', '7,410,066,000']",data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2024.4Q,22,3270.036573,True,COL1,1,"p8 법인세비용차감전순이익 ['3,270,036,573', '43,846,287,477']",data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2024.4Q,23,-3447.839452,True,COL1,2,"p10 법인세비용 ['(3,447,839,452)', '8,941,098,360']",data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2024.4Q,24,6717.876025,True,COL1,1,"p8 당기순이익 ['6,717,876,025', '34,905,189,117']",data/disclosure/FY2024_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2025.1Q,1,6200.0,True,COL1,1,"p4 보험손익 ['62', '(17)', '79']",data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.1Q,16,1500.0,True,COL1,1,"p4 기타사업비용 ['15', '25', '(10)']",data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.1Q,22,15400.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['154', '24', '130']",data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.1Q,23,3200.0,True,COL1,1,"p4 법인세비용 ['32', '5', '27']",data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.1Q,24,12200.0,True,COL1,1,"p3 당기순이익 ['122', '18', '104']",data/disclosure/FY2025_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.2Q,1,8600.0,True,COL1,1,"p5 보험손익 ['86', '200', '(114)']",data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.2Q,16,3100.0,True,COL1,1,"p5 (기타사업비용) ['31', '36', '(4)']",data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.2Q,22,15400.0,True,COL1,1,"p5 법인세비용차감전순이익(손실) ['154', '186', '(32)']",data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.2Q,23,3300.0,True,COL1,1,"p5 법인세비용 ['33', '43', '(10)']",data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.2Q,24,12200.0,True,COL1,1,"p5 당기순이익(손실) ['122', '143', '(21)']",data/disclosure/FY2025_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.3Q,1,20500.0,True,COL1,1,"p4 보험손익 ['205', '181', '23']",data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.3Q,16,5100.0,True,COL1,1,"p4 기타사업비용 ['51', '50', '1']",data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.3Q,22,28200.0,True,COL1,1,"p4 법인세비용차감전순이익(손실) ['282', '338', '(56)']",data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.3Q,23,4200.0,True,COL1,1,"p4 법인세비용 ['42', '78', '(36)']",data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.3Q,24,24000.0,True,COL1,1,"p4 당기순이익(손실) ['240', '260', '(20)']",data/disclosure/FY2025_Q3/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2025.4Q,1,15270.220857,True,COL1,1,"p8 보험손익 ['15,270,220,857', '(1,688,396,959)']",data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2025.4Q,16,8454.716805,True,COL2,1,"p8 기타사업비용 ['18', '8,454,716,805', '8,016,058,821']",data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2025.4Q,22,27274.077979,True,COL1,1,"p8 법인세비용차감전순이익 ['27,274,077,979', '3,270,036,573']",data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2025.4Q,23,6359.471515,True,COL1,1,"p10 법인세비용 ['6,359,471,515', '(3,447,839,452)']",data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2025.4Q,24,20914.606464,True,COL1,1,"p8 당기순이익 ['20,914,606,464', '6,717,876,025']",data/disclosure/FY2025_Q4/raw_aux/KR1106_스코리재보험__audit.pdf
+KR1106,스코리재보험,2026.1Q,1,8300.0,True,COL1,1,"p4 보험손익 ['83', '62', '21']",data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.1Q,16,900.0,True,COL1,1,"p4 (기타사업비용) ['9', '15', '(6)']",data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.1Q,22,8100.0,True,COL1,1,"p4 법인세비용차감전순이익 ['81', '154', '(73)']",data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.1Q,23,1600.0,True,COL1,1,"p4 법인세비용 ['16', '32', '(16)']",data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.1Q,24,6600.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.2Q,1,-6400.0,True,COL1,1,"p5 보험손익 ['(64)', '86', '(150)']",data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.2Q,16,2400.0,True,COL1,1,"p5 (기타사업비용) ['24', '31', '(7)']",data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.2Q,22,-1800.0,True,COL1,1,"p5 법인세비용차감전순이익 ['(18)', '154', '(172)']",data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.2Q,23,-500.0,True,COL1,2,"p5 법인세비용 ['(5)', '33', '(38)']",data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf
+KR1106,스코리재보험,2026.2Q,24,-1300.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR1106_스코리재보험.pdf
+KR1107,퍼시픽라이프리,2023.1Q,1,-2300.0,False,COL2,1,"p3 보험손익 ['-7', '-23', '16']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.1Q,16,500.0,False,COL2,1,"p3 (기타사업비용) ['8', '5', '3']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.1Q,22,6500.0,False,COL2,2,"p13 법인세비용차감전순이익(또는순손실) ['639,075', '6,489,205', '-5,850,130']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.1Q,23,0.0,False,COL1/2/3,1,"p13 법인세비용 ['0', '0', '0']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.1Q,24,6500.0,False,COL2,1,"p3 당기순이익 ['6', '65', '-59']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.2Q,1,-7000.0,False,COL2,1,"p3 보험손익 ['109', '-70', '180']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.2Q,16,1200.0,False,COL2,1,"p3 (기타사업비용) ['13', '12', '2']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.2Q,22,-1100.0,False,COL2,2,"p20 법인세비용차감전순이익(또는순손실) ['17,989,212', '-1,093,842', '19,083,054']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.2Q,23,0.0,False,COL1,1,p20 법인세비용 ['0'],data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.2Q,24,-1100.0,False,COL2,1,"p2 당기순이익 ['180', '-11', '191']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.3Q,1,-7900.0,False,COL2,1,"p4 보험손익 ['-14', '-79', '65']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.3Q,16,1800.0,False,COL2,1,"p4 (기타사업비용) ['20', '18', '2']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.3Q,22,-4500.0,False,COL2,2,"p14 법인세비용차감전순이익(또는순손실) ['13,159,433', '-4,526,447', '17,685,880']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.3Q,23,0.0,False,COL1/2,1,"p4 법인세비용 ['5', '5']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.3Q,24,-4500.0,False,COL2,1,"p3 당기순이익 ['126', '-45', '172']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.4Q,1,-23900.0,False,COL2,1,"p9 보험손익 ['-134', '-239', '104']",data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.4Q,16,2500.0,False,COL2,1,"p9 (기타사업비용) ['28', '25', '3']",data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.4Q,22,-3800.0,False,COL2,2,"p56 법인세비용차감전순이익(또는순손실) ['4,334,865', '(3,839,222)', '8,174,087']",data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.4Q,23,0.0,False,COL1/2/3,1,"p56 법인세비용 ['0', '0', '0']",data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2023.4Q,24,-3800.0,False,COL2,1,"p3 당기순이익 ['43', '-38', '82']",data/disclosure/FY2024_Q4/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.1Q,1,-700.0,True,COL1,1,"p3 보험손익 ['-7', '-23', '16']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.1Q,16,800.0,True,COL1,1,"p3 (기타사업비용) ['8', '5', '3']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.1Q,22,600.0,True,COL1,2,"p13 법인세비용차감전순이익(또는순손실) ['639,075', '6,489,205', '-5,850,130']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.1Q,23,0.0,True,COL1/2/3,1,"p13 법인세비용 ['0', '0', '0']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.1Q,24,600.0,True,COL1,1,"p3 당기순이익 ['6', '65', '-59']",data/disclosure/FY2024_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.2Q,1,10900.0,True,COL1,1,"p3 보험손익 ['109', '-70', '180']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.2Q,16,1300.0,True,COL1,1,"p3 (기타사업비용) ['13', '12', '2']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.2Q,22,18000.0,True,COL1,2,"p20 법인세비용차감전순이익(또는순손실) ['17,989,212', '-1,093,842', '19,083,054']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.2Q,23,0.0,True,COL1,1,p20 법인세비용 ['0'],data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.2Q,24,18000.0,True,COL1,1,"p2 당기순이익 ['180', '-11', '191']",data/disclosure/FY2024_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.3Q,1,-1400.0,True,COL1,1,"p4 보험손익 ['-14', '-79', '65']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.3Q,16,2000.0,True,COL1,1,"p4 (기타사업비용) ['20', '18', '2']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.3Q,22,13200.0,True,COL1,2,"p14 법인세비용차감전순이익(또는순손실) ['13,159,433', '-4,526,447', '17,685,880']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.3Q,23,500.0,True,COL1/2,1,"p4 법인세비용 ['5', '5']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.3Q,24,12600.0,True,COL1,1,"p3 당기순이익 ['126', '-45', '172']",data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2024.4Q,1,-13300.085367,True,COL1,1,"p8 보험손익 ['(13,300,085,367)', '(23,852,988,562)']",data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2024.4Q,22,4334.865096,True,COL1,1,"p8 법인세비용차감전순이익 ['4,334,865,096', '(3,839,221,783)']",data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2024.4Q,23,0.0,True,COL1,1,p8 법인세비용 ['28'],data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2024.4Q,24,4334.865096,True,COL1,1,"p8 당기순이익(손실) ['4,334,865,096', '(3,839,221,783)']",data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2024.4Q,16,2600.0,False,COL2,1,"p10 (기타사업비용) ['35', '26', '9']",data/disclosure/FY2025_Q4/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.1Q,1,0.0,True,COL1/2/3,1,"p4 보험손익 ['0', '(7)', '7']",data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.1Q,16,600.0,True,COL1,1,"p4 (기타사업비용) ['6', '8', '(2)']",data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.1Q,22,4300.0,True,COL1,2,"p35 법인세비용차감전순이익(또는순손실) ['4,334,352', '639,075', '3,695,278']",data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.1Q,23,0.0,True,COL1/2/3,1,"p35 법인세비용 ['0', '0', '0']",data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.1Q,24,4300.0,True,COL1,1,"p3 당기순이익 ['43', '6', '37']",data/disclosure/FY2025_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.2Q,1,2900.0,True,COL1,1,"p5 보험손익 ['29', '109', '-81']",data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.2Q,16,1100.0,True,COL1,1,"p5 (기타사업비용) ['11', '13', '-2']",data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.2Q,22,8600.0,True,COL1,2,"p5 법인세비용차감전순이익 ['86', '180', '-94']",data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.2Q,23,0.0,True,COL1/2/3,1,"p5 법인세비용 ['0', '0', '0']",data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.2Q,24,8600.0,True,COL1,1,"p3 당기순이익 ['86', '180', '-94']",data/disclosure/FY2025_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.3Q,1,-6400.0,True,COL1,1,"p4 보험손익 ['-64', '-14', '-50']",data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.3Q,16,1700.0,True,COL1,1,"p4 (기타사업비용) ['17', '20', '-3']",data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.3Q,22,-900.0,True,COL1,1,"p35 법인세비용차감전순이익 ['(889,658)', '13,159,433', '(14,049,091)']",data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.3Q,23,200.0,True,COL1,1,"p4 법인세비용 ['2', '5', '-3']",data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.3Q,24,-1100.0,True,COL1,1,"p3 당기순이익 ['-11', '126', '-137']",data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2025.4Q,1,-13985.857353,True,COL1,1,"p8 보험손익 ['(13,985,857,353)', '(13,300,085,367)']",data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2025.4Q,16,3485.463871,True,COL2,2,"p8 3)기타사업비용 ['10,20', '3,485,463,871', '2,620,034,074']",data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2025.4Q,22,-12066.580579,True,COL1,1,"p8 법인세비용차감전순이익 ['(12,066,580,579)', '4,334,865,096']",data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2025.4Q,23,0.0,True,COL1,1,p8 법인세비용 ['28'],data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2025.4Q,24,-12066.580579,True,COL1,1,"p8 당기순이익(손실) ['(12,066,580,579)', '4,334,865,096']",data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf
+KR1107,퍼시픽라이프리,2026.1Q,1,3200.0,True,COL1,1,"p4 보험손익 ['32', '0', '31']",data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.1Q,16,900.0,True,COL1,1,"p4 (기타사업비용) ['9', '6', '3']",data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.1Q,22,-1300.0,True,COL1,1,"p35 법인세비용차감전순이익 ['-1,257,632', '4,334,352', '-5,591,984']",data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.1Q,23,0.0,True,COL1/2/3,1,"p4 법인세비용 ['0', '0', '0']",data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.1Q,24,-1300.0,True,COL1,1,"p3 당기순이익 ['-13', '43', '-56']",data/disclosure/FY2026_Q1/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.2Q,1,4600.0,True,COL1,1,"p5 보험손익 ['46', '29', '17']",data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.2Q,16,2000.0,True,COL1,1,"p5 (기타사업비용) ['20', '11', '9']",data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.2Q,22,-100.0,True,COL1/2/3,1,"p5 법인세비용차감전순이익 ['-1', '86', '-87']",data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.2Q,23,0.0,True,COL1/2/3,1,"p5 법인세비용 ['0', '0', '0']",data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1107,퍼시픽라이프리,2026.2Q,24,-100.0,True,COL1/2/3,1,"p3 당기순이익 ['-1', '86', '-88']",data/disclosure/FY2026_Q2/raw/KR1107_퍼시픽라이프리.pdf
+KR1108,마이브라운반려동물전문보험,2025.2Q,1,-2200.0,True,COL1/2,1,"p4 보험손익 ['-22', '-22']",data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.2Q,16,2200.0,True,COL1/2,1,"p4 (기타사업비용) ['22', '22']",data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.2Q,22,-2200.0,True,COL1/2,1,"p4 법인세비용차감전순이익 ['-22', '-22']",data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.2Q,23,0.0,True,COL1,1,p19 법인세비용 ['0'],data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.2Q,24,-2200.0,True,COL1/2,1,"p3 당기순이익 ['-22', '-22']",data/disclosure/FY2025_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.3Q,1,-4500.0,True,COL1/2,1,"p4 보험손익 ['-45', '-45']",data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.3Q,16,3900.0,True,COL1/2,1,"p4 (기타사업비용) ['39', '39']",data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.3Q,22,-4900.0,True,COL1/2,1,"p4 법인세비용차감전순이익 ['-49', '-49']",data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.3Q,23,0.0,True,COL1,1,p24 법인세비용 ['0'],data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.3Q,24,-4900.0,True,COL1/2,1,"p3 당기순이익 ['-49', '-49']",data/disclosure/FY2025_Q3/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.4Q,1,-7500.0,True,COL1/2,1,"p12 보험손익 ['-75', '-75']",data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.4Q,16,6300.0,True,COL1/2,1,"p12 (기타사업비용) ['63', '63']",data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.4Q,22,-8100.0,True,COL1,1,"p116 법인세비용차감전순이익(손실) ['(8,132,225,264)', '(1,115,957,989)']",data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.4Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2025.4Q,24,-8100.0,True,COL1/2,1,"p3 당기순이익 ['-81', '-81']",data/disclosure/FY2025_Q4/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.1Q,1,-2800.0,True,COL1,1,p4 보험손익 ['-28'],data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.1Q,16,2300.0,True,COL1,1,p4 (기타사업비용) ['23'],data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.1Q,22,-3200.0,True,COL1,1,p4 법인세비용차감전순이익 ['-32'],data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.1Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.1Q,24,-3200.0,True,COL1,1,p3 당기순이익 ['-32'],data/disclosure/FY2026_Q1/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.2Q,1,-6900.0,True,COL1,1,"p5 보험손익 ['-69', '-22', '-47']",data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.2Q,16,5900.0,True,COL1,1,"p5 (기타사업비용) ['59', '22', '37']",data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.2Q,22,-7800.0,True,COL1,1,"p43 법인세비용차감전순이익 ['-7,792,486,771']",data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.2Q,23,0.0,True,NOLABEL,2,,data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf
+KR1108,마이브라운반려동물전문보험,2026.2Q,24,-7800.0,True,COL1,1,"p3 당기순이익 ['-78', '-22', '-56']",data/disclosure/FY2026_Q2/raw/KR1108_마이브라운반려동물전문보험.pdf

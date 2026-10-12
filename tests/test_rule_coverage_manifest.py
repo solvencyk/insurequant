@@ -890,7 +890,8 @@ GOLD_OVERLAY_RULES = {
 }
 
 # 실측 2026-08-30 (중복 키 7건 제거 후). 오버레이별 (gold 칸 수, 마스크 칸 수).
-GOLD_OVERLAY_CENSUS = {"CSM": (276, 86), "PL": (203, 29)}
+# 2026-10-13 ticket 20261012T2230Z (parser/ifrs17): gold 만 늘었다 -- CSM +27 · PL +157 (마스크 칸 수 86·29 불변 = 허용오차 불변, 새 gold 칸은 전부 소스와 다르다).
+GOLD_OVERLAY_CENSUS = {"CSM": (303, 86), "PL": (360, 29)}
 
 
 def _gate():

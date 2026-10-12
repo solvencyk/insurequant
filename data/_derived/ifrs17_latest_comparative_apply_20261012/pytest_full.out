@@ -1,0 +1,63 @@
+........................................................................ [  3%]
+........................................................................ [  7%]
+........................................................................ [ 10%]
+........................................................................ [ 14%]
+........................................................................ [ 17%]
+........................................................................ [ 21%]
+........................................................................ [ 25%]
+........................................................................ [ 28%]
+........................................................................ [ 32%]
+........................................................................ [ 35%]
+........................................................................ [ 39%]
+........................................................................ [ 43%]
+........................................................................ [ 46%]
+........................................................................ [ 50%]
+........................................................................ [ 53%]
+.......ssss............Fs............................................... [ 57%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+..s..................................................................... [ 68%]
+........................................................................ [ 71%]
+........................................................................ [ 75%]
+...................................s.................................... [ 78%]
+........................................................................ [ 82%]
+........................................................................ [ 86%]
+........................................................................ [ 89%]
+........................................................................ [ 93%]
+........................................................................ [ 96%]
+...............................................................          [100%]
+================================== FAILURES ===================================
+__________________ test_master_tables_summary_matches_golden __________________
+
+    def test_master_tables_summary_matches_golden():
+        expected = json.loads(GOLDEN.read_text(encoding="utf-8"))
+        actual = _run()
+        assert expected["exit_code"] == actual["exit_code"], (
+            f"exit code moved: {expected['exit_code']} -> {actual['exit_code']}"
+        )
+>       assert expected["summary"] == actual["summary"], (
+            "validate_master_tables SUMMARY moved:\n"
+            f"  expected: {expected['summary']}\n  actual:   {actual['summary']}\n"
+            f"If intended, regenerate: python {GOLDEN.name} --update"
+        )
+E       AssertionError: validate_master_tables SUMMARY moved:
+E           expected: SUMMARY coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3660P(진짜1279·구성상2046·부분335)/29F/2741S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:383P/5PIN/0F/5S | qoq_warn:267Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:14Y
+E           actual:   SUMMARY coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3676P(진짜1291·구성상2050·부분335)/23F/2731S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:386P/2PIN/0F/5S | qoq_warn:266Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:22Y
+E         If intended, regenerate: python master_tables_golden.json --update
+E       assert 'SUMMARY cove...s_bs_aoci:14Y' == 'SUMMARY cove...s_bs_aoci:22Y'
+E         
+E         Skipping 102 identical leading characters in diff, use -v to show
+E         - _bridge:3676P(진짜1291·구성상2050·부분335)/23F/2731S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:386P/2PIN/0F/5S | qoq_warn:266Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:22Y
+E         ?           ^^      ^^      ^^         ^    ^                                                                                                                                                                         ^^^^          ...
+E         
+E         ...Full output truncated (3 lines hidden), use '-vv' to show
+
+tests\test_master_tables_golden.py:50: AssertionError
+============================== warnings summary ===============================
+tests/test_deploy_assets.py::test_every_python_file_parses
+  <unknown>:3: SyntaxWarning: invalid escape sequence '\s'
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_master_tables_golden.py::test_master_tables_summary_matches_golden
+1 failed, 1999 passed, 7 skipped, 1 warning in 712.30s (0:11:52)

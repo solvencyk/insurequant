@@ -1,0 +1,2308 @@
+{
+ "CSM": [
+  {
+   "block": "KR0069|2023.2Q",
+   "code": "KR0069",
+   "quarter": "2023.2Q",
+   "item": 3,
+   "old": 900.2,
+   "new": 1915.9
+  },
+  {
+   "block": "KR0069|2023.2Q",
+   "code": "KR0069",
+   "quarter": "2023.2Q",
+   "item": 4,
+   "old": -821.4,
+   "new": -1837.0
+  },
+  {
+   "block": "KR0082|2023.1Q",
+   "code": "KR0082",
+   "quarter": "2023.1Q",
+   "item": 3,
+   "old": 82.1,
+   "new": 123.6
+  },
+  {
+   "block": "KR0082|2023.1Q",
+   "code": "KR0082",
+   "quarter": "2023.1Q",
+   "item": 4,
+   "old": 127.1,
+   "new": 85.7
+  },
+  {
+   "block": "KR0087|2023.1Q",
+   "code": "KR0087",
+   "quarter": "2023.1Q",
+   "item": 2,
+   "old": 1762.7,
+   "new": 1762.9
+  },
+  {
+   "block": "KR0087|2023.1Q",
+   "code": "KR0087",
+   "quarter": "2023.1Q",
+   "item": 4,
+   "old": -239.9,
+   "new": -240.1
+  },
+  {
+   "block": "KR1000|2025.1Q",
+   "code": "KR1000",
+   "quarter": "2025.1Q",
+   "item": 3,
+   "old": 84.1,
+   "new": 79.8
+  },
+  {
+   "block": "KR1000|2025.1Q",
+   "code": "KR1000",
+   "quarter": "2025.1Q",
+   "item": 4,
+   "old": 206.0,
+   "new": 210.3
+  },
+  {
+   "block": "KR0104|2023.1Q",
+   "code": "KR0104",
+   "quarter": "2023.1Q",
+   "item": 1,
+   "old": 42895.8,
+   "new": 42505.2
+  },
+  {
+   "block": "KR0104|2023.1Q",
+   "code": "KR0104",
+   "quarter": "2023.1Q",
+   "item": 4,
+   "old": 1866.2,
+   "new": 1836.4
+  },
+  {
+   "block": "KR0104|2023.1Q",
+   "code": "KR0104",
+   "quarter": "2023.1Q",
+   "item": 6,
+   "old": 45735.2,
+   "new": 45314.9
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 1,
+   "old": 122013.1,
+   "new": 121441.7
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 3,
+   "old": 879.9,
+   "new": 876.3
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 5,
+   "old": -3760.4,
+   "new": -3746.9
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 6,
+   "old": 123501.4,
+   "new": 122939.8
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 1,
+   "old": 122013.1,
+   "new": 121441.7
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 3,
+   "old": 1830.2,
+   "new": 1823.0
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 5,
+   "old": -7591.3,
+   "new": -7564.6
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 6,
+   "old": 126548.5,
+   "new": 125996.5
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 1,
+   "old": 122013.1,
+   "new": 121441.7
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 3,
+   "old": 2875.9,
+   "new": 2865.0
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 5,
+   "old": -11548.6,
+   "new": -11509.0
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 6,
+   "old": 132593.4,
+   "new": 132050.8
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 1,
+   "old": 100383.8,
+   "new": 96376.4
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 2,
+   "old": 12346.8,
+   "new": 12197.6
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 3,
+   "old": 2236.9,
+   "new": 2163.1
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 4,
+   "old": 198.6,
+   "new": 488.7
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 5,
+   "old": -8379.7,
+   "new": -7842.8
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 6,
+   "old": 106786.4,
+   "new": 103383.0
+  }
+ ],
+ "PL": [
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 1,
+   "old": 567547.0,
+   "new": 566240.017363,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 2,
+   "old": 459817.0,
+   "new": 458510.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 3,
+   "old": 457815.0,
+   "new": 456470.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 4,
+   "old": 376038.0,
+   "new": 374693.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 6,
+   "old": 21083.0,
+   "new": 23870.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 7,
+   "old": 27695.0,
+   "new": 24908.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 8,
+   "old": 2001.0,
+   "new": 2040.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 9,
+   "old": -2249.0,
+   "new": -2211.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 11,
+   "old": 469.0,
+   "new": 354.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 12,
+   "old": 7955.0,
+   "new": 8071.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 13,
+   "old": 134513.0,
+   "new": 134514.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 16,
+   "old": 92608.0,
+   "new": 92608.042127,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 17,
+   "old": 241422.0,
+   "new": 241760.630813,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 18,
+   "old": 598506.0,
+   "new": 598506.215563,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 19,
+   "old": -357084.0,
+   "new": -356745.58475,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 20,
+   "old": 808970.0,
+   "new": 808000.648176,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 21,
+   "old": 6906.0,
+   "new": 6905.826337,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 22,
+   "old": 815876.0,
+   "new": 814906.474513,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 23,
+   "old": 235737.0,
+   "new": 235737.25577,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 24,
+   "old": 580138.0,
+   "new": 579169.218743,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 25,
+   "old": null,
+   "new": 1002473.199291,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.1Q",
+   "code": "KR0008",
+   "quarter": "2023.1Q",
+   "item": 31,
+   "old": null,
+   "new": 1581642.418034,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 1,
+   "old": null,
+   "new": 1167499.945097,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 2,
+   "old": 953944.0,
+   "new": 951355.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 3,
+   "old": 958503.0,
+   "new": 955837.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 4,
+   "old": 759126.0,
+   "new": 756459.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 6,
+   "old": 46562.0,
+   "new": 52470.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 7,
+   "old": 80882.0,
+   "new": 74975.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 8,
+   "old": -4559.0,
+   "new": -4482.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 9,
+   "old": -5498.0,
+   "new": -5420.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 11,
+   "old": -25993.0,
+   "new": -26222.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 12,
+   "old": 34308.0,
+   "new": 34536.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 13,
+   "old": 262747.0,
+   "new": 262749.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 14,
+   "old": 161674.0,
+   "new": 161676.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 15,
+   "old": null,
+   "new": 0.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 16,
+   "old": 172900.0,
+   "new": 208279.846008,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 17,
+   "old": null,
+   "new": 399998.024608,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 18,
+   "old": null,
+   "new": 1084050.443916,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 19,
+   "old": null,
+   "new": -684052.419308,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 20,
+   "old": null,
+   "new": 1567497.969705,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 21,
+   "old": null,
+   "new": 17352.810809,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 22,
+   "old": 1586800.0,
+   "new": 1584850.780514,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 23,
+   "old": 402300.0,
+   "new": 402232.348208,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 24,
+   "old": 1184500.0,
+   "new": 1182618.432306,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 25,
+   "old": null,
+   "new": 1764581.598359,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.2Q",
+   "code": "KR0008",
+   "quarter": "2023.2Q",
+   "item": 31,
+   "old": null,
+   "new": 2947200.030665,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 1,
+   "old": 1686253.903377,
+   "new": 1682407.02924,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 2,
+   "old": 1439318.0,
+   "new": 1435473.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 3,
+   "old": 1453489.0,
+   "new": 1449524.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 4,
+   "old": 1154862.0,
+   "new": 1150897.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 8,
+   "old": -14171.0,
+   "new": -14051.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 9,
+   "old": -9466.0,
+   "new": -9347.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 11,
+   "old": -45167.0,
+   "new": -45168.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 12,
+   "old": 51087.0,
+   "new": 51089.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 17,
+   "old": 439140.481342,
+   "new": 440171.378697,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 19,
+   "old": -1027811.687724,
+   "new": -1026780.790369,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 20,
+   "old": 2125394.384719,
+   "new": 2122578.407937,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 22,
+   "old": 2145520.143953,
+   "new": 2142704.167171,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 24,
+   "old": 1587732.050501,
+   "new": 1584916.073719,
+   "row_absent": false
+  },
+  {
+   "block": "KR0008|2023.3Q",
+   "code": "KR0008",
+   "quarter": "2023.3Q",
+   "item": 31,
+   "old": 3168397.502852,
+   "new": 3165581.52607,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 2,
+   "old": 1469131.0,
+   "new": 1401735.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 3,
+   "old": 1650155.0,
+   "new": 1572457.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 4,
+   "old": 837969.0,
+   "new": 784280.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 5,
+   "old": 90263.0,
+   "new": 90879.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 6,
+   "old": 415719.0,
+   "new": 415090.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 7,
+   "old": 306204.0,
+   "new": 282208.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 8,
+   "old": -181024.0,
+   "new": -170722.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 9,
+   "old": -131855.0,
+   "new": -123293.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 10,
+   "old": -6093.0,
+   "new": -6053.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 11,
+   "old": -63669.0,
+   "new": -71626.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0001|2023.3Q",
+   "code": "KR0001",
+   "quarter": "2023.3Q",
+   "item": 12,
+   "old": 20593.0,
+   "new": 30250.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 1,
+   "old": 431045.384507,
+   "new": 456176.407276,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 2,
+   "old": 332221.0,
+   "new": 367787.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 3,
+   "old": 321249.0,
+   "new": 365347.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 4,
+   "old": 329466.0,
+   "new": 311850.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 5,
+   "old": 26400.0,
+   "new": 29392.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 6,
+   "old": -7962.0,
+   "new": 7020.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 7,
+   "old": -26655.0,
+   "new": 17085.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 8,
+   "old": 10972.0,
+   "new": 2440.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 9,
+   "old": 3858.0,
+   "new": -931.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 10,
+   "old": -546.0,
+   "new": -552.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 11,
+   "old": -12937.0,
+   "new": -11178.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 12,
+   "old": 20597.0,
+   "new": 15101.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 13,
+   "old": 99381.0,
+   "new": 98945.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 14,
+   "old": 7538.0,
+   "new": 17271.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 16,
+   "old": 34876.675806,
+   "new": 27826.743494,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 17,
+   "old": 193576.304797,
+   "new": 130679.816886,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 18,
+   "old": 492836.333089,
+   "new": 329046.833203,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 19,
+   "old": -299260.028292,
+   "new": -198367.016317,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 20,
+   "old": 624621.689304,
+   "new": 586856.224162,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 21,
+   "old": 9046.601923,
+   "new": 931.767937,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 22,
+   "old": 633668.291227,
+   "new": 587787.992099,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 23,
+   "old": 147521.098615,
+   "new": 140518.734899,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 24,
+   "old": 486147.192612,
+   "new": 447269.2572,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 25,
+   "old": null,
+   "new": 35834.488794,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 26,
+   "old": null,
+   "new": 483445.956072,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 27,
+   "old": null,
+   "new": -504172.993555,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 28,
+   "old": null,
+   "new": 33858.04678,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 29,
+   "old": null,
+   "new": 5446.869191,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 30,
+   "old": null,
+   "new": 8075.559563,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 31,
+   "old": null,
+   "new": 483103.745994,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.1Q",
+   "code": "KR0011",
+   "quarter": "2023.1Q",
+   "item": 32,
+   "old": null,
+   "new": 9181.050743,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 1,
+   "old": 971297.908122,
+   "new": 902755.25768,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 2,
+   "old": 758440.0,
+   "new": 737398.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 3,
+   "old": 761679.0,
+   "new": 748962.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 4,
+   "old": 670647.0,
+   "new": 619343.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 5,
+   "old": 59351.0,
+   "new": 61537.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 6,
+   "old": 6777.0,
+   "new": 54133.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 7,
+   "old": 24904.0,
+   "new": 13949.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 8,
+   "old": -3239.0,
+   "new": -11564.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 9,
+   "old": 7865.0,
+   "new": 635.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 10,
+   "old": -1094.0,
+   "new": -1130.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 11,
+   "old": -34962.0,
+   "new": -33487.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 12,
+   "old": 24952.0,
+   "new": 22418.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 16,
+   "old": 70375.725865,
+   "new": 54369.642621,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 17,
+   "old": 337871.214168,
+   "new": 305401.084326,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 18,
+   "old": 900677.012572,
+   "new": 697862.779831,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 19,
+   "old": -562805.798404,
+   "new": -392461.695505,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 20,
+   "old": 1309169.12229,
+   "new": 1208156.342006,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 21,
+   "old": 11103.640221,
+   "new": 5815.88678,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 22,
+   "old": 1320272.762511,
+   "new": 1213972.228786,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 23,
+   "old": 317527.6352,
+   "new": 301728.141452,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 24,
+   "old": 1002745.127311,
+   "new": 912244.087334,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 25,
+   "old": null,
+   "new": 74979.545365,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 26,
+   "old": null,
+   "new": 162335.018808,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 27,
+   "old": null,
+   "new": -127459.467948,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 28,
+   "old": null,
+   "new": 21795.812318,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 29,
+   "old": null,
+   "new": 5341.703708,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 30,
+   "old": null,
+   "new": 3615.256271,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 31,
+   "old": null,
+   "new": 987223.632699,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.2Q",
+   "code": "KR0011",
+   "quarter": "2023.2Q",
+   "item": 32,
+   "old": null,
+   "new": 9351.222208,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 2,
+   "old": 1122979.0,
+   "new": 1121594.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 3,
+   "old": 1137834.0,
+   "new": 1139841.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 4,
+   "old": 941168.0,
+   "new": 935789.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 5,
+   "old": 87835.0,
+   "new": 87760.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 6,
+   "old": 103486.0,
+   "new": 95410.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 7,
+   "old": 5345.0,
+   "new": 20882.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 8,
+   "old": -14855.0,
+   "new": -18247.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 9,
+   "old": 4306.0,
+   "new": 1075.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 10,
+   "old": -2046.0,
+   "new": -2039.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 11,
+   "old": -48341.0,
+   "new": -43355.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 12,
+   "old": 31226.0,
+   "new": 26072.0,
+   "row_absent": false
+  },
+  {
+   "block": "KR0011|2023.3Q",
+   "code": "KR0011",
+   "quarter": "2023.3Q",
+   "item": 18,
+   "old": 968520.161043,
+   "new": 968520.1610430001,
+   "row_absent": false
+  }
+ ],
+ "BS": [
+  {
+   "block": "KR0005|2023.4Q",
+   "code": "KR0005",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "old": 10670878.0,
+   "new": 10663022.0,
+   "account": "ifrs-full_Liabilities",
+   "orig": "10670878.0",
+   "later_rcept": "20250320001444",
+   "later_file": "data/dart/_fs_api_cache/00103176_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0005|2023.4Q",
+   "code": "KR0005",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "old": 1360675.0,
+   "new": 1368531.0,
+   "account": "ifrs-full_Equity",
+   "orig": "1360675.0",
+   "later_rcept": "20250320001444",
+   "later_file": "data/dart/_fs_api_cache/00103176_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0005|2023.4Q",
+   "code": "KR0005",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": 327581.0,
+   "new": 356044.0,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "327581.0",
+   "later_rcept": "20250320001444",
+   "later_file": "data/dart/_fs_api_cache/00103176_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0005|2023.4Q",
+   "code": "KR0005",
+   "quarter": "2023.4Q",
+   "item": 20,
+   "old": 9960742.0,
+   "new": 9958961.0,
+   "account": "ifrs-full_InsuranceContractsIssuedThatAreLiabilities",
+   "orig": "9960742.0",
+   "later_rcept": "20250320001444",
+   "later_file": "data/dart/_fs_api_cache/00103176_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0005|2023.4Q",
+   "code": "KR0005",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 495273.0,
+   "new": 474666.0,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "495273.0",
+   "later_rcept": "20250320001444",
+   "later_file": "data/dart/_fs_api_cache/00103176_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0072|2023.4Q",
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 1,
+   "old": 17457340.34721,
+   "new": 17498444.891841,
+   "account": "ifrs-full_Assets",
+   "orig": "17457340.34721",
+   "later_rcept": "20250331002302",
+   "later_file": "data/dart/_fs_api_cache/00104069_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0072|2023.4Q",
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "old": 17071709.757624,
+   "new": 17112920.364404,
+   "account": "ifrs-full_Liabilities",
+   "orig": "17071709.757624",
+   "later_rcept": "20250331002302",
+   "later_file": "data/dart/_fs_api_cache/00104069_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0072|2023.4Q",
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "old": 385630.589586,
+   "new": 385524.527437,
+   "account": "ifrs-full_Equity",
+   "orig": "385630.589586",
+   "later_rcept": "20250331002302",
+   "later_file": "data/dart/_fs_api_cache/00104069_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0072|2023.4Q",
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": -116909.602727,
+   "new": -117015.664876,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "-116909.602727",
+   "later_rcept": "20250331002302",
+   "later_file": "data/dart/_fs_api_cache/00104069_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0079|2023.4Q",
+   "code": "KR0079",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "old": 30131929.468494,
+   "new": 30027165.961452,
+   "account": "ifrs-full_Liabilities",
+   "orig": "30131929.468494",
+   "later_rcept": "20250814003144",
+   "later_file": "data/dart/_fs_api_cache/00112332_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0079|2023.4Q",
+   "code": "KR0079",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "old": 2914263.556503,
+   "new": 3019027.063545,
+   "account": "ifrs-full_Equity",
+   "orig": "2914263.556503",
+   "later_rcept": "20250814003144",
+   "later_file": "data/dart/_fs_api_cache/00112332_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0079|2023.4Q",
+   "code": "KR0079",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": 400103.553823,
+   "new": 400218.841246,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "400103.553823",
+   "later_rcept": "20250814003144",
+   "later_file": "data/dart/_fs_api_cache/00112332_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0079|2023.4Q",
+   "code": "KR0079",
+   "quarter": "2023.4Q",
+   "item": 20,
+   "old": 25782954.737248,
+   "new": 25645533.710571,
+   "account": "ifrs-full_InsuranceContractsIssuedThatAreLiabilities",
+   "orig": "25782954.737248",
+   "later_rcept": "20250814003144",
+   "later_file": "data/dart/_fs_api_cache/00112332_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0079|2023.4Q",
+   "code": "KR0079",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 1713236.222735,
+   "new": 1817884.442354,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "1713236.222735",
+   "later_rcept": "20250814003144",
+   "later_file": "data/dart/_fs_api_cache/00112332_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0073|2024.4Q",
+   "code": "KR0073",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 115103965.327422,
+   "new": 115102330.809956,
+   "account": "ifrs-full_Liabilities",
+   "orig": "115103965.327422",
+   "later_rcept": "20260331004015",
+   "later_file": "data/dart/_fs_api_cache/00112882_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0073|2024.4Q",
+   "code": "KR0073",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 7305017.718577,
+   "new": 7306220.723432,
+   "account": "ifrs-full_Equity",
+   "orig": "7305017.718577",
+   "later_rcept": "20260331004015",
+   "later_file": "data/dart/_fs_api_cache/00112882_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0073|2024.4Q",
+   "code": "KR0073",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "old": -2205732.209538,
+   "new": -2204529.204683,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "-2205732.209538",
+   "later_rcept": "20260331004015",
+   "later_file": "data/dart/_fs_api_cache/00112882_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0068|2024.4Q",
+   "code": "KR0068",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 111800028.744522,
+   "new": 111786666.0,
+   "account": "ifrs-full_Liabilities",
+   "orig": "111800028.744522",
+   "later_rcept": "20260331003585",
+   "later_file": "data/dart/_fs_api_cache/00113058_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0068|2024.4Q",
+   "code": "KR0068",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 10335003.769767,
+   "new": 10348367.0,
+   "account": "ifrs-full_Equity",
+   "orig": "10335003.769767",
+   "later_rcept": "20260331003585",
+   "later_file": "data/dart/_fs_api_cache/00113058_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0087|2023.4Q",
+   "code": "KR0087",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": 35801.094648,
+   "new": 56405.467597,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "35801.094648",
+   "later_rcept": "20250331000321",
+   "later_file": "data/dart/_fs_api_cache/00117267_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0087|2023.4Q",
+   "code": "KR0087",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 1361584.988732,
+   "new": 1340967.332608,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "1361584.988732",
+   "later_rcept": "20250331000321",
+   "later_file": "data/dart/_fs_api_cache/00117267_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0087|2024.4Q",
+   "code": "KR0087",
+   "quarter": "2024.4Q",
+   "item": 1,
+   "old": 34577574.866215,
+   "new": 34576849.0,
+   "account": "ifrs-full_Assets",
+   "orig": "34577574.866215",
+   "later_rcept": "20260331004234",
+   "later_file": "data/dart/_fs_api_cache/00117267_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0087|2024.4Q",
+   "code": "KR0087",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 32567035.838663,
+   "new": 32563891.0,
+   "account": "ifrs-full_Liabilities",
+   "orig": "32567035.838663",
+   "later_rcept": "20260331004234",
+   "later_file": "data/dart/_fs_api_cache/00117267_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0087|2024.4Q",
+   "code": "KR0087",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 2010539.027552,
+   "new": 2012958.0,
+   "account": "ifrs-full_Equity",
+   "orig": "2010539.027552",
+   "later_rcept": "20260331004234",
+   "later_file": "data/dart/_fs_api_cache/00117267_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0087|2024.4Q",
+   "code": "KR0087",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "old": -1105739.275686,
+   "new": -1103320.0,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "-1105739.275686",
+   "later_rcept": "20260331004234",
+   "later_file": "data/dart/_fs_api_cache/00117267_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0010|2023.4Q",
+   "code": "KR0010",
+   "quarter": "2023.4Q",
+   "item": 1,
+   "old": 37660829.0,
+   "new": 37648092.0,
+   "account": "ifrs-full_Assets",
+   "orig": "37660829.0",
+   "later_rcept": "20250331004034",
+   "later_file": "data/dart/_fs_api_cache/00120216_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0010|2023.4Q",
+   "code": "KR0010",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "old": 31353639.0,
+   "new": 31350276.0,
+   "account": "ifrs-full_Liabilities",
+   "orig": "31353639.0",
+   "later_rcept": "20250331004034",
+   "later_file": "data/dart/_fs_api_cache/00120216_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0010|2023.4Q",
+   "code": "KR0010",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "old": 6307190.0,
+   "new": 6297816.0,
+   "account": "ifrs-full_Equity",
+   "orig": "6307190.0",
+   "later_rcept": "20250331004034",
+   "later_file": "data/dart/_fs_api_cache/00120216_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0010|2023.4Q",
+   "code": "KR0010",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": 286768.0,
+   "new": 364126.0,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "286768.0",
+   "later_rcept": "20250331004034",
+   "later_file": "data/dart/_fs_api_cache/00120216_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0010|2023.4Q",
+   "code": "KR0010",
+   "quarter": "2023.4Q",
+   "item": 14,
+   "old": 1568252.0,
+   "new": 1555515.0,
+   "account": "ifrs-full_ReinsuranceContractsHeldThatAreAssets",
+   "orig": "1568252.0",
+   "later_rcept": "20250331004034",
+   "later_file": "data/dart/_fs_api_cache/00120216_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0010|2023.4Q",
+   "code": "KR0010",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 5638718.0,
+   "new": 5551986.0,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "5638718.0",
+   "later_rcept": "20250331004034",
+   "later_file": "data/dart/_fs_api_cache/00120216_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0069|2024.4Q",
+   "code": "KR0069",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 250223698.0,
+   "new": 244832559.0,
+   "account": "ifrs-full_Liabilities",
+   "orig": "250223698.0",
+   "later_rcept": "20260331004244",
+   "later_file": "data/dart/_fs_api_cache/00126256_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0069|2024.4Q",
+   "code": "KR0069",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 25097358.0,
+   "new": 30488497.0,
+   "account": "ifrs-full_Equity",
+   "orig": "25097358.0",
+   "later_rcept": "20260331004244",
+   "later_file": "data/dart/_fs_api_cache/00126256_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0069|2024.4Q",
+   "code": "KR0069",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "old": 13101010.0,
+   "new": 18492149.0,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "13101010.0",
+   "later_rcept": "20260331004244",
+   "later_file": "data/dart/_fs_api_cache/00126256_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0094|2024.4Q",
+   "code": "KR0094",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 7062568.0,
+   "new": 7062302.0,
+   "account": "ifrs-full_Equity",
+   "orig": "7062568.0",
+   "later_rcept": "20260331004136",
+   "later_file": "data/dart/_fs_api_cache/00137517_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0094|2024.4Q",
+   "code": "KR0094",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "old": -1474062.0,
+   "new": -1474328.0,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "-1474062.0",
+   "later_rcept": "20260331004136",
+   "later_file": "data/dart/_fs_api_cache/00137517_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0070|2023.4Q",
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": 309152.042693,
+   "new": 286192.687526,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "309152.042693",
+   "later_rcept": "20250514001000",
+   "later_file": "data/dart/_fs_api_cache/00148391_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0070|2023.4Q",
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": -218178.129431,
+   "new": -195218.774264,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "-218178.129431",
+   "later_rcept": "20250514001000",
+   "later_file": "data/dart/_fs_api_cache/00148391_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0070|2024.4Q",
+   "code": "KR0070",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 17960129.651848,
+   "new": 17960528.007157,
+   "account": "ifrs-full_Liabilities",
+   "orig": "17960129.651848",
+   "later_rcept": "20260331003080",
+   "later_file": "data/dart/_fs_api_cache/00148391_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0070|2024.4Q",
+   "code": "KR0070",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 704982.724424,
+   "new": 704676.389191,
+   "account": "ifrs-full_Equity",
+   "orig": "704982.724424",
+   "later_rcept": "20260331003080",
+   "later_file": "data/dart/_fs_api_cache/00148391_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0070|2024.4Q",
+   "code": "KR0070",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "old": -221166.432257,
+   "new": -221472.76749,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "-221166.432257",
+   "later_rcept": "20260331003080",
+   "later_file": "data/dart/_fs_api_cache/00148391_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0099|2023.4Q",
+   "code": "KR0099",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "old": 26151264.0,
+   "new": 26270632.0,
+   "account": "ifrs-full_Liabilities",
+   "orig": "26151264.0",
+   "later_rcept": "20250428000500",
+   "later_file": "data/dart/_fs_api_cache/00160393_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0099|2023.4Q",
+   "code": "KR0099",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "old": 5482874.0,
+   "new": 5363506.0,
+   "account": "ifrs-full_Equity",
+   "orig": "5482874.0",
+   "later_rcept": "20250428000500",
+   "later_file": "data/dart/_fs_api_cache/00160393_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0099|2023.4Q",
+   "code": "KR0099",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": 1404468.0,
+   "new": 1336551.0,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "1404468.0",
+   "later_rcept": "20250428000500",
+   "later_file": "data/dart/_fs_api_cache/00160393_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0099|2023.4Q",
+   "code": "KR0099",
+   "quarter": "2023.4Q",
+   "item": 20,
+   "old": 23869743.0,
+   "new": 24031927.0,
+   "account": "ifrs-full_InsuranceContractsIssuedThatAreLiabilities",
+   "orig": "23869743.0",
+   "later_rcept": "20250428000500",
+   "later_file": "data/dart/_fs_api_cache/00160393_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0099|2023.4Q",
+   "code": "KR0099",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 2963776.0,
+   "new": 2998852.0,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "2963776.0",
+   "later_rcept": "20250428000500",
+   "later_file": "data/dart/_fs_api_cache/00160393_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0009|2023.4Q",
+   "code": "KR0009",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": -523892.732716,
+   "new": -497831.484009,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "-523892.732716",
+   "later_rcept": "20250407001731",
+   "later_file": "data/dart/_fs_api_cache/00164973_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0009|2023.4Q",
+   "code": "KR0009",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 6552570.228464,
+   "new": 6526472.766844,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "6552570.228464",
+   "later_rcept": "20250407001731",
+   "later_file": "data/dart/_fs_api_cache/00164973_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0071|2024.4Q",
+   "code": "KR0071",
+   "quarter": "2024.4Q",
+   "item": 1,
+   "old": 23003967.054099,
+   "new": 23004961.085979,
+   "account": "ifrs-full_Assets",
+   "orig": "23003967.054099",
+   "later_rcept": "20260331004251",
+   "later_file": "data/dart/_fs_api_cache/00167068_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0071|2024.4Q",
+   "code": "KR0071",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 22079014.895806,
+   "new": 22083697.099668,
+   "account": "ifrs-full_Liabilities",
+   "orig": "22079014.895806",
+   "later_rcept": "20260331004251",
+   "later_file": "data/dart/_fs_api_cache/00167068_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0071|2024.4Q",
+   "code": "KR0071",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 924952.158293,
+   "new": 921263.986311,
+   "account": "ifrs-full_Equity",
+   "orig": "924952.158293",
+   "later_rcept": "20260331004251",
+   "later_file": "data/dart/_fs_api_cache/00167068_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0083|2024.4Q",
+   "code": "KR0083",
+   "quarter": "2024.4Q",
+   "item": 1,
+   "old": 18214781.856971,
+   "new": 18215103.97701,
+   "account": "ifrs-full_Assets",
+   "orig": "18214781.856971",
+   "later_rcept": "20260420000334",
+   "later_file": "data/dart/_fs_api_cache/00459844_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0083|2024.4Q",
+   "code": "KR0083",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 17728091.21862,
+   "new": 17729485.67766,
+   "account": "ifrs-full_Liabilities",
+   "orig": "17728091.21862",
+   "later_rcept": "20260420000334",
+   "later_file": "data/dart/_fs_api_cache/00459844_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0083|2024.4Q",
+   "code": "KR0083",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 486690.638351,
+   "new": 485618.29935,
+   "account": "ifrs-full_Equity",
+   "orig": "486690.638351",
+   "later_rcept": "20260420000334",
+   "later_file": "data/dart/_fs_api_cache/00459844_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0083|2024.4Q",
+   "code": "KR0083",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "old": -801321.854497,
+   "new": -790411.95085,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "-801321.854497",
+   "later_rcept": "20260420000334",
+   "later_file": "data/dart/_fs_api_cache/00459844_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0083|2024.4Q",
+   "code": "KR0083",
+   "quarter": "2024.4Q",
+   "item": 31,
+   "old": -362335.562144,
+   "new": -374317.804792,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "-362335.562144",
+   "later_rcept": "20260420000334",
+   "later_file": "data/dart/_fs_api_cache/00459844_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0032|2023.4Q",
+   "code": "KR0032",
+   "quarter": "2023.4Q",
+   "item": 1,
+   "old": 10991344.325076,
+   "new": 11003416.6687,
+   "account": "ifrs-full_Assets",
+   "orig": "10991344.325076",
+   "later_rcept": "20250331003247",
+   "later_file": "data/dart/_fs_api_cache/00908155_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0032|2023.4Q",
+   "code": "KR0032",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "old": 9206228.170704,
+   "new": 9218300.514328,
+   "account": "ifrs-full_Liabilities",
+   "orig": "9206228.170704",
+   "later_rcept": "20250331003247",
+   "later_file": "data/dart/_fs_api_cache/00908155_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0032|2023.4Q",
+   "code": "KR0032",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "old": 166041.272457,
+   "new": 206230.156645,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "166041.272457",
+   "later_rcept": "20250331003247",
+   "later_file": "data/dart/_fs_api_cache/00908155_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0032|2023.4Q",
+   "code": "KR0032",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 959195.098429,
+   "new": 919006.214241,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "959195.098429",
+   "later_rcept": "20250331003247",
+   "later_file": "data/dart/_fs_api_cache/00908155_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0104|2023.4Q",
+   "code": "KR0104",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "old": 5338704.113096,
+   "new": 5338305.936865,
+   "account": "ifrs-full_Equity",
+   "orig": "5338704.113096",
+   "later_rcept": "20250331003065",
+   "later_file": "data/dart/_fs_api_cache/00909349_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0104|2023.4Q",
+   "code": "KR0104",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "old": 2315578.483855,
+   "new": 2287674.87031,
+   "account": "ifrs-full_RetainedEarnings",
+   "orig": "2315578.483855",
+   "later_rcept": "20250331003065",
+   "later_file": "data/dart/_fs_api_cache/00909349_2024_11011_OFS.json"
+  },
+  {
+   "block": "KR0104|2024.4Q",
+   "code": "KR0104",
+   "quarter": "2024.4Q",
+   "item": 2,
+   "old": 48380493.869375,
+   "new": 48412045.278544,
+   "account": "ifrs-full_Liabilities",
+   "orig": "48380493.869375",
+   "later_rcept": "20260331002277",
+   "later_file": "data/dart/_fs_api_cache/00909349_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0104|2024.4Q",
+   "code": "KR0104",
+   "quarter": "2024.4Q",
+   "item": 3,
+   "old": 4873141.655263,
+   "new": 4841590.246094,
+   "account": "ifrs-full_Equity",
+   "orig": "4873141.655263",
+   "later_rcept": "20260331002277",
+   "later_file": "data/dart/_fs_api_cache/00909349_2025_11011_OFS.json"
+  },
+  {
+   "block": "KR0104|2024.4Q",
+   "code": "KR0104",
+   "quarter": "2024.4Q",
+   "item": 4,
+   "old": -2110749.758458,
+   "new": -2142301.167627,
+   "account": "ifrs-full_AccumulatedOtherComprehensiveIncome",
+   "orig": "-2110749.758458",
+   "later_rcept": "20260331002277",
+   "later_file": "data/dart/_fs_api_cache/00909349_2025_11011_OFS.json"
+  }
+ ],
+ "notes": []
+}
