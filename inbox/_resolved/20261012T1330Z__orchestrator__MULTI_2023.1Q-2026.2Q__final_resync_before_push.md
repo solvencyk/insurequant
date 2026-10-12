@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1330Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -26,3 +26,4 @@ iter: 1
 - 빌드한 패널·동기화한 시트 목록, 게이트 결과(RED 종류별), 골든 어긋남 목록, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 538cbe7·dee37c2·263f760). xlsx 5시트 동기화(17BS 6칸·CSM상각 18칸·손익분해PL +7행/1칸·보험계약부채 18칸·K-ICS공시 +16행/4칸, 삭제 0, 타 시트 동일), 패널 재빌드(panel_loss_ratio 재보사 세그먼트 표준화 반영, combo 처브, compare 2칸; IFRS17 패널 4종·csm_waterfall 은 재빌드해도 바이트 동일), public_exports 5시트+manifest(build_id 538cbe7, 임시 비공개 3시트 파일 불변). 게이트: xlsx 드리프트 RED 7 -> 0, data-contract RED 0, live_artifacts RED 0(등재 25건), 골든 3종·배포 시험 142건 통과. downstream_kpis.json 은 옛 상각 스케줄 정정(cf66dce) 미반영 213칸이 어긋나 있어 커밋하지 않고 되돌림(어느 HTML 도 읽지 않음) — 별도 점검 필요.
