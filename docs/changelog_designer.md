@@ -7,6 +7,18 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- K-ICS 소진율 도넛·Forward Outlook 제거, 자본성증권 발행현황(시점별 누적 막대) + 큼직한 셀 2개
+
+티켓 `inbox/designer/20261012T1100Z`(라벨, 커밋 dfd899e)·`20261012T1155Z`(셀 2개)·`20261012T1220Z`(도넛·전망 제거 + 누적 막대 + 다운로드 목록 제외; 앞 두 티켓과 충돌하는 부분은 이 티켓이 우선). 공유 티켓이라 고치지 않았다.
+- `K-ICS.html`: 소진율 도넛 패널(`#donut-section-panel`)과 자본비율 전망 패널(`#sec-forward`)·목차 칩·`updateDonutPanel`·`updateForwardPanel`·두 차트·관련 CSS·`kics_tier2_utilization.json`·`kics_forward_capital.json` fetch 를 걷어냈다(메타 설명의 「5년 전망」도). 새 패널 `#sec-capsec`(목차 칩 「자본성증권 발행현황」, 공유 섹션 이름 같음): 막대 = 가로 시점 · 세로 억원 · 아래 신종자본증권(`primary`)·위 후순위채(`warn`) 누적, 값 없는 시점은 막대 없음, 툴팁 시점·tier·금액(억). 그 아래 셀 2개(신종자본증권·후순위채): 가장 큰 글씨 가장 최근 발행금리 `x.xx%`, `총발행액 : x,xxx억 ('23~)`, `콜 상환 도래일 : YYYY-MM-DD (x,xxx억)` 한 건, tier 가 null 이면 가운데 `—`. 값은 tier1 회사 행 `securities_summary`(구판 JSON 이면 셀 영역 숨김), 툴팁(`?`)에 최근 발행일 · 기준일(`balance_as_of`, 없으면 `as_of`) · `콜일 추정`만.
+- 막대 원천 `kics_capital_securities_timeline.json`(publishing 티켓 `20261012T1210Z`, 아직 없음)은 행 목록(`rows`/`results`: code·period·tier·eok)과 회사키 객체(`companies[code][YYYY.nQ] = {hybrid, subordinated}`) 두 형태를 받는다. 파일이 없거나 404 면 차트 영역만 숨는다. **확정 명세가 올라오면 이 어댑터(`capsecSeries`)를 명세에 맞추고 실제 값으로 다시 점검해야 한다.**
+- `download-survey.js`: 기본자본소진율(T1)·보완자본소진율(T2)·자본비율전망(FWD) 3항목을 주석 처리(되돌리기 = 주석 해제, 주석에 「owner 2026-10-12 일시 비공개」), 새 시트 `보험금예실차비율`(AE) 추가. `report-widget.js` SHEETS 에서 같은 3개 제외. 파일(`public_exports`·마스터·xlsx)은 그대로.
+- `tests/test_deploy_assets.py`(fetch 목록: tier1 만 필수, tier2·전망은 fetch 금지 확인, 타임라인 fetch 확인), `tests/test_share_screenshot.py`(K-ICS 섹션 수 5→4), `docs/agents/claude-agent-designer.md` §1 표.
+- 검증 `scripts/shot_capsec.py`(헤드리스 Edge; 타임라인 파일이 없어 합성 데이터로 배치만 확인): 한화생명·메리츠·현대해상(후순위채만)·스위스리·삼성생명·교보라이프플래닛 x 1280px·375px·다크 — 콘솔 오류 0(구판 시뮬레이션의 404 제외), 가로 넘침 0, 큰 글씨 줄바꿈 0, 죽은 앵커·남은 도넛/전망 요소 0. 구판 tier1 JSON(요약 필드 없음) 시뮬레이션에서 셀 영역 숨김. 실제 `securities_summary` 값: 한화생명 신종 6.30%·30,819억·콜 2029-07-17(5,000억), 후순위 4.45%·12,968억·콜 2027-02-04(10,720억, 추정), 메리츠 신종 5.30%·후순위 3.70%. 삼성생명·스위스리·교보라이프플래닛은 두 tier 모두 null 이라 셀은 `—`.
+- 시험: `test_push_gate_wiring` 65 passed, `test_prepush_scope` 65 passed, `test_share_screenshot` 7 passed 1 skipped, `test_deploy_assets` 10 passed 2 failed — 실패 2건은 둘 다 타임라인 JSON 파일이 아직 저장소에 없어서(`test_referenced_files_exist[K-ICS.html]`, 그 파일명을 `claude-agent-publishing.md` 표가 아직 안 적은 `test_docs_agree_with_what_pages_fetch`). 시험은 느슨하게 고치지 않았고, publishing 이 파일과 표를 올리면 풀린다.
+
+---
+
 ## 2026-10-12 -- IFRS17 보험금 예실차비율 별도 섹션(9) + 묶음 막대
 
 티켓 `inbox/designer/20261012T1000Z__orchestrator__MULTI__IFRS17_claims_ae_separate_section_grouped_bar.md`(공유, 오케스트레이터가 종결). `IFRS17.html` 만(+`tests/test_share_screenshot.py` 섹션 수 9→10). 8) 손해율 가정 안의 `#lrAeBox`·`drawLrAe` 제거, 새 패널 `#sec-ae`(`data-pane="ae"`, `data-share-section="보험금 예실차비율"`)를 8 뒤에 신설하고 `9) 보험금 예실차비율`, 뒤따르던 `9) 판매채널별 유지율` 은 `10)` 으로. 목차 칩 「보험금 예실차비율」 추가(앵커 `#sec-ae`; `#sec-lr`·`#sec-ps` 불변). 번호가 쓰이는 곳은 h2·목차·시험(`test_section_markup_complete`)·designer 프롬프트 §1 표뿐이었다.

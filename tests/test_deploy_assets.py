@@ -278,10 +278,16 @@ def test_kics_panel_data_is_external():
               if f"window.{n} =" in html]
     assert not inline, f"panel data inlined back into K-ICS.html: {inline}"
 
-    for name in ("kics_tier1_utilization.json", "kics_tier2_utilization.json",
-                 "kics_forward_capital.json"):
+    # 2026-10-12: the utilization donuts and the forward outlook left the screen. The securities cells read
+    # tier1 `securities_summary`; tier2 and the forward JSON are no longer fetched (the files stay in the repo).
+    for name in ("kics_tier1_utilization.json",):
         assert f"fetch('{name}')" in html, f"K-ICS.html no longer fetches {name}"
         assert (REPO / name).exists(), f"missing deploy asset {name}"
+    for name in ("kics_tier2_utilization.json", "kics_forward_capital.json"):
+        assert f"fetch('{name}')" not in html, f"K-ICS.html fetches {name} again (donut/forward were removed)"
+    # the issuance chart's source: fetch is wired; the file itself is publishing's (ticket 20261012T1210Z) and the
+    # exists() check joins the loop above once it is committed.
+    assert "fetch('kics_capital_securities_timeline.json')" in html, "K-ICS.html no longer fetches the issuance timeline"
 
 
 def test_capsec_provenance_source_id_matches_lineage():

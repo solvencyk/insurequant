@@ -28,9 +28,9 @@
       gtag('config', 'G-F8NSCQZBZK', cfg);
     })();
   </script>
-  <meta name="description" content="보험사별 K-ICS 지급여력비율 추이·세부항목·금리 민감도·5년 전망 — 분기 공시 기반 대시보드"/>
+  <meta name="description" content="보험사별 K-ICS 지급여력비율 추이·세부항목·금리 민감도 — 분기 공시 기반 대시보드"/>
   <meta property="og:title" content="InsureQuant — K-ICS 지급여력비율"/>
-  <meta property="og:description" content="보험사별 K-ICS 지급여력비율 추이·세부항목·금리 민감도·5년 전망"/>
+  <meta property="og:description" content="보험사별 K-ICS 지급여력비율 추이·세부항목·금리 민감도"/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="https://www.insurequant.com/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
@@ -73,17 +73,19 @@
     /* .subtoggle + :hover → common.css (shared with IFRS17 재보험 토글) */
     .panel .subtitle{color:var(--muted);font-size:13px;line-height:1.5;margin:-8px 0 16px 0}
     .panel .subtitle li{margin-bottom:2px}
-    .donut-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;padding:8px 0}
-    .donut-cell{flex:1 1 280px;max-width:360px;text-align:center}
-    .donut-wrap{position:relative;height:240px}
-    .donut-caption{margin-top:8px;color:var(--text);font-size:14px;font-weight:600}
-    .donut-caption .sub{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}
-    .donut-caption .sub[hidden]{display:none}
+    .capsec-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;padding:8px 0}
+    /* 자본성증권 발행현황: 시점별 누적 막대 + 그 아래 큼직한 셀 2개(신종자본증권·후순위채). 큰 글씨는 줄바꿈 금지. */
+    .capsec-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:12px 12px 8px}
+    .capsec-cells{margin-top:14px}
+    .capsec-cell{flex:1 1 280px;max-width:360px;box-sizing:border-box;padding:14px 16px;border:1px solid var(--border);border-radius:10px;background:var(--bg);text-align:center}
+    .capsec-cell[hidden],#capsec-cells[hidden],.iq-help[hidden]{display:none}
+    .capsec-title{display:block;color:var(--text);font-size:14px;font-weight:600}
+    .capsec-rate{display:block;margin:6px 0 8px;color:var(--text);font-size:34px;font-weight:700;line-height:1.15;white-space:nowrap;font-variant-numeric:tabular-nums}
+    .capsec-rate.is-none{color:var(--muted)}
+    .capsec-line{display:block;color:var(--muted);font-size:13px;line-height:1.6}
     .donut-note{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.5}
-    .donut-note .capsec-gf{font-size:11.5px;opacity:.85}
     .no-data{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
     td.no-disclosure{color:var(--muted);font-size:12px;font-style:italic}
-    .forward-chart{position:relative;height:420px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .sens-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .sens-kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
     /* 자산/부채 듀레이션 갭 (owner 2026-09-22, 컨벡서티 카드 폐지·kics_duration_gap.json 전환) —
@@ -126,13 +128,12 @@
       .panel{padding:14px}
       .panel h2{font-size:17px}
       .chart-container{height:360px;padding:8px}
-      .forward-chart{height:340px;padding:8px}
+      .capsec-chart{height:300px;padding:8px 6px 4px}
       .sens-chart{height:260px}
       .table-container th:first-child,.table-container td:first-child{min-width:112px;max-width:40vw}
       table{font-size:12px}
       th,td{padding:4px 6px}
-      .donut-row{gap:12px}
-      .donut-wrap{height:200px}
+      .capsec-row{gap:12px}
       /* ? 도움말 팝오버: 안 보여도(opacity:0) 폭 340px 이 문서 스크롤 폭을 넓혀 모바일 레이아웃 뷰포트가 커지고 우하단 고정 버튼이 화면 밖으로 밀렸다. 모바일은 ? 아래 한 줄 폭(양옆 8px)으로 연다. fixed 는 .panel 의 transform 때문에 안 먹는다. */
       .iq-help{position:static}
       .iq-help-pop{left:8px;right:8px;top:auto;margin-top:28px;width:auto;max-width:none}
@@ -193,10 +194,9 @@
     <nav class="section-nav" aria-label="이 페이지의 섹션">
       <ul>
         <li><a href="#sec-trend">지급여력비율 추이</a></li>
-        <li><a href="#donut-section-panel">자본성증권 소진율</a></li>
+        <li><a href="#sec-capsec">자본성증권 발행현황</a></li>
         <li><a href="#sec-sens">금리 민감도</a></li>
         <li><a href="#sec-dur">자산·부채 듀레이션</a></li>
-        <li><a href="#sec-forward">자본비율 전망</a></li>
       </ul>
     </nav>
     <div class="section-body">
@@ -239,24 +239,14 @@
       <div class="table-container" id="table-container"></div>
     </div>
 
-    <div class="panel" id="donut-section-panel" data-share-section="자본성증권 소진율">
-      <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
-      <ul class="subtitle">
-        <li>기본자본 자본증권 / 기본자본 자본증권의 인정한도 (총요구자본 &times; 10%, 기발행분 15%)</li>
-        <li>보완자본 한도 적용 전 / 보완자본 한도 (총요구자본 &times; 50%)</li>
-      </ul>
-      <div id="donut-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 소진율이 표시됩니다.</div>
-      <div id="donut-row" class="donut-row" style="display:none">
-        <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier1" role="img" data-label-base="기본자본 자본증권 인정한도 소진율" aria-label="기본자본 자본증권 인정한도 소진율 도넛 차트"></canvas></div>
-          <div class="donut-caption">기본자본 자본증권<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="기본자본 자본증권 정의" aria-describedby="help-capsec-t1">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-t1">기본자본 자본증권 = 보통주를 제외한 자본증권 중 기본자본요건을 충족하는 자본증권. 인정한도 = 총요구자본의 10%(「보험업법」 조건부자본증권 15%), 2022년 이전 발행분은 2032년까지 15%(공통적용 경과조치). 한도 초과분은 보완자본으로 재분류. 근거: [별표22] Ⅲ.2.다.(1), Ⅵ.1.가.(1)<span id="help-capsec-t1-unconf" hidden></span></span></span><span class="sub" id="donut-t1-empty" hidden>발행 없음</span></div>
-        </div>
-        <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier2" role="img" data-label-base="보완자본 한도 소진율" aria-label="보완자본 한도 소진율 도넛 차트"></canvas></div>
-          <div class="donut-caption">보완자본<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="보완자본 한도 적용 전 정의" aria-describedby="help-capsec-t2">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-t2">보완자본 한도 적용 전 = 보완자본 - 해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 - 기발행 자본증권(공통적용 경과조치). 근거: 보험업감독업무시행세칙 [별표22] Ⅲ.2.마, Ⅵ.1.가.(3)</span></span></div>
-        </div>
+    <div class="panel" id="sec-capsec" data-share-section="자본성증권 발행현황">
+      <h2>자본성증권 발행현황<span class="iq-help" id="capsec-help" hidden><button type="button" class="iq-help-btn" aria-label="자료 기준" aria-describedby="help-capsec-basis">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-basis"></span></span></h2>
+      <div id="capsec-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 자본성증권 발행현황이 표시됩니다.</div>
+      <div class="capsec-chart" id="capsec-chart-wrap" style="display:none"><canvas id="capsec-chart" role="img" aria-label="시점별 자본성증권 발행현황 누적 막대 차트 (신종자본증권, 후순위채, 억원)"></canvas></div>
+      <div id="capsec-cells" class="capsec-row capsec-cells" hidden>
+        <div class="capsec-cell" id="capsec-cell-hybrid"></div>
+        <div class="capsec-cell" id="capsec-cell-sub"></div>
       </div>
-      <div class="donut-note" id="donut-note"></div>
     </div>
 
     <div class="panel" id="sec-sens" data-share-section="금리 민감도">
@@ -284,17 +274,6 @@
       <div class="donut-note" id="dur-table-note"></div>
     </div>
 
-    <div class="panel" id="sec-forward" data-share-section="자본비율 전망">
-      <h2>자본비율 Forward Outlook <span style="color:var(--muted);font-size:13px;font-weight:400">(보수 시나리오, 2026~2030)</span></h2>
-      <ul class="subtitle">
-        <li>보수적인 가정 두 가지를 놓고 계산한 전망치입니다<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="전망에 쓴 가정 두 가지" aria-describedby="help-forward-assump">?</button><span class="iq-help-pop" role="tooltip" id="help-forward-assump"><b>지급여력기준금액</b> — 2032년까지 경과조치 효과가 줄어든다고 보고, 적용후 값에서 적용전 값으로 선형 보간했습니다.<br><b>지급여력금액</b> — 이미 발행한 자본성증권의 콜옵션을 전부 행사하고 신규 발행은 없다고 보아, 콜이 도래하는 5년 시점에 가용자본에서 뺐습니다.</span></span></li>
-      </ul>
-      <div id="forward-placeholder" class="no-data">상단의 보험사를 선택하면 5년 자본비율 전망이 표시됩니다.</div>
-      <div class="forward-chart" id="forward-chart-wrap" style="display:none">
-        <canvas id="forward-chart" role="img" aria-label="자본비율 5년 전망(Forward Outlook) 차트"></canvas>
-      </div>
-      <div class="donut-note" id="forward-note"></div>
-    </div>
     </div>
   </div>
   <script>
@@ -336,13 +315,10 @@
     })();
     let allData = [];
     let chart = null;
-    let donutTier1Chart = null;
-    let donutTier2Chart = null;
-    let forwardChart = null;
+    let capsecChart = null;
     let sensChart = null;
     let tier1UtilData = [];
-    let tier2UtilData = [];
-    let forwardSimData = [];
+    let capsecTimelineData = null; // kics_capital_securities_timeline.json (없음/실패 → null → 차트 숨김)
     let sensData = []; // 금리 민감도 (kics_rate_sensitivity.json)
     let durGapData = []; // 자산/부채 듀레이션 갭 (kics_duration_gap.json)
     // 하위항목 접기 그룹(기본 접힘, +버튼 토글):
@@ -510,7 +486,7 @@
       return neg ? '△' + out : out;
     }
 
-    // 억원 정수(반올림+콤마+음수△) — Tier/Forward 주석용
+    // 억원 정수(반올림+콤마+음수△)
     function fmtEokInt(v){
       if (v == null) return '-';
       return v < 0 ? '△' + Math.round(-v).toLocaleString('ko-KR') : Math.round(v).toLocaleString('ko-KR');
@@ -982,7 +958,8 @@
       });
     }
 
-    // ===== 하단 패널: 자본성증권 소진율 도넛 + Forward Outlook =====
+    // ===== 하단 패널: 자본성증권 발행현황(시점별 누적 막대) + 큼직한 셀 2개 =====
+    // 2026-10-12 owner: 소진율 도넛·Forward Outlook 을 화면에서 내리고 이 패널로 바꿨다(데이터 파일은 그대로).
 
     function findUtilRow(rows, companyName) {
       if (!companyName || !Array.isArray(rows)) return null;
@@ -993,358 +970,151 @@
       return row || null;
     }
 
-    function findForwardRow(companyName) {
-      if (!companyName || !Array.isArray(forwardSimData)) return null;
-      let row = forwardSimData.find(r => r.insurer_name === companyName);
-      if (row) return row;
-      row = forwardSimData.find(r => r.insurer_name && (companyName.includes(r.insurer_name) || r.insurer_name.includes(companyName)));
-      return row || null;
-    }
-
-    // opt = { na: 원문 부재 사유(있으면 가운데 '—' + 툴팁에 그 문구), overNote: 100% 초과 툴팁 꼬리, extra: 툴팁 추가 줄 }
-    function renderDonut(canvasId, existingChart, utilPct, opt) {
-      opt = opt || {};
-      const ctx = document.getElementById(canvasId);
-      if (!ctx) return existingChart;
-      if (existingChart) existingChart.destroy();
-      const pct = (utilPct == null || isNaN(utilPct)) ? null : utilPct;
-      const fill = pct == null ? 0 : Math.min(Math.max(pct, 0), 100);
-      const rest = 100 - fill;
-      // 색상: 0~70 녹색, 70~100 주황, 100+ 빨강
-      let fillColor = 'rgba(75, 192, 192, 0.85)';
-      if (pct != null && pct >= 100) fillColor = 'rgba(220, 53, 69, 0.85)';
-      else if (pct != null && pct >= 70) fillColor = 'rgba(255, 159, 64, 0.85)';
-      // 인정한도 초과(규정상 한도가 구속하는 경우)는 "100%+"로 표기. 정확값은 툴팁에.
-      // (원호는 도넛 360° 한계로 100% 캡 유지.) 원문 부재(opt.na)는 '데이터 없음'이 아니라 '—'.
-      const centerText = pct == null ? (opt.na ? '—' : '데이터 없음') : (pct > 100 ? '100%+' : pct.toFixed(0) + '%');
-      ctx.setAttribute('aria-label', ctx.getAttribute('data-label-base') + ' ' + (pct == null ? (opt.na || '데이터 없음') : (pct > 100 ? '100% 초과 (' + pct.toFixed(1) + '%)' : pct.toFixed(1) + '%')));
-      const TH = window.IQTheme ? IQTheme.chart() : { muted:'#6a737a', text:'#212529', neg:'#dc3545' };
-      const centerColor = pct == null ? TH.muted : (pct >= 100 ? TH.neg : TH.text);
-      const centerPlugin = {
-        id: 'centerText_' + canvasId,
-        afterDraw(chart) {
-          if (!chart || !chart.chartArea) return;
-          const {ctx, chartArea: {left, right, top, bottom}} = chart;
-          const cx = (left + right) / 2;
-          const cy = (top + bottom) / 2;
-          ctx.save();
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillStyle = centerColor;
-          ctx.font = '700 28px ui-sans-serif, system-ui';
-          ctx.fillText(centerText, cx, cy);
-          ctx.restore();
+    // 시점별 잔액 JSON → { periods: ['2024.4Q', ...], hybrid: [억원|null], sub: [억원|null] }. 없으면 null.
+    // 명세(publishing 티켓 20261012T1210Z): 회사 코드는 JSON 키, 시점 'YYYY.nQ', 단위 억원, tier = hybrid | subordinated.
+    // 확정 전 형태 차이(긴 행 목록 / 회사키 객체)를 모두 받아 같은 모양으로 맞춘다.
+    function capsecSeries(d, code, name) {
+      if (!d || typeof d !== 'object') return null;
+      const NUM = ['outstanding_eok', 'balance_eok', 'amount_eok', 'eok', 'value'];
+      const num = (o) => { for (const k of NUM) { if (o && o[k] != null && isFinite(o[k])) return +o[k]; } return null; };
+      const tierVal = (o, keys) => {
+        for (const k of keys) {
+          const v = o && o[k];
+          if (v == null) continue;
+          if (typeof v === 'object') { const n = num(v); if (n != null) return n; } else if (isFinite(v)) return +v;
         }
+        return null;
       };
-      return new Chart(ctx.getContext('2d'), {
-        type: 'doughnut',
-        data: {
-          labels: ['사용', '잔여'],
-          datasets: [{
-            data: pct == null ? [0, 100] : [fill, rest],
-            backgroundColor: [fillColor, (window.IQTheme ? IQTheme.chart().border : 'rgba(233, 236, 239, 0.6)')],
-            borderWidth: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          cutout: '72%',
-          plugins: {
-            legend: {display: false},
-            tooltip: {
-              callbacks: {
-                label: function(c) {
-                  if (pct == null) return opt.na || '데이터 없음';
-                  const extra = opt.extra ? [opt.extra] : [];
-                  if (c.dataIndex === 0) return ['사용: ' + (pct > 100 ? '100%+ (실제 ' + pct.toFixed(1) + '%' + (opt.overNote ? ' · ' + opt.overNote : '') + ')' : pct.toFixed(2) + '%')].concat(extra);
-                  return ['잔여: ' + Math.max(0, 100 - pct).toFixed(2) + '%'].concat(extra);
-                }
-              }
-            }
-          }
-        },
-        plugins: [centerPlugin]
-      });
-    }
-
-    function updateDonutPanel() {
-      const company = document.getElementById('company').value;
-      const placeholder = document.getElementById('donut-placeholder');
-      const row = document.getElementById('donut-row');
-      const note = document.getElementById('donut-note');
-      if (!company) {
-        placeholder.style.display = 'block';
-        placeholder.textContent = '상단의 보험사를 선택하면 해당 보험사의 소진율이 표시됩니다.';
-        row.style.display = 'none';
-        note.innerHTML = '';
-        return;
-      }
-      placeholder.style.display = 'none';
-      row.style.display = 'flex';
-      const t1 = findUtilRow(tier1UtilData, company);
-      const t2 = findUtilRow(tier2UtilData, company);
-      const t1Pct = t1 ? t1.utilization_pct : null;
-      const t2Pct = t2 ? t2.utilization_pct : null;
-      // 2026-10-12 (owner): 소진율을 규정 근거로 재정의(definition_memo.md §5). 화면 이름은 공시·규정 표기 그대로,
-      // 설명은 ? 팝오버 안에만. 새 필드가 없는 구판 JSON 도 깨지지 않게 폴백한다.
-      //  tier1: 숫자 = tier1_hybrid_recognized_eok / tier1_hybrid_limit_eok (두 한도 중 먼저 차는 쪽), 구판은 issued.
-      //  tier2: rule/reason — rule 이 NA 면 값이 null 이고 reason(경과조치 표 미공시)이 붙는다.
-      const t1Unconf = !!(t1 && t1.type_unconfirmed);
-      const t1UnconfPct = t1 && t1.tier1_pct_if_unconfirmed_tier2 != null ? t1.tier1_pct_if_unconfirmed_tier2 : null;
-      const t1UnconfText = t1Unconf
-        ? '기본자본형/보완자본형 미확정 신종 포함' + (t1UnconfPct != null ? ', 보완자본형이면 ' + t1UnconfPct.toFixed(1) + '%' : '')
-        : '';
-      const t2Na = (t2 && t2Pct == null && (t2.rule === 'NA' || t2.reason)) ? (t2.reason || '경과조치 표 미공시') : '';
-      donutTier1Chart = renderDonut('donut-tier1', donutTier1Chart, t1Pct,
-        { overNote: '초과분은 보완자본으로 재분류', extra: t1UnconfText });
-      donutTier2Chart = renderDonut('donut-tier2', donutTier2Chart, t2Pct,
-        { na: t2Na, overNote: '초과분은 지급여력금액에서 불인정' });
-      // 자본증권이 아예 없는 회사: 가운데 0% + 캡션 아래 작은 글씨.
-      const emptyEl = document.getElementById('donut-t1-empty');
-      if (emptyEl) emptyEl.hidden = !(t1 && t1.no_capital_securities === true);
-      // ? 팝오버(tier1)의 회사별 꼬리: 미확정 신종 포함 여부.
-      // 보완자본으로 인정된 신종자본증권(tier1_excluded_tier2_type_eok)은 분자에서 빠져 있으므로 0% 가 틀려 보이지 않게 금액만 적는다.
-      const t1Excl = t1 && t1.tier1_excluded_tier2_type_eok > 0 ? t1.tier1_excluded_tier2_type_eok : 0;
-      const tailLines = [];
-      if (t1Excl > 0) tailLines.push('보완자본으로 인정된 신종자본증권 ' + fmtEokInt(t1Excl) + '억원');
-      if (t1Unconf) tailLines.push(t1UnconfText);
-      const unconfEl = document.getElementById('help-capsec-t1-unconf');
-      if (unconfEl) {
-        unconfEl.hidden = !tailLines.length;
-        unconfEl.innerHTML = tailLines.length ? '<br>' + tailLines.join('<br>') : '';
-      }
-      const notes = [];
-      if (t1) {
-        const t1Rec = t1.tier1_hybrid_recognized_eok != null ? t1.tier1_hybrid_recognized_eok : t1.tier1_hybrid_issued_eok;
-        const t1Gf = t1.tier1_grandfathered_hybrid_eok || 0;
-        let line = `기본자본 자본증권 ${fmtEokInt(t1Rec)}억원 / 인정한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원`;
-        // 기발행분(15%) 쪽이 먼저 찰 때만 그 숫자가 기발행분이다. 구판 JSON(binding_leg 없음)은 종전대로 표시.
-        if (t1Gf > 0 && (t1.binding_leg === 'legacy_15' || t1.binding_leg === undefined)) {
-          line += ` &nbsp;<span class="capsec-gf">경과조치 기발행분 ${fmtEokInt(t1Gf)}억원 포함</span>`;
-        }
-        notes.push(line);
+      const HK = ['hybrid', 'hybrid_eok', 'hybrid_outstanding_eok'], SK = ['subordinated', 'subordinated_eok', 'subordinated_outstanding_eok'];
+      const by = new Map();
+      const put = (p, tier, v) => {
+        if (!p || v == null) return;
+        const e = by.get(p) || { h: null, s: null };
+        if (tier === 'hybrid') e.h = (e.h || 0) + v; else if (tier === 'subordinated') e.s = (e.s || 0) + v;
+        by.set(p, e);
+      };
+      const rows = Array.isArray(d.rows) ? d.rows : (Array.isArray(d.results) ? d.results : null);
+      if (rows) {
+        rows.forEach(r => {
+          if (!((code && r.code === code) || (name && r.company === name))) return;
+          put(r.period || r.quarter, r.tier, num(r));
+        });
       } else {
-        notes.push('기본자본 자본증권: 데이터 없음');
-      }
-      if (t2) {
-        const t2Gf = t2.grandfathered_subordinated_eok || 0;
-        let line = `보완자본 한도 적용 전 ${t2.numerator_eok == null ? '—' : fmtEokInt(t2.numerator_eok) + '억원'} / 보완자본 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원`;
-        if (t2Gf > 0) {
-          line += ` &nbsp;<span class="capsec-gf">경과조치 기발행 후순위 ${fmtEokInt(t2Gf)}억원</span>`;
+        const src = d.companies || d.data || d.by_company || d;
+        let c = (code && src[code]) || (name && src[name]) || null;
+        if (c && !Array.isArray(c) && (c.series || c.periods || c.timeline)) c = c.series || c.periods || c.timeline;
+        if (Array.isArray(c)) {
+          c.forEach(r => { const p = r.period || r.quarter; put(p, 'hybrid', tierVal(r, HK)); put(p, 'subordinated', tierVal(r, SK)); });
+        } else if (c && typeof c === 'object') {
+          Object.keys(c).forEach(p => { const r = c[p]; put(p, 'hybrid', tierVal(r, HK)); put(p, 'subordinated', tierVal(r, SK)); });
         }
-        notes.push(line);
-        // 한도 적용 전이 0 인데 보완자본이 있으면 공시 표기 그대로. 항목 49 를 안 채운 재보사(스위스리)는
-        // 분자 = 보완자본 - 항목 49 - 기발행분 항등식으로 보완자본 전액이 그 항목이다.
-        const sup = t2.supplementary_capital_eok;
-        if (t2.numerator_eok === 0 && sup > 0) {
-          let lapse = t2.lapse_excess_item49_eok;
-          if (!(lapse > 0) && !((t2.grandfathered_hybrid_eok || 0) + (t2.grandfathered_subordinated_eok || 0) > 0)) lapse = sup;
-          if (lapse > 0) notes.push(`해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 ${fmtEokInt(lapse)}억원`);
-        }
-      } else {
-        notes.push('보완자본: 데이터 없음');
       }
-      // 참고 — 자본성증권 발행잔액. 소진율 분자가 아니다(한도가 계정 단위라서).
-      // 회사별 기준일은 **안 적는다**(owner 2026-09-01): 소진율이 패널 헤더의 공시분기
-      // 하나로 닫히는데 참고 줄에만 회사마다 다른 날짜가 붙으면, 이 패널 숫자가 여러
-      // 기준일에 걸쳐 있다는 오해를 준다. 채권 잔액의 회사별 기준일이 필요하면
-      // `자본성증권발행현황` 시트의 `잔액기준일` 열을 본다.
-      const bh = (t1 && t1.hybrid_outstanding_eok) || 0;
-      const bs = (t1 && t1.subordinated_outstanding_eok) || 0;
-      if (bh > 0 || bs > 0) {
-        notes.push(`<span class="capsec-gf">참고 — 자본성증권 발행잔액: 신종 ${fmtEokInt(bh)}억원 · 후순위 ${fmtEokInt(bs)}억원</span>`);
-      }
-      // 2026-09-01: 여기 있던 '발행잔액 기준일 …' 경고를 걷었다. 분자가 채권 발행현황일 때는
-      // 회사마다 기준일이 달라(반기보고서를 안 내는 회사는 직전 연간) 분모와 어긋나는 사실을
-      // 밝혀야 했지만, 이제 분자·분모가 **같은 분기말 경영공시 항목**이라 항상 같은 날짜만
-      // 찍힌다 — 정보가 없는 줄이 된다. 채권 잔액의 기준일은 위 '참고' 줄이 회사별로 말한다.
-      note.innerHTML = notes.join(' &nbsp;|&nbsp; ');
+      const periods = Array.from(by.keys()).filter(p => /^\d{4}\.\dQ$/.test(p)).sort();
+      if (!periods.length) return null;
+      return { periods, hybrid: periods.map(p => by.get(p).h), sub: periods.map(p => by.get(p).s) };
     }
 
-    // 전망 패널이 비는 이유를 사실대로 말한다. 모집단과 제외 사유는 `kics_forward_capital.json` 이 정한다 — 이름으로 분기하지 않고
-    // 행의 status 와 exclusion_reason 을 그대로 읽는다(2026-10-11: 회사 수를 박은 옛 문구가 재보사 8곳 추가 뒤 틀려졌고,
-    // 서울보증은 이름 분기로 처리했다가 데이터가 사유를 담게 되면서 걷어냈다).
-    function forwardEmptyText(company, row) {
-      if (row && row.status === 'excluded' && row.exclusion_reason) return `${company}: ${row.exclusion_reason}`;
-      if (row) return `${company}: 자본비율 전망을 산출하지 못했습니다 (기준이 되는 지급여력 공시 값이 부족합니다).`;
-      return `${company}: 자본비율 전망 대상이 아닙니다.`;
-    }
-
-    function updateForwardPanel() {
-      const company = document.getElementById('company').value;
-      const placeholder = document.getElementById('forward-placeholder');
-      const wrap = document.getElementById('forward-chart-wrap');
-      const note = document.getElementById('forward-note');
-      const ctx = document.getElementById('forward-chart');
-      const DEFAULT_PLACEHOLDER = '상단의 보험사를 선택하면 5년 자본비율 전망이 표시됩니다.';
-      if (!company) {
-        placeholder.style.display = 'block';
-        placeholder.textContent = DEFAULT_PLACEHOLDER;
-        wrap.style.display = 'none';
-        note.innerHTML = '';
-        if (forwardChart) { forwardChart.destroy(); forwardChart = null; }
-        return;
-      }
-      const row = findForwardRow(company);
-      if (!row || row.status !== 'ok' || !Array.isArray(row.projections) || !row.projections.length) {
-        placeholder.style.display = 'block';
-        placeholder.textContent = forwardEmptyText(company, row);
-        wrap.style.display = 'none';
-        note.innerHTML = '';
-        if (forwardChart) { forwardChart.destroy(); forwardChart = null; }
-        return;
-      }
-      placeholder.style.display = 'none';
+    function renderCapsecChart(series) {
+      const wrap = document.getElementById('capsec-chart-wrap');
+      const ctx = document.getElementById('capsec-chart');
+      if (capsecChart) { capsecChart.destroy(); capsecChart = null; }
+      if (!series || !series.periods.length) { wrap.style.display = 'none'; return; }
       wrap.style.display = 'block';
-
-      const years = row.projections.map(p => String(p.year));
-      const ratioData = row.projections.map(p => p.ratio_pct);
-      const basicRatioData = row.projections.map(p => p.basic_ratio_pct);
-
-      // y축 스케일 (130%/50% 기준선 포함, 윗부분 차트 로직과 동일)
-      const solvencyReference = 130;
-      const basicReference = 50;
-      const sMin = Math.min(...ratioData, solvencyReference);
-      const sMax = Math.max(...ratioData, solvencyReference);
-      const sRange = sMax - sMin;
-      const sYMin = Math.max(0, sMin - sRange * 0.15);
-      const sYMax = sMax + sRange * 0.15;
-      const bMin = Math.min(...basicRatioData, basicReference);
-      const bMax = Math.max(...basicRatioData, basicReference);
-      const bRange = bMax - bMin;
-      let bYMin = Math.max(0, bMin - bRange * 0.15);
-      let bYMax = bMax + bRange * 0.15;
-      // 보조축이 주축과 겹치면 축소 (윗 차트와 동일 패턴)
-      let scaledBasicRef = basicReference;
-      let scaledBasicData = [...basicRatioData];
-      let basicScaleFactor = 1, basicScaleOffset = 0; // 축 눈금을 원래 %로 역변환하기 위해 보관
-      const maxAllowedB = sYMin * 0.98;
-      if (bYMax >= sYMin) {
-        const origRange = bYMax - bYMin;
-        const newRange = maxAllowedB - bYMin;
-        if (origRange > 0 && newRange > 0) {
-          const sf = newRange / origRange;
-          const so = bYMin * (1 - sf);
-          scaledBasicData = basicRatioData.map(v => v == null ? null : v * sf + so);
-          scaledBasicRef = basicReference * sf + so;
-          bYMax = maxAllowedB;
-          basicScaleFactor = sf;
-          basicScaleOffset = so;
-        }
-      }
-
-      if (forwardChart) forwardChart.destroy();
-      forwardChart = new Chart(ctx.getContext('2d'), {
-        type: 'line',
+      const TH = window.IQTheme ? IQTheme.chart() : { text: '#18181b', muted: '#63666b', grid: '#e4e4e2', primary: '#0f6e68', warn: '#c98a12' };
+      const fmt = (v) => fmtEokInt(v) + '억';
+      capsecChart = new Chart(ctx.getContext('2d'), {
+        type: 'bar',
         data: {
-          labels: years,
+          labels: series.periods,
+          // 아래 = 신종자본증권, 위 = 후순위채(누적). 값이 없는 시점은 null → 막대 없음.
           datasets: [
-            {
-              label: '지급여력비율',
-              data: ratioData,
-              borderColor: 'rgb(75, 192, 192)',
-              backgroundColor: 'rgba(75, 192, 192, 0.1)',
-              tension: 0.2,
-              fill: true,
-              yAxisID: 'y',
-              pointRadius: 5,
-              pointHoverRadius: 7
-            },
-            {
-              label: '기본자본비율',
-              data: scaledBasicData,
-              borderColor: 'rgb(255, 99, 132)',
-              backgroundColor: 'rgba(255, 99, 132, 0.1)',
-              tension: 0.2,
-              fill: true,
-              yAxisID: 'y1',
-              pointRadius: 5,
-              pointHoverRadius: 7,
-              _originalBasic: basicRatioData
-            }
+            { label: '신종자본증권', data: series.hybrid, backgroundColor: TH.primary, borderWidth: 0, stack: 'cap' },
+            { label: '후순위채', data: series.sub, backgroundColor: TH.warn, borderWidth: 0, stack: 'cap' }
           ]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            x: { stacked: true, grid: { display: false }, ticks: { color: TH.muted, maxRotation: 60, autoSkip: true } },
+            y: { stacked: true, beginAtZero: true, grid: { color: TH.grid }, ticks: { color: TH.muted, callback: (v) => fmtEokInt(v) },
+                 title: { display: true, text: '억원', color: TH.muted } }
+          },
           plugins: {
-            title: {display: false},
-            legend: {position: window.innerWidth < 640 ? 'bottom' : 'top'},
+            legend: { position: window.innerWidth < 640 ? 'bottom' : 'top', labels: { color: TH.text } },
             tooltip: {
-              mode: 'index',
-              intersect: false,
               callbacks: {
-                label: function(context) {
-                  let label = context.dataset.label || '';
-                  if (label) label += ': ';
-                  if (context.parsed.y == null) { label += '데이터 없음'; return label; }
-                  if (context.datasetIndex === 1 && context.dataset._originalBasic) {
-                    const ov = context.dataset._originalBasic[context.dataIndex];
-                    label += (ov != null ? ov.toFixed(2) : '-') + '%';
-                  } else {
-                    label += context.parsed.y.toFixed(2) + '%';
-                  }
-                  return label;
-                }
-              }
-            },
-            annotation: {
-              annotations: {
-                solvencyLine: {
-                  type: 'line', yMin: solvencyReference, yMax: solvencyReference,
-                  borderColor: 'rgb(75, 192, 192)', borderWidth: 2, borderDash: [5, 5],
-                  label: {display: true, content: '지급여력비율 130% 기준선', position: 'start',
-                    backgroundColor: 'rgb(75, 192, 192)', color: 'white', font: {size: 11}},
-                  yScaleID: 'y'
-                },
-                solvencyWarning: {
-                  type: 'box', yMin: sYMin, yMax: solvencyReference,
-                  backgroundColor: 'rgba(255, 99, 132, 0.08)', borderWidth: 0, yScaleID: 'y'
-                },
-                basicCapitalLine: {
-                  type: 'line', yMin: scaledBasicRef, yMax: scaledBasicRef,
-                  borderColor: 'rgb(255, 99, 132)', borderWidth: 2, borderDash: [5, 5],
-                  label: {display: true, content: '기본자본비율 50% 기준선', position: 'end',
-                    backgroundColor: 'rgb(255, 99, 132)', color: 'white', font: {size: 11}},
-                  yScaleID: 'y1'
-                },
-                basicCapitalWarning: {
-                  type: 'box', yMin: bYMin, yMax: scaledBasicRef,
-                  backgroundColor: 'rgba(255, 99, 132, 0.12)', borderWidth: 0, yScaleID: 'y1'
-                }
+                title: (items) => items.length ? items[0].label : '',
+                label: (c) => c.parsed.y == null ? null : c.dataset.label + ': ' + fmt(c.parsed.y)
               }
             }
-          },
-          scales: {
-            y: {
-              type: 'linear', position: 'left', beginAtZero: false,
-              min: sYMin, max: sYMax,
-              title: {display: true, text: '지급여력비율 (%)', color: 'rgb(75, 192, 192)'},
-              ticks: {callback: v => v.toFixed(0) + '%', color: 'rgb(75, 192, 192)'},
-              grid: {color: 'rgba(75, 192, 192, 0.1)'}
-            },
-            y1: {
-              type: 'linear', position: 'right', beginAtZero: false,
-              min: bYMin, max: bYMax,
-              title: {display: true, text: '기본자본비율 (%)', color: 'rgb(255, 99, 132)'},
-              ticks: {callback: v => (((v - basicScaleOffset) / basicScaleFactor)).toFixed(0) + '%', color: 'rgb(255, 99, 132)'},
-              grid: {drawOnChartArea: false}
-            },
-            x: {title: {display: true, text: '연도'}}
-          },
-          interaction: {mode: 'nearest', axis: 'x', intersect: false}
+          }
         }
       });
+    }
 
-      const baseline = row.baseline || row.baseline_2025_4Q || {};
-      const lastProj = row.projections[row.projections.length - 1];
-      const fmtDrop = d => (d < 0 ? '△' : '+') + Math.abs(d).toFixed(1);
-      const dropRatio = (baseline.ratio_post_pct != null && lastProj.ratio_pct != null)
-        ? fmtDrop(lastProj.ratio_pct - baseline.ratio_post_pct) : '-';
-      const dropBasic = (baseline.basic_ratio_post_pct != null && lastProj.basic_ratio_pct != null)
-        ? fmtDrop(lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct) : '-';
-      note.innerHTML = `Baseline (${row.baseline_quarter || '최신'} 적용후): 지급여력 <b>${baseline.ratio_post_pct != null ? baseline.ratio_post_pct.toFixed(1) : '-'}%</b>, 기본자본 <b>${baseline.basic_ratio_post_pct != null ? baseline.basic_ratio_post_pct.toFixed(1) : '-'}%</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}%p, 기본자본 ${dropBasic}%p &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
+    // 도넛 아래 큼직한 셀 2개 — 신종자본증권 / 후순위채(제목은 공시 표기). 값은 tier1 회사 행의 securities_summary
+    // (as_of, hybrid·subordinated: latest_coupon_pct·latest_issue_date·issued_since_2023_eok·next_call_date·next_call_eok).
+    // tier 객체가 null 이면 셀은 두고 가운데 '—'. securities_summary 가 아예 없는 구판 JSON 이면 영역을 숨긴다(빈 상자 금지).
+    function renderSecuritiesCells(t1) {
+      const wrap = document.getElementById('capsec-cells');
+      const sum = (t1 && t1.securities_summary) || null;
+      if (!sum) { wrap.hidden = true; return; }
+      wrap.hidden = false;
+      const esc = (x) => String(x).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      const cell = (id, idx, title, t) => {
+        const el = document.getElementById(id);
+        if (!t) {
+          el.innerHTML = `<span class="capsec-title">${title}</span><span class="capsec-rate is-none" aria-label="${title} 없음">—</span>`;
+          return;
+        }
+        const rate = t.latest_coupon_pct == null ? '—' : Number(t.latest_coupon_pct).toFixed(2) + '%';
+        const issued = t.issued_since_2023_eok == null ? '—' : fmtEokInt(t.issued_since_2023_eok) + '억';
+        const call = t.next_call_date
+          ? esc(t.next_call_date) + (t.next_call_eok == null ? '' : ' (' + fmtEokInt(t.next_call_eok) + '억)')
+          : '—';
+        const tip = [];
+        if (t.latest_issue_date) tip.push('최근 발행일 ' + esc(t.latest_issue_date));
+        const asOf = t.balance_as_of || sum.as_of;   // 그 증권 잔액의 가장 오래된 기준일(없으면 요약 기준일)
+        if (asOf) tip.push(esc(asOf) + ' 기준');
+        if (t.next_call_estimated === true && t.next_call_date) tip.push('콜일 추정');
+        const hid = 'help-capsec-sum-' + idx;
+        const help = tip.length
+          ? `<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="${title} 기준" aria-describedby="${hid}">?</button><span class="iq-help-pop" role="tooltip" id="${hid}">${tip.join(' · ')}</span></span>`
+          : '';
+        el.innerHTML = `<span class="capsec-title">${title}${help}</span>`
+          + `<span class="capsec-rate${t.latest_coupon_pct == null ? ' is-none' : ''}">${rate}</span>`
+          + `<span class="capsec-line">총발행액 : ${issued} ('23~)</span>`
+          + `<span class="capsec-line">콜 상환 도래일 : ${call}</span>`;
+      };
+      cell('capsec-cell-hybrid', 'hybrid', '신종자본증권', sum.hybrid);
+      cell('capsec-cell-sub', 'sub', '후순위채', sum.subordinated);
+    }
+
+    function updateCapsecPanel() {
+      const company = document.getElementById('company').value;
+      const placeholder = document.getElementById('capsec-placeholder');
+      const cells = document.getElementById('capsec-cells');
+      const help = document.getElementById('capsec-help');
+      if (!company) {
+        placeholder.style.display = 'block';
+        document.getElementById('capsec-chart-wrap').style.display = 'none';
+        cells.hidden = true;
+        if (capsecChart) { capsecChart.destroy(); capsecChart = null; }
+        return;
+      }
+      placeholder.style.display = 'none';
+      const t1 = findUtilRow(tier1UtilData, company);
+      renderCapsecChart(capsecSeries(capsecTimelineData, t1 && t1.code, company));
+      renderSecuritiesCells(t1);
+      // 자료 기준 ? 팝오버: 시점별 JSON 이 source·as_of 를 실어 오면 그대로.
+      const basis = [];
+      if (capsecTimelineData && capsecTimelineData.source) basis.push(String(capsecTimelineData.source));
+      if (capsecTimelineData && capsecTimelineData.as_of) basis.push(String(capsecTimelineData.as_of) + ' 기준');
+      const pop = document.getElementById('help-capsec-basis');
+      pop.textContent = basis.join(' · ');
+      help.hidden = !basis.length;
     }
 
     // ===== 금리 민감도 패널 (시장금리 평행이동 충격) =====
@@ -1795,29 +1565,16 @@
       .then(r => r.json())
       .then(d => {
         tier1UtilData = Array.isArray(d && d.results) ? d.results : [];
-        // 패널 분기는 데이터에서 읽는다. 2026-09-01 이전에는 `(2025.4Q)` 가 마크업에
-        // 리터럴로 박혀 있어 배포본을 2026.1Q·2026.2Q 로 갈아도 화면 라벨만 옛 분기에
-        // 머물렀다(owner 지적). 분모(SCR·한도) 기준분기다 — 분자 기준일은 회사마다
-        // 다를 수 있어 아래 note 에 따로 적는다.
-        const qEl = document.getElementById('capsecQuarter');
-        if (qEl && d && d.quarter) qEl.textContent = '(' + d.quarter + ' 기준)';
-        updateDonutPanel(); // 회사 선택 이후 도착한 경우 1회 재렌더
+        updateCapsecPanel(); // 회사 선택 이후 도착한 경우 1회 재렌더
       })
       .catch(() => {});
 
-    fetch('kics_tier2_utilization.json')
-      .then(r => r.json())
+    // 시점별 발행현황(누적 막대 원천). 없거나 실패하면 차트 영역만 숨는다.
+    fetch('kics_capital_securities_timeline.json')
+      .then(r => r.ok ? r.json() : null)
       .then(d => {
-        tier2UtilData = Array.isArray(d && d.results) ? d.results : [];
-        updateDonutPanel();
-      })
-      .catch(() => {});
-
-    fetch('kics_forward_capital.json')
-      .then(r => r.json())
-      .then(d => {
-        forwardSimData = Array.isArray(d) ? d : [];
-        updateForwardPanel();
+        capsecTimelineData = d && typeof d === 'object' ? d : null;
+        updateCapsecPanel();
       })
       .catch(() => {});
 
@@ -1916,7 +1673,7 @@
         transitionToggle.sync();
 
         // 이벤트 리스너 추가
-        const refreshBottomPanels = () => { updateDonutPanel(); updateForwardPanel(); renderRateSensitivity(); renderDurationSection(); };
+        const refreshBottomPanels = () => { updateCapsecPanel(); renderRateSensitivity(); renderDurationSection(); };
         companySelect.addEventListener('change', () => { updateTable(); refreshBottomPanels(); });
         window.addEventListener('iq:themechange', () => { if (window.IQTheme && window.Chart) IQTheme.applyChartJs(window.Chart); updateTable(); refreshBottomPanels(); });
         periodSelect.addEventListener('change', updateTable);
