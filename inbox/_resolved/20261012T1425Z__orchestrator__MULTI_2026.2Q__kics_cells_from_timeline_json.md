@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T1425Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2026.2Q
@@ -24,3 +24,4 @@ owner 지시(2026-10-12 채팅): 소진율·전망 숫자(분류 판단이 들�
 - 값 비교 결과·바뀐 줄·시험 결과·커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 1624aba): K-ICS 큼직한 셀 2개를 kics_capital_securities_timeline.json 에서 클라이언트 계산으로 바꾸고 kics_tier1_utilization.json fetch 제거(K-ICS.html·tests/test_deploy_assets.py). 한화생명·메리츠·현대해상·삼성생명·스위스리·교보라이프플래닛 18건 비교 차이 0, 1280/375px·다크 확인, 시험 3종 통과(deploy_assets 12; tier1·tier2·전망 fetch 금지 검사 포함). docs/changelog_designer·TODO_designer 갱신은 다음 문서 커밋.
