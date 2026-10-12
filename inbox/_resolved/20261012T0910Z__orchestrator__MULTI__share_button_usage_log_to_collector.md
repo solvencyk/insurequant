@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T0910Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: MULTI
@@ -27,3 +27,4 @@ owner 질문(2026-10-12 채팅): 「각 섹션별로 공유 버튼 만들어 둔
 - 변경 위치(줄), 전송 페이로드 예시 1건, 점검 결과, owner 가 해야 할 재배포 절차, 커밋 해시. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 b3a2ae2). theme.js shLog(익명 이벤트 fire-and-forget, iq_internal=1 제외, 1.5초 디바운스), insurequant_collector.gs share 분기(shares 탭 + shares_summary QUERY 탭), privacy.html 문단, compare.html 에 forms-config.js 로드 1줄. 가로챈 fetch 로 페이로드만 확인(실전송 0), 시험 4종 통과. owner 재배포: Apps Script 코드 교체 -> 배포 관리 -> 새 버전(스크립트를 사이트보다 먼저).
