@@ -137,10 +137,17 @@
 .lrps-table td.num{white-space:nowrap}
 .lrps-table td.empty{color:var(--muted)}
 .lrps-desc{margin:-4px 0 12px}
-#lrCap,#lrAeCap,#psCap,#histTableCap,#histCap,#histComboNote,.cap-fold{position:relative}
-#lrCap .iq-help,#lrAeCap .iq-help,#psCap .iq-help,#histTableCap .iq-help,#histCap .iq-help,#histComboNote .iq-help,.cap-fold .iq-help{position:static}
-#lrCap .iq-help-pop,#lrAeCap .iq-help-pop,#psCap .iq-help-pop,#histTableCap .iq-help-pop,#histCap .iq-help-pop,#histComboNote .iq-help-pop,.cap-fold .iq-help-pop{max-width:min(340px,calc(100vw - 64px))}
+#lrCap,#psCap,#histTableCap,#histCap,#histComboNote,.cap-fold{position:relative}
+#lrCap .iq-help,#psCap .iq-help,#histTableCap .iq-help,#histCap .iq-help,#histComboNote .iq-help,.cap-fold .iq-help{position:static}
+#lrCap .iq-help-pop,#psCap .iq-help-pop,#histTableCap .iq-help-pop,#histCap .iq-help-pop,#histComboNote .iq-help-pop,.cap-fold .iq-help-pop{max-width:min(340px,calc(100vw - 64px))}
 #histTableCap .iq-help-pop,#histComboNote .iq-help-pop,.cap-fold .iq-help-pop{max-width:min(520px,calc(100vw - 64px))}
+/* 섹션 9 (보험금 예실차비율): 제목 옆 ? 팝오버 + 묶음 막대 + 표 */
+.ae-head{position:relative;display:flex;align-items:center;margin:0 0 16px}
+.ae-head h2{margin:0}
+.ae-head .iq-help{position:static}
+.ae-head .iq-help-pop{max-width:min(380px,calc(100vw - 64px))}
+#aeCharts .chart-container + .chart-container{margin-top:12px}
+#aeTable{margin-top:12px}
 .hc-pop-p{display:block}
 .hc-pop-p + .hc-pop-p{margin-top:7px}
 .lrps-treebar{display:flex;gap:6px;align-items:center;margin:12px 0 6px}
@@ -165,6 +172,7 @@
   .lrps-sp{width:32px}
   .lrps-bar-btn{min-height:32px}
   #lrWrap .chart-container{height:380px}
+  #aeCharts .chart-container{height:340px}
   .iq-help{position:static}
   .iq-help-pop{left:8px;right:8px;top:auto;margin-top:28px;width:auto;max-width:none}
 }
@@ -200,6 +208,7 @@
         <li><a href="#sec-nb">NB 배수</a></li>
         <li><a href="#sec-sens">민감도</a></li>
         <li><a href="#sec-lr">손해율 가정</a></li>
+        <li><a href="#sec-ae">보험금 예실차비율</a></li>
         <li><a href="#sec-ps">유지율</a></li>
       </ul>
     </nav>
@@ -341,15 +350,16 @@
         <div class="chart-container chart-sm"><canvas id="canvasLr" role="img" aria-label="경과차년별 손해율 가정 꺾은선 차트"></canvas></div>
         <div class="lrps-treebar" id="lrBar"><button type="button" class="lrps-bar-btn" data-act="open" aria-label="세부 표 모두 펼치기">모두 펼치기</button><button type="button" class="lrps-bar-btn" data-act="close" aria-label="세부 표 모두 접기">모두 접기</button></div>
         <div class="table-wrap lrps-table" id="lrTable"></div>
-        <div id="lrAeBox" hidden>
-          <div class="small-muted" id="lrAeCap">보험금 예실차비율
-            <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="보험금 예실차비율 읽는 법" aria-describedby="help-lrae">?</button><span class="iq-help-pop" role="tooltip" id="help-lrae"><b>보험금 예실차비율</b><br>경영공시 최적가정 ① 표입니다. 예상손해율 = 예상보험금 ÷ 실제위험보험료, 실제손해율 = (발생보험금 + 발생사고요소조정) ÷ 실제위험보험료, 보험금 예실차비율 = 예상손해율 − 실제손해율(%p)이며 공시된 값을 그대로 적었습니다. 연 1회 연말 공시에만 있고 반기·분기 공시에는 없어, 선택한 공시시점 이전의 가장 최근 연말 공시를 보여 줍니다. 값이 없는 칸은 '-' 입니다. 사업 구분이 여러 개인 회사는 구분별로 나눠 적었습니다.</span></span></div>
-          <div class="table-wrap lrps-table" id="lrAeTable"></div>
-        </div>
       </div>
     </div>
+    <div class="panel" id="sec-ae" data-pane="ae" data-share-section="보험금 예실차비율">
+      <div class="ae-head"><h2>9) 보험금 예실차비율</h2><span class="iq-help"><button type="button" class="iq-help-btn" aria-label="보험금 예실차비율 읽는 법" aria-describedby="help-lrae">?</button><span class="iq-help-pop" role="tooltip" id="help-lrae"><b>보험금 예실차비율</b><br>경영공시 최적가정 ① 표입니다. 예상손해율 = 예상보험금 ÷ 실제위험보험료, 실제손해율 = (발생보험금 + 발생사고요소조정) ÷ 실제위험보험료, 보험금 예실차비율 = 예상손해율 − 실제손해율(%p)이며 공시된 값을 그대로 적었습니다. 연 1회 연말 공시에만 있고 반기·분기 공시에는 없습니다. 값이 없는 칸은 막대를 그리지 않고 표에 '-' 로 적습니다. 사업 구분이 여러 개인 회사는 구분별로 차트와 표를 나눠 적었습니다.</span></span></div>
+      <div class="lrps-ctl" id="aeCtl"><label id="aeQWrap">공시시점 <select id="aeQ" class="select"></select></label></div>
+      <div id="aeCharts"></div>
+      <div class="table-wrap lrps-table" id="aeTable"></div>
+    </div>
     <div class="panel" id="sec-ps" data-pane="ps" data-share-section="판매채널별 유지율">
-      <h2>9) 판매채널별 유지율</h2>
+      <h2>10) 판매채널별 유지율</h2>
       <div class="small-muted lrps-desc" id="psDesc">해지율 가정의 근거가 되는 실적입니다.</div>
       <div id="psStub" class="stub-msg" style="display:none"></div>
       <div id="psWrap">
@@ -434,7 +444,7 @@
     한화생명: { slug: "hanwha_life", bucket: "life" },
   };
 
-  const charts = { wf: null, amort: null, pl: null, nb: null, hist: null, lr: null, ps: null };
+  const charts = { wf: null, amort: null, pl: null, nb: null, hist: null, lr: null, ps: null, ae: null };
   let CSM_RANGE_LABEL = "";  // D-2 20260818: 전사 wfx 최소~최대 분기, boot()에서 1회 계산 — h2/aria-label/커버리지줄 3곳이 공유
 
   const payload = { wf:null, amort:null, pl:null, sen:null, nb:null, ni:null };
@@ -553,7 +563,7 @@
     for (const k of ["wf","pl"]){ // ECharts
       if (charts[k]){ try{ charts[k].dispose(); }catch(e){} charts[k]=null; }
     }
-    for (const k of ["amort","nb","hist","lr","ps"]){ // Chart.js
+    for (const k of ["amort","nb","hist","lr","ps","ae"]){ // Chart.js
       try{ charts[k] && charts[k].destroy(); }catch(e){}
       charts[k]=null;
     }
@@ -1717,27 +1727,67 @@
       }
     }
     lrpsTree(q(host,"#lrTable"), q(host,"#lrBar"), { head:"구분 › 상품구분 › 포트폴리오", cols, nodes:roots, open:ui.open });
-    drawLrAe(host, company, qq);
   }
-  // 보험금 예실차비율(경영공시 최적가정 ①): 패널 최상위 ae 블록을 값 그대로 연도 열로. 연 1회 연말 공시라 선택 시점 이하의 가장 최근 연말 공시를 쓴다.
-  // 구판 패널(ae 없음)·ae 없는 회사·해당 시점 이전 공시가 없으면 표 전체를 숨긴다(문구 없음).
+  // ---- 9) 보험금 예실차비율 (경영공시 최적가정 ①) ----
+  // 패널 최상위 ae 블록(ae[회사].q[공시분기] = [[기준연도, 사업구분, 예상손해율, 실제손해율, 보험금 예실차비율, 플래그[]]…])을 값 그대로 쓴다.
+  // 연 1회 연말 공시라 공시시점 선택지는 그 회사 ae 의 분기뿐이다. 구판 패널(ae 없음)·ae 없는 회사면 섹션 전체를 숨긴다(문구 없음).
+  const AE_SERIES = [["예상손해율",2,"%"],["실제손해율",3,"%"],["보험금 예실차비율",4,"%p"]];
+  const AE_BREAK_TIP = "공시 산식과 맞지 않는 값(공시 그대로)";
+  LRPS_UI.ae = { company:null, q:null };
+  let aeChartRedraw = null;
+  function aeTxt(v){   // 소수 둘째 자리 + 음수 △. -0.00 은 0.00
+    const a = Math.abs(v).toLocaleString("ko-KR",{minimumFractionDigits:2,maximumFractionDigits:2});
+    return ((v<0 && Number(a.replace(/,/g,""))!==0) ? "△" : "") + a;
+  }
   function aeNum(v, unit){
     if (v==null || !Number.isFinite(v)) return { t:"-", cls:"num empty" };
-    const a = Math.abs(v).toLocaleString("ko-KR",{minimumFractionDigits:2,maximumFractionDigits:2});
-    const neg = v<0 && Number(a.replace(/,/g,""))!==0;
-    return { t:(neg?"△":"")+a+unit, cls:"num" };
+    return { t:aeTxt(v)+unit, cls:"num" };
   }
-  function drawLrAe(host, company, qq){
-    const box=q(host,"#lrAeBox"), tbox=q(host,"#lrAeTable"); if(!box||!tbox) return;
+  // 막대 위(아래) 값 라벨 — 라이브러리 없이 직접 그린다. 음수는 △, 모바일은 끈다(표가 바로 아래).
+  const aeValueLabels = {
+    id:"aeValueLabels",
+    afterDatasetsDraw(chart, args, opt){
+      if (!opt || !opt.show) return;
+      const ctx = chart.ctx; ctx.save();
+      ctx.font = "600 11px "+((window.Chart && Chart.defaults.font.family) || "sans-serif");
+      ctx.fillStyle = TH.text; ctx.textAlign = "center";
+      chart.data.datasets.forEach((ds, di)=>{
+        const meta = chart.getDatasetMeta(di); if (meta.hidden) return;
+        meta.data.forEach((bar, i)=>{
+          const v = ds.data[i]; if (v==null || !Number.isFinite(v)) return;
+          ctx.textBaseline = v<0 ? "top" : "bottom";
+          ctx.fillText(aeTxt(v), bar.x, v<0 ? bar.y+3 : bar.y-3);
+        });
+      });
+      ctx.restore();
+    },
+  };
+  function renderAe(host, company){
+    aeChartRedraw = null;
+    const panel = q(host,"#sec-ae"); if (!panel) return;
     const ae = LRPS.lr && LRPS.lr.ae && LRPS.lr.ae[company];
-    const sel = qq && ae && ae.q ? wfParseQ(qq) : null;
-    const aq = sel ? Object.keys(ae.q).filter(k=>{ const p=wfParseQ(k); return p[0]<sel[0] || (p[0]===sel[0] && p[1]<=sel[1]); }).sort(wfCmpDesc)[0] : null;
-    const rows = aq ? ae.q[aq] : null;
-    tbox.innerHTML = "";
-    if (!rows || !rows.length){ box.hidden = true; return; }
-    box.hidden = false;
-    const years = Array.from(new Set(rows.map(r=>r[0]))).sort((a,b)=>a-b);
+    const qs = (ae && ae.q) ? Object.keys(ae.q).filter(k=> ae.q[k] && ae.q[k].length).sort(wfCmpDesc) : [];
+    if (!qs.length){ panel.hidden = true; return; }
+    panel.hidden = false;
+    const ui = LRPS_UI.ae;
+    if (ui.company!==company){ ui.company=company; ui.q=null; }
+    const qsel = q(host,"#aeQ");
+    lrpsFill(qsel, qs, v=>v, ui.q || qs[0]);
+    q(host,"#aeQWrap").hidden = qs.length < 2;
+    qsel.addEventListener("change", ()=> drawAe(host, company));
+    drawAe(host, company);
+  }
+  function drawAe(host, company){
+    const ae = LRPS.lr.ae[company], qsel = q(host,"#aeQ"), tbox = q(host,"#aeTable");
+    const aq = qsel.value, rows = ae.q[aq] || [];
+    LRPS_UI.ae.q = aq;
     const segs = Array.from(new Set(rows.map(r=>r[1]||"")));
+    aeChartRedraw = ()=>{ if (host.isConnected) drawAeCharts(host, company, rows, segs); };
+    aeChartRedraw();
+
+    // 표: 항목 × 기준연도(구분이 있으면 구분마다 블록)
+    tbox.innerHTML = "";
+    const years = Array.from(new Set(rows.map(r=>r[0]))).sort((a,b)=>a-b);
     const tbl=document.createElement("table"), thead=document.createElement("thead"), htr=document.createElement("tr");
     ["항목"].concat(years.map(String)).forEach((h,i)=>{ const th=document.createElement("th"); th.scope="col"; th.textContent=h; if(i>0) th.className="num"; htr.appendChild(th); });
     thead.appendChild(htr); tbl.appendChild(thead);
@@ -1751,12 +1801,69 @@
     for (const sg of segs){
       if (sg) addRow(sg, years.map(()=>({t:"",cls:"num"})), "lrps-grp lrps-g1");
       const byY = {}; rows.filter(r=>(r[1]||"")===sg).forEach(r=>{ byY[r[0]]=r; });
-      const titles = years.map(y=> byY[y] && (byY[y][5]||[]).includes("identity_break") ? "공시 산식과 맞지 않는 값(공시 그대로)" : "");
-      [["예상손해율",2,"%"],["실제손해율",3,"%"],["보험금 예실차비율",4,"%p"]].forEach(([lab,ix,u])=>{
+      const titles = years.map(y=> byY[y] && (byY[y][5]||[]).includes("identity_break") ? AE_BREAK_TIP : "");
+      AE_SERIES.forEach(([lab,ix,u])=>{
         addRow(lab, years.map(y=> byY[y] ? aeNum(byY[y][ix],u) : {t:"-",cls:"num empty"}), "lrps-leaf", titles);
       });
     }
     tbl.appendChild(tb); tbox.appendChild(tbl);
+  }
+  // 묶음 막대: 가로축 기준연도, 묶음 안 예상손해율·실제손해율·보험금 예실차비율. 사업 구분이 둘 이상이면 구분마다 차트 하나.
+  // 색은 회사 키컬러(currentKey) 두 농도 + 중립 회색(차이값). 값이 없는 칸은 막대를 그리지 않고, 0 선을 진하게 긋는다.
+  function drawAeCharts(host, company, rows, segs){
+    const holder = q(host,"#aeCharts"); if (!holder) return;
+    if (charts.ae){ try{ charts.ae.destroy(); }catch(e){} charts.ae=null; }
+    holder.innerHTML = "";
+    const made = [];
+    charts.ae = { destroy(){ made.forEach(c=>{ try{ c.destroy(); }catch(e){} }); made.length=0; } };
+    const narrow = LR_MQ.matches;
+    const coName = shortName(codeToName[company] || company);
+    const kc = _hexRgb(currentKey.primary);
+    const soft = kc ? "rgba("+kc.r+","+kc.g+","+kc.b+",0.30)" : "rgba(15,110,104,0.30)";
+    const colors = [soft, currentKey.line, TH.muted];
+    for (const sg of segs){
+      const sr = rows.filter(r=>(r[1]||"")===sg);
+      const years = Array.from(new Set(sr.map(r=>r[0]))).sort((a,b)=>a-b);
+      const byY = {}; sr.forEach(r=>{ byY[r[0]]=r; });
+      const box = document.createElement("div"); box.className = "chart-container chart-sm";
+      const cv = document.createElement("canvas"); cv.setAttribute("role","img"); box.appendChild(cv); holder.appendChild(box);
+      const ds = AE_SERIES.map(([lab,ix,u],k)=> ({
+        label: lab, unit: u, data: years.map(y=> (byY[y] && Number.isFinite(byY[y][ix])) ? byY[y][ix] : null),
+        backgroundColor: colors[k], borderColor: k===2 ? TH.muted : currentKey.line, borderWidth: k===0 ? 2 : 1,
+        borderSkipped:false, maxBarThickness: 56,
+      }));
+      const vals = ds.flatMap(d=>d.data).filter(v=>v!=null);
+      cv.setAttribute("aria-label", coName+" 보험금 예실차비율 묶음 막대 차트"+(sg ? " · "+sg : "")
+        + " · 기준연도 "+(years.length ? years[0]+"년"+(years.length>1 ? "에서 "+years[years.length-1]+"년" : "") : "-")
+        + (vals.length ? " · 값 범위 "+aeTxt(Math.min(...vals))+"에서 "+aeTxt(Math.max(...vals)) : " · 표시할 값 없음"));
+      made.push(new Chart(cv.getContext("2d"), {
+        type:"bar", data:{ labels: years.map(String), datasets: ds }, plugins:[aeValueLabels],
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          interaction:{ mode:"index", intersect:false },
+          plugins:{
+            aeValueLabels:{ show: !narrow },
+            legend:{ display:true, position: narrow ? "bottom" : "top", labels:{ boxWidth: narrow ? 12 : 40, boxHeight: 12, padding: narrow ? 10 : 14 } },
+            title:{ display:true, text:"보험금 예실차비율 · "+coName+(sg ? " · "+sg : "") },
+            tooltip:{ callbacks:{
+              title:(items)=> items.length ? items[0].label : "",
+              label:(x)=> x.dataset.label+": "+(x.parsed.y==null ? "-" : aeTxt(x.parsed.y)+x.dataset.unit),
+              afterBody:(items)=>{
+                if (!items.length) return "";
+                const r = byY[years[items[0].dataIndex]];
+                return (r && (r[5]||[]).includes("identity_break")) ? AE_BREAK_TIP : "";
+              },
+            } },
+          },
+          scales:{
+            x:{ title:{ display:true, text:"기준연도" }, grid:{ display:false } },
+            y:{ beginAtZero:true, grace:"8%", title:{ display:true, text:"% · %p" },
+                ticks:{ callback:(v)=> fmtNum(Number(v)) },
+                grid:{ color:(c)=> c.tick && c.tick.value===0 ? TH.text : TH.grid, lineWidth:(c)=> c.tick && c.tick.value===0 ? 2 : 1 } },
+          },
+        },
+      }));
+    }
   }
   function drawLrChart(host, company, qq, cur, prev, prevQ){
     const c = LRPS.lr.companies[company];
@@ -1927,6 +2034,7 @@
   const _lrMqChange = ()=>{
     try{ lrChartRedraw && lrChartRedraw(); }catch(e){ console.warn("loss-ratio chart redraw", e); }
     try{ psChartRedraw && psChartRedraw(); }catch(e){ console.warn("persistency chart redraw", e); }
+    try{ aeChartRedraw && aeChartRedraw(); }catch(e){ console.warn("claims-ae chart redraw", e); }
   };
   if (LR_MQ.addEventListener) LR_MQ.addEventListener("change", _lrMqChange); else if (LR_MQ.addListener) LR_MQ.addListener(_lrMqChange);
 
@@ -3035,6 +3143,7 @@
     renderBsTable(host, company, wfMode);
     // 섹션 8·9: 패널 하나가 죽어도 나머지 패널은 그대로 두도록 각각 격리한다.
     try{ renderLossRatio(host, company); }catch(e){ console.warn("loss-ratio panel", e); }
+    try{ renderAe(host, company); }catch(e){ console.warn("claims-ae panel", e); }
     try{ renderPersistency(host, company); }catch(e){ console.warn("persistency panel", e); }
   }
 
