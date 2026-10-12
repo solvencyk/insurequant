@@ -7,6 +7,11 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-13 (2) — 발행현황 추정 행 툴팁 꼬리 + 새 JSON 재점검 (ticket 20261013T0030Z)
+
+- `capsecSeries()` 가 연도별 `estimated` 를 모아 막대 툴팁 꼬리(footer)에 「추정(원장 미갱신)」을 붙인다(없는 해는 꼬리 없음). 셀·계산은 그대로.
+- 점검 스크립트: `scripts/check_kics_donuts.py`(도넛 데이터셋·aria·숫자 줄·경과조치 기발행 후순위 줄을 JSON 직접 계산과 대조, 47사), `scripts/check_kics_capsec_cells.py`(막대 연도별 합·추정 꼬리 47사, DB손해 신종 콜 칸 날짜만, 하나손해 셀·막대). 새 JSON(HEAD `392efee2`)에서 위반 0.
+
 ## 2026-10-13 — K-ICS Forward Outlook 거짓 개선 제거 · 음수 △ · 도넛 툴팁 375px · 콜일 칸 내구성 (ticket 20261012T2236Z)
 
 - **원인**: 노트가 자르지 않은 기준선에서 잘린(0.0) 2030 값을 빼 예별 「+41.8%p」·롯데 「+5.4%p」를 인쇄했고, 차트도 0 선과 「0.00%」 툴팁을 그렸다. 노트의 음수 기준선은 ASCII 마이너스였다.

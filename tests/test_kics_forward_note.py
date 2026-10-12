@@ -78,10 +78,13 @@ def test_kics_html_forward_static():
     # 도넛 툴팁: 긴 한 줄을 두 줄로, 「보완자본형이면」은 표시값과 다를 때만
     assert "' · ' + opt.overNote" not in html
     assert "t1UnconfDiffers" in html
+    # 발행현황 막대: 추정 행(estimated: true)이 있는 해의 툴팁 꼬리
+    assert "b.estimated === true" in html and "추정(원장 미갱신)" in html
 
 
 @pytest.mark.skipif(os.environ.get("RUN_KICS_FORWARD") != "1", reason="브라우저 검사 — RUN_KICS_FORWARD=1 일 때만")
-@pytest.mark.parametrize("script,args", [("check_kics_forward_note.py", ["--mobile"]), ("check_kics_callcell.py", [])])
+@pytest.mark.parametrize("script,args", [("check_kics_forward_note.py", ["--mobile"]), ("check_kics_callcell.py", []),
+                                         ("check_kics_donuts.py", ["--mobile"]), ("check_kics_capsec_cells.py", ["--mobile"])])
 def test_browser_checks(script, args):
     r = subprocess.run([sys.executable, str(ROOT / "scripts" / script), *args], cwd=str(ROOT), capture_output=True, text=True,
                        encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"}, timeout=900)

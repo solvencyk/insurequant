@@ -1468,19 +1468,20 @@
         const y = parseInt(String(b.issue_date || '').slice(0, 4), 10);
         const v = Number(b.face_eok);
         if (!isFinite(y) || !isFinite(v)) return;
-        const e = by.get(y) || { h: 0, s: 0 };
+        const e = by.get(y) || { h: 0, s: 0, est: false };
         if (b.tier === 'hybrid') e.h += v; else if (b.tier === 'subordinated') e.s += v; else return;
+        if (b.estimated === true) e.est = true;   // 원장 미갱신으로 채운 추정 행(툴팁에만 표시)
         by.set(y, e);
       });
       if (!by.size) return null;
       const ys = Array.from(by.keys());
       const y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
-      const years = [], hybrid = [], sub = [];
+      const years = [], hybrid = [], sub = [], est = [];
       for (let y = y0; y <= y1; y++) {
-        const e = by.get(y) || { h: 0, s: 0 };
-        years.push(String(y)); hybrid.push(e.h); sub.push(e.s);
+        const e = by.get(y) || { h: 0, s: 0, est: false };
+        years.push(String(y)); hybrid.push(e.h); sub.push(e.s); est.push(!!e.est);
       }
-      return { years, hybrid, sub };
+      return { years, hybrid, sub, est };
     }
 
     function renderCapsecChart(series) {
@@ -1512,9 +1513,11 @@
           plugins: {
             legend: { position: window.innerWidth < 640 ? 'bottom' : 'top', labels: { color: TH.text } },
             tooltip: {
+              footerFont: { size: 11, weight: '400' },
               callbacks: {
                 title: (items) => items.length ? items[0].label + '년 발행' : '',
-                label: (c) => c.dataset.label + ': ' + fmtEokInt(c.parsed.y) + '억'
+                label: (c) => c.dataset.label + ': ' + fmtEokInt(c.parsed.y) + '억',
+                footer: (items) => (items.length && series.est && series.est[items[0].dataIndex]) ? '추정(원장 미갱신)' : []
               }
             }
           }
