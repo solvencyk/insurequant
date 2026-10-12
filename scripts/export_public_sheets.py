@@ -71,11 +71,17 @@ _SHEET_DROP_COLS = {
 # 그 목록과 아래 `private_paths()` 는 tests/test_private_deploy.py 가 같은지 대조한다.
 # 되돌리기: PRIVATE_SHEETS 에서 시트를 빼고 PRIVATE_PATHS(.sh) 에서 경로를 빼고 download-survey.js 주석을 풀고
 # exporter 를 다시 돌린다.
-PRIVATE_SHEETS = ("기본자본소진율", "보완자본소진율", "자본비율전망")
+# 2026-10-12 재공개 (owner 「분류 근거가 확정돼 소진율 도넛과 Forward Outlook 을 다시 살린다」, 티켓 20261012T2030Z):
+# 세 시트와 루트 JSON 3개를 아래 튜플에서 뺐다(= 위 되돌리기 절차를 실행). 비공개 메커니즘(이 튜플들 · 게이트의
+# PUBLIC_EXPORT_PRIVATE_SHEET_PRESENT · 배포 스크립트 PRIVATE_PATHS · tests/test_private_deploy.py)은 그대로 둔다 -
+# 다시 내리려면 이전 값 `("기본자본소진율", "보완자본소진율", "자본비율전망")` 과
+# `("kics_tier1_utilization.json", "kics_tier2_utilization.json", "kics_forward_capital.json")` 을 되살리고
+# 배포 스크립트 PRIVATE_PATHS 에 같은 6개 경로를 넣는다. download-survey.js·report-widget.js·K-ICS.html 은 designer 몫.
+PRIVATE_SHEETS = ()
 # HTML 이 더는 fetch 하지 않는 루트 JSON. tier1 은 designer 커밋 `1624aba`(K-ICS 큼직한 셀을 타임라인 JSON 계산으로 교체,
 # tier1 fetch 제거) 뒤에 넣었다 — 그 전에 넣으면 라이브 패널이 조용히 빈칸이 된다. 새로 HTML 이 이 파일들을 fetch 하게
 # 되면 여기서 빼야 한다(test_deploy_assets 의 keep-list 시험이 잡는다).
-PRIVATE_ROOT_JSONS = ("kics_tier1_utilization.json", "kics_tier2_utilization.json", "kics_forward_capital.json")
+PRIVATE_ROOT_JSONS = ()
 
 
 def private_paths():

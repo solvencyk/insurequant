@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-10-12T06:39:58Z",
+  "generated_at_utc": "2026-10-12T10:46:57Z",
   "license": "All rights reserved. 열람·출처표기 인용·사내 분석은 자유, 자동수집(크롤링)으로 통째 긁어가기·대량 재배포·재판매는 금지.",
   "terms_url": "https://www.insurequant.com/privacy.html#terms",
   "copyright": "(c) 2026 InsureQuant (운영자 조상욱). 원천 수치의 권리는 각 공시 주체에게 있음.",
-  "build_id": "538cbe7",
+  "build_id": "ef62969",
   "sheets": {
     "17BS": {
       "rows": 11016,
@@ -50,10 +50,25 @@
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
+    "기본자본소진율": {
+      "rows": 470,
+      "quarter_min": "2026.2Q",
+      "quarter_max": "2026.2Q"
+    },
+    "보완자본소진율": {
+      "rows": 658,
+      "quarter_min": "2026.2Q",
+      "quarter_max": "2026.2Q"
+    },
     "자본성증권발행현황": {
       "rows": 123,
       "quarter_min": "2026.2Q",
       "quarter_max": "2026.2Q"
+    },
+    "자본비율전망": {
+      "rows": 2530,
+      "quarter_min": null,
+      "quarter_max": null
     },
     "금리듀레이션갭": {
       "rows": 317,

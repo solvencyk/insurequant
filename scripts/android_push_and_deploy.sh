@@ -63,7 +63,11 @@ deploy_path() {
 # tests/test_private_deploy.py 가 대조한다. 되돌리기: 경로를 이 목록에서 빼고(+ exporter 쪽도 같이) 다시 배포한다.
 # kics_tier1_utilization.json 은 K-ICS.html 이 더는 fetch 하지 않는다(designer 1624aba) — 그래서 함께 내린다.
 # 주의: main 의 옛 K-ICS.html 은 아직 이 파일을 fetch 한다. K-ICS.html 도 같은 배포에서 갱신돼야 한다(아래 CHANGED 가 처리).
-PRIVATE_PATHS="public_exports/기본자본소진율.json public_exports/보완자본소진율.json public_exports/자본비율전망.json kics_tier1_utilization.json kics_tier2_utilization.json kics_forward_capital.json"
+# 2026-10-12 재공개(티켓 20261012T2030Z): 아래 6개 경로를 목록에서 뺐다(비공개 메커니즘은 남김). 되돌리려면 6개를 다시 넣는다:
+#   public_exports/기본자본소진율.json public_exports/보완자본소진율.json public_exports/자본비율전망.json
+#   kics_tier1_utilization.json kics_tier2_utilization.json kics_forward_capital.json
+# main 은 비공개 배포로 이 6개를 이미 지웠으므로 NEW_FILES 에 넣어 다시 올린다.
+PRIVATE_PATHS=""
 is_private() {
   for _p in $PRIVATE_PATHS; do [ "$_p" = "$1" ] && return 0; done
   return 1
@@ -163,7 +167,7 @@ EOF
 # main 에 아직 없는 신규 배포 파일 (HTML 이 참조하지 않아 위 순회에 안 걸린다 — 2026-09-11 발견:
 # 위 루프는 origin/main 에 이미 있는 파일만 돌기 때문에 LICENSE 같은 신규 파일이 영원히 빠졌다).
 # 여기 적힌 파일은 브랜치에 있고 main 에 없으면 배포 목록에 넣는다.
-NEW_FILES="LICENSE theme.js compare.html data/compare/panel_compare.json data/company_segment.json data/csm_combo/panel_csm_combo.json jp/index.html jp/jesr_esr.json jp/jesr.html jp/jgaap.html jp/disclosure.html jp/jesr_app.js jp/jp.css jp/jesr_detail.json jp/terms.html jp/report-widget.ja.js public_exports/보험계약부채.json public_exports/보험금예실차비율.json kics_capital_securities_timeline.json"
+NEW_FILES="LICENSE theme.js compare.html data/compare/panel_compare.json data/company_segment.json data/csm_combo/panel_csm_combo.json jp/index.html jp/jesr_esr.json jp/jesr.html jp/jgaap.html jp/disclosure.html jp/jesr_app.js jp/jp.css jp/jesr_detail.json jp/terms.html jp/report-widget.ja.js public_exports/보험계약부채.json public_exports/보험금예실차비율.json kics_capital_securities_timeline.json kics_tier1_utilization.json kics_tier2_utilization.json kics_forward_capital.json public_exports/기본자본소진율.json public_exports/보완자본소진율.json public_exports/자본비율전망.json"
 for f in $NEW_FILES; do
   is_private "$f" && continue
   git rev-parse "origin/main:$(deploy_path "$f")" >/dev/null 2>&1 && continue
