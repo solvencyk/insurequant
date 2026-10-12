@@ -1,6 +1,6 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-09-23 · Stage 4/5 — publishing
+> Last updated: 2026-10-12 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
@@ -9,6 +9,24 @@
 **This file:** entries scoped to publishing work only.
 
 ---
+
+## 2026-10-12 — 자본성증권 인정한도 소진율 규정 근거 재정의 반영 (커밋만, push·배포 보류)
+
+티켓 `inbox/publishing/20261012T0800Z__orchestrator__MULTI_2026.2Q__capital_utilization_redefinition_apply.md`(Opus 실행). 정본 `data/_derived/capital_utilization_definition_20261012/definition_memo.md`(owner 결정 ①~⑦ 권고안 채택).
+- 산식 `scripts/capital_utilization_rules.py`(신설, 순수 함수): 보완자본 = 항목 47 적용후 열 + 발행사 인쇄 관행 R0~R5(메모 s5 와 같은 계산, 항목 47 스코프는 `kics_json_rules._tier2_i47_scope_map` import) ÷ 항목 14(적용 전) × 50%. 기본자본 = max(기발행 신종 항목 53 ÷ SCR×15%, 기본자본형 신규 ÷ SCR×10%). `apply_disclosure_utilization.py` 가 47사 전부를 이 산식으로 쓴다(교보라이프플래닛의 옛 `no_bonds` 0.0 경로 → null + "경과조치 표 미공시", 스위스리 `numerator_undisclosed` → 0.0).
+- 등재부 `data/bonds/capital_tier_registry.json`(신설, 18사 증권별 legacy_tfi/tier1/tier2 + 근거). 미정 4사: 흥국생명 = 기본자본형 확정(2022-12 전환우선주 2,300억 = 티시스 2,000·티캐스트 300 보도, X 실현가능성 검정 7개 분기, 경과조치 표는 496.5 만 이동 → 원칙 10%, 81.4%). 코리안리·농협생명·푸본 = 미확정(공개 자료에 스텝업 조건 없음, 시계열 검정으로 못 가름 `a5`·`a5b`) → 보수적 상한 205.1·72.7·42.1 + `type_unconfirmed`(보완자본형이면 94.0·48.5·17.3).
+- 47사 메모 대조 차이 0(`a7_memo_diff.txt`). 전후 `b1_before_after_47.csv`: tier2 23사(한화생명 222.4→70.5, 메리츠 55.4→0.2, 미래에셋 112.4→24.5, 푸본 130.1→86.6, IBK 120.4→76.0, 농협손해 117.7→103.9 등, 교보라이프플래닛 0.0→null, 스위스리 미공시→0.0), tier1 14사(한화생명 136.3→0.0, 하나손해 284.9→0.0, 농협손해 223.2→0.0, KDB 103.2→0.0, 하나생명 158.8→238.2, DB손해 101.1→151.6, 코리안리 230.7→205.1 등).
+- 파생물: `kics_forward_capital.json` 은 confidence 가 tier 값을 읽어 같은 인자로 재실행(`20261012T015750Z`) — confidence 109칸만 바뀌고 전망값은 같다, 신뢰도 low→high 5사(신한이지·한화생명·미래에셋·푸본·IBK). `data/bonds/capital_securities_forward_outlook.json`·`capital_securities_utilization_20261Q.json` 은 archive/ 스크립트 산출이라 아무도 읽지 않아 그대로 둠. `kics_capital_securities.json` 은 tier1 의 `scr_eok` 만 읽어 값 의존 없음(그 인정표의 "신종 15% 공유" 정책과 forward 모형의 신종 15% 일괄 가정은 새 정의와 다르다 - 보고만).
+- xlsx(`sync_master_xlsx_sheet.py`, 백업 후): 기본자본소진율 값 54칸·비고 188칸, 보완자본소진율 값 47칸·비고 141칸, 자본비율전망 비고 275칸·_diagnostics 605칸(행 수 불변, `c4_xlsx_change_list.csv`). 손해율은 `268002b` 재보사 세그먼트 표준화가 미동기화돼 있던 기존 드리프트 1,520행(값 변경 0)을 같이 맞췄다. 시트 이름·열 불변. 기본자본소진율은 항목명을 그대로 두고 읽는 필드만 바꿨다("기본자본 인정한도(SCR x 15%)" ← `tier1_legacy_limit_eok`, "신종자본증권 인정액" ← `tier1_basic_new_eok`) - 항목명을 규정 표기로 바꾸는 것은 owner 승인 사항.
+- 공개본: 3시트 + manifest(`build_id` c3ebcc3), 나머지 13시트 바이트 동일.
+- 게이트: data-contract RED 0(YELLOW `T2_UTIL_OVER_100_DISCLOSED` 2 = 농협손해 103.9·동양 105.0, 종전 6), live_artifacts RED 0(공개본 재생성 후), xlsx 드리프트 0, K-ICS 룰 게이트 exit 0(입력 불변). 새 RED 0. tier1 100% 초과(DB손해 151.6·하나생명 238.2·아이엠라이프 221.7·코리안리 205.1 상한)는 tier1 도메인 룰이 없어 RED 가 나지 않는다 - 정당 초과 허용 규칙을 둘지는 validation 판단.
+- 시험: `tests/unit/test_capital_utilization_rules.py` 25 passed(훅의 tests/unit 묶음에 들어간다), 코드 변이 3종 모두 검출(`e1_mutation_run.txt`), `test_deploy_assets`+`test_push_gate_wiring` 77 passed·1 skipped.
+- **designer 용 새 필드**(기존 필드 이름·구조 유지, 추가만):
+  - tier1 행: `utilization_pct`(새 값) · `tier1_hybrid_recognized_eok`/`tier1_hybrid_limit_eok`(결속 쪽 분자/한도 = 숫자 줄 "기본자본 자본증권 X억원 / 인정한도 Y억원") · `binding_leg`(`legacy_15` 기발행 SCR×15% · `basic_10` 기본자본형 신규 SCR×10% · null 자본증권 0) · `tier1_legacy_eok`/`tier1_legacy_limit_eok`/`tier1_legacy_pct` · `tier1_basic_new_eok`/`tier1_basic_new_limit_eok`/`tier1_basic_new_pct` · `tier1_excluded_tier2_type_eok`(보완자본형이라 뺀 금액) · `type_unconfirmed`(bool) · `tier1_pct_if_unconfirmed_tier2`(미확정일 때 범위 아래 끝, 아니면 null) · `type_note`(근거 문장) · `no_capital_securities`(true 면 "발행 없음"). `tier1_hybrid_issued_eok` 는 종전대로 항목 6 전체 - 화면 분자로 쓰지 않는다.
+  - tier2 행: `utilization_pct`·`numerator_eok`(새 값, `rule`="NA" 이면 둘 다 null) · `tier2_limit_eok` · `rule`(R0·R1·R2·R3·R4·R5·R-none·NA) · `rule_basis` · `numerator_source` · `reason`(NA 일 때만 "경과조치 표 미공시") · `numerator_tfi_off_eok`/`utilization_pct_tfi_off`(경과조치 종료 시 관점) · `item47_scope` · `rule_flags` · `supplementary_capital_eok`(항목 3) · `lapse_excess_item49_eok`(항목 49) · `no_capital_securities`.
+  - 표시(결정 ④): 분자 0 → "0%", `no_capital_securities` 면 "발행 없음" 덧붙임 · `rule`="NA" → 가운데 "—", 캡션 "산출 불가", 툴팁 `reason` · 스위스리는 항목 49 인쇄가 0 이라 보완자본 4,274억 설명은 `reinsurer_basis.note` 참고.
+- owner 보고(메모 밖 새 발견): 메리츠·흥국생명은 「(기발행 후순위채무)」 행(항목 54)에 2023년 이후 신규 후순위채가 섞여 있다(메리츠 2024.3Q +6,581 = 2024-08 6,500억 발행, 흥국생명 2025.1Q +2,132·2025.4Q +901 = 2025 발행분, `a2`·`a3`). 메모 R2 대로면 메리츠 0.2%·흥국생명 10.6%, 원장 기발행분만 빼면 30.8%·37.0%(`a11`). 결정 ② 를 두 회사로 넓힐지 owner 결정 대상이라 이번에는 메모 값을 실었다.
+- 커밋 `c3ebcc3`(산식·등재부·마스터·xlsx·forward·시험·증거), `00bab2a`(공개본). 증거 `data/_derived/capital_utilization_apply_20261012/`.
 
 ## 2026-10-12 — 미니 재동기화 2차 (재보사 PL·BS·CSM 재스윕 반영, 커밋만, push·배포 보류)
 
