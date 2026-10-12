@@ -881,6 +881,7 @@ _NOT_A_COMPARISON_THRESHOLD = {
     "RESTATEMENT_CASCADE_TOL_DEFAULT": "재작성 채택 연쇄(_adoption_cascades)의 박제 잔차 재검산 "
                        "기본 폭 0.5억 — 등식 허용오차가 아니라 박제해 둔 잔차가 그대로인지 보는 "
                        "폭이다. 엔트리별 `tol` 로 덮어쓸 수 있다(IRR_PIN_TOL 과 같은 성격).",
+    "_TIER2_STALE_FP_EPS": "TIER2_STALE_FALSE_POSITIVE(마이브라운 박제) 의 부동소수 일치 폭 1e-9 — 등식 허용오차가 아니라 적재된 47/48/49/53/54 셀이 박제값 0.0 그대로인지 보는 값 대조 폭이다(IRR_PIN_TOL 과 같은 성격).",
     "TIER2_ZERO_EPS": "47/48/49 가 사실상 0(인쇄값 0 또는 대시)인지 가르는 판정 임계 0.5억 — 두 값이 같아야 한다는 주장이 아니라 갈래(TFI_NA)를 정하는 분류 상수다.",
     "TIER2_LIMIT_RATIO": "보완자본 인정한도 비율 0.5 그 자체 — 허용오차가 아니라 48_tier2_limit 등식의 계수다(item48 == item14 × 50%).",
     "TIER2_SCALE_CEILING": "|값| > item14 × 이 배수면 단위스케일 오류로 보는 자릿수 sanity 상한. 등식 허용오차가 아니며 47_tier2_census 축이 소비한다.",
