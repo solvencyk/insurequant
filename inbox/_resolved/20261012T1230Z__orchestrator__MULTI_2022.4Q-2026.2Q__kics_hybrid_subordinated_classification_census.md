@@ -3,7 +3,7 @@ from: orchestrator
 to: parser
 lane: kics
 created: 20261012T1230Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2022.4Q-2026.2Q
@@ -26,3 +26,4 @@ owner 지시(2026-10-12 채팅): 소진율 도넛·Forward Outlook 은 화면에
 - 전수 건수(회사·증권), 확정도 집계(ⓐ/ⓑ/ⓒ), 기존 분류와 불일치 목록, 분류가 가장 갈리는 회사, 증빙 경로, 커밋 해시. `TODO_parser_kics.md` Status + `docs/changelog_parser_kics.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 3ac68b4·f08e0c8). 신종자본증권·후순위채 분류 전수조사: 채권 목록 133건(신종 46·후순위 87, 27사)+목록 밖 16건 = 149행(census_securities.csv), 확정도 ⓐ 원문 확정 126·ⓑ 시계열 추정 16·ⓒ 불명 7. 등재부 18사 중 신종 채권이 있는 17사에서 14사는 채권 전부 ⓐ. 등재부와 다른 증권 8건은 등재부를 고치지 않고 census_mismatch.csv 로만 보고: DB손보 2026년 3건(발행사 표가 보완자본형을 가리킴 -> 151.6% 가 약 75% 로 달라질 수 있음), 교보 2024-11-12 6,000억(발행조건 스텝업=보완자본형인데 발행사 표는 기본자본형 처리), 푸본·농협생명·코리안리 4건(사업보고서 스텝업 문구로 보완자본형 확정). 아이엠라이프의 설명되지 않던 1,517억은 2022년 발행 전환우선주로 특정. 남은 일: owner 의 등재부 8건 결정(화면 비노출이라 급하지 않음), 증권신고서·사모 계약서 원문 확보 시 ⓑ 6건 승급, 후순위 예외 후보 4건 판정. 산출 data/_derived/capital_securities_classification_census_20261012/.
