@@ -1,0 +1,31 @@
+..................................................F
+================================== FAILURES ===================================
+________________ test_kics_restatement_census_matches_manifest ________________
+
+_restatement_live = (<module 'validate_data_contract' from 'C:\\Users\\sangwook.cho\\Desktop\\insurequant\\scripts\\validate_data_contract... 방향이 뒤집힌다(원공시로 되돌아가면 KICS_RESTATEMENT_MASTER_REVERTED_TO_FILED = RED). 전면 채택하지 않는 이유는 `_severity_rationale` 참조.', ...})
+
+    def test_kics_restatement_census_matches_manifest(_restatement_live):
+        """등재 셀 수·재작성 회사 수가 선언과 같은가.
+    
+        \uc0c8 \ubd84\uae30\uc5d0\uc11c \uc7ac\uc791\uc131\uc774 \ubc1c\uacac\ub418\uba74 \ub4f1\uc7ac\ubd80\uac00 \ub298\uace0 \uc5ec\uae30\uc11c \ub9c9\ud78c\ub2e4 \u2014 \uadf8\ub54c \uc774 \uc22b\uc790\ub97c \uac31\uc2e0\ud558\uba74\uc11c
+        무엇이 늘었는지 커밋에 남기게 된다(조용히 늘어나는 것을 막는 장치)."""
+        _G, _rec, led = _restatement_live
+        assert led, "\ub4f1\uc7ac\ubd80\ub97c \ubabb \uc77d\uc5c8\ub2e4 \u2014 data/_gold/kics_restatement_ledger.json \ud655\uc778"
+        sc = led.get("_scanned") or {}
+        got = (len(led.get("entries") or {}), sc.get("restated"),
+               sc.get("companies_total"), len(sc.get("uncovered") or []))
+>       assert got == KICS_RESTATEMENT_CENSUS, (
+            f"실측 {got} != 선언 {KICS_RESTATEMENT_CENSUS}. 새 분기를 스캔했거나 재작성이 "
+            f"늘었다면 이 선언을 갱신하고 커밋에 사유를 남겨라")
+E       AssertionError: 실측 (39, 1, 39, 0) != 선언 (10, 1, 39, 0). 새 분기를 스캔했거나 재작성이 늘었다면 이 선언을 갱신하고 커밋에 사유를 남겨라
+E       assert (39, 1, 39, 0) == (10, 1, 39, 0)
+E         
+E         At index 0 diff: 39 != 10
+E         Use -v to get more diff
+
+tests\test_rule_coverage_manifest.py:1369: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_rule_coverage_manifest.py::test_kics_restatement_census_matches_manifest
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!
+1 failed, 50 passed in 147.34s (0:02:27)
+exit=1

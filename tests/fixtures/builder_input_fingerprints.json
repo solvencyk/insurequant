@@ -3,9 +3,9 @@
  "_contract": "입력 불변 ∧ 코드 불변 ∧ 산출 불변 ⟹ 지금 다시 빌드해도 같은 바이트. 하나라도 어긋나면 전체 골든을 돌려 확인한 뒤 --update 한다. 지문은 무거운 골든의 대체가 아니라 층이다.",
  "specs": {
   "ifrs17_bs": {
-   "inputs_sha256": "5c5977581406cb2d2f83b16a184b8f957a280c29b7f9a28ffce3adeaddc07d60",
+   "inputs_sha256": "741eb0538c0b48b49b4c5cef630e80351c0190d86988d93e6f48e949e8a033b9",
    "input_files": 2258,
-   "input_bytes": 3576999435,
+   "input_bytes": 3576999438,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 545,
@@ -60,9 +60,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_ifrs17_bs.py + inbox/parser/20260911T0109Z(계보 완결성 목적 추가, 빌더가 직접 읽진 않음)"
   },
   "pl_breakdown": {
-   "inputs_sha256": "fbc50c5ab0319e49cea13c4eeef6d6ac09829ddb5d2fdff0cea6680b8abcf2df",
+   "inputs_sha256": "635fe92eccccea4b95d1edb8e14ee1ac483ccfe1415be83d0e183ca8c7877f8e",
    "input_files": 1587,
-   "input_bytes": 2013127943,
+   "input_bytes": 2013127946,
    "input_files_per_pattern": {
     "data/dart/_fs_api_cache/*.json": 1040,
     "data/dart/FY*_Q*/raw/**/*.xml": 545,
@@ -181,9 +181,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_ifrs17_panels.py — 트레이스는 첫 패널 쓰기에서 멈추므로 나머지 3패널의 glob (*_insurance_pl_mvp/*_bs_snapshot_mvp/*_sensitivity)은 main() 의 outputs 표에서 확인해 extracted/*.json 로 통합했다"
   },
   "dividend": {
-   "inputs_sha256": "3d572867624a916853f618b1fb67844a0f35a118fb960f0d0573a19b966954c8",
+   "inputs_sha256": "9f2a81f9cb933c71145d558050c386d1d1e446bc1cc37b8f8cf71341a6198150",
    "input_files": 626,
-   "input_bytes": 11165804,
+   "input_bytes": 11165807,
    "input_files_per_pattern": {
     "data/dart/_alotmatter_cache/*.json": 624,
     "data/_derived/alotmatter_fetch_census.json": 1,
@@ -211,9 +211,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/build_dividend.py (관측 627개 = census 1 + 캐시 624 + kics_disclosure 1)"
   },
   "post_transition": {
-   "inputs_sha256": "767cd34a8aa9a4576748cca1e57a3f853154e2eaeef73e7db91570efdae13674",
+   "inputs_sha256": "afea94cdc7bfc2094a9932c810ad25a00ba70113f539fea66039cefc1c8ec972",
    "input_files": 654,
-   "input_bytes": 42589277,
+   "input_bytes": 42589280,
    "input_files_per_pattern": {
     "md_inbox/FY*_Q?/*.md": 653,
     "kics_disclosure.json": 1

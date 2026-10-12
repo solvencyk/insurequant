@@ -1324,8 +1324,12 @@ KICS_RESTATEMENT_RULES = {
 }
 
 # 실측 2026-09-01 (FY2026_Q1 -> FY2026_Q2 라운드).
+# 2026-10-13: 등재 셀 10 -> 39. owner 승인(2026-10-12 「최신 공시 직전 컬럼」 덮어쓰기, parser-kics 74a415bf)으로
+# as_restated 29칸이 늘었다. validation 이 29칸 전부를 applied_blocks.csv 의 33개 primary 칸 중 자기 공시값이
+# 새 값과 다른 29칸(나머지 4칸 = 마스터 오류 정정, 재작성 아님)과 1:1 대조했다
+# (data/_derived/kics_latest_prior_apply_audit_20261013/h1_ledger_check.txt). 스캔 메타(1,39,0)는 불변.
 # (등재 셀 수, 재작성 회사 수, 스캔 대상 회사 수, 미판독 회사 수)
-KICS_RESTATEMENT_CENSUS = (10, 1, 39, 0)
+KICS_RESTATEMENT_CENSUS = (39, 1, 39, 0)
 
 
 @pytest.fixture(scope="module")

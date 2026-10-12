@@ -1,0 +1,267 @@
+### test_ident_issuer_inconsistent_exemption
+........................................................................ [ 36%]
+........................................................................ [ 72%]
+......................................................                   [100%]
+198 passed in 8.51s
+exit=0
+### test_census_source_absent_exemption
+..............................................................           [100%]
+62 passed in 8.75s
+exit=0
+### test_tier2_issuer_inconsistent_exemption
+.F.............F...........................F                             [100%]
+================================== FAILURES ===================================
+______ test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets _______
+
+records = [{'값': '115146', '값_적용후': '115146', '공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, {'값': '36312', '값_적용후': '39162', '공시분기':...'공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, {'값': '2850', '값_적용후': '2850', '공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, ...]
+findings = [{'actual': 115146.0, 'detail': '', 'diff': 0.0, 'expected': 115146.0, ...}, {'actual': 102196.0, 'detail': '', 'diff'... 'diff': 0.0, 'expected': 56947.0, ...}, {'actual': 24897.0, 'detail': '', 'diff': 0.0, 'expected': 24897.0, ...}, ...]
+
+    def test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets(records, findings):
+        """면제가 **넓어지지 않았다**를 기계로 못 박는다. 이 버킷들은 RED 로 남아야 한다.
+    
+        2026-08-24 (2\ucc28 owner \uc704\uc784): \uc774 \ubaa9\ub85d\uc5d0\uc11c **\ub124 \ubc84\ud0b7\uc774 \ube60\uc84c\ub2e4** \u2014 \uc608\ubcc4\uc190\ud574 2025.1Q \xb7
+        BNP카디프 2024.3Q · 롯데손해 2023.1Q(전부 raw 확증은 이미 끝났고 1차 위임 목록 밖이라
+        보류돼 있던 것들) · 한화생명 2025.2Q(owner 가 raw 를 직접 열어 보고 오차 용인 결정,
+        원장 status=VERIFIED_BY_OWNER). **남은 보류 두 건은 성격이 정반대다:**
+    
+          \xb7 NH\ub18d\ud611 2024.3Q \u2014 **\ubbf8\uc870\uc0ac**. \ub2e4\ub9ac \uc794\ucc28 \u2212522 \uc758 \uc6d0\uc778\uc744 \uc544\uc9c1 \uc548 \ubd24\ub2e4. \uc870\uc0ac \uc804 \ub4f1\uc7ac\ub294
+            근거가 아니라 추측이다.
+          \xb7 \uc0bc\uc131\ud654\uc7ac 2025.3Q \u2014 **\uace0\uce60 \uac83**\uc774\ub77c \uba74\uc81c \ub300\uc0c1\uc774 \uc544\ub2c8\ub2e4. owner 2026-08-24 \uacb0\uc815\uc73c\ub85c
+            parser 가 값을 정정한다(`inbox/parser/20260824T0400Z` §G). 여기 등재하면
+            고쳐진 뒤에도 죽은 핀이 남아 "그 축은 면제됐다" 로 오독된다.
+    
+        **두 버킷의 기대가 다르다는 점이 중요하다.** 둘 다 '레지스트리에 절대 없어야 한다' 는
+        같지만, RED 의 운명은 반대다:
+          \xb7 NH\ub18d\ud611 2024.3Q \ub294 **RED \uac00 \uc0b4\uc544 \uc788\uc5b4\uc57c \ud55c\ub2e4** \u2014 \ubaa8\ub974\ub294 \uac83\uc744 \uc0ac\uba74\ud558\uc9c0 \uc54a\uc558\ub2e4\ub294 \uc99d\uac70\ub2e4.
+            여기서 RED 가 조용히 사라지면 그건 조사가 끝나서가 아니라 무언가 새어 나간 것이다.
+          · 삼성화재 2025.3Q 는 **RED 가 사라지는 것이 성공**이다(정정되면 축이 저절로 닫힌다).
+            \uadf8\ub798\uc11c RED \uc874\uc18d\uc744 \uc694\uad6c\ud558\uba74 \uc548 \ub41c\ub2e4 \u2014 \uc694\uad6c\ud558\uba74 \uace0\uce5c \uc0ac\ub78c\uc774 \uc774 \uc2dc\ud5d8 \ub54c\ubb38\uc5d0 \ub9c9\ud78c\ub2e4.
+        두 기대를 한 집합으로 뭉치면 그 구분이 사라진다(2026-08-24 실제로 그렇게 썼다가 parser 가
+        삼성화재를 고친 순간 이 시험이 잘못 실패했다)."""
+        # 2026-08-24 (3차): **NH농협 2024.3Q 가 보류 목록에서 나갔다.** 위 docstring 이 "미조사"
+        # \ub77c\uace0 \uc801\uc5b4 \ub454 \uadf8 \uc804\uc81c\uac00 \uc870\uc0ac\ub85c \ubc14\ub00c\uc5c8\ub2e4 \u2014 orchestrator \uac00 raw
+        # `FY2024_Q3/raw/KR0032_NH농협손해보험_amended.pdf` p12 를 직접 열어, 발행사가 **자기 각주
+        # 주2) 공식과 그 공식을 만족하지 않는 숫자를 같은 페이지에 함께 인쇄**하는 것을 확인했다
+        # (\uc21c\uc790\uc0b0 23,478 \u2212 \ubd88\uc778\uc815 0 \u2212 \uc7ac\ubd84\ub958 8,867 = 14,611 vs \uc778\uc1c4\ub41c \uae30\ubcf8\uc790\ubcf8 14,089, \ucc28 522).
+        # \ub2e4\ub9ac\uac00 \ub2eb\ud788\ub824\uba74 \ud55c\ub3c4\ucd08\uacfc = \u2212522 \uc5ec\uc57c \ud558\ub294\ub370 '\ucd08\uacfc\uc561'\uc774 \uc74c\uc218\uc77c \uc218 \uc5c6\uace0 \ubd88\uc778\uc815\ud56d\ubaa9\uc774 0 \uc774\ub77c
+        # 들어갈 자리가 없다. 원장에 `present_markers` 7개로 기계검증 가능하게 등재했다.
+        # **보류가 풀린 이유는 "owner 가 위임했으니까"가 아니라 "원문을 봤으니까"다.**
+        #
+        # \ub0a8\uc740 \ubcf4\ub958\ub294 \uc0bc\uc131\ud654\uc7ac \ud558\ub098\ub2e4 \u2014 \uadf8\uac74 \uace0\uce60 \uac83\uc774\ub77c \uba74\uc81c \ub300\uc0c1\uc774 \uc544\ub2c8\ub2e4(\uc704 docstring \ucc38\uc870).
+        never_exempt = {("KR0008", "2025.3Q")}
+        must_stay_red: set = set()
+        registered = set(gate._TIER2_ISSUER_INCONSISTENT)
+        assert never_exempt & registered == set(), "보류 버킷이 면제로 새어 들어갔다"
+    
+        # \ubcf4\ub958 \ubaa9\ub85d\uc774 1\uac1c\ub85c \uc904\uba74\uc11c \uc774 \uc2dc\ud5d8\uc774 \uc57d\ud574\uc84c\ub2e4. \uadf8 \uc790\ub9ac\ub97c **\ub808\uc9c0\uc2a4\ud2b8\ub9ac \ud06c\uae30 \uace0\uc815**\uc73c\ub85c \uba54\uc6b4\ub2e4 \u2014
+        # 조용히 한 버킷이 더 들어오면 여기서 막힌다. 늘릴 땐 이 숫자와 근거를 같이 고쳐야 한다.
+        # 2026-08-24 (iter-3): 19 -> 18. **\ub298\ub9b0 \uac8c \uc544\ub2c8\ub77c \uc904\uc600\ub2e4** \u2014 \ud55c\ud654\uc0dd\uba85 2025.2Q \uc758
+        # 잔차 원인이 규명돼(우리 룰의 item47 스코프 오독) 룰을 고치자 그 축이 닫혔고, 게이트가
+        # `TIER2_EXEMPTION_INERT` 로 "등재를 풀어라" 를 인쇄해 풀었다. 죽은 핀을 남기면 다음
+        # 세션이 "그 축은 면제됐다" 로 잘못 읽는다.
+        # 2026-09-01: 18 -> 19. 농협생명 KR0104 2026.2Q (`47_tier2_census_post` /
+        # `TIER2_DUPLICATE_ROW`) 1버킷 추가. 발주 inbox/validation/20260831T152646Z__parser__
+        # KR0104_2026.2Q__tier2_duplicate_row_exception.md. 근거는 **MD 가 아니라 raw PDF** 를
+        # \uc9c1\uc811 \uc5f4\uc5b4 \ud655\uc778\ud588\ub2e4 \u2014 data/disclosure/FY2026_Q2/pdf/KR0104_\ub18d\ud611\uc0dd\uba85\ubcf4\ud5d8.pdf p20 \uc5d0\uc11c
+        # '보완자본 한도 적용 전'(1,442,557 / 1,192,557) 과 '보완자본 한도'(1,719,757 / 1,192,557)
+        # 가 word 좌표로 분리된 **두 개의 행**인데 적용후 컬럼에서만 같은 값을 인쇄한다. 더해서
+        # 적용후 한도 1,192,557 은 SCR 3,439,515 × 50% = 1,719,757.5 와도 어긋난다(발행사 자기모순).
+        # CAPPED \ud56d\ub4f1\uc2dd\uc774 \ub450 \uceec\ub7fc \ub2e4 \uc794\ucc28 0.0000 \uc73c\ub85c \ub2eb\ud788\uc9c0\ub9cc **\uadf8\uac83\ub9cc\uc73c\ub85c\ub294 \uadfc\uac70\uac00 \ubabb \ub41c\ub2e4** \u2014
+        # min() 은 한도가 11,925.57 이든 17,197.57 이든 같은 값을 주므로 두 읽기를 구분하지 못한다.
+        # 구분해 주는 것은 행 좌표와 위 SCR×50% 불일치다. 원장 기록은 같은 날 추가했다.
+        # 2026-09-11: 20 -> 19. **\uc904\uc5c8\ub2e4** \u2014 ("KR0003","2026.1Q") \uac00 \ub808\uc9c0\uc2a4\ud2b8\ub9ac\uc5d0\uc11c \ube60\uc84c\ub2e4.
+        # 2026-09-03 발행사가 원문을 재제출해(구본 886,240B -> 신본 1,927,066B, commit 66cfa0b)
+        # TFI \ud45c(item47-52) \ub97c \uc7ac\ud30c\uc2f1\ud558\ub2c8 \ub354 \uc774\uc0c1 \uc804\uae30(2025.4Q) \uc7ac\uac8c\uc2dc\uac00 \uc544\ub2c8\uc5c8\ub2e4 \u2014 \ubc1c\ud589\uc0ac
+        # 자기모순이 아니라 그냥 정정된 값이라 면제 자체가 무의미해졌다(코드 등재 + 원장 기록을
+        # 커밋에서 함께 제거). 2026-09-11 REOPEN 조사(inbox 20260911T1407Z)로 확인:
+        # `_TIER2_ISSUER_INCONSISTENT` 에 그 키가 없고, 재제출 직전 스냅샷(git show
+        # 7c33aae:kics_disclosure.json)에 스테일 표 탐지기(validate_stale_quarter_tables.detect)
+        # \ub97c \ub3cc\ub9ac\uba74 \uc9c0\uae08\ub3c4 \uadf8 \ud328\ud134\uc744 \uc7a1\ub294\ub2e4 \u2014 \ud0d0\uc9c0\uae30 \ud68c\uadc0\uac00 \uc544\ub2c8\ub77c \ub370\uc774\ud130\uac00 \uc9c4\uc9dc \ubc14\ub010 \uac83.
+        # 흔들 핀을 잃은 4개 시험은 다른 등재 버킷(KR1000 2023.4Q · KR0087 2025.2Q)으로
+        # 대상을 옮겼고, "탐지기가 여전히 잡는다"는
+        # tests/test_stale_quarter_tables.py::test_the_kr0003_2026q1_regression_pattern_would_still_be_caught
+        # 로 옮겨 갔다.
+        # 2026-09-01: 19 -> 20. AIG손해 KR0029 2025.3Q (`2_tier1_bridge`, 잔차 -58.0) 1버킷 추가.
+        # owner 가 "면제 등재" 대신 **원문 재확인(옵션 c)** 을 먼저 지시해 raw 를 다시 읽은 결과다.
+        # p14 다리표의 `Ⅱ.불인정하는 항목`(item12)·`Ⅲ.보완자본으로 재분류하는 항목`(item13)이
+        # **\uc9c4\uc9dc \uc22b\uc790 0** \uc73c\ub85c \uc778\uc1c4\ub3fc \uc788\ub2e4(\ub300\uc2dc\xb7\uacf5\ubc31 \uc544\ub2d8) \u2014 fitz word-bbox \uc88c\ud45c(y=290.9 / y=318.7,
+        # x=344)와 240dpi 크롭 렌더링 2방법으로 확인했고, 그 표의 item1~14 전 항목이 마스터와
+        # 소수점까지 일치해 추출 오류가 아님을 확정했다.
+        # 58.70 \uc758 \ucd9c\ucc98\ub294 p15 TFI\ud45c item49 \uc774\uace0 **\uadf8 \ud45c\ub294 \uc790\uae30 \uc548\uc5d0\uc11c \uc644\uc804\ud788 \ub2eb\ud78c\ub2e4** \u2014 \uac19\uc740
+        # 58.70 을 보는 다른 다섯 축(3_tier2_composition · 51_tfi_tier2_composition ·
+        # 50_tfi_tier_split · 47_tier2_census · 48_tier2_limit)이 전부 GREEN 이다. 깨지는 것은
+        # `item4 \u2212 item12 \u2212 item13` \uc73c\ub85c item2 \ub97c \uc7ac\ud604\ud558\ub294 \ucd95 \ud558\ub098\ubfd0\uc774\ub2e4.
+        # 같은 회사 2026.2Q 는 **행 구성이 100% 동일한 표**에서 item12=300 · item13=754 로 채워
+        # \ub2e4\ub9ac\uac00 \uc794\ucc28 -1 \ub85c \ub2eb\ud78c\ub2e4 \u2014 \ud45c \uad6c\uc870\uac00 \uc544\ub2c8\ub77c \ubd84\uae30\ubcc4 \uae30\uc7ac \uad00\ud589 \ucc28\uc774\ub2e4.
+        # 2026-10-10: 19 -> 22. 알지에이리인슈어런스 KR1105 2025.1Q · 2026.1Q · 2026.2Q
+        # (`2_tier1_bridge` + `2_tier1_bridge_post`) 3\ubc84\ud0b7 \ucd94\uac00 \u2014 owner \uc2b9\uc778 2026-10-10(handoff
+        # §7-10 ①, 재보사 단계 6 표 A), validation 단계 8 등재(inbox/validation/20261010T1010Z).
+        # 4-2-2 `Ⅰ. 순자산` 행이 세 열 모두 0(대시)으로 인쇄돼 다리가 0 을 기대하는데 기본자본은
+        # \uad6c\uc131\ud589 \ud569(\uc608 520+2,560\u2212192+3,421=6,309)\uc774\ub2e4. \uc6d0\uc7a5 \uadfc\uac70 3\uac74(present_rows 5\uac1c\uc529) \uac19\uc740 \ub0a0 \ucd94\uac00.
+>       assert len(registered) == 22, (
+            f"면제 레지스트리 크기가 22 -> {len(registered)} 로 바뀌었다. 등재를 늘렸다면 "
+            f"원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. "
+            f"현재 키: {sorted(registered)}"
+        )
+E       AssertionError: 면제 레지스트리 크기가 22 -> 20 로 바뀌었다. 등재를 늘렸다면 원장(`data/_gold/kics_exemption_provenance.json`)의 근거와 이 숫자를 같이 고쳐라. 현재 키: [('KR0003', '2023.1Q'), ('KR0003', '2024.4Q'), ('KR0004', '2025.1Q'), ('KR0029', '2025.3Q'), ('KR0032', '2025.4Q'), ('KR0075', '2024.3Q'), ('KR0075', '2024.4Q'), ('KR0075', '2025.1Q'), ('KR0087', '2025.2Q'), ('KR0104', '2026.2Q'), ('KR1000', '2023.2Q'), ('KR1000', '2023.3Q'), ('KR1000', '2023.4Q'), ('KR1000', '2024.1Q'), ('KR1000', '2024.2Q'), ('KR1000', '2024.3Q'), ('KR1000', '2024.4Q'), ('KR1105', '2025.1Q'), ('KR1105', '2026.1Q'), ('KR1105', '2026.2Q')]
+E       assert 20 == 22
+E        +  where 20 = len({('KR0003', '2023.1Q'), ('KR0003', '2024.4Q'), ('KR0004', '2025.1Q'), ('KR0029', '2025.3Q'), ('KR0032', '2025.4Q'), ('KR0075', '2024.3Q'), ...})
+
+tests\test_tier2_issuer_inconsistent_exemption.py:185: AssertionError
+___________ test_a_missing_input_is_red_not_skip[KR0003-2025.1Q-4] ____________
+
+records = [{'값': '115146', '값_적용후': '115146', '공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, {'값': '36312', '값_적용후': '39162', '공시분기':...'공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, {'값': '2850', '값_적용후': '2850', '공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, ...]
+findings = [{'actual': 115146.0, 'detail': '', 'diff': 0.0, 'expected': 115146.0, ...}, {'actual': 102196.0, 'detail': '', 'diff'... 'diff': 0.0, 'expected': 56947.0, ...}, {'actual': 24897.0, 'detail': '', 'diff': 0.0, 'expected': 24897.0, ...}, ...]
+code = 'KR0003', quarter = '2025.1Q', item = 4
+
+    @pytest.mark.parametrize("code,quarter,item", [
+        ("KR1000", "2023.2Q", 51),
+        ("KR0003", "2025.1Q", 4),
+        ("KR0087", "2025.2Q", 47),
+    ])
+    def test_a_missing_input_is_red_not_skip(records, findings, code, quarter, item):
+        """**\uacb0\uce21\uc740 SKIP \uc774 \uc544\ub2c8\ub77c RED \ub2e4.** \ubc15\uc81c\uac12\uc744 \ud655\uc778\ud560 \uc218 \uc5c6\uc73c\uba74 \uba74\uc81c\uac00 \uc131\ub9bd\ud558\uc9c0 \uc54a\ub294\ub2e4 \u2014
+        SKIP-on-missing 은 이 저장소가 반복해서 데인 검증 무력화 경로다."""
+        mutated = _mutate_cell(records, code, quarter, item, "값", None)
+        _acc, red, _rev, _det = _run(mutated, findings)
+        kinds = {r["rule"] for r in red}
+>       assert "TIER2_EXEMPTION_INPUT_MISSING" in kinds
+E       AssertionError: assert 'TIER2_EXEMPTION_INPUT_MISSING' in set()
+
+tests\test_tier2_issuer_inconsistent_exemption.py:269: AssertionError
+_ test_a_pin_that_names_a_branch_catches_a_branch_change_not_only_a_residual __
+
+records = [{'값': '115146', '값_적용후': '115146', '공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, {'값': '36312', '값_적용후': '39162', '공시분기':...'공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, {'값': '2850', '값_적용후': '2850', '공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, ...]
+findings = [{'actual': 115146.0, 'detail': '', 'diff': 0.0, 'expected': 115146.0, ...}, {'actual': 102196.0, 'detail': '', 'diff'... 'diff': 0.0, 'expected': 56947.0, ...}, {'actual': 24897.0, 'detail': '', 'diff': 0.0, 'expected': 24897.0, ...}, ...]
+
+    def test_a_pin_that_names_a_branch_catches_a_branch_change_not_only_a_residual(records, findings):
+        """갈래 이름으로 박제한 축은 **갈래가 바뀌면** 같은 잔차라도 면제가 아니다.
+    
+        2026-08-24 까지 이 시험의 대상은 한화생명 2025.2Q(`branch=CAPPED`)였다. 그 면제는 같은 날
+        \ud574\uc81c\ub410\ub2e4 \u2014 \uc794\ucc28\uc758 \uc6d0\uc778\uc774 \ubc1c\ud589\uc0ac\uac00 \uc544\ub2c8\ub77c \uc6b0\ub9ac \ub8f0\uc758 item47 \uc2a4\ucf54\ud504 \uc624\ub3c5\uc774\uc5c8\uae30 \ub54c\ubb38\uc774\ub2e4.
+        **시험을 지우지 않고 대상을 옮긴다**: NH농협 2024.3Q 가 같은 방식(`branch=CAPPED`)으로
+        박제돼 있으므로 그 축을 흔든다. 지우면 '갈래가 바뀌어도 통과' 라는 사각이 다시 생긴다."""
+        code, quarter, rule = "KR0032", "2024.3Q", "2_tier1_bridge"
+>       assert "branch=" in gate._TIER2_ISSUER_INCONSISTENT[(code, quarter)][
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            "findings"][rule]["flag"], "\uc774 \ubc84\ud0b7\uc740 \uac08\ub798 \uc774\ub984\uc73c\ub85c \ubc15\uc81c\ub3fc \uc788\uc9c0 \uc54a\ub2e4 \u2014 \ub300\uc0c1\uc744 \ubc14\uafd4\ub77c"
+E       KeyError: ('KR0032', '2024.3Q')
+
+tests\test_tier2_issuer_inconsistent_exemption.py:612: KeyError
+=========================== short test summary info ===========================
+FAILED tests/test_tier2_issuer_inconsistent_exemption.py::test_the_exemption_is_narrow_and_does_not_touch_the_held_buckets
+FAILED tests/test_tier2_issuer_inconsistent_exemption.py::test_a_missing_input_is_red_not_skip[KR0003-2025.1Q-4]
+FAILED tests/test_tier2_issuer_inconsistent_exemption.py::test_a_pin_that_names_a_branch_catches_a_branch_change_not_only_a_residual
+3 failed, 41 passed in 11.21s
+exit=1
+### test_tier2_stale_false_positive_exemption
+..................                                                       [100%]
+18 passed in 10.14s
+exit=0
+### test_tier2_limit_rules
+........................................................................ [ 80%]
+..................                                                       [100%]
+90 passed in 0.58s
+exit=0
+### test_data_contract_selftest
+F                                                                        [100%]
+================================== FAILURES ===================================
+__________________ test_data_contract_selftest_suite_passes ___________________
+
+    def test_data_contract_selftest_suite_passes():
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+>           rc = ST.run_selftest()
+                 ^^^^^^^^^^^^^^^^^
+
+tests\test_data_contract_selftest.py:25: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+scripts\_data_contract_selftest.py:1398: in run_selftest
+    import validate_data_contract as g
+scripts\validate_data_contract.py:95: in <module>
+    from validate_master_tables import (  # noqa: E402
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+    #!/usr/bin/env python3
+    """Validate master tables: data/dart/viz/pl_breakdown_master.json + CSM_waterfall.json.
+    
+    Implements V8 consumer code:
+      - CSM_WATERFALL_CLOSING_IDENTITY : 기초+신계약+이자+가정+상각 = 기말  (CSM_waterfall, 억원)
+      - PL_BRIDGE_DART_INTERNAL        : 8-eq P&L bridge                  (pl_breakdown_master, 백만원)
+      - CSM_AMORT_IDENTITY             : pl.(원수+수재)CSM상각 == wf.CSM상각  (등식, 반올림 폭만)
+    
+    Both masters long-format. PL master is **백만원**, CSM waterfall is **억원**:
+    cross-check aligns by ×100 (억→백만). Item names space-normalized.
+    Tolerance per equation: max(0.1%·|expected|, floor). floor = 2억 (waterfall) / 200백만 (PL).
+    An equation is SKIPPED if its LHS or any RHS term is missing (None) \u2014 0.0 is a valid value.
+    
+    Runs `build_root_masters.py` first (idempotent) so root masters reflect the latest
+    diag/viz source \u2014 parser fixes to the source aren't visible in root masters until rebuilt.
+    Pass --no-build to skip the rebuild and validate the existing root masters as-is.
+    """
+    from __future__ import annotations
+    
+    import json
+    import re
+    import subprocess
+    import sys
+    from collections import defaultdict
+    from pathlib import Path
+    
+    import yaml
+    
+    ROOT = Path(__file__).resolve().parents[1]
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+>   sys.stdout.reconfigure(encoding="utf-8")
+    ^^^^^^^^^^^^^^^^^^^^^^
+E   AttributeError: '_io.StringIO' object has no attribute 'reconfigure'
+
+scripts\validate_master_tables.py:31: AttributeError
+=========================== short test summary info ===========================
+FAILED tests/test_data_contract_selftest.py::test_data_contract_selftest_suite_passes
+1 failed in 4.11s
+exit=1
+### test_post_transition_golden
+.                                                                        [100%]
+1 passed in 4.48s
+exit=0
+### test_dividend_golden
+.                                                                        [100%]
+1 passed in 2.04s
+exit=0
+### test_master_tables_golden
+.                                                                        [100%]
+1 passed in 2.62s
+exit=0
+### test_kics_rules_golden
+F                                                                        [100%]
+================================== FAILURES ===================================
+___________________ test_rule_engine_output_matches_golden ____________________
+
+    def test_rule_engine_output_matches_golden():
+        expected = json.loads(GOLDEN.read_text(encoding="utf-8"))
+        actual = _manifest(_run())
+        for k in ("sha256", "buckets", "findings", "by_status", "by_rule"):
+>           assert expected.get(k) == actual[k], (
+                f"run_validation output moved at '{k}':\n"
+                f"  expected: {expected.get(k)}\n  actual:   {actual[k]}\n"
+                f"If intended, regenerate: python {GOLDEN.name} --update"
+            )
+E           AssertionError: run_validation output moved at 'sha256':
+E               expected: 5c019d869c000fe643b3fbc2fcc70813506d98ec872e60e5353e7630026ea09e
+E               actual:   595c973d77594ff70fc14ba92da226e951db373109c111ed9b9c2214eefd8850
+E             If intended, regenerate: python kics_rules_golden.json --update
+E           assert '5c019d869c00...e7630026ea09e' == '595c973d7759...c2214eefd8850'
+E             
+E             - 595c973d77594ff70fc14ba92da226e951db373109c111ed9b9c2214eefd8850
+E             + 5c019d869c000fe643b3fbc2fcc70813506d98ec872e60e5353e7630026ea09e
+
+tests\test_kics_rules_golden.py:92: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_kics_rules_golden.py::test_rule_engine_output_matches_golden
+1 failed in 1.52s
+exit=1
+### test_golden_input_fingerprint
+.......................                                                  [100%]
+23 passed in 3.60s
+exit=0

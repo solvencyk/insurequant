@@ -1,0 +1,33 @@
+ledger entries old=10 new=39 added=29 changed_existing=0 removed=0
+KR0003|2023.4Q|4: as_filed=2481.0 restated=24807.0 basis=as_restated master_now=24807.0 table_new=24807 table_old=24808  <-- CHECK
+KR0003|2025.1Q|13: as_filed=19202.0 restated=17997.0 basis=as_restated master_now=17997.0 table_new=17997 table_old=19202
+KR0004|2023.1Q|11: as_filed=3823.0 restated=3224.0 basis=as_restated master_now=3224.0 table_new=3224 table_old=3823
+KR0004|2023.1Q|5: as_filed=1211.0 restated=1686.0 basis=as_restated master_now=1686.0 table_new=1686 table_old=1211
+KR0004|2023.1Q|6: as_filed=36.0 restated=161.0 basis=as_restated master_now=161.0 table_new=161 table_old=36
+KR0004|2024.1Q|11: as_filed=2932.0 restated=2923.0 basis=as_restated master_now=2923.0 table_new=2923 table_old=2932
+KR0004|2024.1Q|7: as_filed=-2200.0 restated=-2190.0 basis=as_restated master_now=-2190.0 table_new=-2190 table_old=-2200
+KR0009|2023.1Q|1: as_filed=133398.0 restated=133381.0 basis=as_restated master_now=133381.0 table_new=133381 table_old=133398
+KR0009|2023.1Q|11: as_filed=48867.0 restated=48832.0 basis=as_restated master_now=48832.0 table_new=48832 table_old=48867
+KR0009|2023.1Q|13: as_filed=53694.0 restated=58757.0 basis=as_restated master_now=58757.0 table_new=58757 table_old=53694
+KR0009|2023.1Q|15: as_filed=98852.0 restated=98851.0 basis=as_restated master_now=98851.0 table_new=98851 table_old=98852
+KR0009|2023.1Q|2: as_filed=73537.0 restated=68456.0 basis=as_restated master_now=68456.0 table_new=68456 table_old=73537
+KR0009|2023.1Q|3: as_filed=59861.0 restated=64925.0 basis=as_restated master_now=64925.0 table_new=64925 table_old=59861
+KR0009|2023.1Q|4: as_filed=127231.0 restated=127214.0 basis=as_restated master_now=127214.0 table_new=127214 table_old=127231
+KR0009|2023.1Q|6: as_filed=4983.0 restated=5000.0 basis=as_restated master_now=5000.0 table_new=5000 table_old=4983
+KR0009|2023.2Q|11: as_filed=50884.0 restated=50866.0 basis=as_restated master_now=50866.0 table_new=50866 table_old=50884
+KR0009|2023.2Q|6: as_filed=4983.0 restated=5000.0 basis=as_restated master_now=5000.0 table_new=5000 table_old=4983
+KR0032|2024.3Q|13: as_filed=8867.0 restated=9390.0 basis=as_restated master_now=9390.0 table_new=9390 table_old=8867
+KR0050|2025.3Q|13: as_filed=4608.0 restated=4609.0 basis=as_restated master_now=4609.0 table_new=4609 table_old=4608
+KR0069|2024.2Q|1: as_filed=532470.0 restated=532471.0 basis=as_restated master_now=532471.0 table_new=532471 table_old=532470
+KR0069|2024.2Q|10: as_filed=19279.0 restated=19278.0 basis=as_restated master_now=19278.0 table_new=19278 table_old=19279
+KR0069|2024.2Q|11: as_filed=77034.0 restated=77033.0 basis=as_restated master_now=77033.0 table_new=77033 table_old=77034
+KR0069|2024.2Q|16: as_filed=86726.0 restated=86725.0 basis=as_restated master_now=86725.0 table_new=86725 table_old=86726
+KR0069|2024.2Q|2: as_filed=437468.0 restated=437469.0 basis=as_restated master_now=437469.0 table_new=437469 table_old=437468
+KR0069|2024.2Q|24: as_filed=22956.0 restated=22955.0 basis=as_restated master_now=22955.0 table_new=22955 table_old=22956
+KR0072|2025.2Q|12: as_filed=0.0 restated=328.0 basis=as_restated master_now=328.0 table_new=328 table_old=0
+KR0095|2024.4Q|17: as_filed=14427.0 restated=14428.0 basis=as_restated master_now=14428.0 table_new=14428 table_old=14427
+KR0095|2024.4Q|2: as_filed=33097.0 restated=33096.0 basis=as_restated master_now=33096.0 table_new=33096 table_old=33097
+KR0099|2024.3Q|11: as_filed=14591.0 restated=14590.0 basis=as_restated master_now=14590.0 table_new=14590 table_old=14591
+
+primary applied cells not in ledger-added: [('KR0049', '2025.1Q', 3), ('KR0049', '2026.1Q', 4), ('KR0071', '2024.4Q', 4), ('KR0080', '2026.1Q', 3)]
+bad=1

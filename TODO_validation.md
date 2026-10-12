@@ -1,18 +1,18 @@
 # Insurequant Validation TODO (Stage 3)
 
-> 갱신 2026-10-12 (27차 소진율·전망 복원 독립 감사) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
+> 갱신 2026-10-13 (28차 K-ICS 최신 공시 직전 컬럼 적용 독립 검수) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
 > 2026-10-07 정리 전 전문(V1~V19 블록 포함)은 `docs/todo_archive_validation.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-13 (28차) K-ICS 「최신 공시 직전 컬럼」 적용 65칸 독립 검수 + 골든 정리 (티켓 `20261013T0010Z`, 커밋 `74a415bf` 대상)** — 원본 PDF 직접 재판독: primary 33칸 33/33 일치(10쪽은 240dpi 렌더링 육안), 미러 22칸·파생 10칸 재계산 일치, 마스터 diff = 정확히 65칸(레코드 30,011 불변). 보류 10블록 전부 사유 타당.
+  게이트: K-ICS exit 0 RED 56→54(풀린 KR0003 2025.1Q·KR0032 2024.3Q 다리 RED 2건, 새 RED 0, 이동 31 finding 전부 적용 16블록 안) · 데이터계약 RED 0 · master_tables `--no-build` 직전 판과 동일 · xlsx 드리프트 0 · 매니페스트 102 통과.
+  갱신: `kics_rules_golden`(YELLOW 1,936→1,934 · GREEN 13,705→13,709 · RED 56→54) · 입력지문 4종(+3바이트) · 시험 2파일(등재부 census 10→39, tier2 면제 22→20). 남은 것: PL·17BS 골든 미실행(parser-ifrs17 동시 작업, 빌더가 kics_disclosure 는 이름·티커만 읽음) · 관찰 3건은 changelog 28차.
 - **2026-10-12 (27차) 소진율·전망 복원 독립 감사 (티켓 `20261012T2040Z`, 읽기 전용 — 마스터·HTML·게이트 코드 무수정)** — 기준 `dbbffcb5`+`24a3dd6c`(HEAD `8fe48b1b` 도 대상 파일 동일): 47사 독립 재계산 기본자본 47/47 · 한도 47/47 · 초과분 47/47 · 보완자본(문자 그대로) 45/47(나머지 2 = 항목 54 예외, 문서화됨), 전망 7사 손계산 차이 0, 화면 47사 · 375px · 공개 시트 3종 불일치 0.
   발견: 전망 0% 자름이 노트에 거짓 개선을 인쇄(예별 +41.8%p · 롯데 +5.4%p) · 도넛 툴팁 6사 잘림 · 기본자본 인정한도 33사가 15% 인쇄 · DB손보 콜일자 엇갈림 · 하나손해 원장 미갱신. 재현물 `data/_derived/capsec_audit_20261012/`(`e6_screen_results_dbbffcb5.txt`), 발주 publishing `20261012T2235Z` · designer `20261012T2236Z`.
   남은 것: 두 stage 답변 후 재측정 · owner 결정 4건(아래 열린 일 첫 항목).
 - **2026-10-12 (26차) 골든 갱신 + AIG R3 박제 등재 (티켓 `20261012T1400Z`)** — 이동 원인은 parser-kics `acd351a` 하나뿐(직전 마스터로 돌리면 K-ICS 골든 5키 전부 일치, 입력지문 4종은 `kics_disclosure.json` 한 파일 +5,195바이트). `--update`: `kics_rules_golden`(YELLOW 1,935→1,936 · GREEN 13,684→13,703 · SKIP 3,345→3,325 · RED 56 불변) · `builder_input_fingerprints`(4종).
   무이동 확인(실행): dividend · post_transition · master_tables · viz 2종 · PL(`RUN_PL_GOLDEN=1`, 186초) · 17BS(419초) · deploy_assets 12 · push_gate_wiring 65 · prepush_scope 65 · golden_input_fingerprint 23. AIG KR0029 2024.4Q `R3_CROSS_CHECK` 10배 규칙: `R3_PINNED_EXEMPTIONS`(값 박제 item8 31.0억·item20 291,767.640554백만) + 읽는 쪽 `check_r3` + 변이시험 11건(`tests/test_ilp_r3_pinned_exemption.py`, 훅 묶음 편입). 포트폴리오 검증기 RED 2→1(남은 1 = KR1102 2026.1Q `R2_CENSUS`, owner 결정 대기·미등재).
-- **2026-10-12 (25차) owner 승인 등재 — 재보사 인쇄된 0 7칸 · 서울보증 PL 2칸 · 마이브라운 거짓 양성 1칸 (티켓 `20261012T1010Z`)** — `HOLE-PL` 2->0(`pl_src_absent:3ok`), 데이터계약 RED 2->2(손해율 xlsx 동기화 대기 = publishing 몫, 신규 0) · K-ICS 게이트 exit 0 RED 56 불변(finding 0 추가·0 삭제).
-  읽는 쪽 확인: 7칸은 복원을 가정한 시뮬레이션에서 RED 0·`OWNER_CONFIRMED` 7(대조군 등재부 비움=RED 7) · 마이브라운은 5칸 적재 가정에서 새 RED 0(대조군 RED 2) · 서울보증은 사이트 판 census 가 매니페스트 자리(새 사유 `SITE_ROLLED_OFF`). 변이시험 4파일 85건 통과(신규 2파일 `test_pl_source_absent_site_rolled_off`·`test_tier2_stale_false_positive_exemption` 훅 묶음 편입)·selftest 102/102, 골든 `--update` 1종(master_tables: `coverage_hole 2PL->0PL`·`pl_src_absent 1ok->3ok` 두 토큰뿐).
-  등재 안 한 것: 뮌헨 2026.2Q 50·52(원문에 **있음**, p17 -> parser-kics) · CSM 워터폴 대 ILP(대조하는 게이트 룰이 없어 등재할 줄이 0 -> 룰 설계가 선행). 남은 것: 7칸 복원(parser-ifrs17 `--restore7 --apply`) · 마이브라운 5칸 적재(parser-kics) · 오케스트레이터 티켓 종결.
 
 ## 열린 일
 

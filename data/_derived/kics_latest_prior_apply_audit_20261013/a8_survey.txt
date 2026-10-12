@@ -1,0 +1,85 @@
+===== KR0003 2023.4Q
+  [own] 2023.4Q KR0003_롯데손해보험_amended.pdf: p41(pre,cols=3,hq=['2023.4Q', '2023.3Q', '2023.2Q'],items=20), p42(single,cols=2,hq=[],items=7), p43(single,cols=2,hq=[],items=12), p44(single,cols=2,hq=[],items=13)
+  [F+1] 2024.1Q KR0003_롯데손해보험.pdf: p12(pre,cols=3,hq=['2024.1Q', '2023.4Q', '2023.3Q'],items=22), p14(single,cols=2,hq=[],items=13), p15(single,cols=2,hq=[],items=13)
+  [F+2] 2024.2Q KR0003_롯데손해보험_amended.pdf: p13(pre,cols=3,hq=['2024.2Q', '2024.1Q', '2023.4Q'],items=23), p15(single,cols=2,hq=[],items=13), p16(single,cols=3,hq=['2024.2Q', '2023.4Q', '2022.4Q'],items=13)
+  [F+3] 2024.3Q KR0003_롯데손해보험_amended.pdf: p12(pre,cols=3,hq=['2024.3Q', '2024.2Q', '2024.1Q'],items=23), p14(single,cols=2,hq=[],items=12), p15(single,cols=2,hq=[],items=13)
+===== KR0003 2025.1Q
+  [own] 2025.1Q KR0003_롯데손해보험.pdf: p18(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=25), p20(single,cols=2,hq=[],items=13), p21(single,cols=2,hq=[],items=13)
+  [F+1] 2025.2Q KR0003_롯데손해보험.pdf: p20(pre,cols=3,hq=['2025.2Q', '2025.1Q', '2024.4Q'],items=26), p22(single,cols=2,hq=[],items=13), p23(single,cols=2,hq=[],items=13)
+  [F+2] 2025.3Q KR0003_롯데손해보험.pdf: p20(pre,cols=3,hq=['2025.3Q', '2025.2Q', '2025.1Q'],items=22), p22(single,cols=2,hq=[],items=8), p23(single,cols=2,hq=[],items=13)
+  [F+3] 2025.4Q KR0003_롯데손해보험.pdf: p76(pre,cols=3,hq=['2025.4Q', '2025.3Q', '2025.2Q'],items=19), p79(single,cols=2,hq=[],items=13), p80(single,cols=2,hq=[],items=13)
+===== KR0004 2023.1Q
+  [own] 2023.1Q KR0004_예별손해보험.pdf: p9(pre,cols=3,hq=['2023.1Q', '2023.4Q', '2023.3Q'],items=22), p11(single,cols=2,hq=[],items=13), p12(single,cols=2,hq=[],items=13)
+  [F+1] 2023.2Q KR0004_예별손해보험.pdf: p11(pre,cols=3,hq=['2023.2Q', '2023.1Q', '2022.4Q'],items=22), p13(single,cols=2,hq=[],items=13), p14(single,cols=2,hq=[],items=13)
+  [F+2] 2023.3Q KR0004_예별손해보험.pdf: p8(single,cols=1,hq=['2023.3Q', '2023.2Q', '2023.1Q'],items=4), p9(single,cols=2,hq=['2023.3Q', '2023.2Q', '2023.1Q'],items=4), p11(pre,cols=3,hq=['2023.3Q', '2023.2Q', '2023.1Q'],items=23), p13(single,cols=2,hq=[],items=13), p14(single,cols=2,hq=[],items=13)
+  [F+3] 2023.4Q KR0004_예별손해보험.pdf: p32(pre,cols=3,hq=['2023.4Q', '2023.3Q', '2023.2Q'],items=22), p34(single,cols=2,hq=[],items=13), p35(single,cols=2,hq=[],items=13)
+===== KR0004 2024.1Q
+  [own] 2024.1Q KR0004_예별손해보험.pdf: p11(pre,cols=3,hq=['2024.1Q', '2023.4Q', '2023.3Q'],items=22), p13(single,cols=2,hq=[],items=13), p14(single,cols=2,hq=[],items=13)
+  [F+1] 2024.2Q KR0004_예별손해보험.pdf: p11(pre,cols=3,hq=['2024.2Q', '2024.1Q', '2023.4Q'],items=23), p13(single,cols=2,hq=[],items=13), p14(single,cols=2,hq=[],items=13)
+  [F+2] 2024.3Q KR0004_예별손해보험.pdf: p13(pre,cols=3,hq=['2024.3Q', '2024.2Q', '2024.1Q'],items=24), p15(single,cols=2,hq=[],items=13)
+  [F+3] 2024.4Q KR0004_예별손해보험.pdf: p44(pre,cols=3,hq=['2024.4Q', '2024.3Q', '2024.2Q'],items=24), p46(single,cols=2,hq=[],items=13)
+===== KR0009 2023.1Q
+  [own] 2023.1Q KR0009_현대해상.pdf: p9(pre,cols=2,hq=[],items=24)
+  [F+1] 2023.2Q KR0009_현대해상.pdf: p10(pre,cols=3,hq=['2023.2Q', '2023.1Q', '2022.4Q'],items=24), p12(single,cols=1,hq=[],items=13), p13(single,cols=1,hq=[],items=13)
+  [F+2] 2023.3Q KR0009_현대해상_amended.pdf: p12(pre,cols=3,hq=['2023.3Q', '2023.2Q', '2023.1Q'],items=24), p14(single,cols=1,hq=[],items=13), p15(single,cols=1,hq=[],items=13)
+  [F+3] 2023.4Q KR0009_현대해상_amended.pdf: p42(pre,cols=3,hq=['2023.4Q', '2023.3Q', '2023.2Q'],items=22)
+  [F+3] 2023.4Q KR0009_현대해상_amended_v20261011.pdf: p42(pre,cols=3,hq=['2023.4Q', '2023.3Q', '2023.2Q'],items=22)
+===== KR0009 2023.2Q
+  [own] 2023.2Q KR0009_현대해상.pdf: p10(pre,cols=3,hq=['2023.2Q', '2023.1Q', '2022.4Q'],items=24), p12(single,cols=1,hq=[],items=13), p13(single,cols=1,hq=[],items=13)
+  [F+1] 2023.3Q KR0009_현대해상_amended.pdf: p12(pre,cols=3,hq=['2023.3Q', '2023.2Q', '2023.1Q'],items=24), p14(single,cols=1,hq=[],items=13), p15(single,cols=1,hq=[],items=13)
+  [F+2] 2023.4Q KR0009_현대해상_amended.pdf: p42(pre,cols=3,hq=['2023.4Q', '2023.3Q', '2023.2Q'],items=22)
+  [F+2] 2023.4Q KR0009_현대해상_amended_v20261011.pdf: p42(pre,cols=3,hq=['2023.4Q', '2023.3Q', '2023.2Q'],items=22)
+  [F+3] 2024.1Q KR0009_현대해상_amended.pdf: p15(pre,cols=3,hq=['2024.1Q', '2023.4Q', '2023.3Q'],items=21)
+===== KR0032 2024.3Q
+  [own] 2024.3Q KR0032_NH농협손해보험_amended.pdf: p12(pre,cols=3,hq=['2024.3Q', '2024.2Q', '2024.1Q'],items=24), p14(single,cols=2,hq=[],items=13)
+  [F+1] 2024.4Q KR0032_NH농협손해보험.pdf: p43(pre,cols=3,hq=['2024.4Q', '2024.3Q', '2024.2Q'],items=23)
+  [F+2] 2025.1Q KR0032_NH농협손해보험.pdf: p15(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=23), p17(single,cols=2,hq=[],items=13)
+  [F+2] 2025.1Q KR0032_NH농협손해보험_v20261011.pdf: p15(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=23), p17(single,cols=2,hq=[],items=13)
+  [F+3] 2025.2Q KR0032_NH농협손해보험.pdf: p17(pre,cols=3,hq=['2025.2Q', '2025.1Q', '2024.4Q'],items=24), p19(single,cols=2,hq=[],items=13)
+===== KR0049 2025.1Q
+  [own] 2025.1Q KR0049_악사손해보험.pdf: p19(single,cols=2,hq=[],items=13)
+  [F+1] 2025.2Q KR0049_악사손해보험.pdf: p17(pre,cols=3,hq=[],items=24), p20(single,cols=2,hq=[],items=13)
+  [F+2] 2025.3Q KR0049_악사손해보험.pdf: p16(pre,cols=3,hq=[],items=24), p18(single,cols=2,hq=[],items=13)
+  [F+3] 2025.4Q KR0049_악사손해보험.pdf: p50(pre,cols=3,hq=[],items=24), p53(single,cols=2,hq=[],items=13)
+===== KR0049 2026.1Q
+  [own] 2026.1Q KR0049_악사손해보험.pdf: p19(single,cols=2,hq=[],items=13)
+  [F+1] 2026.2Q KR0049_악사손해보험.pdf: p17(pre,cols=3,hq=[],items=25), p20(single,cols=2,hq=[],items=13)
+  [F+2] 2026.3Q: no filing dir
+  [F+3] 2026.4Q: no filing dir
+===== KR0050 2025.3Q
+  [own] 2025.3Q KR0050_하나손해보험.pdf: p17(single,cols=3,hq=['2025.3Q', '2025.2Q', '2025.1Q'],items=21), p18(single,cols=2,hq=['2025.3Q'],items=8), p19(single,cols=1,hq=['2025.3Q'],items=7), p20(single,cols=1,hq=['2025.3Q'],items=13)
+  [F+1] 2025.4Q KR0050_하나손해보험.pdf: p50(single,cols=1,hq=['2025.4Q', '2025.3Q', '2025.2Q'],items=4), p53(pre,cols=3,hq=['2025.4Q', '2025.3Q', '2025.2Q'],items=21), p54(single,cols=2,hq=[],items=8), p55(single,cols=1,hq=[],items=7), p56(single,cols=1,hq=[],items=13)
+  [F+1] 2025.4Q KR0050_하나손해보험_v20261010.pdf: p50(single,cols=1,hq=['2025.4Q', '2025.3Q', '2025.2Q'],items=4), p53(pre,cols=3,hq=['2025.4Q', '2025.3Q', '2025.2Q'],items=21), p54(single,cols=2,hq=[],items=8), p55(single,cols=1,hq=[],items=7), p56(single,cols=1,hq=[],items=13)
+  [F+2] 2026.1Q KR0050_하나손해보험.pdf: p17(pre,cols=3,hq=['2026.1Q', '2025.4Q', '2025.3Q'],items=21), p18(single,cols=2,hq=['2026.1Q'],items=8), p19(single,cols=1,hq=['2026.1Q'],items=7), p20(single,cols=1,hq=['2026.1Q'],items=13)
+  [F+3] 2026.2Q KR0050_하나손해보험.pdf: p18(pre,cols=3,hq=['2026.2Q', '2026.1Q', '2025.4Q'],items=21), p19(single,cols=2,hq=[],items=8), p20(single,cols=1,hq=[],items=7), p21(single,cols=1,hq=[],items=13)
+===== KR0069 2024.2Q
+  [own] 2024.2Q KR0069_삼성생명.pdf: p16(pre,cols=3,hq=['2024.2Q', '2024.1Q', '2023.4Q'],items=13), p17(pre,cols=3,hq=['2024.2Q', '2024.1Q', '2023.4Q'],items=12)
+  [F+1] 2024.3Q KR0069_삼성생명.pdf: p14(pre,cols=3,hq=['2024.3Q', '2024.2Q', '2024.1Q'],items=13), p15(pre,cols=3,hq=['2024.3Q', '2024.2Q', '2024.1Q'],items=12)
+  [F+2] 2024.4Q KR0069_삼성생명.pdf: p51(pre,cols=3,hq=['2024.4Q', '2024.3Q', '2024.2Q'],items=13), p52(pre,cols=3,hq=['2024.4Q', '2024.3Q', '2024.2Q'],items=12), p67(single,cols=1,hq=[],items=9)
+  [F+3] 2025.1Q KR0069_삼성생명.pdf: p16(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=13), p17(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=12)
+===== KR0071 2024.4Q
+  [own] 2024.4Q KR0071_흥국생명보험.pdf: 
+  [F+1] 2025.1Q KR0071_흥국생명보험.pdf: p18(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=25), p20(single,cols=2,hq=[],items=13), p21(single,cols=2,hq=[],items=13)
+  [F+2] 2025.2Q KR0071_흥국생명보험.pdf: p18(pre,cols=3,hq=['2025.2Q', '2025.1Q', '2024.4Q'],items=25), p20(single,cols=2,hq=[],items=13), p21(single,cols=2,hq=[],items=13)
+  [F+3] 2025.3Q KR0071_흥국생명보험.pdf: p18(pre,cols=3,hq=['2025.3Q', '2025.2Q', '2025.1Q'],items=25), p20(single,cols=2,hq=[],items=13), p21(single,cols=2,hq=[],items=13)
+===== KR0072 2025.2Q
+  [own] 2025.2Q KR0072_케이디비생명보험.pdf: p19(pre,cols=3,hq=['2025.2Q', '2025.1Q', '2024.4Q'],items=24), p22(single,cols=2,hq=[],items=12), p23(single,cols=2,hq=[],items=12)
+  [F+1] 2025.3Q KR0072_케이디비생명보험.pdf: p18(pre,cols=3,hq=['2025.3Q', '2025.2Q', '2025.1Q'],items=24), p21(single,cols=2,hq=[],items=12), p22(single,cols=2,hq=[],items=12)
+  [F+1] 2025.3Q KR0072_케이디비생명보험_v20261011.pdf: p18(pre,cols=3,hq=['2025.3Q', '2025.2Q', '2025.1Q'],items=24), p21(single,cols=2,hq=[],items=12), p22(single,cols=2,hq=[],items=12)
+  [F+2] 2025.4Q KR0072_케이디비생명보험.pdf: p63(pre,cols=3,hq=['2025.4Q', '2025.3Q', '2025.2Q'],items=24), p66(single,cols=2,hq=[],items=12), p67(single,cols=2,hq=[],items=12), p336(single,cols=2,hq=[],items=13), p337(single,cols=2,hq=[],items=16)
+  [F+3] 2026.1Q KR0072_케이디비생명보험.pdf: p20(pre,cols=3,hq=['2026.1Q', '2025.4Q', '2025.3Q'],items=24), p23(single,cols=2,hq=[],items=13), p24(single,cols=2,hq=[],items=13)
+===== KR0080 2026.1Q
+  [own] 2026.1Q KR0080_에이아이에이생명보험.pdf: 
+  [F+1] 2026.2Q KR0080_에이아이에이생명보험.pdf: p20(pre,cols=3,hq=['2026.2Q', '2026.1Q', '2025.4Q'],items=25)
+  [F+2] 2026.3Q: no filing dir
+  [F+3] 2026.4Q: no filing dir
+===== KR0095 2024.4Q
+  [own] 2024.4Q KR0095_메트라이프생명보험.pdf: p53(pre,cols=3,hq=['2024.4Q', '2024.3Q', '2024.2Q'],items=24), p55(single,cols=2,hq=[],items=13), p56(single,cols=2,hq=[],items=13), p112(single,cols=1,hq=[],items=13)
+  [F+1] 2025.1Q KR0095_메트라이프생명보험.pdf: p17(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=24), p19(single,cols=2,hq=[],items=13), p20(single,cols=2,hq=[],items=13)
+  [F+2] 2025.2Q KR0095_메트라이프생명보험.pdf: p18(pre,cols=3,hq=['2025.2Q', '2025.1Q', '2024.4Q'],items=24), p20(single,cols=2,hq=[],items=13), p21(single,cols=2,hq=[],items=13)
+  [F+3] 2025.3Q KR0095_메트라이프생명보험.pdf: p17(pre,cols=3,hq=['2025.3Q', '2025.2Q', '2025.1Q'],items=24), p19(single,cols=2,hq=[],items=13), p20(single,cols=2,hq=[],items=13)
+===== KR0099 2024.3Q
+  [own] 2024.3Q KR0099_케이비라이프생명보험_amended.pdf: p14(pre,cols=3,hq=['2024.3Q', '2024.2Q', '2024.1Q'],items=25)
+  [F+1] 2024.4Q KR0099_케이비라이프생명보험.pdf: p58(pre,cols=3,hq=['2024.4Q', '2024.3Q', '2024.2Q'],items=25)
+  [F+2] 2025.1Q KR0099_케이비라이프생명보험.pdf: p18(pre,cols=3,hq=['2025.1Q', '2024.4Q', '2024.3Q'],items=25)
+  [F+3] 2025.2Q KR0099_케이비라이프생명보험.pdf: p18(pre,cols=3,hq=['2025.2Q', '2025.1Q', '2024.4Q'],items=25)

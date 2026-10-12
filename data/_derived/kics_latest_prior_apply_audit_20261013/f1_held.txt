@@ -1,0 +1,62 @@
+===== KR0070 2024.3Q
+  item22 master_now pre=0 post=0
+     own: 1 [KR0070_에이비엘생명보험.pdf p16] | 52 [KR0070_에이비엘생명보험.pdf p18 pos] | 52 [KR0070_에이비엘생명보험.pdf p19 pos]
+     F+1: 1 [KR0070_에이비엘생명보험.pdf p57] | 94 [KR0070_에이비엘생명보험.pdf p59 pos] | 94 [KR0070_에이비엘생명보험.pdf p60 pos] | 94,211 [KR0070_에이비엘생명보험.pdf p538 pos]
+     F+2: 1 [KR0070_에이비엘생명보험.pdf p19]
+===== KR0050 2023.1Q
+  item18 master_now pre=972 post=972
+     own: 972 [KR0050_하나손해보험_amended. p9]
+     F+1: 972 [KR0050_하나손해보험_amended. p10 pos]
+     F+2: 971 [KR0050_하나손해보험_amended. p10]
+===== KR0051 2023.3Q
+  item11 master_now pre=-332 post=-332
+     own: -321 [KR0051_신한이지손해보험.pdf p9]
+     F+1: -332 [KR0051_신한이지손해보험.pdf p25]
+     F+2: -333 [KR0051_신한이지손해보험.pdf p11]
+===== KR0069 2023.2Q
+  item11 master_now pre=55638 post=55638
+     own: 55,638 [KR0069_삼성생명.pdf p12]
+     F+1: 55,638 [KR0069_삼성생명.pdf p12]
+     F+2: 55,637 [KR0069_삼성생명.pdf p43]
+  item12 master_now pre=12720 post=12720
+     own: 12,720 [KR0069_삼성생명.pdf p12]
+     F+1: 12,720 [KR0069_삼성생명.pdf p12]
+     F+2: 12,719 [KR0069_삼성생명.pdf p43]
+===== KR0069 2024.3Q
+  item23 master_now pre=24572 post=24572
+     own: 24,572 [KR0069_삼성생명.pdf p15]
+     F+1: 24,572 [KR0069_삼성생명.pdf p52]
+     F+2: 24,571 [KR0069_삼성생명.pdf p17]
+===== KR0083 2025.2Q
+  item4 master_now pre=-733 post=None
+     own: -733 [KR0083_푸본현대생명보험.pdf p19]
+     F+1: -733 [KR0083_푸본현대생명보험.pdf p17]
+     F+2: -734 [KR0083_푸본현대생명보험.pdf p53]
+  item7 master_now pre=-4582 post=None
+     own: -4,582 [KR0083_푸본현대생명보험.pdf p19]
+     F+1: -4,582 [KR0083_푸본현대생명보험.pdf p17]
+     F+2: -4,583 [KR0083_푸본현대생명보험.pdf p53]
+===== KR0095 2024.3Q
+  item7 master_now pre=38250 post=38250
+     own: 38,250 [KR0095_메트라이프생명보험.pdf p14]
+     F+1: 38,250 [KR0095_메트라이프생명보험.pdf p53]
+     F+2: 38,251 [KR0095_메트라이프생명보험.pdf p17]
+===== KR0099 2024.2Q
+  item22 master_now pre=7389 post=7389
+     own: 7,389 [KR0099_케이비라이프생명보험.pdf p14]
+     F+1: 7,389 [KR0099_케이비라이프생명보험_amen p14]
+     F+2: 7,390 [KR0099_케이비라이프생명보험.pdf p58]
+===== KR0099 2024.4Q
+  item22 master_now pre=7892 post=7892
+     own: 7,892 [KR0099_케이비라이프생명보험.pdf p58]
+     F+1: 7,892 [KR0099_케이비라이프생명보험.pdf p18]
+     F+2: 7,891 [KR0099_케이비라이프생명보험.pdf p18]
+===== KR0100 2025.2Q
+  item5 master_now pre=2852 post=None
+     own: 2,852 [KR0100_처브라이프생명보험.pdf p18]
+     F+1: 2,852 [KR0100_처브라이프생명보험.pdf p17]
+     F+2: 4,941 [KR0100_처브라이프생명보험.pdf p51]
+  item11 master_now pre=2363 post=None
+     own: 2,363 [KR0100_처브라이프생명보험.pdf p18]
+     F+1: 2,363 [KR0100_처브라이프생명보험.pdf p17]
+     F+2: 275 [KR0100_처브라이프생명보험.pdf p51]

@@ -1,40 +1,40 @@
 {
-  "sha256": "5c019d869c000fe643b3fbc2fcc70813506d98ec872e60e5353e7630026ea09e",
+  "sha256": "595c973d77594ff70fc14ba92da226e951db373109c111ed9b9c2214eefd8850",
   "buckets": 634,
   "findings": 19020,
   "by_status": {
-    "YELLOW": 1936,
-    "GREEN": 13705,
+    "YELLOW": 1934,
+    "GREEN": 13709,
     "SKIP": 3323,
     "ERROR": 0,
-    "RED": 56
+    "RED": 54
   },
   "by_rule": {
     "1": {
-      "GREEN": 536,
-      "YELLOW": 98
+      "GREEN": 535,
+      "YELLOW": 99
     },
     "2": {
-      "GREEN": 427,
-      "YELLOW": 203,
+      "GREEN": 425,
+      "YELLOW": 205,
       "RED": 4
     },
     "3": {
       "SKIP": 634
     },
     "4": {
-      "GREEN": 404,
-      "YELLOW": 229,
+      "GREEN": 406,
+      "YELLOW": 227,
       "RED": 1
     },
     "5": {
-      "GREEN": 520,
-      "YELLOW": 113,
+      "GREEN": 519,
+      "YELLOW": 114,
       "RED": 1
     },
     "6": {
-      "GREEN": 377,
-      "YELLOW": 246,
+      "GREEN": 376,
+      "YELLOW": 247,
       "RED": 11
     },
     "7": {
@@ -55,8 +55,8 @@
     },
     "8_life": {
       "SKIP": 146,
-      "GREEN": 470,
-      "YELLOW": 16,
+      "GREEN": 469,
+      "YELLOW": 17,
       "RED": 2
     },
     "8_life_census": {
@@ -83,9 +83,9 @@
       "GREEN": 274
     },
     "2_tier1_bridge": {
-      "YELLOW": 148,
-      "GREEN": 467,
-      "RED": 10,
+      "YELLOW": 144,
+      "GREEN": 473,
+      "RED": 8,
       "SKIP": 9
     },
     "3_tier2_composition": {
@@ -106,8 +106,8 @@
     },
     "2_tier1_bridge_post": {
       "SKIP": 355,
-      "GREEN": 227,
-      "YELLOW": 52
+      "GREEN": 229,
+      "YELLOW": 50
     },
     "3_tier2_composition_post": {
       "GREEN": 379,

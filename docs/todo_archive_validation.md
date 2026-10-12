@@ -1,5 +1,11 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-13 Status 밀림 (28차 독립 검수 항목 추가로 밀려난 항목, 무수정)
+
+- **2026-10-12 (25차) owner 승인 등재 — 재보사 인쇄된 0 7칸 · 서울보증 PL 2칸 · 마이브라운 거짓 양성 1칸 (티켓 `20261012T1010Z`)** — `HOLE-PL` 2->0(`pl_src_absent:3ok`), 데이터계약 RED 2->2(손해율 xlsx 동기화 대기 = publishing 몫, 신규 0) · K-ICS 게이트 exit 0 RED 56 불변(finding 0 추가·0 삭제).
+  읽는 쪽 확인: 7칸은 복원을 가정한 시뮬레이션에서 RED 0·`OWNER_CONFIRMED` 7(대조군 등재부 비움=RED 7) · 마이브라운은 5칸 적재 가정에서 새 RED 0(대조군 RED 2) · 서울보증은 사이트 판 census 가 매니페스트 자리(새 사유 `SITE_ROLLED_OFF`). 변이시험 4파일 85건 통과(신규 2파일 `test_pl_source_absent_site_rolled_off`·`test_tier2_stale_false_positive_exemption` 훅 묶음 편입)·selftest 102/102, 골든 `--update` 1종(master_tables: `coverage_hole 2PL->0PL`·`pl_src_absent 1ok->3ok` 두 토큰뿐).
+  등재 안 한 것: 뮌헨 2026.2Q 50·52(원문에 **있음**, p17 -> parser-kics) · CSM 워터폴 대 ILP(대조하는 게이트 룰이 없어 등재할 줄이 0 -> 룰 설계가 선행). 남은 것: 7칸 복원(parser-ifrs17 `--restore7 --apply`) · 마이브라운 5칸 적재(parser-kics) · 오케스트레이터 티켓 종결.
+
 ## 2026-10-12 Status 밀림 (27차 독립 감사 항목 추가로 밀려난 항목, 무수정)
 
 - **2026-10-12 재보사 PL 계보 허용 + 마감 골든 3종 `--update` — 데이터계약 RED 102→0(전부 `CONCEPT_MIXED_DISCLOSURE_INTO_DART`, 신규 0)** — `PL_DISCLOSURE_REINSURER_LINEAGE`(how=`disclosure_summary_pl_reinsurer`, 항목 17·20·21)을 「DART 계보 PL 셀이 없는 회사」(데이터 조건 · 8곳 KR1101~KR1108)·income_statement·쪽·**항목별** 인쇄값이 있을 때만 §3d 에서 뺀다(102셀/299값).
