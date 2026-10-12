@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1210Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2022.4Q-2026.2Q
@@ -26,3 +26,4 @@ owner 결정(2026-10-12 채팅): K-ICS 화면의 소진율 도넛과 Forward Out
 - 파일 이름·시점 범위·회사 수, 항목 6 대비 큰 괴리 목록, 게이트 결과, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+방향 수정 후 처리 완료(2026-10-12, 커밋 5a2b58f): 시점별 잔액 추출은 폐기하고(owner: 이미 있는 채권 발행 데이터로 발행일별 발행량만), kics_capital_securities_timeline.json = 채권별 슬림 목록(26사 125건, 신종 45·후순위 80, 분류·인정액 필드 없음, data/bonds/capital_securities_fy2026h1.json 파생). 상환돼 잔액 0 인 증권 포함, 동양생명 2020 신종·악사 JPY 후순위는 발행일/권면 없어 제외. 원천이 2025-12-31·2026-06-30 잔액 목록이라 그 전에 상환된 채권은 없어 과거 연도 발행량이 낮게 보일 수 있음(changelog 기재). 단위시험 15(변이 3), keep-list·문서 표 등재. designer 가 이 명세로 K-ICS 누적 막대 연결 완료(1dd02d5).
