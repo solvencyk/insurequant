@@ -57,6 +57,17 @@ deploy_path() {
     *) printf '%s' "$1" ;;
   esac
 }
+# 비공개 경로 (owner 2026-10-12 「내린 시트들은 비공개로 돌리고」): 저장소에는 남기고 라이브(main)에서만 지운다.
+# 아래 경로는 (1) 배포 대상 계산에서 제외되고 (2) origin/main 에 있으면 배포 커밋에서 `git rm` 된다.
+# 이 목록은 scripts/export_public_sheets.py 의 PRIVATE_SHEETS / PRIVATE_ROOT_JSONS 와 같아야 한다 —
+# tests/test_private_deploy.py 가 대조한다. 되돌리기: 경로를 이 목록에서 빼고(+ exporter 쪽도 같이) 다시 배포한다.
+# kics_tier1_utilization.json 은 K-ICS.html 이 더는 fetch 하지 않는다(designer 1624aba) — 그래서 함께 내린다.
+# 주의: main 의 옛 K-ICS.html 은 아직 이 파일을 fetch 한다. K-ICS.html 도 같은 배포에서 갱신돼야 한다(아래 CHANGED 가 처리).
+PRIVATE_PATHS="public_exports/기본자본소진율.json public_exports/보완자본소진율.json public_exports/자본비율전망.json kics_tier1_utilization.json kics_tier2_utilization.json kics_forward_capital.json"
+is_private() {
+  for _p in $PRIVATE_PATHS; do [ "$_p" = "$1" ] && return 0; done
+  return 1
+}
 BUNDLE=""
 FROM_ORIGIN=0
 DEPLOY=1
@@ -138,6 +149,7 @@ CHANGED=""
 while IFS= read -r f; do
   [ -n "$f" ] || continue
   [ "$f" = ".gitignore" ] && continue
+  is_private "$f" && continue                       # 비공개 경로는 갱신 대상이 아니다(아래에서 지운다)
   src="$f"
   case "$f" in "$JP_PRIVATE_DIR"/*) [ -n "$JP_PRIVATE_DIR" ] && src="jp/${f#"$JP_PRIVATE_DIR"/}" ;; esac
   a=$(git rev-parse "origin/main:$f" 2>/dev/null) || continue
@@ -153,14 +165,23 @@ EOF
 # 여기 적힌 파일은 브랜치에 있고 main 에 없으면 배포 목록에 넣는다.
 NEW_FILES="LICENSE theme.js compare.html data/compare/panel_compare.json data/company_segment.json data/csm_combo/panel_csm_combo.json jp/index.html jp/jesr_esr.json jp/jesr.html jp/jgaap.html jp/disclosure.html jp/jesr_app.js jp/jp.css jp/jesr_detail.json jp/terms.html jp/report-widget.ja.js public_exports/보험계약부채.json public_exports/보험금예실차비율.json kics_capital_securities_timeline.json"
 for f in $NEW_FILES; do
+  is_private "$f" && continue
   git rev-parse "origin/main:$(deploy_path "$f")" >/dev/null 2>&1 && continue
   git rev-parse "$BRANCH:$f" >/dev/null 2>&1 || continue
   CHANGED="$CHANGED$f
 "
 done
 
-[ -n "$CHANGED" ] || { printf '배포할 변경 없음 — main 이 이미 최신이다.\n'; exit 0; }
+# main 에 아직 남아 있는 비공개 경로 -> 이번 배포 커밋에서 지운다.
+REMOVE=""
+for f in $PRIVATE_PATHS; do
+  if git rev-parse "origin/main:$f" >/dev/null 2>&1; then REMOVE="$REMOVE$f
+"; fi
+done
+
+[ -n "$CHANGED" ] || [ -n "$REMOVE" ] || { printf '배포할 변경 없음 — main 이 이미 최신이다.\n'; exit 0; }
 printf '%s' "$CHANGED" | sed 's/^/  /'
+if [ -n "$REMOVE" ]; then printf '  main 에서 비공개로 내릴 경로:\n'; printf '%s' "$REMOVE" | sed 's/^/  - /'; fi
 
 step "격리 워크트리에서 배포"
 WT="$(mktemp -d)/iq_main"
@@ -176,6 +197,11 @@ trap cleanup EXIT
   git checkout -B main origin/main >/dev/null 2>&1
   # 비공개 프리뷰: main 에 공개 경로 jp/ 가 남아 있으면 지운다(첫 전환 라운드에만 해당).
   if [ -n "$JP_PRIVATE_DIR" ] && [ -d jp ]; then git rm -r -q jp; fi
+  # 비공개 경로 제거(작업 브랜치에는 그대로 있다 — main 에서만 지운다)
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    git rm -q -- "$f" || exit 1
+  done <<< "$REMOVE"
   while IFS= read -r f; do
     [ -n "$f" ] || continue
     git checkout "$BRANCH" -- "$f" || exit 1      # 리다이렉션 금지 — 블롭 그대로
@@ -199,7 +225,9 @@ trap cleanup EXIT
   printf '  전 파일 블롭 일치
 '
 
-  git commit -m "deploy: $(printf '%s' "$CHANGED" | tr '\n' ' ' | sed 's/ *$//') 갱신" >/dev/null
+  MSG="deploy: $(printf '%s' "$CHANGED" | tr '\n' ' ' | sed 's/ *$//') 갱신"
+  if [ -n "$REMOVE" ]; then MSG="$MSG; 비공개 제거: $(printf '%s' "$REMOVE" | tr '\n' ' ' | sed 's/ *$//')"; fi
+  git commit -m "$MSG" >/dev/null
   git push origin main
   printf '\n라이브 배포 완료: %s\n' "$(git rev-parse --short HEAD)"
 ) || die "배포 실패 — main 은 건드려지지 않았다."

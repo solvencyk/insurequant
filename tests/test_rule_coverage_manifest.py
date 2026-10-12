@@ -1124,6 +1124,8 @@ PUBLIC_EXPORT_RULES = {
     "PUBLIC_EXPORT_MANIFEST_SHEET_MISSING": "RED — 파일은 있는데 manifest 에 없다",
     "PUBLIC_EXPORT_MANIFEST_MISMATCH": "RED — 표지가 사실과 다른 행수·분기범위를 인쇄한다",
     "PUBLIC_EXPORT_MANIFEST_GHOST_SHEET": "RED — manifest 에만 있고 exporter 목록에 없는 시트",
+    "PUBLIC_EXPORT_PRIVATE_SHEET_PRESENT":
+        "RED — 비공개 시트(PRIVATE_SHEETS, owner 2026-10-12)의 공개 스냅샷 파일이 있다",
 }
 
 # 실측 2026-09-01. exporter 의 MASTERS 길이와 같아야 한다.
@@ -1163,14 +1165,16 @@ def test_public_export_sheet_count_matches_exporter():
     게이트가 목록을 베껴 쓰면 여기서부터 갈라진다. import 로 묶여 있는 한 이 수는 자동으로
     같이 움직인다 — 시트가 늘었는데 이 수가 그대로면 그건 게이트가 목록을 놓쳤다는 뜻이다."""
     sys.path.insert(0, str(ROOT / "scripts"))
-    from export_public_sheets import MASTERS
+    from export_public_sheets import MASTERS, PUBLIC_MASTERS, PRIVATE_SHEETS
     assert len(MASTERS) == PUBLIC_EXPORT_SHEETS, (
         f"exporter 시트 {len(MASTERS)}개 != 선언 {PUBLIC_EXPORT_SHEETS}개 — 시트를 "
         "추가·삭제했으면 이 수를 고치고, 새 시트가 게이트에서 실제로 검사되는지 확인해라")
     L = _live_gate()
     fd = L.Findings()
     stat = L.check_public_exports(fd)
-    assert stat.get("sheets_declared") == len(MASTERS)
+    # 2026-10-12: 비공개 3시트는 공개 스냅샷을 만들지 않으므로 게이트의 검사 대상은 MASTERS - PRIVATE_SHEETS 다.
+    assert len(PUBLIC_MASTERS) == len(MASTERS) - len(PRIVATE_SHEETS)
+    assert stat.get("sheets_declared") == len(PUBLIC_MASTERS)
 
 
 def test_public_export_clean_state_has_no_findings():
@@ -1221,10 +1225,11 @@ def test_mutation_public_export_fires(mutation, tmp_path):
                                          encoding="utf-8")
         want = "PUBLIC_EXPORT_INTERNAL_COL_LEAKED"
     elif mutation == "jargon":
-        d = _json.loads((pe / "자본비율전망.json").read_text(encoding="utf-8"))
+        # 자본비율전망 시트는 2026-10-12 비공개로 내려갔다 — 같은 `비고` 열이 있는 공개 시트로 변이한다.
+        d = _json.loads((pe / "자본성증권발행현황.json").read_text(encoding="utf-8"))
         d[0]["비고"] = "신뢰도 낮음 — T2 face/BS gap +202% (subordinated_eok) — advisory, not in overall"
-        (pe / "자본비율전망.json").write_text(_json.dumps(d, ensure_ascii=False),
-                                            encoding="utf-8")
+        (pe / "자본성증권발행현황.json").write_text(_json.dumps(d, ensure_ascii=False),
+                                                encoding="utf-8")
         want = "PUBLIC_EXPORT_INTERNAL_JARGON"
     else:
         m = _json.loads((pe / "manifest.json").read_text(encoding="utf-8"))

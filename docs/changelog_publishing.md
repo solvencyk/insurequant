@@ -10,6 +10,19 @@
 
 ---
 
+## 2026-10-12 — 비공개 3시트 · 자본성증권 공개 열 제한 · 뮌헨/스위스리 재동기화 (티켓 `20261012T1420Z`·`1440Z`, 커밋만 · push 보류)
+
+owner 지시 「내린 시트들은 비공개로 돌리고」 / 「3 승인」. 저장소의 마스터 JSON·마스터 xlsx 시트·`output/` 은 그대로, 공개 스냅샷과 main(라이브)에서만 내렸다.
+
+- **비공개 시트**: `export_public_sheets.PRIVATE_SHEETS`(기본자본소진율·보완자본소진율·자본비율전망)는 스냅샷을 만들지 않고 manifest 에 싣지 않으며 옛 파일이 있으면 지운다. `PUBLIC_MASTERS`(= MASTERS - 비공개 3)가 게이트의 검사 대상이다. 새 룰 `PUBLIC_EXPORT_PRIVATE_SHEET_PRESENT`(비공개 시트 파일이 있으면 RED).
+- **main 에서 지우기**: `scripts/android_push_and_deploy.sh` 의 `PRIVATE_PATHS`(공개 스냅샷 3 + 루트 `kics_tier1_utilization.json`·`kics_tier2_utilization.json`·`kics_forward_capital.json`)는 갱신 대상에서 빠지고 main 에 있으면 배포 커밋에서 `git rm`. tier1 은 designer `1624aba`(타임라인 JSON 계산, tier1 fetch 제거) 뒤에 넣었다. 목록 일치는 `tests/test_private_deploy.py` 가 exporter `private_paths()` 와 대조한다.
+- **자본성증권발행현황 공개본**: `_SHEET_DROP_COLS` 로 기본자본인정액_억·보완자본인정액_억·기본자본한도_억·SCR_억·보완자본인정율·경과조치·경과조치종료일 제외(경과조치는 발행일로 우리가 붙인 구분이라 같이 뺐다). 남은 열: 회사명·구분·종류·발행일·콜만기도래일·법정만기일·콜근거·액면가_억·잔액_억·공시분기·잔액기준일·출처·비고. 게이트는 시트별 제외 열(`drop_cols(sheet)`)로 대조한다(느슨하게 풀지 않고 제외 열만 뺀 기대값과 셀 단위 일치).
+- **재동기화**: 뮌헨 KR1101 2026.2Q +3행(`33635d1`) -> xlsx `K-ICS공시` 30008->30011, 스위스리 KR1102 2026.1Q +8행(`4147fc1`) -> xlsx `보험계약부채` 6335->6343. `build_master_xlsx._ilp_basis_note` 가 provenance `how=derived_sum_of_rows` 를 읽어 기준표시 「계산값(전 행 합)」 + 비고(인쇄 합계가 Indirect-Par 행을 뺀 값이라 전 행을 더함)를 붙인다. `csm_combo` 패널은 KR1102 2026.1Q 노드 1개(+18 슬롯)와 `meta.lic_recon` 문구만 바뀌었다.
+- **되돌리기**: `PRIVATE_SHEETS`/`PRIVATE_ROOT_JSONS` 와 `PRIVATE_PATHS` 에서 경로 제거 + `download-survey.js` 주석 해제 + exporter 재실행. 공개 열 복원은 `_SHEET_DROP_COLS` 에서 열 제거 후 재실행.
+- **증빙**: `data/_derived/private_sheets_20261012/`(`proof_changes.txt` = HEAD 대비 공개본 변화, `panel_csm_combo_diff.txt`).
+
+---
+
 ## 2026-10-12 — 최종 재동기화 (push 직전 정합, 티켓 `20261012T1330Z`, 커밋만 · push 보류)
 
 오늘 바뀐 마스터(재보사 손해율 세그먼트 `268002b`, 재보사 PL 7칸 복원·처브 BS 20/ILP 14-15·분할표 상각 `3bf1690`, K-ICS 퍼시픽 +16행·악사 4칸 `acd351a`)에 xlsx·공개본·패널을 맞췄다.

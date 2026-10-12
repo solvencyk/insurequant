@@ -556,8 +556,8 @@ def check_public_exports(fd: Findings, out_dir: Path | None = None) -> dict:
     stat = defaultdict(int)
     try:
         sys.path.insert(0, str(ROOT / "scripts"))
-        from export_public_sheets import (MASTERS, FLATTEN, _DROP_COLS, _QUARTER_RE,
-                                          read_committed_json)
+        from export_public_sheets import (PUBLIC_MASTERS as MASTERS, PRIVATE_SHEETS, FLATTEN,
+                                          drop_cols, _QUARTER_RE, read_committed_json)
     except Exception as e:
         fd.add("public_exports/", "PUBLIC_EXPORT_EXPORTER_UNIMPORTABLE", "-",
                f"{type(e).__name__}: {e} — 시트 목록을 exporter 에서 가져오지 못했다")
@@ -570,6 +570,11 @@ def check_public_exports(fd: Findings, out_dir: Path | None = None) -> dict:
         return stat
 
     stat["sheets_declared"] = len(MASTERS)
+    # 비공개 시트(owner 2026-10-12): 공개 스냅샷이 있으면 안 된다. 「있는데 manifest 에 없다」 류와 별개로 파일 자체를 막는다.
+    for priv in PRIVATE_SHEETS:
+        if (out_dir / f"{priv}.json").exists():
+            fd.add(f"public_exports/{priv}.json", "PUBLIC_EXPORT_PRIVATE_SHEET_PRESENT", priv,
+                   "비공개 시트(PRIVATE_SHEETS)의 공개 스냅샷이 있다 — exporter 를 다시 돌리거나 파일을 지워라")
     seen_sheets = []
     for json_name, sheet in MASTERS:
         rel = f"public_exports/{sheet}.json"
@@ -595,15 +600,16 @@ def check_public_exports(fd: Findings, out_dir: Path | None = None) -> dict:
         flatten = FLATTEN.get(json_name)
         if flatten is not None:
             exp = flatten(exp)
-        exp = [{k: v for k, v in r.items() if k not in _DROP_COLS} for r in exp]
+        _drop = drop_cols(sheet)
+        exp = [{k: v for k, v in r.items() if k not in _drop} for r in exp]
 
         stat[f"rows_{sheet}"] = len(pub)
 
-        leaked = sorted({c for r in pub for c in r} & set(_DROP_COLS))
+        leaked = sorted({c for r in pub for c in r} & _drop)
         if leaked:
             fd.add(rel, "PUBLIC_EXPORT_INTERNAL_COL_LEAKED", sheet,
-                   f"내부 전용 열 {leaked} 이 공개 스냅샷에 있다 "
-                   f"(owner 지시 2026-08-28: 공개 다운로드에서 제외)")
+                   f"공개 제외 열 {leaked} 이 공개 스냅샷에 있다 "
+                   f"(owner 지시 2026-08-28 내부 코드, 2026-10-12 한도·인정액 계산 열: 공개 다운로드에서 제외)")
 
         jargon = _pe_jargon_hits(pub)
         if jargon:

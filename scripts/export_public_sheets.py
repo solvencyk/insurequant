@@ -49,6 +49,45 @@ OUT_DIR = REPO / "public_exports"
 # 문자열)를 담아 두는 칸이다 — 비고와 분리해 여기에만 넣었다. 비고는 그대로 남긴다(드롭 금지).
 _DROP_COLS = {"원보험사코드", "_diagnostics"}
 
+# 시트별 추가 제외 열 (공개 스냅샷에서만 빠진다 — 마스터 JSON·내부 마스터 xlsx 시트는 그대로).
+# owner 승인 2026-10-12(inbox/publishing/20261012T1440Z): `자본성증권발행현황` 에서 **우리가 한도·인정액
+# 계산으로 채운 열**은 공시 값이 아니라 분류 판단과 같은 성격이라 공개본에서 뺀다. 남는 열은 발행 사실
+# (회사명·구분·종류·발행일·콜만기도래일·법정만기일·콜근거·액면가·잔액·공시분기·잔액기준일·출처·비고).
+# `경과조치`·`경과조치종료일` 은 원천 열이 아니라 발행일 < K-ICS 시행일로 우리가 붙인 구분
+# (build_capital_securities_recognition._row 의 `gf`)이라 같이 뺀다. 되돌리기: 이 집합에서 열 이름을 지우고
+# exporter 를 다시 돌린다.
+_SHEET_DROP_COLS = {
+    "자본성증권발행현황": frozenset({
+        "기본자본인정액_억", "보완자본인정액_억", "기본자본한도_억", "SCR_억",
+        "보완자본인정율", "경과조치", "경과조치종료일",
+    }),
+}
+
+# 비공개 시트 (owner 2026-10-12 「내린 시트들은 비공개로 돌리고」, inbox/publishing/20261012T1420Z).
+# 분류 판단이 들어가는 숫자라 공개 사이트에서 접근 불가로 만든다. 재공개·유료화는 owner 가 나중에 정한다.
+# 이 시트들은 공개 스냅샷(`public_exports/<시트>.json`)을 만들지 않고 manifest 에도 싣지 않는다. 마스터 JSON ·
+# 마스터 xlsx 시트(`build_master_xlsx.MASTERS`) · output/ 은 저장소에 그대로 둔다(내부 보관).
+# 배포 스크립트(`android_push_and_deploy.sh`)의 PRIVATE_PATHS 가 main 에서 이 경로들을 `git rm` 한다 —
+# 그 목록과 아래 `private_paths()` 는 tests/test_private_deploy.py 가 같은지 대조한다.
+# 되돌리기: PRIVATE_SHEETS 에서 시트를 빼고 PRIVATE_PATHS(.sh) 에서 경로를 빼고 download-survey.js 주석을 풀고
+# exporter 를 다시 돌린다.
+PRIVATE_SHEETS = ("기본자본소진율", "보완자본소진율", "자본비율전망")
+# HTML 이 더는 fetch 하지 않는 루트 JSON. tier1 은 designer 커밋 `1624aba`(K-ICS 큼직한 셀을 타임라인 JSON 계산으로 교체,
+# tier1 fetch 제거) 뒤에 넣었다 — 그 전에 넣으면 라이브 패널이 조용히 빈칸이 된다. 새로 HTML 이 이 파일들을 fetch 하게
+# 되면 여기서 빼야 한다(test_deploy_assets 의 keep-list 시험이 잡는다).
+PRIVATE_ROOT_JSONS = ("kics_tier1_utilization.json", "kics_tier2_utilization.json", "kics_forward_capital.json")
+
+
+def private_paths():
+    """main(라이브)에서 지워야 하는 저장소 상대 경로 전체."""
+    return [f"public_exports/{s}.json" for s in PRIVATE_SHEETS] + list(PRIVATE_ROOT_JSONS)
+
+
+def drop_cols(sheet):
+    """그 시트의 공개 스냅샷에서 빠지는 열 이름 전체(공통 + 시트별)."""
+    return set(_DROP_COLS) | set(_SHEET_DROP_COLS.get(sheet, ()))
+
+
 # 표준 "YYYY.NQ" 형태만 분기범위 계산에 쓴다 — 일부 소스(CSM_amortization 등)는
 # "annual (filings skim)" 같은 비표준 라벨을 공시분기 자리에 넣어 문자열 정렬 시
 # 알파벳이 숫자보다 뒤로 가면서('2'<'a') 최댓값처럼 오판되는 실측 버그가 있었다(2026-08-28).
@@ -100,6 +139,10 @@ MASTERS = [
 ]
 
 
+# 공개 스냅샷을 만드는 시트(= MASTERS - 비공개). 게이트도 이 목록을 import 해서 쓴다.
+PUBLIC_MASTERS = [m for m in MASTERS if m[1] not in PRIVATE_SHEETS]
+
+
 def main(only=None):
     """`only` = 시트 이름 하나. 주면 그 시트 파일만 쓰고 manifest 는 **그 시트 항목만** 추가/갱신한다
     (나머지 시트 파일·manifest 의 다른 항목·generated_at_utc·build_id 는 그대로). 다른 세션이 아직
@@ -125,20 +168,30 @@ def main(only=None):
         "sheets": {},
     }
     if only is not None:
+        if only in PRIVATE_SHEETS:
+            raise SystemExit(f"REFUSE: '{only}' 는 비공개 시트다(PRIVATE_SHEETS)")
         if only not in {sn for _jn, sn in MASTERS}:
             raise SystemExit(f"REFUSE: '{only}' 는 MASTERS 에 없다")
         mp = OUT_DIR / "manifest.json"
         if not mp.exists():
             raise SystemExit("REFUSE: --only 는 기존 manifest.json 이 있어야 한다(전체 실행을 먼저)")
         manifest = json.loads(mp.read_text(encoding="utf-8"))   # 최상위 키·다른 시트 항목 보존
-    for json_name, sheet_name in MASTERS:
+    # 비공개 시트: 옛 스냅샷 파일·manifest 항목이 남아 있으면 지운다(되살아난 파일이 라이브로 가지 않게).
+    for priv in PRIVATE_SHEETS:
+        stale = OUT_DIR / f"{priv}.json"
+        if stale.exists():
+            stale.unlink()
+            print(f"  removed private sheet snapshot {stale.relative_to(REPO)}")
+        manifest.get("sheets", {}).pop(priv, None)
+    for json_name, sheet_name in PUBLIC_MASTERS:
         if only is not None and sheet_name != only:
             continue
         rows = read_committed_json(json_name)
         flatten = FLATTEN.get(json_name)
         if flatten is not None:
             rows = flatten(rows)
-        rows = [{k: v for k, v in r.items() if k not in _DROP_COLS} for r in rows]
+        _drop = drop_cols(sheet_name)
+        rows = [{k: v for k, v in r.items() if k not in _drop} for r in rows]
         out_path = OUT_DIR / f"{sheet_name}.json"
         out_path.write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")
         quarters = sorted(set(

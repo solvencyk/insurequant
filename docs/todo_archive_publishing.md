@@ -1,5 +1,9 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 자본성증권 소진율 규정 근거 재정의 반영(커밋만 · push 보류)** — 티켓 `20261012T0800Z`: 산식 `scripts/capital_utilization_rules.py`·등재부 `data/bonds/capital_tier_registry.json` 신설, 47사 메모 대조 차이 0(tier2 23사·tier1 14사 변경), forward confidence 재정합, xlsx 4시트(손해율 기존 드리프트 포함)·공개본(`c3ebcc3`·`00bab2a`). data-contract RED 0 · live_artifacts RED 0 · xlsx 드리프트 0 · 단위시험 25.
+  남은 것: ① designer 화면(필드 명세 changelog) ② owner: 미확정 3사(코리안리·농협생명·푸본) 발행조건, 메리츠·흥국생명 「(기발행 후순위채무)」 행에 2023년 이후 신규채 혼입(결정 ② 확대 시 0.2→30.8%·10.6→37.0%) ③ forward 신종 15% 일괄 가정·`kics_capital_securities.json` 인정표는 새 정의와 다름(보고만).
+
+
 - **2026-10-12 미니 재동기화 2차(재보사 재스윕 반영, 커밋만 · push 보류)** — xlsx 7시트(`손익분해PL` +303행·25칸, `17BS` +49, `CSM워터폴` +18, `CSM상각` +15, `가정민감도` +6, `보험계약부채` +110, `신계약CSM배수` +3)·NB 마스터 +3행(재보사, 배수 null)·combo/compare 재빌드(재보사만)·`public_exports`(`b4b6a71`·`5079688`). 드리프트 0, data-contract RED 102(전부 `CONCEPT_MIXED_DISCLOSURE_INTO_DART`), live_artifacts RED 0.
   남은 것: ① `CONCEPT_MIXED_DISCLOSURE_INTO_DART` 102 는 validation ② ifrs17 viz 4패널·csm_waterfall 은 바이트 동일(신규 재보사 행이 전부 최신 분기 아님) ③ compare 패널 손해율 항목은 직전 라운드(`66e6156`) 재보사 행을 이번에 처음 반영. 상세 `data/_derived/mini_resync_20261012/runlog.md`.
 
