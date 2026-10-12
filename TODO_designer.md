@@ -5,6 +5,7 @@
 
 ## Status (최신 3개)
 
+- **2026-10-12 공유 버튼 사용 기록 → 수집기 shares 탭 완료(theme.js·compare.html·privacy.html·insurequant_collector.gs, 커밋·미배포)** — 링크 복사·페이지 전체·섹션 스크린샷마다 익명 1건(page·action·section·company·device·result). iq_internal 0건·연타 1건·forms-config 없음 무오류. **owner 가 구글 Apps Script 에서 .gs 새 버전 배포를 해야 shares 탭이 생긴다(전까지는 downloads 탭에 섞여 들어감).** 검증 `scripts/check_share_log.py`.
 - **2026-10-12 IFRS17 섹션 8에 보험금 예실차비율 표 추가 완료(IFRS17.html, 커밋·미배포)** — 손해율 가정 표 아래에 예상손해율·실제손해율·보험금 예실차비율(공시 이름 그대로, 연도 열, %·%p, 음수 △, 마스터 값 그대로), 설명은 ? 팝오버만. 사업구분이 있는 코리안리는 공동재보험/전통형재보험 블록으로 나눔(88개 공시 중 2곳뿐). `ae` 없음(서울보증 등)·구판 패널이면 표 전체 생략.
   스위스리·뮌헨·삼성생명·코리안리·예별·카카오페이 375px·1280px 콘솔 0·가로 넘침 0, 시점 토글(2025.4Q/2024.4Q) 동작. 시험 3종 통과. 검증 `scripts/shot_lr_ae.py`. 남은 것: 없음(배포는 새 판 패널과 함께).
 

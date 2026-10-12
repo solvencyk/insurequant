@@ -14,9 +14,19 @@
  * 스키마 무관 설계 — payload 의 키가 늘거나 바뀌어도 헤더를 자동으로 확장한다.
  * 폼 항목이 확정되기 전에 배포해도 되고, 나중에 항목을 바꿔도 재배포가 필요 없다.
  *
- * payload: { kind: "download" | "report", ...임의 필드 }
- *   download -> 시트에만 기록 (건마다 메일 보내면 스팸이 된다)
- *   report   -> 시트 기록 + owner 에게 메일
+ * payload: { kind: "download" | "report" | "share", ...임의 필드 }
+ *   download -> downloads 탭에만 기록 (건마다 메일 보내면 스팸이 된다)
+ *   report   -> reports 탭 기록 + owner 에게 메일
+ *   share    -> shares 탭 기록(메일 없음) + shares_summary 탭(첫 share 때 자동 생성, QUERY 집계)
+ *
+ * shares 탭 열(2026-10-12, 사이트 공유 버튼 사용 기록 — 개인정보 없음):
+ *   received_at(접수 시각) · ua · page(index/K-ICS/IFRS17/compare/...) · action(link_copy|page_screenshot|section_screenshot)
+ *   · section(섹션 공유일 때 섹션 이름) · company(대상 회사) · device(touch|pointer) · result(ok|truncated|error)
+ *   shares_summary 는 열 위치가 아니라 헤더 이름으로 열을 찾는다.
+ *
+ * 재배포(이 파일을 고친 뒤 owner 가 구글에서 한 번): script.google.com 의 이 프로젝트에 이 파일 내용을 붙여넣고 저장
+ *   > 배포 > 배포 관리 > 연필(수정) > 버전 "새 버전" > 배포. 이렇게 하면 /exec URL 이 그대로라 사이트는 손대지 않는다.
+ *   ('새 배포'를 만들면 URL 이 바뀌니 쓰지 말 것.)
  */
 
 var NOTIFY_EMAIL = 'qoclrl960@gmail.com';   // 오류 제보 수신 주소
@@ -33,7 +43,7 @@ function doPost(e) {
     // 허니팟: 사람 눈에 안 보이는 필드가 채워져 있으면 봇이다. 조용히 성공으로 응답한다.
     if (body._hp) return _ok();
 
-    var kind = (body.kind === 'report') ? 'report' : 'download';
+    var kind = (body.kind === 'report') ? 'report' : (body.kind === 'share') ? 'share' : 'download';
     delete body.kind;
     delete body._hp;
 
@@ -45,8 +55,9 @@ function doPost(e) {
       row[k] = String(v == null ? '' : v).slice(0, MAX_FIELD_LEN);
     });
 
-    _append(kind === 'report' ? 'reports' : 'downloads', row);
+    _append(kind === 'report' ? 'reports' : kind === 'share' ? 'shares' : 'downloads', row);
     if (kind === 'report') _notify(row);
+    if (kind === 'share') _ensureSharesSummary();
     return _ok();
   } catch (err) {
     console.error(err);
@@ -91,6 +102,26 @@ function _append(tabName, row) {
 
   var out = header.map(function (k) { return row.hasOwnProperty(k) ? row[k] : ''; });
   sh.appendRow(out);
+}
+
+/**
+ * shares_summary 탭(없을 때만 만든다): page·section·action 별 건수 — 전체(A열~)와 최근 7일(G열~) 두 표.
+ * 열 위치에 의존하지 않도록 shares 의 1행 헤더 이름을 MATCH 해서 INDEX 로 뽑는다(헤더가 자동 확장돼도 안전).
+ * QUERY 의 Col4 는 received_at. 수식이라 행이 쌓이면 저절로 다시 계산된다.
+ */
+function _ensureSharesSummary() {
+  var ss = _book();
+  if (ss.getSheetByName('shares_summary')) return;
+  var sh = ss.insertSheet('shares_summary');
+  function col(name) { return 'INDEX(shares!$A:$Z,0,MATCH("' + name + '",shares!$A$1:$Z$1,0))'; }
+  var data = '{' + col('page') + ',' + col('section') + ',' + col('action') + ',' + col('received_at') + '}';
+  var sel = '"select Col1, Col2, Col3, count(Col1) where Col1 is not null and Col1 <> \'page\'';
+  var grp = ' group by Col1, Col2, Col3 order by count(Col1) desc label Col1 \'페이지\', Col2 \'섹션\', Col3 \'종류\', count(Col1) \'횟수\'"';
+  sh.getRange('A1').setFormula('=IFERROR(QUERY(' + data + ',' + sel + grp + ',0),"기록 없음")');
+  sh.getRange('G1').setFormula('=IFERROR(QUERY(' + data + ',' + sel + ' and Col4 >= datetime \'"&TEXT(NOW()-7,"yyyy-mm-dd HH:mm:ss")&"\'' + grp + ',0),"최근 7일 기록 없음")');
+  sh.getRange('A1:D1').setFontWeight('bold');
+  sh.getRange('G1:J1').setFontWeight('bold');
+  sh.setFrozenRows(1);
 }
 
 /** 오류 제보를 저장소 inbox 티켓 포맷으로 메일 발송 — 복붙만으로 parser 레인에 넣을 수 있다. */

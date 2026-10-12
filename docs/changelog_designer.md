@@ -7,6 +7,12 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- 공유 버튼 사용 기록(수집기 shares 탭)
+
+티켓 `inbox/designer/20261012T0910Z__orchestrator__MULTI__share_button_usage_log_to_collector.md`(공유, 오케스트레이터가 종결). `theme.js` `shLog`: 링크 복사(`link_copy`)·페이지 전체(`page_screenshot`)·섹션(`section_screenshot`) 마다 `IQ_FORMS.submit('share', {page, action, section, company, device, result})` 1건, 개인정보 없음. 스크린샷은 완료 시점에 `ok|truncated|error`. `iq_internal=1`(쿼리) 또는 브라우저가 내부로 기억(localStorage)이면 0건, 같은 page·action·section 1.5초 내 연타는 1건, `forms-config.js` 없으면 조용히 건너뜀. `compare.html` 은 forms-config.js 를 안 불러와서 `<script src="forms-config.js">` 1줄 추가(CSP 변경 없음). `scripts/appsscript/insurequant_collector.gs`: `kind==='share'` → `shares` 탭 + 첫 share 때 `shares_summary` 탭(헤더 이름 기반 QUERY, 전체·최근 7일), 메일 없음. `privacy.html` (4) 공유 버튼 이용 기록 문단. 검증 `scripts/check_share_log.py`(수집기 요청을 route 로 가로채 본문만 캡처, 실제 전송 0).
+
+---
+
 ## 2026-10-12 -- IFRS17 섹션 8 보험금 예실차비율 표
 
 티켓 `inbox/designer/20261012T0410Z__orchestrator__MULTI_2025.4Q__ifrs17_sec8_claims_ae_ratio_table.md`(공유). `IFRS17.html` 만. `data/loss_ratio/panel_loss_ratio.json` 최상위 `ae[회사코드].q[공시분기]` 를 fetch 중인 기존 패널에서 읽어 `#lrAeBox`(`drawLrAe`)에 그린다. 선택한 공시시점 이하의 가장 최근 연말 공시를 쓰고, 열=기준연도, 행=예상손해율·실제손해율·보험금 예실차비율(셀에 %·%p, 소수 2자리, 음수 △, null 은 -). 사업구분이 있으면 구분 행 아래 3행씩 블록(실데이터에서는 코리안리 공동재보험/전통형재보험뿐). 정의·연 1회 공시 설명은 `?`(`help-lrae`)에만. `ae` 부재·해당 회사 없음·이전 공시 없음이면 박스 숨김. `identity_break` 플래그는 셀 title 만. 검증: `scripts/shot_lr_ae.py`(스크린샷 `artifacts/designer/lr_ae/`, gitignore) 6사×2뷰포트 콘솔 0·넘침 0, 서울보증 숨김 확인.
