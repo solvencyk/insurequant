@@ -11,7 +11,7 @@
       "quarter_max": "2026.2Q"
     },
     "K-ICS공시": {
-      "rows": 30008,
+      "rows": 30011,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
@@ -50,25 +50,10 @@
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },
-    "기본자본소진율": {
-      "rows": 470,
-      "quarter_min": "2026.2Q",
-      "quarter_max": "2026.2Q"
-    },
-    "보완자본소진율": {
-      "rows": 658,
-      "quarter_min": "2026.2Q",
-      "quarter_max": "2026.2Q"
-    },
     "자본성증권발행현황": {
       "rows": 123,
       "quarter_min": "2026.2Q",
       "quarter_max": "2026.2Q"
-    },
-    "자본비율전망": {
-      "rows": 2530,
-      "quarter_min": null,
-      "quarter_max": null
     },
     "금리듀레이션갭": {
       "rows": 317,
@@ -76,7 +61,7 @@
       "quarter_max": "2026.2Q"
     },
     "보험계약부채": {
-      "rows": 6335,
+      "rows": 6343,
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.2Q"
     },

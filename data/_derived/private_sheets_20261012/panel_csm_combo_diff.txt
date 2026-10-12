@@ -1,0 +1,20 @@
+leaves before=10427 after=10445 differing=19
+  /companies/KR1102/q/2026.1Q[0]: <absent> -> 2200.0
+  /companies/KR1102/q/2026.1Q[10]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[11]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[12]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[13]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[14]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[15]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[16]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[17]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[1]: <absent> -> 0.0
+  /companies/KR1102/q/2026.1Q[2]: <absent> -> -12221.0
+  /companies/KR1102/q/2026.1Q[3]: <absent> -> 0.0
+  /companies/KR1102/q/2026.1Q[4]: <absent> -> 794.0
+  /companies/KR1102/q/2026.1Q[5]: <absent> -> 0.0
+  /companies/KR1102/q/2026.1Q[6]: <absent> -> 0.0
+  /companies/KR1102/q/2026.1Q[7]: <absent> -> -9227.0
+  /companies/KR1102/q/2026.1Q[8]: <absent> -> None
+  /companies/KR1102/q/2026.1Q[9]: <absent> -> None
+  /meta/lic_recon: 발생사고요소 셀: 실공시 401 · 사이드카(2-4 에 포함) 30 · 추정 85 · 없음 50 -> 발생사고요소 셀: 실공시 401 · 사이드카(2-4 에 포함) 30 · 추정 85 · 없음 51

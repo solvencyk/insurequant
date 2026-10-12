@@ -500,6 +500,12 @@ _ILP_NOTE_NET = ("보험계약자산을 차감한 순부채(순액)만 공시돼
 _ILP_NOTE_DERIVED = ("직접 공시값이 아닌 계산값 — 측정요소별 변동표의 기말 {what} 합계에서 잔여보장요소 {what}"
                      "(항목 {lrc})를 뺀 간접 산출. 단일열로 공시된 발생사고요소(항목 13)를 허용오차 안에서 "
                      "재현하는 경우만 적재")
+# 2026-10-12 스위스리아시아 2026.1Q: 원문 인쇄 합계 행이 간접 참가(Indirect-Par) 행을 뺀 값이라, 인쇄된 모든 행을 더해 적재했다
+# (owner 결정, provenance `how` = derived_sum_of_rows). 기준표시는 그대로 두지 않고 계산값으로 밝힌다.
+_ILP_HOW_ROW_SUM = "derived_sum_of_rows"
+_ILP_LABEL_ROW_SUM = "계산값(전 행 합)"
+_ILP_NOTE_ROW_SUM = ("직접 공시값이 아닌 계산값 — 원문의 인쇄 합계 행이 간접 참가(Indirect-Par) 행을 뺀 값이라, "
+                     "인쇄된 생명·손해 전 행을 더해 적재했다")
 _ILP_UNIT_FLAG = "여부(1=사용, 0=미사용)"
 
 
@@ -530,6 +536,8 @@ def _ilp_basis_note(item: int, key: tuple, ix: dict) -> tuple:
         c = ix["lrc"].get(key)
         if c is None:
             return ("해당 분기 공시", "") if own_filing_era else ("", "")
+        if c.get("how") == _ILP_HOW_ROW_SUM:
+            return _ILP_LABEL_ROW_SUM, _ILP_NOTE_ROW_SUM
         label = _ilp_lrc_label(c)
         return label, (_ILP_NOTE_RESTATED if c.get("basis") == "latest_filing_comparative_restatable" else "")
     if item == 9:
