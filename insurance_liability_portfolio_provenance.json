@@ -24966,18 +24966,20 @@
    "dropped_tables": [],
    "dedupe": [],
    "flags": [
-    "pdf_source_no_dart_filing"
+    "pdf_source_no_dart_filing",
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass",
-    "bs20_eok": 10717.25,
+    "bs20_eok": 13606.19,
     "ratio_bs20": 1.0,
-    "filing_bs_eok": null,
-    "ratio_filing_bs": null,
+    "filing_bs_eok": 13606.19,
+    "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": 0.0,
     "tag_tables": 0,
     "tag_cells": 0,
-    "tag_mismatch": 0
+    "tag_mismatch": 0,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -24985,11 +24987,24 @@
     "11": 254.66,
     "12": 6.18,
     "13": 0.0,
+    "14": 13345.35,
+    "15": 13606.19
+   },
+   "evidence": "업무보고서식 재무상태표 PDF p32 1. 보험계약부채 1,071,724,928,099원 (= 가. 잔여보장요소 1,045,640,592,317 + 나. 발생사고요소 26,084,335,782) + PDF p34 IV. 특별계정부채 288,894,240,196원 = 1,360,619,168,295원 (D2)",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
     "14": 10456.41,
     "15": 10717.25
    },
-   "evidence": null,
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원); the prior-year-end column of the same page equals the DART 2024.4Q cell"
+   "components_won": {
+    "general_account_보험계약부채_D1": 1071724928099,
+    "general_account_잔여보장요소": 1045640592317,
+    "general_account_발생사고요소": 26084335782,
+    "특별계정부채_SA": 288894240196,
+    "D2_D1_plus_SA": 1360619168295
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR0100",
@@ -25015,18 +25030,20 @@
    "dropped_tables": [],
    "dedupe": [],
    "flags": [
-    "pdf_source_no_dart_filing"
+    "pdf_source_no_dart_filing",
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass",
-    "bs20_eok": 10562.78,
+    "bs20_eok": 13719.62,
     "ratio_bs20": 1.0,
-    "filing_bs_eok": null,
-    "ratio_filing_bs": null,
+    "filing_bs_eok": 13719.62,
+    "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": 0.0,
     "tag_tables": 0,
     "tag_cells": 0,
-    "tag_mismatch": 0
+    "tag_mismatch": 0,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -25034,11 +25051,24 @@
     "11": 257.52,
     "12": 6.03,
     "13": 0.0,
+    "14": 13456.07,
+    "15": 13719.62
+   },
+   "evidence": "업무보고서식 재무상태표 PDF p60 1. 보험계약부채 1,056,278,135,300원 (= 가. 잔여보장요소 1,029,923,017,245 + 나. 발생사고요소 26,355,118,055) + PDF p62 IV. 특별계정부채 315,683,776,384원 = 1,371,961,911,684원 (D2)",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
     "14": 10299.23,
     "15": 10562.78
    },
-   "evidence": null,
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원); the prior-year-end column of the same page equals the DART 2024.4Q cell"
+   "components_won": {
+    "general_account_보험계약부채_D1": 1056278135300,
+    "general_account_잔여보장요소": 1029923017245,
+    "general_account_발생사고요소": 26355118055,
+    "특별계정부채_SA": 315683776384,
+    "D2_D1_plus_SA": 1371961911684
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR0100",
@@ -25064,18 +25094,20 @@
    "dropped_tables": [],
    "dedupe": [],
    "flags": [
-    "pdf_source_no_dart_filing"
+    "pdf_source_no_dart_filing",
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass",
-    "bs20_eok": 10558.39,
+    "bs20_eok": 13816.51,
     "ratio_bs20": 1.0,
-    "filing_bs_eok": null,
-    "ratio_filing_bs": null,
+    "filing_bs_eok": 13816.51,
+    "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": 0.0,
     "tag_tables": 0,
     "tag_cells": 0,
-    "tag_mismatch": 0
+    "tag_mismatch": 0,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -25083,11 +25115,24 @@
     "11": 271.38,
     "12": 6.45,
     "13": 0.0,
+    "14": 13538.69,
+    "15": 13816.51
+   },
+   "evidence": "업무보고서식 재무상태표 PDF p32 1. 보험계약부채 1,055,839,071,905원 (= 가. 잔여보장요소 1,028,056,607,677 + 나. 발생사고요소 27,782,464,228) + PDF p34 IV. 특별계정부채 325,812,255,773원 = 1,381,651,327,678원 (D2)",
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
     "14": 10280.57,
     "15": 10558.39
    },
-   "evidence": null,
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원); the prior-year-end column of the same page equals the DART 2024.4Q cell"
+   "components_won": {
+    "general_account_보험계약부채_D1": 1055839071905,
+    "general_account_잔여보장요소": 1028056607677,
+    "general_account_발생사고요소": 27782464228,
+    "특별계정부채_SA": 325812255773,
+    "D2_D1_plus_SA": 1381651327678
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR1101",
@@ -27682,19 +27727,20 @@
    "dedupe": [],
    "flags": [
     "pdf_source_no_dart_filing",
-    "general_account_basis"
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass",
-    "bs20_eok": 8460.17,
+    "bs20_eok": 11650.57,
     "ratio_bs20": 1.0,
-    "filing_bs_eok": 8460.17,
+    "filing_bs_eok": 11650.57,
     "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": 0.0,
     "tag_tables": 0,
     "tag_cells": 0,
     "tag_mismatch": 0,
-    "bs20_master_disagrees": false
+    "bs20_master_disagrees": false,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -27702,17 +27748,30 @@
     "11": 208.73,
     "12": 2.07,
     "13": 0.0,
-    "14": 8249.37,
-    "15": 8460.17
+    "14": 11439.77,
+    "15": 11650.57
    },
-   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 846,016,693,679 = 가. 잔여보장요소 824,937,077,335 + 나. 발생사고요소 21,079,616,344 (1) 최선추정 20,872,556,945 (2) 위험조정 207,059,399 (원)",
+   "evidence": "업무보고서식 재무상태표 PDF p10 1. 보험계약부채 846,016,693,679원 (= 가. 잔여보장요소 824,937,077,335 + 나. 발생사고요소 21,079,616,344) + PDF p10 IV. 특별계정부채 319,040,371,000원 = 1,165,057,064,679원 (D2)",
    "prior_year_end_column_eok": {
     "total": 8072.22,
     "lic": 207.75,
     "bel": 205.63,
     "ra": 2.12
    },
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
+    "14": 8249.37,
+    "15": 8460.17
+   },
+   "components_won": {
+    "general_account_보험계약부채_D1": 846016693679,
+    "general_account_잔여보장요소": 824937077335,
+    "general_account_발생사고요소": 21079616344,
+    "특별계정부채_SA": 319040371000,
+    "D2_D1_plus_SA": 1165057064679
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR0100",
@@ -27737,20 +27796,21 @@
    "dedupe": [],
    "flags": [
     "pdf_source_no_dart_filing",
-    "general_account_basis",
-    "bs20_master_absent_filing_anchor_used"
+    "bs20_master_absent_filing_anchor_used",
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass_filing_anchor",
     "bs20_eok": null,
     "ratio_bs20": null,
-    "filing_bs_eok": 8364.77,
+    "filing_bs_eok": 11561.41,
     "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": 0.0,
     "tag_tables": 0,
     "tag_cells": 0,
     "tag_mismatch": 0,
-    "bs20_master_disagrees": false
+    "bs20_master_disagrees": false,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -27758,17 +27818,30 @@
     "11": 205.44,
     "12": 2.08,
     "13": 0.0,
-    "14": 8157.25,
-    "15": 8364.77
+    "14": 11353.9,
+    "15": 11561.41
    },
-   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 836,476,647,018 = 가. 잔여보장요소 815,725,033,962 + 나. 발생사고요소 20,751,613,057 (1) 최선추정 20,543,589,252 (2) 위험조정 208,023,805 (원)",
+   "evidence": "업무보고서식 재무상태표 PDF p44 1. 보험계약부채 836,476,647,018원 (= 가. 잔여보장요소 815,725,033,962 + 나. 발생사고요소 20,751,613,057) + PDF p45 IV. 특별계정부채 319,664,747,532원 = 1,156,141,394,550원 (D2)",
    "prior_year_end_column_eok": {
     "total": 8072.22,
     "lic": 207.75,
     "bel": 205.63,
     "ra": 2.12
    },
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
+    "14": 8157.25,
+    "15": 8364.77
+   },
+   "components_won": {
+    "general_account_보험계약부채_D1": 836476647018,
+    "general_account_잔여보장요소": 815725033962,
+    "general_account_발생사고요소": 20751613057,
+    "특별계정부채_SA": 319664747532,
+    "D2_D1_plus_SA": 1156141394550
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR0100",
@@ -27793,20 +27866,21 @@
    "dedupe": [],
    "flags": [
     "pdf_source_no_dart_filing",
-    "general_account_basis",
-    "bs20_master_absent_filing_anchor_used"
+    "bs20_master_absent_filing_anchor_used",
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass_filing_anchor",
     "bs20_eok": null,
     "ratio_bs20": null,
-    "filing_bs_eok": 8153.36,
+    "filing_bs_eok": 11229.62,
     "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": 0.0,
     "tag_tables": 0,
     "tag_cells": 0,
     "tag_mismatch": 0,
-    "bs20_master_disagrees": false
+    "bs20_master_disagrees": false,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -27814,17 +27888,30 @@
     "11": 212.37,
     "12": 2.21,
     "13": 0.0,
-    "14": 7938.79,
-    "15": 8153.36
+    "14": 11015.04,
+    "15": 11229.62
    },
-   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 815,336,273,433 = 가. 잔여보장요소 793,878,866,142 + 나. 발생사고요소 21,457,407,291 (1) 최선추정 21,236,790,388 (2) 위험조정 220,616,903 (원)",
+   "evidence": "업무보고서식 재무상태표 PDF p10 1. 보험계약부채 815,336,273,433원 (= 가. 잔여보장요소 793,878,866,142 + 나. 발생사고요소 21,457,407,291) + PDF p10 IV. 특별계정부채 307,625,565,257원 = 1,122,961,838,690원 (D2)",
    "prior_year_end_column_eok": {
     "total": 8072.22,
     "lic": 207.75,
     "bel": 205.63,
     "ra": 2.12
    },
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
+    "14": 7938.79,
+    "15": 8153.36
+   },
+   "components_won": {
+    "general_account_보험계약부채_D1": 815336273433,
+    "general_account_잔여보장요소": 793878866142,
+    "general_account_발생사고요소": 21457407291,
+    "특별계정부채_SA": 307625565257,
+    "D2_D1_plus_SA": 1122961838690
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR0100",
@@ -27849,19 +27936,20 @@
    "dedupe": [],
    "flags": [
     "pdf_source_no_dart_filing",
-    "general_account_basis"
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass",
-    "bs20_eok": 9216.55,
+    "bs20_eok": 12392.86,
     "ratio_bs20": 1.0,
-    "filing_bs_eok": 9216.55,
+    "filing_bs_eok": 12392.86,
     "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": -0.01,
     "tag_tables": 0,
     "tag_cells": 0,
     "tag_mismatch": 0,
-    "bs20_master_disagrees": false
+    "bs20_master_disagrees": false,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -27869,17 +27957,30 @@
     "11": 227.31,
     "12": 5.02,
     "13": 0.0,
-    "14": 8984.22,
-    "15": 9216.55
+    "14": 12160.54,
+    "15": 12392.86
    },
-   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 921,654,878,542 = 가. 잔여보장요소 898,422,436,475 + 나. 발생사고요소 23,232,442,067 (1) 최선추정 22,730,669,281 (2) 위험조정 501,772,786 (원)",
+   "evidence": "업무보고서식 재무상태표 PDF p14 1. 보험계약부채 921,654,878,542원 (= 가. 잔여보장요소 898,422,436,475 + 나. 발생사고요소 23,232,442,067) + PDF p14 IV. 특별계정부채 317,631,464,243원 = 1,239,286,342,785원 (D2)",
    "prior_year_end_column_eok": {
     "total": 9064.48,
     "lic": 222.82,
     "bel": 218.03,
     "ra": 4.79
    },
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
+    "14": 8984.22,
+    "15": 9216.55
+   },
+   "components_won": {
+    "general_account_보험계약부채_D1": 921654878542,
+    "general_account_잔여보장요소": 898422436475,
+    "general_account_발생사고요소": 23232442067,
+    "특별계정부채_SA": 317631464243,
+    "D2_D1_plus_SA": 1239286342785
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR0100",
@@ -27904,20 +28005,21 @@
    "dedupe": [],
    "flags": [
     "pdf_source_no_dart_filing",
-    "general_account_basis",
-    "bs20_master_absent_filing_anchor_used"
+    "bs20_master_absent_filing_anchor_used",
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass_filing_anchor",
     "bs20_eok": null,
     "ratio_bs20": null,
-    "filing_bs_eok": 9579.2,
+    "filing_bs_eok": 12744.61,
     "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": -0.01,
     "tag_tables": 0,
     "tag_cells": 0,
     "tag_mismatch": 0,
-    "bs20_master_disagrees": false
+    "bs20_master_disagrees": false,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -27925,17 +28027,30 @@
     "11": 230.46,
     "12": 4.97,
     "13": 0.0,
-    "14": 9343.77,
-    "15": 9579.2
+    "14": 12509.19,
+    "15": 12744.61
    },
-   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 957,919,799,083 = 가. 잔여보장요소 934,377,455,666 + 나. 발생사고요소 23,542,343,417 (1) 최선추정 23,045,519,225 (2) 위험조정 496,824,192 (원)",
+   "evidence": "업무보고서식 재무상태표 PDF p55 1. 보험계약부채 957,919,799,083원 (= 가. 잔여보장요소 934,377,455,666 + 나. 발생사고요소 23,542,343,417) + PDF p56 IV. 특별계정부채 316,541,318,851원 = 1,274,461,117,934원 (D2)",
    "prior_year_end_column_eok": {
     "total": 9064.48,
     "lic": 222.82,
     "bel": 218.03,
     "ra": 4.79
    },
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
+    "14": 9343.77,
+    "15": 9579.2
+   },
+   "components_won": {
+    "general_account_보험계약부채_D1": 957919799083,
+    "general_account_잔여보장요소": 934377455666,
+    "general_account_발생사고요소": 23542343417,
+    "특별계정부채_SA": 316541318851,
+    "D2_D1_plus_SA": 1274461117934
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR0100",
@@ -27960,19 +28075,20 @@
    "dedupe": [],
    "flags": [
     "pdf_source_no_dart_filing",
-    "general_account_basis"
+    "general_plus_special_account_basis"
    ],
    "checks": {
     "r_lic1": "pass",
-    "bs20_eok": 10012.61,
+    "bs20_eok": 13001.92,
     "ratio_bs20": 1.0,
-    "filing_bs_eok": 10012.61,
+    "filing_bs_eok": 13001.92,
     "ratio_filing_bs": 1.0,
     "r_lic3_gap_eok": -0.0,
     "tag_tables": 0,
     "tag_cells": 0,
     "tag_mismatch": 0,
-    "bs20_master_disagrees": false
+    "bs20_master_disagrees": false,
+    "filing_bs_basis": "D2 = 일반계정 1.보험계약부채 + IV.특별계정부채 (K-IFRS 서식 「보험계약부채」와 같은 정의)"
    },
    "net_lrc_eok": null,
    "items_eok": {
@@ -27980,17 +28096,30 @@
     "11": 229.13,
     "12": 5.08,
     "13": 0.0,
-    "14": 9778.4,
-    "15": 10012.61
+    "14": 12767.71,
+    "15": 13001.92
    },
-   "evidence": "업무보고서식 재무상태표 1. 보험계약부채 1,001,261,488,868 = 가. 잔여보장요소 977,840,406,334 + 나. 발생사고요소 23,421,082,534 (1) 최선추정 22,913,107,371 (2) 위험조정 507,975,163 (원)",
+   "evidence": "업무보고서식 재무상태표 PDF p29 1. 보험계약부채 1,001,261,488,868원 (= 가. 잔여보장요소 977,840,406,334 + 나. 발생사고요소 23,421,082,534) + PDF p30 IV. 특별계정부채 298,931,010,670원 = 1,300,192,499,538원 (D2)",
    "prior_year_end_column_eok": {
     "total": 9064.48,
     "lic": 222.82,
     "bel": 218.03,
     "ra": 4.79
    },
-   "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)"
+   "note": "업무보고서식 재무상태표 「1. 보험계약부채(가. 잔여보장요소 · 나. 발생사고요소) + IV. 특별계정부채」(원): items 14 and 15 contain the special-account 변액 liabilities like the DART year-end cells and the 2026 K-IFRS 서식; items 10-13 (LIC) are the general-account values, which equal the DART year-end LIC",
+   "general_account_values_eok": {
+    "14": 9778.4,
+    "15": 10012.61
+   },
+   "components_won": {
+    "general_account_보험계약부채_D1": 1001261488868,
+    "general_account_잔여보장요소": 977840406334,
+    "general_account_발생사고요소": 23421082534,
+    "특별계정부채_SA": 298931010670,
+    "D2_D1_plus_SA": 1300192499538
+   },
+   "d2_applied_at": "20261012T0425Z",
+   "d2_note": "owner 2026-10-12 결정 ⑦(정의 통일): 항목 14·15 를 특별계정 변액 보험계약부채를 포함한 기준(D2)으로 다시 계산했다. 연말 DART 셀(2023.4Q·2024.4Q·2025.4Q)과 2026 K-IFRS 서식의 「보험계약부채」가 같은 정의다. 발생사고요소(항목 10~13)는 특별계정에 없다: 일반계정 LIC 가 연말 DART LIC 와 같다(2023.12.31 222.82 대 222.83, 2024.12.31 250.05 대 250.05). D2 대 연말 K-IFRS 라인 차 -0.110 %(2023.4Q) · -0.074 %(2024.4Q). 정정 전(일반계정) 값은 general_account_values_eok."
   },
   {
    "company_code": "KR1101",
@@ -42053,6 +42182,13 @@
    "emitted_by": "scripts/load_ilp_hannover_2023_3q_20261012.py",
    "ticket": "inbox/parser/20261012T0120Z__orchestrator__KR1101-KR1108_2023.1Q-2026.2Q__reinsurer_csm_ilp_sensitivity_resweep.md",
    "note": "KR1104 2023.3Q items 10-15 read by eye from the scanned FY2023_Q3 경영공시"
+  },
+  {
+   "stage": "chubb_d2_20261012",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "note": "Chubb (KR0100) items 14/15 of nine mid-quarters (2023.1Q~2025.3Q) restated from the general-account basis to D2 (= + 특별계정부채); spec data/_derived/ifrs17_owner_followups_20261012/chubb_d2_spec_ilp.json; the same round moves IFRS17_BS item 20 of the six quarters that have one"
   }
  ],
  "indirect_lic_cells": [
@@ -47516,6 +47652,315 @@
    "ticket": "inbox/parser/20261011T1000Z__orchestrator__MULTI_2023.1Q-2026.2Q__ilp_leftovers_hana_attachments.md",
    "at": "20261011T0155Z",
    "emitted_by": "scripts/fix_20261011_ilp_decimal_truncation.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2023.1Q",
+   "items": {
+    "14": {
+     "old": 8249.37,
+     "new": 11439.77
+    },
+    "15": {
+     "old": 8460.17,
+     "new": 11650.57
+    }
+   },
+   "source_file": "data/disclosure/FY2023_Q1/raw/KR0100_처브라이프생명보험.pdf",
+   "page": {
+    "D1": [
+     10
+    ],
+    "SA": [
+     10
+    ]
+   },
+   "printed_row": "1. 보험계약부채 846,016,693,679 + IV. 특별계정부채 319,040,371,000",
+   "printed_numbers": [
+    846016693679,
+    319040371000,
+    824937077335,
+    21079616344
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2023.2Q",
+   "items": {
+    "14": {
+     "old": 8157.25,
+     "new": 11353.9
+    },
+    "15": {
+     "old": 8364.77,
+     "new": 11561.41
+    }
+   },
+   "source_file": "data/disclosure/FY2023_Q2/raw/KR0100_처브라이프생명보험.pdf",
+   "page": {
+    "D1": [
+     44
+    ],
+    "SA": [
+     45
+    ]
+   },
+   "printed_row": "1. 보험계약부채 836,476,647,018 + IV. 특별계정부채 319,664,747,532",
+   "printed_numbers": [
+    836476647018,
+    319664747532,
+    815725033962,
+    20751613057
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2023.3Q",
+   "items": {
+    "14": {
+     "old": 7938.79,
+     "new": 11015.04
+    },
+    "15": {
+     "old": 8153.36,
+     "new": 11229.62
+    }
+   },
+   "source_file": "data/disclosure/FY2023_Q3/raw/KR0100_처브라이프생명보험.pdf",
+   "page": {
+    "D1": [
+     10
+    ],
+    "SA": [
+     10
+    ]
+   },
+   "printed_row": "1. 보험계약부채 815,336,273,433 + IV. 특별계정부채 307,625,565,257",
+   "printed_numbers": [
+    815336273433,
+    307625565257,
+    793878866142,
+    21457407291
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2024.1Q",
+   "items": {
+    "14": {
+     "old": 8984.22,
+     "new": 12160.54
+    },
+    "15": {
+     "old": 9216.55,
+     "new": 12392.86
+    }
+   },
+   "source_file": "data/disclosure/FY2024_Q1/raw/KR0100_처브라이프생명보험_amended.pdf",
+   "page": {
+    "D1": [
+     14
+    ],
+    "SA": [
+     14,
+     15
+    ]
+   },
+   "printed_row": "1. 보험계약부채 921,654,878,542 + IV. 특별계정부채 317,631,464,243",
+   "printed_numbers": [
+    921654878542,
+    317631464243,
+    898422436475,
+    23232442067
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2024.2Q",
+   "items": {
+    "14": {
+     "old": 9343.77,
+     "new": 12509.19
+    },
+    "15": {
+     "old": 9579.2,
+     "new": 12744.61
+    }
+   },
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR0100_처브라이프생명보험.pdf",
+   "page": {
+    "D1": [
+     55,
+     56
+    ],
+    "SA": [
+     56,
+     58
+    ]
+   },
+   "printed_row": "1. 보험계약부채 957,919,799,083 + IV. 특별계정부채 316,541,318,851",
+   "printed_numbers": [
+    957919799083,
+    316541318851,
+    934377455666,
+    23542343417
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2024.3Q",
+   "items": {
+    "14": {
+     "old": 9778.4,
+     "new": 12767.71
+    },
+    "15": {
+     "old": 10012.61,
+     "new": 13001.92
+    }
+   },
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR0100_처브라이프생명보험_amended.pdf",
+   "page": {
+    "D1": [
+     29
+    ],
+    "SA": [
+     30
+    ]
+   },
+   "printed_row": "1. 보험계약부채 1,001,261,488,868 + IV. 특별계정부채 298,931,010,670",
+   "printed_numbers": [
+    1001261488868,
+    298931010670,
+    977840406334,
+    23421082534
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2025.1Q",
+   "items": {
+    "14": {
+     "old": 10456.41,
+     "new": 13345.35
+    },
+    "15": {
+     "old": 10717.25,
+     "new": 13606.19
+    }
+   },
+   "source_file": "data/disclosure/FY2025_Q1/raw/KR0100_처브라이프생명보험.pdf",
+   "page": {
+    "D1": [
+     32
+    ],
+    "SA": [
+     34
+    ]
+   },
+   "printed_row": "1. 보험계약부채 1,071,724,928,099 + IV. 특별계정부채 288,894,240,196",
+   "printed_numbers": [
+    1071724928099,
+    288894240196,
+    1045640592317,
+    26084335782
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2025.2Q",
+   "items": {
+    "14": {
+     "old": 10299.23,
+     "new": 13456.07
+    },
+    "15": {
+     "old": 10562.78,
+     "new": 13719.62
+    }
+   },
+   "source_file": "data/disclosure/FY2025_Q2/raw/KR0100_처브라이프생명보험.pdf",
+   "page": {
+    "D1": [
+     60
+    ],
+    "SA": [
+     62
+    ]
+   },
+   "printed_row": "1. 보험계약부채 1,056,278,135,300 + IV. 특별계정부채 315,683,776,384",
+   "printed_numbers": [
+    1056278135300,
+    315683776384,
+    1029923017245,
+    26355118055
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
+  },
+  {
+   "company_code": "KR0100",
+   "quarter": "2025.3Q",
+   "items": {
+    "14": {
+     "old": 10280.57,
+     "new": 13538.69
+    },
+    "15": {
+     "old": 10558.39,
+     "new": 13816.51
+    }
+   },
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR0100_처브라이프생명보험.pdf",
+   "page": {
+    "D1": [
+     32
+    ],
+    "SA": [
+     34
+    ]
+   },
+   "printed_row": "1. 보험계약부채 1,055,839,071,905 + IV. 특별계정부채 325,812,255,773",
+   "printed_numbers": [
+    1055839071905,
+    325812255773,
+    1028056607677,
+    27782464228
+   ],
+   "reason": "owner 2026-10-12 decision (7): unify the definition of items 14/15 with the year-end cells (special account included, D2 = D1 + SA); LIC items 10-13 unchanged",
+   "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
+   "at": "20261012T0425Z",
+   "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py"
   }
  ]
 }

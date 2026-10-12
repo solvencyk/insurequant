@@ -1,0 +1,152 @@
+{
+ "master": "CSM_amortization.json",
+ "quarter": "2025.4Q",
+ "cells_changed": 18,
+ "sha256_before": "67baba9b7cba341115444474aee5d92dd86b7884c2032485bc2951de3d21d953",
+ "sha256_after": "f60cab6451ba5c94bbd195b45c4ed8e27155455290c576e17095c00b9fc20c1e",
+ "companies": [
+  {
+   "code": "KR0080",
+   "name": "에이아이에이생명보험",
+   "source": "separate filing back table (9년·10년 columns)",
+   "cells": [
+    {
+     "경과차년": 9,
+     "old": null,
+     "new": 613.2,
+     "exact_eok": 613.17
+    },
+    {
+     "경과차년": 10,
+     "old": null,
+     "new": 565.6,
+     "exact_eok": 565.56
+    }
+   ]
+  },
+  {
+   "code": "KR0100",
+   "name": "처브라이프생명보험",
+   "source": "separate filing back table (9년·10년 columns)",
+   "cells": [
+    {
+     "경과차년": 9,
+     "old": null,
+     "new": 21.0,
+     "exact_eok": 21.0
+    },
+    {
+     "경과차년": 10,
+     "old": null,
+     "new": 20.4,
+     "exact_eok": 20.44
+    }
+   ]
+  },
+  {
+   "code": "KR0095",
+   "name": "메트라이프생명보험",
+   "source": "separate filing back table (9년·10년 columns)",
+   "cells": [
+    {
+     "경과차년": 9,
+     "old": null,
+     "new": 1042.9,
+     "exact_eok": 1042.87172
+    },
+    {
+     "경과차년": 10,
+     "old": null,
+     "new": 960.0,
+     "exact_eok": 959.96153
+    }
+   ]
+  },
+  {
+   "code": "KR0075",
+   "name": "비엔피파리바카디프생명보험",
+   "source": "separate filing back table (9년·10년 columns)",
+   "cells": [
+    {
+     "경과차년": 9,
+     "old": null,
+     "new": 11.1,
+     "exact_eok": 11.05591
+    },
+    {
+     "경과차년": 10,
+     "old": null,
+     "new": 9.0,
+     "exact_eok": 9.04199
+    }
+   ]
+  },
+  {
+   "code": "KR0068",
+   "name": "한화생명",
+   "source": "separate filing single wide table (replaces the consolidated table the panel picked)",
+   "cells": [
+    {
+     "경과차년": 1,
+     "old": 4484.3,
+     "new": 4244.1,
+     "exact_eok": 4244.11
+    },
+    {
+     "경과차년": 2,
+     "old": 3933.4,
+     "new": 3762.3,
+     "exact_eok": 3762.28
+    },
+    {
+     "경과차년": 3,
+     "old": 3579.4,
+     "new": 3433.5,
+     "exact_eok": 3433.46
+    },
+    {
+     "경과차년": 4,
+     "old": 3310.8,
+     "new": 3183.5,
+     "exact_eok": 3183.5
+    },
+    {
+     "경과차년": 5,
+     "old": 3065.0,
+     "new": 2953.3,
+     "exact_eok": 2953.26
+    },
+    {
+     "경과차년": 6,
+     "old": 2888.5,
+     "new": 2790.3,
+     "exact_eok": 2790.32
+    },
+    {
+     "경과차년": 7,
+     "old": 2734.4,
+     "new": 2648.1,
+     "exact_eok": 2648.05
+    },
+    {
+     "경과차년": 8,
+     "old": 2599.2,
+     "new": 2523.2,
+     "exact_eok": 2523.22
+    },
+    {
+     "경과차년": 9,
+     "old": 2474.2,
+     "new": 2407.4,
+     "exact_eok": 2407.39
+    },
+    {
+     "경과차년": 10,
+     "old": 2330.8,
+     "new": 2272.0,
+     "exact_eok": 2272.0
+    }
+   ]
+  }
+ ]
+}

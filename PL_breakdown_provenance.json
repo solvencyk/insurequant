@@ -32387,12 +32387,12 @@
   },
   {
    "company_code": "KR1101",
-   "quarter": "2023.4Q",
    "item_block": "income_statement",
-   "source_id": "DISCLOSURE",
-   "source_file": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
-   "published_items": 7,
+   "published_items": 8,
+   "quarter": "2023.4Q",
+   "resolution": "disclosure_summary_pl",
    "schema_items": 24,
+   "source_file": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
    "source_files": [
     {
      "file": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf",
@@ -32406,22 +32406,24 @@
      ]
     },
     {
+     "column": "current",
      "file": "data/disclosure/FY2023_Q4/raw/KR1101_뮌헨재보험.pdf",
      "how": "disclosure_summary_pl_reinsurer",
      "items": [
+      17,
       20,
       21
      ],
      "page": 9,
      "printed": {
+      "17": "0",
       "20": "731",
       "21": "2"
      },
-     "unit": "억원",
-     "column": "current"
+     "unit": "억원"
     }
    ],
-   "resolution": "disclosure_summary_pl"
+   "source_id": "DISCLOSURE"
   },
   {
    "company_code": "KR1101",
@@ -33767,12 +33769,12 @@
   },
   {
    "company_code": "KR1103",
-   "quarter": "2024.3Q",
    "item_block": "income_statement",
-   "source_id": "DISCLOSURE",
-   "source_file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
-   "published_items": 7,
+   "published_items": 8,
+   "quarter": "2024.3Q",
+   "resolution": "disclosure_summary_pl",
    "schema_items": 24,
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
    "source_files": [
     {
      "file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
@@ -33786,23 +33788,25 @@
      ]
     },
     {
+     "column": "prior_year_column_of_later_filing",
      "file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
      "how": "disclosure_summary_pl_reinsurer",
      "items": [
       17,
-      20
+      20,
+      21
      ],
+     "later_filing_quarter": "2025.3Q",
      "page": 4,
      "printed": {
       "17": "37",
-      "20": "66"
+      "20": "66",
+      "21": "(0)"
      },
-     "unit": "억원",
-     "column": "prior_year_column_of_later_filing",
-     "later_filing_quarter": "2025.3Q"
+     "unit": "억원"
     }
    ],
-   "resolution": "disclosure_summary_pl"
+   "source_id": "DISCLOSURE"
   },
   {
    "company_code": "KR1103",
@@ -33938,12 +33942,12 @@
   },
   {
    "company_code": "KR1103",
-   "quarter": "2025.3Q",
    "item_block": "income_statement",
-   "source_id": "DISCLOSURE",
-   "source_file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
-   "published_items": 7,
+   "published_items": 8,
+   "quarter": "2025.3Q",
+   "resolution": "disclosure_summary_pl",
    "schema_items": 24,
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
    "source_files": [
     {
      "file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
@@ -33957,22 +33961,24 @@
      ]
     },
     {
+     "column": "current",
      "file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf",
      "how": "disclosure_summary_pl_reinsurer",
      "items": [
       17,
-      20
+      20,
+      21
      ],
      "page": 4,
      "printed": {
       "17": "28",
-      "20": "(39)"
+      "20": "(39)",
+      "21": "0"
      },
-     "unit": "억원",
-     "column": "current"
+     "unit": "억원"
     }
    ],
-   "resolution": "disclosure_summary_pl"
+   "source_id": "DISCLOSURE"
   },
   {
    "company_code": "KR1103",
@@ -34657,12 +34663,12 @@
   },
   {
    "company_code": "KR1105",
-   "quarter": "2023.2Q",
    "item_block": "income_statement",
-   "source_id": "DISCLOSURE",
-   "source_file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
-   "published_items": 7,
+   "published_items": 8,
+   "quarter": "2023.2Q",
+   "resolution": "disclosure_summary_pl",
    "schema_items": 24,
+   "source_file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
    "source_files": [
     {
      "file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
@@ -34682,23 +34688,25 @@
      ]
     },
     {
+     "column": "prior_year_column_of_later_filing",
      "file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf",
      "how": "disclosure_summary_pl_reinsurer",
      "items": [
       17,
-      20
+      20,
+      21
      ],
+     "later_filing_quarter": "2024.2Q",
      "page": 5,
      "printed": {
       "17": "35",
-      "20": "45"
+      "20": "45",
+      "21": "0"
      },
-     "unit": "억원",
-     "column": "prior_year_column_of_later_filing",
-     "later_filing_quarter": "2024.2Q"
+     "unit": "억원"
     }
    ],
-   "resolution": "disclosure_summary_pl"
+   "source_id": "DISCLOSURE"
   },
   {
    "company_code": "KR1105",
@@ -35056,12 +35064,12 @@
   },
   {
    "company_code": "KR1105",
-   "quarter": "2025.3Q",
    "item_block": "income_statement",
-   "source_id": "DISCLOSURE",
-   "source_file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
-   "published_items": 7,
+   "published_items": 8,
+   "quarter": "2025.3Q",
+   "resolution": "disclosure_summary_pl",
    "schema_items": 24,
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
    "source_files": [
     {
      "file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
@@ -35075,22 +35083,24 @@
      ]
     },
     {
+     "column": "current",
      "file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf",
      "how": "disclosure_summary_pl_reinsurer",
      "items": [
       17,
-      20
+      20,
+      21
      ],
      "page": 4,
      "printed": {
       "17": "79",
-      "20": "251"
+      "20": "251",
+      "21": "0"
      },
-     "unit": "억원",
-     "column": "current"
+     "unit": "억원"
     }
    ],
-   "resolution": "disclosure_summary_pl"
+   "source_id": "DISCLOSURE"
   },
   {
    "company_code": "KR1105",
@@ -35856,12 +35866,12 @@
   },
   {
    "company_code": "KR1107",
-   "quarter": "2023.3Q",
    "item_block": "income_statement",
-   "source_id": "DISCLOSURE",
-   "source_file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
-   "published_items": 7,
+   "published_items": 8,
+   "quarter": "2023.3Q",
+   "resolution": "disclosure_summary_pl",
    "schema_items": 24,
+   "source_file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
    "source_files": [
     {
      "file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
@@ -35875,23 +35885,25 @@
      ]
     },
     {
+     "column": "prior_year_column_of_later_filing",
      "file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf",
      "how": "disclosure_summary_pl_reinsurer",
      "items": [
       17,
-      20
+      20,
+      21
      ],
+     "later_filing_quarter": "2024.3Q",
      "page": 4,
      "printed": {
       "17": "33",
-      "20": "-46"
+      "20": "-46",
+      "21": "0"
      },
-     "unit": "억원",
-     "column": "prior_year_column_of_later_filing",
-     "later_filing_quarter": "2024.3Q"
+     "unit": "억원"
     }
    ],
-   "resolution": "disclosure_summary_pl"
+   "source_id": "DISCLOSURE"
   },
   {
    "company_code": "KR1107",
@@ -36184,12 +36196,12 @@
   },
   {
    "company_code": "KR1107",
-   "quarter": "2025.3Q",
    "item_block": "income_statement",
-   "source_id": "DISCLOSURE",
-   "source_file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
-   "published_items": 7,
+   "published_items": 8,
+   "quarter": "2025.3Q",
+   "resolution": "disclosure_summary_pl",
    "schema_items": 24,
+   "source_file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
    "source_files": [
     {
      "file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
@@ -36203,22 +36215,24 @@
      ]
     },
     {
+     "column": "current",
      "file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf",
      "how": "disclosure_summary_pl_reinsurer",
      "items": [
       17,
-      20
+      20,
+      21
      ],
      "page": 4,
      "printed": {
       "17": "55",
-      "20": "-9"
+      "20": "-9",
+      "21": "0"
      },
-     "unit": "억원",
-     "column": "current"
+     "unit": "억원"
     }
    ],
-   "resolution": "disclosure_summary_pl"
+   "source_id": "DISCLOSURE"
   },
   {
    "company_code": "KR1107",
@@ -37203,6 +37217,5 @@
  "merge_note_20261011_item4_lina6": "round-7 PL 항목 4(원수 CSM상각) 라이나생명 KR0074 6칸 적재(오케스트레이터 후속 발주, 2026-10-11 19:16): 2023.3Q(FY2024_Q3 전기 열 = 소급재작성 기준) · 2024.1Q · 2024.2Q · 2024.3Q · 2025.1Q · 2025.2Q. 값 = 경영공시 PDF 에 첨부된 재무제표 주석 '당(반)분기 및 전(반)분기 중 보험계약부채(자산)의 측정요소별 변동내역(단위:천원)' 의 '제공한 서비스 반영 인식한 보험계약마진' 합계(CSM 3열 합), 천원 -> 백만원, 양수, 누계. 라이나 2023.1Q·2Q 는 소급재작성 전 기준만 인쇄돼 owner 결정 대기라 안 채웠다. 계보 표식은 라운드 6 과 같다 (source_id=DISCLOSURE = 경로 계보, how=resolution=fs_note_csm_amort, 쪽·인쇄값 동반). 근거·재현 data/_derived/bspl_apply_20261011/item4_reinsurers_lina6/spec_lina6.json · scripts/bspl_apply_item4_lina6.py",
  "merge_note_20261012_reinsurer_resweep": "round-8 재보사 PL 공란 재스윕(inbox/parser/20261012T0110Z, 2026-10-12 00:45): KR1101~KR1108 감독회계 총괄 요약 포괄손익계산서(2-1/3-2)의 투자손익(17)·영업이익(20)·영업외손익(21) 306칸 + 기타사업비용(16) 1칸 신규 적재 -- 해당 블록 source_files 에 how=disclosure_summary_pl_reinsurer 항목을 추가하고 published_items 를 늘렸다 (item 17/20/21 은 DART 정의와 다를 수 있어 CONCEPT_REGISTRY pl_disclosure_vs_dart 의 reference_only 이나, 재보사 8곳은 DART 사업보고서가 없어 한 회사 시계열 안에서 개념이 섞이지 않는다). 근거·재현 data/_derived/reinsurer_resweep_20261012/ (s30_final_parse.py → s31_decide.py → s33_plan.py) · scripts/reinsurer_resweep_pl_apply.py",
  "merge_note_20261012_item4_addon": "round-8 add-on(조정자 지시, 2026-10-12 02:14): PL 항목 4(원수 CSM상각 슬롯) 3칸 = KR1105 2025.4Q(FY2025_Q4 p136 주석 12 합계 (39,731,961)천원) · KR1104 2025.4Q(p123 (4) 1) 당기 (3,036,263,157)원) · KR1107 2023.4Q(FY2024 감사보고서 p51 (11,781,896,129)원). CSM 레인 57b7d78 이 올린 워터폴 항목 5 와 |값|/100 일치. 계보 표식은 2026-10-11 라운드 6 과 같다(how=resolution=fs_note_csm_amort). 재현 scripts/reinsurer_resweep_pl_item4_addon.py",
- "merge_note_20261012_withhold7": "재보사 인쇄된 0 7칸(PL_YTD_COLLAPSE_TO_ZERO) 보류 -- owner 등재 전까지 마스터에서 뺐다(조정자 결정 2026-10-12). 복원: scripts/reinsurer_resweep_pl_followup.py --restore7 --apply (상태 data/_derived/reinsurer_resweep_20261012/collapse7_state.json).",
  "merge_note_20261012_r1": "owner R1(2026-10-09, 재보사 포함): 최신 공시의 전기 칸 채택 -- 기존 11칸(스위스리 2023.2Q 22·24 · 2025.1Q·2Q 16 · 제네럴 2023.2Q 22·24 · 2023.3Q 24 · RGA 2023.3Q 1·22·23·24) + 같은 버킷의 새 17·20 3칸(제네럴 2023.3Q 17, RGA 2023.3Q 17·20)을 이듬해 같은 분기 공시의 전년동기 열로 교체. how=latest_prior_column_R1, 옛 값은 replaced_values. 재현 scripts/reinsurer_resweep_pl_followup.py --r1"
 }

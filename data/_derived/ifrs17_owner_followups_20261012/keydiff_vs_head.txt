@@ -1,0 +1,76 @@
+== CSM_amortization.json: HEAD 635 keys -> now 635 keys | removed 0 | added 0 | changed 18 | duplicate keys 0
+   changed ('KR0095', '2025.4Q', 9) {"상각액": [null, 1042.9]}
+   changed ('KR0095', '2025.4Q', 10) {"상각액": [null, 960.0]}
+   changed ('KR0075', '2025.4Q', 9) {"상각액": [null, 11.1]}
+   changed ('KR0075', '2025.4Q', 10) {"상각액": [null, 9.0]}
+   changed ('KR0080', '2025.4Q', 9) {"상각액": [null, 613.2]}
+   changed ('KR0080', '2025.4Q', 10) {"상각액": [null, 565.6]}
+   changed ('KR0100', '2025.4Q', 9) {"상각액": [null, 21.0]}
+   changed ('KR0100', '2025.4Q', 10) {"상각액": [null, 20.4]}
+   changed ('KR0068', '2025.4Q', 1) {"상각액": [4484.3, 4244.1]}
+   changed ('KR0068', '2025.4Q', 2) {"상각액": [3933.4, 3762.3]}
+   changed ('KR0068', '2025.4Q', 3) {"상각액": [3579.4, 3433.5]}
+   changed ('KR0068', '2025.4Q', 4) {"상각액": [3310.8, 3183.5]}
+   changed ('KR0068', '2025.4Q', 5) {"상각액": [3065.0, 2953.3]}
+   changed ('KR0068', '2025.4Q', 6) {"상각액": [2888.5, 2790.3]}
+   changed ('KR0068', '2025.4Q', 7) {"상각액": [2734.4, 2648.1]}
+   changed ('KR0068', '2025.4Q', 8) {"상각액": [2599.2, 2523.2]}
+   changed ('KR0068', '2025.4Q', 9) {"상각액": [2474.2, 2407.4]}
+   changed ('KR0068', '2025.4Q', 10) {"상각액": [2330.8, 2272.0]}
+== IFRS17_BS.json: HEAD 11016 keys -> now 11016 keys | removed 0 | added 0 | changed 6 | duplicate keys 0
+   changed ('KR0100', 20, '2023.1Q') {"값": [846016.693679, 1165057.064679]}
+   changed ('KR0100', 20, '2024.1Q') {"값": [921654.878542, 1239286.342785]}
+   changed ('KR0100', 20, '2024.3Q') {"값": [1001261.488868, 1300192.499538]}
+   changed ('KR0100', 20, '2025.1Q') {"값": [1071724.928099, 1360619.168295]}
+   changed ('KR0100', 20, '2025.2Q') {"값": [1056278.1353, 1371961.911684]}
+   changed ('KR0100', 20, '2025.3Q') {"값": [1055839.071905, 1381651.327678]}
+== insurance_liability_portfolio.json: HEAD 6335 keys -> now 6335 keys | removed 0 | added 0 | changed 18 | duplicate keys 0
+   changed ('KR0100', '2025.1Q', 14) {"값": [10456.41, 13345.35]}
+   changed ('KR0100', '2025.1Q', 15) {"값": [10717.25, 13606.19]}
+   changed ('KR0100', '2025.2Q', 14) {"값": [10299.23, 13456.07]}
+   changed ('KR0100', '2025.2Q', 15) {"값": [10562.78, 13719.62]}
+   changed ('KR0100', '2025.3Q', 14) {"값": [10280.57, 13538.69]}
+   changed ('KR0100', '2025.3Q', 15) {"값": [10558.39, 13816.51]}
+   changed ('KR0100', '2023.1Q', 14) {"값": [8249.37, 11439.77]}
+   changed ('KR0100', '2023.1Q', 15) {"값": [8460.17, 11650.57]}
+   changed ('KR0100', '2023.2Q', 14) {"값": [8157.25, 11353.9]}
+   changed ('KR0100', '2023.2Q', 15) {"값": [8364.77, 11561.41]}
+   changed ('KR0100', '2023.3Q', 14) {"값": [7938.79, 11015.04]}
+   changed ('KR0100', '2023.3Q', 15) {"값": [8153.36, 11229.62]}
+   changed ('KR0100', '2024.1Q', 14) {"값": [8984.22, 12160.54]}
+   changed ('KR0100', '2024.1Q', 15) {"값": [9216.55, 12392.86]}
+   changed ('KR0100', '2024.2Q', 14) {"값": [9343.77, 12509.19]}
+   changed ('KR0100', '2024.2Q', 15) {"값": [9579.2, 12744.61]}
+   changed ('KR0100', '2024.3Q', 14) {"값": [9778.4, 12767.71]}
+   changed ('KR0100', '2024.3Q', 15) {"값": [10012.61, 13001.92]}
+== PL_breakdown.json: HEAD 13794 keys -> now 13801 keys | removed 0 | added 7 | changed 1 | duplicate keys 0
+   added   ('KR1101', '17', '2023.4Q')
+   added   ('KR1103', '21', '2024.3Q')
+   added   ('KR1103', '21', '2025.3Q')
+   added   ('KR1105', '21', '2023.2Q')
+   added   ('KR1105', '21', '2025.3Q')
+   added   ('KR1107', '21', '2023.3Q')
+   added   ('KR1107', '21', '2025.3Q')
+   changed ('KR1105', '21', '2023.3Q') {"값_당분기": [null, 700.0]}
+== CSM_waterfall.json (not changed): HEAD 2358 keys -> now 2358 keys | removed 0 | added 0 | changed 0 | duplicate keys 0
+== CSM_waterfall_provenance.json cells: HEAD 357 keys -> now 357 keys | removed 0 | added 0 | changed 1 | duplicate keys 0
+   changed ('KR1107', '2023.4Q', 'csm_waterfall') {"note": [null, "영업양수 1,069억 포함, 인쇄값. 항목 4(가정 및 경험 조정) 950.77억은 잔차 항목이라 인쇄 CSM 변동표의 「2. 자산양수도」 CSM 1,069.43억(공정가치법 179.80 + 완전소급법 889.63)과 「보험계약마진을 변경하는 추정치 변동」 -118.67억(공정가치법 10.43 + 완전소급법 -129.10)을 함께 담는다(인쇄 기초 0, 2023 = 영업양수도 개시연도). 순수 가정 변동이 아니며 인쇄값 그대로 유지
+== insurance_liability_portfolio_provenance.json cells: HEAD 431 keys -> now 431 keys | removed 0 | added 0 | changed 9 | duplicate keys 0
+   changed ('KR0100', '2025.1Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass", "bs20_eok": 10717.25, "ratio_bs20": 1.0, "filing_bs_eok": null, "ratio_filing_bs": null, "r_lic3_gap_eok": 0.0, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0}, {"r_lic1": "pass", "bs20_eok": 13606.19, "ratio_bs20": 1.0, "fil
+   changed ('KR0100', '2025.2Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass", "bs20_eok": 10562.78, "ratio_bs20": 1.0, "filing_bs_eok": null, "ratio_filing_bs": null, "r_lic3_gap_eok": 0.0, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0}, {"r_lic1": "pass", "bs20_eok": 13719.62, "ratio_bs20": 1.0, "fil
+   changed ('KR0100', '2025.3Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass", "bs20_eok": 10558.39, "ratio_bs20": 1.0, "filing_bs_eok": null, "ratio_filing_bs": null, "r_lic3_gap_eok": 0.0, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0}, {"r_lic1": "pass", "bs20_eok": 13816.51, "ratio_bs20": 1.0, "fil
+   changed ('KR0100', '2023.1Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass", "bs20_eok": 8460.17, "ratio_bs20": 1.0, "filing_bs_eok": 8460.17, "ratio_filing_bs": 1.0, "r_lic3_gap_eok": 0.0, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0, "bs20_master_disagrees": false}, {"r_lic1": "pass", "bs20_eok": 
+   changed ('KR0100', '2023.2Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass_filing_anchor", "bs20_eok": null, "ratio_bs20": null, "filing_bs_eok": 8364.77, "ratio_filing_bs": 1.0, "r_lic3_gap_eok": 0.0, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0, "bs20_master_disagrees": false}, {"r_lic1": "pass_fi
+   changed ('KR0100', '2023.3Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass_filing_anchor", "bs20_eok": null, "ratio_bs20": null, "filing_bs_eok": 8153.36, "ratio_filing_bs": 1.0, "r_lic3_gap_eok": 0.0, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0, "bs20_master_disagrees": false}, {"r_lic1": "pass_fi
+   changed ('KR0100', '2024.1Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass", "bs20_eok": 9216.55, "ratio_bs20": 1.0, "filing_bs_eok": 9216.55, "ratio_filing_bs": 1.0, "r_lic3_gap_eok": -0.01, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0, "bs20_master_disagrees": false}, {"r_lic1": "pass", "bs20_eok"
+   changed ('KR0100', '2024.2Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass_filing_anchor", "bs20_eok": null, "ratio_bs20": null, "filing_bs_eok": 9579.2, "ratio_filing_bs": 1.0, "r_lic3_gap_eok": -0.01, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0, "bs20_master_disagrees": false}, {"r_lic1": "pass_f
+   changed ('KR0100', '2024.3Q', 'lic_pdf_bs') {"checks": [{"r_lic1": "pass", "bs20_eok": 10012.61, "ratio_bs20": 1.0, "filing_bs_eok": 10012.61, "ratio_filing_bs": 1.0, "r_lic3_gap_eok": -0.0, "tag_tables": 0, "tag_cells": 0, "tag_mismatch": 0, "bs20_master_disagrees": false}, {"r_lic1": "pass", "bs20_eok
+   value_corrections 6 -> 15 | backfills 20 -> 21 | other top-level keys equal: True
+== PL_breakdown_provenance.json cells: HEAD 1046 keys -> now 1046 keys | removed 0 | added 0 | changed 7 | duplicate keys 0
+   changed ('KR1101', '2023.4Q', 'income_statement') {"published_items": [7, 8], "source_files": [[{"file": "data/disclosure/FY2023_Q4/raw_aux/KR1101_뮌헨재보험__audit.pdf", "how": "disclosure_summary_pl", "items": [1, 16, 22, 23, 24]}, {"file": "data/disclosure/FY2023_Q4/raw/KR1101_뮌헨재보험.pdf", "how": "disclosure_sum
+   changed ('KR1103', '2024.3Q', 'income_statement') {"published_items": [7, 8], "source_files": [[{"file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf", "how": "disclosure_summary_pl", "items": [1, 16, 22, 23, 24]}, {"file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf", "how": "disclosure_summary_pl_r
+   changed ('KR1103', '2025.3Q', 'income_statement') {"published_items": [7, 8], "source_files": [[{"file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf", "how": "disclosure_summary_pl", "items": [1, 16, 22, 23, 24]}, {"file": "data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf", "how": "disclosure_summary_pl_r
+   changed ('KR1105', '2023.2Q', 'income_statement') {"published_items": [7, 8], "source_files": [[{"file": "data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf", "how": "disclosure_summary_pl", "items": [1, 22, 23, 24]}, {"file": "data/disclosure/FY2023_Q2/raw/KR1105_알지에이리인슈어런스.pdf", "how": "disclosure_summary_
+   changed ('KR1105', '2025.3Q', 'income_statement') {"published_items": [7, 8], "source_files": [[{"file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf", "how": "disclosure_summary_pl", "items": [1, 16, 22, 23, 24]}, {"file": "data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf", "how": "disclosure_summ
+   changed ('KR1107', '2023.3Q', 'income_statement') {"published_items": [7, 8], "source_files": [[{"file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf", "how": "disclosure_summary_pl", "items": [1, 16, 22, 23, 24]}, {"file": "data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf", "how": "disclosure_summary_pl
+   changed ('KR1107', '2025.3Q', 'income_statement') {"published_items": [7, 8], "source_files": [[{"file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf", "how": "disclosure_summary_pl", "items": [1, 16, 22, 23, 24]}, {"file": "data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf", "how": "disclosure_summary_pl

@@ -1,0 +1,197 @@
+{
+ "2023.1Q": {
+  "flags": [
+   "pdf_source_no_dart_filing",
+   "general_account_basis"
+  ],
+  "checks": {
+   "r_lic1": "pass",
+   "bs20_eok": 8460.17,
+   "ratio_bs20": 1.0,
+   "filing_bs_eok": 8460.17,
+   "ratio_filing_bs": 1.0,
+   "r_lic3_gap_eok": 0.0,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0,
+   "bs20_master_disagrees": false
+  },
+  "evidence": "업무보고서식 재무상태표 1. 보험계약부채 846,016,693,679 = 가. 잔여보장요소 824,937,077,335 + 나. 발생사고요소 21,079,616,344 (1) 최선추정 20,872,556,945 (2) 위험조정 207,059,399 (원)",
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)",
+  "note_absent": false
+ },
+ "2023.2Q": {
+  "flags": [
+   "pdf_source_no_dart_filing",
+   "general_account_basis",
+   "bs20_master_absent_filing_anchor_used"
+  ],
+  "checks": {
+   "r_lic1": "pass_filing_anchor",
+   "bs20_eok": null,
+   "ratio_bs20": null,
+   "filing_bs_eok": 8364.77,
+   "ratio_filing_bs": 1.0,
+   "r_lic3_gap_eok": 0.0,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0,
+   "bs20_master_disagrees": false
+  },
+  "evidence": "업무보고서식 재무상태표 1. 보험계약부채 836,476,647,018 = 가. 잔여보장요소 815,725,033,962 + 나. 발생사고요소 20,751,613,057 (1) 최선추정 20,543,589,252 (2) 위험조정 208,023,805 (원)",
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)",
+  "note_absent": false
+ },
+ "2023.3Q": {
+  "flags": [
+   "pdf_source_no_dart_filing",
+   "general_account_basis",
+   "bs20_master_absent_filing_anchor_used"
+  ],
+  "checks": {
+   "r_lic1": "pass_filing_anchor",
+   "bs20_eok": null,
+   "ratio_bs20": null,
+   "filing_bs_eok": 8153.36,
+   "ratio_filing_bs": 1.0,
+   "r_lic3_gap_eok": 0.0,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0,
+   "bs20_master_disagrees": false
+  },
+  "evidence": "업무보고서식 재무상태표 1. 보험계약부채 815,336,273,433 = 가. 잔여보장요소 793,878,866,142 + 나. 발생사고요소 21,457,407,291 (1) 최선추정 21,236,790,388 (2) 위험조정 220,616,903 (원)",
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)",
+  "note_absent": false
+ },
+ "2024.1Q": {
+  "flags": [
+   "pdf_source_no_dart_filing",
+   "general_account_basis"
+  ],
+  "checks": {
+   "r_lic1": "pass",
+   "bs20_eok": 9216.55,
+   "ratio_bs20": 1.0,
+   "filing_bs_eok": 9216.55,
+   "ratio_filing_bs": 1.0,
+   "r_lic3_gap_eok": -0.01,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0,
+   "bs20_master_disagrees": false
+  },
+  "evidence": "업무보고서식 재무상태표 1. 보험계약부채 921,654,878,542 = 가. 잔여보장요소 898,422,436,475 + 나. 발생사고요소 23,232,442,067 (1) 최선추정 22,730,669,281 (2) 위험조정 501,772,786 (원)",
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)",
+  "note_absent": false
+ },
+ "2024.2Q": {
+  "flags": [
+   "pdf_source_no_dart_filing",
+   "general_account_basis",
+   "bs20_master_absent_filing_anchor_used"
+  ],
+  "checks": {
+   "r_lic1": "pass_filing_anchor",
+   "bs20_eok": null,
+   "ratio_bs20": null,
+   "filing_bs_eok": 9579.2,
+   "ratio_filing_bs": 1.0,
+   "r_lic3_gap_eok": -0.01,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0,
+   "bs20_master_disagrees": false
+  },
+  "evidence": "업무보고서식 재무상태표 1. 보험계약부채 957,919,799,083 = 가. 잔여보장요소 934,377,455,666 + 나. 발생사고요소 23,542,343,417 (1) 최선추정 23,045,519,225 (2) 위험조정 496,824,192 (원)",
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)",
+  "note_absent": false
+ },
+ "2024.3Q": {
+  "flags": [
+   "pdf_source_no_dart_filing",
+   "general_account_basis"
+  ],
+  "checks": {
+   "r_lic1": "pass",
+   "bs20_eok": 10012.61,
+   "ratio_bs20": 1.0,
+   "filing_bs_eok": 10012.61,
+   "ratio_filing_bs": 1.0,
+   "r_lic3_gap_eok": -0.0,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0,
+   "bs20_master_disagrees": false
+  },
+  "evidence": "업무보고서식 재무상태표 1. 보험계약부채 1,001,261,488,868 = 가. 잔여보장요소 977,840,406,334 + 나. 발생사고요소 23,421,082,534 (1) 최선추정 22,913,107,371 (2) 위험조정 507,975,163 (원)",
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 가. 잔여보장요소 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원), general-account basis like the 2025.1Q-3Q cells of stage 3: items 14 and 15 do not contain the special-account 변액 liabilities that the DART year-end cells (2023.4Q, 2024.4Q, 2025.4Q) contain; the incurred-claims component (items 10-13) is the same on both bases (prior-year-end LIC of the 2024 filings 222.82억 vs DART 2023.4Q item 10 222.83억)",
+  "note_absent": false
+ },
+ "2025.1Q": {
+  "flags": [
+   "pdf_source_no_dart_filing"
+  ],
+  "checks": {
+   "r_lic1": "pass",
+   "bs20_eok": 10717.25,
+   "ratio_bs20": 1.0,
+   "filing_bs_eok": null,
+   "ratio_filing_bs": null,
+   "r_lic3_gap_eok": 0.0,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0
+  },
+  "evidence": null,
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원); the prior-year-end column of the same page equals the DART 2024.4Q cell",
+  "note_absent": false
+ },
+ "2025.2Q": {
+  "flags": [
+   "pdf_source_no_dart_filing"
+  ],
+  "checks": {
+   "r_lic1": "pass",
+   "bs20_eok": 10562.78,
+   "ratio_bs20": 1.0,
+   "filing_bs_eok": null,
+   "ratio_filing_bs": null,
+   "r_lic3_gap_eok": 0.0,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0
+  },
+  "evidence": null,
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원); the prior-year-end column of the same page equals the DART 2024.4Q cell",
+  "note_absent": false
+ },
+ "2025.3Q": {
+  "flags": [
+   "pdf_source_no_dart_filing"
+  ],
+  "checks": {
+   "r_lic1": "pass",
+   "bs20_eok": 10558.39,
+   "ratio_bs20": 1.0,
+   "filing_bs_eok": null,
+   "ratio_filing_bs": null,
+   "r_lic3_gap_eok": 0.0,
+   "tag_tables": 0,
+   "tag_cells": 0,
+   "tag_mismatch": 0
+  },
+  "evidence": null,
+  "evidence_absent": false,
+  "note": "업무보고서식 재무상태표 「1. 보험계약부채 / 나. 발생사고요소 / (1) 최선추정 (2) 위험조정」 (원); the prior-year-end column of the same page equals the DART 2024.4Q cell",
+  "note_absent": false
+ }
+}
