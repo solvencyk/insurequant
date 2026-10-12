@@ -804,7 +804,19 @@ def check_census(res: GateResult, env: "Env") -> None:
                 message=f"{item} 누계가 직전분기 {prev:,.1f} → 이번분기 정확히 0.0 — FY 누계는 "
                         f"이렇게 사라지지 않는다(파생 값_당분기가 음수로 뒤집힘). 재빌드 결손 의심"
                         + (f" [owner 확정 등재 무효: {why}]" if why else ""))
-    for key in sorted(set(ytd_ok) - ytd_hit):
+    # 등재는 있는데 붕괴로 안 잡히는 칸은 두 가지다: ① 마스터에 그 셀이 **아직 없다**(원문이 0 을 인쇄해 owner 가 확정했지만 복원 전 -- 보류
+    # 중인 셀을 먼저 등재한 경우) -> PENDING, 「등재를 풀라」 가 아니라 복원 대기. ② 셀이 있는데 값이 채워져 붕괴가 사라졌다 -> INERT, 등재를 푼다.
+    # 이름을 가르지 않으면 ①을 읽은 다음 세션이 방금 승인된 등재를 풀어 버린다.
+    _pending = set(ytd_ok) - ytd_hit
+    _have = ({(_norm_ws(c0), str(q0), _norm_ws(i0)) for (c0, q0), m0 in env.pl.items() for i0 in m0}
+             if _pending else set())
+    for key in sorted(_pending):
+        if key not in _have:
+            res.add(check="census", severity="YELLOW", master="PL_breakdown", company=key[0],
+                    quarter=key[1], rule="PL_YTD_COLLAPSE_CONFIRMED_PENDING",
+                    message=f"{key[2]} — owner 확정 등재가 있고 마스터에 그 셀이 아직 없다(복원 대기). 등재를 풀지 마라 -- "
+                            f"셀이 0.0 으로 복원되면 이 등재가 면제를 읽는다")
+            continue
         res.add(check="census", severity="YELLOW", master="PL_breakdown", company=key[0],
                 quarter=key[1], rule="PL_YTD_COLLAPSE_CONFIRMED_INERT",
                 message=f"{key[2]} — owner 확정 등재가 있는데 이 셀이 더는 붕괴로 안 잡힌다. 등재를 풀어라")

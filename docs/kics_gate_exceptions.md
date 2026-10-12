@@ -4,6 +4,23 @@
 > 현재 게이트 상태는 `scripts/validate_kics_disclosure.py` 출력이 정본이다. 아래 날짜가 붙은 스냅샷("RED 19건", "blocking RED 18건" 등)은 그 날짜 기준이다.
 > 등재는 owner 만 한다(`CLAUDE.md` §6). 스크립트 주석·티켓의 "`TODO.md` L…" / "TODO.md §36_irr 표" 는 이 파일을 가리킨다.
 
+## 2026-10-12 owner 승인 등재 — 재보사 인쇄된 0 7칸 · 서울보증 PL 2칸 · 마이브라운 거짓 양성 1칸 (validation 25차)
+
+> 승인 근거: **owner(sangwook.cho) 2026-10-12 채팅 「나머지는 다 승인」** — 오케스트레이터가 정리한 「결정 필요 항목 + 제안」(`TODO.md` 「owner 결정 대기」)의
+> 제안안을 그대로 승인. 원문은 `inbox/validation/20261012T1010Z__orchestrator__MULTI_2023.4Q-2026.2Q__owner_approved_registrations_20261012.md` 「owner 승인 기록」 절.
+> 이 승인은 아래 등재에 한하며 다른 면제로 넓히지 않는다. 등재 직전·직후 게이트 출력 비교: `data/_derived/validation_registrations_20261012/`.
+
+| 등재부 | 키 | 근거 |
+|---|---|---|
+| `user_pl_confirmed_cells.json` rule=`PL_YTD_COLLAPSE_TO_ZERO` (7칸) | 뮌헨재보험 2023.4Q 투자손익 · 알지에이리인슈어런스 2023.2Q·2025.3Q 영업외손익 · 제네럴재보험 2024.3Q·2025.3Q 영업외손익 · 퍼시픽라이프리 2023.3Q·2025.3Q 영업외손익 (전부 0.0) | 경영공시 §2-1 요약 포괄손익계산서(억원)가 0 을 인쇄(제네럴 2024.3Q 는 `(0)`). 값 박제 + 원문 쪽 마커(열 머리글·행·영업이익/세전 행) 매 실행 재확인. 마스터에서는 보류 중(복원 = parser-ifrs17 `reinsurer_resweep_pl_followup.py --restore7 --apply`) -- 복원 전에는 `PL_YTD_COLLAPSE_CONFIRMED_PENDING`(YELLOW), 복원 후 `PL_YTD_COLLAPSE_OWNER_CONFIRMED`. 읽는 쪽 = `check_census` 의 `_ytd_collapse_confirmed_cells`(변이시험 `tests/test_pl_ytd_collapse_owner_confirmed.py`, 복원 가정 시뮬레이션 포함) |
+| `_PL_SOURCE_ABSENT` (validate_kics_disclosure.py, 원장 registry 동명) (2칸) | KR0150 서울보증보험 2024.2Q · 2024.3Q (`SITE_ROLLED_OFF`) | 회사 사이트가 지난 분기 공시를 내렸다(다운로더 `NO_RAW_PDF` 최종). 이 분기 PL 이 인쇄돼 있을 이듬해 같은 분기 공시(2025.2Q·3Q)도 게시된 적이 없어 전년동기 열로도 구할 수 없다. 재검산 = 버킷 부재 · raw 폴더 비어 있음 · **사이트 판 census(다운로더 2026-10-11) status `NO_RAW`**(재보사 전용 매니페스트가 없는 회사용 새 사유 종류) · 원장 VERIFIED + 인용 재오픈. 읽는 쪽 `coverage_holes(source_absent=)`(하노버와 같은 경로). 한계: 회사 사이트 기준이며 협회 공시 시스템은 직접 확인하지 않았다 |
+| `kics_json_rules.TIER2_STALE_FALSE_POSITIVE` (+ 원장 registry 동명) (1칸) | KR1108 마이브라운 2025.3Q — `47_tier2_census`(·_post)의 `TIER2_LIMIT_STALE` 1종 | 원문 p16 이 보완자본·한도 적용 전·한도·초과분·신종·후순위를 전부 `-` 로 인쇄(소액: 지급여력기준금액 1.25억 -> 6.19억이라 0 이 직전분기 기대치 0.63억과 허용오차 2.0억 안에서 같다). **박제**: 그 컬럼의 47/48/49(+53/54 적재 시)가 0.0 과 정확히 같을 때만 지문에서 제외. 해당 5칸은 아직 마스터에 없다(parser-kics 적재 대기 -- 적재 전 상태 `DORMANT` 를 매 실행 인쇄). 읽는 쪽 = `_tier2_cross_bucket_context`(변이시험 `tests/test_tier2_stale_false_positive_exemption.py`) |
+
+**등재하지 않은 것(티켓 지시대로 판정)**:
+
+- **뮌헨(KR1101) 2026.2Q 항목 50·52** -- 원문에 **있다**(FY2026_Q2 p17 (1) 공통적용 경과조치 표가 지급여력금액·기본자본 271,642백만원을 적용 전·후 모두 인쇄, 나머지 행은 공란). 그래서 원천부재 등재를 하지 않았다(parser-kics 몫). 참고: 50·52 만 적재하면 `50_tfi_tier_split` `TFI_TIER_PARTIAL_ROWS` RED 2(전·후), 항목 51 = 0 을 함께 싣고 `50+51=52` 가 닫히면 새 RED 0(인메모리 시뮬레이션 `sim_mybrown_munich.txt`). 51 = 0 은 p16 헤드라인이 보완자본 0 을 인쇄하지만 TFI 표 자신은 그 행이 공란이라 owner 판단 사항.
+- **CSM 워터폴 대 ILP 기준 차이** -- 현재 게이트 중 이 대조를 내는 룰이 **없다**(`CSM_WATERFALL_VS_ILP_CSM_STOCK` 은 22차 「제안만」, 코드 0줄). 등재할 줄이 없으므로 읽는 쪽 없는 등재는 만들지 않았다(그건 원장 등재부가 룰 없이 홀로 사는 형태). 대상 칸 목록과 근거는 `data/_derived/validation_registrations_20261012/csm_wf_vs_ilp_basis_diff_cells.md`. 예별(KR0004) 2025.4Q 0.0 대 6,227 은 티켓 지시대로 등재 대상이 아니다.
+
 ## 2026-10-11 PL_breakdown 원천부재 등재 1칸 + 법인세 0 확정 3칸 (owner 승인 채팅, validation 23차)
 
 | 등재부 | 키 | 근거 |

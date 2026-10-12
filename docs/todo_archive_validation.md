@@ -1,5 +1,11 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-12 Status 밀림 (25차 owner 승인 등재 항목 추가로 밀려난 항목, 무수정)
+
+- **2026-10-11 (24차) push 직전 최종 골든·훅 사전 실행 — 훅 BLOCKED 1건 -> 등재로 해소(`validate_live_artifacts` `INSPL_CENSUS_MISSING` 8, 재보사 7+마이브라운이 PL 마스터에 새로 들어옴)** — 나머지 훅 항목 전부 clear
+  (데이터계약 RED 0 · K-ICS exit 0 · 지문 RED 0 · 오프라인 772 통과). 골든 `--update` 3종(viz_ifrs17_panels `csm_amort_schedule` 해시=`cf66dce` 의도 이동 · master_tables SUMMARY · 입력지문), PL 골든 통과(해시 불변).
+  커밋 2건(골든 · 문서), push 안 함. **후속(같은 날 밤, 티켓 `20261011T2300Z`, owner 「8줄 등재 (권장)」)**: `live_artifact_baseline.json` 에 8줄 등재(게이트 코드 불변) -> `validate_live_artifacts` RED 8->0 · YELLOW(baselined) 17->25 · STALE 0, 훅 차단 항목 해소. 제안서 키 1개 오타(뮤헨 -> 뮌헨)를 STALE 1+RED 1 로 게이트가 잡아 고침. 런로그 `data/_derived/pre_push_final_20261011/pre_push_final_runlog_20261011.md`(원본은 gitignore 된 `data/disclosure/_meta/`).
+
 ## 2026-10-12 Status 밀림 (재보사 PL 계보 허용 항목 추가로 밀려난 항목, 무수정)
 
 - **2026-10-11 (23차) 항목 4 주석 계보 허용 + owner 승인 등재 4칸 — 데이터계약 RED 34→11(PL 범위 24 소멸·신규 0)** — `PL_FS_NOTE_LINEAGE`(how=fs_note_csm_amort, 항목 4 한정)로 §3d 20건,

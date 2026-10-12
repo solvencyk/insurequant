@@ -233,6 +233,62 @@ TIER2_ZERO_EPS = 0.5
 # 2026-08-21 교보생명 홀수분기 5건 100배 · DB생명 2026.1Q item48 100만배.
 TIER2_SCALE_CEILING = 10.0
 
+# `TIER2_LIMIT_STALE`(47_tier2_census 의 전기 한도 잔존 지문) 거짓 양성 등재 -- owner 승인 2026-10-12
+# (inbox/validation/20261012T1010Z, 「나머지는 다 승인」, TODO.md 결정 ④).
+#
+# 지문: item48 이 당분기 item14_적용전×50% 와는 허용오차 밖이고 **직전분기** item14×50% 와는 허용오차 안.
+# 소액 초소형사에서는 직전분기 기대치(item14 가 1.25억이면 0.63억)가 허용오차(2.0억) 안이라 **0 이 그 지문에 걸린다** --
+# 마이브라운 2025.3Q 는 원문 p16 이 보완자본·한도 적용 전·한도·초과분·신종·후순위 전부 `-`(=0)를 인쇄하는데(기발행 신종자본증권·
+# 후순위채무 없음 주석 동반), 지급여력기준금액이 1.25억 -> 6.19억으로 커서 0 을 적재하면 RED 가 난다. 재탕된 표가 아니라
+# **그 분기 표가 대시를 인쇄한 것**이다. 값만으로는 구분이 안 된다(직전 분기 2025.2Q 의 47/48/49 도 0 이라 재탕이어도 0) --
+# 구분 근거는 원문 이 분기 문서가 대시를 인쇄한다는 사실이고, 그건 원장 기록이 매 실행 원문을 다시 열어 확인한다.
+#
+# 면제는 blanket 이 아니라 **박제**다: (회사,분기) 한 칸, 그 컬럼(값·값_적용후 각각)의 47/48/49 가 전부 적재돼 있고
+# 박제값(0.0)과 정확히 같을 때만 지문에서 뺀다. 한 칸이라도 움직이면(다른 값·결측) 면제가 없어 RED 가 돌아온다.
+# 근거 원문 재확인은 `data/_gold/kics_exemption_provenance.json` 의 같은 이름 레지스트리 기록이 매 실행 한다
+# (`validate_kics_disclosure._exemption_registries`) -- 원장 기록이 없으면 EXEMPTION_PROVENANCE_MISSING RED.
+# 읽는 쪽 = `_tier2_cross_bucket_context` 의 stale 판정(아래). 보고용 = `tier2_stale_false_positive_view`.
+TIER2_STALE_FALSE_POSITIVE: dict[tuple[str, str], dict[str, Any]] = {
+    ("KR1108", "2025.3Q"): {
+        "approved": "owner 2026-10-12",
+        "must_have": (47, 48, 49),                 # 이 셋은 적재돼 있어야 면제가 선다(결측은 면제가 아니다)
+        "cells": {47: 0.0, 48: 0.0, 49: 0.0, 53: 0.0, 54: 0.0},   # 적재돼 있다면 전부 이 값이어야 한다
+    },
+}
+_TIER2_STALE_FP_EPS = 1e-9
+
+
+def _tier2_stale_fp_holds(spec: Mapping[str, Any], src: Mapping[int, float]) -> bool:
+    """그 컬럼의 박제 셀이 마스터와 정확히 같은가. must_have 결측이면 False(면제 없음)."""
+    for item in spec["must_have"]:
+        if src.get(item) is None:
+            return False
+    for item, pinned in spec["cells"].items():
+        v = src.get(item)
+        if v is not None and abs(v - pinned) > _TIER2_STALE_FP_EPS:
+            return False
+    return True
+
+
+def tier2_stale_false_positive_view(records: Iterable[Mapping[str, Any]]) -> list[dict[str, Any]]:
+    """`TIER2_STALE_FALSE_POSITIVE` 등재 칸의 이번 실행 상태 -- 매 실행 눈에 보이게 인쇄하려는 것이다.
+
+    DORMANT = 마스터에 그 (회사,분기) 버킷이 없거나 47/48/49 가 아직 적재되지 않음(면제가 아무것도 안 한다),
+    APPLIED = 두 컬럼 다 박제와 일치(지문에서 빠진다), DRIFT = 적재돼 있는데 박제와 다름(면제 없음 -- RED 가 돌아올 수 있다)."""
+    by = {(b.code, b.quarter): b for b in _group_records(records)}
+    out: list[dict[str, Any]] = []
+    for (code, q), spec in sorted(TIER2_STALE_FALSE_POSITIVE.items()):
+        b = by.get((code, q))
+        cols = {}
+        for col, src in (("값", b.values if b else {}), ("값_적용후", b.values_post if b else {})):
+            loaded = [i for i in spec["must_have"] if src.get(i) is not None]
+            if not loaded:
+                cols[col] = "DORMANT"
+            else:
+                cols[col] = "APPLIED" if _tier2_stale_fp_holds(spec, src) else "DRIFT"
+        out.append({"code": code, "quarter": q, "approved": spec["approved"], "columns": cols})
+    return out
+
 # 적용후 항등식은 **아직 확립되지 않았다** — 그래서 적용후 축의 불일치는 RED 가 아니라 YELLOW 다.
 #
 # 이건 "적용후를 안 본다"가 아니다. 적용후도 똑같이 계산해서 리포트에 싣고, 결측·부호·자릿수는
@@ -2301,6 +2357,11 @@ def _tier2_cross_bucket_context(
                     continue
                 if (abs(i48 - i14_cur * TIER2_LIMIT_RATIO) > tolerance
                         and abs(i48 - i14_prev * TIER2_LIMIT_RATIO) <= tolerance):
+                    # owner 승인 거짓 양성 등재(`TIER2_STALE_FALSE_POSITIVE`): 그 컬럼의 박제 셀이 마스터와
+                    # 정확히 같을 때만 이 칸을 지문에서 뺀다. 박제가 어긋나면(결측·다른 값) 그대로 stale.
+                    fp = TIER2_STALE_FALSE_POSITIVE.get((cur.code, cur.quarter))
+                    if fp is not None and _tier2_stale_fp_holds(fp, src):
+                        continue
                     stale.add((cur.code, cur.quarter, is_post))
     return (frozenset(seen), frozenset(stale), frozenset(x_present),
             _tier2_i47_scope_map(buckets, tolerance))

@@ -528,6 +528,10 @@ def main(argv=None) -> int:
             # 경영공시 요약 PL 계보 reference_only(17/20/21) 허용 -- DART 없는 회사 한정(2026-10-12, 재보사 PL 공란 채우기). ~25초.
             "tests/test_pl_reinsurer_disclosure_lineage.py",
             "tests/test_pl_source_absent_exemption.py",
+            # 서울보증 PL 2024.2Q·3Q 원천부재(SITE_ROLLED_OFF, owner 2026-10-12) -- 사이트 판 census 가 매니페스트 자리를 대신한다. ~10초.
+            "tests/test_pl_source_absent_site_rolled_off.py",
+            # TIER2_LIMIT_STALE 거짓 양성 등재(마이브라운 2025.3Q, owner 2026-10-12) -- 읽는 분기 변이시험. ~25초.
+            "tests/test_tier2_stale_false_positive_exemption.py",
             "tests/test_pl_ytd_collapse_owner_confirmed.py",
             # 분기 지평 트립와이어(2026-08-29 신설). 게이트 세 곳이 각자 분기 목록을 리터럴로
             # 들고 있었고 셋 다 2026.1Q 에서 끝나 있어서, 2026.2Q 를 배포한 날 census·qoq·

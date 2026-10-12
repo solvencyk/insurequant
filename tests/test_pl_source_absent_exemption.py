@@ -44,6 +44,9 @@ NAMES = {"KR1104": "하노버재보험"}
 
 
 def _run(ledger=None, registry=None, present=None, root=None):
+    # 이 파일은 하노버 한 칸을 시험한다 -- 서울보증(2026-10-12 등재)은 test_pl_source_absent_site_rolled_off.py 가 시험한다.
+    if registry is None:
+        registry = {KEY: K._PL_SOURCE_ABSENT[KEY]}
     return K.pl_source_absent_exemptions(
         present if present is not None else _present_without_key(), NAMES,
         registry=registry, ledger=ledger if ledger is not None else _ledger(), root=root)
@@ -60,12 +63,15 @@ def _ledger_with(mutator):
 # ---------------------------------------------------------------------------------------------------
 # 등재 범위 = owner 승인 (하노버 2025.3Q 한 칸), 원장·레지스트리 일치
 # ---------------------------------------------------------------------------------------------------
+SGI_KEYS = {("KR0150", "2024.2Q"), ("KR0150", "2024.3Q")}   # owner 승인 2026-10-12 (서울보증, tests/test_pl_source_absent_site_rolled_off.py 가 따로 변이시험)
+
+
 def test_registry_is_pinned_to_owner_approval_and_ledger_agrees():
-    assert set(K._PL_SOURCE_ABSENT) == {KEY}, f"등재 범위가 owner 승인(2026-10-11, 1칸)과 다르다: {sorted(K._PL_SOURCE_ABSENT)}"
+    assert set(K._PL_SOURCE_ABSENT) == {KEY} | SGI_KEYS,         f"등재 범위가 owner 승인(2026-10-11 하노버 1칸 + 2026-10-12 서울보증 2칸)과 다르다: {sorted(K._PL_SOURCE_ABSENT)}"
     spec = K._PL_SOURCE_ABSENT[KEY]
     assert spec["kind"] == "NOT_POSTED" and spec["raw"] == {} and "2026-10-11" in spec["approved"]
     led = {(e["company"], e["quarter"]): e for e in _ledger()["entries"] if e.get("registry") == "_PL_SOURCE_ABSENT"}
-    assert set(led) == {KEY}
+    assert set(led) == {KEY} | SGI_KEYS
     assert led[KEY]["status"] == "VERIFIED" and led[KEY]["claim_kind"] == "NOT_POSTED"
     assert K._exemption_registries()["_PL_SOURCE_ABSENT"] == frozenset(K._PL_SOURCE_ABSENT)
 
@@ -93,11 +99,12 @@ def test_reader_removes_only_the_registered_whole_bucket_hole():
     real0, _k0, _s0 = _live_holes()
     hit: list = []
     real1, _k1, _s1 = _live_holes(source_absent=names, absent_out=hit)
-    assert ("하노버재보험", "2025.3Q", "통째") in real0
-    assert ("하노버재보험", "2025.3Q", "통째") not in real1
-    assert hit == [("하노버재보험", "2025.3Q")]
-    # 그 한 칸 말고는 아무것도 안 바뀐다
-    assert sorted(set(real0) - set(real1)) == [("하노버재보험", "2025.3Q", "통째")]
+    removed = [("서울보증보험", "2024.2Q", "통째"), ("서울보증보험", "2024.3Q", "통째"), ("하노버재보험", "2025.3Q", "통째")]
+    for r in removed:
+        assert r in real0 and r not in real1
+    assert sorted(hit) == [("서울보증보험", "2024.2Q"), ("서울보증보험", "2024.3Q"), ("하노버재보험", "2025.3Q")]
+    # 등재 3칸 말고는 아무것도 안 바뀐다
+    assert sorted(set(real0) - set(real1)) == removed
     assert not (set(real1) - set(real0))
 
 

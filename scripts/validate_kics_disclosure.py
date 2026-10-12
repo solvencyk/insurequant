@@ -41,10 +41,12 @@ from solvency.validation.kics_json_rules import (
     MARKET_M,
     R4,
     R7,
+    TIER2_STALE_FALSE_POSITIVE,
     _diversified_sqrt,
     irr_derive_expected,
     irr_pin_verdict,
     run_validation,
+    tier2_stale_false_positive_view,
 )
 
 
@@ -157,6 +159,10 @@ _CENSUS_KINDS: dict[str, dict] = {
     # owner 수집 정책(2026-10-09): 다음 회기 공시의 전기 칸에 헤드라인이 있으면 별도 수집 안 함.
     # 원천 부재가 아니라 **수집하지 않은 것**이다 — 사유가 다르므로 종류를 따로 둔다.
     "COLLECTION_POLICY": {"manifest_status": "skipped_prior_col", "raw_required": False},
+    # 서울보증(KR0150) 같은 비재보사: 회사 사이트가 지난 분기 공시를 내려 raw 를 받을 수 없다(owner 승인 2026-10-12).
+    # 재보사 전용 매니페스트(`reinsurer_{code}_manifest.json`)가 없어서 다운로더의 사이트 판 census
+    # (`_SITE_EDITION_CENSUS`)가 매니페스트 자리를 대신하고, 그 칸의 status 가 NO_RAW 여야 통과한다.
+    "SITE_ROLLED_OFF": {"manifest_status": "NO_RAW", "raw_required": False},
 }
 _CENSUS_LEDGER_REGISTRY = "_CENSUS_SOURCE_ABSENT"
 _REINSURER_MANIFEST = "data/disclosure/_meta/reinsurer_{code}_manifest.json"
@@ -218,9 +224,32 @@ def _census_raw_state(code: str, quarter: str, root: Path | None = None) -> dict
     return out
 
 
+_SITE_EDITION_CENSUS = "data/disclosure/_meta/site_edition_census_result_20261011.json"
+
+
+def _site_edition_census_cell(code: str, quarter: str, root: Path | None = None):
+    """다운로더 사이트 판 census(2026-10-11)의 (회사,분기) 칸 → (cell | None, 사유 문자열)."""
+    p = (root or ROOT) / _SITE_EDITION_CENSUS
+    try:
+        data = json.loads(p.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return None, f"매니페스트 없음: reinsurer_{code}_manifest.json 도, 사이트 판 census {p.name} 도 없다"
+    except Exception as e:  # noqa: BLE001 — 깨진 census 는 근거가 아니다
+        return None, f"사이트 판 census 파싱 불가: {p.name} ({type(e).__name__})"
+    cells = data.get("cells") if isinstance(data, dict) else None
+    hits = [c for c in (cells or []) if isinstance(c, dict) and c.get("kr") == code and c.get("q") == quarter]
+    if len(hits) != 1:
+        return None, f"{p.name} cells 에 {code} {quarter} 항목이 {len(hits)}개(1개여야 한다)"
+    return hits[0], ""
+
+
 def _census_manifest_entry(code: str, quarter: str, root: Path | None = None):
     """다운로더 매니페스트의 그 분기 항목 → (entry | None, 사유 문자열)."""
     p = (root or ROOT) / _REINSURER_MANIFEST.format(code=code)
+    if not p.exists():
+        # 재보사가 아닌 회사(서울보증 등)는 전용 매니페스트가 없다 -- 다운로더의 사이트 판 census 의 그 칸 하나가
+        # 근거다. 정확히 1칸이어야 하고, 판정(status)은 호출한 쪽이 사유 종류별로 한다.
+        return _site_edition_census_cell(code, quarter, root)
     try:
         data = json.loads(p.read_text(encoding="utf-8"))
     except FileNotFoundError:
@@ -360,6 +389,13 @@ _PL_SOURCE_ABSENT: dict[tuple[str, str], dict] = {
     # K-ICS 쪽 `_CENSUS_SOURCE_ABSENT[("KR1104","2025.3Q")]` 와 같은 사실(문서 자체가 없다)이지만 게이트는
     # 별개이므로 PL 에도 따로 등재한다. owner 2026-10-11 채팅: 「하노버 25.3q만 예외 승인」.
     ("KR1104", "2025.3Q"): {"kind": "NOT_POSTED", "approved": "owner 2026-10-11", "raw": {}},
+    # 서울보증보험 KR0150 2024.2Q·2024.3Q -- PL 통째 구멍. 회사 사이트(sgic.co.kr)는 연간(Q4)+최근 분기 공시만 노출하고
+    # 지난 Q1~Q3 는 내렸다(downloader `SGI_QUARTERLY_STRUCTURAL`, 2026-06-01 확인 · 2026-10-11 사이트 판 census
+    # `NO_RAW` 최종). 비상장이라 DART 도 없다. 이 분기 PL 은 이듬해 같은 분기 공시(2025.2Q·2025.3Q)의 전년동기 열에도
+    # 없다 -- 그 두 분기 공시도 게시된 적이 없다(같은 census NO_RAW). owner 승인 2026-10-12: 오케스트레이터 제안안을 그대로 승인
+    # (inbox/validation/20261012T1010Z, 「나머지는 다 승인」). 다른 분기(2023.x·2024.1Q·2025.2Q/3Q)는 이 등재에 포함되지 않는다.
+    ("KR0150", "2024.2Q"): {"kind": "SITE_ROLLED_OFF", "approved": "owner 2026-10-12", "raw": {}},
+    ("KR0150", "2024.3Q"): {"kind": "SITE_ROLLED_OFF", "approved": "owner 2026-10-12", "raw": {}},
 }
 
 
@@ -3608,6 +3644,9 @@ def _exemption_registries() -> dict[str, frozenset]:
         # 잔차 박제형 면제 2번째. 룰엔진에 살지만 근거 검사는 여기서 받는다 — 레지스트리를
         # 여기 등록하지 않으면 그 면제는 근거 없이 조용히 산다.
         "IRR_DERIVE_ISSUER_INCONSISTENT": frozenset(IRR_DERIVE_ISSUER_INCONSISTENT),
+        # `TIER2_LIMIT_STALE` 거짓 양성 등재(owner 승인 2026-10-12, 마이브라운 2025.3Q). 룰엔진
+        # (`_tier2_cross_bucket_context`)이 읽고, 근거(원문 대시 인쇄)는 원장 기록을 매 실행 다시 열어 확인한다.
+        "TIER2_STALE_FALSE_POSITIVE": frozenset(TIER2_STALE_FALSE_POSITIVE),
         # 금리민감도 게이트의 RS1·RS5 근거 박제 면제(owner 승인 2026-10-10, 재보사 단계 10). 장치는
         # `validate_kics_rate_sensitivity.rs_pinned_exemptions` 에 살고 원장도 스스로 재검산하지만,
         # 여기 등록해야 원장 기록이 없을 때 K-ICS·데이터계약 게이트가 한 겹 더 막는다.
@@ -4687,6 +4726,13 @@ def main() -> int:
         ],
         "not_evaluated": dict(sorted(irr_after_skipped.items())),
     }
+    stale_fp_view = tier2_stale_false_positive_view(records)
+    report["tier2_stale_false_positive_exception"] = {
+        "doc": ("TIER2_LIMIT_STALE 거짓 양성 등재 (owner 2026-10-12) — 소액 초소형사의 원문 대시(0)가 전기 한도 잔존 지문에 걸리는 것을 "
+                "박제 셀(47/48/49[+53/54]=0, 값·값_적용후 각각)이 마스터와 정확히 같을 때만 지문에서 뺀다. DORMANT=아직 미적재, "
+                "APPLIED=박제 일치, DRIFT=적재됐는데 박제와 다름(면제 없음). 근거 원문은 원장 기록이 매 실행 재확인한다."),
+        "entries": stale_fp_view,
+    }
     irr_pin_detail, irr_pin_review = _irr_pin_recheck(records)
     report["irr_derive_issuer_inconsistent_exception"] = {
         "doc": ("36_irr documented exception (owner 2026-08-21) — blanket skip 이 아니라 기대잔차 박제. "
@@ -5161,6 +5207,11 @@ def main() -> int:
     else:
         print("적용후 36_irr 불일치 (전사 39사): 0")
     print(f"    [적용후 36_irr 미판정 내역] {dict(sorted(irr_after_skipped.items()))}")
+    if stale_fp_view:
+        print(f"TIER2_LIMIT_STALE 거짓 양성 등재 (owner 2026-10-12, 박제 셀 일치 시에만 지문에서 제외) {len(stale_fp_view)}건:")
+        for e in stale_fp_view:
+            print(f"    {e['quarter']} {e['code']} 값={e['columns']['값']} 값_적용후={e['columns']['값_적용후']} "
+                  f"(DORMANT=아직 미적재 · APPLIED=박제 일치 · DRIFT=박제와 다름 -> 면제 없음)")
     if IRR_DERIVE_ISSUER_INCONSISTENT:
         print(f"36_irr documented exception (재현식 미적용, 잔차 박제) {len(IRR_DERIVE_ISSUER_INCONSISTENT)}건 "
               f"— 적용전·적용후 각각 재검산 (tol {IRR_PIN_TOL}):")
