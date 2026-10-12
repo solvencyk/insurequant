@@ -1,5 +1,8 @@
 # TODO archive — `TODO.md` (Status 이력, 읽기 지연)
 
+- **2026-10-11 밤 작업 브랜치 push 직전(HEAD `17b526d` 이후).** 재보사 PL 항목 4(CSM 상각) 17버킷 + 라이나 CSM 백필 9분기(워터폴 54칸·상각 +20행·값_당분기 20칸) + PL 항목 4 라이나 9버킷, 상각 스케줄 표 선택 버그 수정(18사 2025.4Q 172칸), 게이트 §3d 항목 4 계보 허용 + owner 승인 등재 4건, 재보사 PL 라벨 「원수」 제거, xlsx·NB(라이나 실제 배수)·패널·공개본 재동기화.
+  남은 것: validation 사전 정리(`T2200Z`, 골든 `--update`) → `git push origin fix/csm-product-segmented-columns`(훅 ≈18분) → owner 폰 배포. owner 결정 대기는 아래 「owner 결정 대기」.
+
 - **2026-10-11 작업 브랜치 push 완료(`6841689`, 훅 gate-clear: RED 0 · offline tests 692 통과).** 재보사 8곳 K-ICS(단계 1~12)·index/compare 3분류·IFRS17 섹션 3 콤보(발생사고요소 실값, 2023/2024 연말 백필, 재작성 3사 †)·모바일 손해율 curve(안 A)·금리민감도/듀레이션갭 재보사.
   라이브 `main` 배포는 owner 가 폰 Termux 에서 `scripts/android_push_and_deploy.sh --from-origin --branch fix/csm-product-segmented-columns` 실행(배포 후 `public_exports/manifest.json` `build_id`=`6fadc86` 확인, 회사망은 `curl --ssl-no-revoke`). **주의: `data/loss_ratio/risk_premium_vs_expected_claims.json`(77MB)이 커밋 `78471c0` 로 원격에 올라갔다(GitHub 50MB 경고) — 이력 정리·LFS·.gitignore 판단 필요.**
 
