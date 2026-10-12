@@ -5,14 +5,14 @@
 
 ## Status (최신 3개)
 
+- **2026-10-12 최종 재동기화(push 직전 정합, 커밋만 · push 보류)** — xlsx 5시트(`17BS` 처브 6칸·`CSM상각` 18칸·`손익분해PL` +7행/1칸·`보험계약부채` 18칸·`K-ICS공시` +16행/4칸)·손해율 패널(재보사 세그먼트 표준화)·combo(처브)·compare(2칸) 재빌드·`public_exports`(`538cbe7`·`dee37c2`). 드리프트 0, data-contract RED 0, live_artifacts RED 0(baselined 25), 시험 142 passed.
+  남은 것: ① `downstream_kpis.json` 은 어느 HTML 도 안 읽고 이번 변경이 아닌 옛 `cf66dce`(상각 스케줄 정정) 미반영분(213칸) 때문에 어긋나 있어 재빌드본을 커밋하지 않음(`downstream_kpis.rebuilt_NOT_COMMITTED.json`) ② `viz_build_nb_csm_ratio.py` 는 IR 원문 입력이라 이번 마스터와 무관해 생략 ③ 상세 `data/_derived/final_resync_20261012/runlog.md`.
+
 - **2026-10-12 `securities_summary` 필드 + `보험금예실차비율` 시트(커밋만 · push 보류)** — 티켓 `1150Z`: 두 소진율 JSON 47사 행에 최근 발행금리·2023 이후 발행액·가장 가까운 콜(`scripts/capital_securities_summary.py`, 신종 null 30·후순위 null 23, 한화생명 검산 일치, 시험 20, `ad9dfb6`). `1130Z` 3번: xlsx 새 시트 162행 + 공개본(`0397ce4`, 다른 17시트 값 동일).
   남은 것: ① `1130Z` 1~2번(메리츠·흥국생명 기발행 차감)은 owner 보류 ② `1210Z` 시점별 잔액 JSON - 신종은 정기보고서 표준표(신종자본증권 미상환 잔액)로 가능, 후순위채는 표준표가 없어 소스 결정 필요 ③ designer: `download-survey.js` 시트 목록에 `보험금예실차비율` 1줄. 다른 시트 xlsx 드리프트 5건은 파서 마스터 변경 미반영.
 
 - **2026-10-12 자본성증권 소진율 규정 근거 재정의 반영(커밋만 · push 보류)** — 티켓 `20261012T0800Z`: 산식 `scripts/capital_utilization_rules.py`·등재부 `data/bonds/capital_tier_registry.json` 신설, 47사 메모 대조 차이 0(tier2 23사·tier1 14사 변경), forward confidence 재정합, xlsx 4시트(손해율 기존 드리프트 포함)·공개본(`c3ebcc3`·`00bab2a`). data-contract RED 0 · live_artifacts RED 0 · xlsx 드리프트 0 · 단위시험 25.
   남은 것: ① designer 화면(필드 명세 changelog) ② owner: 미확정 3사(코리안리·농협생명·푸본) 발행조건, 메리츠·흥국생명 「(기발행 후순위채무)」 행에 2023년 이후 신규채 혼입(결정 ② 확대 시 0.2→30.8%·10.6→37.0%) ③ forward 신종 15% 일괄 가정·`kics_capital_securities.json` 인정표는 새 정의와 다름(보고만).
-
-- **2026-10-12 미니 재동기화 2차(재보사 재스윕 반영, 커밋만 · push 보류)** — xlsx 7시트(`손익분해PL` +303행·25칸, `17BS` +49, `CSM워터폴` +18, `CSM상각` +15, `가정민감도` +6, `보험계약부채` +110, `신계약CSM배수` +3)·NB 마스터 +3행(재보사, 배수 null)·combo/compare 재빌드(재보사만)·`public_exports`(`b4b6a71`·`5079688`). 드리프트 0, data-contract RED 102(전부 `CONCEPT_MIXED_DISCLOSURE_INTO_DART`), live_artifacts RED 0.
-  남은 것: ① `CONCEPT_MIXED_DISCLOSURE_INTO_DART` 102 는 validation ② ifrs17 viz 4패널·csm_waterfall 은 바이트 동일(신규 재보사 행이 전부 최신 분기 아님) ③ compare 패널 손해율 항목은 직전 라운드(`66e6156`) 재보사 행을 이번에 처음 반영. 상세 `data/_derived/mini_resync_20261012/runlog.md`.
 
 ## 열린 일
 

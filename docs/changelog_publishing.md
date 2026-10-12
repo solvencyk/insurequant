@@ -10,6 +10,16 @@
 
 ---
 
+## 2026-10-12 — 최종 재동기화 (push 직전 정합, 티켓 `20261012T1330Z`, 커밋만 · push 보류)
+
+오늘 바뀐 마스터(재보사 손해율 세그먼트 `268002b`, 재보사 PL 7칸 복원·처브 BS 20/ILP 14-15·분할표 상각 `3bf1690`, K-ICS 퍼시픽 +16행·악사 4칸 `acd351a`)에 xlsx·공개본·패널을 맞췄다.
+
+- **패널**: `viz_build_persistency_lossratio_panels.py` -> `panel_loss_ratio.json` 41노드(재보사 KR1101~1107 의 세그먼트가 `생명보험`/`장기손해보험` 으로 나뉘고 옛 `손해보험`·빈 구분 노드 삭제, `--check` OK), `viz_build_csm_combo_panel.py` 21노드(처브 KR0100 만, 포트폴리오 부채열), `viz_build_compare_panel.py` 2칸(악사 K-ICS 2024.3Q 286.4->286.5, KR1101 투자손익 null->0). ifrs17 viz 4패널·`csm_waterfall` 은 재빌드해도 바이트 동일. 증빙 `data/_derived/final_resync_20261012/panel_*.txt`.
+- **xlsx**(`sync_master_xlsx_sheet.py` 시트별, 백업 `.bak_20261012_final_pre`): `17BS` 6칸(처브 보험계약부채 K-IFRS 기준 값->값), `CSM상각` 18칸(메트라이프·BNP·AIA·처브 2025.4Q 9·10년차 빈칸->값 8, 한화생명 분할표 정정 10), `손익분해PL` +7행·1칸(`값_당분기`), `보험계약부채` 18칸(처브 값->값), `K-ICS공시` +16행(퍼시픽 2025.3Q·2026.2Q 47~54)·4칸(악사 2024.3Q). 삭제 0, 나머지 12시트 값 SHA 동일(`xlsx_invariance.txt`), `요약` 은 행수 칸만 다름.
+- **공개본** `export_public_sheets.py`: 5시트 + `manifest.json`(`build_id` `538cbe7`). 임시로 목록에서 내린 3시트 파일은 그대로 둠.
+- **게이트**: `check_master_xlsx_drift` RED 7 -> 0, `validate_data_contract` RED 0(YELLOW 152), `validate_live_artifacts` RED 0(baselined 25), `validate_master_tables --no-build` 실행(exit 2 는 골든이 고정한 값), 골든 3종(master_tables·ifrs17 panels·csm_waterfall) passed, `test_deploy_assets`+`test_push_gate_wiring`+`test_prepush_scope` 142 passed.
+- **미반영(의도)**: `downstream_kpis.json`(213칸 어긋남, 옛 `cf66dce` 미반영분이라 이번 범위 밖·HTML 무참조), `viz_build_nb_csm_ratio.py`(IR 원문 입력).
+
 ## 2026-10-12 — `kics_capital_securities_timeline.json` 신설 (티켓 `20261012T1210Z`, owner 정정으로 채권 단위 발행 내역으로 축소, 커밋만 · push 보류)
 
 K-ICS 「자본성증권 발행현황」 누적 막대(발행일 기준, 아래 신종자본증권 + 위 후순위채)의 원천. owner 지시(2026-10-12): 시점별 잔액을 DART 에서 새로 뽑지 않고 이미 있는 채권 단위 자료만 쓴다(중간에 만들던 시점별 추출기는 폐기).
