@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 `securities_summary` 필드 + `보험금예실차비율` 시트(커밋만 · push 보류)** — 티켓 `1150Z`: 두 소진율 JSON 47사 행에 최근 발행금리·2023 이후 발행액·가장 가까운 콜(`scripts/capital_securities_summary.py`, 신종 null 30·후순위 null 23, 한화생명 검산 일치, 시험 20, `ad9dfb6`). `1130Z` 3번: xlsx 새 시트 162행 + 공개본(`0397ce4`, 다른 17시트 값 동일).
+  남은 것: ① `1130Z` 1~2번(메리츠·흥국생명 기발행 차감)은 owner 보류 ② `1210Z` 시점별 잔액 JSON - 신종은 정기보고서 표준표(신종자본증권 미상환 잔액)로 가능, 후순위채는 표준표가 없어 소스 결정 필요 ③ designer: `download-survey.js` 시트 목록에 `보험금예실차비율` 1줄. 다른 시트 xlsx 드리프트 5건은 파서 마스터 변경 미반영.
+
 - **2026-10-12 자본성증권 소진율 규정 근거 재정의 반영(커밋만 · push 보류)** — 티켓 `20261012T0800Z`: 산식 `scripts/capital_utilization_rules.py`·등재부 `data/bonds/capital_tier_registry.json` 신설, 47사 메모 대조 차이 0(tier2 23사·tier1 14사 변경), forward confidence 재정합, xlsx 4시트(손해율 기존 드리프트 포함)·공개본(`c3ebcc3`·`00bab2a`). data-contract RED 0 · live_artifacts RED 0 · xlsx 드리프트 0 · 단위시험 25.
   남은 것: ① designer 화면(필드 명세 changelog) ② owner: 미확정 3사(코리안리·농협생명·푸본) 발행조건, 메리츠·흥국생명 「(기발행 후순위채무)」 행에 2023년 이후 신규채 혼입(결정 ② 확대 시 0.2→30.8%·10.6→37.0%) ③ forward 신종 15% 일괄 가정·`kics_capital_securities.json` 인정표는 새 정의와 다름(보고만).
 

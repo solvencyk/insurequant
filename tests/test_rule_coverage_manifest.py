@@ -2072,3 +2072,82 @@ def test_census_source_absent_census_matches_manifest():
     assert got == CENSUS_SOURCE_ABSENT_CENSUS, (
         f"실측 {got} != 선언 {CENSUS_SOURCE_ABSENT_CENSUS}. 등재를 늘리거나 풀었다면 owner 승인 근거와 함께 "
         "이 선언을 갱신하라")
+
+
+# ===========================================================================
+# kics_capital_securities_timeline.json (validate_live_artifacts check 8, 2026-10-12) - 변이시험
+# ===========================================================================
+# K-ICS.html 이 fetch 하는데 읽는 검사기가 없던 파일(배포 직후 test_push_gate_wiring 이 잡았다).
+# 검사 = 구조 · 분류/인정액 필드 금지 · 회사별 권면 합·건수가 data/bonds 원천 파생과 일치.
+def _capsec_fixture():
+    src = {"companies": [
+        {"code": "KR0001", "bonds": [
+            {"tier": "hybrid", "issue_date": "2024-07-17", "face_amount_mn": 500000},
+            {"tier": "subordinated", "issue_date": "2022-02-04", "face_amount_mn": 1076175}]},
+        {"code": "KR0002", "bonds": [
+            {"tier": "subordinated", "issue_date": "2023-01-01", "face_amount_mn": 300000},
+            {"tier": "hybrid", "issue_date": None, "face_amount_mn": 999}]},        # 발행일 없음 -> 파생에서 제외
+    ]}
+    doc = {"securities": {
+        "KR0001": [
+            {"tier": "hybrid", "issue_date": "2024-07-17", "call_date": None, "coupon_pct": 4.8,
+             "face_eok": 5000.0, "outstanding_eok": 5000.0, "as_of": "2026-06-30"},
+            {"tier": "subordinated", "issue_date": "2022-02-04", "call_date": "2027-02-04", "coupon_pct": 3.38,
+             "face_eok": 10761.75, "outstanding_eok": 0.0, "as_of": "2026-06-30"}],
+        "KR0002": [
+            {"tier": "subordinated", "issue_date": "2023-01-01", "call_date": None, "coupon_pct": None,
+             "face_eok": 3000.0, "outstanding_eok": 3000.0, "as_of": "2026-06-30"}]}}
+    return doc, src
+
+
+def _capsec_rules(doc, src):
+    import copy
+    L = _live_gate()
+    fd = L.Findings()
+    L.check_capsec_timeline(fd, copy.deepcopy(doc), copy.deepcopy(src))
+    return sorted({r["rule"] for r in fd.rows})
+
+
+def test_capsec_timeline_gate_clean_fixture_passes():
+    doc, src = _capsec_fixture()
+    assert _capsec_rules(doc, src) == []
+
+
+def test_capsec_timeline_gate_catches_each_mutation():
+    import copy
+    cases = {
+        "CAPTL_STRUCTURE": [
+            lambda d: d["securities"]["KR0001"][0].pop("face_eok"),
+            lambda d: d["securities"]["KR0001"][0].update(tier="preferred"),
+            lambda d: d["securities"]["KR0001"][0].update(issue_date="2024/07/17"),
+            lambda d: d["securities"]["KR0001"][0].update(outstanding_eok=-1.0),
+            lambda d: d.update(securities={}),
+        ],
+        "CAPTL_EXTRA_FIELD": [
+            lambda d: d["securities"]["KR0001"][0].update(basic_recognized_eok=5000.0),
+            lambda d: d["securities"]["KR0001"][0].update(limit_eok=1.0),
+        ],
+        "CAPTL_SOURCE_MISMATCH": [
+            lambda d: d["securities"]["KR0001"][0].update(face_eok=5001.0),          # 권면 합 변조
+            lambda d: d["securities"]["KR0001"].pop(),                               # 건 유실
+            lambda d: d["securities"].pop("KR0002"),                                 # 회사 유실
+            lambda d: d["securities"].update(KR9999=[dict(d["securities"]["KR0002"][0])]),  # 원천에 없는 회사
+        ],
+    }
+    for rule, muts in cases.items():
+        for i, mut in enumerate(muts):
+            doc, src = _capsec_fixture()
+            mut(doc)
+            assert rule in _capsec_rules(doc, src), f"{rule} 변이 {i} 를 못 잡았다"
+    # 원천을 바꿔도(배포본이 빌더 입력과 갈라지면) 잡혀야 한다
+    doc, src = _capsec_fixture()
+    src["companies"][0]["bonds"][0]["face_amount_mn"] = 600000
+    assert "CAPTL_SOURCE_MISMATCH" in _capsec_rules(doc, src)
+
+
+def test_capsec_timeline_gate_passes_on_the_deployed_file():
+    L = _live_gate()
+    fd = L.Findings()
+    stat = L.check_capsec_timeline(fd)
+    assert fd.rows == [], fd.rows[:3]
+    assert stat["bonds"] > 0 and stat["source_pass"] == stat["companies"]

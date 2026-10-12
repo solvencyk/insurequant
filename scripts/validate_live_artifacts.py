@@ -824,6 +824,96 @@ def check_kics_duration_gap(fd: Findings) -> dict:
     return stat
 
 
+# --------------------------------------------------------------------------- 8) 자본성증권 발행 타임라인
+CAPTL_SRC = "data/bonds/capital_securities_fy2026h1.json"
+CAPTL_TIERS = ("hybrid", "subordinated")
+CAPTL_FIELDS = {"tier", "issue_date", "call_date", "coupon_pct", "face_eok", "outstanding_eok", "as_of"}
+CAPTL_REQUIRED = ("tier", "issue_date", "face_eok", "outstanding_eok")
+_ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def check_capsec_timeline(fd: Findings, doc: dict | None = None, src: dict | None = None) -> dict:
+    """`kics_capital_securities_timeline.json` — K-ICS.html 자본성증권 발행현황 누적 막대의 원천(채권 단위, 분류 없음).
+
+    2026-10-12 owner 배포로 화면에 붙었다. 세 축:
+
+      ① **구조** — `securities[회사코드][]`, 각 건에 `tier`(hybrid|subordinated)·`issue_date`(ISO)·
+         `face_eok`·`outstanding_eok`(0 이상 수) 필수.
+      ② **분류 없음** — 허용 필드 밖의 키(인정액·한도·기본/보완자본 계열 포함)는 전부 막는다.
+         이 파일은 발행 내역일 뿐이고 인정액 판단은 다른 파일의 일이다(owner 2026-10-12).
+      ③ **소스 대조** — 회사별 `face_eok` 합과 건수가 `data/bonds/capital_securities_fy2026h1.json`
+         에서 독립적으로 파생한 값과 같아야 한다(배포본이 빌더 입력과 달라지면 막는다. 회사 census 포함).
+    """
+    if doc is None:
+        doc = load("kics_capital_securities_timeline.json")
+    if src is None:
+        src = load(CAPTL_SRC)
+    A = "kics_capital_securities_timeline.json"
+    stat = defaultdict(int)
+    sec = doc.get("securities") if isinstance(doc, dict) else None
+    if not isinstance(sec, dict) or not sec:
+        fd.add(A, "CAPTL_STRUCTURE", "securities", "최상위 `securities` 가 회사코드 -> 목록 dict 가 아니거나 비어 있다")
+        return dict(stat)
+
+    got: dict[str, list] = {}
+    for code, lst in sec.items():
+        if not isinstance(lst, list) or not lst:
+            fd.add(A, "CAPTL_STRUCTURE", code, "회사 항목이 비어 있지 않은 목록이 아니다")
+            continue
+        got[code] = []
+        for i, b in enumerate(lst):
+            key = f"{code}|#{i}"
+            stat["bonds"] += 1
+            if not isinstance(b, dict):
+                fd.add(A, "CAPTL_STRUCTURE", key, "건이 dict 가 아니다")
+                continue
+            miss = [f for f in CAPTL_REQUIRED if b.get(f) is None]
+            bad = []
+            if b.get("tier") not in CAPTL_TIERS:
+                bad.append(f"tier={b.get('tier')!r}")
+            if not isinstance(b.get("issue_date"), str) or not _ISO_DATE.match(b["issue_date"]):
+                bad.append(f"issue_date={b.get('issue_date')!r}")
+            for f in ("face_eok", "outstanding_eok"):
+                v = b.get(f)
+                if isinstance(v, bool) or not isinstance(v, (int, float)) or v < 0:
+                    bad.append(f"{f}={v!r}")
+            if miss or bad:
+                fd.add(A, "CAPTL_STRUCTURE", key,
+                       f"필수 필드 누락 {miss} / 형식 위반 {bad} — 화면 막대에 놓을 수 없다")
+                stat["structure_fail"] += 1
+            extra = sorted(set(b) - CAPTL_FIELDS)
+            if extra:
+                fd.add(A, "CAPTL_EXTRA_FIELD", key,
+                       f"허용 필드 밖의 키 {extra} — 이 파일은 발행 내역만 담는다(인정액·한도·분류 계열 금지)")
+                stat["extra_field"] += 1
+            if isinstance(b.get("face_eok"), (int, float)) and not isinstance(b.get("face_eok"), bool):
+                got[code].append(float(b["face_eok"]))
+
+    # ③ 소스 대조 — 빌더와 같은 포함 규칙(tier·발행일·권면 있음)을 독립적으로 다시 적용
+    want: dict[str, list] = {}
+    for c in src.get("companies", []):
+        for b in c.get("bonds") or []:
+            if b.get("tier") in CAPTL_TIERS and b.get("issue_date") and b.get("face_amount_mn") is not None:
+                want.setdefault(c["code"], []).append(float(b["face_amount_mn"]) / 100.0)
+    for code in sorted(set(want) - set(got)):
+        fd.add(A, "CAPTL_SOURCE_MISMATCH", code, f"원천에는 {len(want[code])}건이 있는데 배포본에 회사가 없다")
+        stat["source_fail"] += 1
+    for code in sorted(set(got) - set(want)):
+        fd.add(A, "CAPTL_SOURCE_MISMATCH", code, f"배포본에 {len(got[code])}건이 있는데 원천 파생에는 회사가 없다")
+        stat["source_fail"] += 1
+    for code in sorted(set(got) & set(want)):
+        g, w = got[code], want[code]
+        tol = 0.01 * max(len(g), len(w))          # 건마다 소수 둘째 자리 반올림
+        if len(g) != len(w) or abs(sum(g) - sum(w)) > tol:
+            fd.add(A, "CAPTL_SOURCE_MISMATCH", code,
+                   f"건수 {len(g)} vs 원천 {len(w)}, 권면 합 {sum(g):,.2f} vs 원천 파생 {sum(w):,.2f}억원")
+            stat["source_fail"] += 1
+        else:
+            stat["source_pass"] += 1
+    stat["companies"] = len(got)
+    return dict(stat)
+
+
 # --------------------------------------------------------------------------- baseline
 # 등재는 **건별**이지만 사유는 룰 단위로 관리한다(같은 원인의 933건을 933번 적는 것은 문서가
 # 아니라 소음이다). 사유 없는 등재는 이 게이트를 무력화하는 방법이므로 emit 시 강제한다.
@@ -916,6 +1006,7 @@ def main() -> int:
         "insurance_pl_breakdown.json": check_insurance_pl_breakdown(fd),
         "kics_tier{1,2}_utilization.json": check_tier_utilization(fd),
         "kics_duration_gap.json": check_kics_duration_gap(fd),
+        "kics_capital_securities_timeline.json": check_capsec_timeline(fd),
         "public_exports/*.json": check_public_exports(fd),
     }
 

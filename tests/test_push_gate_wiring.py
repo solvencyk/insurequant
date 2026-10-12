@@ -414,13 +414,16 @@ LIVE_ARTIFACT_READERS = {
     "dividend.json": ["validate_data_contract"],
     "kics_disclosure.json": ["validate_kics_disclosure", "validate_kics_rate_sensitivity"],
     "kics_rate_sensitivity.json": ["validate_kics_rate_sensitivity"],
-    "kics_forward_capital.json": ["validate_data_contract"],
+    # 2026-10-12: kics_forward_capital.json · kics_tier1_utilization.json · kics_tier2_utilization.json 선언을 지웠다 - 이 셋은 비공개
+    # 시트가 돼 K-ICS.html 이 더는 fetch 하지 않고(origin/main 도 0건) 배포 스크립트 PRIVATE_PATHS 가 main 에서 git rm 한다.
+    # 화면에서 빠졌으므로 ghost 검사가 선언 삭제를 요구한다. 파일 자체는 검사기가 계속 읽는다(DEPLOYED_VS_UPSTREAM 의 tier 짝 포함).
     # 2026-09-22 배포(main 22e2471)로 화면에 붙은 뒤 이 테스트가 바로 잡아냈다 — 선언이 없으면
     # 여기서 막힌다는 설계가 그대로 작동했다. 검사는 census + 파일 안 산수 + kics_disclosure
     # 항목41~46 교차대조 3축(`validate_live_artifacts.check_kics_duration_gap`).
     "kics_duration_gap.json": ["validate_live_artifacts"],
-    "kics_tier1_utilization.json": ["validate_live_artifacts"],
-    "kics_tier2_utilization.json": ["validate_live_artifacts"],
+    # 2026-10-12 K-ICS.html 자본성증권 발행현황 누적 막대(채권 단위 발행 내역, 분류 없음). 검사 = 구조 + 분류 필드 금지 +
+    # 회사별 권면 합·건수가 data/bonds/capital_securities_fy2026h1.json 파생과 일치(`check_capsec_timeline`, 변이시험 test_capsec_timeline_gate).
+    "kics_capital_securities_timeline.json": ["validate_live_artifacts"],
     "NB_CSM_multiple.json": ["validate_live_artifacts"],
     "data/dart/viz/csm_amort_schedule.json": ["validate_live_artifacts"],
     "data/dart/viz/insurance_pl_breakdown.json": ["validate_live_artifacts"],
@@ -649,6 +652,10 @@ PANEL_DERIVED_FROM = {
                                                   "data/loss_ratio/master_loss_ratio.json"),
     # 2026-10-10 IFRS17.html 섹션 3. 잔여보장요소(경영공시 2-4) + 기말 CSM 대조(CSM_waterfall) + BS 보험계약부채(IFRS17_BS item 20). scripts/viz_build_csm_combo_panel.py
     "data/csm_combo/panel_csm_combo.json":       ("insurance_liability_portfolio.json", "CSM_waterfall.json", "IFRS17_BS.json"),
+    # 2026-10-12 K-ICS.html 자본성증권 발행현황 막대. 채권 단위 발행 내역이라 `자본성증권발행현황` 시트(kics_capital_securities.json,
+    # 한 건 = 한 행: 발행일·액면가)가 같은 채권을 담는다 — 2026-10-12 실측 타임라인 125건 중 122건이 시트와 (회사,발행일,권면) 일치,
+    # 나머지 3건(상환·시트 비포함)은 타임라인에만 있고 시트 1건(발행일 없음)은 시트에만 있다. 원천은 data/bonds/capital_securities_fy2026h1.json.
+    "kics_capital_securities_timeline.json":     "kics_capital_securities.json",
 }
 
 

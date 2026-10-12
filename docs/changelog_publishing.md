@@ -10,6 +10,15 @@
 
 ---
 
+## 2026-10-12 — 타임라인 JSON 읽는 검사기 선언 + 죽은 선언 정리 (티켓 `20261012T1945Z`, 커밋만 · push 보류)
+
+- 원인: owner 가 작업 브랜치를 배포하자 라이브 `K-ICS.html` 이 `kics_capital_securities_timeline.json` 을 fetch 하는데 `tests/test_push_gate_wiring.py::LIVE_ARTIFACT_READERS` 에 그 파일의 선언이 없었다(`test_every_live_fetched_artifact_has_a_declared_reader`). 같은 시험의 ghost 검사도 실패: `kics_forward_capital`·`kics_tier1_utilization`·`kics_tier2_utilization` 은 비공개 3시트가 돼 화면이 더는 fetch 하지 않는데(원격 main HTML 도 0건) 선언만 남아 있었다. designer 가 말한 「나머지 1건」은 이것이다(마스터 시트 요구 시험 `test_every_live_fetched_artifact_lands_in_a_master_sheet` 는 `PANEL_DERIVED_FROM` 선언이 없어 같이 걸렸다).
+- 검사기: `scripts/validate_live_artifacts.py::check_capsec_timeline`(게이트 check 8) - ① 구조(`securities[코드][]`, `tier`·`issue_date`·`face_eok`·`outstanding_eok` 필수·형식) ② 허용 필드 밖의 키(인정액·한도·분류 계열 포함) 금지 ③ 회사별 건수·`face_eok` 합이 `data/bonds/capital_securities_fy2026h1.json` 에서 독립 파생한 값과 일치(회사 census 포함). 룰 id `CAPTL_STRUCTURE`·`CAPTL_EXTRA_FIELD`·`CAPTL_SOURCE_MISMATCH`. 실측 배포본: 26사 125건, RED 0.
+- 선언: `LIVE_ARTIFACT_READERS["kics_capital_securities_timeline.json"] = ["validate_live_artifacts"]`, `PANEL_DERIVED_FROM[...] = "kics_capital_securities.json"`(`자본성증권발행현황` 시트. 실측 타임라인 125건 중 122건이 시트와 (회사,발행일,권면) 일치, 3건 타임라인 전용, 시트 전용 1건은 발행일 없음). 죽은 선언 3개 삭제(파일 자체는 검사기가 계속 읽는다).
+- 변이시험: `tests/test_rule_coverage_manifest.py` 의 `test_capsec_timeline_gate_*` 3개(정상 통과 · 변이 11종 + 원천 변조 각 룰이 잡힘 · 배포본 통과).
+- 시험: `test_push_gate_wiring` 63 passed 1 skipped(기존 skip) · `test_deploy_assets` 12 · `test_prepush_scope` 65 · `test_rule_coverage_manifest` 102 · `unit/test_capital_securities_timeline` 15 passed. 게이트 `validate_live_artifacts` RED=0.
+- 놓친 이유: 「새 fetch 파일 → 선언」 시험은 `origin/main` 의 HTML 만 보는 구조라 배포 후에야 걸린다. 의견: 같은 시험의 fetch 목록을 `origin/main ∪ 작업트리 HTML` 로 넓혀 gap 검사도 배포 전(작업 브랜치 push 훅)에 걸 수 있다. `_worktree_fetches()` 가 이미 있어 한 줄 수준이고, 부작용은 작업 브랜치에 임시로 붙인 fetch 도 선언을 요구받는다는 것뿐이다(구현은 별도).
+
 ## 2026-10-12 — 비공개 3시트 · 자본성증권 공개 열 제한 · 뮌헨/스위스리 재동기화 (티켓 `20261012T1420Z`·`1440Z`, 커밋만 · push 보류)
 
 owner 지시 「내린 시트들은 비공개로 돌리고」 / 「3 승인」. 저장소의 마스터 JSON·마스터 xlsx 시트·`output/` 은 그대로, 공개 스냅샷과 main(라이브)에서만 내렸다.
