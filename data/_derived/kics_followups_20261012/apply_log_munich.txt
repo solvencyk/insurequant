@@ -1,0 +1,8 @@
+live master sha 3b377532fab9 | rows 30008 | round-trip identical: True
+live master == git HEAD before the change: True (list equality incl. order)
+planned: edits=0 cells, inserts=3 rows
+verified vs HEAD: all 30008 HEAD rows present, same relative order, changed cells == planned 0 edit cells exactly, new keys == planned 3 inserts exactly (no deletions, no other cells)
+rows of all companies outside ['KR1101']: identical to HEAD (list equality incl. order): True
+new master bytes sha bede3bcc0bc6 | rows 30011
+backup: C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\kics_followups_20261012\backup\kics_disclosure_before_3b377532fab9.json
+APPLIED ['munich_B_derived_51']: edits=0 inserts=3 rows_total=30011 sha=bede3bcc0bc6a1ae71cd0da293b0f4ab202e3864ec87552980c8a3ecc6acaedf

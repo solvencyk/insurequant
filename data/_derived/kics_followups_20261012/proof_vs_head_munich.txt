@@ -1,0 +1,8 @@
+live sha bede3bcc0bc6 rows 30011 | HEAD rows 30008
+(1) all 30008 HEAD rows present in the same relative order: True
+(2) cells changed vs HEAD: 0 == planned 0 (exactly):
+(3) keys new vs HEAD: 3 == planned 3 (exactly):
+      KR1101 2026.2Q item50 값='2716.42' 후='2716.42'  기본자본(TFI표, 공통적용경과조치)
+      KR1101 2026.2Q item51 값='0' 후='0'  보완자본(TFI표, 공통적용경과조치)
+      KR1101 2026.2Q item52 값='2716.42' 후='2716.42'  지급여력금액(TFI표, 공통적용경과조치)
+(4) rows of all companies outside ['KR1101']: 29326 rows identical to HEAD incl. order: True

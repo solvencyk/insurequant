@@ -1,0 +1,4 @@
+candidate master: C:\Users\sangwook.cho\AppData\Local\Temp\claude\C--Users-sangwook-cho-Desktop-insurequant\e15a5832-0270-4430-8e3e-4cba8a1f182c\scratchpad\cand_before2.json | live master sha 3b377532fab9 | candidate sha 3b377532fab9
+gate seconds: 17.2 | exit code: 0
+   Status counts: RED=56 YELLOW=1936 GREEN=13703 SKIP=3325 ERROR=0
+   documented exception (발행사 자기모순, 잔차 박제): blocking RED=0 (= 56 − 8_life 2건 − tier2 RED 37건 − 재작성 연쇄 0건 + 연쇄 이탈 0건 − 항등식(2·4·5·6) 17건; tier2 YELLOW 박제 5건은 차감 대상 아님) · 적용후 mmult item17 면제 2건

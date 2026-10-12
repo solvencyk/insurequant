@@ -2,6 +2,15 @@
 
 > Last updated: 2026-10-12 · Stage 2/5 — parser (kics lane)
 
+## 2026-10-12 (이어서) - 뮌헨 KR1101 2026.2Q 항목 50 · 51 · 52 적재 (owner 승인 「1 승인」, 51 = 항등식 도출) (kics 레인, 푸시 없음)
+
+계약: 코디네이터 중간 지시(owner 2026-10-12 채팅 「1 승인」 전달) - 앞서 보류한 `plans/munich_B_derived_51.json` 을 적용. 티켓 `20261012T1030Z` 는 고치지 않음.
+
+- **적재**: KR1101 2026.2Q 항목 50(기본자본) · 51(보완자본) · 52(지급여력금액) 3행, 값 · 값_적용후 = 2716.42 · 0 · 2716.42. 50 · 52 는 p17 인쇄(271,642 백만원 = 2,716.42억, 전 · 후 열). **51 은 원문이 값도 대시도 없는 공란**이라 같은 표의 항등식 52 = 50 + 51 로 0 을 도출했다(2716.42 - 2716.42). 방증: 같은 문서 p16 세부표 보완자본 0, p17 ① 자본감소분 표 보완자본 「-」, 이 회사 앞 13개 분기 51 = 0(인쇄된 대시). 47 · 48 · 49 · 53 · 54 는 도출 근거가 없어 그대로 공란. 출처 메모 = `data/_derived/kics_followups_20261012/provenance_derived_cells.json`(도출 규칙 · 원문 상태 · 승인 기록)과 계획 파일 `src`/`note`.
+- **증명**: 쓰기 전 `apply_plan.py` 검증(마스터 = HEAD, 라운드트립 동일, 새 키 = 계획 3, 바뀐 칸 0)과 쓰기 뒤 `proof_vs_head_munich.txt`(HEAD 행 30,008 전부 존재 · 같은 순서, 새 키 3 = 계획, 뮌헨 밖 29,326행 HEAD 와 동일). 백업(9.4MB)은 저장소에 싣지 않는다(직전 HEAD 가 곧 백업).
+- **게이트(전 · 후, `gate_before_munich.txt` · `gate_after_munich_vs_before.txt`)**: RED 56 → 56(새 RED 0), YELLOW 1936 → 1936, GREEN 13703 → 13705, SKIP 3325 → 3323, blocking RED 0, exit 0. 움직인 finding 4개 전부 뮌헨 2026.2Q(`50_tfi_tier_split` · `_post` SKIP → GREEN, `51_tfi_tier2_composition` · `_post` 는 47 · 48 · 49 결측으로 SKIP 유지).
+- **남은 것**: validation(룰 골든 `test_kics_rules_golden` 은 이미 퍼시픽 · 악사로 움직였고 이번 +3행으로 한 번 더 움직인다 - `--update` 이유 「퍼시픽 +16행 · 악사 4칸 · 뮌헨 +3행」, 입력지문 `INPUTS_MOVED` 4건) · publishing(xlsx `K-ICS공시` +3행 추가로 총 +19행 · 4칸).
+
 ## 2026-10-12 — 퍼시픽 16행 적재 · 악사 4칸 채택 · 뮌헨 적재 보류(51 공란) (kics 레인, 푸시 없음)
 
 계약: orchestrator 티켓 `inbox/parser/20261012T1030Z__orchestrator__KR1107-KR0055_2024.3Q-2026.2Q__kics_owner_approved_followups.md`(공유 티켓, 오케스트레이터가 종결 - 고치지 않음) + 코디네이터 부기(뮌헨 50·52 · 51 확인). 도구·계획·증거 `data/_derived/kics_followups_20261012/`.

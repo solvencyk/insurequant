@@ -100,8 +100,11 @@ anchor = ("KR1101", "2026.1Q", 54)
 muc_rows = []
 for it, val in ((50, "2716.42"), (52, "2716.42")):
     muc_rows.append({"after": None, "row": new_row(tplm[it], "2026.2Q", val, val), "src": MUC_SRC, "note": "as printed"})
+MUC_51_PROVENANCE = ("DERIVED, not printed: item 51 (보완자본, TFI table) is BLANK in the source (p17 prints neither a value nor a dash; the previous quarter "
+                     "2026.1Q p16 printed '-' in the same six rows); value 0 = item 52 - item 50 (identity 지급여력금액 = 기본자본 + 보완자본 inside the same table: "
+                     "2716.42 - 2716.42), consistent with p16 보완자본 0 and the p17 '① 자본감소분' table 보완자본 '-'. Owner approval 2026-10-12 (chat '1 승인', relayed by the coordinator).")
 muc_rows_b = [muc_rows[0],
-              {"after": None, "row": new_row(tplm[51], "2026.2Q", "0", "0"), "src": MUC_SRC + " ; item 51 = 52 - 50 = 0 DERIVED (identity within the same table), not printed", "note": "derived, owner decision needed"},
+              {"after": None, "row": new_row(tplm[51], "2026.2Q", "0", "0"), "src": MUC_SRC + " ; " + MUC_51_PROVENANCE, "note": "derived by identity 52 - 50 (blank in source); owner approved 2026-10-12"},
               muc_rows[1]]
 
 
@@ -118,8 +121,8 @@ def chain(rs):
 
 emit("munich_A_50_52_only", {"name": "munich_A_50_52_only", "task": "20261012T1030Z item 3 (KR1101) SIMULATION ONLY", "base_sha": base_sha,
                                                     "note": "NOT applied", "edits": [], "inserts": chain(muc_rows)})
-emit("munich_B_derived_51", {"name": "munich_B_derived_51", "task": "20261012T1030Z item 3 (KR1101) SIMULATION ONLY", "base_sha": base_sha,
-                                                    "note": "NOT applied", "edits": [], "inserts": chain(muc_rows_b)})
+emit("munich_B_derived_51", {"name": "munich_B_derived_51", "task": "20261012T1030Z item 3 (KR1101); coordinator relay 2026-10-12 owner '1 승인'", "base_sha": base_sha,
+                                                    "note": "items 50/52 as printed (p17), item 51 = 0 derived by the identity 52 = 50 + 51 (blank in the source); simulated new RED 0", "edits": [], "inserts": chain(muc_rows_b)})
 
 print("base_sha", base_sha)
 for n in [x for x in ("pacific_tfi_zero", "axa_2024_3q_latest", "munich_A_50_52_only", "munich_B_derived_51") if x in ONLY]:
