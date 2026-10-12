@@ -477,7 +477,33 @@
     el.textContent = t; el.hidden = false;
     clearTimeout(_shToastTimer); _shToastTimer = setTimeout(function(){ el.hidden = true; }, 2600);
   }
+  /* 공유 사용 기록(owner 2026-10-12): 개인정보 없이 익명 이벤트 하나를 수집기(forms-config.js 의 IQ_FORMS)로 보낸다.
+     fire-and-forget — forms-config.js 가 없거나 미설정이면 조용히 건너뛰고, 어떤 예외도 공유 동작에 닿지 않는다.
+     iq_internal=1 로 진입했거나 이 브라우저가 내부로 기억돼 있으면(GA4 와 같은 규칙) 보내지 않는다. 같은 동작 연타(1.5초)는 한 번만. */
+  var _shLogLast = {};
+  function shInternal(){
+    try{ if(new URLSearchParams(location.search).get('iq_internal') === '1') return true; }catch(e){}
+    try{ return localStorage.getItem('iq_internal') === '1'; }catch(e){}
+    return false;
+  }
+  function shLog(action, section, result){
+    try{
+      if(shInternal() || !window.IQ_FORMS || typeof window.IQ_FORMS.submit !== 'function') return;
+      var seg = location.pathname.split('/').pop();
+      try{ seg = decodeURIComponent(seg); }catch(e){}
+      var page = seg.replace(/\.html$/, '') || 'index';
+      section = section || '';
+      var key = page + '|' + action + '|' + section, now = Date.now();
+      if(_shLogLast[key] && now - _shLogLast[key] < 1500) return;
+      _shLogLast[key] = now;
+      var co = ''; try{ co = shCtx().company || ''; }catch(e){}
+      var touch = !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+      var p = window.IQ_FORMS.submit('share', { page:page, action:action, section:section, company:co, device:touch ? 'touch' : 'pointer', result:result || 'ok' });
+      if(p && typeof p.catch === 'function') p.catch(function(){});
+    }catch(e){}
+  }
   function shCopyLink(){
+    shLog('link_copy', '', 'ok');
     var u = new URL(location.href); u.searchParams.delete('iq_internal');
     var link = u.toString().replace(/%2C/gi, ',');
     var done = function(){ shToast('링크를 복사했습니다'); };
@@ -554,10 +580,12 @@
     var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-sec-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.iq-help', '.iq-anon-link']
       .concat(cfg.ignore || []).join(',');
     var rect = target.getBoundingClientRect(), cw0 = Math.ceil(rect.width), bodyH = Math.ceil(Math.max(rect.height, target.scrollHeight));
-    /* 섹션 이미지: 좁은 화면의 표는 가로로 스크롤된다. 보이는 만큼만 찍으면 오른쪽 열이 조용히 잘리므로 그만큼 이미지를 넓힌다.
-       페이지 전체 이미지는 폰 화면 폭 그대로 둔다(긴 세로 이미지가 목적이고, 한 표 때문에 전체가 3배로 넓어지면 읽을 수 없다). */
-    var extra = 0;
-    if(o.widen) [].forEach.call(target.querySelectorAll('.table-container, .table-wrap'), function(t){ extra = Math.max(extra, Math.ceil(t.scrollWidth - t.clientWidth)); });
+    /* 섹션 이미지: 가로로 스크롤되는 표는 그 폭만큼 이미지를 넓혀 오른쪽 열까지 담는다(넓은 화면).
+       폰(화면 폭 520px 미만 또는 coarse pointer)은 넓히지 않는다 — 이미 그려진 차트 canvas 는 넓어진 폭에 맞춰 다시 그려지지 않아
+       왼쪽 1/3 만 차지하고 오른쪽이 텅 비었다(owner 2026-10-12). 폰에서는 화면에 보이는 섹션 폭 그대로, 표는 보이는 열까지만 찍는다.
+       페이지 전체 이미지도 폰 화면 폭 그대로 둔다(한 표 때문에 전체가 3배로 넓어지면 읽을 수 없다). */
+    var extra = 0, phone = coarse || document.documentElement.clientWidth < 520;
+    if(o.widen && !phone) [].forEach.call(target.querySelectorAll('.table-container, .table-wrap'), function(t){ extra = Math.max(extra, Math.ceil(t.scrollWidth - t.clientWidth)); });
     var cw = cw0 + extra;
     var PAD = (o.pad != null) ? o.pad : 12, W = cw + PAD * 2, narrow = W < 520, LH = 17;
     /* 위 제목 */
@@ -637,23 +665,25 @@
     if(_shBusy){ shToast('이미지를 만드는 중입니다'); return; }
     _shBusy = true; shToast('이미지를 만드는 중…');
     function done(){ _shBusy = false; [].forEach.call(document.querySelectorAll('.iq-sec-share[aria-busy]'), function(b){ b.removeAttribute('aria-busy'); }); }
+    function log(res){ shLog(o.action || 'page_screenshot', o.section || '', res); }
     shLoadH2C(function(){
       shRender(target, o).then(function(r){
         r.canvas.toBlob(function(b){
           done();
-          if(!b){ shToast('이미지를 만들지 못했습니다'); return; }
+          if(!b){ log('error'); shToast('이미지를 만들지 못했습니다'); return; }
+          log(r.meta.truncated ? 'truncated' : 'ok');
           shSave(b, o.tag);
           if(r.meta.truncated) setTimeout(function(){ shToast('페이지가 매우 길어 위쪽 일부만 담았습니다. 섹션별 공유를 이용해 주세요'); }, 700);
         }, 'image/png');
-      }, function(){ done(); shToast('이미지를 만들지 못했습니다'); });
-    }, done);
+      }, function(){ done(); log('error'); shToast('이미지를 만들지 못했습니다'); });
+    }, function(){ done(); log('error'); });
   }
   function shRoot(){
     var cfg = window.IQShareConfig || {};
     return document.querySelector(cfg.container || '.section-body') || document.querySelector('.container') || document.body;
   }
   /* 헤더 공유 메뉴: 페이지 전체(모든 섹션)를 한 장의 긴 이미지로 */
-  function shShot(){ shDo(shRoot(), { tag:'full' }); }
+  function shShot(){ shDo(shRoot(), { tag:'full', action:'page_screenshot' }); }
   /* 섹션 우상단 버튼: 그 섹션만 */
   function shSection(el, btn){
     var sel = document.getElementById('company');
@@ -663,7 +693,7 @@
   }
   function shSecOpts(el){
     var anc = el.querySelector('.anc'), id = (el.id || (anc && anc.id) || 'section').replace(/[^A-Za-z0-9_-]/g, '');
-    return { title:el.getAttribute('data-share-section') || '', tag:id, pad:12, settle:500, widen:true };
+    return { title:el.getAttribute('data-share-section') || '', tag:id, pad:12, settle:500, widen:true, action:'section_screenshot', section:el.getAttribute('data-share-section') || '' };
   }
   var SHARE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M8.4 10.9l7.2-4.1M8.4 13.1l7.2 4.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><g fill="currentColor"><circle cx="18" cy="5.5" r="2.7"/><circle cx="6" cy="12" r="2.7"/><circle cx="18" cy="18.5" r="2.7"/></g></svg>';
   function mountSectionShare(){
