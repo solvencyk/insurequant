@@ -1,0 +1,13 @@
+rows 43 vs_registry: {'DIFFERENT': 6, 'same': 37}
+KR0073 교보생명보험 2024-11-12 face 6000.0 | final tier2 a | 등재부 지금 tier2 tier1 | vs_registry DIFFERENT
+     사업보고서 L46354: Step-up(2034-11-12 +1%) -> 보완자본형(R1). 단 발행사 K-ICS 표는 보완자본에 가산하지 않은 흔적(항목 47 +202, X +89) = 상충, 등재부 tier1 [F-KR0073]
+KR0083 푸본현대생명 2023-02-28 face 600.0 | final tier2 a | 등재부 지금 tier2 None | vs_registry DIFFERENT
+     주석: 5년 후 조기상환 + 10년 경과 후 1회 이자율 조정(한화생명·흥국화재의 스텝업 +1.00%p 문구와 같음, 가산폭 미기재) -> 보완자본형 [F-KR0083,R1]
+KR0097 하나생명보험 2023-03-31 face 1800.0 | final tier2 a | 등재부 지금 tier2 tier1 | vs_registry DIFFERENT
+     owner 발췌(O3 = 아시아경제 2023-04-05, W11): 5년 후 콜 미행사 시 금리가 단계적으로 오르는 스텝업 구조 -> 보완자본형. 상충 메모: DART 주석(F-KR0097)에 스텝업 문구 없음, 발행사 표(c9)는 부분 기본자본형 모양, 등재부 tier1
+KR0104 농협생명보험 2023-01-31 face 2500.0 | final tier2 a | 등재부 지금 tier2 None | vs_registry DIFFERENT
+     사업보고서: 10년째 최초 가산금리 +1.00% step-up -> 보완자본형 [F-KR0104,R1]; 발행 직후 분기 전기 열이 없어 표 판독 불가
+KR1000 코리안리재보 2023-03-16 face 2500.0 | final tier2 a | 등재부 지금 tier2 None | vs_registry DIFFERENT
+     주석 28: 5년 시점 재산정, 10년 시점 Step up 100bps -> 보완자본형 [F-KR1000,R1]
+KR1000 코리안리재보 2024-10-11 face 2300.0 | final tier2 a | 등재부 지금 tier2 None | vs_registry DIFFERENT
+     주석 28: 10년 시점 Step up 100bps -> 보완자본형 [F-KR1000,R1]; 구 신종 상환과 같은 분기라 표 판독 혼재
