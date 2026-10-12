@@ -25,6 +25,10 @@ Rules:
                       KR1000/코리안리재보험 at 4.64x by hand-checking the raw PDF table, so
                       the cutoff is set well above that, wide enough to still catch an actual
                       unit-scale bug like a 억원/백만원 mixup).
+                      A RED here can be released ONLY through R3_PINNED_EXEMPTIONS (below):
+                      the pin holds the exact item8 / item20 values the owner-approved
+                      reconnaissance saw, so any data move re-raises RED, and a pin that is
+                      no longer needed is itself RED (R3_EXEMPTION_INERT).
   R4_NA_VS_MISSING   item9 (해지율_예외모형_사용여부) must be 0 or 1 whenever items 1-8 exist
                       for that (company,quarter) -- a silent absence of item9 alongside a
                       present item1-8 is flagged (2-5 section located but N/A-vs-used could
@@ -62,6 +66,25 @@ DOCUMENTED_EXCEPTIONS = [
     # (분기당 8~9행) 예외가 한 번도 발동하지 않는 죽은 면제였다(실행 결과 exceptions applied 0).
     # 죽은 면제를 남기면 나중에 그 회사 행이 빠져도 RED 대신 SKIP 으로 조용히 넘어간다.
 ]
+
+# R3_CROSS_CHECK 박제 등재부 (2026-10-12, owner 「확인된 것만 등재」 승인, 티켓 20261012T1400Z).
+# 키 (원보험사코드, 공시분기) -> 원문 재확인으로 본 값 + 사유. **값을 박제한다**: 등재는 "이 칸이 이 값일 때만"
+# 면제이고, item8 이나 item20 이 움직이면 RED 로 되돌아온다(근거 재확인 없이 영원히 빠지는 키 집합 방식 금지).
+# 면제가 더는 필요 없어지면(10배 규칙에 안 걸림) R3_EXEMPTION_INERT RED 로 알려 죽은 면제를 남기지 않는다.
+# item20_mm 은 IFRS17_BS.json 항목 20 (백만원), item8_eok 은 이 마스터 항목 8 (억원).
+R3_PINNED_EXEMPTIONS = {
+    ("KR0029", "2024.4Q"): {
+        "item8_eok": 31.0,
+        "item20_mm": 291767.640554,
+        "reason": (
+            "AIG손해보험 2024.4Q: 2-4 표의 순 LRC 가 잔여보장자산 상계로 0 근처(+31.0억, DART 순 LRC 30.23)이고 "
+            "BS 항목 20 은 부채 기준 LRC 884.60 + LIC 2,033.08 = 2,917.7억이라 10배 규칙에 걸린다. 값은 맞고 "
+            "구조적이다(원문 재확인 parser-ifrs17, data/disclosure/_meta/ifrs17_owner_followups_runlog_20261012.md "
+            "§4 ⑧; 단위 오류 아님)."),
+    },
+}
+R3_PIN_TOL_EOK = 1e-6
+R3_PIN_TOL_MM = 1e-3
 
 # R2 census 범위 밖 코드 — **다음 round 에서 재보사 IFRS17(2-4/2-5) 을 적재하기 전까지만.**
 # 2026-10-10 재보사·마이브라운(KR1101~KR1108) K-ICS 적재로 md_inbox 2025.1Q~2026.2Q 에 이 8사 MD 가
@@ -142,6 +165,68 @@ def load_item20_registry() -> dict:
     return reg
 
 
+def check_r3(by_cq: dict, item20_reg: dict, findings: dict, pins: dict | None = None) -> None:
+    """R3_CROSS_CHECK vs IFRS17_BS item20. `pins` defaults to R3_PINNED_EXEMPTIONS (the reader of the registry)."""
+    pins = R3_PINNED_EXEMPTIONS if pins is None else pins
+    for (code, q), items in by_cq.items():
+        if 8 not in items:
+            continue
+        my_total_eok = items[8]["값"]  # 억원
+        item20_mm = item20_reg.get((code, q))  # 백만원
+        if item20_mm is None:
+            continue  # no overlapping IFRS17_BS row for this (company,quarter); not an error
+        item20_eok = item20_mm / 100.0  # 백만원 -> 억원
+        gap = item20_eok - my_total_eok
+        gap_pct = (gap / my_total_eok * 100.0) if my_total_eok else float("inf")
+        line = (
+            f"R3_CROSS_CHECK {code} {q}: item8(LRC-only)={my_total_eok:,.1f}억 "
+            f"item20(BS full)={item20_eok:,.1f}억 gap={gap:,.1f}억 ({gap_pct:+.1f}%)"
+        )
+        # Negative-gap slack: this compares two INDEPENDENT extraction pipelines (this
+        # master's own PDF table parse vs IFRS17_BS's DART XML parse) built from
+        # different source documents, each already rounded to whole 억원 per line
+        # before summing -- a few 억원 of rounding noise is expected even when both
+        # sides are correct. Confirmed on KR0070 (-0.6억, -0.0003%) and KR0072 (-1.5억,
+        # -0.001%) at 2026.2Q: both negligible, not real violations. TOL (0.05억) stays
+        # for R1 (single-pipeline arithmetic identity, which should be exact).
+        neg_slack = max(5.0, 0.005 * my_total_eok)  # 억원, or 0.5% of item8
+        # Upper bound: item20=LRC+LIC can legitimately run several multiples of item8
+        # (LRC-only) for LIC-heavy books -- confirmed on KR1000/코리안리재보험 (a
+        # reinsurer: item8=20,327억 vs item20=94,297억, 4.64x) by hand-checking the raw
+        # PDF table (합계 5,457 2,507 9,470 2,893 -- matches exactly, not a parse error).
+        # Reinsurance and claims-heavy non-life books can carry LIC far larger than
+        # LRC. Only flag RED past a wide safety margin that would instead suggest a
+        # unit-scale bug (e.g. 억원/백만원 confusion, ~100x).
+        red_msg = None
+        if gap < -neg_slack:
+            red_msg = (line + f" -- item20 < item8 by more than rounding slack "
+                       f"(-{neg_slack:.1f}억); expected item20 >= item8 since item20 = LRC+LIC")
+        elif my_total_eok > 0 and gap > 10 * my_total_eok:
+            red_msg = (line + " -- gap > 10x item8, implausible even for an LIC-heavy "
+                       "reinsurer/claims book -- check for a unit-scale bug")
+
+        pin = pins.get((code, q))
+        if pin is not None:
+            if red_msg is None:
+                findings["RED"].append(
+                    f"R3_EXEMPTION_INERT {code} {q}: pinned exemption but the cross-check no longer fails "
+                    f"({line}) -- remove the dead exemption from R3_PINNED_EXEMPTIONS")
+                continue
+            if (abs(my_total_eok - pin["item8_eok"]) > R3_PIN_TOL_EOK
+                    or abs(item20_mm - pin["item20_mm"]) > R3_PIN_TOL_MM):
+                findings["RED"].append(
+                    f"R3_PIN_DRIFT {code} {q}: values moved since the pinned reconnaissance "
+                    f"(pinned item8={pin['item8_eok']} 억 item20={pin['item20_mm']} 백만원; "
+                    f"now item8={my_total_eok} 억 item20={item20_mm} 백만원) -- re-confirm against the source; {red_msg}")
+                continue
+            findings["exceptions"].append(f"R3_CROSS_CHECK {code} {q}: SKIP (pinned) -- {pin['reason']}")
+            continue
+        if red_msg is not None:
+            findings["RED"].append(red_msg)
+        else:
+            findings["YELLOW"].append(line)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--period", help="restrict to one 공시분기 label, e.g. 2026.2Q")
@@ -197,48 +282,7 @@ def main():
                 findings["RED"].append(f"R2_CENSUS {code} {q}: no row in master, not documented")
 
     # --- R3 CROSS_CHECK vs IFRS17_BS item20 ---
-    item20_reg = load_item20_registry()
-    for (code, q), items in by_cq.items():
-        if 8 not in items:
-            continue
-        my_total_eok = items[8]["값"]  # 억원
-        item20_mm = item20_reg.get((code, q))  # 백만원
-        if item20_mm is None:
-            continue  # no overlapping IFRS17_BS row for this (company,quarter); not an error
-        item20_eok = item20_mm / 100.0  # 백만원 -> 억원
-        gap = item20_eok - my_total_eok
-        gap_pct = (gap / my_total_eok * 100.0) if my_total_eok else float("inf")
-        line = (
-            f"R3_CROSS_CHECK {code} {q}: item8(LRC-only)={my_total_eok:,.1f}억 "
-            f"item20(BS full)={item20_eok:,.1f}억 gap={gap:,.1f}억 ({gap_pct:+.1f}%)"
-        )
-        # Negative-gap slack: this compares two INDEPENDENT extraction pipelines (this
-        # master's own PDF table parse vs IFRS17_BS's DART XML parse) built from
-        # different source documents, each already rounded to whole 억원 per line
-        # before summing -- a few 억원 of rounding noise is expected even when both
-        # sides are correct. Confirmed on KR0070 (-0.6억, -0.0003%) and KR0072 (-1.5억,
-        # -0.001%) at 2026.2Q: both negligible, not real violations. TOL (0.05억) stays
-        # for R1 (single-pipeline arithmetic identity, which should be exact).
-        neg_slack = max(5.0, 0.005 * my_total_eok)  # 억원, or 0.5% of item8
-        # Upper bound: item20=LRC+LIC can legitimately run several multiples of item8
-        # (LRC-only) for LIC-heavy books -- confirmed on KR1000/코리안리재보험 (a
-        # reinsurer: item8=20,327억 vs item20=94,297억, 4.64x) by hand-checking the raw
-        # PDF table (합계 5,457 2,507 9,470 2,893 -- matches exactly, not a parse error).
-        # Reinsurance and claims-heavy non-life books can carry LIC far larger than
-        # LRC. Only flag RED past a wide safety margin that would instead suggest a
-        # unit-scale bug (e.g. 억원/백만원 confusion, ~100x).
-        if gap < -neg_slack:
-            findings["RED"].append(
-                line + f" -- item20 < item8 by more than rounding slack "
-                f"(-{neg_slack:.1f}억); expected item20 >= item8 since item20 = LRC+LIC"
-            )
-        elif my_total_eok > 0 and gap > 10 * my_total_eok:
-            findings["RED"].append(
-                line + " -- gap > 10x item8, implausible even for an LIC-heavy "
-                "reinsurer/claims book -- check for a unit-scale bug"
-            )
-        else:
-            findings["YELLOW"].append(line)
+    check_r3(by_cq, load_item20_registry(), findings)
 
     # --- R4 NA_VS_MISSING ---
     for (code, q), items in by_cq.items():

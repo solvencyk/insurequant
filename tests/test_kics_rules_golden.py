@@ -324,7 +324,12 @@ def _update() -> int:
                     "2025.4Q 신판 정정(YELLOW→GREEN 3키; 룰별 RED 이동은 19_market 1→0 하나뿐 = 교보 2026.1Q), 재보사 TFI 메모행 47~54 +40행(KR1101 18 · KR1108 20 · "
                     "KR1103 2, 커밋 b80d16a; SKIP→GREEN/YELLOW, YELLOW 는 48_tier2_limit 한도 재현 검토). "
                     "새 RED 0. 증명: 옛 마스터(a6ca9b5) 대 현 마스터 행 비교 — 추가 103행(KR1102 46 · AXA 17 · "
-                    "재보사 40) · 변경 68칸(교보·예별·농협·KB 신판 정정) · 삭제 0, 이동 버킷이 이 목록과 일치.")
+                    "재보사 40) · 변경 68칸(교보·예별·농협·KB 신판 정정) · 삭제 0, 이동 버킷이 이 목록과 일치. "
+                    "※ 2026-10-12 재생성(validation, 룰 공식은 안 건드렸다): 원인은 parser-kics 커밋 acd351a "
+                    "하나뿐이다(퍼시픽 KR1107 2025.3Q·2026.2Q 항목 47~54 +16행, 악사 KR0049 2024.3Q 4칸). "
+                    "직전 마스터(acd351a^)로 돌리면 골든과 5개 키 전부 일치함을 확인했다. buckets 634 · "
+                    "findings 19,020 불변, RED 56 불변, YELLOW 1,935→1,936 · GREEN 13,684→13,703 · "
+                    "SKIP 3,345→3,325.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")

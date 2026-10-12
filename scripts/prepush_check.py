@@ -532,6 +532,8 @@ def main(argv=None) -> int:
             "tests/test_pl_source_absent_site_rolled_off.py",
             # TIER2_LIMIT_STALE 거짓 양성 등재(마이브라운 2025.3Q, owner 2026-10-12) -- 읽는 분기 변이시험. ~25초.
             "tests/test_tier2_stale_false_positive_exemption.py",
+            # 포트폴리오 검증기 R3 「10배 규칙」 박제 등재(AIG KR0029 2024.4Q, owner 2026-10-12) -- 읽는 쪽 변이시험. <1초.
+            "tests/test_ilp_r3_pinned_exemption.py",
             "tests/test_pl_ytd_collapse_owner_confirmed.py",
             # 분기 지평 트립와이어(2026-08-29 신설). 게이트 세 곳이 각자 분기 목록을 리터럴로
             # 들고 있었고 셋 다 2026.1Q 에서 끝나 있어서, 2026.2Q 를 배포한 날 census·qoq·
