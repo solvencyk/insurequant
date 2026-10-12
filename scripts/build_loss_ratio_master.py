@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """손해율 마스터 변환기 (owner 결정 2026-10-07, handoff §5-1).
 
-「위험보험료 대비 예상보험금」(표 B) 추출 원본 `data/loss_ratio/risk_premium_vs_expected_claims.json`(long, 출처 포함)은 그대로 두고,
+「위험보험료 대비 예상보험금」(표 B) 추출 원본 `data/loss_ratio/risk_premium_vs_expected_claims.json.gz`(long, 출처 포함; 2026-10-12 부터 gzip 저장)은 그대로 두고,
 마스터 양식으로 바꿔 쓴다. 추출기(`extract_loss_ratio.py`)는 고치지도 실행하지도 않는다 -- 디스크 산출을 입력으로만 읽는다.
 입력이 바뀌어도(추출기 재실행) 이 스크립트를 다시 돌리면 그대로 반영된다(회사·라벨·분기 하드코딩 없음).
 
@@ -42,6 +42,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import io
 import json
 import os
@@ -53,7 +54,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 OUT_DIR = REPO / "data" / "loss_ratio"
-SRC_B = OUT_DIR / "risk_premium_vs_expected_claims.json"
+SRC_B = OUT_DIR / "risk_premium_vs_expected_claims.json.gz"          # 2026-10-12: 85MB -> gz (내용 바이트 동일). read_json 이 .gz 를 투명하게 연다
 SRC_CENSUS = OUT_DIR / "census.csv"
 OUT_JSON = OUT_DIR / "master_loss_ratio.json"
 OUT_CSV = OUT_DIR / "master_loss_ratio.csv"
@@ -84,8 +85,11 @@ STD_GUBUN_ORDER = ["합계", "Non-Par", "Direct-Par", "Indirect-Par"]
 STD_PRODUCT_ORDER = ["유배당", "무배당", "변액", "", "생명", "장기"]
 STD_PORT_ORDER = ["사망", "건강", "상해", "질병", "재물", "연금저축", "자산연계형연금저축", "기타", "복합", "합계"]
 PRODUCT_PREFIXES = ("유배당", "무배당", "변액")
-# 재보사(KR1101~KR1107, 2026-10-12): 라벨이 유/무배당 대신 보험종목 접두어(`생명사망` · `장기질병` · `생명복합` · `장기복합`)를 쓴다 -> 상품구분 자리에 그 접두어를 그대로 둔다(추정 없음)
+# 재보사(KR1101~KR1107, 2026-10-12): 라벨이 유/무배당 대신 보험종목 접두어(`생명사망` · `장기질병` · `생명복합` · `장기복합`)를 쓴다.
+# 사전(classify)은 접두어를 (상품구분, 포트폴리오) 로 가르는 내부 표현만 쓰고, 마스터에 나가는 값은 아래 REINSURER_SEG_RULES 가 접두어를 `세그먼트` 로 옮긴다
+# (owner 2026-10-12 「4는 웬만하면 생명보험·장기손해보험으로 분류 표준화」). 마스터 `상품구분` 에는 생명/장기가 더 나가지 않는다.
 LINE_PREFIXES = ("생명", "장기")
+STD_SEG_LIFE, STD_SEG_LTNL = "생명보험", "장기손해보험"
 PORT_CATEGORIES = ("사망", "건강", "상해", "질병", "재물", "연금저축", "기타", "복합")
 
 _PUNCT = re.compile(r"[\s\u00b7\u2219\u318d\u2022\u30fb\u2027\u22c5\u119e.,]")      # 공백·가운뎃점 변형(· ∙ ㆍ • ・ ‧ ⋅ ᆞ)·마침표·쉼표
@@ -125,12 +129,8 @@ PORT_DICT_NOTES = {
 }
 # 표준 라벨별 판단 근거(애매한 것). taxonomy 비고에 붙인다.
 STD_NOTES = {
-    ("생명", "사망"): "재보사 라벨 `생명사망`: 접두어 `생명`은 유/무배당이 아니라 보험종목 구분 -> 상품구분 자리에 그대로(추정 없음)",
-    ("생명", "건강"): "재보사 라벨 `생명건강`: 접두어 `생명`은 보험종목 구분 -> 상품구분 자리에 그대로",
-    ("생명", "복합"): "재보사 라벨 `생명복합`: 접두어 `생명`은 보험종목 구분 -> 상품구분 자리에 그대로. `복합` 은 새 표준 포트폴리오(원문 라벨)",
-    ("장기", "복합"): "재보사 라벨 `장기복합`: 접두어 `장기`는 보험종목 구분 -> 상품구분 자리에 그대로. `복합` 은 새 표준 포트폴리오(원문 라벨)",
-    ("장기", "질병"): "재보사 라벨 `장기질병`: 접두어 `장기`는 보험종목 구분 -> 상품구분 자리에 그대로",
     ("무배당", "복합"): "`복합` 은 새 표준 포트폴리오(원문 라벨 `무배당복합`)",
+    ("", "복합"): "`복합` 은 새 표준 포트폴리오(원문 라벨 `생명복합`·`장기복합`; 보험종목은 세그먼트 생명보험/장기손해보험으로 구분)",
     ("", "기타"): "접두어 없는 `기타`: 유배당/무배당 어느 쪽인지 원문에 없음 -> 상품구분 공란 유지(추정해 붙이지 않음)",
     ("", "자산연계형연금저축"): "`자산연계형` 은 유/무배당·변액과 다른 상품군 라벨이라 접두어가 없음 -> 상품구분 공란, 포트폴리오로 둠",
     ("유배당", "건강"): "생보 `건강` 은 손보 `상해`·`질병` 과 합치지 않음(인쇄 라벨 그대로)",
@@ -175,6 +175,103 @@ def classify(raw_gb: str | None, raw_pf: str | None, canon_pf: str | None, fix_n
 
 
 # ------------------------------------------------------------------------------------------------
+# 재보사 세그먼트 표준화 (owner 2026-10-12): 마스터 `세그먼트` = 생명보험 / 장기손해보험 (공동재보험을 따로 인쇄하는 회사는 `…/공동재보험`)
+#   * 내부 블록·정정 대조·합계 검산은 원문 인쇄 단위(세그먼트 = 원본 사업구분/부문)로 그대로 돈다. 마스터 행에 나가는 `세그먼트`·`상품구분` 두 칸만 바뀐다.
+#   * 회사별 판정 근거 = 같은 공시본의 원문. 근거 쪽수는 data/_derived/loss_ratio_label_std_20261012/ (reinsurer_label_mapping.csv).
+#       prefix   라벨 접두어 `생명`/`장기` 가 인쇄돼 있음 (KR1101 뮌헨 · KR1103 제네럴; 4-6-2 표 상품유형 생명 / 장기손해 와 일치)
+#       printed  표 안 머리글(`[생명보험]`/`[손해보험]`)을 그대로 쓰되 `손해보험` -> `장기손해보험` (KR1102: 같은 포트폴리오가 4-6-2 표에서 상품유형 `장기손해`,
+#                [손해보험] 표의 합계 = Σ포트폴리오(무배당상해·무배당질병)로 닫혀 일반·자동차 행이 없음) (KR1106 은 이미 표준명)
+#       all      표 전체가 한 종목 (KR1104 하노버 · KR1105 알지에이: 4-6-2 표의 상품유형 열이 전 행 `장기손해`)
+#       table462 4-6-2 표의 상품유형 열을 라벨로 대조 (KR1107 퍼시픽: 생명 = Non-Par 무배당사망·무배당건강, 나머지 포트폴리오 = 장기손해)
+#     규칙에 안 걸리는 칸(모르는 라벨)은 원문 세그먼트·상품구분을 그대로 둔다(추정해 붙이지 않음) -- 그 블록의 합계도 그대로.
+#     원문이 생명+장기손해를 합산해 한 덩어리로 인쇄한 회사(KR1106 스코리 2024.4Q/2025.4Q 채택 블록)는 규칙을 두지 않아 세그먼트 공란.
+#   * 합계 행: 표의 모든 포트폴리오 행이 같은 표준 세그먼트면 그 값, 둘 이상이면 공란(생명+장기손해 혼합 합계).
+# ------------------------------------------------------------------------------------------------
+REINSURER_SEG_RULES: dict[str, dict] = {
+    "KR1101": {"kind": "prefix"},
+    "KR1103": {"kind": "prefix"},
+    "KR1102": {"kind": "printed", "map": {"생명보험": STD_SEG_LIFE, "손해보험": STD_SEG_LTNL}},
+    "KR1106": {"kind": "printed", "map": {STD_SEG_LIFE: STD_SEG_LIFE, STD_SEG_LTNL: STD_SEG_LTNL}},
+    "KR1104": {"kind": "all", "seg": STD_SEG_LTNL},
+    "KR1105": {"kind": "all", "seg": STD_SEG_LTNL},
+    "KR1107": {"kind": "table462", "life": {("Non-Par", "사망"), ("Non-Par", "건강")},
+               "ltnl": {"상해", "질병", "재물", "연금저축", "자산연계형연금저축", "기타"}},
+}
+STD_RULE_NOTE = "재보사 세그먼트 표준화(2026-10-12)"
+
+
+def split_canon(pf: str | None) -> tuple[str, str]:
+    """추출기 canon 포트폴리오 문자열 -> (상품구분 또는 보험종목 접두어, 포트폴리오). std_concat 의 역."""
+    if not pf:
+        return "", ""
+    if pf == "합계":
+        return "", "합계"
+    for p in PRODUCT_PREFIXES + LINE_PREFIXES:
+        if pf.startswith(p) and len(pf) > len(p):
+            return p, pf[len(p):]
+    return "", pf
+
+
+def _std_line(rule: dict, src_seg: str, gb: str, pv: str, pf: str):
+    """한 포트폴리오 행 -> (표준 세그먼트, 표준 상품구분) | None(규칙 밖)."""
+    k = rule["kind"]
+    if k == "prefix":
+        if pv == "생명":
+            return STD_SEG_LIFE, ""
+        if pv == "장기":
+            return STD_SEG_LTNL, ""
+        return None
+    if k == "printed":
+        s = rule["map"].get(src_seg)
+        return (s, pv) if s else None
+    if k == "all":
+        return rule["seg"], pv
+    if k == "table462":
+        if (gb, pf) in rule["life"]:
+            return STD_SEG_LIFE, pv
+        if pf in rule["ltnl"]:
+            return STD_SEG_LTNL, pv
+        return None
+    return None
+
+
+def std_assign(code: str, items) -> dict:
+    """한 블록(회사, PDF 분기, 기준연도)의 칸 묶음 {(원문 세그먼트, 구분, 상품구분, 포트폴리오)} -> {item: (표준 세그먼트, 표준 상품구분)}.
+    규칙이 없는 회사는 항등. 합계 행은 같은 원문 세그먼트 묶음 안의 포트폴리오 행 결과로 정한다(모두 같으면 그 값, 섞이면 공란, 하나라도 규칙 밖이면 항등)."""
+    items = list(items)
+    out = {it: (it[0], it[2]) for it in items}
+    rule = REINSURER_SEG_RULES.get(code)
+    if not rule:
+        return out
+    groups: dict[str, list] = defaultdict(list)
+    for it in items:
+        groups[it[0]].append(it)
+    for src_seg, its in groups.items():
+        parts, totals = {}, []
+        for it in its:
+            if it[1] == "합계":
+                totals.append(it)
+            else:
+                parts[it] = _std_line(rule, *it)
+        for it, r in parts.items():
+            if r is not None:
+                out[it] = r
+        segs = {r[0] for r in parts.values() if r is not None}
+        unmapped = any(r is None for r in parts.values())
+        if parts and not unmapped:
+            tot_seg = next(iter(segs)) if len(segs) == 1 else ""
+        elif not parts and rule["kind"] == "all":
+            tot_seg = rule["seg"]
+        elif not parts and rule["kind"] == "printed" and src_seg in rule["map"]:
+            tot_seg = rule["map"][src_seg]
+        else:
+            continue
+        for it in totals:
+            out[it] = (tot_seg, it[2])
+    return out
+
+
+# ------------------------------------------------------------------------------------------------
 # 입출력 유틸
 # ------------------------------------------------------------------------------------------------
 def retry(fn, what: str, tries: int = 8, wait: float = 5.0):
@@ -192,7 +289,10 @@ def retry(fn, what: str, tries: int = 8, wait: float = 5.0):
 
 def read_json(path: Path):
     def f():
-        txt = path.read_text(encoding="utf-8")
+        if path.suffix == ".gz":
+            txt = gzip.decompress(path.read_bytes()).decode("utf-8")
+        else:
+            txt = path.read_text(encoding="utf-8")
         if not txt.strip():
             raise json.JSONDecodeError("빈 파일", txt, 0)
         return json.loads(txt)
@@ -341,9 +441,10 @@ def norm_cells(rows: list[dict]):
             if r.get("구분") != gb or (r.get("포트폴리오") is not None and r.get("포트폴리오") != std_concat(pv, pf)):
                 clsflags = clsflags + [f"분류불일치(추출기 canon {r.get('구분')}|{r.get('포트폴리오')} / 사전 {gb}|{std_concat(pv, pf)})"]
         tkey = (raw_gb or "", raw_pf or "", seg, gb, pv, pf, note, tuple(f for f in clsflags if f != "라벨보정"))
-        t = tax.setdefault(tkey, {"codes": set(), "n": 0})
+        t = tax.setdefault(tkey, {"codes": set(), "n": 0, "by_code": Counter()})
         t["codes"].add(code)
         t["n"] += 1
+        t["by_code"][code] += 1
         k = (code, pq, yr)
         blk = blocks.setdefault(k, {"cells": {}, "n_src": 0, "n_used": 0, "dup_list": [], "files": set(), "pages": set()})
         blk["n_src"] += 1
@@ -352,7 +453,8 @@ def norm_cells(rows: list[dict]):
         ck = (seg, kg, pv, kpf, r["경과기간"])
         cell = blk["cells"].setdefault(ck, {"g": gb, "pv": pv, "pf": pf, "seg": seg, "period": r["경과기간"], "raw_gb": raw_gb or "",
                                             "raw_pf": raw_pf or "", "canon_gb": r.get("구분"), "canon_pf": r.get("포트폴리오"),
-                                            "cls": list(clsflags), "m": {}, "dups": []})
+                                            "cls": list(clsflags), "m": {}, "dups": [], "tk": Counter()})
+        cell["tk"][tkey] += 1
         m = r["지표"]
         val = r["값"]
         unit = r["단위"]
@@ -700,6 +802,7 @@ def master_rows_for_block(code: str, q: str, blk: dict, reg: dict, blockflags: l
     rows = []
     units = Counter(c["orig_unit"] for cell in blk["cells"].values() for mm, c in cell["m"].items() if mm in AMT and c["v"] is not None)
     block_unit = units.most_common(1)[0][0] if units else "억원"          # 금액 지표가 아예 없는 칸의 단위 표기용
+    std = std_assign(code, {(c["seg"], c["g"], c["pv"], c["pf"]) for c in blk["cells"].values()})          # 재보사만 표준화, 나머지는 항등
     for ck, cell in blk["cells"].items():
         m = cell["m"]
         ca, cb, cq = m.get("예상보험금"), m.get("위험보험료"), m.get("비율")
@@ -746,6 +849,7 @@ def master_rows_for_block(code: str, q: str, blk: dict, reg: dict, blockflags: l
         hows = sorted({c["how"] for c in m.values()})
         orig_units = sorted({c["orig_unit"] for mm, c in m.items() if mm in AMT and c["v"] is not None}) or \
             sorted({c["orig_unit"] for mm, c in m.items() if mm in AMT}) or [block_unit]
+        out_seg, out_pv = std[(cell["seg"], cell["g"], cell["pv"], cell["pf"])]
         rows.append({
             "원보험사코드": code,
             "원수사명": e["name"] or blk.get("name") or "",
@@ -754,14 +858,14 @@ def master_rows_for_block(code: str, q: str, blk: dict, reg: dict, blockflags: l
             "공시분기": q,
             "경과차년": cell["period"],
             "구분": cell["g"],
-            "상품구분": cell["pv"],
+            "상품구분": out_pv,
             "포트폴리오": cell["pf"],
             "위험보험료": num_clean(b),
             "예상보험금": num_clean(a),
             "손해율": loss,
             "원문구분": cell["raw_gb"],
             "원문포트폴리오": cell["raw_pf"],
-            "세그먼트": cell["seg"],
+            "세그먼트": out_seg,
             "단위": "/".join(orig_units),
             "출처": src_txt,
             "추출방식": "+".join(hows),
@@ -822,6 +926,35 @@ def build():
     return build_from(src_rows, census_rows, load_registry())
 
 
+def restandardize_tax(tax: dict, blocks_all: dict) -> dict:
+    """taxonomy census 를 마스터에 나가는 값 기준으로 다시 센다: 규칙이 있는 회사(재보사)의 라벨 행만 (세그먼트, 표준 상품구분) 을 표준값으로 바꾸고, 나머지 회사는 그대로."""
+    new: dict[tuple, dict] = {}
+    for tkey, t in tax.items():
+        rest = {c: n for c, n in t["by_code"].items() if c not in REINSURER_SEG_RULES}
+        if rest:
+            e = new.setdefault(tkey, {"codes": set(), "n": 0, "by_code": Counter()})
+            e["codes"].update(rest)
+            e["n"] += sum(rest.values())
+            e["by_code"].update(rest)
+    for (code, pq, yr), blk in blocks_all.items():
+        if code not in REINSURER_SEG_RULES:
+            continue
+        std = std_assign(code, {(c["seg"], c["g"], c["pv"], c["pf"]) for c in blk["cells"].values()})
+        for cell in blk["cells"].values():
+            seg_o, pv_o = std[(cell["seg"], cell["g"], cell["pv"], cell["pf"])]
+            for tkey, n in cell["tk"].items():
+                raw_gb, raw_pf, seg, gb, pv, pf, note, flags = tkey
+                if (seg_o, pv_o) != (seg, pv):
+                    parts = [f"세그먼트 `{seg}` -> `{seg_o}`" if seg != seg_o else "", f"상품구분 `{pv}` -> `{pv_o}`" if pv != pv_o else ""]
+                    note = "; ".join(x for x in (note, f"{STD_RULE_NOTE}: " + ", ".join(p for p in parts if p) + f" (원문 라벨 `{raw_pf}`)") if x)
+                nk = (raw_gb, raw_pf, seg_o, gb, pv_o, pf, note, flags)
+                e = new.setdefault(nk, {"codes": set(), "n": 0, "by_code": Counter()})
+                e["codes"].add(code)
+                e["n"] += n
+                e["by_code"][code] += n
+    return new
+
+
 def build_from(src_rows: list[dict], census_rows: list[dict], reg: dict):
     keys_seen: Counter = Counter()
     for r in src_rows:
@@ -830,6 +963,7 @@ def build_from(src_rows: list[dict], census_rows: list[dict], reg: dict):
     if unknown:
         print(f"  [경고] 원본 행에 이 변환기가 모르는 필드가 있다(마스터에 안 실림 -- 새 축이면 SEGMENT_FIELDS/사전 보강 필요): {unknown}")
     blocks_all, tax = norm_cells(src_rows)
+    tax = restandardize_tax(tax, blocks_all)
     blocks, unused = valid_block_keys(blocks_all)
     cidx = census_index(census_rows)
     fallback = {}
@@ -1099,9 +1233,21 @@ def verify(src_rows: list[dict], mj: list[dict], mc: list[list[str]] | None = No
     ridx: dict[tuple, dict] = {}
     block_rows: Counter = Counter()
     dup_src: Counter = Counter()
+    # 재보사(REINSURER_SEG_RULES): 마스터 `세그먼트`/`상품구분` 은 표준값이라, 원본 칸을 같은 규칙으로 옮긴 키로 색인한다(추출기 canon 라벨 -> split_canon). 나머지 회사는 항등.
+    std_items: dict[tuple, set] = defaultdict(set)
+    for r in src_rows:
+        if r["원보험사코드"] in REINSURER_SEG_RULES:
+            pv_, pf_ = split_canon(r["포트폴리오"])
+            std_items[(r["원보험사코드"], r["공시분기"], r["기준연도"])].add((seg_of(r), r["구분"], pv_, pf_))
+    std_maps = {bk: std_assign(bk[0], its) for bk, its in std_items.items()}
     for r in src_rows:
         bk = (r["원보험사코드"], r["공시분기"], r["기준연도"])
-        key = bk + (seg_of(r), r["구분"], r["포트폴리오"], r["경과기간"])
+        s_seg, s_pf = seg_of(r), r["포트폴리오"]
+        if bk in std_maps:
+            pv_, pf_ = split_canon(r["포트폴리오"])
+            s_seg, pv_o = std_maps[bk][(seg_of(r), r["구분"], pv_, pf_)]
+            s_pf = std_concat(pv_o, pf_)
+        key = bk + (s_seg, r["구분"], s_pf, r["경과기간"])
         d = idx.setdefault(key, {})
         rkey = bk + (seg_of(r), r.get("구분_원문") or r["구분"], r.get("포트폴리오_원문") or "", r["경과기간"])
         rd = ridx.setdefault(rkey, {})
@@ -1113,6 +1259,7 @@ def verify(src_rows: list[dict], mj: list[dict], mc: list[list[str]] | None = No
         block_rows[bk] += 1
     consumed: Counter = Counter()
     seen_keys: dict[tuple, int] = {}
+    gseg: dict[int, str] = {}
     used_blocks: dict[tuple, set] = defaultdict(set)
     n_loss_bad = n_val_bad = n_ratio_flag_bad = 0
     for i, m in enumerate(mj):
@@ -1140,6 +1287,7 @@ def verify(src_rows: list[dict], mj: list[dict], mc: list[list[str]] | None = No
             errs.append(f"행{i} {code} {m['공시분기']} {m['구분']}|{m['상품구분']}{m['포트폴리오']}|{m['경과차년']}: 원본에 대응 칸 없음")
             continue
         consumed[(code, pq, yr)] += len(s)
+        gseg[i] = seg_of(next(iter(s.values())))          # 합계=Σ 검산은 원문 인쇄 단위(원본 세그먼트)로 묶는다 -- 표준화로 세그먼트가 달라져도 같은 표
         for col, met in (("위험보험료", "위험보험료"), ("예상보험금", "예상보험금")):
             sr = s.get(met)
             exp = None
@@ -1195,12 +1343,12 @@ def verify(src_rows: list[dict], mj: list[dict], mc: list[list[str]] | None = No
             warns.append(f"{bk}: 원본에 같은 칸 중복 {dup_src[bk]}건(첫 값 채택, 플래그 `원본중복칸`)")
     # --- 합계 = Σ포트폴리오 (마스터 값 기준, 원문오기·중복칸·분류미정·검산실패 census 행은 설명 가능한 예외)
     grp: dict[tuple, dict] = defaultdict(lambda: {"tot": None, "parts": [], "flags": ""})
-    for m in mj:
+    for i, m in enumerate(mj):
         for col in ("예상보험금", "위험보험료"):
             v = m[col]
             if v is None:
                 continue
-            g = grp[(m["원보험사코드"], m["공시분기"], m["세그먼트"], m["경과차년"], col)]
+            g = grp[(m["원보험사코드"], m["공시분기"], gseg.get(i, m["세그먼트"]), m["경과차년"], col)]
             g["flags"] += m["플래그"]
             if m["구분"] == "합계":
                 g["tot"] = v
@@ -1298,7 +1446,7 @@ def run_verify_files() -> tuple[list[str], list[str], dict]:
 
 
 def main():
-    ap = argparse.ArgumentParser(description="손해율 마스터 변환기 (risk_premium_vs_expected_claims.json -> master_loss_ratio.json/csv)")
+    ap = argparse.ArgumentParser(description="손해율 마스터 변환기 (risk_premium_vs_expected_claims.json.gz -> master_loss_ratio.json/csv)")
     ap.add_argument("--verify-only", action="store_true", help="쓰지 않고 기존 산출만 원본과 1:1 대조")
     ap.add_argument("--no-write", action="store_true", help="산출 파일을 쓰지 않고 요약·메모리 검산만")
     args = ap.parse_args()

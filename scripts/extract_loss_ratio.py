@@ -6,7 +6,7 @@
   표 C  「가격설정(pricing)의 적정성」 합산비율 표 (손보, 2Q·4Q 공시)  종목 x {손해율, 사업비율, 합산비율} x 연도·분기
 
 산출 (모두 data/loss_ratio/, 원자적 교체):
-  claims_ae_ratio.json · risk_premium_vs_expected_claims.json · combined_ratio_nonlife.json
+  claims_ae_ratio.json · risk_premium_vs_expected_claims.json.gz · combined_ratio_nonlife.json
   census.csv         기대그리드 전 칸의 상태 (FILLED / FILLED(vision) / ABSENT_IN_SOURCE / UNREADABLE / SCAN_PENDING ...)
   pdf_survey.csv     PDF 549개 전수 조사(쪽 수 · 텍스트쪽 비율 · 키워드 쪽 번호) = ABSENT 근거 원장
   diffs.csv          같은 기준연도가 두 공시(또는 본문 vs 뒤쪽 사본)에 나올 때의 값 차이
@@ -33,6 +33,7 @@ from __future__ import annotations
 import argparse
 import bisect
 import csv
+import gzip
 import io
 import json
 import os
@@ -60,7 +61,7 @@ except Exception:  # noqa: BLE001
     PDF_SUBDIRS = ("raw", "pdf")
 
 OUT_A = OUT_DIR / "claims_ae_ratio.json"
-OUT_B = OUT_DIR / "risk_premium_vs_expected_claims.json"
+OUT_B = OUT_DIR / "risk_premium_vs_expected_claims.json.gz"          # 2026-10-12: gzip 저장(내용 동일, 85MB -> 약 5MB)
 OUT_C = OUT_DIR / "combined_ratio_nonlife.json"
 ERRATA_PATH = OUT_DIR / "source_errata.csv"          # 원문 인쇄 오기 등재부(렌더 PNG 로 직접 확인한 칸만). 읽기 전용 입력
 OUT_CENSUS = OUT_DIR / "census.csv"
@@ -141,7 +142,24 @@ def atomic_write_text(path: Path, text: str, encoding: str = "utf-8") -> None:
 
 
 def atomic_write_json(path: Path, obj) -> None:
-    atomic_write_text(path, json.dumps(obj, ensure_ascii=False, separators=(",", ":")))
+    text = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+    if path.suffix != ".gz":
+        atomic_write_text(path, text)
+        return
+    buf = io.BytesIO()          # deterministic gzip (no file name, mtime 0): same content -> same bytes
+    with gzip.GzipFile(filename="", mode="wb", fileobj=buf, compresslevel=9, mtime=0) as g:
+        g.write(text.encode("utf-8"))
+    tmp = path.with_name(path.name + ".tmp")
+    tmp.write_bytes(buf.getvalue())
+    last: Exception | None = None
+    for _ in range(60):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError as e:
+            last = e
+            time.sleep(1.0)
+    raise last  # type: ignore[misc]
 
 
 # ---------------------------------------------------------------------------------------------

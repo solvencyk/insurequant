@@ -1,0 +1,310 @@
+M	KR1101	2024.4Q		Non-Par	생명	건강	Non-Par	생명건강	16
+M	KR1101	2024.4Q		Non-Par	생명	복합	Non-Par	생명복합	16
+M	KR1101	2024.4Q		Non-Par	생명	사망	Non-Par	생명사망	16
+M	KR1101	2024.4Q		Non-Par	장기	복합	Non-Par	장기복합	16
+M	KR1101	2024.4Q		합계		합계	합계		16
+M	KR1101	2025.4Q		Non-Par	생명	건강	Non-Par	생명건강	16
+M	KR1101	2025.4Q		Non-Par	생명	복합	Non-Par	생명복합	16
+M	KR1101	2025.4Q		Non-Par	생명	사망	Non-Par	생명사망	16
+M	KR1101	2025.4Q		Non-Par	장기	복합	Non-Par	장기복합	16
+M	KR1101	2025.4Q		합계		합계	합계		16
+M	KR1102	2024.4Q	생명보험	Indirect-Par	무배당	사망	Indirect-Par	무배당사망	16
+M	KR1102	2024.4Q	생명보험	Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1102	2024.4Q	생명보험	Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1102	2024.4Q	생명보험	합계		합계	합계		16
+M	KR1102	2024.4Q	손해보험	Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1102	2024.4Q	손해보험	Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1102	2024.4Q	손해보험	합계		합계	합계		16
+M	KR1102	2025.4Q	생명보험	Indirect-Par	무배당	사망	Indirect-Par	무배당사망	16
+M	KR1102	2025.4Q	생명보험	Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1102	2025.4Q	생명보험	Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1102	2025.4Q	생명보험	합계		합계	합계		16
+M	KR1102	2025.4Q	손해보험	Indirect-Par	무배당	질병	Indirect-Par	무배당질병	16
+M	KR1102	2025.4Q	손해보험	Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1102	2025.4Q	손해보험	Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1102	2025.4Q	손해보험	합계		합계	합계		16
+M	KR1103	2023.4Q		Non-Par	생명	건강	Non-Par	생명건강	16
+M	KR1103	2023.4Q		Non-Par	생명	사망	Non-Par	생명사망	16
+M	KR1103	2023.4Q		Non-Par	장기	질병	Non-Par	장기질병	16
+M	KR1103	2023.4Q		합계		합계	합계		16
+M	KR1103	2024.4Q		Non-Par	생명	건강	Non-Par	생명건강	16
+M	KR1103	2024.4Q		Non-Par	생명	사망	Non-Par	생명사망	16
+M	KR1103	2024.4Q		Non-Par	장기	질병	Non-Par	장기질병	16
+M	KR1103	2024.4Q		합계		합계	합계		16
+M	KR1103	2025.4Q		Non-Par	생명	건강	Non-Par	생명건강	16
+M	KR1103	2025.4Q		Non-Par	생명	사망	Non-Par	생명사망	16
+M	KR1103	2025.4Q		Non-Par	장기	질병	Non-Par	장기질병	16
+M	KR1103	2025.4Q		합계		합계	합계		16
+M	KR1104	2023.4Q		Non-Par		기타	Non-Par	기타	16
+M	KR1104	2023.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1104	2023.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1104	2023.4Q		합계		합계	합계		16
+M	KR1104	2024.4Q		Non-Par		기타	Non-Par	기타	16
+M	KR1104	2024.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1104	2024.4Q		합계		합계	합계		16
+M	KR1104	2025.4Q		Non-Par		기타	Non-Par	기타	16
+M	KR1104	2025.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1104	2025.4Q		합계		합계	합계		16
+M	KR1105	2023.4Q		Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1105	2023.4Q		Non-Par	무배당	복합	Non-Par	무배당복합	16
+M	KR1105	2023.4Q		Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1105	2023.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1105	2023.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1105	2023.4Q		합계		합계	합계		16
+M	KR1105	2024.4Q		Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1105	2024.4Q		Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1105	2024.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1105	2024.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1105	2024.4Q		합계		합계	합계		16
+M	KR1105	2025.4Q		Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1105	2025.4Q		Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1105	2025.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1105	2025.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1105	2025.4Q		합계		합계	합계		16
+M	KR1106	2024.4Q		Non-Par	무배당	기타	Non-Par	무배당기타	16
+M	KR1106	2024.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1106	2024.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1106	2024.4Q		합계		합계	합계		16
+M	KR1106	2025.4Q		Non-Par	무배당	기타	Non-Par	무배당기타	16
+M	KR1106	2025.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1106	2025.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1106	2025.4Q		합계		합계	합계		16
+M	KR1107	2023.4Q		Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1107	2023.4Q		Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1107	2023.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1107	2023.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1107	2023.4Q		합계		합계	합계		16
+M	KR1107	2024.4Q		Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1107	2024.4Q		Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1107	2024.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1107	2024.4Q		합계		합계	합계		16
+M	KR1107	2025.4Q		Direct-Par		기타	Direct-Par	기타	16
+M	KR1107	2025.4Q		Direct-Par		자산연계형연금저축	Direct-Par	자산연계형연금∙저축	16
+M	KR1107	2025.4Q		Direct-Par	무배당	기타	Direct-Par	유배당기타	16
+M	KR1107	2025.4Q		Direct-Par	무배당	상해	Direct-Par	무배당상해	16
+M	KR1107	2025.4Q		Direct-Par	무배당	연금저축	Direct-Par	무배당연금∙저축	16
+M	KR1107	2025.4Q		Direct-Par	무배당	재물	Direct-Par	무배당재물	16
+M	KR1107	2025.4Q		Direct-Par	무배당	질병	Direct-Par	무배당질병	16
+M	KR1107	2025.4Q		Direct-Par	유배당	기타	Direct-Par	유배당기타	16
+M	KR1107	2025.4Q		Direct-Par	유배당	상해	Direct-Par	유배당상해	16
+M	KR1107	2025.4Q		Direct-Par	유배당	연금저축	Direct-Par	유배당연금∙저축	16
+M	KR1107	2025.4Q		Direct-Par	유배당	재물	Direct-Par	유배당재물	16
+M	KR1107	2025.4Q		Direct-Par	유배당	질병	Direct-Par	유배당질병	16
+M	KR1107	2025.4Q		Indirect-Par		기타	Indirect-Par	기타	16
+M	KR1107	2025.4Q		Indirect-Par		자산연계형연금저축	Indirect-Par	자산연계형연금∙저축	16
+M	KR1107	2025.4Q		Indirect-Par	무배당	기타	Indirect-Par	유배당기타	16
+M	KR1107	2025.4Q		Indirect-Par	무배당	상해	Indirect-Par	무배당상해	16
+M	KR1107	2025.4Q		Indirect-Par	무배당	연금저축	Indirect-Par	무배당연금∙저축	16
+M	KR1107	2025.4Q		Indirect-Par	무배당	재물	Indirect-Par	무배당재물	16
+M	KR1107	2025.4Q		Indirect-Par	무배당	질병	Indirect-Par	무배당질병	16
+M	KR1107	2025.4Q		Indirect-Par	유배당	기타	Indirect-Par	유배당기타	16
+M	KR1107	2025.4Q		Indirect-Par	유배당	상해	Indirect-Par	유배당상해	16
+M	KR1107	2025.4Q		Indirect-Par	유배당	연금저축	Indirect-Par	유배당연금∙저축	16
+M	KR1107	2025.4Q		Indirect-Par	유배당	재물	Indirect-Par	유배당재물	16
+M	KR1107	2025.4Q		Indirect-Par	유배당	질병	Indirect-Par	유배당질병	16
+M	KR1107	2025.4Q		Non-Par		기타	Non-Par	기타	16
+M	KR1107	2025.4Q		Non-Par		자산연계형연금저축	Non-Par	자산연계형연금∙저축	16
+M	KR1107	2025.4Q		Non-Par	무배당	건강	Non-Par	무배당건강	16
+M	KR1107	2025.4Q		Non-Par	무배당	기타	Non-Par	유배당기타	16
+M	KR1107	2025.4Q		Non-Par	무배당	사망	Non-Par	무배당사망	16
+M	KR1107	2025.4Q		Non-Par	무배당	상해	Non-Par	무배당상해	16
+M	KR1107	2025.4Q		Non-Par	무배당	연금저축	Non-Par	무배당연금∙저축	16
+M	KR1107	2025.4Q		Non-Par	무배당	재물	Non-Par	무배당재물	16
+M	KR1107	2025.4Q		Non-Par	무배당	질병	Non-Par	무배당질병	16
+M	KR1107	2025.4Q		Non-Par	유배당	기타	Non-Par	유배당기타	16
+M	KR1107	2025.4Q		Non-Par	유배당	상해	Non-Par	유배당상해	16
+M	KR1107	2025.4Q		Non-Par	유배당	연금저축	Non-Par	유배당연금∙저축	16
+M	KR1107	2025.4Q		Non-Par	유배당	재물	Non-Par	유배당재물	16
+M	KR1107	2025.4Q		Non-Par	유배당	질병	Non-Par	유배당질병	16
+M	KR1107	2025.4Q		합계		합계	합계		16
+S	KR1101	2024.4Q	2024	None	None	Non-Par	생명건강	생명건강	48
+S	KR1101	2024.4Q	2024	None	None	Non-Par	생명복합	생명복합	48
+S	KR1101	2024.4Q	2024	None	None	Non-Par	생명사망	생명사망	48
+S	KR1101	2024.4Q	2024	None	None	Non-Par	장기복합	장기복합	48
+S	KR1101	2024.4Q	2024	None	None	합계	합계	None	48
+S	KR1101	2025.4Q	2024	None	None	Non-Par	생명건강	생명건강	48
+S	KR1101	2025.4Q	2024	None	None	Non-Par	생명복합	생명복합	48
+S	KR1101	2025.4Q	2024	None	None	Non-Par	생명사망	생명사망	48
+S	KR1101	2025.4Q	2024	None	None	Non-Par	장기복합	장기복합	48
+S	KR1101	2025.4Q	2024	None	None	합계	합계	None	48
+S	KR1101	2025.4Q	2025	None	None	Non-Par	생명건강	생명건강	48
+S	KR1101	2025.4Q	2025	None	None	Non-Par	생명복합	생명복합	48
+S	KR1101	2025.4Q	2025	None	None	Non-Par	생명사망	생명사망	48
+S	KR1101	2025.4Q	2025	None	None	Non-Par	장기복합	장기복합	48
+S	KR1101	2025.4Q	2025	None	None	합계	합계	None	48
+S	KR1102	2024.4Q	2024	None	생명보험	Indirect-Par	무배당사망	무배당사망	48
+S	KR1102	2024.4Q	2024	None	생명보험	Non-Par	무배당건강	무배당건강	48
+S	KR1102	2024.4Q	2024	None	생명보험	Non-Par	무배당사망	무배당사망	48
+S	KR1102	2024.4Q	2024	None	생명보험	합계	합계	None	48
+S	KR1102	2024.4Q	2024	None	손해보험	Non-Par	무배당상해	무배당상해	48
+S	KR1102	2024.4Q	2024	None	손해보험	Non-Par	무배당질병	무배당질병	48
+S	KR1102	2024.4Q	2024	None	손해보험	합계	합계	None	48
+S	KR1102	2025.4Q	2024	None	생명보험	Indirect-Par	무배당사망	무배당사망	48
+S	KR1102	2025.4Q	2024	None	생명보험	Non-Par	무배당건강	무배당건강	48
+S	KR1102	2025.4Q	2024	None	생명보험	Non-Par	무배당사망	무배당사망	48
+S	KR1102	2025.4Q	2024	None	생명보험	합계	합계	None	48
+S	KR1102	2025.4Q	2024	None	손해보험	Non-Par	무배당상해	무배당상해	48
+S	KR1102	2025.4Q	2024	None	손해보험	Non-Par	무배당질병	무배당질병	48
+S	KR1102	2025.4Q	2024	None	손해보험	합계	합계	None	48
+S	KR1102	2025.4Q	2025	None	생명보험	Indirect-Par	무배당사망	무배당사망	48
+S	KR1102	2025.4Q	2025	None	생명보험	Non-Par	무배당건강	무배당건강	48
+S	KR1102	2025.4Q	2025	None	생명보험	Non-Par	무배당사망	무배당사망	48
+S	KR1102	2025.4Q	2025	None	생명보험	합계	합계	None	48
+S	KR1102	2025.4Q	2025	None	손해보험	Indirect-Par	무배당질병	무배당질병	48
+S	KR1102	2025.4Q	2025	None	손해보험	Non-Par	무배당상해	무배당상해	48
+S	KR1102	2025.4Q	2025	None	손해보험	Non-Par	무배당질병	무배당질병	48
+S	KR1102	2025.4Q	2025	None	손해보험	합계	합계	None	48
+S	KR1103	2024.4Q	2023	None	None	Non-Par	생명건강	생명건강	48
+S	KR1103	2024.4Q	2023	None	None	Non-Par	생명사망	생명사망	48
+S	KR1103	2024.4Q	2023	None	None	Non-Par	장기질병	장기질병	48
+S	KR1103	2024.4Q	2023	None	None	합계	합계	None	48
+S	KR1103	2024.4Q	2024	None	None	Non-Par	생명건강	생명건강	48
+S	KR1103	2024.4Q	2024	None	None	Non-Par	생명사망	생명사망	48
+S	KR1103	2024.4Q	2024	None	None	Non-Par	장기질병	장기질병	48
+S	KR1103	2024.4Q	2024	None	None	합계	합계	None	48
+S	KR1103	2025.4Q	2024	None	None	Non-Par	생명건강	생명건강	48
+S	KR1103	2025.4Q	2024	None	None	Non-Par	생명사망	생명사망	48
+S	KR1103	2025.4Q	2024	None	None	Non-Par	장기질병	장기질병	48
+S	KR1103	2025.4Q	2024	None	None	합계	합계	None	48
+S	KR1103	2025.4Q	2025	None	None	Non-Par	생명건강	생명건강	48
+S	KR1103	2025.4Q	2025	None	None	Non-Par	생명사망	생명사망	48
+S	KR1103	2025.4Q	2025	None	None	Non-Par	장기질병	장기질병	48
+S	KR1103	2025.4Q	2025	None	None	합계	합계	None	48
+S	KR1104	2024.4Q	2023	None	None	Non-Par	기타	기타	48
+S	KR1104	2024.4Q	2023	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1104	2024.4Q	2023	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1104	2024.4Q	2023	None	None	합계	합계	None	48
+S	KR1104	2024.4Q	2024	None	None	Non-Par	기타	기타	48
+S	KR1104	2024.4Q	2024	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1104	2024.4Q	2024	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1104	2024.4Q	2024	None	None	합계	합계	None	48
+S	KR1104	2025.4Q	2024	None	None	Non-Par	기타	기타	48
+S	KR1104	2025.4Q	2024	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1104	2025.4Q	2024	None	None	합계	합계	None	48
+S	KR1104	2025.4Q	2025	None	None	Non-Par	기타	기타	48
+S	KR1104	2025.4Q	2025	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1104	2025.4Q	2025	None	None	합계	합계	None	48
+S	KR1105	2024.4Q	2023	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1105	2024.4Q	2023	None	None	Non-Par	무배당복합	무배당복합	48
+S	KR1105	2024.4Q	2023	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1105	2024.4Q	2023	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1105	2024.4Q	2023	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1105	2024.4Q	2023	None	None	합계	합계	None	48
+S	KR1105	2024.4Q	2024	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1105	2024.4Q	2024	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1105	2024.4Q	2024	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1105	2024.4Q	2024	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1105	2024.4Q	2024	None	None	합계	합계	None	48
+S	KR1105	2025.4Q	2024	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1105	2025.4Q	2024	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1105	2025.4Q	2024	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1105	2025.4Q	2024	None	None	Non-Par	무배당질병	무배당질병	32
+S	KR1105	2025.4Q	2024	None	None	합계	합계	None	48
+S	KR1105	2025.4Q	2025	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1105	2025.4Q	2025	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1105	2025.4Q	2025	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1105	2025.4Q	2025	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1105	2025.4Q	2025	None	None	합계	합계	None	48
+S	KR1106	2024.4Q	2024	None	생명보험	Non-Par	무배당건강	무배당건강	48
+S	KR1106	2024.4Q	2024	None	생명보험	Non-Par	무배당기타	무배당기타	48
+S	KR1106	2024.4Q	2024	None	생명보험	Non-Par	무배당사망	무배당사망	48
+S	KR1106	2024.4Q	2024	None	생명보험	합계	합계	None	48
+S	KR1106	2024.4Q	2024	None	장기손해보험	Non-Par	무배당복합	무배당복합	48
+S	KR1106	2024.4Q	2024	None	장기손해보험	Non-Par	무배당상해	무배당상해	48
+S	KR1106	2024.4Q	2024	None	장기손해보험	Non-Par	무배당질병	무배당질병	48
+S	KR1106	2024.4Q	2024	None	장기손해보험	합계	합계	None	48
+S	KR1106	2025.4Q	2024	None	None	Non-Par	무배당기타	무배당기타	48
+S	KR1106	2025.4Q	2024	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1106	2025.4Q	2024	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1106	2025.4Q	2024	None	None	합계	합계	None	48
+S	KR1106	2025.4Q	2025	None	None	Non-Par	무배당기타	무배당기타	48
+S	KR1106	2025.4Q	2025	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1106	2025.4Q	2025	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1106	2025.4Q	2025	None	None	합계	합계	None	48
+S	KR1107	2024.4Q	2023	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1107	2024.4Q	2023	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1107	2024.4Q	2023	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1107	2024.4Q	2023	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1107	2024.4Q	2023	None	None	합계	합계	None	48
+S	KR1107	2024.4Q	2024	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1107	2024.4Q	2024	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1107	2024.4Q	2024	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1107	2024.4Q	2024	None	None	합계	합계	None	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	기타	기타	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	무배당기타	유배당기타	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	무배당상해	무배당상해	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	무배당연금저축	무배당연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	무배당재물	무배당재물	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	무배당질병	무배당질병	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	유배당기타	유배당기타	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	유배당상해	유배당상해	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	유배당연금저축	유배당연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	유배당재물	유배당재물	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	유배당질병	유배당질병	48
+S	KR1107	2025.4Q	2024	None	None	Direct-Par	자산연계형연금저축	자산연계형연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	기타	기타	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	무배당기타	유배당기타	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	무배당상해	무배당상해	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	무배당연금저축	무배당연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	무배당재물	무배당재물	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	무배당질병	무배당질병	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	유배당기타	유배당기타	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	유배당상해	유배당상해	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	유배당연금저축	유배당연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	유배당재물	유배당재물	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	유배당질병	유배당질병	48
+S	KR1107	2025.4Q	2024	None	None	Indirect-Par	자산연계형연금저축	자산연계형연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	기타	기타	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	무배당기타	유배당기타	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	무배당연금저축	무배당연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	무배당재물	무배당재물	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	유배당기타	유배당기타	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	유배당상해	유배당상해	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	유배당연금저축	유배당연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	유배당재물	유배당재물	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	유배당질병	유배당질병	48
+S	KR1107	2025.4Q	2024	None	None	Non-Par	자산연계형연금저축	자산연계형연금∙저축	48
+S	KR1107	2025.4Q	2024	None	None	합계	합계	None	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	기타	기타	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	무배당기타	유배당기타	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	무배당상해	무배당상해	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	무배당연금저축	무배당연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	무배당재물	무배당재물	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	무배당질병	무배당질병	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	유배당기타	유배당기타	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	유배당상해	유배당상해	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	유배당연금저축	유배당연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	유배당재물	유배당재물	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	유배당질병	유배당질병	48
+S	KR1107	2025.4Q	2025	None	None	Direct-Par	자산연계형연금저축	자산연계형연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	기타	기타	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	무배당기타	유배당기타	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	무배당상해	무배당상해	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	무배당연금저축	무배당연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	무배당재물	무배당재물	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	무배당질병	무배당질병	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	유배당기타	유배당기타	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	유배당상해	유배당상해	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	유배당연금저축	유배당연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	유배당재물	유배당재물	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	유배당질병	유배당질병	48
+S	KR1107	2025.4Q	2025	None	None	Indirect-Par	자산연계형연금저축	자산연계형연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	기타	기타	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	무배당건강	무배당건강	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	무배당기타	유배당기타	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	무배당사망	무배당사망	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	무배당상해	무배당상해	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	무배당연금저축	무배당연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	무배당재물	무배당재물	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	무배당질병	무배당질병	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	유배당기타	유배당기타	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	유배당상해	유배당상해	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	유배당연금저축	유배당연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	유배당재물	유배당재물	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	유배당질병	유배당질병	48
+S	KR1107	2025.4Q	2025	None	None	Non-Par	자산연계형연금저축	자산연계형연금∙저축	48
+S	KR1107	2025.4Q	2025	None	None	합계	합계	None	48

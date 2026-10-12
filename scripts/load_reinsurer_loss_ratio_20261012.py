@@ -9,6 +9,9 @@ data/_derived/reinsurer_loss_ratio_20261012/ and prints a summary. With --apply 
   master_loss_ratio.json / .csv         (+ reinsurer master rows, same layout)
   period_adoption.csv / master_census.csv / portfolio_taxonomy.csv (+ rows for the new codes / new labels only)
 It never rewrites an existing row: the existing bytes are a verified prefix of the new bytes (the script checks that after writing).
+NOTE 2026-10-12: this one-shot loader was already applied. Since then the long source is risk_premium_vs_expected_claims.json.gz (same content bytes) and the
+master carries the standardized reinsurer 세그먼트/상품구분 (build_loss_ratio_master.REINSURER_SEG_RULES), so a re-run would no longer reproduce the committed
+master -- do not re-run it on the current tree. Its file names were only updated so that it keeps reading the right source.
 Run: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/load_reinsurer_loss_ratio_20261012.py [--apply]
 """
 from __future__ import annotations
@@ -36,7 +39,8 @@ BACKUP = WORK / "backup_before"
 NEW_CODES = [f"KR110{i}" for i in range(1, 9)] + ["KR1011"]
 ROW_ORDER = ["원보험사코드", "원수사명", "생손보여부", "공시분기", "기준연도", "구분", "구분_원문", "포트폴리오", "포트폴리오_원문", "경과기간", "지표",
              "값", "단위", "dash", "출처", "추출방식", "원천위치"]
-FILES = ["risk_premium_vs_expected_claims.json", "claims_ae_ratio.json", "census.csv", "master_loss_ratio.json", "master_loss_ratio.csv",
+SRC_B_NAME = "risk_premium_vs_expected_claims.json.gz"
+FILES = [SRC_B_NAME, "claims_ae_ratio.json", "census.csv", "master_loss_ratio.json", "master_loss_ratio.csv",
          "period_adoption.csv", "master_census.csv", "portfolio_taxonomy.csv", "panel_loss_ratio.json", "source_errata.csv"]
 LOGL: list[str] = []
 ERRATA_COLS = ["원보험사코드", "공시분기", "기준연도", "사업구분", "부문", "구분", "포트폴리오", "경과기간", "지표", "인쇄값", "추정값", "근거"]
@@ -196,7 +200,7 @@ def main() -> None:
 
     meta = X.load_company_meta()
     reg = M.load_registry()
-    old_src = json.loads(read_text(LR / "risk_premium_vs_expected_claims.json"))
+    old_src = M.read_json(LR / SRC_B_NAME)
     old_census = M.read_csv(LR / "census.csv")
     old_master = json.loads(read_text(LR / "master_loss_ratio.json"))
     src_new = new_source_rows()
@@ -293,13 +297,20 @@ def main() -> None:
     before = {fn: (LR / fn).read_bytes() for fn in FILES}
 
     def append_compact_json(fn: str, rows: list[dict]) -> None:
-        raw = before[fn].decode("utf-8")
+        if fn.endswith(".gz"):                      # 2026-10-12: the long source is stored as .json.gz (content bytes unchanged)
+            import gzip
+            raw = gzip.decompress(before[fn]).decode("utf-8")
+        else:
+            raw = before[fn].decode("utf-8")
         assert raw.endswith("]")
         add = ",".join(json.dumps(r, ensure_ascii=False, separators=(",", ":")) for r in rows)
         new = raw[:-1] + ("," if len(raw) > 2 else "") + add + "]"
-        M.atomic_write(LR / fn, new)
+        if fn.endswith(".gz"):
+            X.atomic_write_json(LR / fn, json.loads(new))
+        else:
+            M.atomic_write(LR / fn, new)
 
-    append_compact_json("risk_premium_vs_expected_claims.json", src_new)
+    append_compact_json(SRC_B_NAME, src_new)
     append_compact_json("claims_ae_ratio.json", a_new)
 
     def append_csv(fn: str, cols: list[str], rows: list[dict], fmt=None) -> None:

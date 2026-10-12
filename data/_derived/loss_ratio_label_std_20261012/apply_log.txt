@@ -1,0 +1,13 @@
+committed master 38248 rows; rebuilt master 38248 rows
+non-reinsurer rows 36344 -> 36344; identical: True
+reinsurer rows 1904 -> 1904; identical on the other 17 fields (added 0 / removed 0): True
+old-value guard (unexpected committed 세그먼트/상품구분 on a reinsurer row): 0
+changed field sets (rows): {"unchanged": 384, "세그먼트+상품구분": 272, "세그먼트": 1248}
+reinsurer rows still carrying 상품구분 생명/장기: 0
+verify(rebuilt): errs 0 warns 0 stats {'rows': 38248, 'sum_checked': 3432, 'sum_fail': 1, 'sum_fail_explained': 1, 'loss_bad': 0, 'val_bad': 0, 'ratio_flag_bad': 0}
+master JSON: non-reinsurer bytes are an exact prefix of both the committed and the new file: True
+master CSV: non-reinsurer bytes are an exact prefix of both the committed and the new file: True
+period_adoption.csv regenerated == committed: True; master_census.csv regenerated == committed: True
+taxonomy: committed 252 rows (reinsurer-only tail 19); regenerated reinsurer label rows 64 = 60 new key + 4 already in the committed non-reinsurer rows; standard-triple conflicts 0
+ALL PROOFS PASS: True
+WROTE master_loss_ratio.json / .csv, portfolio_taxonomy.csv
