@@ -81,13 +81,64 @@ for r in s3:
     jv = p["ratio_pct"] if r["항목명"] == "지급여력비율 전망" else p["basic_ratio_pct"]
     if r["값"] is None or abs(r["값"] - jv) > 0.0051:
         bad.append(("sheet3 value", r["원수사명"], r["공시분기"], r["항목명"], r["값"], jv))
+# --- sheets vs MY OWN recompute (h1 tier2, regenerated for this pin): numerator and the two deducted ledger amounts; tier1 limits
+import json as _json
+_h1 = "C:/Users/sangwook.cho/Desktop/insurequant/data/_derived/capsec_audit_20261012/h1_tier2_recompute_47_%s.json" % audit_io.resolved_rev()
+try:
+    mine = {x["name"]: x for x in _json.load(open(_h1, encoding="utf-8"))}
+except FileNotFoundError:
+    mine = {}
+inp = _json.load(open("C:/Users/sangwook.cho/Desktop/insurequant/data/_derived/capsec_audit_20261012/a2_inputs_2026_2Q.json", encoding="utf-8"))
+scr = {v["name"]: v["i14_pre"] for v in inp.values()}
+bad_mine = []
+n_mine = 0
+if mine:
+    wanted = (("보완자본 인정한도 소진 분자", "N2_mine"), ("경과조치 인정 신종자본증권(레거시)", "ledger_hybrid_mine"), ("경과조치 인정 후순위채무(레거시)", "ledger_sub_mine"))
+    for r in s2:
+        for item, key in wanted:
+            if r["항목명"] == item and r["공시분기"] == "2026.2Q":
+                m = find(mine, r["원수사명"])
+                if m is None:
+                    bad_mine.append(("sheet2 company not in my recompute", r["원수사명"]))
+                    continue
+                n_mine += 1
+                ref = m[key]
+                if ref is None and key != "N2_mine" and r["값"] == 0.0:
+                    continue          # 교보라이프플래닛 (항목 47~54 원문 부재, numerator null): the ledger has no bonds, the sheet states 0.0 - true
+                if (r["값"] is None) != (ref is None) or (ref is not None and abs(r["값"] - ref) > 0.06):
+                    bad_mine.append(("sheet2 vs my recompute", r["원수사명"], item, r["값"], ref))
+    # the two 「기발행 ...」 stock rows = ALL pre-2023 ledger bonds still outstanding (past-call ones included; the deducted amount is the 「레거시」 row above)
+    _led_code = {c["code"]: c for c in audit_io.load_json("data/bonds/capital_securities_fy2026h1.json")["companies"]}
+    _led = {v["name"]: _led_code[k] for k, v in inp.items() if k in _led_code}      # sheet names are the master names
+    for r in s2:
+        if r["항목명"] in ("기발행 신종자본증권(보완자본 재분류분)", "기발행 후순위채무") and r["공시분기"] == "2026.2Q":
+            tier = "hybrid" if "신종" in r["항목명"] else "subordinated"
+            c = find(_led, r["원수사명"])
+            if c is None:
+                bad_mine.append(("sheet2 stock row: company not in ledger", r["원수사명"]))
+                continue
+            ref = sum((b.get("outstanding_mn") or 0) for b in c.get("bonds", []) if b["tier"] == tier and b.get("issue_date") and b["issue_date"] <= "2022-12-31") / 100.0
+            n_mine += 1
+            if r["값"] is None or abs(r["값"] - ref) > 0.06:
+                bad_mine.append(("sheet2 stock row vs my ledger sum", r["원수사명"], r["항목명"], r["값"], round(ref, 2)))
+    for r in s1:
+        if r["항목명"] in ("기본자본 인정한도(SCR x 15%)", "기본자본 인정한도(엄격, SCR x 10%)") and r["공시분기"] == "2026.2Q":
+            f = 0.15 if "15%" in r["항목명"] else 0.10
+            s = find(scr, r["원수사명"])
+            n_mine += 1
+            if s is None or abs(r["값"] - f * s) > 0.06:
+                bad_mine.append(("sheet1 limit vs my SCR", r["원수사명"], r["항목명"], r["값"], None if s is None else round(f * s, 2)))
+L_mine = "sheets vs my own recompute (tier2 numerator / deducted hybrid / deducted subordinated, tier1 15%% and 10%% limits): %d cells checked, %d mismatches" % (n_mine, len(bad_mine))
 # --- coverage in the other direction
 cov1 = {r["원수사명"] for r in rows1}
 cov2 = {r["원수사명"] for r in rows2}
 cov3 = {r["원수사명"] for r in s3 if r["항목명"] == "지급여력비율 전망"}
 L.append("sheet 기본자본소진율: %d company rows checked (JSON has %d), sheet 보완자본소진율: %d (JSON %d), sheet 자본비율전망: %d year-points of %d companies (JSON ok companies %d)" % (
     n1, len(t1), n2, len(t2), n3, len(cov3), sum(1 for v in fw.values() if v.get("status") == "ok")))
-L.append("mismatches: %d" % len(bad))
+L.append("mismatches (sheet vs published JSON): %d" % len(bad))
+L.append(L_mine)
+for b in bad_mine:
+    L.append("   " + " | ".join(str(x) for x in b))
 for b in bad:
     L.append("   " + " | ".join(str(x) for x in b))
 # the clamped forward rows - what the downloaded sheet says about them

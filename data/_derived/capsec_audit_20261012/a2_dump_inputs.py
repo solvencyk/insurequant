@@ -27,7 +27,10 @@ def num(x):
         return ("RAW", s)
 
 
-d = json.load(open(ROOT + "/kics_disclosure.json", encoding="utf-8"))
+import sys
+sys.path.insert(0, OUT)
+import audit_io
+d = audit_io.load_json("kics_disclosure.json")
 rows = {}
 dup = []
 for r in d:

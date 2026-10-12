@@ -1,0 +1,21 @@
+== kics_tier1_utilization.json : 47 -> 47 companies
+   changed fields (count of companies): hybrid_outstanding_eok:1, securities_summary:2, tier1_hybrid_limit_eok:33
+   utilization_pct changed for 0 companies:
+== kics_tier2_utilization.json : 47 -> 47 companies
+   changed fields (count of companies): data_source:2, grandfathered_basis:47, grandfathered_hybrid_eok:9, grandfathered_hybrid_printed_eok:45, grandfathered_subordinated_eok:17, grandfathered_subordinated_printed_eok:45, hybrid_outstanding_eok:1, numerator_eok:17, numerator_source:37, rule:2, rule_basis:19, rule_flags:19, securities_summary:2, utilization_pct:15
+   utilization_pct changed for 15 companies:
+      KR0001 메리츠화재해상보험 0.2 -> 30.8
+      KR0002 한화손해보험 46.7 -> 46.6
+      KR0003 롯데손해보험 53.5 -> 58.6
+      KR0005 흥국화재 45.3 -> 53.3
+      KR0010 KB손해보험 20.3 -> 20.5
+      KR0032 NH농협손해보험 103.9 -> 102.8
+      KR0049 악사손해보험 2.0 -> 29.2
+      KR0068 한화생명 70.5 -> 74.8
+      KR0071 흥국생명보험 10.6 -> 37.0
+      KR0073 교보생명보험 51.6 -> 51.5
+      KR0076 아이엠라이프생명보험 49.5 -> 56.9
+      KR0083 푸본현대생명보험 86.6 -> 73.1
+      KR0099 KB라이프생명 0.8 -> 0.0
+      KR0104 농협생명보험 18.8 -> 21.1
+      KR1011 IBK연금보험 76.0 -> 76.2

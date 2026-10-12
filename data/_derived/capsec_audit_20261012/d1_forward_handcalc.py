@@ -37,13 +37,16 @@ import sys
 sys.path.insert(0, HERE)
 import audit_io  # noqa: E402
 
-assert audit_io.worktree_equals_head("kics_disclosure.json"), "master differs from HEAD"
-assert audit_io.worktree_equals_head("data/bonds/capital_securities_fy2026h1.json"), "ledger differs from HEAD"
+# (pinned load below; no worktree dependence)
+# (ledger loaded from the pinned revision)
+import os
 SUF = "_" + audit_io.resolved_rev()
-PIN = "rev=%s registry=%s forward=%s" % (audit_io.resolved_rev(), audit_io.sha12("data/bonds/capital_tier_registry.json"), audit_io.sha12("kics_forward_capital.json"))
+PREV_REV = os.environ.get("AUDIT_PREV", "dbbffcb5")      # the state audited before (totals / basic paths must equal it except where announced)
+PIN = "rev=%s registry=%s forward=%s ledger=%s previous=%s" % (audit_io.resolved_rev(), audit_io.sha12("data/bonds/capital_tier_registry.json"),
+                                                               audit_io.sha12("kics_forward_capital.json"), audit_io.sha12("data/bonds/capital_securities_fy2026h1.json"), PREV_REV)
 inp = json.load(open(HERE + "a2_inputs_2026_2Q.json", encoding="utf-8"))
 reg = audit_io.load_json("data/bonds/capital_tier_registry.json")["companies"]
-led = {c["code"]: c for c in json.load(open(ROOT + "/data/bonds/capital_securities_fy2026h1.json", encoding="utf-8"))["companies"]}
+led = {c["code"]: c for c in audit_io.load_json("data/bonds/capital_securities_fy2026h1.json")["companies"]}
 pub = {r["insurer_code"]: r for r in audit_io.load_json("kics_forward_capital.json")}
 
 
@@ -212,7 +215,6 @@ def path_override(code, overrides):
 
 SENS = {
     "KR1000": ("코리안리 제5·6회 -> 기본자본형(발행사 기본자본 처리 가정)", {"2023-03-16": "tier1", "2024-10-11": "tier1"}),
-    "KR0011": ("DB손보 제3·4·5회 -> 보완자본형(X 검정 쪽)", {"2026-02-11": "tier2", "2026-06-09": "tier2", "2026-06-29": "tier2"}),
     "KR0097": ("하나생명 제1회 -> 보완자본형(우리 분류)", {"2023-03-31": "tier2"}),
     "KR0073": ("교보 2024-11 -> 보완자본형(우리 분류)", {"2024-11-12": "tier2"}),
 }
@@ -252,7 +254,7 @@ except FileNotFoundError:
 
 # ----- previous committed state (ef62969, before the issuer-basis change): which fields moved?
 try:
-    prev = {r["insurer_code"]: r for r in audit_io.load_json("kics_forward_capital.json", rev="ef62969")}
+    prev = {r["insurer_code"]: r for r in audit_io.load_json("kics_forward_capital.json", rev=PREV_REV)}
     n_tot = n_basic = n_cmp = 0
     changed_basic = []
     for code, r in pub.items():
@@ -266,7 +268,14 @@ try:
                 n_basic += 1
                 changed_basic.append(code)
     txt.append("")
-    txt.append("vs previous commit ef62969: %d year-points compared; total-path (capital/ratio/scr) differs in %d; basic path differs in %d %s" % (n_cmp, n_tot, n_basic, sorted(set(changed_basic))))
+    txt.append("vs previous audited state %s: %d year-points compared; total-path (capital/ratio/scr) differs in %d; basic path (capital or ratio) differs in %d %s" % (
+        PREV_REV, n_cmp, n_tot, n_basic, sorted(set(changed_basic))))
+    other = []
+    for code, r in pub.items():
+        if code in prev and r != prev[code]:
+            ch = sorted(k for k in set(r) | set(prev[code]) if r.get(k) != prev[code].get(k))
+            other.append((code, ch))
+    txt.append("rows of kics_forward_capital.json that differ AT ALL from the previous audited state (code, changed top-level keys): %s" % other)
     gone = [c for c, r in pub.items() if r.get("status") == "ok" and ("baseline_basis_flag" in r and r.get("baseline_basis_flag"))]
     txt.append("rows still carrying baseline_basis_flag=true: %s ; rows with the field at all: %d" % (gone, sum(1 for r in pub.values() if "baseline_basis_flag" in r)))
     leftovers = sorted({k for r in pub.values() if r.get("status") == "ok" for p_ in r["projections"] for k in p_ if k in ("basic_capital_by_type_eok", "basic_ratio_by_type_pct")})

@@ -1,5 +1,10 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-13 Status 밀림 (29차 소진율·전망 재측정 항목 추가로 밀려난 항목, 무수정)
+
+- **2026-10-12 (26차) 골든 갱신 + AIG R3 박제 등재 (티켓 `20261012T1400Z`)** — 이동 원인은 parser-kics `acd351a` 하나뿐(직전 마스터로 돌리면 K-ICS 골든 5키 전부 일치, 입력지문 4종은 `kics_disclosure.json` 한 파일 +5,195바이트). `--update`: `kics_rules_golden`(YELLOW 1,935→1,936 · GREEN 13,684→13,703 · SKIP 3,345→3,325 · RED 56 불변) · `builder_input_fingerprints`(4종).
+  무이동 확인(실행): dividend · post_transition · master_tables · viz 2종 · PL(`RUN_PL_GOLDEN=1`, 186초) · 17BS(419초) · deploy_assets 12 · push_gate_wiring 65 · prepush_scope 65 · golden_input_fingerprint 23. AIG KR0029 2024.4Q `R3_CROSS_CHECK` 10배 규칙: `R3_PINNED_EXEMPTIONS`(값 박제 item8 31.0억·item20 291,767.640554백만) + 읽는 쪽 `check_r3` + 변이시험 11건(`tests/test_ilp_r3_pinned_exemption.py`, 훅 묶음 편입). 포트폴리오 검증기 RED 2→1(남은 1 = KR1102 2026.1Q `R2_CENSUS`, owner 결정 대기·미등재).
+
 ## 2026-10-13 Status 밀림 (28차 독립 검수 항목 추가로 밀려난 항목, 무수정)
 
 - **2026-10-12 (25차) owner 승인 등재 — 재보사 인쇄된 0 7칸 · 서울보증 PL 2칸 · 마이브라운 거짓 양성 1칸 (티켓 `20261012T1010Z`)** — `HOLE-PL` 2->0(`pl_src_absent:3ok`), 데이터계약 RED 2->2(손해율 xlsx 동기화 대기 = publishing 몫, 신규 0) · K-ICS 게이트 exit 0 RED 56 불변(finding 0 추가·0 삭제).

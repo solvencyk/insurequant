@@ -1,0 +1,15 @@
+PIN rev=6fd00720 ledger=a2f3d6da847e
+pre-2023 bonds outstanding in the ledger: 51 ; flagged past_call_outstanding: 6
+disagreements (flag != call_date < as_of of the bond)  [should be none]:
+   FLAG-vs-ASOF KR0001 메리츠화재해상보험 subordinated issue 2021-04-12 call 2026-04-12 (derived_issue_plus_5y) as_of 2026-06-30 out 2100.0 flag False by_as_of True by_numerator_date True
+disagreements (flag != call_date < 2026-06-30)  [matter for stale rows only]:
+   FLAG-vs-2026-06-30 KR0001 메리츠화재해상보험 subordinated issue 2021-04-12 call 2026-04-12 (derived_issue_plus_5y) as_of 2026-06-30 out 2100.0 flag False by_as_of True by_numerator_date True
+   FLAG-vs-2026-06-30 KR0099 케이비라이프생명보험 subordinated issue 2021-05-31 call 2026-05-31 (derived_issue_plus_5y) as_of 2025-12-31 out 1299.7 flag False by_as_of False by_numerator_date True
+   FLAG-vs-2026-06-30 KR0076 아이엠라이프생명보험 subordinated issue 2021-05-07 call 2026-05-07 (derived_issue_plus_5y) as_of 2025-12-31 out 500.0 flag False by_as_of False by_numerator_date True
+all flagged bonds:
+   KR0011 DB손해보험 subordinated issue 2017-05-25 call 2022-05-25 (derived_issue_plus_5y) as_of 2026-06-30 out 1700.0
+   KR0003 롯데손해보험 subordinated issue 2020-05-07 call 2025-05-07 (derived_issue_plus_5y) as_of 2026-06-30 out 898.6
+   KR0005 흥국화재해상보험 hybrid issue 2016-12-29 call 2021-12-29 (disclosed) as_of 2026-06-30 out 920.0
+   KR0009 현대해상화재보험 subordinated issue 2017-05-26 call 2022-05-26 (derived_issue_plus_5y) as_of 2026-06-30 out 2330.0
+   KR0104 농협생명보험 subordinated issue 2017-04-28 call 2022-04-28 (derived_issue_plus_5y) as_of 2026-06-30 out 2800.0
+   KR0004 엠지손해보험 subordinated issue 2020-04-14 call 2025-04-14 (derived_issue_plus_5y) as_of 2025-12-31 out 680.0

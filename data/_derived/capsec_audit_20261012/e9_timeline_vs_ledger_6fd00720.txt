@@ -1,0 +1,7 @@
+PIN rev=6fd00720 timeline=75bf4c259ac2 ledger=a2f3d6da847e
+ledger bonds with an issue_date and a non-zero face: 126 (zero-face bonds not listed by the timeline: 1) ; timeline rows: 126 (companies in timeline: 26)
+companies with ledger bonds but no timeline entry: none
+companies whose timeline rows differ from the ledger-derived rows (face, outstanding, as_of, call_date_unconfirmed, estimated, within 0.006): 0
+rows carrying the new markers (ledger side): [('KR0011', 'DB손해보험', 7470.0, 'call_date_unconfirmed'), ('KR0011', 'DB손해보험', 1200.0, 'call_date_unconfirmed'), ('KR0050', '하나손해보험', 999.0, 'estimated')]
+rows carrying the new markers (timeline side): [('KR0011', '2025-09-01', 7470.0, None, 'call_date_unconfirmed'), ('KR0011', '2025-09-25', 1200.0, None, 'call_date_unconfirmed'), ('KR0050', '2026-06-29', 999.0, 999.0, 'estimated')]
+timeline companies not in ledger: none
