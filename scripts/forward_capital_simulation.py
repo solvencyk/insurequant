@@ -19,6 +19,8 @@ Numerator (가용자본):
     그다음 기본자본" 순서가 자동으로 나온다(owner 2026-06-15). 기준시점 기본자본이 회사 공시값이라 계층은
     발행사 K-ICS 표가 실제로 다룬 형(issuer_type, 없으면 type)을 쓰고, 둘이 다른 회사는 baseline_basis_flag=true
     + 우리 분류 기준 대체 경로(basic_ratio_by_type_pct)를 같이 싣는다. 총자본 경로는 계층과 무관하다.
+    (2026-10-12 owner 결정으로 등재부 type 이 발행사 처리를 따르게 되어 지금은 어느 회사도 둘이 다르지 않다 - 그 필드들은
+    그런 회사가 생길 때만 나타난다.)
 
 Denominator (지급여력기준금액):
   baseline (post-transition, current) = item14 값_적용후 (else 값)
@@ -605,7 +607,7 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         if basic_capacity_exhausted:
             basic_ratio = 0.0
 
-        projections.append({
+        proj_row = {
             "year": year,
             "capital_eok": round(capital_y, 1),
             "basic_capital_eok": round(basic_y, 1),
@@ -626,12 +628,16 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
             "hybrid_tier1type_remaining_eok": round(hy["by_type"]["tier1"], 1),
             "hybrid_tier2type_remaining_eok": round(hy["by_type"]["tier2"], 1),   # 보완자본형: 기본자본 기여 0
             "hybrid_limit_tier1type_eok": round(scr_y * TIER1_TYPE_LIMIT_RATIO, 1),   # SCR_y x 10%
-            "basic_capital_by_type_eok": None if basic_by_type_y is None else round(basic_by_type_y, 1),
-            "basic_ratio_by_type_pct": (None if basic_by_type_y is None or not scr_y
-                                        else round(max(basic_by_type_y, 0.0) / scr_y * 100.0, 2)),
             "basic_ratio_if_tier2_type_pct": (None if basic_if_t2_y is None or not scr_y
                                               else round(max(basic_if_t2_y, 0.0) / scr_y * 100.0, 2)),
-        })
+        }
+        if flagged:
+            # 발행사 처리와 우리 분류가 다른 신종이 있을 때만 싣는다(2026-10-12 발행사 처리 기준으로 등재부를 맞춘 뒤에는
+            # 어느 회사에도 없다 - 필드 자체가 사라진다. K-ICS.html 은 없으면 그냥 안 그린다).
+            proj_row["basic_capital_by_type_eok"] = None if basic_by_type_y is None else round(basic_by_type_y, 1)
+            proj_row["basic_ratio_by_type_pct"] = (None if basic_by_type_y is None or not scr_y
+                                                   else round(max(basic_by_type_y, 0.0) / scr_y * 100.0, 2))
+        projections.append(proj_row)
 
     baseline_payload = {
         "capital_eok": cap_baseline,
@@ -641,7 +647,7 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         "ratio_post_pct": round(cap_baseline / scr_post * 100, 2),
         "basic_ratio_post_pct": round((basic_baseline or 0) / scr_post * 100, 2) if basic_baseline else None,
     }
-    return {
+    row = {
         "insurer_code": insurer_code,
         "insurer_name": baseline.get("insurer_name"),
         "status": "ok",
@@ -657,8 +663,6 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         "outstanding_tier1_eok": round(sum(e["amount_eok"] for e in bond_events if e["tier"] == "tier1_hybrid"), 1),
         "projections": projections,
         # --- 2026-10-12 새 필드(additive) ---
-        "baseline_basis_flag": bool(flagged),
-        "baseline_basis_note": _basis_note(flagged),
         "type_unconfirmed": bool(unconfirmed),
         "outstanding_hybrid_by_type_eok": {
             ty: round(sum(e["amount_eok"] for e in hybrid_events if _cls(e, "type") == ty), 1)
@@ -666,10 +670,15 @@ def simulate_one(insurer_code: str, baseline: dict, bonds: list[dict]) -> dict:
         "hybrid_classification": [
             {"name": e["name"], "issue_date": e.get("issue_date"), "call_date": e["call_date"],
              "amount_eok": round(e["amount_eok"], 1), "type": _cls(e, "type"),
-             "issuer_type": _cls(e, "basis_type") if _cls(e, "basis_type") != _cls(e, "type") else None,
+             **({"issuer_type": _cls(e, "basis_type")} if _cls(e, "basis_type") != _cls(e, "type") else {}),
              "type_unconfirmed": bool(_cls(e, "type_unconfirmed")), "type_source": _cls(e, "source")}
             for e in hybrid_events],
     }
+    if flagged:
+        # 발행사 처리와 분류가 다른 신종이 있는 회사만 두 필드를 싣는다(현재 0사).
+        row["baseline_basis_flag"] = True
+        row["baseline_basis_note"] = _basis_note(flagged)
+    return row
 
 
 BOND_COVERAGE_VALUES = ("dart_listed", "no_bonds_in_dart", "absent_in_source")

@@ -77,7 +77,7 @@ def test_tier2_type_call_cuts_total_not_basic():
     p27, p29 = row["projections"][1], row["projections"][3]
     assert p27["basic_capital_eok"] == p29["basic_capital_eok"] == 500.0       # 2028-06 콜 전후 기본자본 불변
     assert p27["capital_eok"] == 2000.0 and p29["capital_eok"] == 1700.0       # 총자본은 300 빠진다
-    assert row["baseline_basis_flag"] is False
+    assert "baseline_basis_flag" not in row and "baseline_basis_note" not in row   # 어긋남이 없으면 필드 자체가 없다
 
 
 def test_tier1_type_call_cuts_basic_and_total():
@@ -118,8 +118,9 @@ def test_issuer_type_difference_sets_flag_and_alt_path():
     assert p29["basic_capital_by_type_eok"] == 500.0      # 우리 분류 기준 대체 경로 = 불변
     assert p29["basic_ratio_by_type_pct"] == 50.0 and p29["basic_ratio_pct"] == 42.0
     assert p29["capital_eok"] == 1920.0                   # 총자본은 분류와 무관
-    assert F.simulate_one("T", _baseline(), [_bond(80, "2028-06-01", "tier2")])["projections"][3][
-        "basic_ratio_by_type_pct"] is None                # 어긋남이 없으면 대체 경로를 싣지 않는다
+    plain = F.simulate_one("T", _baseline(), [_bond(80, "2028-06-01", "tier2")])
+    assert "basic_ratio_by_type_pct" not in plain["projections"][3] and "basic_capital_by_type_eok" not in plain["projections"][3]
+    assert "baseline_basis_flag" not in plain         # 어긋남이 없으면 대체 경로·플래그를 싣지 않는다(2026-10-12: 지금은 0사)
 
 
 def test_unconfirmed_security_carries_flag_and_tier2_alternative():
@@ -186,8 +187,10 @@ def test_deployed_forward_json_equals_model(monkeypatch):
         row = F.simulate_one(code, baselines[code], bonds_per.get(code, []))
         for k in ("baseline_basis_flag", "baseline_basis_note", "type_unconfirmed", "outstanding_hybrid_by_type_eok",
                   "hybrid_classification"):
-            if row[k] != d.get(k):
+            if row.get(k) != d.get(k):                  # 없는 필드끼리도 같아야 한다(.get 으로 비교)
                 bad.append((code, k))
+            if (k in row) != (k in d):
+                bad.append((code, k, "presence"))
         for pm, pd in zip(row["projections"], d["projections"]):
             for k in pm:
                 if pm[k] != pd.get(k):
@@ -200,6 +203,10 @@ def test_deployed_flags_are_exactly_the_registry_mismatches():
     flagged = sorted(c for c, r in deployed.items() if r.get("baseline_basis_flag"))
     reg = R.load_registry()["companies"]
     expect = sorted(c for c, e in reg.items() if any(s.get("issuer_type") for s in e["securities"]))
-    assert flagged == expect == ["KR0073", "KR0097"]
+    # 2026-10-12 발행사 처리 기준으로 등재부 type 을 맞춘 뒤 어긋난 증권이 0건 -> 플래그·대체 경로 필드는 어느 회사에도 없다.
+    assert flagged == expect == []
+    assert not [c for c, r in deployed.items() if "baseline_basis_flag" in r or "baseline_basis_note" in r]
+    assert not [c for c, r in deployed.items() for p in r.get("projections", []) or []
+                if "basic_ratio_by_type_pct" in p or "basic_capital_by_type_eok" in p]
     assert all(deployed[c]["baseline_basis_note"] for c in flagged)
     assert not [c for c, r in deployed.items() if r.get("status") == "ok" and r.get("type_unconfirmed")]

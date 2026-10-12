@@ -1,0 +1,92 @@
+== kics_tier1_utilization.json: changed fields
+  KR1000 코리안리재보험 type_note: '소진율 = 기발행 3,292 / SCR x 15% = 94.0%(신규 4,800억 두 건은 보완자본형 확정이라 제외; 종전 상한 205.1%).' -> '소진율 = 기발행 3,292 / SCR x 15% = 94.0%(신규 4,800억 두 건은 보완자본형으로 제외: 제5회는 발행사 처리 확인, 제6회는 판정 불가(issuer_check); 종전 상한 205.1%).
+  KR0097 하나생명보험 tier1_basic_new_eok: 0.25 -> 1799.0
+  KR0097 하나생명보험 tier1_basic_new_pct: 0.0 -> 238.2
+  KR0097 하나생명보험 tier1_excluded_tier2_type_eok: 1798.75 -> 0.0
+  KR0097 하나생명보험 tier1_hybrid_overflow_eok: 0.0 -> 1043.6
+  KR0097 하나생명보험 tier1_hybrid_recognized_eok: 0.25 -> 1799.0
+  KR0097 하나생명보험 type_note: '소진율 = 기본자본형 신규 0 / SCR x 10% = 0%(재분류 2026-10-12: 종전 238.2%). 발행사는 일부를 기본자본으로 인정(issuer_type=tier1).' -> '소진율 = 기본자본형 신규 1,799 / SCR x 10% = 238.2%. 발행사 처리대로 기본자본형으로 분류(2026-10-12; 발행사는 한도 초과분 약 1,044억만 보완자본으로 재분류).'
+  KR0097 하나생명보험 utilization_pct: 0.0 -> 238.2
+  KR0097 하나생명보험 utilization_pct_strict: 0.0 -> 238.2
+  KR0073 교보생명보험 tier1_basic_new_eok: 0.01 -> 5983.01
+  KR0073 교보생명보험 tier1_basic_new_pct: 0.0 -> 56.8
+  KR0073 교보생명보험 tier1_excluded_tier2_type_eok: 10968.0 -> 4985.0
+  KR0073 교보생명보험 type_note: '소진율 = max(기발행 11,089 / SCR x 15% = 70.1%, 기본자본형 신규 0) = 70.1%(2024-11 건을 발행사처럼 기본자본형으로 보면 5,983 / SCR x 10% = 56.8% 로 여 -> '소진율 = max(기발행 11,089 / SCR x 15% = 70.1%, 기본자본형 신규 5,983 / SCR x 10% = 56.8%) = 70.1%(2024-11 건을 발행사 처리대로 기본자본형으로 분류 20
+  KR0073 교보생명보험 utilization_pct_strict: 0.0 -> 56.8
+  KR0104 농협생명보험 type_note: '소진율 = 기발행 2,500 / SCR x 15% = 48.5%(제5회 2,500억은 보완자본형 확정이라 기본자본 자본증권에서 제외; 종전 상한 72.7%).' -> '소진율 = 기발행 2,500 / SCR x 15% = 48.5%(제5회 2,500억은 발행조건 기준 보완자본형으로 제외, 발행사 처리는 판정 불가(issuer_check); 종전 상한 72.7%).'
+  KR0083 푸본현대생명보험 type_note: '기본자본형/보완자본형 미확정 - 기본자본형으로 보고 상한(분모 10%) 계산. 소진율 = max(기발행 400 / SCR x 15% = 17.3%, 기본자본형 신규 50 / SCR x 10% = 3.2%) = 17 -> '기본자본형/보완자본형 미확정 - 기본자본형으로 보고 상한(분모 10%) 계산. 소진율 = max(기발행 400 / SCR x 15% = 17.3%, 기본자본형 신규 50 / SCR x 10% = 3.2%) = 17
+  (total 16 field changes)
+== kics_tier2_utilization.json: changed fields
+  KR0032 NH농협손해보험 tier1_overflow_into_tier2_eok: 2483.6 -> 0.0
+  KR0050 하나손해보험 tier1_overflow_into_tier2_eok: 298.5 -> 0.0
+  KR0072 케이디비생명보험 tier1_overflow_into_tier2_eok: 80.7 -> 0.0
+  KR0068 한화생명 tier1_overflow_into_tier2_eok: 8302.2 -> 0.0
+  KR0076 아이엠라이프생명보험 tier1_overflow_into_tier2_eok: 0.0 -> 1353.88
+  KR0011 DB손해보험 tier1_overflow_into_tier2_eok: 225.2 -> 5942.1
+  KR0097 하나생명보험 tier1_overflow_into_tier2_eok: 665.7 -> 1043.6
+  KR1000 코리안리재보험 tier1_overflow_into_tier2_eok: 1297.1 -> 0.0
+  (total 8 field changes)
+
+== tier1 utilization_pct before -> after (47 companies; changed marked *)
+   KR0050 하나손해보험       0.0 -> 0.0
+   KR1000 코리안리재보험      94.0 -> 94.0
+ * KR0097 하나생명보험       0.0 -> 238.2
+   KR0073 교보생명보험       70.1 -> 70.1
+   KR0068 한화생명         0.0 -> 0.0
+   KR0005 흥국화재         62.4 -> 62.4
+   KR0072 케이디비생명보험     0.0 -> 0.0
+   KR0011 DB손해보험       151.6 -> 151.6
+   KR0104 농협생명보험       48.5 -> 48.5
+   KR0076 아이엠라이프생명보험   221.7 -> 221.7
+   KR0002 한화손해보험       53.1 -> 53.1
+   KR0083 푸본현대생명보험     17.3 -> 17.3
+   KR0001 메리츠화재해상보험    18.9 -> 18.9
+   KR0099 KB라이프생명      12.2 -> 12.2
+   KR0071 흥국생명보험       81.4 -> 81.4
+   KR0004 MG_예별손해보험    0.0 -> 0.0
+   KR0008 삼성화재해상보험     0.5 -> 0.5
+   KR0009 현대해상         0.0 -> 0.0
+   KR0010 KB손해보험       0.0 -> 0.0
+   KR0029 AIG손해보험      0.0 -> 0.0
+   KR0049 악사손해보험       0.0 -> 0.0
+   KR0051 신한이지손해보험     0.0 -> 0.0
+   KR0070 에이비엘생명보험     0.0 -> 0.0
+   KR0074 라이나생명보험      0.0 -> 0.0
+   KR0075 비엔피파리바카디프생   0.0 -> 0.0
+   KR0079 미래에셋생명       0.0 -> 0.0
+   KR0080 에이아이에이생명보험   0.0 -> 0.0
+   KR0082 DB생명보험       0.0 -> 0.0
+   KR0087 동양생명         0.0 -> 0.0
+   KR0095 메트라이프생명보험    0.0 -> 0.0
+   KR0100 처브라이프생명보험    0.0 -> 0.0
+   KR0150 서울보증보험       0.0 -> 0.0
+   KR1010 교보라이프플래닛생명   0.0 -> 0.0
+   KR1011 IBK연금보험      0.0 -> 0.0
+   KR1098 카카오페이손해보험    0.0 -> 0.0
+   KR0003 롯데손해보험       14.3 -> 14.3
+   KR0032 NH농협손해보험     0.0 -> 0.0
+   KR0069 삼성생명         0.0 -> 0.0
+   KR0094 신한라이프생명보험    0.0 -> 0.0
+   KR1101 뮌헨재보험        0.0 -> 0.0
+   KR1102 스위스리아시아      0.0 -> 0.0
+   KR1103 제네럴재보험       0.0 -> 0.0
+   KR1104 하노버재보험       0.0 -> 0.0
+   KR1105 알지에이리인슈어런스   0.0 -> 0.0
+   KR1106 스코리재보험       0.0 -> 0.0
+   KR1107 퍼시픽라이프리      0.0 -> 0.0
+   KR1108 마이브라운반려동물전   0.0 -> 0.0
+
+== tier2 utilization_pct / numerator before -> after: changed rows
+  none (tier2 unchanged for all 47)
+
+== tier1_overflow_into_tier2_eok before -> after (rows that differ or are non-zero)
+  KR0032 NH농협손해보험     2483.6 -> 0.0  (tier1 json overflow 0.0; tier2 numerator 6981.7, rule R2)
+  KR0050 하나손해보험       298.5 -> 0.0  (tier1 json overflow 0.0; tier2 numerator 2007.83, rule R-none)
+  KR0072 케이디비생명보험     80.7 -> 0.0  (tier1 json overflow 0.0; tier2 numerator 6452.28, rule R-none)
+  KR0068 한화생명         8302.2 -> 0.0  (tier1 json overflow 0.0; tier2 numerator 52934.71, rule R3)
+  KR0076 아이엠라이프생명보험   0.0 -> 1353.88  (tier1 json overflow 1353.88; tier2 numerator 1833.8, rule R5)
+  KR0011 DB손해보험       225.2 -> 5942.1  (tier1 json overflow 5942.1; tier2 numerator 22392.16, rule R-none)
+  KR0097 하나생명보험       665.7 -> 1043.6  (tier1 json overflow 1043.6; tier2 numerator 1275.58, rule R-none)
+  KR1000 코리안리재보험      1297.1 -> 0.0  (tier1 json overflow 0.0; tier2 numerator 7113.21, rule R2)
+
+consistency tier2 field == tier1 json tier1_hybrid_overflow_eok for all 47: OK

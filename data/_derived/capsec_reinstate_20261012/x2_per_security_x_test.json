@@ -1,0 +1,707 @@
+{
+ "events": [
+  {
+   "security": "KR0005 흥국화재 제5회 신종 (2025-03-21, 1,993)",
+   "code": "KR0005",
+   "quarter": "2025.1Q",
+   "prev": "2024.4Q",
+   "X_prev": 2624.32,
+   "X_q": 4613.42,
+   "obs_dX": 1989.1,
+   "d_item6": 1993.0,
+   "d_item47_pre": 1997.51,
+   "cap10_q": 1800.8,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 1993.0,
+   "pred_T1_variants": {
+    "all T1": 238.2
+   },
+   "tol": 56.7,
+   "gap_T2": 3.9,
+   "gap_T1": {
+    "all T1": 1750.9
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "item53 2,120 unchanged (2024.4Q cell empty in master only); pre-issue X band 2,591~2,630; post-issue X - 1,993 = 2,620 -> 2,377 continues the band."
+  },
+  {
+   "security": "KR0032 NH농협손해 제3회 신종 (2024-12-27, 4,500)",
+   "code": "KR0032",
+   "quarter": "2024.4Q",
+   "prev": "2024.3Q",
+   "X_prev": 0.87,
+   "X_q": 4848.94,
+   "obs_dX": 4848.07,
+   "d_item6": 4500.0,
+   "d_item47_pre": 4330.02,
+   "cap10_q": 1398.5,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 4500.0,
+   "pred_T1_variants": {
+    "all T1": 3101.5
+   },
+   "tol": 422.6,
+   "gap_T2": 348.07,
+   "gap_T1": {
+    "all T1": 1746.57
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "item53 = 0; X stays 4,820~5,125 for 7 quarters while cap10 moves 1,344~1,642 (a tier1-type overflow would move with it)."
+  },
+  {
+   "security": "KR0050 하나손해 제1회 신종 (2024-05-14, 1,000)",
+   "code": "KR0050",
+   "quarter": "2024.2Q",
+   "prev": "2024.1Q",
+   "X_prev": 38.78,
+   "X_q": 1012.81,
+   "obs_dX": 974.03,
+   "d_item6": 1000.0,
+   "d_item47_pre": 973.42,
+   "cap10_q": 266.7,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 1000.0,
+   "pred_T1_variants": {
+    "all T1": 733.3
+   },
+   "tol": 30.0,
+   "gap_T2": 25.97,
+   "gap_T1": {
+    "all T1": 240.73
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "pre-issue X band 15~39; X stays 1,000~1,052 for 8 quarters while cap10 rises 290~463."
+  },
+  {
+   "security": "KR0050 하나손해 2026.2Q 신규 신종 (999, 채권원장 미등재)",
+   "code": "KR0050",
+   "quarter": "2026.2Q",
+   "prev": "2026.1Q",
+   "X_prev": 1015.94,
+   "X_q": 2007.44,
+   "obs_dX": 991.5,
+   "d_item6": 999.0,
+   "d_item47_pre": 991.83,
+   "cap10_q": 467.7,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 999.0,
+   "pred_T1_variants": {
+    "all T1": 531.3
+   },
+   "tol": 30.0,
+   "gap_T2": 7.5,
+   "gap_T1": {
+    "all T1": 460.2
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "제1회 is tier2-type (event above), so the new one alone is the T1 stack: overflow 999 - cap10."
+  },
+  {
+   "security": "KR0068 한화생명 신종5+신종6 (2024-07-17 5,000 + 2024-09-24 6,000, same quarter)",
+   "code": "KR0068",
+   "quarter": "2024.3Q",
+   "prev": "2024.2Q",
+   "X_prev": 6877.6,
+   "X_q": 12467.22,
+   "obs_dX": 5589.62,
+   "d_item6": 5985.0,
+   "d_item47_pre": 7912.08,
+   "cap10_q": 12496.9,
+   "adj_legacy_in_X": -4983.44,
+   "pred_T2": 6016.56,
+   "pred_T1_variants": {
+    "both T1": -4983.44,
+    "신종5 T1, 신종6 T2": 1016.56,
+    "신종5 T2, 신종6 T1": 16.56
+   },
+   "tol": 4019.7,
+   "gap_T2": 426.94,
+   "gap_T1": {
+    "both T1": 10573.06,
+    "신종5 T1, 신종6 T2": 4573.06,
+    "신종5 T2, 신종6 T1": 5573.06
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "legacy hybrids (item53) sit inside X: 2023.1Q->2Q dX -10,691 vs d(item53) -10,600; 2023.2Q/3Q X - item53 = 3.3 / 3.9. Legacy 4,983 leaves in this quarter (item53 -> 0)."
+  },
+  {
+   "security": "KR0068 한화생명 신종8 (2025-03-26, 6,000)",
+   "code": "KR0068",
+   "quarter": "2025.1Q",
+   "prev": "2024.4Q",
+   "X_prev": 11730.5,
+   "X_q": 17702.57,
+   "obs_dX": 5972.07,
+   "d_item6": 5983.0,
+   "d_item47_pre": 5086.77,
+   "cap10_q": 13676.4,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 6000.0,
+   "pred_T1_variants": {
+    "all T1": 0.0
+   },
+   "tol": 1486.4,
+   "gap_T2": 27.93,
+   "gap_T1": {
+    "all T1": 5972.07
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "legacy gone; both earlier new ones are tier2-type, so only this one is the T1 stack."
+  },
+  {
+   "security": "KR0068 한화생명 외화 신종 (2025-06-24, 13,819)",
+   "code": "KR0068",
+   "quarter": "2025.2Q",
+   "prev": "2025.1Q",
+   "X_prev": 17702.57,
+   "X_q": 30878.45,
+   "obs_dX": 13175.88,
+   "d_item6": 13734.0,
+   "d_item47_pre": 17876.02,
+   "cap10_q": 13861.4,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 13819.0,
+   "pred_T1_variants": {
+    "all T1": 0.0
+   },
+   "tol": 1486.4,
+   "gap_T2": 643.12,
+   "gap_T1": {
+    "all T1": 13175.88
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "X - all four tier2 = 59 / 52 / 108 / 178 / 408 afterwards."
+  },
+  {
+   "security": "KR0072 KDB생명 제2회 신종 (2023-05-19, 2,160)",
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "prev": "2023.1Q",
+   "X_prev": 2160.0,
+   "X_q": 2160.0,
+   "obs_dX": 0.0,
+   "d_item6": -2806.0,
+   "d_item47_pre": 908.08,
+   "cap10_q": 1595.6,
+   "adj_legacy_in_X": -2160.0,
+   "pred_T2": 0.0,
+   "pred_T1_variants": {
+    "all T1": -1595.6
+   },
+   "tol": 30.0,
+   "gap_T2": 0.0,
+   "gap_T1": {
+    "all T1": 1595.6
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "2023.1Q X = 2,160 = item53 (legacy 2,160 inside X; item6 4,965 incl. 2,805 not in X); the new 2,160 replaces it. Level: X - item6 within 0.5 for 13 quarters while cap10 moves 1,288~1,613."
+  },
+  {
+   "security": "KR0072 KDB생명 제3회 신종 (2024-12-26, 250)",
+   "code": "KR0072",
+   "quarter": "2024.4Q",
+   "prev": "2024.3Q",
+   "X_prev": 2158.35,
+   "X_q": 2403.05,
+   "obs_dX": 244.7,
+   "d_item6": 245.0,
+   "d_item47_pre": -942.7,
+   "cap10_q": 1349.0,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 245.0,
+   "pred_T1_variants": {
+    "all T1": 0.0
+   },
+   "tol": 30.0,
+   "gap_T2": 0.3,
+   "gap_T1": {
+    "all T1": 244.7
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "book amount 245 (item6 change); face 250."
+  },
+  {
+   "security": "KR0073 교보생명 신종 (2023-05-12, 4,985)",
+   "code": "KR0073",
+   "quarter": "2023.2Q",
+   "prev": "2023.1Q",
+   "X_prev": 11089.0,
+   "X_q": 16074.0,
+   "obs_dX": 4985.0,
+   "d_item6": 4985.0,
+   "d_item47_pre": 4985.41,
+   "cap10_q": 8177.4,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 4985.0,
+   "pred_T1_variants": {
+    "all T1": 0.0
+   },
+   "tol": 30.0,
+   "gap_T2": 0.0,
+   "gap_T1": {
+    "all T1": 4985.0
+   },
+   "verdict": "CONFIRMED_T2",
+   "note": "legacy 11,089 unchanged and inside X (2023.1Q X = item6 = item53 = 11,089); 2023.2Q X = item6 = 16,074."
+  },
+  {
+   "security": "KR0073 교보생명 신종 (2024-11-12, 5,983)",
+   "code": "KR0073",
+   "quarter": "2024.4Q",
+   "prev": "2024.3Q",
+   "X_prev": 24383.78,
+   "X_q": 24472.84,
+   "obs_dX": 89.06,
+   "d_item6": 5983.0,
+   "d_item47_pre": 202.34,
+   "cap10_q": 8520.2,
+   "adj_legacy_in_X": 0.0,
+   "pred_T2": 5983.0,
+   "pred_T1_variants": {
+    "all T1": 0.0
+   },
+   "tol": 1095.4,
+   "gap_T2": 5893.94,
+   "gap_T1": {
+    "all T1": 89.06
+   },
+   "verdict": "CONTRADICTED_T2",
+   "note": "item47(pre) +202 as well; the issuer did not add it to supplementary capital."
+  }
+ ],
+ "level_koreanre_5": [
+  {
+   "q": "2023.2Q",
+   "X": 5184.01,
+   "legacy_excess": 2636.3,
+   "N5": 2494.9,
+   "O_if_T2": 52.8,
+   "O_if_T1_own10pct": 2019.3
+  },
+  {
+   "q": "2023.3Q",
+   "X": 5114.0,
+   "legacy_excess": 2618.8,
+   "N5": 2494.9,
+   "O_if_T2": 0.3,
+   "O_if_T1_own10pct": 1978.5
+  },
+  {
+   "q": "2023.4Q",
+   "X": 5082.35,
+   "legacy_excess": 2587.4,
+   "N5": 2494.9,
+   "O_if_T2": 0.0,
+   "O_if_T1_own10pct": 1999.1
+  },
+  {
+   "q": "2024.1Q",
+   "X": 5001.95,
+   "legacy_excess": 2507.0,
+   "N5": 2494.9,
+   "O_if_T2": -0.0,
+   "O_if_T1_own10pct": 2052.7
+  },
+  {
+   "q": "2024.2Q",
+   "X": 4900.94,
+   "legacy_excess": 2406.1,
+   "N5": 2494.9,
+   "O_if_T2": -0.1,
+   "O_if_T1_own10pct": 2119.9
+  },
+  {
+   "q": "2024.3Q",
+   "X": 4838.2,
+   "legacy_excess": 2343.4,
+   "N5": 2494.9,
+   "O_if_T2": -0.1,
+   "O_if_T1_own10pct": 2161.7
+  }
+ ],
+ "level_koreanre_6": [
+  {
+   "q": "2024.3Q",
+   "X": 4838.2,
+   "legacy_excess": 2343.4,
+   "N_all": 2494.9,
+   "O_if_5_T2_6_T2": -0.1,
+   "O_if_5_T2_6_T1": -0.1
+  },
+  {
+   "q": "2024.4Q",
+   "X": 6537.57,
+   "legacy_excess": 20.0,
+   "N_all": 4790.2,
+   "O_if_5_T2_6_T2": 1727.4,
+   "O_if_5_T2_6_T1": 3908.6
+  },
+  {
+   "q": "2025.1Q",
+   "X": 9993.51,
+   "legacy_excess": 0.0,
+   "N_all": 4790.2,
+   "O_if_5_T2_6_T2": 5203.3,
+   "O_if_5_T2_6_T1": 7432.7
+  },
+  {
+   "q": "2025.2Q",
+   "X": 10597.0,
+   "legacy_excess": 0.0,
+   "N_all": 4790.2,
+   "O_if_5_T2_6_T2": 5806.8,
+   "O_if_5_T2_6_T1": 8003.1
+  },
+  {
+   "q": "2025.3Q",
+   "X": 10832.0,
+   "legacy_excess": 0.0,
+   "N_all": 4790.1,
+   "O_if_5_T2_6_T2": 6041.9,
+   "O_if_5_T2_6_T1": 8254.7
+  },
+  {
+   "q": "2025.4Q",
+   "X": 11015.18,
+   "legacy_excess": 0.0,
+   "N_all": 4790.0,
+   "O_if_5_T2_6_T2": 6225.1,
+   "O_if_5_T2_6_T1": 8447.0
+  },
+  {
+   "q": "2026.1Q",
+   "X": 11428.18,
+   "legacy_excess": 0.0,
+   "N_all": 4790.0,
+   "O_if_5_T2_6_T2": 6638.1,
+   "O_if_5_T2_6_T1": 8927.6
+  },
+  {
+   "q": "2026.2Q",
+   "X": 10405.33,
+   "legacy_excess": 0.0,
+   "N_all": 4790.0,
+   "O_if_5_T2_6_T2": 5615.3,
+   "O_if_5_T2_6_T1": 7910.4
+  }
+ ],
+ "level_nhlife_5": [
+  {
+   "q": "2023.1Q",
+   "X": 7016.66,
+   "cap10": 4229.0,
+   "O_if_T2": 2016.7,
+   "O_if_T1": 4516.7
+  },
+  {
+   "q": "2023.2Q",
+   "X": 6338.97,
+   "cap10": 4212.2,
+   "O_if_T2": 1339.0,
+   "O_if_T1": 3839.0
+  },
+  {
+   "q": "2023.3Q",
+   "X": 5606.5,
+   "cap10": 4151.1,
+   "O_if_T2": 606.5,
+   "O_if_T1": 3106.5
+  },
+  {
+   "q": "2023.4Q",
+   "X": 5528.9,
+   "cap10": 3648.2,
+   "O_if_T2": 528.9,
+   "O_if_T1": 3028.9
+  },
+  {
+   "q": "2024.1Q",
+   "X": 5677.84,
+   "cap10": 3537.1,
+   "O_if_T2": 677.8,
+   "O_if_T1": 3177.8
+  },
+  {
+   "q": "2024.2Q",
+   "X": 5653.71,
+   "cap10": 3405.0,
+   "O_if_T2": 653.7,
+   "O_if_T1": 3153.7
+  },
+  {
+   "q": "2024.3Q",
+   "X": 5625.63,
+   "cap10": 3108.9,
+   "O_if_T2": 625.6,
+   "O_if_T1": 3125.6
+  },
+  {
+   "q": "2024.4Q",
+   "X": 5646.2,
+   "cap10": 2942.3,
+   "O_if_T2": 646.2,
+   "O_if_T1": 3146.2
+  },
+  {
+   "q": "2025.1Q",
+   "X": 5721.67,
+   "cap10": 2749.1,
+   "O_if_T2": 721.7,
+   "O_if_T1": 3221.7
+  },
+  {
+   "q": "2025.2Q",
+   "X": 6593.2,
+   "cap10": 2810.0,
+   "O_if_T2": 1593.2,
+   "O_if_T1": 4093.2
+  },
+  {
+   "q": "2025.3Q",
+   "X": 5750.06,
+   "cap10": 2837.8,
+   "O_if_T2": 750.1,
+   "O_if_T1": 3250.1
+  },
+  {
+   "q": "2025.4Q",
+   "X": 5724.26,
+   "cap10": 3015.1,
+   "O_if_T2": 724.3,
+   "O_if_T1": 3224.3
+  },
+  {
+   "q": "2026.1Q",
+   "X": 5588.94,
+   "cap10": 3283.5,
+   "O_if_T2": 588.9,
+   "O_if_T1": 3088.9
+  },
+  {
+   "q": "2026.2Q",
+   "X": 5724.76,
+   "cap10": 3439.5,
+   "O_if_T2": 724.8,
+   "O_if_T1": 3224.8
+  }
+ ],
+ "level_fubon": [
+  {
+   "q": "2023.1Q",
+   "X": 3538.0,
+   "cap10": 1520.1,
+   "O_if_T2": 2938.0,
+   "O_if_T1": 3538.0
+  },
+  {
+   "q": "2023.2Q",
+   "X": 3338.0,
+   "cap10": 1558.3,
+   "O_if_T2": 2738.0,
+   "O_if_T1": 3338.0
+  },
+  {
+   "q": "2023.3Q",
+   "X": 3166.0,
+   "cap10": 1444.3,
+   "O_if_T2": 2566.0,
+   "O_if_T1": 3166.0
+  },
+  {
+   "q": "2023.4Q",
+   "X": 3735.0,
+   "cap10": 1467.6,
+   "O_if_T2": 3135.0,
+   "O_if_T1": 3735.0
+  },
+  {
+   "q": "2024.1Q",
+   "X": 3615.0,
+   "cap10": 1436.1,
+   "O_if_T2": 3015.0,
+   "O_if_T1": 3615.0
+  },
+  {
+   "q": "2024.2Q",
+   "X": 3483.0,
+   "cap10": 1452.2,
+   "O_if_T2": 2883.0,
+   "O_if_T1": 3483.0
+  },
+  {
+   "q": "2024.3Q",
+   "X": 3405.0,
+   "cap10": 1378.7,
+   "O_if_T2": 2805.0,
+   "O_if_T1": 3405.0
+  },
+  {
+   "q": "2024.4Q",
+   "X": 3058.0,
+   "cap10": 1318.7,
+   "O_if_T2": 2458.0,
+   "O_if_T1": 3058.0
+  },
+  {
+   "q": "2025.1Q",
+   "X": 2964.0,
+   "cap10": 1309.2,
+   "O_if_T2": 2364.0,
+   "O_if_T1": 2964.0
+  },
+  {
+   "q": "2025.2Q",
+   "X": 2986.0,
+   "cap10": 1303.9,
+   "O_if_T2": 2386.0,
+   "O_if_T1": 2986.0
+  },
+  {
+   "q": "2025.3Q",
+   "X": 2976.0,
+   "cap10": 1317.1,
+   "O_if_T2": 2376.0,
+   "O_if_T1": 2976.0
+  },
+  {
+   "q": "2025.4Q",
+   "X": 2997.0,
+   "cap10": 1290.9,
+   "O_if_T2": 2397.0,
+   "O_if_T1": 2997.0
+  },
+  {
+   "q": "2026.1Q",
+   "X": 3132.0,
+   "cap10": 1392.5,
+   "O_if_T2": 2532.0,
+   "O_if_T1": 3132.0
+  },
+  {
+   "q": "2026.2Q",
+   "X": 3314.0,
+   "cap10": 1542.6,
+   "O_if_T2": 2714.0,
+   "O_if_T1": 3314.0
+  }
+ ],
+ "level_hanalife": [
+  {
+   "q": "2023.1Q",
+   "X": 1884.2,
+   "cap10": 417.0,
+   "O_if_T2": 85.5,
+   "X_lt_amount": false,
+   "tier1_overflow": 1381.8,
+   "O_if_T1": 502.5
+  },
+  {
+   "q": "2023.2Q",
+   "X": 1654.19,
+   "cap10": 459.1,
+   "O_if_T2": -144.6,
+   "X_lt_amount": true,
+   "tier1_overflow": 1339.7,
+   "O_if_T1": 314.5
+  },
+  {
+   "q": "2023.3Q",
+   "X": 1615.35,
+   "cap10": 437.7,
+   "O_if_T2": -183.4,
+   "X_lt_amount": true,
+   "tier1_overflow": 1361.0,
+   "O_if_T1": 254.3
+  },
+  {
+   "q": "2023.4Q",
+   "X": 1784.44,
+   "cap10": 412.5,
+   "O_if_T2": -14.3,
+   "X_lt_amount": true,
+   "tier1_overflow": 1386.2,
+   "O_if_T1": 398.2
+  },
+  {
+   "q": "2024.1Q",
+   "X": 1620.0,
+   "cap10": 468.9,
+   "O_if_T2": -178.8,
+   "X_lt_amount": true,
+   "tier1_overflow": 1329.8,
+   "O_if_T1": 290.2
+  },
+  {
+   "q": "2024.2Q",
+   "X": 1465.15,
+   "cap10": 472.7,
+   "O_if_T2": -333.6,
+   "X_lt_amount": true,
+   "tier1_overflow": 1326.0,
+   "O_if_T1": 139.1
+  },
+  {
+   "q": "2024.3Q",
+   "X": 1381.11,
+   "cap10": 479.0,
+   "O_if_T2": -417.6,
+   "X_lt_amount": true,
+   "tier1_overflow": 1319.8,
+   "O_if_T1": 61.4
+  },
+  {
+   "q": "2025.1Q",
+   "X": 1476.51,
+   "cap10": 534.9,
+   "O_if_T2": -322.2,
+   "X_lt_amount": true,
+   "tier1_overflow": 1263.8,
+   "O_if_T1": 212.7
+  },
+  {
+   "q": "2025.2Q",
+   "X": 1450.62,
+   "cap10": 540.7,
+   "O_if_T2": -348.1,
+   "X_lt_amount": true,
+   "tier1_overflow": 1258.0,
+   "O_if_T1": 192.6
+  },
+  {
+   "q": "2025.3Q",
+   "X": 1251.26,
+   "cap10": 576.7,
+   "O_if_T2": -547.5,
+   "X_lt_amount": true,
+   "tier1_overflow": 1222.0,
+   "O_if_T1": 29.2
+  },
+  {
+   "q": "2025.4Q",
+   "X": 1552.96,
+   "cap10": 593.6,
+   "O_if_T2": -245.8,
+   "X_lt_amount": true,
+   "tier1_overflow": 1205.2,
+   "O_if_T1": 347.8
+  },
+  {
+   "q": "2026.1Q",
+   "X": 1272.76,
+   "cap10": 641.1,
+   "O_if_T2": -526.0,
+   "X_lt_amount": true,
+   "tier1_overflow": 1157.7,
+   "O_if_T1": 115.1
+  },
+  {
+   "q": "2026.2Q",
+   "X": 1275.87,
+   "cap10": 755.4,
+   "O_if_T2": -522.9,
+   "X_lt_amount": true,
+   "tier1_overflow": 1043.3,
+   "O_if_T1": 232.5
+  }
+ ]
+}

@@ -1,0 +1,108 @@
+== EVENT STUDY (X = item13 - item49, 억원) ==
+[CONFIRMED_T2] KR0005 흥국화재 제5회 신종 (2025-03-21, 1,993)
+   2024.4Q->2025.1Q: X 2624.32 -> 4613.42  obs dX=+1989.1  d_item6=+1993.0  d_item47pre=1997.51  cap10=1800.8  legacy-in-X adj=+0.0
+   pred_T2=+1993.0 gap=3.9  | pred[all T1]=+238.2 gap=1750.9  | tol=56.7
+   note: item53 2,120 unchanged (2024.4Q cell empty in master only); pre-issue X band 2,591~2,630; post-issue X - 1,993 = 2,620 -> 2,377 continues the band.
+[CONFIRMED_T2] KR0032 NH농협손해 제3회 신종 (2024-12-27, 4,500)
+   2024.3Q->2024.4Q: X 0.87 -> 4848.94  obs dX=+4848.07  d_item6=+4500.0  d_item47pre=4330.02  cap10=1398.5  legacy-in-X adj=+0.0
+   pred_T2=+4500.0 gap=348.07  | pred[all T1]=+3101.5 gap=1746.57  | tol=422.6
+   note: item53 = 0; X stays 4,820~5,125 for 7 quarters while cap10 moves 1,344~1,642 (a tier1-type overflow would move with it).
+[CONFIRMED_T2] KR0050 하나손해 제1회 신종 (2024-05-14, 1,000)
+   2024.1Q->2024.2Q: X 38.78 -> 1012.81  obs dX=+974.03  d_item6=+1000.0  d_item47pre=973.42  cap10=266.7  legacy-in-X adj=+0.0
+   pred_T2=+1000.0 gap=25.97  | pred[all T1]=+733.3 gap=240.73  | tol=30.0
+   note: pre-issue X band 15~39; X stays 1,000~1,052 for 8 quarters while cap10 rises 290~463.
+[CONFIRMED_T2] KR0050 하나손해 2026.2Q 신규 신종 (999, 채권원장 미등재)
+   2026.1Q->2026.2Q: X 1015.94 -> 2007.44  obs dX=+991.5  d_item6=+999.0  d_item47pre=991.83  cap10=467.7  legacy-in-X adj=+0.0
+   pred_T2=+999.0 gap=7.5  | pred[all T1]=+531.3 gap=460.2  | tol=30.0
+   note: 제1회 is tier2-type (event above), so the new one alone is the T1 stack: overflow 999 - cap10.
+[CONFIRMED_T2] KR0068 한화생명 신종5+신종6 (2024-07-17 5,000 + 2024-09-24 6,000, same quarter)
+   2024.2Q->2024.3Q: X 6877.6 -> 12467.22  obs dX=+5589.62  d_item6=+5985.0  d_item47pre=7912.08  cap10=12496.9  legacy-in-X adj=-4983.44
+   pred_T2=+6016.56 gap=426.94  | pred[both T1]=-4983.44 gap=10573.06 ; pred[신종5 T1, 신종6 T2]=+1016.56 gap=4573.06 ; pred[신종5 T2, 신종6 T1]=+16.56 gap=5573.06  | tol=4019.7
+   note: legacy hybrids (item53) sit inside X: 2023.1Q->2Q dX -10,691 vs d(item53) -10,600; 2023.2Q/3Q X - item53 = 3.3 / 3.9. Legacy 4,983 leaves in this quarter (item53 -> 0).
+[CONFIRMED_T2] KR0068 한화생명 신종8 (2025-03-26, 6,000)
+   2024.4Q->2025.1Q: X 11730.5 -> 17702.57  obs dX=+5972.07  d_item6=+5983.0  d_item47pre=5086.77  cap10=13676.4  legacy-in-X adj=+0.0
+   pred_T2=+6000.0 gap=27.93  | pred[all T1]=+0.0 gap=5972.07  | tol=1486.4
+   note: legacy gone; both earlier new ones are tier2-type, so only this one is the T1 stack.
+[CONFIRMED_T2] KR0068 한화생명 외화 신종 (2025-06-24, 13,819)
+   2025.1Q->2025.2Q: X 17702.57 -> 30878.45  obs dX=+13175.88  d_item6=+13734.0  d_item47pre=17876.02  cap10=13861.4  legacy-in-X adj=+0.0
+   pred_T2=+13819.0 gap=643.12  | pred[all T1]=+0.0 gap=13175.88  | tol=1486.4
+   note: X - all four tier2 = 59 / 52 / 108 / 178 / 408 afterwards.
+[CONFIRMED_T2] KR0072 KDB생명 제2회 신종 (2023-05-19, 2,160)
+   2023.1Q->2023.2Q: X 2160.0 -> 2160.0  obs dX=+0.0  d_item6=-2806.0  d_item47pre=908.08  cap10=1595.6  legacy-in-X adj=-2160.0
+   pred_T2=+0.0 gap=0.0  | pred[all T1]=-1595.6 gap=1595.6  | tol=30.0
+   note: 2023.1Q X = 2,160 = item53 (legacy 2,160 inside X; item6 4,965 incl. 2,805 not in X); the new 2,160 replaces it. Level: X - item6 within 0.5 for 13 quarters while cap10 moves 1,288~1,613.
+[CONFIRMED_T2] KR0072 KDB생명 제3회 신종 (2024-12-26, 250)
+   2024.3Q->2024.4Q: X 2158.35 -> 2403.05  obs dX=+244.7  d_item6=+245.0  d_item47pre=-942.7  cap10=1349.0  legacy-in-X adj=+0.0
+   pred_T2=+245.0 gap=0.3  | pred[all T1]=+0.0 gap=244.7  | tol=30.0
+   note: book amount 245 (item6 change); face 250.
+[CONFIRMED_T2] KR0073 교보생명 신종 (2023-05-12, 4,985)
+   2023.1Q->2023.2Q: X 11089.0 -> 16074.0  obs dX=+4985.0  d_item6=+4985.0  d_item47pre=4985.41  cap10=8177.4  legacy-in-X adj=+0.0
+   pred_T2=+4985.0 gap=0.0  | pred[all T1]=+0.0 gap=4985.0  | tol=30.0
+   note: legacy 11,089 unchanged and inside X (2023.1Q X = item6 = item53 = 11,089); 2023.2Q X = item6 = 16,074.
+[CONTRADICTED_T2] KR0073 교보생명 신종 (2024-11-12, 5,983)
+   2024.3Q->2024.4Q: X 24383.78 -> 24472.84  obs dX=+89.06  d_item6=+5983.0  d_item47pre=202.34  cap10=8520.2  legacy-in-X adj=+0.0
+   pred_T2=+5983.0 gap=5893.94  | pred[all T1]=+0.0 gap=89.06  | tol=1095.4
+   note: item47(pre) +202 as well; the issuer did not add it to supplementary capital.
+
+== LEVEL TESTS ==
+KR1000 코리안리 제5회: O = X - legacy excess over 15% x item14 - N5 (zero = tier2-type; own-10% tier1 reading leaves O = cap10)
+   {"q": "2023.2Q", "X": 5184.01, "legacy_excess": 2636.3, "N5": 2494.9, "O_if_T2": 52.8, "O_if_T1_own10pct": 2019.3}
+   {"q": "2023.3Q", "X": 5114.0, "legacy_excess": 2618.8, "N5": 2494.9, "O_if_T2": 0.3, "O_if_T1_own10pct": 1978.5}
+   {"q": "2023.4Q", "X": 5082.35, "legacy_excess": 2587.4, "N5": 2494.9, "O_if_T2": 0.0, "O_if_T1_own10pct": 1999.1}
+   {"q": "2024.1Q", "X": 5001.95, "legacy_excess": 2507.0, "N5": 2494.9, "O_if_T2": -0.0, "O_if_T1_own10pct": 2052.7}
+   {"q": "2024.2Q", "X": 4900.94, "legacy_excess": 2406.1, "N5": 2494.9, "O_if_T2": -0.1, "O_if_T1_own10pct": 2119.9}
+   {"q": "2024.3Q", "X": 4838.2, "legacy_excess": 2343.4, "N5": 2494.9, "O_if_T2": -0.1, "O_if_T1_own10pct": 2161.7}
+KR1000 코리안리 제6회: O after adding 제6회 (2,295): neither reading returns O to ~0 (other items entered X in 2024.4Q and 2025.1Q with item6 flat)
+   {"q": "2024.3Q", "X": 4838.2, "legacy_excess": 2343.4, "N_all": 2494.9, "O_if_5_T2_6_T2": -0.1, "O_if_5_T2_6_T1": -0.1}
+   {"q": "2024.4Q", "X": 6537.57, "legacy_excess": 20.0, "N_all": 4790.2, "O_if_5_T2_6_T2": 1727.4, "O_if_5_T2_6_T1": 3908.6}
+   {"q": "2025.1Q", "X": 9993.51, "legacy_excess": 0.0, "N_all": 4790.2, "O_if_5_T2_6_T2": 5203.3, "O_if_5_T2_6_T1": 7432.7}
+   {"q": "2025.2Q", "X": 10597.0, "legacy_excess": 0.0, "N_all": 4790.2, "O_if_5_T2_6_T2": 5806.8, "O_if_5_T2_6_T1": 8003.1}
+   {"q": "2025.3Q", "X": 10832.0, "legacy_excess": 0.0, "N_all": 4790.1, "O_if_5_T2_6_T2": 6041.9, "O_if_5_T2_6_T1": 8254.7}
+   {"q": "2025.4Q", "X": 11015.18, "legacy_excess": 0.0, "N_all": 4790.0, "O_if_5_T2_6_T2": 6225.1, "O_if_5_T2_6_T1": 8447.0}
+   {"q": "2026.1Q", "X": 11428.18, "legacy_excess": 0.0, "N_all": 4790.0, "O_if_5_T2_6_T2": 6638.1, "O_if_5_T2_6_T1": 8927.6}
+   {"q": "2026.2Q", "X": 10405.33, "legacy_excess": 0.0, "N_all": 4790.0, "O_if_5_T2_6_T2": 5615.3, "O_if_5_T2_6_T1": 7910.4}
+KR0104 농협생명 제5회 (first disclosed quarter 2023.1Q, no pre-issue column): O = X - legacy 2,500 - [2,500 if T2]; cap10 never below 2,749 so no cap effect distinguishes
+   {"q": "2023.1Q", "X": 7016.66, "cap10": 4229.0, "O_if_T2": 2016.7, "O_if_T1": 4516.7}
+   {"q": "2023.2Q", "X": 6338.97, "cap10": 4212.2, "O_if_T2": 1339.0, "O_if_T1": 3839.0}
+   {"q": "2023.3Q", "X": 5606.5, "cap10": 4151.1, "O_if_T2": 606.5, "O_if_T1": 3106.5}
+   {"q": "2023.4Q", "X": 5528.9, "cap10": 3648.2, "O_if_T2": 528.9, "O_if_T1": 3028.9}
+   {"q": "2024.1Q", "X": 5677.84, "cap10": 3537.1, "O_if_T2": 677.8, "O_if_T1": 3177.8}
+   {"q": "2024.2Q", "X": 5653.71, "cap10": 3405.0, "O_if_T2": 653.7, "O_if_T1": 3153.7}
+   {"q": "2024.3Q", "X": 5625.63, "cap10": 3108.9, "O_if_T2": 625.6, "O_if_T1": 3125.6}
+   {"q": "2024.4Q", "X": 5646.2, "cap10": 2942.3, "O_if_T2": 646.2, "O_if_T1": 3146.2}
+   {"q": "2025.1Q", "X": 5721.67, "cap10": 2749.1, "O_if_T2": 721.7, "O_if_T1": 3221.7}
+   {"q": "2025.2Q", "X": 6593.2, "cap10": 2810.0, "O_if_T2": 1593.2, "O_if_T1": 4093.2}
+   {"q": "2025.3Q", "X": 5750.06, "cap10": 2837.8, "O_if_T2": 750.1, "O_if_T1": 3250.1}
+   {"q": "2025.4Q", "X": 5724.26, "cap10": 3015.1, "O_if_T2": 724.3, "O_if_T1": 3224.3}
+   {"q": "2026.1Q", "X": 5588.94, "cap10": 3283.5, "O_if_T2": 588.9, "O_if_T1": 3088.9}
+   {"q": "2026.2Q", "X": 5724.76, "cap10": 3439.5, "O_if_T2": 724.8, "O_if_T1": 3224.8}
+KR0083 푸본현대 2023-02 (600; first disclosed quarter 2023.1Q): O swings 2,0xx~3,7xx either way
+   {"q": "2023.1Q", "X": 3538.0, "cap10": 1520.1, "O_if_T2": 2938.0, "O_if_T1": 3538.0}
+   {"q": "2023.2Q", "X": 3338.0, "cap10": 1558.3, "O_if_T2": 2738.0, "O_if_T1": 3338.0}
+   {"q": "2023.3Q", "X": 3166.0, "cap10": 1444.3, "O_if_T2": 2566.0, "O_if_T1": 3166.0}
+   {"q": "2023.4Q", "X": 3735.0, "cap10": 1467.6, "O_if_T2": 3135.0, "O_if_T1": 3735.0}
+   {"q": "2024.1Q", "X": 3615.0, "cap10": 1436.1, "O_if_T2": 3015.0, "O_if_T1": 3615.0}
+   {"q": "2024.2Q", "X": 3483.0, "cap10": 1452.2, "O_if_T2": 2883.0, "O_if_T1": 3483.0}
+   {"q": "2024.3Q", "X": 3405.0, "cap10": 1378.7, "O_if_T2": 2805.0, "O_if_T1": 3405.0}
+   {"q": "2024.4Q", "X": 3058.0, "cap10": 1318.7, "O_if_T2": 2458.0, "O_if_T1": 3058.0}
+   {"q": "2025.1Q", "X": 2964.0, "cap10": 1309.2, "O_if_T2": 2364.0, "O_if_T1": 2964.0}
+   {"q": "2025.2Q", "X": 2986.0, "cap10": 1303.9, "O_if_T2": 2386.0, "O_if_T1": 2986.0}
+   {"q": "2025.3Q", "X": 2976.0, "cap10": 1317.1, "O_if_T2": 2376.0, "O_if_T1": 2976.0}
+   {"q": "2025.4Q", "X": 2997.0, "cap10": 1290.9, "O_if_T2": 2397.0, "O_if_T1": 2997.0}
+   {"q": "2026.1Q", "X": 3132.0, "cap10": 1392.5, "O_if_T2": 2532.0, "O_if_T1": 3132.0}
+   {"q": "2026.2Q", "X": 3314.0, "cap10": 1542.6, "O_if_T2": 2714.0, "O_if_T1": 3314.0}
+KR0097 하나생명 제1회 (1,798.75): necessary condition X >= amount fails when X_lt_amount=True
+   {"q": "2023.1Q", "X": 1884.2, "cap10": 417.0, "O_if_T2": 85.5, "X_lt_amount": false, "tier1_overflow": 1381.8, "O_if_T1": 502.5}
+   {"q": "2023.2Q", "X": 1654.19, "cap10": 459.1, "O_if_T2": -144.6, "X_lt_amount": true, "tier1_overflow": 1339.7, "O_if_T1": 314.5}
+   {"q": "2023.3Q", "X": 1615.35, "cap10": 437.7, "O_if_T2": -183.4, "X_lt_amount": true, "tier1_overflow": 1361.0, "O_if_T1": 254.3}
+   {"q": "2023.4Q", "X": 1784.44, "cap10": 412.5, "O_if_T2": -14.3, "X_lt_amount": true, "tier1_overflow": 1386.2, "O_if_T1": 398.2}
+   {"q": "2024.1Q", "X": 1620.0, "cap10": 468.9, "O_if_T2": -178.8, "X_lt_amount": true, "tier1_overflow": 1329.8, "O_if_T1": 290.2}
+   {"q": "2024.2Q", "X": 1465.15, "cap10": 472.7, "O_if_T2": -333.6, "X_lt_amount": true, "tier1_overflow": 1326.0, "O_if_T1": 139.1}
+   {"q": "2024.3Q", "X": 1381.11, "cap10": 479.0, "O_if_T2": -417.6, "X_lt_amount": true, "tier1_overflow": 1319.8, "O_if_T1": 61.4}
+   {"q": "2025.1Q", "X": 1476.51, "cap10": 534.9, "O_if_T2": -322.2, "X_lt_amount": true, "tier1_overflow": 1263.8, "O_if_T1": 212.7}
+   {"q": "2025.2Q", "X": 1450.62, "cap10": 540.7, "O_if_T2": -348.1, "X_lt_amount": true, "tier1_overflow": 1258.0, "O_if_T1": 192.6}
+   {"q": "2025.3Q", "X": 1251.26, "cap10": 576.7, "O_if_T2": -547.5, "X_lt_amount": true, "tier1_overflow": 1222.0, "O_if_T1": 29.2}
+   {"q": "2025.4Q", "X": 1552.96, "cap10": 593.6, "O_if_T2": -245.8, "X_lt_amount": true, "tier1_overflow": 1205.2, "O_if_T1": 347.8}
+   {"q": "2026.1Q", "X": 1272.76, "cap10": 641.1, "O_if_T2": -526.0, "X_lt_amount": true, "tier1_overflow": 1157.7, "O_if_T1": 115.1}
+   {"q": "2026.2Q", "X": 1275.87, "cap10": 755.4, "O_if_T2": -522.9, "X_lt_amount": true, "tier1_overflow": 1043.3, "O_if_T1": 232.5}
+   X < amount in 12 of 13 quarters; O_if_T1 range 29.2~502.5

@@ -153,6 +153,11 @@ def apply_tier2(row: dict, res: dict, ledger_entry: dict, as_of: str) -> None:
     row["rule_flags"] = t2["flags"]
     row["supplementary_capital_eok"] = res.get("item3")
     row["lapse_excess_item49_eok"] = res.get("item49")
+    # 2026-10-12: 「기본자본 한도초과분의 보완자본 재분류」 는 예전에 채권원장 발행액 - SCR x 15% (wire_capital_securities_to_utilization.py)
+    # 로 한 번 쓰이고 갱신이 끊겨 있었다(하나생명 665.7 = 1,798.8 - 1,133.1). 이제 기본자본 소진율과 같은 출처
+    # (공시 항목 6 + 등재부 분류, 기발행은 SCR x 15% · 기본자본형 신규는 SCR x 10% 초과분)의 tier1 결과를 그대로 쓴다.
+    t1 = res.get("t1")
+    row["tier1_overflow_into_tier2_eok"] = None if t1 is None else t1["overflow_eok"]
     row["no_capital_securities"] = res["no_capital_securities"]
 
 

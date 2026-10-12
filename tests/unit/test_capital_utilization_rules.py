@@ -16,6 +16,7 @@ from __future__ import annotations
 import copy
 import csv
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -35,10 +36,13 @@ QUARTER = "2026.2Q"
 # 20261012T2030Z, owner 「분류 확정」): 하나생명 제1회(스텝업 구조)·푸본 600억·농협생명 제5회·코리안리 제5/6회가
 # 보완자본형으로 확정되어 기본자본 자본증권에서 빠진다 -> KR0097 238.2 -> 0.0 · KR1000 205.1 -> 94.0 ·
 # KR0104 72.7 -> 48.5 · KR0083 42.1 -> 17.3 (이 네 값이 바뀐 이유는 전부 이 재분류다 - 느슨하게 푼 것이 아니다).
-# 흥국생명은 2022-12 전환우선주로 기본자본형 확정(81.4 불변). 교보 2024 건은 type=tier2(발행조건 스텝업)로
-# 바뀌었지만 결속하는 쪽이 기발행 70.1 이라 숫자 불변.
+# 흥국생명은 2022-12 전환우선주로 기본자본형 확정(81.4 불변).
+# 2026-10-12 발행사 처리 기준 라운드(티켓 20261012T2115Z, owner 「회사에서 그렇게 분류했으면 회사 분류를 따르는 게 맞다」):
+# 증권별 X 검정(data/_derived/capsec_reinstate_20261012/x2_per_security_x_test.txt)에서 하나생명 제1회와 교보 2024-11 은
+# 발행사가 기본자본형으로 처리한 것으로 나와 type=tier1 로 바꿨다 -> KR0097 0.0 -> 238.2 (이 한 값이 바뀐 이유는 전부 이
+# 재분류다 - 느슨하게 푼 것이 아니다). 교보는 결속하는 쪽이 기발행 70.1 이라 숫자 불변(기본자본형 신규 56.8).
 T1_MEMO = {"KR0068": 0.0, "KR0072": 0.0, "KR0050": 0.0, "KR0032": 0.0, "KR0005": 62.4, "KR0073": 70.1,
-           "KR0002": 53.1, "KR0011": 151.6, "KR0097": 0.0, "KR0001": 18.9, "KR0003": 14.3, "KR0099": 12.2,
+           "KR0002": 53.1, "KR0011": 151.6, "KR0097": 238.2, "KR0001": 18.9, "KR0003": 14.3, "KR0099": 12.2,
            "KR0076": 221.7, "KR1000": 94.0, "KR0104": 48.5, "KR0083": 17.3, "KR0071": 81.4, "KR0008": 0.5}
 # 아직 미확정이 남은 회사 = 푸본의 채권원장에 없는 50억(2024.4Q~)뿐. 결속하지 않아 상한 = 하한.
 T1_UNCONFIRMED = {"KR0083": 17.3}   # code -> 보완자본형일 때 값(범위 아래 끝)
@@ -226,7 +230,7 @@ def _flip(registry, code, frm, to):
     ("KR0011", "tier1", "tier2", 151.6, 0.0),     # DB손해: 기본자본형을 보완자본형으로 보면 0
     ("KR1000", "tier2", "tier1", 94.0, 205.1),    # 코리안리: 확정된 보완자본형 신규 4,800억을 기본자본형으로 보면 205.1
     ("KR0104", "tier2", "tier1", 48.5, 72.7),     # 농협생명: 제5회 2,500억 (확정 전 상한이던 값)
-    ("KR0097", "tier2", "tier1", 0.0, 238.2),     # 하나생명: 스텝업 구조 -> 보완자본형. 기본자본형이면 종전 238.2
+    ("KR0097", "tier1", "tier2", 238.2, 0.0),     # 하나생명: 발행사가 기본자본형으로 처리(2026-10-12). 보완자본형으로 되돌리면 0
     ("KR0032", "tier2", "tier1", 0.0, 334.7),     # 농협손해
 ])
 def test_registry_type_is_load_bearing(records, ledger, registry, code, frm, to, before, after):
@@ -241,6 +245,16 @@ def test_removing_a_registry_entry_changes_the_number(records, ledger, registry)
     assert _t1(records, ledger, registry, "KR0073")["pct"] == 70.1
 
 
+def test_kyobo_2024_security_is_tier1_and_load_bearing_for_the_strict_leg(records, ledger, registry):
+    """교보 2024-11 은 발행사 처리대로 기본자본형: 기본자본형 신규 5,983 / SCR x 10% = 56.8%. 결속은 기발행 70.1 이라
+    소진율은 그대로지만 이 한 줄이 바뀌면 신규 쪽 숫자가 바뀐다(분류가 숫자를 움직인다)."""
+    t1 = _t1(records, ledger, registry, "KR0073")
+    assert t1["pct"] == 70.1 and t1["binding_leg"] == "legacy_15"
+    assert t1["basic_new_eok"] == 5983.01 and t1["basic_new_pct"] == 56.8
+    flipped = _t1(records, ledger, _flip(registry, "KR0073", "tier1", "tier2"), "KR0073")
+    assert flipped["basic_new_pct"] == 0.0 and flipped["pct"] == 70.1
+
+
 def test_unconfirmed_flag_comes_from_registry(records, ledger, registry):
     reg = copy.deepcopy(registry)
     for s in reg["companies"]["KR0083"]["securities"]:
@@ -250,8 +264,9 @@ def test_unconfirmed_flag_comes_from_registry(records, ledger, registry):
 
 
 def test_reclassified_securities_are_confirmed_and_flag_cleared(registry):
-    """2026-10-12 재분류: 이 네 회사의 신규 신종은 보완자본형 확정 - 미확정 표지가 남아 있으면 안 된다."""
-    for code, issue in (("KR0097", "2023-03-31"), ("KR0083", "2023-02-28"), ("KR0104", "2023-01-31"),
+    """2026-10-12 재분류: 이 세 회사의 신규 신종은 보완자본형(발행조건 기준; 발행사 처리는 issuer_check 에 기록) - 미확정 표지가
+    남아 있으면 안 된다. 하나생명 제1회는 발행사 처리대로 기본자본형이라 따로 본다."""
+    for code, issue in (("KR0083", "2023-02-28"), ("KR0104", "2023-01-31"),
                         ("KR1000", "2023-03-16"), ("KR1000", "2024-10-11")):
         hit = [s for s in registry["companies"][code]["securities"] if s.get("issue_date") == issue]
         assert len(hit) == 1, (code, issue)
@@ -260,7 +275,8 @@ def test_reclassified_securities_are_confirmed_and_flag_cleared(registry):
 
 
 def test_issuer_type_only_where_it_differs_and_is_documented(registry):
-    """issuer_type 은 type 과 다를 때만 적는다(forward 기본자본 경로가 이 필드로 갈린다) - 하나생명·교보 둘뿐."""
+    """issuer_type 은 type 과 다를 때만 적는다(forward 기본자본 경로가 이 필드로 갈린다). 2026-10-12 owner 결정으로 type 이
+    발행사 처리를 따르게 되어 지금은 쓰는 증권이 0건이다 - 누가 다시 어긋난 증권을 등재하면 이 시험이 알린다."""
     found = {}
     for code, ent in registry["companies"].items():
         for s in ent["securities"]:
@@ -269,7 +285,61 @@ def test_issuer_type_only_where_it_differs_and_is_documented(registry):
                 assert s["issuer_type"] != s["type"], (code, s["name"])
                 assert s.get("evidence"), (code, s["name"])
                 found.setdefault(code, []).append(s["issue_date"])
-    assert found == {"KR0097": ["2023-03-31"], "KR0073": ["2024-11-12"]}, found
+    assert found == {}, found
+
+
+def _issue_quarter(issue_date: str):
+    if re.fullmatch(r"\d{4}\.\dQ", issue_date):                          # "2026.2Q" 형 표기(채권원장 미등재 신규 건)
+        return issue_date
+    m = re.match(r"(\d{4})-(\d{2})-\d{2}", issue_date)
+    return f"{m.group(1)}.{(int(m.group(2)) - 1) // 3 + 1}Q" if m else None   # "2016-12-29~..." 같은 묶음 표기는 None
+
+
+def test_registry_type_matches_issuer_x_test(registry):
+    """등재부 type 이 증권별 발행사 처리 검정(x2)과 같다: 확인 = tier2 유지, 반증 = tier1, 판정 불가 = 현 분류 유지 + 그렇게 기록.
+    x2 를 다시 돌리지 않고 등재부만 고치거나, 반대로 검정 결과를 바꾸고 등재부를 안 맞추면 여기서 막힌다."""
+    x2 = json.loads((ROOT / "data/_derived/capsec_reinstate_20261012/x2_per_security_x_test.json").read_text(encoding="utf-8"))
+    n = 0
+    for ev in x2["events"]:
+        secs = [s for s in registry["companies"][ev["code"]]["securities"]
+                if s.get("issue_date") and _issue_quarter(s["issue_date"]) == ev["quarter"] and s["type"] != "legacy_tfi"]
+        assert secs, ev["security"]
+        for s in secs:
+            n += 1
+            if ev["verdict"] == "CONFIRMED_T2":
+                assert s["type"] == "tier2" and "보완자본형 확인" in s["issuer_check"], (ev["security"], s["name"])
+            elif ev["verdict"] == "CONTRADICTED_T2":
+                assert s["type"] == "tier1" and "기본자본형 확인" in s["issuer_check"], (ev["security"], s["name"])
+            else:
+                raise AssertionError(("inconclusive events are not allowed in x2 events list", ev["security"]))
+    assert n == 12, n          # 이벤트 11건 = 증권 12건(한화생명 2024.3Q 두 건)
+    # 첫 공시 분기가 발행 분기인 증권 · 발행 분기가 다른 변동과 겹친 증권: 수준 시험 결과를 등재부가 그대로 말한다
+    expect = {("KR0097", "2023-03-31"): ("tier1", "기본자본형 확인"), ("KR1000", "2023-03-16"): ("tier2", "보완자본형 확인"),
+              ("KR0083", "2023-02-28"): ("tier2", "판정 불가"), ("KR0104", "2023-01-31"): ("tier2", "판정 불가"),
+              ("KR1000", "2024-10-11"): ("tier2", "판정 불가")}
+    for (code, issue), (ty, word) in expect.items():
+        hit = [s for s in registry["companies"][code]["securities"] if s.get("issue_date") == issue]
+        assert len(hit) == 1 and hit[0]["type"] == ty and word in hit[0]["issuer_check"], (code, issue)
+    # 어느 tier2 증권이든 issuer_check 가 있어야 한다(근거 없는 보완자본형 금지)
+    bare = [(c, s["name"]) for c, e in registry["companies"].items() for s in e["securities"]
+            if s["type"] == "tier2" and not s.get("issuer_check")]
+    assert not bare, bare
+
+
+def test_x_test_panel_equals_master(records):
+    """x2 의 입력 패널(x1_panel.json)이 지금 마스터와 같다 - 마스터가 바뀌었는데 증빙이 낡은 채 남는 것을 막는다."""
+    panel = json.loads((ROOT / "data/_derived/capsec_reinstate_20261012/x1_panel.json").read_text(encoding="utf-8"))
+    cell = {}
+    for r in records:
+        if r["원보험사코드"] in panel and r["항목번호"] in (6, 13, 49):
+            cell[(r["원보험사코드"], r["공시분기"], r["항목번호"])] = _f(str(r["값"]).replace(",", ""))
+    bad = []
+    for code, qs in panel.items():
+        for q, v in qs.items():
+            for key, no in (("i6", 6), ("i13", 13), ("i49", 49)):
+                if v[key] != cell.get((code, q, no)):
+                    bad.append((code, q, key, v[key], cell.get((code, q, no))))
+    assert not bad, bad[:5]
 
 
 # --------------------------------------------------------------------------- 4. 등재부 위생·census
@@ -298,3 +368,18 @@ def test_every_company_with_post_2023_securities_is_registered(computed_deployed
         if not [s for s in secs if s["type"] in ("tier1", "tier2")]:
             missing.append((code, c["name"], round(t1["securities_eok"] - t1["legacy_eok"], 2)))
     assert not missing, missing
+
+
+def test_tier2_overflow_field_is_the_tier1_overflow_for_all_47(deployed, records):
+    """kics_tier2_utilization.json 의 tier1_overflow_into_tier2_eok(공개 시트 「기본자본 한도초과분의 보완자본 재분류」)는
+    예전 채권원장 추정(발행액 - SCR x 15%, 하나생명 665.7)이 갱신 없이 남아 있었다. 지금은 기본자본 소진율과 같은 출처의
+    한도 초과액(tier1 json 의 tier1_hybrid_overflow_eok)과 47사 전부 같아야 한다. 하나생명은 공시에서 따로 손계산한다."""
+    t1, t2 = deployed
+    a = {r["code"]: r["tier1_hybrid_overflow_eok"] for r in t1["results"]}
+    b = {r["code"]: r["tier1_overflow_into_tier2_eok"] for r in t2["results"]}
+    assert set(a) == set(b) and len(b) == 47
+    assert {c for c in a if a[c] != b[c]} == set(), {c: (a[c], b[c]) for c in a if a[c] != b[c]}
+    q = t1["quarter"]
+    item = {r["항목번호"]: float(str(r["값"]).replace(",", "")) for r in records
+            if r["원보험사코드"] == "KR0097" and r["공시분기"] == q and r["항목번호"] in (6, 14)}
+    assert b["KR0097"] == round(item[6] - item[14] * 0.10, 2) == 1043.6      # 1,799 - 755.4
