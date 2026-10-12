@@ -317,7 +317,6 @@
     let chart = null;
     let capsecChart = null;
     let sensChart = null;
-    let tier1UtilData = [];
     let capsecTimelineData = null; // kics_capital_securities_timeline.json (증권 단위; 없음/실패 → null → 차트 숨김)
     let sensData = []; // 금리 민감도 (kics_rate_sensitivity.json)
     let durGapData = []; // 자산/부채 듀레이션 갭 (kics_duration_gap.json)
@@ -961,13 +960,10 @@
     // ===== 하단 패널: 자본성증권 발행현황(시점별 누적 막대) + 큼직한 셀 2개 =====
     // 2026-10-12 owner: 소진율 도넛·Forward Outlook 을 화면에서 내리고 이 패널로 바꿨다(데이터 파일은 그대로).
 
-    function findUtilRow(rows, companyName) {
-      if (!companyName || !Array.isArray(rows)) return null;
-      let row = rows.find(r => r.company === companyName);
-      if (row) return row;
-      // 부분 매칭 (e.g. "교보생명보험" vs "교보생명")
-      row = rows.find(r => companyName.includes(r.company) || r.company.includes(companyName));
-      return row || null;
+    // 회사 이름(셀렉트 값) → 회사 코드. 코드는 화면에 안 나오고 타임라인 JSON 의 키로만 쓴다.
+    function capsecCompanyCode(name) {
+      const r = allData.find(x => x['원수사명'] === name);
+      return r ? r['원보험사코드'] : null;
     }
 
     // 증권 단위 발행 목록(kics_capital_securities_timeline.json) → 발행연도별 발행액 { years, hybrid, sub }. 없으면 null.
@@ -1036,12 +1032,48 @@
       });
     }
 
-    // 도넛 아래 큼직한 셀 2개 — 신종자본증권 / 후순위채(제목은 공시 표기). 값은 tier1 회사 행의 securities_summary
-    // (as_of, hybrid·subordinated: latest_coupon_pct·latest_issue_date·issued_since_2023_eok·next_call_date·next_call_eok).
-    // tier 객체가 null 이면 셀은 두고 가운데 '—'. securities_summary 가 아예 없는 구판 JSON 이면 영역을 숨긴다(빈 상자 금지).
-    function renderSecuritiesCells(t1) {
+    // 큼직한 셀 2개(신종자본증권 / 후순위채) 값 — 타임라인 JSON 의 증권 단위 목록에서 계산한다.
+    //  최근 발행금리: 잔액이 남은 증권 중 issue_date 가 가장 늦은 증권의 coupon_pct(같은 날 여럿이면 잔액이 큰 쪽)
+    //  총발행액 '23~: issue_date >= 2023-01-01 인 증권의 outstanding_eok 합
+    //  콜 상환 도래일: 잔액 > 0 이고 call_date >= 기준일 인 증권 중 가장 이른 콜일 한 건(같은 날 여럿이면 잔액 합)
+    //  기준일 = 파일 전체 as_of 의 최댓값(분기말). tier 에 잔액이 남은 증권이 없으면 null.
+    function capsecCells(d, code) {
+      const list = d && d.securities && code ? d.securities[code] : null;
+      if (!Array.isArray(list) || !list.length) return { hybrid: null, subordinated: null, as_of: null };
+      let ref = '';
+      Object.keys(d.securities).forEach(k => (d.securities[k] || []).forEach(b => { if (b.as_of && b.as_of > ref) ref = b.as_of; }));
+      const tierOf = (tier) => {
+        const bs = list.filter(b => b.tier === tier && Number(b.outstanding_eok) > 0);
+        if (!bs.length) return null;
+        const dated = bs.filter(b => b.issue_date);
+        let latest = null;
+        dated.forEach(b => {
+          if (!latest || b.issue_date > latest.issue_date ||
+              (b.issue_date === latest.issue_date && Number(b.outstanding_eok) > Number(latest.outstanding_eok))) latest = b;
+        });
+        const since = dated.filter(b => b.issue_date >= '2023-01-01').reduce((a, b) => a + Number(b.outstanding_eok), 0);
+        const calls = bs.filter(b => b.call_date && b.call_date >= ref);
+        let nextDate = null, nextEok = null;
+        if (calls.length) {
+          nextDate = calls.map(b => b.call_date).sort()[0];
+          nextEok = calls.filter(b => b.call_date === nextDate).reduce((a, b) => a + Number(b.outstanding_eok), 0);
+        }
+        const asOfs = bs.map(b => b.as_of).filter(Boolean).sort();
+        return {
+          latest_coupon_pct: latest && latest.coupon_pct != null ? latest.coupon_pct : null,
+          latest_issue_date: latest ? latest.issue_date : null,
+          issued_since_2023_eok: Math.round(since),
+          next_call_date: nextDate, next_call_eok: nextEok == null ? null : Math.round(nextEok),
+          balance_as_of: asOfs.length ? asOfs[0] : null
+        };
+      };
+      return { hybrid: tierOf('hybrid'), subordinated: tierOf('subordinated'), as_of: ref || null };
+    }
+
+    // 큼직한 셀 2개 — 신종자본증권 / 후순위채(제목은 공시 표기). tier 객체가 null 이면 셀은 두고 가운데 '—'.
+    // 타임라인 JSON 이 없으면(sum 이 null) 영역을 숨긴다(빈 상자 금지).
+    function renderSecuritiesCells(sum) {
       const wrap = document.getElementById('capsec-cells');
-      const sum = (t1 && t1.securities_summary) || null;
       if (!sum) { wrap.hidden = true; return; }
       wrap.hidden = false;
       const esc = (x) => String(x).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -1058,9 +1090,8 @@
           : '—';
         const tip = [];
         if (t.latest_issue_date) tip.push('최근 발행일 ' + esc(t.latest_issue_date));
-        const asOf = t.balance_as_of || sum.as_of;   // 그 증권 잔액의 가장 오래된 기준일(없으면 요약 기준일)
+        const asOf = t.balance_as_of || sum.as_of;   // 그 증권 잔액의 가장 오래된 기준일(없으면 파일 기준일)
         if (asOf) tip.push(esc(asOf) + ' 기준');
-        if (t.next_call_estimated === true && t.next_call_date) tip.push('콜일 추정');
         const hid = 'help-capsec-sum-' + idx;
         const help = tip.length
           ? `<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="${title} 기준" aria-describedby="${hid}">?</button><span class="iq-help-pop" role="tooltip" id="${hid}">${tip.join(' · ')}</span></span>`
@@ -1086,9 +1117,9 @@
         return;
       }
       placeholder.style.display = 'none';
-      const t1 = findUtilRow(tier1UtilData, company);
-      renderCapsecChart(capsecSeries(capsecTimelineData, t1 && t1.code));
-      renderSecuritiesCells(t1);
+      const code = capsecCompanyCode(company);
+      renderCapsecChart(capsecSeries(capsecTimelineData, code));
+      renderSecuritiesCells(capsecTimelineData && code ? capsecCells(capsecTimelineData, code) : null);
     }
 
     // ===== 금리 민감도 패널 (시장금리 평행이동 충격) =====
@@ -1535,15 +1566,7 @@
     // (147KB = 파일의 70%). 페이지가 어차피 kics_disclosure.json을 fetch하므로 file://
     // 로는 원래부터 동작하지 않았고, 인라인은 이득 없이 diff·캐시만 망가뜨렸다.
     // 실패 시 빈 배열 유지 → 패널은 placeholder 표시 (민감도 로더와 동일 패턴).
-    fetch('kics_tier1_utilization.json')
-      .then(r => r.json())
-      .then(d => {
-        tier1UtilData = Array.isArray(d && d.results) ? d.results : [];
-        updateCapsecPanel(); // 회사 선택 이후 도착한 경우 1회 재렌더
-      })
-      .catch(() => {});
-
-    // 시점별 발행현황(누적 막대 원천). 없거나 실패하면 차트 영역만 숨는다.
+    // 발행현황(누적 막대 + 큼직한 셀 2개의 원천, 증권 단위). 없거나 실패하면 이 패널의 차트·셀만 숨는다.
     fetch('kics_capital_securities_timeline.json')
       .then(r => r.ok ? r.json() : null)
       .then(d => {
