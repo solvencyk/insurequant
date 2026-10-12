@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1150Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -40,3 +40,4 @@ owner 지시(2026-10-12 채팅): K-ICS 화면의 소진율 도넛 밑 주석을 
 - 필드 명세 위치, 47사 판정 요약(null 회사 수), 한화생명 검산 결과, 시트 영향, 게이트 결과, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 ad9dfb6): kics_tier1/tier2_utilization.json 의 47사 행에 securities_summary(한화생명 검산 일치; 신종 null 30곳, 후순위채 null 23곳; 추가 필드 next_call_estimated·balance_as_of — 22사 잔액 기준일 2025-12-31). 필드 명세는 docs/changelog_publishing.md 맨 위. xlsx 시트에는 싣지 않음.

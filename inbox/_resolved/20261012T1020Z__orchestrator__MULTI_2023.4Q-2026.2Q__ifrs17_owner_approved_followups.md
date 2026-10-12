@@ -3,7 +3,7 @@ from: orchestrator
 to: parser
 lane: ifrs17
 created: 20261012T1020Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2023.4Q-2026.2Q
@@ -29,3 +29,4 @@ owner 는 2026-10-12 채팅에서 `TODO.md` 「owner 결정 대기」 ①~㉕ �
 - 항목별 결과(고친 칸 수·보류 사유), 등재 필요 목록, HEAD 키 대조 증빙 경로, 게이트 전후 비교, 커밋 해시. `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 3bf1690·024d7ba). 재보사 인쇄된 0 7칸 복원(PL_breakdown 13,794->13,801행, PL_YTD_COLLAPSE_TO_ZERO 0), 퍼시픽 2023.4Q CSM 항목 4 비고(영업양수 1,069억 포함), 처브 중간분기 BS 항목 20·ILP 14·15 특별계정 포함 통일(포트폴리오 검증기 RED 7->2), 분할표 CSM_amortization 2025.4Q 18칸(AIA·처브·메트라이프·BNP카디프 y9·y10, 한화생명 연결->별도), AIG 2024.4Q·스위스리 2026.1Q·예별 2025.4Q 원문 재확인(데이터 변경 없음). HEAD 키 대조 삭제 0. 남은 것: 등재 필요 2건 — KR0029 2024.4Q 포트폴리오 검증기 R3 10배 규칙(등재부 읽는 쪽 없음 → 룰 변경), KR1102 2026.1Q R2_CENSUS(인쇄 합계가 Indirect-Par 행 제외; 파생 적재 vs 등재 owner 결정). xlsx 시트(17BS·CSM상각·보험계약부채·손익분해PL) 동기화는 publishing 몫.

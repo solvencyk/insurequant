@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1110Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: MULTI
@@ -25,3 +25,4 @@ owner 가 공유 버튼 기록(시트 `shares`)을 시험했는데 라이브(`ma
 - 브랜치·해시·파일 3개·테스트 결과·owner 폰 배포 한 줄 명령(`cd ~/insurequant && git fetch origin && git checkout -B deploy/design-20261012 origin/deploy/design-20261012 && bash scripts/android_push_and_deploy.sh --from-origin --branch deploy/design-20261012`).
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12): 브랜치 deploy/design-20261012(origin 에 push 됨, HEAD df7304a — 에이전트 커밋 cf0ae2d 에 --no-verify 기록을 덧붙여 오케스트레이터가 재작성) — theme.js·privacy.html·compare.html 3파일만(origin/main 대비 +48/-10). 시험 4종 통과. 폰 배포 명령은 작업 브랜치를 먼저 체크아웃해 스크립트를 가져온 뒤 --branch deploy/design-20261012 (브랜치가 slim 이라 scripts/ 없음).

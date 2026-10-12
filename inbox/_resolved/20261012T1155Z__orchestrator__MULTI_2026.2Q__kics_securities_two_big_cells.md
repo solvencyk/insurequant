@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T1155Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -30,3 +30,4 @@ owner 지시(2026-10-12 채팅): 「지금 소진율 도넛 밑에 주석으로 
 - 바뀐 줄·확인한 회사·실제 값 점검 여부(필드 커밋 전후)·시험 결과·커밋 해시. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 e2c72cd, 티켓 1220Z 와 함께): 신종자본증권·후순위채 큼직한 셀 2개(최근 발행금리·총발행액 '23~·가장 가까운 콜 한 건, 값 없으면 —)를 securities_summary 필드로 구현. 한화생명 신종 6.30%·30,819억 실제 값 점검, 삼성생명·스위스리·교보라이프플래닛은 null → —.

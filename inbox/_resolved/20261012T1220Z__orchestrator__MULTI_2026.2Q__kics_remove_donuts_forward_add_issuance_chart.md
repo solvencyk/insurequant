@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T1220Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -30,3 +30,4 @@ owner 결정(2026-10-12 채팅, 이 티켓이 우선): 신종자본증권이 기
 - 제거한 영역·바뀐 줄, 새 차트·셀 확인 회사, 실제 값 점검 여부, 시험 결과, 커밋 해시. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 e2c72cd): K-ICS.html 소진율 도넛·자본비율 전망 영역과 칩·fetch·CSS 제거, 자리에 「자본성증권 발행현황」 시점별 누적 막대(아래 신종자본증권·위 후순위채)와 셀 2개. download-survey.js 에서 기본자본소진율·보완자본소진율·자본비율전망 3종을 주석 처리(되돌리기 가능)하고 report-widget.js 목록에서도 제외, 새 시트 보험금예실차비율 추가. 한화생명·메리츠·현대해상(후순위채만)·스위스리·삼성생명·교보라이프플래닛 1280/375px·다크 확인. 남은 것: 누적 막대 원천 kics_capital_securities_timeline.json 은 publishing(1210Z)이 만드는 중 — 도착하면 capsecSeries 를 명세에 맞추고 실제 값 점검, test_deploy_assets 2건 실패는 그 파일 대기.

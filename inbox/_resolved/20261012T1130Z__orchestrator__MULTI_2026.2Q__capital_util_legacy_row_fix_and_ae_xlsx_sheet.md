@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1130Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -29,3 +29,4 @@ owner 가 소진율 도넛·Forward Outlook 을 화면에서 내리기로 했다
 - 메리츠·흥국생명 전→후, 다른 4사 값 변화 목록, 새 시트 행 수·시트 바이트 불변 증명, 시트 이름이 나열된 위치(designer 용), 게이트 결과, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+부분 처리(2026-10-12): 항목 3(예실차 xlsx 시트 신설) 완료 — 커밋 0397ce4, 시트 「보험금예실차비율」 162행×13열, public_exports 포함, 나머지 17개 시트 값 불변. 항목 1·2(메리츠·흥국생명 기발행 후순위 차감 수정)는 owner 가 소진율 도넛을 화면에서 내리기로 해 보류(재개 시 이 티켓 참조).

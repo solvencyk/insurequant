@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T1100Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -31,3 +31,4 @@ owner 지시(2026-10-12 채팅): 자본성증권 인정한도 소진율을 규�
 - 바뀐 곳(줄)·확인한 회사·시험 결과·커밋 해시. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 후 대체됨(2026-10-12, 커밋 dfd899e): K-ICS 소진율 라벨·표시 규칙을 규정 표기대로 구현했으나, owner 가 같은 날 도넛 자체를 화면에서 내리기로 결정(티켓 1220Z)해 화면에는 남지 않는다.
