@@ -278,14 +278,13 @@ def test_kics_panel_data_is_external():
               if f"window.{n} =" in html]
     assert not inline, f"panel data inlined back into K-ICS.html: {inline}"
 
-    # 2026-10-12: the utilization donuts and the forward outlook left the screen, and the utilization files
-    # (tier1/tier2/forward) are no longer public. The issuance chart and the two big cells are both computed
-    # client-side from the per-bond timeline file, so that is the only capital-securities JSON the page fetches.
-    for name in ("kics_capital_securities_timeline.json",):
+    # 2026-10-12 (reinstated the same day): the utilization donuts and the forward outlook are back on the
+    # screen, so tier1/tier2/forward are required fetches again. The issuance chart and the two big cells
+    # are computed client-side from the per-bond timeline file, so that is a fourth required fetch.
+    for name in ("kics_tier1_utilization.json", "kics_tier2_utilization.json",
+                 "kics_forward_capital.json", "kics_capital_securities_timeline.json"):
         assert f"fetch('{name}')" in html, f"K-ICS.html no longer fetches {name}"
         assert (REPO / name).exists(), f"missing deploy asset {name}"
-    for name in ("kics_tier1_utilization.json", "kics_tier2_utilization.json", "kics_forward_capital.json"):
-        assert f"fetch('{name}')" not in html, f"K-ICS.html fetches {name} again (utilization/forward are not public)"
 
 
 def test_capsec_provenance_source_id_matches_lineage():

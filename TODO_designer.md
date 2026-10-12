@@ -1,10 +1,12 @@
 # Insurequant Designer TODO (Stage 5)
 
-> 갱신 2026-10-11 · 프롬프트 `docs/agents/claude-agent-designer.md` · 이력 `docs/changelog_designer.md`
+> 갱신 2026-10-12 · 프롬프트 `docs/agents/claude-agent-designer.md` · 이력 `docs/changelog_designer.md`
 > 2026-10-07 정리 전 전문(BS-TACCOUNT·DESIGN-V2·MOB 블록 포함)은 `docs/todo_archive_designer.md` 맨 위에 있다. designer 는 push 하지 않는다.
 
 ## Status (최신 3개)
 
+- **2026-10-12 오후 K-ICS 소진율 도넛·Forward Outlook 복원 완료(K-ICS.html·download-survey.js·report-widget.js·tests 4종, 커밋·미배포)** — 순서: 추이 -> 소진율 도넛 -> 자본성증권 발행현황(막대+셀 2개, 내용·계산 그대로) -> 금리 민감도 -> 듀레이션 -> Forward Outlook, 목차 칩 6개, 다운로드·오류 제보 시트 3개 복원, `LIVE_ARTIFACT_READERS` 3개 재선언(같은 커밋). 새 필드(`baseline_basis_flag`·`basic_ratio_by_type_pct`·`basic_ratio_if_tier2_type_pct`)는 전망 툴팁에만.
+  한화생명·메리츠·DB손해·하나손해·하나생명·교보·코리안리·스위스리·교보라이프플래닛·동양 x 1280/375/다크 + 구판 시뮬레이션 32회, JSON 대조 불일치 0·콘솔 0·넘침 0·죽은 칩 0, 시험 4종 통과. 검증 `scripts/shot_kics_util.py`. 남은 것: 설계 프롬프트 §1 표 K-ICS 행 문구(「도넛·forward 내림」) 갱신, 배포는 owner GO.
 - **2026-10-12 K-ICS 소진율 도넛·Forward Outlook 제거 → 자본성증권 발행현황(시점별 누적 막대) + 큼직한 셀 2개 완료(K-ICS.html·download-survey.js·report-widget.js·tests/test_deploy_assets.py, 커밋·미배포)** — 도넛·자본비율 전망 패널·목차 칩·fetch(`kics_tier2_utilization.json`·`kics_forward_capital.json`) 제거, 새 패널 `#sec-capsec`(막대 아래 신종자본증권·위 후순위채, 아래 셀 2개는 tier1 행 `securities_summary`). 다운로드 목록·오류 제보 대상에서 소진율 2종·자본비율전망 시트 일시 제외(주석에 되돌리기 방법).
   막대 = 발행연도별 발행액(증권 단위 `kics_capital_securities_timeline.json` 의 `face_eok` 합, 신종자본증권 아래·후순위채 위로 쌓기, 발행 없는 해 0, 파일/회사 자료 없으면 차트만 숨김). 한화생명·메리츠·현대해상·스위스리 실제 파일로 1280/375px 확인(한화생명 2024 신종 11,000·2025 19,819 = 총 30,819억 일치). 남은 것: 없음(배포는 owner GO).
 - **2026-10-12 IFRS17 보험금 예실차비율을 별도 섹션 9로 분리 + 묶음 막대 완료(IFRS17.html, 커밋·미배포)** — 섹션 8 에서 예실차 표를 빼고 새 패널 `#sec-ae`(9) 신설, 기존 9 판매채널별 유지율은 10 으로. 제목 옆 ? 팝오버만, 공시시점 select(그 회사 ae 분기), 가로축 기준연도·묶음 안 예상손해율/실제손해율/보험금 예실차비율, 값 라벨·툴팁·축 전부 △, 0 선 강조, 구분 둘(코리안리)은 차트 2개, 아래 표.

@@ -414,9 +414,11 @@ LIVE_ARTIFACT_READERS = {
     "dividend.json": ["validate_data_contract"],
     "kics_disclosure.json": ["validate_kics_disclosure", "validate_kics_rate_sensitivity"],
     "kics_rate_sensitivity.json": ["validate_kics_rate_sensitivity"],
-    # 2026-10-12: kics_forward_capital.json · kics_tier1_utilization.json · kics_tier2_utilization.json 선언을 지웠다 - 이 셋은 비공개
-    # 시트가 돼 K-ICS.html 이 더는 fetch 하지 않고(origin/main 도 0건) 배포 스크립트 PRIVATE_PATHS 가 main 에서 git rm 한다.
-    # 화면에서 빠졌으므로 ghost 검사가 선언 삭제를 요구한다. 파일 자체는 검사기가 계속 읽는다(DEPLOYED_VS_UPSTREAM 의 tier 짝 포함).
+    # 2026-10-12 오후: 소진율 도넛·Forward Outlook 이 화면에 되살아나 K-ICS.html 이 이 셋을 다시 fetch 한다(designer 복원 커밋과 같은 단위).
+    # 낮에 선언을 지웠던 것(비공개 시트 + ghost 검사)의 반대 — 비공개 목록은 publishing 이 비웠다(ef62969·2729a53).
+    "kics_forward_capital.json": ["validate_data_contract"],
+    "kics_tier1_utilization.json": ["validate_live_artifacts"],
+    "kics_tier2_utilization.json": ["validate_live_artifacts"],
     # 2026-09-22 배포(main 22e2471)로 화면에 붙은 뒤 이 테스트가 바로 잡아냈다 — 선언이 없으면
     # 여기서 막힌다는 설계가 그대로 작동했다. 검사는 census + 파일 안 산수 + kics_disclosure
     # 항목41~46 교차대조 3축(`validate_live_artifacts.check_kics_duration_gap`).

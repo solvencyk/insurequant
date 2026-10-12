@@ -7,6 +7,16 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 (오후) -- K-ICS 소진율 도넛·Forward Outlook 복원 (발행현황 패널은 그대로)
+
+티켓 `inbox/designer/20261012T2035Z__orchestrator__MULTI_2026.2Q__kics_restore_utilization_donuts_and_forward.md`(공유, 고치지 않음). 데이터는 publishing 이 먼저 커밋(`ef62969`·`2729a53`·`35740b2`·`8037840`: 새 `kics_tier1_utilization.json`·`kics_tier2_utilization.json`·`kics_forward_capital.json`, 비공개 목록 비움).
+- `K-ICS.html`: 제거 커밋 `e2c72cd` 의 반대로 복원. 순서 = 지급여력비율 추이 -> **자본성증권 소진율(`#donut-section-panel`)** -> 자본성증권 발행현황(`#sec-capsec`, 막대+큼직한 셀 2개 **내용·계산(타임라인 JSON 클라이언트 계산) 그대로 무이동**) -> 금리 민감도 -> 자산·부채 듀레이션 -> **자본비율 Forward Outlook(`#sec-forward`)**. 목차 칩 2개 복원(6개), 도넛·전망 CSS·메타 설명(「5년 전망」)·`updateDonutPanel`/`updateForwardPanel`/`renderDonut`/`findUtilRow`/`findForwardRow`/`forwardEmptyText`·fetch 3개·`refreshBottomPanels` 복원. `dfd899e` 라벨 작업(메모 §5: 공시·규정 표기 그대로, `0%`·`발행 없음`·`—`·`100%+`, 설명은 `?` 팝오버만, 음수 △)은 복원본에 그대로 들어 있다.
+- 새 필드: 전망 차트 툴팁에만 반영 — 기본자본비율 점에 `baseline_basis_flag` 회사(하나생명·교보)는 `신종 분류 기준: x.xx%`(`basic_ratio_by_type_pct`), 미확정 증권이 있는 회사는 `미확정 신종이 보완자본형이면: x.xx%`(`basic_ratio_if_tier2_type_pct`). 소진율 쪽은 기존 처리(`type_unconfirmed`·`tier1_pct_if_unconfirmed_tier2`·`tier1_excluded_tier2_type_eok`·`no_capital_securities`·`rule`/`reason`)가 새 JSON 에서 그대로 동작. 화면 문장 추가 없음. 필드 없는 구판 JSON 이면 툴팁 줄이 안 붙는다(시뮬레이션 확인).
+- `download-survey.js`: 3시트(T1·T2·FWD) 주석 해제·되돌리기 안내 삭제. `report-widget.js` `SHEETS` 에 같은 3개 복원. `tests/test_deploy_assets.py`: tier1·tier2·전망·타임라인 4개 모두 필수 fetch + 파일 존재(「fetch 금지」 단정 삭제, 느슨하게 풀지 않음). `tests/test_share_screenshot.py`: K-ICS 섹션 수 4->6. `tests/test_push_gate_wiring.py`: `LIVE_ARTIFACT_READERS` 에 루트 JSON 3개 선언 복원(forward=`validate_data_contract`, tier1·tier2=`validate_live_artifacts`) — HTML fetch 복원과 같은 커밋, 타임라인 선언은 유지.
+- 검증 `scripts/shot_kics_util.py`(헤드리스 Edge, `?iq_internal=1`): 한화생명·메리츠·DB손해·하나손해·하나생명·교보·코리안리·스위스리·교보라이프플래닛·동양 x 1280px·375px·다크 + 구판 JSON 시뮬레이션(한화생명·하나생명) = 32회, 도넛 데이터셋·aria 값과 전망 선 값을 JSON 과 직접 대조(불일치 0), 콘솔 오류 0, 가로 넘침 0, 죽은 칩 0, 패널 사이 간격 16px 균일, 발행현황 막대·셀 유지. 예: 한화생명 기본자본 0%·보완자본 70.5%(71%), DB손해 기본자본 151.6%(가운데 `100%+`, 도넛 호는 100 으로 캡, 숫자 줄 17,452억원/11,510억원), 동양 보완자본 105.0%(`100%+`), 스위스리 0%·발행 없음, 교보라이프플래닛 보완자본 `—`, 하나생명 2030 기본자본비율 3.93%(툴팁 분류 기준 13.15%).
+- 시험: `test_deploy_assets` 12 passed, `test_push_gate_wiring` 66 passed 1 skipped, `test_prepush_scope` 65 passed, `test_share_screenshot` 7 passed 1 skipped, `scripts/check_share_screenshot.py` OK(K-ICS 섹션 「자본비율 전망」 이미지 포함).
+- 남은 것: `docs/agents/claude-agent-designer.md` §1 표의 K-ICS 행이 아직 「도넛·forward 는 화면에서 내림」으로 적혀 있다(이 티켓의 쓰기 허용 파일 밖이라 안 고침).
+
 ## 2026-10-12 -- K-ICS 소진율 도넛·Forward Outlook 제거, 자본성증권 발행현황(시점별 누적 막대) + 큼직한 셀 2개
 
 티켓 `inbox/designer/20261012T1100Z`(라벨, 커밋 dfd899e)·`20261012T1155Z`(셀 2개)·`20261012T1220Z`(도넛·전망 제거 + 누적 막대 + 다운로드 목록 제외; 앞 두 티켓과 충돌하는 부분은 이 티켓이 우선). 공유 티켓이라 고치지 않았다.
