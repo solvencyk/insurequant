@@ -1,0 +1,14 @@
+(a) 보험손익(dual): item1 vs [bare] i2+i13+i14 and [adj] i2+i13+i14+i15-i16 (백만원; tol max(0.1%,200))
+   DB손보 2023.1Q: item1=456176.4 bare=484003.0 (d -27826.6) adj=456176.3 (d 0.2) tol=456.2 -> CLOSES
+   DB손보 2023.2Q: item1=902755.3 bare=957125.0 (d -54369.7) adj=902755.4 (d -0.1) tol=902.8 -> CLOSES
+   DB손보 2023.3Q: item1=1307758.6 bare=1387800.0 (d -80041.4) adj=1307758.3 (d 0.3) tol=1307.8 -> CLOSES
+   메리츠 2023.3Q: item1=1233704.6 bare=1473686.0 (d -239981.4) adj=1233704.3 (d 0.3) tol=1233.7 -> CLOSES
+(b) 세전이익 = 영업이익 + 영업외손익
+   한화생명 2023.2Q: item22=625430.804 item20+21=625430.804 diff -0.000 tol 625.4 -> CLOSES
+   한화손보 2023.2Q: item22=259658.676 item20+21=259658.676 diff 0.000 tol 259.7 -> CLOSES
+(c) DB손보 CSM상각: PL i4 (원수CSM상각, 백만원 -> 억) vs waterfall |i5| (억)
+   2023.1Q: PL 3118.50억 waterfall 3118.50억 residual 0.00억 rel 0.00000 -> CLOSES
+   2023.2Q: PL 6193.43억 waterfall 6193.40억 residual 0.03억 rel 0.00000 -> CLOSES
+   2023.3Q: PL 9357.89억 waterfall 9357.90억 residual -0.01억 rel 0.00000 -> CLOSES
+(d) 농협생명 FY2023: opening CSM (item 1) equal across 2023.1Q-4Q: [42505.2, 42505.2, 42505.2, 42505.2]
+    and 2024.1Q opening (= 2023.4Q closing): (44773.9, 44773.9)

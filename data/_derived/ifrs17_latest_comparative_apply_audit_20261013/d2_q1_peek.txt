@@ -1,0 +1,4 @@
+== KR0005 []
+== KR0083 ['C:/Users/sangwook.cho/Desktop/insurequant/data/dart/FY2023_Q1/raw\\KR0083_푸본현대생명보험\\20230515002882.xml']
+ table 68 line 3853
+    'Ⅲ. 영업이익': [23735.0, -271154.0, 243867.0]

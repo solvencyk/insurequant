@@ -1,0 +1,7 @@
+gold-conflict held rows: 59
+applied cells inside a gold-conflict block (same master/company/quarter and listed items): 0
+same master+company+quarter overlap (any item): [('PL_breakdown', 'KR0002', '2023.1Q'), ('PL_breakdown', 'KR0002', '2023.2Q'), ('PL_breakdown', 'KR0003', '2023.2Q'), ('PL_breakdown', 'KR0005', '2023.2Q')]
+   held: PL_breakdown KR0002 2023.1Q items=n_diff=2 reason=An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. The ticket 
+   held: PL_breakdown KR0002 2023.2Q items=n_diff=3 reason=An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. The ticket 
+   held: PL_breakdown KR0003 2023.2Q items=n_diff=9 reason=An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. The ticket 
+   held: PL_breakdown KR0005 2023.2Q items=n_diff=8 reason=An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. The ticket 

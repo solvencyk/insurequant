@@ -1,0 +1,17 @@
+kics_basic/v: 658 leaves checked, 0 differ
+kics_basic/v_pre: 658 leaves checked, 0 differ
+csm_closing/v: 658 leaves checked, 0 differ
+nb_multiple/v: 658 leaves checked, 0 differ
+ins_profit/v: 658 leaves checked, 0 differ
+net_income/v: 658 leaves checked, 0 differ
+kics_avail/v: 658 leaves checked, 0 differ
+kics_avail/v_pre: 658 leaves checked, 0 differ
+nb_csm/v: 658 leaves checked, 0 differ
+inv_profit/v: 658 leaves checked, 0 differ
+equity/v: 658 leaves checked, 0 differ
+assets/v: 658 leaves checked, 0 differ
+TOTAL differing leaves: 0
+  roe KR0004 2024.2Q: panel None vs mine 26.1
+  roe KR0004 2024.3Q: panel None vs mine 43.2
+  roe KR0004 2024.4Q: panel None vs mine -442.4
+roe/v: 658 leaves, 3 differ (tolerance 0.1pt; clip/negative-equity rules not replicated)

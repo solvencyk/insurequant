@@ -1,0 +1,3 @@
+KR0072 2023.4Q item31: matched table 69 anchor 7 ; tops=[(65, 7, 7, 1.0), (69, 7, 7, 1e-06), (352, 7, 7, 1.0)]
+KR0083 2024.4Q item4: matched table 377 anchor 7 ; tops=[(85, 7, 7, 1.0), (90, 7, 7, 1.0), (377, 7, 7, 1e-06)]
+cells needing a second look (not top table or anchor<3): 2

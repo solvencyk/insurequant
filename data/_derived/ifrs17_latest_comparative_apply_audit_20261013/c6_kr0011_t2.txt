@@ -1,0 +1,45 @@
+FY2024_Q1 candidate section [160, 164, 168, 172] calibration score 8/13
+FY2024_Q1 candidate section [551, 555, 559, 563] calibration score 13/13
+2023.1Q item2: mine(prior)=367787.0 master=367787.0 | cur-calibration mine=463425.0 master(2024.1Q)=463425.0 OK APPLIED new=367787.0 -> OK
+2023.1Q item3: mine(prior)=365347.0 master=365347.0 | cur-calibration mine=528805.0 master(2024.1Q)=528805.0 OK APPLIED new=365347.0 -> OK
+2023.1Q item4: mine(prior)=311850.0 master=311850.0 | cur-calibration mine=322368.0 master(2024.1Q)=322368.0 OK APPLIED new=311850.0 -> OK
+2023.1Q item5: mine(prior)=29392.0 master=29392.0 | cur-calibration mine=21095.0 master(2024.1Q)=21095.0 OK APPLIED new=29392.0 -> OK
+2023.1Q item6: mine(prior)=7020.0 master=7020.0 | cur-calibration mine=135.0 master(2024.1Q)=135.0 OK APPLIED new=7020.0 -> OK
+2023.1Q item7: mine(prior)=17085.0 master=17085.0 | cur-calibration mine=185207.0 master(2024.1Q)=185207.0 OK APPLIED new=17085.0 -> OK
+2023.1Q item8: mine(prior)=2440.0 master=2440.0 | cur-calibration mine=-65380.0 master(2024.1Q)=-65380.0 OK APPLIED new=2440.0 -> OK
+2023.1Q item9: mine(prior)=-931.0 master=-931.0 | cur-calibration mine=4579.0 master(2024.1Q)=4579.0 OK APPLIED new=-931.0 -> OK
+2023.1Q item10: mine(prior)=-552.0 master=-552.0 | cur-calibration mine=-922.0 master(2024.1Q)=-922.0 OK APPLIED new=-552.0 -> OK
+2023.1Q item11: mine(prior)=-11178.0 master=-11178.0 | cur-calibration mine=-14427.0 master(2024.1Q)=-14427.0 OK APPLIED new=-11178.0 -> OK
+2023.1Q item12: mine(prior)=15101.0 master=15101.0 | cur-calibration mine=-54610.0 master(2024.1Q)=-54610.0 OK APPLIED new=15101.0 -> OK
+2023.1Q item13: mine(prior)=98945.0 master=98945.0 | cur-calibration mine=98554.0 master(2024.1Q)=98554.0 OK APPLIED new=98945.0 -> OK
+2023.1Q item14: mine(prior)=17271.0 master=17271.0 | cur-calibration mine=23322.0 master(2024.1Q)=23322.0 OK APPLIED new=17271.0 -> OK
+FY2024_Q2 candidate section [203, 207, 211, 215] calibration score 12/13
+FY2024_Q2 candidate section [597, 601, 605, 609] calibration score 13/13
+2023.2Q item2: mine(prior)=737398.0 master=737398.0 | cur-calibration mine=876668.0 master(2024.2Q)=876668.0 OK APPLIED new=737398.0 -> OK
+2023.2Q item3: mine(prior)=748962.0 master=748962.0 | cur-calibration mine=951806.0 master(2024.2Q)=951806.0 OK APPLIED new=748962.0 -> OK
+2023.2Q item4: mine(prior)=619343.0 master=619343.0 | cur-calibration mine=653946.0 master(2024.2Q)=653946.0 OK APPLIED new=619343.0 -> OK
+2023.2Q item5: mine(prior)=61537.0 master=61537.0 | cur-calibration mine=57614.0 master(2024.2Q)=57614.0 OK APPLIED new=61537.0 -> OK
+2023.2Q item6: mine(prior)=54133.0 master=54133.0 | cur-calibration mine=44183.0 master(2024.2Q)=44183.0 OK APPLIED new=54133.0 -> OK
+2023.2Q item7: mine(prior)=13949.0 master=13949.0 | cur-calibration mine=196063.0 master(2024.2Q)=196063.0 OK APPLIED new=13949.0 -> OK
+2023.2Q item8: mine(prior)=-11564.0 master=-11564.0 | cur-calibration mine=-75138.0 master(2024.2Q)=-75138.0 OK APPLIED new=-11564.0 -> OK
+2023.2Q item9: mine(prior)=635.0 master=635.0 | cur-calibration mine=9313.0 master(2024.2Q)=9313.0 OK APPLIED new=635.0 -> OK
+2023.2Q item10: mine(prior)=-1130.0 master=-1130.0 | cur-calibration mine=-1902.0 master(2024.2Q)=-1902.0 OK APPLIED new=-1130.0 -> OK
+2023.2Q item11: mine(prior)=-33487.0 master=-33487.0 | cur-calibration mine=-33427.0 master(2024.2Q)=-33427.0 OK APPLIED new=-33487.0 -> OK
+2023.2Q item12: mine(prior)=22418.0 master=22418.0 | cur-calibration mine=-49122.0 master(2024.2Q)=-49122.0 OK APPLIED new=22418.0 -> OK
+2023.2Q item13: mine(prior)=193628.0 master=193628.0 | cur-calibration mine=172089.0 master(2024.2Q)=172089.0 OK  -> OK
+2023.2Q item14: mine(prior)=26099.0 master=26099.0 | cur-calibration mine=100374.0 master(2024.2Q)=100374.0 OK  -> OK
+FY2024_Q3 candidate section [172, 176, 180, 184] calibration score 12/13
+FY2024_Q3 candidate section [566, 570, 574, 578] calibration score 13/13
+2023.3Q item2: mine(prior)=1121594.0 master=1121594.0 | cur-calibration mine=1255792.0 master(2024.3Q)=1255792.0 OK APPLIED new=1121594.0 -> OK
+2023.3Q item3: mine(prior)=1139841.0 master=1139841.0 | cur-calibration mine=1335455.0 master(2024.3Q)=1335455.0 OK APPLIED new=1139841.0 -> OK
+2023.3Q item4: mine(prior)=935789.0 master=935789.0 | cur-calibration mine=990341.0 master(2024.3Q)=990341.0 OK APPLIED new=935789.0 -> OK
+2023.3Q item5: mine(prior)=87760.0 master=87760.0 | cur-calibration mine=98511.0 master(2024.3Q)=98511.0 OK APPLIED new=87760.0 -> OK
+2023.3Q item6: mine(prior)=95410.0 master=95410.0 | cur-calibration mine=40967.0 master(2024.3Q)=40967.0 OK APPLIED new=95410.0 -> OK
+2023.3Q item7: mine(prior)=20882.0 master=20882.0 | cur-calibration mine=205636.0 master(2024.3Q)=205636.0 OK APPLIED new=20882.0 -> OK
+2023.3Q item8: mine(prior)=-18247.0 master=-18247.0 | cur-calibration mine=-79663.0 master(2024.3Q)=-79663.0 OK APPLIED new=-18247.0 -> OK
+2023.3Q item9: mine(prior)=1075.0 master=1075.0 | cur-calibration mine=14462.0 master(2024.3Q)=14462.0 OK APPLIED new=1075.0 -> OK
+2023.3Q item10: mine(prior)=-2039.0 master=-2039.0 | cur-calibration mine=-2865.0 master(2024.3Q)=-2865.0 OK APPLIED new=-2039.0 -> OK
+2023.3Q item11: mine(prior)=-43355.0 master=-43355.0 | cur-calibration mine=-47863.0 master(2024.3Q)=-47863.0 OK APPLIED new=-43355.0 -> OK
+2023.3Q item12: mine(prior)=26072.0 master=26072.0 | cur-calibration mine=-43397.0 master(2024.3Q)=-43397.0 OK APPLIED new=26072.0 -> OK
+2023.3Q item13: mine(prior)=289804.0 master=289804.0 | cur-calibration mine=194952.0 master(2024.3Q)=194952.0 OK  -> OK
+2023.3Q item14: mine(prior)=-23598.0 master=-23598.0 | cur-calibration mine=86644.0 master(2024.3Q)=86644.0 OK  -> OK

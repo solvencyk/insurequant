@@ -1,0 +1,19 @@
+===== KR0005 20230814003024 KR0005_흥국화재
+  CELL item1 보험손익: old=103053.0 new=189046.0 | master 2023.1Q item value = 85993.0
+  CELL item19 보험금융손익: old=-88683.0 new=-175805.0 | master 2023.1Q item value = -83304.0
+  CELL item20 영업이익: old=84854.0 new=209429.0 | master 2023.1Q item value = 124575.0
+  CELL item21 영업외손익: old=-232.0 new=-387.0 | master 2023.1Q item value = -155.0
+  CELL item22 세전이익: old=84622.0 new=209042.0 | master 2023.1Q item value = 124420.0
+  CELL item23 법인세: old=17589.0 new=45314.0 | master 2023.1Q item value = 27725.0
+  CELL item24 당기순이익: old=67033.0 new=163728.0 | master 2023.1Q item value = 96695.0
+===== KR0003 20230814002928 KR0003_롯데손해보험
+  CELL item19 보험금융손익: old=-35335.383645 new=-71316.307049 | master 2023.1Q item value = None
+  CELL item18 투자이익: old=84894.676752 new=120875.600156 | master 2023.1Q item value = None
+===== KR0002 20230814001853 KR0002_한화손해보험
+  CELL item21 영업외손익: old=650.950355 new=936.800717 | master 2023.1Q item value = 285.850362
+===== KR0068 20230814002953 KR0068_한화생명
+  CELL item21 영업외손익: old=98854.352757 new=189467.309969 | master 2023.1Q item value = 90612.957212
+===== KR0083 20230814001755 KR0083_푸본현대생명보험
+  CELL item19 보험금융손익: old=-72348.679758 new=-144630.478387 | master 2023.1Q item value = -0.193336
+  CELL item18 투자이익: old=119695.50403 new=191977.302659 | master 2023.1Q item value = 40277.501357
+  CELL item21 영업외손익: old=-134.061855 new=-317.572727 | master 2023.1Q item value = -183.574912

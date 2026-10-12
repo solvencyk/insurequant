@@ -1,0 +1,7 @@
+data/_gold/user_pl_cells.json: old leaves 1245, new leaves 2187; pre-existing leaves changed=0 removed=0; added=942
+    top keys ['_doc', 'set']
+data/_gold/user_csm_cells.json: old leaves 1652, new leaves 1814; pre-existing leaves changed=0 removed=0; added=162
+    top keys ['_doc', 'exclude_companies', 'set']
+held rows mentioning gold/owner conflict: 68
+gold-conflict blocks 67; applied blocks 40; intersection [('PL_breakdown', 'KR0002', '2023.1Q'), ('PL_breakdown', 'KR0002', '2023.2Q'), ('PL_breakdown', 'KR0003', '2023.2Q'), ('PL_breakdown', 'KR0005', '2023.2Q'), ('PL_breakdown', 'KR0008', '2023.1Q')]
+Counter({'후보 미검증(도구 공백)': 107, '비교 컬럼 추출 불가': 84, 'gold 충돌': 59, '현행 유지': 24, '재판정 안 함(이전 라운드)': 7, 'scan': 7, '최신 채택(진짜 재작성 †)': 4, '최신 채택': 3, 'observation': 3, '조건부(동반 블록 필요)': 2, '최신 채택(예외 해소)': 1, '둘 다 불가(현행 유지+목록)': 1, 'NEW-01': 1, 'NEW-02': 1, 'NEW-03': 1, 'NEW-04': 1, 'NEW-05': 1, 'NEW-06': 1, 'NEW-07': 1, 'NEW-08': 1, 'NEW-09': 1})

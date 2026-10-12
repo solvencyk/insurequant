@@ -1,0 +1,10 @@
+PL_breakdown.json: derived-flow rows changed 236; not equal to (값 - prior-quarter 값): 0
+   CSM_waterfall.json KR0001 2023.3Q i6: 값_당분기 103383.0 vs 값-prev 2698.800000000003
+   CSM_waterfall.json KR0001 2023.4Q i1: 값_당분기 103383.0 vs 값-prev 96376.4
+   CSM_waterfall.json KR0008 2023.2Q i1: 값_당분기 122939.8 vs 값-prev 121441.7
+   CSM_waterfall.json KR0008 2023.2Q i6: 값_당분기 125996.5 vs 값-prev 3056.699999999997
+   CSM_waterfall.json KR0008 2023.3Q i1: 값_당분기 125996.5 vs 값-prev 121441.7
+   CSM_waterfall.json KR0008 2023.3Q i6: 값_당분기 132050.8 vs 값-prev 6054.299999999988
+   CSM_waterfall.json KR0008 2023.4Q i1: 값_당분기 132050.8 vs 값-prev 121441.7
+   CSM_waterfall.json KR0104 2023.2Q i1: 값_당분기 45314.9 vs 값-prev 42505.2
+CSM_waterfall.json: derived-flow rows changed 42; not equal to (값 - prior-quarter 값): 8

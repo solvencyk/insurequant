@@ -1,0 +1,54 @@
+KR0051 2024.3Q i1 master=-14000.0: MISMATCH [(4, '보험손익', [0.0, 140.0, 0.0, 79.0, 0.0, 61.0])]
+KR0051 2024.3Q i22 master=-14000.0: p21 '법인세비용차감전순손실' nums=[-13990237354.0, -3872810256.0, -10117427098.0] scale=1e-06 col0 -> MATCH
+KR0051 2024.3Q i24 master=-14000.0: p21 'Ⅳ.당기순손실' nums=[-13990237354.0, -3872810256.0, -10117427098.0] scale=1e-06 col0 -> MATCH
+KR0074 2023.3Q i22 master=418600.0: p4 '법인세비용차감전순이익' nums=[4186.0, 5435.0, -1249.0] scale=100.0 col0 -> MATCH
+KR0074 2025.3Q i22 master=397300.0: p4 '법인세비용차감전순이익' nums=[3973.0, 5312.0, -1339.0] scale=100.0 col0 -> MATCH
+KR0075 2023.1Q i22 master=-6700.0: p4 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-67.0, -67.0, -74.0, -74.0, 7.0] scale=100.0 col0 -> MATCH
+KR0075 2023.2Q i22 master=-4000.0: p5 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-40.0, -101.0, 61.0] scale=100.0 col0 -> MATCH
+KR0075 2023.3Q i22 master=-5900.0: p4 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-59.0, -150.0, 91.0] scale=100.0 col0 -> MATCH
+KR0075 2024.1Q i22 master=-1900.0: p4 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-19.0, -67.0, 48.0] scale=100.0 col0 -> MATCH
+KR0075 2024.2Q i22 master=-4500.0: p5 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-45.0, -40.0, -5.0] scale=100.0 col0 -> MATCH
+KR0075 2024.3Q i22 master=-8700.0: p4 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-87.0, -59.0, -28.0] scale=100.0 col0 -> MATCH
+KR0075 2025.1Q i22 master=-4200.0: p4 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-42.0, -19.0, -23.0] scale=100.0 col0 -> MATCH
+KR0075 2025.2Q i22 master=-6100.0: p5 '법인세비용차감전순이익법인세비용차감전순이익' nums=[-61.0, -45.0, -16.0] scale=100.0 col0 -> MATCH
+KR0076 2024.1Q i22 master=16300.0: p5 '법인세비용차감전순이익' nums=[163.0, 378.0, -215.0] scale=100.0 col0 -> MATCH
+KR0080 2025.1Q i1 master=18300.0: NOROW []
+KR0080 2025.1Q i16 master=13700.0: NOROW []
+KR0080 2025.1Q i22 master=41700.0: NOROW []
+KR0080 2025.1Q i23 master=9700.0: NOROW []
+KR0080 2025.1Q i24 master=32000.0: NOROW []
+KR0080 2025.2Q i1 master=42800.0: NOROW []
+KR0080 2025.2Q i16 master=28300.0: NOROW []
+KR0080 2025.2Q i22 master=100100.0: NOROW []
+KR0080 2025.2Q i23 master=23100.0: NOROW []
+KR0080 2025.2Q i24 master=77000.0: NOROW []
+KR0080 2025.3Q i1 master=26000.0: NOROW []
+KR0080 2026.1Q i1 master=11900.0: NOROW []
+KR0097 2024.2Q i1 master=14600.0: NOROW []
+KR0097 2024.2Q i16 master=6100.0: NOROW []
+KR0097 2024.2Q i22 master=12400.0: NOROW []
+KR0097 2024.2Q i23 master=3200.0: NOROW []
+KR0097 2024.2Q i24 master=9200.0: NOROW []
+KR0097 2026.2Q i22 master=25600.0: p5 '법인세비용차감전순이익' nums=[256.0, 209.0, 47.0] scale=100.0 col0 -> MATCH
+KR1098 2024.2Q i1 master=-20500.0: NOROW []
+KR1098 2024.2Q i16 master=1400.0: NOROW []
+KR1098 2024.2Q i22 master=-21800.0: NOROW []
+KR1098 2024.2Q i23 master=0.0: NOROW []
+KR1098 2024.2Q i24 master=-21800.0: NOROW []
+KR1098 2024.3Q i1 master=-30800.0: NOROW []
+KR1098 2024.3Q i16 master=2100.0: NOROW []
+KR1098 2024.3Q i22 master=-34900.0: NOROW []
+KR1098 2024.3Q i23 master=0.0: NOROW []
+KR1098 2024.3Q i24 master=-34900.0: NOROW []
+KR1098 2025.1Q i22 master=-13715.0: p4 '법인세비용차감전순이익' nums=[-137.15, -115.77, -21.37] scale=100.0 col0 -> MATCH
+KR1098 2025.2Q i22 master=-24800.0: p5 '법인세비용차감전순이익' nums=[-248.0, -218.0, -30.0] scale=100.0 col0 -> MATCH
+KR1098 2025.3Q i22 master=-35200.0: p4 '법인세비용차감전순이익' nums=[-352.0, -349.0, -2.0] scale=100.0 col0 -> MATCH
+KR1098 2026.1Q i22 master=-10300.0: p4 '법인세비용차감전순이익' nums=[-103.0, -137.0, 34.0] scale=100.0 col0 -> MATCH
+KR1098 2026.2Q i22 master=-17500.0: p5 '법인세비용차감전순이익' nums=[-175.0, -248.0, 73.0] scale=100.0 col0 -> MATCH
+KR1104 2023.1Q i16 master=0.0: NOROW []
+KR1104 2023.1Q i22 master=711.0: p5 '법인세비용차감전순이익' nums=[711.0, 531.0, 180.0] scale=1.0 col0 -> MATCH
+KR1104 2023.2Q i22 master=-65.0: p6 '법인세비용차감전순이익' nums=[-65.0, 147.0, -212.0] scale=1.0 col0 -> MATCH
+KR1104 2023.3Q i22 master=595.0: p6 '법인세비용차감전순이익' nums=[1975.0, 595.0, 1380.0] scale=1.0 col1 -> MATCH
+KR1105 2025.1Q i22 master=14600.0: p4 '법인세비용차감전순이익' nums=[146.0, 78.0, 68.0] scale=100.0 col0 -> MATCH
+KR1105 2026.1Q i22 master=-2800.0: p4 '법인세비용차감전순이익' nums=[-28.0, 146.0, -174.0] scale=100.0 col0 -> MATCH
+{'MISMATCH': 1, 'MATCH': 24, 'NOROW': 28}

@@ -1,0 +1,14 @@
+KR0005 item1 보험손익: table67 col1 3m=103053.000000 cum=189046.000000 | old=103053.0 (old==3m: True) Q1master=85993.0 Q1+3m=189046.0 resid=0.0 -> OK
+KR0005 item19 보험금융손익: table67 col2 3m=-89558.000000 cum=-175805.000000 | old=-88683.0 (old==3m: False) Q1master=-83304.0 Q1+3m=-172862.0 resid=-2943.0 -> CHECK
+KR0005 item20 영업이익: table67 col1 3m=84854.000000 cum=209429.000000 | old=84854.0 (old==3m: True) Q1master=124575.0 Q1+3m=209429.0 resid=0.0 -> OK
+KR0005 item21 영업외손익: table67 col1 3m=-232.000000 cum=-387.000000 | old=-232.0 (old==3m: True) Q1master=-155.0 Q1+3m=-387.0 resid=0.0 -> OK
+KR0005 item22 세전이익: table67 col1 3m=84622.000000 cum=209042.000000 | old=84622.0 (old==3m: True) Q1master=124420.0 Q1+3m=209042.0 resid=0.0 -> OK
+KR0005 item23 법인세: table67 col2 3m=17589.000000 cum=45314.000000 | old=17589.0 (old==3m: True) Q1master=27725.0 Q1+3m=45314.0 resid=0.0 -> OK
+KR0005 item24 당기순이익: table67 col1 3m=67033.000000 cum=163728.000000 | old=67033.0 (old==3m: True) Q1master=96695.0 Q1+3m=163728.0 resid=0.0 -> OK
+KR0003 item19 보험금융손익: table106 col2 3m=-35335.383645 cum=-71316.307049 | old=-35335.383645 (old==3m: True) Q1master=None Q1+3m=None resid=None -> OK
+KR0003 item18: no statement column equals new 120875.600156
+KR0002 item21 영업외손익: table512 col2 3m=650.950355 cum=936.800717 | old=650.950355 (old==3m: True) Q1master=285.850362 Q1+3m=936.800717 resid=0.0 -> OK
+KR0068 item21 영업외손익: table624 col2 3m=98854.352757 cum=189467.309969 | old=98854.352757 (old==3m: True) Q1master=90612.957212 Q1+3m=189467.309969 resid=0.0 -> OK
+KR0083 item19 보험금융손익: table98 col2 3m=-72344.118003 cum=-144630.478387 | old=-72348.679758 (old==3m: False) Q1master=-0.193336 Q1+3m=-72344.31133899999 resid=-72286.16704799999 -> CHECK
+KR0083 item18: no statement column equals new 191977.302659
+KR0083 item21 영업외손익: table98 col2 3m=-134.061855 cum=-317.572727 | old=-134.061855 (old==3m: True) Q1master=-183.574912 Q1+3m=-317.63676699999996 resid=0.06403999999997723 -> OK

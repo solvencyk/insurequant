@@ -1,0 +1,12 @@
+table 140 line 8524 cols 3 cap ''
+   item1: cur cum None  prior cum None | master 2024.3Q 1458627.191111 2023.3Q 1307758.6394
+   item17: cur cum None  prior cum None | master 2024.3Q 619482.082455 2023.3Q 374239.793436
+   item24: cur cum None  prior cum 1.946943 | master 2024.3Q 1577966.670674 2023.3Q 1275701.483179
+   item25: cur cum None  prior cum 1.061298 | master 2024.3Q -1220047.685719 2023.3Q 86776.741664
+   item26: cur cum None  prior cum 0.0 | master 2024.3Q 338926.979522 2023.3Q -318244.033208
+   item27: cur cum None  prior cum None | master 2024.3Q -1616535.617231 2023.3Q 385624.698718
+   item28: cur cum None  prior cum None | master 2024.3Q 51475.205038 2023.3Q -1845.331496
+   item29: cur cum None  prior cum None | master 2024.3Q 11539.589792 2023.3Q 3892.052036
+   item30: cur cum None  prior cum None | master 2024.3Q 9039.336572 2023.3Q -886.205252
+   item31: cur cum None  prior cum 3.008241 | master 2024.3Q 357918.984955 2023.3Q 1362478.224843
+   item32: cur cum None  prior cum 1.061298 | master 2024.3Q -14493.179412 2023.3Q 18235.560866

@@ -1,0 +1,8 @@
+data/_gold/user_pl_cells.json: type dict old=2 new=2
+   pre-existing keys changed=1 removed=0 added=0
+data/_gold/user_csm_cells.json: type dict old=3 new=3
+   pre-existing keys changed=1 removed=0 added=0
+data/dart/viz/bs_manual_overrides.json: type dict old=4349 new=4414
+   pre-existing keys changed=0 removed=0 added=65
+held cols ['section', 'master', 'code', 'company', 'quarter', 'items', 'dryrun_verdict', 'decision', 'reason', 'dryrun_note']
+held categories Counter({'C_dryrun_verdict': 284, 'D_new_findings': 9, 'E_3m_scan_not_verifiable': 7, 'A_adopt_not_applied': 5, 'B_cell_removed_from_applied_block': 3, 'F_other_observation': 3})

@@ -1,0 +1,54 @@
+﻿code,quarter,item,master,pdf,page,label,numbers,scale,col,verdict
+KR0051,2024.3Q,1,-14000.0,data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf,4,보험손익,"[0.0, 140.0, 0.0, 79.0, 0.0, 61.0]",,,MISMATCH
+KR0051,2024.3Q,22,-14000.0,data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf,21,법인세비용차감전순손실,"[-13990237354.0, -3872810256.0, -10117427098.0]",1e-06,0,MATCH
+KR0051,2024.3Q,24,-14000.0,data/disclosure/FY2024_Q3/raw/KR0051_신한이지손해보험.pdf,21,Ⅳ.당기순손실,"[-13990237354.0, -3872810256.0, -10117427098.0]",1e-06,0,MATCH
+KR0074,2023.3Q,22,418600.0,data/disclosure/FY2023_Q3/raw/KR0074_라이나생명보험_amended.pdf,4,법인세비용차감전순이익,"[4186.0, 5435.0, -1249.0]",100.0,0,MATCH
+KR0074,2025.3Q,22,397300.0,data/disclosure/FY2025_Q3/raw/KR0074_라이나생명보험.pdf,4,법인세비용차감전순이익,"[3973.0, 5312.0, -1339.0]",100.0,0,MATCH
+KR0075,2023.1Q,22,-6700.0,data/disclosure/FY2023_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf,4,법인세비용차감전순이익법인세비용차감전순이익,"[-67.0, -67.0, -74.0, -74.0, 7.0]",100.0,0,MATCH
+KR0075,2023.2Q,22,-4000.0,data/disclosure/FY2023_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,5,법인세비용차감전순이익법인세비용차감전순이익,"[-40.0, -101.0, 61.0]",100.0,0,MATCH
+KR0075,2023.3Q,22,-5900.0,data/disclosure/FY2023_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,4,법인세비용차감전순이익법인세비용차감전순이익,"[-59.0, -150.0, 91.0]",100.0,0,MATCH
+KR0075,2024.1Q,22,-1900.0,data/disclosure/FY2024_Q1/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,4,법인세비용차감전순이익법인세비용차감전순이익,"[-19.0, -67.0, 48.0]",100.0,0,MATCH
+KR0075,2024.2Q,22,-4500.0,data/disclosure/FY2024_Q2/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,5,법인세비용차감전순이익법인세비용차감전순이익,"[-45.0, -40.0, -5.0]",100.0,0,MATCH
+KR0075,2024.3Q,22,-8700.0,data/disclosure/FY2024_Q3/raw/KR0075_비엔피파리바카디프생명보험_amended.pdf,4,법인세비용차감전순이익법인세비용차감전순이익,"[-87.0, -59.0, -28.0]",100.0,0,MATCH
+KR0075,2025.1Q,22,-4200.0,data/disclosure/FY2025_Q1/raw/KR0075_비엔피파리바카디프생명보험.pdf,4,법인세비용차감전순이익법인세비용차감전순이익,"[-42.0, -19.0, -23.0]",100.0,0,MATCH
+KR0075,2025.2Q,22,-6100.0,data/disclosure/FY2025_Q2/raw/KR0075_비엔피파리바카디프생명보험.pdf,5,법인세비용차감전순이익법인세비용차감전순이익,"[-61.0, -45.0, -16.0]",100.0,0,MATCH
+KR0076,2024.1Q,22,16300.0,data/disclosure/FY2024_Q1/raw/KR0076_아이엠라이프생명보험.pdf,5,법인세비용차감전순이익,"[163.0, 378.0, -215.0]",100.0,0,MATCH
+KR0080,2025.1Q,1,18300.0,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.1Q,16,13700.0,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.1Q,22,41700.0,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.1Q,23,9700.0,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.1Q,24,32000.0,data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.2Q,1,42800.0,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.2Q,16,28300.0,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.2Q,22,100100.0,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.2Q,23,23100.0,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.2Q,24,77000.0,data/disclosure/FY2025_Q2/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2025.3Q,1,26000.0,data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0080,2026.1Q,1,11900.0,data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf,,,,,,NOROW
+KR0097,2024.2Q,1,14600.0,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf,,,,,,NOROW
+KR0097,2024.2Q,16,6100.0,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf,,,,,,NOROW
+KR0097,2024.2Q,22,12400.0,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf,,,,,,NOROW
+KR0097,2024.2Q,23,3200.0,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf,,,,,,NOROW
+KR0097,2024.2Q,24,9200.0,data/disclosure/FY2024_Q2/raw/KR0097_하나생명보험_amended.pdf,,,,,,NOROW
+KR0097,2026.2Q,22,25600.0,data/disclosure/FY2026_Q2/raw/KR0097_하나생명보험.pdf,5,법인세비용차감전순이익,"[256.0, 209.0, 47.0]",100.0,0,MATCH
+KR1098,2024.2Q,1,-20500.0,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf,,,,,,NOROW
+KR1098,2024.2Q,16,1400.0,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf,,,,,,NOROW
+KR1098,2024.2Q,22,-21800.0,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf,,,,,,NOROW
+KR1098,2024.2Q,23,0.0,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf,,,,,,NOROW
+KR1098,2024.2Q,24,-21800.0,data/disclosure/FY2024_Q2/raw/KR1098_카카오페이손해보험_amended2.pdf,,,,,,NOROW
+KR1098,2024.3Q,1,-30800.0,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf,,,,,,NOROW
+KR1098,2024.3Q,16,2100.0,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf,,,,,,NOROW
+KR1098,2024.3Q,22,-34900.0,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf,,,,,,NOROW
+KR1098,2024.3Q,23,0.0,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf,,,,,,NOROW
+KR1098,2024.3Q,24,-34900.0,data/disclosure/FY2024_Q3/raw/KR1098_카카오페이손해보험.pdf,,,,,,NOROW
+KR1098,2025.1Q,22,-13715.0,data/disclosure/FY2025_Q1/raw/KR1098_카카오페이손해보험.pdf,4,법인세비용차감전순이익,"[-137.15, -115.77, -21.37]",100.0,0,MATCH
+KR1098,2025.2Q,22,-24800.0,data/disclosure/FY2025_Q2/raw/KR1098_카카오페이손해보험.pdf,5,법인세비용차감전순이익,"[-248.0, -218.0, -30.0]",100.0,0,MATCH
+KR1098,2025.3Q,22,-35200.0,data/disclosure/FY2025_Q3/raw/KR1098_카카오페이손해보험.pdf,4,법인세비용차감전순이익,"[-352.0, -349.0, -2.0]",100.0,0,MATCH
+KR1098,2026.1Q,22,-10300.0,data/disclosure/FY2026_Q1/raw/KR1098_카카오페이손해보험.pdf,4,법인세비용차감전순이익,"[-103.0, -137.0, 34.0]",100.0,0,MATCH
+KR1098,2026.2Q,22,-17500.0,data/disclosure/FY2026_Q2/raw/KR1098_카카오페이손해보험.pdf,5,법인세비용차감전순이익,"[-175.0, -248.0, 73.0]",100.0,0,MATCH
+KR1104,2023.1Q,16,0.0,data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf,,,,,,NOROW
+KR1104,2023.1Q,22,711.0,data/disclosure/FY2023_Q1/raw/KR1104_하노버재보험.pdf,5,법인세비용차감전순이익,"[711.0, 531.0, 180.0]",1.0,0,MATCH
+KR1104,2023.2Q,22,-65.0,data/disclosure/FY2023_Q2/raw/KR1104_하노버재보험.pdf,6,법인세비용차감전순이익,"[-65.0, 147.0, -212.0]",1.0,0,MATCH
+KR1104,2023.3Q,22,595.0,data/disclosure/FY2024_Q3/raw/KR1104_하노버재보험.pdf,6,법인세비용차감전순이익,"[1975.0, 595.0, 1380.0]",1.0,1,MATCH
+KR1105,2025.1Q,22,14600.0,data/disclosure/FY2025_Q1/raw/KR1105_알지에이리인슈어런스.pdf,4,법인세비용차감전순이익,"[146.0, 78.0, 68.0]",100.0,0,MATCH
+KR1105,2026.1Q,22,-2800.0,data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf,4,법인세비용차감전순이익,"[-28.0, 146.0, -174.0]",100.0,0,MATCH

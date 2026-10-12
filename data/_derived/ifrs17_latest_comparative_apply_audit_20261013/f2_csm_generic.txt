@@ -1,0 +1,92 @@
+== KR0001 FY2024_Q3: candidate tables [241, 243, 511, 513]
+   window [241]: vs master 2024.3Q (cur) 6/6 ; vs master 2023.3Q post-apply (prior) 0/6 ; vals [104687.3, 10553.8, 2538.5, -2786.2, -8576.8, 106416.6]
+   window [243]: vs master 2024.3Q (cur) 0/6 ; vs master 2023.3Q post-apply (prior) 6/6 ; vals [96376.4, 12197.6, 2163.1, 488.7, -7842.8, 103383.0]
+   window [511]: vs master 2024.3Q (cur) 6/6 ; vs master 2023.3Q post-apply (prior) 0/6 ; vals [104687.3, 10553.8, 2538.5, -2786.2, -8576.8, 106416.6]
+   window [513]: vs master 2024.3Q (cur) 0/6 ; vs master 2023.3Q post-apply (prior) 6/6 ; vals [96376.4, 12197.6, 2163.1, 488.7, -7842.8, 103383.0]
+      item1: mine=96376.39 master=96376.4 APPLIED new=96376.4 OK 
+      item2: mine=12197.58 master=12197.6 APPLIED new=12197.6 OK 
+      item3: mine=2163.05 master=2163.1 APPLIED new=2163.1 OK 
+      item4: mine=488.74 master=488.7 APPLIED new=488.7 OK 
+      item5: mine=-7842.80 master=-7842.8 APPLIED new=-7842.8 OK 
+      item6: mine=103382.96 master=103383.0 APPLIED new=103383.0 OK 
+      closing identity residual (mine) 0.00억
+      item1: mine=96376.39 master=96376.4 APPLIED new=96376.4 OK 
+      item2: mine=12197.58 master=12197.6 APPLIED new=12197.6 OK 
+      item3: mine=2163.05 master=2163.1 APPLIED new=2163.1 OK 
+      item4: mine=488.74 master=488.7 APPLIED new=488.7 OK 
+      item5: mine=-7842.80 master=-7842.8 APPLIED new=-7842.8 OK 
+      item6: mine=103382.96 master=103383.0 APPLIED new=103383.0 OK 
+      closing identity residual (mine) 0.00억
+== KR0069 FY2024_Q2: candidate tables [415, 417, 419, 421, 423, 425, 744, 746, 748, 750, 752, 754]
+   window [415, 417, 419]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [123925.7, 16628.5, 2304.1, -7218.9, -7194.9, 128444.5]
+   window [417, 419, 421]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [113605.0, 21011.7, 2123.9, -7381.1, -6986.4, 122373.1]
+   window [419, 421, 423]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [113373.8, 17672.7, 1972.9, -7442.8, -6567.8, 119008.8]
+   window [421, 423, 425]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 6/6 ; vals [107486.9, 18159.3, 1915.9, -1837.0, -6596.7, 119128.4]
+   window [423, 425, 744]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [116877.6, 13627.2, 2077.2, -1653.7, -6738.1, 124190.2]
+   window [425, 744, 746]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [117108.8, 16966.2, 2228.2, -1591.9, -7156.8, 127554.6]
+   window [744, 746, 748]: vs master 2024.2Q (cur) 6/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [122473.7, 16460.6, 2276.4, -7153.9, -7081.5, 126975.3]
+   window [746, 748, 750]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [113083.1, 20992.8, 2115.0, -7337.2, -6940.1, 121913.5]
+   window [748, 750, 752]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 0/6 ; vals [112851.8, 17653.7, 1964.0, -7399.0, -6521.4, 118549.1]
+   window [750, 752, 754]: vs master 2024.2Q (cur) 0/6 ; vs master 2023.2Q post-apply (prior) 6/6 ; vals [107486.9, 18159.3, 1915.9, -1837.0, -6596.7, 119128.4]
+      item1: mine=107486.90 master=107486.9  OK 
+      item2: mine=18159.35 master=18159.3  OK 
+      item3: mine=1915.88 master=1915.9 APPLIED new=1915.9 OK 
+      item4: mine=-1837.05 master=-1837.0 APPLIED new=-1837.0 OK 
+      item5: mine=-6596.68 master=-6596.7  OK 
+      item6: mine=119128.40 master=119128.4  OK 
+      closing identity residual (mine) 0.00억
+      item1: mine=107486.90 master=107486.9  OK 
+      item2: mine=18159.35 master=18159.3  OK 
+      item3: mine=1915.86 master=1915.9 APPLIED new=1915.9 OK 
+      item4: mine=-1837.05 master=-1837.0 APPLIED new=-1837.0 OK 
+      item5: mine=-6596.67 master=-6596.7  OK 
+      item6: mine=119128.39 master=119128.4  OK 
+      closing identity residual (mine) 0.00억
+== KR0082 FY2024_Q1: candidate tables [251, 253, 572, 574]
+   window [251]: vs master 2024.1Q (cur) 6/6 ; vs master 2023.1Q post-apply (prior) 0/6 ; vals [16548.9, 1236.4, 154.3, -924.3, -319.3, 16696.0]
+   window [253]: vs master 2024.1Q (cur) 0/6 ; vs master 2023.1Q post-apply (prior) 6/6 ; vals [15523.6, 1239.3, 123.6, 85.7, -323.1, 16649.0]
+   window [572]: vs master 2024.1Q (cur) 6/6 ; vs master 2023.1Q post-apply (prior) 0/6 ; vals [16548.9, 1236.4, 154.3, -924.3, -319.3, 16696.0]
+   window [574]: vs master 2024.1Q (cur) 0/6 ; vs master 2023.1Q post-apply (prior) 6/6 ; vals [15523.6, 1239.3, 123.6, 85.7, -323.1, 16649.0]
+      item1: mine=15523.57 master=15523.6  OK 
+      item2: mine=1239.29 master=1239.3  OK 
+      item3: mine=123.61 master=123.6 APPLIED new=123.6 OK 
+      item4: mine=85.67 master=85.7 APPLIED new=85.7 OK 
+      item5: mine=-323.10 master=-323.1  OK 
+      item6: mine=16649.04 master=16649.0  OK 
+      closing identity residual (mine) 0.00억
+      item1: mine=15523.57 master=15523.6  OK 
+      item2: mine=1239.29 master=1239.3  OK 
+      item3: mine=123.61 master=123.6 APPLIED new=123.6 OK 
+      item4: mine=85.67 master=85.7 APPLIED new=85.7 OK 
+      item5: mine=-323.10 master=-323.1  OK 
+      item6: mine=16649.04 master=16649.0  OK 
+      closing identity residual (mine) 0.00억
+== KR0087 FY2024_Q1: candidate tables [223, 224, 388, 389]
+   window [223]: vs master 2024.1Q (cur) 6/6 ; vs master 2023.1Q post-apply (prior) 0/6 ; vals [25418.0, 2043.5, 264.9, -172.9, -642.0, 26911.5]
+   window [224]: vs master 2024.1Q (cur) 0/6 ; vs master 2023.1Q post-apply (prior) 6/6 ; vals [23742.3, 1762.9, 240.5, -240.0, -648.5, 24857.0]
+   window [388]: vs master 2024.1Q (cur) 6/6 ; vs master 2023.1Q post-apply (prior) 0/6 ; vals [25418.0, 2043.5, 264.9, -172.9, -642.0, 26911.5]
+   window [389]: vs master 2024.1Q (cur) 0/6 ; vs master 2023.1Q post-apply (prior) 6/6 ; vals [23742.3, 1762.9, 240.5, -240.0, -648.5, 24857.0]
+      item1: mine=23742.28 master=23742.3  OK 
+      item2: mine=1762.88 master=1762.9 APPLIED new=1762.9 OK 
+      item3: mine=240.47 master=240.5  OK 
+      item4: mine=-240.04 master=-240.1 APPLIED new=-240.1 OK printed adj row -240.04; residual -240.05
+      item5: mine=-648.55 master=-648.5  OK 
+      item6: mine=24857.03 master=24857.0  OK 
+      closing identity residual (mine) 0.01억
+      item1: mine=23742.28 master=23742.3  OK 
+      item2: mine=1762.88 master=1762.9 APPLIED new=1762.9 OK 
+      item3: mine=240.47 master=240.5  OK 
+      item4: mine=-240.04 master=-240.1 APPLIED new=-240.1 OK printed adj row -240.04; residual -240.05
+      item5: mine=-648.55 master=-648.5  OK 
+      item6: mine=24857.03 master=24857.0  OK 
+      closing identity residual (mine) 0.01억
+== KR0104 FY2024_Q1: candidate tables [195, 197]
+   window [195]: vs master 2024.1Q (cur) 6/6 ; vs master 2023.1Q post-apply (prior) 0/6 ; vals [44773.9, 4604.9, 432.9, 345.8, -1068.8, 49088.7]
+   window [197]: vs master 2024.1Q (cur) 0/6 ; vs master 2023.1Q post-apply (prior) 5/6 ; vals [42505.2, 1571.7, 381.1, 1866.2, -979.6, 45314.9]
+      item1: mine=42505.19 master=42505.2 APPLIED new=42505.2 OK 
+      item2: mine=1571.72 master=1571.7  OK 
+      item3: mine=381.14 master=381.1  OK 
+      item4: mine=1866.15 master=1836.4 APPLIED new=1836.4 OK printed adj row 1866.15; residual 1836.42
+      item5: mine=-979.59 master=-979.6  OK 
+      item6: mine=45314.88 master=45314.9 APPLIED new=45314.9 OK 
+      closing identity residual (mine) 29.73억

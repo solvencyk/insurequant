@@ -1,0 +1,10 @@
+PL_breakdown: old gold entries 203, new 360; duplicated keys in new: 0
+   pre-existing gold entries changed/removed: 0
+   applied cells 157; problems 0
+   new gold lines not in applied list: 0
+CSM_waterfall: old gold entries 276, new 303; duplicated keys in new: 0
+   pre-existing gold entries changed/removed: 0
+   applied cells 27; problems 0
+   new gold lines not in applied list: 0
+bs_manual_overrides old 4349 new 4414 type dict
+   added 65 changed-existing 0; sample ['KR0005|2|2023.4Q', 'KR0005|3|2023.4Q', 'KR0005|4|2023.4Q'] -> [{'값': 10663022.0, '근거': "[2026-10-12 parser/ifrs17 20261012T2230Z] 최신 공시 전기말 열 채택(owner 2026-10-12 최신 비교열 우선). 옛 값(원 공시 연말) 10670878.0 -> 10663022.0. rcept 20250320001444 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm 와 동일); 독립 재독 data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml#L4249 '부채총계' 인쇄 10,663,022 (백만원) 표#58 헤더 구 분 제79기 제78기 제77기 | (2024년 12월말) (2023년 12월말) (2022년 12월말)"}, {'값': 1368531.0, '근거': "[2026-10-12 parser/ifrs17 20261012T2230Z] 최신 공시 전기말 열 채택(owner 2026-10-12 최신 비교열 우선). 옛 값(원 공시 연말) 1360675.0 -> 1368531.0. rcept 20250320001444 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm 와 동일); 독립 재독 data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml#L4284 '자본총계' 인쇄 1,368,531 (백만원) 표#58 헤더 구 분 제79기 제78기 제77기 | (2024년 12월말) (2023년 12월말) (2022년 12월말)"}]

@@ -1,0 +1,94 @@
+rows 249 cols ['master', 'code', 'company', 'quarter', 'item', 'item_name', 'unit', 'old', 'new', 'kind', 'block', 'source_ref', 'verified_ref', 'printed', 'evidence']
+master: Counter({'PL_breakdown': 157, 'IFRS17_BS': 65, 'CSM_waterfall': 27})
+kind: Counter({'latest_comparative': 233, '3m_as_cumulative': 14, 'wrong_year_column': 2})
+unit: Counter({'백만원': 222, '억원': 27})
+  ('CSM_waterfall', 'CSM KR0001 2023.3Q', 'latest_comparative'): 6
+  ('CSM_waterfall', 'CSM KR0008 2023.1Q', 'latest_comparative'): 4
+  ('CSM_waterfall', 'CSM KR0008 2023.2Q', 'latest_comparative'): 4
+  ('CSM_waterfall', 'CSM KR0008 2023.3Q', 'latest_comparative'): 4
+  ('CSM_waterfall', 'CSM KR0069 2023.2Q', 'latest_comparative'): 2
+  ('CSM_waterfall', 'CSM KR0082 2023.1Q', 'latest_comparative'): 2
+  ('CSM_waterfall', 'CSM KR0087 2023.1Q', 'latest_comparative'): 2
+  ('CSM_waterfall', 'CSM KR0104 2023.1Q', 'latest_comparative'): 3
+  ('IFRS17_BS', 'BS KR0005 2023.4Q', 'latest_comparative'): 5
+  ('IFRS17_BS', 'BS KR0009 2023.4Q', 'latest_comparative'): 2
+  ('IFRS17_BS', 'BS KR0010 2023.4Q', 'latest_comparative'): 6
+  ('IFRS17_BS', 'BS KR0032 2023.4Q', 'latest_comparative'): 4
+  ('IFRS17_BS', 'BS KR0068 2024.4Q', 'latest_comparative'): 2
+  ('IFRS17_BS', 'BS KR0069 2024.4Q', 'latest_comparative'): 3
+  ('IFRS17_BS', 'BS KR0070 2023.4Q', 'latest_comparative'): 2
+  ('IFRS17_BS', 'BS KR0070 2024.4Q', 'latest_comparative'): 3
+  ('IFRS17_BS', 'BS KR0071 2024.4Q', 'latest_comparative'): 3
+  ('IFRS17_BS', 'BS KR0072 2023.4Q', 'latest_comparative'): 4
+  ('IFRS17_BS', 'BS KR0073 2024.4Q', 'latest_comparative'): 3
+  ('IFRS17_BS', 'BS KR0079 2023.4Q', 'latest_comparative'): 5
+  ('IFRS17_BS', 'BS KR0083 2024.4Q', 'latest_comparative'): 5
+  ('IFRS17_BS', 'BS KR0087 2023.4Q', 'latest_comparative'): 2
+  ('IFRS17_BS', 'BS KR0087 2024.4Q', 'latest_comparative'): 4
+  ('IFRS17_BS', 'BS KR0094 2024.4Q', 'latest_comparative'): 2
+  ('IFRS17_BS', 'BS KR0099 2023.4Q', 'latest_comparative'): 5
+  ('IFRS17_BS', 'BS KR0104 2023.4Q', 'latest_comparative'): 2
+  ('IFRS17_BS', 'BS KR0104 2024.4Q', 'latest_comparative'): 3
+  ('PL_breakdown', 'PL KR0001 2023.3Q', 'latest_comparative'): 11
+  ('PL_breakdown', 'PL KR0002 2023.1Q (후속 공시 해당 분기 열 오적재 정정)', 'wrong_year_column'): 1
+  ('PL_breakdown', 'PL KR0002 2023.2Q (3개월 열 오적재 정정)', '3m_as_cumulative'): 1
+  ('PL_breakdown', 'PL KR0002 2023.2Q (후속 공시 해당 분기 열 오적재 정정)', 'wrong_year_column'): 1
+  ('PL_breakdown', 'PL KR0003 2023.2Q (3개월 열 오적재 정정)', '3m_as_cumulative'): 2
+  ('PL_breakdown', 'PL KR0005 2023.2Q (3개월 열 오적재 정정)', '3m_as_cumulative'): 7
+  ('PL_breakdown', 'PL KR0008 2023.1Q', 'latest_comparative'): 21
+  ('PL_breakdown', 'PL KR0008 2023.2Q', 'latest_comparative'): 24
+  ('PL_breakdown', 'PL KR0008 2023.3Q', 'latest_comparative'): 14
+  ('PL_breakdown', 'PL KR0011 2023.1Q', 'latest_comparative'): 31
+  ('PL_breakdown', 'PL KR0011 2023.2Q', 'latest_comparative'): 29
+  ('PL_breakdown', 'PL KR0011 2023.3Q', 'latest_comparative'): 11
+  ('PL_breakdown', 'PL KR0068 2023.2Q (3개월 열 오적재 정정)', '3m_as_cumulative'): 1
+  ('PL_breakdown', 'PL KR0083 2023.2Q (3개월 열 오적재 정정)', '3m_as_cumulative'): 3
+source_ref kinds:
+  ('CSM_waterfall', 'latest_comparative', 'rcept 20240514000901 (FY2024_Q1) 측정요소 변동표 전기열 (CSM 3열 합)'): 2
+  ('CSM_waterfall', 'latest_comparative', "rcept 20240514001371 (FY2024_Q1) 표#197 L14885 '(3-1-2) 측정요소별"): 2
+  ('CSM_waterfall', 'latest_comparative', 'rcept 20240514001371 (FY2024_Q1) 표#197 L14885 전기열'): 1
+  ('CSM_waterfall', 'latest_comparative', "rcept 20240516001321 (FY2024_Q1) 표#749 L57336 '2) 제74(전)기 1분"): 4
+  ('CSM_waterfall', 'latest_comparative', "rcept 20240516001580 (FY2024_Q1) 표#389 L36516 '<전분기>' 전기열"): 1
+  ('CSM_waterfall', 'latest_comparative', 'rcept 20240516001580 (FY2024_Q1) 표#389 L36516 전기열'): 1
+  ('CSM_waterfall', 'latest_comparative', 'rcept 20240814004014 (FY2024_Q2) 측정요소 변동표 전기열 (CSM 3열 합)'): 2
+  ('CSM_waterfall', 'latest_comparative', "rcept 20240814004058 (FY2024_Q2) 표#772 L60900 '2) 제74(전)기 반기"): 4
+  ('CSM_waterfall', 'latest_comparative', 'rcept 20241114001986 (FY2024_Q3) 측정요소 변동표 전기열 (CSM 3열 합)'): 6
+  ('CSM_waterfall', 'latest_comparative', "rcept 20241114002060 (FY2024_Q3) 표#752 L58839 '2) 제74(전)기 3분"): 4
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250313001346 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 2
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250314000905 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 5
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250314001697 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 6
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250318001228 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 5
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250319000486 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 2
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250320001444 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 5
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250331001358 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 2
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250331002302 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 4
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250331003065 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 2
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20250331003247 (FY2024_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 4
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260311004614 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 3
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260313001227 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 4
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260316001304 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 2
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260318001034 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 2
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260331002089 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 5
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260331002277 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 3
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260331003080 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 3
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260331004015 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 3
+  ('IFRS17_BS', 'latest_comparative', 'rcept 20260331004251 (FY2025_Q4) 재무상태표 전기말 열 (FS-API frmtrm '): 3
+  ('PL_breakdown', '3m_as_cumulative', 'rcept 20230814001755 (FY2023_Q2) 원 공시 포괄손익계산서 표#98 L6576 당기 '): 3
+  ('PL_breakdown', '3m_as_cumulative', 'rcept 20230814001853 (FY2023_Q2) 원 공시 포괄손익계산서 표#512 L35011 당'): 1
+  ('PL_breakdown', '3m_as_cumulative', 'rcept 20230814002928 (FY2023_Q2) 원 공시 포괄손익계산서 표#106 L5871 당기'): 2
+  ('PL_breakdown', '3m_as_cumulative', 'rcept 20230814002953 (FY2023_Q2) 원 공시 포괄손익계산서 표#624 L62256 당'): 1
+  ('PL_breakdown', '3m_as_cumulative', 'rcept 20230814003024 (FY2023_Q2) 원 공시 포괄손익계산서 표#67 L4958 당기 '): 7
+  ('PL_breakdown', 'latest_comparative', 'later filing FY2024_Q1 별도 주석 보험수익/비용·재보험수익/비용 전기 표 [[773, 59'): 10
+  ('PL_breakdown', 'latest_comparative', "later filing FY2024_Q1 별도 주석 보험수익/비용·재보험수익/비용 전기 표 {'REV': ["): 13
+  ('PL_breakdown', 'latest_comparative', 'later filing FY2024_Q2 별도 주석 보험수익/비용·재보험수익/비용 전기 표 [[796, 63'): 11
+  ('PL_breakdown', 'latest_comparative', "later filing FY2024_Q2 별도 주석 보험수익/비용·재보험수익/비용 전기 표 {'REV': ["): 11
+  ('PL_breakdown', 'latest_comparative', 'later filing FY2024_Q3 별도 주석 보험수익/비용·재보험수익/비용 전기 표 [[776, 61'): 7
+  ('PL_breakdown', 'latest_comparative', "later filing FY2024_Q3 별도 주석 보험수익/비용·재보험수익/비용 전기 표 {'REV': ["): 11
+  ('PL_breakdown', 'latest_comparative', 'rcept 20240516001321 (FY2024_Q1) 포괄손익계산서 표#517 L38751 전기 누적열'): 11
+  ('PL_breakdown', 'latest_comparative', 'rcept 20240516001637 (FY2024_Q1) 포괄손익계산서 표#539 L41313 전기 누적열'): 18
+  ('PL_breakdown', 'latest_comparative', 'rcept 20240814003770 (FY2024_Q2) 포괄손익계산서 표#585 L46676 전기 누적열'): 18
+  ('PL_breakdown', 'latest_comparative', 'rcept 20240814004058 (FY2024_Q2) 포괄손익계산서 표#540 L42174 전기 누적열'): 13
+  ('PL_breakdown', 'latest_comparative', "rcept 20241114001986 (FY2024_Q3) 주석 '(4) 보험손익 상세내역' 별도 <전분기>"): 11
+  ('PL_breakdown', 'latest_comparative', 'rcept 20241114002060 (FY2024_Q3) 포괄손익계산서 표#518 L40023 전기 누적열'): 7
+  ('PL_breakdown', 'wrong_year_column', 'data/disclosure/FY2023_Q1/raw/KR0002_한화손해보험.pdf p4 (원 공시) = '): 1
+  ('PL_breakdown', 'wrong_year_column', 'data/disclosure/FY2023_Q2/raw/KR0002_한화손해보험.pdf p5 (원 공시) = '): 1
