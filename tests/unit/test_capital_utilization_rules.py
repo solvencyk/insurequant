@@ -65,6 +65,22 @@ def memo():
         return {r["code"]: r for r in csv.DictReader(fh)}
 
 
+@pytest.fixture(scope="module")
+def deployed():
+    """배포본 두 파일. 메모 재현은 2026.2Q 에 고정이지만 배포본 대조·census 는 **배포본의 분기**로 한다 -
+    다음 분기를 배포해도 이 두 시험이 낡은 분기를 검사하지 않게."""
+    t1 = json.loads((ROOT / "kics_tier1_utilization.json").read_text(encoding="utf-8"))
+    t2 = json.loads((ROOT / "kics_tier2_utilization.json").read_text(encoding="utf-8"))
+    assert t1["quarter"] == t2["quarter"]
+    return t1, t2
+
+
+@pytest.fixture(scope="module")
+def computed_deployed(records, ledger, registry, deployed, computed):
+    q = deployed[0]["quarter"]
+    return computed if q == QUARTER else R.compute_quarter(records, q, ledger, registry)
+
+
 def _f(v):
     return None if v in (None, "") else float(v)
 
@@ -119,10 +135,9 @@ def test_swiss_re_is_zero_not_undisclosed(computed):
 
 
 # --------------------------------------------------------------------------- 2. 배포본 == 산식
-def test_deployed_json_equals_rules(computed):
-    t1 = json.loads((ROOT / "kics_tier1_utilization.json").read_text(encoding="utf-8"))
-    t2 = json.loads((ROOT / "kics_tier2_utilization.json").read_text(encoding="utf-8"))
-    assert t1["quarter"] == t2["quarter"] == QUARTER
+def test_deployed_json_equals_rules(deployed, computed_deployed):
+    t1, t2 = deployed
+    computed = computed_deployed
     bad = []
     for row in t1["results"]:
         c = computed[row["code"]]["t1"]
@@ -241,11 +256,11 @@ def test_registry_schema(registry):
                 assert s.get("unconfirmed_reason"), (code, s["name"])
 
 
-def test_every_company_with_post_2023_securities_is_registered(computed, registry):
+def test_every_company_with_post_2023_securities_is_registered(computed_deployed, registry):
     """보통주 이외 자본증권 중 기발행이 아닌 금액이 있는 회사는 등재부에 기발행 아닌 증권이 있어야 한다.
     없으면 그 금액이 근거 없이 기본자본형(상한)으로 들어간다 - 새 발행사가 조용히 끼어드는 자리."""
     missing = []
-    for code, c in computed.items():
+    for code, c in computed_deployed.items():
         t1 = c["t1"]
         if t1 is None or t1["securities_eok"] - t1["legacy_eok"] <= R.TOL:
             continue
