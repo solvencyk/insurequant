@@ -1,0 +1,54 @@
+PIN rev=dbbffcb5 ledger=d22485f605e8
+ledger rows: 22 as_of 2025-12-31 (carried forward from the FY2025 annual report), 25 as_of 2026-06-30 (H1 2026)
+columns: code name | ledger hybrid (억, face) | K-ICS item 6 (억, 2026.2Q 값) | gap | ledger sub (억) | K-ICS item 54 (억) ; gap flags |gap| > 2% of item 6 or > 50억
+-- STALE (2025-12-31)
+  KR0068 한화생명보험 | hybrid 30819 | item6 30685 | gap +134 | sub 27679 | item54 17932
+  KR0083 푸본현대생명 | hybrid 1000 | item6 1050 | gap -50 | sub 7275 | item54 2952
+  KR0094 신한라이프생명보험 | hybrid 0 | item6 0 | gap +0 | sub 7984 | item54 0
+  KR0099 케이비라이프생명보험 | hybrid 500 | item6 498 | gap +2 | sub 2000 | item54 702
+  KR0097 하나생명보험 | hybrid 1799 | item6 1799 | gap -0 | sub 0 | item54 0
+  KR0069 삼성생명 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR0004 엠지손해보험 | hybrid 0 | item6 0 | gap +0 | sub 680 | item54 0
+  KR0050 하나손해보험 | hybrid 1000 | item6 1999 | gap -999 | sub 0 | item54 0  <== GAP
+  KR0076 아이엠라이프생명보험 | hybrid 949 | item6 2466 | gap -1517 | sub 2250 | item54 0  <== GAP
+  KR0008 삼성화재해상보험 | hybrid 0 | item6 73 | gap -73 | sub 0 | item54 0  <== GAP
+  KR0029 에이아이지손해보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR0074 라이나생명보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR0075 비엔피파리바카디프생명보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR0080 에이아이에이생명보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR0095 메트라이프생명보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR0100 처브라이프생명보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR0051 신한이지손해보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1098 카카오페이손해보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1011 아이비케이연금보험 | hybrid 0 | item6 0 | gap +0 | sub 3593 | item54 1602
+  KR0150 서울보증보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1010 교보라이프플래닛생명보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 -
+  KR0049 악사손해보험 | hybrid 0 | item6 0 | gap +0 | sub 459 | item54 345
+-- FRESH (2026-06-30)
+  KR1000 코리안리재보험 | hybrid 8100 | item6 8082 | gap +18 | sub 0 | item54 0
+  KR0011 DB손해보험 | hybrid 17490 | item6 17452 | gap +38 | sub 9700 | item54 0
+  KR0073 교보생명보험 | hybrid 22148 | item6 22057 | gap +92 | sub 7000 | item54 0
+  KR0002 한화손해보험 | hybrid 2350 | item6 4231 | gap -1881 | sub 11000 | item54 2482  <== GAP
+  KR0087 동양생명 | hybrid 0 | item6 0 | gap +0 | sub 11957 | item54 0
+  KR0071 흥국생명보험 | hybrid 500 | item6 2796 | gap -2296 | sub 4085 | item54 4132  <== GAP
+  KR0001 메리츠화재해상보험 | hybrid 1800 | item6 1792 | gap +8 | sub 18010 | item54 15631
+  KR0003 롯데손해보험 | hybrid 460 | item6 454 | gap +6 | sub 8070 | item54 1934
+  KR0005 흥국화재해상보험 | hybrid 4120 | item6 4159 | gap -39 | sub 3200 | item54 191
+  KR0072 케이디비생명보험 | hybrid 2410 | item6 2403 | gap +7 | sub 3888 | item54 0
+  KR0009 현대해상화재보험 | hybrid 0 | item6 0 | gap +0 | sub 28330 | item54 0
+  KR0032 NH농협손해보험 | hybrid 4500 | item6 4500 | gap +0 | sub 3000 | item54 927
+  KR0082 DB생명보험 | hybrid 0 | item6 0 | gap +0 | sub 3000 | item54 3136
+  KR0070 에이비엘생명보험 | hybrid 0 | item6 0 | gap +0 | sub 6430 | item54 633
+  KR0104 농협생명보험 | hybrid 5000 | item6 5000 | gap +0 | sub 11100 | item54 8700
+  KR0079 미래에셋생명 | hybrid 0 | item6 0 | gap +0 | sub 2991 | item54 2931
+  KR0010 KB손해보험 | hybrid 0 | item6 0 | gap +0 | sub 8860 | item54 2901
+  KR1101 뮌헨재보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 -
+  KR1102 스위스리아시아 | hybrid 0 | item6 -3 | gap +3 | sub 0 | item54 0
+  KR1103 제네럴재보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1104 하노버재보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1105 알지에이리인슈어런스 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1106 스코리재보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1107 퍼시픽라이프리 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+  KR1108 마이브라운반려동물전문보험 | hybrid 0 | item6 0 | gap +0 | sub 0 | item54 0
+
+companies flagged: 5 (item 6 also contains preferred / convertible-preferred shares that are not in the bond ledger - a gap is a prompt to look, not proof)

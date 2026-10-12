@@ -1,0 +1,3 @@
+﻿code,company,tier,issue,call,expected_issue_plus5y,diff_days,call_source,outstanding_eok,name
+KR0011,DB손해보험,hybrid,2025-09-01,2030-09-25,2030-09-01,24,disclosed,7470.0,제1회 신종자본증권 (공모)
+KR0011,DB손해보험,hybrid,2025-09-25,2030-09-01,2030-09-25,-24,disclosed,1200.0,제2회 신종자본증권 (사모)

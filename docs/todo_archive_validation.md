@@ -1,5 +1,10 @@
 # TODO archive — `TODO_validation.md` (Status 이력, 읽기 지연)
 
+## 2026-10-12 Status 밀림 (27차 독립 감사 항목 추가로 밀려난 항목, 무수정)
+
+- **2026-10-12 재보사 PL 계보 허용 + 마감 골든 3종 `--update` — 데이터계약 RED 102→0(전부 `CONCEPT_MIXED_DISCLOSURE_INTO_DART`, 신규 0)** — `PL_DISCLOSURE_REINSURER_LINEAGE`(how=`disclosure_summary_pl_reinsurer`, 항목 17·20·21)을 「DART 계보 PL 셀이 없는 회사」(데이터 조건 · 8곳 KR1101~KR1108)·income_statement·쪽·**항목별** 인쇄값이 있을 때만 §3d 에서 뺀다(102셀/299값).
+  변이시험 pytest 14건 + selftest 92→102(Q11 가족)·훅 묶음 편입. 골든 `--update`: master_tables(재보사 적재 반영)·17BS(+49칸, 빌더 산출=마스터 sha)·입력지문 / PL·viz 2종·kics·post_transition·dividend 는 무이동. 훅 대체 `prepush_check.py --full` = **gate-clear exit 0**(데이터계약 RED 0 · K-ICS clear · 도메인 7종 pass · 지문 pass · JS clear · inbox 위반 0 · 오프라인 795 통과 1 skip). 남은 것: owner 결정표(티켓 §5).
+
 ## 2026-10-12 Status 밀림 (26차 골든 갱신 항목 추가로 밀려난 항목, 무수정)
 
 - **2026-10-12 게이트 속도(티켓 `20261012T0300Z`) — 원문 PDF 텍스트 캐시 `scripts/_pdf_text_cache.py`, 판정 불변** — K-ICS 게이트 재실행 40초→3.5초, 매니페스트 전수 스윕 1건 1,120초→210초. 전/후 출력(stdout·리포트 7.5MB) 바이트 동일, 변이시험 9건(`tests/unit/`).

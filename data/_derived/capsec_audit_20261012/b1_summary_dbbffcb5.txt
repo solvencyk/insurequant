@@ -1,0 +1,32 @@
+PIN: rev=dbbffcb5 registry=1eb96b5cb635 tier1=80f2e1696cbd tier2=378131037f67 forward=1db3db7d8745
+== b1 summary (2026.2Q, tolerance 0.1%p) ==
+tier1 pct match 47/47 ; legacy-leg amount match 47 ; new-basic amount match 47
+tier2 limit (item14 x 50%) match 47/47
+tier1_overflow (legacy over 15% SCR + new basic over 10% SCR): tier1 JSON field match 47/47 ; tier2 JSON tier1_overflow_into_tier2_eok match 47/47
+  non-zero overflow companies (mine): KR0011 DB손해보험 5942.1, KR0076 아이엠라이프 1353.9, KR0097 하나생명보험 1043.6
+tier2 literal-definition pct match 45/47
+  tier2 MISMATCH KR0079 미래에셋생명보험 mine=0.0(R4 raw N2=-0.01) pub=24.5(R1 N2=2930.93)
+  tier2 MISMATCH KR0082 DB생명보험 mine=0.0(R4 raw N2=-571.96) pub=31.6(R-none N2=2563.95)
+tier2 TFI-off (적용 전) pct match 46/46
+closure via issuer headline item 3: confirms published N2 for 42/46 companies with a numerator
+  closure NOT closing: KR0079 미래에셋생명보험 pub N2=2930.93 closure_post=0.46 closure_pre=0.46 limit=11981.0
+  closure NOT closing: KR0082 DB생명보험 pub N2=2563.95 closure_post=-572.31 closure_pre=-572.31 limit=8124.0
+  closure NOT closing: KR1011 IBK연금보험 pub N2=2744.69 closure_post=3883.87 closure_pre=2008.02 limit=3610.5
+  closure NOT closing: KR1102 스위스리아시아 pub N2=0.0 closure_post=4274.0 closure_pre=4274.0 limit=2043.5
+item 48 (issuer-printed 보완자본 한도) minus 0.5 x item14(pre), |diff| > 1, companies with a 보완자본:
+  KR0104 농협생명보험 t2_i48_post_minus_half_scr = -5271.93
+  KR1102 스위스리아시아 t2_i48_pre_minus_half_scr = -2043.5
+  KR1102 스위스리아시아 t2_i48_post_minus_half_scr = -2043.5
+
+vintage sensitivity (ledger legacy 후순위 instead of the printed item 54), |pct diff| >= 0.5%p; ledger status shown:
+  KR0001 메리츠화재해상보험 pub=0.2% vintage=32.177% (+32.0)  print54=15630.85 ledger_legacy_face=5960.0 rec=5540.0 status=ok
+  KR0032 NH농협손해보험 pub=103.9% vintage=102.779% (-1.1)  print54=926.58 ledger_legacy_face=1000.0 rec=1000.0 status=ok
+  KR0068 한화생명 pub=70.5% vintage=74.818% (+4.3)  print54=17932.09 ledger_legacy_face=14711.4 rec=14711.4 status=stale_ledger_2025-12-31
+  KR0071 흥국생명보험 pub=10.6% vintage=37.014% (+26.4)  print54=4132.49 ledger_legacy_face=394.8 rec=394.8 status=ok
+  KR0076 아이엠라이프생명보험 pub=49.5% vintage=38.678% (-10.8)  print54=0.0 ledger_legacy_face=500.0 rec=400.0 status=stale_ledger_2025-12-31
+  KR0083 푸본현대생명보험 pub=86.6% vintage=73.121% (-13.5)  print54=2951.86 ledger_legacy_face=3995.0 rec=3995.0 status=stale_ledger_2025-12-31
+  KR0099 KB라이프생명 pub=0.8% vintage=0.0% (-0.8)  print54=701.95 ledger_legacy_face=1999.5 rec=1739.6 status=stale_ledger_2025-12-31
+  KR0104 농협생명보험 pub=18.8% vintage=21.082% (+2.3)  print54=8700.42 ledger_legacy_face=11100.0 rec=8300.0 status=ok
+
+tier1 variants differing from the published state (registry vs census-final type vs issuer-basis type):
+  KR0097 하나생명보험 registry=238.152 census=0.033 issuer_basis=238.152 published=238.2

@@ -1,0 +1,36 @@
+PIN rev=dbbffcb5 tier1=80f2e1696cbd
+binding_leg counts: {None: 33, 'legacy_15': 9, 'basic_10': 5}
+companies printing Y = 15% x SCR with item 53 = 0 (no grandfathered hybrid): 33 of 47  (the percentage is 0.0 for all of them, only the printed Y differs from the 10% rule)
+   KR0050 하나손해보험 | printed Y 702 | 10% x SCR would be 468 | utilization 0.0 | binding_leg None
+   KR0068 한화생명 | printed Y 22517 | 10% x SCR would be 15011 | utilization 0.0 | binding_leg None
+   KR0072 케이디비생명보험 | printed Y 2329 | 10% x SCR would be 1553 | utilization 0.0 | binding_leg None
+   KR0004 MG_예별손해보험 | printed Y 1292 | 10% x SCR would be 861 | utilization 0.0 | binding_leg None
+   KR0009 현대해상 | printed Y 11000 | 10% x SCR would be 7334 | utilization 0.0 | binding_leg None
+   KR0010 KB손해보험 | printed Y 10828 | 10% x SCR would be 7219 | utilization 0.0 | binding_leg None
+   KR0029 AIG손해보험 | printed Y 417 | 10% x SCR would be 278 | utilization 0.0 | binding_leg None
+   KR0049 악사손해보험 | printed Y 381 | 10% x SCR would be 254 | utilization 0.0 | binding_leg None
+   KR0051 신한이지손해보험 | printed Y 79 | 10% x SCR would be 52 | utilization 0.0 | binding_leg None
+   KR0070 에이비엘생명보험 | printed Y 2592 | 10% x SCR would be 1728 | utilization 0.0 | binding_leg None
+   KR0074 라이나생명보험 | printed Y 3058 | 10% x SCR would be 2039 | utilization 0.0 | binding_leg None
+   KR0075 비엔피파리바카디프생명보험 | printed Y 153 | 10% x SCR would be 102 | utilization 0.0 | binding_leg None
+   KR0079 미래에셋생명 | printed Y 3594 | 10% x SCR would be 2396 | utilization 0.0 | binding_leg None
+   KR0080 에이아이에이생명보험 | printed Y 2465 | 10% x SCR would be 1643 | utilization 0.0 | binding_leg None
+   KR0082 DB생명보험 | printed Y 2437 | 10% x SCR would be 1625 | utilization 0.0 | binding_leg None
+   KR0087 동양생명 | printed Y 3565 | 10% x SCR would be 2377 | utilization 0.0 | binding_leg None
+   KR0095 메트라이프생명보험 | printed Y 3134 | 10% x SCR would be 2089 | utilization 0.0 | binding_leg None
+   KR0100 처브라이프생명보험 | printed Y 205 | 10% x SCR would be 137 | utilization 0.0 | binding_leg None
+   KR0150 서울보증보험 | printed Y 2152 | 10% x SCR would be 1434 | utilization 0.0 | binding_leg None
+   KR1010 교보라이프플래닛생명보험 | printed Y 117 | 10% x SCR would be 78 | utilization 0.0 | binding_leg None
+   KR1011 IBK연금보험 | printed Y 1083 | 10% x SCR would be 722 | utilization 0.0 | binding_leg None
+   KR1098 카카오페이손해보험 | printed Y 64 | 10% x SCR would be 43 | utilization 0.0 | binding_leg None
+   KR0032 NH농협손해보험 | printed Y 2016 | 10% x SCR would be 1344 | utilization 0.0 | binding_leg None
+   KR0069 삼성생명 | printed Y 93353 | 10% x SCR would be 62235 | utilization 0.0 | binding_leg None
+   KR0094 신한라이프생명보험 | printed Y 8064 | 10% x SCR would be 5376 | utilization 0.0 | binding_leg None
+   KR1101 뮌헨재보험 | printed Y 168 | 10% x SCR would be 112 | utilization 0.0 | binding_leg None
+   KR1102 스위스리아시아 | printed Y 613 | 10% x SCR would be 409 | utilization 0.0 | binding_leg None
+   KR1103 제네럴재보험 | printed Y 44 | 10% x SCR would be 30 | utilization 0.0 | binding_leg None
+   KR1104 하노버재보험 | printed Y 40 | 10% x SCR would be 27 | utilization 0.0 | binding_leg None
+   KR1105 알지에이리인슈어런스 | printed Y 387 | 10% x SCR would be 258 | utilization 0.0 | binding_leg None
+   KR1106 스코리재보험 | printed Y 585 | 10% x SCR would be 390 | utilization 0.0 | binding_leg None
+   KR1107 퍼시픽라이프리 | printed Y 108 | 10% x SCR would be 72 | utilization 0.0 | binding_leg None
+   KR1108 마이브라운반려동물전문보험 | printed Y 3 | 10% x SCR would be 2 | utilization 0.0 | binding_leg None

@@ -1,0 +1,100 @@
+PIN rev=dbbffcb5 registry=1eb96b5cb635 forward=1db3db7d8745
+== KR0068 한화생명  baseline capital 252154.2 basic 85208.7 scr_post 150110.7 scr_pre 150112.0  baseline_basis_flag(pub)=None
+   bond hybrid    한화생명보험신종자본증권5 (원화 신종자본증권, 공모) issue=2024-07-17 call=2029-07-17 mat=2054-07-17 amt=5000.0 type=tier2 basis=tier2
+   bond hybrid    한화생명보험신종자본증권6 (원화 신종자본증권, 공모) issue=2024-09-24 call=2029-09-24 mat=2054-09-24 amt=6000.0 type=tier2 basis=tier2
+   bond hybrid    한화생명보험신종자본증권8 (원화 신종자본증권, 공모) issue=2025-03-26 call=2030-03-26 mat=2055-03-26 amt=6000.0 type=tier2 basis=tier2
+   bond hybrid    외화신종자본증권 (신종자본증권 3(해외), 공모/외화) issue=2025-06-24 call=2030-06-24 mat=2055-06-24 amt=13819.0 type=tier2 basis=tier2
+   bond subordinated 후순위사채(외화) 제2회 무보증 후순위사채 (J.P.Morga issue=2022-02-04 call=2027-02-04 mat=2032-02-04 amt=10719.7 type=None basis=None
+   bond subordinated 한화생명보험3(후) 제3회 무보증 후순위사채 (원화, 공모) issue=2022-06-17 call=2027-06-17 mat=2032-06-17 amt=3991.7 type=None basis=None
+   bond subordinated 한화생명보험4(후) 제4회 무보증 후순위사채 (원화, 공모) issue=2023-08-02 call=2028-08-02 mat=2033-08-02 amt=4988.2 type=None basis=None
+   bond subordinated 한화생명보험7(후) 제7회 무보증 후순위사채 (원화, 공모) issue=2024-12-12 call=2029-12-12 mat=2034-12-12 amt=7979.3 type=None basis=None
+   2026 scr 150110.7/150110.7 cap 252154.2/252154.2 basic 85208.7/85208.7 ratio 167.98/167.98 basic_ratio 56.76/56.76 OK
+   2027 scr 150111.0/150111.0 cap 237442.8/237442.8 basic 85208.7/85208.7 ratio 158.18/158.18 basic_ratio 56.76/56.76 OK
+   2028 scr 150111.2/150111.2 cap 232454.6/232454.6 basic 85208.7/85208.7 ratio 154.85/154.85 basic_ratio 56.76/56.76 OK
+   2029 scr 150111.4/150111.4 cap 213475.2/213475.2 basic 85208.7/85208.7 ratio 142.21/142.21 basic_ratio 56.76/56.76 OK
+   2030 scr 150111.6/150111.6 cap 193656.2/193656.2 basic 85208.7/85208.7 ratio 129.01/129.01 basic_ratio 56.76/56.76 OK
+   [variant R: limits on scr_pre] basic_ratio: 2026 56.76, 2027 56.76, 2028 56.76, 2029 56.76, 2030 56.76   max |diff| vs model = 0.00%p
+== KR0011 DB손해보험  baseline capital 235232.0 basic 110440.0 scr_post 115099.0 scr_pre 115099.0  baseline_basis_flag(pub)=None
+   bond hybrid    제1회 신종자본증권 (공모) issue=2025-09-01 call=2030-09-25 mat=2055-09-01 amt=7470.0 type=tier1 basis=tier1
+   bond hybrid    제2회 신종자본증권 (사모) issue=2025-09-25 call=2030-09-01 mat=2055-09-25 amt=1200.0 type=tier1 basis=tier1
+   bond hybrid    KR0011 신종자본증권 (발행 2026-02-11, H1 2 issue=2026-02-11 call=2031-02-11 mat=2056-02-11 amt=4420.0 type=tier1 basis=tier1
+   bond hybrid    KR0011 신종자본증권 (발행 2026-06-09, H1 2 issue=2026-06-09 call=2031-06-09 mat=2056-06-09 amt=4100.0 type=tier1 basis=tier1
+   bond hybrid    KR0011 신종자본증권 (발행 2026-06-29, H1 2 issue=2026-06-29 call=2031-06-29 mat=2056-06-29 amt=300.0 type=tier1 basis=tier1
+   bond subordinated 제1-2회 무보증 후순위사채 issue=2017-05-25 call=2022-05-25 mat=2027-05-25 amt=1700.0 type=None basis=None
+   bond subordinated 제3회 무보증 후순위사채 issue=2025-02-20 call=2030-02-20 mat=2035-02-20 amt=8000.0 type=None basis=None
+   2026 scr 115099.0/115099.0 cap 235232.0/235232.0 basic 110440.0/110440.0 ratio 204.37/204.37 basic_ratio 95.95/95.95 OK
+   2027 scr 115099.0/115099.0 cap 235232.0/235232.0 basic 110440.0/110440.0 ratio 204.37/204.37 basic_ratio 95.95/95.95 OK
+   2028 scr 115099.0/115099.0 cap 235232.0/235232.0 basic 110440.0/110440.0 ratio 204.37/204.37 basic_ratio 95.95/95.95 OK
+   2029 scr 115099.0/115099.0 cap 235232.0/235232.0 basic 110440.0/110440.0 ratio 204.37/204.37 basic_ratio 95.95/95.95 OK
+   2030 scr 115099.0/115099.0 cap 218562.0/218562.0 basic 107750.1/107750.1 ratio 189.89/189.89 basic_ratio 93.62/93.62 OK
+   [variant R: limits on scr_pre] basic_ratio: 2026 95.95, 2027 95.95, 2028 95.95, 2029 95.95, 2030 93.62   max |diff| vs model = 0.00%p
+== KR0050 하나손해보험  baseline capital 7114.0 basic 1049.0 scr_post 4677.0 scr_pre 4677.0  baseline_basis_flag(pub)=None
+   bond hybrid    하나손해보험 제1회 신종자본증권(사모) issue=2024-05-14 call=2029-05-14 mat=2054-05-14 amt=1000.0 type=tier2 basis=tier2
+   2026 scr 4677.0/4677.0 cap 7114.0/7114.0 basic 1049.0/1049.0 ratio 152.11/152.11 basic_ratio 22.43/22.43 OK
+   2027 scr 4677.0/4677.0 cap 7114.0/7114.0 basic 1049.0/1049.0 ratio 152.11/152.11 basic_ratio 22.43/22.43 OK
+   2028 scr 4677.0/4677.0 cap 7114.0/7114.0 basic 1049.0/1049.0 ratio 152.11/152.11 basic_ratio 22.43/22.43 OK
+   2029 scr 4677.0/4677.0 cap 6114.0/6114.0 basic 1049.0/1049.0 ratio 130.72/130.72 basic_ratio 22.43/22.43 OK
+   2030 scr 4677.0/4677.0 cap 6114.0/6114.0 basic 1049.0/1049.0 ratio 130.72/130.72 basic_ratio 22.43/22.43 OK
+   [variant R: limits on scr_pre] basic_ratio: 2026 22.43, 2027 22.43, 2028 22.43, 2029 22.43, 2030 22.43   max |diff| vs model = 0.00%p
+== KR0097 하나생명보험  baseline capital 9269.0 basic 955.9 scr_post 6704.0 scr_pre 7554.0  baseline_basis_flag(pub)=None
+   bond hybrid    국내 무기명식 무보증 무담보 신종자본증권 (제1회) issue=2023-03-31 call=2028-03-31 mat=2053-03-31 amt=1798.8 type=tier1 basis=tier1
+   2026 scr 6704.0/6704.0 cap 9269.0/9269.0 basic 955.9/955.9 ratio 138.26/138.26 basic_ratio 14.26/14.26 OK
+   2027 scr 6845.7/6845.7 cap 9269.0/9269.0 basic 970.0/970.0 ratio 135.40/135.40 basic_ratio 14.17/14.17 OK
+   2028 scr 6987.3/6987.3 cap 7470.2/7470.2 basic 285.5/285.5 ratio 106.91/106.91 basic_ratio 4.09/4.09 OK
+   2029 scr 7129.0/7129.0 cap 7470.2/7470.2 basic 285.5/285.5 ratio 104.79/104.79 basic_ratio 4.00/4.00 OK
+   2030 scr 7270.7/7270.7 cap 7470.2/7470.2 basic 285.5/285.5 ratio 102.74/102.74 basic_ratio 3.93/3.93 OK
+   [variant R: limits on scr_pre] basic_ratio: 2026 14.26, 2027 13.96, 2028 2.87, 2029 2.81, 2030 2.76   max |diff| vs model = 1.22%p
+== KR0073 교보생명보험  baseline capital 163821.0 basic 94133.6 scr_post 81604.0 scr_pre 105398.0  baseline_basis_flag(pub)=None
+   bond hybrid    외화신종자본증권 (USD 500M, 지속가능채권) issue=2022-06-15 call=2027-06-15 mat=2052-06-15 amt=6448.5 type=legacy_tfi basis=legacy_tfi
+   bond hybrid    원화신종자본증권 (지속가능채권, 2021) issue=2021-09-10 call=2026-09-10 mat=2051-09-10 amt=4700.0 type=legacy_tfi basis=legacy_tfi
+   bond hybrid    원화신종자본증권 (지속가능채권, 2023) issue=2023-05-12 call=2028-05-12 mat=2053-05-12 amt=5000.0 type=tier2 basis=tier2
+   bond hybrid    원화신종자본증권 (2024) issue=2024-11-12 call=2029-11-12 mat=2054-11-12 amt=6000.0 type=tier1 basis=tier1
+   bond subordinated 무보증후순위사채 (2024) issue=2024-08-06 call=2029-08-06 mat=2034-08-06 amt=7000.0 type=None basis=None
+   2026 scr 81604.0/81604.0 cap 159121.0/159121.0 basic 89433.6/89433.6 ratio 194.99/194.99 basic_ratio 109.59/109.59 OK
+   2027 scr 85569.7/85569.7 cap 152672.5/152672.5 basic 82985.1/82985.1 ratio 178.42/178.42 basic_ratio 96.98/96.98 OK
+   2028 scr 89535.3/89535.3 cap 147672.5/147672.5 basic 82985.1/82985.1 ratio 164.93/164.93 basic_ratio 92.68/92.68 OK
+   2029 scr 93501.0/93501.0 cap 134672.5/134672.5 basic 76985.1/76985.1 ratio 144.03/144.03 basic_ratio 82.34/82.34 OK
+   2030 scr 97466.7/97466.7 cap 134672.5/134672.5 basic 76985.1/76985.1 ratio 138.17/138.17 basic_ratio 78.99/78.99 OK
+   [variant R: limits on scr_pre] basic_ratio: 2026 109.59, 2027 96.98, 2028 92.68, 2029 82.34, 2030 78.99   max |diff| vs model = 0.00%p
+== KR0001 메리츠화재해상보험  baseline capital 145432.0 basic 52538.0 scr_post 63107.0 scr_pre 63107.0  baseline_basis_flag(pub)=None
+   bond hybrid    메리츠화재 제2회 신종자본증권(사모) issue=2022-04-07 call=2027-04-07 mat=2052-04-07 amt=700.0 type=legacy_tfi basis=legacy_tfi
+   bond hybrid    메리츠화재 제3회 신종자본증권(사모) issue=2022-06-30 call=2027-06-30 mat=2052-06-30 amt=1100.0 type=legacy_tfi basis=legacy_tfi
+   bond subordinated 메리츠화재해상보험7 / 제7회 무보증 후순위사채 issue=2021-04-12 call=2026-04-12 mat=2031-04-12 amt=2100.0 type=None basis=None
+   bond subordinated 메리츠화재해상보험8 / 제8회 무보증 후순위사채 issue=2022-05-13 call=2027-05-13 mat=2032-05-13 amt=2960.0 type=None basis=None
+   bond subordinated 메리츠화재해상보험9 무보증 후순위사채(사모) issue=2022-06-20 call=2027-06-20 mat=2032-06-20 amt=900.0 type=None basis=None
+   bond subordinated 메리츠화재해상보험10 무보증 후순위사채(사모) issue=2024-04-12 call=2029-04-12 mat=2034-04-12 amt=1500.0 type=None basis=None
+   bond subordinated 메리츠화재해상보험11 / 제11회 무보증 후순위사채 issue=2024-08-28 call=2029-08-28 mat=2034-08-28 amt=6500.0 type=None basis=None
+   bond subordinated 메리츠화재해상보험12 / 제12회 무보증 후순위사채 issue=2025-02-13 call=2030-02-13 mat=2035-02-13 amt=3000.0 type=None basis=None
+   bond subordinated 메리츠화재해상보험13 / 제13회 무보증 후순위사채 issue=2025-10-27 call=2030-10-27 mat=2035-10-27 amt=1050.0 type=None basis=None
+   2026 scr 63107.0/63107.0 cap 145432.0/145432.0 basic 52538.0/52538.0 ratio 230.45/230.45 basic_ratio 83.25/83.25 OK
+   2027 scr 63107.0/63107.0 cap 139352.0/139352.0 basic 50738.0/50738.0 ratio 220.82/220.82 basic_ratio 80.40/80.40 OK
+   2028 scr 63107.0/63107.0 cap 138932.0/138932.0 basic 50738.0/50738.0 ratio 220.15/220.15 basic_ratio 80.40/80.40 OK
+   2029 scr 63107.0/63107.0 cap 130512.0/130512.0 basic 50738.0/50738.0 ratio 206.81/206.81 basic_ratio 80.40/80.40 OK
+   2030 scr 63107.0/63107.0 cap 126042.0/126042.0 basic 50738.0/50738.0 ratio 199.73/199.73 basic_ratio 80.40/80.40 OK
+   [variant R: limits on scr_pre] basic_ratio: 2026 83.25, 2027 80.40, 2028 80.40, 2029 80.40, 2030 80.40   max |diff| vs model = 0.00%p
+== KR1000 코리안리재보험  baseline capital 49207.0 basic 41024.1 scr_post 23353.0 scr_pre 23353.0  baseline_basis_flag(pub)=None
+   bond hybrid    제3회 신종자본증권 (지속가능채권/ESG) issue=2022-05-30 call=2027-05-30 mat=2052-05-30 amt=2300.0 type=legacy_tfi basis=legacy_tfi
+   bond hybrid    제4회 신종자본증권 issue=2022-10-28 call=2027-10-28 mat=2052-10-28 amt=1000.0 type=legacy_tfi basis=legacy_tfi
+   bond hybrid    제5회 신종자본증권 issue=2023-03-16 call=2028-03-16 mat=2053-03-16 amt=2500.0 type=tier2 basis=tier2
+   bond hybrid    제6회 신종자본증권 issue=2024-10-11 call=2029-10-11 mat=2054-10-11 amt=2300.0 type=tier2 basis=tier2
+   2026 scr 23353.0/23353.0 cap 49207.0/49207.0 basic 41024.1/41024.1 ratio 210.71/210.71 basic_ratio 175.67/175.67 OK
+   2027 scr 23353.0/23353.0 cap 45907.0/45907.0 basic 37724.1/37724.1 ratio 196.58/196.58 basic_ratio 161.54/161.54 OK
+   2028 scr 23353.0/23353.0 cap 43407.0/43407.0 basic 37724.1/37724.1 ratio 185.87/185.87 basic_ratio 161.54/161.54 OK
+   2029 scr 23353.0/23353.0 cap 41107.0/41107.0 basic 37724.1/37724.1 ratio 176.02/176.02 basic_ratio 161.54/161.54 OK
+   2030 scr 23353.0/23353.0 cap 41107.0/41107.0 basic 37724.1/37724.1 ratio 176.02/176.02 basic_ratio 161.54/161.54 OK
+   [variant R: limits on scr_pre] basic_ratio: 2026 175.67, 2027 161.54, 2028 161.54, 2029 161.54, 2030 161.54   max |diff| vs model = 0.00%p
+
+classification sensitivity of the basic-ratio path (published basis vs flipped), %p:
+  KR1000 코리안리 제5·6회 -> 기본자본형(발행사 기본자본 처리 가정) : 2026 175.67 -> 175.67 (+0.00); 2027 161.54 -> 161.54 (+0.00); 2028 161.54 -> 161.39 (-0.15); 2029 161.54 -> 151.54 (-10.00); 2030 161.54 -> 151.54 (-10.00)
+  KR0011 DB손보 제3·4·5회 -> 보완자본형(X 검정 쪽) : 2026 95.95 -> 95.95 (+0.00); 2027 95.95 -> 95.95 (+0.00); 2028 95.95 -> 95.95 (+0.00); 2029 95.95 -> 95.95 (+0.00); 2030 93.62 -> 88.42 (-5.20)
+  KR0097 하나생명 제1회 -> 보완자본형(우리 분류) : 2026 14.26 -> 14.26 (-0.00); 2027 14.17 -> 13.96 (-0.21); 2028 4.09 -> 13.68 (+9.59); 2029 4.00 -> 13.41 (+9.40); 2030 3.93 -> 13.15 (+9.22)
+  KR0073 교보 2024-11 -> 보완자본형(우리 분류) : 2026 109.59 -> 109.59 (+0.00); 2027 96.98 -> 96.98 (+0.00); 2028 92.68 -> 92.68 (+0.00); 2029 82.34 -> 88.75 (+6.42); 2030 78.99 -> 85.14 (+6.16)
+
+total-path invariance, published after vs 'before' snapshot (capital/ratio/scr, all ok rows): 690 compared, 0 differ
+basic-ratio path changed for 11 companies: KR0005, KR0011, KR0032, KR0050, KR0068, KR0072, KR0073, KR0083, KR0097, KR0104, KR1000
+
+vs previous commit ef62969: 230 year-points compared; total-path (capital/ratio/scr) differs in 0; basic path differs in 0 []
+rows still carrying baseline_basis_flag=true: [] ; rows with the field at all: 0
+projection fields basic_*_by_type present anywhere (should be only when a mismatch exists): []
+
+COMPARED 35 series points, 0 differ beyond rounding tolerance
