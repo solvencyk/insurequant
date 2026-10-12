@@ -1083,7 +1083,13 @@
                 label: function(c) {
                   if (pct == null) return opt.na || '데이터 없음';
                   const extra = opt.extra ? [opt.extra] : [];
-                  if (c.dataIndex === 0) return ['사용: ' + (pct > 100 ? '100%+ (실제 ' + pct.toFixed(1) + '%' + (opt.overNote ? ' · ' + opt.overNote : '') + ')' : pct.toFixed(2) + '%')].concat(extra);
+                  // 375px 에서 툴팁이 캔버스(약 325px)보다 넓어 오른쪽이 잘리던 건(검증 감사 20261012T2236Z): 긴 한 줄을 둘로 나눈다.
+                  if (c.dataIndex === 0) {
+                    const lines = pct > 100
+                      ? ['사용: 100%+ (실제 ' + pct.toFixed(1) + '%)'].concat(opt.overNote ? [opt.overNote] : [])
+                      : ['사용: ' + pct.toFixed(2) + '%'];
+                    return lines.concat(extra);
+                  }
                   return ['잔여: ' + Math.max(0, 100 - pct).toFixed(2) + '%'].concat(extra);
                 }
               }
@@ -1118,8 +1124,10 @@
       //  tier2: rule/reason — rule 이 NA 면 값이 null 이고 reason(경과조치 표 미공시)이 붙는다.
       const t1Unconf = !!(t1 && t1.type_unconfirmed);
       const t1UnconfPct = t1 && t1.tier1_pct_if_unconfirmed_tier2 != null ? t1.tier1_pct_if_unconfirmed_tier2 : null;
+      // 「보완자본형이면 X%」는 표시값과 다를 때만 붙인다(같으면 정보가 없고 툴팁만 넓어진다).
+      const t1UnconfDiffers = t1UnconfPct != null && (t1Pct == null || t1UnconfPct.toFixed(1) !== Number(t1Pct).toFixed(1));
       const t1UnconfText = t1Unconf
-        ? '기본자본형/보완자본형 미확정 신종 포함' + (t1UnconfPct != null ? ', 보완자본형이면 ' + t1UnconfPct.toFixed(1) + '%' : '')
+        ? '기본자본형/보완자본형 미확정 신종 포함' + (t1UnconfDiffers ? ', 보완자본형이면 ' + t1UnconfPct.toFixed(1) + '%' : '')
         : '';
       const t2Na = (t2 && t2Pct == null && (t2.rule === 'NA' || t2.reason)) ? (t2.reason || '경과조치 표 미공시') : '';
       donutTier1Chart = renderDonut('donut-tier1', donutTier1Chart, t1Pct,
@@ -1197,6 +1205,20 @@
       return `${company}: 자본비율 전망 대상이 아닙니다.`;
     }
 
+    // 음수는 △(세모) — 비율(%)·%p 모두 ASCII 마이너스를 쓰지 않는다. dp = 소수 자리.
+    function fmtTriPct(v, dp) {
+      const x = Number(v);
+      if (v == null || !isFinite(x)) return '-';
+      const t = Math.abs(x).toFixed(dp);
+      return (x < 0 && Number(t) !== 0 ? '△' : '') + t + '%';
+    }
+    // 전망 한 해의 지표가 자본잠식(<=0)으로 잘렸는지. 플래그가 있으면 플래그, 구판(플래그 없음)이면 금액이 0 이하일 때.
+    function fwExhausted(p, flag, amountKey) {
+      if (p[flag] === true) return true;
+      if (p[flag] === false) return false;
+      return p[amountKey] != null && p[amountKey] <= 0;
+    }
+
     function updateForwardPanel() {
       const company = document.getElementById('company').value;
       const placeholder = document.getElementById('forward-placeholder');
@@ -1225,22 +1247,29 @@
       wrap.style.display = 'block';
 
       const years = row.projections.map(p => String(p.year));
-      const ratioData = row.projections.map(p => p.ratio_pct);
-      const basicRatioData = row.projections.map(p => p.basic_ratio_pct);
+      // 2026-10-12 (검증 감사 20261012T2236Z): 가용자본(기본자본) <= 0 인 해는 JSON 이 비율을 0.0 으로 자르고 *_exhausted 를 true 로 둔다.
+      //  잘린 0.0 을 선·점으로 그리면 거짓 개선처럼 보이므로 그 해는 null(점 없음)로 두고 툴팁에 「자본잠식」, 노트의 변화 칸은 「—」.
+      //  플래그가 없는 구판 JSON 은 자본(기본자본) 금액이 0 이하일 때 같은 취급.
+      const exR = row.projections.map(p => fwExhausted(p, 'capacity_exhausted', 'capital_eok'));
+      const exB = row.projections.map(p => fwExhausted(p, 'basic_capacity_exhausted', 'basic_capital_eok'));
+      const ratioData = row.projections.map((p, i) => (exR[i] || p.ratio_pct == null) ? null : p.ratio_pct);
+      const basicRatioData = row.projections.map((p, i) => (exB[i] || p.basic_ratio_pct == null) ? null : p.basic_ratio_pct);
 
-      // y축 스케일 (130%/50% 기준선 포함, 윗부분 차트 로직과 동일)
+      // y축 스케일 (130%/50% 기준선 포함, 윗부분 차트 로직과 동일). null(자본잠식) 해는 범위 계산에서 뺀다.
       const solvencyReference = 130;
       const basicReference = 50;
-      const sMin = Math.min(...ratioData, solvencyReference);
-      const sMax = Math.max(...ratioData, solvencyReference);
+      const fin = a => a.filter(v => v != null && isFinite(v));
+      const padOf = (range, ref) => range > 0 ? range * 0.15 : ref * 0.2;
+      const sMin = Math.min(...fin(ratioData), solvencyReference);
+      const sMax = Math.max(...fin(ratioData), solvencyReference);
       const sRange = sMax - sMin;
-      const sYMin = Math.max(0, sMin - sRange * 0.15);
-      const sYMax = sMax + sRange * 0.15;
-      const bMin = Math.min(...basicRatioData, basicReference);
-      const bMax = Math.max(...basicRatioData, basicReference);
+      const sYMin = Math.max(0, sMin - padOf(sRange, solvencyReference));
+      const sYMax = sMax + padOf(sRange, solvencyReference);
+      const bMin = Math.min(...fin(basicRatioData), basicReference);
+      const bMax = Math.max(...fin(basicRatioData), basicReference);
       const bRange = bMax - bMin;
-      let bYMin = Math.max(0, bMin - bRange * 0.15);
-      let bYMax = bMax + bRange * 0.15;
+      let bYMin = Math.max(0, bMin - padOf(bRange, basicReference));
+      let bYMax = bMax + padOf(bRange, basicReference);
       // 보조축이 주축과 겹치면 축소 (윗 차트와 동일 패턴)
       let scaledBasicRef = basicReference;
       let scaledBasicData = [...basicRatioData];
@@ -1288,6 +1317,21 @@
               pointRadius: 5,
               pointHoverRadius: 7,
               _originalBasic: basicRatioData
+            },
+            {
+              // 자본잠식 해의 툴팁 전용(보이지 않는 점). 점이 null 인 해는 Chart.js 가 툴팁을 안 띄우므로 이 점이 그 자리를 잡는다.
+              label: '자본잠식',
+              data: years.map((y, i) => (exR[i] || exB[i]) ? sYMin : null),
+              yAxisID: 'y',
+              showLine: false,
+              fill: false,
+              pointRadius: 0,
+              pointHoverRadius: 0,
+              pointHitRadius: 0,
+              borderColor: 'rgba(0,0,0,0)',
+              backgroundColor: 'rgba(0,0,0,0)',
+              _exR: exR,
+              _exB: exB
             }
           ]
         },
@@ -1296,12 +1340,18 @@
           maintainAspectRatio: false,
           plugins: {
             title: {display: false},
-            legend: {position: window.innerWidth < 640 ? 'bottom' : 'top'},
+            legend: {position: window.innerWidth < 640 ? 'bottom' : 'top', labels: {filter: item => item.datasetIndex !== 2}},
             tooltip: {
               mode: 'index',
               intersect: false,
               callbacks: {
                 label: function(context) {
+                  if (context.datasetIndex === 2) {
+                    const ds = context.dataset, i = context.dataIndex, out = [];
+                    if (ds._exR[i]) out.push('지급여력비율: 자본잠식');
+                    if (ds._exB[i]) out.push('기본자본비율: 자본잠식');
+                    return out;
+                  }
                   let label = context.dataset.label || '';
                   if (label) label += ': ';
                   if (context.parsed.y == null) { label += '데이터 없음'; return label; }
@@ -1316,10 +1366,14 @@
                 // 2026-10-12 새 필드(툴팁에만, 화면 문장 아님): 기본자본비율 점에 신종 분류 기준 경로를 덧붙인다.
                 //  basic_ratio_by_type_pct = 발행사 처리와 우리 분류가 다른 회사(baseline_basis_flag)의 분류 기준 경로,
                 //  basic_ratio_if_tier2_type_pct = 미확정 증권이 있는 회사의 보완자본형 가정 경로. 필드가 없으면(구판) 아무것도 안 붙는다.
+                labelColor: function(context) {
+                  if (context.datasetIndex === 2) { const m = (window.IQTheme ? IQTheme.chart().muted : '#63666b'); return {borderColor: m, backgroundColor: m}; }
+                  return {borderColor: context.dataset.borderColor, backgroundColor: context.dataset.borderColor};
+                },
                 afterLabel: function(context) {
                   if (context.datasetIndex !== 1) return [];
                   const pr = row.projections[context.dataIndex] || {};
-                  const f = v => (v < 0 ? '△' : '') + Math.abs(v).toFixed(2) + '%';
+                  const f = v => fmtTriPct(v, 2);
                   const out = [];
                   if (row.baseline_basis_flag && pr.basic_ratio_by_type_pct != null) out.push('신종 분류 기준: ' + f(pr.basic_ratio_by_type_pct));
                   if (pr.basic_ratio_if_tier2_type_pct != null) out.push('미확정 신종이 보완자본형이면: ' + f(pr.basic_ratio_if_tier2_type_pct));
@@ -1359,14 +1413,14 @@
               type: 'linear', position: 'left', beginAtZero: false,
               min: sYMin, max: sYMax,
               title: {display: true, text: '지급여력비율 (%)', color: 'rgb(75, 192, 192)'},
-              ticks: {callback: v => v.toFixed(0) + '%', color: 'rgb(75, 192, 192)'},
+              ticks: {callback: v => fmtTriPct(v, 0), color: 'rgb(75, 192, 192)'},
               grid: {color: 'rgba(75, 192, 192, 0.1)'}
             },
             y1: {
               type: 'linear', position: 'right', beginAtZero: false,
               min: bYMin, max: bYMax,
               title: {display: true, text: '기본자본비율 (%)', color: 'rgb(255, 99, 132)'},
-              ticks: {callback: v => (((v - basicScaleOffset) / basicScaleFactor)).toFixed(0) + '%', color: 'rgb(255, 99, 132)'},
+              ticks: {callback: v => fmtTriPct((v - basicScaleOffset) / basicScaleFactor, 0), color: 'rgb(255, 99, 132)'},
               grid: {drawOnChartArea: false}
             },
             x: {title: {display: true, text: '연도'}}
@@ -1376,13 +1430,22 @@
       });
 
       const baseline = row.baseline || row.baseline_2025_4Q || {};
-      const lastProj = row.projections[row.projections.length - 1];
+      const lastIdx = row.projections.length - 1;
+      const lastProj = row.projections[lastIdx];
+      // 변화 = 마지막 해(2030) 값 - 기준선. 그 해 지표가 잘렸으면(자본잠식) 「—」. 음수는 △, 기준선 값도 △.
       const fmtDrop = d => (d < 0 ? '△' : '+') + Math.abs(d).toFixed(1);
-      const dropRatio = (baseline.ratio_post_pct != null && lastProj.ratio_pct != null)
-        ? fmtDrop(lastProj.ratio_pct - baseline.ratio_post_pct) : '-';
-      const dropBasic = (baseline.basic_ratio_post_pct != null && lastProj.basic_ratio_pct != null)
-        ? fmtDrop(lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct) : '-';
-      note.innerHTML = `Baseline (${row.baseline_quarter || '최신'} 적용후): 지급여력 <b>${baseline.ratio_post_pct != null ? baseline.ratio_post_pct.toFixed(1) : '-'}%</b>, 기본자본 <b>${baseline.basic_ratio_post_pct != null ? baseline.basic_ratio_post_pct.toFixed(1) : '-'}%</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}%p, 기본자본 ${dropBasic}%p &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
+      const dropRatio = (!exR[lastIdx] && baseline.ratio_post_pct != null && lastProj.ratio_pct != null)
+        ? fmtDrop(lastProj.ratio_pct - baseline.ratio_post_pct) + '%p' : '—';
+      const dropBasic = (!exB[lastIdx] && baseline.basic_ratio_post_pct != null && lastProj.basic_ratio_pct != null)
+        ? fmtDrop(lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct) + '%p' : '—';
+      const baseOf = v => v != null ? fmtTriPct(v, 1) : '-';
+      let noteHtml = `Baseline (${row.baseline_quarter || '최신'} 적용후): 지급여력 <b>${baseOf(baseline.ratio_post_pct)}</b>, 기본자본 <b>${baseOf(baseline.basic_ratio_post_pct)}</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}, 기본자본 ${dropBasic} &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
+      // 자본잠식 해가 있으면 한 줄 안내(공개 시트 비고와 같은 표기: 자본잠식(가용자본<=0) / 기본자본 잠식(가용 기본자본<=0)).
+      const clipped = [];
+      if (exR.some(Boolean)) clipped.push('자본잠식(가용자본&lt;=0)');
+      if (exB.some(Boolean)) clipped.push('기본자본 잠식(가용 기본자본&lt;=0)');
+      if (clipped.length) noteHtml += `<br><span class="capsec-gf" id="forward-clip-note">${clipped.join(' · ')} 해의 비율은 표시하지 않습니다</span>`;
+      note.innerHTML = noteHtml;
     }
 
     // ===== 하단 패널: 자본성증권 발행현황(시점별 누적 막대) + 큼직한 셀 2개 =====
@@ -1480,11 +1543,16 @@
               (b.issue_date === latest.issue_date && Number(b.outstanding_eok) > Number(latest.outstanding_eok))) latest = b;
         });
         const total = all.reduce((a, b) => a + (isFinite(Number(b.face_eok)) ? Number(b.face_eok) : 0), 0);
-        const calls = bs.filter(b => b.call_date && b.call_date >= ref);
+        // 잔액이 비어 있는(null·빈 칸·숫자가 아닌 표식, 예: 원장 미갱신) 증권도 콜일은 후보로 둔다 — 날짜만 보이고 금액은 생략.
+        //  잔액이 0 으로 확정된(상환 끝) 증권은 종전대로 후보가 아니다. 날짜 모양(YYYY-MM-DD)이 아닌 콜일은 후보가 아니다.
+        const amtOf = b => (b.outstanding_eok == null || b.outstanding_eok === '' || !isFinite(Number(b.outstanding_eok))) ? null : Number(b.outstanding_eok);
+        const isDate = x => typeof x === 'string' && /^\d{4}-\d{2}-\d{2}/.test(x);
+        const calls = all.filter(b => isDate(b.call_date) && b.call_date >= ref && (amtOf(b) == null || amtOf(b) > 0));
         let nextDate = null, nextEok = null;
         if (calls.length) {
           nextDate = calls.map(b => b.call_date).sort()[0];
-          nextEok = calls.filter(b => b.call_date === nextDate).reduce((a, b) => a + Number(b.outstanding_eok), 0);
+          const same = calls.filter(b => b.call_date === nextDate);
+          nextEok = same.some(b => amtOf(b) == null) ? null : same.reduce((a, b) => a + amtOf(b), 0);
         }
         const asOfs = bs.map(b => b.as_of).filter(Boolean).sort();
         return {
@@ -1513,8 +1581,11 @@
         }
         const rate = t.latest_coupon_pct == null ? '—' : Number(t.latest_coupon_pct).toFixed(2) + '%';
         const issued = t.issued_total_eok == null ? '—' : fmtEokInt(t.issued_total_eok) + '억';
-        const call = t.next_call_date
-          ? esc(t.next_call_date) + (t.next_call_eok == null ? '' : ' (' + fmtEokInt(t.next_call_eok) + '억)')
+        // 콜일만 있고 금액이 없거나(null·빈 칸·표식) 날짜 모양이 아니면 날짜만 / 대시로 그린다.
+        const callOk = typeof t.next_call_date === 'string' && /^\d{4}-\d{2}-\d{2}/.test(t.next_call_date);
+        const callAmt = (t.next_call_eok != null && t.next_call_eok !== '' && isFinite(Number(t.next_call_eok))) ? Number(t.next_call_eok) : null;
+        const call = callOk
+          ? esc(t.next_call_date) + (callAmt == null ? '' : ' (' + fmtEokInt(callAmt) + '억)')
           : '—';
         const tip = [];
         if (t.latest_issue_date) tip.push('최근 발행일 ' + esc(t.latest_issue_date));

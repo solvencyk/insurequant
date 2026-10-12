@@ -7,6 +7,12 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-13 — K-ICS Forward Outlook 거짓 개선 제거 · 음수 △ · 도넛 툴팁 375px · 콜일 칸 내구성 (ticket 20261012T2236Z)
+
+- **원인**: 노트가 자르지 않은 기준선에서 잘린(0.0) 2030 값을 빼 예별 「+41.8%p」·롯데 「+5.4%p」를 인쇄했고, 차트도 0 선과 「0.00%」 툴팁을 그렸다. 노트의 음수 기준선은 ASCII 마이너스였다.
+- **변경(`K-ICS.html`)**: `fwExhausted()`(플래그, 없으면 금액 <= 0) -> 잘린 해 시리즈 null, y축 범위는 null 제외(전부 null 이면 기준선 기준 여백). 보이지 않는 3번째 시리즈가 null 해의 툴팁 자리를 잡아 「지급여력비율: 자본잠식」/「기본자본비율: 자본잠식」을 찍는다(범례·색 상자 처리). 노트 변화 칸은 잘렸으면 「—」, 안내 한 줄은 공개 시트 비고 표기(자본잠식(가용자본<=0) · 기본자본 잠식(가용 기본자본<=0)) 재사용. `fmtTriPct()` 로 노트 기준선·툴팁·y축 눈금(보조축 환산 포함) 음수 △. 도넛 툴팁 「사용: 100%+ (실제 X%)」와 「초과분은 …」를 두 줄로 분리, `tier1_pct_if_unconfirmed_tier2` 는 표시값(소수 첫째 자리)과 다를 때만 「보완자본형이면 X%」(툴팁·? 꼬리 공통). 콜 상환 도래일 칸: 잔액이 null·빈 칸·표식(원장 미갱신)인 증권도 콜일 후보로 두고 금액 없이 날짜만, 날짜 모양이 아니면 대시. 잔액 0 확정은 종전대로 후보 아님.
+- **검증**: `scripts/check_kics_forward_note.py --mobile --dark`(47사 x 3뷰 141회: 노트 변화 = 자본/SCR 기준 또는 「—」, 시리즈 null, 안내 줄, ASCII 마이너스 0, 도넛 툴팁 실제 호버 폭 <= 캔버스 325, 콘솔·넘침 0) 위반 0. 같은 스크립트를 옛 판(HEAD)에 돌리면 예별 +41.8%p·0.00% 툴팁, 하나생명 329·푸본 341·농협손해 349 폭 초과를 그대로 잡는다. `scripts/check_kics_callcell.py` 합성 6변형(null·빈 칸·표식·필드 없음·날짜 표식) 통과. 시험 `tests/test_kics_forward_note.py`(JSON 계약·정적, `RUN_KICS_FORWARD=1` 이면 브라우저) + `test_deploy_assets` 12 · `test_push_gate_wiring` 66 · `test_prepush_scope` 65 · `test_share_screenshot` 7 · `check_share_screenshot.py` 통과.
+
 ## 2026-10-12 (오후) -- K-ICS 소진율 도넛·Forward Outlook 복원 (발행현황 패널은 그대로)
 
 티켓 `inbox/designer/20261012T2035Z__orchestrator__MULTI_2026.2Q__kics_restore_utilization_donuts_and_forward.md`(공유, 고치지 않음). 데이터는 publishing 이 먼저 커밋(`ef62969`·`2729a53`·`35740b2`·`8037840`: 새 `kics_tier1_utilization.json`·`kics_tier2_utilization.json`·`kics_forward_capital.json`, 비공개 목록 비움).
