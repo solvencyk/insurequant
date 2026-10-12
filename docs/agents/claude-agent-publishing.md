@@ -113,6 +113,8 @@ The HTML pages fetch these directly — **데이터를 HTML 에 인라인하지 
   다시 돌렸으면 **그 뒤에 반드시 이것을 돌린다** — `tests/unit/test_capital_utilization_rules.py` 가 배포본 == 산식을 훅에서 강제한다.
   새 신종·우선주가 공시에 생기면 등재부에 형을 먼저 적는다(같은 테스트의 census 가 빠진 회사를 막는다).
   소진율을 바꿨으면 forward sim 을 같은 인자로 다시 돌린다 — confidence 블록이 tier 값을 읽는다.
+  forward sim 의 기본자본 경로도 같은 등재부를 읽는다(2026-10-12): 기발행 15% · 기본자본형 10% · 보완자본형 기본자본 0, 발행사 처리가
+  다른 증권은 `issuer_type`. 등재부만 고치고 forward 를 안 돌리면 `tests/unit/test_forward_capital_tiers.py` 가 배포본 != 모델로 막는다.
 - `scripts/forward_capital_simulation.py --baseline-quarter <Q> --tier-quarter <Q> --bonds-source data/bonds/capital_securities_fy2026h1.json`
   — forward-looking sim (데이터 JSON 만 쓴다)
 - `scripts/promote_from_to_be.py` — what-if → as-is promotion

@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 최종 재동기화(push 직전 정합, 커밋만 · push 보류)** — xlsx 5시트(`17BS` 처브 6칸·`CSM상각` 18칸·`손익분해PL` +7행/1칸·`보험계약부채` 18칸·`K-ICS공시` +16행/4칸)·손해율 패널(재보사 세그먼트 표준화)·combo(처브)·compare(2칸) 재빌드·`public_exports`(`538cbe7`·`dee37c2`). 드리프트 0, data-contract RED 0, live_artifacts RED 0(baselined 25), 시험 142 passed.
+  남은 것: ① `downstream_kpis.json` 은 어느 HTML 도 안 읽고 이번 변경이 아닌 옛 `cf66dce`(상각 스케줄 정정) 미반영분(213칸) 때문에 어긋나 있어 재빌드본을 커밋하지 않음(`downstream_kpis.rebuilt_NOT_COMMITTED.json`) ② `viz_build_nb_csm_ratio.py` 는 IR 원문 입력이라 이번 마스터와 무관해 생략 ③ 상세 `data/_derived/final_resync_20261012/runlog.md`.
+
 - **2026-10-12 `securities_summary` 필드 + `보험금예실차비율` 시트(커밋만 · push 보류)** — 티켓 `1150Z`: 두 소진율 JSON 47사 행에 최근 발행금리·2023 이후 발행액·가장 가까운 콜(`scripts/capital_securities_summary.py`, 신종 null 30·후순위 null 23, 한화생명 검산 일치, 시험 20, `ad9dfb6`). `1130Z` 3번: xlsx 새 시트 162행 + 공개본(`0397ce4`, 다른 17시트 값 동일).
   남은 것: ① `1130Z` 1~2번(메리츠·흥국생명 기발행 차감)은 owner 보류 ② `1210Z` 시점별 잔액 JSON - 신종은 정기보고서 표준표(신종자본증권 미상환 잔액)로 가능, 후순위채는 표준표가 없어 소스 결정 필요 ③ designer: `download-survey.js` 시트 목록에 `보험금예실차비율` 1줄. 다른 시트 xlsx 드리프트 5건은 파서 마스터 변경 미반영.
 
