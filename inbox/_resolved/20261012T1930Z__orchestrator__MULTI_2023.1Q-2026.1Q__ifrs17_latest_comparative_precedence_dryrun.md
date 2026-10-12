@@ -3,7 +3,7 @@ from: orchestrator
 to: parser
 lane: ifrs17
 created: 20261012T1930Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.1Q-2026.1Q
@@ -38,3 +38,7 @@ owner 지시(2026-10-12 채팅): K-ICS 에 정한 원칙을 **PL·CSM 도 같은
 - 예외 전수 건수·유형 분포, 판정별 건수와 영향 셀 수, 라이나 2023.1Q·2Q 가능 여부, 룰 사각, 산출 경로·커밋 해시. `TODO_parser_ifrs17.md` Status + `docs/changelog_parser_ifrs17.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+드라이런 완료(parser-ifrs17, 커밋 580ae0e, 읽기 전용; 마스터·등재부·골든·xlsx 무변경). 산출: data/_derived/ifrs17_latest_comparative_precedence_dryrun_20261012/ (classification.csv · case_verdicts.csv · census_blocks.csv · dryrun_stats.json). summary.md 는 하니스 쓰기 제한으로 못 만들었고 같은 내용이 docs/changelog_parser_ifrs17.md 11차 항목에 있다.
+예외·보류 254건 분류(ⓐ 30 · ⓑ 11 · ⓒ 90 · ⓓ 77 · ⓔ 46 · 신규 발견 9). 529블록 판정: 최신 채택 39(진짜 재작성 32 · 예외 해소 7, 마스터 셀 약 240) · gold 충돌 59 · 현행 유지 24 · 둘 다 불가 1 · 조건부 2 · 후보 미검증 107(PL Tier-2 전기 컬럼 리더 부재) · 이전 라운드 재판정 안 함 7 · 변화 없음 206 · 비교 컬럼 추출 불가 84.
+라이나 CSM 2023.1Q·2Q 보류 유지(최신 비교열이 보류 행과 숫자까지 같음). 적용은 마스터만 고치면 빌더가 되돌리므로 gold-overlay 등재 또는 전기 컬럼 리더가 필요 — owner 결정 후 별도 티켓.
+orchestrator 종결: 2026-10-12.
