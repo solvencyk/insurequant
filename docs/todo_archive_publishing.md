@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 소진율 도넛 + Forward Outlook 재공개(커밋만 · push 보류)** — 티켓 `20261012T2030Z`: 등재부 재분류(하나생명 제1회·푸본 600·농협생명 제5회·코리안리 제5/6회 -> tier2 확정, 교보 2024-11 type=tier2 + `issuer_type`=tier1) -> 소진율 tier1 만 4사 변경(하나생명 238.2->0.0 · 코리안리 205.1->94.0 · 농협생명 72.7->48.5 · 푸본 42.1->17.3), tier2 불변. forward 가 증권별 계층(기발행 15% · 기본자본형 10% · 보완자본형 기본자본 0)을 따르고 총자본 경로는 47사 불변. 비공개 목록 3종 비움 + 공개 스냅샷 3시트 재생성 (`ef62969`·`2729a53`).
+  남은 것: ① designer: K-ICS.html fetch 복원과 같은 커밋에서 `LIVE_ARTIFACT_READERS` 에 루트 JSON 3개 선언(`tests/test_push_gate_wiring.py`) · `tests/test_deploy_assets.py` 의 「fetch 안 함」 단정 뒤집기 · `download-survey.js` 주석 해제 · `report-widget.js` 목록 ② owner: DB손보 2026 신종 3건·하나손해·하나생명은 census 1차가 다르게 읽음(아래 changelog), census 최종본 대조 ③ 증빙 `data/_derived/capsec_reinstate_20261012/`.
+
 - **2026-10-12 타임라인 JSON 읽는 검사기 선언 + 죽은 선언 3개 정리(커밋만 · push 보류)** — 티켓 `20261012T1945Z`: `validate_live_artifacts.check_capsec_timeline`(구조·분류/인정액 필드 금지·회사별 권면 합·건수 == `data/bonds` 파생) 신설, `LIVE_ARTIFACT_READERS`·`PANEL_DERIVED_FROM` 선언, 변이시험 3개(`test_rule_coverage_manifest`). 나머지 1건 = 비공개 3시트(forward·tier1·tier2) 선언이 ghost 검사에 걸린 것, 선언 삭제로 해소.
   남은 것: ① 배포 전 시험으로 앞당기기(작업 브랜치 HTML fetch 목록 대 선언)는 의견만, 구현 별도 ② 타임라인은 시트와 125건 중 122건만 일치(3건 타임라인 전용·1건 시트 전용)라 시트 열 수준 대조는 안 걸었다.
 

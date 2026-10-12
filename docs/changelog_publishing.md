@@ -10,6 +10,13 @@
 
 ---
 
+## 2026-10-13 — parser-ifrs17 `b8c37fff` 파생 산출물 재생성 (NB 배수 · 비교 패널 · CSM 콤보 · xlsx/공개본, 커밋 `99c7ead7` + 공개본 커밋, 커밋만 · push 보류)
+
+- 배경: `b8c37fff` 가 `CSM_waterfall`·`PL_breakdown`·`IFRS17_BS` 의 249셀을 고쳤으나 파생 파일을 다시 만들지 않아 `validate_live_artifacts` RED `NB_VS_WATERFALL` 메리츠 2023.3Q(NB 12,346.8 대 워터폴 12,197.6).
+- 재생성(확립된 빌더만, 마스터는 안 씀): `build_nb_csm_multiple.py` -> `NB_CSM_multiple.json` **12칸**(동양 2023.1Q 신계약CSM 1,762.7 -> 1,762.9 · 2023.2Q 당분기 1,825.1 -> 1,824.9, 메리츠 2023.3Q 12,346.8 -> 12,197.6 · 2023.4Q 당분기 3,659.7 -> 3,808.9 과 배수). `viz_build_compare_panel.py` -> `data/compare/panel_compare.json` **69잎**(재구성 시험 `z2_attribute_panels.py`: 63잎 = b8c37fff + NB, 6잎 = b8c37fff 이전부터 낡아 있던 현대해상·삼성생명 지표). `viz_build_csm_combo_panel.py` -> `data/csm_combo/panel_csm_combo.json` **8잎**(메리츠·동양·흥국화재 2023 분기 CSM 4칸 + `est_unreliable` 명단 1사 교체). xlsx `신계약CSM배수` 12칸 `sync_master_xlsx_sheet.py` 시트 반영, 공개본 `신계약CSM배수`·manifest 재생성.
+- 변경 없음(재실행으로 확인): `viz_build_ifrs17_panels.py`(csm_amort_schedule · insurance_pl_breakdown · bs_snapshot · sensitivity_heatmap) 와 `viz_build_csm_waterfall.py` 는 `data/dart/extracted` 를 읽어 산출이 HEAD 와 바이트 동일. 손해율·유지율·`data/company_segment.json` 은 이 마스터들을 티커 조회로만 읽어 재생성 대상 아님. `downstream_kpis.json` 은 어느 화면도 안 읽어 건드리지 않음(기존 보류).
+- 크기: 지시한 249셀 범위 안(NB 12칸 + 패널은 그 파생값). 249셀 밖의 큰 변동 없음; 단 `panel_compare` 의 6잎은 이전부터 낡은 상태였다.
+
 ## 2026-10-13 — 독립 감사 티켓 `20261012T2235Z` 요청 1·2·3 + owner 결정 8: 콜일 상충 · 하나손해 추정 행 · 기본자본 인쇄 한도 · 보완자본 기발행 차감 (커밋 `48c7c3ac` + 공개본 커밋, 커밋만 · push 보류)
 
 - **요청 1 (DB손해보험 제1·2회 콜일).** 원 공시 전수 대조(`y1_db_call_dates_all_filings.txt`): FY2025 3Q·사업보고서는 두 회차 모두 2030년 9월 1일, FY2026 1Q·반기보고서는 제1회 9월 25일·제2회 9월 1일, 발행일+5년이면 제1회 09-01·제2회 09-25 - 발행사 문서끼리 어긋나 확정 불가.
