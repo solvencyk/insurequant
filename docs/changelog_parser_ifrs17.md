@@ -1,7 +1,20 @@
 # Parser Changelog — IFRS17 lane (Stage 2)
 
-> Last updated: 2026-10-11 · Stage 2/5 — parser (ifrs17 lane)
+> Last updated: 2026-10-12 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
+
+## 2026-10-12 (9차: owner 승인 후속, 티켓 20261012T1020Z)
+
+커밋 `3bf1690`. push 안 함. 공유 티켓 미수정(오케스트레이터가 종결). 서브에이전트·docling 안 씀(PDF 텍스트층 + 쪽 렌더링 + DART XML). owner 승인 = `TODO.md` 「owner 결정 대기」 ⑦~⑩·⑮·⑯·⑳~㉒. 전 과정·표·재현 `data/disclosure/_meta/ifrs17_owner_followups_runlog_20261012.md`, 증빙·백업·게이트 전후·HEAD 키 대조 `data/_derived/ifrs17_owner_followups_20261012/`(`keydiff_vs_head.txt`).
+
+- **⑯ 재보사 인쇄된 0 7칸 복원**: validation 이 같은 날 `data/_gold/user_pl_confirmed_cells.json` 에 7칸을 등재(`f0535af`)한 것을 이름·항목·분기로 확인한 뒤 `scripts/reinsurer_resweep_pl_followup.py --restore7 --apply`. `PL_breakdown.json` 13,794 → 13,801행(+7, 값 0.0) + 값_당분기 1칸(RGA 영업외손익 2023.3Q None → 700.0) + 사이드카 7블록, 삭제 0. 데이터 계약 게이트는 7칸을 `PL_YTD_COLLAPSE_CONFIRMED_PENDING`(복원 대기 YELLOW)에서 `PL_YTD_COLLAPSE_OWNER_CONFIRMED`(박제·원천 재확인 통과 YELLOW)로 바꿔 말하고 `PL_YTD_COLLAPSE_TO_ZERO` 는 나지 않는다. 마스터테이블 게이트 pl_bridge 3653P → 3660P(진짜 1278 → 1279 · 구성상 2040 → 2046 · SKIP 2748 → 2741).
+- **⑳ 퍼시픽 KR1107 2023.4Q CSM 항목 4**: 인쇄값 950.76538 유지(마스터 변경 0), `CSM_waterfall_provenance.json` 셀에 `note` 「영업양수 1,069억 포함, 인쇄값」 + 분해(FY2024 감사보고서 51쪽 자산양수도 CSM 1,069.43억 + 추정치 변동 −118.67억)(`scripts/annotate_csm_prov_kr1107_20261012.py`). ㉑ 뮌헨 ILP 부호 · ㉒ 하노버 2023.4Q ILP 공란·제네럴 민감도는 변경 없음(HEAD 와 내용 동일 대조).
+- **⑦ 처브 KR0100 정의 통일(D2 = 일반계정 `1. 보험계약부채` + `IV. 특별계정부채`)**: 연말 DART 셀·2026 K-IFRS 서식은 변액 포함인데 중간분기는 일반계정만이라 계단이 생기고 2-4 합계가 항목 20 보다 컸다(포트폴리오 검증기 R3 RED 5). 원문 재독 9분기(토큰 일치·부채총계 항등식·2-2 요약 일치·LIC 불변 확인) 후 `IFRS17_BS.json` 항목 20 6칸(오버레이·사이드카·파트 파일 포함; 빌더 임시 실행이 라이브와 바이트 동일) + `insurance_liability_portfolio.json` 항목 14·15 9셀(18값, 항목 10~13 불변) + provenance. 검증기 RED 7 → 2, LIC 검산기 불변. 쓰다가 provenance 키 `original_basis` 가 xlsx 빌더의 「소급재작성」 표시와 겹치는 것을 발견해 `--revert`(바이트 동일 복원) 뒤 키 이름을 바꿔 다시 적용.
+- **⑧ AIG 2024.4Q · ⑨ 스위스리 2026.1Q · ⑩ 예별 2025.4Q (원문 재확인, 데이터 변경 0)**: ⑧ 값 맞음(4-6-2 합계 −2,350·775·923·683, 구조적 10배) → 등재 필요 목록. ⑨ 인쇄 합계가 두 절 모두 Indirect-Par 행을 뺐음을 렌더링으로 확인, 정정값(전체 행 합 BEL −12,221·RA 794·CSM 2,200)은 파생값이라 미적재 → 등재 필요 목록(또는 owner 파생 적재 지시). ⑩ DART 엠지 FY2025 `계약이전 (271,333,145)천원` → 기말 `-`(마스터 항목 1~6 은 인쇄값 그대로, 항목 4 −3,534.1 에 계약이전 −2,713.3 포함)와 경영공시 예별 CSM 6,227 은 보고 주체가 다른 각자의 인쇄값, 경영공시에 CSM 변동표가 없어 6,227 워터폴 확정 불가.
+- **⑮ 분할표 5사 + 한화생명**: `CSM_amortization.json` 2025.4Q 18칸 — AIA·처브·메트라이프·BNP 카디프 y9·y10 8칸(빈 칸 → 값; 뒷 반쪽 표를 합침, 별도 파일 우선, 행 항등식 + 당기 합계 = 기말 CSM + 전기 합계 = 2024.4Q 기말 CSM) · 한화생명 y1~y10 10칸(연결 표 → 별도 표 18512행, 합계 87,136.52 = 마스터 기말 CSM). 라이나는 이미 완전(DART 뒷 표와 5자리 일치)해 변경 0. 패널·추출기·xlsx 는 안 건드렸다(패널 `buckets.total` 은 계속 부분합).
+- **게이트·골든**: 포트폴리오 검증기 RED 7 → 2 · LIC 검산기 RED 0 · CSM 연속성 RED 0 · `validate_master_tables --no-build` pl_bridge 만 이동(위) · 데이터 계약 RED 0 → 5(전부 xlsx 시트 동기화 — `17BS` 6셀 · `CSM상각` 18셀 · `보험계약부채` 18셀 · `손익분해PL` 7행 + 1셀, publishing 몫). 골든 `--update`(이유: ⑦ 6칸 + ⑯ 7칸): `ifrs17_bs`(sha256 `ef70b026…` → `0d88b860…`) · `master_tables`(pl_bridge 이동만) · `builder_input_fingerprints`(ifrs17_bs 한 항목); `test_ifrs17_bs_golden` 전체 실행 통과.
+- **남은 것**: 등재 필요(validation) = (KR0029 2024.4Q, `R3_CROSS_CHECK` 10배 규칙 — 이 분기에는 등재부 읽는 쪽이 없어 규칙 변경 + 변이시험 필요) · (KR1102 2026.1Q, `R2_CENSUS`, 발행사 합계 행 불완전) · designer `csm_combo` 패널 재빌드(처브 9셀) · 분할표 읽기(`extract_amort_schedule` 앞 반쪽만) 수정은 별도 티켓(패널 재생성 + `test_viz_ifrs17_panels_golden --update`; 그 전까지 마스터를 패널에서 다시 만들면 18칸이 되돌아가므로 `scripts/load_amort_split_tables_20261012.py --apply` 재실행).
+- 도구: `scripts/annotate_csm_prov_kr1107_20261012.py` · `extract_amort_split_tables_20261012.py` · `load_amort_split_tables_20261012.py`(`--revert --apply`) · `extract_chubb_d2_20261012.py` · `apply_chubb_ilp_d2_20261012.py`(`--revert --apply`) · `apply_ifrs17_bs_fix_20261012.py`(`bspl_followup_apply_bs_fix.py` 사본). 안 건드린 것: 게이트·예외 등재부·HTML·xlsx·`public_exports`·viz 패널·K-ICS 파일. 작업 중 실수 1건: 처음에 맨 `python -` 를 한 번 실행해 스토어 python 프로세스 2개와 그 셸 1개가 남았고 모두 종료했다(저장소에 쓴 것 없음).
 
 ## 2026-10-11 (6차: 라이나 KR0074 CSM 분기 백필 + 상각 스케줄, 티켓 20261011T1700Z)
 
