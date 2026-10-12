@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261012T2040Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2026.2Q
@@ -31,3 +31,4 @@ owner 지시(2026-10-12): 소진율 도넛과 Forward Outlook 을 복원한다 �
 - 47사 대조 결과(일치/불일치 건수와 원인), 규정 대조에서 어긋난 정의, 전망 7사 손계산 대조, 화면 대조, 감사 통과 여부, 커밋 해시. `TODO_validation.md` Status + `docs/changelog_validation.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+최종 PASS(validation, 커밋 20508b03 → c76921ca → 7dac3110): 기본자본 소진율 47/47, 보완자본 소진율 47/47(원장 2022 이전 발행 잔액, 콜일 이후 제외 규칙), 보완자본 한도 분모, 전망 7사 손계산 차이 0, 총자본 경로 불변, 공개 시트 대 JSON 불일치 0, 화면 47사 1280/375px 불일치 0. 발견 사항은 publishing(48c7c3ac, 10b45d71, 7e6e55d0 등)·designer(75234ddf, 258d3c30)에서 처리·재검증. owner 결정 대기로 남긴 것: 흥국화재·악사의 콜 경과 채권 방향, 아이엠라이프 원장 기준일, 메리츠·흥국생명 외 TODO.md 참조. DB손보 기본자본형은 owner 확정. orchestrator 종결 2026-10-13.
