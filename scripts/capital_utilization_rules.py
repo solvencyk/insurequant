@@ -23,7 +23,9 @@
     R4      적용후 = 적용전 - 항목 53 (후순위만 안 뺌)              -> 적용후 - 항목 54
     R5      그 밖의 발행사 고유 차감                                -> 적용후 열 인쇄값
     R-none  기발행분 없음                                           -> 인쇄값 그대로
-    기발행 차감액 = **채권원장의 2022-12-31 이전 발행 잔액**(신종·후순위 따로, 47사 공통; owner 결정 2026-10-12 밤).
+    기발행 차감액 = **채권원장의 2022-12-31 이전 발행 잔액**(신종·후순위 따로, 47사 공통; owner 결정 2026-10-12 밤). 단 **콜일이 이미
+           지났는데 상환 안 한 채권(원장 `past_call_outstanding`=true)은 뺀다** - 자본증권의 실효 만기는 콜일이라(forward 도 콜일에 롤오프)
+           콜 경과분은 더는 인정 자본이 아니고 발행사도 자기 기발행 줄에 넣지 않는다(coordinator 정정 2026-10-13).
            인쇄된 항목 53/54 는 2023년 이후 발행분이 섞여 있을 수 있어 차감액으로 쓰지 않는다(`*_printed_eok` 참고용).
            R2~R4 는 발행사가 적용 후 열에서 인쇄값을 어떻게 뺐는지의 이름이고, 분자는 모두 같은 항등식으로 닫는다:
            분자 = 항목 47(적용 전 열) - 항목 49 - 원장 2022년 이전 신종 - 원장 2022년 이전 후순위
@@ -65,6 +67,7 @@ LEGACY_CUTOFF = "2023-01-01"   # K-ICS 시행일. 이 날 전 발행 = 기발행
 REASON_NO_TFI_TABLE = "경과조치 표 미공시"
 REGISTRY_PATH = ROOT / "data" / "bonds" / "capital_tier_registry.json"
 LEDGER_PATH = ROOT / "kics_capital_securities.json"
+BONDS_PATH = ROOT / "data" / "bonds" / "capital_securities_fy2026h1.json"
 
 RULE_BASIS = {
     "R0": "보완자본(항목 3)이 0 이라 한도 적용 대상도 0",
@@ -80,9 +83,9 @@ RULE_BASIS = {
     "R-none": "기발행 자본증권 없음 - 인쇄값 그대로",
     "NA": "항목 47~54(공통적용 경과조치 표) 원문 부재 - 산출 불가",
 }
-NEW_DEBT_ROW_BASIS = (". 기발행 차감액은 발행사 인쇄값(항목 53·54)이 아니라 채권원장의 2022년까지 발행 잔액이다 - 인쇄값에는 "
-                      "2023년 이후 발행 신규채가 섞여 있을 수 있고 신규채는 기발행이 아니라 한도 대상이다"
-                      "(owner 결정 2026-10-12: 기발행 차감은 2022년까지 발행분만).")
+NEW_DEBT_ROW_BASIS = (". 기발행 차감액은 발행사 인쇄값(항목 53·54)이 아니라 채권원장의 2022년까지 발행 잔액이다(콜일이 지났는데 "
+                      "상환 안 한 채권 제외) - 인쇄값에는 2023년 이후 발행 신규채가 섞여 있을 수 있고 신규채는 기발행이 아니라 한도 "
+                      "대상이다(owner 결정 2026-10-12: 기발행 차감은 2022년까지 발행분만).")
 
 
 def rule_basis(t2: dict) -> str:
@@ -138,6 +141,8 @@ def load_ledger(path: Path = LEDGER_PATH) -> dict[str, dict]:
     """채권원장(증권 한 건 단위) -> 회사별 {hybrid, sub, sub_legacy, as_of}.
 
     sub_legacy·hybrid_legacy 는 s4 와 같은 판정이다: 발행일이 없거나 2023-01-01 전이면 기발행(= 2022-12-31 이전 발행 잔액).
+    단 둘은 행(`kics_capital_securities.json`)이 아니라 채권원장 원본(`data/bonds/...fy2026h1.json`)에서 직접 내며, **콜일 경과 후
+    미상환(`past_call_outstanding`=true) 채권은 뺀다**(coordinator 정정 2026-10-13).
     as_of 는 그 회사 행 중 가장 오래된 잔액기준일(코멘트가 정직할 수 있는 한계).
     """
     out: dict[str, dict] = {}
@@ -157,6 +162,19 @@ def load_ledger(path: Path = LEDGER_PATH) -> dict[str, dict]:
         ao = r.get("잔액기준일")
         if ao and (e["as_of"] is None or ao < e["as_of"]):
             e["as_of"] = ao
+    # 기발행 차감액(2022-12-31 이전 발행 잔액)은 채권원장 원본에서 직접 낸다: 콜일이 지났는데 상환 안 한 채권(past_call_outstanding)은
+    # 실효 만기(= 콜일)가 지났으므로 인정 자본이 아니다 -> 차감액에서 뺀다. 발행일 없음 = 기발행(위 판정과 같다).
+    if BONDS_PATH.exists():
+        for c in json.loads(BONDS_PATH.read_text(encoding="utf-8")).get("companies", []):
+            e = out.get(c["code"])
+            if e is None:
+                continue
+            e["hybrid_legacy"] = e["sub_legacy"] = 0.0
+            for b in c.get("bonds") or []:
+                if b.get("past_call_outstanding") or (b.get("issue_date") or "") >= LEGACY_CUTOFF:
+                    continue
+                key = "hybrid_legacy" if b.get("tier") == "hybrid" else "sub_legacy"
+                e[key] += (b.get("outstanding_mn") or 0) / 100.0
     return out
 
 
@@ -215,7 +233,7 @@ def tier2_limit_subject(pre: dict, post: dict, bond_sub_legacy_eok: float | None
         # 규칙 이름은 발행사가 인쇄값을 어떻게 뺐는지(인쇄값으로 판별). 분자는 전부 같은 항등식으로 닫는다:
         #   분자 = 적용 전 열(d0) - 원장 2022년까지 발행 잔액(legacy)
         # R2 적용 후 열 d1 = d0 - 인쇄값 이므로 d1 + (인쇄값 - 원장) 과 같은 값이다(허용오차 안에서).
-        src_led = f" - 채권원장 2022년까지 발행 잔액(신종 {led_hyb:,.2f} + 후순위 {led_sub:,.2f})"
+        src_led = f" - 채권원장 2022년까지 발행 잔액(콜 경과 미상환 제외; 신종 {led_hyb:,.2f} + 후순위 {led_sub:,.2f})"
         if legacy_printed <= TOL:
             rule = "R1" if gross else "R-none"
         elif close(p1, p0 - legacy_printed):
