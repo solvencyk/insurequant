@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T1000Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2024.4Q-2025.4Q
@@ -30,3 +30,4 @@ owner 지시(2026-10-12 채팅): 「손해율 예실차 부분도 ifrs17 탭에 
 - 새 섹션 번호와 바뀐 번호 목록, 차트 구성(회사별 구분 처리), 점검 결과, 커밋 해시. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 356b7a8). IFRS17.html 에 「9) 보험금 예실차비율」 독립 섹션(#sec-ae) 신설: 기준연도 축 묶음 막대(예상손해율·실제손해율·보험금 예실차비율, 음수 △, 0선 굵게) + 아래 기존 표, 사업 구분이 둘인 코리안리는 차트 2개, ae 없는 회사(서울보증)는 섹션 숨김·목차 칩 흐림, 기존 9) 유지율은 10) 으로 번호 이동, 8) 에서 예실차 제거. 7개사 1280/375px 확인, 시험 4종 통과. 설계 결정: 새 섹션은 8) 공시시점에 연동하지 않고 자체 「공시시점」 선택(연말 공시 2025.4Q·2024.4Q) — owner 가 연동을 원하면 변경.

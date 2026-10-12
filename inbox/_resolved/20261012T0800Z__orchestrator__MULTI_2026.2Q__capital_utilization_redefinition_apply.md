@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T0800Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -29,3 +29,4 @@ owner 지시(2026-10-12 채팅, 직접 선택): K-ICS 자본성증권 인정한�
 - 47사 전/후 요약(바뀐 회사 수·큰 변화), 메모 대조 결과(차이 0 여부), 미정 4사 분류 결과(확정/미확정+플래그), 새 JSON 필드 명세(designer 용: 필드 이름·값 의미·`null`/`reason` 규칙·`type_unconfirmed`·`rule`), 게이트 새 RED 종류별 목록, 시험 결과, 별건 점검 대상(⑦), 커밋 해시. `TODO_publishing.md` Status + `docs/changelog_publishing.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 c3ebcc3·00bab2a·bd69673·3fe9a53·267241b, Opus). 소진율을 규정 근거로 재정의해 47사 재산출(메모 재현표와 차이 0): tier2 23사 변경(한화생명 222.4->70.5, 메리츠 55.4->0.2, 미래에셋 112.4->24.5, 교보라이프플래닛 null+「경과조치 표 미공시」, 스위스리 0.0), tier1 14사 변경(한화생명 136.3->0, 하나손해 284.9->0, DB손해 101.1->151.6, 하나생명 158.8->238.2). 신설 data/bonds/capital_tier_registry.json, scripts/capital_utilization_rules.py, 단위시험 25(+변이 3종 전부 포착). 미정 4사: 흥국생명 기본자본형 확정(81.4), 코리안리·농협생명·푸본현대 미확정(type_unconfirmed, 상한 205.1·72.7·42.1 / 보완자본형이면 94.0·48.5·17.3). 새 JSON 필드 명세는 docs/changelog_publishing.md 맨 위. data-contract RED 0, 보완자본 100% 초과 YELLOW 2건(농협손해 103.9·동양 105.0). owner 결정 남음: 메리츠·흥국생명 「기발행 후순위채무」 행 처리(메모 0.2·10.6 대 원장 30.8·37.0), 별건 흥국생명 2025.4Q 항목 6 · 한화생명 항목 54 점검.

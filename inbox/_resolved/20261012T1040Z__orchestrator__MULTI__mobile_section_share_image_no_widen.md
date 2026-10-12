@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T1040Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: MULTI
@@ -27,3 +27,4 @@ owner 지시(2026-10-12 채팅, 스크린샷 첨부): 모바일에서 섹션 「
 - 바뀐 줄·확인한 화면·커밋 해시. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 18bd037). theme.js: 폰(화면 폭 520px 미만·터치)의 섹션 공유 이미지는 표 폭만큼 넓히지 않고 화면 폭 그대로(375px 뮌헨 손해율 가정·삼성생명 NB·코리안리 예실차 모두 차트가 폭을 채움, 이전 약 1000px). 데스크톱 1280px·페이지 전체 이미지는 그대로. test_share_screenshot 1개 추가.
