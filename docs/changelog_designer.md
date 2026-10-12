@@ -15,6 +15,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 - `download-survey.js`: 기본자본소진율(T1)·보완자본소진율(T2)·자본비율전망(FWD) 3항목을 주석 처리(되돌리기 = 주석 해제, 주석에 「owner 2026-10-12 일시 비공개」), 새 시트 `보험금예실차비율`(AE) 추가. `report-widget.js` SHEETS 에서 같은 3개 제외. 파일(`public_exports`·마스터·xlsx)은 그대로.
 - `tests/test_deploy_assets.py`(fetch 목록: tier1 만 필수, tier2·전망은 fetch 금지 확인, 타임라인 fetch 확인), `tests/test_share_screenshot.py`(K-ICS 섹션 수 5→4), `docs/agents/claude-agent-designer.md` §1 표.
 - 검증 `scripts/shot_capsec.py`(헤드리스 Edge; 실제 타임라인 파일로 한화생명·메리츠·현대해상·스위스리 확인): 한화생명·메리츠·현대해상(후순위채만)·스위스리·삼성생명·교보라이프플래닛 x 1280px·375px·다크 — 콘솔 오류 0(구판 시뮬레이션의 404 제외), 가로 넘침 0, 큰 글씨 줄바꿈 0, 죽은 앵커·남은 도넛/전망 요소 0. 구판 tier1 JSON(요약 필드 없음) 시뮬레이션에서 셀 영역 숨김. 실제 `securities_summary` 값: 한화생명 신종 6.30%·30,819억·콜 2029-07-17(5,000억), 후순위 4.45%·12,968억·콜 2027-02-04(10,720억, 추정), 메리츠 신종 5.30%·후순위 3.70%. 삼성생명·스위스리·교보라이프플래닛은 두 tier 모두 null 이라 셀은 `—`.
+- 2026-10-12 후속(커밋 1624aba·이후): 큼직한 셀 값은 `kics_tier1_utilization.json` 대신 타임라인 JSON 에서 클라이언트 계산(그 fetch 제거, 시험은 타임라인 fetch 필수·tier1/tier2/전망 fetch 금지). 이어서 owner 정정으로 2023 필터 제거: `총발행액 : x,xxx억`(접미 없음) = 그 tier 모든 증권 `face_eok` 합(차트 막대 합계와 같음), 최근 금리·콜 도래일은 잔액이 남은 증권 기준 그대로. 한화생명 신종 30,819·후순위 27,762, 메리츠 2,850·18,010, 현대해상 후순위 28,330(신종 없음 `—`)이 셀 = 막대 합계, 1280/375px 가로 넘침·콘솔 오류 0.
 - 시험(실제 파일 반영 후): `test_deploy_assets` 12 passed(타임라인 파일·publishing 표가 올라와 앞서의 실패 2건 해소), `test_share_screenshot` 7 passed 1 skipped, `test_push_gate_wiring` 65 passed 1 skipped. `test_prepush_scope` 는 앞 실행에서 65 passed(이후 변경이 K-ICS.html 안뿐이라 재실행 안 함).
 
 ---

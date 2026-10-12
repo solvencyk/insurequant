@@ -1034,24 +1034,25 @@
 
     // 큼직한 셀 2개(신종자본증권 / 후순위채) 값 — 타임라인 JSON 의 증권 단위 목록에서 계산한다.
     //  최근 발행금리: 잔액이 남은 증권 중 issue_date 가 가장 늦은 증권의 coupon_pct(같은 날 여럿이면 잔액이 큰 쪽)
-    //  총발행액 '23~: issue_date >= 2023-01-01 인 증권의 outstanding_eok 합
+    //  총발행액: 그 tier 모든 증권의 face_eok 합(차트 막대 합계와 같다)
     //  콜 상환 도래일: 잔액 > 0 이고 call_date >= 기준일 인 증권 중 가장 이른 콜일 한 건(같은 날 여럿이면 잔액 합)
-    //  기준일 = 파일 전체 as_of 의 최댓값(분기말). tier 에 잔액이 남은 증권이 없으면 null.
+    //  기준일 = 파일 전체 as_of 의 최댓값(분기말). tier 에 증권이 하나도 없으면 null.
     function capsecCells(d, code) {
       const list = d && d.securities && code ? d.securities[code] : null;
       if (!Array.isArray(list) || !list.length) return { hybrid: null, subordinated: null, as_of: null };
       let ref = '';
       Object.keys(d.securities).forEach(k => (d.securities[k] || []).forEach(b => { if (b.as_of && b.as_of > ref) ref = b.as_of; }));
       const tierOf = (tier) => {
-        const bs = list.filter(b => b.tier === tier && Number(b.outstanding_eok) > 0);
-        if (!bs.length) return null;
+        const all = list.filter(b => b.tier === tier);
+        if (!all.length) return null;
+        const bs = all.filter(b => Number(b.outstanding_eok) > 0);   // 금리·콜은 잔액이 남은 증권 기준
         const dated = bs.filter(b => b.issue_date);
         let latest = null;
         dated.forEach(b => {
           if (!latest || b.issue_date > latest.issue_date ||
               (b.issue_date === latest.issue_date && Number(b.outstanding_eok) > Number(latest.outstanding_eok))) latest = b;
         });
-        const since = dated.filter(b => b.issue_date >= '2023-01-01').reduce((a, b) => a + Number(b.outstanding_eok), 0);
+        const total = all.reduce((a, b) => a + (isFinite(Number(b.face_eok)) ? Number(b.face_eok) : 0), 0);
         const calls = bs.filter(b => b.call_date && b.call_date >= ref);
         let nextDate = null, nextEok = null;
         if (calls.length) {
@@ -1062,7 +1063,7 @@
         return {
           latest_coupon_pct: latest && latest.coupon_pct != null ? latest.coupon_pct : null,
           latest_issue_date: latest ? latest.issue_date : null,
-          issued_since_2023_eok: Math.round(since),
+          issued_total_eok: Math.round(total),
           next_call_date: nextDate, next_call_eok: nextEok == null ? null : Math.round(nextEok),
           balance_as_of: asOfs.length ? asOfs[0] : null
         };
@@ -1084,7 +1085,7 @@
           return;
         }
         const rate = t.latest_coupon_pct == null ? '—' : Number(t.latest_coupon_pct).toFixed(2) + '%';
-        const issued = t.issued_since_2023_eok == null ? '—' : fmtEokInt(t.issued_since_2023_eok) + '억';
+        const issued = t.issued_total_eok == null ? '—' : fmtEokInt(t.issued_total_eok) + '억';
         const call = t.next_call_date
           ? esc(t.next_call_date) + (t.next_call_eok == null ? '' : ' (' + fmtEokInt(t.next_call_eok) + '억)')
           : '—';
@@ -1098,7 +1099,7 @@
           : '';
         el.innerHTML = `<span class="capsec-title">${title}${help}</span>`
           + `<span class="capsec-rate${t.latest_coupon_pct == null ? ' is-none' : ''}">${rate}</span>`
-          + `<span class="capsec-line">총발행액 : ${issued} ('23~)</span>`
+          + `<span class="capsec-line">총발행액 : ${issued}</span>`
           + `<span class="capsec-line">콜 상환 도래일 : ${call}</span>`;
       };
       cell('capsec-cell-hybrid', 'hybrid', '신종자본증권', sum.hybrid);
