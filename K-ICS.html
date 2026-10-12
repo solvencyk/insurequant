@@ -240,7 +240,7 @@
     </div>
 
     <div class="panel" id="sec-capsec" data-share-section="자본성증권 발행현황">
-      <h2>자본성증권 발행현황<span class="iq-help" id="capsec-help" hidden><button type="button" class="iq-help-btn" aria-label="자료 기준" aria-describedby="help-capsec-basis">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-basis"></span></span></h2>
+      <h2>자본성증권 발행현황</h2>
       <div id="capsec-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 자본성증권 발행현황이 표시됩니다.</div>
       <div class="capsec-chart" id="capsec-chart-wrap" style="display:none"><canvas id="capsec-chart" role="img" aria-label="시점별 자본성증권 발행현황 누적 막대 차트 (신종자본증권, 후순위채, 억원)"></canvas></div>
       <div id="capsec-cells" class="capsec-row capsec-cells" hidden>
@@ -318,7 +318,7 @@
     let capsecChart = null;
     let sensChart = null;
     let tier1UtilData = [];
-    let capsecTimelineData = null; // kics_capital_securities_timeline.json (없음/실패 → null → 차트 숨김)
+    let capsecTimelineData = null; // kics_capital_securities_timeline.json (증권 단위; 없음/실패 → null → 차트 숨김)
     let sensData = []; // 금리 민감도 (kics_rate_sensitivity.json)
     let durGapData = []; // 자산/부채 듀레이션 갭 (kics_duration_gap.json)
     // 하위항목 접기 그룹(기본 접힘, +버튼 토글):
@@ -970,63 +970,45 @@
       return row || null;
     }
 
-    // 시점별 잔액 JSON → { periods: ['2024.4Q', ...], hybrid: [억원|null], sub: [억원|null] }. 없으면 null.
-    // 명세(publishing 티켓 20261012T1210Z): 회사 코드는 JSON 키, 시점 'YYYY.nQ', 단위 억원, tier = hybrid | subordinated.
-    // 확정 전 형태 차이(긴 행 목록 / 회사키 객체)를 모두 받아 같은 모양으로 맞춘다.
-    function capsecSeries(d, code, name) {
-      if (!d || typeof d !== 'object') return null;
-      const NUM = ['outstanding_eok', 'balance_eok', 'amount_eok', 'eok', 'value'];
-      const num = (o) => { for (const k of NUM) { if (o && o[k] != null && isFinite(o[k])) return +o[k]; } return null; };
-      const tierVal = (o, keys) => {
-        for (const k of keys) {
-          const v = o && o[k];
-          if (v == null) continue;
-          if (typeof v === 'object') { const n = num(v); if (n != null) return n; } else if (isFinite(v)) return +v;
-        }
-        return null;
-      };
-      const HK = ['hybrid', 'hybrid_eok', 'hybrid_outstanding_eok'], SK = ['subordinated', 'subordinated_eok', 'subordinated_outstanding_eok'];
+    // 증권 단위 발행 목록(kics_capital_securities_timeline.json) → 발행연도별 발행액 { years, hybrid, sub }. 없으면 null.
+    // 명세: { generated, unit:'억원', source, securities: { '<회사코드>': [ { tier:'hybrid'|'subordinated', issue_date:'YYYY-MM-DD',
+    //   call_date, coupon_pct, face_eok, outstanding_eok, as_of } ] } }. 가로 = 발행연도(첫 해~마지막 해, 발행 없는 해는 0),
+    // 세로 = 그 해 발행한 증권의 face_eok 합. 누적 = 신종자본증권 위에 후순위채를 쌓는다(시간 누적 아님).
+    function capsecSeries(d, code) {
+      const list = d && d.securities && code ? d.securities[code] : null;
+      if (!Array.isArray(list) || !list.length) return null;
       const by = new Map();
-      const put = (p, tier, v) => {
-        if (!p || v == null) return;
-        const e = by.get(p) || { h: null, s: null };
-        if (tier === 'hybrid') e.h = (e.h || 0) + v; else if (tier === 'subordinated') e.s = (e.s || 0) + v;
-        by.set(p, e);
-      };
-      const rows = Array.isArray(d.rows) ? d.rows : (Array.isArray(d.results) ? d.results : null);
-      if (rows) {
-        rows.forEach(r => {
-          if (!((code && r.code === code) || (name && r.company === name))) return;
-          put(r.period || r.quarter, r.tier, num(r));
-        });
-      } else {
-        const src = d.companies || d.data || d.by_company || d;
-        let c = (code && src[code]) || (name && src[name]) || null;
-        if (c && !Array.isArray(c) && (c.series || c.periods || c.timeline)) c = c.series || c.periods || c.timeline;
-        if (Array.isArray(c)) {
-          c.forEach(r => { const p = r.period || r.quarter; put(p, 'hybrid', tierVal(r, HK)); put(p, 'subordinated', tierVal(r, SK)); });
-        } else if (c && typeof c === 'object') {
-          Object.keys(c).forEach(p => { const r = c[p]; put(p, 'hybrid', tierVal(r, HK)); put(p, 'subordinated', tierVal(r, SK)); });
-        }
+      list.forEach(b => {
+        const y = parseInt(String(b.issue_date || '').slice(0, 4), 10);
+        const v = Number(b.face_eok);
+        if (!isFinite(y) || !isFinite(v)) return;
+        const e = by.get(y) || { h: 0, s: 0 };
+        if (b.tier === 'hybrid') e.h += v; else if (b.tier === 'subordinated') e.s += v; else return;
+        by.set(y, e);
+      });
+      if (!by.size) return null;
+      const ys = Array.from(by.keys());
+      const y0 = Math.min.apply(null, ys), y1 = Math.max.apply(null, ys);
+      const years = [], hybrid = [], sub = [];
+      for (let y = y0; y <= y1; y++) {
+        const e = by.get(y) || { h: 0, s: 0 };
+        years.push(String(y)); hybrid.push(e.h); sub.push(e.s);
       }
-      const periods = Array.from(by.keys()).filter(p => /^\d{4}\.\dQ$/.test(p)).sort();
-      if (!periods.length) return null;
-      return { periods, hybrid: periods.map(p => by.get(p).h), sub: periods.map(p => by.get(p).s) };
+      return { years, hybrid, sub };
     }
 
     function renderCapsecChart(series) {
       const wrap = document.getElementById('capsec-chart-wrap');
       const ctx = document.getElementById('capsec-chart');
       if (capsecChart) { capsecChart.destroy(); capsecChart = null; }
-      if (!series || !series.periods.length) { wrap.style.display = 'none'; return; }
+      if (!series || !series.years.length) { wrap.style.display = 'none'; return; }
       wrap.style.display = 'block';
       const TH = window.IQTheme ? IQTheme.chart() : { text: '#18181b', muted: '#63666b', grid: '#e4e4e2', primary: '#0f6e68', warn: '#c98a12' };
-      const fmt = (v) => fmtEokInt(v) + '억';
       capsecChart = new Chart(ctx.getContext('2d'), {
         type: 'bar',
         data: {
-          labels: series.periods,
-          // 아래 = 신종자본증권, 위 = 후순위채(누적). 값이 없는 시점은 null → 막대 없음.
+          labels: series.years,
+          // 아래 = 신종자본증권, 위 = 후순위채(쌓기). 발행 없는 해는 0.
           datasets: [
             { label: '신종자본증권', data: series.hybrid, backgroundColor: TH.primary, borderWidth: 0, stack: 'cap' },
             { label: '후순위채', data: series.sub, backgroundColor: TH.warn, borderWidth: 0, stack: 'cap' }
@@ -1037,7 +1019,7 @@
           maintainAspectRatio: false,
           interaction: { mode: 'index', intersect: false },
           scales: {
-            x: { stacked: true, grid: { display: false }, ticks: { color: TH.muted, maxRotation: 60, autoSkip: true } },
+            x: { stacked: true, grid: { display: false }, ticks: { color: TH.muted, maxRotation: 0, autoSkip: true } },
             y: { stacked: true, beginAtZero: true, grid: { color: TH.grid }, ticks: { color: TH.muted, callback: (v) => fmtEokInt(v) },
                  title: { display: true, text: '억원', color: TH.muted } }
           },
@@ -1045,8 +1027,8 @@
             legend: { position: window.innerWidth < 640 ? 'bottom' : 'top', labels: { color: TH.text } },
             tooltip: {
               callbacks: {
-                title: (items) => items.length ? items[0].label : '',
-                label: (c) => c.parsed.y == null ? null : c.dataset.label + ': ' + fmt(c.parsed.y)
+                title: (items) => items.length ? items[0].label + '년 발행' : '',
+                label: (c) => c.dataset.label + ': ' + fmtEokInt(c.parsed.y) + '억'
               }
             }
           }
@@ -1096,7 +1078,6 @@
       const company = document.getElementById('company').value;
       const placeholder = document.getElementById('capsec-placeholder');
       const cells = document.getElementById('capsec-cells');
-      const help = document.getElementById('capsec-help');
       if (!company) {
         placeholder.style.display = 'block';
         document.getElementById('capsec-chart-wrap').style.display = 'none';
@@ -1106,15 +1087,8 @@
       }
       placeholder.style.display = 'none';
       const t1 = findUtilRow(tier1UtilData, company);
-      renderCapsecChart(capsecSeries(capsecTimelineData, t1 && t1.code, company));
+      renderCapsecChart(capsecSeries(capsecTimelineData, t1 && t1.code));
       renderSecuritiesCells(t1);
-      // 자료 기준 ? 팝오버: 시점별 JSON 이 source·as_of 를 실어 오면 그대로.
-      const basis = [];
-      if (capsecTimelineData && capsecTimelineData.source) basis.push(String(capsecTimelineData.source));
-      if (capsecTimelineData && capsecTimelineData.as_of) basis.push(String(capsecTimelineData.as_of) + ' 기준');
-      const pop = document.getElementById('help-capsec-basis');
-      pop.textContent = basis.join(' · ');
-      help.hidden = !basis.length;
     }
 
     // ===== 금리 민감도 패널 (시장금리 평행이동 충격) =====
