@@ -11,6 +11,7 @@ Validation-only history. Cross-stage changes also keep a 1-line cross-reference 
 - **무이동 확인(`--update` 안 함)**: dividend · post_transition · master_tables · viz 2종 · PL(`RUN_PL_GOLDEN=1` 186초) · 17BS(419초) 전부 통과(빌더가 `kics_disclosure.json` 에서 회사 메타만 읽는다는 보고 실증). 빠른 시험: deploy_assets 12 · push_gate_wiring 65 · prepush_scope 65 · golden_input_fingerprint 23 통과.
 - **AIG KR0029 2024.4Q R3**: `validate_insurance_liability_portfolio.py` 에 `R3_PINNED_EXEMPTIONS`(값 박제) + 읽는 쪽 `check_r3`(R3 루프를 함수로 추출, 판정식 불변) 신설. 박제 값이 맞으면 `exceptions` 로 인쇄, 값이 움직이면 `R3_PIN_DRIFT` RED, 면제가 불필요해지면 `R3_EXEMPTION_INERT` RED. 변이시험 11건(`tests/test_ilp_r3_pinned_exemption.py`: 대조군·item8/item20 이동·타사/타분기·INERT·음의 간극 분기·읽는 쪽 무력화·라이브 마스터) + 훅 묶음 편입. 게이트 RED 2->1, YELLOW 610 불변. 남은 RED = KR1102 2026.1Q `R2_CENSUS`(owner 결정 대기, 등재 안 함). 이 게이트 자체는 여전히 `NOT_A_PUSH_GATE`.
 - **CSM 룰 설계 범위 메모**: `TODO_validation.md` 열린 일에 기록(설계는 하지 않음).
+- **2차 갱신(같은 날, parser-kics `33635d1` 뮌헨 KR1101 2026.2Q TFI 50/52 + 51=0 도출, +3행)**: 직전 마스터로 돌리면 1차 갱신 골든과 5키 일치 -> 이동은 그 커밋뿐. `kics_rules_golden` GREEN 13,703->13,705 · SKIP 3,325->3,323(RED 56 불변), 입력지문 4종 각 +978바이트(`kics_disclosure.json` 한 파일). 재실행: dividend · post_transition · master_tables 통과. PL·17BS 무거운 골든은 이 2차에서 재실행하지 않았다(기존 회사·분기에 3행 추가, 빌더는 회사 메타만 읽음 -- 1차 실행에서 무이동 실증).
 - **모델**: Sonnet 5.5.
 
 ## 2026-10-12 (25차) -- owner 승인 등재: 재보사 인쇄된 0 7칸 · 서울보증 PL 2칸 · 마이브라운 거짓 양성 1칸 (티켓 `20261012T1010Z`)

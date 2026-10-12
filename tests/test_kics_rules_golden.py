@@ -329,7 +329,11 @@ def _update() -> int:
                     "하나뿐이다(퍼시픽 KR1107 2025.3Q·2026.2Q 항목 47~54 +16행, 악사 KR0049 2024.3Q 4칸). "
                     "직전 마스터(acd351a^)로 돌리면 골든과 5개 키 전부 일치함을 확인했다. buckets 634 · "
                     "findings 19,020 불변, RED 56 불변, YELLOW 1,935→1,936 · GREEN 13,684→13,703 · "
-                    "SKIP 3,345→3,325.")
+                    "SKIP 3,345→3,325. "
+                    "※ 2026-10-12 (2차) 재생성: 원인은 parser-kics 33635d1 하나뿐(뮌헨 KR1101 2026.2Q TFI 표 "
+                    "항목 50/52 인쇄값 + 51=0 항등식 도출, +3행). 직전 마스터(33635d1^)로 돌리면 1차 갱신 골든과 "
+                    "5키 전부 일치. buckets 634 · findings 19,020 · RED 56 불변, GREEN 13,703→13,705 · "
+                    "SKIP 3,325→3,323.")
     GOLDEN.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"updated {GOLDEN}: {man['findings']} findings / {man['buckets']} buckets")
     print(f"  by_status: {man['by_status']}")
