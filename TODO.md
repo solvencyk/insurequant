@@ -1,22 +1,22 @@
 # Insurequant TODO — cross-stage
 
-> 갱신 2026-10-11 · 사실(게이트·inbox·커버리지)은 `scripts/status_report.py --fast` 가 정본이고, 이 파일은 의도만 적는다.
+> 갱신 2026-10-12 · 사실(게이트·inbox·커버리지)은 `scripts/status_report.py --fast` 가 정본이고, 이 파일은 의도만 적는다.
 > stage 별 TODO·프롬프트·이력 위치는 `CLAUDE.md` §1. 2026-10-07 정리 전 전문은 `docs/todo_archive_root.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-12 오후 작업 브랜치 push 직전(HEAD `0f143d2` 이후).** owner 결정: K-ICS 소진율 도넛·Forward Outlook 을 화면에서 내림(신종 분류 판단이 들어가는 숫자는 건조하게 못 뽑는다 — 유료화 후보) → 발행연도별 신종·후순위채 누적 막대 + 큼직한 셀 2개(최근 발행금리·총발행액 '23~·가장 가까운 콜 1건), 기본자본소진율·보완자본소진율·자본비율전망 3시트는 다운로드 목록에서 임시로 내림(파일·시트 그대로, `download-survey.js` 주석 해제로 복구).
+  공유 버튼 이용 기록(`shares` 탭) 라이브(`deploy/design-20261012`), IFRS17 「보험금 예실차비율」 독립 섹션 + 시트 신설, 재보사 PL 7칸 복원·처브 BS/ILP·분할표·퍼시픽/악사 K-ICS 칸 보정, 손해율 재보사 세그먼트 표준화 + 85MB→1MB(.gz). 남은 것: validation 골든·AIG R3 등재(`T1400Z`) → `git push origin fix/csm-product-segmented-columns`(풀 훅 ≈10분) → owner 폰 배포.
 - **2026-10-12 아침 작업 브랜치 push(HEAD `6233594` 이후, 훅 gate-clear).** owner 취침 중 재보사 전면 재스윕: 손해율 가정 7곳(master_loss_ratio +1,904·예실차 37→44사)·PL 투자손익/영업외 +303·BS +49·CSM 계열(RGA·하노버 2025.4Q 등)·자본성증권 재확인(0 이 맞음). 화면: K-ICS 시나리오 컬럼명(공시 이름)·듀레이션 주석 ? 안으로·IFRS17 통합 현황 박스·NB 표·보험금 예실차비율 표·모바일 재보험 접기. 훅 소요 26분→약 11분(PDF 텍스트 캐시).
   라이브 `main` 배포는 owner 폰(`bash scripts/android_push_and_deploy.sh --from-origin --branch fix/csm-product-segmented-columns`, `bash` 필수). 결정 대기는 아래 「owner 결정 대기」.
 - **2026-10-11 밤 작업 브랜치 push 직전(HEAD `17b526d` 이후).** 재보사 PL 항목 4(CSM 상각) 17버킷 + 라이나 CSM 백필 9분기(워터폴 54칸·상각 +20행·값_당분기 20칸) + PL 항목 4 라이나 9버킷, 상각 스케줄 표 선택 버그 수정(18사 2025.4Q 172칸), 게이트 §3d 항목 4 계보 허용 + owner 승인 등재 4건, 재보사 PL 라벨 「원수」 제거, xlsx·NB(라이나 실제 배수)·패널·공개본 재동기화.
   남은 것: validation 사전 정리(`T2200Z`, 골든 `--update`) → `git push origin fix/csm-product-segmented-columns`(훅 ≈18분) → owner 폰 배포. owner 결정 대기는 아래 「owner 결정 대기」.
-- **2026-10-11 작업 브랜치 push 완료(`6841689`, 훅 gate-clear: RED 0 · offline tests 692 통과).** 재보사 8곳 K-ICS(단계 1~12)·index/compare 3분류·IFRS17 섹션 3 콤보(발생사고요소 실값, 2023/2024 연말 백필, 재작성 3사 †)·모바일 손해율 curve(안 A)·금리민감도/듀레이션갭 재보사.
-  라이브 `main` 배포는 owner 가 폰 Termux 에서 `scripts/android_push_and_deploy.sh --from-origin --branch fix/csm-product-segmented-columns` 실행(배포 후 `public_exports/manifest.json` `build_id`=`6fadc86` 확인, 회사망은 `curl --ssl-no-revoke`). **주의: `data/loss_ratio/risk_premium_vs_expected_claims.json`(77MB)이 커밋 `78471c0` 로 원격에 올라갔다(GitHub 50MB 경고) — 이력 정리·LFS·.gitignore 판단 필요.**
 
 ## 열린 일
 
-- [ ] **owner 결정 대기(2026-10-11~12)** — ① 라이나 CSM 2023.1Q·2Q: 옛 기준(기초 22,082.5억)으로만 인쇄돼 재작성 기준 2023.4Q 와 안 이어짐(적재하면 `WITHIN_FY_OPENING_DRIFT` RED) — 보류 유지 vs 옛 기준 적재 + 예외 (`data/_derived/csm_backfill_lina_20261011/held_rows_waterfall.json`) ② 서울보증 2024.2Q·3Q PL 통째 구멍 2건(마스터테이블 게이트, 지난 분기 사이트 삭제) 등재 ③ 퍼시픽 2025.3Q·2026.2Q 경과조치 0 대 공란 16칸 ④ 마이브라운 `TIER2_LIMIT_STALE` 5칸 ⑤ 뮌헨 2026.2Q 항목 50·52 ⑥ 악사 2024.3Q 4칸 ⑦ 처브 KR0100 항목 20 정의·ILP RED 5 ⑧ KR0029 2024.4Q 「10배 규칙」 ⑨ KR1102 2026.1Q ILP 합계 ⑩ CSM 워터폴 대 ILP 기준 차이(교보·KB라이프·하나생명·롯데 재작성, 예별 2025.4Q 0.0 대 6,227) ⑪ `INSPL_CENSUS_MISSING` 8(재보사 보험손익 원표) ⑫ 법정준비금 R-RSV-4 미배선 ⑬ 77MB loss_ratio 이력 ⑭ `RS1/RS2/RS5_EXCEPTIONS` 이전 ⑮ 분할표 5사(라이나·AIA·처브·메트라이프·BNP카디프) 상각 스케줄 부분합·한화생명 연결 표 선택·csm_amort_schedule 패널의 라이나 행을 마스터값으로 바꿀지.
-  **10-12 추가**: ⑯ 재보사 투자손익·영업외 「인쇄된 0」 7칸(마스터 보류, 승인 시 `scripts/reinsurer_resweep_pl_followup.py --restore7 --apply`) ⑰ 재보사 R1 정정 15행(최신 공시 전기 칸 채택 적용 확인) ⑱ 스위스리 보완자본 4,274억(해약환급금 부족분 초과분, 자본증권 0) 소진율 「미공시」 → 「발행 없음」 표시 ⑲ 손해율 포트폴리오 이름 매핑(생명/장기 접두어가 상품구분 자리, `data/_derived/reinsurer_loss_ratio_20261012/reinsurer_label_mapping.csv`) ⑳ 퍼시픽 2023.4Q CSM 항목 4 영업양수 1,069억 ㉑ 뮌헨 2023.4Q ILP 원문 부호 반전(반대로 적재) ㉒ 하노버 2023.4Q ILP 재작성 충돌·제네럴 민감도(부호 없음) 보류 ㉓ 예실차·긴 형식 손해율 표 xlsx 시트 신설 ㉔ 라이나 CSM 2023.1Q·2Q 보류 유지 여부 ㉕ 서울보증 2024.2Q·3Q PL 통째 구멍 등재.
-  전체 15항목 표: `data/disclosure/_meta/final_validation_runlog_20261011.md`. 밤샘 스윕 지시·진행 상세는 `docs/todo_archive_root.md` 맨 위.
+- [ ] **owner 결정 대기(2026-10-12 갱신)** — ① 라이나 CSM 2023.1Q·2Q 보류 유지 vs 옛 기준 적재(`data/_derived/csm_backfill_lina_20261011/held_rows_waterfall.json`) ② 뮌헨 KR1101 2026.2Q 항목 50·52: 원문 p17 에 인쇄됐으나 항목 51 이 공백(대시 아님)이라 51=0(=52−50 항등)을 파생 적재할지(계획은 parser-kics 의 `plans/`, 미적용) ③ 스위스리 KR1102 2026.1Q ILP 합계(인쇄 합계가 Indirect-Par 행 제외) 파생 적재 vs 등재 ④ 소진율·전망 3시트의 임시 비공개 해제 시점·유료화 설계 ⑤ `자본성증권발행현황` 시트의 기본/보완 인정액 열(한도 충전 산식 기반)을 공개로 둘지 ⑥ 메리츠·흥국생명 「기발행 후순위채무」 차감 수정(도넛 철회로 보류: 0.2→30.8·10.6→37.0) ⑦ 흥국생명 2025.4Q 항목 6 outlier(1,020 대 2,796)·한화생명 항목 54(17,932 대 원장 14,711) 별건 점검 ⑧ CSM 워터폴 대 ILP 기준 차이 룰 설계(Opus 몫; 입력·허용오차·예외 형태는 validation 메모) ⑨ 법정준비금 R-RSV-4 미배선 ⑩ `RS1/RS2/RS5_EXCEPTIONS` 이전 ⑪ 77MB loss_ratio 이력 blob(파일은 `.json.gz` 1MB 로 줄임; 이력 정리·LFS 는 보류, 강제 push 금지) ⑫ `downstream_kpis.json` 은 옛 상각 스케줄 정정(`cf66dce`) 미반영 213칸이 어긋나 있어 재빌드 보류(어느 HTML 도 안 읽음).
+  전체 표: `data/disclosure/_meta/final_validation_runlog_20261011.md`. 밤샘 스윕 지시·진행 상세는 `docs/todo_archive_root.md` 맨 위.
+- [ ] **신종자본증권·후순위채 분류 전수조사(내부, owner 2026-10-12)** — 화면에는 쓰지 않는다. parser-kics 진행 중 `inbox/parser/20261012T1230Z…`, 산출 `data/_derived/capital_securities_classification_census_20261012/`(원문 확정/시계열 추정/불명 3단계, 기존 등재부 `data/bonds/capital_tier_registry.json` 과 불일치 목록).
 - [ ] **신규 도메인: 채널별 유지율 · 손해율 추이 + 사별 비교 기능(owner 팀장 요청 2026-10-07)** — 추출 진행 중.
   인수인계 `docs/handoff_20261007_persistency_lossratio_compare.md`(상태·census·남은 순서), 명세는 `inbox/parser/20261007T0*` 티켓 3개.
   비교 기능은 owner 의 핵심 지표 목록 대기.
