@@ -2,7 +2,7 @@
 from: publishing
 to: designer
 created: 20261013T0030Z
-status: open
+status: resolved
 route: fix
 company: KR0011,KR0050
 period: 2026.2Q
@@ -34,3 +34,4 @@ owner 결정(2026-10-12 밤): 보완자본 분자에서 뺀 기발행 금액 = *
 - 소진율이 바뀐 21사는 도넛·숫자 줄이 `kics_tier2_utilization.json` 을 읽으므로 따라간다.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료: DB손해 콜 칸·하나손해 추정 행 육안 확인, 추정 툴팁 한 줄, 47사 재점검 위반 0 (designer 258d3c30). orchestrator 종결 2026-10-13.

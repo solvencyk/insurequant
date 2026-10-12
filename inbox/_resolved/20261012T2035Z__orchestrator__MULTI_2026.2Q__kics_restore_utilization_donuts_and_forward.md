@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261012T2035Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -27,3 +27,4 @@ owner 지시(2026-10-12 채팅): 「그게 확실하다면 도넛이랑 forward 
 - 복원한 영역·바뀐 줄, 확인한 회사와 JSON 대조 결과, 시험 결과, 커밋 해시. `TODO_designer.md` Status + `docs/changelog_designer.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료: 소진율 도넛·Forward Outlook 복원, 다운로드·제보 목록·시험 복원 (designer 496d359, 47f983ea). 발행현황 패널은 유지. orchestrator 종결 2026-10-13.

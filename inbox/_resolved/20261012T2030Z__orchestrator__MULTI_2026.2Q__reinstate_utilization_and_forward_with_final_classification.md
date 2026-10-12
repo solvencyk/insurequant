@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T2030Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2026.2Q
@@ -27,3 +27,4 @@ iter: 1
 - 등재부 변경(증권 수), 소진율 전후 요약(바뀐 회사), 전망 모델 변경 요약(한화생명 기본자본비율 경로 전후, 총자본 경로 불변 여부, `baseline_basis_flag` 회사), 재공개 결과, 게이트·시험, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료: 등재부 갱신·소진율 재산출·전망 모델·재공개 (publishing ef62969, 2729a53, 35740b2, 8037840). orchestrator 종결 2026-10-13.

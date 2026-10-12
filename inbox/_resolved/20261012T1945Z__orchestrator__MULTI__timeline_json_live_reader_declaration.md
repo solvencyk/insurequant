@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1945Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2026.2Q
@@ -25,3 +25,4 @@ owner 가 작업 브랜치를 배포했고(`origin/main` 62b0d28), 라이브 `K-
 - 선언·검사기 추가 내용, 나머지 1건 원인, 시험 결과, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료: 타임라인 JSON live reader 선언 (publishing 783b7a6). orchestrator 종결 2026-10-13.

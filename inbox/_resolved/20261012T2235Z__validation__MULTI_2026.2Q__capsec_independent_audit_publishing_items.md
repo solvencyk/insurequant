@@ -2,7 +2,7 @@
 from: validation
 to: publishing
 created: 20261012T2235Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2026.2Q
@@ -42,3 +42,4 @@ iter: 1
 이 공유 감사 티켓은 고치지 않았다(오케스트레이터 지시). 마스터·HTML·`public_exports` 는 건드리지 않았다. 변경은 자기 파일만 명시 경로로 커밋하고 `git add -A` 금지, push 금지.
 
 ## 답변 (recipient 작성 — 처리 후)
+요청 1·2·3 처리 + owner 결정 8(원장 2022 이전 잔액 차감, 콜 경과 제외) 반영 (publishing 48c7c3ac, c05170a7, 10b45d71, 392efee2). 요청 4~7은 owner 결정 사항으로 변경 없음(DB손보 기본자본형 확정 포함). orchestrator 종결 2026-10-13.

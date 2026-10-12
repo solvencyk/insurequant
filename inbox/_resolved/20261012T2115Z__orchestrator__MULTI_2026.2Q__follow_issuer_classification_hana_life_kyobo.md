@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T2115Z
-status: open
+status: resolved
 route: fix
 company: KR0097,KR0073
 period: 2026.2Q
@@ -26,3 +26,4 @@ owner: 「회사에서 그렇게 분류했으면 회사 분류를 따르는 게 
 - 바뀐 증권·회사, 소진율 전후(하나생명 등), 전망 변화(총자본 경로 불변 여부), 10개사 건별 재확인 결과, 시험, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료: 하나생명 제1회·교보 2024-11 발행사 처리 기준 tier1, 10개사 건별 재확인, 겹침 필드 정리 (publishing dbbffcb5, 24a3dd6c). orchestrator 종결 2026-10-13.

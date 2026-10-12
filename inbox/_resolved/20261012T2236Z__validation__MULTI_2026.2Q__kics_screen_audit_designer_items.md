@@ -2,7 +2,7 @@
 from: validation
 to: designer
 created: 20261012T2236Z
-status: open
+status: resolved
 route: fix
 company: KR0004,KR0003,KR0011,KR0032,KR0076,KR0083,KR0087,KR0097
 period: 2026.2Q
@@ -38,3 +38,4 @@ iter: 1
 기본자본 소진율 분모 인쇄(33사가 15%·SCR 인쇄)·「경과조치 기발행 후순위」 값의 출처·DB손보 콜일자·하나손해 원장은 데이터 문제라 publishing 티켓 `20261012T2235Z` 에 있다. HTML 은 건드리지 않았고(감사 전용), 이 공유 감사 티켓도 고치지 않았다.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료: 전망 노트 거짓 개선 제거(capacity_exhausted)·음수 △·375px 도넛 툴팁 폭·콜 칸 null 허용 (designer 75234ddf). orchestrator 종결 2026-10-13.
