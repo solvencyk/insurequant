@@ -1,0 +1,5 @@
+# data\dart\FY2026_Q2\raw\KR0001_메리츠화재해상보험\20260814002253.xml | 40897 lines | sections 'capital-recognised debt': 0 | note hits: 2
+
+## NOTE HITS (lines mentioning step-up / rate adjustment / call / interest suspension together with 신종·자본증권·후순위)
+ 11218 | 상기 후순위사채는 발행 후 5년이 경과한 시점부터 연결기업이 조기상환을 할 수 있습니다. 발행일로부터 5년이 경과한 시점에 1회에 한하여 이자율이 조정됩니다.
+ 22309 | 상기 후순위사채는 발행 후 5년이 경과한 시점부터 당사가 조기상환을 할 수 있습니다. 발행일로부터 5년이 경과한 시점에 1회에 한하여 이자율이 조정됩니다.

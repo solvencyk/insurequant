@@ -1,0 +1,341 @@
+== KR0001 메리츠화재해상보험 | subordinated bonds in inventory: 8
+  2023.1Q: i54=13207.0 | list face 7460 (gap 5747) | list amortised 7460 (gap 5747)  <== GAP
+  2023.2Q: i54=12143.88 | list face 7460 (gap 4683.88) | list amortised 7460 (gap 4683.88)  <== GAP
+  2023.3Q: i54=12164.95 | list face 7460 (gap 4704.95) | list amortised 7460 (gap 4704.95)  <== GAP
+  2023.4Q: i54=12341.22 | list face 7460 (gap 4881.22) | list amortised 7460 (gap 4881.22)  <== GAP
+  2024.1Q: i54=12350.34 | list face 7460 (gap 4890.34) | list amortised 7460 (gap 4890.34)  <== GAP
+  2024.2Q: i54=11376.82 | list face 8960 (gap 2416.82) | list amortised 8960 (gap 2416.82)  <== GAP
+  2024.3Q: i54=17957.71 | list face 15460 (gap 2497.71) | list amortised 15460 (gap 2497.71)  <== GAP
+  2024.4Q: i54=15579.19 | list face 15460 (gap 119.19) | list amortised 15460 (gap 119.19)
+  2025.1Q: i54=17158.46 | list face 16960 (gap 198.46) | list amortised 16960 (gap 198.46)
+  2025.2Q: i54=17204.6 | list face 16960 (gap 244.6) | list amortised 16960 (gap 244.6)
+  2025.3Q: i54=17130.77 | list face 16960 (gap 170.77) | list amortised 16960 (gap 170.77)
+  2025.4Q: i54=17988.79 | list face 18010 (gap -21.21) | list amortised 18010 (gap -21.21)
+  2026.1Q: i54=17753.87 | list face 18010 (gap -256.13) | list amortised 18010 (gap -256.13)
+  2026.2Q: i54=15630.85 | list face 18010 (gap -2379.15) | list amortised 17590 (gap -1959.15)  <== GAP
+== KR0002 한화손해보험 | subordinated bonds in inventory: 3
+  2023.1Q: i54=5897.0 | list face 2500 (gap 3397) | list amortised 2500 (gap 3397)  <== GAP
+  2023.2Q: i54=5872.16 | list face 2500 (gap 3372.16) | list amortised 2500 (gap 3372.16)  <== GAP
+  2023.3Q: i54=5868.52 | list face 2500 (gap 3368.52) | list amortised 2500 (gap 3368.52)  <== GAP
+  2023.4Q: i54=2446.29 | list face 2500 (gap -53.71) | list amortised 2500 (gap -53.71)
+  2024.1Q: i54=2436.79 | list face 2500 (gap -63.21) | list amortised 2500 (gap -63.21)
+  2024.2Q: i54=2455.38 | list face 2500 (gap -44.62) | list amortised 2500 (gap -44.62)
+  2024.3Q: i54=6015.27 | list face 6000 (gap 15.27) | list amortised 6000 (gap 15.27)
+  2024.4Q: i54=6073.58 | list face 6000 (gap 73.58) | list amortised 6000 (gap 73.58)
+  2025.1Q: i54=11135.74 | list face 11000 (gap 135.74) | list amortised 11000 (gap 135.74)
+  2025.2Q: i54=11138.96 | list face 11000 (gap 138.96) | list amortised 11000 (gap 138.96)
+  2025.3Q: i54=11088.83 | list face 11000 (gap 88.83) | list amortised 11000 (gap 88.83)
+  2025.4Q: i54=10902.81 | list face 11000 (gap -97.19) | list amortised 11000 (gap -97.19)
+  2026.1Q: i54=10593.5 | list face 11000 (gap -406.5) | list amortised 11000 (gap -406.5)  <== GAP
+  2026.2Q: i54=2482.02 | list face 11000 (gap -8517.98) | list amortised 11000 (gap -8517.98)  <== GAP
+== KR0003 롯데손해보험 | subordinated bonds in inventory: 10
+  2023.1Q: i54=3583.0 | list face 2300 (gap 1283) | list amortised 2300 (gap 1283)  <== GAP
+  2023.2Q: i54=3053.83 | list face 2400 (gap 653.83) | list amortised 2400 (gap 653.83)  <== GAP
+  2023.3Q: i54=3726.83 | list face 3100 (gap 626.83) | list amortised 3100 (gap 626.83)  <== GAP
+  2023.4Q: i54=4520.38 | list face 3800 (gap 720.38) | list amortised 3800 (gap 720.38)  <== GAP
+  2024.1Q: i54=5315.96 | list face 4600 (gap 715.96) | list amortised 4600 (gap 715.96)  <== GAP
+  2024.2Q: i54=6825.78 | list face 6000 (gap 825.78) | list amortised 6000 (gap 825.78)  <== GAP
+  2024.3Q: i54=6960.58 | list face 6100 (gap 860.58) | list amortised 6100 (gap 860.58)  <== GAP
+  2024.4Q: i54=8224.1 | list face 8100 (gap 124.1) | list amortised 8100 (gap 124.1)
+  2025.1Q: i54=8245.73 | list face 8100 (gap 145.73) | list amortised 8100 (gap 145.73)
+  2025.2Q: i54=8050.09 | list face 8100 (gap -49.91) | list amortised 7920 (gap 130.09)
+  2025.3Q: i54=7987.06 | list face 8100 (gap -112.94) | list amortised 7920 (gap 67.06)
+  2025.4Q: i54=2136.72 | list face 8100 (gap -5963.28) | list amortised 7920 (gap -5783.28)  <== GAP
+  2026.1Q: i54=2111.36 | list face 8100 (gap -5988.64) | list amortised 7920 (gap -5808.64)  <== GAP
+  2026.2Q: i54=1933.86 | list face 8100 (gap -6166.14) | list amortised 7740 (gap -5806.14)  <== GAP
+== KR0004 예별손해보험 | subordinated bonds in inventory: 1
+  2023.1Q: i54=884.25 | list face 680 (gap 204.25) | list amortised 680 (gap 204.25)  <== GAP
+  2023.2Q: i54=935.18 | list face 680 (gap 255.18) | list amortised 680 (gap 255.18)  <== GAP
+  2023.3Q: i54=922.63 | list face 680 (gap 242.63) | list amortised 680 (gap 242.63)  <== GAP
+  2023.4Q: i54=0.0 | list face 680 (gap -680) | list amortised 680 (gap -680)  <== GAP
+  2024.1Q: i54=0.0 | list face 680 (gap -680) | list amortised 680 (gap -680)  <== GAP
+  2024.2Q: i54=0.0 | list face 680 (gap -680) | list amortised 680 (gap -680)  <== GAP
+  2024.3Q: i54=0.0 | list face 680 (gap -680) | list amortised 680 (gap -680)  <== GAP
+  2024.4Q: i54=0.0 | list face 680 (gap -680) | list amortised 680 (gap -680)  <== GAP
+  2025.1Q: i54=0.0 | list face 680 (gap -680) | list amortised 680 (gap -680)  <== GAP
+  2025.2Q: i54=0.0 | list face 680 (gap -680) | list amortised 544 (gap -544)  <== GAP
+  2025.3Q: i54=0.0 | list face 680 (gap -680) | list amortised 544 (gap -544)  <== GAP
+  2025.4Q: i54=0.0 | list face 680 (gap -680) | list amortised 544 (gap -544)  <== GAP
+  2026.1Q: i54=0.0 | list face 680 (gap -680) | list amortised 544 (gap -544)  <== GAP
+  2026.2Q: i54=0.0 | list face 680 (gap -680) | list amortised 408 (gap -408)  <== GAP
+== KR0005 흥국화재 | subordinated bonds in inventory: 4
+  2023.1Q: i54=2484.39 | list face 650 (gap 1834.39) | list amortised 650 (gap 1834.39)  <== GAP
+  2023.2Q: i54=2226.78 | list face 650 (gap 1576.78) | list amortised 650 (gap 1576.78)  <== GAP
+  2023.3Q: i54=2196.53 | list face 650 (gap 1546.53) | list amortised 650 (gap 1546.53)  <== GAP
+  2023.4Q: i54=2260.52 | list face 650 (gap 1610.52) | list amortised 650 (gap 1610.52)  <== GAP
+  2024.1Q: i54=1250.28 | list face 650 (gap 600.28) | list amortised 650 (gap 600.28)  <== GAP
+  2024.2Q: i54=1035.71 | list face 650 (gap 385.71) | list amortised 650 (gap 385.71)  <== GAP
+  2024.3Q: i54=3143.98 | list face 2650 (gap 493.98) | list amortised 2650 (gap 493.98)  <== GAP
+  2025.1Q: i54=1051.31 | list face 2650 (gap -1598.69) | list amortised 2650 (gap -1598.69)  <== GAP
+  2025.2Q: i54=1053.17 | list face 2650 (gap -1596.83) | list amortised 2650 (gap -1596.83)  <== GAP
+  2025.3Q: i54=651.01 | list face 2650 (gap -1998.99) | list amortised 2650 (gap -1998.99)  <== GAP
+  2025.4Q: i54=640.47 | list face 2650 (gap -2009.53) | list amortised 2650 (gap -2009.53)  <== GAP
+  2026.1Q: i54=191.56 | list face 3650 (gap -3458.44) | list amortised 3560 (gap -3368.44)  <== GAP
+  2026.2Q: i54=190.57 | list face 3650 (gap -3459.43) | list amortised 3560 (gap -3369.43)  <== GAP
+== KR0009 현대해상 | subordinated bonds in inventory: 6
+  2023.2Q: i54=5262.93 | list face 5830 (gap -567.07) | list amortised 4898 (gap 364.93)  <== GAP
+  2023.3Q: i54=5195.58 | list face 5830 (gap -634.42) | list amortised 4898 (gap 297.58)  <== GAP
+  2023.4Q: i54=5078.47 | list face 5830 (gap -751.53) | list amortised 4898 (gap 180.47)  <== GAP
+  2024.1Q: i54=5027.83 | list face 5830 (gap -802.17) | list amortised 4898 (gap 129.83)
+  2024.2Q: i54=9586.16 | list face 10830 (gap -1243.84) | list amortised 9432 (gap 154.16)
+  2024.3Q: i54=9756.24 | list face 10830 (gap -1073.76) | list amortised 9432 (gap 324.24)
+  2024.4Q: i54=4355.94 | list face 23830 (gap -19474.1) | list amortised 22432 (gap -18076.1)  <== GAP
+  2025.1Q: i54=4399.94 | list face 31830 (gap -27430.1) | list amortised 30432 (gap -26032.1)  <== GAP
+  2025.2Q: i54=3943.43 | list face 31830 (gap -27886.6) | list amortised 29966 (gap -26022.6)  <== GAP
+  2025.3Q: i54=3924.21 | list face 31830 (gap -27905.8) | list amortised 29966 (gap -26041.8)  <== GAP
+  2025.4Q: i54=3841.11 | list face 31830 (gap -27988.9) | list amortised 29966 (gap -26124.9)  <== GAP
+  2026.1Q: i54=3765.61 | list face 31830 (gap -28064.4) | list amortised 29966 (gap -26200.4)  <== GAP
+  2026.2Q: i54=0.0 | list face 31830 (gap -31830) | list amortised 28800 (gap -28800)  <== GAP
+== KR0010 KB손해보험 | subordinated bonds in inventory: 3
+  2023.1Q: i54=6583.91 | list face 6650 (gap -66.09) | list amortised 6650 (gap -66.09)
+  2023.2Q: i54=6504.13 | list face 6650 (gap -145.87) | list amortised 6650 (gap -145.87)
+  2023.3Q: i54=6455.91 | list face 6650 (gap -194.09) | list amortised 6650 (gap -194.09)
+  2023.4Q: i54=6606.47 | list face 6650 (gap -43.53) | list amortised 6650 (gap -43.53)
+  2024.2Q: i54=6629.82 | list face 6650 (gap -20.18) | list amortised 6650 (gap -20.18)
+  2024.4Q: i54=6664.73 | list face 6650 (gap 14.73) | list amortised 6650 (gap 14.73)
+  2025.2Q: i54=6760.17 | list face 12650 (gap -5889.83) | list amortised 12650 (gap -5889.83)  <== GAP
+  2025.4Q: i54=6722.49 | list face 12650 (gap -5927.51) | list amortised 12650 (gap -5927.51)  <== GAP
+  2026.2Q: i54=2901.11 | list face 12650 (gap -9748.89) | list amortised 11892 (gap -8990.89)  <== GAP
+== KR0011 DB손해보험 | subordinated bonds in inventory: 3
+  2023.1Q: i54=7517.5 | list face 6690 (gap 827.5) | list amortised 6350 (gap 1167.5)  <== GAP
+  2023.2Q: i54=6169.32 | list face 6690 (gap -520.68) | list amortised 6010 (gap 159.32)
+  2023.3Q: i54=6196.87 | list face 6690 (gap -493.13) | list amortised 6010 (gap 186.87)
+  2023.4Q: i54=6300.48 | list face 6690 (gap -389.52) | list amortised 6010 (gap 290.48)  <== GAP
+  2024.1Q: i54=5995.35 | list face 6690 (gap -694.65) | list amortised 6010 (gap -14.65)
+  2024.2Q: i54=5690.62 | list face 6690 (gap -999.38) | list amortised 5670 (gap 20.62)
+  2024.3Q: i54=5721.1 | list face 6690 (gap -968.9) | list amortised 5670 (gap 51.1)
+  2024.4Q: i54=5736.74 | list face 6690 (gap -953.26) | list amortised 5670 (gap 66.74)
+  2025.1Q: i54=16621.15 | list face 14690 (gap 1931.15) | list amortised 13670 (gap 2951.15)  <== GAP
+  2025.2Q: i54=16387.95 | list face 14690 (gap 1697.95) | list amortised 13330 (gap 3057.95)  <== GAP
+  2025.3Q: i54=5479.58 | list face 14690 (gap -9210.42) | list amortised 13330 (gap -7850.42)  <== GAP
+  2025.4Q: i54=5466.62 | list face 14690 (gap -9223.38) | list amortised 13330 (gap -7863.38)  <== GAP
+  2026.1Q: i54=5463.4 | list face 14690 (gap -9226.6) | list amortised 13330 (gap -7866.6)  <== GAP
+  2026.2Q: i54=0.0 | list face 14690 (gap -14690) | list amortised 11992 (gap -11992)  <== GAP
+== KR0032 NH농협손해보험 | subordinated bonds in inventory: 2
+  2023.1Q: i54=914.0 | list face 1000 (gap -86) | list amortised 1000 (gap -86)  <== GAP
+  2023.2Q: i54=917.78 | list face 1000 (gap -82.22) | list amortised 1000 (gap -82.22)  <== GAP
+  2023.3Q: i54=919.14 | list face 1000 (gap -80.86) | list amortised 1000 (gap -80.86)  <== GAP
+  2023.4Q: i54=942.07 | list face 1000 (gap -57.93) | list amortised 1000 (gap -57.93)  <== GAP
+  2024.1Q: i54=958.9 | list face 1000 (gap -41.1) | list amortised 1000 (gap -41.1)  <== GAP
+  2024.2Q: i54=977.79 | list face 1000 (gap -22.21) | list amortised 1000 (gap -22.21)
+  2024.3Q: i54=988.61 | list face 1000 (gap -11.39) | list amortised 1000 (gap -11.39)
+  2024.4Q: i54=993.45 | list face 1000 (gap -6.55) | list amortised 1000 (gap -6.55)
+  2025.1Q: i54=997.22 | list face 3000 (gap -2002.78) | list amortised 3000 (gap -2002.78)  <== GAP
+  2025.2Q: i54=1015.77 | list face 3000 (gap -1984.23) | list amortised 3000 (gap -1984.23)  <== GAP
+  2025.3Q: i54=1012.02 | list face 3000 (gap -1987.98) | list amortised 3000 (gap -1987.98)  <== GAP
+  2025.4Q: i54=949.59 | list face 3000 (gap -2050.41) | list amortised 3000 (gap -2050.41)  <== GAP
+  2026.1Q: i54=929.51 | list face 3000 (gap -2070.49) | list amortised 3000 (gap -2070.49)  <== GAP
+  2026.2Q: i54=926.58 | list face 3000 (gap -2073.42) | list amortised 3000 (gap -2073.42)  <== GAP
+== KR0049 악사손해보험 | subordinated bonds in inventory: 0
+  2023.1Q: i54=337.26 | list face 0 (gap 337.26) | list amortised 0 (gap 337.26)  <== GAP
+  2023.2Q: i54=317.76 | list face 0 (gap 317.76) | list amortised 0 (gap 317.76)  <== GAP
+  2023.3Q: i54=310.47 | list face 0 (gap 310.47) | list amortised 0 (gap 310.47)  <== GAP
+  2023.4Q: i54=335.71 | list face 0 (gap 335.71) | list amortised 0 (gap 335.71)  <== GAP
+  2024.1Q: i54=323.75 | list face 0 (gap 323.75) | list amortised 0 (gap 323.75)  <== GAP
+  2024.2Q: i54=309.86 | list face 0 (gap 309.86) | list amortised 0 (gap 309.86)  <== GAP
+  2024.3Q: i54=338.64 | list face 0 (gap 338.64) | list amortised 0 (gap 338.64)  <== GAP
+  2024.4Q: i54=343.19 | list face 0 (gap 343.19) | list amortised 0 (gap 343.19)  <== GAP
+  2025.1Q: i54=352.37 | list face 0 (gap 352.37) | list amortised 0 (gap 352.37)  <== GAP
+  2025.2Q: i54=344.45 | list face 0 (gap 344.45) | list amortised 0 (gap 344.45)  <== GAP
+  2025.3Q: i54=341.55 | list face 0 (gap 341.55) | list amortised 0 (gap 341.55)  <== GAP
+  2025.4Q: i54=331.38 | list face 0 (gap 331.38) | list amortised 0 (gap 331.38)  <== GAP
+  2026.1Q: i54=339.45 | list face 0 (gap 339.45) | list amortised 0 (gap 339.45)  <== GAP
+  2026.2Q: i54=344.66 | list face 0 (gap 344.66) | list amortised 0 (gap 344.66)  <== GAP
+== KR0068 한화생명 | subordinated bonds in inventory: 4
+  2023.1Q: i54=18727.41 | list face 14761.8 (gap 3965.66) | list amortised 14762 (gap 3965.66)  <== GAP
+  2023.2Q: i54=18508.39 | list face 14761.8 (gap 3746.64) | list amortised 14762 (gap 3746.64)  <== GAP
+  2023.3Q: i54=24136.71 | list face 19761.8 (gap 4374.96) | list amortised 19762 (gap 4374.96)  <== GAP
+  2023.4Q: i54=15697.98 | list face 19761.8 (gap -4063.77) | list amortised 19762 (gap -4063.77)  <== GAP
+  2024.1Q: i54=15999.2 | list face 19761.8 (gap -3762.55) | list amortised 19762 (gap -3762.55)  <== GAP
+  2024.2Q: i54=16345.27 | list face 19761.8 (gap -3416.48) | list amortised 19762 (gap -3416.48)  <== GAP
+  2024.3Q: i54=16157.69 | list face 19761.8 (gap -3604.06) | list amortised 19762 (gap -3604.06)  <== GAP
+  2024.4Q: i54=17140.81 | list face 27761.8 (gap -10620.9) | list amortised 27762 (gap -10620.9)  <== GAP
+  2025.1Q: i54=17229.37 | list face 27761.8 (gap -10532.4) | list amortised 27762 (gap -10532.4)  <== GAP
+  2025.2Q: i54=16491.18 | list face 27761.8 (gap -11270.6) | list amortised 27762 (gap -11270.6)  <== GAP
+  2025.3Q: i54=16885.46 | list face 27761.8 (gap -10876.3) | list amortised 27762 (gap -10876.3)  <== GAP
+  2025.4Q: i54=17145.92 | list face 27761.8 (gap -10615.8) | list amortised 27762 (gap -10615.8)  <== GAP
+  2026.1Q: i54=17705.14 | list face 27761.8 (gap -10056.6) | list amortised 27762 (gap -10056.6)  <== GAP
+  2026.2Q: i54=17932.09 | list face 27761.8 (gap -9829.66) | list amortised 27762 (gap -9829.66)  <== GAP
+== KR0070 에이비엘생명보험 | subordinated bonds in inventory: 5
+  2023.1Q: i54=650.32 | list face 1930 (gap -1279.68) | list amortised 1930 (gap -1279.68)  <== GAP
+  2023.2Q: i54=640.75 | list face 1930 (gap -1289.25) | list amortised 1930 (gap -1289.25)  <== GAP
+  2023.3Q: i54=635.04 | list face 1930 (gap -1294.96) | list amortised 1930 (gap -1294.96)  <== GAP
+  2023.4Q: i54=649.71 | list face 1930 (gap -1280.29) | list amortised 1930 (gap -1280.29)  <== GAP
+  2024.1Q: i54=642.91 | list face 1930 (gap -1287.09) | list amortised 1930 (gap -1287.09)  <== GAP
+  2024.2Q: i54=644.95 | list face 1930 (gap -1285.05) | list amortised 1930 (gap -1285.05)  <== GAP
+  2024.3Q: i54=651.21 | list face 3930 (gap -3278.79) | list amortised 3930 (gap -3278.79)  <== GAP
+  2024.4Q: i54=652.16 | list face 4930 (gap -4277.84) | list amortised 4930 (gap -4277.84)  <== GAP
+  2025.1Q: i54=650.84 | list face 6430 (gap -5779.16) | list amortised 6430 (gap -5779.16)  <== GAP
+  2025.2Q: i54=650.82 | list face 6430 (gap -5779.18) | list amortised 6430 (gap -5779.18)  <== GAP
+  2025.3Q: i54=647.75 | list face 6430 (gap -5782.25) | list amortised 6430 (gap -5782.25)  <== GAP
+  2025.4Q: i54=643.23 | list face 6430 (gap -5786.77) | list amortised 6430 (gap -5786.77)  <== GAP
+  2026.1Q: i54=636.63 | list face 6430 (gap -5793.37) | list amortised 6430 (gap -5793.37)  <== GAP
+  2026.2Q: i54=632.85 | list face 6430 (gap -5797.15) | list amortised 6430 (gap -5797.15)  <== GAP
+== KR0071 흥국생명보험 | subordinated bonds in inventory: 4
+  2023.1Q: i54=1172.51 | list face 400 (gap 772.51) | list amortised 400 (gap 772.51)  <== GAP
+  2023.2Q: i54=1157.2 | list face 400 (gap 757.2) | list amortised 400 (gap 757.2)  <== GAP
+  2023.3Q: i54=1141.91 | list face 400 (gap 741.91) | list amortised 400 (gap 741.91)  <== GAP
+  2023.4Q: i54=1225.85 | list face 400 (gap 825.85) | list amortised 400 (gap 825.85)  <== GAP
+  2024.1Q: i54=1229.82 | list face 400 (gap 829.82) | list amortised 400 (gap 829.82)  <== GAP
+  2024.2Q: i54=1232.53 | list face 400 (gap 832.53) | list amortised 400 (gap 832.53)  <== GAP
+  2024.3Q: i54=1236.91 | list face 400 (gap 836.91) | list amortised 400 (gap 836.91)  <== GAP
+  2024.4Q: i54=1234.07 | list face 400 (gap 834.07) | list amortised 400 (gap 834.07)  <== GAP
+  2025.1Q: i54=3366.47 | list face 2400 (gap 966.47) | list amortised 2400 (gap 966.47)  <== GAP
+  2025.2Q: i54=3372.16 | list face 2400 (gap 972.16) | list amortised 2400 (gap 972.16)  <== GAP
+  2025.3Q: i54=3355.7 | list face 2400 (gap 955.7) | list amortised 2400 (gap 955.7)  <== GAP
+  2025.4Q: i54=4257.15 | list face 4100 (gap 157.15) | list amortised 4100 (gap 157.15)  <== GAP
+  2026.1Q: i54=4161.69 | list face 4100 (gap 61.69) | list amortised 4100 (gap 61.69)
+  2026.2Q: i54=4132.49 | list face 4100 (gap 32.49) | list amortised 4100 (gap 32.49)
+== KR0072 케이디비생명보험 | subordinated bonds in inventory: 3
+  2023.1Q: i54=4281.36 | list face 0 (gap 4281.36) | list amortised 0 (gap 4281.36)  <== GAP
+  2023.2Q: i54=5189.44 | list face 900 (gap 4289.44) | list amortised 900 (gap 4289.44)  <== GAP
+  2023.3Q: i54=4211.3 | list face 2100 (gap 2111.3) | list amortised 2100 (gap 2111.3)  <== GAP
+  2023.4Q: i54=4622.52 | list face 2100 (gap 2522.52) | list amortised 2100 (gap 2522.52)  <== GAP
+  2024.1Q: i54=4652.53 | list face 2100 (gap 2552.53) | list amortised 2100 (gap 2552.53)  <== GAP
+  2024.2Q: i54=3529.43 | list face 2100 (gap 1429.43) | list amortised 2100 (gap 1429.43)  <== GAP
+  2024.3Q: i54=1210.44 | list face 4100 (gap -2889.56) | list amortised 4100 (gap -2889.56)  <== GAP
+  2024.4Q: i54=0.0 | list face 4100 (gap -4100) | list amortised 4100 (gap -4100)  <== GAP
+  2025.1Q: i54=0.0 | list face 4100 (gap -4100) | list amortised 4100 (gap -4100)  <== GAP
+  2025.2Q: i54=0.0 | list face 4100 (gap -4100) | list amortised 4100 (gap -4100)  <== GAP
+  2025.3Q: i54=0.0 | list face 4100 (gap -4100) | list amortised 4100 (gap -4100)  <== GAP
+  2025.4Q: i54=0.0 | list face 4100 (gap -4100) | list amortised 4100 (gap -4100)  <== GAP
+  2026.1Q: i54=0.0 | list face 4100 (gap -4100) | list amortised 4100 (gap -4100)  <== GAP
+  2026.2Q: i54=0.0 | list face 4100 (gap -4100) | list amortised 4100 (gap -4100)  <== GAP
+== KR0073 교보생명보험 | subordinated bonds in inventory: 1
+  2023.1Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2023.2Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2023.3Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2023.4Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.1Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.2Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.3Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+  2024.4Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+  2025.1Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+  2025.2Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+  2025.3Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+  2025.4Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+  2026.1Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+  2026.2Q: i54=0.0 | list face 7000 (gap -7000) | list amortised 7000 (gap -7000)  <== GAP
+== KR0076 아이엠라이프생명보험 | subordinated bonds in inventory: 3
+  2023.1Q: i54=987.4 | list face 500 (gap 487.4) | list amortised 500 (gap 487.4)  <== GAP
+  2023.2Q: i54=479.0 | list face 500 (gap -21) | list amortised 500 (gap -21)  <== GAP
+  2023.3Q: i54=481.43 | list face 500 (gap -18.57) | list amortised 500 (gap -18.57)  <== GAP
+  2023.4Q: i54=490.81 | list face 500 (gap -9.19) | list amortised 500 (gap -9.19)
+  2024.1Q: i54=490.45 | list face 500 (gap -9.55) | list amortised 500 (gap -9.55)
+  2024.2Q: i54=489.59 | list face 500 (gap -10.41) | list amortised 500 (gap -10.41)
+  2024.3Q: i54=493.78 | list face 500 (gap -6.22) | list amortised 500 (gap -6.22)
+  2024.4Q: i54=495.46 | list face 1500 (gap -1004.54) | list amortised 1500 (gap -1004.54)  <== GAP
+  2025.1Q: i54=496.82 | list face 2250 (gap -1753.18) | list amortised 2250 (gap -1753.18)  <== GAP
+  2025.2Q: i54=498.81 | list face 2250 (gap -1751.19) | list amortised 2250 (gap -1751.19)  <== GAP
+  2025.3Q: i54=499.23 | list face 2250 (gap -1750.77) | list amortised 2250 (gap -1750.77)  <== GAP
+  2025.4Q: i54=499.45 | list face 2250 (gap -1750.55) | list amortised 2250 (gap -1750.55)  <== GAP
+  2026.1Q: i54=499.72 | list face 2250 (gap -1750.28) | list amortised 2250 (gap -1750.28)  <== GAP
+  2026.2Q: i54=0.0 | list face 2250 (gap -2250) | list amortised 2150 (gap -2150)  <== GAP
+== KR0079 미래에셋생명보험 | subordinated bonds in inventory: 2
+  2023.2Q: i54=4966.33 | list face 3000 (gap 1966.33) | list amortised 3000 (gap 1966.33)  <== GAP
+  2023.4Q: i54=3003.59 | list face 3000 (gap 3.59) | list amortised 3000 (gap 3.59)
+  2024.4Q: i54=3024.39 | list face 3000 (gap 24.39) | list amortised 3000 (gap 24.39)
+  2025.4Q: i54=6022.44 | list face 6000 (gap 22.44) | list amortised 6000 (gap 22.44)
+  2026.2Q: i54=2930.94 | list face 6000 (gap -3069.06) | list amortised 5400 (gap -2469.06)  <== GAP
+== KR0082 DB생명보험 | subordinated bonds in inventory: 1
+  2023.1Q: i54=888.0 | list face 0 (gap 888) | list amortised 0 (gap 888)  <== GAP
+  2023.2Q: i54=885.9 | list face 0 (gap 885.9) | list amortised 0 (gap 885.9)  <== GAP
+  2023.3Q: i54=882.69 | list face 0 (gap 882.69) | list amortised 0 (gap 882.69)  <== GAP
+  2023.4Q: i54=311.93 | list face 0 (gap 311.93) | list amortised 0 (gap 311.93)  <== GAP
+  2024.1Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.2Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.3Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.4Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2025.1Q: i54=3019.19 | list face 3000 (gap 19.19) | list amortised 3000 (gap 19.19)
+  2025.2Q: i54=3019.19 | list face 3000 (gap 19.19) | list amortised 3000 (gap 19.19)
+  2025.3Q: i54=3019.19 | list face 3000 (gap 19.19) | list amortised 3000 (gap 19.19)
+  2025.4Q: i54=3135.91 | list face 3000 (gap 135.91) | list amortised 3000 (gap 135.91)  <== GAP
+  2026.1Q: i54=3135.91 | list face 3000 (gap 135.91) | list amortised 3000 (gap 135.91)  <== GAP
+  2026.2Q: i54=3135.91 | list face 3000 (gap 135.91) | list amortised 3000 (gap 135.91)  <== GAP
+== KR0083 푸본현대생명보험 | subordinated bonds in inventory: 9
+  2023.1Q: i54=5424.01 | list face 3995 (gap 1429.01) | list amortised 3995 (gap 1429.01)  <== GAP
+  2023.2Q: i54=5304.52 | list face 7275 (gap -1970.48) | list amortised 7275 (gap -1970.48)  <== GAP
+  2023.3Q: i54=5189.05 | list face 7275 (gap -2085.95) | list amortised 7275 (gap -2085.95)  <== GAP
+  2023.4Q: i54=5439.46 | list face 7275 (gap -1835.54) | list amortised 7275 (gap -1835.54)  <== GAP
+  2024.1Q: i54=5377.13 | list face 7275 (gap -1897.87) | list amortised 7275 (gap -1897.87)  <== GAP
+  2024.2Q: i54=5432.45 | list face 7275 (gap -1842.55) | list amortised 7275 (gap -1842.55)  <== GAP
+  2024.4Q: i54=4154.49 | list face 7275 (gap -3120.51) | list amortised 7275 (gap -3120.51)  <== GAP
+  2025.1Q: i54=4161.84 | list face 7275 (gap -3113.16) | list amortised 7275 (gap -3113.16)  <== GAP
+  2025.2Q: i54=4024.85 | list face 7275 (gap -3250.15) | list amortised 7275 (gap -3250.15)  <== GAP
+  2025.3Q: i54=3522.1 | list face 7275 (gap -3752.9) | list amortised 7275 (gap -3752.9)  <== GAP
+  2025.4Q: i54=3511.66 | list face 7275 (gap -3763.34) | list amortised 7275 (gap -3763.34)  <== GAP
+  2026.1Q: i54=3499.41 | list face 7275 (gap -3775.59) | list amortised 7275 (gap -3775.59)  <== GAP
+  2026.2Q: i54=2951.86 | list face 7275 (gap -4323.14) | list amortised 7275 (gap -4323.14)  <== GAP
+== KR0087 동양생명 | subordinated bonds in inventory: 3
+  2023.1Q: i54=3143.67 | list face 0 (gap 3143.67) | list amortised 0 (gap 3143.67)  <== GAP
+  2023.2Q: i54=3022.76 | list face 0 (gap 3022.76) | list amortised 0 (gap 3022.76)  <== GAP
+  2023.3Q: i54=2012.27 | list face 0 (gap 2012.27) | list amortised 0 (gap 2012.27)  <== GAP
+  2023.4Q: i54=2000.81 | list face 0 (gap 2000.81) | list amortised 0 (gap 2000.81)  <== GAP
+  2024.1Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.2Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2024.3Q: i54=0.0 | list face 0 (gap 0) | list amortised 0 (gap 0)
+  2025.1Q: i54=0.0 | list face 3000 (gap -3000) | list amortised 3000 (gap -3000)  <== GAP
+  2025.2Q: i54=0.0 | list face 9956.63 (gap -9956.63) | list amortised 9957 (gap -9956.63)  <== GAP
+  2025.3Q: i54=0.0 | list face 9956.63 (gap -9956.63) | list amortised 9957 (gap -9956.63)  <== GAP
+  2025.4Q: i54=0.0 | list face 11956.6 (gap -11956.6) | list amortised 11957 (gap -11956.6)  <== GAP
+  2026.2Q: i54=0.0 | list face 11956.6 (gap -11956.6) | list amortised 11957 (gap -11956.6)  <== GAP
+== KR0094 신한라이프생명보험 | subordinated bonds in inventory: 2
+  2023.1Q: i54=6584.1 | list face 0 (gap 6584.1) | list amortised 0 (gap 6584.1)  <== GAP
+  2023.2Q: i54=7579.29 | list face 3000 (gap 4579.29) | list amortised 3000 (gap 4579.29)  <== GAP
+  2023.3Q: i54=7712.67 | list face 3000 (gap 4712.67) | list amortised 3000 (gap 4712.67)  <== GAP
+  2023.4Q: i54=3035.54 | list face 3000 (gap 35.54) | list amortised 3000 (gap 35.54)
+  2024.1Q: i54=3013.37 | list face 3000 (gap 13.37) | list amortised 3000 (gap 13.37)
+  2024.2Q: i54=0.0 | list face 3000 (gap -3000) | list amortised 3000 (gap -3000)  <== GAP
+  2024.3Q: i54=0.0 | list face 3000 (gap -3000) | list amortised 3000 (gap -3000)  <== GAP
+  2024.4Q: i54=0.0 | list face 3000 (gap -3000) | list amortised 3000 (gap -3000)  <== GAP
+  2025.1Q: i54=0.0 | list face 3000 (gap -3000) | list amortised 3000 (gap -3000)  <== GAP
+  2025.2Q: i54=0.0 | list face 8000 (gap -8000) | list amortised 8000 (gap -8000)  <== GAP
+  2025.3Q: i54=0.0 | list face 8000 (gap -8000) | list amortised 8000 (gap -8000)  <== GAP
+  2025.4Q: i54=0.0 | list face 8000 (gap -8000) | list amortised 8000 (gap -8000)  <== GAP
+  2026.1Q: i54=0.0 | list face 8000 (gap -8000) | list amortised 8000 (gap -8000)  <== GAP
+  2026.2Q: i54=0.0 | list face 8000 (gap -8000) | list amortised 8000 (gap -8000)  <== GAP
+== KR0099 KB라이프생명 | subordinated bonds in inventory: 2
+  2023.1Q: i54=1930.57 | list face 2000 (gap -69.43) | list amortised 2000 (gap -69.43)  <== GAP
+  2023.2Q: i54=1919.01 | list face 2000 (gap -80.99) | list amortised 2000 (gap -80.99)  <== GAP
+  2023.3Q: i54=1952.39 | list face 2000 (gap -47.61) | list amortised 2000 (gap -47.61)
+  2023.4Q: i54=797.08 | list face 2000 (gap -1202.92) | list amortised 2000 (gap -1202.92)  <== GAP
+  2024.1Q: i54=1988.8 | list face 2000 (gap -11.2) | list amortised 2000 (gap -11.2)
+  2024.2Q: i54=1994.66 | list face 2000 (gap -5.34) | list amortised 2000 (gap -5.34)
+  2024.3Q: i54=2009.01 | list face 2000 (gap 9.01) | list amortised 2000 (gap 9.01)
+  2024.4Q: i54=2011.21 | list face 2000 (gap 11.21) | list amortised 2000 (gap 11.21)
+  2025.1Q: i54=2012.8 | list face 2000 (gap 12.8) | list amortised 2000 (gap 12.8)
+  2025.2Q: i54=2011.18 | list face 2000 (gap 11.18) | list amortised 2000 (gap 11.18)
+  2025.3Q: i54=2015.19 | list face 2000 (gap 15.19) | list amortised 2000 (gap 15.19)
+  2025.4Q: i54=2011.02 | list face 2000 (gap 11.02) | list amortised 2000 (gap 11.02)
+  2026.1Q: i54=2007.17 | list face 2000 (gap 7.17) | list amortised 2000 (gap 7.17)
+  2026.2Q: i54=701.95 | list face 2000 (gap -1298.05) | list amortised 1740 (gap -1038.05)  <== GAP
+== KR0104 농협생명보험 | subordinated bonds in inventory: 3
+  2023.1Q: i54=10328.14 | list face 11100 (gap -771.86) | list amortised 10540 (gap -211.86)
+  2023.2Q: i54=9462.45 | list face 11100 (gap -1637.55) | list amortised 9980 (gap -517.55)  <== GAP
+  2023.3Q: i54=9394.55 | list face 11100 (gap -1705.45) | list amortised 9980 (gap -585.45)  <== GAP
+  2023.4Q: i54=9876.46 | list face 11100 (gap -1223.54) | list amortised 9980 (gap -103.54)
+  2024.1Q: i54=9849.87 | list face 11100 (gap -1250.13) | list amortised 9980 (gap -130.13)
+  2024.2Q: i54=9336.98 | list face 11100 (gap -1763.02) | list amortised 9420 (gap -83.02)
+  2024.3Q: i54=9391.71 | list face 11100 (gap -1708.29) | list amortised 9420 (gap -28.29)
+  2024.4Q: i54=9876.58 | list face 11100 (gap -1223.42) | list amortised 9420 (gap 456.58)  <== GAP
+  2025.1Q: i54=9928.65 | list face 11100 (gap -1171.35) | list amortised 9420 (gap 508.65)  <== GAP
+  2025.2Q: i54=9425.84 | list face 11100 (gap -1674.16) | list amortised 8860 (gap 565.84)  <== GAP
+  2025.3Q: i54=9413.73 | list face 11100 (gap -1686.27) | list amortised 8860 (gap 553.73)  <== GAP
+  2025.4Q: i54=9320.69 | list face 11100 (gap -1779.31) | list amortised 8860 (gap 460.69)  <== GAP
+  2026.1Q: i54=9275.61 | list face 11100 (gap -1824.39) | list amortised 8860 (gap 415.61)  <== GAP
+  2026.2Q: i54=8700.42 | list face 11100 (gap -2399.58) | list amortised 8300 (gap 400.42)  <== GAP
+== KR1011 IBK연금보험 | subordinated bonds in inventory: 4
+  2023.1Q: i54=1620.92 | list face 3600 (gap -1979.08) | list amortised 3600 (gap -1979.08)  <== GAP
+  2023.2Q: i54=1616.06 | list face 3600 (gap -1983.94) | list amortised 3600 (gap -1983.94)  <== GAP
+  2023.3Q: i54=1600.1 | list face 3600 (gap -1999.9) | list amortised 3600 (gap -1999.9)  <== GAP
+  2023.4Q: i54=1633.74 | list face 3600 (gap -1966.26) | list amortised 3600 (gap -1966.26)  <== GAP
+  2024.1Q: i54=1624.14 | list face 3600 (gap -1975.86) | list amortised 3600 (gap -1975.86)  <== GAP
+  2024.2Q: i54=1640.41 | list face 3600 (gap -1959.59) | list amortised 3600 (gap -1959.59)  <== GAP
+  2024.3Q: i54=1642.59 | list face 3600 (gap -1957.41) | list amortised 3600 (gap -1957.41)  <== GAP
+  2024.4Q: i54=1644.31 | list face 3600 (gap -1955.69) | list amortised 3600 (gap -1955.69)  <== GAP
+  2025.1Q: i54=1624.18 | list face 3600 (gap -1975.82) | list amortised 3600 (gap -1975.82)  <== GAP
+  2025.2Q: i54=1627.59 | list face 3600 (gap -1972.41) | list amortised 3600 (gap -1972.41)  <== GAP
+  2025.3Q: i54=1623.28 | list face 3600 (gap -1976.72) | list amortised 3600 (gap -1976.72)  <== GAP
+  2025.4Q: i54=1615.36 | list face 3600 (gap -1984.64) | list amortised 3600 (gap -1984.64)  <== GAP
+  2026.1Q: i54=1604.79 | list face 3600 (gap -1995.21) | list amortised 3600 (gap -1995.21)  <== GAP
+  2026.2Q: i54=1602.09 | list face 3600 (gap -1997.91) | list amortised 3600 (gap -1997.91)  <== GAP

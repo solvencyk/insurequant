@@ -1,0 +1,5 @@
+# data\dart\FY2023_Q2\raw\KR0005_흥국화재\20230814003024.xml | 15283 lines | sections 'capital-recognised debt': 0 | note hits: 2
+
+## NOTE HITS (lines mentioning step-up / rate adjustment / call / interest suspension together with 신종·자본증권·후순위)
+  8265 | 상기 신종자본증권은 발행 후 5년 시점 및 매 6개월마다 당사가 조기상환을 할 수 있으며, 발행일로부터 10년 경과후 1회에 한하여 이자율이 조정 됩니다. 한편, 만기일에 당사의 선택으로 30년씩 만기 연장이 가능합니다.
+ 10276 | (주1) 반기순이익에서 신종자본증권 분배금을 차감하였습니다.(주2) 보통주와 배당률만 상이하고 보통주에 배당하지 않는 경우 무배당이며, 비누적적이고 잔여재산분배에 있어 보통주와 동일 순위인 우선주입니다.

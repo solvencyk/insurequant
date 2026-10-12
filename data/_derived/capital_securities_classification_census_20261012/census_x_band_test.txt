@@ -1,0 +1,77 @@
+KR0005  blocks[2025.1Q:1993]  pre-issue band 9~2624 (width 2615); typical |d(X-L)| max/median 2120/5; tol 20; scored quarters 5
+    score all-T2=0  all-T1=0  census[2025.1Q=T2]=0
+    best[2025.1Q=T1]=0  second[2025.1Q=T2]=0
+    event study: 2025.1Q: confounded(item 53 changes in the issue quarter)
+    event study pick: n/a
+    other_t under census: 25.1Q:500 25.2Q:504 25.3Q:501 25.4Q:327 26.1Q:293 26.2Q:257
+    other_t under best: 25.1Q:2301 25.2Q:2319 25.3Q:2373 25.4Q:2292 26.1Q:2286 26.2Q:2250
+KR0011  blocks[2025.3Q:8650;2026.1Q:4413;2026.2Q:4389]  pre-issue band 1181~3144 (width 1963); typical |d(X-L)| max/median 1963/660; tol 175; scored quarters 4
+    score all-T2=25302  all-T1=4404  census[2025.3Q=T1,2026.1Q=T2,2026.2Q=T2]=328
+    best[2025.3Q=T1,2026.1Q=T2,2026.2Q=T2]=328  second[2025.3Q=T1,2026.1Q=T2,2026.2Q=T1]=3188
+    event study: 2025.3Q: dOther if T1 +1348 / if T2 -7302 | 2026.1Q: dOther if T1 +1638 / if T2 +421 | 2026.2Q: dOther if T1 +2552 / if T2 -308
+    event study pick: 2025.3Q: T1 (rejected T2: |d|=7302 vs chosen |d|=1348; rejected beyond typical max: YES) | 2026.1Q: T2 (rejected T1: |d|=1638 vs chosen |d|=421; rejected beyond typical max: no) | 2026.2Q: T2 (rejected T1: |d|=2552 vs chosen |d|=308; rejected beyond typical max: YES)
+    other_t under census: 25.3Q:3143 25.4Q:3215 26.1Q:3636 26.2Q:3328
+    other_t under best: 25.3Q:3143 25.4Q:3215 26.1Q:3636 26.2Q:3328
+KR0032  blocks[2024.4Q:4500]  pre-issue band -0~316 (width 317); typical |d(X-L)| max/median 314/34; tol 45; scored quarters 7
+    score all-T2=582  all-T1=11216  census[2024.4Q=T2]=582
+    best[2024.4Q=T2]=582  second[2024.4Q=T1]=11216
+    event study: 2024.4Q: dOther if T1 +1747 / if T2 +348
+    event study pick: 2024.4Q: T2 (rejected T1: |d|=1747 vs chosen |d|=348; rejected beyond typical max: YES)
+    other_t under census: 24.4Q:349 25.1Q:331 25.2Q:319 25.3Q:342 25.4Q:533 26.1Q:508 26.2Q:625
+    other_t under best: 24.4Q:349 25.1Q:331 25.2Q:319 25.3Q:342 25.4Q:533 26.1Q:508 26.2Q:625
+KR0050  blocks[2024.2Q:1000;2026.2Q:999]  pre-issue band 15~39 (width 24); typical |d(X-L)| max/median 16/16; tol 20; scored quarters 9
+    score all-T2=0  all-T1=2943  census[2024.2Q=T2,2026.2Q=T2]=0
+    best[2024.2Q=T2,2026.2Q=T2]=0  second[2024.2Q=T2,2026.2Q=T1]=417
+    event study: 2024.2Q: dOther if T1 +241 / if T2 -26 | 2026.2Q: dOther if T1 +460 / if T2 -7
+    event study pick: 2024.2Q: T2 (rejected T1: |d|=241 vs chosen |d|=26; rejected beyond typical max: YES) | 2026.2Q: T2 (rejected T1: |d|=460 vs chosen |d|=7; rejected beyond typical max: YES)
+    other_t under census: 24.2Q:13 24.3Q:8 24.4Q:52 25.1Q:-1 25.2Q:13 25.3Q:25 25.4Q:20 26.1Q:16 26.2Q:8
+    other_t under best: 24.2Q:13 24.3Q:8 24.4Q:52 25.1Q:-1 25.2Q:13 25.3Q:25 25.4Q:20 26.1Q:16 26.2Q:8
+KR0068  blocks[2024.3Q:11000;2025.1Q:5983;2025.2Q:13734]  pre-issue band 3~2684 (width 2680); typical |d(X-L)| max/median 2680/201; tol 307; scored quarters 7
+    score all-T2=0  all-T1=78993  census[2024.3Q=T2,2025.1Q=T2,2025.2Q=T2]=0
+    best[2024.3Q=T2,2025.1Q=T2,2025.2Q=T2]=0  second[2024.3Q=T2,2025.1Q=T1,2025.2Q=T2]=19989
+    event study: 2024.3Q: confounded(item 53 changes in the issue quarter) | 2025.1Q: dOther if T1 +5972 / if T2 -11 | 2025.2Q: dOther if T1 +13176 / if T2 -558
+    event study pick: 2025.1Q: T2 (rejected T1: |d|=5972 vs chosen |d|=11; rejected beyond typical max: YES) | 2025.2Q: T2 (rejected T1: |d|=13176 vs chosen |d|=558; rejected beyond typical max: YES)
+    other_t under census: 24.3Q:1467 24.4Q:730 25.1Q:720 25.2Q:161 25.3Q:154 25.4Q:210 26.1Q:280 26.2Q:510
+    other_t under best: 24.3Q:1467 24.4Q:730 25.1Q:720 25.2Q:161 25.3Q:154 25.4Q:210 26.1Q:280 26.2Q:510
+KR0072  blocks[2023.2Q:2160;2024.4Q:245]  pre-issue band none(<3 quarters) (width None); typical |d(X-L)| max/median n/a; tol 24; scored quarters 12
+    score all-T2=2136  all-T1=540  census[2023.2Q=T2,2024.4Q=T2]=2136
+    best[2023.2Q=T1,2024.4Q=T1]=540  second[2023.2Q=T1,2024.4Q=T2]=540
+    event study: 2023.2Q: dOther if T1 -564 / if T2 -2160 | 2024.4Q: dOther if T1 -21 / if T2 -21
+    event study pick: 2023.2Q: T1 (rejected T2: |d|=2160 vs chosen |d|=564; rejected beyond 50% of block: YES) | 2024.4Q: T2 (rejected T1: |d|=21 vs chosen |d|=21; rejected beyond 50% of block: no)
+    other_t under census: 23.2Q:-2160 23.3Q:0 23.4Q:-2 24.1Q:-2 24.2Q:-2 24.3Q:-2 24.4Q:-2 25.1Q:-2 25.2Q:-2 25.3Q:-2 25.4Q:-2 26.1Q:-2 26.2Q:-2
+    other_t under best: 23.2Q:-564 23.3Q:1613 23.4Q:1404 24.1Q:1469 24.2Q:1403 24.3Q:1368 24.4Q:1347 25.1Q:1308 25.2Q:1286 25.3Q:1308 25.4Q:1356 26.1Q:1414 26.2Q:1551
+KR0073  blocks[2023.2Q:4985;2024.4Q:5983]  pre-issue band none(<3 quarters) (width None); typical |d(X-L)| max/median n/a; tol 110; scored quarters 13
+    score all-T2=0  all-T1=0  census[2023.2Q=T2,2024.4Q=T2]=0
+    best[2023.2Q=T1,2024.4Q=T1]=0  second[2023.2Q=T1,2024.4Q=T2]=0
+    event study: 2023.2Q: dOther if T1 +4985 / if T2 +0 | 2024.4Q: dOther if T1 +89 / if T2 -5894
+    event study pick: 2023.2Q: T2 (rejected T1: |d|=4985 vs chosen |d|=0; rejected beyond 50% of block: YES) | 2024.4Q: T1 (rejected T2: |d|=5894 vs chosen |d|=89; rejected beyond 50% of block: YES)
+    other_t under census: 23.2Q:0 23.3Q:11549 23.4Q:7571 24.1Q:7578 24.2Q:7579 24.3Q:8310 24.4Q:2416 25.1Q:4442 25.2Q:5064 25.3Q:9502 25.4Q:6790 26.1Q:14208 26.2Q:9336
+    other_t under best: 23.2Q:4985 23.3Q:16534 23.4Q:12556 24.1Q:12563 24.2Q:12564 24.3Q:13295 24.4Q:10936 25.1Q:13416 25.2Q:13901 25.3Q:18384 25.4Q:15459 26.1Q:23532 26.2Q:19876
+KR0083  blocks[2023.1Q:600]  pre-issue band none(<3 quarters) (width None); typical |d(X-L)| max/median n/a; tol 10; scored quarters 11
+    score all-T2=0  all-T1=0  census[2023.1Q=T2]=0
+    best[2023.1Q=T1]=0  second[2023.1Q=T2]=0
+    event study: 2023.1Q: n/a
+    event study pick: n/a
+    other_t under census: 23.1Q:2898 23.2Q:2338 23.3Q:2166 23.4Q:2735 24.1Q:2615 24.2Q:2483 24.3Q:2805 24.4Q:2058 25.1Q:1964 25.2Q:1986 25.3Q:1976 25.4Q:1997 26.1Q:2132 26.2Q:2314
+    other_t under best: 23.1Q:3498 23.2Q:2938 23.3Q:2766 23.4Q:3335 24.1Q:3215 24.2Q:3083 24.3Q:3405 24.4Q:2658 25.1Q:2564 25.2Q:2586 25.3Q:2576 25.4Q:2597 26.1Q:2732 26.2Q:2914
+KR0097  blocks[2023.1Q:1800]  pre-issue band none(<3 quarters) (width None); typical |d(X-L)| max/median n/a; tol 18; scored quarters 13
+    score all-T2=3586  all-T1=0  census[2023.1Q=T1]=0
+    best[2023.1Q=T1]=0  second[2023.1Q=T2]=3586
+    event study: 2023.1Q: n/a
+    event study pick: n/a
+    other_t under census: 23.1Q:501 23.2Q:313 23.3Q:253 23.4Q:397 24.1Q:289 24.2Q:138 24.3Q:60 25.1Q:211 25.2Q:191 25.3Q:28 25.4Q:347 26.1Q:114 26.2Q:231
+    other_t under best: 23.1Q:501 23.2Q:313 23.3Q:253 23.4Q:397 24.1Q:289 24.2Q:138 24.3Q:60 25.1Q:211 25.2Q:191 25.3Q:28 25.4Q:347 26.1Q:114 26.2Q:231
+KR0104  blocks[2023.1Q:2500]  pre-issue band none(<3 quarters) (width None); typical |d(X-L)| max/median n/a; tol 25; scored quarters 14
+    score all-T2=0  all-T1=0  census[2023.1Q=T2]=0
+    best[2023.1Q=T1]=0  second[2023.1Q=T2]=0
+    event study: 2023.1Q: n/a
+    event study pick: n/a
+    other_t under census: 23.1Q:2017 23.2Q:1339 23.3Q:606 23.4Q:529 24.1Q:678 24.2Q:654 24.3Q:626 24.4Q:646 25.1Q:722 25.2Q:1593 25.3Q:750 25.4Q:724 26.1Q:589 26.2Q:725
+    other_t under best: 23.1Q:4517 23.2Q:3839 23.3Q:3106 23.4Q:3029 24.1Q:3178 24.2Q:3154 24.3Q:3126 24.4Q:3146 25.1Q:3222 25.2Q:4093 25.3Q:3250 25.4Q:3224 26.1Q:3089 26.2Q:3225
+KR1000  blocks[2023.1Q:2500;2024.4Q:2300]  pre-issue band none(<3 quarters) (width None); typical |d(X-L)| max/median n/a; tol 48; scored quarters 13
+    score all-T2=19991  all-T1=5829  census[2023.1Q=T2,2024.4Q=T2]=19991
+    best[2023.1Q=T1,2024.4Q=T1]=5829  second[2023.1Q=T1,2024.4Q=T2]=5829
+    event study: 2023.1Q: n/a | 2024.4Q: confounded(item 53 changes in the issue quarter)
+    event study pick: n/a
+    other_t under census: 23.1Q:-1932 23.2Q:-2902 23.3Q:-2972 23.4Q:-3004 24.1Q:-3084 24.2Q:-3185 24.3Q:-3248 24.4Q:-1554 25.1Q:1902 25.2Q:2505 25.3Q:2740 25.4Q:2923 26.1Q:3336 26.2Q:2313
+    other_t under best: 23.1Q:47 23.2Q:-936 23.3Q:-994 23.4Q:-1005 24.1Q:-1031 24.2Q:-1065 24.3Q:-1086 24.4Q:627 25.1Q:4131 25.2Q:4702 25.3Q:4953 25.4Q:5145 26.1Q:5626 26.2Q:4649
