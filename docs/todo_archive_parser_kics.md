@@ -1,4 +1,8 @@
 # TODO archive — `TODO_parser_kics.md` (Status 이력, 읽기 지연)
+- **2026-10-11 (25회차) 사이트 신판 16칸(티켓 `20261011T1210Z`) — 마스터 98칸 · 금리민감도 62칸 · IRR/듀레이션갭/원천기록 정정**: 신판을 렌더링·텍스트로 옛 판과 대조해 예별 2025.4Q(수정공시)·농협 2025.1Q·교보 2025.3Q·2025.4Q·2026.1Q(후 표 완결)의 K-ICS 칸을 신판 값으로 칸 단위 정정하고 KB손보 2025.4Q 빈 항목 6 을 0 으로 채웠다. 교보 2024.3Q · KDB생명 2025.3Q · KB손보 2026.2Q · B군 7칸은 K-ICS 칸 변화 없음(마스터 = 신판). docling 0회.
+  HEAD 대비 185칸 = 계획 185칸(추가·삭제·계획 밖 0). K-ICS 게이트 RED 57 → 56(교보 2026.1Q `19_market` 해소, 새 RED 0, 버킷 밖 변화 0, blocking 0, exit 2 불변), 금리민감도 검증 동일, 데이터계약 RED 38 → 39(= xlsx `금리민감도` DRIFT 62칸, publishing), 테스트 17 failed / 838 passed 동일. 커밋 없음.
+  남은 것: validation(교보 2026.1Q 연쇄·후 박제 등재 해제 · 골든 `--update` · KB손보 사이드카 검토) · publishing(xlsx 3시트 · public_exports) · `md_inbox` MD 는 옛 판이라 재실행하면 정정이 되돌아감 · 화면에 보이는 숫자가 바뀌는 정정이라 배포 전 owner 고지. 근거 `data/disclosure/_meta/kics_newer_editions_apply_runlog_20261011.md`.
+
 - **2026-10-11 (24회차) 사이트 신판 3건(티켓 `20261010T2351Z`) — 악사 2024.3Q 완성본 적재**: 신판 PDF(27쪽) docling 변환(1프로세스) 뒤 KR0049 2024.3Q 마스터 +17행(항목 25·26·29~35·47~54) · `값_적용후` +9칸(15~23, 부재 박제 9칸 전부 채움). 기존 39사 25,496행·재보사 4,453행 HEAD 와 동일, 악사 2024.3Q 기존 26행은 17행 동일 · 9행에 후 키만 추가, 보류 4칸(3·4·27후: 인쇄값 2325·5215·286.5 ≠ 마스터, 쪽 근거 런로그 §1.5) · 사이드카 2칸(전환 UNKNOWN→O/O/X/O/X/X/X · 텍스트층 BORDERLINE→READABLE).
   신한이지 2025.3Q = K-ICS 쪽 8쪽 행 단위 동일(원본 판 유지, 변경 없음) · 하나 2025.4Q = K-ICS 칸 143칸 중 달라진 쪽(대출채권 p21·22, 위험관리 서술 재쪽매김 p62~66)에서 온 것 0(충돌 0, 덮어쓴 것 없음). 커밋 없음. K-ICS 게이트 RED 57·blocking 0·exit 2 불변(YELLOW 1940→1939, 새 RED 0), 데이터계약 RED 35→36(= xlsx `K-ICS공시` DRIFT 9칸, publishing).
   남은 것: validation(악사 부재 박제 해제 · 골든 2종 `--update`) · publishing(xlsx +103행·9칸) · owner(보류 4칸 · 하나 판 확인) · 헬퍼가 이 3쌍을 모름(`[0]`=옛 판). 근거 `data/disclosure/_meta/kics_editions_runlog_20261011.md`.

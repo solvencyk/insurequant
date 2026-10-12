@@ -1,6 +1,22 @@
 # Parser Changelog — K-ICS lane (Stage 2)
 
-> Last updated: 2026-10-11 · Stage 2/5 — parser (kics lane)
+> Last updated: 2026-10-12 · Stage 2/5 — parser (kics lane)
+
+## 2026-10-12 — 퍼시픽 16행 적재 · 악사 4칸 채택 · 뮌헨 적재 보류(51 공란) (kics 레인, 푸시 없음)
+
+계약: orchestrator 티켓 `inbox/parser/20261012T1030Z__orchestrator__KR1107-KR0055_2024.3Q-2026.2Q__kics_owner_approved_followups.md`(공유 티켓, 오케스트레이터가 종결 - 고치지 않음) + 코디네이터 부기(뮌헨 50·52 · 51 확인). 도구·계획·증거 `data/_derived/kics_followups_20261012/`.
+쓰기는 칸 단위 + 옛 값/시작 sha guard + 백업 + temp 후 `os.replace`(`apply_plan.py`, 쓰기 전 HEAD 대비 계획 일치 증명). docling 0회.
+
+- **퍼시픽 KR1107 2025.3Q · 2026.2Q 항목 47~54 = 16행 추가(값 0 · 값_적용후 0)**: 미적용사 확인 - 전환 적용여부 사이드카 10분기(2024.1Q~2026.2Q) 전부 TFI · TAC · TIR · TER · TIRR · 적기시정 유예 X(보고 연장만 O), FSS 붙임-1 `_TRANSITION_KIND` 19사에 없음. 원문(PDF p22 · p25, 텍스트층 + 렌더링)의 「(1) 공통적용 경과조치 관련 - 해당사항 없음」 표(백만원)는 지급여력비율 · 지급여력금액 · 기본자본 · 보완자본 · 한도 적용 전 · 한도 · 해약환급금 초과분 · (기발행 신종자본증권) · (기발행 후순위채무) · 지급여력기준금액 전 칸에 숫자 0 을 인쇄한다(53 · 54 후 칸만 사선).
+  티켓 규칙(「숫자를 인쇄했으면 그 값」)대로 0 을 적재했다. 53 · 54 의 후 칸은 재보사 기존 89행 관례(후 키 존재, 후 = 전)를 따라 0. 머리글 지급여력금액(2,043 · 1,781억)과 어긋나는 서식 채움이지만 발행사 인쇄 그대로이고, 이웃 분기(2025.2Q · 2025.4Q · 2026.1Q)는 같은 표에 실제 금액(머리글 지급여력금액과 같은 값)을 인쇄했다. 삽입 위치는 같은 회사 이웃 분기 블록 바로 뒤(2025.2Q 뒤 · 2026.1Q 뒤).
+- **악사 KR0049 2024.3Q 4칸 = 최신 공시 전기 열 채택(owner 2026-10-09 규칙)**: 항목 3 `값` · `값_적용후` 2326 → 2325, 항목 4 `값` 5216 → 5215 (FY2024_Q4 PDF p39 · 인쇄 쪽 38 [경과조치 적용 전 지급여력비율 세부] 당분기-1분기 열: 보완자본 2,325 · 순자산 5,215), 항목 27 `값_적용후` 286.43630737 → 286.5 (같은 문서 p36 [지급여력비율 총괄] 경과조치후 지급여력비율 당분기-1분기 열 286.5, FY2025_Q1 문서 당분기-2분기 열도 286.5). 이웃 분기는 이미 인쇄된 후 비율을 쥐고 있어(2024.3Q 만 파생값) 일관. 사이트 신판(2024.3Q)의 2,325 · 5,215 · 286.5 와도 같다. 근거 쪽 이미지 `img/KR0049_FY2024Q4_p36_summary.png` · `p39_detail.png`.
+- **뮌헨 KR1101 2026.2Q 항목 50 · 52 - 적재 보류**: p17 (1) 공통적용 표는 지급여력금액 · 기본자본 271,642(백만원 = 2,716.42억)만 인쇄하고 보완자본(51) · 47 · 48 · 49 · 53 · 54 는 값도 대시도 없는 공란이다(텍스트층에 글자 없음; 같은 쪽 ① 자본감소분 표는 보완자본 「-」 를 인쇄하고, 직전 분기 2026.1Q p16 은 같은 6행에 「-」 를 인쇄). 코디네이터 부기(「51 이 대시면 0 을 싣는다」)의 조건이 충족되지 않는다.
+  시뮬(`sim_munich_A.txt` · `sim_munich_B.txt`, 라이브 마스터 + 계획, 게이트 `--master`): (A) 50 · 52 만 = 새 RED 2(`50_tfi_tier_split` · `_post` `TFI_TIER_PARTIAL_ROWS`, blocking RED 2, exit 2) / (B) 51 = 52 - 50 = 0 도출 포함 3행 = 새 RED 0 · SKIP → GREEN 2. 둘 다 적재하지 않았다 - A 는 RED, B 는 인쇄되지 않은 값(게이트 주석: 대시는 0, 공란은 결측이 정답). 계획 파일은 `plans/munich_A_50_52_only.json` · `munich_B_derived_51.json` 에 보관, B 는 `apply_plan.py --plans munich_B_derived_51 --apply`(마스터가 바뀌었으면 `make_plans.py` 먼저). 대안은 validation 이 53 · 54 의 `_TFI_MEMO_ISSUER_BLANK` 처럼 51 공란 등재부를 만드는 것.
+- **마이브라운 `TIER2_LIMIT_STALE` 5칸**: 티켓대로 변경 0(마이브라운 행 불변).
+- **증명 · 게이트**: HEAD 대비 바뀐 칸 4 · 새 키 16 = 계획과 정확히 일치(삭제 0, 퍼시픽 · 악사 밖 28,809행 HEAD 와 동일, `proof_vs_head.txt`, 쓰기 전 같은 검증을 `apply_plan.py` 가 수행). `git diff --numstat` +180/-4. K-ICS 룰 게이트 RED 56 → 56(새 RED 0 · 해소 RED 0), YELLOW 1935 → 1936(새 6 = 악사 룰 1 · 2 의 차 1억 반올림 2 + 퍼시픽 `48_tier2_limit` · `_post` × 2분기 4(한도 0 대 SCR×50% 기대 652.0 · 359.5억, LOADER_ENFORCED 정보), 해소 5 = 악사 `2_tier1_bridge` + 퍼시픽 `47_tier2_census` · `_post` × 2분기 4), GREEN 13684 → 13703, SKIP 3345 → 3325, blocking RED 0, exit 0, 이동한 finding 키 30개 전부 건드린 3개 버킷 안(`gate_after_vs_base.txt`).
+- **시험(한 번에 하나씩)**: `test_kics_rules_golden` 통과 → 실패(sha 이동, 룰 코드 불변, 원인 = 이 변경의 퍼시픽 +16행 · 악사 4칸 - `--update` 는 validation, 이유 문구는 그대로 쓸 수 있다) · `validate_golden_input_fingerprints` RED 0 → 4(`INPUTS_MOVED`: ifrs17_bs · pl_breakdown · dividend · post_transition, 네 빌더 모두 `kics_disclosure.json` 에서 회사 메타만 읽으므로 산출 불변이 예상되나 규정대로 전체 골든 통과 뒤 `--update` 필요 = validation) · K-ICS 관련 오프라인 시험 13파일 588 passed / 3 failed(`test_identity_registry::test_no_undeclared_threshold_constants` = 검증 쪽 `f0535af` 가 추가한 `_TIER2_STALE_FP_EPS` 미등재, 이 변경과 무관 · `test_rule_coverage_manifest` 의 public export 17BS · 마스터 xlsx 드리프트 = IFRS17 레인 미동기화 + 이 변경의 xlsx `K-ICS공시` 16행 · 4칸). 마스터 xlsx 드리프트 검사 RED 7 중 `K-ICS공시` 2건(ROW_MISSING 16행 · DRIFT 4칸)이 이 변경의 몫이고 나머지 5건은 IFRS17 계열.
+- **남은 것(손대지 않음)**: validation(룰 골든 · 입력지문 `--update`, 뮌헨 51 공란 등재 또는 owner 승인) · publishing(xlsx `K-ICS공시` `python scripts/sync_master_xlsx_sheet.py "K-ICS공시"`, public_exports K-ICS 계열 재생성, `kics_tier1/2_utilization.json` 에서 퍼시픽 47~54 사용 여부 확인) · owner(뮌헨 51 · 퍼시픽 0 적재의 화면 영향 확인).
+- **내 실수 1건(무해)**: 시작 때 맨 `python3 --version` 을 한 번 실행했다(버전 출력만, 즉시 종료, 남은 프로세스 없음).
 
 ## 2026-10-11 — 신판 5곳 재현성: MD 변환 · 판 선택 등재부 · `fill_*` 재현 증명 (kics 레인, 커밋·푸시 없음)
 

@@ -1,0 +1,19 @@
+candidate: plans=['munich_A_50_52_only'] edits=0 inserts=2 touched buckets=[('KR1101', '2026.2Q')]
+candidate master: C:\Users\sangwook.cho\AppData\Local\Temp\claude\C--Users-sangwook-cho-Desktop-insurequant\e15a5832-0270-4430-8e3e-4cba8a1f182c\scratchpad\cand_mucA.json | live master sha 4ce39b259814 | candidate sha 05272c1e4c01
+gate seconds: 14.4 | exit code: 2
+   Status counts: RED=58 YELLOW=1935 GREEN=13684 SKIP=3343 ERROR=0
+   documented exception (발행사 자기모순, 잔차 박제): blocking RED=2 (= 58 − 8_life 2건 − tier2 RED 37건 − 재작성 연쇄 0건 + 연쇄 이탈 0건 − 항등식(2·4·5·6) 17건; tier2 YELLOW 박제 5건은 차감 대상 아님) · 적용후 mmult item17 면제 2건
+
+finding keys: base 19020 -> candidate 19020 | added 0 | removed 0 | changed (status or value) 2
+status counts base : {'GREEN': 13684, 'SKIP': 3345, 'YELLOW': 1935, 'RED': 56}
+status counts cand : {'GREEN': 13684, 'SKIP': 3343, 'YELLOW': 1935, 'RED': 58}
+keys outside the touched buckets that moved: 0 []
+
+[KR1101 2026.2Q]
+  ~ 50_tfi_tier_split: SKIP -> RED (exp 2->2, act 0->1, diff None->None) TFI_TIER_PARTIAL_ROWS: [값] [50] 는 있는데 [51] 결측 — 같은 표의 연속 2행이라 부분결측은 행 유실 신호
+  ~ 50_tfi_tier_split_post: SKIP -> RED (exp 2->2, act 0->1, diff None->None) TFI_TIER_PARTIAL_ROWS: [값_적용후] [50] 는 있는데 [51] 결측 — 같은 표의 연속 2행이라 부분결측은 행 유실 신호
+
+NEW RED: 2 [('KR1101', '2026.2Q', '50_tfi_tier_split'), ('KR1101', '2026.2Q', '50_tfi_tier_split_post')]
+RESOLVED RED: 0 []
+NEW YELLOW: 0 []
+RESOLVED YELLOW: 0 []
