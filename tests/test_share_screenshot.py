@@ -72,3 +72,10 @@ def test_full_page_image_taller_than_viewport():
     if "SKIP:" in out:
         pytest.skip(out.strip().splitlines()[-1])
     assert proc.returncode == 0, out[-3000:]
+
+
+def test_phone_section_image_does_not_widen():
+    """폰의 섹션 이미지는 표 폭만큼 넓히지 않는다(차트 canvas 는 넓어진 폭에 다시 그려지지 않아 왼쪽 1/3 만 차지했다, owner 2026-10-12)."""
+    js = _read("theme.js")
+    assert re.search(r"phone\s*=\s*coarse\s*\|\|\s*document\.documentElement\.clientWidth\s*<\s*520", js)
+    assert re.search(r"if\(o\.widen\s*&&\s*!phone\)", js), "widen 은 폰이 아닐 때만"

@@ -7,6 +7,14 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 ---
 
+## 2026-10-12 -- 모바일 섹션 공유 이미지 가로 확장 제거
+
+티켓 `inbox/designer/20261012T1040Z__orchestrator__MULTI__mobile_section_share_image_no_widen.md`(공유, 오케스트레이터가 종결). `theme.js` `shRender`: 섹션 이미지의 `o.widen`(가로 스크롤 표의 `scrollWidth-clientWidth` 만큼 이미지·복제 섹션 폭을 늘림)을 폰(`phone = coarse || clientWidth < 520`)에서는 하지 않는다. 이미 그려진 차트 canvas 는 넓어진 폭에 다시 그려지지 않아 왼쪽 1/3 만 차지하고 오른쪽이 비던 문제(뮌헨 손해율 가정, owner 스크린샷). 데스크톱·페이지 전체 이미지 경로 불변.
+
+실측(헤드리스 Edge, 375px·DPR2, 섹션 공유 버튼 클릭 -> PNG): 뮌헨 손해율 가정 758x1674px(CSS 폭 379), 삼성생명 NB 배수 758x1304, 코리안리 예실차 758x2404 — 전부 화면 폭 그대로, 차트가 폭을 채움, 표는 보이는 열까지. 데스크톱 1280px 뮌헨 손해율 가정은 1104px 로 widen 유지. 시험: `tests/test_share_screenshot.py::test_phone_section_image_does_not_widen`(정적) 신설, 4종(share_screenshot·deploy_assets 12·push_gate_wiring 65·prepush_scope 65) 통과.
+
+---
+
 ## 2026-10-12 -- 공유 버튼 사용 기록(수집기 shares 탭)
 
 티켓 `inbox/designer/20261012T0910Z__orchestrator__MULTI__share_button_usage_log_to_collector.md`(공유, 오케스트레이터가 종결). `theme.js` `shLog`: 링크 복사(`link_copy`)·페이지 전체(`page_screenshot`)·섹션(`section_screenshot`) 마다 `IQ_FORMS.submit('share', {page, action, section, company, device, result})` 1건, 개인정보 없음. 스크린샷은 완료 시점에 `ok|truncated|error`. `iq_internal=1`(쿼리) 또는 브라우저가 내부로 기억(localStorage)이면 0건, 같은 page·action·section 1.5초 내 연타는 1건, `forms-config.js` 없으면 조용히 건너뜀. `compare.html` 은 forms-config.js 를 안 불러와서 `<script src="forms-config.js">` 1줄 추가(CSP 변경 없음). `scripts/appsscript/insurequant_collector.gs`: `kind==='share'` → `shares` 탭 + 첫 share 때 `shares_summary` 탭(헤더 이름 기반 QUERY, 전체·최근 7일), 메일 없음. `privacy.html` (4) 공유 버튼 이용 기록 문단. 검증 `scripts/check_share_log.py`(수집기 요청을 route 로 가로채 본문만 캡처, 실제 전송 0).

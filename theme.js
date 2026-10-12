@@ -580,10 +580,12 @@
     var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-sec-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.iq-help', '.iq-anon-link']
       .concat(cfg.ignore || []).join(',');
     var rect = target.getBoundingClientRect(), cw0 = Math.ceil(rect.width), bodyH = Math.ceil(Math.max(rect.height, target.scrollHeight));
-    /* 섹션 이미지: 좁은 화면의 표는 가로로 스크롤된다. 보이는 만큼만 찍으면 오른쪽 열이 조용히 잘리므로 그만큼 이미지를 넓힌다.
-       페이지 전체 이미지는 폰 화면 폭 그대로 둔다(긴 세로 이미지가 목적이고, 한 표 때문에 전체가 3배로 넓어지면 읽을 수 없다). */
-    var extra = 0;
-    if(o.widen) [].forEach.call(target.querySelectorAll('.table-container, .table-wrap'), function(t){ extra = Math.max(extra, Math.ceil(t.scrollWidth - t.clientWidth)); });
+    /* 섹션 이미지: 가로로 스크롤되는 표는 그 폭만큼 이미지를 넓혀 오른쪽 열까지 담는다(넓은 화면).
+       폰(화면 폭 520px 미만 또는 coarse pointer)은 넓히지 않는다 — 이미 그려진 차트 canvas 는 넓어진 폭에 맞춰 다시 그려지지 않아
+       왼쪽 1/3 만 차지하고 오른쪽이 텅 비었다(owner 2026-10-12). 폰에서는 화면에 보이는 섹션 폭 그대로, 표는 보이는 열까지만 찍는다.
+       페이지 전체 이미지도 폰 화면 폭 그대로 둔다(한 표 때문에 전체가 3배로 넓어지면 읽을 수 없다). */
+    var extra = 0, phone = coarse || document.documentElement.clientWidth < 520;
+    if(o.widen && !phone) [].forEach.call(target.querySelectorAll('.table-container, .table-wrap'), function(t){ extra = Math.max(extra, Math.ceil(t.scrollWidth - t.clientWidth)); });
     var cw = cw0 + extra;
     var PAD = (o.pad != null) ? o.pad : 12, W = cw + PAD * 2, narrow = W < 520, LH = 17;
     /* 위 제목 */
