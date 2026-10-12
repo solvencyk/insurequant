@@ -10,6 +10,19 @@
 
 ---
 
+## 2026-10-12 — 발행사 처리 기준 재분류 · 증권별 X 검정 · 보완자본 재분류 칸 정정 (티켓 `20261012T2115Z`, 커밋 `dbbffcb5` + 공개본 커밋, 커밋만 · push 보류)
+
+owner 「회사에서 그렇게 분류했으면 회사 분류를 따르는 게 맞다」: 등재부 `type` 은 발행사가 K-ICS 공시에서 실제로 처리한 형을 따른다(발행조건·기사 해석은 `terms_note` 에만). 정의(분자·분모)·`kics_disclosure.json`·HTML 불변. 증빙 `data/_derived/capsec_reinstate_20261012/x1~x6`.
+
+- **검정 방법**(`x2_per_security_x_test.py`): X = 항목13 - 항목49. 발행 분기 X 가 발행액만큼 오르면 보완자본형, 한도(SCR x 10%) 초과분만 오르면 기본자본형. 오차는 직전 비이벤트 3개 분기 |dX| 최대의 1.5배(하한 30억). 첫 공시 분기가 발행 분기인 증권은 수준 시험(나머지 항목의 안정성)과 필요조건(X >= 발행액)을 쓴다. 총액 비교(13-49 >= 차감액)는 증명이 아니라 쓰지 않았다.
+- **결과 17건**: 변경 2건 - 하나생명 제1회(X 가 13분기 중 12분기 발행액 1,799 보다 작아 보완자본형이 산술상 불가, 기본자본형이면 나머지 29~502 로 안정), 교보 2024-11(발행 분기 X +89, 보완자본형이면 +5,983) -> tier1. 보완자본형 확인 12건 - 흥국화재 제5회(X +1,989/1,993) · 농협손해(+4,848/4,500) · 하나손해 2건(+974/1,000 · +992/999) · 한화생명 4건(2024.3Q 두 건은 합산 시험, 한 건씩 뒤집어도 불일치; 신종8 +5,972/6,000; 외화 +13,176/13,819) · KDB생명 2건(X = 항목 6 이 13분기 오차 0.5 이내) · 교보 2023(+4,985/4,985) · 코리안리 제5회(수준 시험: 6분기 0.3 이내, 단 기발행+제5회에 15% 한도를 함께 씌우는 읽기와는 구분 불가). **판정 불가 3건(현 분류 유지, 추측 안 함)** - 푸본 2023-02 600(첫 공시 분기가 발행 분기, 나머지 항목 ±400 흔들림) · 농협생명 제5회(같은 이유, 한도가 발행액보다 항상 커서 한도 변동으로도 못 가름) · 코리안리 제6회(기발행 상환과 겹치고 항목 6 변동 없는 X +1,7xx·+3,456 이 따로 들어옴).
+- **소진율**: `apply_disclosure_utilization.py --quarter 2026.2Q` - tier1 은 하나생명 0.0 -> 238.2 만 변경(분자 1,799 / SCR x 10% 755.4), 교보 70.1 불변(엄격 쪽 0 -> 56.8), tier2 47사 전부 불변. 하나생명 한도 초과분 1,043.6 은 보완자본 한도 적용 전(항목 47 = 1,275.6)에 이미 들어 있다(81.8%, 나머지 232 는 다른 재분류 항목).
+- **`tier1_overflow_into_tier2_eok` 정정**: 이 칸(공개 `보완자본소진율` 시트 「기본자본 한도초과분의 보완자본 재분류」)은 옛 `wire_capital_securities_to_utilization.py`(채권원장 발행액 - SCR x 15%, 하나생명 1,798.8 - 1,133.1 = 665.7)가 한 번 쓰고 갱신이 끊겨 있었다. `apply_tier2` 가 tier1 의 한도 초과액(공시 항목 6 + 등재부 분류)을 같은 값으로 쓰도록 바꿔 47사 일치(시험 추가). 바뀐 8사: 농협손해 2,483.6->0 · 하나손해 298.5->0 · KDB생명 80.7->0 · 한화생명 8,302.2->0 · 코리안리 1,297.1->0(전부 보완자본형이라 한도 초과 재분류가 아님) · 아이엠라이프 0->1,353.9 · DB손보 225.2->5,942.1 · 하나생명 665.7->1,043.6. 시트 비고에 정의를 적었고, 기본자본 소진율 시트의 「스텝업 등 기본자본요건을 못 맞춘」 문구는 「발행사가 경영공시에서 보완자본으로 처리한」 으로 바꿨다(발행조건 해석을 공개 문장에 쓰지 않는다).
+- **Forward Outlook**: 등재부 type 이 발행사 처리와 같아져 기본자본 경로는 47사 전 연도 불변(하나생명·교보는 종전에도 발행사 처리 기준으로 계산), 총자본 경로 바이트 동일(`x5_forward_before_after.txt`). **사라진 필드**: 회사 행 `baseline_basis_flag`·`baseline_basis_note`, 연도 행 `basic_capital_by_type_eok`·`basic_ratio_by_type_pct`, `hybrid_classification[].issuer_type`(어긋난 증권이 있을 때만 다시 나타난다). 값이 바뀐 필드: `hybrid_classification[].type`(하나생명·교보 2건 tier2 -> tier1), `outstanding_hybrid_by_type_eok`(두 회사). K-ICS.html 은 `row.baseline_basis_flag && ...` 로 읽어 필드가 없으면 그냥 안 그린다. 손계산 9사 불일치 0(`x6_handcheck.txt`).
+- **재공개**: `export_public_sheets.py` - `기본자본소진율`·`보완자본소진율` 시트와 manifest 만 변경, `자본비율전망` 불변. xlsx 시트 `기본자본소진율`(값 4칸, 비고 교체 48행)·`보완자본소진율`(비고 교체 47행)을 `sync_master_xlsx_sheet.py` 로, `check_master_xlsx_drift` 0.
+- **되돌리는 방법**: 등재부는 커밋 `dbbffcb5` 의 `data/bonds/capital_tier_registry.json` 두 줄(하나생명·교보)을 되돌리고 `apply_disclosure_utilization.py` -> `forward_capital_simulation.py` 순으로 재실행. 오버플로 칸만 되돌리려면 `apply_tier2` 의 `tier1_overflow_into_tier2_eok` 한 줄.
+- 시험: `tests/unit` 259 통과(하나생명 기대값 0.0 -> 238.2 는 위 재분류 때문이며 느슨하게 푼 것이 아니다; 등재부-검정 연결·패널-마스터 일치·오버플로 일치·필드 부재 시험 추가) · `test_private_deploy` 14 · `test_push_gate_wiring` 66(1 skip) · `test_deploy_assets` 12 · `test_rule_coverage_manifest` 102. 게이트 `validate_data_contract` RED=0 · `validate_live_artifacts` RED=0(baselined 25) · `check_master_xlsx_drift` 0.
+
 ## 2026-10-12 — 소진율 도넛 · Forward Outlook 재공개 (티켓 `20261012T2030Z`, 커밋 `ef62969`·`2729a53`, 커밋만 · push 보류)
 
 owner 「분류 근거가 확정돼 소진율 도넛과 Forward Outlook 을 다시 살린다」, 정의(계정 단위 · 해설서 p13 각주 ⑴)는 불변. 증빙 `data/_derived/capsec_reinstate_20261012/`.

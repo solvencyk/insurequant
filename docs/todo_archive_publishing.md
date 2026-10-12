@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 비공개 3시트 + 자본성증권 공개 열 제한 + 뮌헨·스위스리 재동기화(커밋만 · push 보류)** — 티켓 `1420Z`·`1440Z`: 기본자본소진율·보완자본소진율·자본비율전망 공개 스냅샷 3개 삭제(manifest 에서도 제외), main 에서는 배포 스크립트 `PRIVATE_PATHS` 가 이 3개 + 루트 JSON 3개(tier1·tier2·forward)를 `git rm`. `자본성증권발행현황` 공개본은 한도·인정액 계산 열 7개 제외(123행 불변). 뮌헨 K-ICS공시 +3행·스위스리 보험계약부채 +8행(「계산값(전 행 합)」 표기) xlsx·공개본·`csm_combo` 패널 반영. 새 시험 `tests/test_private_deploy.py`.
+  남은 것: ① 폰 배포는 `git checkout -B <브랜치> origin/<브랜치>` 로 새 스크립트를 먼저 받은 뒤 1회 실행(안 받고 옛 스크립트로 돌리면 2회) ② 배포 건조 실행 시험은 부하가 큰 PC 에서 시험당 5분 안팎 ③ 증빙 `data/_derived/private_sheets_20261012/`.
+
 - **2026-10-12 최종 재동기화(push 직전 정합, 커밋만 · push 보류)** — xlsx 5시트(`17BS` 처브 6칸·`CSM상각` 18칸·`손익분해PL` +7행/1칸·`보험계약부채` 18칸·`K-ICS공시` +16행/4칸)·손해율 패널(재보사 세그먼트 표준화)·combo(처브)·compare(2칸) 재빌드·`public_exports`(`538cbe7`·`dee37c2`). 드리프트 0, data-contract RED 0, live_artifacts RED 0(baselined 25), 시험 142 passed.
   남은 것: ① `downstream_kpis.json` 은 어느 HTML 도 안 읽고 이번 변경이 아닌 옛 `cf66dce`(상각 스케줄 정정) 미반영분(213칸) 때문에 어긋나 있어 재빌드본을 커밋하지 않음(`downstream_kpis.rebuilt_NOT_COMMITTED.json`) ② `viz_build_nb_csm_ratio.py` 는 IR 원문 입력이라 이번 마스터와 무관해 생략 ③ 상세 `data/_derived/final_resync_20261012/runlog.md`.
 
