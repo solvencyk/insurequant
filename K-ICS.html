@@ -78,6 +78,7 @@
     .donut-wrap{position:relative;height:240px}
     .donut-caption{margin-top:8px;color:var(--text);font-size:14px;font-weight:600}
     .donut-caption .sub{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}
+    .donut-caption .sub[hidden]{display:none}
     .donut-note{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.5}
     .donut-note .capsec-gf{font-size:11.5px;opacity:.85}
     .no-data{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
@@ -241,18 +242,18 @@
     <div class="panel" id="donut-section-panel" data-share-section="자본성증권 소진율">
       <h2>자본성증권 인정 한도 소진율 <span id="capsecQuarter" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
       <ul class="subtitle">
-        <li>기본자본 자본증권(보통주 제외): 공시 인정액 / (SCR &times; 15%)</li>
-        <li>보완자본(전체): 한도 적용 전 보완자본 / (SCR &times; 50%)</li>
+        <li>기본자본 자본증권 / 기본자본 자본증권의 인정한도 (총요구자본 &times; 10%, 기발행분 15%)</li>
+        <li>보완자본 한도 적용 전 / 보완자본 한도 (총요구자본 &times; 50%)</li>
       </ul>
       <div id="donut-placeholder" class="no-data">상단의 보험사를 선택하면 해당 보험사의 소진율이 표시됩니다.</div>
       <div id="donut-row" class="donut-row" style="display:none">
         <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier1" role="img" aria-label="기본자본 자본증권(보통주 제외) 인정 한도 소진율 도넛 차트"></canvas></div>
-          <div class="donut-caption">기본자본 자본증권<span class="sub">(보통주 제외)</span></div>
+          <div class="donut-wrap"><canvas id="donut-tier1" role="img" data-label-base="기본자본 자본증권 인정한도 소진율" aria-label="기본자본 자본증권 인정한도 소진율 도넛 차트"></canvas></div>
+          <div class="donut-caption">기본자본 자본증권<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="기본자본 자본증권 정의" aria-describedby="help-capsec-t1">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-t1">기본자본 자본증권 = 보통주를 제외한 자본증권 중 기본자본요건을 충족하는 자본증권. 인정한도 = 총요구자본의 10%(「보험업법」 조건부자본증권 15%), 2022년 이전 발행분은 2032년까지 15%(공통적용 경과조치). 한도 초과분은 보완자본으로 재분류. 근거: [별표22] Ⅲ.2.다.(1), Ⅵ.1.가.(1)<span id="help-capsec-t1-unconf" hidden></span></span></span><span class="sub" id="donut-t1-empty" hidden>발행 없음</span></div>
         </div>
         <div class="donut-cell">
-          <div class="donut-wrap"><canvas id="donut-tier2" role="img" aria-label="보완자본 인정 한도 소진율 도넛 차트"></canvas></div>
-          <div class="donut-caption">보완자본<span class="sub">(전체)</span></div>
+          <div class="donut-wrap"><canvas id="donut-tier2" role="img" data-label-base="보완자본 한도 소진율" aria-label="보완자본 한도 소진율 도넛 차트"></canvas></div>
+          <div class="donut-caption">보완자본<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="보완자본 한도 적용 전 정의" aria-describedby="help-capsec-t2">?</button><span class="iq-help-pop" role="tooltip" id="help-capsec-t2">보완자본 한도 적용 전 = 보완자본 - 해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 - 기발행 자본증권(공통적용 경과조치). 근거: 보험업감독업무시행세칙 [별표22] Ⅲ.2.마, Ⅵ.1.가.(3)</span></span></div>
         </div>
       </div>
       <div class="donut-note" id="donut-note"></div>
@@ -1000,7 +1001,9 @@
       return row || null;
     }
 
-    function renderDonut(canvasId, existingChart, utilPct) {
+    // opt = { na: 원문 부재 사유(있으면 가운데 '—' + 툴팁에 그 문구), overNote: 100% 초과 툴팁 꼬리, extra: 툴팁 추가 줄 }
+    function renderDonut(canvasId, existingChart, utilPct, opt) {
+      opt = opt || {};
       const ctx = document.getElementById(canvasId);
       if (!ctx) return existingChart;
       if (existingChart) existingChart.destroy();
@@ -1011,9 +1014,10 @@
       let fillColor = 'rgba(75, 192, 192, 0.85)';
       if (pct != null && pct >= 100) fillColor = 'rgba(220, 53, 69, 0.85)';
       else if (pct != null && pct >= 70) fillColor = 'rgba(255, 159, 64, 0.85)';
-      // 인정한도 초과(분자=KOFIA 발행액, 분모=공시 한도, 독립 소스라 >100% 발생 가능)는 "100%+"로 표기.
-      // (정확값 대신 "초과" 신호만 — 원호는 도넛 360° 한계로 100% 캡 유지.)
-      const centerText = pct == null ? '데이터 없음' : (pct > 100 ? '100%+' : pct.toFixed(0) + '%');
+      // 인정한도 초과(규정상 한도가 구속하는 경우)는 "100%+"로 표기. 정확값은 툴팁에.
+      // (원호는 도넛 360° 한계로 100% 캡 유지.) 원문 부재(opt.na)는 '데이터 없음'이 아니라 '—'.
+      const centerText = pct == null ? (opt.na ? '—' : '데이터 없음') : (pct > 100 ? '100%+' : pct.toFixed(0) + '%');
+      ctx.setAttribute('aria-label', ctx.getAttribute('data-label-base') + ' ' + (pct == null ? (opt.na || '데이터 없음') : (pct > 100 ? '100% 초과 (' + pct.toFixed(1) + '%)' : pct.toFixed(1) + '%')));
       const TH = window.IQTheme ? IQTheme.chart() : { muted:'#6a737a', text:'#212529', neg:'#dc3545' };
       const centerColor = pct == null ? TH.muted : (pct >= 100 ? TH.neg : TH.text);
       const centerPlugin = {
@@ -1051,9 +1055,10 @@
             tooltip: {
               callbacks: {
                 label: function(c) {
-                  if (pct == null) return '데이터 없음';
-                  if (c.dataIndex === 0) return '사용: ' + (pct > 100 ? '100%+ (실제 ' + pct.toFixed(1) + '% · 발행액이 인정한도 초과)' : pct.toFixed(2) + '%');
-                  return '잔여: ' + Math.max(0, 100 - pct).toFixed(2) + '%';
+                  if (pct == null) return opt.na || '데이터 없음';
+                  const extra = opt.extra ? [opt.extra] : [];
+                  if (c.dataIndex === 0) return ['사용: ' + (pct > 100 ? '100%+ (실제 ' + pct.toFixed(1) + '%' + (opt.overNote ? ' · ' + opt.overNote : '') + ')' : pct.toFixed(2) + '%')].concat(extra);
+                  return ['잔여: ' + Math.max(0, 100 - pct).toFixed(2) + '%'].concat(extra);
                 }
               }
             }
@@ -1081,18 +1086,41 @@
       const t2 = findUtilRow(tier2UtilData, company);
       const t1Pct = t1 ? t1.utilization_pct : null;
       const t2Pct = t2 ? t2.utilization_pct : null;
-      donutTier1Chart = renderDonut('donut-tier1', donutTier1Chart, t1Pct);
-      donutTier2Chart = renderDonut('donut-tier2', donutTier2Chart, t2Pct);
+      // 2026-10-12 (owner): 소진율을 규정 근거로 재정의(definition_memo.md §5). 화면 이름은 공시·규정 표기 그대로,
+      // 설명은 ? 팝오버 안에만. 새 필드가 없는 구판 JSON 도 깨지지 않게 폴백한다.
+      //  tier1: 숫자 = tier1_hybrid_recognized_eok / tier1_hybrid_limit_eok (두 한도 중 먼저 차는 쪽), 구판은 issued.
+      //  tier2: rule/reason — rule 이 NA 면 값이 null 이고 reason(경과조치 표 미공시)이 붙는다.
+      const t1Unconf = !!(t1 && t1.type_unconfirmed);
+      const t1UnconfPct = t1 && t1.tier1_pct_if_unconfirmed_tier2 != null ? t1.tier1_pct_if_unconfirmed_tier2 : null;
+      const t1UnconfText = t1Unconf
+        ? '기본자본형/보완자본형 미확정 신종 포함' + (t1UnconfPct != null ? ', 보완자본형이면 ' + t1UnconfPct.toFixed(1) + '%' : '')
+        : '';
+      const t2Na = (t2 && t2Pct == null && (t2.rule === 'NA' || t2.reason)) ? (t2.reason || '경과조치 표 미공시') : '';
+      donutTier1Chart = renderDonut('donut-tier1', donutTier1Chart, t1Pct,
+        { overNote: '초과분은 보완자본으로 재분류', extra: t1UnconfText });
+      donutTier2Chart = renderDonut('donut-tier2', donutTier2Chart, t2Pct,
+        { na: t2Na, overNote: '초과분은 지급여력금액에서 불인정' });
+      // 자본증권이 아예 없는 회사: 가운데 0% + 캡션 아래 작은 글씨.
+      const emptyEl = document.getElementById('donut-t1-empty');
+      if (emptyEl) emptyEl.hidden = !(t1 && t1.no_capital_securities === true);
+      // ? 팝오버(tier1)의 회사별 꼬리: 미확정 신종 포함 여부.
+      // 보완자본으로 인정된 신종자본증권(tier1_excluded_tier2_type_eok)은 분자에서 빠져 있으므로 0% 가 틀려 보이지 않게 금액만 적는다.
+      const t1Excl = t1 && t1.tier1_excluded_tier2_type_eok > 0 ? t1.tier1_excluded_tier2_type_eok : 0;
+      const tailLines = [];
+      if (t1Excl > 0) tailLines.push('보완자본으로 인정된 신종자본증권 ' + fmtEokInt(t1Excl) + '억원');
+      if (t1Unconf) tailLines.push(t1UnconfText);
+      const unconfEl = document.getElementById('help-capsec-t1-unconf');
+      if (unconfEl) {
+        unconfEl.hidden = !tailLines.length;
+        unconfEl.innerHTML = tailLines.length ? '<br>' + tailLines.join('<br>') : '';
+      }
       const notes = [];
-      // 2026-09-01 (owner): 분자를 경영공시 항목으로 바꾸면서 문구도 계정 단위로 고쳤다.
-      // 기본자본 한도(SCR×15%)의 대상은 `자본항목 중 보통주 이외의 자본증권`(item6) **전체**이지
-      // 신종자본증권이 아니고, 보완자본 한도(SCR×50%)의 대상도 보완자본 전체다. 종전 라벨은
-      // 신종 아닌 기본자본 자본증권을 가진 6개사와, 후순위채가 아닌 보완자본(34사 354,926억)을
-      // 화면에서 지워 버렸다. 신종·후순위 발행잔액은 아래 참고 줄로 내린다.
       if (t1) {
+        const t1Rec = t1.tier1_hybrid_recognized_eok != null ? t1.tier1_hybrid_recognized_eok : t1.tier1_hybrid_issued_eok;
         const t1Gf = t1.tier1_grandfathered_hybrid_eok || 0;
-        let line = `기본자본 자본증권: 인정 ${fmtEokInt(t1.tier1_hybrid_issued_eok)}억원 / 한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원 (SCR×15%)`;
-        if (t1Gf > 0) {
+        let line = `기본자본 자본증권 ${fmtEokInt(t1Rec)}억원 / 인정한도 ${fmtEokInt(t1.tier1_hybrid_limit_eok)}억원`;
+        // 기발행분(15%) 쪽이 먼저 찰 때만 그 숫자가 기발행분이다. 구판 JSON(binding_leg 없음)은 종전대로 표시.
+        if (t1Gf > 0 && (t1.binding_leg === 'legacy_15' || t1.binding_leg === undefined)) {
           line += ` &nbsp;<span class="capsec-gf">경과조치 기발행분 ${fmtEokInt(t1Gf)}억원 포함</span>`;
         }
         notes.push(line);
@@ -1101,11 +1129,19 @@
       }
       if (t2) {
         const t2Gf = t2.grandfathered_subordinated_eok || 0;
-        let line = `보완자본: 한도적용전 ${fmtEokInt(t2.numerator_eok)}억원 / 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원 (SCR×50%)`;
+        let line = `보완자본 한도 적용 전 ${t2.numerator_eok == null ? '—' : fmtEokInt(t2.numerator_eok) + '억원'} / 보완자본 한도 ${fmtEokInt(t2.tier2_limit_eok)}억원`;
         if (t2Gf > 0) {
           line += ` &nbsp;<span class="capsec-gf">경과조치 기발행 후순위 ${fmtEokInt(t2Gf)}억원</span>`;
         }
         notes.push(line);
+        // 한도 적용 전이 0 인데 보완자본이 있으면 공시 표기 그대로. 항목 49 를 안 채운 재보사(스위스리)는
+        // 분자 = 보완자본 - 항목 49 - 기발행분 항등식으로 보완자본 전액이 그 항목이다.
+        const sup = t2.supplementary_capital_eok;
+        if (t2.numerator_eok === 0 && sup > 0) {
+          let lapse = t2.lapse_excess_item49_eok;
+          if (!(lapse > 0) && !((t2.grandfathered_hybrid_eok || 0) + (t2.grandfathered_subordinated_eok || 0) > 0)) lapse = sup;
+          if (lapse > 0) notes.push(`해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 ${fmtEokInt(lapse)}억원`);
+        }
       } else {
         notes.push('보완자본: 데이터 없음');
       }
