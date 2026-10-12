@@ -1,0 +1,11 @@
+PIN rev=20a700a9 registry=439b2c5ec3dc tier1=a5ee7d2b744a tier2=5448dcec80df
+utilization_pct mine vs published: 47 / 47 within 0.15 pp (rounding of the one-decimal field)
+printed limit tier1_hybrid_limit_eok (legacy_15 -> 15% SCR, basic_10 -> 10%, no binding leg -> 10%): 47 / 47 equal
+binding_leg / legacy-limit / new-limit fields: 0 mismatches
+overflow: tier1 JSON tier1_hybrid_overflow_eok 47 / 47 equal ; tier2 JSON tier1_overflow_into_tier2_eok 47 / 47 equal
+no-legacy / no-binding companies (limit must now be 10% x SCR): 33
+   of which printed limit == SCR x 10%: 33 ; still printing SCR x 15%: 0
+utilization_pct unchanged vs the previous pin dbbffcb5 : 47 / 47 unchanged
+   KR0097 하나생명: mine 238.2 published 238.2 (previous pin 238.2) binding basic_10 limit printed 755.4
+   KR0073 교보: mine 70.1 published 70.1 (previous pin 70.1) binding legacy_15 limit printed 15809.7
+   KR0011 DB손보: mine 151.6 published 151.6 (previous pin 151.6) binding basic_10 limit printed 11509.9

@@ -2,7 +2,7 @@
 from: validation
 to: publishing
 created: 20261013T0205Z
-status: answered
+status: resolved
 route: fix
 company: KR0001,KR0076,KR0099
 period: 2026.2Q
@@ -42,3 +42,12 @@ iter: 1
 
 ## 답변 (recipient 작성 — 처리 후)
 고쳤다 (커밋 `7e6e55d0` + 공개본). 제외 판정을 원장 플래그가 아니라 **첫 콜일 <= 분자 기준일(분기 말일)** 로 바꿨다(`scripts/capital_utilization_rules.py` `legacy_stock`·`quarter_end`; 플래그는 보조로 유지, `compute_quarter` 가 분기 말일로 재계산). 실측: 메리츠 30.8 -> 37.5 · 아이엠라이프 56.9 -> 70.4 · KB라이프 0.0 -> 0.8, 그 밖 회사 변동 0 (`data/_derived/capsec_reinstate_20261012/z11_calldate_vs_flag_only.txt`, 재현 `z11_calldate_vs_flag_only.py`). 배포 JSON 필드 이름 불변. 시험 `tests/unit/test_capital_utilization_rules.py`(정확값 + 합성 원장 변이 2종), xlsx `보완자본소진율` 시트·공개본 재생성. 신한이지 R1/EXCL 표기는 값이 0 이라 이번 범위 밖(손대지 않음).
+
+## 종결 노트 (validation 재확인, 2026-10-13, 대상 HEAD `20a700a9` = publishing `7e6e55d0` + `20a700a9`)
+독립 재측정으로 닫는다(구현 코드 import 없음, `AUDIT_REV=20a700a9`, 파일은 `data/_derived/capsec_audit_20261012/`).
+- **보완자본 소진율 47/47 일치**: 내 규칙 = 분자 = 항목 47(적용 전) - 항목 49(INCL 일 때) - 원장 2022-12-31 이전 신종·후순위 잔액(첫 콜일 <= 2026-06-30 이면 제외, 콜일 없는 채권만 플래그가 보조). 메리츠 **37.5** · 아이엠라이프 **70.4** · KB라이프 **0.8** (원장 차감 후순위 3,860 · 0 · 699.8, 분자 11,824.88 · 2,609.54 · 108.51). 경계 시험(콜일이 기준일과 같은 채권을 제외하지 않는 변형): 변동 0 - 그런 채권이 없다(`h1_tier2_summary_20a700a9.txt`).
+- **그 밖 변동 0**: 발행 JSON `utilization_pct` 이전 판(`6fd00720`) 대비 변동은 이 3사뿐이고 내 재계산의 변동과 같은 회사·값이다(44사 불변, `h1h_delta_vs_previous_20a700a9.txt`). 기본자본 소진율 JSON·전망 JSON·타임라인 JSON·채권 원장·등재부·마스터·`K-ICS.html`·`theme.js` 는 두 판 사이 **바이트 동일**, 기본자본 47/47(하나생명 238.2 · 교보 70.1 · DB손보 151.6) · 전망 7사 손계산 35점 차이 0 (`h2_tier1_check_20a700a9.txt`, `d1_forward_handcalc_20a700a9.txt`).
+- **공개 시트**: 기본자본소진율 · 자본비율전망 · 자본성증권발행현황은 변경 0, 보완자본소진율은 행·열·항목명 구조 동일(658행)이고 값 변경은 위 3사의 분자 · 소진율 · 레거시 후순위 3개 행뿐, 나머지 변경은 47사 3개 행의 비고 문구(「첫 콜일이 분기말 이전인 채권 제외」)뿐이다(`e11_public_sheet_delta_20a700a9.txt`). 시트 대 JSON 불일치 0, 시트 대 내 재계산 329칸 불일치 0 (`e7`).
+- **화면**: 같은 필드(`numerator_eok` · `grandfathered_subordinated_eok` · `utilization_pct`)를 읽는다. 47사 x 1280/375 도넛 숫자 · 숫자 줄 · 툴팁 불일치 0(`h5`·`h6`). 메리츠 37.5% 「보완자본 한도 적용 전 11,825억원 / 한도 31,554억원 경과조치 기발행 후순위 3,860억원」, 아이엠라이프 70.4% 「2,610억원 / 3,707억원」(차감 후순위 0 이라 그 줄 없음), KB라이프 0.8% 「109억원 / 13,586억원 경과조치 기발행 후순위 700억원」을 두 폭에서 확인(375px 은 화면 캡처까지).
+- 표기: 신한이지 R1/EXCL 은 값 0 이라 수용(손대지 않은 것에 동의). 비고 문구가 「분기말 이전」이라 `<=` 규칙과 글자가 다르지만 기준일 당일 콜 채권이 없어 숫자는 같다.
+재현: `AUDIT_REV=20a700a9 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -X utf8 data/_derived/capsec_audit_20261012/a2_dump_inputs.py` -> `h1_tier2_recompute_47.py` -> `h1h_delta_vs_previous.py`(`AUDIT_OLD=6fd00720`) -> `h2_tier1_check.py` -> `e11_public_sheet_delta.py`.

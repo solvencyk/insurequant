@@ -1,13 +1,13 @@
 # Insurequant Validation TODO (Stage 3)
 
-> 갱신 2026-10-13 (29차 소진율·전망 재측정 + 28차 K-ICS 최신 공시 직전 컬럼 적용 독립 검수) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
+> 갱신 2026-10-13 (29차 소진율·전망 재측정 + 콜일 규칙 정정 확인 + 28차 K-ICS 최신 공시 직전 컬럼 적용 독립 검수) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
 > 2026-10-07 정리 전 전문(V1~V19 블록 포함)은 `docs/todo_archive_validation.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
-- **2026-10-13 (29차) 소진율·전망 재측정 (티켓 `20261012T2040Z`, 대상 HEAD `6fd00720`, 읽기 전용 — 마스터·HTML·게이트 코드 무수정)** — 새 규칙(기발행 차감 = 원장 2022-12-31 이전 잔액, 콜 경과 제외)으로 보완자본 소진율 47사 독립 재계산 **47/47 일치** · 기본자본 47/47(결속 갈래 없는 33사 한도 10%, 하나생명 238.2 · 교보 70.1 · DB손보 151.6 불변) · 전망 7사 손계산 35점 차이 0(총자본·기본자본 경로 이전 판과 동일, 행 변경은 KR0050 `confidence` 뿐) · 타임라인·공개 시트 4종 불일치 0 · 화면 47사 x 1280/375 불일치 0(예별·롯데 노트 거짓 개선 제거, 툴팁 잘림 0, 공유 이미지 15사 정상).
-  불일치 1건: 원장 `past_call_outstanding` 가 각 행 `as_of` 기준이라 첫 콜일이 분자 기준일 이전인 3건(메리츠 2,100억 · 아이엠라이프 500억 · KB라이프 1,299.7억)이 차감에 남는다(30.8→37.5 · 56.9→70.4 · 0.0→0.8) -> publishing `20261013T0205Z`. 재현물 `data/_derived/capsec_audit_20261012/`(`h1`~`h9`·`e7`~`e10`, 기록 `h9_screen_results_6fd00720.txt`).
-  남은 것: publishing 답변 후 재측정(순서는 아래 열린 일) · owner 결정 잔여 5건.
+- **2026-10-13 (29차) 소진율·전망 재측정 (티켓 `20261012T2040Z`, 대상 HEAD `6fd00720` -> 후속 확인 `20a700a9`, 읽기 전용 — 마스터·HTML·게이트 코드 무수정)** — 새 규칙(기발행 차감 = 원장 2022-12-31 이전 잔액, 콜 경과 제외)으로 보완자본 소진율 47사 독립 재계산 **47/47 일치** · 기본자본 47/47(결속 갈래 없는 33사 한도 10%, 하나생명 238.2 · 교보 70.1 · DB손보 151.6 불변) · 전망 7사 손계산 35점 차이 0(총자본·기본자본 경로 이전 판과 동일, 행 변경은 KR0050 `confidence` 뿐) · 타임라인·공개 시트 4종 불일치 0 · 화면 47사 x 1280/375 불일치 0(예별·롯데 노트 거짓 개선 제거, 툴팁 잘림 0, 공유 이미지 15사 정상).
+  불일치 1건(원장 `past_call_outstanding` 플래그가 행 `as_of` 기준이라 콜 경과 3건이 차감에 남음)은 **해소**: publishing `7e6e55d0`·`20a700a9`(첫 콜일 <= 분자 기준일)를 독립 재측정으로 확인 - 47/47 일치, 메리츠 30.8→37.5 · 아이엠라이프 56.9→70.4 · KB라이프 0.0→0.8, 그 밖 변동 0(44사 불변), 기본자본·전망·타임라인·원장·`K-ICS.html` 바이트 동일, 화면 47사 x 1280/375 불일치 0, 티켓 `20261013T0205Z` resolved(`_resolved/`). 재현물 `data/_derived/capsec_audit_20261012/`(`h1h_delta_vs_previous_20a700a9.txt`·`e11_public_sheet_delta_20a700a9.txt`).
+  남은 것: 공유 감사 티켓 `20261012T2040Z` 종결(오케스트레이터 몫) · owner 결정 잔여 5건(아래 열린 일).
 - **2026-10-13 (28차) K-ICS 「최신 공시 직전 컬럼」 적용 65칸 독립 검수 + 골든 정리 (티켓 `20261013T0010Z`, 커밋 `74a415bf` 대상)** — 원본 PDF 직접 재판독: primary 33칸 33/33 일치(10쪽은 240dpi 렌더링 육안), 미러 22칸·파생 10칸 재계산 일치, 마스터 diff = 정확히 65칸(레코드 30,011 불변). 보류 10블록 전부 사유 타당.
   게이트: K-ICS exit 0 RED 56→54(풀린 KR0003 2025.1Q·KR0032 2024.3Q 다리 RED 2건, 새 RED 0, 이동 31 finding 전부 적용 16블록 안) · 데이터계약 RED 0 · master_tables `--no-build` 직전 판과 동일 · xlsx 드리프트 0 · 매니페스트 102 통과.
   갱신: `kics_rules_golden`(YELLOW 1,936→1,934 · GREEN 13,705→13,709 · RED 56→54) · 입력지문 4종(+3바이트) · 시험 2파일(등재부 census 10→39, tier2 면제 22→20). 남은 것: PL·17BS 골든 미실행(parser-ifrs17 동시 작업, 빌더가 kics_disclosure 는 이름·티커만 읽음) · 관찰 3건은 changelog 28차.
@@ -17,7 +17,7 @@
 
 ## 열린 일
 
-- [ ] **29차 재측정 후속** — ① publishing `20261013T0205Z`(콜 경과 3건을 분자 기준일로 판정) 답변을 받으면 같은 순서로 재측정: `a2_dump_inputs` -> `h1_tier2_recompute_47` -> `h2_tier1_check` -> `d1_forward_handcalc` -> `d2_forward_internal_consistency` -> `h4_expected` -> `e7`~`e10` + 브라우저 `h5`·`h6`·`h7`·`h8`(사용법은 각 파일 머리 주석; 페이지가 CSP 로 `eval` 불가라 `<script src>` 주입, 유휴 창은 rAF 가 안 돌아 공유 이미지 검사는 `Chart.defaults.animation=false`).
+- [ ] **29차 재측정 후속** — ① 다음 변경 때 같은 순서로 재측정(콜일 규칙 확인 끝남; `h1_tier2_recompute_47.py` 기본 규칙 = 첫 콜일 <= 분자 기준일, 이전 핀은 `H1_PRIMARY=flag`; `h1h`·`e11` 은 이전 핀 대비 변동 목록): `a2_dump_inputs` -> `h1_tier2_recompute_47` -> `h2_tier1_check` -> `d1_forward_handcalc` -> `d2_forward_internal_consistency` -> `h4_expected` -> `e7`~`e10` + 브라우저 `h5`·`h6`·`h7`·`h8`(사용법은 각 파일 머리 주석; 페이지가 CSP 로 `eval` 불가라 `<script src>` 주입, 유휴 창은 rAF 가 안 돌아 공유 이미지 검사는 `Chart.defaults.animation=false`).
   ② owner 결정 잔여: 코리안리 제5·6회 · 농협생명 제5회 · 푸본 600억(발행사 표 X 검정으로 판정 불가) · 기본자본 두 갈래(기발행 15% / 신규 10%) 결합 규칙 · IBK TAC 위치 · 아이엠라이프 전환우선주 차감 방식(해석에 따라 16.0~70.4%) · 악사 JPY 후순위 콜일 추정 확인(29.2% 가 그 추정 위에 있다). 해소: DB손보 제1~5회 기본자본형 확정, 기발행 차감 = 원장 2022년 이전(owner 2026-10-12 밤).
   ③ **전망 JSON 내부 정합 룰 제안**(게이트 코드는 이번에도 안 건드림): 모든 해 `ratio_pct = capital_eok / scr_eok x 100`(+-0.011), 어긋나면 `capacity_exhausted` 가 같이 true 일 때만 허용(`d2_forward_internal_consistency.py` 초안; 화면 쪽은 designer `scripts/check_kics_forward_note.py` 가 이미 막는다). ④ 화면 대 JSON·툴팁 폭·공유 이미지 감사는 수동 브라우저 스크립트(`h5`~`h8`)다 - 반복 도구(헤드리스)로 만들지 UH-26 과 함께 판단.
 - [ ] **최종 라운드 후속(22차)** — 소유자 결정 15건(런로그 Step 5) · 법정준비금 `run_components`(R-RSV-4/12) 데이터계약 배선(현재 단독 RED 10, parser-ifrs17 선행) ·

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""h1: INDEPENDENT 47-company recomputation of the 보완자본 소진율 under the NEW owner rule (2026-10-12 night + coordinator correction 2026-10-13).
+"""h1: INDEPENDENT 47-company recomputation of the 보완자본 소진율 under the NEW owner rule (2026-10-12 night + coordinator correction 2026-10-13 + call-date rule 2026-10-13 second correction).
 
 Spec used (taken from the coordinator's message and TODO.md, not from the implementation):
    numerator = 항목 47 (적용 전 열; 발행사 인쇄 관행은 R0~R5 로 정규화하되 숫자는 같다) - 항목 49 (인쇄 47 이 49 를 포함하는 INCL 일 때)
                - 채권원장 신종 - 채권원장 후순위
-   채권원장 차감액 = 2026.2Q 분자 기준일 현재 잔액(outstanding) 중  issue_date <= 2022-12-31  AND  past_call_outstanding = false  인 증권,
-                    신종(hybrid)·후순위(subordinated) 따로.  인쇄 항목 53·54 는 차감에 쓰지 않는다(*_printed_eok 로만 보존).
+   채권원장 차감액 = 2026.2Q 분자 기준일 현재 잔액(outstanding) 중  issue_date <= 2022-12-31  AND  첫 콜일 > 분자 기준일(2026-06-30)  인 증권
+                    (콜일 <= 기준일이면 제외; 콜일이 없는 채권만 원장 플래그가 보조), 신종(hybrid)·후순위(subordinated) 따로.  인쇄 항목 53·54 는 차감에 쓰지 않는다(*_printed_eok 로만 보존).
    분모 = 항목 14 값(경과조치 적용 전) x 50%.  R0: 항목 3(보완자본)=0 이면 0.  항목 47~54 원문 부재(NA)면 null.
 Independence: reads only my own dump of kics_disclosure.json (a2_inputs_2026_2Q.json, regenerated from the pinned revision) and the pinned ledger /
 published JSON.  Imports nothing from scripts/ or src/.
@@ -33,6 +33,8 @@ TOL = 2.0              # 억원, two rounded cells
 PCT_TOL = 0.1          # %p (coordinator)
 AS_OF = date(2026, 6, 30)
 CUT = "2022-12-31"
+import os
+PRIMARY = os.environ.get("H1_PRIMARY", "calldate")      # 'calldate' (rule of 2026-10-13) or 'flag' (rule of 2026-10-12, for the previous pin)
 
 inp = json.load(open(HERE + "a2_inputs_2026_2Q.json", encoding="utf-8"))
 pub2 = {r["code"]: r for r in audit_io.load_json("kics_tier2_utilization.json")["results"]}
@@ -73,13 +75,16 @@ def scoped_47(code):
 
 
 def first_call_passed(b, mode):
-    """past-call at the numerator date (mode 'date'); the ledger flag otherwise"""
+    """mode 'calldate' (the rule since 2026-10-13): first call date <= numerator date 2026-06-30; the ledger flag is only an aid for a bond WITHOUT a call date.
+    mode 'flag' (the rule of 2026-10-12): the per-row ledger flag.   mode 'date': strictly before the numerator date (boundary sensitivity)."""
     if mode == "flag":
         return bool(b.get("past_call_outstanding"))
     cd = b.get("call_date")
     if not cd:
-        return False
+        return bool(b.get("past_call_outstanding")) if mode == "calldate" else False
     y, m, d = (int(x) for x in cd.split("-"))
+    if mode == "calldate":
+        return date(y, m, d) <= AS_OF
     return date(y, m, d) < AS_OF
 
 
@@ -139,14 +144,16 @@ rows = []
 for code in sorted(inp):
     r = inp[code]
     p = pub2[code]
-    a = numerator(code)                       # the spec
-    b_date = numerator(code, mode="date")
-    b_min = numerator(code, minrule=True)
-    b_rec = numerator(code, haircut=True)
+    a = numerator(code, mode=PRIMARY)         # the spec (call-date rule)
+    b_date = numerator(code, mode="date")     # strictly before the numerator date (boundary check)
+    b_flag = numerator(code, mode="flag")     # the previous rule (per-row flag)
+    b_min = numerator(code, mode=PRIMARY, minrule=True)
+    b_rec = numerator(code, mode=PRIMARY, haircut=True)
     lim = a["limit"]
     pct = None if a["N2"] is None else a["N2"] / lim * 100
     pct_date = None if b_date["N2"] is None else b_date["N2"] / lim * 100
     pct_min = None if b_min["N2"] is None else b_min["N2"] / lim * 100
+    pct_flag = None if b_flag["N2"] is None else b_flag["N2"] / lim * 100
     pct_rec = None if b_rec["N2"] is None else b_rec["N2"] / lim * 100
     pub_pct = p.get("utilization_pct")
     pub_num = p.get("numerator_eok")
@@ -168,6 +175,7 @@ for code in sorted(inp):
         "tfi_off_mine": None if tfi_off_mine is None else round(tfi_off_mine, 2), "tfi_off_pub": p.get("numerator_tfi_off_eok"),
         "tfi_off_pct_mine": None if (tfi_off_mine is None or not lim) else round(tfi_off_mine / lim * 100, 3), "tfi_off_pct_pub": p.get("utilization_pct_tfi_off"),
         "pct_variant_date": None if pct_date is None else round(pct_date, 3), "pct_variant_min": None if pct_min is None else round(pct_min, 3),
+        "pct_variant_flag": None if pct_flag is None else round(pct_flag, 3),
         "pct_variant_haircut": None if pct_rec is None else round(pct_rec, 3),
         "ledger_stale": led.get("stale"), "ledger_as_of": led.get("as_of"), "ledger_unknown_vintage_sub_or_hyb": None if not led else round(led["unknown_vintage"], 2),
         "pastcall_excluded": "; ".join("%s %s call %s %.0f %s" % x for x in (led.get("excluded_pastcall") or [])),
@@ -208,7 +216,9 @@ L.append("rule marks: mine uses INCL/EXCL scope; published item47_scope equal fo
     sum(1 for x in rows if x["scope_mine"] == x["scope_pub"] or x["scope_mine"] == "-"), len(rows)))
 L.append("")
 L.append("sensitivity (companies whose pct moves by > 0.1 pp under the variant):")
-for key, nm in (("pct_variant_date", "past-call decided at 2026-06-30 instead of the ledger flag"), ("pct_variant_min", "min(printed 53/54, ledger) (first owner wording)"),
+for key, nm in (("pct_variant_flag", "the previous rule (per-row ledger flag) instead of the call-date rule"),
+                ("pct_variant_date", "call date strictly before 2026-06-30 (boundary: a bond called ON the numerator date)"),
+                ("pct_variant_min", "min(printed 53/54, ledger) (first owner wording)"),
                 ("pct_variant_haircut", "ledger legacy 후순위 with 잔존만기 체감")):
     mv = [x for x in rows if x[key] is not None and x["pct_mine"] is not None and abs(x[key] - x["pct_mine"]) > 0.1]
     L.append("  %s: %d companies" % (nm, len(mv)))
