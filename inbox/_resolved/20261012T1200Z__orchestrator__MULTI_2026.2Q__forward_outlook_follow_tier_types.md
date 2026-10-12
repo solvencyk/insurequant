@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1200Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2026.2Q
@@ -30,3 +30,4 @@ owner 지적(2026-10-12 채팅): 「그럼 그에 맞게 forward outlook 숫자�
 - 바뀐 회사 수·한화생명 전후(기본자본비율 경로), 총자본 경로 불변 여부, 미확정 3사 처리, 새 필드 명세, 게이트 결과, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+취소(2026-10-12, owner 결정): owner 가 「신종 분류 판단이 들어가는 숫자는 건조하게 뽑을 수 없다」며 K-ICS 소진율 도넛과 Forward Outlook 화면을 내리고 시점별 발행현황 누적 그래프로 바꾸기로 했다. 전망 모델을 증권 계층 등재부에 맞추는 이 작업은 하지 않는다(코드·전망 JSON 변경 없음).

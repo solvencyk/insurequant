@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261012T1010Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2023.4Q-2026.2Q
@@ -28,3 +28,4 @@ owner(sangwook.cho)는 2026-10-12 채팅에서 오케스트레이터가 정리�
 - 등재 건수(항목별), 읽는 쪽 분기 확인 결과, 해소/신규 줄 비교, 새 RED(있으면 종류별), 커밋 해시. `TODO_validation.md` Status + `docs/changelog_validation.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 f0535af). 등재: 재보사 인쇄된 0 7칸(user_pl_confirmed_cells + 읽는 쪽 PL_YTD_COLLAPSE_CONFIRMED_PENDING), 서울보증 PL 2024.2Q·3Q(_PL_SOURCE_ABSENT, HOLE-PL 2 -> 0), 마이브라운 TIER2_LIMIT_STALE 5칸(TIER2_STALE_FALSE_POSITIVE). 미등재: 뮌헨 2026.2Q 항목 50·52 는 원문 p17 에 인쇄돼 있어 parser-kics 가 채움(51=0 도출 필요 — 원문이 51 을 「-」로 인쇄하면 0), CSM 워터폴 대 ILP 기준 차이는 대조 룰이 코드에 없어 등재할 줄이 없음(룰 설계 선행; 칸 목록은 data/_derived/validation_registrations_20261012/csm_wf_vs_ilp_basis_diff_cells.md; 롯데 2024.3Q -23억 잔차는 별도 분류 필요). 새 RED 0, 골든 master_tables 1종 --update, selftest 102/102.

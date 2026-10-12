@@ -13,6 +13,9 @@ iter: 1
 ### owner 승인 기록 (2026-10-12 채팅)
 (가) 메리츠·흥국생명 「기발행 후순위채무」 행: owner 가 「2023 이후 발행분은 기발행에서 제외하고 소진율에 가산한다 = 소진율이 증가한다」 는 설명에 「ㅇㅋ」 로 승인했다. (나) 한화생명·KDB생명·하나손해·농협손해·흥국화재의 신규 신종: owner 가 AskUserQuestion 에서 「현재 유지(권장)」 를 선택했다 = 기본자본 소진율은 회사 공시대로 보완자본형으로 보아 0% 유지(분자에서 제외), 코드 변경 없음. (다) 예실차 xlsx 시트 신설(스키마 변경)은 owner 가 「나머지는 다 승인」 으로 승인했다(`TODO.md` ㉓).
 
+### 오케스트레이터 정정 (2026-10-12 오후, owner 결정)
+owner 가 소진율 도넛·Forward Outlook 을 화면에서 내리기로 했다(분류 판단이 들어가는 숫자는 건조하게 뽑을 수 없다는 이유). 따라서 아래 **항목 1·2(메리츠·흥국생명 수정, 재산출)는 하지 않는다(보류)**. **항목 3(예실차 xlsx 시트 신설)과 4(기록)만 한다.** 새 우선순위: `1110Z` → `1150Z` → `1210Z`(시점별 발행현황 JSON) → 이 티켓의 항목 3. 전망(`1200Z`)은 취소됨.
+
 ### 해 줄 것
 1. **메리츠(KR0001)·흥국생명(KR0071) tier2 분자의 기발행 차감액**: 직전 작업(`c3ebcc3`, 규칙 R2)은 항목 54 「(기발행 후순위채무)」 인쇄값 전체를 기발행으로 빼서 메리츠 0.2%·흥국생명 10.6% 가 됐다. 채권원장(`kics_capital_securities.json`)상 2022년 이전 발행 후순위는 메리츠 5,960억(항목 54 인쇄 15,630.85억)·흥국생명 394.81억(인쇄 4,132.49억)뿐이라 나머지는 2023년 이후 신규채다(`data/_derived/capital_utilization_apply_20261012/a11_legacy_row_overreach_alt.txt`). 두 회사는 **기발행 차감액 = 채권원장 2022년 이전분**(= `exempt = ledger legacy`)으로 바꿔 메리츠 30.8%·흥국생명 37.0% 가 되게 한다(DB생명·미래에셋과 같은 취급 — 신규채는 한도 대상). 규칙 ID·근거를 행 필드에 남기고(`rule`/`rule_basis`), `capital_tier_registry.json` 등 근거 문자열 갱신, 단위시험·변이시험 갱신. **다른 4사(한화생명 74.8·KB손해 20.5·에이비엘 70.4·IBK 76.2)는 이번에 바꾸지 않는다** — 값 변화 목록만 보고(owner 가 일관 적용 여부를 정한다).
 2. 재산출 → 기존 방식대로 `kics_tier2_utilization.json`·`kics_forward_capital.json`(신뢰도만 바뀌는지)·`data/bonds/` 파생·xlsx `보완자본소진율`/`자본비율전망` 시트(`scripts/sync_master_xlsx_sheet.py`)·`public_exports/` 재생성·재커밋(`export_public_sheets.py` 는 커밋된 HEAD 를 읽는다). 전후 표(47사 중 바뀐 칸)와 게이트(`validate_data_contract.py`·`validate_live_artifacts.py`·`check_master_xlsx_drift.py`) 비교를 증빙으로 저장. 새 RED 는 덮지 말고 보고.
