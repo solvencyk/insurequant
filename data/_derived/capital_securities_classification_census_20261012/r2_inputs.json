@@ -1,0 +1,7 @@
+{
+ "note": "sha256 of the files r2_apply.py read (read only); written at the time of the run",
+ "census_securities.json (round 1)": "f8fa314a20986d2788d4fe43f9514c094692f2f4e00349ddf4ef87b11d42ed54",
+ "kics_disclosure.json": "bede3bcc0bc6a1ae71cd0da293b0f4ab202e3864ec87552980c8a3ecc6acaedf",
+ "data/bonds/capital_tier_registry.json": "2da5ae0ad41d8cda21303389068bd9ba92af73109f46a6a0805dc824d9efb11b",
+ "data/bonds/capital_securities_fy2026h1.json (cited in the exclusion reason)": "f3a951e4d4a08ce23f61d4bc9173156e810b2ddcd0413e215c230852f78f432d"
+}
