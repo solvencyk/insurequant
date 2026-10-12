@@ -1,0 +1,103 @@
+== kics_tier1_utilization.json  top-level keys=['quarter', 'count', 'definition', 'results']  count=47 n_rows=47
+  definition={"limit_primary": "SCR×15% (KIRI 2024-14 common-transition)", "limit_strict": "SCR×10%", "numerator": "item6 (자본항목 중 보통주 이외의 자본증권)", "source": "kics_disclosure.json (2026.2Q 경영공시)", "as_of": "2026-06-30", "as_of_note": "분자·분모 모두 같은 분기말 경영공시 항목이라 기준일이 어긋나지 않는다. 채권 발행현황(data/bonds/**)은 forward outlook 전용으로 남는다.", "limit": "item14 x 15%"}
+  keyset x39: ['company', 'code', 'quarter', 'scr_eok', 'tier1_hybrid_limit_eok', 'tier1_hybrid_limit_strict_eok', 'tier1_hybrid_issued_eok', 'tier1_hybrid_excess_eok', 'tier1_hybrid_recognized_eok', 'tier1_hybrid_overflow_eok', 'utilization_pct', 'utilization_pct_strict', 'data_source', 'quality_flag', 'issued_source', 'excess_source', 'legacy_hybrid_transition_eok', 'tier1_grandfathered_hybrid_eok', 'utilization_pct_raw', 'numerator_as_of', 'hybrid_outstanding_eok', 'subordinated_outstanding_eok', 'bond_balance_as_of']
+  keyset x8: ['company', 'code', 'quarter', 'scr_eok', 'tier1_hybrid_limit_eok', 'tier1_hybrid_limit_strict_eok', 'tier1_hybrid_issued_eok', 'tier1_hybrid_excess_eok', 'tier1_hybrid_recognized_eok', 'tier1_hybrid_overflow_eok', 'utilization_pct', 'utilization_pct_strict', 'data_source', 'quality_flag', 'issued_source', 'excess_source', 'legacy_hybrid_transition_eok', 'tier1_grandfathered_hybrid_eok', 'utilization_pct_raw', 'numerator_as_of', 'hybrid_outstanding_eok', 'subordinated_outstanding_eok', 'bond_balance_as_of', 'reinsurer_basis']
+  KR0001 메리츠화재해상보험  pct=18.9 strict=28.4 issued=1792.0 lim=9466.05 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=1791.95 extra={}
+  KR0002 한화손해보험     pct=79.2 strict=118.9 issued=4231.0 lim=5339.55 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=2341.05 extra={}
+  KR0003 롯데손해보험     pct=14.3 strict=21.5 issued=454.0 lim=3166.65 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=453.7 extra={}
+  KR0004 MG_예별손해보험  pct=0.0 strict=0.0 issued=0.0 lim=1291.95 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0005 흥국화재       pct=122.4 strict=183.6 issued=4159.0 lim=3398.1 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=2120.0 extra={}
+  KR0008 삼성화재해상보험   pct=0.3 strict=0.5 issued=73.0 lim=23333.25 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0009 현대해상       pct=0.0 strict=0.0 issued=0.0 lim=11000.25 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0010 KB손해보험     pct=0.0 strict=0.0 issued=0.0 lim=10828.05 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0011 DB손해보험     pct=101.1 strict=151.6 issued=17452.0 lim=17264.85 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0029 AIG손해보험    pct=0.0 strict=0.0 issued=0.0 lim=417.0 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0032 NH농협손해보험   pct=223.2 strict=334.7 issued=4500.0 lim=2016.45 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0049 악사손해보험     pct=0.0 strict=0.0 issued=0.0 lim=380.85 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0050 하나손해보험     pct=284.9 strict=427.4 issued=1999.0 lim=701.55 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0051 신한이지손해보험   pct=0.0 strict=0.0 issued=0.0 lim=78.6 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0068 한화생명       pct=136.3 strict=204.4 issued=30685.0 lim=22516.8 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0069 삼성생명       pct=0.0 strict=0.0 issued=0.0 lim=93352.65 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0070 에이비엘생명보험   pct=0.0 strict=0.0 issued=0.0 lim=2591.85 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0071 흥국생명보험     pct=66.0 strict=98.9 issued=2796.0 lim=4239.45 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=496.5 extra={}
+  KR0072 케이디비생명보험   pct=103.2 strict=154.7 issued=2403.0 lim=2329.35 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0073 교보생명보험     pct=139.5 strict=209.3 issued=22057.0 lim=15809.7 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=11088.99 extra={}
+  KR0074 라이나생명보험    pct=0.0 strict=0.0 issued=0.0 lim=3058.5 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0075 비엔피파리바카디프생 pct=0.0 strict=0.0 issued=0.0 lim=152.55 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0076 아이엠라이프생명보험 pct=221.7 strict=332.6 issued=2466.0 lim=1112.1 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=2465.98 extra={}
+  KR0079 미래에셋생명     pct=0.0 strict=0.0 issued=0.0 lim=3594.3 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0080 에이아이에이생명보험 pct=0.0 strict=0.0 issued=0.0 lim=2464.65 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0082 DB생명보험     pct=0.0 strict=0.0 issued=0.0 lim=2437.2 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0083 푸본현대생명보험   pct=45.4 strict=68.1 issued=1050.0 lim=2313.9 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=400.0 extra={}
+  KR0087 동양생명       pct=0.0 strict=0.0 issued=0.0 lim=3565.2 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0094 신한라이프생명보험  pct=0.0 strict=0.0 issued=0.0 lim=8064.15 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0095 메트라이프생명보험  pct=0.0 strict=0.0 issued=0.0 lim=3134.1 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0097 하나생명보험     pct=158.8 strict=238.2 issued=1799.0 lim=1133.1 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0099 KB라이프생명    pct=12.2 strict=18.3 issued=498.0 lim=4075.8 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=498.0 extra={}
+  KR0100 처브라이프생명보험  pct=0.0 strict=0.0 issued=0.0 lim=205.2 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR0104 농협생명보험     pct=96.9 strict=145.4 issued=5000.0 lim=5159.25 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=2500.0 extra={}
+  KR0150 서울보증보험     pct=0.0 strict=0.0 issued=0.0 lim=2151.75 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR1000 코리안리재보험    pct=230.7 strict=346.1 issued=8082.0 lim=3502.95 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=3291.97 extra={}
+  KR1010 교보라이프플래닛생명 pct=0.0 strict=0.0 issued=0.0 lim=116.55 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=None extra={}
+  KR1011 IBK연금보험    pct=0.0 strict=0.0 issued=0.0 lim=1083.15 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR1098 카카오페이손해보험  pct=0.0 strict=0.0 issued=0.0 lim=63.9 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={}
+  KR1101 뮌헨재보험      pct=0.0 strict=0.0 issued=0.0 lim=167.7 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': 0.0, 'note': "신종자본증권 0 · 보완자본 0. 경과조치표의 '보완자본 한도 적용 전'·'기발행' 칸이 공란이라 item47 이 마스터에 없다 -> 보완자본 0 이고 한도>0 이므로 한도 적용 전도 0 으로 도출."}}
+  KR1102 스위스리아시아    pct=0.0 strict=0.0 issued=0.0 lim=613.05 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': -3.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 (3)억(마이너스 계정, 발행 아님) · 기발행 신종/후순위 '-'. 단 보완자본이 4,274억(= '보완자본으로 재분류하는 항목' 4,274억)이고 '보완자본 한도 적용 전·한도'가 모두 '-' 라 보완자본 소진율은 확정 불가 -> 빈 칸. 기본자본 자본증권 소진율은 0%."}}
+  KR1103 제네럴재보험     pct=0.0 strict=0.0 issued=0.0 lim=44.25 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': 0.0, 'note': "신종자본증권 '-' · 기발행 신종/후순위 '-' · 보완자본 공란/'-'. 마스터 item47=0."}}
+  KR1104 하노버재보험     pct=0.0 strict=0.0 issued=0.0 lim=40.05 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': 0.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 신종/후순위 0 · 후순위채권 '-' · 신종자본증권 '-'. 마스터 item47=0."}}
+  KR1105 알지에이리인슈어런스 pct=0.0 strict=0.0 issued=0.0 lim=387.3 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': 0.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 칸 공란. 경과조치표 '보완자본 한도 적용 전' 5,499억은 같은 표의 지급여력금액(5,499)과 같은 값인데 보완자본·보완자본 한도는 0 이라 발행사가 칸을 잘못 채운 것으로 본다 -> 0 으로 두고 원값은 item47_raw 에 보존."}}
+  KR1106 스코리재보험     pct=0.0 strict=0.0 issued=0.0 lim=584.55 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': 0.0, 'note': '신종자본증권 0 · 기발행 신종/후순위 0 · 보완자본 0. 마스터 item47=0. 요구자본 경과조치 적용사(item14 값 3,897 > 값_적용후 3,627.26).'}}
+  KR1107 퍼시픽라이프리    pct=0.0 strict=0.0 issued=0.0 lim=107.85 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': 0.0, 'note': '신종자본증권 0 · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 신종/후순위 0 · 한도 적용 전 0(원문). 마스터에 item47 이 없어 보완자본 0 + 한도>0 으로 0 도출(원문 표값과 일치).'}}
+  KR1108 마이브라운반려동물전 pct=0.0 strict=0.0 issued=0.0 lim=3.05 qf=ok src=kics_disclosure item6 / (item14 x 15%) gf=0.0 extra={'reinsurer_basis': {'item6_raw': 0.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 '-' · 보완자본 '-' · 한도 적용 전 '-' · 기발행 '-'. 마스터에 item47 이 없어 보완자본 0 + 한도>0 으로 0 도출."}}
+== kics_tier2_utilization.json  top-level keys=['quarter', 'count', 'results', 'definition']  count=47 n_rows=47
+  definition={"limit": "item14 x 50% ([별표22] Ⅲ.2.마)", "numerator": "item47 (보완자본 한도 적용 전)", "source": "kics_disclosure.json (2026.2Q 경영공시)", "replaces": "broken proxy(item3 보완자본 − 면제) — 총보완자본 혼동(삼성생명 자본증권0인데 7.76조), 동양240%/KB218% artifact", "as_of": "2026-06-30", "as_of_note": "분자·분모 모두 같은 분기말 경영공시 항목이라 기준일이 어긋나지 않는다. 채권 발행현황(data/bonds/**)은 forward outlook 전용으로 남는다."}
+  keyset x38: ['company', 'code', 'quarter', 'tier2_limit_eok', 'numerator_eok', 'utilization_pct', 'data_source', 'tier2_eok', 'pre_limit_eok', 'lapse_excess_eok', 'hybrid_eok', 'subordinated_eok', 'proxy_utilization_pct', 'quality_flag', 'new_subordinated_recognized_eok', 'new_subordinated_gross_eok', 'tier1_overflow_into_tier2_eok', 'grandfathered_hybrid_eok', 'grandfathered_subordinated_eok', 'numerator_as_of', 'hybrid_outstanding_eok', 'subordinated_outstanding_eok', 'bond_balance_as_of']
+  keyset x8: ['company', 'code', 'quarter', 'tier2_limit_eok', 'numerator_eok', 'utilization_pct', 'data_source', 'tier2_eok', 'pre_limit_eok', 'lapse_excess_eok', 'hybrid_eok', 'subordinated_eok', 'proxy_utilization_pct', 'quality_flag', 'new_subordinated_recognized_eok', 'new_subordinated_gross_eok', 'tier1_overflow_into_tier2_eok', 'grandfathered_hybrid_eok', 'grandfathered_subordinated_eok', 'numerator_as_of', 'hybrid_outstanding_eok', 'subordinated_outstanding_eok', 'bond_balance_as_of', 'reinsurer_basis']
+  keyset x1: ['company', 'code', 'quarter', 'tier2_limit_eok', 'numerator_eok', 'utilization_pct', 'data_source', 'tier2_eok', 'pre_limit_eok', 'lapse_excess_eok', 'hybrid_eok', 'subordinated_eok', 'proxy_utilization_pct', 'quality_flag', 'new_subordinated_recognized_eok', 'new_subordinated_gross_eok', 'tier1_overflow_into_tier2_eok', 'grandfathered_hybrid_eok', 'grandfathered_subordinated_eok', 'numerator_as_of']
+  KR0001 메리츠화재해상보험  pct=55.4 num=17484.88 lim=31553.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=92894.0 pre=None lapse=None gfh=1791.95 gfs=15630.85 extra={}
+  KR0002 한화손해보험     pct=73.8 num=13138.25 lim=17798.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=39508.01 pre=8315.18 lapse=28710.81 gfh=2341.05 gfs=2482.02 extra={}
+  KR0003 롯데손해보험     pct=76.2 num=8038.95 lim=10555.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=28287.34 pre=5651.39 lapse=20702.09 gfh=453.7 gfs=1933.86 extra={}
+  KR0004 MG_예별손해보험  pct=0.0 num=0.49 lim=4306.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=None lapse=None gfh=0.0 gfs=0.0 extra={}
+  KR0005 흥국화재       pct=65.7 num=7439.32 lim=11327.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=27259.63 pre=5128.75 lapse=21940.32 gfh=2120.0 gfs=190.57 extra={}
+  KR0008 삼성화재해상보험   pct=4.0 num=3089.8 lim=77777.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=97415.18 pre=3089.8 lapse=94325.38 gfh=0.0 gfs=0.0 extra={}
+  KR0009 현대해상       pct=70.5 num=25852.36 lim=36667.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=91826.46 pre=25852.36 lapse=65974.1 gfh=0.0 gfs=0.0 extra={}
+  KR0010 KB손해보험     pct=28.4 num=10244.19 lim=36093.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=80500.28 pre=7343.08 lapse=None gfh=0.0 gfs=2901.11 extra={}
+  KR0011 DB손해보험     pct=38.9 num=22392.16 lim=57549.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=124792.04 pre=22392.16 lapse=102399.87 gfh=0.0 gfs=0.0 extra={}
+  KR0029 AIG손해보험    pct=0.0 num=0.0 lim=1390.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=754.39 pre=0.0 lapse=754.39 gfh=0.0 gfs=0.0 extra={}
+  KR0032 NH농협손해보험   pct=117.7 num=7908.29 lim=6721.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=15538.0 pre=None lapse=None gfh=0.0 gfs=926.58 extra={}
+  KR0049 악사손해보험     pct=29.2 num=370.65 lim=1269.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=2653.48 pre=25.99 lapse=2282.83 gfh=0.0 gfs=344.66 extra={}
+  KR0050 하나손해보험     pct=85.9 num=2007.83 lim=2338.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=6065.39 pre=2007.83 lapse=4057.56 gfh=0.0 gfs=0.0 extra={}
+  KR0051 신한이지손해보험   pct=8.4 num=22.0 lim=262.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.22 pre=0.22 lapse=0.22 gfh=0.0 gfs=0.0 extra={}
+  KR0068 한화생명       pct=222.4 num=166945.49 lim=75056.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=166945.49 pre=166945.49 lapse=96078.69 gfh=0.0 gfs=17932.09 extra={}
+  KR0069 삼성생명       pct=38.1 num=118528.22 lim=311175.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=192933.0 pre=None lapse=None gfh=0.0 gfs=0.0 extra={}
+  KR0070 에이비엘생명보험   pct=77.7 num=6711.29 lim=8639.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=11256.08 pre=6078.44 lapse=4544.79 gfh=0.0 gfs=632.85 extra={}
+  KR0071 흥국생명보험     pct=43.3 num=6121.98 lim=14131.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=20832.26 pre=1492.99 lapse=15206.78 gfh=496.5 gfs=4132.49 extra={}
+  KR0072 케이디비생명보험   pct=83.1 num=6452.28 lim=7764.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=16273.15 pre=6452.28 lapse=9820.87 gfh=0.0 gfs=0.0 extra={}
+  KR0073 교보생명보험     pct=72.7 num=38286.48 lim=52699.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=69687.73 pre=27197.5 lapse=42490.24 gfh=11088.99 gfs=0.0 extra={}
+  KR0074 라이나생명보험    pct=0.0 num=0.0 lim=10195.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=18651.61 pre=0.0 lapse=18651.61 gfh=0.0 gfs=0.0 extra={}
+  KR0075 비엔피파리바카디프생 pct=46.0 num=233.86 lim=508.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=233.86 pre=233.86 lapse=106.31 gfh=0.0 gfs=0.0 extra={}
+  KR0076 아이엠라이프생명보험 pct=96.0 num=3558.34 lim=3707.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=7816.96 pre=1833.8 lapse=4629.33 gfh=2465.98 gfs=0.0 extra={}
+  KR0079 미래에셋생명     pct=112.4 num=13472.53 lim=11981.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=73472.53 pre=73472.53 lapse=70547.6 gfh=0.0 gfs=2930.94 extra={}
+  KR0080 에이아이에이생명보험 pct=33.3 num=2735.39 lim=8215.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=2735.39 pre=2735.39 lapse=2719.78 gfh=0.0 gfs=0.0 extra={}
+  KR0082 DB생명보험     pct=31.6 num=2563.95 lim=8124.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=20469.35 pre=2563.95 lapse=17905.4 gfh=0.0 gfs=3135.91 extra={}
+  KR0083 푸본현대생명보험   pct=130.1 num=10034.79 lim=7713.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=9634.79 pre=6682.93 lapse=0.0 gfh=400.0 gfs=2951.86 extra={}
+  KR0087 동양생명       pct=105.0 num=12478.17 lim=11884.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=268.94 pre=None lapse=None gfh=0.0 gfs=0.0 extra={}
+  KR0094 신한라이프생명보험  pct=33.1 num=8907.55 lim=26880.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=517.37 pre=None lapse=None gfh=0.0 gfs=0.0 extra={}
+  KR0095 메트라이프생명보험  pct=0.0 num=0.0 lim=10447.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=21853.77 pre=0.0 lapse=21853.77 gfh=0.0 gfs=0.0 extra={}
+  KR0097 하나생명보험     pct=33.8 num=1275.58 lim=3777.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=8312.71 pre=1275.58 lapse=7037.13 gfh=0.0 gfs=0.0 extra={}
+  KR0099 KB라이프생명    pct=9.6 num=1308.31 lim=13586.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=23033.2 pre=108.36 lapse=22222.88 gfh=498.0 gfs=701.95 extra={}
+  KR0100 처브라이프생명보험  pct=13.4 num=91.76 lim=684.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=1620.74 pre=91.76 lapse=1528.98 gfh=0.0 gfs=0.0 extra={}
+  KR0104 농협생명보험     pct=83.9 num=14425.57 lim=17197.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=48031.81 pre=11925.57 lapse=36106.24 gfh=2500.0 gfs=8700.42 extra={}
+  KR0150 서울보증보험     pct=0.6 num=43.15 lim=7172.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=43.15 pre=43.15 lapse=0.0 gfh=0.0 gfs=0.0 extra={}
+  KR1000 코리안리재보험    pct=89.1 num=10405.18 lim=11676.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=8182.88 pre=7113.21 lapse=1069.67 gfh=3291.97 gfs=0.0 extra={}
+  KR1010 교보라이프플래닛생명 pct=0.0 num=0.0 lim=388.5 qf=ok src=no_bonds t2=3.76 pre=None lapse=None gfh=0.0 gfs=0.0 extra={}
+  KR1011 IBK연금보험    pct=120.4 num=4346.77 lim=3610.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=7904.66 pre=2744.69 lapse=3557.89 gfh=0.0 gfs=1602.09 extra={}
+  KR1098 카카오페이손해보험  pct=0.0 num=0.0 lim=213.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=0.0 gfh=0.0 gfs=0.0 extra={}
+  KR1101 뮌헨재보험      pct=0.0 num=0.0 lim=559.0 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': None, 'item3_raw': 0.0, 'note': "신종자본증권 0 · 보완자본 0. 경과조치표의 '보완자본 한도 적용 전'·'기발행' 칸이 공란이라 item47 이 마스터에 없다 -> 보완자본 0 이고 한도>0 이므로 한도 적용 전도 0 으로 도출."}}
+  KR1102 스위스리아시아    pct=None num=None lim=2043.5 qf=numerator_undisclosed src=kics_disclosure item47 / (item14 x 50%) t2=4274.0 pre=None lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': 0.0, 'item3_raw': 4274.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 (3)억(마이너스 계정, 발행 아님) · 기발행 신종/후순위 '-'. 단 보완자본이 4,274억(= '보완자본으로 재분류하는 항목' 4,274억)이고 '보완자본 한도 적용 전·한도'가 모두 '-' 라 보완자본 소진율은 확정 불가 -> 빈 칸. 기본자본 자본증권 소진율은 0%."}}
+  KR1103 제네럴재보험     pct=0.0 num=0.0 lim=147.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': 0.0, 'item3_raw': 0.0, 'note': "신종자본증권 '-' · 기발행 신종/후순위 '-' · 보완자본 공란/'-'. 마스터 item47=0."}}
+  KR1104 하노버재보험     pct=0.0 num=0.0 lim=133.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': 0.0, 'item3_raw': 0.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 신종/후순위 0 · 후순위채권 '-' · 신종자본증권 '-'. 마스터 item47=0."}}
+  KR1105 알지에이리인슈어런스 pct=0.0 num=0.0 lim=1291.0 qf=issuer_item47_inconsistent src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': 5499.0, 'item3_raw': 0.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 칸 공란. 경과조치표 '보완자본 한도 적용 전' 5,499억은 같은 표의 지급여력금액(5,499)과 같은 값인데 보완자본·보완자본 한도는 0 이라 발행사가 칸을 잘못 채운 것으로 본다 -> 0 으로 두고 원값은 item47_raw 에 보존.", 'item47_raw_issuer_cell': 5499.0}}
+  KR1106 스코리재보험     pct=0.0 num=0.0 lim=1948.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': 0.0, 'item3_raw': 0.0, 'note': '신종자본증권 0 · 기발행 신종/후순위 0 · 보완자본 0. 마스터 item47=0. 요구자본 경과조치 적용사(item14 값 3,897 > 값_적용후 3,627.26).'}}
+  KR1107 퍼시픽라이프리    pct=0.0 num=0.0 lim=359.5 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': None, 'item3_raw': 0.0, 'note': '신종자본증권 0 · 보통주 이외의 자본증권 0 · 보완자본 0 · 기발행 신종/후순위 0 · 한도 적용 전 0(원문). 마스터에 item47 이 없어 보완자본 0 + 한도>0 으로 0 도출(원문 표값과 일치).'}}
+  KR1108 마이브라운반려동물전 pct=0.0 num=0.0 lim=10.16 qf=ok src=kics_disclosure item47 / (item14 x 50%) t2=0.0 pre=0.0 lapse=None gfh=0.0 gfs=0.0 extra={'reinsurer_basis': {'item47_raw': None, 'item3_raw': 0.0, 'note': "신종자본증권 '-' · 보통주 이외의 자본증권 '-' · 보완자본 '-' · 한도 적용 전 '-' · 기발행 '-'. 마스터에 item47 이 없어 보완자본 0 + 한도>0 으로 0 도출."}}

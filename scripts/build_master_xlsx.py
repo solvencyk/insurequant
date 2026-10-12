@@ -41,12 +41,12 @@ MASTERS = [
     ("dividend.json", "배당",
      "배당에 관한 사항 (DART alotMatter) — 항목1-7 회사단위 + 8-11 종류주(보통주/우선주)별"),
     ("kics_tier1_utilization.json", "기본자본소진율",
-     "기본자본(신종자본증권) 인정한도 소진율 — SCR×15%(주력)/×10%(엄격) 한도 대비 발행잔액·인정액 "
-     "(DART 사채발행현황 기준, 2026.1Q 스냅샷) long-format. 비고열=known limitation"),
+     "기본자본 자본증권 인정한도 소진율 — max(기발행 신종 ÷ SCR×15%, 기본자본형 신규 ÷ SCR×10%), "
+     "보완자본형 신종 제외 (경영공시 기준, 2026-10-12 규정 근거 재정의) long-format. 비고열=근거·한계"),
     ("kics_tier2_utilization.json", "보완자본소진율",
-     "보완자본(후순위채) 인정한도 소진율 — SCR×50% 한도 대비 신규발행 인정액 "
-     "(DART 사채발행현황 기준, 2026.1Q 스냅샷; 2026-06-20 폐기된 구산식은 참고용 별도 항목명 행) "
-     "long-format. 비고열=known limitation"),
+     "보완자본 인정한도 소진율 — 보완자본 한도 적용 전(경과조치 적용 후) ÷ SCR×50% "
+     "(경영공시 기준, 2026-10-12 규정 근거 재정의; 2026-06-20 폐기된 구산식은 참고용 별도 항목명 행) "
+     "long-format. 비고열=근거·한계"),
     ("kics_capital_securities.json", "자본성증권발행현황",
      "자본성증권 한 건 단위 인정액 — 회사·구분·발행일·콜만기도래일·법정만기일·액면가·"
      "공시분기별 기본자본인정액/보완자본인정액. 종전에는 회사 단위 집계값만 있어 어느 증권이 "
@@ -196,12 +196,20 @@ def _call_fallback_codes() -> set:
     return out
 
 
+# 2026-10-12 규정 근거 재정의(scripts/capital_utilization_rules.py): 소진율은 두 한도 중 먼저 차는 쪽이다
+# (기발행 신종 / SCR x 15%, 기본자본형 신규 / SCR x 10%). 배포 JSON 의 tier1_hybrid_limit_eok·
+# tier1_hybrid_recognized_eok 는 화면·게이트 항등식용 **결속 쪽** 값이라 행마다 15% 또는 10% 가 된다 —
+# 항목명 "(SCR x 15%)" 와 어긋나므로 이 시트는 항목명은 그대로 두고 **읽는 필드만** 바꿨다:
+#   "기본자본 인정한도(SCR x 15%)" <- tier1_legacy_limit_eok (늘 SCR x 15%, 값 변화 없음)
+#   "신종자본증권 인정액"           <- tier1_basic_new_eok   (기본자본형 신규 = 10% 한도 대상)
+# 그러면 시트만으로 소진율 = max(경과조치 인정 신종자본증권 / 인정한도(15%), 인정액 / 인정한도(엄격 10%))
+# 가 재현된다. 항목명 자체를 규정 표기로 바꾸는 것은 시트 스키마 변경이라 owner 승인 사항이다.
 _TIER1_ITEMS = [
     ("scr_eok", "지급여력기준금액(SCR)"),
-    ("tier1_hybrid_limit_eok", "기본자본 인정한도(SCR x 15%)"),
+    ("tier1_legacy_limit_eok", "기본자본 인정한도(SCR x 15%)"),
     ("tier1_hybrid_limit_strict_eok", "기본자본 인정한도(엄격, SCR x 10%)"),
     ("tier1_hybrid_issued_eok", "신종자본증권 발행잔액"),
-    ("tier1_hybrid_recognized_eok", "신종자본증권 인정액"),
+    ("tier1_basic_new_eok", "신종자본증권 인정액"),
     ("tier1_hybrid_overflow_eok", "신종자본증권 한도초과분"),
     ("legacy_hybrid_transition_eok", "경과조치 신종자본증권(구산정)"),
     ("tier1_grandfathered_hybrid_eok", "경과조치 인정 신종자본증권"),
@@ -227,13 +235,23 @@ _TIER1_NOTE_FIELDS = {"tier1_hybrid_issued_eok", "tier1_hybrid_recognized_eok", 
 # 의미" 절, 2026-06-14/2026-08-25 owner 결정) — 추측 아니고 그 문서를 그대로 인용.
 _TIER1_BASIS_NOTE = {
     "utilization_pct": (
-        "인정한도 기준=SCR×15%. [별표22] Ⅲ.2.다.(1)② — 원칙 10%이고, 10% 초과분이 "
-        "「보험업법」상 조건부자본증권이면 15%로 상향. 옆 '기본자본 소진율(엄격)'은 같은 "
-        "분자를 SCR×10%로 나눈 값이라 정의상 이 값의 1.5배로 더 높게 나온다."
+        "2026-10-12 규정 근거 재정의: 소진율 = max(경과조치 인정 신종자본증권 ÷ 기본자본 인정한도"
+        "(SCR×15%), 신종자본증권 인정액(기본자본형 신규) ÷ 기본자본 인정한도(엄격, SCR×10%)). "
+        "2022년 이전 기발행 신종만 공통적용 경과조치로 15%([별표22] Ⅵ.1.가.(1), 2032년까지), 나머지는 "
+        "원칙 10%([별표22] Ⅲ.2.다.(1)②). 스텝업 등 기본자본요건을 못 맞춘 보완자본형 신종"
+        "([별표22] Ⅲ.2.다.(2))은 기본자본 자본증권이 아니라 분자에서 뺀다."
     ),
     "utilization_pct_strict": (
-        "인정한도 기준=SCR×10%([별표22] Ⅲ.2.다.(1)② 원칙한도). '기본자본 소진율'"
-        "(SCR×15%, 조건부자본증권 상향한도)의 1.5배 — 분자는 동일, 분모만 더 작다."
+        "SCR×10% 한도 쪽 소진율 = 신종자본증권 인정액(기본자본형 신규) ÷ 기본자본 인정한도(엄격, "
+        "SCR×10%). '기본자본 소진율'은 이 값과 경과조치 쪽(SCR×15%) 중 큰 값이다."
+    ),
+    "tier1_basic_new_eok": (
+        "기본자본형 신규 자본증권(신종·우선주 등) = 신종자본증권 발행잔액(보통주 이외 자본증권) - "
+        "경과조치 인정 신종자본증권 - 보완자본형 신종. 원칙 한도 SCR×10% 대상(2026-10-12 재정의)."
+    ),
+    "tier1_hybrid_overflow_eok": (
+        "두 한도 초과분 합(경과조치분의 SCR×15% 초과 + 기본자본형 신규의 SCR×10% 초과) — "
+        "보완자본으로 재분류되는 금액."
     ),
 }
 _TIER1_OVER100_NOTE = (
@@ -242,6 +260,20 @@ _TIER1_OVER100_NOTE = (
     "차감된다. 소진율은 100%로 자르지 않는다(owner 2026-06-14 결정 — "
     "docs/tier1_hybrid_utilization_definition.md). 화면에는 '100%+'로 표기됨."
 )
+
+
+def _tier1_row_note(r: dict) -> str:
+    """'기본자본 소진율' 행에만 붙는 회사별 근거 — 어느 한도가 결속하는지, 형 판정이 미확정인지."""
+    leg = r.get("binding_leg")
+    out = []
+    if leg == "legacy_15":
+        out.append(f"결속 한도: 경과조치 쪽(SCR×15%) {r.get('tier1_legacy_pct')}%")
+    elif leg == "basic_10":
+        out.append(f"결속 한도: 원칙 한도 쪽(SCR×10%) {r.get('tier1_basic_new_pct')}%")
+    if r.get("type_unconfirmed"):
+        out.append("기본자본형/보완자본형 미확정 신종 포함 — 기본자본형으로 보고 계산한 상한이며, "
+                   f"보완자본형으로 확인되면 {r.get('tier1_pct_if_unconfirmed_tier2')}%")
+    return " / ".join(out)
 
 
 def _flatten_tier1(raw: dict) -> list:
@@ -263,8 +295,10 @@ def _flatten_tier1(raw: dict) -> list:
             basis = _TIER1_BASIS_NOTE.get(field)
             if basis:
                 notes.append(basis)
-                if (v or 0) > 100.0:
+                if field in ("utilization_pct", "utilization_pct_strict") and (v or 0) > 100.0:
                     notes.append(_TIER1_OVER100_NOTE)
+            if field == "utilization_pct" and _tier1_row_note(r):
+                notes.append(_tier1_row_note(r))
             row["비고"] = " / ".join(notes)
             rows.append(row)
     return rows
@@ -297,8 +331,16 @@ _TIER2_ITEMS = [
 # note below documents that distinction so nobody downstream mistakes it for current.
 _TIER2_PROXY_NOTE = ("2026-06-20 폐기된 구 산식(item3 총보완자본 raw 기준) — 한도제외 대상인 "
                       "해약환급금준비금 초과분이 섞여 부풀었던 값(예: 동양생명 240%, KB손해보험 218%). "
-                      "신종/후순위 발행잔액이 아니다. 현재 헤드라인은 '보완자본 소진율' 행(분자=DART "
-                      "발행잔액 기반, 2026-08-29 census: 39개사 전부 0~100% 안).")
+                      "신종/후순위 발행잔액이 아니다. 현재 헤드라인은 '보완자본 소진율' 행(2026-10-12 규정 근거 "
+                      "재정의: 분자 = 보완자본 한도 적용 전, 경과조치 적용 후 기준).")
+# 2026-10-12 규정 근거 재정의(scripts/capital_utilization_rules.py). '소진 분자'·'소진율' 행에 회사별로
+# 어떤 인쇄 관행을 어떻게 정규화했는지(배포 JSON 의 numerator_source·rule_basis)를 실어 보낸다 —
+# xlsx 만 받은 사람에게는 이 칸이 유일한 근거다. 'R2' 같은 내부 규칙 번호는 싣지 않는다.
+_TIER2_UTIL_NOTE = ("분자 = 보완자본 - 해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 - 기발행 "
+                    "자본증권(공통적용 경과조치), 분모 = 총요구자본(경과조치 적용 전) × 50% "
+                    "([별표22] Ⅲ.2.마·Ⅵ.1.가.(3)·Ⅵ.1.라).")
+_TIER2_OVER100_NOTE = ("100% 초과 = 보완자본 한도 초과 — 초과분은 지급여력금액에서 불인정"
+                       "([별표22] Ⅲ.1.라.(6)). 화면에는 '100%+'로 표기됨.")
 
 
 def _flatten_tier2(raw: dict) -> list:
@@ -312,7 +354,17 @@ def _flatten_tier2(raw: dict) -> list:
             row["공시분기"] = q
             row["항목명"] = label
             row["값"] = r.get(field)
-            row["비고"] = _TIER2_PROXY_NOTE if field == "proxy_utilization_pct" else ""
+            note = _TIER2_PROXY_NOTE if field == "proxy_utilization_pct" else ""
+            if field == "numerator_eok" and r.get("rule"):
+                note = r.get("numerator_source") or r.get("rule_basis") or ""
+            if field == "utilization_pct" and r.get("rule"):
+                parts = [_TIER2_UTIL_NOTE, r.get("rule_basis") or ""]
+                if r.get("reason"):
+                    parts.append(r["reason"])
+                if (r.get("utilization_pct") or 0) > 100.0:
+                    parts.append(_TIER2_OVER100_NOTE)
+                note = " / ".join(p for p in parts if p)
+            row["비고"] = note
             rows.append(row)
     return rows
 

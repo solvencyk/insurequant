@@ -1,0 +1,785 @@
+{
+ "sanity_fail": [],
+ "confidence_changes": [
+  {
+   "code": "KR0001",
+   "name": "메리츠화재해상보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     17484.9,
+     62.1
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0002",
+   "name": "한화손해보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     13138.2,
+     8315.2
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0003",
+   "name": "롯데손해보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     8038.9,
+     5651.4
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0004",
+   "name": "예별손해보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     0.5,
+     0
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0005",
+   "name": "흥국화재",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     7439.3,
+     5128.8
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0008",
+   "name": "삼성화재해상보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0009",
+   "name": "현대해상",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0010",
+   "name": "KB손해보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     10244.2,
+     7343.1
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0011",
+   "name": "DB손해보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0029",
+   "name": "AIG손해보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0032",
+   "name": "NH농협손해보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     7908.3,
+     6981.7
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 face/BS gap +200% (subordinated_eok) — advisory, not in overall",
+      "T2 util 118% > 100 (limit breach)"
+     ],
+     [
+      "T2 face/BS gap +200% (subordinated_eok) — advisory, not in overall",
+      "T2 util 104% > 100 (limit breach)"
+     ]
+    ]
+   }
+  },
+  {
+   "code": "KR0049",
+   "name": "악사손해보험",
+   "diff": {
+    "sim_bias": [
+     "neutral",
+     "over_deduct"
+    ],
+    "tier2_bucket": [
+     "high",
+     "low"
+    ],
+    "t2_gap_pct": [
+     23.8,
+     1665.4
+    ],
+    "kics_t2_numerator_eok": [
+     370.6,
+     26.0
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "FSC outstanding face aligns with K-ICS BS table rows"
+     ],
+     [
+      "T2 face/BS gap +1665% (numerator_eok_fallback) — advisory, not in overall"
+     ]
+    ],
+    "kics_t2_baseline_eok": [
+     370.6,
+     26.0
+    ]
+   }
+  },
+  {
+   "code": "KR0050",
+   "name": "하나손해보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0051",
+   "name": "신한이지손해보험",
+   "diff": {
+    "sim_bias": [
+     "under_deduct",
+     "neutral"
+    ],
+    "issue_flags": [
+     [
+      "fsc_missing_t2"
+     ],
+     []
+    ],
+    "tier2_bucket": [
+     "low",
+     "no_data"
+    ],
+    "level": [
+     "low",
+     "high"
+    ],
+    "t2_gap_pct": [
+     -100.0,
+     null
+    ],
+    "kics_t2_numerator_eok": [
+     22.0,
+     0
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 FSC gap: BS 22억 but bond DB=0",
+      "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+     ],
+     [
+      "no capital instruments in FSC or BS — flat capital, SCR-interp only"
+     ]
+    ],
+    "kics_t2_field": [
+     "numerator_eok_fallback",
+     "missing"
+    ],
+    "kics_t2_baseline_eok": [
+     22.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "code": "KR0068",
+   "name": "한화생명",
+   "diff": {
+    "issue_flags": [
+     [
+      "t2_util_over_100"
+     ],
+     []
+    ],
+    "level": [
+     "low",
+     "high"
+    ],
+    "kics_t2_numerator_eok": [
+     166945.5,
+     52934.7
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R3 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 face/BS gap +88% (subordinated_eok) — advisory, not in overall",
+      "T2 util 222% > 100 (limit breach)"
+     ],
+     [
+      "T2 face/BS gap +88% (subordinated_eok) — advisory, not in overall"
+     ]
+    ]
+   }
+  },
+  {
+   "code": "KR0069",
+   "name": "삼성생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0070",
+   "name": "에이비엘생명보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     6711.3,
+     6078.4
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0071",
+   "name": "흥국생명보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     6122.0,
+     1493.0
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0072",
+   "name": "케이디비생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0073",
+   "name": "교보생명보험",
+   "diff": {
+    "tier2_bucket": [
+     "low",
+     "medium"
+    ],
+    "t2_gap_pct": [
+     -81.7,
+     -74.3
+    ],
+    "kics_t2_numerator_eok": [
+     38286.5,
+     27197.5
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 face/BS gap -82% (numerator_eok_fallback) — advisory, not in overall"
+     ],
+     [
+      "FSC outstanding face aligns with K-ICS BS table rows"
+     ]
+    ],
+    "kics_t2_baseline_eok": [
+     38286.5,
+     27197.5
+    ]
+   }
+  },
+  {
+   "code": "KR0074",
+   "name": "라이나생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0075",
+   "name": "비엔피파리바카디프생명보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     233.9,
+     127.5
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 FSC gap: BS 234억 but bond DB=0",
+      "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+     ],
+     [
+      "T2 FSC gap: BS 128억 but bond DB=0",
+      "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+     ]
+    ],
+    "kics_t2_baseline_eok": [
+     233.9,
+     127.5
+    ]
+   }
+  },
+  {
+   "code": "KR0076",
+   "name": "아이엠라이프생명보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     3558.3,
+     1833.8
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R5 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0079",
+   "name": "미래에셋생명보험",
+   "diff": {
+    "issue_flags": [
+     [
+      "t2_util_over_100"
+     ],
+     []
+    ],
+    "tier2_bucket": [
+     "low",
+     "high"
+    ],
+    "level": [
+     "low",
+     "high"
+    ],
+    "t2_gap_pct": [
+     -77.8,
+     2.1
+    ],
+    "kics_t2_numerator_eok": [
+     13472.5,
+     2930.9
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 face/BS gap -78% (numerator_eok_fallback) — advisory, not in overall",
+      "T2 util 112% > 100 (limit breach)"
+     ],
+     [
+      "FSC outstanding face aligns with K-ICS BS table rows"
+     ]
+    ],
+    "kics_t2_baseline_eok": [
+     13472.5,
+     2930.9
+    ]
+   }
+  },
+  {
+   "code": "KR0080",
+   "name": "에이아이에이생명보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     2735.4,
+     15.6
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 FSC gap: BS 2735억 but bond DB=0",
+      "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+     ],
+     [
+      "T2 FSC gap: BS 16억 but bond DB=0",
+      "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+     ]
+    ],
+    "kics_t2_baseline_eok": [
+     2735.4,
+     15.6
+    ]
+   }
+  },
+  {
+   "code": "KR0082",
+   "name": "DB생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0083",
+   "name": "푸본현대생명보험",
+   "diff": {
+    "issue_flags": [
+     [
+      "t2_util_over_100"
+     ],
+     []
+    ],
+    "level": [
+     "low",
+     "high"
+    ],
+    "kics_t2_numerator_eok": [
+     10034.8,
+     6682.9
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 face/BS gap +82% (subordinated_eok) — advisory, not in overall",
+      "T2 util 130% > 100 (limit breach)"
+     ],
+     [
+      "T2 face/BS gap +82% (subordinated_eok) — advisory, not in overall"
+     ]
+    ]
+   }
+  },
+  {
+   "code": "KR0087",
+   "name": "동양생명",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0094",
+   "name": "신한라이프생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0095",
+   "name": "메트라이프생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0097",
+   "name": "하나생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0099",
+   "name": "KB라이프생명",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     1308.3,
+     108.4
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0100",
+   "name": "처브라이프생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR0104",
+   "name": "농협생명보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     14425.6,
+     3225.2
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R4 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1000",
+   "name": "코리안리재보험",
+   "diff": {
+    "kics_t2_numerator_eok": [
+     10405.2,
+     7113.2
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 FSC gap: BS 10405억 but bond DB=0",
+      "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+     ],
+     [
+      "T2 FSC gap: BS 7113억 but bond DB=0",
+      "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+     ]
+    ],
+    "kics_t2_baseline_eok": [
+     10405.2,
+     7113.2
+    ]
+   }
+  },
+  {
+   "code": "KR1010",
+   "name": "교보라이프플래닛생명보험",
+   "diff": {
+    "tier2_data_source": [
+     "no_bonds",
+     "kics_disclosure item47 부재 - 경과조치 표 미공시"
+    ],
+    "tier2_quality_flag": [
+     "ok",
+     "tfi_table_absent"
+    ]
+   }
+  },
+  {
+   "code": "KR1011",
+   "name": "IBK연금보험",
+   "diff": {
+    "issue_flags": [
+     [
+      "t2_util_over_100"
+     ],
+     []
+    ],
+    "level": [
+     "low",
+     "high"
+    ],
+    "kics_t2_numerator_eok": [
+     4346.8,
+     2744.7
+    ],
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)"
+    ],
+    "reasons": [
+     [
+      "T2 face/BS gap +125% (subordinated_eok) — advisory, not in overall",
+      "T2 util 120% > 100 (limit breach)"
+     ],
+     [
+      "T2 face/BS gap +125% (subordinated_eok) — advisory, not in overall"
+     ]
+    ]
+   }
+  },
+  {
+   "code": "KR1098",
+   "name": "카카오페이손해보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1101",
+   "name": "뮌헨재보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1102",
+   "name": "스위스리아시아",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)"
+    ],
+    "tier2_quality_flag": [
+     "numerator_undisclosed",
+     "ok"
+    ]
+   }
+  },
+  {
+   "code": "KR1103",
+   "name": "제네럴재보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1104",
+   "name": "하노버재보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1105",
+   "name": "알지에이리인슈어런스",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1106",
+   "name": "스코리재보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1107",
+   "name": "퍼시픽라이프리",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  },
+  {
+   "code": "KR1108",
+   "name": "마이브라운반려동물전문보험",
+   "diff": {
+    "tier2_data_source": [
+     "kics_disclosure item47 / (item14 x 50%)",
+     "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)"
+    ]
+   }
+  }
+ ],
+ "projection_changes_if_full_rerun": []
+}

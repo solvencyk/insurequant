@@ -122,8 +122,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 5960.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 17484.9,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 62.1,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -255,8 +255,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 2500.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 13138.2,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 8315.2,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -389,8 +389,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 2289.2,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 8038.9,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 5651.4,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -522,8 +522,8 @@
    "kics_t1_field": "missing",
    "kics_t2_baseline_eok": 680.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 0.5,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 0,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -655,8 +655,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 200.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 7439.3,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 5128.8,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -789,7 +789,7 @@
    "kics_t2_baseline_eok": 3089.8,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 3089.8,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t1",
@@ -928,7 +928,7 @@
    "kics_t2_baseline_eok": 2330.0,
    "kics_t2_field": "subordinated_eok",
    "kics_t2_numerator_eok": 25852.4,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -1060,8 +1060,8 @@
    "kics_t1_field": "missing",
    "kics_t2_baseline_eok": 2860.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 10244.2,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 7343.1,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -1194,7 +1194,7 @@
    "kics_t2_baseline_eok": 1700.0,
    "kics_t2_field": "subordinated_eok",
    "kics_t2_numerator_eok": 22392.2,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -1327,7 +1327,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -1459,8 +1459,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 1000.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 7908.3,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 6981.7,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "t2_util_over_100"
@@ -1468,7 +1468,7 @@
    "sim_bias": "over_deduct",
    "reasons": [
     "T2 face/BS gap +200% (subordinated_eok) — advisory, not in overall",
-    "T2 util 118% > 100 (limit breach)"
+    "T2 util 104% > 100 (limit breach)"
    ]
   }
  },
@@ -1586,22 +1586,22 @@
   "confidence": {
    "level": "high",
    "tier1_bucket": "no_data",
-   "tier2_bucket": "high",
+   "tier2_bucket": "low",
    "t1_gap_pct": null,
-   "t2_gap_pct": 23.8,
+   "t2_gap_pct": 1665.4,
    "bond_t1_out_eok": 0,
    "bond_t2_out_eok": 458.8,
    "kics_t1_issued_eok": 0.0,
    "kics_t1_field": "missing",
-   "kics_t2_baseline_eok": 370.6,
+   "kics_t2_baseline_eok": 26.0,
    "kics_t2_field": "numerator_eok_fallback",
-   "kics_t2_numerator_eok": 370.6,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 26.0,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
-   "sim_bias": "neutral",
+   "sim_bias": "over_deduct",
    "reasons": [
-    "FSC outstanding face aligns with K-ICS BS table rows"
+    "T2 face/BS gap +1665% (numerator_eok_fallback) — advisory, not in overall"
    ]
   }
  },
@@ -1729,7 +1729,7 @@
    "kics_t2_baseline_eok": 2007.8,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 2007.8,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t2"
@@ -1854,27 +1854,24 @@
   ],
   "bond_coverage": "no_bonds_in_dart",
   "confidence": {
-   "level": "low",
+   "level": "high",
    "tier1_bucket": "no_data",
-   "tier2_bucket": "low",
+   "tier2_bucket": "no_data",
    "t1_gap_pct": null,
-   "t2_gap_pct": -100.0,
-   "bond_t1_out_eok": 0,
-   "bond_t2_out_eok": 0,
+   "t2_gap_pct": null,
+   "bond_t1_out_eok": 0.0,
+   "bond_t2_out_eok": 0.0,
    "kics_t1_issued_eok": 0.0,
    "kics_t1_field": "missing",
-   "kics_t2_baseline_eok": 22.0,
-   "kics_t2_field": "numerator_eok_fallback",
-   "kics_t2_numerator_eok": 22.0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_baseline_eok": 0.0,
+   "kics_t2_field": "missing",
+   "kics_t2_numerator_eok": 0,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
-   "issue_flags": [
-    "fsc_missing_t2"
-   ],
-   "sim_bias": "under_deduct",
+   "issue_flags": [],
+   "sim_bias": "neutral",
    "reasons": [
-    "T2 FSC gap: BS 22억 but bond DB=0",
-    "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
+    "no capital instruments in FSC or BS — flat capital, SCR-interp only"
    ]
   }
  },
@@ -1990,7 +1987,7 @@
   ],
   "bond_coverage": "dart_listed",
   "confidence": {
-   "level": "low",
+   "level": "high",
    "tier1_bucket": "high",
    "tier2_bucket": "low",
    "t1_gap_pct": 0.4,
@@ -2001,16 +1998,13 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 14711.4,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 166945.5,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 52934.7,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R3 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
-   "issue_flags": [
-    "t2_util_over_100"
-   ],
+   "issue_flags": [],
    "sim_bias": "over_deduct",
    "reasons": [
-    "T2 face/BS gap +88% (subordinated_eok) — advisory, not in overall",
-    "T2 util 222% > 100 (limit breach)"
+    "T2 face/BS gap +88% (subordinated_eok) — advisory, not in overall"
    ]
   }
  },
@@ -2138,7 +2132,7 @@
    "kics_t2_baseline_eok": 118528.2,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 118528.2,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t2"
@@ -2273,8 +2267,8 @@
    "kics_t1_field": "missing",
    "kics_t2_baseline_eok": 630.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 6711.3,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 6078.4,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -2406,8 +2400,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 394.8,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 6122.0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 1493.0,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -2541,7 +2535,7 @@
    "kics_t2_baseline_eok": 6452.3,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 6452.3,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -2664,22 +2658,22 @@
   "confidence": {
    "level": "high",
    "tier1_bucket": "high",
-   "tier2_bucket": "low",
+   "tier2_bucket": "medium",
    "t1_gap_pct": 0.4,
-   "t2_gap_pct": -81.7,
+   "t2_gap_pct": -74.3,
    "bond_t1_out_eok": 22148.5,
    "bond_t2_out_eok": 7000.0,
    "kics_t1_issued_eok": 22057.0,
    "kics_t1_field": "tier1_hybrid_issued_eok",
-   "kics_t2_baseline_eok": 38286.5,
+   "kics_t2_baseline_eok": 27197.5,
    "kics_t2_field": "numerator_eok_fallback",
-   "kics_t2_numerator_eok": 38286.5,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 27197.5,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "under_deduct",
    "reasons": [
-    "T2 face/BS gap -82% (numerator_eok_fallback) — advisory, not in overall"
+    "FSC outstanding face aligns with K-ICS BS table rows"
    ]
   }
  },
@@ -2807,7 +2801,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -2937,17 +2931,17 @@
    "bond_t2_out_eok": 0,
    "kics_t1_issued_eok": 0.0,
    "kics_t1_field": "missing",
-   "kics_t2_baseline_eok": 233.9,
+   "kics_t2_baseline_eok": 127.5,
    "kics_t2_field": "numerator_eok_fallback",
-   "kics_t2_numerator_eok": 233.9,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 127.5,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t2"
    ],
    "sim_bias": "under_deduct",
    "reasons": [
-    "T2 FSC gap: BS 234억 but bond DB=0",
+    "T2 FSC gap: BS 128억 but bond DB=0",
     "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
    ]
   }
@@ -3075,8 +3069,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 500.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 3558.3,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 1833.8,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R5 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "over_deduct",
@@ -3198,27 +3192,24 @@
   ],
   "bond_coverage": "dart_listed",
   "confidence": {
-   "level": "low",
+   "level": "high",
    "tier1_bucket": "no_data",
-   "tier2_bucket": "low",
+   "tier2_bucket": "high",
    "t1_gap_pct": null,
-   "t2_gap_pct": -77.8,
+   "t2_gap_pct": 2.1,
    "bond_t1_out_eok": 0,
    "bond_t2_out_eok": 2991.4,
    "kics_t1_issued_eok": 0.0,
    "kics_t1_field": "missing",
-   "kics_t2_baseline_eok": 13472.5,
+   "kics_t2_baseline_eok": 2930.9,
    "kics_t2_field": "numerator_eok_fallback",
-   "kics_t2_numerator_eok": 13472.5,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 2930.9,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
-   "issue_flags": [
-    "t2_util_over_100"
-   ],
+   "issue_flags": [],
    "sim_bias": "neutral",
    "reasons": [
-    "T2 face/BS gap -78% (numerator_eok_fallback) — advisory, not in overall",
-    "T2 util 112% > 100 (limit breach)"
+    "FSC outstanding face aligns with K-ICS BS table rows"
    ]
   }
  },
@@ -3343,17 +3334,17 @@
    "bond_t2_out_eok": 0,
    "kics_t1_issued_eok": 0.0,
    "kics_t1_field": "missing",
-   "kics_t2_baseline_eok": 2735.4,
+   "kics_t2_baseline_eok": 15.6,
    "kics_t2_field": "numerator_eok_fallback",
-   "kics_t2_numerator_eok": 2735.4,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 15.6,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R1 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t2"
    ],
    "sim_bias": "under_deduct",
    "reasons": [
-    "T2 FSC gap: BS 2735억 but bond DB=0",
+    "T2 FSC gap: BS 16억 but bond DB=0",
     "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
    ]
   }
@@ -3482,7 +3473,7 @@
    "kics_t2_baseline_eok": 2563.9,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 2563.9,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -3603,7 +3594,7 @@
   ],
   "bond_coverage": "dart_listed",
   "confidence": {
-   "level": "low",
+   "level": "high",
    "tier1_bucket": "high",
    "tier2_bucket": "low",
    "t1_gap_pct": -4.8,
@@ -3614,16 +3605,13 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 3995.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 10034.8,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 6682.9,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
-   "issue_flags": [
-    "t2_util_over_100"
-   ],
+   "issue_flags": [],
    "sim_bias": "over_deduct",
    "reasons": [
-    "T2 face/BS gap +82% (subordinated_eok) — advisory, not in overall",
-    "T2 util 130% > 100 (limit breach)"
+    "T2 face/BS gap +82% (subordinated_eok) — advisory, not in overall"
    ]
   }
  },
@@ -3751,7 +3739,7 @@
    "kics_t2_baseline_eok": 12478.2,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 12478.2,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "t2_util_over_100"
@@ -3886,7 +3874,7 @@
    "kics_t2_baseline_eok": 8907.5,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 8907.5,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -4019,7 +4007,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -4152,7 +4140,7 @@
    "kics_t2_baseline_eok": 1275.6,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 1275.6,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t2"
@@ -4287,8 +4275,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 1999.5,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 1308.3,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 108.4,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -4421,7 +4409,7 @@
    "kics_t2_baseline_eok": 91.8,
    "kics_t2_field": "numerator_eok_fallback",
    "kics_t2_numerator_eok": 91.8,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t2"
@@ -4556,8 +4544,8 @@
    "kics_t1_field": "tier1_hybrid_issued_eok",
    "kics_t2_baseline_eok": 11100.0,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 14425.6,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 3225.2,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R4 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -4693,17 +4681,17 @@
    "bond_t2_out_eok": 0,
    "kics_t1_issued_eok": 8082.0,
    "kics_t1_field": "tier1_hybrid_issued_eok",
-   "kics_t2_baseline_eok": 10405.2,
+   "kics_t2_baseline_eok": 7113.2,
    "kics_t2_field": "numerator_eok_fallback",
-   "kics_t2_numerator_eok": 10405.2,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 7113.2,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [
     "fsc_missing_t2"
    ],
    "sim_bias": "under_deduct",
    "reasons": [
-    "T2 FSC gap: BS 10405억 but bond DB=0",
+    "T2 FSC gap: BS 7113억 but bond DB=0",
     "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
    ]
   }
@@ -4832,8 +4820,8 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "no_bonds",
-   "tier2_quality_flag": "ok",
+   "tier2_data_source": "kics_disclosure item47 부재 - 경과조치 표 미공시",
+   "tier2_quality_flag": "tfi_table_absent",
    "issue_flags": [],
    "sim_bias": "neutral",
    "reasons": [
@@ -4953,7 +4941,7 @@
   ],
   "bond_coverage": "dart_listed",
   "confidence": {
-   "level": "low",
+   "level": "high",
    "tier1_bucket": "no_data",
    "tier2_bucket": "low",
    "t1_gap_pct": null,
@@ -4964,16 +4952,13 @@
    "kics_t1_field": "missing",
    "kics_t2_baseline_eok": 1597.3,
    "kics_t2_field": "subordinated_eok",
-   "kics_t2_numerator_eok": 4346.8,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "kics_t2_numerator_eok": 2744.7,
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
-   "issue_flags": [
-    "t2_util_over_100"
-   ],
+   "issue_flags": [],
    "sim_bias": "over_deduct",
    "reasons": [
-    "T2 face/BS gap +125% (subordinated_eok) — advisory, not in overall",
-    "T2 util 120% > 100 (limit breach)"
+    "T2 face/BS gap +125% (subordinated_eok) — advisory, not in overall"
    ]
   }
  },
@@ -5101,7 +5086,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -5234,7 +5219,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -5367,8 +5352,8 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
-   "tier2_quality_flag": "numerator_undisclosed",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R-none / (item14 x 50%)",
+   "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
    "reasons": [
@@ -5500,7 +5485,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -5633,7 +5618,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -5766,7 +5751,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "issuer_item47_inconsistent",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -5899,7 +5884,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -6032,7 +6017,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",
@@ -6165,7 +6150,7 @@
    "kics_t2_baseline_eok": 0.0,
    "kics_t2_field": "missing",
    "kics_t2_numerator_eok": 0,
-   "tier2_data_source": "kics_disclosure item47 / (item14 x 50%)",
+   "tier2_data_source": "kics_disclosure item47 규정 정규화 R0 / (item14 x 50%)",
    "tier2_quality_flag": "ok",
    "issue_flags": [],
    "sim_bias": "neutral",

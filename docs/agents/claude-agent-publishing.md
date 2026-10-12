@@ -107,7 +107,14 @@ The HTML pages fetch these directly — **데이터를 HTML 에 인라인하지 
 - **`scripts/sync_tier_utilization_to_deploy.py` — `output/tier{1,2}_utilization/` → 배포본 루트 `kics_tier{1,2}_utilization.json`.**
   위 두 스크립트를 돌렸으면 **반드시** 이것도 돌린다(기본 dry-run, `--apply` 로 반영). 건너뛰면 배포본이 옛 스냅샷에 굳는다 —
   `validate_live_artifacts.py` 의 `TIER_DEPLOYED_VALUE_DIFFERS` 가 뜨면 이 sync 를 건너뛴 것이다(`PM-2026-08-25_gate_read_the_wrong_file.md`).
-- `scripts/forward_capital_simulation.py` — forward-looking sim (인자 없이 실행, 데이터 JSON 만 쓴다)
+- **`scripts/apply_disclosure_utilization.py --quarter <Q>` — 소진율 최종값(정본, 2026-10-12 규정 근거 재정의).**
+  산식은 `scripts/capital_utilization_rules.py`, 신종·우선주의 기본자본형/보완자본형 판정은 증권별 계층 등재부
+  `data/bonds/capital_tier_registry.json` 이다. 47사 전체를 배포본·빌더 산출물 둘 다에 쓴다. 위 세 스크립트(옛 채권 기반 산식)를
+  다시 돌렸으면 **그 뒤에 반드시 이것을 돌린다** — `tests/unit/test_capital_utilization_rules.py` 가 배포본 == 산식을 훅에서 강제한다.
+  새 신종·우선주가 공시에 생기면 등재부에 형을 먼저 적는다(같은 테스트의 census 가 빠진 회사를 막는다).
+  소진율을 바꿨으면 forward sim 을 같은 인자로 다시 돌린다 — confidence 블록이 tier 값을 읽는다.
+- `scripts/forward_capital_simulation.py --baseline-quarter <Q> --tier-quarter <Q> --bonds-source data/bonds/capital_securities_fy2026h1.json`
+  — forward-looking sim (데이터 JSON 만 쓴다)
 - `scripts/promote_from_to_be.py` — what-if → as-is promotion
 
 ### 2.2 IFRS17 batch builders + viz

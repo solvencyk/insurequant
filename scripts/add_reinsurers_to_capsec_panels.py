@@ -15,9 +15,10 @@ K-ICS.html 은 `kics_forward_capital.json`(Forward Outlook)과 `kics_tier{1,2}_u
    게이트(`CAPSEC_COVERAGE_REGRESSION`)가 「소스에 회사 레코드가 없다 = 미검증」을 RED 로 보기 때문에,
    무발행이면 빈 레코드로 명시해야 「스캔 후 0」과 구분된다. 근거(경영공시 항목값)를 레코드 notes 에 적는다.
 2. `output/tier{1,2}_utilization/*_20262Q.json` 과 배포본 `kics_tier{1,2}_utilization.json` 에 재보사 행을 더한다.
-   산식은 `apply_disclosure_utilization.py` 와 같다:
-       기본자본 소진율 = item6 / (item14 x 15%)    · 보완자본 소진율 = item47 / (item14 x 50%)
-   재보사 특수사항(아래 REINSURER_NOTES) 은 행의 `reinsurer_basis` 필드에 근거와 함께 남긴다.
+   행을 만들 때의 값은 임시다 - 최종값은 `apply_disclosure_utilization.py` 가 규정 근거 산식
+   (`capital_utilization_rules.py`, 2026-10-12)으로 47사 전체를 다시 계산해 덮는다.
+   재보사 특수사항(아래 REINSURER_NOTES) 은 행의 `reinsurer_basis` 필드에 근거와 함께 남긴다
+   (apply 도 이 사전을 import 해 note 를 맞춘다).
 
 ## 재보사에서 공시값을 그대로 못 쓰는 두 경우 (지어내지 않고 비우거나 0 으로 두되 이유를 기록)
 
@@ -27,8 +28,14 @@ K-ICS.html 은 `kics_forward_capital.json`(Forward Outlook)과 `kics_tier{1,2}_u
         한도 적용 전 금액도 0 이다(한도에 걸려 줄어든 부분이 없다는 뜻) -> 0.
       - RGA 5,499: 같은 표에서 보완자본 0 · 한도 0 인데 한도 적용 전만 5,499 = 지급여력금액과 같은 값.
         보완자본 항목이 아니라 발행사가 칸을 잘못 채운 것으로 보고 0 으로 둔다(원값은 note 에 보존).
-      - 스위스리 '-': 보완자본(item3)이 4,274억으로 0 이 아닌데 한도 적용 전은 비어 있다 — 소진율을
-        확정할 수 없다. **빈 칸(null)** 으로 둔다("틀린 값을 싣느니 빈 칸").
+      - 스위스리: 보완자본(item3) 4,274억은 전액 해약환급금 부족분 상당액 중 해약환급금준비금 상당액
+        초과분이라 [별표22] Ⅲ.2.마 단서로 한도 계산 대상이 0 이다. 한도 적용 전 인쇄값 0 을 그대로 써
+        **0.0** 으로 둔다(2026-10-12 owner 결정 ⑤ — 종전 'numerator_undisclosed' 빈 칸 경로는 없앴다).
+
+## 이 스크립트는 행을 **만들기만** 한다 (2026-10-12)
+
+소진율 값의 정본은 `scripts/apply_disclosure_utilization.py`(규정 근거 산식, `capital_utilization_rules.py`)다.
+이 스크립트로 행을 새로 만들었으면 그 뒤에 apply 를 돌려 47사 전체를 같은 산식으로 덮는다.
 
 ## 실행
 
@@ -53,7 +60,6 @@ import shutil
 import sys
 from pathlib import Path
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 ROOT = Path(__file__).resolve().parents[1]
 
 QUARTER = "2026.2Q"
@@ -74,10 +80,11 @@ REINSURER_NOTES = {
     "KR1101": {"t2": "zero_derived", "why":
         "신종자본증권 0 · 보완자본 0. 경과조치표의 '보완자본 한도 적용 전'·'기발행' 칸이 공란이라 item47 이 마스터에 없다 -> "
         "보완자본 0 이고 한도>0 이므로 한도 적용 전도 0 으로 도출."},
-    "KR1102": {"t2": "blank", "why":
-        "신종자본증권 '-' · 보통주 이외의 자본증권 (3)억(마이너스 계정, 발행 아님) · 기발행 신종/후순위 '-'. 단 보완자본이 4,274억(= "
-        "'보완자본으로 재분류하는 항목' 4,274억)이고 '보완자본 한도 적용 전·한도'가 모두 '-' 라 보완자본 소진율은 확정 불가 -> 빈 칸. "
-        "기본자본 자본증권 소진율은 0%."},
+    "KR1102": {"t2": "zero_disclosed", "why":
+        "신종자본증권 '-' · 보통주 이외의 자본증권 (3)억(마이너스 계정, 발행 아님) · 기발행 신종/후순위 '-'. 보완자본 4,274억(= "
+        "'보완자본으로 재분류하는 항목' 4,274억)은 전액 해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분(감사 K-ICS 상세 Ⅲ.3)"
+        "이고 경과조치 표 '보완자본 한도 적용 전'은 0(대시)이다 - [별표22] Ⅲ.2.마 단서로 한도 계산 대상이 0 이라 보완자본 소진율 0% "
+        "(2026-10-12 owner 결정 ⑤, 종전 '확정 불가 -> 빈 칸' 해제. 항목 49 는 채우지 않는다). 기본자본 자본증권 소진율은 0%."},
     "KR1103": {"t2": "zero_disclosed", "why":
         "신종자본증권 '-' · 기발행 신종/후순위 '-' · 보완자본 공란/'-'. 마스터 item47=0."},
     "KR1104": {"t2": "zero_disclosed", "why":
@@ -182,9 +189,7 @@ def tier_rows(code, it):
     }
     t2_lim = round(scr * TIER2_RATE, 2)
     kind = n["t2"]
-    if kind == "blank":
-        num, util, qf = None, None, "numerator_undisclosed"
-    elif kind == "zero_disclosed":
+    if kind == "zero_disclosed":
         num, util, qf = round(item47 or 0.0, 2), round((item47 or 0.0) / t2_lim * 100, 1), "ok"
     else:   # zero_derived / zero_issuer_cell_inconsistent: 보완자본(item3)=0 로부터 도출
         assert (item3 or 0.0) == 0.0, (code, item3)
@@ -227,6 +232,9 @@ def add_to(path: Path, fmt_doc, fmt, key, rows, id_key, backup_dir, apply):
 
 
 def main() -> int:
+    # 2026-10-12: 모듈 최상위에서 main() 으로 옮겼다 - apply_disclosure_utilization.py 가 REINSURER_NOTES 를
+    # import 하는데, import 만으로 호출자의 stdout 래퍼를 갈아끼우면 옛 래퍼가 GC 되며 버퍼를 닫는다.
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--backup-dir", default=None)
