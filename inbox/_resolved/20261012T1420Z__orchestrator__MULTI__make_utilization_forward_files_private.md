@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T1420Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2026.2Q
@@ -26,3 +26,4 @@ owner 지시(2026-10-12 채팅): 「내린 시트들은 비공개로 돌리고�
 - 비공개로 만든 경로 목록, 메커니즘, 변경한 검사(좁힌 규칙), 폰 실행 안내(1회/2회), 되돌리는 방법, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 3c83f58·fda6752). 비공개: 기본자본소진율·보완자본소진율·자본비율전망 공개본 3개 삭제·manifest 제외, 배포 스크립트 PRIVATE_PATHS 가 main 에서 이 3개와 루트 JSON 3개(kics_tier1/tier2_utilization·kics_forward_capital)를 git rm(저장소 보관), 새 게이트 규칙·tests/test_private_deploy.py 13건·변이시험 2. 자본성증권발행현황 공개본에서 한도·인정액 계산 열 7개 제외(123행 유지). 재동기화: 뮌헨 K-ICS공시 +3행·스위스리 보험계약부채 +8행(기준표시 「계산값(전 행 합)」)·csm_combo 패널 KR1102 노드·공개본 4개. 게이트 data-contract RED 0·live_artifacts RED 0(등재 25)·드리프트 0. 폰: 작업 브랜치를 먼저 체크아웃해 새 스크립트를 받은 뒤 1회 실행. 주의: 사전 push 훅의 배포 건조 실행 시험이 시험당 5~10분(PC 의 git 호출 느림).
