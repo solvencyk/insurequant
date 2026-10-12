@@ -1,0 +1,33 @@
+{
+ "name": "KR0083_2024.4Q",
+ "code": "KR0083",
+ "quarter": "2024.4Q",
+ "edits": [
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 7,
+   "field": "값",
+   "old": "-3623",
+   "new": "-3743",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0083_푸본현대생명보험.pdf p19",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 9,
+   "field": "값",
+   "old": "-8013",
+   "new": "-7893",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0083_푸본현대생명보험.pdf p19",
+   "col": "F(2025.2Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.2Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q2/raw/KR0083_푸본현대생명보험.pdf p19",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

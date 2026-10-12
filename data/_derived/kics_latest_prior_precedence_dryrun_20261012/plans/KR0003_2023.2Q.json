@@ -1,0 +1,31 @@
+{
+ "name": "KR0003_2023.2Q",
+ "code": "KR0003",
+ "quarter": "2023.2Q",
+ "edits": [
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 9,
+   "field": "값",
+   "old": "3582",
+   "new": "2049",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0003_롯데손해보험_amended.pdf p41+42",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 11,
+   "field": "값",
+   "old": "7504",
+   "new": "9037",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0003_롯데손해보험_amended.pdf p41+42",
+   "col": "F(2023.4Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2023.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2023_Q4/raw/KR0003_롯데손해보험_amended.pdf p41+42",
+ "flags": []
+}

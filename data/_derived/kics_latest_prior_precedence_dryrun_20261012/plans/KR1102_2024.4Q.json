@@ -1,0 +1,273 @@
+{
+ "name": "KR1102_2024.4Q",
+ "code": "KR1102",
+ "quarter": "2024.4Q",
+ "edits": [
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 1,
+   "field": "값",
+   "old": "9250",
+   "new": "9259",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 1,
+   "field": "값_적용후",
+   "old": "9250",
+   "new": "9259",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 2,
+   "field": "값",
+   "old": "9198",
+   "new": "9259",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 2,
+   "field": "값_적용후",
+   "old": "9198",
+   "new": "9259",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 4,
+   "field": "값",
+   "old": "9250",
+   "new": "9259",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 4,
+   "field": "값_적용후",
+   "old": "9250",
+   "new": "9259",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 7,
+   "field": "값",
+   "old": "4760",
+   "new": "4767",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 7,
+   "field": "값_적용후",
+   "old": "4760",
+   "new": "4767",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 9,
+   "field": "값",
+   "old": "248",
+   "new": "528",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 9,
+   "field": "값_적용후",
+   "old": "248",
+   "new": "528",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 11,
+   "field": "값",
+   "old": "1751",
+   "new": "1474",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 11,
+   "field": "값_적용후",
+   "old": "1751",
+   "new": "1474",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 14,
+   "field": "값",
+   "old": "3508",
+   "new": "3504",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 14,
+   "field": "값_적용후",
+   "old": "3508",
+   "new": "3504",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 15,
+   "field": "값",
+   "old": "4554",
+   "new": "4550",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 15,
+   "field": "값_적용후",
+   "old": "4554",
+   "new": "4550",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 16,
+   "field": "값",
+   "old": "1570",
+   "new": "1553",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 16,
+   "field": "값_적용후",
+   "old": "1570",
+   "new": "1553",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 17,
+   "field": "값",
+   "old": "3675",
+   "new": "3680",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 17,
+   "field": "값_적용후",
+   "old": "3675",
+   "new": "3680",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 19,
+   "field": "값",
+   "old": "274",
+   "new": "284",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 19,
+   "field": "값_적용후",
+   "old": "274",
+   "new": "284",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 20,
+   "field": "값",
+   "old": "119",
+   "new": "82",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 20,
+   "field": "값_적용후",
+   "old": "119",
+   "new": "82",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 22,
+   "field": "값",
+   "old": "1046",
+   "new": "1045",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2024.4Q",
+   "item": 22,
+   "field": "값_적용후",
+   "old": "1046",
+   "new": "1045",
+   "src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.2Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q2/raw/KR1102_스위스리아시아.pdf p16",
+ "flags": [
+  "LATEST_DASH_OR_BLANK_VS_MASTER_NONZERO(items [3, 13])"
+ ]
+}

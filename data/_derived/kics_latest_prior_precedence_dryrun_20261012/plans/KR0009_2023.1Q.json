@@ -1,0 +1,174 @@
+{
+ "name": "KR0009_2023.1Q",
+ "code": "KR0009",
+ "quarter": "2023.1Q",
+ "edits": [
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 1,
+   "field": "값",
+   "old": "133398",
+   "new": "133381",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 1,
+   "field": "값_적용후",
+   "old": "133398",
+   "new": "133381",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 2,
+   "field": "값",
+   "old": "73537",
+   "new": "68456",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 2,
+   "field": "값_적용후",
+   "old": "73537",
+   "new": "68456",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 3,
+   "field": "값",
+   "old": "59861",
+   "new": "64925",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 3,
+   "field": "값_적용후",
+   "old": "59861",
+   "new": "64925",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 4,
+   "field": "값",
+   "old": "127231",
+   "new": "127214",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 4,
+   "field": "값_적용후",
+   "old": "127231",
+   "new": "127214",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 6,
+   "field": "값",
+   "old": "4983",
+   "new": "5000",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 6,
+   "field": "값_적용후",
+   "old": "4983",
+   "new": "5000",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 11,
+   "field": "값",
+   "old": "48867",
+   "new": "48832",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 11,
+   "field": "값_적용후",
+   "old": "48867",
+   "new": "48832",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 13,
+   "field": "값",
+   "old": "53694",
+   "new": "58757",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 13,
+   "field": "값_적용후",
+   "old": "53694",
+   "new": "58757",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 15,
+   "field": "값",
+   "old": "98852",
+   "new": "98851",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 15,
+   "field": "값_적용후",
+   "old": "98852",
+   "new": "98851",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2023.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2023_Q3/raw/KR0009_현대해상_amended.pdf p12",
+ "flags": [
+  "GAPFILL_ROW_IN_DIFF(items [13]: row assigned by form order, not by label)",
+  "NO_OWN_CONTROL(NO_GRID)"
+ ]
+}

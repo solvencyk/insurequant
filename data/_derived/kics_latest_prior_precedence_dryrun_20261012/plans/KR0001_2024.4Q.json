@@ -1,0 +1,53 @@
+{
+ "name": "KR0001_2024.4Q",
+ "code": "KR0001",
+ "quarter": "2024.4Q",
+ "edits": [
+  {
+   "code": "KR0001",
+   "q": "2024.4Q",
+   "item": 23,
+   "field": "값",
+   "old": "40",
+   "new": "41",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0001_메리츠화재해상보험_amended2.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR0001",
+   "q": "2024.4Q",
+   "item": 23,
+   "field": "값_적용후",
+   "old": "40",
+   "new": "41",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0001_메리츠화재해상보험_amended2.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0001",
+   "q": "2024.4Q",
+   "item": 25,
+   "field": "값",
+   "old": "40",
+   "new": "41",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0001_메리츠화재해상보험_amended2.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR0001",
+   "q": "2024.4Q",
+   "item": 25,
+   "field": "값_적용후",
+   "old": "40",
+   "new": "41",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0001_메리츠화재해상보험_amended2.pdf p16",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.2Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q2/raw/KR0001_메리츠화재해상보험_amended2.pdf p16",
+ "flags": [
+  "EXTRACTION_SUSPECT(own-filing control deviates the same way)"
+ ]
+}

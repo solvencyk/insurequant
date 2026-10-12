@@ -1,0 +1,51 @@
+{
+ "name": "KR0009_2023.2Q",
+ "code": "KR0009",
+ "quarter": "2023.2Q",
+ "edits": [
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 6,
+   "field": "값",
+   "old": "4983",
+   "new": "5000",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0009_현대해상_amended.pdf p42",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 6,
+   "field": "값_적용후",
+   "old": "4983",
+   "new": "5000",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0009_현대해상_amended.pdf p42",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 11,
+   "field": "값",
+   "old": "50884",
+   "new": "50866",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0009_현대해상_amended.pdf p42",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 11,
+   "field": "값_적용후",
+   "old": "50884",
+   "new": "50866",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0009_현대해상_amended.pdf p42",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2023.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2023_Q4/raw/KR0009_현대해상_amended.pdf p42",
+ "flags": []
+}

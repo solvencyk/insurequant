@@ -1,4 +1,8 @@
 # TODO archive — `TODO_parser_kics.md` (Status 이력, 읽기 지연)
+- **2026-10-12 (28회차) 퍼시픽·악사·뮌헨 후속(티켓 `20261012T1030Z`) — 마스터 +16행 · 4칸 정정 · 뮌헨 +3행(owner 승인 뒤 51 도출)**: 퍼시픽 KR1107 2025.3Q·2026.2Q 항목 47~54 16행을 인쇄된 0 그대로 적재(p22·p25 「해당사항 없음」 서식, 미적용사 확인: 전환 사이드카 10분기 TFI·TAC·TIR·TER·TIRR 전부 X · FSS 붙임-1 밖) · 악사 KR0049 2024.3Q 4칸(항목 3 전·후 2325 · 4 전 5215 · 27후 286.5) = 2024.4Q 공시 전기 열(p36·p39) 채택.
+  뮌헨 KR1101 2026.2Q 는 p17 이 50·52(2,716.42)만 인쇄하고 51 은 대시도 아닌 공란이라 처음엔 보류(50·52 만 = RED 2)했으나 owner 승인(10-12 「1 승인」)으로 50·52 + 51 = 0(항등식 52 = 50 + 51 도출, 원문 공란)을 적재(`provenance_derived_cells.json`). 마이브라운 무변경. HEAD 대비 바뀐 칸·새 키 = 계획 정확히 일치(4칸 + 16행, 뮌헨 +3행), K-ICS 게이트 RED 56 · blocking 0 · exit 0 불변(YELLOW 1935 → 1936, 새 RED 0).
+  남은 것 없음(git log 확인): validation 골든 갱신 완료(`470e146` · `b8b949a`), publishing xlsx `K-ICS공시` +19행 · 4칸 · public_exports 재동기화 완료(`538cbe7` · `fda6752`). 커밋 `acd351a`(퍼시픽 · 악사) · `33635d1`(뮌헨). 근거 `data/_derived/kics_followups_20261012/`(`proof_vs_head.txt` · `sim_*.txt` · 계획 `plans/`).
+
 - **2026-10-12 (27회차) 재보사 자본성증권 소진율 재확인(티켓 `20261012T0130Z`) — 8사 전부 0 이 원문 근거로 맞다 · 마스터 보정 0칸**: 8×14×7(항목 6·13·47·48·49·53·54) 784칸 전수 분류(일치 635 · 원공시 유지 결정 2 · 부재 147, 미분류 0), 감사 K-ICS 12건·IFRS 감사·MD 106개 대조. 스위스리 보완자본 4,274억 = 전액 해약환급금 부족분 초과분(Ⅲ.3, 자본증권 아님, 영업기금은 보통주), 알지에이 47 = 5,499 는 발행사 서식 오기(raw p18 확인).
   `kics_disclosure.json` == HEAD(변경 0), docling 0회, 커밋 없음. 남은 것: owner/publishing(스위스리 분자 0 확정 규칙 · 「발행 없음」 표시 · 보류 20칸·버킷 14칸) — 산식 제안은 런로그 §7. 근거 `data/disclosure/_meta/reinsurer_capital_securities_recheck_runlog_20261012.md`(사본 `data/_derived/reinsurer_capital_recheck_20261012/`).
 

@@ -1,0 +1,33 @@
+{
+ "name": "KR0100_2025.2Q",
+ "code": "KR0100",
+ "quarter": "2025.2Q",
+ "edits": [
+  {
+   "code": "KR0100",
+   "q": "2025.2Q",
+   "item": 5,
+   "field": "값",
+   "old": "2852",
+   "new": "4941",
+   "src": "data/disclosure/FY2025_Q4/raw/KR0100_처브라이프생명보험.pdf p51",
+   "col": "F(2025.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0100",
+   "q": "2025.2Q",
+   "item": 11,
+   "field": "값",
+   "old": "2363",
+   "new": "275",
+   "src": "data/disclosure/FY2025_Q4/raw/KR0100_처브라이프생명보험.pdf p51",
+   "col": "F(2025.4Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q4/raw/KR0100_처브라이프생명보험.pdf p51",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

@@ -1,0 +1,43 @@
+{
+ "name": "KR0071_2025.1Q",
+ "code": "KR0071",
+ "quarter": "2025.1Q",
+ "edits": [
+  {
+   "code": "KR0071",
+   "q": "2025.1Q",
+   "item": 2,
+   "field": "값",
+   "old": "18260",
+   "new": "19895",
+   "src": "data/disclosure/FY2025_Q3/raw/KR0071_흥국생명보험.pdf p18",
+   "col": "F(2025.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0071",
+   "q": "2025.1Q",
+   "item": 3,
+   "field": "값",
+   "old": "18236",
+   "new": "16601",
+   "src": "data/disclosure/FY2025_Q3/raw/KR0071_흥국생명보험.pdf p18",
+   "col": "F(2025.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0071",
+   "q": "2025.1Q",
+   "item": 13,
+   "field": "값",
+   "old": "14870",
+   "new": "13235",
+   "src": "data/disclosure/FY2025_Q3/raw/KR0071_흥국생명보험.pdf p18",
+   "col": "F(2025.3Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q3/raw/KR0071_흥국생명보험.pdf p18",
+ "flags": [
+  "POST_COLUMN_NOT_REPLACEABLE(items [2, 3])"
+ ]
+}

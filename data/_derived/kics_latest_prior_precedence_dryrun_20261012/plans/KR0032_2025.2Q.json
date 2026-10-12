@@ -1,0 +1,53 @@
+{
+ "name": "KR0032_2025.2Q",
+ "code": "KR0032",
+ "quarter": "2025.2Q",
+ "edits": [
+  {
+   "code": "KR0032",
+   "q": "2025.2Q",
+   "item": 1,
+   "field": "값",
+   "old": "21385",
+   "new": "21384",
+   "src": "data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf p45",
+   "col": "F(2025.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0032",
+   "q": "2025.2Q",
+   "item": 1,
+   "field": "값_적용후",
+   "old": "21385",
+   "new": "21384",
+   "src": "data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf p45",
+   "col": "F(2025.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0032",
+   "q": "2025.2Q",
+   "item": 3,
+   "field": "값",
+   "old": "11573",
+   "new": "11572",
+   "src": "data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf p45",
+   "col": "F(2025.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0032",
+   "q": "2025.2Q",
+   "item": 3,
+   "field": "값_적용후",
+   "old": "11573",
+   "new": "11572",
+   "src": "data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf p45",
+   "col": "F(2025.4Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q4/raw/KR0032_NH농협손해보험.pdf p45",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

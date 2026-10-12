@@ -1,0 +1,728 @@
+{
+ "gapfill_filings": 54,
+ "inventory_rows": 192,
+ "inventory_distinct": 185,
+ "domain_distinct": {
+  "K-ICS": 147,
+  "금리민감도": 34,
+  "PL_breakdown(ifrs17 레인 소관 데이터)": 3,
+  "K-ICS(메타룰)": 1
+ },
+ "declared_distinct": {
+  "D": 48,
+  "B": 49,
+  "C": 64,
+  "E": 24
+ },
+ "final_distinct": {
+  "D": 48,
+  "B": 43,
+  "C": 64,
+  "E": 24,
+  "A": 6
+ },
+ "kics_distinct": 147,
+ "declared_kics": {
+  "D": 21,
+  "B": 45,
+  "C": 58,
+  "E": 23
+ },
+ "final_kics": {
+  "D": 21,
+  "B": 39,
+  "C": 58,
+  "E": 23,
+  "A": 6
+ },
+ "measured_kics": {
+  "N/A": 2,
+  "CLEAN": 69,
+  "NA_LATEST_FILING": 6,
+  "UNCOVERED": 14,
+  "POST_COLUMN_ONLY": 32,
+  "NO_MASTER_BUCKET": 7,
+  "CONFLICT_OTHER": 11,
+  "CONFLICT_INVOLVED": 6
+ },
+ "measured_all": {
+  "N/A": 2,
+  "CLEAN": 69,
+  "NA_LATEST_FILING": 6,
+  "UNCOVERED": 14,
+  "OUT_OF_SCOPE": 38,
+  "POST_COLUMN_ONLY": 32,
+  "NO_MASTER_BUCKET": 7,
+  "CONFLICT_OTHER": 11,
+  "CONFLICT_INVOLVED": 6
+ },
+ "by_registry": {
+  "IMAGE_OCR_COMPANIES": {
+   "n": 2,
+   "declared": {
+    "D": 2
+   },
+   "final": {
+    "D": 2
+   },
+   "red": 0
+  },
+  "IRR_DERIVE_ISSUER_INCONSISTENT": {
+   "n": 6,
+   "declared": {
+    "B": 6
+   },
+   "final": {
+    "B": 6
+   },
+   "red": 0
+  },
+  "IRR_SCENARIO_EXEMPT": {
+   "n": 1,
+   "declared": {
+    "C": 1
+   },
+   "final": {
+    "C": 1
+   },
+   "red": 0
+  },
+  "MARKET_BREAKDOWN_EXEMPT": {
+   "n": 3,
+   "declared": {
+    "C": 3
+   },
+   "final": {
+    "C": 3
+   },
+   "red": 0
+  },
+  "RS1_EXCEPTIONS": {
+   "n": 1,
+   "declared": {
+    "B": 1
+   },
+   "final": {
+    "B": 1
+   },
+   "red": 0
+  },
+  "RS2_EXCEPTIONS": {
+   "n": 2,
+   "declared": {
+    "B": 2
+   },
+   "final": {
+    "B": 2
+   },
+   "red": 0
+  },
+  "RS5_EXCEPTIONS": {
+   "n": 17,
+   "declared": {
+    "D": 17
+   },
+   "final": {
+    "D": 17
+   },
+   "red": 0
+  },
+  "RS6_KNOWN_HOLES": {
+   "n": 10,
+   "declared": {
+    "D": 10
+   },
+   "final": {
+    "D": 10
+   },
+   "red": 0
+  },
+  "TIER2_STALE_FALSE_POSITIVE": {
+   "n": 1,
+   "declared": {
+    "D": 1
+   },
+   "final": {
+    "D": 1
+   },
+   "red": 0
+  },
+  "_AFTER_SUBRISK_NOT_DISCLOSED": {
+   "n": 1,
+   "declared": {
+    "C": 1
+   },
+   "final": {
+    "C": 1
+   },
+   "red": 0
+  },
+  "_CENSUS_SOURCE_ABSENT": {
+   "n": 7,
+   "declared": {
+    "C": 5,
+    "E": 2
+   },
+   "final": {
+    "C": 5,
+    "E": 2
+   },
+   "red": 0
+  },
+  "_IDENT_ISSUER_INCONSISTENT": {
+   "n": 15,
+   "declared": {
+    "B": 15
+   },
+   "final": {
+    "B": 15
+   },
+   "red": 17
+  },
+  "_LIFE8_ISSUER_INCONSISTENT": {
+   "n": 2,
+   "declared": {
+    "B": 2
+   },
+   "final": {
+    "B": 2
+   },
+   "red": 2
+  },
+  "_PL_SOURCE_ABSENT": {
+   "n": 3,
+   "declared": {
+    "C": 3
+   },
+   "final": {
+    "C": 3
+   },
+   "red": 0
+  },
+  "_RS1_ISSUER_INCONSISTENT": {
+   "n": 1,
+   "declared": {
+    "B": 1
+   },
+   "final": {
+    "B": 1
+   },
+   "red": 0
+  },
+  "_RS5_SOURCE_ABSENT": {
+   "n": 3,
+   "declared": {
+    "C": 3
+   },
+   "final": {
+    "C": 3
+   },
+   "red": 0
+  },
+  "_TAUT_EXEMPT": {
+   "n": 1,
+   "declared": {
+    "E": 1
+   },
+   "final": {
+    "E": 1
+   },
+   "red": 0
+  },
+  "_TFI_MEMO_ISSUER_BLANK": {
+   "n": 7,
+   "declared": {
+    "C": 7
+   },
+   "final": {
+    "C": 7
+   },
+   "red": 0
+  },
+  "_TFI_MEMO_TABLE_NOT_SCANNED": {
+   "n": 18,
+   "declared": {
+    "D": 18
+   },
+   "final": {
+    "D": 18
+   },
+   "red": 0
+  },
+  "_TIER2_ISSUER_INCONSISTENT": {
+   "n": 22,
+   "declared": {
+    "B": 22
+   },
+   "final": {
+    "A": 6,
+    "B": 16
+   },
+   "red": 37
+  },
+  "kics_item23_children_post_absent.json": {
+   "n": 31,
+   "declared": {
+    "E": 19,
+    "C": 12
+   },
+   "final": {
+    "E": 19,
+    "C": 12
+   },
+   "red": 0
+  },
+  "kics_subrisk_source_absent.json:legit_zero": {
+   "n": 2,
+   "declared": {
+    "E": 2
+   },
+   "final": {
+    "E": 2
+   },
+   "red": 0
+  },
+  "kics_subrisk_source_absent.json:table_absent": {
+   "n": 29,
+   "declared": {
+    "C": 29
+   },
+   "final": {
+    "C": 29
+   },
+   "red": 0
+  }
+ },
+ "red56_by_final_type": {
+  "A": 8,
+  "B": 48
+ },
+ "red56_by_registry": {
+  "_TIER2_ISSUER_INCONSISTENT": 37,
+  "_LIFE8_ISSUER_INCONSISTENT": 2,
+  "_IDENT_ISSUER_INCONSISTENT": 17
+ },
+ "blocks_total": 587,
+ "blocks_status": {
+  "CLEAN": 467,
+  "CONFLICT": 88,
+  "UNCOVERED": 32
+ },
+ "already_adopted_clean_blocks": 21,
+ "already_adopted_examples": [
+  "KR0004 2024.2Q",
+  "KR0010 2023.2Q",
+  "KR0011 2023.2Q",
+  "KR0051 2024.3Q",
+  "KR0071 2023.2Q",
+  "KR0073 2023.2Q",
+  "KR0082 2023.2Q",
+  "KR0100 2024.1Q",
+  "KR1102 2024.2Q",
+  "KR1102 2025.2Q",
+  "KR1102 2025.4Q",
+  "KR1102 2026.1Q",
+  "KR1103 2023.2Q",
+  "KR1103 2023.3Q",
+  "KR1103 2025.2Q",
+  "KR1103 2025.3Q",
+  "KR1104 2026.1Q",
+  "KR1105 2025.2Q",
+  "KR1105 2026.1Q",
+  "KR1106 2025.4Q"
+ ],
+ "own_control_blocks": 504,
+ "own_control_exact": 467,
+ "own_control_deviating_already_adopted": 21,
+ "own_control_deviating_conflict": 16,
+ "known_cases_status": {
+  "KR0049|2024.3Q": "CLEAN",
+  "KR0073|2026.1Q": "CLEAN",
+  "KR1107|2025.3Q": "CLEAN",
+  "KR1107|2026.1Q": "CLEAN",
+  "KR1101|2025.4Q": "CLEAN"
+ },
+ "conflict_by_quarter": {
+  "2023.2Q": 10,
+  "2024.4Q": 12,
+  "2025.1Q": 7,
+  "2023.1Q": 11,
+  "2023.4Q": 3,
+  "2024.1Q": 6,
+  "2024.2Q": 6,
+  "2025.2Q": 8,
+  "2026.1Q": 4,
+  "2025.4Q": 3,
+  "2024.3Q": 7,
+  "2025.3Q": 6,
+  "2023.3Q": 5
+ },
+ "uncovered_reasons": {
+  "own=OK|F+1=NO_TEXT_TABLE|F+2=NO_TEXT_TABLE": 4,
+  "own=NO_TEXT_TABLE|F+1=NO_TEXT_TABLE|F+2=NO_TEXT_TABLE": 21,
+  "own=NO_TEXT_TABLE|F+1=NO_TEXT_TABLE|F+2=VISION_ONLY": 2,
+  "own=NO_TEXT_TABLE|F+1=VISION_ONLY|F+2=VISION_ONLY": 1,
+  "own=OK|F+1=VISION_ONLY|F+2=VISION_ONLY": 1,
+  "own=OK|F+1=NO_PDF|F+2=NO_PDF": 2,
+  "own=NO_GRID|F+1=NO_TEXT_TABLE|F+2=NO_TEXT_TABLE": 1
+ },
+ "later_printings_differ_among_conflicts": 40,
+ "later_printings_differ_all_blocks": 55,
+ "decision_all": {
+  "LATEST_TRUE_RESTATEMENT": 40,
+  "KEEP_CURRENT_BOTH_FAIL": 5,
+  "LATEST_FIRST_BLIND_SPOT": 10,
+  "LATEST_EXCEPTION_RESOLVED": 2,
+  "KEEP_CURRENT_LATEST_FAILS": 31
+ },
+ "decision_exception_blocks": {
+  "KEEP_CURRENT_BOTH_FAIL": 5,
+  "LATEST_EXCEPTION_RESOLVED": 2,
+  "LATEST_TRUE_RESTATEMENT": 7,
+  "LATEST_FIRST_BLIND_SPOT": 2,
+  "KEEP_CURRENT_LATEST_FAILS": 5
+ },
+ "decision_nonexception_blocks": {
+  "LATEST_TRUE_RESTATEMENT": 33,
+  "LATEST_FIRST_BLIND_SPOT": 8,
+  "KEEP_CURRENT_LATEST_FAILS": 26
+ },
+ "decision_by_tier": {
+  "ROUND1": {
+   "LATEST_TRUE_RESTATEMENT": 30,
+   "LATEST_FIRST_BLIND_SPOT": 2
+  },
+  "SMALL": {
+   "LATEST_TRUE_RESTATEMENT": 2,
+   "LATEST_FIRST_BLIND_SPOT": 1,
+   "KEEP_CURRENT_LATEST_FAILS": 1
+  },
+  "MATERIAL": {
+   "KEEP_CURRENT_BOTH_FAIL": 5,
+   "LATEST_FIRST_BLIND_SPOT": 7,
+   "LATEST_EXCEPTION_RESOLVED": 2,
+   "LATEST_TRUE_RESTATEMENT": 8,
+   "KEEP_CURRENT_LATEST_FAILS": 30
+  }
+ },
+ "tier_counts": {
+  "ROUND1": 32,
+  "MATERIAL": 52,
+  "SMALL": 4
+ },
+ "category_all": {
+  "완전성 부족": 45,
+  "룰 사각": 8,
+  "채택 후보": 26,
+  "gold 충돌": 1,
+  "현행 유지": 7,
+  "현행 유지 + 목록": 1
+ },
+ "adopt_blocks": 26,
+ "adopt_cells": {
+  "total": 87,
+  "pre": 46,
+  "post_mirror": 31,
+  "derived": 10
+ },
+ "adopt_by_tier": {
+  "ROUND1": 18,
+  "MATERIAL": 7,
+  "SMALL": 1
+ },
+ "adopt_by_outcome": {
+  "LATEST_TRUE_RESTATEMENT": 24,
+  "LATEST_EXCEPTION_RESOLVED": 2
+ },
+ "adopt_exception_resolved": [
+  "KR0003 2025.1Q",
+  "KR0032 2024.3Q"
+ ],
+ "adopt_ids_material": [
+  "KR0003_2025.1Q",
+  "KR0004_2023.1Q",
+  "KR0009_2023.1Q",
+  "KR0009_2023.2Q",
+  "KR0032_2024.3Q",
+  "KR0072_2025.2Q",
+  "KR0100_2025.2Q"
+ ],
+ "incomplete_reasons_any": {
+  "세부 위험액 일부 값 불일치/판독 공백": 11,
+  "추출 의심(자기 공시 대조열도 어긋남)": 3,
+  "적용후 열 대체 불가(적용사)": 20,
+  "세부 위험액 열 판독 불가(스캔)": 1,
+  "세부 위험액 직전 반기 표 미확인": 8,
+  "핵심표 일부 칸 판독 실패(추출 한계)": 12
+ },
+ "incomplete_single_reason": {
+  "추출 의심(자기 공시 대조열도 어긋남)": 2,
+  "적용후 열 대체 불가(적용사)": 15,
+  "세부 위험액 직전 반기 표 미확인": 4,
+  "세부 위험액 일부 값 불일치/판독 공백": 6,
+  "핵심표 일부 칸 판독 실패(추출 한계)": 8
+ },
+ "incomplete_by_parity": {
+  "짝수(2Q/4Q)": 26,
+  "홀수(1Q/3Q)": 19
+ },
+ "incomplete_applier": 18,
+ "gold_conflict": [
+  "KR0010 2026.1Q [(3, '값'), (4, '값')]"
+ ],
+ "blind_blocks": [
+  "KR0003 2023.2Q",
+  "KR0008 2023.4Q",
+  "KR0008 2024.1Q",
+  "KR0011 2023.1Q",
+  "KR0050 2025.2Q",
+  "KR0051 2023.2Q",
+  "KR0068 2023.1Q",
+  "KR0083 2024.4Q",
+  "KR0083 2025.3Q",
+  "KR0100 2025.3Q"
+ ],
+ "blind_blocks_ticket_category": {
+  "룰 사각": 8,
+  "완전성 부족": 2
+ },
+ "cells_tested_for_coverage": 389,
+ "engine_blind_cells": 96,
+ "engine_blind_pre_cells": [
+  "KR0001|2023.2Q|25|값",
+  "KR0001|2024.4Q|25|값",
+  "KR0001|2025.1Q|25|값",
+  "KR0069|2024.2Q|24|값",
+  "KR0071|2024.1Q|26|값",
+  "KR0071|2024.2Q|26|값"
+ ],
+ "dc_cross_new_blocks": [
+  "KR0005_2024.1Q",
+  "KR0005_2024.2Q",
+  "KR0051_2023.2Q",
+  "KR0051_2024.1Q",
+  "KR0080_2023.2Q",
+  "KR0080_2023.3Q",
+  "KR0083_2024.4Q",
+  "KR0100_2023.3Q",
+  "KR1102_2024.4Q",
+  "KR1106_2023.3Q"
+ ],
+ "dc_cross_gone_blocks": [
+  "KR0003_2023.1Q",
+  "KR0003_2023.2Q",
+  "KR0080_2023.1Q",
+  "KR0080_2023.3Q",
+  "KR1106_2023.3Q"
+ ],
+ "dc_cross_new_among_adopt": [],
+ "dc_cross_gone_among_adopt": [],
+ "neighbour_findings_moved_any": 0,
+ "neighbour_new_red_any": 0,
+ "registry_actions_blocks": [
+  "KR0003_2023.1Q",
+  "KR0003_2025.1Q",
+  "KR0032_2024.3Q",
+  "KR1000_2024.2Q",
+  "KR1000_2024.3Q",
+  "KR1000_2024.4Q"
+ ],
+ "blind_cross_supports_latest": [
+  "KR0003_2023.2Q"
+ ],
+ "blind_cross_supports_current": [
+  "KR0051_2023.2Q",
+  "KR0083_2024.4Q"
+ ],
+ "blind_cross_neither": [
+  "KR0008_2023.4Q",
+  "KR0008_2024.1Q",
+  "KR0011_2023.1Q",
+  "KR0050_2025.2Q",
+  "KR0068_2023.1Q",
+  "KR0083_2025.3Q",
+  "KR0100_2025.3Q"
+ ],
+ "keep_current_ids": [
+  "KR0051 2024.1Q",
+  "KR0080 2023.3Q",
+  "KR1104 2023.1Q",
+  "KR1105 2023.1Q",
+  "KR1105 2024.4Q",
+  "KR1105 2025.3Q",
+  "KR1105 2025.4Q"
+ ],
+ "dc_cross_new_by_category": {
+  "완전성 부족": 6,
+  "현행 유지": 2,
+  "룰 사각": 1,
+  "현행 유지 + 목록": 1
+ },
+ "dc_cross_gone_by_category": {
+  "완전성 부족": 2,
+  "룰 사각": 1,
+  "현행 유지": 1,
+  "현행 유지 + 목록": 1
+ },
+ "post_only_split": {
+  "C": 13,
+  "E": 19
+ },
+ "dc_new_red_by_category": {
+  "완전성 부족": 13,
+  "채택 후보": 2,
+  "현행 유지": 3
+ },
+ "dc_new_red_among_adopt": [
+  "KR0003_2025.1Q",
+  "KR0032_2024.3Q"
+ ],
+ "adopt_material_list": [
+  {
+   "id": "KR0003_2025.1Q",
+   "diffs": "13:19202->17997",
+   "outcome": "LATEST_EXCEPTION_RESOLVED"
+  },
+  {
+   "id": "KR0004_2023.1Q",
+   "diffs": "5:1211->1686; 6:36->161; 11:3823->3224",
+   "outcome": "LATEST_TRUE_RESTATEMENT"
+  },
+  {
+   "id": "KR0009_2023.1Q",
+   "diffs": "1:133398->133381; 2:73537->68456; 3:59861->64925; 4:127231->127214; 6:4983->5000; 11:48867->48832; 13:53694->58757; 15:98852->98851",
+   "outcome": "LATEST_TRUE_RESTATEMENT"
+  },
+  {
+   "id": "KR0009_2023.2Q",
+   "diffs": "6:4983->5000; 11:50884->50866",
+   "outcome": "LATEST_TRUE_RESTATEMENT"
+  },
+  {
+   "id": "KR0032_2024.3Q",
+   "diffs": "13:8867->9390",
+   "outcome": "LATEST_EXCEPTION_RESOLVED"
+  },
+  {
+   "id": "KR0072_2025.2Q",
+   "diffs": "12:0->328",
+   "outcome": "LATEST_TRUE_RESTATEMENT"
+  },
+  {
+   "id": "KR0100_2025.2Q",
+   "diffs": "5:2852->4941; 11:2363->275",
+   "outcome": "LATEST_TRUE_RESTATEMENT"
+  }
+ ],
+ "keep_current_n": 36,
+ "keep_current_by_category": {
+  "완전성 부족": 28,
+  "현행 유지": 7,
+  "현행 유지 + 목록": 1
+ },
+ "keep_current_companies": {
+  "KR0003": 1,
+  "KR0005": 2,
+  "KR0051": 1,
+  "KR0071": 2,
+  "KR0076": 1,
+  "KR0080": 3,
+  "KR0087": 3,
+  "KR0099": 1,
+  "KR0100": 3,
+  "KR0104": 1,
+  "KR1000": 3,
+  "KR1102": 2,
+  "KR1103": 5,
+  "KR1104": 2,
+  "KR1105": 4,
+  "KR1106": 2
+ },
+ "keep_current_post_axis_only": 4,
+ "completeness": {
+  "odd|1Q|next": {
+   "blocks": 181,
+   "readable": 170,
+   "core_complete": 155,
+   "complete": 155
+  },
+  "odd|3Q|next": {
+   "blocks": 134,
+   "readable": 121,
+   "core_complete": 109,
+   "complete": 109
+  },
+  "odd|all|next": {
+   "blocks": 315,
+   "readable": 291,
+   "core_complete": 264,
+   "complete": 264
+  },
+  "odd|1Q|latest": {
+   "blocks": 181,
+   "readable": 172,
+   "core_complete": 156,
+   "complete": 156
+  },
+  "odd|3Q|latest": {
+   "blocks": 134,
+   "readable": 126,
+   "core_complete": 109,
+   "complete": 109
+  },
+  "odd|all|latest": {
+   "blocks": 315,
+   "readable": 298,
+   "core_complete": 265,
+   "complete": 265
+  },
+  "even|2Q|next": {
+   "blocks": 134,
+   "readable": 121,
+   "core_complete": 110,
+   "sub_present": 0,
+   "scanned": 121,
+   "complete": 0
+  },
+  "even|4Q|next": {
+   "blocks": 138,
+   "readable": 126,
+   "core_complete": 109,
+   "sub_present": 0,
+   "scanned": 126,
+   "complete": 0
+  },
+  "even|all|next": {
+   "blocks": 272,
+   "readable": 247,
+   "core_complete": 219,
+   "sub_present": 0,
+   "scanned": 247,
+   "complete": 0
+  },
+  "even|2Q|latest": {
+   "blocks": 134,
+   "readable": 127,
+   "core_complete": 112,
+   "sub_present": 110,
+   "scanned": 127,
+   "complete": 98
+  },
+  "even|4Q|latest": {
+   "blocks": 138,
+   "readable": 130,
+   "core_complete": 113,
+   "sub_present": 114,
+   "scanned": 130,
+   "complete": 99
+  },
+  "even|all|latest": {
+   "blocks": 272,
+   "readable": 257,
+   "core_complete": 225,
+   "sub_present": 224,
+   "scanned": 257,
+   "complete": 197
+  }
+ }
+}

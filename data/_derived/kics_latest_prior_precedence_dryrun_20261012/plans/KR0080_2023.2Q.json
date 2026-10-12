@@ -1,0 +1,313 @@
+{
+ "name": "KR0080_2023.2Q",
+ "code": "KR0080",
+ "quarter": "2023.2Q",
+ "edits": [
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 1,
+   "field": "값",
+   "old": "33793",
+   "new": "33792",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 1,
+   "field": "값_적용후",
+   "old": "33793",
+   "new": "33792",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 2,
+   "field": "값",
+   "old": "28620",
+   "new": "29645",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 2,
+   "field": "값_적용후",
+   "old": "28620",
+   "new": "29645",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 3,
+   "field": "값",
+   "old": "5173",
+   "new": "4147",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 3,
+   "field": "값_적용후",
+   "old": "5173",
+   "new": "4147",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 4,
+   "field": "값",
+   "old": "33793",
+   "new": "33836",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 4,
+   "field": "값_적용후",
+   "old": "33793",
+   "new": "33836",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 7,
+   "field": "값",
+   "old": "11797",
+   "new": "12053",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 7,
+   "field": "값_적용후",
+   "old": "11797",
+   "new": "12053",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 9,
+   "field": "값",
+   "old": "959",
+   "new": "1687",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 9,
+   "field": "값_적용후",
+   "old": "959",
+   "new": "1687",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 11,
+   "field": "값",
+   "old": "5955",
+   "new": "5014",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 11,
+   "field": "값_적용후",
+   "old": "5955",
+   "new": "5014",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 12,
+   "field": "값",
+   "old": "0",
+   "new": "44",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 12,
+   "field": "값_적용후",
+   "old": "0",
+   "new": "44",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 13,
+   "field": "값",
+   "old": "5173",
+   "new": "4147",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 13,
+   "field": "값_적용후",
+   "old": "5173",
+   "new": "4147",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 14,
+   "field": "값",
+   "old": "13824",
+   "new": "13763",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 14,
+   "field": "값_적용후",
+   "old": "13824",
+   "new": "13763",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 15,
+   "field": "값",
+   "old": "17930",
+   "new": "17851",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 15,
+   "field": "값_적용후",
+   "old": "17930",
+   "new": "17851",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 16,
+   "field": "값",
+   "old": "2931",
+   "new": "2819",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 16,
+   "field": "값_적용후",
+   "old": "2931",
+   "new": "2819",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 19,
+   "field": "값",
+   "old": "3022",
+   "new": "2859",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 19,
+   "field": "값_적용후",
+   "old": "3022",
+   "new": "2859",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 20,
+   "field": "값",
+   "old": "1351",
+   "new": "1323",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 20,
+   "field": "값_적용후",
+   "old": "1351",
+   "new": "1323",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 22,
+   "field": "값",
+   "old": "4106",
+   "new": "4088",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0080",
+   "q": "2023.2Q",
+   "item": 22,
+   "field": "값_적용후",
+   "old": "4106",
+   "new": "4088",
+   "src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+   "col": "F(2023.4Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2023.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2023_Q4/raw/KR0080_에이아이에이생명보험.pdf p36+37",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

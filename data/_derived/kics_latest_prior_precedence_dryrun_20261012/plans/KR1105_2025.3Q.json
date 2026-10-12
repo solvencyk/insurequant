@@ -1,0 +1,53 @@
+{
+ "name": "KR1105_2025.3Q",
+ "code": "KR1105",
+ "quarter": "2025.3Q",
+ "edits": [
+  {
+   "code": "KR1105",
+   "q": "2025.3Q",
+   "item": 4,
+   "field": "값",
+   "old": "6099",
+   "new": "0",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR1105",
+   "q": "2025.3Q",
+   "item": 4,
+   "field": "값_적용후",
+   "old": "6099",
+   "new": "0",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1105",
+   "q": "2025.3Q",
+   "item": 23,
+   "field": "값",
+   "old": "0",
+   "new": "801",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR1105",
+   "q": "2025.3Q",
+   "item": 23,
+   "field": "값_적용후",
+   "old": "0",
+   "new": "801",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2026.1Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2026_Q1/raw/KR1105_알지에이리인슈어런스.pdf p16",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

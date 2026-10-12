@@ -1,0 +1,23 @@
+{
+ "name": "KR0032_2024.4Q",
+ "code": "KR0032",
+ "quarter": "2024.4Q",
+ "edits": [
+  {
+   "code": "KR0032",
+   "q": "2024.4Q",
+   "item": 11,
+   "field": "값",
+   "old": "1078",
+   "new": "1077",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0032_NH농협손해보험.pdf p17",
+   "col": "F(2025.2Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.2Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q2/raw/KR0032_NH농협손해보험.pdf p17",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

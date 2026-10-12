@@ -1,0 +1,33 @@
+{
+ "name": "KR0011_2023.1Q",
+ "code": "KR0011",
+ "quarter": "2023.1Q",
+ "edits": [
+  {
+   "code": "KR0011",
+   "q": "2023.1Q",
+   "item": 6,
+   "field": "값",
+   "old": "0",
+   "new": "697",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0011_DB손해보험_amended2.pdf p11",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0011",
+   "q": "2023.1Q",
+   "item": 11,
+   "field": "값",
+   "old": "78878",
+   "new": "78181",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0011_DB손해보험_amended2.pdf p11",
+   "col": "F(2023.3Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2023.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2023_Q3/raw/KR0011_DB손해보험_amended2.pdf p11",
+ "flags": [
+  "NO_OWN_CONTROL(NO_GRID)"
+ ]
+}

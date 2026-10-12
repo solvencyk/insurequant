@@ -1,0 +1,54 @@
+{
+ "name": "KR0076_2023.1Q",
+ "code": "KR0076",
+ "quarter": "2023.1Q",
+ "edits": [
+  {
+   "code": "KR0076",
+   "q": "2023.1Q",
+   "item": 2,
+   "field": "값",
+   "old": "3026",
+   "new": "3594",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0076",
+   "q": "2023.1Q",
+   "item": 3,
+   "field": "값",
+   "old": "5880",
+   "new": "5312",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0076",
+   "q": "2023.1Q",
+   "item": 7,
+   "field": "값",
+   "old": "1364",
+   "new": "1365",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0076",
+   "q": "2023.1Q",
+   "item": 13,
+   "field": "값",
+   "old": "4975",
+   "new": "4407",
+   "src": "data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf p12",
+   "col": "F(2023.3Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2023.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2023_Q3/raw/KR0076_아이엠라이프생명보험.pdf p12",
+ "flags": [
+  "NO_OWN_CONTROL(NO_GRID)",
+  "POST_COLUMN_NOT_REPLACEABLE(items [2, 3])"
+ ]
+}

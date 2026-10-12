@@ -1,0 +1,131 @@
+{
+ "name": "KR0069_2024.2Q",
+ "code": "KR0069",
+ "quarter": "2024.2Q",
+ "edits": [
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 1,
+   "field": "값",
+   "old": "532470",
+   "new": "532471",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 1,
+   "field": "값_적용후",
+   "old": "532470",
+   "new": "532471",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 2,
+   "field": "값",
+   "old": "437468",
+   "new": "437469",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 2,
+   "field": "값_적용후",
+   "old": "437468",
+   "new": "437469",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 10,
+   "field": "값",
+   "old": "19279",
+   "new": "19278",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 10,
+   "field": "값_적용후",
+   "old": "19279",
+   "new": "19278",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 11,
+   "field": "값",
+   "old": "77034",
+   "new": "77033",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 11,
+   "field": "값_적용후",
+   "old": "77034",
+   "new": "77033",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 16,
+   "field": "값",
+   "old": "86726",
+   "new": "86725",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 16,
+   "field": "값_적용후",
+   "old": "86726",
+   "new": "86725",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 24,
+   "field": "값",
+   "old": "22956",
+   "new": "22955",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.2Q",
+   "item": 24,
+   "field": "값_적용후",
+   "old": "22956",
+   "new": "22955",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+   "col": "F(2024.4Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2024.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2024_Q4/raw/KR0069_삼성생명.pdf p51+52",
+ "flags": []
+}

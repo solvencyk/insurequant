@@ -1,0 +1,33 @@
+{
+ "name": "KR0069_2024.3Q",
+ "code": "KR0069",
+ "quarter": "2024.3Q",
+ "edits": [
+  {
+   "code": "KR0069",
+   "q": "2024.3Q",
+   "item": 23,
+   "field": "값",
+   "old": "24572",
+   "new": "24571",
+   "src": "data/disclosure/FY2025_Q1/raw/KR0069_삼성생명.pdf p16+17",
+   "col": "F(2025.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR0069",
+   "q": "2024.3Q",
+   "item": 23,
+   "field": "값_적용후",
+   "old": "24572",
+   "new": "24571",
+   "src": "data/disclosure/FY2025_Q1/raw/KR0069_삼성생명.pdf p16+17",
+   "col": "F(2025.1Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.1Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q1/raw/KR0069_삼성생명.pdf p16+17",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

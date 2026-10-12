@@ -1,0 +1,53 @@
+{
+ "name": "KR1102_2025.3Q",
+ "code": "KR1102",
+ "quarter": "2025.3Q",
+ "edits": [
+  {
+   "code": "KR1102",
+   "q": "2025.3Q",
+   "item": 2,
+   "field": "값",
+   "old": "6496",
+   "new": "6395",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2025.3Q",
+   "item": 2,
+   "field": "값_적용후",
+   "old": "6496",
+   "new": "6395",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1102",
+   "q": "2025.3Q",
+   "item": 3,
+   "field": "값",
+   "old": "850",
+   "new": "951",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR1102",
+   "q": "2025.3Q",
+   "item": 3,
+   "field": "값_적용후",
+   "old": "850",
+   "new": "951",
+   "src": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf p16",
+   "col": "F(2026.1Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2026.1Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf p16",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

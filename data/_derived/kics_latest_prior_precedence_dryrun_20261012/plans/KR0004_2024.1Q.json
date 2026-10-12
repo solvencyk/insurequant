@@ -1,0 +1,31 @@
+{
+ "name": "KR0004_2024.1Q",
+ "code": "KR0004",
+ "quarter": "2024.1Q",
+ "edits": [
+  {
+   "code": "KR0004",
+   "q": "2024.1Q",
+   "item": 7,
+   "field": "값",
+   "old": "-2200",
+   "new": "-2190",
+   "src": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf p13",
+   "col": "F(2024.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0004",
+   "q": "2024.1Q",
+   "item": 11,
+   "field": "값",
+   "old": "2932",
+   "new": "2923",
+   "src": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf p13",
+   "col": "F(2024.3Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2024.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2024_Q3/raw/KR0004_예별손해보험.pdf p13",
+ "flags": []
+}

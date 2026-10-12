@@ -1,0 +1,31 @@
+{
+ "name": "KR1103_2026.1Q",
+ "code": "KR1103",
+ "quarter": "2026.1Q",
+ "edits": [
+  {
+   "code": "KR1103",
+   "q": "2026.1Q",
+   "item": 17,
+   "field": "값",
+   "old": "355",
+   "new": "-53",
+   "src": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf p8+9",
+   "col": "F(2026.2Q) 직전분기 열"
+  },
+  {
+   "code": "KR1103",
+   "q": "2026.1Q",
+   "item": 17,
+   "field": "값_적용후",
+   "old": "355",
+   "new": "-53",
+   "src": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf p8+9",
+   "col": "F(2026.2Q) 직전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2026.2Q) 직전분기 열",
+ "latest_src": "data/disclosure/FY2026_Q2/raw/KR1103_제네럴재보험.pdf p8+9",
+ "flags": []
+}

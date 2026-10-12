@@ -1,0 +1,44 @@
+{
+ "name": "KR0087_2025.1Q",
+ "code": "KR0087",
+ "quarter": "2025.1Q",
+ "edits": [
+  {
+   "code": "KR0087",
+   "q": "2025.1Q",
+   "item": 2,
+   "field": "값",
+   "old": "11848",
+   "new": "13096",
+   "src": "data/disclosure/FY2025_Q3/raw/KR0087_동양생명.pdf p15+16",
+   "col": "F(2025.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0087",
+   "q": "2025.1Q",
+   "item": 3,
+   "field": "값",
+   "old": "22013",
+   "new": "20765",
+   "src": "data/disclosure/FY2025_Q3/raw/KR0087_동양생명.pdf p15+16",
+   "col": "F(2025.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR0087",
+   "q": "2025.1Q",
+   "item": 13,
+   "field": "값",
+   "old": "18777",
+   "new": "17529",
+   "src": "data/disclosure/FY2025_Q3/raw/KR0087_동양생명.pdf p15+16",
+   "col": "F(2025.3Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q3/raw/KR0087_동양생명.pdf p15+16",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)",
+  "POST_COLUMN_NOT_REPLACEABLE(items [2, 3])"
+ ]
+}

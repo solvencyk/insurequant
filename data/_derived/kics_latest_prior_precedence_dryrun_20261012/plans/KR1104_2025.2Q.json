@@ -1,0 +1,31 @@
+{
+ "name": "KR1104_2025.2Q",
+ "code": "KR1104",
+ "quarter": "2025.2Q",
+ "edits": [
+  {
+   "code": "KR1104",
+   "q": "2025.2Q",
+   "item": 20,
+   "field": "값",
+   "old": "0",
+   "new": "28",
+   "src": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf p32+33",
+   "col": "F(2025.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR1104",
+   "q": "2025.2Q",
+   "item": 20,
+   "field": "값_적용후",
+   "old": "0",
+   "new": "28",
+   "src": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf p32+33",
+   "col": "F(2025.4Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q4/raw/KR1104_하노버재보험.pdf p32+33",
+ "flags": []
+}

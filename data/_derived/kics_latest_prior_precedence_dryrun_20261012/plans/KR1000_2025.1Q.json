@@ -1,0 +1,43 @@
+{
+ "name": "KR1000_2025.1Q",
+ "code": "KR1000",
+ "quarter": "2025.1Q",
+ "edits": [
+  {
+   "code": "KR1000",
+   "q": "2025.1Q",
+   "item": 2,
+   "field": "값",
+   "old": "31536",
+   "new": "33628",
+   "src": "data/disclosure/FY2025_Q3/raw/KR1000_코리안리.pdf p11",
+   "col": "F(2025.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR1000",
+   "q": "2025.1Q",
+   "item": 3,
+   "field": "값",
+   "old": "12086",
+   "new": "9993",
+   "src": "data/disclosure/FY2025_Q3/raw/KR1000_코리안리.pdf p11",
+   "col": "F(2025.3Q) 전전분기 열"
+  },
+  {
+   "code": "KR1000",
+   "q": "2025.1Q",
+   "item": 13,
+   "field": "값",
+   "old": "12086",
+   "new": "9993",
+   "src": "data/disclosure/FY2025_Q3/raw/KR1000_코리안리.pdf p11",
+   "col": "F(2025.3Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.3Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q3/raw/KR1000_코리안리.pdf p11",
+ "flags": [
+  "POST_COLUMN_NOT_REPLACEABLE(items [2, 3])"
+ ]
+}

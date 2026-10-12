@@ -1,0 +1,34 @@
+{
+ "name": "KR0029_2025.4Q",
+ "code": "KR0029",
+ "quarter": "2025.4Q",
+ "edits": [
+  {
+   "code": "KR0029",
+   "q": "2025.4Q",
+   "item": 7,
+   "field": "값",
+   "old": "5153",
+   "new": "5154",
+   "src": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf p16",
+   "col": "F(2026.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR0029",
+   "q": "2025.4Q",
+   "item": 7,
+   "field": "값_적용후",
+   "old": "5153",
+   "new": "5154",
+   "src": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf p16",
+   "col": "F(2026.2Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2026.2Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2026_Q2/raw/KR0029_AIG손해보험.pdf p16",
+ "flags": [
+  "LATEST_DASH_OR_BLANK_VS_MASTER_NONZERO(items [15])",
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

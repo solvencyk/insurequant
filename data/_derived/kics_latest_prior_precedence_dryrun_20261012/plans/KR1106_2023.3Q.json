@@ -1,0 +1,73 @@
+{
+ "name": "KR1106_2023.3Q",
+ "code": "KR1106",
+ "quarter": "2023.3Q",
+ "edits": [
+  {
+   "code": "KR1106",
+   "q": "2023.3Q",
+   "item": 7,
+   "field": "값",
+   "old": "3772",
+   "new": "2374",
+   "src": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf p9",
+   "col": "F(2024.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR1106",
+   "q": "2023.3Q",
+   "item": 7,
+   "field": "값_적용후",
+   "old": "3772",
+   "new": "2374",
+   "src": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf p9",
+   "col": "F(2024.1Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1106",
+   "q": "2023.3Q",
+   "item": 9,
+   "field": "값",
+   "old": "-124",
+   "new": "-352",
+   "src": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf p9",
+   "col": "F(2024.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR1106",
+   "q": "2023.3Q",
+   "item": 9,
+   "field": "값_적용후",
+   "old": "-124",
+   "new": "-352",
+   "src": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf p9",
+   "col": "F(2024.1Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR1106",
+   "q": "2023.3Q",
+   "item": 11,
+   "field": "값",
+   "old": "0",
+   "new": "2622",
+   "src": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf p9",
+   "col": "F(2024.1Q) 전전분기 열"
+  },
+  {
+   "code": "KR1106",
+   "q": "2023.3Q",
+   "item": 11,
+   "field": "값_적용후",
+   "old": "0",
+   "new": "2622",
+   "src": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf p9",
+   "col": "F(2024.1Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2024.1Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2024_Q1/raw/KR1106_스코리재보험.pdf p9",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

@@ -1,0 +1,51 @@
+{
+ "name": "KR0095_2024.4Q",
+ "code": "KR0095",
+ "quarter": "2024.4Q",
+ "edits": [
+  {
+   "code": "KR0095",
+   "q": "2024.4Q",
+   "item": 2,
+   "field": "값",
+   "old": "33097",
+   "new": "33096",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf p18",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR0095",
+   "q": "2024.4Q",
+   "item": 2,
+   "field": "값_적용후",
+   "old": "33097",
+   "new": "33096",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf p18",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  },
+  {
+   "code": "KR0095",
+   "q": "2024.4Q",
+   "item": 17,
+   "field": "값",
+   "old": "14427",
+   "new": "14428",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf p18",
+   "col": "F(2025.2Q) 전전분기 열"
+  },
+  {
+   "code": "KR0095",
+   "q": "2024.4Q",
+   "item": 17,
+   "field": "값_적용후",
+   "old": "14427",
+   "new": "14428",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf p18",
+   "col": "F(2025.2Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.2Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q2/raw/KR0095_메트라이프생명보험.pdf p18",
+ "flags": []
+}

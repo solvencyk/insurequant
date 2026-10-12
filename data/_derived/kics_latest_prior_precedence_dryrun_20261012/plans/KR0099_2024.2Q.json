@@ -1,0 +1,33 @@
+{
+ "name": "KR0099_2024.2Q",
+ "code": "KR0099",
+ "quarter": "2024.2Q",
+ "edits": [
+  {
+   "code": "KR0099",
+   "q": "2024.2Q",
+   "item": 22,
+   "field": "값",
+   "old": "7389",
+   "new": "7390",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0099_케이비라이프생명보험.pdf p58+59",
+   "col": "F(2024.4Q) 전전분기 열"
+  },
+  {
+   "code": "KR0099",
+   "q": "2024.2Q",
+   "item": 22,
+   "field": "값_적용후",
+   "old": "7389",
+   "new": "7390",
+   "src": "data/disclosure/FY2024_Q4/raw/KR0099_케이비라이프생명보험.pdf p58+59",
+   "col": "F(2024.4Q) 전전분기 열 (mirror)"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2024.4Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2024_Q4/raw/KR0099_케이비라이프생명보험.pdf p58+59",
+ "flags": [
+  "LATER_PRINTINGS_DIFFER(F+1 vs F+2)"
+ ]
+}

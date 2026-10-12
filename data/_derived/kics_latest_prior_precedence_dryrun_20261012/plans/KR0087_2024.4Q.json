@@ -1,0 +1,21 @@
+{
+ "name": "KR0087_2024.4Q",
+ "code": "KR0087",
+ "quarter": "2024.4Q",
+ "edits": [
+  {
+   "code": "KR0087",
+   "q": "2024.4Q",
+   "item": 4,
+   "field": "값",
+   "old": "35560",
+   "new": "35559",
+   "src": "data/disclosure/FY2025_Q2/raw/KR0087_동양생명.pdf p15+16",
+   "col": "F(2025.2Q) 전전분기 열"
+  }
+ ],
+ "inserts": [],
+ "latest_label": "F(2025.2Q) 전전분기 열",
+ "latest_src": "data/disclosure/FY2025_Q2/raw/KR0087_동양생명.pdf p15+16",
+ "flags": []
+}
