@@ -827,7 +827,9 @@ def check_kics_duration_gap(fd: Findings) -> dict:
 # --------------------------------------------------------------------------- 8) 자본성증권 발행 타임라인
 CAPTL_SRC = "data/bonds/capital_securities_fy2026h1.json"
 CAPTL_TIERS = ("hybrid", "subordinated")
-CAPTL_FIELDS = {"tier", "issue_date", "call_date", "coupon_pct", "face_eok", "outstanding_eok", "as_of"}
+CAPTL_FIELDS = {"tier", "issue_date", "call_date", "coupon_pct", "face_eok", "outstanding_eok", "as_of",
+                "call_date_unconfirmed", "estimated"}
+CAPTL_FLAGS = ("call_date_unconfirmed", "estimated")     # 선택 표지: 있으면 반드시 True (2026-10-12 감사 요청 1·2)
 CAPTL_REQUIRED = ("tier", "issue_date", "face_eok", "outstanding_eok")
 _ISO_DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
@@ -867,7 +869,9 @@ def check_capsec_timeline(fd: Findings, doc: dict | None = None, src: dict | Non
             if not isinstance(b, dict):
                 fd.add(A, "CAPTL_STRUCTURE", key, "건이 dict 가 아니다")
                 continue
-            miss = [f for f in CAPTL_REQUIRED if b.get(f) is None]
+            # 잔액 null 은 콜일 미확정 표지와 함께일 때만 허용(날짜-금액 짝을 화면에 싣지 않으려고 의도적으로 비운 칸)
+            blank_ok = b.get("call_date_unconfirmed") is True and b.get("outstanding_eok") is None
+            miss = [f for f in CAPTL_REQUIRED if b.get(f) is None and not (blank_ok and f == "outstanding_eok")]
             bad = []
             if b.get("tier") not in CAPTL_TIERS:
                 bad.append(f"tier={b.get('tier')!r}")
@@ -875,11 +879,17 @@ def check_capsec_timeline(fd: Findings, doc: dict | None = None, src: dict | Non
                 bad.append(f"issue_date={b.get('issue_date')!r}")
             for f in ("face_eok", "outstanding_eok"):
                 v = b.get(f)
+                if blank_ok and f == "outstanding_eok":
+                    continue
                 if isinstance(v, bool) or not isinstance(v, (int, float)) or v < 0:
                     bad.append(f"{f}={v!r}")
             if miss or bad:
                 fd.add(A, "CAPTL_STRUCTURE", key,
                        f"필수 필드 누락 {miss} / 형식 위반 {bad} — 화면 막대에 놓을 수 없다")
+                stat["structure_fail"] += 1
+            badflag = [f for f in CAPTL_FLAGS if f in b and b[f] is not True]
+            if badflag:
+                fd.add(A, "CAPTL_STRUCTURE", key, f"선택 표지 {badflag} 는 True 일 때만 존재해야 한다(값 {[b[f] for f in badflag]!r})")
                 stat["structure_fail"] += 1
             extra = sorted(set(b) - CAPTL_FIELDS)
             if extra:

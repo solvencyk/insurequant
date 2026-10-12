@@ -4,8 +4,8 @@
    pred_T2=+1993.0 gap=3.9  | pred[all T1]=+238.2 gap=1750.9  | tol=56.7
    note: item53 2,120 unchanged (2024.4Q cell empty in master only); pre-issue X band 2,591~2,630; post-issue X - 1,993 = 2,620 -> 2,377 continues the band.
 [CONFIRMED_T2] KR0032 NH농협손해 제3회 신종 (2024-12-27, 4,500)
-   2024.3Q->2024.4Q: X 0.87 -> 4848.94  obs dX=+4848.07  d_item6=+4500.0  d_item47pre=4330.02  cap10=1398.5  legacy-in-X adj=+0.0
-   pred_T2=+4500.0 gap=348.07  | pred[all T1]=+3101.5 gap=1746.57  | tol=422.6
+   2024.3Q->2024.4Q: X 523.87 -> 4848.94  obs dX=+4325.07  d_item6=+4500.0  d_item47pre=4330.02  cap10=1398.5  legacy-in-X adj=+0.0
+   pred_T2=+4500.0 gap=174.93  | pred[all T1]=+3101.5 gap=1223.57  | tol=361.9
    note: item53 = 0; X stays 4,820~5,125 for 7 quarters while cap10 moves 1,344~1,642 (a tier1-type overflow would move with it).
 [CONFIRMED_T2] KR0050 하나손해 제1회 신종 (2024-05-14, 1,000)
    2024.1Q->2024.2Q: X 38.78 -> 1012.81  obs dX=+974.03  d_item6=+1000.0  d_item47pre=973.42  cap10=266.7  legacy-in-X adj=+0.0

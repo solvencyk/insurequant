@@ -2312,11 +2312,11 @@
   "bond_coverage": "dart_listed",
   "confidence": {
    "level": "low",
-   "tier1_bucket": "low",
+   "tier1_bucket": "high",
    "tier2_bucket": "low",
-   "t1_gap_pct": -50.0,
+   "t1_gap_pct": 0.0,
    "t2_gap_pct": -100.0,
-   "bond_t1_out_eok": 1000.0,
+   "bond_t1_out_eok": 1999.0,
    "bond_t2_out_eok": 0,
    "kics_t1_issued_eok": 1999.0,
    "kics_t1_field": "tier1_hybrid_issued_eok",
@@ -2331,7 +2331,6 @@
    "sim_bias": "under_deduct",
    "reasons": [
     "T2 FSC gap: BS 2008억 but bond DB=0",
-    "T1 face/BS gap -50% (tier1_hybrid_issued_eok)",
     "T2 face/BS gap -100% (numerator_eok_fallback) — advisory, not in overall"
    ]
   }

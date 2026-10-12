@@ -29,9 +29,9 @@
    "code": "KR0032",
    "quarter": "2024.4Q",
    "prev": "2024.3Q",
-   "X_prev": 0.87,
+   "X_prev": 523.87,
    "X_q": 4848.94,
-   "obs_dX": 4848.07,
+   "obs_dX": 4325.07,
    "d_item6": 4500.0,
    "d_item47_pre": 4330.02,
    "cap10_q": 1398.5,
@@ -40,10 +40,10 @@
    "pred_T1_variants": {
     "all T1": 3101.5
    },
-   "tol": 422.6,
-   "gap_T2": 348.07,
+   "tol": 361.9,
+   "gap_T2": 174.93,
    "gap_T1": {
-    "all T1": 1746.57
+    "all T1": 1223.57
    },
    "verdict": "CONFIRMED_T2",
    "note": "item53 = 0; X stays 4,820~5,125 for 7 quarters while cap10 moves 1,344~1,642 (a tier1-type overflow would move with it)."

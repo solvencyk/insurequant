@@ -16,6 +16,9 @@ owner 지시(2026-10-12): 시점별 잔액을 DART 에서 새로 뽑지 않고, 
 * as_of 는 채권별 잔액 기준일(회사마다 2025-12-31 또는 2026-06-30). 원천에 발행일이 없는 증권은 막대에 놓을 수 없어 뺀다.
 * 이미 상환돼 잔액 0 인 증권도 발행 내역이라 싣는다(outstanding_eok = 0). 원천에 한 번도 오른 적 없는 과거 상환 증권은 없다.
 * 회사코드는 JSON 키로만 쓴다(화면 노출 금지 규약).
+* 선택 표지(True 일 때만 존재): `call_date_unconfirmed`(공시끼리 콜일이 엇갈려 회차별 콜일-금액 짝 미확정 - 이 건은 outstanding_eok 를
+  null 로 비워 화면이 콜일 옆에 금액을 싣지 않게 한다; face_eok 는 그대로), `estimated`(원장 미갱신으로 공시 증가분에서 넣은 추정 행 -
+  금리·콜일 미상)
 
 실행: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/build_capital_securities_timeline.py
 """
@@ -50,7 +53,7 @@ def bond_record(bond: dict, company_as_of: str | None) -> dict | None:
     # 권면이 비어 있으면 잔액으로 대신하지 않고 그 채권은 뺀다(추측 금지)
     if face is None:
         return None
-    return {
+    rec = {
         "tier": bond["tier"],
         "issue_date": bond["issue_date"],
         "call_date": bond.get("call_date") or None,
@@ -59,6 +62,13 @@ def bond_record(bond: dict, company_as_of: str | None) -> dict | None:
         "outstanding_eok": eok(out or 0.0),
         "as_of": bond.get("as_of") or company_as_of,
     }
+    # 선택 표지 두 개(True 일 때만 키가 생긴다): 화면이 날짜-금액 짝을 싣지 말아야 하는 건을 알아보게 한다.
+    if bond.get("call_date_unconfirmed"):
+        rec["call_date_unconfirmed"] = True      # 발행사 공시끼리 콜일이 엇갈려 어느 회차의 콜인지 미확정(DB손해 제1·2회)
+        rec["outstanding_eok"] = None            # 틀릴 수 있는 날짜 옆에 금액을 싣지 않는다 - 화면은 잔액이 null 이면 날짜만 그린다
+    if bond.get("estimated"):
+        rec["estimated"] = True                  # 원장 미갱신으로 공시 증가분에서 추정해 넣은 행(금리·콜일 미상)
+    return rec
 
 
 def build(src: dict, generated: str) -> dict:

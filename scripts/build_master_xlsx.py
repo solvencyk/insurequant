@@ -348,8 +348,9 @@ _TIER2_PROXY_NOTE = ("2026-06-20 폐기된 구 산식(item3 총보완자본 raw 
 # 어떤 인쇄 관행을 어떻게 정규화했는지(배포 JSON 의 numerator_source·rule_basis)를 실어 보낸다 —
 # xlsx 만 받은 사람에게는 이 칸이 유일한 근거다. 'R2' 같은 내부 규칙 번호는 싣지 않는다.
 _TIER2_UTIL_NOTE = ("분자 = 보완자본 - 해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 - 기발행 "
-                    "자본증권(공통적용 경과조치), 분모 = 총요구자본(경과조치 적용 전) × 50% "
-                    "([별표22] Ⅲ.2.마·Ⅵ.1.가.(3)·Ⅵ.1.라).")
+                    "자본증권(공통적용 경과조치; 2022년 12월 31일까지 발행한 신종·후순위의 채권원장 잔액만 뺀다 - 발행사가 "
+                    "인쇄한 기발행 금액에는 2023년 이후 발행분이 섞여 있을 수 있어 쓰지 않는다), 분모 = 총요구자본"
+                    "(경과조치 적용 전) × 50% ([별표22] Ⅲ.2.마·Ⅵ.1.가.(3)·Ⅵ.1.라).")
 # 2026-10-12: 이 칸은 예전 채권원장 추정(발행액 - SCR x 15%)이 갱신 없이 남아 있었다. 지금은 기본자본 소진율과 같은
 # 출처(공시 보통주 이외 자본증권 + 등재부 분류)에서 나온 한도 초과 재분류액이다.
 _TIER2_OVERFLOW_NOTE = ("기본자본 자본증권(기발행은 총요구자본 x 15%, 신규 기본자본형은 x 10%) 인정한도를 넘어 보완자본으로 "
@@ -374,6 +375,12 @@ def _flatten_tier2(raw: dict) -> list:
             note = _TIER2_PROXY_NOTE if field == "proxy_utilization_pct" else ""
             if field == "tier1_overflow_into_tier2_eok":
                 note = _TIER2_OVERFLOW_NOTE
+            if field in ("grandfathered_hybrid_eok", "grandfathered_subordinated_eok") and r.get(field) is not None:
+                printed = r.get(field.replace("_eok", "_printed_eok"))
+                note = ("보완자본 분자에서 뺀 기발행 금액 = 채권원장의 2022년 12월 31일까지 발행한 "
+                        + ("신종" if "hybrid" in field else "후순위") + "자본증권 잔액"
+                        + (f" (발행사가 경영공시에 인쇄한 금액 {printed:,.2f}억원은 2023년 이후 발행분이 섞여 있을 수 있어 쓰지 않음)"
+                           if printed is not None else ""))
             if field == "numerator_eok" and r.get("rule"):
                 note = r.get("numerator_source") or r.get("rule_basis") or ""
             if field == "utilization_pct" and r.get("rule"):

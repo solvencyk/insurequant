@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-12",
+ "generated": "2026-10-13",
  "unit": "억원",
  "source": "data/bonds/capital_securities_fy2026h1.json (DART 사업·반기보고서 채권 단위, 회사별 최신 기준일). 발행일이 없는 증권은 제외, 상환돼 잔액 0 인 증권은 포함",
  "securities": {
@@ -140,8 +140,9 @@
     "call_date": "2030-09-25",
     "coupon_pct": 3.8,
     "face_eok": 7470.0,
-    "outstanding_eok": 7470.0,
-    "as_of": "2026-06-30"
+    "outstanding_eok": null,
+    "as_of": "2026-06-30",
+    "call_date_unconfirmed": true
    },
    {
     "tier": "hybrid",
@@ -149,8 +150,9 @@
     "call_date": "2030-09-01",
     "coupon_pct": 3.8,
     "face_eok": 1200.0,
-    "outstanding_eok": 1200.0,
-    "as_of": "2026-06-30"
+    "outstanding_eok": null,
+    "as_of": "2026-06-30",
+    "call_date_unconfirmed": true
    },
    {
     "tier": "hybrid",
@@ -1102,6 +1104,16 @@
     "face_eok": 1000.0,
     "outstanding_eok": 1000.0,
     "as_of": "2025-12-31"
+   },
+   {
+    "tier": "hybrid",
+    "issue_date": "2026-06-29",
+    "call_date": null,
+    "coupon_pct": null,
+    "face_eok": 999.0,
+    "outstanding_eok": 999.0,
+    "as_of": "2026-06-30",
+    "estimated": true
    }
   ],
   "KR0076": [

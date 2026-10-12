@@ -175,7 +175,9 @@ def build(quarter: str, bonds_path: Path, scr_by_code: dict[str, float]) -> list
 def _row(c, b, quarter, out_eok, t1_rec, t2_rec, src_rel, t1_limit, scr, tier, rate=None):
     issue = _pdate(b.get("issue_date"))
     gf = bool(issue and issue < KICS_START)
-    call = _pdate(b.get("call_date"))
+    # 발행사 공시끼리 콜일이 엇갈려 확정 못 한 증권(DB손해 제1·2회, 티켓 20261012T2235Z 요청 1)은 콜일을 비운다 - 짝이 틀린
+    # 날짜를 싣는 것보다 낫다. 채권원장의 call_date 는 forward(연 단위)가 계속 읽는다.
+    call = None if b.get("call_date_unconfirmed") else _pdate(b.get("call_date"))
     legal = economic_maturity(b)
     return {
         "원보험사코드": c["code"],
@@ -188,7 +190,7 @@ def _row(c, b, quarter, out_eok, t1_rec, t2_rec, src_rel, t1_limit, scr, tier, r
         "콜만기도래일": call.isoformat() if call else None,
         # 2026-09-23 신설. **보완자본 체감은 이 열에서 센다**(콜만기도래일이 아니라).
         "법정만기일": legal.isoformat() if legal else None,
-        "콜근거": b.get("call_source"),
+        "콜근거": "공시 원문 상충(콜일 미확정)" if b.get("call_date_unconfirmed") else b.get("call_source"),
         "액면가_억": round((b.get("face_amount_mn") or 0) / 100.0, 2),
         "잔액_억": round(out_eok, 2),
         "공시분기": quarter,
