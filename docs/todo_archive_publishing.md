@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 재보사 손해율 패널·xlsx 동기화(커밋만 · push 보류)** — `panel_loss_ratio.json` 37→44사(재보사 7곳 추가·기존 37사 바이트 동일)+최상위 `ae` 블록(예실차 162행·44사), xlsx `손해율` +1,904행(변경 셀 0).
+  남은 것: ① designer 가 `ae` 를 화면에 표시(`meta.note` 참조) ② 예실차(`claims_ae_ratio.json`)·긴 형식 표(`risk_premium_vs_expected_claims.json`)는 xlsx 시트가 없다 → 신설은 owner 승인(`build_master_xlsx.py` 스키마) ③ `public_exports/` 는 다른 마스터가 끝난 뒤 마감 라운드에서.
+
 - **2026-10-11 미니 재동기화(라이나 CSM·PL 항목 4·상각 정정, 커밋만 · push 보류)** — xlsx 4시트(`5d320c9`)·NB 마스터 재빌드·combo/compare 재빌드·`public_exports`(`812b007`). 드리프트 0, data-contract RED 0, live_artifacts RED 8(`INSPL_CENSUS_MISSING` 뿐, `NB_CENSUS_MISSING` 0).
   남은 것: ① 골든 `test_viz_ifrs17_panels_golden`(`csm_amort_schedule` 해시만)·지문 `--update` 는 validation ② 라이나 상각 스케줄은 패널에 안 간다(패널 행이 DART 원천) — 화면에 싸지 owner 판단. 상세 `data/disclosure/_meta/mini_resync_runlog_20261011.md`.
 
