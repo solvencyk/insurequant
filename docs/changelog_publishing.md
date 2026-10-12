@@ -26,7 +26,7 @@
   - tier2 행: `utilization_pct`·`numerator_eok`(새 값, `rule`="NA" 이면 둘 다 null) · `tier2_limit_eok` · `rule`(R0·R1·R2·R3·R4·R5·R-none·NA) · `rule_basis` · `numerator_source` · `reason`(NA 일 때만 "경과조치 표 미공시") · `numerator_tfi_off_eok`/`utilization_pct_tfi_off`(경과조치 종료 시 관점) · `item47_scope` · `rule_flags` · `supplementary_capital_eok`(항목 3) · `lapse_excess_item49_eok`(항목 49) · `no_capital_securities`.
   - 표시(결정 ④): 분자 0 → "0%", `no_capital_securities` 면 "발행 없음" 덧붙임 · `rule`="NA" → 가운데 "—", 캡션 "산출 불가", 툴팁 `reason` · 스위스리는 항목 49 인쇄가 0 이라 보완자본 4,274억 설명은 `reinsurer_basis.note` 참고.
 - owner 보고(메모 밖 새 발견): 메리츠·흥국생명은 「(기발행 후순위채무)」 행(항목 54)에 2023년 이후 신규 후순위채가 섞여 있다(메리츠 2024.3Q +6,581 = 2024-08 6,500억 발행, 흥국생명 2025.1Q +2,132·2025.4Q +901 = 2025 발행분, `a2`·`a3`). 메모 R2 대로면 메리츠 0.2%·흥국생명 10.6%, 원장 기발행분만 빼면 30.8%·37.0%(`a11`). 결정 ② 를 두 회사로 넓힐지 owner 결정 대상이라 이번에는 메모 값을 실었다.
-- 커밋 `c3ebcc3`(산식·등재부·마스터·xlsx·forward·시험·증거), `00bab2a`(공개본). 증거 `data/_derived/capital_utilization_apply_20261012/`.
+- 커밋 `c3ebcc3`(산식·등재부·마스터·xlsx·forward·시험·증거), `00bab2a`(공개본), `bd69673`(문서), `3fe9a53`(배포본 대조 시험이 배포본의 분기를 따라가게). 증거 `data/_derived/capital_utilization_apply_20261012/`.
 
 ## 2026-10-12 — 미니 재동기화 2차 (재보사 PL·BS·CSM 재스윕 반영, 커밋만, push·배포 보류)
 
