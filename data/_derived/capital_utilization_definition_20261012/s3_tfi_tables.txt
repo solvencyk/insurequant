@@ -1,0 +1,133 @@
+KR0001 unit=백만원 L379 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=145432.06 t1=52537.62 t2=92894.44 preLim=17484.88 lim=31553.53 lapse=75409.56 legH=1791.95 legS=15630.85 scr=63107.08
+   POST: tot=145432.06 t1=54329.57 t2=91102.49 preLim=62.08 lim=31553.53 lapse=75409.56 legH=None legS=None scr=63107.08
+KR0002 unit=None L411 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=65763.49 t1=23914.43 t2=41849.06 preLim=13138.25 lim=17798.33 lapse=28710.81 legH=2341.05 legS=2482.02 scr=35596.65
+   POST: tot=65763.49 t1=26255.48 t2=39508.01 preLim=8315.18 lim=17798.33 lapse=28710.81 legH=None legS=None scr=35596.65
+KR0003 unit=백만원 L371 hdr=['구분', '경과조치 적용 전', '적용 후']
+   PRE : tot=27377.05 t1=-1364.0 t2=28741.04 preLim=8038.95 lim=10555.5 lapse=20702.09 legH=None legS=1933.86 scr=21111.0
+   POST: tot=27377.05 t1=-910.29 t2=28287.34 preLim=5651.39 lim=10555.5 lapse=20702.09 legH=None legS=None scr=16907.42
+KR0004 unit=백만원 L337 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=-3017.21 t1=-3017.7 t2=0.49 preLim=0.49 lim=4306.72 lapse=0.0 legH=0.0 legS=0.0 scr=8613.45
+   POST: tot=-3017.21 t1=-3017.7 t2=0.49 preLim=0.49 lim=4306.72 lapse=0.0 legH=None legS=None scr=7218.68
+KR0005 unit=백만원 L384 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=35692.65 t1=6313.02 t2=29379.63 preLim=7439.32 lim=11327.03 lapse=21940.32 legH=2120.0 legS=190.57 scr=22654.05
+   POST: tot=35692.65 t1=8433.02 t2=27259.63 preLim=5128.75 lim=11327.03 lapse=21940.32 legH=None legS=None scr=22654.05
+KR0008 unit=백만원 L330 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=439879.36 t1=342464.18 t2=97415.18 preLim=3089.8 lim=77777.7 lapse=94325.38 legH=0.0 legS=0.0 scr=155555.39
+   POST: tot=439879.36 t1=342464.18 t2=97415.18 preLim=3089.8 lim=77777.7 lapse=94325.38 legH=None legS=None scr=155555.39
+KR0009 unit=None L380 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=153284.51 t1=61458.05 t2=91826.46 preLim=25852.36 lim=36667.53 lapse=65974.1 legH=0.0 legS=0.0 scr=73335.05
+   POST: tot=153284.51 t1=61458.05 t2=91826.46 preLim=25852.36 lim=36667.53 lapse=65974.1 legH=None legS=None scr=73335.05
+KR0010 unit=None L434 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=None t1=54815.45 t2=80500.28 preLim=10244.19 lim=36093.38 lapse=None legH=None legS=None scr=None
+   POST: tot=None t1=54815.45 t2=80500.28 preLim=7343.08 lim=None lapse=None legH=None legS=None scr=None
+KR0011 unit=백만원 L375 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=235231.77 t1=110439.73 t2=124792.04 preLim=22392.16 lim=57549.42 lapse=102399.87 legH=0.0 legS=0.0 scr=115098.84
+   POST: tot=235231.77 t1=110439.73 t2=124792.04 preLim=22392.16 lim=57549.42 lapse=102399.87 legH=None legS=None scr=115098.84
+KR0029 unit=백만원 L524 hdr=['구분', '경과조치 적용 전', '적용 후']
+   PRE : tot=6769.55 t1=6015.16 t2=754.39 preLim=0.0 lim=1389.83 lapse=754.39 legH=0.0 legS=0.0 scr=2779.66
+   POST: tot=6769.55 t1=6015.16 t2=754.39 preLim=0.0 lim=1389.83 lapse=754.39 legH=None legS=None scr=None
+KR0032 unit=백만원 L487 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=26673.89 t1=11136.24 t2=15537.65 preLim=7908.29 lim=6721.7 lapse=8815.95 legH=0.0 legS=926.58 scr=13443.4
+   POST: tot=27600.48 t1=11136.24 t2=16464.24 preLim=6981.7 lim=6721.7 lapse=8815.95 legH=None legS=None scr=13443.4
+KR0049 unit=백만원 L307 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=4036.33 t1=1382.85 t2=2653.48 preLim=370.65 lim=1269.56 lapse=2282.83 legH=0.0 legS=344.66 scr=2539.12
+   POST: tot=4036.33 t1=1382.85 t2=2653.48 preLim=25.99 lim=1269.56 lapse=2282.83 legH=None legS=None scr=None
+KR0050 unit=백만원 L542 hdr=['구 분', '적용 전 경과조치']
+   PRE : tot=7114.26 t1=1048.87 t2=6065.39 preLim=2007.83 lim=2338.28 lapse=4057.56 legH=0.0 legS=0.0 scr=4676.56
+   POST: tot=None t1=None t2=None preLim=None lim=None lapse=None legH=None legS=None scr=None
+KR0051 unit=억원 L388 hdr=['구분', '경과조치적용전', '경과조치적용후']
+   PRE : tot=1197.0 t1=1176.0 t2=22.0 preLim=22.0 lim=262.0 lapse=22.0 legH=0.0 legS=0.0 scr=524.0
+   POST: tot=1197.0 t1=1176.0 t2=22.0 preLim=22.0 lim=262.0 lapse=22.0 legH=None legS=None scr=524.0
+KR0068 unit=백만원 L287 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=252154.16 t1=85208.67 t2=166945.49 preLim=166945.49 lim=75055.83 lapse=96078.69 legH=0.0 legS=17932.09 scr=150111.65
+   POST: tot=252154.16 t1=85208.67 t2=166945.49 preLim=166945.49 lim=75055.83 lapse=96078.69 legH=None legS=None scr=150111.65
+KR0069 unit=백만원 L448 hdr=['구 분', '경과조치적용전', '경과조치적용후']
+   PRE : tot=1295525.03 t1=1102591.88 t2=192933.15 preLim=118528.22 lim=311175.55 lapse=74404.93 legH=0.0 legS=0.0 scr=622351.1
+   POST: tot=1295525.03 t1=1102591.88 t2=192933.15 preLim=118528.22 lim=311175.55 lapse=74404.93 legH=None legS=None scr=622351.1
+KR0070 unit=백만원 L386 hdr=['구 분', '적용 전', '적용 후']
+   PRE : tot=18642.88 t1=7386.79 t2=11256.08 preLim=6711.29 lim=8639.41 lapse=4544.79 legH=0.0 legS=632.85 scr=17278.82
+   POST: tot=18642.88 t1=7386.79 t2=11256.08 preLim=6078.44 lim=8639.41 lapse=4544.79 legH=None legS=None scr=17278.82
+KR0071 unit=백만원 L332 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=44851.27 t1=23522.51 t2=21328.75 preLim=6121.98 lim=14131.73 lapse=15206.78 legH=496.5 legS=4132.49 scr=28263.47
+   POST: tot=44851.27 t1=24019.01 t2=20832.26 preLim=1492.99 lim=14131.73 lapse=15206.78 legH=None legS=None scr=28263.47
+KR0072 unit=백만원 L392 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=12214.91 t1=-4058.24 t2=16273.15 preLim=6452.28 lim=7764.66 lapse=9820.87 legH=0.0 legS=0.0 scr=15529.33
+   POST: tot=12214.91 t1=-4058.24 t2=16273.15 preLim=6452.28 lim=7764.66 lapse=9820.87 legH=None legS=None scr=15529.33
+KR0073 unit=백만원 L476 hdr=['구분', '경과조치적용전', '경과조치적용후']
+   PRE : tot=163821.32 t1=83044.6 t2=80776.72 preLim=38286.48 lim=52699.09 lapse=42490.24 legH=11088.99 legS=0.0 scr=105398.18
+   POST: tot=163821.32 t1=94133.59 t2=69687.73 preLim=27197.5 lim=52699.09 lapse=42490.24 legH=None legS=None scr=105398.18
+KR0074 unit=백만원 L298 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=71250.84 t1=52599.23 t2=18651.61 preLim=0.0 lim=10195.19 lapse=18651.61 legH=0.0 legS=0.0 scr=20390.39
+   POST: tot=71250.84 t1=52599.23 t2=18651.61 preLim=0.0 lim=10195.19 lapse=18651.61 legH=None legS=None scr=20390.39
+KR0075 unit=백만원 L418 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=1998.05 t1=1764.19 t2=233.86 preLim=233.86 lim=508.4 lapse=106.31 legH=0.0 legS=0.0 scr=1016.8
+   POST: tot=1998.05 t1=1764.19 t2=233.86 preLim=233.86 lim=508.4 lapse=106.31 legH=None legS=None scr=1016.8
+KR0076 unit=백만원 L425 hdr=['구 분', '경과조치 적용 전', '적용 후']
+   PRE : tot=9313.83 t1=1126.15 t2=8187.68 preLim=3558.34 lim=3707.18 lapse=4629.33 legH=2465.98 legS=0.0 scr=7414.36
+   POST: tot=9313.83 t1=1496.87 t2=7816.96 preLim=1833.8 lim=3707.18 lapse=4629.33 legH=None legS=None scr=7414.36
+KR0079 NO_TFI_ANCHOR
+KR0080 unit=None L377 hdr=['구 분', '경과조치 적용전', '경과조치 적용후']
+   PRE : tot=28984.94 t1=26249.56 t2=2735.39 preLim=2735.39 lim=8215.65 lapse=2719.78 legH=0.0 legS=0.0 scr=16431.29
+   POST: tot=28984.94 t1=26249.56 t2=2735.39 preLim=2735.39 lim=8215.65 lapse=2719.78 legH=None legS=None scr=16431.29
+KR0082 unit=백만원 L562 hdr=['구 분', '적용 전', '경과조치 적용 후']
+   PRE : tot=33004.62 t1=12535.27 t2=20469.35 preLim=2563.95 lim=8124.0 lapse=17905.4 legH=0.0 legS=3135.91 scr=16248.01
+   POST: tot=33004.62 t1=12535.27 t2=20469.35 preLim=2563.95 lim=8124.0 lapse=17905.4 legH=None legS=None scr=16248.01
+KR0083 unit=백만원 L412 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=12269.33 t1=4556.42 t2=7712.91 preLim=10034.79 lim=7712.91 lapse=0.0 legH=400.0 legS=2951.86 scr=15425.82
+   POST: tot=14591.21 t1=4956.42 t2=9634.79 preLim=6682.93 lim=7712.91 lapse=0.0 legH=None legS=None scr=15425.82
+KR0087 NO_TFI_ANCHOR
+KR0094 NO_TFI_ANCHOR
+KR0095 unit=백만원 L434 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=48562.81 t1=26709.04 t2=21853.77 preLim=0.0 lim=10446.96 lapse=21853.77 legH=0.0 legS=0.0 scr=20893.92
+   POST: tot=48562.81 t1=26709.04 t2=21853.77 preLim=0.0 lim=10446.96 lapse=21853.77 legH=None legS=None scr=20893.92
+KR0097 unit=None L341 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=9071.95 t1=759.23 t2=8312.71 preLim=1275.58 lim=3776.78 lapse=7037.13 legH=0.0 legS=0.0 scr=7553.57
+   POST: tot=9071.95 t1=759.23 t2=8312.71 preLim=1275.58 lim=3776.78 lapse=7037.13 legH=None legS=None scr=7553.57
+KR0099 unit=백만원 L345 hdr=['구분', '경과조치 적용 전', '적용 후']
+   PRE : tot=60710.43 t1=37179.23 t2=23531.2 preLim=1308.31 lim=13586.09 lapse=22222.88 legH=498.0 legS=701.95 scr=27172.17
+   POST: tot=60710.43 t1=37677.23 t2=23033.2 preLim=108.36 lim=13586.09 lapse=22222.88 legH=None legS=None scr=27172.17
+KR0100 unit=백만원 L622 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=2161.79 t1=541.05 t2=1620.74 preLim=91.76 lim=683.97 lapse=1528.98 legH=0.0 legS=0.0 scr=1367.93
+   POST: tot=2161.79 t1=541.05 t2=1620.74 preLim=91.76 lim=683.97 lapse=1528.98 legH=None legS=None scr=844.09
+KR0104 unit=백만원 L358 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=74778.19 t1=24246.38 t2=50531.81 preLim=14425.57 lim=17197.57 lapse=36106.24 legH=2500.0 legS=8700.42 scr=34395.15
+   POST: tot=74778.19 t1=26746.38 t2=48031.81 preLim=11925.57 lim=11925.57 lapse=36106.24 legH=None legS=None scr=34395.15
+KR0150 unit=백만원 L521 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=56288.15 t1=56245.0 t2=43.15 preLim=43.15 lim=7172.49 lapse=0.0 legH=0.0 legS=0.0 scr=14345.08
+   POST: tot=56288.15 t1=56245.0 t2=43.15 preLim=43.15 lim=7172.49 lapse=0.0 legH=None legS=None scr=14345.08
+KR1000 unit=백만원 L384 hdr=['구 분', '경과조치적용전', '경과조치적용후']
+   PRE : tot=49206.98 t1=37732.13 t2=11474.85 preLim=10405.18 lim=11676.69 lapse=1069.67 legH=3291.97 legS=0.0 scr=23353.38
+   POST: tot=49206.98 t1=41024.1 t2=8182.88 preLim=7113.21 lim=11676.69 lapse=1069.67 legH=None legS=None scr=23353.38
+KR1010 NO_TFI_ANCHOR
+KR1011 unit=백만원 L359 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=8798.5 t1=1630.15 t2=7168.35 preLim=4346.77 lim=3610.46 lapse=3557.89 legH=0.0 legS=1602.09 scr=7220.92
+   POST: tot=9534.81 t1=1630.15 t2=7904.66 preLim=2744.69 lim=3610.46 lapse=3557.89 legH=None legS=None scr=7220.92
+KR1098 unit=None L439 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=920.69 t1=920.69 t2=0.0 preLim=0.0 lim=213.19 lapse=0.0 legH=0.0 legS=0.0 scr=426.39
+   POST: tot=920.69 t1=920.69 t2=0.0 preLim=0.0 lim=213.19 lapse=0.0 legH=None legS=None scr=426.39
+KR1101 unit=None L441 hdr=['구분', '경과조치적용전', '경과조치적용후']
+   PRE : tot=2716.42 t1=2716.42 t2=None preLim=None lim=None lapse=None legH=None legS=None scr=1117.98
+   POST: tot=2716.42 t1=2716.42 t2=None preLim=None lim=None lapse=None legH=None legS=None scr=1117.98
+KR1102 unit=백만원 L454 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=7373.73 t1=3100.17 t2=4273.56 preLim=0.0 lim=0.0 lapse=0.0 legH=0.0 legS=0.0 scr=4087.48
+   POST: tot=7373.73 t1=3100.17 t2=4273.56 preLim=0.0 lim=0.0 lapse=0.0 legH=0.0 legS=0.0 scr=4087.48
+KR1103 unit=억원 L369 hdr=['구분', '경과조치적용전', '경과조치적용후']
+   PRE : tot=869.0 t1=869.0 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=0.0 legS=0.0 scr=295.0
+   POST: tot=869.0 t1=869.0 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=None legS=None scr=295.0
+KR1104 unit=백만원 L478 hdr=['구분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=579.11 t1=579.11 t2=0.0 preLim=0.0 lim=0.0 lapse=None legH=0.0 legS=0.0 scr=266.56
+   POST: tot=500.56 t1=500.56 t2=0.0 preLim=0.0 lim=0.0 lapse=None legH=0.0 legS=0.0 scr=362.94
+KR1105 unit=백만원 L437 hdr=['구분', '경과조치 적용 전', '경과조치', '적용 후']
+   PRE : tot=54.99 t1=54.99 t2=0.0 preLim=54.99 lim=0.0 lapse=0.0 legH=None legS=None scr=25.82
+   POST: tot=54.99 t1=54.99 t2=0.0 preLim=54.99 lim=0.0 lapse=0.0 legH=None legS=None scr=25.82
+KR1106 unit=백만원 L378 hdr=['구 분', '경과조치전', '경과조치후']
+   PRE : tot=6896.41 t1=6896.41 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=0.0 legS=0.0 scr=3896.51
+   POST: tot=6896.41 t1=6896.41 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=0.0 legS=0.0 scr=3627.26
+KR1107 unit=백만원 L489 hdr=['구분', '경과조치 적용 전', '경과조치', '적용 후']
+   PRE : tot=0.0 t1=0.0 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=0.0 legS=0.0 scr=0.0
+   POST: tot=0.0 t1=0.0 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=None legS=None scr=0.0
+KR1108 unit=None L309 hdr=['구 분', '경과조치 적용 전', '경과조치 적용 후']
+   PRE : tot=46.97 t1=46.97 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=0.0 legS=0.0 scr=20.32
+   POST: tot=46.97 t1=46.97 t2=0.0 preLim=0.0 lim=0.0 lapse=0.0 legH=None legS=None scr=20.32

@@ -2,7 +2,7 @@
 from: orchestrator
 to: publishing
 created: 20261012T0700Z
-status: open
+status: resolved
 route: bugfix
 company: MULTI
 period: 2026.2Q
@@ -39,3 +39,4 @@ owner 지적(2026-10-12, 화가 많이 나 계심 — 빠르고 정확하게): K
 - 재산출 전후(5곳 값·플래그, 나머지 42곳 바이트 동일 증명), tier1 점검 결과(불일치 목록), 파생물·xlsx·공개본 처리, 시험 결과, 커밋 해시. `TODO_publishing.md` Status + `docs/changelog_publishing.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+(orchestrator 종결 2026-10-12) 착수 직후 중단·취소: 「항목 3 폴백」 방안은 규정상 틀린 것으로 조사(Opus, 티켓 20261012T0710Z)에서 확인됨 — 해약환급금 부족분 상당액 중 준비금 초과분은 보완자본 한도 계산에서 제외되므로 보완자본 전체를 분자로 쓰면 안 된다. 코드·마스터 변경 0(미커밋 변경 없음). 대체 티켓: 20261012T0800Z(규정 근거 재정의 반영).

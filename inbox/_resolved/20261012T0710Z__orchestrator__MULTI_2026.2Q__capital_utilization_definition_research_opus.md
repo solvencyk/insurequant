@@ -3,7 +3,7 @@ from: orchestrator
 to: parser
 lane: kics
 created: 20261012T0710Z
-status: open
+status: resolved
 route: verify
 company: MULTI
 period: 2026.2Q
@@ -33,3 +33,4 @@ owner 지시(2026-10-12, 직접 지시 — **Opus 로 규정을 뒤져서 정의
 - 결론(0 이 맞는 회사/틀린 회사 목록), 새 정의 한 문장씩(tier1·tier2), 47사 대조표 요약(차이 난 회사·원인), 화면 문구안, owner 결정 사항 번호 목록, 근거 출처.
 
 ## 답변 (recipient 작성 — 처리 후)
+(parser-kics Opus, orchestrator 종결 2026-10-12) 규정 근거 재정의 완료(`data/_derived/capital_utilization_definition_20261012/definition_memo.md`, 47사 대조 `recompute_47.csv/json`). 재보사 8곳·라이나·메트라이프·AIG tier2 0% 는 규정상 맞음([별표22] Ⅲ.2.마 단서: 해약환급금 부족분 상당액 중 준비금 초과분은 한도 계산 제외), 스위스리는 「미공시」가 아니라 0%, 교보라이프플래닛은 「산출 불가」. 새 정의: tier2 = (보완자본 − 해약환급금 초과분 − 2022년 이전 발행 자본증권) ÷ (경과조치 적용 전 총요구자본×50%, 공시표 「한도 적용 전/한도」 적용후 열), tier1 = 기본자본요건 충족 자본증권 ÷ (총요구자본×10%, 2022년 이전 기발행분 15%; 보완자본형 신종 제외). 배포값 23사(tier2)·다수(tier1) 변경 필요. owner 선택(2026-10-12): 보완자본 반영·기본자본도 전부 → 티켓 20261012T0800Z 로 구현 발주.
