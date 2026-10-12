@@ -1,0 +1,416 @@
+{
+ "inventory_rows": 428,
+ "core_rows": 254,
+ "new_findings": [
+  {
+   "id": "NEW-01",
+   "domain": "PL_breakdown",
+   "code": "KR0005",
+   "company": "흥국화재",
+   "quarters": "2023.2Q",
+   "n_cells": "5",
+   "rule": "Tier-1 HTML 폴백이 3개월 열을 누적으로 적재",
+   "reason": "항목 1·20·22·23·24 마스터 103,053·84,854·84,622·17,589·67,033 = 2분기 단독액(누적 189,046·209,429·209,042·45,314·163,728). 후속 2024.2Q−2024.1Q 비교열로 정확 일치",
+   "evidence": "q2_threemonth_census.csv (s95)",
+   "type": "D"
+  },
+  {
+   "id": "NEW-02",
+   "domain": "PL_breakdown",
+   "code": "KR0068",
+   "company": "한화생명",
+   "quarters": "2023.2Q",
+   "n_cells": "4",
+   "rule": "Tier-1 HTML 폴백이 3개월 열을 누적으로 적재",
+   "reason": "항목 20·22·23·24 = 원 필링 요약 포괄손익계산서 표의 3개월 열(435,963·625,431·112,101·513,329), 누적은 987,882·1,030,823·254,070·776,753. 항목 21 만 다른 열이라 I2 잔차 −90,613(기지 PL_BRIDGE FAIL 의 원인)",
+   "evidence": "s94_is_rows_probe.py KR0068 FY2023_Q2",
+   "type": "D"
+  },
+  {
+   "id": "NEW-03",
+   "domain": "PL_breakdown",
+   "code": "KR0008",
+   "company": "삼성화재",
+   "quarters": "2023.2Q(전기 컬럼 읽기)",
+   "n_cells": "1",
+   "rule": "companies._old_lobcum 불규칙 합계행 오배정",
+   "reason": "전기(전반기) 재보험비용 합계행이 8칸 중 7값이면 일반손익(항목 14)이 +192,855 부풀어 브릿지가 안 닫힌다(정확합산 리더로는 −0.2). 현재 생산 경로(당기 컬럼 6값 행)에는 영향 없음 — 전기 컬럼 읽기를 도입할 때만 위험",
+   "evidence": "s81_samsung_old_probe.py · plprior.sumcheck_lobcum",
+   "type": "D"
+  },
+  {
+   "id": "NEW-04",
+   "domain": "PL_breakdown",
+   "code": "KR0001",
+   "company": "메리츠화재해상보험",
+   "quarters": "2023.1Q(최신 블록)",
+   "n_cells": "1",
+   "rule": "assemble() 의 v[16]=abs(v[16]) 정규화",
+   "reason": "순이익 방향(음수) 기타사업비용(최신 비교열 −11,048.07, 원 공시 −12,370.22)의 부호가 사라져 최신 블록 브릿지가 11,047.6 어긋난다. 현행은 owner gold(부호 보존)로 우회",
+   "evidence": "s79_item16_sign.py · s80_fsapi_rows.py",
+   "type": "E"
+  },
+  {
+   "id": "NEW-05",
+   "domain": "게이트",
+   "code": "",
+   "company": "(validate_master_tables)",
+   "quarters": "2023~",
+   "n_cells": "27",
+   "rule": "tax22_src 소스 대조가 원 필링 FS-API 캐시 고정",
+   "reason": "Tier-1 최신 채택 후보에서 가짜 FAIL 27건 — 최신 비교열 채택 시 소스 대조도 같은 컬럼을 읽어야 함",
+   "evidence": "candrun/PL_TIER1.master_tables.txt",
+   "type": "E"
+  },
+  {
+   "id": "NEW-06",
+   "domain": "게이트",
+   "code": "",
+   "company": "(BS_KICS · PL_OCI_VS_BS_AOCI · R-LIC1)",
+   "quarters": "2023.4Q 외",
+   "n_cells": "23",
+   "rule": "BS 연말 최신 채택의 부수 경고",
+   "reason": "기준선이 원 공시 기준이라 최신 채택 시 BS_KICS_BASELINE_BREAK +11/-3 · PL_OCI_VS_BS_AOCI +8 · R-LIC1 +2(롯데·교보 2023.4Q, 이 둘은 채택 보류로 제외)",
+   "evidence": "candrun/RECOMMENDED.* · BS_YEAREND.*",
+   "type": "E"
+  },
+  {
+   "id": "NEW-07",
+   "domain": "ILP",
+   "code": "KR0074",
+   "company": "라이나생명보험",
+   "quarters": "2023.2Q~2023.4Q",
+   "n_cells": "6",
+   "rule": "ILP 항목 10~15 QoQ 점프 룰 없음",
+   "reason": "항목 14 4,195.29 → 2,297.78(재작성 2023.3Q) → 4,690.10, 항목 15 4,765.89 → 2,843.84 → 5,249.05 — 비단조인데 어떤 룰도 못 본다",
+   "evidence": "s93_ilp_labels.py",
+   "type": "E"
+  },
+  {
+   "id": "NEW-08",
+   "domain": "IFRS17_BS",
+   "code": "(비FS-API 10사)",
+   "company": "악사·하나손보·신한이지·라이나·아이엠라이프·AIA·메트라이프·처브·교보라이프플래닛·IBK연금",
+   "quarters": "2022.4Q (범위 밖)",
+   "n_cells": "30",
+   "rule": "17BS 2022.4Q 기준 혼재",
+   "reason": "마스터는 FY2022 원 공시(IFRS4)값, FY2023 감사보고서 전기 컬럼은 IFRS17 재작성(예 AIA 자산 17.51→16.54조, 부채 15.83→12.46조). 티켓 범위(2023.1Q~)를 벗어나 판정은 안 했다",
+   "evidence": "bs_4q_scan_xml.csv (s19)",
+   "type": "A"
+  },
+  {
+   "id": "NEW-09",
+   "domain": "CSM_waterfall",
+   "code": "(삼성생명·DB생명)",
+   "company": "삼성생명 2024.2Q · DB생명 2024.1Q",
+   "quarters": "yoy 경고 2건",
+   "n_cells": "2",
+   "rule": "QOQ_DELTA_WARN(yoy) = 빈티지 혼합의 증상",
+   "reason": "이자부리 900→2,276, 82→154 경고가 최신 채택(2023.2Q·2023.1Q)으로 사라진다 — 경고를 빈티지 혼합 탐지 신호로 쓸 수 있다. QOQ_DELTA_WARN 은 2024+ 만 본다",
+   "evidence": "candrun/RECOMMENDED.master_tables.txt",
+   "type": "E"
+  }
+ ],
+ "type_all_original": {
+  "A": 46,
+  "B": 15,
+  "E": 161,
+  "C": 100,
+  "D": 106
+ },
+ "type_core_original": {
+  "A": 24,
+  "B": 11,
+  "E": 46,
+  "C": 90,
+  "D": 83
+ },
+ "type_all_after": {
+  "A": 52,
+  "B": 15,
+  "E": 161,
+  "C": 100,
+  "D": 100
+ },
+ "type_core_after": {
+  "A": 30,
+  "B": 11,
+  "E": 46,
+  "C": 90,
+  "D": 77
+ },
+ "cross_filing_candidates": 72,
+ "census_blocks": 529,
+ "verdict_blocks_by_domain": {
+  "CSM_waterfall": {
+   "gold 충돌": 20,
+   "최신 채택(예외 해소)": 2,
+   "변화 없음": 173,
+   "비교 컬럼 추출 불가": 67,
+   "현행 유지": 24,
+   "최신 채택(진짜 재작성 †)": 7,
+   "후보 미검증(도구 공백)": 8,
+   "둘 다 불가(현행 유지+목록)": 1
+  },
+  "IFRS17_BS": {
+   "조건부(동반 블록 필요)": 2,
+   "최신 채택(진짜 재작성 †)": 22,
+   "재판정 안 함(이전 라운드)": 1,
+   "후보 미검증(도구 공백)": 1
+  },
+  "ILP": {
+   "변화 없음": 31,
+   "비교 컬럼 추출 불가": 14,
+   "최신 채택(예외 해소)": 1
+  },
+  "PL_breakdown": {
+   "gold 충돌": 39,
+   "최신 채택(예외 해소)": 4,
+   "변화 없음": 2,
+   "후보 미검증(도구 공백)": 98,
+   "재판정 안 함(이전 라운드)": 6,
+   "최신 채택(진짜 재작성 †)": 3,
+   "비교 컬럼 추출 불가": 3
+  }
+ },
+ "verdict_blocks_total": {
+  "gold 충돌": 59,
+  "최신 채택(예외 해소)": 7,
+  "변화 없음": 206,
+  "비교 컬럼 추출 불가": 84,
+  "현행 유지": 24,
+  "최신 채택(진짜 재작성 †)": 32,
+  "후보 미검증(도구 공백)": 107,
+  "둘 다 불가(현행 유지+목록)": 1,
+  "재판정 안 함(이전 라운드)": 7,
+  "조건부(동반 블록 필요)": 2
+ },
+ "verdict_cells_total": {
+  "gold 충돌": 346,
+  "둘 다 불가(현행 유지+목록)": 2,
+  "변화 없음": 0,
+  "비교 컬럼 추출 불가": 0,
+  "재판정 안 함(이전 라운드)": 1,
+  "조건부(동반 블록 필요)": 12,
+  "최신 채택(예외 해소)": 93,
+  "최신 채택(진짜 재작성 †)": 149,
+  "현행 유지": 120,
+  "후보 미검증(도구 공백)": 563
+ },
+ "adopt_cells_changed_vs_filled": {
+  "CSM_waterfall": [
+   28,
+   0
+  ],
+  "IFRS17_BS": [
+   70,
+   0
+  ],
+  "ILP": [
+   1,
+   0
+  ],
+  "PL_breakdown": [
+   116,
+   27
+  ]
+ },
+ "case_rows": 254,
+ "case_verdicts": {
+  "판정 대상 아님(죽은 면제)": 5,
+  "gold 충돌": 48,
+  "최신 채택(예외 해소)": 9,
+  "gold 충돌 (번들: gold 충돌×2, 최신 채택(예외 해소)×1)": 1,
+  "후보 미검증(도구 공백) (번들: 후보 미검증(도구 공백)×2, 둘 다 불가(현행 유지+목록)×1)": 1,
+  "재판정 안 함(이전 라운드)": 28,
+  "후보 미검증(도구 공백)": 107,
+  "변화 없음": 3,
+  "비교 컬럼 추출 불가": 4,
+  "현행 유지": 13,
+  "최신 채택(진짜 재작성 †)": 32,
+  "둘 다 불가(현행 유지+목록)": 1,
+  "조건부(동반 블록 필요)": 2
+ },
+ "q2_threemonth_cells": [
+  {
+   "kr": "KR0005",
+   "name": "흥국화재",
+   "item": "1",
+   "master": "103053.0",
+   "latest_cum6m": "189046.0",
+   "latest_2q_only": "103053.0",
+   "near_cum": "0.4549",
+   "near_3m": "0.0",
+   "orig_fsapi": "False",
+   "basis": "OFS",
+   "cls": "3M_COLUMN?"
+  },
+  {
+   "kr": "KR0005",
+   "name": "흥국화재",
+   "item": "20",
+   "master": "84854.0",
+   "latest_cum6m": "209429.0",
+   "latest_2q_only": "84854.0",
+   "near_cum": "0.5948",
+   "near_3m": "0.0",
+   "orig_fsapi": "False",
+   "basis": "OFS",
+   "cls": "3M_COLUMN?"
+  },
+  {
+   "kr": "KR0005",
+   "name": "흥국화재",
+   "item": "22",
+   "master": "84622.0",
+   "latest_cum6m": "209042.0",
+   "latest_2q_only": "84622.0",
+   "near_cum": "0.5952",
+   "near_3m": "0.0",
+   "orig_fsapi": "False",
+   "basis": "OFS",
+   "cls": "3M_COLUMN?"
+  },
+  {
+   "kr": "KR0005",
+   "name": "흥국화재",
+   "item": "23",
+   "master": "17589.0",
+   "latest_cum6m": "45314.0",
+   "latest_2q_only": "17589.0",
+   "near_cum": "0.6118",
+   "near_3m": "0.0",
+   "orig_fsapi": "False",
+   "basis": "OFS",
+   "cls": "3M_COLUMN?"
+  },
+  {
+   "kr": "KR0005",
+   "name": "흥국화재",
+   "item": "24",
+   "master": "67033.0",
+   "latest_cum6m": "163728.0",
+   "latest_2q_only": "67033.0",
+   "near_cum": "0.5906",
+   "near_3m": "0.0",
+   "orig_fsapi": "False",
+   "basis": "OFS",
+   "cls": "3M_COLUMN?"
+  }
+ ],
+ "recommended_set": {
+  "csm_only": [
+   "KR0069 2023.2Q †",
+   "KR0082 2023.1Q †",
+   "KR0087 2023.1Q †",
+   "KR1000 2025.1Q †",
+   "KR0104 2023.1Q 예외 해소"
+  ],
+  "joint_csm_pl": [
+   "KR0008 2023.1Q †",
+   "KR0008 2023.2Q †",
+   "KR0008 2023.3Q †",
+   "KR0001 2023.3Q 예외 해소"
+  ],
+  "pl_only": [
+   "KR0011 2023.1Q 예외 해소",
+   "KR0011 2023.2Q 예외 해소",
+   "KR0011 2023.3Q 예외 해소"
+  ],
+  "bs_yearend_blocks": 21,
+  "bs_kr0075_master_error": 1,
+  "ilp_separately_tested": [
+   "KR0097 2024.4Q 예외 해소"
+  ],
+  "candidate_cells": {
+   "csm": 29,
+   "pl_changed": 116,
+   "pl_filled": 27,
+   "bs": 65,
+   "ilp_effective": 1
+  }
+ },
+ "gate_results_recommended_vs_live": {
+  "master_tables.pl_bridge": "3660P/29F/2741S -> 3674P/25F/2731S",
+  "master_tables.csm_amort_identity": "383P/5PIN -> 386P/2PIN (DB x3 LEDGER_STALE)",
+  "master_tables.qoq_warn": "267 -> 266",
+  "master_tables.oci_vs_bs_aoci": "14 -> 22 (YELLOW)",
+  "data_contract": "RED 0 data + 3 xlsx drift (17BS, CSM워터폴, 손익분해PL); YELLOW 152 -> 160 (BS_KICS_BASELINE_BREAK +11/-3)",
+  "csm_continuity/ilp_portfolio/ilp_lic/nb_csm/csm_waterfall": "unchanged",
+  "attribution": {
+   "SAMSUNG": "pl_bridge PASS +6, FAIL unchanged",
+   "MERITZ3": "pl_bridge FAIL -1",
+   "DB": "pl_bridge FAIL -3, csm_amort PIN 5->2"
+  }
+ },
+ "lina_csm_2023_1Q_2Q": {
+  "verdict": "현행 유지",
+  "reason": "latest comparative prints (FY2024_Q1 p52, FY2024_Q2 p77) equal the held old-basis rows; restated basis first printed for 2023.3Q (FY2024_Q3 p53)",
+  "detail": {
+   "2023.1Q": {
+    "held": [
+     22082.47318,
+     1736.43148,
+     194.99464,
+     -219.77121,
+     -1262.6213,
+     22531.50678
+    ],
+    "latest_comparative": [
+     22082.47318,
+     1736.43148,
+     194.99464,
+     -219.77121,
+     -1262.6213,
+     22531.50678
+    ],
+    "source": "FY2024_Q1 p52 (전분기)",
+    "held_equals_latest": true,
+    "opening_vs_master_2023_4Q": [
+     22082.47318,
+     35264.0
+    ],
+    "wfy_would_fire": true
+   },
+   "2023.2Q": {
+    "held": [
+     22082.47318,
+     3547.84635,
+     399.18339,
+     -1375.68662,
+     -2561.10669,
+     22092.70962
+    ],
+    "latest_comparative": [
+     22082.47317,
+     3547.84635,
+     399.18339,
+     -1375.68662,
+     -2561.10669,
+     22092.7096
+    ],
+    "source": "FY2024_Q2 p77 (전반기)",
+    "held_equals_latest": true,
+    "opening_vs_master_2023_4Q": [
+     22082.47317,
+     35264.0
+    ],
+    "wfy_would_fire": true
+   }
+  }
+ },
+ "blind_spots": {
+  "L1": "PL Tier-2 comparative-column reader missing except 삼성화재/DB(OLD)/메리츠(Format-B) -> block cannot be rebuilt as a whole",
+  "L2": "closure unit is company x FY bundle (WFY/CONT) - no per-block gate",
+  "L3": "vintage mixing (original / next-year interim / next-year annual / 2nd restatement) has no detector; QOQ_DELTA_WARN(yoy) is a symptom",
+  "L4": "tax22_src reads the original-filing FS-API cache",
+  "L5": "companies._old_lobcum mis-assigns irregular (7-of-8) total rows",
+  "L6": "assemble() abs(item16) drops the sign of a net-income-direction 기타사업비용",
+  "L7": "BS year-end items 4/14/20/21/30/31 have no closure rule (A=L+E covers 1-3 only)",
+  "L8": "BS_KICS_BASELINE_BREAK / PL_OCI_VS_BS_AOCI / R-LIC1 baselines are original-filing basis",
+  "L9": "no reader for non-FS-API BS year-end items beyond the 3 totals",
+  "L10": "ILP items 10-15 have no QoQ jump rule; CSM_WATERFALL_VS_ILP_CSM_STOCK is not wired",
+  "L11": "no expiry alert for WFY_EXCEPTIONS made dead by a latest-column adoption (농협생명 FY2023 + 5 dead)",
+  "L12": "no YTD monotonicity check; QOQ_DELTA_WARN covers 2024+ only"
+ }
+}

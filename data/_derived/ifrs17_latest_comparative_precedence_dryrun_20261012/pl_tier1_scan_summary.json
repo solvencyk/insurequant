@@ -1,0 +1,18 @@
+{
+ "cells": {
+  "SAME_ALL_noorig": 120,
+  "RESTATED_STALE": 840,
+  "ONLY_LATER": 548,
+  "SAME_ALL": 2591,
+  "MASTER_NEQ_ORIG": 12,
+  "NO_LATER_blocks": 50,
+  "RESTATED_ADOPTED": 18
+ },
+ "blocks_with_class": {
+  "RESTATED_STALE": 139,
+  "ONLY_LATER": 58,
+  "MASTER_NEQ_ORIG": 11,
+  "RESTATED_ADOPTED": 11
+ },
+ "company_quarters": 234
+}

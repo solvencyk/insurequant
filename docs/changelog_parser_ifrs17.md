@@ -3,6 +3,19 @@
 > Last updated: 2026-10-12 · Stage 2/5 — parser (ifrs17 lane)
 > Prompt: docs/agents/claude-agent-parser.md (shared) + docs/domains/claude-agent-ifrs17.md · TODO: TODO_parser_ifrs17.md
 
+## 2026-10-12 (11차: 최신 비교열 우선 원칙 드라이런 — 읽기 전용, 티켓 20261012T1930Z)
+
+커밋은 `git log -1 -- data/_derived/ifrs17_latest_comparative_precedence_dryrun_20261012`. push 안 함. 공유 티켓 미수정(오케스트레이터가 종결). 서브에이전트·docling 안 씀. 산출·증거 `data/_derived/ifrs17_latest_comparative_precedence_dryrun_20261012/`(재현 명령은 `s100_consolidate.py` 머리 주석, 수치 전부 `dryrun_stats.json`). 원칙(owner): 「최신 공시가 그 분기를 다시 보여 준 컬럼(전기·전년동기 비교열)을 우선하되, 검증 단위까지 산술이 닫히지 않으면 이전 공시 값」.
+
+- **쓰기 0**: 마스터·등재부·골든·xlsx·`public_exports`·HTML·viz 는 안 썼다. 입력 29개 해시를 시작·끝에 비교해 `insurequant_master_tables.xlsx` 하나만 달랐고 그것은 publishing 세션의 K-ICS 소진율 시트 재동기화(21:13~14, 커밋됨)다. 후보 마스터는 `cand/` 임시 사본이고 게이트는 `gate_overlay.py`(저장소 쓰기를 기록만 하고 버리는 덮개)로 살아 있는 코드를 그대로 돌렸다(`validate_master_tables` 는 `--no-build`). 큰 후보 마스터(수 MB)는 커밋하지 않고 재생성 명령만 남겼다.
+- **검증 단위**: 회사×FY 번들(WFY 는 FY 안 기초, CONT 는 직전 4Q 기말을 묶는다). 블록은 통째로만 교체하고, 도메인 간 항등식(PL 항목 4 ↔ 워터폴 항목 5, BS 항목 20 ↔ ILP 항목 15)이 걸리면 짝을 같이 채택해야 닫힌 것으로 봤다. 생산 Tier-2 리더를 전기 컬럼으로 플립해(`companies._old_prior` 부정 · 메리츠 Format-B 둘째 표) PL 블록 전체를 만들었고(삼성화재·DB·메리츠), 같은 필링의 CSM 전기 컬럼과 PL 항목 4 가 독립으로 0.03억 이내에서 닫히는 것을 읽기 타당성 증명으로 썼다.
+- **분류**(`classification.csv`): 코어 예외·보류 254건 ⓐ 24 → **30**(DB손보 PL_BRIDGE 3 · 메리츠 2023.2Q·3Q · 한화손해 2023.2Q 를 ⓓ 에서 재분류) · ⓑ 11 · ⓒ 90 · ⓓ 83 → 77 · ⓔ 46. 신규 발견 9건 별도.
+- **판정**(`census_blocks.csv` 529블록): 최신 채택 **39**(† 32 · 예외 해소 7; 마스터 셀 CSM 29 · PL 143[변경 116 + 공란 27] · BS 65 · ILP 1) · gold 충돌 59 · 현행 유지 24 · 둘 다 불가 1 · 조건부 2(롯데·교보 BS 2023.4Q, ILP 동반) · 후보 미검증(도구 공백) 107 · 이전 라운드 7 · 변화 없음 206 · 비교 컬럼 추출 불가 84. ⓐ 30건 중 9건 해소: DB손보 PL_BRIDGE 3 + CSM_AMORT PIN 3 · 메리츠 2023.3Q · 농협생명 FY2023 WFY · 하나생명 2024.4Q ILP 대 워터폴(−57.2억).
+- **추천 세트 임시 적재 게이트**: `pl_bridge` 3660P/29F → 3674P/25F · `csm_amort_identity` PIN 5 → 2(DB 3 은 `LEDGER_STALE`) · 데이터 RED 0(xlsx 드리프트 3시트만) · 연속성·ILP 2종·NB·워터폴 불변 · 부수 YELLOW(`BS_KICS_BASELINE_BREAK` +11/−3 · `PL_OCI_VS_BS_AOCI` +8). 귀속: 삼성화재 PASS +6 · 메리츠 2023.3Q FAIL −1 · DB FAIL −3.
+- **라이나 CSM 2023.1Q·2Q**: 새 증거 없음, 보류 유지. 최신 비교열(FY2024_Q1 p52 · FY2024_Q2 p77)이 보류 행과 숫자까지 같고 기초 22,082.5억 ≠ 마스터 2023.4Q 35,264.0억(WFY 발화, 격차 13,181.5억). 재작성 기준은 2023.3Q 비교열(FY2024_Q3 p53)에서야 처음 인쇄 → 소급 계산 금지.
+- **신규 발견**: 2023.2Q HTML 폴백 Tier-1 이 3개월 열을 누적으로 적재(흥국화재 5셀 정확 일치 · 한화생명 4셀 원 필링 표 확인, 기지 FAIL −90,613 의 원인) · `_old_lobcum` 불규칙 합계행 오배정(전기 컬럼 읽기에서만 위험) · `abs(item16)` 이 음수 기타사업비용 부호를 지움 · `tax22_src` 원 캐시 고정 · BS 최신 채택의 기준선 거짓 이탈 · 라이나 ILP 항목 14·15 비단조 · 17BS 2022.4Q IFRS4/17 혼재 30셀(범위 밖) · QOQ_DELTA_WARN(yoy) 가 빈티지 혼합의 증상. 룰 사각 12개(L1~L12)는 `dryrun_stats.json` `blind_spots`.
+- **안 건드린 것·주의**: 후보 미검증은 부정 판정이 아니라 「전기 컬럼 리더가 없어 못 만들었다」이다. 적재 경로는 owner 결정(마스터만 고치면 `build_pl()` 이 되돌리므로 gold-overlay 등재 또는 빌더 전기 컬럼 리더). 보고용 `summary.md` 는 하니스가 보고서 파일 쓰기를 막아 만들지 않고 이 항목과 최종 보고에 담았다. 작업 중 실수: 표준입력 헤레독 파이썬을 여러 번 실행했고(읽기 전용 출력, 저장소 쓰기 없음) 그중 하나가 폭주해 PID 45892 를 직접 종료했다.
+
 ## 2026-10-12 (10차: 스위스리 KR1102 2026.1Q ILP 합계 전체 행 합 적재, 티켓 20261012T1450Z)
 
 커밋 `4147fc1`. push 안 함. 공유 티켓 미수정(오케스트레이터가 종결). 서브에이전트·docling 안 씀(PDF 텍스트층 + 150dpi 렌더링). owner 결정 2026-10-12 채팅 「2는 계산값 넣으면 안 되나?」(`TODO.md` owner 결정 ③) — 예외 등재 대신 계산값 적재. 증빙·백업·게이트 전후 `data/_derived/ilp_kr1102_derived_load_20261012/`(`evidence.md`).

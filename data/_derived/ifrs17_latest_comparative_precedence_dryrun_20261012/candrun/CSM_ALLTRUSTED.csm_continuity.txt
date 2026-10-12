@@ -1,0 +1,10 @@
+[csm_continuity] companies=44 flagged=6 red=5
+  RED KR0003 롯데손해보험: WITHIN_FY_OPENING_DRIFT — FY2024 기초 CSM 변동 23204~23861 (>1%) — 분기 간 basis/period mis-pick 의심
+  YELLOW KR0009 현대해상: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 83515~88281 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  RED KR0070 에이비엘생명보험: WITHIN_FY_OPENING_DRIFT — FY2024 기초 CSM 변동 8695~9288 (>1%) — 분기 간 basis/period mis-pick 의심
+  RED KR0071 흥국생명보험: WITHIN_FY_OPENING_DRIFT — FY2024 기초 CSM 변동 21737~22427 (>1%) — 분기 간 basis/period mis-pick 의심
+  YELLOW KR0073 교보생명보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 54378~55338 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  YELLOW KR0073 교보생명보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2024 기초 CSM 변동 56644~58249 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  RED KR0073 교보생명보험: WITHIN_FY_OPENING_DRIFT — FY2025 기초 CSM 변동 55085~64381 (>1%) — 분기 간 basis/period mis-pick 의심
+  RED KR0099 KB라이프생명: WITHIN_FY_OPENING_DRIFT — FY2023 기초 CSM 변동 31328~33596 (>1%) — 분기 간 basis/period mis-pick 의심
+[written] C:\Users\sangwook.cho\Desktop\insurequant\data\dart\viz\csm_continuity_validation.json
