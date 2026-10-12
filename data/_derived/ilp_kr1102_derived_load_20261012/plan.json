@@ -1,0 +1,264 @@
+{
+ "stamp": "20261012T0748Z",
+ "ticket": "inbox/parser/20261012T1450Z__orchestrator__KR1102_2026.1Q__ilp_total_derived_load.md",
+ "company": "KR1102",
+ "quarter": "2026.1Q",
+ "how": "derived_sum_of_rows",
+ "note": "인쇄 합계는 Indirect-Par 행 제외, 전체 행 합으로 적재(owner 2026-10-12)",
+ "cells": [
+  {
+   "item": 1,
+   "항목명": "일반모형_최선추정부채",
+   "before": null,
+   "after": -12221.0
+  },
+  {
+   "item": 2,
+   "항목명": "일반모형_위험조정",
+   "before": null,
+   "after": 794.0
+  },
+  {
+   "item": 3,
+   "항목명": "일반모형_보험계약마진",
+   "before": null,
+   "after": 2200.0
+  },
+  {
+   "item": 4,
+   "항목명": "변동수수료접근법_최선추정부채",
+   "before": null,
+   "after": 0.0
+  },
+  {
+   "item": 5,
+   "항목명": "변동수수료접근법_위험조정",
+   "before": null,
+   "after": 0.0
+  },
+  {
+   "item": 6,
+   "항목명": "변동수수료접근법_보험계약마진",
+   "before": null,
+   "after": 0.0
+  },
+  {
+   "item": 7,
+   "항목명": "보험료배분접근법_보험부채",
+   "before": null,
+   "after": 0.0
+  },
+  {
+   "item": 8,
+   "항목명": "보험부채_합계",
+   "before": null,
+   "after": -9227.0
+  }
+ ],
+ "rows_read": {
+  "life": {
+   "rows": [
+    {
+     "portfolio": "무배당사망",
+     "kind": "Non-Par",
+     "bel_ra_csm": [
+      -297,
+      19,
+      30
+     ]
+    },
+    {
+     "portfolio": "무배당건강",
+     "kind": "Non-Par",
+     "bel_ra_csm": [
+      -2367,
+      294,
+      166
+     ]
+    },
+    {
+     "portfolio": "무배당사망",
+     "kind": "Indirect-Par",
+     "bel_ra_csm": [
+      -4842,
+      50,
+      1207
+     ]
+    }
+   ],
+   "printed_total": [
+    -2664,
+    313,
+    197
+   ]
+  },
+  "nonlife": {
+   "rows": [
+    {
+     "portfolio": "무배당상해",
+     "kind": "Non-Par",
+     "bel_ra_csm": [
+      -78,
+      5,
+      41
+     ]
+    },
+    {
+     "portfolio": "무배당질병",
+     "kind": "Non-Par",
+     "bel_ra_csm": [
+      -1979,
+      238,
+      194
+     ]
+    },
+    {
+     "portfolio": "무배당질병",
+     "kind": "Indirect-Par",
+     "bel_ra_csm": [
+      -1914,
+      20,
+      310
+     ]
+    },
+    {
+     "portfolio": "일반",
+     "kind": "Non-Par",
+     "bel_ra_csm": [
+      -751,
+      165,
+      252
+     ]
+    },
+    {
+     "portfolio": "자동차",
+     "kind": "Non-Par",
+     "bel_ra_csm": [
+      7,
+      3,
+      0
+     ]
+    }
+   ],
+   "printed_total": [
+    -2801,
+    411,
+    487
+   ]
+  }
+ },
+ "derived": {
+  "life_sum": [
+   -7506,
+   363,
+   1403
+  ],
+  "nonlife_sum": [
+   -4715,
+   431,
+   797
+  ],
+  "total": [
+   -12221,
+   794,
+   2200
+  ],
+  "printed_totals_sum": [
+   -5465,
+   724,
+   684
+  ],
+  "footing": {
+   "life": {
+    "rows_excluding_indirect": [
+     -2664,
+     313,
+     196
+    ],
+    "printed_total": [
+     -2664,
+     313,
+     197
+    ],
+    "diff": [
+     0,
+     0,
+     -1
+    ]
+   },
+   "nonlife": {
+    "rows_excluding_indirect": [
+     -2801,
+     411,
+     487
+    ],
+    "printed_total": [
+     -2801,
+     411,
+     487
+    ],
+    "diff": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  "corroboration": {
+   "csm_after_release_narrative": 2200,
+   "csm_item3_plus_item6": 2200,
+   "ra_narrative": 794,
+   "ra_item2_plus_item5": 794,
+   "life_longterm_csm_narrative": 1948,
+   "life_longterm_csm_row_sum": 1948,
+   "life_longterm_csm_if_printed_life_total_used": 1949,
+   "life_longterm_ra_row_sum_lrc_only": 626,
+   "life_longterm_ra_narrative": 635,
+   "life_longterm_bel_row_sum_lrc_only": -11477,
+   "life_longterm_bel_narrative": -6550
+  }
+ },
+ "neighbours": {
+  "2025.3Q": {
+   "1": -9540.0,
+   "2": 645.0,
+   "3": 2915.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0,
+   "7": 0.0,
+   "8": -5980.0
+  },
+  "2025.4Q": {
+   "1": -10309.0,
+   "2": 685.0,
+   "3": 2209.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0,
+   "7": 0.0,
+   "8": -7415.0
+  },
+  "2026.2Q": {
+   "1": -12965.0,
+   "2": 744.0,
+   "3": 2155.0,
+   "4": 0.0,
+   "5": 0.0,
+   "6": 0.0,
+   "7": 0.0,
+   "8": -10066.0
+  },
+  "csm_waterfall_2025.4Q_closing": 2208.53602
+ },
+ "baseline": {
+  "master_sha256": "39fb24ac8184aaf634c772def363b0c4f2a4dd610a3b9ec2a94be5a53afe36ba",
+  "master_rows": 6335,
+  "prov_sha256": "631a0fb10e1416b795b406a1bf8584020148098f7dfadb3dcf772ca735fd15ea"
+ },
+ "candidate": {
+  "master_sha256": "00ec416699adddb43b75a4626591679e00fbb92a137b54290910a1b50afe72dd",
+  "master_rows": 6343,
+  "prov_sha256": "246c600220835f06227af22d7a7982e3f273b9712d974c139d0d62d755943172"
+ }
+}

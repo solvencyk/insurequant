@@ -41379,6 +41379,282 @@
      "used": true
     }
    ]
+  },
+  {
+   "company_code": "KR1102",
+   "quarter": "2026.1Q",
+   "item_block": "lrc_model_table_2-4",
+   "source_id": "PDF",
+   "as_of_date": "2026-03-31",
+   "source_file": "data/disclosure/FY2026_Q1/raw/KR1102_스위스리아시아.pdf",
+   "page": 9,
+   "table": null,
+   "table_label": "<2026년 1분기>",
+   "table_year": 2026,
+   "table_year_src": "label",
+   "unit_in_source": "억원",
+   "printed_run": null,
+   "run_kind": "two_sections_row_sum",
+   "text_source": "pymupdf",
+   "items_eok": {
+    "1": -12221.0,
+    "2": 794.0,
+    "3": 2200.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": -9227.0
+   },
+   "item9": null,
+   "item9_evidence": null,
+   "flags": [
+    "derived_sum_of_rows",
+    "printed_total_excludes_indirect_par",
+    "sum_of_life_and_nonlife_sections"
+   ],
+   "evidence": "PDF p9 2-4 <2026년 1분기> (단위 억원): 생명 3행 (Non-Par 무배당사망 (297)·19·30 / 무배당건강 (2,367)·294·166 / Indirect-Par 무배당사망 (4,842)·50·1,207) + 손해 5행 (Non-Par 무배당상해 (78)·5·41 / 무배당질병 (1,979)·238·194 / Indirect-Par 무배당질병 (1,914)·20·310 / 일반 (751)·165·252 / 자동차 7·3·0) 의 일반모형 열을 전 행 합산: 최선추정부채 -12,221 · 위험조정 794 · 보험계약마진 2,200 (변동수수료접근법·보험료배분접근법은 전 행 '-' = 0). 인쇄 합계 행은 두 절 모두 Indirect-Par 행을 뺀 값이다(생명 (2,664)·313·197, 손해 (2,801)·411·487; 합 (5,465)·724·684). p6 2-2 서술 대조: 보험계약마진 2,353억 중 153억 상각 → 2,353 - 153 = 2,200 = 항목 3+6; 잔여위험조정 794억 = 항목 2+5; 생명 및 장기 보험계약마진 1,948억 = 생명 전 행 + 장기손해 3행(Indirect 포함) 합.",
+   "how": "derived_sum_of_rows",
+   "note": "인쇄 합계는 Indirect-Par 행 제외, 전체 행 합으로 적재(owner 2026-10-12)",
+   "owner_decision": {
+    "at": "2026-10-12",
+    "channel": "chat",
+    "quote": "2는 계산값 넣으면 안 되나?",
+    "ticket": "inbox/parser/20261012T1450Z__orchestrator__KR1102_2026.1Q__ilp_total_derived_load.md",
+    "instead_of": "R2_CENSUS exemption registration (DOCUMENTED_EXCEPTIONS)"
+   },
+   "published_in": "FY2026_Q1 경영공시 2-4",
+   "basis": "own_filing",
+   "basis_note": "basis=own_filing keeps scripts/build_master_xlsx.py::_ilp_lrc_label working (label '해당 분기 공시'); the derivation is carried by how/flags/note -- the xlsx 비고 column does not know `how` yet (publishing)",
+   "alternatives": [
+    {
+     "role": "own",
+     "fy": "FY2026_Q1",
+     "page": 9,
+     "label": "<2026년 1분기>",
+     "unit": "억원",
+     "vec_eok": {
+      "1": -5465.0,
+      "2": 724.0,
+      "3": 684.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0
+     },
+     "footing": "printed_total_excludes_indirect_par",
+     "footing_exception": null,
+     "usable": false,
+     "used": false,
+     "reason_not_used": "the printed 합계 rows of both sections omit the Indirect-Par portfolio (owner 2026-10-12: load the sum of all rows instead)"
+    },
+    {
+     "role": "own_row_sum",
+     "fy": "FY2026_Q1",
+     "page": 9,
+     "label": "<2026년 1분기>",
+     "unit": "억원",
+     "vec_eok": {
+      "1": -12221.0,
+      "2": 794.0,
+      "3": 2200.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0
+     },
+     "footing": "ok",
+     "footing_exception": null,
+     "usable": true,
+     "used": true
+    }
+   ],
+   "sections": {
+    "life": {
+     "page": 9,
+     "run": [
+      -2664.0,
+      313.0,
+      197.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "vec": {
+      "1": -7506.0,
+      "2": 363.0,
+      "3": 1403.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0
+     },
+     "footing": "printed_total_excludes_indirect_par",
+     "rows": [
+      {
+       "portfolio": "무배당사망",
+       "kind": "Non-Par",
+       "bel_ra_csm": [
+        -297,
+        19,
+        30
+       ]
+      },
+      {
+       "portfolio": "무배당건강",
+       "kind": "Non-Par",
+       "bel_ra_csm": [
+        -2367,
+        294,
+        166
+       ]
+      },
+      {
+       "portfolio": "무배당사망",
+       "kind": "Indirect-Par",
+       "bel_ra_csm": [
+        -4842,
+        50,
+        1207
+       ]
+      }
+     ],
+     "printed_total_bel_ra_csm": [
+      -2664,
+      313,
+      197
+     ],
+     "rows_excluding_indirect_bel_ra_csm": [
+      -2664,
+      313,
+      196
+     ],
+     "printed_total_minus_rows_excluding_indirect": [
+      0,
+      0,
+      -1
+     ],
+     "row_sum_bel_ra_csm": [
+      -7506,
+      363,
+      1403
+     ]
+    },
+    "nonlife": {
+     "page": 9,
+     "run": [
+      -2801.0,
+      411.0,
+      487.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "vec": {
+      "1": -4715.0,
+      "2": 431.0,
+      "3": 797.0,
+      "4": 0.0,
+      "5": 0.0,
+      "6": 0.0,
+      "7": 0.0
+     },
+     "footing": "printed_total_excludes_indirect_par",
+     "rows": [
+      {
+       "portfolio": "무배당상해",
+       "kind": "Non-Par",
+       "bel_ra_csm": [
+        -78,
+        5,
+        41
+       ]
+      },
+      {
+       "portfolio": "무배당질병",
+       "kind": "Non-Par",
+       "bel_ra_csm": [
+        -1979,
+        238,
+        194
+       ]
+      },
+      {
+       "portfolio": "무배당질병",
+       "kind": "Indirect-Par",
+       "bel_ra_csm": [
+        -1914,
+        20,
+        310
+       ]
+      },
+      {
+       "portfolio": "일반",
+       "kind": "Non-Par",
+       "bel_ra_csm": [
+        -751,
+        165,
+        252
+       ]
+      },
+      {
+       "portfolio": "자동차",
+       "kind": "Non-Par",
+       "bel_ra_csm": [
+        7,
+        3,
+        0
+       ]
+      }
+     ],
+     "printed_total_bel_ra_csm": [
+      -2801,
+      411,
+      487
+     ],
+     "rows_excluding_indirect_bel_ra_csm": [
+      -2801,
+      411,
+      487
+     ],
+     "printed_total_minus_rows_excluding_indirect": [
+      0,
+      0,
+      0
+     ],
+     "row_sum_bel_ra_csm": [
+      -4715,
+      431,
+      797
+     ]
+    }
+   },
+   "corroboration_p6_2_2_narrative": {
+    "page": 6,
+    "csm_before_release_eok": 2353,
+    "csm_release_eok": 153,
+    "csm_after_release_eok": 2200,
+    "equals_item3_plus_item6": true,
+    "ra_eok": 794,
+    "equals_item2_plus_item5": true,
+    "life_and_longterm_csm_eok": 1948,
+    "life_plus_longterm_nonlife_rows_csm_row_sum": 1948,
+    "equals_row_sum": true,
+    "same_total_built_from_printed_life_total_instead_of_rows": 1949,
+    "not_used_as_anchor": {
+     "life_and_longterm_bel_eok": -6550,
+     "table_lrc_bel_row_sum": -11477,
+     "life_and_longterm_ra_eok": 635,
+     "table_lrc_ra_row_sum": 626,
+     "why": "the narrative BEL/RA of 생명 및 장기 do not equal the LRC-only 2-4 row sums (RA 635 vs 626, BEL -6,550 vs -11,477); the scope difference was not investigated, so they are not used as anchors -- only the CSM and the all-business RA tie exactly"
+    }
+   },
+   "previously_withheld_reason": "the printed 합계 rows of BOTH sections omit the Indirect-Par portfolio: life 합계 (2,664) 313 197 = 무배당사망 (297) 19 30 + 무배당건강 (2,367) 294 166 only (rows incl. Indirect sum to (7,506) 363 1,403); non-life 합계 (2,801) 411 487 = 상해 + 질병 + 일반 + 자동차 without 무배당질병 Indirect (1,914) 20 310 (all rows sum to (4,715) 431 797). Neither the printed totals (incomplete) nor a row sum (derived) is loaded: owner decision",
+   "ticket": "inbox/parser/20261012T1450Z__orchestrator__KR1102_2026.1Q__ilp_total_derived_load.md",
+   "at": "20261012T0748Z",
+   "emitted_by": "scripts/load_ilp_kr1102_derived_20261012.py"
   }
  ],
  "lrc_model_not_loaded": [
@@ -41866,6 +42142,12 @@
       }
      }
     ]
+   },
+   "resolved": {
+    "at": "20261012T0748Z",
+    "how": "loaded as the sum of all rows (owner decision 2026-10-12); 인쇄 합계는 Indirect-Par 행 제외, 전체 행 합으로 적재(owner 2026-10-12)",
+    "see": "lrc_model_cells[how=derived_sum_of_rows]",
+    "emitted_by": "scripts/load_ilp_kr1102_derived_20261012.py"
    }
   },
   {
@@ -42189,6 +42471,13 @@
    "emitted_by": "scripts/apply_chubb_ilp_d2_20261012.py",
    "ticket": "inbox/parser/20261012T1020Z__orchestrator__MULTI_2023.4Q-2026.2Q__ifrs17_owner_followups_20261012.md",
    "note": "Chubb (KR0100) items 14/15 of nine mid-quarters (2023.1Q~2025.3Q) restated from the general-account basis to D2 (= + 특별계정부채); spec data/_derived/ifrs17_owner_followups_20261012/chubb_d2_spec_ilp.json; the same round moves IFRS17_BS item 20 of the six quarters that have one"
+  },
+  {
+   "stage": "kr1102_2026.1Q_derived_sum_20261012",
+   "at": "20261012T0748Z",
+   "emitted_by": "scripts/load_ilp_kr1102_derived_20261012.py",
+   "ticket": "inbox/parser/20261012T1450Z__orchestrator__KR1102_2026.1Q__ilp_total_derived_load.md",
+   "note": "KR1102 2026.1Q items 1-8 := sum of all rows of the 2-4 tables (the printed totals omit the Indirect-Par rows); how=derived_sum_of_rows"
   }
  ],
  "indirect_lic_cells": [

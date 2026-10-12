@@ -1,0 +1,32 @@
+master insurance_liability_portfolio.json: HEAD 6335 rows, working tree 6343 rows
+  added 8: [('KR1102', '2026.1Q', 1), ('KR1102', '2026.1Q', 2), ('KR1102', '2026.1Q', 3), ('KR1102', '2026.1Q', 4), ('KR1102', '2026.1Q', 5), ('KR1102', '2026.1Q', 6), ('KR1102', '2026.1Q', 7), ('KR1102', '2026.1Q', 8)]
+  removed 0: []
+  changed 0: []
+    + ('KR1102', '2026.1Q', 1) 일반모형_최선추정부채 = -12221.0
+    + ('KR1102', '2026.1Q', 2) 일반모형_위험조정 = 794.0
+    + ('KR1102', '2026.1Q', 3) 일반모형_보험계약마진 = 2200.0
+    + ('KR1102', '2026.1Q', 4) 변동수수료접근법_최선추정부채 = 0.0
+    + ('KR1102', '2026.1Q', 5) 변동수수료접근법_위험조정 = 0.0
+    + ('KR1102', '2026.1Q', 6) 변동수수료접근법_보험계약마진 = 0.0
+    + ('KR1102', '2026.1Q', 7) 보험료배분접근법_보험부채 = 0.0
+    + ('KR1102', '2026.1Q', 8) 보험부채_합계 = -9227.0
+sidecar insurance_liability_portfolio_provenance.json:
+  master: identical
+  scope: identical
+  generated_at: identical
+  emitter: identical
+  emitted_by: identical
+  inputs: identical
+  key: HEAD 3 -> 3 (+0); changed existing entries 0
+  source_id_values: identical
+  note: identical
+  cells: HEAD 431 -> 431 (+0); changed existing entries 0
+  not_loaded: HEAD 2 -> 2 (+0); changed existing entries 0
+  lrc_model_cells: HEAD 211 -> 212 (+1); changed existing entries 0
+  lrc_model_not_loaded: HEAD 80 -> 80 (+0); changed existing entries 1
+    changed record KR1102 2026.1Q: only `resolved` added = True
+  backfills: HEAD 21 -> 22 (+1); changed existing entries 0
+  indirect_lic_cells: HEAD 125 -> 125 (+0); changed existing entries 0
+  item9_cells: HEAD 6 -> 6 (+0); changed existing entries 0
+  value_corrections: HEAD 15 -> 15 (+0); changed existing entries 0
+RESULT: OK (changed cells = planned cells, deletions 0)
