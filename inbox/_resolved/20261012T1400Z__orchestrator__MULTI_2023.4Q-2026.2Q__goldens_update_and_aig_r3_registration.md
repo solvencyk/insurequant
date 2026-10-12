@@ -2,7 +2,7 @@
 from: orchestrator
 to: validation
 created: 20261012T1400Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2023.4Q-2026.2Q
@@ -25,3 +25,4 @@ iter: 1
 - 업데이트한 골든(이유), 등재 결과, 새 RED(있으면), CSM 룰 설계 범위 메모, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료(2026-10-12, 커밋 470e146·b8b949a). 골든 --update: K-ICS 룰 골든·입력지문 4종(17BS·PL·배당·적용후) — 이동 원인은 parser-kics acd351a(퍼시픽 +16행·악사 4칸)와 33635d1(뮌헨 +3행)뿐(직전 마스터로는 골든과 일치 확인), K-ICS 게이트 RED 56 불변. 2차 갱신(뮌헨) 뒤에는 17BS·PL 골든 재실행 생략(두 빌더가 이 파일에서 회사 메타만 읽음). AIG KR0029 2024.4Q R3 10배 규칙: 포트폴리오 검증기에 값 박제 등재부 R3_PINNED_EXEMPTIONS + 읽는 쪽 check_r3 + 변이시험 11건(tests/test_ilp_r3_pinned_exemption.py), 검증기 RED 2->1(남은 1건 KR1102 2026.1Q R2_CENSUS 는 owner 결정 -> 계산값 적재 지시로 parser-ifrs17 에 발주). CSM 워터폴 대 ILP 룰 설계 범위: 입력 CSM_waterfall.json 기말 CSM·insurance_liability_portfolio.json 항목 3+6, 허용오차 후보 max(1억, 0.5%), 재작성 칸 기준 명시 YELLOW·계약이전 칸 값 박제, 롯데 군집은 칸별 분류(TODO_validation 열린 일).
