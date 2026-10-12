@@ -1,0 +1,10 @@
+[compare] A: HEAD-on-disk vs rebuild@c76921ca: 6 differing leaves  (0 = the committed panel was fresh before b8c37fff)
+[compare] B: rebuild@c76921ca vs regenerated now: 63 differing leaves  (= effect of b8c37fff + NB regeneration)
+      A /metrics[1]/v/KR0009[0]
+      A /metrics[1]/v_pre/KR0009[0]
+      A /metrics[13]/v/KR0009[0]
+      A /metrics[13]/v/KR0069[5]
+      A /metrics[13]/v_pre/KR0009[0]
+      A /metrics[13]/v_pre/KR0069[5]
+[combo] A: HEAD-on-disk vs rebuild@c76921ca: 0 differing leaves  (0 = the committed panel was fresh before b8c37fff)
+[combo] B: rebuild@c76921ca vs regenerated now: 8 differing leaves  (= effect of b8c37fff + NB regeneration)
