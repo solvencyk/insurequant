@@ -2262,7 +2262,7 @@
       "item47_scope": "EXCL",
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
-      "lapse_excess_item49_eok": null,
+      "lapse_excess_item49_eok": 0.0,
       "no_capital_securities": true,
       "securities_summary": {
         "as_of": "2026-06-30",

@@ -284,6 +284,29 @@ def tier1_binding(item6, item53, scr, entry: dict) -> dict | None:
     }
 
 
+def classify_hybrid(entry: dict, issue_date: str | None) -> dict:
+    """채권 한 건(신종)의 계층 - forward 모델이 쓴다(2026-10-12 재공개 라운드).
+
+    반환: type(우리 분류, 소진율과 같은 정의) · basis_type(발행사 K-ICS 표가 실제로 다룬 형 = issuer_type,
+    없으면 type) · type_unconfirmed · source.
+    등재부는 (회사, 발행일) 로 찾는다. 등재부에 없으면: 발행일이 없거나 시행일(2023-01-01) 전이면 기발행
+    (legacy_tfi), 이후인데 등재부에 없으면 보수적으로 기본자본형 + 미확정(소진율의 미확정 정책과 같다).
+    """
+    hit = [s for s in (entry.get("securities") or []) if issue_date and s.get("issue_date") == issue_date]
+    if hit:
+        types = {s["type"] for s in hit}
+        if len(types) > 1:
+            return {"type": "tier1", "basis_type": "tier1", "type_unconfirmed": True, "source": "registry_ambiguous"}
+        s = hit[0]
+        return {"type": s["type"], "basis_type": s.get("issuer_type") or s["type"],
+                "type_unconfirmed": any(bool(x.get("type_unconfirmed")) for x in hit), "source": "registry"}
+    if not issue_date or issue_date < LEGACY_CUTOFF:
+        return {"type": "legacy_tfi", "basis_type": "legacy_tfi", "type_unconfirmed": False,
+                "source": "fallback_issued_before_2023"}
+    return {"type": "tier1", "basis_type": "tier1", "type_unconfirmed": True,
+            "source": "fallback_unregistered_post_2022"}
+
+
 def no_capital_securities(item6, item53, item54, ledger_entry: dict | None) -> bool:
     """「발행 없음」 - 보통주 이외 자본증권(항목 6)·기발행 행(53·54)·채권원장 잔액이 모두 0."""
     led = ledger_entry or {}

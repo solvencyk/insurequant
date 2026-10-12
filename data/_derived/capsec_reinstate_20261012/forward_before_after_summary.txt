@@ -1,0 +1,68 @@
+rows 230 | total-path diffs: 0 [] | row-field diffs: [] | confidence diffs: []
+companies whose basic-ratio path changed: ['KR0005', 'KR0011', 'KR0032', 'KR0050', 'KR0068', 'KR0072', 'KR0073', 'KR0083', 'KR0097', 'KR0104', 'KR1000']
+KR0005 흥국화재 flag False
+    2026 basic% 47.6 -> 47.6 | total% 200.32 -> 200.32 | by_type None
+    2027 basic% 46.15 -> 39.01 | total% 184.96 -> 184.96 | by_type None
+    2028 basic% 44.83 -> 37.35 | total% 177.1 -> 177.1 | by_type None
+    2029 basic% 43.08 -> 35.83 | total% 159.98 -> 159.98 | by_type None
+    2030 basic% 31.87 -> 34.43 | total% 144.19 -> 144.19 | by_type None
+KR0011 DB손해보험 flag False
+    2026 basic% 95.95 -> 95.95 | total% 204.37 -> 204.37 | by_type None
+    2027 basic% 95.95 -> 95.95 | total% 204.37 -> 204.37 | by_type None
+    2028 basic% 95.95 -> 95.95 | total% 204.37 -> 204.37 | by_type None
+    2029 basic% 95.95 -> 95.95 | total% 204.37 -> 204.37 | by_type None
+    2030 basic% 88.62 -> 93.62 | total% 189.89 -> 189.89 | by_type None
+KR0032 NH농협손해보험 flag False
+    2026 basic% 102.77 -> 102.77 | total% 245.48 -> 245.48 | by_type None
+    2027 basic% 99.38 -> 98.81 | total% 236.01 -> 236.01 | by_type None
+    2028 basic% 96.25 -> 95.14 | total% 227.25 -> 227.25 | by_type None
+    2029 basic% 78.34 -> 91.73 | total% 182.05 -> 182.05 | by_type None
+    2030 basic% 75.64 -> 88.56 | total% 159.85 -> 159.85 | by_type None
+KR0050 하나손해보험 flag False
+    2026 basic% 22.43 -> 22.43 | total% 152.11 -> 152.11 | by_type None
+    2027 basic% 22.43 -> 22.43 | total% 152.11 -> 152.11 | by_type None
+    2028 basic% 22.43 -> 22.43 | total% 152.11 -> 152.11 | by_type None
+    2029 basic% 7.43 -> 22.43 | total% 130.72 -> 130.72 | by_type None
+    2030 basic% 7.43 -> 22.43 | total% 130.72 -> 130.72 | by_type None
+KR0068 한화생명 flag False
+    2026 basic% 56.76 -> 56.76 | total% 167.98 -> 167.98 | by_type None
+    2027 basic% 56.76 -> 56.76 | total% 158.18 -> 158.18 | by_type None
+    2028 basic% 56.76 -> 56.76 | total% 154.85 -> 154.85 | by_type None
+    2029 basic% 54.97 -> 56.76 | total% 142.21 -> 142.21 | by_type None
+    2030 basic% 41.76 -> 56.76 | total% 129.01 -> 129.01 | by_type None
+KR0072 케이디비생명보험 flag False
+    2026 basic% 33.17 -> 33.17 | total% 182.41 -> 182.41 | by_type None
+    2027 basic% 31.97 -> 30.98 | total% 170.37 -> 170.37 | by_type None
+    2028 basic% 17.93 -> 29.06 | total% 127.13 -> 127.13 | by_type None
+    2029 basic% 14.99 -> 27.36 | total% 102.84 -> 102.84 | by_type None
+    2030 basic% 14.16 -> 25.86 | total% 97.17 -> 97.17 | by_type None
+KR0073 교보생명보험 flag True
+    2026 basic% 115.35 -> 109.59 | total% 194.99 -> 194.99 | by_type 109.59
+    2027 basic% 108.56 -> 96.98 | total% 178.42 -> 178.42 | by_type 96.98
+    2028 basic% 98.17 -> 92.68 | total% 164.93 -> 164.93 | by_type 92.68
+    2029 basic% 87.59 -> 82.34 | total% 144.03 -> 144.03 | by_type 88.75
+    2030 basic% 84.02 -> 78.99 | total% 138.17 -> 138.17 | by_type 85.14
+KR0083 푸본현대생명보험 flag False
+    2026 basic% 132.39 -> 132.39 | total% 211.23 -> 211.23 | by_type None
+    2027 basic% 123.71 -> 123.71 | total% 167.92 -> 167.92 | by_type None
+    2028 basic% 114.22 -> 118.74 | total% 131.98 -> 131.98 | by_type None
+    2029 basic% 109.81 -> 114.15 | total% 126.88 -> 126.88 | by_type None
+    2030 basic% 105.73 -> 109.9 | total% 122.16 -> 122.16 | by_type None
+KR0097 하나생명보험 flag True
+    2026 basic% 14.26 -> 14.26 | total% 138.26 -> 138.26 | by_type 14.26
+    2027 basic% 14.27 -> 14.17 | total% 135.4 -> 135.4 | by_type 13.96
+    2028 basic% 0.0 -> 4.09 | total% 106.91 -> 106.91 | by_type 13.68
+    2029 basic% 0.0 -> 4.0 | total% 104.79 -> 104.79 | by_type 13.41
+    2030 basic% 0.0 -> 3.93 | total% 102.74 -> 102.74 | by_type 13.15
+KR0104 농협생명보험 flag False
+    2026 basic% 141.78 -> 141.78 | total% 396.38 -> 396.38 | by_type None
+    2027 basic% 123.14 -> 113.02 | total% 298.22 -> 298.22 | by_type None
+    2028 basic% 99.48 -> 100.85 | total% 255.71 -> 255.71 | by_type None
+    2029 basic% 89.81 -> 91.05 | total% 230.86 -> 230.86 | by_type None
+    2030 basic% 81.85 -> 82.98 | total% 210.41 -> 210.41 | by_type None
+KR1000 코리안리재보험 flag False
+    2026 basic% 175.67 -> 175.67 | total% 210.71 -> 210.71 | by_type None
+    2027 basic% 175.67 -> 161.54 | total% 196.58 -> 196.58 | by_type None
+    2028 basic% 170.52 -> 161.54 | total% 185.87 -> 185.87 | by_type None
+    2029 basic% 160.67 -> 161.54 | total% 176.02 -> 176.02 | by_type None
+    2030 basic% 160.67 -> 161.54 | total% 176.02 -> 176.02 | by_type None
