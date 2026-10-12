@@ -1,18 +1,18 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> 갱신 2026-10-12 · 프롬프트 `docs/agents/claude-agent-publishing.md` · 이력 `docs/changelog_publishing.md`
+> 갱신 2026-10-13 · 프롬프트 `docs/agents/claude-agent-publishing.md` · 이력 `docs/changelog_publishing.md`
 > 2026-10-07 정리 전 전문은 `docs/todo_archive_publishing.md` 맨 위에 있다. publishing 은 마스터 JSON 만 쓰고 HTML 은 designer 몫이다.
 
 ## Status (최신 3개)
+
+- **2026-10-13 독립 감사 티켓 `20261012T2235Z` 요청 1·2·3 + owner 결정 8(커밋 `48c7c3ac` · push 보류)** — ① DB손보 제1·2회 콜일 원문 상충(FY2025 둘 다 09-01 / 2026 1Q·반기 09-25·09-01): 타임라인 잔액 null 로 날짜만 표시 + 공개 시트 콜일 비움 ② 하나손해 원장에 2026-06-29 추정 행(999억, 금리·콜일 없음, `estimated`) ③ 기본자본 인쇄 한도: 결속 갈래 없는 33사 15% -> 10%(소진율 47사 불변) ④ 보완자본 분자의 기발행 차감 = 원장 2022-12-31 이전 잔액(47사 공통, 21사 변동: 메리츠 0.2 -> 30.8 · 흥국생명 10.6 -> 37.0 · 한화생명 70.5 -> 74.8 · 푸본 86.6 -> 73.1 · 농협생명 18.8 -> 4.8).
+  남은 것: ① owner: 농협생명 4.8(원장 2022년 이전 후순위 11,100 대 인쇄 8,700 - 원장 상환 반영 여부)·아이엠라이프 56.9(원장에 전환우선주 없음, 기준일 2025-12-31) 확인 ② designer: 티켓 `20261013T0030Z`(DB손보 셀 눈 확인, 하나손해 추정 툴팁) ③ 증빙 `data/_derived/capsec_reinstate_20261012/z3·z4·z6·y1`.
 
 - **2026-10-12 발행사 처리 기준 재분류 + 증권별 X 검정(커밋만 · push 보류)** — 티켓 `20261012T2115Z`: 하나생명 제1회·교보 2024-11 `type` tier2 -> tier1(발행사 K-ICS 표가 기본자본형으로 처리), 나머지 tier2 증권 10개사 12건은 발행 분기 X(항목13-49) 검정으로 보완자본형 확인, 판정 불가 3건(푸본 600·농협생명 제5회·코리안리 제6회)은 현 분류 유지(`issuer_check`). 소진율 tier1 은 하나생명 0.0 -> 238.2 만 변경(교보 70.1 불변), tier2·총자본 경로 불변, forward 의 `baseline_basis_flag` 류 필드는 사라짐. `tier1_overflow_into_tier2_eok`(공개 시트 1칸)가 옛 채권원장 추정(하나생명 665.7)으로 낡아 있던 것을 기본자본 소진율과 같은 출처(1,043.6)로 47사 통일 (`dbbffcb5`).
   남은 것: ① owner: 판정 불가 3건의 발행사 처리 확인 필요 시 별도 근거(원문 표 재독)가 필요 ② 증빙 `data/_derived/capsec_reinstate_20261012/x1~x6` ③ 기존 DB손보 5건(기본자본형)은 이번 범위 밖 - 같은 X 검정 미실시.
 
 - **2026-10-12 소진율 도넛 + Forward Outlook 재공개(커밋만 · push 보류)** — 티켓 `20261012T2030Z`: 등재부 재분류(하나생명 제1회·푸본 600·농협생명 제5회·코리안리 제5/6회 -> tier2 확정, 교보 2024-11 type=tier2 + `issuer_type`=tier1) -> 소진율 tier1 만 4사 변경(하나생명 238.2->0.0 · 코리안리 205.1->94.0 · 농협생명 72.7->48.5 · 푸본 42.1->17.3), tier2 불변. forward 가 증권별 계층(기발행 15% · 기본자본형 10% · 보완자본형 기본자본 0)을 따르고 총자본 경로는 47사 불변. 비공개 목록 3종 비움 + 공개 스냅샷 3시트 재생성 (`ef62969`·`2729a53`).
   남은 것: ① designer: K-ICS.html fetch 복원과 같은 커밋에서 `LIVE_ARTIFACT_READERS` 에 루트 JSON 3개 선언(`tests/test_push_gate_wiring.py`) · `tests/test_deploy_assets.py` 의 「fetch 안 함」 단정 뒤집기 · `download-survey.js` 주석 해제 · `report-widget.js` 목록 ② owner: DB손보 2026 신종 3건·하나손해·하나생명은 census 1차가 다르게 읽음(아래 changelog), census 최종본 대조 ③ 증빙 `data/_derived/capsec_reinstate_20261012/`.
-
-- **2026-10-12 타임라인 JSON 읽는 검사기 선언 + 죽은 선언 3개 정리(커밋만 · push 보류)** — 티켓 `20261012T1945Z`: `validate_live_artifacts.check_capsec_timeline`(구조·분류/인정액 필드 금지·회사별 권면 합·건수 == `data/bonds` 파생) 신설, `LIVE_ARTIFACT_READERS`·`PANEL_DERIVED_FROM` 선언, 변이시험 3개(`test_rule_coverage_manifest`). 나머지 1건 = 비공개 3시트(forward·tier1·tier2) 선언이 ghost 검사에 걸린 것, 선언 삭제로 해소.
-  남은 것: ① 배포 전 시험으로 앞당기기(작업 브랜치 HTML fetch 목록 대 선언)는 의견만, 구현 별도 ② 타임라인은 시트와 125건 중 122건만 일치(3건 타임라인 전용·1건 시트 전용)라 시트 열 수준 대조는 안 걸었다.
 
 ## 열린 일
 

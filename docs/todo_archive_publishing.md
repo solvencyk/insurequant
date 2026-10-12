@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 타임라인 JSON 읽는 검사기 선언 + 죽은 선언 3개 정리(커밋만 · push 보류)** — 티켓 `20261012T1945Z`: `validate_live_artifacts.check_capsec_timeline`(구조·분류/인정액 필드 금지·회사별 권면 합·건수 == `data/bonds` 파생) 신설, `LIVE_ARTIFACT_READERS`·`PANEL_DERIVED_FROM` 선언, 변이시험 3개(`test_rule_coverage_manifest`). 나머지 1건 = 비공개 3시트(forward·tier1·tier2) 선언이 ghost 검사에 걸린 것, 선언 삭제로 해소.
+  남은 것: ① 배포 전 시험으로 앞당기기(작업 브랜치 HTML fetch 목록 대 선언)는 의견만, 구현 별도 ② 타임라인은 시트와 125건 중 122건만 일치(3건 타임라인 전용·1건 시트 전용)라 시트 열 수준 대조는 안 걸었다.
+
 - **2026-10-12 비공개 3시트 + 자본성증권 공개 열 제한 + 뮌헨·스위스리 재동기화(커밋만 · push 보류)** — 티켓 `1420Z`·`1440Z`: 기본자본소진율·보완자본소진율·자본비율전망 공개 스냅샷 3개 삭제(manifest 에서도 제외), main 에서는 배포 스크립트 `PRIVATE_PATHS` 가 이 3개 + 루트 JSON 3개(tier1·tier2·forward)를 `git rm`. `자본성증권발행현황` 공개본은 한도·인정액 계산 열 7개 제외(123행 불변). 뮌헨 K-ICS공시 +3행·스위스리 보험계약부채 +8행(「계산값(전 행 합)」 표기) xlsx·공개본·`csm_combo` 패널 반영. 새 시험 `tests/test_private_deploy.py`.
   남은 것: ① 폰 배포는 `git checkout -B <브랜치> origin/<브랜치>` 로 새 스크립트를 먼저 받은 뒤 1회 실행(안 받고 옛 스크립트로 돌리면 2회) ② 배포 건조 실행 시험은 부하가 큰 PC 에서 시험당 5분 안팎 ③ 증빙 `data/_derived/private_sheets_20261012/`.
 
