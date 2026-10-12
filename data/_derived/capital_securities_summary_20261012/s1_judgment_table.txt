@@ -1,0 +1,4 @@
+as_of=2026-06-30 companies=47
+tier object null: hybrid 30 / subordinated 23
+vs ledger issued_since_2023 (|diff|>1억): 0
+deployed rows != computed: 0 []

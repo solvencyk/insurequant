@@ -48,7 +48,20 @@
       "type_unconfirmed": false,
       "type_note": "기본자본 자본증권 0 -> 소진율 0%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 10.66,
+          "latest_issue_date": "2024-05-14",
+          "issued_since_2023_eok": 1000,
+          "next_call_date": "2029-05-14",
+          "next_call_eok": 1000,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        },
+        "subordinated": null
+      }
     },
     {
       "company": "코리안리재보험",
@@ -85,7 +98,20 @@
       "type_unconfirmed": true,
       "type_note": "기본자본형/보완자본형 미확정 - 기본자본형으로 보고 상한(분모 10%) 계산. 미확정: 소진율 범위 94.0%(신규 4,790억이 보완자본형일 때 = 기발행 3,292 / SCR x 15%) ~ 205.1%(기본자본형일 때 = 4,790 / SCR x 10%). 상한 205.1% 를 싣는다. 공개 자료(WebSearch 2026-10-12: 2024 차환 발행 보도 - 30년 만기·5년 콜, 신평사 등급 보고서 - 이자지급 정지 특약)에서 스텝업 조항 유무를 확인하지 못했다. 시계열 검정은 갈리지 않는다(a5·a5b): 발행사 경과조치 표에서 경과조치 효과가 2023.1Q~2024.4Q 는 SCR x 5%(경과조치 전 열에도 신종 일부가 기본자본으로 남음), 2025.1Q 부터는 기발행 신종 전액으로 바뀌어, 어느 쪽 가설도 한두 분기씩 설명이 어긋난다. 확정에는 제5회·제6회 증권신고서(투자설명서)의 금리조정(스텝업) 조항 확인이 필요하다.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": 94.0
+      "tier1_pct_if_unconfirmed_tier2": 94.0,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 4.27,
+          "latest_issue_date": "2024-10-11",
+          "issued_since_2023_eok": 4800,
+          "next_call_date": "2027-05-30",
+          "next_call_eok": 2300,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": null
+      }
     },
     {
       "company": "하나생명보험",
@@ -122,7 +148,20 @@
       "type_unconfirmed": false,
       "type_note": "소진율 = 1,799 / SCR x 10% = 238.2%(초과분은 보완자본 재분류).",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.627,
+          "latest_issue_date": "2023-03-31",
+          "issued_since_2023_eok": 1799,
+          "next_call_date": "2028-03-31",
+          "next_call_eok": 1799,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        },
+        "subordinated": null
+      }
     },
     {
       "company": "교보생명보험",
@@ -159,7 +198,28 @@
       "type_unconfirmed": false,
       "type_note": "소진율 = max(11,089 / SCR x 15% = 70.1%, 5,983 / SCR x 10% = 56.8%) = 70.1%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 4.6,
+          "latest_issue_date": "2024-11-12",
+          "issued_since_2023_eok": 11000,
+          "next_call_date": "2026-09-10",
+          "next_call_eok": 4700,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.3,
+          "latest_issue_date": "2024-08-06",
+          "issued_since_2023_eok": 7000,
+          "next_call_date": "2029-08-06",
+          "next_call_eok": 7000,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "한화생명",
@@ -196,7 +256,28 @@
       "type_unconfirmed": false,
       "type_note": "기발행 0, 신규 신종 30,685억 전부 보완자본형 -> 소진율 0%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.3,
+          "latest_issue_date": "2025-06-24",
+          "issued_since_2023_eok": 30819,
+          "next_call_date": "2029-07-17",
+          "next_call_eok": 5000,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.45,
+          "latest_issue_date": "2024-12-12",
+          "issued_since_2023_eok": 12968,
+          "next_call_date": "2027-02-04",
+          "next_call_eok": 10720,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "흥국화재",
@@ -233,7 +314,28 @@
       "type_unconfirmed": false,
       "type_note": "소진율 = 기발행 2,120 / SCR x 15% = 62.4%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.1,
+          "latest_issue_date": "2025-03-21",
+          "issued_since_2023_eok": 2000,
+          "next_call_date": "2027-03-31",
+          "next_call_eok": 200,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": null,
+          "latest_issue_date": "2026-03-31",
+          "issued_since_2023_eok": 3000,
+          "next_call_date": "2026-09-29",
+          "next_call_eok": 200,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "케이디비생명보험",
@@ -270,7 +372,28 @@
       "type_unconfirmed": false,
       "type_note": "기본자본 자본증권 0 -> 소진율 0%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.0,
+          "latest_issue_date": "2024-12-26",
+          "issued_since_2023_eok": 2410,
+          "next_call_date": "2028-05-19",
+          "next_call_eok": 2160,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 5.82,
+          "latest_issue_date": "2024-08-30",
+          "issued_since_2023_eok": 3888,
+          "next_call_date": "2028-06-30",
+          "next_call_eok": 721,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "DB손해보험",
@@ -307,7 +430,28 @@
       "type_unconfirmed": false,
       "type_note": "소진율 = 17,452 / SCR x 10% = 151.6%(비조건부라 15% 아님). 초과 약 5,942억은 보완자본으로 재분류.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.3,
+          "latest_issue_date": "2026-06-29",
+          "issued_since_2023_eok": 17490,
+          "next_call_date": "2030-09-01",
+          "next_call_eok": 1200,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.12,
+          "latest_issue_date": "2025-02-20",
+          "issued_since_2023_eok": 8000,
+          "next_call_date": "2030-02-20",
+          "next_call_eok": 8000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "농협생명보험",
@@ -344,7 +488,28 @@
       "type_unconfirmed": true,
       "type_note": "기본자본형/보완자본형 미확정 - 기본자본형으로 보고 상한(분모 10%) 계산. 미확정: 소진율 범위 48.5%(보완자본형일 때) ~ 72.7%(기본자본형일 때). 상한 72.7% 를 싣는다. 공개 자료(WebSearch 2026-10-12)는 2023년 초 2,500억 신종 발행(대주주 NH농협금융지주 대상 보도)과 지급여력비율 개선만 전하고 스텝업·이자지급 재량 조건은 없다. 10% 한도(2,749~4,229억)가 신규분 2,500억보다 늘 커서 시계열 X·실현가능성 검정으로 형을 가를 수 없다(a5: 두 가설 모두 가능). 확정에는 발행조건(사모 계약서 또는 사업보고서 주석)이 필요하다.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": 48.5
+      "tier1_pct_if_unconfirmed_tier2": 48.5,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.524,
+          "latest_issue_date": "2023-01-31",
+          "issued_since_2023_eok": 2500,
+          "next_call_date": "2027-09-28",
+          "next_call_eok": 2500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.5,
+          "latest_issue_date": "2022-04-08",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-03-31",
+          "next_call_eok": 6000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "아이엠라이프생명보험",
@@ -381,7 +546,28 @@
       "type_unconfirmed": false,
       "type_note": "전액 기발행 -> 소진율 = 2,466 / SCR x 15% = 221.7%(한도 초과분은 보완자본 재분류).",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.4,
+          "latest_issue_date": "2022-03-30",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-03-30",
+          "next_call_eok": 949,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 5.5,
+          "latest_issue_date": "2025-03-28",
+          "issued_since_2023_eok": 1750,
+          "next_call_date": "2029-11-15",
+          "next_call_eok": 1000,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "한화손해보험",
@@ -418,7 +604,28 @@
       "type_unconfirmed": false,
       "type_note": "소진율 = max(기발행 2,341 / SCR x 15%, 기본자본형 1,890 / SCR x 10%) = 53.1% (10% 쪽이 결속).",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.5,
+          "latest_issue_date": "2022-09-29",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-05-31",
+          "next_call_eok": 1500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.79,
+          "latest_issue_date": "2025-01-31",
+          "issued_since_2023_eok": 8500,
+          "next_call_date": "2027-03-07",
+          "next_call_eok": 2500,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "푸본현대생명보험",
@@ -455,7 +662,28 @@
       "type_unconfirmed": true,
       "type_note": "기본자본형/보완자본형 미확정 - 기본자본형으로 보고 상한(분모 10%) 계산. 미확정: 소진율 범위 17.3%(신규분이 보완자본형일 때) ~ 42.1%(기본자본형일 때). 상한 42.1% 를 싣는다. 공개 자료(WebSearch 2026-10-12: 2023-02 신종 600억 발행 보도만 있음)에 스텝업·이자지급 재량 조건이 없다. 10% 한도(1,291~1,559억)가 신규분(600~650억)보다 늘 커서 한도 초과 재분류가 생기지 않아 시계열 X·실현가능성 검정으로 형을 가를 수 없다(a5: 두 가설 모두 가능). 확정에는 발행조건(사모 계약서 또는 사업보고서 주석의 금리조정 조항)이 필요하다.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": 17.3
+      "tier1_pct_if_unconfirmed_tier2": 17.3,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.2,
+          "latest_issue_date": "2023-02-28",
+          "issued_since_2023_eok": 600,
+          "next_call_date": "2027-11-30",
+          "next_call_eok": 400,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 7,
+          "latest_issue_date": "2023-04-11",
+          "issued_since_2023_eok": 3280,
+          "next_call_date": "2027-06-14",
+          "next_call_eok": 3995,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "메리츠화재해상보험",
@@ -492,7 +720,28 @@
       "type_unconfirmed": false,
       "type_note": "항목 6(1,792억) = 기발행 신종 전액. 기본자본형 신규 0.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.3,
+          "latest_issue_date": "2022-06-30",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-04-07",
+          "next_call_eok": 700,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 3.7,
+          "latest_issue_date": "2025-10-27",
+          "issued_since_2023_eok": 12050,
+          "next_call_date": "2027-05-13",
+          "next_call_eok": 2960,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "KB라이프생명",
@@ -529,7 +778,28 @@
       "type_unconfirmed": false,
       "type_note": "전액 기발행 -> 소진율 = 498 / SCR x 15% = 12.2%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.6,
+          "latest_issue_date": "2022-06-29",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-06-29",
+          "next_call_eok": 500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 3.61,
+          "latest_issue_date": "2021-08-24",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2026-08-24",
+          "next_call_eok": 700,
+          "next_call_estimated": false,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "흥국생명보험",
@@ -566,7 +836,28 @@
       "type_unconfirmed": false,
       "type_note": "확정(기본자본형): 소진율 = max(496.5 / SCR x 15% = 11.7%, 2,299.5 / SCR x 10% = 81.4%) = 81.4%. 2025.4Q 항목 6 = 1,020(앞뒤 2,796)은 별건 점검 대상(결정 ⑦).",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 4.8,
+          "latest_issue_date": "2022-03-31",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-03-31",
+          "next_call_eok": 500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.4,
+          "latest_issue_date": "2025-12-31",
+          "issued_since_2023_eok": 3690,
+          "next_call_date": "2027-09-29",
+          "next_call_eok": 395,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "MG_예별손해보험",
@@ -603,7 +894,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 7.6,
+          "latest_issue_date": "2020-04-14",
+          "issued_since_2023_eok": 0,
+          "next_call_date": null,
+          "next_call_eok": null,
+          "next_call_estimated": null,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "삼성화재해상보험",
@@ -640,7 +944,12 @@
       "type_unconfirmed": false,
       "type_note": "소진율 0.5%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "현대해상",
@@ -677,7 +986,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 4.1,
+          "latest_issue_date": "2025-03-27",
+          "issued_since_2023_eok": 26000,
+          "next_call_date": "2029-06-03",
+          "next_call_eok": 5000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "KB손해보험",
@@ -714,7 +1036,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 4.2,
+          "latest_issue_date": "2025-03-12",
+          "issued_since_2023_eok": 6000,
+          "next_call_date": "2027-06-13",
+          "next_call_eok": 2860,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "AIG손해보험",
@@ -751,7 +1086,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "악사손해보험",
@@ -788,7 +1128,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": null,
+          "latest_issue_date": null,
+          "issued_since_2023_eok": 0,
+          "next_call_date": null,
+          "next_call_eok": null,
+          "next_call_estimated": null,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "신한이지손해보험",
@@ -825,7 +1178,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "에이비엘생명보험",
@@ -862,7 +1220,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 5.7,
+          "latest_issue_date": "2025-03-26",
+          "issued_since_2023_eok": 5800,
+          "next_call_date": "2027-09-29",
+          "next_call_eok": 630,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "라이나생명보험",
@@ -899,7 +1270,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "비엔피파리바카디프생명보험",
@@ -936,7 +1312,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "미래에셋생명",
@@ -973,7 +1354,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 3.8,
+          "latest_issue_date": "2025-10-24",
+          "issued_since_2023_eok": 2991,
+          "next_call_date": "2030-10-24",
+          "next_call_eok": 2991,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "에이아이에이생명보험",
@@ -1010,7 +1404,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "DB생명보험",
@@ -1047,7 +1446,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 5.03,
+          "latest_issue_date": "2025-02-14",
+          "issued_since_2023_eok": 3000,
+          "next_call_date": "2030-02-14",
+          "next_call_eok": 3000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "동양생명",
@@ -1084,7 +1496,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 3.65,
+          "latest_issue_date": "2025-11-04",
+          "issued_since_2023_eok": 11957,
+          "next_call_date": "2029-10-07",
+          "next_call_eok": 3000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "메트라이프생명보험",
@@ -1121,7 +1546,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "처브라이프생명보험",
@@ -1158,7 +1588,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "서울보증보험",
@@ -1195,7 +1630,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "교보라이프플래닛생명보험",
@@ -1232,7 +1672,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "IBK연금보험",
@@ -1269,7 +1714,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 6.3,
+          "latest_issue_date": "2023-03-30",
+          "issued_since_2023_eok": 1996,
+          "next_call_date": "2026-12-28",
+          "next_call_eok": 499,
+          "next_call_estimated": false,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "카카오페이손해보험",
@@ -1306,7 +1764,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "롯데손해보험",
@@ -1343,7 +1806,28 @@
       "type_unconfirmed": false,
       "type_note": "항목 6(454억) = 기발행 신종 전액.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.8,
+          "latest_issue_date": "2021-12-29",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2026-12-17",
+          "next_call_eok": 400,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 6.2,
+          "latest_issue_date": "2024-11-12",
+          "issued_since_2023_eok": 5780,
+          "next_call_date": "2027-09-02",
+          "next_call_eok": 1391,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "NH농협손해보험",
@@ -1380,7 +1864,28 @@
       "type_unconfirmed": false,
       "type_note": "기본자본 자본증권 0 -> 소진율 0%.",
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.743,
+          "latest_issue_date": "2024-12-27",
+          "issued_since_2023_eok": 4500,
+          "next_call_date": "2029-12-27",
+          "next_call_eok": 4500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.1,
+          "latest_issue_date": "2025-03-14",
+          "issued_since_2023_eok": 2000,
+          "next_call_date": "2026-07-19",
+          "next_call_eok": 1000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "삼성생명",
@@ -1417,7 +1922,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "신한라이프생명보험",
@@ -1454,7 +1964,20 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": false,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 3.4,
+          "latest_issue_date": "2025-06-05",
+          "issued_since_2023_eok": 7984,
+          "next_call_date": "2028-06-09",
+          "next_call_eok": 2996,
+          "next_call_estimated": false,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "뮌헨재보험",
@@ -1495,7 +2018,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "스위스리아시아",
@@ -1536,7 +2064,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "제네럴재보험",
@@ -1577,7 +2110,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "하노버재보험",
@@ -1618,7 +2156,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "알지에이리인슈어런스",
@@ -1659,7 +2202,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "스코리재보험",
@@ -1700,7 +2248,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "퍼시픽라이프리",
@@ -1741,7 +2294,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "마이브라운반려동물전문보험",
@@ -1782,7 +2340,12 @@
       "type_unconfirmed": false,
       "type_note": null,
       "no_capital_securities": true,
-      "tier1_pct_if_unconfirmed_tier2": null
+      "tier1_pct_if_unconfirmed_tier2": null,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     }
   ]
 }

@@ -32,6 +32,12 @@
 배포본만 고치면 `validate_live_artifacts` 가 "배포본 != 빌더 산출물"(TIER_DEPLOYED_VALUE_DIFFERS)로
 RED 를 낸다. 같은 값을 두 곳에 쓴다(불변식 1번).
 
+## securities_summary (2026-10-12, 소진율 도넛 밑 신종·후순위 큰 셀)
+
+두 파일의 회사 행 모두에 같은 값으로 `securities_summary` 를 더한다(최근 발행금리·2023년 이후 총발행액·가장 가까운
+콜). 값 정의는 `scripts/capital_securities_summary.py` 머리말이 정본이고, 입력은 소진율 분자(경영공시 항목)가 아니라
+`data/bonds/capital_securities_fy2026h1.json` 의 증권 단위 자료다(발행금리·콜일은 경영공시에 없다).
+
 기존 필드 이름·구조는 그대로 두고 새 필드만 더한다(구판 HTML 이 깨지지 않게). 화면·게이트가 읽는
 `utilization_pct`·`tier1_hybrid_recognized_eok`·`tier1_hybrid_limit_eok`(결속 한도 쪽)·`numerator_eok`·
 `tier2_limit_eok` 는 새 산식 값이다.
@@ -51,6 +57,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import capital_utilization_rules as R  # noqa: E402
+import capital_securities_summary as SUM  # noqa: E402
 from add_reinsurers_to_capsec_panels import REINSURER_NOTES  # noqa: E402
 
 KICS = ROOT / "kics_disclosure.json"
@@ -162,6 +169,7 @@ def main() -> int:
     ledger = R.load_ledger()
     registry = R.load_registry()
     res_by_code = R.compute_quarter(records, a.quarter, ledger, registry)
+    summaries = SUM.summaries_by_code(a.quarter)
     t1doc = json.loads(T1F.read_text(encoding="utf-8"))
     t2doc = json.loads(T2F.read_text(encoding="utf-8"))
     for doc, name in ((t1doc, T1F.name), (t2doc, T2F.name)):
@@ -170,6 +178,7 @@ def main() -> int:
 
     changed, skipped = [], []
     for row in t1doc["results"]:
+        row["securities_summary"] = summaries.get(row["code"]) or SUM.empty_summary(a.quarter)
         res = res_by_code.get(row["code"])
         if not res or res["t1"] is None:
             skipped.append(("t1", row["code"]))
@@ -182,6 +191,7 @@ def main() -> int:
             changed.append(("t1", row["code"], row["company"], before[0], row["utilization_pct"],
                             row["binding_leg"] or "-"))
     for row in t2doc["results"]:
+        row["securities_summary"] = summaries.get(row["code"]) or SUM.empty_summary(a.quarter)
         res = res_by_code.get(row["code"])
         if not res:
             skipped.append(("t2", row["code"]))

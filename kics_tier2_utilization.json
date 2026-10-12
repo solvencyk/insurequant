@@ -36,7 +36,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 92894.0,
       "lapse_excess_item49_eok": 75409.56,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.3,
+          "latest_issue_date": "2022-06-30",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-04-07",
+          "next_call_eok": 700,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 3.7,
+          "latest_issue_date": "2025-10-27",
+          "issued_since_2023_eok": 12050,
+          "next_call_date": "2027-05-13",
+          "next_call_eok": 2960,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "NH농협손해보험",
@@ -72,7 +93,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 15538.0,
       "lapse_excess_item49_eok": 8815.95,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.743,
+          "latest_issue_date": "2024-12-27",
+          "issued_since_2023_eok": 4500,
+          "next_call_date": "2029-12-27",
+          "next_call_eok": 4500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.1,
+          "latest_issue_date": "2025-03-14",
+          "issued_since_2023_eok": 2000,
+          "next_call_date": "2026-07-19",
+          "next_call_eok": 1000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "하나손해보험",
@@ -108,7 +150,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 6065.0,
       "lapse_excess_item49_eok": 4057.56,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 10.66,
+          "latest_issue_date": "2024-05-14",
+          "issued_since_2023_eok": 1000,
+          "next_call_date": "2029-05-14",
+          "next_call_eok": 1000,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        },
+        "subordinated": null
+      }
     },
     {
       "company": "케이디비생명보험",
@@ -144,7 +199,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 16273.0,
       "lapse_excess_item49_eok": 9820.87,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.0,
+          "latest_issue_date": "2024-12-26",
+          "issued_since_2023_eok": 2410,
+          "next_call_date": "2028-05-19",
+          "next_call_eok": 2160,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 5.82,
+          "latest_issue_date": "2024-08-30",
+          "issued_since_2023_eok": 3888,
+          "next_call_date": "2028-06-30",
+          "next_call_eok": 721,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "IBK연금보험",
@@ -180,7 +256,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 7168.0,
       "lapse_excess_item49_eok": 3557.89,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 6.3,
+          "latest_issue_date": "2023-03-30",
+          "issued_since_2023_eok": 1996,
+          "next_call_date": "2026-12-28",
+          "next_call_eok": 499,
+          "next_call_estimated": false,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "한화생명",
@@ -219,7 +308,28 @@
       ],
       "supplementary_capital_eok": 166945.0,
       "lapse_excess_item49_eok": 96078.69,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.3,
+          "latest_issue_date": "2025-06-24",
+          "issued_since_2023_eok": 30819,
+          "next_call_date": "2029-07-17",
+          "next_call_eok": 5000,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.45,
+          "latest_issue_date": "2024-12-12",
+          "issued_since_2023_eok": 12968,
+          "next_call_date": "2027-02-04",
+          "next_call_eok": 10720,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "현대해상",
@@ -255,7 +365,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 91826.0,
       "lapse_excess_item49_eok": 65974.1,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 4.1,
+          "latest_issue_date": "2025-03-27",
+          "issued_since_2023_eok": 26000,
+          "next_call_date": "2029-06-03",
+          "next_call_eok": 5000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "에이비엘생명보험",
@@ -291,7 +414,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 11256.0,
       "lapse_excess_item49_eok": 4544.79,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 5.7,
+          "latest_issue_date": "2025-03-26",
+          "issued_since_2023_eok": 5800,
+          "next_call_date": "2027-09-29",
+          "next_call_eok": 630,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "삼성생명",
@@ -327,7 +463,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 192933.0,
       "lapse_excess_item49_eok": 74404.93,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "롯데손해보험",
@@ -363,7 +504,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 28741.0,
       "lapse_excess_item49_eok": 20702.09,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.8,
+          "latest_issue_date": "2021-12-29",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2026-12-17",
+          "next_call_eok": 400,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 6.2,
+          "latest_issue_date": "2024-11-12",
+          "issued_since_2023_eok": 5780,
+          "next_call_date": "2027-09-02",
+          "next_call_eok": 1391,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "아이엠라이프생명보험",
@@ -401,7 +563,28 @@
       ],
       "supplementary_capital_eok": 8188.0,
       "lapse_excess_item49_eok": 4629.33,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.4,
+          "latest_issue_date": "2022-03-30",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-03-30",
+          "next_call_eok": 949,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 5.5,
+          "latest_issue_date": "2025-03-28",
+          "issued_since_2023_eok": 1750,
+          "next_call_date": "2029-11-15",
+          "next_call_eok": 1000,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "한화손해보험",
@@ -437,7 +620,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 41849.0,
       "lapse_excess_item49_eok": 28710.81,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.5,
+          "latest_issue_date": "2022-09-29",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-05-31",
+          "next_call_eok": 1500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.79,
+          "latest_issue_date": "2025-01-31",
+          "issued_since_2023_eok": 8500,
+          "next_call_date": "2027-03-07",
+          "next_call_eok": 2500,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "흥국화재",
@@ -473,7 +677,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 29380.0,
       "lapse_excess_item49_eok": 21940.32,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.1,
+          "latest_issue_date": "2025-03-21",
+          "issued_since_2023_eok": 2000,
+          "next_call_date": "2027-03-31",
+          "next_call_eok": 200,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": null,
+          "latest_issue_date": "2026-03-31",
+          "issued_since_2023_eok": 3000,
+          "next_call_date": "2026-09-29",
+          "next_call_eok": 200,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "푸본현대생명보험",
@@ -509,7 +734,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 7713.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 6.2,
+          "latest_issue_date": "2023-02-28",
+          "issued_since_2023_eok": 600,
+          "next_call_date": "2027-11-30",
+          "next_call_eok": 400,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 7,
+          "latest_issue_date": "2023-04-11",
+          "issued_since_2023_eok": 3280,
+          "next_call_date": "2027-06-14",
+          "next_call_eok": 3995,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "DB손해보험",
@@ -545,7 +791,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 124792.0,
       "lapse_excess_item49_eok": 102399.87,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.3,
+          "latest_issue_date": "2026-06-29",
+          "issued_since_2023_eok": 17490,
+          "next_call_date": "2030-09-01",
+          "next_call_eok": 1200,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.12,
+          "latest_issue_date": "2025-02-20",
+          "issued_since_2023_eok": 8000,
+          "next_call_date": "2030-02-20",
+          "next_call_eok": 8000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "하나생명보험",
@@ -581,7 +848,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 8313.0,
       "lapse_excess_item49_eok": 7037.13,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.627,
+          "latest_issue_date": "2023-03-31",
+          "issued_since_2023_eok": 1799,
+          "next_call_date": "2028-03-31",
+          "next_call_eok": 1799,
+          "next_call_estimated": true,
+          "balance_as_of": "2025-12-31"
+        },
+        "subordinated": null
+      }
     },
     {
       "company": "코리안리재보험",
@@ -617,7 +897,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 11475.0,
       "lapse_excess_item49_eok": 1069.67,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 4.27,
+          "latest_issue_date": "2024-10-11",
+          "issued_since_2023_eok": 4800,
+          "next_call_date": "2027-05-30",
+          "next_call_eok": 2300,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": null
+      }
     },
     {
       "company": "DB생명보험",
@@ -655,7 +948,20 @@
       ],
       "supplementary_capital_eok": 20469.0,
       "lapse_excess_item49_eok": 17905.4,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 5.03,
+          "latest_issue_date": "2025-02-14",
+          "issued_since_2023_eok": 3000,
+          "next_call_date": "2030-02-14",
+          "next_call_eok": 3000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "교보생명보험",
@@ -691,7 +997,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 80777.0,
       "lapse_excess_item49_eok": 42490.24,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 4.6,
+          "latest_issue_date": "2024-11-12",
+          "issued_since_2023_eok": 11000,
+          "next_call_date": "2026-09-10",
+          "next_call_eok": 4700,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.3,
+          "latest_issue_date": "2024-08-06",
+          "issued_since_2023_eok": 7000,
+          "next_call_date": "2029-08-06",
+          "next_call_eok": 7000,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "비엔피파리바카디프생명보험",
@@ -729,7 +1056,12 @@
       ],
       "supplementary_capital_eok": 234.0,
       "lapse_excess_item49_eok": 106.31,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "KB손해보험",
@@ -765,7 +1097,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 80500.0,
       "lapse_excess_item49_eok": 70256.09,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 4.2,
+          "latest_issue_date": "2025-03-12",
+          "issued_since_2023_eok": 6000,
+          "next_call_date": "2027-06-13",
+          "next_call_eok": 2860,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "처브라이프생명보험",
@@ -801,7 +1146,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 1621.0,
       "lapse_excess_item49_eok": 1528.98,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "흥국생명보험",
@@ -837,7 +1187,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 21329.0,
       "lapse_excess_item49_eok": 15206.78,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 4.8,
+          "latest_issue_date": "2022-03-31",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-03-31",
+          "next_call_eok": 500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.4,
+          "latest_issue_date": "2025-12-31",
+          "issued_since_2023_eok": 3690,
+          "next_call_date": "2027-09-29",
+          "next_call_eok": 395,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "농협생명보험",
@@ -875,7 +1246,28 @@
       ],
       "supplementary_capital_eok": 50532.0,
       "lapse_excess_item49_eok": 36106.24,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.524,
+          "latest_issue_date": "2023-01-31",
+          "issued_since_2023_eok": 2500,
+          "next_call_date": "2027-09-28",
+          "next_call_eok": 2500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 4.5,
+          "latest_issue_date": "2022-04-08",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-03-31",
+          "next_call_eok": 6000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "삼성화재해상보험",
@@ -911,7 +1303,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 97415.0,
       "lapse_excess_item49_eok": 94325.38,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "동양생명",
@@ -947,7 +1344,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 28794.0,
       "lapse_excess_item49_eok": 16910.13,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 3.65,
+          "latest_issue_date": "2025-11-04",
+          "issued_since_2023_eok": 11957,
+          "next_call_date": "2029-10-07",
+          "next_call_eok": 3000,
+          "next_call_estimated": true,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "악사손해보험",
@@ -983,7 +1393,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 2653.0,
       "lapse_excess_item49_eok": 2282.83,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": null,
+          "latest_issue_date": null,
+          "issued_since_2023_eok": 0,
+          "next_call_date": null,
+          "next_call_eok": null,
+          "next_call_estimated": null,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "신한라이프생명보험",
@@ -1019,7 +1442,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 59367.0,
       "lapse_excess_item49_eok": 50459.24,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 3.4,
+          "latest_issue_date": "2025-06-05",
+          "issued_since_2023_eok": 7984,
+          "next_call_date": "2028-06-09",
+          "next_call_eok": 2996,
+          "next_call_estimated": false,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "교보라이프플래닛생명보험",
@@ -1055,7 +1491,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 364.0,
       "lapse_excess_item49_eok": null,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "KB라이프생명",
@@ -1091,7 +1532,28 @@
       "rule_flags": [],
       "supplementary_capital_eok": 23531.0,
       "lapse_excess_item49_eok": 22222.88,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": {
+          "latest_coupon_pct": 5.6,
+          "latest_issue_date": "2022-06-29",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2027-06-29",
+          "next_call_eok": 500,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        },
+        "subordinated": {
+          "latest_coupon_pct": 3.61,
+          "latest_issue_date": "2021-08-24",
+          "issued_since_2023_eok": 0,
+          "next_call_date": "2026-08-24",
+          "next_call_eok": 700,
+          "next_call_estimated": false,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "서울보증보험",
@@ -1127,7 +1589,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 43.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "에이아이에이생명보험",
@@ -1165,7 +1632,12 @@
       ],
       "supplementary_capital_eok": 2735.0,
       "lapse_excess_item49_eok": 2719.78,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "미래에셋생명",
@@ -1204,7 +1676,20 @@
       ],
       "supplementary_capital_eok": 13473.0,
       "lapse_excess_item49_eok": 10541.6,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 3.8,
+          "latest_issue_date": "2025-10-24",
+          "issued_since_2023_eok": 2991,
+          "next_call_date": "2030-10-24",
+          "next_call_eok": 2991,
+          "next_call_estimated": false,
+          "balance_as_of": "2026-06-30"
+        }
+      }
     },
     {
       "company": "MG_예별손해보험",
@@ -1240,7 +1725,20 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": false
+      "no_capital_securities": false,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": {
+          "latest_coupon_pct": 7.6,
+          "latest_issue_date": "2020-04-14",
+          "issued_since_2023_eok": 0,
+          "next_call_date": null,
+          "next_call_eok": null,
+          "next_call_estimated": null,
+          "balance_as_of": "2025-12-31"
+        }
+      }
     },
     {
       "company": "AIG손해보험",
@@ -1276,7 +1774,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 754.0,
       "lapse_excess_item49_eok": 754.39,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "신한이지손해보험",
@@ -1314,7 +1817,12 @@
       ],
       "supplementary_capital_eok": 22.0,
       "lapse_excess_item49_eok": 22.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "라이나생명보험",
@@ -1350,7 +1858,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 18652.0,
       "lapse_excess_item49_eok": 18651.61,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "메트라이프생명보험",
@@ -1386,7 +1899,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 21854.0,
       "lapse_excess_item49_eok": 21853.77,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "카카오페이손해보험",
@@ -1422,7 +1940,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "뮌헨재보험",
@@ -1463,7 +1986,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": null,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "스위스리아시아",
@@ -1504,7 +2032,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 4274.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "제네럴재보험",
@@ -1545,7 +2078,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "하노버재보험",
@@ -1586,7 +2124,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "알지에이리인슈어런스",
@@ -1628,7 +2171,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "스코리재보험",
@@ -1669,7 +2217,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "퍼시픽라이프리",
@@ -1710,7 +2263,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": null,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     },
     {
       "company": "마이브라운반려동물전문보험",
@@ -1751,7 +2309,12 @@
       "rule_flags": [],
       "supplementary_capital_eok": 0.0,
       "lapse_excess_item49_eok": 0.0,
-      "no_capital_securities": true
+      "no_capital_securities": true,
+      "securities_summary": {
+        "as_of": "2026-06-30",
+        "hybrid": null,
+        "subordinated": null
+      }
     }
   ],
   "definition": {

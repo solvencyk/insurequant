@@ -10,6 +10,20 @@
 
 ---
 
+## 2026-10-12 — `securities_summary` 필드 신설 (K-ICS 소진율 도넛 밑 신종·후순위 큰 셀용, 커밋만, push 보류)
+
+티켓 `inbox/publishing/20261012T1150Z__orchestrator__MULTI_2026.2Q__capital_securities_summary_fields_for_cells.md`. 산식 `scripts/capital_securities_summary.py`(순수 함수), 쓰는 곳 `scripts/apply_disclosure_utilization.py`(소진율 산출과 같은 경로, 재실행해도 소진율 변경 0건), 입력 `data/bonds/capital_securities_fy2026h1.json`(소진율 분자는 경영공시 항목이지만 발행금리·콜일은 증권 단위 자료에만 있다. 채권원장 `kics_capital_securities.json` 에는 쿠폰이 없다).
+- **필드 명세**(`kics_tier1_utilization.json`·`kics_tier2_utilization.json` 47사 행 모두에 같은 값, 기존 필드 변경 없음):
+  `securities_summary: { as_of, hybrid, subordinated }` — `as_of` = 분기말(2026-06-30, 콜 도래 판정 기준일). `hybrid`(신종자본증권)·`subordinated`(후순위채)는 **잔액이 남은 증권이 없으면 객체 전체가 null**, 있으면 아래 키:
+  - `latest_coupon_pct`: 잔액이 남은 증권 중 발행일이 가장 늦은 증권의 쿠폰(%). 같은 날 여러 건이면 잔액이 큰 쪽. 그 증권의 쿠폰이 원천에 없으면 **null**(이전 증권 값으로 대신하지 않는다). `latest_issue_date`: 그 증권 발행일(툴팁용).
+  - `issued_since_2023_eok`: 발행일 >= 2023-01-01 인 증권의 잔액(`outstanding_mn`) 합 / 100, 정수 반올림. 해당 없으면 0.
+  - `next_call_date`·`next_call_eok`: `past_call_outstanding`=false 이고 콜일 >= as_of 인 증권 중 가장 이른 콜일과 그날 잔액 합(같은 날 여러 건이면 합). 해당 증권이 없으면 둘 다 null.
+  - 추가 필드 2개(명세 밖, 화면이 정직하게 쓰도록): `next_call_estimated`(콜일이 원문 공시가 아니라 발행일+5년 등 추정이면 true, 콜일 없으면 null) · `balance_as_of`(그 tier 잔액 중 가장 오래된 기준일 - 22사는 잔액이 2025-12-31 기준이라 2026-06-30 과 다르다).
+- 판정: 47사 x 2 tier = 94칸 중 신종 null 30·후순위 null 23. 발행일 미상 증권(악사손해 후순위 1건)은 최근 발행·2023 이후 합계에서 빠진다(추측 안 함). 흥국화재 후순위의 가장 최근 발행(2026-03-31)은 쿠폰이 원천에 없어 `latest_coupon_pct` null, 콜일도 없어 그 증권은 콜 후보에서 빠진다. 푸본현대 후순위처럼 같은 날 콜이 여러 건이면 합산(3,995억). 증빙 `data/_derived/capital_securities_summary_20261012/s1_judgment_table.{csv,txt}`(채권원장 2023 이후 합계와 94칸 전부 일치 · 배포본 대조 차이 0).
+- 한화생명(KR0068) 사람 검산 일치: 신종 최근 = 2025-06-24 외화 6.30%, 2023 이후 합계 30,819억(5,000+6,000+6,000+13,819), 가장 가까운 콜 2029-07-17 5,000억. 후순위 최근 4.45%(2024-12-12), 2023 이후 12,968억(4,988.23+7,979.32), 가장 가까운 콜 2027-02-04 10,720억(발행일+5년 추정이라 `next_call_estimated`=true).
+- xlsx: `기본자본소진율`·`보완자본소진율` 시트는 `build_master_xlsx.py` 의 고정 항목 목록(`_TIER1_ITEMS`·`_TIER2_ITEMS`)만 행으로 만들어 이 필드는 **시트·공개본에 실리지 않는다**(항목행 추가는 스키마 변경이라 하지 않았다, 필요하면 owner 결정).
+- 시험 `tests/unit/test_capital_securities_summary.py` 20 passed(경계 2022-12-31/2023-01-01 · 콜 경과 · 콜일 동일 다건 · tier 없음 · 쿠폰 없음 · 변이 5종 모두 검출).
+
 ## 2026-10-12 — 자본성증권 인정한도 소진율 규정 근거 재정의 반영 (커밋만, push·배포 보류)
 
 티켓 `inbox/publishing/20261012T0800Z__orchestrator__MULTI_2026.2Q__capital_utilization_redefinition_apply.md`(Opus 실행). 정본 `data/_derived/capital_utilization_definition_20261012/definition_memo.md`(owner 결정 ①~⑦ 권고안 채택).
