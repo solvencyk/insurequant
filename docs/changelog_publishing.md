@@ -10,6 +10,14 @@
 
 ---
 
+## 2026-10-12 — `kics_capital_securities_timeline.json` 신설 (티켓 `20261012T1210Z`, owner 정정으로 채권 단위 발행 내역으로 축소, 커밋만 · push 보류)
+
+K-ICS 「자본성증권 발행현황」 누적 막대(발행일 기준, 아래 신종자본증권 + 위 후순위채)의 원천. owner 지시(2026-10-12): 시점별 잔액을 DART 에서 새로 뽑지 않고 이미 있는 채권 단위 자료만 쓴다(중간에 만들던 시점별 추출기는 폐기).
+- 파일 `kics_capital_securities_timeline.json`(루트, 배포 keep-list 등재: `android_push_and_deploy.sh` NEW_FILES · 발행 프롬프트 §1 표), 빌더 `scripts/build_capital_securities_timeline.py`, 입력 `data/bonds/capital_securities_fy2026h1.json`(`securities_summary` 와 같은 입력 = 회사별 최신 기준일 자료).
+- 명세: `{"generated":"YYYY-MM-DD","unit":"억원","source":"...","securities":{"<회사코드>":[{"tier":"hybrid"|"subordinated","issue_date":"YYYY-MM-DD","call_date":"YYYY-MM-DD"|null,"coupon_pct":number|null,"face_eok":number,"outstanding_eok":number,"as_of":"YYYY-MM-DD"}]}}`. 회사코드는 JSON 키로만. 회사 안에서 발행일 순. 억원 = 백만원/100, 소수 둘째 자리. `face_eok` = 발행 권면, `outstanding_eok` = `as_of` 시점 잔액(상환돼 0 이어도 발행 내역이라 싣는다). `as_of` 는 채권별 기준일(2025-12-31 또는 2026-06-30). tier 는 원천 그대로이고 기본자본/보완자본 판단·인정액 필드는 없다.
+- 범위: 26사·125건(신종 45·후순위 80). 원천 127건 중 2건 제외(동양생명 2020 신종 - 권면 없음·잔액 0, 악사손해 JPY 후순위 - 발행일 없음; 추측하지 않는다). **원천에 한 번도 오르지 않은 과거 상환 증권은 없다**(원천이 2025-12-31·2026-06-30 잔액 기준 목록이라 그 전에 상환된 채권은 발행 막대에서 빠진다 - 과거 연도의 발행량이 낮게 보일 수 있다).
+- 시험 `tests/unit/test_capital_securities_timeline.py` 15 passed(단위 변환 · 상환 0 포함 · 발행일/권면 없음 제외 · 정렬 · 변이 3종 검출 · 배포본 = 원천 재생성 · 분류 필드 없음 · 한화생명 신종 4건 손계산).
+
 ## 2026-10-12 — `보험금예실차비율` xlsx 시트·공개 스냅샷 신설 (티켓 `20261012T1130Z` 3번, 커밋만, push 보류)
 
 owner 승인 「나머지는 다 승인」(스키마 변경, `TODO.md` ㉓). 소스 `data/loss_ratio/claims_ae_ratio.json`(44사, 162행). 빌더 `scripts/build_master_xlsx.py` 의 `MASTERS` 에 항목 1개 + `FLATTEN`(`_flatten_claims_ae_ratio`), `scripts/export_public_sheets.py` 의 `MASTERS` 1개.
