@@ -3,7 +3,7 @@ from: orchestrator
 to: parser
 lane: ifrs17
 created: 20261012T2230Z
-status: open
+status: resolved
 route: fix
 company: MULTI
 period: 2023.1Q-2026.1Q
@@ -34,3 +34,4 @@ iter: 1
 - 적용 블록·칸 수(마스터별), 보류와 사유, 직접 확인한 칸, 예외 해제 7건 결과, 신규 발견 9셀 정정, 게이트 전후(RED·핀), 영속화 방식, 커밋 해시.
 
 ## 답변 (recipient 작성 — 처리 후)
+처리 완료: 249셀(CSM 27 · PL 157 · BS 65) 적용 + 3개월/누적 정정 14셀 + 한화손보 2셀 + 예외 해제 10줄 (parser-ifrs17 b8c37fff), validation 독립 재독 249/249 일치·PDF 계보 116/116 일치·골든 갱신 (validation 5414c81e), 파생 산출물 재생성 (publishing 99c7ead7, 638ebabb). 라이브 배포 main 970259b8 (2026-10-13). 적용 칸 옆 별건 결함 4건은 inbox/parser/20261012T1820Z... 로 이관. orchestrator 종결 2026-10-13.
