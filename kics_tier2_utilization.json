@@ -7,8 +7,8 @@
       "code": "KR0001",
       "quarter": "2026.2Q",
       "tier2_limit_eok": 31553.5,
-      "numerator_eok": 9724.88,
-      "utilization_pct": 30.8,
+      "numerator_eok": 11824.88,
+      "utilization_pct": 37.5,
       "data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
       "tier2_eok": 92894.0,
       "pre_limit_eok": null,
@@ -21,20 +21,20 @@
       "new_subordinated_gross_eok": 12050.0,
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 1800.0,
-      "grandfathered_subordinated_eok": 5960.0,
+      "grandfathered_subordinated_eok": 3860.0,
       "numerator_as_of": "2026-06-30",
       "hybrid_outstanding_eok": 1800.0,
       "subordinated_outstanding_eok": 18010.0,
       "bond_balance_as_of": "2026-06-30",
       "rule": "R2",
       "rule_basis": "발행사가 경과조치 적용 후 열에서 기발행 자본증권(항목 53·54)을 이미 뺐다 - 적용 후 열에 (인쇄값 - 원장 2022년까지 발행 잔액)을 되더한다([별표22] Ⅵ.1.가.(3)). 기발행 차감액은 발행사 인쇄값(항목 53·54)이 아니라 채권원장의 2022년까지 발행 잔액이다(콜일이 지났는데 상환 안 한 채권 제외) - 인쇄값에는 2023년 이후 발행 신규채가 섞여 있을 수 있고 신규채는 기발행이 아니라 한도 대상이다(owner 결정 2026-10-12: 기발행 차감은 2022년까지 발행분만).",
-      "numerator_source": "항목 47 적용전 - 채권원장 2022년까지 발행 잔액(콜 경과 미상환 제외; 신종 1,800.00 + 후순위 5,960.00)",
+      "numerator_source": "항목 47 적용전 - 채권원장 2022년까지 발행 잔액(콜 경과 미상환 제외; 신종 1,800.00 + 후순위 3,860.00)",
       "reason": null,
       "numerator_tfi_off_eok": 17484.88,
       "utilization_pct_tfi_off": 55.4,
       "item47_scope": "EXCL",
       "rule_flags": [
-        "기발행 차감액 = 채권원장 2022년까지 발행 잔액 7,760.00억(신종 1,800.00 + 후순위 5,960.00); 발행사 인쇄값 17,422.80억(항목 53 1,791.95 + 54 15,630.85)과 다름"
+        "기발행 차감액 = 채권원장 2022년까지 발행 잔액 5,660.00억(신종 1,800.00 + 후순위 3,860.00); 발행사 인쇄값 17,422.80억(항목 53 1,791.95 + 54 15,630.85)과 다름"
       ],
       "supplementary_capital_eok": 92894.0,
       "lapse_excess_item49_eok": 75409.56,
@@ -62,7 +62,7 @@
       },
       "grandfathered_subordinated_printed_eok": 15630.85,
       "grandfathered_hybrid_printed_eok": 1791.95,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "NH농협손해보험",
@@ -124,7 +124,7 @@
       },
       "grandfathered_subordinated_printed_eok": 926.58,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "하나손해보험",
@@ -176,7 +176,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "케이디비생명보험",
@@ -236,7 +236,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "IBK연금보험",
@@ -290,7 +290,7 @@
       },
       "grandfathered_subordinated_printed_eok": 1602.09,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "한화생명",
@@ -354,7 +354,7 @@
       },
       "grandfathered_subordinated_printed_eok": 17932.09,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "현대해상",
@@ -406,7 +406,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "에이비엘생명보험",
@@ -460,7 +460,7 @@
       },
       "grandfathered_subordinated_printed_eok": 632.85,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "삼성생명",
@@ -504,7 +504,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "롯데손해보험",
@@ -566,15 +566,15 @@
       },
       "grandfathered_subordinated_printed_eok": 1933.86,
       "grandfathered_hybrid_printed_eok": 453.7,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "아이엠라이프생명보험",
       "code": "KR0076",
       "quarter": "2026.2Q",
       "tier2_limit_eok": 3707.0,
-      "numerator_eok": 2109.54,
-      "utilization_pct": 56.9,
+      "numerator_eok": 2609.54,
+      "utilization_pct": 70.4,
       "data_source": "kics_disclosure item47 규정 정규화 R5 / (item14 x 50%)",
       "tier2_eok": 7816.96,
       "pre_limit_eok": 1833.8,
@@ -587,20 +587,20 @@
       "new_subordinated_gross_eok": 1750.0,
       "tier1_overflow_into_tier2_eok": 1353.88,
       "grandfathered_hybrid_eok": 948.8,
-      "grandfathered_subordinated_eok": 500.0,
+      "grandfathered_subordinated_eok": 0.0,
       "numerator_as_of": "2026-06-30",
       "hybrid_outstanding_eok": 948.8,
       "subordinated_outstanding_eok": 2250.0,
       "bond_balance_as_of": "2025-12-31",
       "rule": "R5",
       "rule_basis": "발행사 고유 차감 방식 - 적용 전 열에서 채권원장 2022년까지 발행 잔액(신종·후순위)을 뺀다. 기발행 차감액은 발행사 인쇄값(항목 53·54)이 아니라 채권원장의 2022년까지 발행 잔액이다(콜일이 지났는데 상환 안 한 채권 제외) - 인쇄값에는 2023년 이후 발행 신규채가 섞여 있을 수 있고 신규채는 기발행이 아니라 한도 대상이다(owner 결정 2026-10-12: 기발행 차감은 2022년까지 발행분만).",
-      "numerator_source": "항목 47 적용전 - 채권원장 2022년까지 발행 잔액(콜 경과 미상환 제외; 신종 948.80 + 후순위 500.00)",
+      "numerator_source": "항목 47 적용전 - 채권원장 2022년까지 발행 잔액(콜 경과 미상환 제외; 신종 948.80 + 후순위 0.00)",
       "reason": null,
       "numerator_tfi_off_eok": 3558.34,
       "utilization_pct_tfi_off": 96.0,
       "item47_scope": "EXCL",
       "rule_flags": [
-        "기발행 차감액 = 채권원장 2022년까지 발행 잔액 1,448.80억(신종 948.80 + 후순위 500.00); 발행사 인쇄값 2,465.98억(항목 53 2,465.98 + 54 0.00)과 다름",
+        "기발행 차감액 = 채권원장 2022년까지 발행 잔액 948.80억(신종 948.80 + 후순위 0.00); 발행사 인쇄값 2,465.98억(항목 53 2,465.98 + 54 0.00)과 다름",
         "R5 발행사 고유 차감 방식 - 적용 전 열에서 원장 2022년까지 발행 잔액을 뺌"
       ],
       "supplementary_capital_eok": 8188.0,
@@ -629,7 +629,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 2465.98,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "한화손해보험",
@@ -691,7 +691,7 @@
       },
       "grandfathered_subordinated_printed_eok": 2482.02,
       "grandfathered_hybrid_printed_eok": 2341.05,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "흥국화재",
@@ -753,7 +753,7 @@
       },
       "grandfathered_subordinated_printed_eok": 190.57,
       "grandfathered_hybrid_printed_eok": 2120.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "푸본현대생명보험",
@@ -815,7 +815,7 @@
       },
       "grandfathered_subordinated_printed_eok": 2951.86,
       "grandfathered_hybrid_printed_eok": 400.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "DB손해보험",
@@ -875,7 +875,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "하나생명보험",
@@ -927,7 +927,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "코리안리재보험",
@@ -981,7 +981,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 3291.97,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "DB생명보험",
@@ -1036,7 +1036,7 @@
       },
       "grandfathered_subordinated_printed_eok": 3135.91,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "교보생명보험",
@@ -1098,7 +1098,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 11088.99,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "비엔피파리바카디프생명보험",
@@ -1144,7 +1144,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "KB손해보험",
@@ -1198,7 +1198,7 @@
       },
       "grandfathered_subordinated_printed_eok": 2901.11,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "처브라이프생명보험",
@@ -1242,7 +1242,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "흥국생명보험",
@@ -1304,7 +1304,7 @@
       },
       "grandfathered_subordinated_printed_eok": 4132.49,
       "grandfathered_hybrid_printed_eok": 496.5,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "농협생명보험",
@@ -1367,7 +1367,7 @@
       },
       "grandfathered_subordinated_printed_eok": 8700.42,
       "grandfathered_hybrid_printed_eok": 2500.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "삼성화재해상보험",
@@ -1411,7 +1411,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "동양생명",
@@ -1463,7 +1463,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "악사손해보험",
@@ -1517,7 +1517,7 @@
       },
       "grandfathered_subordinated_printed_eok": 344.66,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "신한라이프생명보험",
@@ -1569,7 +1569,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "교보라이프플래닛생명보험",
@@ -1611,15 +1611,15 @@
         "hybrid": null,
         "subordinated": null
       },
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "KB라이프생명",
       "code": "KR0099",
       "quarter": "2026.2Q",
       "tier2_limit_eok": 13586.0,
-      "numerator_eok": 0.0,
-      "utilization_pct": 0.0,
+      "numerator_eok": 108.51,
+      "utilization_pct": 0.8,
       "data_source": "kics_disclosure item47 규정 정규화 R2 / (item14 x 50%)",
       "tier2_eok": 23033.2,
       "pre_limit_eok": 108.36,
@@ -1632,22 +1632,19 @@
       "new_subordinated_gross_eok": 0.0,
       "tier1_overflow_into_tier2_eok": 0.0,
       "grandfathered_hybrid_eok": 500.0,
-      "grandfathered_subordinated_eok": 1999.51,
+      "grandfathered_subordinated_eok": 699.8,
       "numerator_as_of": "2026-06-30",
       "hybrid_outstanding_eok": 500.0,
       "subordinated_outstanding_eok": 1999.5,
       "bond_balance_as_of": "2025-12-31",
       "rule": "R2",
-      "rule_basis": "발행사가 경과조치 적용 후 열에서 기발행 자본증권(항목 53·54)을 이미 뺐다 - 적용 후 열에 (인쇄값 - 원장 2022년까지 발행 잔액)을 되더한다([별표22] Ⅵ.1.가.(3)). 기발행 차감액은 발행사 인쇄값(항목 53·54)이 아니라 채권원장의 2022년까지 발행 잔액이다(콜일이 지났는데 상환 안 한 채권 제외) - 인쇄값에는 2023년 이후 발행 신규채가 섞여 있을 수 있고 신규채는 기발행이 아니라 한도 대상이다(owner 결정 2026-10-12: 기발행 차감은 2022년까지 발행분만).",
-      "numerator_source": "항목 47 적용전 - 채권원장 2022년까지 발행 잔액(콜 경과 미상환 제외; 신종 500.00 + 후순위 1,999.51)",
+      "rule_basis": "발행사가 경과조치 적용 후 열에서 기발행 자본증권(항목 53·54)을 이미 뺐다 - 적용 후 열에 (인쇄값 - 원장 2022년까지 발행 잔액)을 되더한다([별표22] Ⅵ.1.가.(3))",
+      "numerator_source": "항목 47 적용전 - 채권원장 2022년까지 발행 잔액(콜 경과 미상환 제외; 신종 500.00 + 후순위 699.80)",
       "reason": null,
       "numerator_tfi_off_eok": 1308.31,
       "utilization_pct_tfi_off": 9.6,
       "item47_scope": "EXCL",
-      "rule_flags": [
-        "기발행 차감액 = 채권원장 2022년까지 발행 잔액 2,499.51억(신종 500.00 + 후순위 1,999.51); 발행사 인쇄값 1,199.95억(항목 53 498.00 + 54 701.95)과 다름",
-        "원장 2022년까지 발행 잔액 > 한도 적용 전: 0 으로 둠(원장·인쇄 불일치 확인 필요)"
-      ],
+      "rule_flags": [],
       "supplementary_capital_eok": 23531.0,
       "lapse_excess_item49_eok": 22222.88,
       "no_capital_securities": false,
@@ -1674,7 +1671,7 @@
       },
       "grandfathered_subordinated_printed_eok": 701.95,
       "grandfathered_hybrid_printed_eok": 498.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "서울보증보험",
@@ -1718,7 +1715,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "에이아이에이생명보험",
@@ -1764,7 +1761,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "미래에셋생명",
@@ -1820,7 +1817,7 @@
       },
       "grandfathered_subordinated_printed_eok": 2930.94,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "MG_예별손해보험",
@@ -1872,7 +1869,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "AIG손해보험",
@@ -1916,7 +1913,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "신한이지손해보험",
@@ -1962,7 +1959,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "라이나생명보험",
@@ -2006,7 +2003,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "메트라이프생명보험",
@@ -2050,7 +2047,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "카카오페이손해보험",
@@ -2094,7 +2091,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "뮌헨재보험",
@@ -2141,7 +2138,7 @@
         "hybrid": null,
         "subordinated": null
       },
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "스위스리아시아",
@@ -2190,7 +2187,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "제네럴재보험",
@@ -2239,7 +2236,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "하노버재보험",
@@ -2288,7 +2285,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "알지에이리인슈어런스",
@@ -2338,7 +2335,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "스코리재보험",
@@ -2387,7 +2384,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "퍼시픽라이프리",
@@ -2436,7 +2433,7 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     },
     {
       "company": "마이브라운반려동물전문보험",
@@ -2485,12 +2482,12 @@
       },
       "grandfathered_subordinated_printed_eok": 0.0,
       "grandfathered_hybrid_printed_eok": 0.0,
-      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 콜일이 지났는데 상환 안 한 채권 제외). 발행사 인쇄값은 *_printed_eok"
+      "grandfathered_basis": "채권원장 2022-12-31 이전 발행 잔액(신종·후순위 각각, 첫 콜일이 분기말 이전인 채권 제외). 발행사 인쇄값은 *_printed_eok"
     }
   ],
   "definition": {
     "limit": "item14 x 50% ([별표22] Ⅲ.2.마, 경과조치 적용 전 총요구자본 - Ⅵ.1.라)",
-    "numerator": "보완자본 한도 적용 전 = 보완자본(item47 적용 전 열) - 해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 - 기발행 자본증권(채권원장의 2022-12-31 이전 발행 잔액 중 콜 경과 미상환 제외, 신종·후순위 각각; 발행사 인쇄 관행 정규화 R0~R5 = 행의 rule, 인쇄 항목 53·54 는 차감액으로 쓰지 않음 - owner 2026-10-12)",
+    "numerator": "보완자본 한도 적용 전 = 보완자본(item47 적용 전 열) - 해약환급금 부족분 상당액 중 해약환급금준비금 상당액 초과분 - 기발행 자본증권(채권원장의 2022-12-31 이전 발행 잔액 중 첫 콜일이 분기말 이전인 채권 제외, 신종·후순위 각각; 발행사 인쇄 관행 정규화 R0~R5 = 행의 rule, 인쇄 항목 53·54 는 차감액으로 쓰지 않음 - owner 2026-10-12)",
     "source": "kics_disclosure.json (2026.2Q 경영공시)",
     "replaces": "broken proxy(item3 보완자본 − 면제) — 총보완자본 혼동(삼성생명 자본증권0인데 7.76조), 동양240%/KB218% artifact",
     "as_of": "2026-06-30",

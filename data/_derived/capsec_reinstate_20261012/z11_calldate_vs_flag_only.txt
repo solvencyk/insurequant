@@ -1,0 +1,5 @@
+Effect of deriving the exclusion from call_date <= numerator date (prev = ledger flag only)
+code company | deduction hyb prev->new | sub prev->new | printed 53/54 | pct prev->new | numerator prev->new
+KR0076 아이엠라이프생명보 | hyb 948.8 -> 948.8 | sub 500.0 -> 0.0 | printed 2465.98/0.0 | pct 56.9 -> 70.4 | num 2109.54 -> 2609.54
+KR0001 메리츠화재해상보험 | hyb 1800.0 -> 1800.0 | sub 5960.0 -> 3860.0 | printed 1791.95/15630.85 | pct 30.8 -> 37.5 | num 9724.88 -> 11824.88
+KR0099 KB라이프생명   | hyb 500.0 -> 500.0 | sub 1999.51 -> 699.8 | printed 498.0/701.95 | pct 0.0 -> 0.8 | num 0.0 -> 108.51
