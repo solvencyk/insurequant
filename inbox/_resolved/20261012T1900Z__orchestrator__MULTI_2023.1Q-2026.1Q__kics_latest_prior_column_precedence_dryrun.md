@@ -3,7 +3,7 @@ from: orchestrator
 to: parser
 lane: kics
 created: 20261012T1900Z
-status: open
+status: resolved
 route: feature
 company: MULTI
 period: 2023.1Q-2026.1Q
@@ -34,3 +34,7 @@ owner 제안(2026-10-12 채팅): 현재 RED 에 「최신 공시 직전 컬럼 �
 - 예외 전수 건수와 유형별 분포, 채택 후보·현행 유지·룰 사각·gold 충돌·완전성 부족 건수, 블록 완전성 실측, 새로 드러난 문제, 산출 경로·커밋 해시. `TODO_parser_kics.md` Status + `docs/changelog_parser_kics.md`.
 
 ## 답변 (recipient 작성 — 처리 후)
+드라이런 완료(parser-kics, 커밋 ae7a54b7, 읽기 전용; 마스터·등재부·골든·xlsx·HTML 무변경, 게이트 RED 56·차단 0 전후 동일). 산출: data/_derived/kics_latest_prior_precedence_dryrun_20261012/summary.md (+ 분류·판정 csv, plans/ 덮어쓰기 계획, 재현 스크립트).
+예외 185건: ⓐ 공시 간 충돌 6 · ⓑ 발행사 자체 불일치 43 · ⓒ 원문 부재 64 · ⓓ 파서 오류·오탐 48 · ⓔ 기타 24. 587블록 중 열 간 차이 88: 최신 채택 42(진짜 재작성 40, 예외 해소 2) · 현행 유지 31 · 둘 다 실패 5 · 룰 사각 10. 티켓 범주: 채택 후보 26블록(87칸), 완전성 부족 45, 룰 사각 8, gold 충돌 1, 현행 유지 7(+목록 1).
+적용은 별도 owner 승인 티켓으로만 한다(롯데 2025.1Q·NH농협손해 2024.3Q는 예외 선해제 필요, 코리안리 3분기는 최신 열이 다른 룰을 깸, 소급재작성 as-filed 정책 변경 필요).
+orchestrator 종결: 2026-10-12.
