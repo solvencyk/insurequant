@@ -23,7 +23,7 @@
 |---|------|----------|-------|
 | F7 | KOSIS 손보사별 손해율 시계열 ingest | P1 | `orgId=382, tblId=TX_38202_A1561`, JSON API. 미착수(`data/kosis/` 없음) |
 | F8 | 손보협회 비교공시 (consumer.knia.or.kr) — 채널별 불완전판매·정착률·민원·부지급률·지급지연 | P1 | 사이트 구조 probe 단계. F13(publishing) 선행조건. 미착수 |
-| F9 | data.go.kr 금융통계 API 추가 연동 (`15061307`·`15061306`·`15094797`) | P2 | `src/bonds/fsc_client.py` 패턴 재활용 |
+| F9 | data.go.kr 금융통계 API 추가 연동 (`15061307`·`15061306`·`15094797`) | P2 | `data/_archive/20260803T063432Z/src/bonds/fsc_client.py`(보관본; `src/bonds/` 는 없음) 패턴 재활용 |
 | F10 | GA 통합공시 (gapub.insure.or.kr) | P3 | 사이트 구조 probe |
 | F14 | 규제 뉴스 피드 (roadmap §1E) | P3 | 큐레이션 피드, 자동발행 X |
 | DART-RAW-PROVENANCE | DART raw source_file+as_of 사이드카 | P2 | bonds 완료, DART raw 잔여 |

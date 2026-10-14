@@ -413,7 +413,7 @@ def check_tier_utilization(fd: Findings) -> dict:
             if u is None or n is None or lim in (None, 0):
                 stat[f"{tier}_util_skip"] += 1
                 continue
-            # 소진율은 **자르지 않는다** — owner 2026-06-14 결정(docs/changelog_designer.md:783-789,
+            # 소진율은 **자르지 않는다** — owner 2026-06-14 결정(docs/changelog_archive/designer/2026-06.md 「2026-06-14 (후속3)」,
             # designer 프롬프트 L177 LOCKED). 분자=발행액(KOFIA/DART), 분모=인정한도(공시)로 소스가
             # 독립이라 >100% 가 정당하게 나온다. 자르는 것은 화면 원호뿐이고(K-ICS.html L833),
             # 숫자는 '100%+' + 툴팁 실제값(L841/L879)으로 표기한다. 2026-08-25 이전 이 자리에 있던

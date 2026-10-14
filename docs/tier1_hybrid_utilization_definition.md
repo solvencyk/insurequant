@@ -126,7 +126,7 @@ python scripts/compute_tier1_utilization.py --quarter 2025.4Q
 분자는 발행액(KOFIA/DART per-bond), 분모는 인정한도(공시 SCR 기반)로 **소스가 서로 독립**이라
 사전에 100% 로 묶는 것이 애초에 불가능하다. 계산값이 100 을 넘으면 그대로 두고 **화면에서만**
 `100%+` 로 표기한다(원호는 도넛 360° 한계 때문에 `Math.min(...,100)` 유지 — K-ICS.html L833).
-근거: `docs/changelog_designer.md` 2026-06-14 (후속3) · `docs/agents/claude-agent-designer.md` L177
+근거: `docs/changelog_archive/designer/2026-06.md` 2026-06-14 (후속3) · `docs/agents/claude-agent-designer.md` L177
 LOCKED 항목.
 
 규정상 한도초과분이 보완자본으로 재분류되는 것은 사실이지만, 그것은 `tier1_hybrid_overflow_eok`

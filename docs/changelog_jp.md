@@ -2,6 +2,8 @@
 
 > 이력 저장소. 세션 시작 시 읽지 않는다. 현황은 `TODO_jp.md`.
 
+> 보관: 이전 달 항목은 `docs/changelog_archive/jp/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
+
 ## 2026-09-15 (35) -- F조 출처 교체, 貸借対照表 29/31사
 
 - **あいおいニッセイ同和**: 자사 ディスクロージャー資料2026 법정 계산서류(BS p30/PL p33). MS&AD
@@ -792,11 +794,4 @@ designer 가 "다음 세션 재확인 권장"으로 넘긴 ECharts 렌더를 orc
 ## 2026-09-01 -- 9월 말 킥오프 확정 (owner)
 
 인스뉴스 기사(일본 금융청 2026 보험 모니터링 보고서) 계기. 상세 루트 `TODO.md` J-ESR 항목.
-
-## 2026-07-21 -- MVP 페이지 revert (`167cba1`)
-
-그룹 연결값 11사뿐이라 화면 보류(owner). 근거 메모리 `project_jesr_scope_timing`.
-
-## 2026-06-24 -- 트랙 신설 (당시 downloader/parser 가 처리)
-
-`docs/changelog_downloader.md` 2026-06-24 항목 2건 · `inbox/_resolved/2026062*__*jesr*` 8건.
+

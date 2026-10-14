@@ -157,7 +157,7 @@ for r in t1doc["results"]:
     r["tier1_hybrid_recognized_eok"] = x["new_hyb"]
     r["tier1_hybrid_overflow_eok"] = x["overflow"]
     r["tier1_grandfathered_hybrid_eok"] = x["gf_hyb"]
-    # 캡 없음 (owner 2026-06-14 결정, docs/changelog_designer.md:783-789 · designer 프롬프트 L177 LOCKED).
+    # 캡 없음 (owner 2026-06-14 결정, docs/changelog_archive/designer/2026-06.md 「2026-06-14 (후속3)」 · designer 프롬프트 L177 LOCKED).
     # 분자=발행액(KOFIA/DART per-bond), 분모=인정한도(공시 SCR 기반) — 독립 소스라 >100% 가 정당하게
     # 나온다. 자르는 것은 **화면의 원호뿐**이고(K-ICS.html L833 Math.min(...,100)), 숫자는 생짜로
     # 넘겨 HTML 이 '100%+' + 툴팁 실제값(L841/L879)으로 표기한다. tier2(L140)와 같은 규약.
