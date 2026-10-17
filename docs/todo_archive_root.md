@@ -1,5 +1,8 @@
 # TODO archive — `TODO.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 아침 작업 브랜치 push(HEAD `6233594` 이후, 훅 gate-clear).** owner 취침 중 재보사 전면 재스윕: 손해율 가정 7곳(master_loss_ratio +1,904·예실차 37→44사)·PL 투자손익/영업외 +303·BS +49·CSM 계열(RGA·하노버 2025.4Q 등)·자본성증권 재확인(0 이 맞음). 화면: K-ICS 시나리오 컬럼명(공시 이름)·듀레이션 주석 ? 안으로·IFRS17 통합 현황 박스·NB 표·보험금 예실차비율 표·모바일 재보험 접기. 훅 소요 26분→약 11분(PDF 텍스트 캐시).
+  라이브 `main` 배포는 owner 폰(`bash scripts/android_push_and_deploy.sh --from-origin --branch fix/csm-product-segmented-columns`, `bash` 필수). 결정 대기는 아래 「owner 결정 대기」.
+
 - **2026-10-11 밤 작업 브랜치 push 직전(HEAD `17b526d` 이후).** 재보사 PL 항목 4(CSM 상각) 17버킷 + 라이나 CSM 백필 9분기(워터폴 54칸·상각 +20행·값_당분기 20칸) + PL 항목 4 라이나 9버킷, 상각 스케줄 표 선택 버그 수정(18사 2025.4Q 172칸), 게이트 §3d 항목 4 계보 허용 + owner 승인 등재 4건, 재보사 PL 라벨 「원수」 제거, xlsx·NB(라이나 실제 배수)·패널·공개본 재동기화.
   남은 것: validation 사전 정리(`T2200Z`, 골든 `--update`) → `git push origin fix/csm-product-segmented-columns`(훅 ≈18분) → owner 폰 배포. owner 결정 대기는 아래 「owner 결정 대기」.
 

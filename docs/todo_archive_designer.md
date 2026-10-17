@@ -1,5 +1,8 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 오후 K-ICS 소진율 도넛·Forward Outlook 복원 완료(K-ICS.html·download-survey.js·report-widget.js·tests 4종, 커밋·미배포)** — 순서: 추이 -> 소진율 도넛 -> 자본성증권 발행현황(막대+셀 2개, 내용·계산 그대로) -> 금리 민감도 -> 듀레이션 -> Forward Outlook, 목차 칩 6개, 다운로드·오류 제보 시트 3개 복원, `LIVE_ARTIFACT_READERS` 3개 재선언(같은 커밋). 새 필드(`baseline_basis_flag`·`basic_ratio_by_type_pct`·`basic_ratio_if_tier2_type_pct`)는 전망 툴팁에만.
+  한화생명·메리츠·DB손해·하나손해·하나생명·교보·코리안리·스위스리·교보라이프플래닛·동양 x 1280/375/다크 + 구판 시뮬레이션 32회, JSON 대조 불일치 0·콘솔 0·넘침 0·죽은 칩 0, 시험 4종 통과. 검증 `scripts/shot_kics_util.py`. 남은 것: 설계 프롬프트 §1 표 K-ICS 행 문구(「도넛·forward 내림」) 갱신, 배포는 owner GO.
+
 ## 2026-10-14 배포 완료로 닫힌 절 (main 970259b8 에 전부 반영, 문서 정리로 이동)
 
 ## publishing 이 배포 전에 해야 할 일 (2026-10-10 designer)

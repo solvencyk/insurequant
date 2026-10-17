@@ -1,6 +1,6 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-10-11 · Stage: cross-stage
+> Last updated: 2026-10-18 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
@@ -8,6 +8,9 @@ Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
 
 ---
+
+- **2026-10-18 TODO 일괄 처리(owner 「샥 돌려봐, 난 자고온다」; 20개 에이전트 · 동시 3개 · 독립 검증 포함, 푸시·배포는 하지 않음)**: ① 정리 fan-out 1차: 캐시 · 빈 폴더 43개 삭제, 추적되지 않는 임시 · 증거 외 파일 1259개(10.5GB)를 `C:/Users/sangwook.cho/insurequant_quarantine_20261018` 로 이동(삭제 아님, MOVED.json · README.txt), 추적 백업 2개(`CSM_waterfall.backup.json` · `insurance_pl_breakdown.json.bak_pre39`) 제거, git status 체감 5초 → 1초 미만. 이동 후 추적 파일의 참조 0건 · 개인 파일 무손상 확인. ② 문서: `CLAUDE.md` · TODO_* · inbox/README · `.claude/` · docs 의 낡은 서술과 깨진 참조 113건 정정(보관본 · 이력 무수정, 규칙 의미 변경 0 독립 확인), `.githooks/pre-push` 훅 소요 문구 18분 → 약 11분. 규칙끼리 어긋난 곳 10건은 owner 판단으로 `TODO.md` 에. ③ 손해율 구분 선택기 · 3분기 팝업은 `docs/changelog_designer.md`. ④ reach out 후보 신규 28건(미추적 파일, 발송 · 초안 없음). ⑤ 사업성 평가 `docs/business_assessment_20261018.md`(GA4 · 서치콘솔은 못 읽어 필요한 입력 목록만).
+  모델 · 비용 한 줄: 에이전트 20개(Sonnet 계열, 손해율 · 팝업 · 정리 · 문서 · 후보 · 평가 6줄기), 토큰 약 400만, 소요 약 3.4시간. 검증이 잡아 고친 것: 손해율 IFRS17 합계 없는 사업구분의 죽은 선택지 · 근거 약한 팝오버 예시, 사업성 보고서의 과장 표현 다수.
 
 - **2026-10-14 orchestrator 서브에이전트 정의 보강 + 문서 회전(owner 지시 「정의에 빠진 것 채우고 문서 리팩토링」, 토큰이 크게 들어 워크플로우는 감사 단계에서 중단)**: ① `.claude/agents` 6개(downloader · parser-kics · parser-ifrs17 · validation · designer · publishing)에 최근 2주 기록으로 확인된 빠진 규칙을 채웠다 -- 공통(python 은 스크립트 파일로만·고아 프로세스는 내 PID 만 종료, PC 한도 RAM 15.5GB, 커밋은 파일 명시·개인 문서와 50MB 초과 제외, TODO Status 3개 규칙), 레인별(최신 비교열·최신 공시 전기 칸 우선과 gold 영속 경로·3개월 열 오적재, `--refresh` 재실행 금지·판 선택 등재부, 재보사 8곳·별첨·현행판 대조·서울보증 종결, 독립 재독 감사·골든 `--update` 전 원인 증명, 공시 이름 그대로·회사코드 비노출·`?iq_internal=1`·JSON 플래그 먼저, 마스터 재동기화 순서·새 배포 파일 7곳·격리 클론 배포). 낡은 사실도 고쳤다: 읽는 순서 공통 틀을 레인별로 구체화, 상관행렬 경로(`src/solvency/validation/kics_json_rules.py`), 훅 18분 → 약 11분, downloader 소스 5개 → 4개 + 재보사, designer 4페이지 → 5페이지. 감사 원본(7명, 증거 포함)은 워크플로우 `wf_5091d231-d40` journal.
   ② 문서 회전 도구 `scripts/doc_rotate.py`(+ `tests/test_doc_rotate.py`)를 만들어 changelog 8개를 「최신 달과 그 전 달」만 남기고 `docs/changelog_archive/<stage>/<월>.md` 로 무수정 이동(343항목, 합계 약 2.0MB → 0.8MB, 독립 검산: 원본 줄 손실 0), `TODO_designer.md` Status 15개 → 3개와 배포 끝난 hand-off 절을 archive 로, 낡은 인용(소진율 도넛 `:783-789` 등) 교체, `docs/agents/doc-style.md` 를 실제 규칙으로 재작성, 루트 TODO 의 「inbox 열린 4건」을 실측 10건으로 정정. 월 1회 `doc_rotate.py --check` → `--apply`.

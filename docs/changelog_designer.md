@@ -9,6 +9,12 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/designer/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-18 — 손해율 가정 구분 선택기 + 2026 3분기 안내 팝업 (owner TODO 일괄 처리, 커밋·미배포)
+
+- **손해율 가정 구분 선택기(compare.html · IFRS17.html 8절 · `scripts/viz_build_compare_panel.py` · `data/compare/panel_compare.json` · `scripts/check_loss_group.py`)**: 회사 전체 포트폴리오 한 줄은 뒤쪽 경과차년에서 계약 유형 비중이 달라져 곡선이 꺾이므로(스위스리 사례) 구분(합계 · Non-Par · Indirect-Par · Direct-Par, 공시 이름 그대로) 선택기를 넣었다. 기본은 합계라 기존 숫자는 그대로(HEAD 와 동일 확인). compare 는 넓은 화면 Chart.js · 좁은 화면 SVG · 현재가치 표 · 업계 중앙값이 같은 선택을 따르고 주소 `g=` 로 공유한다. IFRS17 8절은 패널 JSON 에 이미 있는 구분 소계 행을 쓴다(합계 행이 없는 뮌헨 · 제네럴 · 퍼시픽라이프리 사업구분은 선택지에서 합계를 빼고 구분이 하나면 선택기를 숨김). 믹스 효과 설명은 ? 팝오버에만. 빌더에 구분 축(`loss_curve.g` · `med_g` · `note_g`, `loss_pv.vg` · `medg`)을 더해 `panel_compare.json` 120,456 → 153,426 바이트(기존 필드 불변, 마스터 무수정, `--check` OK).
+  검증: 전 회사 마스터 재계산 대조(곡선 최대 0.05pp, 점 2,041 + 2,095), 합계 선택 시 HEAD 와 동일(compare 18/18 · IFRS17 47/47), 1280/375/다크 가로 넘침 0 · 콘솔 오류 0, `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` 78 통과. 남은 것: IFRS17 현재가치 구분 소계 이중 반올림 5칸(최대 0.054pp, publishing), 스위스리 Indirect-Par 21~25년 159.27(원문 공시값) 확인은 owner 판단. 배포 때 HTML 2개 · `panel_compare.json` 같이.
+- **2026 3분기 업데이트 안내 팝업(`theme.js`)**: 파일 맨 위 `NOTICE`(id 2026-3Q · owner 문구 네 줄 · hideAfter 2026-12-31)를 5개 대시보드 페이지가 브라우저당 1회 띄운다(닫으면 localStorage `iq_notice_seen`, 저장소가 막히면 방문마다, 분석·shLog 호출 없음, 새 배포 파일 없음). 다이얼로그 접근성(role · aria-modal · Esc · 백드롭 · 초점 이동/복귀 · Tab 가둠) · 대비 5.76:1 이상 · 375px 가로 넘침 0 · 레이아웃 이동 0. 검사 `scripts/check_notice_popup.py` 428건 위반 0, 독립 검증도 통과. 팝업이 클릭을 가리므로 브라우저 검사 스크립트 10종은 컨텍스트에 `iq_notice_seen` 을 미리 넣도록 한 줄씩 고쳤다(`tests/regression_*.py` 3종은 사전 주입 필요, 푸시 훅 비연결).
+
 ## 2026-10-13 (2) — 발행현황 추정 행 툴팁 꼬리 + 새 JSON 재점검 (ticket 20261013T0030Z)
 
 - `capsecSeries()` 가 연도별 `estimated` 를 모아 막대 툴팁 꼬리(footer)에 「추정(원장 미갱신)」을 붙인다(없는 해는 꼬리 없음). 셀·계산은 그대로.
