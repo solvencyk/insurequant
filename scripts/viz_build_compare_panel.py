@@ -311,6 +311,59 @@ for ty in TYPES:
         byq[q] = row
     loss_curve_med[ty] = byq
 
+# ---------------------------------------------------------------- loss ratio by 구분 (Non-Par / Direct-Par / Indirect-Par)
+# 합계 경로(위)는 그대로 두고 구분 축만 더한다. 마스터에는 구분 소계 행이 없으므로 그 구분의 잎 행(모든 포트폴리오·세그먼트)을
+# (회사, 공시분기, 경과차년) 단위로 더한다: Σ예상보험금 / Σ위험보험료 x 100, 두 금액이 모두 있는 칸만, 위험보험료 합이 0 이하이면 없음.
+# (viz_build_persistency_lossratio_panels._agg 와 같은 규칙이라 IFRS17 8절 구분 소계 행과 맞는다. 세그먼트는 가로질러 합산.)
+LR_GROUPS = ["Non-Par", "Direct-Par", "Indirect-Par"]
+LR_PV = "현재가치"
+lrg2_acc = defaultdict(lambda: [0.0, 0.0])
+lrg2_unit = defaultdict(set)
+for r in lr:
+    g = r["구분"]
+    if g not in LR_GROUPS or r["포트폴리오"] in ("합계", ""):
+        continue
+    if r["원보험사코드"] not in roster or r["공시분기"] not in QI:
+        continue
+    lab = r["경과차년"]
+    if lab not in LR_SLOTS and lab != LR_PV:
+        continue
+    rp, ec = r["위험보험료"], r["예상보험금"]
+    if rp is None or ec is None:
+        continue
+    a = lrg2_acc[(g, r["원보험사코드"], r["공시분기"], lab)]
+    a[0] += rp
+    a[1] += ec
+    lrg2_unit[(g, r["원보험사코드"], r["공시분기"])].add(r["단위"])
+assert all(len(u) == 1 for u in lrg2_unit.values()), "한 공시·한 구분의 손해율 행에 단위가 섞였다"
+loss_curve_g = {g: defaultdict(dict) for g in LR_GROUPS}
+loss_pv_g = {g: defaultdict(lambda: [None] * NQ) for g in LR_GROUPS}
+for (g, c, q, lab), (rp, ec) in lrg2_acc.items():
+    if rp <= 0:
+        continue
+    if lab == LR_PV:
+        loss_pv_g[g][c][QI[q]] = ec / rp * 100.0
+    else:
+        row = loss_curve_g[g][c].setdefault(q, [None] * len(LR_SLOTS))
+        row[LR_SLOTS.index(lab)] = round(ec / rp * 100.0, 1)
+loss_curve_med_g = {}
+for ty in TYPES:
+    pool = [c for c, d in roster.items() if d["type"] == ty and d["median_pool"]]
+    per_g = {}
+    for g in LR_GROUPS:
+        byq = {}
+        for q in sorted({q for c in pool for q in loss_curve_g[g].get(c, {})}, key=qkey):
+            row = []
+            for k in range(len(LR_LABELS)):
+                xs = [loss_curve_g[g][c][q][k] for c in pool if q in loss_curve_g[g].get(c, {}) and loss_curve_g[g][c][q][k] is not None]
+                row.append(round(statistics.median(xs), 1) if len(xs) >= 5 else None)
+            if any(x is not None for x in row):
+                byq[q] = row
+        if byq:
+            per_g[g] = byq
+    loss_curve_med_g[ty] = per_g
+LR_GROUPS_SHOWN = [g for g in LR_GROUPS if loss_curve_g[g]]
+
 # ---------------------------------------------------------------- metrics config
 NA = {
     "csm_closing": {"KR0051": "PAA 전용이라 CSM 없음", "KR0150": "보증보험이라 CSM 없음", "KR0004": "CSM 공시 거의 없음"},
@@ -447,6 +500,14 @@ for m in METRICS:
     for c in list(m["na"]):
         if any(x is not None for x in m["v"][c]):
             del m["na"][c]
+    if m["id"] == "loss_pv":      # 구분별 현재가치 시계열과 업계 중앙값(추가 필드, 위의 v·med 는 그대로)
+        m["vg"], m["medg"] = {}, {}
+        for g in LR_GROUPS_SHOWN:
+            full = {c: [None if x is None else round(x, m["dec"]) for x in (loss_pv_g[g][c] if c in loss_pv_g[g] else [None] * NQ)]
+                    for c in roster}
+            m["vg"][g] = {c: full[c] for c in sorted(full) if any(x is not None for x in full[c])}
+            mg, _ = medians(full)
+            m["medg"][g] = {t: row for t, row in mg.items() if any(x is not None for x in row)}
 
 # 화면이 쓰지 않는 필드는 싣지 않는다(파일 크기·오해 방지).
 COMPANY_KEYS = ("code", "name", "type", "short", "sector")
@@ -473,6 +534,14 @@ out = {
         "labels": LR_SLOTS, "n_std": len(LR_LABELS),
         "v": {c: dict(sorted(loss_curve_v[c].items(), key=lambda kv: qkey(kv[0]))) for c in sorted(loss_curve_v)},
         "med": loss_curve_med,
+        "g_order": LR_GROUPS_SHOWN,
+        "note_g": ("구분을 고르면 그 계약 유형(Non-Par, Direct-Par, Indirect-Par)만 모아 계산합니다. 합계 곡선은 경과차년이 길어질수록 계약 유형 구성이 달라져"
+                   "(칸마다 세 유형의 비중이 다름) 유형 자체의 손해율이 같아도 곡선이 꺾일 수 있습니다. 같은 유형끼리 비교하려면 구분을 고르세요. "
+                   "다만 구분을 골라도 그 유형 자체의 공시값이 경과차년에 따라 크게 달라지면(위험보험료가 작은 칸 등) 곡선은 그대로 꺾입니다. "
+                   "구분 값은 그 구분의 모든 포트폴리오 예상보험금 합 ÷ 위험보험료 합이라 공시 합계 행과 소수 첫째 자리에서 어긋날 수 있고, 위험보험료가 작은 칸은 크게 흔들립니다. "
+                   "공시 기준과 구성은 해마다 다를 수 있습니다."),
+        "g": {g: {c: dict(sorted(loss_curve_g[g][c].items(), key=lambda kv: qkey(kv[0]))) for c in sorted(loss_curve_g[g])} for g in LR_GROUPS_SHOWN},
+        "med_g": loss_curve_med_g,
     },
 }
 payload = json.dumps(out, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
