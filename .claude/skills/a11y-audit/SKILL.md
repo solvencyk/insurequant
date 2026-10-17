@@ -1,6 +1,6 @@
 ---
 name: a11y-audit
-description: Audit insurequant's 4 deployed dashboards (index.html, K-ICS.html, IFRS17.html, 공시보고서.html) against the project's WCAG 2.1 AA accessibility baseline — contrast, colorblind-safe chart palettes, keyboard access, focus visibility, form labels. Use when adding a new page/chart/component, doing a periodic A11y pass, or when the owner asks for an accessibility check.
+description: Audit insurequant's 5 deployed dashboards (index.html, K-ICS.html, IFRS17.html, 공시보고서.html, compare.html) against the project's WCAG 2.1 AA accessibility baseline — contrast, colorblind-safe chart palettes, keyboard access, focus visibility, form labels. Use when adding a new page/chart/component, doing a periodic A11y pass, or when the owner asks for an accessibility check.
 ---
 
 # A11y audit (insurequant designer stage)
@@ -22,13 +22,13 @@ form controls. Full table in `docs/a11y_baseline.md` §1.
    (chart colors are almost never CSS, they're JS object literals).
 2. **Check text/background contrast** for every distinct foreground-on-background
    pair found (`common.css` tokens + any page-local literal) with
-   `python scripts/a11y_contrast_check.py contrast "#fg" "#bg"` — don't
+   `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/a11y_contrast_check.py contrast "#fg" "#bg"` — don't
    hand-compute, the WCAG relative-luminance formula is easy to get subtly
    wrong by hand and this repo has been burned by that before.
 3. **Check chart-palette colorblind-safety** for any palette used to
    distinguish ≥2 data series simultaneously (categorical multi-line charts,
    diverging treemap/heatmap scales):
-   `python scripts/a11y_contrast_check.py cbcheck "#colorA" "#colorB"` for every
+   `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/a11y_contrast_check.py cbcheck "#colorA" "#colorB"` for every
    pair in the palette. Flag pairs with `delta-RGB < 60` under either
    protanopia or deuteranopia simulation. A pair that's ALSO backed by a
    non-color cue (label, tooltip, position, symbol) is lower severity than one
@@ -74,8 +74,8 @@ form controls. Full table in `docs/a11y_baseline.md` §1.
 
 ## Known repo-specific traps
 
-- `common.css` is linked in 3 of the 4 pages historically — always check the
-  4th (`공시보고서.html`) hasn't drifted; it's the one most likely to be
+- `common.css` was once linked in only 3 of the 4 original pages (all 6 HTML link it as of 2026-10-18) — still check that
+  `공시보고서.html` hasn't drifted; it's the one most likely to be
   edited standalone and forgotten.
 - The `.subtoggle` (+/− expand button) pattern is already a real `<button>`
   with `aria-expanded` — don't re-flag it.

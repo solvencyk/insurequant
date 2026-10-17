@@ -35,7 +35,7 @@ inbox/
 from: validation          # 보낸 스테이지
 to: parser                # 받는 스테이지 (= 폴더명)
 created: 20260608T0210Z
-status: open              # open | answered | resolved
+status: open              # open | answered | resolved | superseded
 route: reparse            # refetch | reparse | escalate | blind_spot
 company: KR0003
 period: 2025.4Q
@@ -108,8 +108,8 @@ python scripts/check_inbox_hygiene.py --fix    # 폴더-status 불일치만 자�
 **handoff의 정본은 inbox md** — 검증 스테이지가 그 JSON들을 읽어 route별 메시지로 변환해
 해당 inbox에 넣는다. 이 변환은 **스크립트 `scripts/consolidate_inbox.py`** 가 한다 (기계적
 작업이라 에이전트 불필요). idempotent: 이미 `parser/` 또는 `_resolved/`에 같은 (회사·기간·토픽)
-메시지가 있으면 skip → 중복/해결건 재생성 안 함. 현재 continuity validator 처리, 신규 validator는
-`VALIDATORS` 리스트에 핸들러 추가. **루프 = validator 실행 → `consolidate_inbox.py` → "inbox 확인해라".**
+메시지가 있으면 skip → 중복/해결건 재생성 안 함. 현재 처리하는 validator 는 CSM continuity · K-ICS 금리민감도 RS1/RS2 ·
+CSM 워터폴 must_reparse · 데이터계약 넷이고, 신규 validator는 `VALIDATORS` 리스트에 핸들러 추가. **루프 = validator 실행 → `consolidate_inbox.py` → "inbox 확인해라".**
 
 ## Git
 

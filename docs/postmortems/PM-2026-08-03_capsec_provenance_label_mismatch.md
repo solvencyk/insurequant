@@ -1,8 +1,8 @@
 # PM-2026-08-03 — 자본성증권 provenance 라벨 거짓이 게이트를 통과 (false-green)
 
-> 발주: `inbox/validation/20260803T0056Z__owner__MULTI__capsec_provenance_source_id_dart.md`
+> 발주: `inbox/_resolved/20260803T0056Z__owner__MULTI__capsec_provenance_source_id_dart.md`
 > 후속 발주(§6, 같은 사건의 두 번째 얼굴):
-> `inbox/validation/20260803T0310Z__owner__MULTI_2026.1Q__capsec_coverage_census_regression.md`
+> `inbox/_resolved/20260803T0310Z__owner__MULTI_2026.1Q__capsec_coverage_census_regression.md`
 > 상태: **closed** (룰 배선 + 사이드카 재발행 + 회귀 케이스 완료 / §6 커버리지 census 배선 완료)
 > · 잔여 UH-7 1건 + §6의 데이터측 잔여(raw 재추출, RED 15건 = 의도된 push 차단)
 > 계통: PM-2026-06-16 "맞는 산수·틀린 소스"의 **provenance 축 변종** — 이번엔 산수도 소스도 맞고
@@ -94,7 +94,7 @@ push 차단력은 push 게이트 단독으로 확보된다(절반-경화 아님)
 | `source_id_for_lineage`를 무력화(선언값 그대로 인정) | selftest G1 **FAIL**(미검출) = 룰이 실제로 판정을 하고 있음 |
 
 > forward_capital은 착지 도중 **DART로 재기준**됐다(병행 parser 세션,
-> `inbox/parser/20260803T0055Z__owner__MULTI_2026.1Q__forward_capital_rebase_fsc_to_dart.md`
+> `inbox/_resolved/20260803T0055Z__owner__MULTI_2026.1Q__forward_capital_rebase_fsc_to_dart.md`
 > — manifest `bonds_source`가 FSC stamp에서 repo-상대 경로로 변경). 사이드카가 **도출식**이라
 > 라벨이 `FSC_BONDS → DART`로 자동 추종했다. 이 자동 추종이 이번 배선의 요점이다.
 
@@ -110,9 +110,9 @@ push 차단력은 push 게이트 단독으로 확보된다(절반-경화 아님)
 
 | ID | 내용 | 티켓 |
 |---|---|---|
-| **UH-7** (신규) | `kics_forward_capital.json` 셀 키가 `baseline_2025_4Q`인데 실제 데이터는 `BASELINE_QUARTER = "2026.1Q"` 필터 산출물(`scripts/forward_capital_simulation.py:45,93,442`). **값은 맞고 키 이름만 거짓** — as-of 정본 판단을 흐린다(owner §4가 이걸 stale로 의심한 원인). HTML이 이 키를 읽으므로 rename은 designer/publishing 동시 변경 필요 → validation 단독 수정 금지 | `inbox/publishing/20260803T0210Z__validation__MULTI_2026.1Q__forward_baseline_key_misnomer.md` |
+| **UH-7** (신규) | `kics_forward_capital.json` 셀 키가 `baseline_2025_4Q`인데 실제 데이터는 `BASELINE_QUARTER = "2026.1Q"` 필터 산출물(`scripts/forward_capital_simulation.py:45,93,442`). **값은 맞고 키 이름만 거짓** — as-of 정본 판단을 흐린다(owner §4가 이걸 stale로 의심한 원인). HTML이 이 키를 읽으므로 rename은 designer/publishing 동시 변경 필요 → validation 단독 수정 금지 | `inbox/_resolved/20260803T0210Z__validation__MULTI_2026.1Q__forward_baseline_key_misnomer.md` |
 | ~~**UH-3**~~ | ~~provenance end-state(no-sidecar=RED) 미전환~~ | ✅ **해소 2026-08-03 (c)** — §7 참조 |
-| **UH-8** (신규) | `kics_rate_sensitivity`는 `MASTER_FILES`에 있으나 **CHECK 2 검사 대상이 아니다**(사이드카 없음 → 소스 신선도 미검증). UH-3가 닫은 것과 같은 부류의 잔여 축 | `inbox/parser/20260803T0520Z__validation__MULTI__rate_sensitivity_provenance_sidecar.md` (lane: kics) |
+| **UH-8** (신규) | `kics_rate_sensitivity`는 `MASTER_FILES`에 있으나 **CHECK 2 검사 대상이 아니다**(사이드카 없음 → 소스 신선도 미검증). UH-3가 닫은 것과 같은 부류의 잔여 축 | `inbox/_resolved/20260803T0520Z__validation__MULTI__rate_sensitivity_provenance_sidecar.md` (lane: kics) |
 | 절반-경화(확인) | `prepush_check.py`가 `validate_kics_disclosure.py`를 **호출하지 않음**을 재확인(`:23` import는 `validate_data_contract`·`triage_anomaly_candidates`뿐). 이번 룰은 push 게이트 배선이라 무관하지만, K-ICS 게이트 전용 룰(현 documented RED 8건 포함)은 여전히 push를 못 막는다. 체인 추가는 push 의미를 바꾸므로 **owner 결정 사항** | ~~owner 판단 대기~~ → **✅ 해소 2026-08-21** (아래 각주) |
 
 > **정정 각주 (2026-08-25).** 위 표의 마지막 행 "절반-경화(확인)" 은 **더 이상 유효하지 않다.**
@@ -186,8 +186,8 @@ KR0069 삼성생명이 그 형태의 유일한 실례다.
 
 | ID | 내용 | 티켓 |
 |---|---|---|
-| 데이터 잔여 (RED 15) | raw 있음 12사(KR0008·0029·0050·0051·0074·0075·0076·0080·0095·0100·1011·1098) = 추출 또는 무발행 빈 레코드 명시 | `inbox/parser/20260803T0400Z__validation__MULTI_FY2025__capsec_source_census_records.md` |
-| 데이터 잔여 (RED 3) | FY2025 annual raw 자체 부재 3사(KR0049 악사손해·KR1010 교보라이프플래닛·KR0150 서울보증) | `inbox/downloader/20260803T0405Z__validation__KR0049_KR1010_KR0150_FY2025__capsec_annual_raw_missing.md` |
+| 데이터 잔여 (RED 15) | raw 있음 12사(KR0008·0029·0050·0051·0074·0075·0076·0080·0095·0100·1011·1098) = 추출 또는 무발행 빈 레코드 명시 | `inbox/_resolved/20260803T0400Z__validation__MULTI_FY2025__capsec_source_census_records.md` |
+| 데이터 잔여 (RED 3) | FY2025 annual raw 자체 부재 3사(KR0049 악사손해·KR1010 교보라이프플래닛·KR0150 서울보증) | `inbox/_resolved/20260803T0405Z__validation__KR0049_KR1010_KR0150_FY2025__capsec_annual_raw_missing.md` |
 | YELLOW→RED 승격 | `CAPSEC_AMOUNT_MISMATCH`(부분 유실) 라이브 실측 0건 → 1~2 릴리스 관찰 후 RED 전환 | 본 PM(다음 릴리스 검토) |
 
 > **데이터 잔여 진행 (2026-08-03 c)**: RED **15 → 13**. parser가 KR0050·KR0076 레코드를 적재해

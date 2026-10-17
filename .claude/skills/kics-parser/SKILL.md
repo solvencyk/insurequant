@@ -11,7 +11,7 @@ description: >-
   market-risk subs (pdfplumber EOF → fitz fallback), backfilling a company/quarter, or reconciling/answering
   questions about K-ICS 지급여력비율·요구자본·시장위험 figures on the insurequant site. Covers the src/solvency/parser
   extractors, the fill_period → fill_subitems → fill_market pipeline, the gate's "RED=0 OR documented in docs/kics_gate_exceptions.md"
-  contract, capital-tiering limits, per-company quirks (AIA 경과조치 미적용, 내부모형사 직접공시 IRR, 서울보증 보증보험
+  contract, capital-tiering limits, per-company quirks (AIA 경과조치 미적용, 교보·신한라이프 IRR 잔차 박제, 서울보증 보증보험
   생명장기=0, 코리안리 자동차, 카카오/예별 micro·자본잠식), even-Q vs odd-Q cadence, △(세모) negative sign, and
   unit 백만원↔억원 conversion. This is the K-ICS half of the 2-lane parser split — NOT for IFRS17 / CSM waterfall /
   DART filing parsing (that is the ifrs17 lane; use the ifrs17-parser skill for that).
@@ -27,7 +27,7 @@ which the site renders (`K-ICS.html`, `index.html` donut/ratio panels).
 `scripts/fill_*` / `extract_market_*` / `validate_kics_disclosure.py` / `run_harness.py`, root
 `kics_disclosure.json` / `kics_rate_sensitivity.json`, `data/disclosure/`, `md_inbox/`. ifrs17 = `src/ifrs17/`,
 `CSM_waterfall.json` / `PL_breakdown.json`, `data/dart/`. The two run in **parallel sessions** (2-lane hard
-split, CLAUDE.md) — don't edit ifrs17 files. **Join point:** `build_root_masters.py` runs once after both load.
+split, CLAUDE.md) — don't edit ifrs17 files. **Join point:** `build_root_masters.py` — never run `main()` whole (CLAUDE.md §8).
 
 ## Source of truth
 
@@ -93,9 +93,9 @@ These are the hard-won ones. Full detail + per-company table in **`references/qu
    the 경과조치 적용 전/후 layout are commonly 백만원; the core extractor rounds 1-28 to integers (so a tiny
    item19=2 can break sqrt-reconcile = documented micro), while 36-46 keep 2-decimal precision. Let the unit-cue
    logic decide; never assume.
-7. **Internal-model insurers disclose IRR directly.** 한화생명·신한라이프·교보 publish per-scenario 금리위험액,
-   so the standard `derive_irr(41-46)` won't reconcile to item36 — the company values are correct. These are
-   **owner-approved 36_irr exceptions** (INTERNAL_MODEL_36IRR_EXEMPT), not parse errors.
+7. **Some insurers' 41-46 do not reproduce item36 (교보 KR0073, 신한라이프 KR0094).** The old claim 「internal-model insurers publish per-scenario 금리위험액 directly」
+   was disproved by a raw check on 2026-08-21: the 41-46 tables are fully printed, so `INTERNAL_MODEL_36IRR_EXEMPT` was emptied. The 6 (company, quarter) cells are now
+   **residual pins** (`IRR_DERIVE_ISSUER_INCONSISTENT` in `kics_json_rules.py`) — not blanket skips, not parse errors.
 8. **Windows shell.** Use the full venv python (above). **Never run an inline multi-line `python -c`** — it hangs
    the shell and wedges Workflow subagents permanently ([[feedback-workflow-multiline-python-hang]]); write a
    `.py` file (put diagnostics in `scripts/_probes/`) or use Read/Grep. `sys.stdout = io.TextIOWrapper(sys.stdout.buffer,
@@ -120,5 +120,5 @@ These are the hard-won ones. Full detail + per-company table in **`references/qu
 - **Parallelize by (회사 × 분기)** when chunks are independent and large; small fixes inline ([[feedback-multi-agent-parallel]]).
 - **What's verifiable:** `pytest tests/unit/`, the gate above, and a per-(company,quarter) census probe.
 
-After changing a master JSON, regenerate `insurequant_master_tables.xlsx`
-(`python scripts/build_master_xlsx.py`) so the review loop stays in sync ([[feedback-rebuild-master-xlsx]]).
+After changing a master JSON, sync only the changed sheet of `insurequant_master_tables.xlsx` (publishing's job by default)
+(`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/sync_master_xlsx_sheet.py "K-ICS공시"`; never regenerate it whole with `build_master_xlsx.py` — CLAUDE.md §8) so the review loop stays in sync ([[feedback-rebuild-master-xlsx]]).

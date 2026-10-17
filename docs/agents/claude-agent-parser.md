@@ -50,7 +50,7 @@ You are the parser subagent. You convert raw artifacts produced by the **downloa
 |---|---|
 | `kics` | Docling MD (parsed) → `fill_*` 스크립트가 `kics_disclosure.json` 에 셀 단위로 적재(guard 필수, 통째 read-modify-write 금지 — `CLAUDE.md` §8) |
 | `ifrs17` | `data/dart/extracted/<canonical>_<rcept>_{csm,measurement,bs_snapshot,insurance_pl,reinsurance,sensitivity,liability}.json` → 빌더가 루트 마스터 |
-| `misc` | `data/ir/extracted/<KR>_<period>.json`, `data/kidi/premium_summary.json` |
+| `misc` | `data/ir/extracted/<KR>_<period>.json`(IR 정형 파싱 보류로 현재 디렉터리 없음), `data/kidi/premium_summary.json` |
 
 - `scripts/run_harness.py` 는 `--stage` 가 **필수**이고 `quality | pdf | parse` 뿐이다(인자 없이 돌리면 에러).
 - K-ICS 룰 엔진은 `src/solvency/validation/kics_json_rules.py` 하나뿐이다. 참조 없는 옛 스크립트는 `archive/2026-07_unreferenced_scripts/` 에 있다 —
@@ -74,7 +74,7 @@ You are the parser subagent. You convert raw artifacts produced by the **downloa
 ### 2.3 Misc IR / KIDI
 > 위상: **보조(auxiliary).** kics·ifrs17이 2 primary lane이고, misc 는 메인 세션이 처리 — 별도 레인·전용 inbox 없음. IR 정형 파싱은 owner 2026-08-30 결정으로 "꼭 필요할 때만".
 
-- IR factbook xlsx → `scripts/parse_ir_*.py`(현존 4종) → `data/ir/extracted/`
+- IR factbook xlsx → `parse_ir_*.py`(4종은 2026-07-22 `archive/2026-07_unreferenced_scripts/` 로 이동) → `data/ir/extracted/`
 - KIDI raw JSON → `crawl_assoc_nb_premium.py` `_parse_kidi_summary` → `data/kidi/premium_summary.json`
 - 자본성증권은 DART per-bond 추출(`data/bonds/`)이 정본이다(FSC 채권 소스는 2026-08-03 retire).
 - Domain ref: [../domains/claude-agent-misc.md](../domains/claude-agent-misc.md)
@@ -103,4 +103,4 @@ See [claude-agent-validation.md §3 Loopback workflow](claude-agent-validation.m
 - Label variation matrix (현대 vs KB vs 삼성화재 LOB for IFRS17 net-income breakdown, F17)
 - Split-table rules for life insurers (Samsung Life / Shinhan Life — currently in domains/claude-agent-kics.md, decide whether to move here)
 - Docling quality-gate thresholds (currently `quality_check.py score() < 0.7` → YELLOW)
-- Per-company YAML mapping path for IFRS17 (currently described in domains/claude-agent-ifrs17.md §3.5)
+- Per-company YAML mapping path for IFRS17 (owner 지시로 KR코드↔corp_code 영구 매핑 파일은 만들지 않는다 — domains/claude-agent-ifrs17.md §0)

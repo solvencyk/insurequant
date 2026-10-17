@@ -8,7 +8,7 @@
 # 안 치면 그냥 통과했다. 이 저장소에서 실제로 강제되는 지점은 git 하나뿐이라 여기 건다.
 #
 # 소요는 **번들 범위에 따라 갈린다**(2026-09-13 부터 `prepush_check.py` §0 이 판정):
-#   전체(FULL)      ~18분(2026-09-02 실측 17분 33초 + 마스터 xlsx 대조 12초)
+#   전체(FULL)      약 11분(2026-10-12 실측 10분 42초; 2026-09-02 에는 17분 33초였다)
 #   축소(jp-scope)  ~5초 — jp/·J-ESR/·docs·inbox·TODO·.claude·배포 .sh·CLAUDE.md 만 바뀐 번들.
 #                   한국 마스터 축은 **미검사**이고 verdict 에 SKIPPED(jp-scope) 로 찍힌다.
 # 통과 못 하면 push 가 막힌다. 판정만 보려면 `python scripts/prepush_check.py --scope-only`.
@@ -44,7 +44,7 @@ else
   exit 1
 fi
 
-echo "pre-push: 게이트 실행 중 (전체 ~18분 / jp 범위면 ~5초 — 끊지 말 것)..."
+echo "pre-push: 게이트 실행 중 (전체 약 11분 / jp 범위면 ~5초 — 끊지 말 것)..."
 "$PY" "$GATE"
 rc=$?
 

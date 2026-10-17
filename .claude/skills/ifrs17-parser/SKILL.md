@@ -30,13 +30,14 @@ DART disclosures into the IFRS17 metric masters and the viz panels the site rend
 
 `docs/domains/claude-agent-ifrs17.md` is the **design/scope SOT** — the label-variant tables, the
 CSM table-form taxonomy (Form A / A_rows / B), the slice rules (생보 = 전사 합계, 손보 = 장기 열),
-and the Q1–Q9 design decisions. **Read it for "what label means what" / "how is this table shaped".**
+and the design decisions (the Q1–Q9 original Q&A is in `docs/domains/claude-agent-ifrs17_history.md`). **Read it for "what label means what" / "how is this table shaped".**
 This skill does **not** duplicate it — it is the *operational* layer (current pipeline map + traps).
 
-> ⚠️ The SOT is 2026-05 bootstrap-era and some status lines are **superseded by current code**. Most
-> important: SOT §7.3 / Q8 say "DART 민감도 = misaligned skim PoC, K-ICS is primary". That is no longer
-> true — DART CSM/PL sensitivity is now a **real, owner-directed pipeline** (`sensitivity_extractor.py` →
-> `sensitivity_heatmap.json`). Where SOT PoC-status conflicts with live code, **the code + this skill win.**
+> ⚠️ The SOT was cleaned up on 2026-10-07; the 2026-05 bootstrap-era text (PoC status lines, Q1–Q9 Q&A) is now in
+> `docs/domains/claude-agent-ifrs17_history.md` and may be **superseded by current code**. Most important: the old
+> claim "DART 민감도 = misaligned skim PoC, K-ICS is primary" is no longer true — DART CSM/PL sensitivity is now a
+> **real, owner-directed pipeline** (`sensitivity_extractor.py` → `sensitivity_heatmap.json`, SOT §7.2). Where a
+> PoC-era status conflicts with live code, **the code + this skill win.**
 
 ## Pipeline at a glance
 
@@ -47,7 +48,7 @@ data/dart/FY####_Q4/raw/  ─▶  (semantic scoring, no           <canonical>_<r
   *.xml                                                         insurance_pl, reinsurance,           build_nb_csm_multiple            ─▶  csm_bubble, NB_CSM_multiple
                                                                 bs_snapshot, sensitivity,            viz_build_ifrs17_panels          ─▶  bs_snapshot, insurance_pl_breakdown,
                                                                 liability  (+ _mvp, + _*_summary)                                          sensitivity_heatmap
-                                                                                                     build_root_masters (join, after BOTH lanes load)
+                                                                                                     build_root_masters (join; main() 통짜 실행 금지, CLAUDE.md §8)
 ```
 
 The HTML (`IFRS17.html`, `index.html`) reads the `data/dart/viz/*.json` panels. **Designer owns the HTML;
@@ -60,10 +61,10 @@ For the file map, extracted-block + panel + PL-master schemas, and how to run/ve
 
 These are the hard-won ones. Full detail + per-company table in **`references/quirks-and-traps.md`**.
 
-1. **Destructive rebuild on this branch.** `build_csm_waterfall_master.py` and `build_pl_breakdown.py`
-   discover companies from `data/dart/FY*/raw/`, but that raw was **git-purged** on `fix/csm-…`
-   (only AIA FY2024 + all FY2025 raw survive). Re-running either **collapses** the committed masters.
-   On this branch, fix PL/CSM cells via **disposition + `_GOLD_CELL_OVERRIDE` / surgical JSON patch**, not a
+1. **Destructive rebuild.** `build_csm_waterfall_master.py` and `build_pl_breakdown.py`
+   discover companies from `data/dart/FY*/raw/`. That raw was **git-purged** on `fix/csm-…` in 2026-07
+   (rebuilds then **collapsed** the committed masters). As of 2026-10-18 raw is back on disk for FY2022_Q4..FY2026_Q2 (gitignored; `scripts/check_dart_raw_coverage.py` guards losses), but a full rebuild still **reverts hand-loaded cells** (see `.claude/agents/parser-ifrs17.md`, CLAUDE.md §8).
+   Fix PL/CSM cells via **disposition + `_GOLD_CELL_OVERRIDE` / surgical JSON patch**, not a
    full rebuild. The CSM gold gate is also non-runnable here. (See [[project-git-purge]].)
 2. **Unit.** Sensitivity panels are in **억원** (1억 = 100백만); PL master is in **백만원**. The sensitivity
    extractor normalizes via a unit cue, else cross-checks the table's base CSM against `CSM_waterfall.json`
@@ -90,19 +91,19 @@ These are the hard-won ones. Full detail + per-company table in **`references/qu
   (csm_amort_pl ≈ §(5) 당기손익 CSM; PL item17 = item18 + item19; 영업이익 = item1 + item17). If a pilot value
   doesn't match the owner's expectation, **stop and report the cause** — don't ship a guess.
 - **Parallelize by (회사 × 분기 × kind)** when chunks are independent and large; small fixes do inline.
-- **What's verifiable on this branch:** `pytest tests/unit/`, and `viz_build_ifrs17_panels.py` (reads committed
-  `data/dart/extracted/*.json`). FY2024-quarter cell re-parses are raw-blocked; FY2025 is unblocked (raw on disk).
+- **What's verifiable:** `pytest tests/unit/`, and `viz_build_ifrs17_panels.py` (reads committed
+  `data/dart/extracted/*.json`). Cell re-parses are no longer raw-blocked (raw on disk for FY2022_Q4..FY2026_Q2).
 - **viz 빌더 골든 (2026-07-22):** `viz_build_ifrs17_panels.py`(4개 패널: csm_amort_schedule /
   insurance_pl_breakdown / bs_snapshot / sensitivity_heatmap)와 `viz_build_csm_waterfall.py`
   (csm_waterfall.json)에 골든이 있다 — `tests/test_viz_{ifrs17_panels,csm_waterfall}_golden.py`.
   두 빌더는 커밋된 입력(`data/dart/extracted/*` + `CSM_waterfall.json` + `sensitivity_overrides.json`)의
-  순수 함수라 결정론적. **빌더를 고쳤으면 `python -m pytest tests/test_viz_*_golden.py` 필수**
+  순수 함수라 결정론적. **빌더를 고쳤으면 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_viz_*_golden.py` 필수**
   (오프라인 각 ~1.5초). 이 빌더들은 `data/dart/viz/`의 커밋된 파일을 **인플레이스로 덮어쓰므로**
-  골든이 실행 전 백업·drift 시 복구한다. 산출이 의도적으로 바뀌면(추출 수정 등) `python
+  골든이 실행 전 백업·drift 시 복구한다. 산출이 의도적으로 바뀌면(추출 수정 등) `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
   tests/test_viz_<x>_golden.py --update` + 커밋에 이유 기록.
 
-After changing a master JSON, regenerate `insurequant_master_tables.xlsx`
-(`python scripts/build_master_xlsx.py`) so the review loop stays in sync ([[feedback-rebuild-master-xlsx]]).
+After changing a master JSON, sync only the changed sheet of `insurequant_master_tables.xlsx` (usually publishing's job)
+(`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/sync_master_xlsx_sheet.py "<sheet>"`; never regenerate it whole with `build_master_xlsx.py` — CLAUDE.md §8) so the review loop stays in sync ([[feedback-rebuild-master-xlsx]]).
 
 ## PL breakdown is a package now (2026-07-22) — read this before editing a handler
 
@@ -138,7 +139,7 @@ import**로 적혀 있다. 새 헬퍼가 필요하면 `import *`로 열지 말�
 ### 골든 게이트 — PL 빌더를 고쳤으면 반드시
 
 ```bash
-RUN_PL_GOLDEN=1 python -m pytest tests/test_pl_breakdown_golden.py
+RUN_PL_GOLDEN=1 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_pl_breakdown_golden.py
 ```
 
 빌더를 재실행해 `pl_breakdown_master.json` + `pl_breakdown_coverage.json`을
@@ -149,8 +150,8 @@ RUN_PL_GOLDEN=1 python -m pytest tests/test_pl_breakdown_golden.py
 - **구조만 바꿨는데 실패** → 리팩토링이 동작을 바꾼 것이다. 고쳐라.
 - **의도적으로 값이 바뀜**(새 분기 raw, 진짜 추출 수정) → 해시를 손으로 고치지 말고 재생성:
   ```bash
-  python scripts/build_pl_breakdown.py
-  python tests/test_pl_breakdown_golden.py --update
+  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/build_pl_breakdown.py
+  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe tests/test_pl_breakdown_golden.py --update
   ```
   그리고 **왜 숫자가 움직였는지 커밋 메시지에 적어라.**
 
@@ -161,9 +162,9 @@ RUN_PL_GOLDEN=1 python -m pytest tests/test_pl_breakdown_golden.py
 KR0073 다중 breakdown 선택). 2026-07-22 사후보정 꼬리 182줄을 `_apply_post_corrections`로
 분리해 389줄로 줄였다 — **동작 불변**.
 
-고쳤으면 **`python -m pytest tests/test_post_transition_golden.py`** 필수(오프라인·~4초):
+고쳤으면 **`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_post_transition_golden.py`** 필수(오프라인·~4초):
 전 md_inbox 분기에 대해 순수 코어를 돌려 **쓰게 될 모든 `(회사,분기,항목)→(전,후,소스)`
-6,114셀**을 해시로 고정한다(마스터는 안 건드림). 값이 의도적으로 바뀌면 `python
+6,114셀**을 해시로 고정한다(마스터는 안 건드림). 값이 의도적으로 바뀌면 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 tests/test_post_transition_golden.py --update` + 커밋에 이유 기록.
 
 ### DART FS API 캐시 — 정정공시 대응 (2026-07-22)
@@ -175,9 +176,9 @@ tests/test_post_transition_golden.py --update` + 커밋에 이유 기록.
 
 정정공시가 뜬 회사-연도는 재취득 후 커밋하라:
 ```bash
-python scripts/fetch_dart_fs.py --refresh <corp_code> <year>   # OPENDART_API_KEY 필요
-python scripts/build_pl_breakdown.py                            # 마스터 재빌드
-python tests/test_pl_breakdown_golden.py --update              # 골든 재생성(값이 바뀌었으므로)
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/fetch_dart_fs.py --refresh <corp_code> <year>   # OPENDART_API_KEY 필요
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/build_pl_breakdown.py                            # 마스터 재빌드
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe tests/test_pl_breakdown_golden.py --update              # 골든 재생성(값이 바뀌었으므로)
 ```
 그 다음 갱신된 캐시 + 마스터 + 골든을 **함께** 커밋하고 왜 바뀌었는지 적어라.
 

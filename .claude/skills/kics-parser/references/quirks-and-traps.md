@@ -55,12 +55,12 @@ validator `_parent_zero_child_nonzero` blocks the gate. Real cases removed: 서�
 | AIA (KR0080) | 경과조치 **미적용** → 적용전 = 적용후 | duplicate 적용후 = 적용전 in sensitivity; not a missing-data RED |
 | 코리안리 (KR1000) | 자동차보험 = **일반손해 sub (0)** | don't expect a separate 자동차 risk line |
 | 서울보증 (KR0150) | **보증보험사** — 생명장기위험액(item17)=0 (본업은 일반손해 item18) | 29-35 absent is correct; 과거 interim Q1-3 = refetch-impossible structural gap (SGI_QUARTERLY_STRUCTURAL, census whitelist) |
-| 예별손해 / 구 MG손해 (KR0004) | **자본잠식** (지급여력비율 음수); rename MG→예별 2025; raw only FY2025_Q4 + FY2026_Q1 on disk | △ negatives are real; 경과조치 **적용사**(TER/TIRR) so 적용후 ≠ 적용전; 2023-2025.3Q never existed → downloader |
-| 한화생명·신한라이프·교보 (internal model) | publish **per-scenario 금리위험액 directly** → standard derive_irr(41-46) won't reconcile to item36 | owner-approved **INTERNAL_MODEL_36IRR_EXEMPT** (RED→SKIP); company values correct, not a parse error |
+| 예별손해 / 구 MG손해 (KR0004) | **자본잠식** (지급여력비율 음수); rename MG→예별 2025; raw on disk for FY2023_Q1..FY2026_Q2 | △ negatives are real; 경과조치 **적용사**(TER/TIRR) so 적용후 ≠ 적용전; earlier-quarter raw is now on disk |
+| 교보(KR0073)·신한라이프(KR0094) | 41-46 fully printed, but the standard derive_irr(41-46) does not reproduce item36 (the old 「internal model, per-scenario 금리위험액 direct」 premise was disproved 2026-08-21; `INTERNAL_MODEL_36IRR_EXEMPT` is empty) | **residual pins** `IRR_DERIVE_ISSUER_INCONSISTENT` (6 cells, re-checked every run); values are as printed, not a parse error |
 | 카카오페이손해 (KR1098) | **micro-insurer** (single-digit 억); some quarters image-only PDF | tiny item19 → micro-reconcile RED documented; image quarters → owner OCR; 2025.2Q/3Q text-loaded |
 | 삼성생명·신한라이프 | **split-table**: item1(amount) and item14(SCR) in separate MD sections | `extract_kics_summary_overview_rows` + `make_quarter_column_picker` (N/4분기); strip `(A)/(B)/(A/B)` suffixes |
 | 신한 (OCR) | char corruption: middle-dot `∙`, `보험→보X위`, `손액보험→손해보험` | label-normalize variants |
-| KR0010 KB손해 · KR0079 미래에셋 | **image-only** 금리위험액 / core tables | KICS-IMG cohort: tol 10.0, owner OCR for missing cells |
+| KR0010 KB손해 · KR0079 미래에셋 | **image-only** 금리위험액 / core tables | `IMAGE_OCR_COMPANIES`: tol 10.0, owner OCR for missing cells |
 | 동양생명·하나생명·카카오 (various Q) | core or market table = **full-page image** (text layer empty) | owner OCR/gold — don't fabricate; document as census gap, not expected-absent |
 
 ## Reconciliation cross-checks

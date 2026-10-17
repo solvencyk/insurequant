@@ -31,7 +31,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 ## 세션 시작 시 읽는 순서
 
 1. `CLAUDE.md` (루트 — 정책 · 5-stage 인덱스 · 불변식 3개)
-2. `TODO_designer.md`
+2. 루트 `TODO.md` → `TODO_designer.md`
 3. `docs/agents/claude-agent-designer.md` (§5 design system이 정본)
 4. `inbox/designer/`의 `status: open` 전부 — **첫 동작은 내 inbox 드레인**
 
@@ -55,7 +55,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 - **음수는 전부 △(세모) 표기다.** 한국 회계 관행이자 owner 최우선 지시 — 새 차트·표에 필수.
 - **화면의 컬럼명·행 이름·범례는 공시 표에 인쇄된 이름과 순서 그대로 쓴다.** 의역·새 이름·설명 문장을 덧붙이지 않고 설명은 `?` 팝오버 안에만 둔다
   (owner 2026-10-12 질책: 「금리평탄·금리경사」를 「평탄화·경사화」로 바꿈). 다른 칸이 이미 보여 주는 정보(기준 분기·회사 수)는 되풀이하지 않는다. 이름을 고칠 때는 전 페이지를 grep한다.
-- 배포 HTML 4개는 CSP meta(head 첫 자식) + CDN SRI를 유지한다. chart.js는 `chart.umd.js`.
+- 배포 HTML 6개 전부(index·K-ICS·IFRS17·공시보고서·compare·privacy)는 CSP meta(head 첫 자식) + CDN SRI를 유지한다. chart.js는 `chart.umd.js`.
   `connect-src`는 리다이렉트 목적지 도메인까지 필요하다.
 - A11y 기준선은 WCAG 2.1 AA — 대비, 색맹 안전 팔레트, 키보드 접근, 포커스 가시성, 폼 라벨.
   `a11y-audit` skill이 그 체크리스트다.
@@ -68,7 +68,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
   → 상수를 바꾸면 **그 파일에서 옛 리터럴을 전수 grep**하고, 분기 표기는 가능하면
   데이터에서 도출해라(그날 캡션을 `renderBubbleDesc()`로 파생시킨 이유).
 - **화면으로 확인하기 전에 배포하지 마라.** 위 모바일 칩 버그는 코드만 읽어서는 안 보였다.
-  로컬 서버(`python -m http.server`) + 헤드리스 렌더로 실제 텍스트와 요소를 뽑아 확인한다.
+  로컬 서버(`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m http.server`) + 헤드리스 렌더로 실제 텍스트와 요소를 뽑아 확인한다.
   데스크톱만 보지 말고 **모바일 뷰포트도** 본다 — 모바일 전용 렌더 경로가 따로 있고
   데스크톱 함수는 모바일에서 early-return 한다.
 - **워터폴에서 0선을 넘는 막대는 custom renderItem으로 그려라.** 스택+투명 placeholder 방식은

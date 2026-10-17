@@ -10,10 +10,10 @@
 - **PL 빌더는 패키지다.** `scripts/build_pl_breakdown.py`(엔트리: 24항목 `assemble`·`_GOLD_CELL_OVERRIDE`) + `scripts/pl_breakdown/`(`common`·`tier1`·`tier2`·`companies`).
   회사별 주석 대응은 `pl_breakdown/companies.py` 에 함수를 추가하고 파일 끝 `SONBO_HANDLERS` / `LIFE_HANDLERS` 에 **등록**한다(등록 안 하면 죽은 코드).
   의존은 단방향(`companies → tier1/tier2/common`).
-- **골든**: PL 빌더·핸들러를 고치면 `RUN_PL_GOLDEN=1 python -m pytest tests/test_pl_breakdown_golden.py`(~95~180초) ·
+- **골든**: PL 빌더·핸들러를 고치면 `RUN_PL_GOLDEN=1 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_pl_breakdown_golden.py`(~95~180초) ·
   `fill_post_transition_to_disclosure.py` 는 `tests/test_post_transition_golden.py` · viz 빌더는 `tests/test_viz_{ifrs17_panels,csm_waterfall}_golden.py`
   (인플레이스로 덮어쓰는 빌더라 골든이 백업·복구한다). 값이 의도적으로 바뀐 경우에만 `--update` + 커밋에 이유.
-- **DART FS 캐시 정정공시**: `_fetch_raw` 는 캐시를 만료 없이 신뢰한다. 정정공시가 뜨면 `python scripts/fetch_dart_fs.py --refresh <corp_code> <year>`
+- **DART FS 캐시 정정공시**: `_fetch_raw` 는 캐시를 만료 없이 신뢰한다. 정정공시가 뜨면 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/fetch_dart_fs.py --refresh <corp_code> <year>`
   → 마스터 재빌드 → PL 골든 재생성 → 캐시+마스터+골든 함께 커밋(owner 정책: 캐시는 커밋).
 - **gold override 는 두 겹이다.** 루트 `PL_breakdown.json` 은 `data/_gold/user_pl_cells.json` 이 빌드 마지막에 UPSERT 해서 보호된다.
   빌더 산출 `pl_breakdown_master.json` 은 `_GOLD_CELL_OVERRIDE` 에 있는 칸만 보호된다 — 원천 결함을 고친 칸은 **두 곳에 다** 넣는다

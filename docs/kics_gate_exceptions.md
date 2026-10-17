@@ -7,7 +7,7 @@
 ## 2026-10-12 owner 승인 등재 — 재보사 인쇄된 0 7칸 · 서울보증 PL 2칸 · 마이브라운 거짓 양성 1칸 (validation 25차)
 
 > 승인 근거: **owner(sangwook.cho) 2026-10-12 채팅 「나머지는 다 승인」** — 오케스트레이터가 정리한 「결정 필요 항목 + 제안」(`TODO.md` 「owner 결정 대기」)의
-> 제안안을 그대로 승인. 원문은 `inbox/validation/20261012T1010Z__orchestrator__MULTI_2023.4Q-2026.2Q__owner_approved_registrations_20261012.md` 「owner 승인 기록」 절.
+> 제안안을 그대로 승인. 원문은 `inbox/_resolved/20261012T1010Z__orchestrator__MULTI_2023.4Q-2026.2Q__owner_approved_registrations_20261012.md` 「owner 승인 기록」 절.
 > 이 승인은 아래 등재에 한하며 다른 면제로 넓히지 않는다. 등재 직전·직후 게이트 출력 비교: `data/_derived/validation_registrations_20261012/`.
 
 | 등재부 | 키 | 근거 |
@@ -349,7 +349,7 @@ K-ICS 게이트와 데이터계약 게이트가 같은 함수를 부른다. 변�
 **🔴 신규 blocking RED 18건 (2026-08-24 iter-7) — documented exception 아님, parser 발주 중.**
 
 item52/53/54 에 룰을 배선하자 **GREEN 이던 18칸이 RED 로 뒤집혔다.** 전부 raw PDF 로 원인을
-확정했고 `inbox/parser/20260824T0400Z__validation__MULTI__item52_54_load_defects.md` 로 발주했다.
+확정했고 `inbox/_resolved/20260824T0400Z__validation__MULTI__item52_54_load_defects.md` 로 발주했다.
 배선 전에는 이 항목들을 보는 룰이 하나도 없어서 조용히 통과하고 있었다(47/48/49 때 1,285칸이
 통과한 것과 같은 형태).
 

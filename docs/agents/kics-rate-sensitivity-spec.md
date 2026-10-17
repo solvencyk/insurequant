@@ -83,7 +83,7 @@ validator 출력 JSON → `scripts/consolidate_inbox.py` `VALIDATORS`에 핸들�
 1. **parser**: `scripts/extract_kics_rate_sensitivity.py` (결정적 스크립트, 에이전트가 작성·iterate) — `md_inbox/FY*/*.md` 스캔 → 루트 `kics_rate_sensitivity.json` + `data/_derived/kics_rate_sensitivity_diag.json`(status census).
 2. **validation**: §5 룰 구현 (`scripts/validate_kics_rate_sensitivity.py` 또는 기존 validate 러너 확장) → RED는 inbox loopback (max 5).
 3. **publishing**: RED 0 게이트 통과 후 마스터 확정. (site 패널은 designer 후속 — 이번 범위 밖.)
-4. FY2026_Q1: md_inbox 미생성(PDF만 입수) — MD 변환 완료 후 동일 스크립트 재실행으로 흡수.
+4. FY2026_Q1: (초안 당시) md_inbox 미생성이었으나 현재 `md_inbox/FY2026_Q1`·`FY2026_Q2` 모두 생성돼 있다 — 동일 스크립트 재실행으로 흡수.
 
 ## 7. 변경 이력
 - 2026-06-10: 초안. 38사 서베이 → 스키마·변형 카탈로그·RS1–4 codify.

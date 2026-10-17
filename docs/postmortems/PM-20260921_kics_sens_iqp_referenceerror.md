@@ -2,8 +2,8 @@
 
 > 상태: `closed` (5칸 전부 채움 · 잔여는 UH-26 · UH-27 로 등재)
 > 발견 경로: **owner 라이브 QA(눈)** — 게이트·테스트·CI 어느 것도 신호를 내지 않았다
-> 관련 inbox: `inbox/validation/20260921T0057Z__owner__ALL__deployed_js_runtime_blind_spot.md`
-> (designer 발주 `inbox/designer/20260921T0057Z__owner__ALL_2026.2Q__kics_sens_IQP_referenceerror.md`)
+> 관련 inbox: `inbox/_resolved/20260921T0057Z__owner__ALL__deployed_js_runtime_blind_spot.md`
+> (designer 발주 `inbox/_resolved/20260921T0057Z__owner__ALL_2026.2Q__kics_sens_IQP_referenceerror.md`)
 > 관련 커밋: 원인 `2dbc4ca`(2026-09-20 05:55) · 복구 `197d15e`(2026-09-21) · 게이트 신설(이 라운드)
 
 ## 0. 사실관계 (blameless)
@@ -141,8 +141,8 @@ designer 복구본으로 바꾸면 `배포 JS 런타임=clear … gate-clear`, `
 
 | 잔여 | 왜 위험 | 후속 티켓 / 우선순위 |
 |---|---|---|
-| **UH-26 — 런타임 전용 실패는 여전히 무검사.** 정적 검사는 "이름이 없다" 만 본다. 잡히지 **않는** 것: ① `TypeError: a.b is not a function`(객체는 있는데 메서드가 없다) ② `getElementById('…')` 가 null 인데 그대로 `.style` 접근(엘리먼트 id 개명) ③ 차트 옵션 스키마 오류 ④ fetch 응답 모양이 바뀐 경우 ⑤ **스코프 오류** — IIFE 안에서 정의하고 밖에서 부르는 형태(전수 변이 183건 중 9건이 이 이유로 미검출). 전부 "데이터는 맞는데 화면이 죽는" 같은 부류다. | `inbox/validation/20260921T0630Z__validation__ALL__headless_runtime_smoke_feasibility.md` / **P2**. 선행조건 = CDN 오프라인 대응(SRI 자산 로컬 캐시 or 스텁의 정직한 한계 문서화) + **브라우저 없는 클론에서 SKIP 이 fail-open 이 되지 않게 하는 설계**. 그 설계 없이 배선하면 "안 돌렸다"가 "통과했다"로 읽힌다. |
-| **UH-27 — 라이브(`origin/main`) 축은 인쇄만 하고 push 를 막지 않는다.** 이번 사고의 본질은 *이미 배포된 것*이 하루 넘게 깨져 있었고 **아무 기계도 그 말을 안 했다**는 것이다. 게이트는 "내가 밀려는 것" 만 본다. 차단으로 걸면 designer 가 main 에 고칠 때까지 무관한 작업까지 전부 막히므로 일부러 정보로 뒀다 — 그 판단을 조용히 하지 않으려고 `_live_audit()` 이 **매 실행 인쇄**한다(`[라이브 감사 · 비차단] origin/main@… RED=n`). | `inbox/publishing/20260921T0630Z__validation__ALL__live_main_still_broken_deploy_iqp_fix.md` / **P1**(지금 라이브가 깨져 있다). 상시 축으로 승격할지는 owner 판단 — 대안은 배포 직후 1회 `--git-ref origin/main` 을 launch-runbook 에 박는 것. |
+| **UH-26 — 런타임 전용 실패는 여전히 무검사.** 정적 검사는 "이름이 없다" 만 본다. 잡히지 **않는** 것: ① `TypeError: a.b is not a function`(객체는 있는데 메서드가 없다) ② `getElementById('…')` 가 null 인데 그대로 `.style` 접근(엘리먼트 id 개명) ③ 차트 옵션 스키마 오류 ④ fetch 응답 모양이 바뀐 경우 ⑤ **스코프 오류** — IIFE 안에서 정의하고 밖에서 부르는 형태(전수 변이 183건 중 9건이 이 이유로 미검출). 전부 "데이터는 맞는데 화면이 죽는" 같은 부류다. | `inbox/_resolved/20260921T0630Z__validation__ALL__headless_runtime_smoke_feasibility.md` / **P2**. 선행조건 = CDN 오프라인 대응(SRI 자산 로컬 캐시 or 스텁의 정직한 한계 문서화) + **브라우저 없는 클론에서 SKIP 이 fail-open 이 되지 않게 하는 설계**. 그 설계 없이 배선하면 "안 돌렸다"가 "통과했다"로 읽힌다. |
+| **UH-27 — 라이브(`origin/main`) 축은 인쇄만 하고 push 를 막지 않는다.** 이번 사고의 본질은 *이미 배포된 것*이 하루 넘게 깨져 있었고 **아무 기계도 그 말을 안 했다**는 것이다. 게이트는 "내가 밀려는 것" 만 본다. 차단으로 걸면 designer 가 main 에 고칠 때까지 무관한 작업까지 전부 막히므로 일부러 정보로 뒀다 — 그 판단을 조용히 하지 않으려고 `_live_audit()` 이 **매 실행 인쇄**한다(`[라이브 감사 · 비차단] origin/main@… RED=n`). | `inbox/_resolved/20260921T0630Z__validation__ALL__live_main_still_broken_deploy_iqp_fix.md` / **P1**(지금 라이브가 깨져 있다). 상시 축으로 승격할지는 owner 판단 — 대안은 배포 직후 1회 `--git-ref origin/main` 을 launch-runbook 에 박는 것. |
 
 **같이 기록해 두는 두 가지(룰로 안 만든 결론).**
 - **`gtag`/`dataLayer` 를 CDN allowlist 에 넣지 않았다.** `googletagmanager.com/gtag/js` 는

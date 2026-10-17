@@ -4,7 +4,7 @@
 검증하던 중 발견한 **기준 불일치 2건과 그 해소**를 영구 기록한다. 마스터 테이블의 숫자가
 "왜 이 값인가"를 다음 세션이 추적할 수 있게 함이 목적.
 
-관련 코드: `scripts/build_csm_waterfall_master.py` (CSM), `scripts/build_net_income_breakdown.py` (PL).
+관련 코드: `scripts/build_csm_waterfall_master.py` (CSM), `scripts/build_net_income_breakdown.py` (PL, 옛 net_income_breakdown 패널), `scripts/build_pl_breakdown.py` (PL 마스터 현행).
 검증: `data/dart/viz/csm_waterfall_master_diag.json`. 상세 changelog → `docs/changelog_parser.md` 2026-06-02.
 
 ---
@@ -51,7 +51,7 @@ waterfall에 합산하지 않는다. 6사 gold 전부 일관. (재보험 CER 표
 
 ---
 
-## 3. PL breakdown 신 스키마 (24항목, 2026-06-02)
+## 3. PL breakdown 신 스키마 (24항목, 2026-06-02 — 현행 마스터는 항목 1~32, 25~32 는 OCI 확장)
 
 ```
 1  보험손익                  = 2 + 13 + 14 + 15 - 16  (영업수익/비용 구성)
@@ -91,4 +91,4 @@ waterfall에 합산하지 않는다. 6사 gold 전부 일관. (재보험 CER 표
 ## 4. 검증 상태 (2026-06-02)
 
 - **CSM waterfall:** 6사 gold 6/6 항목 정확 (메리츠·KB·삼성화재·한화손보·한화생명·삼성생명). 전부 별도·원수.
-- **PL breakdown:** 공식 확정, 4사 gold(삼성화재·메리츠·한화생명·삼성생명) 보유. 24항목 스키마 구현 대기.
+- **PL breakdown:** 공식 확정, 4사 gold(삼성화재·메리츠·한화생명·삼성생명) 보유. (24항목 스키마는 이후 `scripts/build_pl_breakdown.py` 로 구현됐고 항목 25~32 OCI 확장이 붙었다.)

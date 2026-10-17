@@ -1,6 +1,6 @@
 # Launch Runbook — insurequant 사이트 배포 절차 (정본)
 
-> 작성: 2026-07-21 · publishing stage · 발주: `inbox/publishing/20260721T0233Z__owner__MULTI__adopt_launch_runbook.md`
+> 작성: 2026-07-21 · publishing stage · 발주: `inbox/_resolved/20260721T0233Z__owner__MULTI__adopt_launch_runbook.md`
 > 이 문서는 **절차서**다 — 배경/설계 논의는 `docs/agents/claude-agent-publishing.md` §9(slim-publish)·§10(safe-git),
 > 사고 경위는 `docs/postmortems/PM-2026-06-16_two_month_glitch.md` 참조.
 >
@@ -17,15 +17,15 @@
   **대시보드 HTML(+공용 데이터 JSON 일부)만** 올라간다.
 - **owner 승인 필수.** publishing 스테이지는 로컬 git(add/commit/checkout/rm)은 스스로 실행하지만
   **`git push`는 실행하지 않는다** — 보고 + 권고까지가 계약(`claude-agent-publishing.md` 헤더).
-- **push 전 게이트 #0 = `python scripts/validate_data_contract.py`(또는 이를 감싸는 `prepush_check.py`).**
+- **push 전 게이트 #0 = `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py`(또는 이를 감싸는 `prepush_check.py`).**
   RED이 1건이라도 있으면 push 금지. exception 우회 불가 — RED은 해당 스테이지로 route해서 고쳐 0으로
   만든다 (`feedback_red_blocks_push` 원칙).
 - **공유 워킹트리 주의.** 이 저장소는 여러 세션(파서/검증/퍼블리싱/디자이너)이 같은 폴더를 쓴다. 커밋 전
   `git branch --show-current` + `git status`로 남의 미커밋 변경이 있는지 반드시 확인 — 보이면 hold.
 - 마스터 JSON을 갱신했으면 `insurequant_master_tables.xlsx` 재생성 필수(`xlsx` skill 사용). **마스터
   xlsx를 openpyxl로 load+save 하지 말 것** — 값 열의 수식 캐시가 전부 wipe된다.
-- 배포 에셋(keep-list) = `index.html`/`K-ICS.html`/`IFRS17.html`/`공시보고서.html` + 관련 마스터 JSON +
-  `common.css`. **HTML 파일은 publishing 소관 밖(designer 소유)** — publishing이 손대면
+- 배포 에셋(keep-list) = 루트 HTML(`index`·`K-ICS`·`IFRS17`·`공시보고서`·`compare`·`privacy`) + 그 HTML 이 fetch 하는 마스터 JSON +
+  `common.css`·`theme.js` 등 공용 자산(정본 목록은 아래 §2). **HTML 파일은 publishing 소관 밖(designer 소유)** — publishing이 손대면
   `manual_html_edit` warn 후 정지, designer로 넘긴다.
 
 ---
@@ -33,9 +33,10 @@
 ## 1. Pre-flight 게이트 (push 전, 예외 없음)
 
 ```bash
-python scripts/validate_data_contract.py
-# 또는 K-ICS 룰게이트·도메인게이트 4종·inbox 위생·오프라인 테스트까지 묶은 상위 래퍼(권장, ~5분)
-python scripts/prepush_check.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py
+# 또는 K-ICS 룰게이트·도메인게이트 7종·DART raw 커버리지·골든 입력지문·배포 JS 런타임·inbox 위생·오프라인 테스트까지 묶은 상위 래퍼(권장)
+# 소요는 변경 범위에 따라 갈린다(전체 분 단위, jp-scope 축소 ~5초) — 숫자 정본은 `.githooks/pre-push` 머리 주석
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py
 ```
 
 - **exit/RED 판정**: `SUMMARY RED=0`이 아니면 **BLOCKED**. YELLOW는 통과(리뷰 큐, 비차단).
@@ -44,7 +45,7 @@ python scripts/prepush_check.py
   `TODO.md`/게이트 내 registry에 등재(owner 승인 필요, 서브에이전트 자체판단 금지).
 - self-test로 게이트 자체의 회귀 확인(신규 룰 추가 후 필수):
   ```bash
-  python scripts/validate_data_contract.py --selftest
+  C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py --selftest
   ```
 - K-ICS 전용 게이트(`validate_kics_disclosure.py`)는 **2026-08-21부터 `prepush_check.py`가 감싼다**
   (단계 1b, exit code가 `blocked`에 들어간다). 그 전까지는 감싸지 않아 K-ICS 게이트에만 배선한 룰이
@@ -78,7 +79,7 @@ grep 으로는 **절대 도출되지 않지만** `main` 에 항상 있어야 하
 | `.gitignore` | slim 워크트리 위생 |
 | `robots.txt` | 크롤러 정책 — 검색 전체 허용, `/public_exports/` 색인 제외, AI 학습용 크롤러(GPTBot·CCBot·ClaudeBot 등) 차단. 사용자 대행 fetcher(ChatGPT-User·PerplexityBot)는 막지 않음(owner 2026-09-11) |
 | `LICENSE` | 이용 조건 + 데이터베이스제작자권 고지(2026-09-11 신설). `https://www.insurequant.com/LICENSE` 로도 열람됨 |
-| `og-image.png` | 링크 미리보기 카드(1200×630). 루트 5개 페이지의 `og:image` 메타만 가리키고 keep-list grep 은 meta content 를 안 보므로 빠지면 카톡·팀즈·링크드인 미리보기가 조용히 글자만 남는다(2026-10-07 신설, 원본 `docs/og-image.src.html`) |
+| `og-image.png` | 링크 미리보기 카드(1200×630). 루트 6개 페이지(index·K-ICS·IFRS17·공시보고서·compare·privacy)의 `og:image` 메타만 가리키고 keep-list grep 은 meta content 를 안 보므로 빠지면 카톡·팀즈·링크드인 미리보기가 조용히 글자만 남는다(2026-10-07 신설, 원본 `docs/og-image.src.html`) |
 
 §3 절차 2) 에서 keep-list 파일을 교체할 때 이 표의 파일도 같이 `git checkout <branch> -- …` 한다.
 
@@ -101,7 +102,7 @@ git checkout <feature-branch> -- index.html K-ICS.html common.css kics_disclosur
 git status   # keep-list 밖의 변경이 섞이지 않았는지 확인
 
 # 4) 커밋
-git commit -m "<期>: <one-line summary>"
+git commit -m "<period>: <one-line summary>"
 
 # 5) GATE — 여기서 사용자 GO를 받는다 (아래 §4)
 git push origin main
@@ -115,7 +116,7 @@ git worktree remove ../insurequant-main-deploy
 
 메모: 예전(2026-06 초) 절차는 같은 폴더에서 `git checkout main`으로 브랜치를 바꿔치기했다 —
 공유 워킹트리에서 다른 세션과 충돌 위험이 있어 **격리 워크트리 방식을 표준으로 채택**
-(`claude-agent-publishing.md` §8b에서 지적된 문제의 해결책).
+(`claude-agent-publishing.md` §9에서 같은 폴더 checkout 금지로 명문화).
 
 ## 4. 승인 지점 (owner GO)
 
@@ -138,6 +139,7 @@ curl -s https://www.insurequant.com/K-ICS.html | grep -c "<html"
 ```
 
 - GitHub Pages 재배포는 push 후 약 1~2분 걸린다 — 바로 404/구버전이 나와도 재시도.
+- `public_exports/manifest.json` 의 `build_id` 가 방금 올린 값인지 확인한다(`CLAUDE.md` §11, `claude-agent-publishing.md` §9).
 - 화면에서 실제로 바뀐 값이 보이는지 눈으로 1곳 이상 확인(예: 새로 올라간 회사가 드롭다운에 있는지).
 - Playwright/브라우저 프리뷰가 가능하면 콘솔 에러 0 확인.
 
@@ -205,7 +207,7 @@ git push origin main                 # ← GO 필요
 ## 8. 실행 체크리스트 (요약)
 
 ```
-[ ] 1. python scripts/validate_data_contract.py  → SUMMARY RED=0 확인
+[ ] 1. C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py  → SUMMARY RED=0 확인
 [ ] 2. (신규 게이트 룰 추가했다면) --selftest 통과 확인
 [ ] 3. keep-list 재파생 (각 HTML grep) — 배포 대상 파일 확정
 [ ] 4. 마스터 JSON 갱신 있었으면 insurequant_master_tables.xlsx 재생성 (xlsx skill, openpyxl 재저장 금지)

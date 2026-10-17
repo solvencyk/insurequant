@@ -12,7 +12,7 @@ When this document and the Python module disagree, **the Python module wins**. U
 
 Before advancing to the next K-ICS pipeline stage (JSON swap, template sync, HTML deploy, push):
 
-1. Run `python scripts/validate_kics_disclosure.py` on root `kics_disclosure.json`.
+1. Run `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py` on root `kics_disclosure.json`.
 2. **RED count must be 0**, unless each remaining RED is a **documented exception** in `docs/kics_gate_exceptions.md` (company code, quarter, rule id, reason).
 3. Any unexpected RED requires **parsing-error review** (MD source, parser scope, row mapping) before proceeding.
 4. YELLOW findings are warnings (|diff| >= 0.5 eok-won, <= tolerance); they do not block the gate but should be triaged.
@@ -34,7 +34,7 @@ Each JSON row uses (at minimum):
 | Company code | 원보험사코드 | Bucket key |
 | Company name | 원수사명 | Reporting only |
 | Quarter | 공시분기 | Bucket key (e.g. 2025.4Q) |
-| Item number | 항목번호 | Integer 1-35 |
+| Item number | 항목번호 | Integer 1-54 (`data/_gold/kics_item_registry.json`) |
 | Item label | 항목명 | Korean label (not used by validator) |
 | Value | 값 | Primary numeric field |
 | Post-transition value | 값_적용후 | Optional; used by rule 8_post |
@@ -51,7 +51,7 @@ Default tolerance: **2.0** (eok-won units for amount rules; percentage points fo
 
 **Per-rule overrides:**
 - **Rule 8_life** uses a dynamic tolerance: `max(eff_tol, 0.05 * abs(expected))`. R7 diversified sqrt accumulates rounding from 7 sub-items, so an absolute 2.0 eok-won tolerance is too tight when expected is large (hundreds to thousands of eok-won). Other rules retain the default 2.0 (or the image-OCR override below).
-- **Image-only PDF insurers** (KR0010, KR0079): tolerance overridden to **10.0** across all rules to absorb OCR rounding (see KICS-IMG in TODO.md).
+- **Image-only PDF insurers** (KR0010, KR0079): tolerance overridden to **10.0** across all rules to absorb OCR rounding (`IMAGE_OCR_COMPANIES` in `kics_json_rules.py`).
 
 Classification (`classify_diff`, diff = actual - expected):
 
@@ -288,7 +288,7 @@ Rules 1-2, 4-8, 8_post, 8_life, 9, 10 are enforced in `kics_json_rules.py`.
 
 ## Item number to Korean label mapping
 
-Canonical labels from `templates/kics_disclosure.json` / K-ICS disclosure tables:
+Canonical labels from the root `kics_disclosure.json` (`templates/kics_disclosure.json` no longer exists) / K-ICS disclosure tables:
 
 | Item | Korean label |
 |------|----------------|
@@ -341,14 +341,14 @@ Canonical labels from `templates/kics_disclosure.json` / K-ICS disclosure tables
 
 Items 12, 13, 24-26 are not cross-checked by rules 1-8_life but appear in disclosure JSON.
 
-**Items 36–46 (proposed, pending implementation):** market-risk sub-decomposition. Rule `19_market` (item19 = sqrt(V'·M·V), V=[36,37,38,39,40]) and Rule `36_irr` (item36 = √[max(R상승,R하락)²+max(R평탄,R경사)²]+R평균회귀, scenario 위험액 derived from net-asset items 41–46). Full spec: `docs/agents/kics-market-risk-decomposition.md` §6–§8.
+**Items 36–46 (implemented):** market-risk sub-decomposition. Rule `19_market` (item19 = sqrt(V'·M·V), V=[36,37,38,39,40]) and Rule `36_irr` (item36 = √[max(R상승,R하락)²+max(R평탄,R경사)²]+R평균회귀, scenario 위험액 derived from net-asset items 41–46). Full spec: `docs/agents/kics-market-risk-decomposition.md` §6–§8.
 
 ---
 
 ## Running validation
 
 ```bash
-python scripts/validate_kics_disclosure.py
+C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py
 ```
 
 - Reads `kics_disclosure.json` at repo root.
@@ -369,9 +369,9 @@ Report fields per finding: `rule`, `원보험사코드`, `원수사명`, `공시
 | 36_irr | item36 or any of items 41-46 missing | No |
 | All others | Never SKIP — missing inputs -> RED | Yes (RED) |
 
-Permanent skip cohorts for sub-items (parsing, not validation): see TODO.md KICS-SUB (KR0029, KR0150, KR1098, etc.).
+Sub-item source absence (parsing, not validation): the TODO.md KICS-SUB cohort is no longer defined; it is registered in `data/_gold/kics_subrisk_source_absent.json`.
 
 **Rule `19_market` / `36_irr` (시장위험액 분해, 2026-06-09 신설)** — 정본 스펙: [`kics-market-risk-decomposition.md`](kics-market-risk-decomposition.md) §6/§7-7. 구현: `kics_json_rules.py` (8_life 복제, dynamic tol `max(eff_tol, 0.05·expected)`).
 - `19_market`: `item19 = sqrt(V'·M·V)`, V=[36–40](금리·주식·부동산·외환·자산집중), M=`MARKET_M` 5×5(대각1/외환-주식 −0.25/자산집중 0/그외 0.25).
 - `36_irr`: `item36 = √[max(R상승,R하락)² + max(R평탄,R경사)²] + R평균회귀`, R=base(41)−시나리오순자산(43–46), 평균회귀=41−42(signed).
-- 골든 3/3 일치: 흥국 8,132억·157,128 / 현대 322,767. item36–46 적재(parser 진행 중)까지 전사 SKIP, RED=2 불변.
+- 골든 3/3 일치: 흥국 8,132억·157,128 / 현대 322,767. (신설 당시 메모 "item36–46 적재 전까지 전사 SKIP" 는 낡았다 — 적재 완료, 현재 SKIP 정책은 위 SKIP policy 표와 `_scan_breakdown_presence`(짝수분기 결측=RED)를 따른다.)

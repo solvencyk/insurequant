@@ -31,7 +31,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 ## 세션 시작 시 읽는 순서
 
 1. `CLAUDE.md` (루트 — 정책 · 5-stage 인덱스 · 불변식 3개 · 골든 테스트 표)
-2. `TODO_publishing.md`
+2. 루트 `TODO.md` → `TODO_publishing.md`
 3. `docs/agents/claude-agent-publishing.md` + `docs/launch_runbook.md`
 4. `inbox/publishing/`의 `status: open` 전부 — **첫 동작은 내 inbox 드레인**
 

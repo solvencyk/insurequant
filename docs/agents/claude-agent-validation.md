@@ -35,11 +35,11 @@
 ### 1.1 K-ICS
 - 권위 문서: [kics-json-validation-rules.md](kics-json-validation-rules.md)
 - 구현: [src/solvency/validation/kics_json_rules.py](../../src/solvency/validation/kics_json_rules.py)
-- 러너: `python scripts/validate_kics_disclosure.py`
+- 러너: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py`
 
 > **룰 로직을 고치면 골든 필수.** `run_validation` 은 `_validate_bucket`(자본 1-3·요구자본 4-8) · `_validate_market_irr`(19_market·36_irr) ·
 > `_validate_transition_basic`(8_post·8_life) · `_validate_transition_capital`(9·10)으로 나뉘어 있다. 고친 뒤
-> **`python -m pytest tests/test_kics_rules_golden.py`**(라이브 마스터 findings 의 `(회사,분기,룰,상태)` 매트릭스, <1초).
+> **`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_kics_rules_golden.py`**(라이브 마스터 findings 의 `(회사,분기,룰,상태)` 매트릭스, <1초).
 > 마스터테이블 게이트(`validate_master_tables.py` 의 `_check_*` 7개)는 **`tests/test_master_tables_golden.py`**.
 > 결과가 **의도적으로** 바뀌면 손으로 해시를 고치지 말고 `--update` 재생성 + 커밋 메시지에 **왜**.
 
@@ -226,7 +226,7 @@ item={X} company={Y} quarter={Q} QoQ_delta={D%} exceeds 15% threshold (basis={ra
   - **기계적 raise**: validator JSON → `route: reparse` 메시지는 [`scripts/consolidate_inbox.py`](../../scripts/consolidate_inbox.py)가 한다(idempotent). 손으로 쓰지 말 것. 루프: validator 실행 → `consolidate_inbox.py` → "inbox 확인해라". 신규 validator 는 `VALIDATORS` 에 핸들러 추가.
   - **판단 라우팅(에이전트 몫)**: 원천 애매(별도-연결 무앵커)/앙상블 불일치/iter 5회 초과 → `route: escalate`; 룰로 못 잡는 비-IR 균일오류 → `route: blind_spot`; raw 의심(파싱불가 시그니처) → `route: refetch`(`inbox/downloader/`).
 - 흩어진 검증 JSON(`csm_continuity_validation` 등)은 **근거**로 그대로 둔다. closing-identity 가 못 보는 off-year/basis-swap 은 [`scripts/validate_csm_continuity.py`](../../scripts/validate_csm_continuity.py)가 본다.
-- **⚠️ 빌드 체인 gotcha**: parser가 소스(`csm_waterfall_master_diag.json` / viz JSON)를 고쳐도 **`build_root_masters.py` 재실행 전엔 루트 마스터에 반영 안 됨.** `answered` 재확인 시 **소스 mtime > 루트 mtime이면 빌드 누락** — 빌드 돌리고(또는 parser/publishing에 요청) 재검증.
+- **⚠️ 빌드 체인 gotcha**: parser가 소스(`csm_waterfall_master_diag.json` / viz JSON)를 고쳐도 **`build_root_masters.py` 재실행 전엔 루트 마스터에 반영 안 됨.** `answered` 재확인 시 **소스 mtime > 루트 mtime이면 빌드 누락** — 개별 빌더·셀 단위로만 반영하고(`build_root_masters.py main()` 통짜 실행 금지, CLAUDE.md §8; 또는 parser/publishing에 요청) 재검증.
 
 ```
 LOOP (max 5 iterations):
@@ -279,7 +279,7 @@ raw 나 전수 데이터로 그 가설을 반증 가능한 쿼리(20줄 안팎)�
 | 도메인 | RED>0일 때 차단되는 것 | 차단되지 않는 것 |
 |---|---|---|
 | K-ICS | JSON swap, template sync, K-ICS.html 리빌드, git push | — (전부 차단) |
-| IFRS17 | `templates/data/assoc/` JSON sync | **HTML deploy 자체는 차단 X** (panel-level "data missing" stub 허용) |
+| IFRS17 | 루트 IFRS17 마스터 JSON sync (옛 `templates/data/assoc/` 경로는 없다) | **HTML deploy 자체는 차단 X** (panel-level "data missing" stub 허용) |
 | Misc IR | K-ICS 룰 RED와 동일 처리 (전부 차단) | — |
 
 YELLOW(QoQ warn 포함)는 어떤 다운스트림도 차단하지 않는다. 보고서에 기록되고, 운영자가 사후 검토.

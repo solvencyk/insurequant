@@ -14,7 +14,7 @@ This file is the current code/data wiring (verified 2026-06-16).
 
 ## Sources (raw) + MD
 `data/disclosure/<PERIOD>/raw/KR####_<원수사명>.pdf` — the insurer's quarterly **정기경영공시** PDF
-(`PERIOD` = `FY2023_Q1` … `FY2026_Q1`). `data/disclosure/<PERIOD>/parsed/*.md` mirrors the docling output; the
+(`PERIOD` = `FY2023_Q1` … `FY2026_Q2`). `data/disclosure/<PERIOD>/parsed/*.md` mirrors the docling output; the
 fill scripts read from `md_inbox/<PERIOD>/KR####_<name>.md` (code = `stem.split("_",1)[0]`). raw is gitignored
 but **on disk** (purge-independent). Docling MD = markdown tables; numbers comma-grouped, negatives as **△**.
 
@@ -35,7 +35,7 @@ raw PDF ──docling──▶ md_inbox MD ──▶ fill_period (1-28) ──�
 | `fill_market_irr_from_pdf.py` | **41-46** | recovery pass from raw PDF, **gated vs item36** (stores only GREEN-by-construction). |
 | `extract_market_section_pages.py` | — (Phase-0 localizer) | finds 시장위험 pages → `artifacts/kics_validation/market_pages/`. **pdfplumber → fitz fallback** on EOF. |
 | `validate_kics_disclosure.py` | — (GATE) | `run_validation` + 4 structural gates (below). |
-| `build_master_xlsx.py` | — | rebuild `insurequant_master_tables.xlsx` after any master edit. |
+| `sync_master_xlsx_sheet.py` | — | sync only the changed sheet of `insurequant_master_tables.xlsx` after a master edit (publishing's job by default; never rebuild it whole with `build_master_xlsx.py` — CLAUDE.md §8). |
 
 Flat integer `항목번호` key (no `17.1` sub-numbering) so downstream keying by 항목번호 keeps working.
 
@@ -47,7 +47,8 @@ Flat integer `항목번호` key (no `17.1` sub-numbering) so downstream keying b
 23 기타요구자본(opt,0) · 24-26 종속/관계회사 환산·대응치 · **27 다.지급여력비율(=1/14×100, %)** · 28 기본자본비율(=2/14×100, %) ·
 **29-35** 생명장기 subs = 사망·장수·장해질병·장기재물기타·해지·사업비·대재해(1-1..1-7) ·
 **36-40** 시장 subs = 금리·주식·부동산·외환·자산집중(3-1..3-5) ·
-**41-46** 금리위험 순자산가치 = 충격전·평균회귀·금리상승·금리하락·금리평탄·금리경사(3-1-0..3-1-5).
+**41-46** 금리위험 순자산가치 = 충격전·평균회귀·금리상승·금리하락·금리평탄·금리경사(3-1-0..3-1-5) ·
+**47-54** 보완자본 한도(47-49)·공통적용 경과조치 TFI 표(50-54) — 정본 `data/_gold/kics_item_registry.json`(1-46 은 의도적 미등재).
 
 ## File map + schemas
 **`kics_disclosure.json`** (root, long-format, unit **억원**) — key order is load-bearing (`fill_period._fields()`
@@ -83,8 +84,8 @@ tol **10.0**. Status: GREEN |diff|<0.5, YELLOW ≤tol, RED >tol or missing input
 - `_market_tooling_fail` (advisory, non-blocking) — localizer ERR/NO_SIGNAL/TIMEOUT worklist.
 
 **Gate contract (CLAUDE.md):** RED must be **0**, OR every RED is a documented exception in `docs/kics_gate_exceptions.md` (company,
-quarter, rule, reason). Permanent skip cohorts in TODO.md: **KICS-SUB** (KR0029, KR0150, KR1098 …), image-OCR
-**KICS-IMG** (KR0010, KR0079). Exit 0 only if red=0 AND census_red=0 AND parent-child empty.
+quarter, rule, reason). The TODO.md cohort names KICS-SUB/KICS-IMG are no longer defined in the TODOs: sub-risk source absence is registered in `data/_gold/kics_subrisk_source_absent.json`, image-OCR
+insurers (KR0010, KR0079) are `IMAGE_OCR_COMPANIES`. Exit 0 only if red=0 AND census_red=0 AND parent-child empty.
 
 ## Run / verify recipes
 PY = `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe` (docling lives in the venv, not system python).
@@ -101,7 +102,7 @@ PY scripts/fill_market_irr_from_pdf.py [--dry-run]
 # GATE — RED must be 0 (or documented); writes report_latest.json
 PY scripts/validate_kics_disclosure.py
 # after any master JSON change
-PY scripts/build_master_xlsx.py
+PY scripts/sync_master_xlsx_sheet.py "K-ICS공시"   # changed sheet only; never build_master_xlsx.py whole (CLAUDE.md §8)
 PY -m pytest tests/unit/
 ```
 **Surgical single-company backfill** (avoids `fill_period`'s STALE_DELETES + cross-company item4-reconcile):

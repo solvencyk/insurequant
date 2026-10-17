@@ -38,7 +38,7 @@
 | `roadmap.md` · `strategy-monetization.md` · `launch_runbook.md` | 방향·수익화·출시 절차 |
 | `a11y_baseline.md` | 접근성 기준선(a11y-audit 스킬이 참조) |
 | `tier1_hybrid_utilization_definition.md` | Tier1 소진율 정의 |
-| `pl_breakdown_coverage.md` · `pl_selfcheck_matrix.md` · `csm_status_matrix.md` · `csm_coverage_goldmap.md` | 스크립트(`scripts/_pl_selfcheck.py`·`_csm_status_matrix.py`·`_csm_goldmap.py`)가 쓰는 현황표. 손으로 고치지 않는다 |
+| `pl_breakdown_coverage.md` · `pl_selfcheck_matrix.md` · `csm_status_matrix.md` · `csm_coverage_goldmap.md` | 스크립트(`scripts/_pl_coverage_map.py`·`_pl_selfcheck.py`·`_csm_status_matrix.py`·`_csm_goldmap.py`)가 쓰는 현황표. 손으로 고치지 않는다 |
 | `handoff_20261007_*.md` · `handoff_20261008_*.md` | 신규 도메인 인수인계(유지율·손해율 비교, 재보사 파이프라인) |
 | `LESSONS_2026-06-07.md` · `archived_metrics.md` | 과거 교훈·폐기 지표 기록(`postmortems/` 와 `roadmap.md` 가 인용) |
 | `og-image.src.html` | og:image 원본(`launch_runbook.md` 참조) |

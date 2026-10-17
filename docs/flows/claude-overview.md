@@ -82,18 +82,15 @@ flowchart LR
 ```
 data/disclosure/
   FY2025_Q4/
-    pdf/
+    raw/
       KR1098_카카오페이손해보험.pdf
     parsed/
       KR1098_카카오페이손해보험.md
   FY2025_Q1/
-    pdf/
-      KR0051_신한EZ손해보험.pdf
-      KR0051_신한EZ손해보험_amended.pdf
+    raw/
+      KR0011_DB손해보험_amended2.pdf
   _meta/
     KR1098_download_cache.csv
-  _unsorted/
-    <companyDirname>/...   # 분기 추론 실패한 레거시 파일
 ```
 
 ## 문서화 원칙

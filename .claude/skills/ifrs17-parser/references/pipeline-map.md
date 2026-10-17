@@ -12,12 +12,12 @@ Operational reference. For *domain* depth (label variants, table-form taxonomy, 
 - [Run / verify recipes](#run--verify-recipes)
 
 ## Sources (raw)
-`data/dart/FY{2023,2024,2025}_Q4/raw/KR####_<canonical>_<rcept14>/*.xml` — DART filing XML (HTML-table
+`data/dart/FY####_Q#/raw/KR####_<canonical>_<rcept14>/*.xml` — DART filing XML (HTML-table
 format: `<TABLE><TR><TD>`, numbers comma-grouped, negatives in parentheses, labels often 전각-spaced).
 - A filing usually carries **별도(separate) + 연결(consolidated)** statements. The masters are built on the
   **별도** statements for life insurers; prefer 별도 when both exist and record which you used.
-- ⚠️ On `fix/csm-…` most FY2023/FY2024 raw is **git-purged**; only **AIA (KR0080) FY2024** + **all FY2025_Q4**
-  raw survive on disk. `data/dart/extracted/*.json` are committed and intact.
+- ⚠️ In 2026-07 most FY2023/FY2024 raw was **git-purged** on `fix/csm-…`; as of 2026-10-18 raw is back on disk for
+  FY2022_Q4..FY2026_Q2 (gitignored; `scripts/check_dart_raw_coverage.py` guards losses). `data/dart/extracted/*.json` are committed and intact.
 
 ## Extractors (`src/ifrs17/`)
 Semantic scoring, **no per-company regex** (see SOT §3.2). One module per table kind:
@@ -30,22 +30,22 @@ Semantic scoring, **no per-company regex** (see SOT §3.2). One module per table
 | `reinsurance_extractor.py` | `reinsurance` | §14(3)(4) 출재 (장기 only) |
 | `bs_snapshot_extractor.py` | `bs_snapshot` | §14(1) 자산부채 현황 |
 | `sensitivity_extractor.py` | `sensitivity` | 가정민감도 / 보험위험의 민감도 분석 (DART note) |
-| `liability_extractor.py` | `liability` | §14(3) multi-index 부채 변동 (skim/structural) |
-| `kics_sensitivity_extractor.py` | `kics_sensitivity` | K-ICS rate-sensitivity (lane-adjacent; KR####_FY####_Q#_kics_sensitivity.json) |
+| `liability_extractor.py` | `liability` | **archived 2026-07-22** (`archive/2026-07_unreferenced_scripts/src_ifrs17/`; no importer) |
+| `kics_sensitivity_extractor.py` | `kics_sensitivity` | **archived 2026-07-22** with its runner (`archive/2026-07_unreferenced_scripts/src_ifrs17/`) |
 | `scoring.py` | — | shared table-scoring keywords (`data/ifrs17/table_scoring_keywords.yaml`) |
 | `row_normalizer.py`, `universe.py`, `opendart_client.py`, `config.py` | — | row alias / universe+slice policy / DART REST / `.env` |
 
 ## Batch drivers + builders (`scripts/`)
-- **Batch (raw → extracted):** `ifrs17_batch_{measurement,insurance_pl,reinsurance,bs_snapshot,sensitivity,
-  all,historical,kics_sensitivity}.py`; `ifrs17_batch_sensitivity_fy2025.py` (the FY2025 refresh — groups raw
+- **Batch (raw → extracted):** `ifrs17_batch_{measurement,sensitivity,
+  all,historical}.py` (the `insurance_pl`·`reinsurance`·`bs_snapshot`·`kics_sensitivity` runners were archived 2026-07-22); `ifrs17_batch_sensitivity_fy2025.py` (the FY2025 refresh — groups raw
   by canonical, merges multi-dir audit filings, keys by max rcept).
 - **Masters (extracted → master JSON):** `build_csm_waterfall_master.py`, `build_pl_breakdown.py`,
-  `build_nb_csm_multiple.py`, `build_net_income_breakdown.py`. `build_root_masters.py` = the **join point**,
-  run once **after both lanes have loaded**.
+  `build_nb_csm_multiple.py`, `build_net_income_breakdown.py`. `build_root_masters.py` = the **join point** (main() 통짜 실행 금지 — CLAUDE.md §8),
+  use the individual builders only.
 - **Viz (→ data/dart/viz panels):** `viz_build_ifrs17_panels.py` (bs_snapshot, csm_amort_schedule,
   insurance_pl_breakdown, sensitivity_heatmap), `viz_build_csm_waterfall.py`, `viz_build_ifrs17_kpis.py`.
 - ⚠️ `build_csm_waterfall_master.py` and `build_pl_breakdown.py` **discover from `data/dart/FY*/raw/`** →
-  **destructive on this branch** (collapses masters). See quirks-and-traps.md §destructive-rebuild.
+  **destructive** (reverts hand-loaded cells; in the purge era it also collapsed masters). See quirks-and-traps.md §destructive-rebuild.
 
 ## Outputs
 - `data/dart/extracted/<canonical>_<rcept>_<kind>.json` (+ `_mvp` filtered variants, + `_*_summary` /
@@ -71,7 +71,7 @@ unit ("억원"), unit_detected, unit_source, header, scenarios: [ {risk, shock, 
   are skipped so they never enter an ifrs17 panel.
 
 **PL master** (`pl_breakdown_master.json` ≡ root `PL_breakdown.json`) — flat list of
-`{원보험사코드, 원수사명, 티커, 생손보여부, 항목번호, 항목명, 공시분기, 값[, 값_당분기]}`. 31 항목 per
+`{원보험사코드, 원수사명, 티커, 생손보여부, 항목번호, 항목명, 공시분기, 값[, 값_당분기]}`. 32 항목 per
 (company, quarter):
 ```
 1 보험손익  2 생명장기 손익  3 생명장기 원수손익  4 원수 CSM상각  5 원수 위험조정 변동  6 원수 예실차
@@ -79,7 +79,7 @@ unit ("억원"), unit_detected, unit_source, header, scenarios: [ {risk, shock, 
 12 기타 생명장기 재보험손익  13 자동차손익  14 일반손익  15 기타영업수익  16 기타사업비용  17 투자손익
 18 투자이익  19 보험금융손익  20 영업이익  21 영업외손익  22 세전이익  23 법인세  24 당기순이익
 25 기타포괄손익  26 FVOCI 채무증권 평가손익  27 보험계약금융손익(OCI)  28 위험회피 파생상품 평가손익
-29 FVOCI 지분증권 평가손익  30 재보험금융손익(OCI)  31 총포괄손익
+29 FVOCI 지분증권 평가손익  30 재보험금융손익(OCI)  31 총포괄손익  32 기타 포괄손익(미분류)
 ```
 값 unit = **백만원**. **Closure identities** (use to detect mis-parses):
 `item1 = item2 − item16` · `item17 = item18 + item19` · `item20(영업이익) = item1 + item17` ·
@@ -115,5 +115,5 @@ PY = `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe`
 - **Full FY2025 sensitivity batch:** `PY scripts/ifrs17_batch_sensitivity_fy2025.py` then the panel rebuild.
   ⚠️ FY2025 product-row / 원수·출재·순액 sub-row layouts (농협생명, 케이디비, …) currently emit garbage via the
   band/generic path — verify per company before shipping; keep mis-parsing companies on FY2024 (phase-2 work).
-- **After any master JSON change:** `PY scripts/build_master_xlsx.py` to regenerate
-  `insurequant_master_tables.xlsx` (review-loop sync).
+- **After any master JSON change:** sync only the changed sheet with `PY scripts/sync_master_xlsx_sheet.py "<sheet>"` (usually publishing's job; never regenerate the whole workbook with `build_master_xlsx.py` — CLAUDE.md §8):
+  `insurequant_master_tables.xlsx` stays in review-loop sync.

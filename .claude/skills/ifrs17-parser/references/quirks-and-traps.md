@@ -14,6 +14,8 @@ The failure modes that have actually cost time. Crystallized from memory + sessi
 - [Windows / encoding](#windows--encoding)
 
 ## Destructive rebuild on this branch
+> **Status 2026-10-18:** the 2026-07 purge is history — raw is on disk again for FY2022_Q4..FY2026_Q2 (gitignored; `scripts/check_dart_raw_coverage.py` guards losses). The "never a full rebuild" rule still stands because rebuilds revert hand-loaded cells (`.claude/agents/parser-ifrs17.md`, CLAUDE.md §8). The text below describes the purge-era failure.
+
 `fix/csm-product-segmented-columns` had `data/dart/**/raw/` git-purged (399MB→29MB). `build_csm_waterfall_master.py`
 and `build_pl_breakdown.py` rediscover companies from `data/dart/FY*/raw/` — so re-running either **collapses**
 the committed masters (e.g. `csm_waterfall_master_diag.json` 1926 rows → ~12). The CSM gold gate

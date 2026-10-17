@@ -21,7 +21,7 @@ Before any action, read these in order:
 - `TODO_downloader.md` (current state and decisions for the downloader stage; falls back to `TODO.md` for cross-stage items). History (`docs/changelog_downloader.md`) only when you need a past decision's background.
 - `docs/agents/source-catalog.yaml` (sibling structured catalog — same URLs/XPaths in machine-readable form)
 - `data/dart/_inventory_manifest.json` (DART coverage; avoid re-fetching)
-- `data/disclosure/_meta/FY*/_manifest.json` (per-period manifests)
+- `data/disclosure/_meta/FY*/manifest.json` (per-period manifests)
 - `data/ir/_*.json` (`_db_manifest.json`, `_db_decks_manifest.json`, `_hyundai_manifest.json`, `_kr_map.json`)
 
 ## 4 Data Sources — Full Catalog
@@ -94,8 +94,8 @@ Inventory: `data/dart/_inventory_manifest.json`.
 
 DART universe (`src/ifrs17/universe.py`):
 - 23 listed (정기보고서 13Q each)
-- 5 AUDIT_REPORT_ANNUAL: 라이나생명보험, 메트라이프생명보험, 에이아이에이생명보험, 하나생명보험, 처브라이프생명보험 (감사보고서 annual only)
-- NON_LISTED_SKIP 8사 (정기보고서 미공시): IBK연금보험, 교보라이프플래닛, 비엔피파리바카디프, 신한이지손해, 아이엠라이프, 악사손해, 카카오페이손해, 하나손해 — 감사보고서는 받을 수 있음 (KPI '전부 다'에 포함)
+- 6 AUDIT_REPORT_ANNUAL: IBK연금보험, 라이나생명보험, 메트라이프생명보험, 에이아이에이생명보험, 하나생명보험, 처브라이프생명보험 (감사보고서 annual only)
+- NON_LISTED_SKIP 11사 (정기보고서 미공시): 교보라이프플래닛, 라이나생명, 메트라이프생명, 비엔피파리바카디프, 신한이지손해, 아이엠라이프, 악사손해, 처브라이프, 카카오페이손해, 하나생명, 하나손해 — 감사보고서는 받을 수 있음 (KPI '전부 다'에 포함)
 - EXCLUDED_SKIP 2: AIG손해보험 (corp_name 검색은 '에이아이지손해보험'), 서울보증보험 — 받을 수 있는 만큼 받음
 
 ### Source 3 — 보험개발원 (KIDI INCOS) 통계
@@ -185,10 +185,10 @@ When user requests '다음 분기 받아' (or invokes this prompt for, say, 2026
 
 1. **Determine period**: parse user request OR check latest under `data/disclosure/FY*_Q*/` and increment.
 2. **For each source**:
-   - **Source 1a (손보 17사)**: copy existing `scripts/download_disclosure_2026q1_nonlife.py` to `scripts/download_disclosure_<period>_nonlife.py`. Update URLs/XPaths where the period-specific identifier appears (e.g. `FY2026-1_4.pdf` -> `FY2026-2_4.pdf`, `intSeq=1539` -> check current value, `pancId=15467` -> check current, etc.). XPaths that select `tr[1]` usually pick the latest entry automatically — no change. Just verify with a quick smoke probe.
+   - **Source 1a (손보 17사)**: copy the latest `scripts/download_disclosure_2026q2_nonlife.py` to `scripts/download_disclosure_<period>_nonlife.py`. Update URLs/XPaths where the period-specific identifier appears (e.g. `FY2026-1_4.pdf` -> `FY2026-2_4.pdf`, `intSeq=1539` -> check current value, `pancId=15467` -> check current, etc.). XPaths that select `tr[1]` usually pick the latest entry automatically — no change. Just verify with a quick smoke probe.
    - **Source 1b (생보 22사 bulk)**: same script template; `tr[23]` row index increments per quarter — bump tr[24], tr[25], etc.
-   - **Source 2 (DART)**: `python scripts/ifrs17_batch_historical.py --all --periods <YYYY.QQ>` + `python scripts/ifrs17_batch_all.py` for new 사업보고서. Also fetch newly-filed FY+1 audits for non-listed 8 + AIG + audit-only 5 via `OpenDARTClient.list_filings + fetch_document_xml`.
-   - **Source 3 (KIDI)**: `python scripts/ingest_kidi_monthly_premium.py` (no args — uses default 13 periods). Latest period auto-discovered via `getMLxxLastYM`. KIDI lags real quarter by ~1.5 months (e.g. 2026.1Q data available in mid-May 2026).
+   - **Source 2 (DART)**: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/ifrs17_batch_historical.py --all --periods <YYYY.QQ>` + `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/ifrs17_batch_all.py` for new 사업보고서. Also fetch newly-filed FY+1 audits for NON_LISTED_SKIP 11 + AIG + AUDIT_REPORT_ANNUAL 6 (`src/ifrs17/universe.py`) via `OpenDARTClient.list_filings + fetch_document_xml`.
+   - **Source 3 (KIDI)**: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/ingest_kidi_monthly_premium.py` (no args — uses default 13 periods). Latest period auto-discovered via `getMLxxLastYM`. KIDI lags the real quarter by ~3 months in practice (measured 2026-08; the catalog's 1.5 months is wrong), and an unpublished month comes back as zero-filled rows — check `getML01LastYM`/`getMN07LastYM` first.
    - **Source 4 (IR)**: same script template as source 1; `tr[1]` usually picks latest.
 3. **Each script** auto-creates `_failure` dump dirs. If any fail, retry with screenshot/HTML inspection. **Try fallback XPaths before escalating to user.**
 4. **Verify**:
@@ -204,7 +204,7 @@ When user requests '다음 분기 받아' (or invokes this prompt for, say, 2026
 ## Validation Rules
 
 - **DART raw 유실 검사 (2026-08-25 신설, push 게이트에 배선됨).** 세션 시작 시와 새 분기 수집
-  직후 `python scripts/check_dart_raw_coverage.py` 를 돌려라. 한 번이라도 디스크에 있었던
+  직후 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/check_dart_raw_coverage.py` 를 돌려라. 한 번이라도 디스크에 있었던
   (period, 회사) 칸을 `data/dart/_raw_coverage_baseline.json` 에 박제(high-water mark)해 두고
   사라지면 RED 다. 새로 받은 분기는 `--update` 로 baseline 에 합친다(합집합만, 절대 줄지 않음).
   의도적으로 뺀 칸은 `known_absent` 에 **사유와 함께** 옮긴다.
@@ -237,7 +237,7 @@ If a site returns 0 visible elements for the expected XPath:
 - Don't ingest 캐롯손해보험 (KR1059) — merged into 한화손보, no separate site.
 - **Per-company legacy downloaders are gone** — the single engine (`src/solvency/downloader/base.py` + `runner.py` + `handlers/`)
   is the only path. If a site breaks, self-heal the handler per §"When URLs/XPaths Change"; don't resurrect a per-company script.
-- **`run_harness.py` requires `--stage` (`quality|pdf|parse`).** PDF accessibility gate: `python scripts/run_harness.py --stage pdf --period <period>`.
+- **`run_harness.py` requires `--stage` (`quality|pdf|parse`).** PDF accessibility gate: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage pdf --period <period>`.
 - Old one-off scripts (`crawl_ir_*` 등) are archived under `archive/2026-07_unreferenced_scripts/` — restore with `git mv` if needed.
 
 ## DART Core 4 Metrics (사용자 명시)
@@ -261,7 +261,7 @@ Body XML contains all 4 in 연결재무제표 주석 section. Parser handles lab
 
 **WHEN ALL 4 SOURCE INGESTS + VERIFICATION ARE COMPLETE**, before handing off to the parser subagent, you MUST:
 
-1. Run `python scripts/report_collection_status.py --period <period> --out docs/collection-status-<period>.md` — generates the per-insurer O/X table.
+1. Run `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/report_collection_status.py --period <period> --out docs/collection-status-<period>.md` — generates the per-insurer O/X table.
 2. **Post the rendered table back to the user IN THIS CHAT** (not only as a file). The user expects to see it inline so they can spot gaps without opening files.
 
 ### Report Format (user-defined, do not abbreviate or restyle columns)
@@ -311,7 +311,7 @@ Anything else (download stub, 미수집, parse error) is NOT 수용 — must be 
 
 생보 22: KR0068 한화생명 / KR0069 삼성생명 / KR0070 ABL생명 / KR0071 흥국생명 / KR0072 KDB생명 / KR0073 교보생명 / KR0074 라이나생명 / KR0075 BNP파리바카디프 / KR0076 iM라이프 / KR0079 미래에셋생명 / KR0082 DB생명 / KR0083 푸본현대생명 / KR0087 동양생명 / KR0094 신한라이프 / KR0095 메트라이프 / KR0097 하나생명 / KR0099 KB라이프 / KR0100 처브라이프 / KR0104 농협생명 / KR1010 교보라이프플래닛 / KR1011 IBK연금보험 / AIA 에이아이에이생명.
 
-(캐롯손해보험 KR1059는 한화손보 합병으로 universe에서 영구 제외.)
+(캐롯손해보험 KR1059는 한화손보 합병으로 universe에서 영구 제외.) 재보사 7곳(KR1101~1107)·마이브라운(KR1108)은 이 39사 목록 밖의 별도 수집 경로다 — `.claude/agents/downloader.md`, `docs/handoff_20261008_reinsurer_pipeline.md`.
 
 ### Bottom summary
 

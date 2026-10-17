@@ -8,11 +8,11 @@
 
 단일 진입 명령:
 
-- `python scripts/run_harness.py --stage quality` : MD 품질 게이트 + 리뷰 큐
-- `python scripts/validate_kics_disclosure.py`   : K-ICS 결과물 정합성 게이트 (RED=0)
-- `python scripts/run_harness.py --stage pdf`   : 다운로드된 PDF 접근성 게이트
+- `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage quality` : MD 품질 게이트 + 리뷰 큐
+- `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py`   : K-ICS 결과물 정합성 게이트 (RED=0)
+- `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage pdf`   : 다운로드된 PDF 접근성 게이트
 
-세부 스테이지:
+세부 스테이지 (※ 실제 `run_harness.py --stage` 선택지는 `quality|pdf|parse` 3개뿐이다 — `perf`·`schema` 는 2026-07-21 제거됐고, 아래 나머지는 개념 구분이다):
 
 - `lint`: 정적 품질 검사
 - `unit`: 변환 로직 단위 테스트
@@ -45,13 +45,15 @@
 - 스키마 매퍼(레코드 생성)
 - 파일명/메타데이터 파서
 
-추천 구조:
+추천 구조 (※ 아래 3개 파일은 만들어지지 않았다. 실제 단위 테스트는 `tests/unit/` 의 추출기·핸들러 테스트다):
 
 - `tests/unit/test_markdown_parser.py`
 - `tests/unit/test_normalize_value.py`
 - `tests/unit/test_record_mapper.py`
 
 ## Stage 3: Golden 테스트
+
+(※ `tests/golden/` 디렉터리는 없다. 실제 골든은 `CLAUDE.md` §7 표의 `tests/test_*_golden.py` 다.)
 
 입력:
 
@@ -76,7 +78,7 @@
 
 **Authoritative K-ICS JSON rules:** [`kics-json-validation-rules.md`](../agents/kics-json-validation-rules.md) (synced with `src/solvency/validation/kics_json_rules.py`).
 
-**Pipeline gate:** `python scripts/validate_kics_disclosure.py` must report **RED=0** (or only documented exceptions in `TODO.md`) before JSON swap, template sync, or deploy. Unexpected RED → parsing-error review required.
+**Pipeline gate:** `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py` must report **RED=0** (or only documented exceptions in `docs/kics_gate_exceptions.md`) before JSON swap, template sync, or deploy. Unexpected RED → parsing-error review required.
 
 구현:
 
@@ -116,11 +118,11 @@ status=skipped + sha256 불변)이며, 이것이 현재 유일한 멱등성 게�
 - 경로: `artifacts/review_queue/review_queue_<run_id>.csv`
 - 컬럼: `md_path`, `company_code`, `score`, `missing_rows`, `has_unit`, `has_disclosure_date`, `numeric_normalisation_rate`, `reason`
 - 운영자가 해당 PDF를 Gemini Enterprise에서 다시 파싱한 뒤,
-  `md_inbox/<companyCode>/`에 결과 Markdown을 덮어쓰면 다음 빌드부터 자동 반영
+  `md_inbox/<period>/`에 결과 Markdown을 덮어쓰면 다음 빌드부터 자동 반영
 
 ### 7-3) 정합성 검증(Stage 5와 연계)
 
-- **K-ICS disclosure JSON:** [`kics-json-validation-rules.md`](../agents/kics-json-validation-rules.md) — run `python scripts/validate_kics_disclosure.py`; gate RED=0
+- **K-ICS disclosure JSON:** [`kics-json-validation-rules.md`](../agents/kics-json-validation-rules.md) — run `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py`; gate RED=0
 - 비율 재계산: `solvency_amount / required_capital * 100 ≈ solvency_ratio` (허용 오차 1.0)
 - 룰 R1~R8 · 8_life · 19_market: `src/solvency/validation/kics_json_rules.py`
 
@@ -172,9 +174,9 @@ ACL 정상화 + verify_pdf 자동 실행. 검증 실패 시 `_fetch_with_retry`�
 
 ### 8-5) 실행 예시
 
-- `python scripts/run_harness.py --stage pdf` (기본 FY2025_Q4)
-- `python scripts/run_harness.py --stage pdf --period FY2024_Q4`
-- `python scripts/run_harness.py --stage pdf --pdf-root /custom/path`
+- `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage pdf` (기본 FY2025_Q4)
+- `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage pdf --period FY2024_Q4`
+- `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage pdf --pdf-root /custom/path`
 
 ### 8-6) 출력
 
@@ -212,7 +214,7 @@ GitHub Actions 도입:
 - Job:
   - setup python
   - install deps (`pip install -r requirements.txt`)
-  - run `python scripts/run_harness.py --stage quality`
+  - run `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage quality`
   - artifacts 업로드: `artifacts/reports/`, `artifacts/review_queue/`
 
 ### 3단계(중기)

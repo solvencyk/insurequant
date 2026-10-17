@@ -207,7 +207,7 @@ tier1/tier2 가 특히 교활하다. `validate_data_contract.ARTIFACTS` 는 **�
 
 | ID | 내용 | 상태 |
 |---|---|---|
-| **UH-13** | **`data/dart/viz/csm_waterfall_history.json` 은 아무도 재생성하지 않는 정적 스냅샷이다.** 선언 빌더 `scripts/ifrs17_batch_historical.py` 는 2026-06 에 아카이브됐다. 마스터 대조 1,581셀 중 **933건(59.0%) drift**, 최대 Δ 43,852억(삼성화재 2023.3Q closing). IFRS17.html 이 그 값을 그린다. 검사는 걸었지만 **파일의 처분이 안 정해졌다** — drift 등재는 "스냅샷이 낡았다"의 박제이지 값의 승인이 아니다 | 발주 `inbox/parser/20260825T1125Z__validation__MULTI__live_viz_artifacts_unchecked.md` §A. 권고: **마스터 파생으로 교체**(그러면 drift 가 구조적으로 0) |
+| **UH-13** | **`data/dart/viz/csm_waterfall_history.json` 은 아무도 재생성하지 않는 정적 스냅샷이다.** 선언 빌더 `scripts/ifrs17_batch_historical.py` 는 2026-06 에 아카이브됐다. 마스터 대조 1,581셀 중 **933건(59.0%) drift**, 최대 Δ 43,852억(삼성화재 2023.3Q closing). IFRS17.html 이 그 값을 그린다. 검사는 걸었지만 **파일의 처분이 안 정해졌다** — drift 등재는 "스냅샷이 낡았다"의 박제이지 값의 승인이 아니다 | 발주 `inbox/_resolved/20260825T1125Z__validation__MULTI__live_viz_artifacts_unchecked.md` §A. 권고: **마스터 파생으로 교체**(그러면 drift 가 구조적으로 0) |
 | **UH-14** | **R-1/R-2 는 소스 문자열 검사다.** 정본 증거는 런타임 추적(`probe_20260825_trace_validator_reads.py`)인데, 그건 `validate_data_contract` 한 번 도는 데만 수십 초라 매 push 묶음에 넣지 않았다. 지금 매트릭스는 "경로 리터럴이 소스에 있다"까지만 강제한다 — 리터럴은 있는데 그 코드경로가 죽어 있으면 통과한다 | 검토 방향: 추적 프로브를 **주 1회 또는 릴리스 전** 수동 실행으로 규정하거나, 검사기별 캐시된 read-manifest 를 산출물로 남겨 대조. 지금은 변이시험 M2b(상류 직접 로드)가 가장 흔한 회귀형을 덮는다 |
 
 **해소된 것**: 없음(이 PM 이 신설이다). **없음 명시**: R-1~R-4 는 전부 배선됐고 이빨 검증됐다.

@@ -45,9 +45,9 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 > (`tests/test_deploy_assets.py::test_docs_agree_with_what_pages_fetch` 가 "페이지가 fetch 하는 JSON 은 전부 이 문서와 designer §1 에 이름이 있다" 를 강제).
 >
 > ```bash
-> python - <<'EOF'
+> cat > <scratchpad>/derive_fetches.py <<'EOF'   # 스크립트 파일로 저장해 풀패스 venv python 으로 돌린다(`python -` 표준입력은 멈춘다)
 > import re, pathlib
-> for f in ['index.html','K-ICS.html','IFRS17.html','공시보고서.html']:
+> for f in ['index.html','K-ICS.html','IFRS17.html','공시보고서.html','compare.html']:
 >     t = pathlib.Path(f).read_text(encoding='utf-8'); u=set()
 >     u |= set(re.findall(r"fetch\(\s*['\"]([^'\"]+)['\"]", t))
 >     u |= set(re.findall(r"resolveUrl\(\s*['\"]([^'\"]+)['\"]", t))
@@ -57,6 +57,7 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 >         if m: u.add(m.group(1))
 >     print(f, '->', sorted({x.lstrip('./') for x in u if x.endswith('.json')}))
 > EOF
+> C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe <scratchpad>/derive_fetches.py
 > ```
 
 **2026-10-07 도출 결과 (live `main` 과 일치 확인):**
@@ -124,15 +125,15 @@ The HTML pages fetch these directly — **데이터를 HTML 에 인라인하지 
 - `scripts/promote_from_to_be.py` — what-if → as-is promotion
 
 ### 2.2 IFRS17 batch builders + viz
-- `scripts/ifrs17_batch_{all,historical,bs_snapshot,insurance_pl,kics_sensitivity,measurement,reinsurance,sensitivity}.py`
+- `scripts/ifrs17_batch_{all,historical,measurement,sensitivity}.py` (`bs_snapshot`·`insurance_pl`·`reinsurance`·`kics_sensitivity` runners were archived 2026-07-22)
 - `scripts/ifrs17_promote_history_to_measurement.py`
 - `scripts/build_nb_csm_multiple.py`, `scripts/build_net_income_breakdown.py`
-- `scripts/viz_build_{csm_bubble,csm_waterfall,csm_waterfall_history,earnings_quadrant,ifrs17_kpis,ifrs17_panels,nb_csm_ratio}.py`
+- `scripts/viz_build_{csm_bubble,csm_waterfall,csm_combo_panel,compare_panel,ifrs17_kpis,ifrs17_panels,nb_csm_ratio,persistency_lossratio_panels}.py` (`csm_waterfall_history`·`earnings_quadrant` 는 archive/ 로 이동)
   > `viz_build_ifrs17_panels.py`·`viz_build_csm_waterfall.py` 는 **골든 있음** — 산출을 바꾸면
-  > `python -m pytest tests/test_viz_{ifrs17_panels,csm_waterfall}_golden.py`. 인플레이스로 덮어쓰는 빌더라 실행 전 백업.
+  > `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_viz_{ifrs17_panels,csm_waterfall}_golden.py`. 인플레이스로 덮어쓰는 빌더라 실행 전 백업.
 
 ### 2.3 Misc
-- `scripts/analyze_transitional_measures*.py`
+- `archive/2026-06_csm_nb_reverse_engineering/analyze_transitional_measures*.py` (scripts/ 에서 이동)
 - `scripts/export_red_all_cases.py` / `scripts/summarize_red_findings.py` (post-validation reporting)
 - `scripts/export_public_sheets.py` — **커밋된 HEAD 를 읽는다**: 마스터 커밋 → `public_exports/` 재생성 → 재커밋.
 
@@ -142,7 +143,7 @@ The HTML pages fetch these directly — **데이터를 HTML 에 인라인하지 
 
 **#0 must pass first. Any RED = BLOCKED. No documented-exception bypass.**
 
-0. **Push gate** — `python scripts/prepush_check.py`(훅과 같은 것). ① data-contract hard gate · ①b K-ICS rule gate · ①c 도메인 게이트 ·
+0. **Push gate** — `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py`(훅과 같은 것). ① data-contract hard gate · ①b K-ICS rule gate · ①c 도메인 게이트 ·
    ③ inbox hygiene · ④ 오프라인 테스트(골든 + 매니페스트). **exit 2 = push BLOCKED.** 범위 판정은 `CLAUDE.md` §5.
    **Never quote a gate verdict you did not run** — 돌려서 verdict 를 라운드 보고서에 붙인다. 기술적 gate-clear 는 push 허가가 아니다(owner GO 별도).
 

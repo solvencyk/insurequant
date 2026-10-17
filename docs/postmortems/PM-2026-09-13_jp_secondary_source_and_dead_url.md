@@ -11,8 +11,8 @@
 > 남은 잔여는 severity 승격 판단 하나다(**UH-22**, §5) — 발화 자체는 이미 push 를 막는다.
 > 발견 경로: 타 세션 리허설(출처 URL 생존 점검) → 이 세션에서 원문 대조로 확대
 > 관련 inbox: `inbox/_resolved/20260913T1325Z__owner__JP_MULTI__source_url_rehearsal_and_edinet_key.md` ·
-> `inbox/jp/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` ·
-> `inbox/jp/20260913T1810Z__validation__JP_MULTI__adjusted_figure_rule.md`(UH-21) · 관련 커밋: `04f27f7`
+> `inbox/_resolved/20260913T1500Z__validation__JP_MULTI__jp_source_gate_wiring.md` ·
+> `inbox/_resolved/20260913T1810Z__validation__JP_MULTI__adjusted_figure_rule.md`(UH-21) · 관련 커밋: `04f27f7`
 
 ## 0. 사실관계 (blameless)
 

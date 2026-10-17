@@ -35,10 +35,10 @@
 | | 함수/규칙 | 파일 | scope | exit-code 반영 |
 |---|---|---|---|---|
 | K-ICS 게이트 | `<fn>` | `scripts/validate_kics_disclosure.py` | 전분기 / display | ✅ / ❌ |
-| **push 게이트** | `<fn 또는 미배선>` | `scripts/validate_data_contract.py` | display 7분기 | ✅ / ❌ |
+| **push 게이트** | `<fn 또는 미배선>` | `scripts/validate_data_contract.py` | display 분기(`_quarter_horizon.display_quarters()` 파생) | ✅ / ❌ |
 
-⚠️ K-ICS 게이트에만 배선 = **push를 못 막음**(`prepush_check.py`는 그 스크립트를 호출 안 함).
-push 차단이 필요하면 `check_census`에 lift 필요.
+⚠️ "배선했다" 와 "push 를 막는다" 는 다르다. `prepush_check.py` 가 그 스크립트를 실제로 부르고 exit code 가 `blocked` 에 들어가는지 소스에서 확인한다
+(K-ICS 게이트·도메인 게이트 7종은 2026-08-21 부터 훅이 호출한다. `validate_master_tables.py` 는 호출하지 않는다 — `docs/postmortems/README.md` 「두 게이트의 차이」).
 
 ## 4. documented exception
 

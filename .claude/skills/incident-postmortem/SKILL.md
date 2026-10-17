@@ -41,7 +41,7 @@ blameless: 원인을 사람이 아니라 **게이트의 사각**으로 서술한
 |---|---|---|
 | K-ICS 게이트 | `scripts/validate_kics_disclosure.py` | ✅ **2026-08-21부터** `prepush_check.py` 단계 1b로 차단 |
 | push 게이트 | `scripts/validate_data_contract.py` (← `scripts/prepush_check.py`) | ✅ display 7분기 scope로 차단 |
-| 도메인 게이트 4종 | `validate_{csm_continuity,kics_rate_sensitivity,nb_csm_multiple,csm_waterfall}.py` | ✅ 2026-08-21부터 단계 1c |
+| 도메인 게이트 7종 | `validate_{csm_continuity,kics_rate_sensitivity,nb_csm_multiple,csm_waterfall,live_artifacts,disclosure_freshness,stale_quarter_tables}.py` | ✅ 단계 1c (2026-08-21 신설, 이후 3종 추가) |
 | 일반 이상치 발견 | `scripts/scan_generic_anomalies.py` | ❌ **2026-08-25에 게이트 밖으로 분리** — YELLOW 전용이라 원래 막은 적 없다. 분기 라운드 1회 수동 실행(`claude-agent-publishing.md` §3.0b) |
 
 **"배선했다"와 "실제로 push를 막는다"는 다른 말이다.** 3번 칸을 채울 때 룰을 어느 스크립트에 넣었는지
@@ -58,8 +58,8 @@ push를 못 막았다 — 그때 쓰인 우회는 `validate_data_contract.py`의
   임계값·severity·오탐억제**까지. 오탐억제가 없는 룰은 배선해도 곧 꺼진다.
 - **3번(배선)**: 함수명 + 파일 + scope(전분기/display) + exit-code 반영 여부.
 - **4번(exception)**: registry **변수명과 파일**까지. 이 저장소의 등재처:
-  `_AFTER_SUBRISK_NOT_DISCLOSED` · `_POST_PARENT_NOT_DISCLOSED` · `_MARKET_BREAKDOWN_EXEMPT` ·
-  `_IRR_SCENARIO_EXEMPT` · `_INTERNAL_MODEL_36IRR_EXEMPT` (전부 `validate_kics_disclosure.py`),
+  `_AFTER_SUBRISK_NOT_DISCLOSED` · `_POST_PARENT_NOT_DISCLOSED` (`validate_kics_disclosure.py`) ·
+  `MARKET_BREAKDOWN_EXEMPT` · `IRR_SCENARIO_EXEMPT` · `IRR_DERIVE_ISSUER_INCONSISTENT` (`src/solvency/validation/kics_json_rules.py`; `INTERNAL_MODEL_36IRR_EXEMPT` 는 2026-08-21 전건 해제돼 빈 집합이다),
   `data/_gold/user_pl_confirmed_cells.json`.
   **exemption 추가는 owner 권한** — 서브에이전트 자체판단 waiver 금지.
 
@@ -85,11 +85,11 @@ push를 못 막았다 — 그때 쓰인 우회는 `validate_data_contract.py`의
 
 ## 현재 미배선(UH) — 새 포스트모템 쓰기 전 확인
 
-`docs/postmortems/README.md` 하단 표가 정본. **2026-07-21 기준: UH-1·UH-2·UH-4 해소**
+`docs/postmortems/README.md` 하단 표가 정본이다(미배선 UH 는 UH-27 까지 늘었다; 아래 2026-07-21 스냅샷은 낡았다). **2026-07-21 기준: UH-1·UH-2·UH-4 해소**
 (적용후 7종 → `check_census` 1b(iv) lift · push 게이트 체인 3종 git 등재 · selftest 신설 14/14).
 잔여: **UH-3**(sidecar 발행 대기, 현재 YELLOW로 가시화) · **UH-5**(선행 레지스트리 미충족).
 
-**새 룰을 만들기 전 반드시**: `python scripts/validate_data_contract.py --selftest` 로 기존 14 케이스가
+**새 룰을 만들기 전 반드시**: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py --selftest` 로 기존 케이스가
 깨지지 않는지 확인하고, 새 룰에는 **케이스를 추가**한다(`scripts/_data_contract_selftest.py`).
 케이스 없는 룰은 다음 리팩터에서 조용히 죽는다.
 

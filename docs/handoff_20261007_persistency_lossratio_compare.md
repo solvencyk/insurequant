@@ -12,9 +12,9 @@ owner 팀장 요청 3건. 홈페이지 표시는 아직 미정이고, 지금은 
 
 | 티켓 | 내용 | 산출 |
 |---|---|---|
-| `inbox/parser/20261007T0600Z__orchestrator__MULTI_2023.2Q-2026.2Q__persistency_by_channel.md` | 채널별 유지율 텍스트 추출 | `scripts/extract_persistency_channel.py` → `data/persistency/persistency_channel.json` + `census.csv` |
-| `inbox/parser/20261007T0600Z__orchestrator__MULTI_2024.4Q-2025.4Q__claims_vs_risk_premium.md` | 손해율 표 A·B·C 텍스트 추출 | `scripts/extract_loss_ratio.py` → `data/loss_ratio/{claims_ae_ratio,risk_premium_vs_expected_claims,combined_ratio_nonlife}.json` + `census.csv` |
-| `inbox/parser/20261007T0700Z__orchestrator__MULTI_2023.2Q-2026.2Q__persistency_lossratio_scanned_vision.md` | 스캔본 렌더 + 눈으로 판독(V1 생보 4사, V2 AIA·흥국화재·카카오페이·KB) | `data/persistency/vision_cells_v{1,2}.json`, `data/loss_ratio/vision_cells_v2.json`, `vision_census_v{1,2}.csv` |
+| `inbox/_resolved/20261007T0600Z__orchestrator__MULTI_2023.2Q-2026.2Q__persistency_by_channel.md` | 채널별 유지율 텍스트 추출 | `scripts/extract_persistency_channel.py` → `data/persistency/persistency_channel.json` + `census.csv` |
+| `inbox/_resolved/20261007T0600Z__orchestrator__MULTI_2024.4Q-2025.4Q__claims_vs_risk_premium.md` | 손해율 표 A·B·C 텍스트 추출 | `scripts/extract_loss_ratio.py` → `data/loss_ratio/{claims_ae_ratio,risk_premium_vs_expected_claims,combined_ratio_nonlife}.json` + `census.csv` |
+| `inbox/_resolved/20261007T0700Z__orchestrator__MULTI_2023.2Q-2026.2Q__persistency_lossratio_scanned_vision.md` | 스캔본 렌더 + 눈으로 판독(V1 생보 4사, V2 AIA·흥국화재·카카오페이·KB) | `data/persistency/vision_cells_v{1,2}.json`, `data/loss_ratio/vision_cells_v2.json`, `vision_census_v{1,2}.csv` |
 
 발주 후 추가 지시(에이전트에 메시지로 보냄 — 티켓에는 없음):
 - 추출기는 `vision_cells*.json` 을 **glob 으로** 전부 병합한다(V1·V2 파일 분리).

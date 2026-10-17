@@ -1,9 +1,9 @@
 # 일본 ESR 규제 공시 양식 지도 (jp 레인 정본, 2026-09-12 신설)
 
-> 근거 티켓: `inbox/jp/20260912T0905Z__owner__JP_MULTI__esr_disclosure_template_map.md`. 기계 스키마: `J-ESR/esr_disclosure_schema.json`.
+> 근거 티켓: `inbox/_resolved/20260912T0905Z__owner__JP_MULTI__esr_disclosure_template_map.md`. 기계 스키마: `J-ESR/esr_disclosure_schema.json`.
 > 표본값+검산: `J-ESR/raw/fy2025_samples/extracted_sample_values.json`. 생성기(10월 62사 추출의 프로토타입):
 > `J-ESR/extract_esr_template_samples.py` (`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/extract_esr_template_samples.py`, exit 0 = 검산 전부 통과 + census 헤드라인 일치).
-> 합산 규정(상관행렬) 기계본: `J-ESR/esr_aggregation_rules.json` — §8 (2026-09-12 추가, 티켓 `inbox/jp/20260912T1005Z__owner__JP_MULTI__esr_aggregation_rule.md`).
+> 합산 규정(상관행렬) 기계본: `J-ESR/esr_aggregation_rules.json` — §8 (2026-09-12 추가, 티켓 `inbox/_resolved/20260912T1005Z__owner__JP_MULTI__esr_aggregation_rule.md`).
 > **10월 말 재census 의 확장 열 이름은 이 문서의 항목 id 를 그대로 쓴다.**
 
 ## 0. 한 줄 요약
@@ -314,7 +314,7 @@
 
 ## 8. 합산 규정과 재현 결과 (2026-09-12 추가 — 소요자본을 상관행렬로 다시 계산해 공시값과 대조)
 
-> 티켓 `inbox/jp/20260912T1005Z__owner__JP_MULTI__esr_aggregation_rule.md`. 기계본 `J-ESR/esr_aggregation_rules.json`(행렬은 id 순서 명시), 검산 `extract_esr_template_samples.py::run_aggregation_checks`(G01~G10). K-ICS 레인의 mmult 검산에 해당한다.
+> 티켓 `inbox/_resolved/20260912T1005Z__owner__JP_MULTI__esr_aggregation_rule.md`. 기계본 `J-ESR/esr_aggregation_rules.json`(행렬은 id 순서 명시), 검산 `extract_esr_template_samples.py::run_aggregation_checks`(G01~G10). K-ICS 레인의 mmult 검산에 해당한다.
 
 ### 8-1. 규정 문서 (확보본 `J-ESR/raw/regulation/`, sha256 은 rules JSON `sources[]`)
 
@@ -388,7 +388,7 @@ case_down 은 スプレッド–株式 0.00, スプレッド–不動産 0.00 (�
 - 판정 흐름: G06/G07 실패 + T8 `内部モデル 適用` → expected(`calc_method=internal_model` 기록) / + `該当ありません` → known_deviations 후보로 티켓.
 - 세율: `implied_statutory_tax_rate = K/(J−I)/0.8` 가 0.27~0.31 밖이면 2호 분기(DTA 과다·적자사) — 데이터 오류 아님, notes 에 적는다.
 
-## 9. 손익 층 `layer:"profit"` (2026-09-12 추가 — 티켓 `inbox/jp/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md`)
+## 9. 손익 층 `layer:"profit"` (2026-09-12 추가 — 티켓 `inbox/_resolved/20260912T1150Z__owner__JP_MULTI__profit_layer_schema.md`)
 
 > 한국 PL 패널(손익분해)의 일본판 입력층. 일본 법정 결산은 **J-GAAP 원가법**(책임준비금 標準責任準備金 lock-in, IFRS17 미적용)이라 CSM·RA·예실차가 없고,
 > 대신 생보는 `基礎利益`(기초이익)+`三利源`, 손보는 `保険引受利益`+`資産運用損益`+비율 3종이 공시서류 표로 있다. 기사 3축 ③(이차손익 전환, 도메인 문서 §4b-3)은
@@ -546,7 +546,7 @@ IFRS/国際財務報告基準 문자열 0건 확인 → `ifrs17_applied=false`.
 동작한다(`profit_pdf_fixture`, `FixtureDoc`). 위 25/25·17/19 는 이 fixture 재현 경로로 나온 결과다 — **실물 PDF 가 돌아오면 다음 실행이
 자동으로 그쪽을 쓰고, 같은 숫자가 나오는지 대조해 볼 것**(라벨/좌표가 100% 같은 파일이면 바이트 단위로 같아야 한다).
 
-### 9-7. 재보험 다리(bridge) `table:"profit:bridge"` — 元受/受再/出再 분해 (2026-09-13 추가, 티켓 `inbox/jp/20260913T0025Z__owner__JP_MULTI__reinsurance_bridge.md`)
+### 9-7. 재보험 다리(bridge) `table:"profit:bridge"` — 元受/受再/出再 분해 (2026-09-13 추가, 티켓 `inbox/_resolved/20260913T0025Z__owner__JP_MULTI__reinsurance_bridge.md`)
 
 owner 질문 "정미(正味) 숫자 말고 원수(元受, 출재 전) 숫자를 따로 볼 수 없나" → 손보 디스클로저지 「保険引受の状況」 절에 종목별(火災/海上/傷害/自動車/
 自動車損害賠償責任/その他) + `合計` 행으로 있는 6개 하위표에서 뽑는다. 표 위치는 두 회사가 다르다 — au 는 業績데이터 4of5 분책 p3~4(같은
@@ -609,7 +609,7 @@ owner: "원수끼리·수재끼리·출재끼리 묶어 원수손익·재보험�
   積立·準備金 행이 빠져 5사 전부 False 였던 항등식 — 잔차 행으로 대체, 항상 True).
 - 해석 주의(화면 각주): 自賠責·地震保険은 풀 경유로 受再·出再 양쪽에 계상되므로 再保険収支 △ 전부가 상업 재보험 비용은 아니다.
 
-### 9-8. 대형 손보 3사 본편 — ESR 층 제외 전 층 추출 (2026-09-13, 티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`)
+### 9-8. 대형 손보 3사 본편 — ESR 층 제외 전 층 추출 (2026-09-13, 티켓 `inbox/_resolved/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`)
 
 §10-7 에서 확보한 3 PDF(`J-ESR/raw/fy2025_samples/others/`)에서 profit(손익·재보험 다리·비율)·history·article_axes(준비금·재보험 집중)·회계기준을
 추출해 `extracted_sample_values.json` 에 `tokiomarine_nichido` / `mitsui_sumitomo` / `sompo_japan` 을 추가했다(ESR 층은 3사 전부 not_yet — 2026-10-31).
@@ -667,7 +667,7 @@ owner: "원수끼리·수재끼리·출재끼리 묶어 원수손익·재보험�
 - **MSI 세로쓰기 P&L**: Meiji(§9-6, 구획별 값 몰아찍기) 와 달리 행 단위로 "経|常|利|益|값" 이라 `vertical_pl=True` 로 P&L 도 `merge_vertical` 하면 기존
   `grab()` 이 그대로 동작. 내역행 값이 "(1,679,248)" 괄호 → `unwrap_parens=True`(깨진 "(64,842" 포함, 이중괄호는 유지).
 
-### 9-9. 종목별 층 `layer:"by_line"` (2026-09-13, 티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`)
+### 9-9. 종목별 층 `layer:"by_line"` (2026-09-13, 티켓 `inbox/_resolved/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`)
 
 「保険引受の状況」 種目別 3표 — 正味収入保険料 / 正味支払保険金(+正味損害率 열) / 正味損害率、正味事業費率及びその合算率 — 를 火災(fire)·海上(marine)·傷害(pa)·
 自動車(motor)·自動車損害賠償責任(cali)·その他(other)·合計(total) × {prev, cur} 로 뽑는다. 스키마 id `lob_net_premiums_written` / `lob_net_claims_paid` /
@@ -684,7 +684,7 @@ owner: "원수끼리·수재끼리·출재끼리 묶어 원수손익·재보험�
 검산: **B01** Σ(fire..other)=total — 종목별 百万円 절사라 ±1 은 성립하지 않는다(실측 차 0~3) → tol=항 개수 6(risk_tree root 와 같은 규칙). **B02** total 비율 = profit 층 ±0.1(같은 표, 30/30 정확).
 **B03** 종목별 合算率=損害率+事業費率 ±0.15. **B04**(gate=False) 保険金표 損害率 열 vs 比率표. 5사 gate 실패 0. 自賠責은 4사 合算率 118~140%(법정 노마진 종목) — 화면에서 total 과 같은 축에 두면 스케일이 깨진다.
 
-## 10. 시계열 층 `layer:"history"` (2026-09-12 추가 — 티켓 `inbox/jp/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`)
+## 10. 시계열 층 `layer:"history"` (2026-09-12 추가 — 티켓 `inbox/_resolved/20260912T1440Z__owner__JP_MULTI__pl_history_5y.md`)
 
 > owner: "손해율·사업비율·합산비율 시계열을 쭉 보여줘도 좋겠다. 당기/전기만 있어 허전하다." `profit` 층은 {prev,cur} 2개 사업연도뿐이라
 > FY2021~FY2025 5개년 전체를 담는 별도 층을 신설했다. 기계 스키마 = `esr_disclosure_schema.json` `layer:"history"` 13항목(값 10 + 생보 id 3개는
@@ -762,7 +762,7 @@ owner: "원수끼리·수재끼리·출재끼리 묶어 원수손익·재보험�
 history 층은 **갱신되지 않는다**(다음 갱신은 FY2026 결산이 나오는 2027년 7월 전후). census 3축(`docs/domains/claude-agent-jp.md` §4b)과
 같은 원문을 재활용하므로 별도 추가 조사는 필요 없다.
 
-### 10-7. 표본 6사 실측 (2026-09-13, 티켓 `inbox/jp/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`)
+### 10-7. 표본 6사 실측 (2026-09-13, 티켓 `inbox/_resolved/20260913T0230Z__owner__JP_MULTI__nonlife_ratio_availability.md`)
 
 owner 질의: "손해율 5개년이 다른 손보사에도 다 있는지, FY2025 없어도 FY2024 까지는 어딘가 공시돼 있지 않나?" — 대형 4(東京海上日動·損保
 ジャパン·三井住友海上·あいおいニッセイ同和) + 중형 2(共栄火災·日新火災)를 표본으로 잡았으나, 이 세션에서 curl 이 라운드 중간에 **전
@@ -799,7 +799,7 @@ owner 가정이 맞다. 다만 세 회사가 서로 다른 방식으로 담고 �
   `https://www.nisshinfire.co.jp/ir/pdf/disclosure2026.pdf`). 10월 재census 라운드에서 curl 이 풀렸을 때 그대로 재시도할 것 —
   회사가 공시를 안 했다는 근거는 없다.
 
-### 10-8. 대형 손보 3사 5개년표 (2026-09-13, 티켓 `inbox/jp/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`)
+### 10-8. 대형 손보 3사 5개년표 (2026-09-13, 티켓 `inbox/_resolved/20260913T0330Z__owner__JP_MULTI__big3_partial_detail.md`)
 
 - **TMNF p88** 「主要な経営指標等の推移」: 금액 행마다 `(対前期増減(△)率)` 부라벨 + 값 뒤 `(x.x%)` 성장률 괄호 → `hist_skip=[対前期増減]`,
   `hist_drop_paren_all=True`. 損害率/事業費率 5개년 직접(57.5→61.6 / 31.9→31.4), 合算率 파생. SMR 행은 대시 4개 + "別時期での開示" → 전부 null 정상.
@@ -817,7 +817,7 @@ owner 가정이 맞다. 다만 세 회사가 서로 다른 방식으로 담고 �
 - `jp/jesr_detail.json` 은 5사(`_meta.coverage = {detail_total 5, esr_posted 2, esr_not_yet 3}`), 3사는 `esr_status:"not_yet"` + `esr_placeholder`
   (원문 문구·페이지·expected 2026-10-31), headline ESR null, capital_tree/risk_tree 빈 리스트, profit/history/profit_flow 는 posted 사와 동일 구조.
 
-## 11. 생보 3이원 census `layer:"core_history"` (2026-09-13, 티켓 `inbox/jp/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`)
+## 11. 생보 3이원 census `layer:"core_history"` (2026-09-13, 티켓 `inbox/_resolved/20260913T0400Z__owner__JP_MULTI__lob_ratios_and_life_margins.md`)
 
 owner: "생보는 이차·사차·비차 마진 통계가 있을 것". 표본 5사(원문 확보 3 + NN Life 기확보 + 第一生命 미확보). **이 세션은 curl 이 전 도메인 차단**이라 WebFetch 가 PDF 바이너리를
 `tool-results/` 에 저장해 주는 것을 이용해 `J-ESR/raw/fy2025_samples/others/` 로 복사했다(도메인 문서 §4 "WebFetch 는 대체로 됨" 의 실제 경로). 읽은 문서는 **5월 결산설명자료**(슬라이드)이지
@@ -836,7 +836,7 @@ owner: "생보는 이차·사차·비차 마진 통계가 있을 것". 표본 5�
 있다. 5개년은 住友 그룹 기초이익뿐. 검산 `基礎利益 ≈ Σ三利源` 은 회사 정의(明治安田 業務利益, 住友 保険関係差 묶음, 日本生命 그룹 합산)가 달라 회사별로 식이 다르다 — 스키마의 P02 "informational" 판단이 맞았다.
 발행 블록 `jp/jesr_detail.json` companies[].core_history = {fiscal_years 5, unit, series{hist_core_profit / hist_core_profit_group / hist_interest_margin / hist_mortality_margin / hist_expense_margin / hist_insurance_margin / hist_operating_profit / hist_investment_margin}, labels_ja, three_source, status, notes}, 생보 행은 `esr_status:"life_core_only"`.
 
-## 12. J-GAAP 貸借対照表 요약 층 `bs` (2026-09-13, 티켓 `inbox/jp/20260913T1300Z__owner__JP_MULTI__jgaap_balance_sheet.md`)
+## 12. J-GAAP 貸借対照表 요약 층 `bs` (2026-09-13, 티켓 `inbox/_resolved/20260913T1300Z__owner__JP_MULTI__jgaap_balance_sheet.md`)
 
 - 코드 `J-ESR/extract_bs.py` → `J-ESR/raw/fy2025_samples/extracted_bs_values.json` → `build_jesr_detail_json.py::build_bs_block()` → `jp/jesr_detail.json` companies[].bs.
   행 id·순서·depth·sign·parent 는 티켓 표 그대로(18행, 합계 3행 필수, 잔차 3행 `derived:true`). id 는 스키마 항목이 아니라 builder `BS_LABELS` 가 `_meta.labels` 를 채운다.

@@ -96,7 +96,7 @@ owner 가 2026-09-01 에 공유한 기사(insnews #92437, 일본 금융청 '2026
 이 데이터가 얼마나 뽑히는지 본 뒤 owner 에게 다시 묻는다(즉시 화면에 얹지 않는다).
 
 5. **esr_target_range — 각사 ESR 목표레인지(자본정책), 랭킹 색 차등용 (owner 2026-09-13 확정, 티켓
-   `inbox/jp/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md`).** 감독하한 100%만으로는 랭킹 막대색이 전부 초록이 된다 — 회사가 자본정책에서 공표한
+   `inbox/_resolved/20260913T1610Z__owner__JP_MULTI__esr_target_ranges.md`).** 감독하한 100%만으로는 랭킹 막대색이 전부 초록이 된다 — 회사가 자본정책에서 공표한
    목표레인지(상단 초과=주주환원, 하단 미달=자본조치)로 색을 차등한다. 산출 `J-ESR/esr_target_ranges.json`(`_meta` + `ranges[]`: company_jp/company_en/low_pct/high_pct/
    basis(`internal_99.95`|`regulatory`|`unknown`)/confidence_level/policy_note/source_url/source_doc/as_of/inherited_from). 単体사는 자기 레인지가 없으면 모회사(HD) 레인지를
    `inherited_from` 표기로 상속, 상호회사(日本生命·住友生命·明治安田生命·朝日生命·富国生命)는 목표레인지 미공표가 정상이라 `null`(추정 금지). 2026-09-13 census 20사(jesr_esr.json 15
@@ -158,17 +158,17 @@ owner 가 2026-09-01 에 공유한 기사(insnews #92437, 일본 금융청 '2026
   — 종전 코드가 쓰던 `disclosure.edinet-fsa.go.jp/api/v2` 는 301→302 로 튕겨 간다. 인증은 헤더
   `Ocp-Apim-Subscription-Key` 와 쿼리 `Subscription-Key` 둘 다 된다. **키가 없으면 HTTP 200 에 본문이
   `{"StatusCode": 401}` 로 온다** — 상태코드만 보고 "결과 0건" 으로 읽지 말 것.
-  확인: `python J-ESR/jesr_edinet_fetch.py --smoke`.
-- **회사코드 정본은 `J-ESR/jp_insurers.csv` 한 곳뿐.** 갱신은 `python J-ESR/edinet_codelist.py --apply`
+  확인: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/jesr_edinet_fetch.py --smoke`.
+- **회사코드 정본은 `J-ESR/jp_insurers.csv` 한 곳뿐.** 갱신은 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/edinet_codelist.py --apply`
   (공식 EDINETコードリスト 11,389건 대조, 증거는 `J-ESR/edinet_code_match.json`). 스크립트에 코드를 하드코딩하지 말 것 —
   종전 하드코딩 13개 중 **7개가 다른 회사 코드**였다(E04979=パーク24, E04506=九州電力 …).
 - **누가 EDINET 에 있나(81행 실측).** 有報 제출의무 17 · 등록만 있고 의무 없음 9(상호회사 5 + 第一生命保険·大同生命·
   太陽生命·FWD生命) · **미등록 51**. 즉 EDINET 으로 ESR 을 받을 수 있는 회사는 **최대 17사**이고 나머지는 영원히 안 온다
   — 각사 디스클로저 PDF 가 1차 출처라는 판단(owner 2026-09-12)의 기계 근거다.
 - **FY2025 有報는 이미 다 나왔다.** 2026-06-11~06-30 에 14사 제출(전부 XBRL 있음). 인덱스는
-  `python J-ESR/jesr_edinet_fetch.py --scan --from 2026-06-01 --to 2026-07-31` → `J-ESR/raw/edinet/scan_*.json`.
+  `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/jesr_edinet_fetch.py --scan --from 2026-06-01 --to 2026-07-31` → `J-ESR/raw/edinet/scan_*.json`.
 - **XBRL 태그에는 ESR 이 없다(FY2024 probe 결론 유지). 본문 iXBRL htm 에는 서술로 있다.**
-  `python J-ESR/edinet_esr_probe.py` 가 有報 15건 전부에서 ESR 문장을 찾았고 5사는 수치까지 확정된다
+  `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe J-ESR/edinet_esr_probe.py` 가 有報 15건 전부에서 ESR 문장을 찾았고 5사는 수치까지 확정된다
   (東京海上HD 268% · T&D 222% · SOMPO 270% · ライフネット 333% · かんぽ 181%). 산출 `J-ESR/edinet_esr_probe.json`.
 - **용도 두 가지.** ① 화면 수치 교차검증(감사받은 문서라 2차보도보다 강하다) ② 회사 IR PDF 가 사라졌을 때의 증거.
   단 **EDINET 뷰어 딥링크는 사용자용 링크로 쓸 수 없다** — 세션 기반이라 `WEEK0040.html?docId=…` 는 "Document Moved" 로

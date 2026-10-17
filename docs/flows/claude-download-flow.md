@@ -10,8 +10,8 @@
 - 엔진: `src/solvency/downloader/base.py`의 `DownloaderEngine`
 - CLI: `src/solvency/downloader/runner.py`
 - 메인 운영 단위는 **협회 단위 일괄 다운로드** (개별 회사가 아님)
-  - 손해보험: `python -m solvency.downloader.runner --company NONLIFE`
-  - 생명보험: `python -m solvency.downloader.runner --company LIFE`
+  - 손해보험: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m solvency.downloader.runner --company NONLIFE`
+  - 생명보험: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m solvency.downloader.runner --company LIFE`
 - 협회 페이지에서 회사명 추출 → `*_insurer_registry.yaml`로 사코드 매핑
 - 핸들러: `src/solvency/downloader/handlers/{nonlife,life}_insurance_association.py`
 
@@ -37,10 +37,9 @@
 
 로컬:
 
-- `data/disclosure/<period>/pdf/<companyDirname>.pdf`
+- `data/disclosure/<period>/raw/<companyDirname>.pdf`
 - `data/disclosure/<period>/parsed/<companyDirname>.{md,xlsx}`
 - `data/disclosure/_meta/<companyCode>_download_cache.csv` (멱등성용 manifest)
-- `data/disclosure/_unsorted/<companyDirname>/...` (마이그레이션이 분기를 추론하지 못한 파일)
 
 Drive (코드 외부, 수동/MCP):
 
@@ -51,13 +50,13 @@ Drive (코드 외부, 수동/MCP):
 
 - `<period>` : `FY<연도>_Q<분기>` 형식. 예) `FY2025_Q4`
 - `<companyDirname>` : 기존 회사 폴더명 그대로(예: `KR1098_카카오페이손해보험`)
-- 보완/재공시본은 동일 폴더에 `<companyDirname>_amended.pdf`(또는 `_amended2`, `_amended3` ...)로 저장
+- 보완/재공시본은 동일 폴더에 `<companyDirname>_amended.pdf`(또는 `_amended2`, `_amended3` ...)로 저장 — 이는 옛 규약이고 2026-09-12 이후 신규 수집분은 원본을 덮어쓰지 않고 `<companyDirname>_v<YYYYMMDD>.pdf` 로 병존 저장한다(`docs/agents/claude-agent-downloader.md` 'Amended filings coexist')
 
 예시:
 
-- `data/disclosure/FY2025_Q4/pdf/KR1098_카카오페이손해보험.pdf`
-- `data/disclosure/FY2025_Q1/pdf/KR0051_신한EZ손해보험_amended.pdf`
-- `data/disclosure/FY2024_Q4/parsed/KR0008_삼성화재.md`
+- `data/disclosure/FY2025_Q4/raw/KR1098_카카오페이손해보험.pdf`
+- `data/disclosure/FY2025_Q1/raw/KR0011_DB손해보험_amended2.pdf`
+- `data/disclosure/FY2024_Q4/parsed/KR0008_삼성화재해상보험.md`
 
 ## manifest 필드
 
@@ -77,19 +76,19 @@ Drive (코드 외부, 수동/MCP):
 
 - 다운로드 실패는 최대 3회 재시도(엔진 외부 wrap)
 - `bytes == 0` 또는 `sha256` 미생성 → `status="failed"`
-- 같은 문서의 원본/보완이 공존 → 보완본을 최종(`amended`)으로만 보관
+- 같은 문서의 원본/보완이 공존 → (옛 규약) 보완본을 최종(`amended`)으로만 보관. 2026-09-12 이후 신규 수집분은 원본을 두고 `_v<YYYYMMDD>` 로 병존 저장한다(위 명명 규약 참조)
 
 ## 레거시 다운로더와의 관계
 
 - 회사별 레거시 다운로더 4종은 2026-07-21 삭제 (단일 엔진으로 완전 대체)
-- 새 단일 엔진 핸들러가 완성되기 전까지는 회사별 정확도 검증을 위한 fallback
-- 새 핸들러 작성 시 이 4종에서 셀렉터/플로우를 이식
+- 삭제됐으므로 fallback 으로 쓸 수 없다(분기 수집 현행 절차는 `docs/agents/claude-agent-downloader.md`)
+- 새 핸들러 작성 시 셀렉터/플로우는 삭제 이전 git 이력에서 이식
 
 ## 기존 데이터 마이그레이션 (2026-04, 1회성)
 
 이전 레이아웃(`data/disclosure/<companyDirname>/{pdf,parsed}/...`)에 쌓여 있던 704개 파일을 새 분기-우선 레이아웃으로 이미 옮겼습니다.
 
 - 매칭 성공: 550개 → `FY2023_Q1` ... `FY2025_Q4`
-- 미매칭: 154개 → `data/disclosure/_unsorted/<companyDirname>/` (대부분 분기 정보가 없는 회사 루트 통합 파일)
+- 미매칭: 154개 → `data/disclosure/_unsorted/<companyDirname>/` (대부분 분기 정보가 없는 회사 루트 통합 파일; 현재 디렉터리는 남아 있지 않다)
 - 사용한 1회성 스크립트는 `archive/` 아래 날짜 버킷에 보존 (2026-07-22 기준 `archive/2026-07_unreferenced_scripts/`, `archive/2026-06_csm_nb_reverse_engineering/`, `archive/scratch_scripts/`)
 - 새 다운로드는 `src/solvency/downloader/`가 처음부터 새 레이아웃으로 떨어트림

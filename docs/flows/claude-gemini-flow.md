@@ -10,8 +10,8 @@ PDF에서 지급여력 관련 표를 추출한 Markdown을 안정적으로 확�
 ## 메인 경로: Docling (로컬, 무료)
 
 - 모듈: `src/solvency/parser/docling_parser.py`
-- 입력: 회사별 PDF 디렉토리(`data/disclosure/<companyCode>/pdf/`)
-- 출력: `md_inbox/<companyCode>/<docId>.md`
+- 입력: 분기별 PDF 디렉토리(`data/disclosure/<period>/raw/`)
+- 출력: `md_inbox/<period>/KR####_<name>.md`
 - 멱등성: 입력 PDF의 sha256/size/mtime이 동일하면 변환 생략
 - 메모리: 변환 후 Docling 객체 명시적 해제 + `gc.collect()`
 - 병렬: `parse_parallel(items, workers=N)`로 process pool 사용
@@ -21,11 +21,11 @@ PDF에서 지급여력 관련 표를 추출한 Markdown을 안정적으로 확�
 - 트리거: `parser/quality_check.py`가 임계치(score < 0.7 또는 핵심 행 누락) 미달 판정 시
 - 산출물: `artifacts/review_queue/review_queue_<run_id>.csv`
 - 운영자가 해당 PDF 목록을 Gemini Enterprise에서 다시 파싱
-- 결과 Markdown을 `md_inbox/<companyCode>/`에 덮어쓰면 다음 빌드부터 자동 반영
+- 결과 Markdown을 `md_inbox/<period>/`에 덮어쓰면 다음 빌드부터 자동 반영
 
 ## Markdown 입력 계약
 
-파일 경로: `md_inbox/<companyCode>/<docId>.md`
+파일 경로: `md_inbox/<period>/KR####_<name>.md`
 
 Front Matter 필수 키:
 
@@ -76,5 +76,5 @@ Front Matter 필수 키:
 ## 레거시 대체 관계
 
 - 과거 Camelot 기반 파서가 하던 PDF 표 추출 역할을 Docling이 담당 (camelot 경로는 2026-07-21 삭제)
-- Camelot 경로는 사이트 구조 급변 또는 Docling 사용 제한 시의 fallback으로만 유지
+- Camelot 경로는 2026-07-21 삭제돼 fallback 으로 쓸 수 없다(위 줄과 같다)
 - Selenium 기반 Gemini 자동화는 채택하지 않음(UI 변경 취약, 멱등성 보장 어려움)

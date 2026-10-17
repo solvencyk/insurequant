@@ -21,11 +21,11 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 
 **Input**
 - `task`: e.g. "add Panel 7 for new metric X" / "fix mobile donut layout" / "improve chart legend density"
-- `affected_pages`: subset of `index.html` / `K-ICS.html` / `IFRS17.html` / `공시보고서.html`
+- `affected_pages`: subset of `index.html` / `K-ICS.html` / `IFRS17.html` / `공시보고서.html` / `compare.html`
 - `master_json`: path to the master(s) the change consumes (so designer knows the schema)
 
 **Output**
-- Edited HTML (one or more of the 4 root files)
+- Edited HTML (one or more of the 5 dashboard HTML files)
 - Shared rules go in root [`common.css`](../../common.css) / [`theme.js`](../../theme.js) (design system — see §5), not per-page
 - `artifacts/designer/<task>_<ts>.md` — change report: pages touched, breakpoints affected, screenshots, regression check notes
 - exit code: `0` on success.
@@ -51,13 +51,13 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 > 이 열은 HTML 에서 **기계 도출**한다(2026-10-07 재도출). 페이지의 fetch 를 바꾸면 **이 표와 `claude-agent-publishing.md` §1 을 같이 고쳐라**
 > (거기에 재도출 명령이 있다). 둘 다 배포 keep-list 의 근거이고 `tests/test_deploy_assets.py` 가 대조한다.
 
-Local preview: `python -m http.server 8000` from repo root. 이 PC 의 프리뷰 창은 `window` scroll 이벤트를 안 뿜는다 — 스크롤 연동은 합성 `scroll` 이벤트로 검증하고 그 한계를 보고에 적는다.
+Local preview: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m http.server 8000` from repo root. 이 PC 의 프리뷰 창은 `window` scroll 이벤트를 안 뿜는다 — 스크롤 연동은 합성 `scroll` 이벤트로 검증하고 그 한계를 보고에 적는다.
 
 ---
 
 ## 2. Responsive breakpoints (committed conventions)
 
-- **Mobile = `@media (max-width:640px)`** on all 4 pages: header padding ↓, `.tabs` horizontal-scroll, `.panel` padding ↓, chart heights ↓, tables `overflow-x:auto` 12px.
+- **Mobile = `@media (max-width:640px)`** on all 5 dashboard pages: header padding ↓, `.tabs` horizontal-scroll, `.panel` padding ↓, chart heights ↓, tables `overflow-x:auto` 12px.
 - `index.html` ≤640px hides treemap and shows vertical list (`#map-list`, `renderList()` mirrors `render()`).
 - K-ICS donuts stack via `flex-wrap`; dense tables → card view ≤640px (`renderMobileCards`).
 - Section nav: ≥1080px 좌측 고정 그리드, 그 아래는 헤더 밑 가로 칩 줄(항목 4개 고정 — owner 가 "칩 남발" 로 두 번 반려).
@@ -95,7 +95,7 @@ Don't introduce a new chart lib without owner approval. 라이브러리는 CSS `
 
 ## 5. Design system
 
-Tokens + shared chrome live in root [`common.css`](../../common.css) (linked by all 4 pages) and [`theme.js`](../../theme.js).
+Tokens + shared chrome live in root [`common.css`](../../common.css) (linked by all 6 HTML pages) and [`theme.js`](../../theme.js).
 
 ### 5.1 Design tokens — single source of truth = `common.css :root` (팔레트 B, owner 승인 2026-09-20)
 
@@ -121,7 +121,7 @@ Tokens + shared chrome live in root [`common.css`](../../common.css) (linked by 
 - **In common.css:** `:root` tokens, `body`, `header`, `.brand`, `.tabs`/`.tab`, `.container`, `.select`, `.panel h2`, `.panel p`, `.panel > p.lede`, table base, num/text utils, A11y baseline, `.section-nav`, `.iq-help`, 기간·경과조치 세그먼트 토글, and one shared mobile `.tabs`/`.tab` block.
 - **Stays page-specific (do NOT hoist):** `.panel`/`.controls` spacing, `*{box-sizing}`, every chart/component class. **Only hoist an `@media` rule when its body is byte-identical across ≥3 pages.**
 - **⚠️ Cascade trap:** 공시보고서.html redefines base `.tab` inline, so the hoisted mobile `.tab` loses the cascade there — its own responsive rule must stay inline. If a page overrides a base rule inline, its matching `@media` override must stay inline too. **Verify the computed value at 640px, not just presence of the rule.**
-- **Non-breaking test:** after any change, `common.css` loads (no 404), 0 console errors, computed styles unchanged on **all four pages** at desktop + 640px.
+- **Non-breaking test:** after any change, `common.css` loads (no 404), 0 console errors, computed styles unchanged on **all five dashboard pages** at desktop + 640px.
 - `.section-nav`(페이지 안 섹션 이동)와 `.tab/.tabs`(페이지 간 이동)는 일부러 이름·생김새를 나눴다 — 섞지 말 것.
 
 ### 5.3 A11y baseline — target WCAG 2.1 AA

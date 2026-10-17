@@ -16,18 +16,19 @@ rollback 상세는 그 문서에 있다. 이 파일은 트리거 조건과 절�
 
 ## 절차 순서 (요약 — 명령어는 `docs/launch_runbook.md` §1-6)
 
-1. **Pre-flight 게이트**: `python scripts/validate_data_contract.py` → `SUMMARY RED=0` 확인. RED이면
+1. **Pre-flight 게이트**: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py`(훅과 같은 게이트, 약 11분 — background로 끝까지) → RED=0·verdict 확인. RED이면
    해당 스테이지 inbox로 route, 여기서 멈춘다. exception 우회 없음.
 2. **keep-list 재파생**: 각 HTML의 `fetch(`/`src=`/`href=`를 grep해서 배포 대상 파일을 확정한다 —
    기억으로 판단하지 않는다.
-3. **마스터 xlsx 최신화 확인**: JSON 마스터를 갱신했다면 `insurequant_master_tables.xlsx`를 재생성
-   (공식 `xlsx` skill 경유, openpyxl load+save 금지).
+3. **마스터 xlsx 최신화 확인**: JSON 마스터를 갱신했다면 바뀐 시트만 `scripts/sync_master_xlsx_sheet.py`로 맞춘다
+   (전체 재생성·openpyxl load+save 금지, CLAUDE.md §8).
 4. **공유 워킹트리 확인**: `git branch --show-current` + `git status` — 다른 스테이지의 미커밋 변경이
    보이면 hold.
 5. **격리 워크트리로 main에 cherry-push**: 같은 폴더에서 `git checkout main`으로 바꿔치기하지 않는다
    (다른 세션과 충돌 위험). `git worktree add` 사용.
 6. **owner GO**: `git push origin main` 직전, 올라갈 파일 전체 목록 + 이유 + 게이트 결과를 제시하고
    명시적 승인을 받는다. 로컬 add/commit/checkout은 승인 없이 진행(계약상 "기계적 작업").
+   main 반영 실행 경로는 CLAUDE.md §11·`publishing.md`가 정본이다 — owner가 폰 Termux에서 `scripts/android_push_and_deploy.sh --from-origin --branch <작업브랜치>`를 돌리므로 작업 브랜치를 먼저 push해 둔다.
 7. **배포 후 검증**: 라이브 URL 1개 이상 curl/WebFetch로 200 + 값 확인.
 8. **문제 발생 시 rollback**: `docs/launch_runbook.md` §6 — HTML/JSON은 `git revert`(force-push 금지),
    마스터 xlsx는 `.bak` 복원 또는 Excel 재오픈(재생성은 최후 수단).

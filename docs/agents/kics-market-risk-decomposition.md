@@ -1,6 +1,6 @@
 # K-ICS Market Risk (시장위험액) Sub-Risk Decomposition — Research + Validation Rule
 
-**Status:** research complete, ready for parser + validator implementation (2026-06-09).
+**Status:** research complete 2026-06-09; items 36-46 and rules `19_market`/`36_irr` are implemented (see §9).
 **Source of truth (domain):** `新지급여력제도(K-ICS) 해설서` 제4장 시장위험액 (p.199–), 특히 `<표19> 시장위험액 하위위험 간 상관계수` (해설서 p.205).
 **Analogous to:** Rule `8_life` (item17 = 생명장기손해보험위험액 = `sqrt(S'·R7·S)` over items 29–35). This doc does the same for **item19 = 시장위험액**.
 
@@ -180,7 +180,7 @@ item36(금리위험액)을 한 단계 더 분해. 단, 저장 primitive는 시�
 
 ### 7-3. 공시 형식 두 가지 (순자산가치 행은 둘 다 보유)
 
-- **(A) 직접형** (예: 신한라이프): `Ⅳ.금리위험액` 행에 시나리오별 위험액도 직접 기재. 순자산가치 행도 있음.
+- **(A) 직접형** (예: 신한라이프): `Ⅳ.금리위험액` 행에 시나리오별 위험액도 직접 기재. 순자산가치 행도 있음. ※ 2026-08-21 raw 대조로 반증됨 — 신한라이프·교보의 `Ⅳ.금리위험액`은 시나리오별로 쪼개지지 않은 단일 병합셀이다(`kics_json_rules.py` `INTERNAL_MODEL_36IRR_EXEMPT` 주석).
 - **(B) 유도형** (예: 흥국화재·현대해상): `Ⅳ.금리위험액`은 총액만. 시나리오별은 순자산가치 행에서 §7-2로 유도.
 
 → **순자산가치 행(items 41–46)을 보편 primitive로 저장**하면 (A)(B) 무관하게 일관 검증.
@@ -196,7 +196,7 @@ item36(금리위험액)을 한 단계 더 분해. 단, 저장 primitive는 시�
 
 ### 7-5. 공시 가용성 (census — 드물지 않음)
 
-공시 raw PDF **209/497 filing**에 "금리위험액 현황" 시나리오 표 존재. 회사 기준 **39/40개사**(미보유 1곳 = KR0079 미래에셋, 이미지-only PDF). 즉 기계판독 PDF 회사는 사실상 전부 공시. **단, 현재 파서가 이 표를 PDF→MD로 추출하지 않음**(흥국·현대 파싱본엔 방법론 각주만) — raw PDF "금리위험액 현황" 표를 신규 추출해야 함.
+공시 raw PDF **209/497 filing**에 "금리위험액 현황" 시나리오 표 존재. 회사 기준 **39/40개사**(미보유 1곳 = KR0079 미래에셋, 이미지-only PDF). 즉 기계판독 PDF 회사는 사실상 전부 공시. **단, (2026-06-09 당시) 파서가 이 표를 PDF→MD로 추출하지 않았다**(흥국·현대 파싱본엔 방법론 각주만) — 이후 §9 대로 raw PDF 추출·적재 완료.
 
 ### 7-6. 신규 항목 (41–46) — 시나리오별 순자산가치
 
@@ -249,4 +249,4 @@ JSON 행 shape는 기존과 동일: `{원보험사코드, 원수사명, 티커, 
 - [x] **(parser)** item41–46 raw PDF "금리위험액 현황" 순자산가치 행 추출 + item36–40 세부표 추출 → `scripts/fill_market_subitems_to_disclosure.py`, 14,244행 적재 (2026-06-09).
 - [x] **(schema)** 36–46 `kics_disclosure.json` UPSERT 완료.
 - [x] **(validator)** Rule `19_market` + `36_irr` 구현 완료(`kics_json_rules.py`), 게이트 RED=0(신규 룰 기준; 기존 KR0010 OCR 예외 2건만 잔존).
-- [ ] **(parser 후속 정제, 미적재 갭)** MKT: KR0050 하나손해(세부표 폼)·KR0051 신한이지·KR0070 에이비엘(2025 concat)·KR1098. IRR 직접형/granular(KR0094 신한·KR0097 하나생명)는 순자산-델타 재구성 불가 → 직접공시 시나리오 위험액 별도 저장 검토. 총액추출 실패 KR0068·KR0073·KR0051.
+- [ ] **(parser 후속 정제, 미적재 갭)** MKT: KR0050 하나손해(세부표 폼)·KR0051 신한이지·KR0070 에이비엘(2025 concat)·KR1098. IRR 직접형/granular(KR0094 신한·KR0097 하나생명)는 순자산-델타 재구성 불가 → 직접공시 시나리오 위험액 별도 저장 검토. [KR0094 신한은 2026-08-21 반증: 41-46 표가 완비돼 있고 잔차 박제(`IRR_DERIVE_ISSUER_INCONSISTENT`)로 처리한다.] 총액추출 실패 KR0068·KR0073·KR0051.
