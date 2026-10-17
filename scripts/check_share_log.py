@@ -71,7 +71,7 @@ def main() -> int:
                     for mode in ("normal", "internal", "noconfig"):
                         ctx = br.new_context(viewport={"width": w, "height": h}, has_touch=(viewport == "mobile"),
                                              is_mobile=(viewport == "mobile"))
-                        pg = ctx.new_page()
+                        ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); pg = ctx.new_page()
                         posts: list[dict] = []
                         errs: list[str] = []
                         pg.on("pageerror", lambda e, errs=errs: errs.append(str(e)))

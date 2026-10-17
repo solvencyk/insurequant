@@ -105,7 +105,7 @@ def main():
                 for name in COS:
                     if legacy and name not in ("한화생명", "하나생명보험"):
                         continue
-                    pg = ctx.new_page(); errs = []
+                    ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); pg = ctx.new_page(); errs = []
                     pg.on("console", lambda m, e=errs: e.append(m.text) if m.type in ("error",) else None)
                     pg.on("pageerror", lambda x, e=errs: e.append(str(x)))
                     pg.set_default_timeout(60000)

@@ -83,7 +83,7 @@ def main() -> int:
                     if only and pref not in only:
                         continue
                     for mode in a.modes.split(","):
-                        page = ctx.new_page()
+                        ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); page = ctx.new_page()
                         if a.asof:
                             def _trim(route):
                                 asof = a.asof

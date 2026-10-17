@@ -65,7 +65,7 @@ def main():
         with sync_playwright() as pw:
             br = pw.chromium.launch(channel="msedge", headless=True)
             for vn, w, h, scheme in views:
-                ctx = br.new_context(viewport={"width": w, "height": h}, color_scheme=scheme); pg = ctx.new_page(); errs = []
+                ctx = br.new_context(viewport={"width": w, "height": h}, color_scheme=scheme); ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); pg = ctx.new_page(); errs = []
                 pg.on("pageerror", lambda x, e=errs: e.append(str(x)))
                 pg.on("console", lambda m, e=errs: e.append(m.text) if m.type == "error" and "Failed to load resource" not in m.text else None)
                 pg.goto(f"http://127.0.0.1:{port}/K-ICS.html?iq_internal=1", wait_until="domcontentloaded")

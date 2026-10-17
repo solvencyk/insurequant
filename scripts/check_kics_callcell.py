@@ -39,7 +39,7 @@ def main():
                 for b in d["securities"][code]:
                     if b["tier"] == "subordinated" and b.get("call_date") and b["call_date"] >= ref and (b.get("outstanding_eok") or 0) > 0:
                         mut(b)
-                ctx = br.new_context(viewport={"width": 375, "height": 812}); pg = ctx.new_page(); errs = []
+                ctx = br.new_context(viewport={"width": 375, "height": 812}); ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); pg = ctx.new_page(); errs = []
                 pg.on("pageerror", lambda x, e=errs: e.append(str(x)))
                 pg.on("console", lambda m, e=errs: e.append(m.text) if m.type == "error" and "Failed to load resource" not in m.text else None)
                 body = json.dumps(d)

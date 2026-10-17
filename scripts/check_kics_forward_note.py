@@ -146,7 +146,7 @@ def main():
             br = pw.chromium.launch(channel="msedge", headless=True)
             for vn, w, h, scheme in views:
                 ctx = br.new_context(viewport={"width": w, "height": h}, color_scheme=scheme)
-                pg = ctx.new_page(); errs = []
+                ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); pg = ctx.new_page(); errs = []
                 # 망 흔들림(외부 CDN·폰트·분석 스크립트의 ERR_CONNECTION_RESET)은 우리 코드 오류가 아니다 — 외부 호스트 요청 실패는 경고로만 센다.
                 pg.on("console", lambda m, e=errs: e.append(m.text) if m.type == "error" and "Failed to load resource" not in m.text else None)
                 pg.on("requestfailed", lambda r: (errs.append("로컬 요청 실패 " + r.url) if r.url.startswith("http://127.0.0.1") else print("  (경고) 외부 요청 실패", r.url[:80], r.failure)))

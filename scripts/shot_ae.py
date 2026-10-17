@@ -62,7 +62,7 @@ def main():
             for vn, w, h in [("desktop", 1280, 900), ("mobile", 375, 812)]:
                 ctx = br.new_context(viewport={"width": w, "height": h})
                 for pref, name in COS:
-                    pg = ctx.new_page(); errs = []
+                    ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); pg = ctx.new_page(); errs = []
                     pg.on("console", lambda m, e=errs: e.append(m.text) if m.type in ("error",) else None)
                     pg.on("pageerror", lambda x, e=errs: e.append(str(x)))
                     pg.set_default_timeout(20000)

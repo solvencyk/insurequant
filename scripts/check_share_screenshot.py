@@ -152,7 +152,7 @@ def run(args) -> int:
                         has_touch=(vname == "mobile"), is_mobile=(vname == "mobile"),
                         color_scheme=theme,
                     )
-                    page = ctx.new_page()
+                    ctx.add_init_script("try{localStorage.setItem('iq_notice_seen','2026-3Q')}catch(e){}"); page = ctx.new_page()
                     # 분석 비콘은 테스트에서 내보내지 않는다(gtag 는 로컬 서빙이어도 실제로 나간다)
                     page.route(re.compile(r"google-analytics\.com|googletagmanager\.com"), lambda r: r.abort())
                     errors: list[str] = []
