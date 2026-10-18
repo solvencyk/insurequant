@@ -104,6 +104,23 @@ def _rank(order, v):
     return order.index(v) if v in order else len(order)
 
 
+RATIO_DP = 6      # the screen rounds once to 1 decimal; storing 2 decimals made it a second rounding
+
+
+def _ratio(v, a, b):
+    """Stored ratio of one master cell. The master prints the ratio to 2 decimals; when the amounts reproduce
+    that printed value (|a/b x 100 - printed| <= 0.005, i.e. the print is only a 2-decimal rounding of the
+    ratio) store the unrounded ratio so the screen rounds exactly once. Otherwise (amounts rounded to the
+    unit, or one missing) keep the printed value as disclosed -- never replace it with a recomputation."""
+    if v is None:
+        return None
+    if a is not None and b:      # b != 0: a negative denominator reproduces the printed value as well
+        exact = a / b * 100
+        if abs(exact - v) <= 0.005 + 1e-9:
+            return round(exact, RATIO_DP)
+    return round(v, 2)
+
+
 def _agg(leaves, years):
     """Group loss ratio per year column = sum(예상보험금) / sum(위험보험료) x 100 over the leaves
     that have BOTH amounts (never an average of ratios). Risk premium sum 0 / no leaf -> None."""
@@ -121,7 +138,7 @@ def _agg(leaves, years):
             sa += a
             sb += b
             used += 1
-        out.append(round(sa / sb * 100, 2) if used and sb > 0 else None)
+        out.append(round(sa / sb * 100, RATIO_DP) if used and sb > 0 else None)
     return out
 
 
@@ -160,7 +177,7 @@ def build_loss_ratio() -> dict:
         key = (r["구분"], r.get("상품구분") or "", r["포트폴리오"])
         v = _num(r["손해율"])
         a, b = _num(r.get("예상보험금")), _num(r.get("위험보험료"))
-        cells[(code, q, seg)].setdefault(key, {})[yr] = (None if v is None else round(v, 2), a, b)
+        cells[(code, q, seg)].setdefault(key, {})[yr] = (_ratio(v, a, b), a, b)
         cols_seen[(code, q, seg)].add(yr)
         if v is not None and a is not None and b:
             if abs(a / b * 100 - v) > 0.6 + abs(v) * 0.005:
@@ -225,7 +242,7 @@ def build_loss_ratio() -> dict:
             "quarters": quarters,
             "note": ("q[분기]: s={세그먼트:[[구분,상품구분,포트폴리오,[손해율%...]]]}, c=열 라벨(표준 16칸이 아닐 때만, 아니면 meta.years). "
                      "행 종류: 합계=[합계,'',합계] / 구분 소계=[구분,'',''] / 상품구분 소계=[구분,상품,''] / 잎=포트폴리오 있음. "
-                     "소계 손해율=Σ예상보험금÷Σ위험보험료×100(빌더 계산, 마스터에는 소계 행 없음). 전 칸 '-' 인 행은 뺌. "
+                     "소계 손해율=Σ예상보험금÷Σ위험보험료×100(빌더 계산, 마스터에는 소계 행 없음). 값은 소수 6자리까지 저장하고 화면이 소수 첫째 자리로 한 번만 반올림한다(공시 2자리 값이 금액으로 재현되면 반올림 전 비율을 싣고, 아니면 공시 2자리 값 그대로). 전 칸 '-' 인 행은 뺌. "
                      "ae[회사코드]={n:회사명,q:{공시분기:[[기준연도,사업구분(없으면 ''),예상손해율%,실제손해율%,예실차비율%p,[플래그...]]]}}: "
                      "claims_ae_ratio.json 값 그대로(반올림·재계산 없음, 공시값 '-'는 null), 플래그는 마스터 플래그 + 'identity_break'/'dash'."),
         },

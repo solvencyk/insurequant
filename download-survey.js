@@ -81,6 +81,17 @@
   var PURPOSES = ["업계 동향·현안 파악", "경쟁사 비교·내부 보고", "거래처 발굴·선별", "투자 판단 참고", "학술논문 작성", "기사·리포트 작성", "개인 관심"];
   var DONE_KEY = "iqSurveyDone_v1";
   var AFFIL_KEY = "iqSurveyAffil_v1";
+  // 내부 방문은 방명록 행을 수집기로 보내지 않는다(owner 2026-10-19). 판정은 theme.js shInternal() 과 같다:
+  // 주소에 iq_internal=1 이거나 이 브라우저 localStorage iq_internal=1. 다운로드와 설문 화면은 그대로 동작한다.
+  function isInternalVisit() {
+    try { if (new URLSearchParams(location.search).get("iq_internal") === "1") return true; } catch (e) { /* ignore */ }
+    try { return localStorage.getItem("iq_internal") === "1"; } catch (e) { /* ignore */ }
+    return false;
+  }
+  function logDownload(values) {
+    if (isInternalVisit()) return Promise.resolve({ ok: false, reason: "internal" });
+    return window.IQ_FORMS.submit("download", values);
+  }
   var SECTOR_KEY = "iqSurveySector_v1";
   var DEPT_KEY = "iqSurveyDept_v1";
   var DISCLAIMER_TEXT = "본 데이터는 공시자료를 자동으로 수집·가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 오류 발견 시 화면의 우측 하단 버튼을 통해 제보 부탁드립니다.";
@@ -393,7 +404,7 @@
       errorMsg.classList.remove("show");
       submitBtn.disabled = true;
       submitBtn.textContent = "처리 중…";
-      window.IQ_FORMS.submit("download", {
+      logDownload({
         affiliation: affilVal, department: deptSel.value, sector: sectorSel.value, sheets: sheets.join(", "), purpose: purposeSelect.value, consent: "동의함"
       }).then(function () {
         try {
@@ -460,7 +471,7 @@
         sectorVal = localStorage.getItem(SECTOR_KEY) || "";
         deptVal = localStorage.getItem(DEPT_KEY) || "";
       } catch (e3) { /* ignore */ }
-      window.IQ_FORMS.submit("download", { affiliation: affilVal, department: deptVal, sector: sectorVal, sheets: sheets.join(", "), purpose: "", consent: "재방문(방명록 생략)" });
+      logDownload({ affiliation: affilVal, department: deptVal, sector: sectorVal, sheets: sheets.join(", "), purpose: "", consent: "재방문(방명록 생략)" });
       downloadSheets(sheets).then(function () {
         closeModal(backdrop, opener);
       }).catch(function (err) {
