@@ -347,7 +347,7 @@
           <span class="lrps-pv" id="lrPv" aria-live="polite"></span>
         </div>
         <div class="small-muted" id="lrCap">손해율 = 예상보험금 ÷ 위험보험료 · 경과차년별 미래 가정
-          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="손해율 가정 읽는 법" aria-describedby="help-lr">?</button><span class="iq-help-pop" role="tooltip" id="help-lr">굵은 실선은 선택한 공시시점의 합계(구분을 고르면 그 구분), 옅은 점선은 직전 연도 공시의 같은 선입니다. 전체 합계 곡선은 경과차년이 길어질수록 계약 유형(Non-Par·Direct-Par·Indirect-Par) 구성이 달라져(칸마다 세 유형의 비중이 다름) 유형 자체의 손해율이 같아도 꺾일 수 있습니다. 같은 유형끼리 비교하려면 구분을 고르세요. 다만 구분을 골라도 그 유형 자체의 공시값이 경과차년에 따라 크게 달라지면(위험보험료가 작은 칸 등) 곡선은 그대로 꺾입니다. 공시 기준과 구성은 해마다 다를 수 있어 직전 연도 점선과 구성이 다를 수 있습니다. 현재가치 기준 손해율은 선에 넣지 않고 오른쪽 숫자로 따로 적습니다. 값이 없는 칸은 '-' 이고 선이 끊깁니다. 아래 표의 구분·상품구분 행은 그 아래 포트폴리오의 예상보험금 합 ÷ 위험보험료 합(비율의 평균이 아님)이고, [+] 로 펼칩니다.</span></span></div>
+          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="손해율 가정 읽는 법" aria-describedby="help-lr">?</button><span class="iq-help-pop" role="tooltip" id="help-lr">굵은 실선은 선택한 공시시점의 선, 옅은 점선은 직전 연도 공시의 같은 선입니다. 처음 화면은 Non-Par 입니다(이 시점·사업 구분에 Non-Par 가 없으면 합계, 합계도 없으면 첫 구분). 합계는 구분에서 고를 수 있습니다. 합계 곡선은 경과차년이 길어질수록 계약 유형(Non-Par·Direct-Par·Indirect-Par) 구성이 달라져(칸마다 세 유형의 비중이 다름) 유형 자체의 손해율이 같아도 꺾일 수 있습니다. 같은 유형끼리 비교하려면 구분을 고르세요. 다만 구분을 골라도 그 유형 자체의 공시값이 경과차년에 따라 크게 달라지면(위험보험료가 작은 칸 등) 곡선은 그대로 꺾입니다. 공시 기준과 구성은 해마다 다를 수 있어 직전 연도 점선과 구성이 다를 수 있습니다. 현재가치 기준 손해율은 선에 넣지 않고 오른쪽 숫자로 따로 적습니다. 값이 없는 칸은 '-' 이고 선이 끊깁니다. 아래 표의 구분·상품구분 행은 그 아래 포트폴리오의 예상보험금 합 ÷ 위험보험료 합(비율의 평균이 아님)이고, [+] 로 펼칩니다.</span></span></div>
         <div class="chart-container chart-sm"><canvas id="canvasLr" role="img" aria-label="경과차년별 손해율 가정 꺾은선 차트"></canvas></div>
         <div class="lrps-treebar" id="lrBar"><button type="button" class="lrps-bar-btn" data-act="open" aria-label="세부 표 모두 펼치기">모두 펼치기</button><button type="button" class="lrps-bar-btn" data-act="close" aria-label="세부 표 모두 접기">모두 접기</button></div>
         <div class="table-wrap lrps-table" id="lrTable"></div>
@@ -1696,14 +1696,17 @@
     segWrap.hidden = segs.length < 2;
     const seg = ssel.value, rows = qd.s[seg], cols = lrColsOf(qd, seg);
     ui.q = qq; ui.seg = seg;
-    // 구분 선택지: 합계 + 이 시점·사업구분에 값이 있는 구분 소계 행. 구분이 둘 미만이면(= 합계와 같은 선) 선택기를 숨긴다.
+    // 구분 선택지: 합계 + 이 시점·사업구분에 값이 있는 구분 소계 행. 선택지가 하나뿐이면 선택기를 숨긴다.
     const gsel=q(host,"#lrGrp"), grpWrap=q(host,"#lrGrpWrap");
     const grpAll = [], hasTot = rows.some(r=> r[0]==="합계" && r[2]==="합계");
     for (const r of rows) if (r[0]!=="합계" && r[1]==="" && r[2]==="" && lrpsHas(r[3]) && !grpAll.includes(r[0])) grpAll.push(r[0]);
-    // 합계 행이 없는 사업구분은 「합계」를 선택지에서 뺀다(골라도 되돌아가는 죽은 선택지). 구분이 하나뿐이면 선택기는 숨고 그 구분이 보인다.
-    const grpOpts = hasTot ? (grpAll.length>=2 ? ["합계"].concat(grpAll) : ["합계"]) : (grpAll.length ? grpAll : ["합계"]);
-    // ui.grp 는 사용자가 직접 고른 값만 기억한다(합계 없는 사업구분을 거쳐 와도 덮어쓰지 않음). 없는 값이면 lrpsFill 이 첫 선택지로 돌린다.
-    lrpsFill(gsel, grpOpts, v=>v, ui.grp || "합계");
+    // 합계 행이 없는 사업구분은 「합계」를 선택지에서 뺀다(골라도 되돌아가는 죽은 선택지). 합계 행이 있으면 구분이 하나뿐이어도 합계와 그 구분 둘을 둔다.
+    const grpOpts = hasTot ? ["합계"].concat(grpAll) : (grpAll.length ? grpAll : ["합계"]);
+    // 처음 화면은 Non-Par. 이 시점·사업구분에 Non-Par 가 없으면 합계, 합계도 없으면 첫 구분(owner 2026-10-19).
+    // ui.grp 는 사용자가 직접 고른 값만 기억한다(없는 사업구분을 거쳐 와도 덮어쓰지 않음). 그 값이 이 선택지에 없으면 위 기본 규칙으로 돌린다.
+    const grpWant = (ui.grp && grpOpts.includes(ui.grp)) ? ui.grp
+      : (grpOpts.includes("Non-Par") ? "Non-Par" : (grpOpts.includes("합계") ? "합계" : grpOpts[0]));
+    lrpsFill(gsel, grpOpts, v=>v, grpWant);
     grpWrap.hidden = grpOpts.length < 2;
     const grp = gsel.value;
     const cur = lrCurveMap(qd, seg, grp);
@@ -1886,7 +1889,7 @@
     const c = LRPS.lr.companies[company];
     const coName = codeToName[company] || c.n || company;
     const narrow = LR_MQ.matches;
-    // 선: 선택 시점 합계(굵은 실선) + 직전 연도 공시 합계(옅은 점선, 없으면 생략). 칸은 하나도 빼거나 합치지 않는다.
+    // 선: 선택 시점 선택 구분(기본 Non-Par; 없으면 합계)의 곡선(굵은 실선) + 직전 연도 공시의 같은 구분(옅은 점선, 없으면 생략). 칸은 하나도 빼거나 합치지 않는다.
     const labelSet = new Set();
     for (const m of [cur, prev]) if (m) for (const y of Object.keys(m)) if (y!=="현재가치") labelSet.add(y);
     const labels = Array.from(labelSet).sort((a,b)=> (LR_RANK[a]==null?99:LR_RANK[a]) - (LR_RANK[b]==null?99:LR_RANK[b]));

@@ -295,8 +295,11 @@
   'use strict';
   var MAXC = 4;
   var DATA = null, CO = {}, Q = [], LAST = 0, CSM_M = null;
-  var GALL = '합계';
-  var S = { sel:[], basis:'post', med:true, units:[], grp:GALL };   /* grp = 손해율 카드의 구분(합계 | Non-Par | Direct-Par | Indirect-Par) */
+  var GALL = '합계', GDEF = 'Non-Par';
+  /* grp = 손해율 카드의 구분(합계 | Non-Par | Direct-Par | Indirect-Par). 기본은 Non-Par 이고 주소에는 적지 않는다(g 없음 = Non-Par).
+     기본(Non-Par)일 때만 회사별 대체가 걸린다: Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 첫 구분(grpFor). */
+  var S = { sel:[], basis:'post', med:true, units:[], grp:GDEF };
+  var GNOTE = '처음 화면은 Non-Par 입니다. Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 다른 구분을 대신 그리고, 그 선은 이름 옆에 구분을 적습니다.';
   var UNITS = [], UNIT = {}, UNIT_OF = {}, DEF = [];   /* 지표 단위: chart_group 이 같은 지표(유지율 4회차)는 한 단위 */
   var $ = function(id){ return document.getElementById(id); };
 
@@ -331,37 +334,67 @@
 
   /* ---------- 데이터 접근 ---------- */
   /* 구분(합계 | Non-Par | Direct-Par | Indirect-Par): 손해율 curve 카드에서만. 구판 JSON(g 없음)이면 선택기를 두지 않고 합계만 쓴다. */
-  function grpOn(){ var C = DATA && DATA.loss_curve; return S.grp !== GALL && !!(C && C.g && C.g[S.grp]) && curveOn(); }
+  var LPM = null;
+  function lpAsof(){
+    if(!LPM && DATA) DATA.metrics.forEach(function(x){ if(x.id === 'loss_pv') LPM = x; });
+    return LPM ? mLast(LPM) : -1;
+  }
   function lcHas(g, code, asof){
-    var by = DATA.loss_curve.g[g][code]; if(!by) return false;
+    var by = DATA.loss_curve.g && DATA.loss_curve.g[g] && DATA.loss_curve.g[g][code]; if(!by) return false;
     for(var j = asof; j >= 0; j--) if(by[Q[j]]) return true;
     return false;
   }
-  /* 고른 회사 중 한 곳이라도 그 구분을 공시한 구분만 고른다. 구분이 하나뿐이면(= 합계와 같음) 선택기를 두지 않는다. */
+  /* 고른 회사 중 한 곳이라도 그 구분을 공시한 구분만 고른다. 합계는 구분이 하나라도 있으면 함께 둔다(구분이 없으면 선택기 자체가 없다). */
   function grpOptions(asof){
     var C = DATA && DATA.loss_curve; if(!C || !C.g || !C.g_order) return [];
     var ok = C.g_order.filter(function(g){ return S.sel.some(function(s){ return lcHas(g, s.code, asof); }); });
-    return ok.length >= 2 ? [GALL].concat(ok) : [];
+    return ok.length >= 1 ? [GALL].concat(ok) : [];
+  }
+  function gOpts(){
+    var a = lpAsof();
+    return (DATA && DATA.loss_curve && S.sel.length && a >= 0 && curveOn()) ? grpOptions(a) : [];
+  }
+  /* 선택기에서 눌려 보이는 구분. 기본(Non-Par)인데 고른 회사 누구도 Non-Par 를 공시하지 않았으면 합계가 눌려 보인다. */
+  function grpPicked(){
+    var o = gOpts(); if(!o.length) return GALL;
+    if(o.indexOf(S.grp) >= 0) return S.grp;
+    return o.indexOf(GALL) >= 0 ? GALL : o[0];
+  }
+  /* 회사 하나가 실제로 그리는 구분 */
+  function grpFor(code){
+    if(!gOpts().length) return GALL;
+    if(S.grp !== GDEF) return S.grp;
+    var C = DATA.loss_curve, a = lpAsof();
+    if(lcHas(GDEF, code, a)) return GDEF;
+    if(C.v[code] && Object.keys(C.v[code]).length) return GALL;
+    for(var i = 0; i < C.g_order.length; i++) if(lcHas(C.g_order[i], code, a)) return C.g_order[i];
+    return GALL;
   }
   function normGrp(){
-    if(S.grp === GALL || !DATA) return;
-    var m = null; DATA.metrics.forEach(function(x){ if(x.id === 'loss_pv') m = x; });
-    var o = (m && S.sel.length) ? grpOptions(mLast(m)) : [];
-    if(o.indexOf(S.grp) < 0) S.grp = GALL;
+    if(!DATA || S.grp === GDEF) return;
+    if(gOpts().indexOf(S.grp) < 0) S.grp = GDEF;
   }
   function vals(m, code){
-    if(m.id === 'loss_pv' && grpOn()) return (m.vg && m.vg[S.grp] && m.vg[S.grp][code]) || [];
+    if(m.id === 'loss_pv'){
+      var g = grpFor(code);
+      if(g !== GALL) return (m.vg && m.vg[g] && m.vg[g][code]) || [];
+    }
     var src = (S.basis === 'pre' && m.v_pre) ? m.v_pre : m.v; return src[code] || [];
   }
   function medArr(m, type){
-    if(m.id === 'loss_pv' && grpOn()) return (m.medg && m.medg[S.grp] && m.medg[S.grp][type]) || null;
+    if(m.id === 'loss_pv'){
+      var g = grpPicked();
+      if(g !== GALL) return (m.medg && m.medg[g] && m.medg[g][type]) || null;
+    }
     var src = (S.basis === 'pre' && m.med_pre) ? m.med_pre : m.med;
     return src ? src[type] : null;
   }
-  /* 손해율 curve 의 회사별 행({분기: 16칸})과 업계 중앙값({분기: 15칸}) — 구분을 고르면 구분별 것 */
-  function lcRows(code){ var C = DATA.loss_curve; return (grpOn() ? C.g[S.grp][code] : C.v[code]) || {}; }
-  function lcMed(type){ var C = DATA.loss_curve; return (grpOn() ? (C.med_g && C.med_g[type] && C.med_g[type][S.grp]) : (C.med && C.med[type])) || null; }
-  function grpTag(){ return grpOn() ? ' · ' + S.grp : ''; }
+  /* 손해율 curve 의 회사별 행({분기: 16칸})과 업계 중앙값({분기: 15칸}) — 구분별 것 */
+  function lcRows(code){ var C = DATA.loss_curve, g = grpFor(code); return (g === GALL ? C.v[code] : (C.g[g] && C.g[g][code])) || {}; }
+  function lcMed(type){ var C = DATA.loss_curve, g = grpPicked(); return (g === GALL ? (C.med && C.med[type]) : (C.med_g && C.med_g[type] && C.med_g[type][g])) || null; }
+  function grpTag(){ var g = grpPicked(); return g !== GALL ? ' · ' + g : ''; }
+  /* 선택기에서 고른 구분과 다른 구분으로 그린 회사(Non-Par 대체)는 이름 옆에 그 구분을 적는다 */
+  function fbTag(code){ var g = grpFor(code); return (gOpts().length && g !== grpPicked()) ? ' · ' + g : ''; }
   var RE_T = '재보·보증';
   function selType(){ return S.sel.length ? CO[S.sel[0].code].type : null; }
   /* 지표의 최신 공시 분기: 39사 전체에서 값이 있는 가장 늦은 분기. 선택한 회사만 보면 오래된 값이 최신처럼 보인다. */
@@ -388,7 +421,7 @@
 
   /* 손해율 curve 에 선이 없는 회사의 사유: 구분을 고른 상태에서 합계 공시가 있으면 그 구분만 값이 없는 것 */
   function lcReason(m, code){
-    if(grpOn() && ((DATA.loss_curve.v[code] && Object.keys(DATA.loss_curve.v[code]).length) || (m.v[code] || []).some(function(x){ return x != null; }))) return '이 구분 값 없음';
+    if(grpFor(code) !== GALL && ((DATA.loss_curve.v[code] && Object.keys(DATA.loss_curve.v[code]).length) || (m.v[code] || []).some(function(x){ return x != null; }))) return '이 구분 값 없음';
     return naReason(m, code);
   }
 
@@ -442,7 +475,8 @@
     S.sel = []; codes.slice(0, MAXC).forEach(addCo);
     S.basis = p.get('b') === 'pre' ? 'pre' : 'post';
     S.med = p.get('md') !== '0';
-    S.grp = p.get('g') || GALL; normGrp();
+    var gq = p.get('g');   /* g 없음 = Non-Par. 옛 링크의 g=Non-Par · g=합계 도 그대로 읽는다 */
+    S.grp = (gq === GALL || (gq && DATA.loss_curve && DATA.loss_curve.g && DATA.loss_curve.g[gq])) ? gq : GDEF; normGrp();
     var ids = [];
     (p.get('m') || '').split(',').forEach(function(x){ var u = UNIT_OF[x.trim()]; if(u && ids.indexOf(u) < 0) ids.push(u); });
     S.units = ids.length ? ids : DEF.slice();
@@ -453,7 +487,7 @@
     if(S.units.length && !sameUnits(S.units, DEF)) p.set('m', S.units.join(','));
     if(S.basis === 'pre') p.set('b', 'pre');
     if(!S.med) p.set('md', '0');
-    if(S.grp !== GALL) p.set('g', S.grp);
+    if(S.grp !== GDEF) p.set('g', S.grp);
     var q = p.toString().replace(/%2C/g, ',');
     try{ history.replaceState(null, '', location.pathname + (q ? '?' + q : '')); }catch(e){}
   }
@@ -768,7 +802,7 @@
       if(co){ coarse.push(nm); for(i = 0; i < 10; i++) pts[i].y = row[nstd]; }   /* 1~10년을 한 구간으로 공시한 회사 */
       var pv = cellFor(m, s.code, asof);
       if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
-      ds.push({label: nm + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm, coarse: co, data: pts,
+      ds.push({label: nm + fbTag(s.code) + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm + fbTag(s.code), coarse: co, data: pts,
         borderColor: LC[s.code], backgroundColor: LC[s.code], borderWidth: 3, pointStyle: PT[k % 4],
         pointRadius: co ? 0 : 4, pointHoverRadius: co ? 4 : 6, cubicInterpolationMode: 'monotone', spanGaps: false, borderDash: co ? [5, 4] : [], order: 1});
     });
@@ -786,7 +820,7 @@
           cubicInterpolationMode: 'monotone', spanGaps: false, order: 2});
       }
     }
-    var label = '손해율 가정 경과차년별 꺾은선' + (grpOn() ? ' · ' + S.grp : '') + '. ' + ds.map(function(d){
+    var label = '손해율 가정 경과차년별 꺾은선' + grpTag() + '. ' + ds.map(function(d){
       var v = d.data.filter(function(p){ return p.y != null; });
       return v.length ? d.short + ' ' + nf(v[0].y, 1) + '%에서 ' + nf(v[v.length - 1].y, 1) + '%' : d.short + ' n/a';
     }).join('. ');
@@ -842,7 +876,7 @@
     S.sel.forEach(function(s, k){
       var nm = CO[s.code].short, byQ = lcRows(s.code), row = null, qi = -1;
       for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
-      var it = {nm: nm, k: k, pv: cellFor(m, s.code, asof), pts: null, line: false};
+      var it = {nm: nm, k: k, code: s.code, pv: cellFor(m, s.code, asof), pts: null, line: false};
       items.push(it);
       if(!row){ nas.push('<li><b>' + esc(nm) + '</b> n/a — ' + esc(lcReason(m, s.code)) + '</li>'); return; }
       any = true;
@@ -876,7 +910,7 @@
     }
     function lastOf(pts){ for(var n = pts.length - 1; n >= 0; n--) if(pts[n] != null) return {n: n, v: pts[n]}; return null; }
     function firstOf(pts){ for(var n = 0; n < pts.length; n++) if(pts[n] != null) return pts[n]; return null; }
-    var label = '손해율 가정 경과차년별 꺾은선' + (grpOn() ? ' · ' + S.grp : '') + '. ' + lines.map(function(it){ return it.nm + ' ' + nfs(firstOf(it.pts), 1) + '%에서 ' + nfs(lastOf(it.pts).v, 1) + '%'; }).join('. ') +
+    var label = '손해율 가정 경과차년별 꺾은선' + grpTag() + '. ' + lines.map(function(it){ return it.nm + fbTag(it.code) + ' ' + nfs(firstOf(it.pts), 1) + '%에서 ' + nfs(lastOf(it.pts).v, 1) + '%'; }).join('. ') +
       (med ? '. ' + type + ' 업계 중앙값 ' + nfs(firstOf(med), 1) + '%에서 ' + nfs(lastOf(med).v, 1) + '%' : '') + '. 현재가치 손해율은 아래 표에 있습니다.';
     var svg = svgEl('svg', {viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label});
     var step = (hi - lo) > 80 ? 40 : (hi - lo) > 30 ? 20 : 10;
@@ -899,7 +933,7 @@
     var tr = items.map(function(it){
       var sw = it.line ? swatch(it.col) : '<span class="sw sw0"></span>';
       var chip = (it.pv && it.pv.i !== asof) ? ' ' + qchip(it.pv.i, asof) : '';
-      return '<tr><td>' + sw + esc(it.nm) + chip + '</td><td><b>' + (it.pv ? nfs(it.pv.v, 1) + '%' : (grpOn() ? '—' : 'n/a')) + '</b></td></tr>';
+      return '<tr><td>' + sw + esc(it.nm + fbTag(it.code)) + chip + '</td><td><b>' + (it.pv ? nfs(it.pv.v, 1) + '%' : (grpFor(it.code) !== GALL ? '—' : 'n/a')) + '</b></td></tr>';
     });
     if(med && medPv) tr.push('<tr><td>' + swatch('var(--muted)', '1 4') + esc(type) + ' 중앙값' + grpTag() + (medPv.i !== asof ? ' ' + qchip(medPv.i, asof) : '') + '</td><td><b>' + nfs(medPv.v, 1) + '%</b></td></tr>');
     wrap.insertAdjacentHTML('beforeend', '<table><caption class="sr-only">손해율 가정 현재가치 손해율</caption><thead><tr><th scope="col">회사</th><th scope="col">현재가치</th></tr></thead><tbody>' + tr.join('') + '</tbody></table>');
@@ -1228,13 +1262,15 @@
       var title = curve ? curve.label : (grouped ? m0.chart_label : m0.label);
       var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title); card.setAttribute('data-share-section', title);
       var asofs = ms.map(mLast), amax = Math.max.apply(null, asofs), bt = (!grouped && m0.basis) ? (S.basis === 'pre' ? ' · 적용 전' : ' · 적용 후') : '';
-      var gopts = curve ? grpOptions(amax) : [];
+      var gopts = curve ? grpOptions(amax) : [], gshown = curve ? grpPicked() : GALL;
+      var defn = curve ? curve.defn : m0.defn;
+      if(gshown !== GALL && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, gshown + ' 구분의 ');   /* 합계가 아닌 구분을 그릴 때는 정의 줄도 그 구분이다 */
       card.innerHTML = '<span class="anc" id="c-' + esc(id) + '"></span><h3>' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
         '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + m0.id + '">?</button>' +
-        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? curve.note + (gopts.length && curve.note_g ? ' ' + curve.note_g : '') : m0.note) + '</span></span></h3>' +
-        '<p class="def">' + esc(curve ? curve.defn : m0.defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] + (m0.ytd ? ' · ' + ytdSpan(amax) : '') : '없음') + '</p>' +
+        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? curve.note + (gopts.length && curve.note_g ? ' ' + GNOTE + ' ' + curve.note_g : '') : m0.note) + '</span></span></h3>' +
+        '<p class="def">' + esc(defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] + (m0.ytd ? ' · ' + ytdSpan(amax) : '') : '없음') + '</p>' +
         (gopts.length ? '<div class="gsel"><span class="control-label" id="lb-grp">구분</span><div class="seg-toggle" role="group" aria-labelledby="lb-grp">' +
-          gopts.map(function(g){ var on = g === S.grp; return '<button type="button" class="seg-btn' + (on ? ' active' : '') + '" data-g="' + esc(g) + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(g) + '</button>'; }).join('') +
+          gopts.map(function(g){ var on = g === gshown; return '<button type="button" class="seg-btn' + (on ? ' active' : '') + '" data-g="' + esc(g) + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(g) + '</button>'; }).join('') +
           '</div></div>' : '');
       grid.appendChild(card);
       if(curve && !chartsOn()){ lossMobile(card, m0); return; }
