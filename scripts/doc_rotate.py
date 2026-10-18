@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
 ARCHIVE_DIR = DOCS / "changelog_archive"
 KEEP_STATUS = 3
+MAX_STATUS_LINES = 5
 MARKER = "> 보관:".encode("utf-8")
 DATED = re.compile(rb"^## (\d{4})-(\d{2})-(\d{2})")
 
@@ -253,12 +254,12 @@ def check() -> int:
             continue
         ents, lines = plan["entries"], plan["lines"]
         long_entries = [(a, sum(1 for ln in lines[a:b] if ln.strip())) for a, b in ents[:KEEP_STATUS]]
-        over = [f"L{a + 1}({n}줄)" for a, n in long_entries if n > 3]
+        over = [f"L{a + 1}({n}줄)" for a, n in long_entries if n > MAX_STATUS_LINES]
         msg = []
         if len(ents) > KEEP_STATUS:
             msg.append(f"Status {len(ents)}개 (>{KEEP_STATUS})")
         if over:
-            msg.append("3줄 초과 " + ", ".join(over))
+            msg.append(f"{MAX_STATUS_LINES}줄 초과 " + ", ".join(over))
         done = [i + 1 for i, ln in enumerate(lines) if re.match(rb"- \[x\]", ln, re.I)]
         if done:
             msg.append(f"완료([x]) 줄 {len(done)}개 L{done[0]}...")

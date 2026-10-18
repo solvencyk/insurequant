@@ -34,10 +34,11 @@ flowchart LR
 
 ### 1) 다운로드 계층
 
+- 분기 수집의 현행 경로: `scripts/download_disclosure_<period>_{nonlife,life,life_sites}.py` (손보 = 사별 사이트, 생보 = 협회 일괄 zip + 자사 사이트 선게시). 근거와 표는 `docs/flows/claude-download-flow.md`
 - 단일 엔진: `src/solvency/downloader/base.py` + `runner.py`
-- 협회 단위 핸들러:
-  - `handlers/nonlife_insurance_association.py` (KNIA 손보협회, 16개 일괄)
-  - `handlers/life_insurance_association.py` (생명보험협회)
+- 협회 단위 핸들러 (2026.2Q 에는 쓰지 않음):
+  - `handlers/nonlife_insurance_association.py` (KNIA 손보협회 kpub, 결산(Q4)만·16사, 마지막 기록 2026-04-26)
+  - `handlers/life_insurance_association.py` (생명보험협회 일괄 zip)
 - 회사명 → 사코드 매핑은 `*_insurer_registry.yaml`로 분리
 - 다운로드 직후 ACL 정상화 + `verify_pdf` 자동 호출, 실패 시 자동 재시도
 
@@ -96,6 +97,6 @@ data/disclosure/
 ## 문서화 원칙
 
 - Docling 경로가 유일한 운영 경로 (2026-07-21 레거시 camelot/CSV 경로 삭제)
-- 다운로드는 "보험사별 스크립트"가 아닌 "case 기반 단일 엔진"을 목표로 기술
+- 다운로드는 현행 분기 스크립트 경로를 기준으로 기술하고, 엔진 핸들러는 실제로 쓰이는 범위(손보 Q4 백필·생보 협회 zip)만 적는다
 - 파일명/필드명/에러 정책을 문서에서 먼저 확정
 - 자동 검증 하네스에서 문서 계약을 강제

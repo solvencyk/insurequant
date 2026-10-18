@@ -5,22 +5,32 @@
 보험사 공시 사이트에서 지급여력비율 관련 PDF를 표준 구조로 수집합니다.  
 **이번 운영 모델에서는 Drive 업로드/Gemini 작업은 코드 밖(MCP + 수동)으로 분리**되며, 코드는 PDF 수집과 manifest 작성까지만 책임집니다.
 
-## 단일 엔진 아키텍처
+## 분기 수집 경로 (2026.2Q 라운드 실측, 2026-10-19 확인)
+
+분기 정기경영공시는 **분기별 스크립트**로 받는다. 근거는 `data/disclosure/_meta/FY2026_Q2/` 의 매니페스트와 각 스크립트 docstring 이다.
+
+| 구분 | 현행 경로 | 2026.2Q 증거 |
+|---|---|---|
+| 손보 17사 | 사별 사이트 스크립트 `scripts/download_disclosure_2026q2_nonlife.py` (분기마다 복제) | `manifest.json` 14 ok·3 fail, `src_url` 호스트가 전부 각 회사 사이트 |
+| 생보 22사 | 생보협회 일괄 zip을 `scripts/download_disclosure_2026q2_life.py` 로 받음 (anchor = `fn_quarterfileDown('<q>')`) | `life_bulk_manifest.json` 2026-08-31, zip 42.6MB |
+| 생보, 협회보다 먼저 자사 사이트에 올린 회사 | `scripts/download_disclosure_2026q2_life_sites.py` | `life_own_site_download_manifest.json` |
+
+세부 절차와 사별 URL·XPath 는 `docs/agents/claude-agent-downloader.md` Source 1a·1b 가 정본이다.
+
+## 단일 엔진 (협회 핸들러, 분기 수집의 현행 경로는 아님)
 
 - 엔진: `src/solvency/downloader/base.py`의 `DownloaderEngine`
 - CLI: `src/solvency/downloader/runner.py`
-- 메인 운영 단위는 **협회 단위 일괄 다운로드** (개별 회사가 아님)
-  - 손해보험: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m solvency.downloader.runner --company NONLIFE`
-  - 생명보험: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m solvency.downloader.runner --company LIFE`
+- 손해보험 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m solvency.downloader.runner --company NONLIFE`
+  - 손보협회 통합공시(kpub.knia.or.kr)는 **결산(Q4)만** 싣고 예별(KR0004) 행이 없다. 프로파일도 FY2025_Q4 고정이다.
+  - 마지막 기록 = `data/disclosure/_meta/NONLIFE_download_cache.csv` 2026-04-26(FY2025_Q4, 16사). Q4 백필은 `scripts/backfill_nonlife_disclosure_kpub.py`.
+- 생명보험 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m solvency.downloader.runner --company LIFE`
+  - 프로파일(`profiles/LIFE.yaml`)은 고정 `td[N]` 칸 번호를 쓴다. 2026.2Q 스크립트는 그 번호가 어긋난다는 이유로 onclick anchor 로 바꿨다. 엔진 LIFE 경로는 2026.2Q 에 쓰지 않았고 현재 페이지에서 검증하지 않았다.
 - 협회 페이지에서 회사명 추출 → `*_insurer_registry.yaml`로 사코드 매핑
 - 핸들러: `src/solvency/downloader/handlers/{nonlife,life}_insurance_association.py`
+- `profiles/<KRxxxx>.yaml` (`site_type` = `case_a_direct_pdf` / `case_b_button_click` / `case_c_zip_attachment`)은 skeleton 이다. `runner.py::_placeholder_handler` 가 경고만 남기고 0건을 낸다.
 
-새 보험사 추가는 registry YAML에 한 줄 추가만 하면 됨 (코드 수정 불필요).
 회사명-사코드가 매칭되지 않은 PDF는 `data/disclosure/_unmatched/<period>/`로 분리.
-
-회사별 단일 사이트가 따로 필요한 경우(레거시 fallback)는 `profiles/<KRxxxx>.yaml`
-+ `site_type` (`case_a_direct_pdf` / `case_b_button_click` / `case_c_zip_attachment`)
-경로도 유지됩니다.
 
 ## 자동 검증 통합
 
@@ -39,7 +49,9 @@
 
 - `data/disclosure/<period>/raw/<companyDirname>.pdf`
 - `data/disclosure/<period>/parsed/<companyDirname>.{md,xlsx}`
-- `data/disclosure/_meta/<companyCode>_download_cache.csv` (멱등성용 manifest)
+- `data/disclosure/<period>/attachments/<companyDirname>_attachment_<종류>.pdf` (경영공시 별첨, owner 2026-10-11. `raw/` 에 섞지 않음. 목록 = `data/disclosure/_meta/attachments_manifest.json`)
+- `data/disclosure/_meta/<period>/manifest.json` (분기 스크립트 manifest)
+- `data/disclosure/_meta/<companyCode>_download_cache.csv` (엔진용 멱등성 manifest)
 
 Drive (코드 외부, 수동/MCP):
 

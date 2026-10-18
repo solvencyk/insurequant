@@ -111,7 +111,7 @@ KR1107 2023.4Q `8_life_census`·`19_market`(P9 신규 RED) — **고칠 수 있�
 
 ## 2026-10-10 재보사·마이브라운(KR1101~KR1108) owner 승인 등재 29건 (validation 단계 8)
 
-> 승인: owner **2026-10-10** (`docs/handoff_20261008_reinsurer_pipeline.md` §7-10 ①②). 발주
+> 승인: owner **2026-10-10** (`docs/archive/handoff_20261008_reinsurer_pipeline.md` §7-10 ①②). 발주
 > `inbox/validation/20261010T1010Z`. 근거·분류: `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_6.md` §4-1
 > 표 A·B, 단계 7 런로그 §9, 단계 8 런로그 `reinsurer_runlog_KR1101-1108_8.md`.
 > 전부 **잔차·부재 박제**다(통째 skip 아님). 근거 원장 `data/_gold/kics_exemption_provenance.json` 23건

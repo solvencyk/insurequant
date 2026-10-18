@@ -31,7 +31,7 @@ rollback 상세는 그 문서에 있다. 이 파일은 트리거 조건과 절�
    main 반영 실행 경로는 CLAUDE.md §11·`publishing.md`가 정본이다 — owner 구두 GO 뒤 오케스트레이터가 이 PC 에서 직접 `scripts/android_push_and_deploy.sh --from-origin --branch <작업브랜치>`를 돌리므로 작업 브랜치를 먼저 push해 둔다. git live push 가 막히면 직접 2번 시도하고, 그래도 안 되면 owner 에게 폰 Termux 명령과 배치파일을 제시한다(CLAUDE.md §11).
 7. **배포 후 검증**: 라이브 URL 1개 이상 curl/WebFetch로 200 + 값 확인.
 8. **문제 발생 시 rollback**: `docs/launch_runbook.md` §6 — HTML/JSON은 `git revert`(force-push 금지),
-   마스터 xlsx는 `.bak` 복원 또는 Excel 재오픈(재생성은 최후 수단).
+   마스터 xlsx는 `.bak` 복원 또는 Excel 재오픈(전체 재생성 금지, CLAUDE.md §8).
 
 ## 이 저장소 특유의 함정
 

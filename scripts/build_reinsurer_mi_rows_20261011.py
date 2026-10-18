@@ -5,7 +5,7 @@ READ ONLY on masters. Input  : data/_derived/reinsurer_ifrs17_csm_20261011/mi_ta
                   Output : data/_derived/reinsurer_ifrs17_csm_20261011/mi_rows.json   (rows in the master's schema, sorted)
                            data/_derived/reinsurer_ifrs17_csm_20261011/mi_build_report.json (decisions, conflicts, checks)
 
-Rules (owner, handoff_20261008_reinsurer_pipeline §7, same as the K-ICS reinsurer load and the CSM masters):
+Rules (owner, docs/archive/handoff_20261008_reinsurer_pipeline §7, same as the K-ICS reinsurer load and the CSM masters):
   1. a (company, quarter, item) that really differs between filings takes the value of the MOST RECENT filing's prior-year
      column (the filing four quarters later); no agent judgement of "typo";
   2. a pure rounding difference (one print has decimals, the other is its integer rounding) is no conflict: the more precise

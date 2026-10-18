@@ -55,7 +55,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 - **`docs/agents/source-catalog.yaml`의 4개 소스(정기경영공시 손보·생보, DART, KIDI, IR) 전체가 기본 체크리스트다**
   (5번째 bonds는 2026-08-03 폐지, `misc`는 없다). owner가 예시로 든 소스만 훑지 마라 — KIDI를 통째로 빠뜨린 전례가 있다(2026-08-03).
 - **39사 외에 재보사 7곳(KR1101~1107)과 마이브라운(KR1108)도 수집 대상이다.** DART에 없고 소스가 회사 사이트 PDF라 카탈로그에 없다.
-  식별 사전 `data/disclosure/_meta/reinsurer_registry.yaml`(읽기 전용)과 `docs/handoff_20261008_reinsurer_pipeline.md` §3·§4·§7을 먼저 읽는다.
+  식별 사전 `data/disclosure/_meta/reinsurer_registry.yaml`(읽기 전용)과 `docs/archive/handoff_20261008_reinsurer_pipeline.md` §3·§4·§7을 먼저 읽는다.
   저장은 `raw/KR11##_<dirname>.pdf`, 보조(감사·K-ICS 감사)는 `FY*_Q4/raw_aux/`, 기록은 `_meta/reinsurer_KR11##_manifest.json`(status ok/not_posted/blocked/unverified).
   KR1107 2023.x는 owner 규칙(2026-10-09, 다음 회기 문서 전기 칸에 값이 있으면 별도 수집 안 함)이라 받지 않고, 마이브라운 DART 확인은 owner가 꺼내기 전까지 보류다.
 - **raw는 첫 수집 시점의 판일 뿐이다.** 발행사는 수집 뒤에도 정정판·완성본·텍스트판을 다시 올린다(예별 2025.4Q 지급여력비율 △8.24→△13.53, KB손보 2026.2Q 스캔이 17일 뒤 텍스트판으로 교체, 2026-10-11 census).
@@ -93,7 +93,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 
 inbox 티켓의 `## 답변`에 실측 수치와 재현 명령을 남기고 `status:` 갱신
 (`answered` = 원 sender 재확인 필요 / `resolved` = 자기완결 → `_resolved/` 이동).
-`TODO_downloader.md` 맨 위 Status를 갱신하고(**최신 3개, 항목당 3줄**, 초과분은 `scripts/doc_rotate.py todo`), 완결 항목은 `docs/changelog_downloader.md`에 기록한다.
+`TODO_downloader.md` 맨 위 Status를 갱신하고(**최신 3개, 항목당 5줄**, 초과분은 `scripts/doc_rotate.py todo`), 완결 항목은 `docs/changelog_downloader.md`에 기록한다.
 
 **새 raw·`_v`를 저장하면 같은 세션에 parser inbox에 raw-ready 티켓을 쓴다.** `from: downloader`, 칸별(회사·분기) 파일 경로·쪽수·sha256·옛/새 차이를 담고
 (K-ICS 수치가 바뀌면 `lane: kics`, 참고용이면 `ifrs17`), 쓴 뒤 `scripts/check_inbox_hygiene.py` 신규 위반 0을 확인한다. 변환(docling)·마스터 쓰기는 하지 않는다.

@@ -23,7 +23,7 @@
 
 1. 읽는 순서: 이 파일 → 루트 `TODO.md` → 자기 stage 의 `TODO_<stage>.md` + 프롬프트(parser 는 레인별 TODO + 공유 프롬프트 + 도메인 문서).
 2. **changelog·`docs/todo_archive_*.md`·`docs/claude-md-history.md` 는 읽지 않는다** — 과거 결정의 근거가 필요할 때만 연다.
-3. `TODO*.md` 는 **열린 일·휴면·결정만** 둔다. Status 는 **최신 3개, 항목당 3줄 이내**(무엇·커밋·남은 것) — 경위·검산·시행착오는 changelog 에만 쓴다.
+3. `TODO*.md` 는 **열린 일·휴면·결정만** 둔다. Status 는 **최신 3개, 항목당 5줄 이내**(무엇·커밋·남은 것) — 경위·검산·시행착오는 changelog 에만 쓴다.
    밀린 Status·끝난 블록은 `docs/todo_archive_<이름>.md` 제목 바로 아래에 **한 글자도 안 고치고** 잘라 붙인다(최신이 위). 3개월 넘게 진척 없는 항목은 「휴면」 한 줄로 내린다.
    changelog 는 최신 달과 그 전 달 항목만 본 파일에 두고 나머지는 `docs/changelog_archive/<stage>/<월>.md` 로 무수정 이동한다. 둘 다 `scripts/doc_rotate.py`(`--check` → `--apply`, 월 1회)가 하고 문서 스타일 정본은 `docs/agents/doc-style.md`.
 4. 변경·실행 후 **해당 stage TODO 맨 위 갱신 필수**, 완결 항목은 stage changelog 에 기록. cross-stage 면 루트 `TODO.md` + `docs/claude-changelog.md`.
@@ -79,7 +79,7 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 ## 8. 마스터 JSON·xlsx 취급
 
 - 마스터 JSON 통째 read-modify-write 금지(동시 세션 수정을 조용히 지운다). 셀 단위 + guard. `build_root_masters.py main()` 통짜 실행 금지, `validate_master_tables.py` 는 반드시 `--no-build`.
-- master xlsx 는 전체 재생성 금지 — 바뀐 시트만 `scripts/sync_master_xlsx_sheet.py` 로. openpyxl 로 열어 재저장하면 수식 캐시가 날아간다.
+- master xlsx 는 전체 재생성 금지 — 바뀐 시트만 `scripts/sync_master_xlsx_sheet.py` 로. openpyxl 로 열어 재저장하면 수식 캐시가 날아간다 — 그래서 sync 스크립트는 워크북에 수식·피벗·차트가 하나라도 있으면 REFUSE 하고, 없을 때만 저장한다(2026-10-19 실측: 19개 시트 수식 0개).
 - `scripts/export_public_sheets.py` 는 커밋된 HEAD 를 읽는다: 마스터 커밋 → `public_exports/` 재생성 → 재커밋.
 
 ## 9. 스테이지 간 handoff = inbox

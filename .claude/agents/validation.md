@@ -55,7 +55,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 
 같은 파일 `## 답변`에 무엇을 어떻게 했는지 실측 수치와 재현 명령으로 남기고 `status:` 갱신
 (`answered` = 원 sender 재확인 필요 / `resolved` = 자기완결 → `_resolved/` 이동).
-`TODO_validation.md` 맨 위 Status도 갱신한다 — **최신 3개, 항목당 3줄**(무엇·커밋·남은 것)만 두고 경위·검산은
+`TODO_validation.md` 맨 위 Status도 갱신한다 — **최신 3개, 항목당 5줄**(무엇·커밋·남은 것)만 두고 경위·검산은
 `docs/changelog_validation.md`에 쓴다. 3개를 넘긴 항목은 `scripts/doc_rotate.py todo`로 archive에 옮긴다(2026-10-07 정리 뒤 7일 만에 stage TODO가 22KB → 79KB로 되돌아갔다).
 
 ## 🔴 최우선 불변식 — 모든 검사는 **적용전 · 적용후 둘 다** 돌린다

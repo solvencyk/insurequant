@@ -1,7 +1,7 @@
-"""사별 비교 목업 데이터 빌더 (읽기 전용 입력 -> docs/mockups/compare/compare_data.json).
+"""사별 비교 목업 데이터 빌더 (읽기 전용 입력 -> docs/archive/mockups/compare/compare_data.json).
 
 배포 대상이 아닌 목업이다. 마스터 JSON은 읽기만 하고 쓰지 않는다.
-실행: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe docs/mockups/compare/build_mock_data.py
+실행: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe docs/archive/mockups/compare/build_mock_data.py
 
 지표 정의(스카우트 실측 레시피)
 - 지급여력비율/기본자본비율: kics_disclosure.json 항목 27/28, 적용후 = 값_적용후 ?? 값, 적용전 = 값
@@ -21,7 +21,7 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 OUT = Path(__file__).resolve().parent / "compare_data.json"
 
 

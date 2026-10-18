@@ -174,7 +174,7 @@ Never write it into the master on MD text alone.**
   (most rows lack 값_적용후) — don't treat its absence as an error.
 
 ## Reinsurer branches (KR1101-KR1108) + two editions in one quarter
-Foreign-reinsurer branch filings (own-site PDFs, not DART). Full contract `docs/handoff_20261008_reinsurer_pipeline.md`; run logs `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_*.md` (latest `_13.md`).
+Foreign-reinsurer branch filings (own-site PDFs, not DART). Full contract `docs/archive/handoff_20261008_reinsurer_pipeline.md`; run logs `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_*.md` (latest `_13.md`).
 - **Two raw PDFs for one (period, company)** = 4 of 645 pairs (뮌헨 2023.1Q·2Q, 스위스리 2023.4Q, DB손보 2025.3Q). `disclosure_pdfs()` lists them by NAME, so `[0]` is the old file (스위스리 2023.4Q: old 60-page
   "공시 예정" edition vs the complete `_v20240510`). **Single-file readers must call `latest_disclosure_pdfs()` / `prefer_latest_edition()`** (`scripts/_disclosure_pdf_paths.py`): the downloader manifest
   `data/disclosure/_meta/reinsurer_<code>_manifest.json` decides — `latest` > last of `versions` > `file` (alternates ignored: 뮌헨's primary `file` is the K-ICS revised edition, the older original is `_v20230101`).

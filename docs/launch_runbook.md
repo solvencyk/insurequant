@@ -22,8 +22,9 @@
   만든다 (`feedback_red_blocks_push` 원칙).
 - **공유 워킹트리 주의.** 이 저장소는 여러 세션(파서/검증/퍼블리싱/디자이너)이 같은 폴더를 쓴다. 커밋 전
   `git branch --show-current` + `git status`로 남의 미커밋 변경이 있는지 반드시 확인 — 보이면 hold.
-- 마스터 JSON을 갱신했으면 `insurequant_master_tables.xlsx` 재생성 필수(`xlsx` skill 사용). **마스터
-  xlsx를 openpyxl로 load+save 하지 말 것** — 값 열의 수식 캐시가 전부 wipe된다.
+- 마스터 JSON을 갱신했으면 바뀐 시트만 `scripts/sync_master_xlsx_sheet.py`로 `insurequant_master_tables.xlsx`에
+  맞춘다(**전체 재생성 금지**, CLAUDE.md §8). **마스터 xlsx를 openpyxl로 직접 load+save 하지 말 것** — 값 열의
+  수식 캐시가 전부 wipe된다.
 - 배포 에셋(keep-list) = 루트 HTML(`index`·`K-ICS`·`IFRS17`·`공시보고서`·`compare`·`privacy`) + 그 HTML 이 fetch 하는 마스터 JSON +
   `common.css`·`theme.js` 등 공용 자산(정본 목록은 아래 §2). **HTML 파일은 publishing 소관 밖(designer 소유)** — publishing이 손대면
   `manual_html_edit` warn 후 정지, designer로 넘긴다.
@@ -179,9 +180,9 @@ git push origin main                 # ← GO 필요
    `.bak`을 원본 이름으로 복사.
 2. **`.bak`이 없으면 Excel에서 직접 재오픈** — Excel이 열 때 수식을 재계산하므로 캐시가 복구된다. 그 후
    "다른 이름으로 저장" 대신 **같은 파일에 저장**(경로 유지).
-3. 위 두 방법이 다 안 되면 `scripts/build_master_xlsx.py`를 **공식 `xlsx` skill 워크플로우 하에**
-   재실행 — 소스 JSON에서 처음부터 재생성(값은 정적 export이므로 복구되지만, 시트에 있던 수기 서식/주석은
-   사라질 수 있음 — 되돌리기 전 owner에게 알림).
+3. 위 두 방법이 다 안 되면 git 에 커밋된 `insurequant_master_tables.xlsx`로 복원한 뒤 바뀐 시트만
+   `scripts/sync_master_xlsx_sheet.py`로 다시 맞춘다. `scripts/build_master_xlsx.py` 전체 재생성은 금지(CLAUDE.md §8) —
+   수기 시트·서식·주석이 사라지므로 owner 가 따로 승인할 때만 쓴다.
 4. 복구 후 mtime이 현재 마스터 JSON들보다 최신인지 확인(`ls -la insurequant_master_tables.xlsx
    CSM_waterfall.json PL_breakdown.json kics_disclosure.json`)해서 다시 stale해지지 않았는지 검증.
 
@@ -210,7 +211,7 @@ git push origin main                 # ← GO 필요
 [ ] 1. C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_data_contract.py  → SUMMARY RED=0 확인
 [ ] 2. (신규 게이트 룰 추가했다면) --selftest 통과 확인
 [ ] 3. keep-list 재파생 (각 HTML grep) — 배포 대상 파일 확정
-[ ] 4. 마스터 JSON 갱신 있었으면 insurequant_master_tables.xlsx 재생성 (xlsx skill, openpyxl 재저장 금지)
+[ ] 4. 마스터 JSON 갱신 있었으면 바뀐 시트만 sync_master_xlsx_sheet.py 로 insurequant_master_tables.xlsx 에 반영 (전체 재생성 금지, openpyxl 직접 재저장 금지)
 [ ] 5. git branch --show-current + git status  → 남의 미커밋 없는지 확인
 [ ] 6. git worktree add ../insurequant-main-deploy main
 [ ] 7. keep-list 파일만 워크트리에 반영, git status로 범위 재확인

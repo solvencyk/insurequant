@@ -8,7 +8,7 @@ Output: data/_derived/reinsurer_ifrs17_csm_20261011/rows_amortization.json
         data/_derived/reinsurer_ifrs17_csm_20261011/build_report.json   (decisions, conflicts, checks)
 No master is touched here; load_reinsurer_csm_masters_20261011.py applies the rows (guarded, additive).
 
-Rules applied (owner decisions 2026-10-09/10, docs/handoff_20261008_reinsurer_pipeline.md section 7):
+Rules applied (owner decisions 2026-10-09/10, docs/archive/handoff_20261008_reinsurer_pipeline.md section 7):
   1. same (company, year) in several filings that really differ -> take the LATEST filing's prior-year column,
      both values are recorded in build_report.json;
   2. a pure rounding difference is no conflict -> take the more precise value (백만원 print beats 억원 integer);

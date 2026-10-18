@@ -18,7 +18,7 @@ if Korean shows as CJK/mojibake the file got UTF-16 — rewrite. See `CLAUDE.md`
 | What | Where |
 |---|---|
 | Open work, dormant items, owner decisions pending | stage TODO (`## 열린 일`, `## 보류`) |
-| Where the stage is right now | stage TODO `## Status` — **newest 3 entries, <=3 lines each** (what · commit · what remains) |
+| Where the stage is right now | stage TODO `## Status` — **newest 3 entries, <=5 lines each** (what · commit · what remains) |
 | How it was done: numbers, checks, false starts | stage `changelog_<stage>.md` |
 | Cross-stage change, deploy round, refactor | root `TODO.md` + `docs/claude-changelog.md` |
 | Durable owner decision | the `## 정책` table of the root TODO (or the stage TODO `## 결정`) |

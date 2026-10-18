@@ -30,7 +30,9 @@ Before any action, read these in order:
 
 #### 1a. 손보 17사 — 사별 사이트
 
+**현행 경로 = 사별 사이트 스크립트** (2026.2Q 라운드 실측: `data/disclosure/_meta/FY2026_Q2/manifest.json` 17사 중 14 ok·3 fail, 받은 파일의 `src_url` 호스트가 전부 각 회사 사이트다).
 Script (latest template): `scripts/download_disclosure_2026q2_nonlife.py`. 아래 표는 2026.1Q 기준 스냅샷이다 — 분기 라벨·id 의 정본은 최신 스크립트.
+손보협회 통합공시(kpub.knia.or.kr, 엔진 `--company NONLIFE`)는 **결산(Q4)만** 싣고 예별(KR0004)이 없어 분기 수집 경로가 아니다. Q4 백필용으로만 유효하다(`scripts/backfill_nonlife_disclosure_kpub.py`; 엔진 마지막 기록 = `_meta/NONLIFE_download_cache.csv` 2026-04-26, FY2025_Q4 16사).
 
 | KR | name | URL | XPath | mode | notes |
 |---|---|---|---|---|---|
@@ -54,14 +56,18 @@ Script (latest template): `scripts/download_disclosure_2026q2_nonlife.py`. 아�
 
 Notes:
 - 캐롯손해보험 (KR1059) — 한화손보로 합병됨, 별도 사이트 없음 (skip).
-- 사용자 지시: 재무제표 별도/연결/감사보고서는 거들떠도 보지 마. (현대해상은 li[3]=경영공시 최종만)
+- 사용자 지시: 정기 수집 스크립트는 경영공시 본문만 받는다. 재무제표 별도/연결/감사보고서 파일을 경영공시로 집지 마. (현대해상은 li[3]=경영공시 최종만)
+- 예외(owner 2026-10-11): 경영공시 PDF 가 「재무제표는 첨부 참조」로 끝나 재무제표가 별첨으로 분리된 (회사, 분기) 칸은 그 별첨(재무제표·주석·감사보고서)을 받는다.
+  저장은 `data/disclosure/FY*/attachments/KR####_<이름>_attachment_<종류>.pdf` + `data/disclosure/_meta/attachments_manifest.json` 이고 `raw/` 에 섞지 않는다(`raw/` 글롭과 `run_harness` 변환 대상에서 빠져야 한다).
+  필요 여부는 텍스트층이 아니라 렌더링으로 판정한다(「8-1 없음」 70칸 중 25칸은 이미지 쪽으로 `raw/` 에 이미 있었다). 근거·결과: `.claude/agents/downloader.md`, `docs/changelog_downloader.md` 2026-10-11 별첨 수집.
 
 #### 1b. 생보 22사 — 생보협회 일괄 zip
 
+현행 경로 = 협회 일괄 zip을 분기 스크립트로 받는다(2026.2Q 실측: `_meta/FY2026_Q2/life_bulk_manifest.json`, 2026-08-31, zip 42.6MB). 엔진 `--company LIFE` 는 2026.2Q 에 쓰지 않았다.
 Script (latest template): `scripts/download_disclosure_2026q2_life.py`. 협회 포털이 늦으면 자사 사이트에 먼저 올린 회사는 `scripts/download_disclosure_2026q2_life_sites.py` 로 받는다(대상은 `life_own_site_census.json` 의 posted).
 
 - URL: https://pub.insure.or.kr/mngtDis/mngtDis/list.do
-- 2026.1Q row XPath: `//*[@id="scroll_cont"]/table/tbody/tr[23]/td[2]/a` (tr[N] increments per quarter; pull date from td[1] to verify)
+- 2026.1Q row XPath (옛 스냅샷): `//*[@id="scroll_cont"]/table/tbody/tr[23]/td[2]/a`. 2026.2Q 스크립트는 tr[23] 이 회사 행이 아니라 전체파일 행이고 분기 칸이 게시될 때만 생기므로 고정 td 번호 대신 `a[onclick*="fn_quarterfileDown('<q>')"]` 에 앵커한다(스크립트 docstring, 2026-08-31 실측).
 - Output: 22.4MB zip -> 22 PDFs
 
 22 included KRs: KR0068 한화 / KR0069 삼성 / KR0070 ABL / KR0071 흥국 / KR0072 KDB / KR0073 교보 / KR0074 라이나 / KR0075 BNP / KR0076 iM라이프 / KR0079 미래에셋 / KR0082 DB생명 / KR0083 푸본현대 / KR0087 동양 / KR0094 신한라이프 / KR0095 메트라이프 / KR0097 하나생명 / KR0099 KB라이프 / KR0100 처브 / KR0104 농협생명 / KR1010 교보라이프플래닛 / KR1011 IBK연금 + AIA (non-KR).
@@ -88,7 +94,7 @@ Filename-to-KR mapping: substring match. 신한라이프의 generic name `2026�
 
 `batch_historical` 의 정정 rcept 선택 버그(`[기재정정]/[첨부정정]` → status=014)는 2026-08-13 고쳤다(`[` 로 시작하는 report_nm 제외). 그 전 이력의 소급 재검사는 `TODO_downloader.md` BATCH-HISTORICAL-FIX.
 
-Body XML contains 연결재무제표 주석 directly — DO NOT fetch attachment (별첨). Verified keywords: 보험계약마진, 보험료배분접근법(을 적용하지 않/하는), 보험손익의 상세내역, 신계약 — all present in body.
+Body XML contains 연결재무제표 주석 directly — DO NOT fetch the DART attachment (별첨). This applies to DART 사업보고서 첨부 only; 경영공시 PDF 별첨 follows the 2026-10-11 exception in Source 1a. Verified keywords: 보험계약마진, 보험료배분접근법(을 적용하지 않/하는), 보험손익의 상세내역, 신계약 — all present in body.
 
 Inventory: `data/dart/_inventory_manifest.json`.
 
@@ -153,6 +159,7 @@ Known IR gaps (사용자 확인 2026-05-30):
 ## Canonical Folder Layout
 
 - `data/disclosure/<period>/raw/KR####_<name>.<ext>`
+- `data/disclosure/<period>/attachments/KR####_<name>_attachment_<종류>.pdf` + `data/disclosure/_meta/attachments_manifest.json` (경영공시 별첨, Source 1a 예외)
 - `data/ir/<period>/raw/KR####_<name>/<filename>`
 - `data/dart/<period>/raw/KR####_<canonical>[__cons]_<rcept>/document.zip + *.xml` (annual)
 - `data/dart/<period>/raw/KR####_<canonical>/document.zip  (period = FYYYYY_Q#)` (13Q periodic)
@@ -186,7 +193,7 @@ When user requests '다음 분기 받아' (or invokes this prompt for, say, 2026
 1. **Determine period**: parse user request OR check latest under `data/disclosure/FY*_Q*/` and increment.
 2. **For each source**:
    - **Source 1a (손보 17사)**: copy the latest `scripts/download_disclosure_2026q2_nonlife.py` to `scripts/download_disclosure_<period>_nonlife.py`. Update URLs/XPaths where the period-specific identifier appears (e.g. `FY2026-1_4.pdf` -> `FY2026-2_4.pdf`, `intSeq=1539` -> check current value, `pancId=15467` -> check current, etc.). XPaths that select `tr[1]` usually pick the latest entry automatically — no change. Just verify with a quick smoke probe.
-   - **Source 1b (생보 22사 bulk)**: same script template; `tr[23]` row index increments per quarter — bump tr[24], tr[25], etc.
+   - **Source 1b (생보 22사 bulk)**: `scripts/download_disclosure_2026q2_life.py` 복제 후 `PERIODS` 항목의 키·selector 안 분기 숫자(`fn_quarterfileDown('<q>')`)만 올린다. 협회가 늦으면 `download_disclosure_2026q2_life_sites.py`(자사 사이트).
    - **Source 2 (DART)**: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/ifrs17_batch_historical.py --all --periods <YYYY.QQ>` + `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/ifrs17_batch_all.py` for new 사업보고서. Also fetch newly-filed FY+1 audits for NON_LISTED_SKIP 11 + AIG + AUDIT_REPORT_ANNUAL 6 (`src/ifrs17/universe.py`) via `OpenDARTClient.list_filings + fetch_document_xml`.
    - **Source 3 (KIDI)**: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/ingest_kidi_monthly_premium.py` (no args — uses default 13 periods). Latest period auto-discovered via `getMLxxLastYM`. KIDI lags the real quarter by ~3 months in practice (measured 2026-08; the catalog's 1.5 months is wrong), and an unpublished month comes back as zero-filled rows — check `getML01LastYM`/`getMN07LastYM` first.
    - **Source 4 (IR)**: same script template as source 1; `tr[1]` usually picks latest.
@@ -228,15 +235,16 @@ If a site returns 0 visible elements for the expected XPath:
 
 ## What NOT to Do
 
-- Don't fetch DART attachments (별첨/감사보고서 zip). Body XML has everything (verified 2026-05-30).
+- Don't fetch DART attachments (별첨/감사보고서 zip). Body XML has everything (verified 2026-05-30; root `TODO.md` policy 8). 경영공시 PDF 의 별첨은 DART 가 아니므로 이 금지에 걸리지 않는다 — Source 1a 의 2026-10-11 예외를 따른다.
 - Don't trust XBRL for IFRS17 deep notes (not standardized). XBRL useful only for Tier1 P&L.
 - Use canonical `data/<source>/<period>/raw/KR####_<name>` layout for DART/KIDI/disclosure/IR alike.
 - Don't delete anything outside `data/_archive/` mode. Always move-then-decide.
 - Don't fabricate data for missing rcepts. Honest gap > fake number.
-- Don't include 재무제표/연결재무제표/감사보고서 as 경영공시 raw (sites confuse the two — 한화손보 IR was previously mis-classified because URL path was /notice/ir/ but content was 경영공시).
+- Don't include 재무제표/연결재무제표/감사보고서 as 경영공시 raw (sites confuse the two — 한화손보 IR was previously mis-classified because URL path was /notice/ir/ but content was 경영공시). 별첨으로 받은 것은 `raw/` 가 아니라 `attachments/` 에 둔다.
 - Don't ingest 캐롯손해보험 (KR1059) — merged into 한화손보, no separate site.
-- **Per-company legacy downloaders are gone** — the single engine (`src/solvency/downloader/base.py` + `runner.py` + `handlers/`)
-  is the only path. If a site breaks, self-heal the handler per §"When URLs/XPaths Change"; don't resurrect a per-company script.
+- **분기 수집의 현행 경로는 `scripts/download_disclosure_<period>_{nonlife,life,life_sites}.py` 와 `download_ir_<period>.py` 다**(2026.2Q 실측, Source 1a·1b).
+  엔진(`src/solvency/downloader/base.py` + `runner.py` + `handlers/`)의 협회 핸들러는 손보=kpub 결산(Q4)만·생보=일괄 zip이고, `profiles/KR*.yaml`(case_a/b/c)은 로그만 남기고 0건을 내는 skeleton 이다(`runner.py::_placeholder_handler`).
+  `src/solvency/legacy/` 의 옛 회사별 다운로더 4종은 2026-07-21 삭제됐으니 되살리지 않는다. 사이트가 깨지면 §"When URLs/XPaths Change" 대로 해당 분기 스크립트의 항목을 고친다.
 - **`run_harness.py` requires `--stage` (`quality|pdf|parse`).** PDF accessibility gate: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/run_harness.py --stage pdf --period <period>`.
 - Old one-off scripts (`crawl_ir_*` 등) are archived under `archive/2026-07_unreferenced_scripts/` — restore with `git mv` if needed.
 
@@ -311,7 +319,7 @@ Anything else (download stub, 미수집, parse error) is NOT 수용 — must be 
 
 생보 22: KR0068 한화생명 / KR0069 삼성생명 / KR0070 ABL생명 / KR0071 흥국생명 / KR0072 KDB생명 / KR0073 교보생명 / KR0074 라이나생명 / KR0075 BNP파리바카디프 / KR0076 iM라이프 / KR0079 미래에셋생명 / KR0082 DB생명 / KR0083 푸본현대생명 / KR0087 동양생명 / KR0094 신한라이프 / KR0095 메트라이프 / KR0097 하나생명 / KR0099 KB라이프 / KR0100 처브라이프 / KR0104 농협생명 / KR1010 교보라이프플래닛 / KR1011 IBK연금보험 / AIA 에이아이에이생명.
 
-(캐롯손해보험 KR1059는 한화손보 합병으로 universe에서 영구 제외.) 재보사 7곳(KR1101~1107)·마이브라운(KR1108)은 이 39사 목록 밖의 별도 수집 경로다 — `.claude/agents/downloader.md`, `docs/handoff_20261008_reinsurer_pipeline.md`.
+(캐롯손해보험 KR1059는 한화손보 합병으로 universe에서 영구 제외.) 재보사 7곳(KR1101~1107)·마이브라운(KR1108)은 이 39사 목록 밖의 별도 수집 경로다 — `.claude/agents/downloader.md`, `docs/archive/handoff_20261008_reinsurer_pipeline.md`.
 
 ### Bottom summary
 

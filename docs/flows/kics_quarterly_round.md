@@ -36,8 +36,8 @@
 
   - 손보: `scripts/download_disclosure_2026q2_nonlife.py` (이미 2Q 로 갱신됨. KR0002 / KR0003 /
     KR0004_MG / KR0009 / KR0032 는 XPath 에 분기 라벨이 박혀 있고 2분기로 바뀌어 있다).
-  - 생보: **2Q 스크립트가 아직 없다.** `download_disclosure_2026q1_life.py` 를 복제해
-    `download_disclosure_2026q2_life.py` 를 만들고 기간 라벨만 올린다.
+  - 생보: `download_disclosure_2026q2_life.py`(협회 일괄 zip)와 `download_disclosure_2026q2_life_sites.py`(회사 사이트)가 이미 있다.
+    3Q 는 이 둘을 복제해 기간 상수(PERIODS)만 올린다.
   - 수집 직후 **무조건** 내용검증을 건다:
 
   ```

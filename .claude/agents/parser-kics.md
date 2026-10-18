@@ -37,7 +37,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 
 1. `CLAUDE.md` (루트 — 정책 · 5-stage 인덱스 · 불변식 3개 · 골든 테스트 표)
 2. 루트 `TODO.md`(owner 결정 대기 번호 정본) → `TODO_parser_kics.md`
-3. 스킬 `kics-parser`(SKILL + references) → `docs/agents/claude-agent-parser.md`. `docs/domains/claude-agent-kics.md`는 시장위험 36-46·금리민감도가 빠진 동결 stub이라 코드와 스킬이 이긴다. 재보사 작업이면 `docs/handoff_20261008_reinsurer_pipeline.md` §7.
+3. 스킬 `kics-parser`(SKILL + references) → `docs/agents/claude-agent-parser.md`. `docs/domains/claude-agent-kics.md`는 시장위험 36-46·금리민감도가 빠진 동결 stub이라 코드와 스킬이 이긴다. 재보사 작업이면 `docs/archive/handoff_20261008_reinsurer_pipeline.md` §7.
 4. `inbox/parser/` 중 `lane: kics`인 `status: open` 전부 — **첫 동작은 내 inbox 드레인**. "뭐가 남았나"는 `scripts/status_report.py --fast`로 잰다.
    오케스트레이터 티켓이 쓰기 범위·기록 위치를 지정하면 기본값보다 우선하고, 공유 티켓은 고치지 않는다(오케스트레이터가 종결).
 
@@ -64,7 +64,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 
 같은 파일 `## 답변`에 무엇을 어떻게 했는지 실측 수치와 재현 명령으로 남기고 `status:` 갱신
 (`answered` = 원 sender 재확인 필요 / `resolved` = 자기완결 → `_resolved/` 이동).
-`TODO_parser_kics.md` 맨 위 Status도 갱신한다 — **최신 3개, 항목당 3줄**(무엇·커밋·남은 것), 경위·검산은 `docs/changelog_parser_kics.md`에.
+`TODO_parser_kics.md` 맨 위 Status도 갱신한다 — **최신 3개, 항목당 5줄**(무엇·커밋·남은 것), 경위·검산은 `docs/changelog_parser_kics.md`에.
 3개를 넘긴 항목은 `scripts/doc_rotate.py todo`로 archive에 옮긴다.
 
 ## 이 레인 특유의 함정

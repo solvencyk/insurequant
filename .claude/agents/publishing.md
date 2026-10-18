@@ -113,5 +113,5 @@ owner에게 요구하는 것은 세 가지뿐이다 — 로그인·인증 승인
 ## 처리 후
 
 inbox 티켓의 `## 답변`에 실측 수치와 재현 명령을 남기고 `status:` 갱신
-(`answered` / `resolved` → `_resolved/` 이동). `TODO_publishing.md` 맨 위 Status를 갱신하고(**최신 3개, 항목당 3줄**,
+(`answered` / `resolved` → `_resolved/` 이동). `TODO_publishing.md` 맨 위 Status를 갱신하고(**최신 3개, 항목당 5줄**,
 초과분은 `scripts/doc_rotate.py todo`), 완결 항목은 `docs/changelog_publishing.md`에 기록한다.

@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <meta name="robots" content="noindex"/>
 <title>손해율 가정 curve 모바일 목업</title>
-<link rel="stylesheet" href="../../../common.css"/>
-<script src="../../../theme.js"></script>
+<link rel="stylesheet" href="../../../../common.css"/>
+<script src="../../../../theme.js"></script>
 <style>
   /* 목업: 모바일(375px) 손해율 가정 curve 간단 비교 2안. 데이터는 실제 data/compare/panel_compare.json 을 fetch 한다.
      ?opt=A|B  ?set=diff|sim (곡선이 다른 조합 / 비슷한 조합)  ?n=2~4 (회사 수) */
@@ -72,7 +72,7 @@
   function lrX(lab){ var m = /^(\d+)년$/.exec(lab); if(m) return +m[1]; m = /^(\d+)~(\d+)년$/.exec(lab); if(m) return (+m[1] + +m[2]) / 2; return LR_END_X; }
   function el(n, a, txt){ var e = document.createElementNS(SVGNS, n); for(var k in a) e.setAttribute(k, a[k]); if(txt != null) e.textContent = txt; return e; }
 
-  fetch('../../../data/compare/panel_compare.json').then(function(r){ return r.json(); }).then(function(D){
+  fetch('../../../../data/compare/panel_compare.json').then(function(r){ return r.json(); }).then(function(D){
     var C = D.loss_curve, nstd = C.n_std, labs = C.labels, Q = D.meta.quarters;
     var pvm = D.metrics.filter(function(m){ return m.id === 'loss_pv'; })[0];
     var byName = {}; D.companies.forEach(function(c){ byName[c.short] = c; });
