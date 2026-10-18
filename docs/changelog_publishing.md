@@ -12,7 +12,7 @@
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/publishing/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
-## 2026-10-19 — IFRS17 8절 현재가치 이중 반올림 수정 (티켓 `20261018T0700Z`, 커밋만 · push 보류)
+## 2026-10-19 — IFRS17 8절 현재가치 이중 반올림 수정 (티켓 `20261018T0700Z`, main 배포 `f96f06b0` 완료)
 
 - 저장 빌더는 `scripts/viz_build_persistency_lossratio_panels.py` 였다. `_ratio()` 가 공시 2자리 값이 금액으로 재현되면 반올림 전 비율(소수 6자리)을 싣고, 아니면 공시값을 유지한다(가드 `b != 0` 으로 위험보험료 음수 잎 32칸도 포함). `data/loss_ratio/panel_loss_ratio.json` 206,474 → 281,737 바이트, 구조 동일 · 바뀐 숫자 18,853개 모두 변화 0.005 이하 · meta.note 한 곳.
 - 효과: 화면 표시값과 마스터 금액 재계산값의 차이가 0.05pp 를 넘는 칸이 약 800개(현재가치 77) → 0(약 21,900칸 전수). 마스터 · HTML 무수정. 이 패널을 고정하는 골든은 없어 `--check` 와 `tests/test_push_gate_wiring.py` 가 고정한다. 독립 검증 통과.

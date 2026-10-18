@@ -9,7 +9,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/designer/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
-## 2026-10-19 — 안내 팝업 시작일 · 손해율 기본 Non-Par · 방명록 내부 접속 제외 · a11y 감사 (owner 승인, 커밋·미배포)
+## 2026-10-19 — 안내 팝업 시작일 · 손해율 기본 Non-Par · 방명록 내부 접속 제외 · a11y 감사 (owner 승인, main 배포 `f96f06b0` 완료)
 
 - **3분기 안내 팝업 시작일**: `theme.js` `NOTICE.showFrom` 2026-10-31 추가. 방문자 로컬 날짜가 showFrom 이상 hideAfter(2026-12-31) 이하일 때만 뜬다(hideAfter 와 같은 날짜 문자열 비교, 시간대 변환 없음). `scripts/check_notice_popup.py` 498건(Asia/Seoul · UTC · America/Los_Angeles 경계 포함) 위반 0, 독립 검증 47/47.
 - **손해율 구분 선택기 기본값 Non-Par**(compare.html 손해율 카드 · IFRS17.html 8절 · `scripts/check_loss_group.py`): compare 는 주소 `g` 없음이 Non-Par, 나머지는 `g=합계` 등으로 적고 옛 링크 `g=Non-Par`·`g=합계` 유지. Non-Par 가 없는 회사는 합계 → 첫 구분으로 대체하고 이름 옆에 구분을 적는다. IFRS17 8절도 같은 순서. 합계를 명시로 고르면 선택기 도입 직전 숫자와 글자 그대로 같다. 점검 316건 위반 0, 마스터 재계산 대조 최대 0.05pp. 단일 구분 회사도 합계와 그 구분 두 선택지를 보인다(카카오페이손보는 잎 합과 공시 합계 행이 한 칸 14.3pp 어긋나 validation 확인 중).
