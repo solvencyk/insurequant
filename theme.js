@@ -11,6 +11,24 @@
      IQTheme.echartsTooltip()    ECharts tooltip 색 옵션(formatter 와 Object.assign 해서 쓴다)
      window 'iq:themechange'     테마가 바뀌면 발생 — 페이지는 차트를 다시 그린다 */
 (function(){
+  /* 업데이트 안내 팝업 설정 (owner 2026-10-18) — 분기마다 이 객체만 고친다.
+     id         기간 식별자. 사용자가 닫으면 이 값을 localStorage 'iq_notice_seen' 에 적어 같은 기간에는 다시 안 뜬다.
+     showFrom   이 날짜(YYYY-MM-DD, 포함)부터 뜬다. 그 전에는 코드가 배포돼 있어도 안 뜬다(owner 2026-10-19: 10월 31일부터).
+     hideAfter  이 날짜(YYYY-MM-DD, 포함)가 지나면 저절로 안 뜬다. 지난 안내가 남아 있지 않게 하는 안전장치.
+     두 날짜 모두 방문자 브라우저의 로컬 달력 날짜로 비교한다(시간대 변환 없음). 한국 방문자는 한국 시각 기준으로
+     0시에 켜지고, 다른 시간대 방문자는 자기 달력 날짜가 showFrom 이 되는 때부터 보인다. */
+  var NOTICE = {
+    id: '2026-3Q',
+    title: '2026 3분기 업데이트 안내',
+    lines: [
+      '2026 3분기 DART 공시 기한 2026년 11월 13일',
+      '2026 3분기 경영공시 기한 2026년 11월 30일',
+      '2026년 3분기 보험개발원 매출 현황 미정',
+      '공시 업로드 후 2일-3일 내외 소요 예정'
+    ],
+    showFrom: '2026-10-31',
+    hideAfter: '2026-12-31'
+  };
   var KEY='iq_theme';
   var root=document.documentElement;
   var mq=window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
@@ -749,7 +767,99 @@
     h.classList.add('has-share');
   }
 
-  function boot(){ mount(); mountShare(); mountSectionShare(); syncSectionNav(); watchForRerender(); }
+  /* ---- 업데이트 안내 팝업 (owner 2026-10-18) ------------------------------------
+     대시보드 5페이지(index·K-ICS·IFRS17·공시보고서·compare)에서만, 기간(NOTICE.id)마다 브라우저당 한 번 띄운다.
+     일본 사이트(jp/)·약관 페이지에는 안 띄운다. 이벤트·분석 호출은 일절 하지 않는다(shLog 도 안 부름).
+     localStorage 는 읽기·쓰기 전부 try/catch — 막힌 브라우저에서는 방문마다 뜬다.
+     배경 스크롤은 overflow 를 건드리지 않고(스크롤바가 사라지며 본문 폭이 흔들리지 않게) 백드롭 위 휠·터치만 막는다. */
+  var NOTICE_KEY = 'iq_notice_seen';
+  var NOTICE_PAGES = ['', 'index', 'K-ICS', 'IFRS17', '공시보고서', 'compare'];
+  function noticeSeen(){ try{ return localStorage.getItem(NOTICE_KEY) === NOTICE.id; }catch(e){ return false; } }
+  function noticeMarkSeen(){ try{ localStorage.setItem(NOTICE_KEY, NOTICE.id); }catch(e){} }
+  function noticeToday(){
+    var d = new Date(), m = d.getMonth() + 1, day = d.getDate();
+    return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+  }
+  /* YYYY-MM-DD 문자열끼리의 사전순 비교 = 날짜순 비교. 로컬 달력 날짜 기준(hideAfter 와 같은 방식). */
+  function noticeOutOfWindow(){
+    var today = noticeToday();
+    return today < NOTICE.showFrom || today > NOTICE.hideAfter;
+  }
+  function noticeEligible(){
+    try{ if(window.self !== window.top) return false; }catch(e){ return false; }
+    if((root.getAttribute('lang') || '').toLowerCase().indexOf('ja') === 0) return false;
+    var parts = location.pathname.split('/');
+    for(var i = 0; i < parts.length - 1; i++) if(parts[i] === 'jp') return false;
+    var seg = parts[parts.length - 1];
+    try{ seg = decodeURIComponent(seg); }catch(e){}
+    return NOTICE_PAGES.indexOf(seg.replace(/\.html$/, '')) !== -1;
+  }
+  function noticeCss(){
+    if(document.getElementById('iqNoticeCss')) return;
+    var st = document.createElement('style'); st.id = 'iqNoticeCss';
+    st.textContent =
+      '.iq-modal-backdrop.iq-notice{overscroll-behavior:contain;animation:iqNoticeIn .18s ease-out}' +
+      '.iq-modal-panel.iq-notice-panel{max-width:min(420px,calc(100vw - 24px));border:1px solid var(--border);overscroll-behavior:contain;outline:none}' +
+      '.iq-notice-panel .iq-modal-head{margin-bottom:var(--sp-3)}' +
+      '.iq-notice-panel .iq-modal-close{min-width:44px;min-height:44px;margin:-10px -10px -10px 0;font-size:24px}' +
+      '.iq-notice-list{margin:0 0 var(--sp-4);padding-left:20px;font-size:15px;line-height:1.6;color:var(--text);word-break:keep-all}' +
+      '.iq-notice-list li+li{margin-top:var(--sp-2)}' +
+      '.iq-notice-ok{display:block;box-sizing:border-box;width:100%;min-height:44px;border:0;border-radius:var(--r-md);background:var(--primary);color:var(--on-primary);font:600 15px var(--font-sans);cursor:pointer}' +
+      '.iq-notice-ok:hover{background:var(--primary-hover)}' +
+      '.iq-notice-ok:focus-visible,.iq-notice-panel .iq-modal-close:focus-visible{outline:2px solid var(--primary);outline-offset:2px}' +
+      '@keyframes iqNoticeIn{from{opacity:0}to{opacity:1}}' +
+      '@media (prefers-reduced-motion:reduce){.iq-modal-backdrop.iq-notice{animation:none}}';
+    document.head.appendChild(st);
+  }
+  function mountNotice(){
+    if(!noticeEligible() || noticeOutOfWindow() || noticeSeen() || document.getElementById('iqNotice')) return;
+    noticeCss();
+    var prev = document.activeElement;
+    var back = secEl('div', 'iq-modal-backdrop iq-notice'); back.id = 'iqNotice';
+    var panel = secEl('div', 'iq-modal-panel iq-notice-panel');
+    panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-labelledby', 'iqNoticeTitle');
+    var head = secEl('div', 'iq-modal-head');
+    var h = secEl('h2', 'iq-modal-title'); h.id = 'iqNoticeTitle'; h.textContent = NOTICE.title; h.style.margin = '0';
+    var x = secEl('button', 'iq-modal-close'); x.type = 'button'; x.setAttribute('aria-label', '닫기'); x.textContent = '\u00d7';
+    head.appendChild(h); head.appendChild(x);
+    var ul = secEl('ul', 'iq-notice-list');
+    NOTICE.lines.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
+    var ok = secEl('button', 'iq-notice-ok'); ok.type = 'button'; ok.textContent = '닫기';
+    panel.appendChild(head); panel.appendChild(ul); panel.appendChild(ok); back.appendChild(panel);
+
+    var down = null;
+    function close(){
+      document.removeEventListener('keydown', onKey, true);
+      document.removeEventListener('focusin', onFocusIn, true);
+      if(back.parentNode) back.parentNode.removeChild(back);
+      noticeMarkSeen();
+      try{ if(prev && prev !== document.body && document.contains(prev) && prev.focus) prev.focus(); }catch(e){}
+    }
+    function onKey(e){
+      if(e.key === 'Escape' || e.key === 'Esc'){ e.preventDefault(); e.stopPropagation(); close(); return; }
+      if(e.key !== 'Tab') return;
+      var a = document.activeElement;
+      if(!panel.contains(a)){ e.preventDefault(); (e.shiftKey ? ok : x).focus(); return; }
+      if(e.shiftKey && a === x){ e.preventDefault(); ok.focus(); }
+      else if(!e.shiftKey && a === ok){ e.preventDefault(); x.focus(); }
+    }
+    function onFocusIn(e){ if(!panel.contains(e.target)) ok.focus(); }
+    x.addEventListener('click', close);
+    ok.addEventListener('click', close);
+    back.addEventListener('mousedown', function(e){ down = e.target; });
+    back.addEventListener('touchstart', function(e){ down = e.target; }, { passive: true });
+    back.addEventListener('click', function(e){ if(e.target === back && down === back) close(); down = null; });
+    function stop(e){ if(e.target === back && e.cancelable) e.preventDefault(); }
+    back.addEventListener('wheel', stop, { passive: false });
+    back.addEventListener('touchmove', stop, { passive: false });
+    document.addEventListener('keydown', onKey, true);
+    document.addEventListener('focusin', onFocusIn, true);
+    document.body.appendChild(back);
+    ok.focus();
+  }
+
+  function boot(){ mount(); mountShare(); mountSectionShare(); syncSectionNav(); watchForRerender(); mountNotice(); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
   /* 회사 키컬러 (KEYCOLOR-V1, owner 확정 2026-06-12) — 표시명 -> 색. 회사 키컬러의 단일 정의다.
