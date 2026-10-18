@@ -13,7 +13,10 @@
 (function(){
   /* 업데이트 안내 팝업 설정 (owner 2026-10-18) — 분기마다 이 객체만 고친다.
      id         기간 식별자. 사용자가 닫으면 이 값을 localStorage 'iq_notice_seen' 에 적어 같은 기간에는 다시 안 뜬다.
-     hideAfter  이 날짜(YYYY-MM-DD, 포함)가 지나면 저절로 안 뜬다. 지난 안내가 남아 있지 않게 하는 안전장치. */
+     showFrom   이 날짜(YYYY-MM-DD, 포함)부터 뜬다. 그 전에는 코드가 배포돼 있어도 안 뜬다(owner 2026-10-19: 10월 31일부터).
+     hideAfter  이 날짜(YYYY-MM-DD, 포함)가 지나면 저절로 안 뜬다. 지난 안내가 남아 있지 않게 하는 안전장치.
+     두 날짜 모두 방문자 브라우저의 로컬 달력 날짜로 비교한다(시간대 변환 없음). 한국 방문자는 한국 시각 기준으로
+     0시에 켜지고, 다른 시간대 방문자는 자기 달력 날짜가 showFrom 이 되는 때부터 보인다. */
   var NOTICE = {
     id: '2026-3Q',
     title: '2026 3분기 업데이트 안내',
@@ -23,6 +26,7 @@
       '2026년 3분기 보험개발원 매출 현황 미정',
       '공시 업로드 후 2일-3일 내외 소요 예정'
     ],
+    showFrom: '2026-10-31',
     hideAfter: '2026-12-31'
   };
   var KEY='iq_theme';
@@ -772,10 +776,14 @@
   var NOTICE_PAGES = ['', 'index', 'K-ICS', 'IFRS17', '공시보고서', 'compare'];
   function noticeSeen(){ try{ return localStorage.getItem(NOTICE_KEY) === NOTICE.id; }catch(e){ return false; } }
   function noticeMarkSeen(){ try{ localStorage.setItem(NOTICE_KEY, NOTICE.id); }catch(e){} }
-  function noticeExpired(){
+  function noticeToday(){
     var d = new Date(), m = d.getMonth() + 1, day = d.getDate();
-    var today = d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
-    return today > NOTICE.hideAfter;
+    return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
+  }
+  /* YYYY-MM-DD 문자열끼리의 사전순 비교 = 날짜순 비교. 로컬 달력 날짜 기준(hideAfter 와 같은 방식). */
+  function noticeOutOfWindow(){
+    var today = noticeToday();
+    return today < NOTICE.showFrom || today > NOTICE.hideAfter;
   }
   function noticeEligible(){
     try{ if(window.self !== window.top) return false; }catch(e){ return false; }
@@ -804,7 +812,7 @@
     document.head.appendChild(st);
   }
   function mountNotice(){
-    if(!noticeEligible() || noticeExpired() || noticeSeen() || document.getElementById('iqNotice')) return;
+    if(!noticeEligible() || noticeOutOfWindow() || noticeSeen() || document.getElementById('iqNotice')) return;
     noticeCss();
     var prev = document.activeElement;
     var back = secEl('div', 'iq-modal-backdrop iq-notice'); back.id = 'iqNotice';

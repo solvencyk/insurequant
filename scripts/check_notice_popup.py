@@ -9,7 +9,10 @@ theme.js 의 mountNotice()(NOTICE 설정 객체)가 실제 브라우저에서 �
   5. 닫으면 초점이 열기 전 요소로 돌아간다. Tab/Shift+Tab 은 대화상자 안에서만 돈다.
   6. 1280/375 x 라이트/다크: 가로 넘침 없음 · 패널이 뷰포트 안 · 닫기 타깃 44px 이상 · 글자 대비 4.5:1 이상 ·
      떠 있는 동안 본문 폭이 그대로(레이아웃 시프트 없음).
-  7. prefers-reduced-motion 이면 애니메이션 없음. hideAfter 가 지난 날짜면 안 뜬다.
+  7. prefers-reduced-motion 이면 애니메이션 없음.
+  7b. 표시 기간: showFrom(2026-10-31) 전(10-18, 10-30 23:59:59)에는 5페이지 어디에도 안 뜨고, 10-31 00:00:00 과 중간(11-05)에는 뜬다.
+      hideAfter(2026-12-31) 당일 끝까지 뜨고 2027-01-01 부터 안 뜬다. Asia/Seoul·UTC·America/Los_Angeles 에서 방문자 로컬 달력 날짜로 판정한다.
+      날짜 덮어쓰기가 없는 나머지 검사는 전부 시계를 기간 안(2026-11-05)으로 고정해 돌린다.
   8. jp/·privacy 에는 안 뜬다. 팝업을 열고 닫는 동안 외부로 나가는 요청이 0(분석·수집기 호출 없음).
   9. 콘솔 오류 0.
 
@@ -33,6 +36,7 @@ except Exception:
 
 ROOT = Path(__file__).resolve().parents[1]
 PERIOD = "2026-3Q"
+IN_WINDOW = "2026-11-05T12:00:00+09:00"   # showFrom(2026-10-31) 이후 hideAfter(2026-12-31) 이전의 한국 시각
 LINES = [
     "2026 3분기 DART 공시 기한 2026년 11월 13일",
     "2026 3분기 경영공시 기한 2026년 11월 30일",
@@ -132,13 +136,16 @@ def run(args) -> int:
                     print("SKIP: 브라우저를 띄울 수 없어 안 돌렸다 (" + str(e).splitlines()[0] + ")")
                     return 0
 
-            def new(vw, vh, scheme="light", reduced=False, init=(), mobile=False):
+            def new(vw, vh, scheme="light", reduced=False, init=(), mobile=False, now=IN_WINDOW, tz="Asia/Seoul"):
+                # 모든 맥락의 시계를 고정한다 — 기본값은 showFrom~hideAfter 사이(IN_WINDOW)라서 날짜 덮어쓰기 없이는 안 뜨는 팝업도 검사할 수 있다.
                 ctx = browser.new_context(viewport={"width": vw, "height": vh}, color_scheme=scheme,
                                           reduced_motion="reduce" if reduced else "no-preference",
-                                          has_touch=mobile, is_mobile=mobile)
+                                          has_touch=mobile, is_mobile=mobile, timezone_id=tz)
                 for s in init:
                     ctx.add_init_script(s)
                 pg = ctx.new_page()
+                if now:
+                    pg.clock.set_fixed_time(now)
                 errs: list[str] = []
                 reqs: list[str] = []
                 # 우리가 막은 분석 요청(ERR_FAILED)과 회사망 전송 오류(ERR_CONNECTION_RESET 등 외부 CDN)는 페이지 오류가 아니다. 404 등 그 밖의 로드 실패는 그대로 잡는다.
@@ -245,16 +252,44 @@ def run(args) -> int:
             go(pg, "index.html")
             check(pg.evaluate(PROBE_JS)["anim"] == "none", "[reduced] 애니메이션이 남아 있음")
             ctx.close()
-            ctx, pg, errs, reqs = new(1280, 900)
-            pg.clock.set_fixed_time("2027-01-02T09:00:00")
-            go(pg, "index.html")
-            check(not pg.evaluate("() => !!document.getElementById('iqNotice')"), "[expired] hideAfter 지났는데 뜸")
-            ctx.close()
-            ctx, pg, errs, reqs = new(1280, 900)
-            pg.clock.set_fixed_time("2026-12-31T23:00:00")
-            go(pg, "index.html")
-            check(pg.evaluate("() => !!document.getElementById('iqNotice')"), "[lastday] hideAfter 당일에는 떠야 함")
-            ctx.close()
+
+            # ---- 7b: 표시 기간 showFrom(2026-10-31) ~ hideAfter(2026-12-31), 방문자 로컬 달력 날짜 기준 ----------
+            # (시각 문자열의 오프셋은 그 시각이 어느 시간대 벽시계인지 못 박는 용도, tz 는 브라우저가 쓰는 시간대)
+            SEOUL, UTC, LA = "Asia/Seoul", "UTC", "America/Los_Angeles"
+            window_cases = [
+                # 5페이지 전부: showFrom 전은 안 뜨고, 경계·중간은 뜬다
+                ("2026-10-18T09:00:00+09:00", SEOUL, False, PAGES),
+                ("2026-10-30T23:59:59+09:00", SEOUL, False, PAGES),
+                ("2026-10-31T00:00:00+09:00", SEOUL, True, PAGES),
+                ("2026-11-05T12:00:00+09:00", SEOUL, True, PAGES),
+                # hideAfter 경계(이전과 같은 동작)
+                ("2026-12-31T23:59:59+09:00", SEOUL, True, ["index.html"]),
+                ("2027-01-01T00:00:00+09:00", SEOUL, False, ["index.html"]),
+                ("2027-01-02T09:00:00+09:00", SEOUL, False, ["index.html"]),
+                # UTC
+                ("2026-10-30T23:59:59+00:00", UTC, False, ["index.html"]),
+                ("2026-10-31T00:00:00+00:00", UTC, True, ["index.html"]),
+                ("2026-12-31T23:59:59+00:00", UTC, True, ["index.html"]),
+                ("2027-01-01T00:00:00+00:00", UTC, False, ["index.html"]),
+                # 로스앤젤레스(2026-11-01 새벽까지 PDT -07:00, 이후 PST -08:00)
+                ("2026-10-30T23:59:59-07:00", LA, False, ["index.html"]),
+                ("2026-10-31T00:00:00-07:00", LA, True, ["index.html"]),
+                ("2026-12-31T23:59:59-08:00", LA, True, ["index.html"]),
+                ("2027-01-01T00:00:00-08:00", LA, False, ["index.html"]),
+                # 같은 순간이라도 방문자 시간대의 달력 날짜로 판정한다
+                ("2026-10-31T00:00:00+09:00", UTC, False, ["index.html"]),   # UTC 로는 10-30 15시
+                ("2026-10-31T00:00:00+09:00", LA, False, ["index.html"]),    # LA 로는 10-30 08시
+                ("2026-10-30T23:59:59-07:00", SEOUL, True, ["index.html"]),  # 서울로는 10-31 15시
+                ("2026-12-31T23:59:59-08:00", SEOUL, False, ["index.html"]), # 서울로는 2027-01-01 16시
+            ]
+            for iso, tz, want, pages in window_cases:
+                for name in pages:
+                    ctx, pg, errs, reqs = new(1280, 900, now=iso, tz=tz)
+                    go(pg, name)
+                    got = pg.evaluate("() => !!document.getElementById('iqNotice')")
+                    check(got == want, f"[window] {name} {iso} tz={tz}: 기대 {'표시' if want else '숨김'} / 실제 {'표시' if got else '숨김'}")
+                    check(not errs, f"[window] {name} {iso} tz={tz} 콘솔 오류 {errs[:3]}")
+                    ctx.close()
 
             # ---- 8: 대상 아닌 페이지 --------------------------------------------------------------------
             for name in NEGATIVE:
@@ -269,6 +304,9 @@ def run(args) -> int:
     src = (ROOT / "theme.js").read_text(encoding="utf-8")
     m = re.search(r"function mountNotice\(\)\{.*?\n  \}\n", src, re.S)
     check(bool(m) and not re.search(r"shLog|IQ_FORMS|gtag|fetch\(|sendBeacon|XMLHttpRequest", m.group(0)), "[static] mountNotice 안에 분석·전송 호출이 있음")
+
+    check(re.search(r"showFrom:\s*'2026-10-31'", src) is not None, "[static] NOTICE.showFrom 이 2026-10-31 이 아님")
+    check(re.search(r"hideAfter:\s*'2026-12-31'", src) is not None, "[static] NOTICE.hideAfter 가 2026-12-31 이 아님")
 
     print(f"checks={n_checks[0]} fails={len(fails)}")
     for f in fails:
