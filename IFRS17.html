@@ -343,10 +343,11 @@
         <div class="lrps-ctl" id="lrCtl">
           <label>공시시점 <select id="lrQ" class="select"></select></label>
           <label id="lrSegWrap" hidden>사업 구분 <select id="lrSeg" class="select"></select></label>
+          <label id="lrGrpWrap" hidden>구분 <select id="lrGrp" class="select"></select></label>
           <span class="lrps-pv" id="lrPv" aria-live="polite"></span>
         </div>
         <div class="small-muted" id="lrCap">손해율 = 예상보험금 ÷ 위험보험료 · 경과차년별 미래 가정
-          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="손해율 가정 읽는 법" aria-describedby="help-lr">?</button><span class="iq-help-pop" role="tooltip" id="help-lr">굵은 실선은 선택한 공시시점의 전체 합계, 옅은 점선은 직전 연도 공시의 합계입니다. 현재가치 기준 손해율은 선에 넣지 않고 오른쪽 숫자로 따로 적습니다. 값이 없는 칸은 '-' 이고 선이 끊깁니다. 아래 표의 구분·상품구분 행은 그 아래 포트폴리오의 예상보험금 합 ÷ 위험보험료 합(비율의 평균이 아님)이고, [+] 로 펼칩니다.</span></span></div>
+          <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="손해율 가정 읽는 법" aria-describedby="help-lr">?</button><span class="iq-help-pop" role="tooltip" id="help-lr">굵은 실선은 선택한 공시시점의 선, 옅은 점선은 직전 연도 공시의 같은 선입니다. 처음 화면은 Non-Par 입니다(이 시점·사업 구분에 Non-Par 가 없으면 합계, 합계도 없으면 첫 구분). 합계는 구분에서 고를 수 있습니다. 합계 곡선은 경과차년이 길어질수록 계약 유형(Non-Par·Direct-Par·Indirect-Par) 구성이 달라져(칸마다 세 유형의 비중이 다름) 유형 자체의 손해율이 같아도 꺾일 수 있습니다. 같은 유형끼리 비교하려면 구분을 고르세요. 다만 구분을 골라도 그 유형 자체의 공시값이 경과차년에 따라 크게 달라지면(위험보험료가 작은 칸 등) 곡선은 그대로 꺾입니다. 공시 기준과 구성은 해마다 다를 수 있어 직전 연도 점선과 구성이 다를 수 있습니다. 현재가치 기준 손해율은 선에 넣지 않고 오른쪽 숫자로 따로 적습니다. 값이 없는 칸은 '-' 이고 선이 끊깁니다. 아래 표의 구분·상품구분 행은 그 아래 포트폴리오의 예상보험금 합 ÷ 위험보험료 합(비율의 평균이 아님)이고, [+] 로 펼칩니다.</span></span></div>
         <div class="chart-container chart-sm"><canvas id="canvasLr" role="img" aria-label="경과차년별 손해율 가정 꺾은선 차트"></canvas></div>
         <div class="lrps-treebar" id="lrBar"><button type="button" class="lrps-bar-btn" data-act="open" aria-label="세부 표 모두 펼치기">모두 펼치기</button><button type="button" class="lrps-bar-btn" data-act="close" aria-label="세부 표 모두 접기">모두 접기</button></div>
         <div class="table-wrap lrps-table" id="lrTable"></div>
@@ -1562,7 +1563,7 @@
   // 버튼은 진짜 <button aria-expanded aria-controls>. 차트만 다시 그리는 리사이즈에서는 이 표를 건드리지 않는다.
   // 이 페이지는 폭이 640px 를 넘나들거나 테마가 바뀌면 renderCompany 로 대시보드 전체를 다시 그린다. 그때 공시시점·사업구분·
   // 펼침 상태가 날아가지 않도록 선택값과 펼친 행의 경로를 LRPS_UI 에 두고, 회사나 공시시점·사업구분을 바꿀 때만 비운다.
-  const LRPS_UI = { lr:{ company:null, q:null, seg:null, open:new Set() }, ps:{ company:null, q:null, open:new Set() } };
+  const LRPS_UI = { lr:{ company:null, q:null, seg:null, grp:null, open:new Set() }, ps:{ company:null, q:null, open:new Set() } };
   let LRPS_UID = 0;
   function lrpsTree(box, bar, o){
     const uid = "lrpst"+(++LRPS_UID)+"-";
@@ -1647,9 +1648,12 @@
     return (LRPS.lr && LRPS.lr.meta && LRPS.lr.meta.years) || LR_YEARS;
   }
   function lrPriorQuarter(qq){ const [y,n]=wfParseQ(qq); return (y-1)+"."+n+"Q"; }
-  function lrTotalMap(qd, seg){
+  // 곡선 한 줄: 구분이 "합계"면 [합계,'',합계] 행, 아니면 그 구분의 소계 행 [구분,'',''] (빌더가 Σ예상보험금÷Σ위험보험료×100 로 계산해 둠).
+  function lrCurveMap(qd, seg, grp){
     const rows = qd && qd.s && qd.s[seg]; if(!rows) return null;
-    const t = rows.find(r=> r[0]==="합계" && r[2]==="합계"); if(!t) return null;
+    const t = (!grp || grp==="합계") ? rows.find(r=> r[0]==="합계" && r[2]==="합계")
+      : rows.find(r=> r[0]===grp && r[1]==="" && r[2]==="" && lrpsHas(r[3]));
+    if(!t) return null;
     const m = {}; lrColsOf(qd, seg).forEach((y,i)=>{ m[y]=t[3][i]; });
     return m;
   }
@@ -1671,13 +1675,15 @@
     }
     stub(stubEl, false); wrap.style.display="";
     const ui = LRPS_UI.lr;
-    if (ui.company!==company){ ui.company=company; ui.q=null; ui.seg=null; ui.open=new Set(); }   // 다른 회사 → 초기화
-    const qsel=q(host,"#lrQ"), ssel=q(host,"#lrSeg");
+    if (ui.company!==company){ ui.company=company; ui.q=null; ui.seg=null; ui.grp=null; ui.open=new Set(); }   // 다른 회사 → 초기화
+    const qsel=q(host,"#lrQ"), ssel=q(host,"#lrSeg"), gsel=q(host,"#lrGrp");
     const qs = Object.keys(c.q).sort(wfCmpDesc);
     lrpsFill(qsel, qs, v=>v, ui.q || qs[0]);
     const onPick = ()=>{ ui.open=new Set(); drawLossRatio(host, company); };   // 공시시점·사업구분을 직접 바꾸면 접힌 상태로
     qsel.addEventListener("change", onPick);
     ssel.addEventListener("change", onPick);
+    // 구분은 곡선만 바꾼다: 아래 트리 표의 펼침 상태는 그대로 둔다.
+    gsel.addEventListener("change", ()=>{ ui.grp=gsel.value; drawLossRatio(host, company); });
     drawLossRatio(host, company);
   }
   function drawLossRatio(host, company){
@@ -1690,19 +1696,32 @@
     segWrap.hidden = segs.length < 2;
     const seg = ssel.value, rows = qd.s[seg], cols = lrColsOf(qd, seg);
     ui.q = qq; ui.seg = seg;
-    const cur = lrTotalMap(qd, seg);
-    const prevQ = lrPriorQuarter(qq), prev = lrTotalMap(c.q[prevQ], seg);
+    // 구분 선택지: 합계 + 이 시점·사업구분에 값이 있는 구분 소계 행. 선택지가 하나뿐이면 선택기를 숨긴다.
+    const gsel=q(host,"#lrGrp"), grpWrap=q(host,"#lrGrpWrap");
+    const grpAll = [], hasTot = rows.some(r=> r[0]==="합계" && r[2]==="합계");
+    for (const r of rows) if (r[0]!=="합계" && r[1]==="" && r[2]==="" && lrpsHas(r[3]) && !grpAll.includes(r[0])) grpAll.push(r[0]);
+    // 합계 행이 없는 사업구분은 「합계」를 선택지에서 뺀다(골라도 되돌아가는 죽은 선택지). 합계 행이 있으면 구분이 하나뿐이어도 합계와 그 구분 둘을 둔다.
+    const grpOpts = hasTot ? ["합계"].concat(grpAll) : (grpAll.length ? grpAll : ["합계"]);
+    // 처음 화면은 Non-Par. 이 시점·사업구분에 Non-Par 가 없으면 합계, 합계도 없으면 첫 구분(owner 2026-10-19).
+    // ui.grp 는 사용자가 직접 고른 값만 기억한다(없는 사업구분을 거쳐 와도 덮어쓰지 않음). 그 값이 이 선택지에 없으면 위 기본 규칙으로 돌린다.
+    const grpWant = (ui.grp && grpOpts.includes(ui.grp)) ? ui.grp
+      : (grpOpts.includes("Non-Par") ? "Non-Par" : (grpOpts.includes("합계") ? "합계" : grpOpts[0]));
+    lrpsFill(gsel, grpOpts, v=>v, grpWant);
+    grpWrap.hidden = grpOpts.length < 2;
+    const grp = gsel.value;
+    const cur = lrCurveMap(qd, seg, grp);
+    const prevQ = lrPriorQuarter(qq), prev = lrCurveMap(c.q[prevQ], seg, grp);
 
     // 현재가치 기준 손해율은 선에 넣지 않고 숫자 하나로
     const pvEl = q(host,"#lrPv");
     const pvCur = cur ? cur["현재가치"] : null, pvPrev = prev ? prev["현재가치"] : null;
     pvEl.innerHTML = "";
-    pvEl.append("현재가치 기준 ");
+    pvEl.append("현재가치 기준 "+(grp==="합계" ? "" : grp+" "));
     const b=document.createElement("b"); b.textContent = pvCur==null ? "-" : pct1(pvCur)+"%"; pvEl.appendChild(b);
     if (prev) pvEl.append(" · "+prevQ+" 공시 "+(pvPrev==null ? "-" : pct1(pvPrev)+"%"));
 
     // 차트는 폭이 브레이크포인트를 넘나들 때 이 클로저만 다시 부른다(표 펼침 상태·선택값은 그대로).
-    lrChartRedraw = ()=>{ if (host.isConnected) drawLrChart(host, company, qq, cur, prev, prevQ); };
+    lrChartRedraw = ()=>{ if (host.isConnected) drawLrChart(host, company, qq, cur, prev, prevQ, grp); };
     lrChartRedraw();
 
     // 세부 표: 합계 맨 위, 구분 › 상품구분 › 포트폴리오 트리(기본 접힘). 전 칸 '-' 인 행은 숨긴다.
@@ -1865,22 +1884,23 @@
       }));
     }
   }
-  function drawLrChart(host, company, qq, cur, prev, prevQ){
+  function drawLrChart(host, company, qq, cur, prev, prevQ, grp){
+    grp = grp || "합계";
     const c = LRPS.lr.companies[company];
     const coName = codeToName[company] || c.n || company;
     const narrow = LR_MQ.matches;
-    // 선: 선택 시점 합계(굵은 실선) + 직전 연도 공시 합계(옅은 점선, 없으면 생략). 칸은 하나도 빼거나 합치지 않는다.
+    // 선: 선택 시점 선택 구분(기본 Non-Par; 없으면 합계)의 곡선(굵은 실선) + 직전 연도 공시의 같은 구분(옅은 점선, 없으면 생략). 칸은 하나도 빼거나 합치지 않는다.
     const labelSet = new Set();
     for (const m of [cur, prev]) if (m) for (const y of Object.keys(m)) if (y!=="현재가치") labelSet.add(y);
     const labels = Array.from(labelSet).sort((a,b)=> (LR_RANK[a]==null?99:LR_RANK[a]) - (LR_RANK[b]==null?99:LR_RANK[b]));
     const xs = labels.map((y,i)=> lrXPos(y, i, narrow));
     const pts = (m)=> labels.map((y,i)=> ({ x: xs[i], y: (m && m[y]!=null) ? m[y] : null }));
     const ds = [];
-    if (prev) ds.push({ label: prevQ+" 공시 합계 (직전)", data: pts(prev),
+    if (prev) ds.push({ label: prevQ+" 공시 "+grp+" (직전)", data: pts(prev),
       borderColor: TH.muted, backgroundColor: "transparent", pointBackgroundColor: TH.muted, pointBorderColor: TH.muted,
       borderWidth:2, borderDash:[3,4], pointRadius: narrow?0:3, pointHoverRadius: narrow?4:5,
       cubicInterpolationMode:"monotone", spanGaps:false, order:2 });
-    if (cur) ds.push({ label: qq+" 공시 합계", data: pts(cur),
+    if (cur) ds.push({ label: qq+" 공시 "+grp, data: pts(cur),
       borderColor: currentKey.line, backgroundColor: currentKey.soft, pointBackgroundColor: currentKey.line, pointBorderColor: currentKey.line,
       borderWidth:3.5, pointRadius: narrow?2.5:4, pointHoverRadius: narrow?5:6,
       cubicInterpolationMode:"monotone", spanGaps:false, order:1 });
@@ -1889,6 +1909,7 @@
     if (!cv) return;
     const vals = ds.flatMap(d=> d.data.map(p=>p.y)).filter(v=> v!=null);
     cv.setAttribute("aria-label", shortName(coName)+" "+qq+" 공시 경과차년별 손해율 가정 곡선 차트"
+      + (grp==="합계" ? "" : " · "+grp)
       + (vals.length ? " · 범위 "+pct1(Math.min(...vals))+"%에서 "+pct1(Math.max(...vals))+"%" : " · 표시할 값 없음"));
     const xMin = narrow ? 0.5 : 0, xMax = narrow ? labels.length+0.5 : LR_OPEN_END_X+1;
     charts.lr = new Chart(cv.getContext("2d"), {
@@ -1898,7 +1919,7 @@
         interaction:{ mode:"index", intersect:false },
         plugins:{
           legend:{ display:true, position: narrow ? "bottom" : "top" },
-          title:{ display:true, text:"손해율 가정 · "+shortName(coName) },
+          title:{ display:true, text:"손해율 가정 · "+shortName(coName)+(grp==="합계" ? "" : " · "+grp) },
           tooltip:{ callbacks:{
             title:(items)=> items.length ? labels[items[0].dataIndex] : "",
             label:(x)=> x.dataset.label+": "+(x.parsed.y==null ? "-" : pct1(x.parsed.y)+"%"),
