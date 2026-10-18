@@ -1,5 +1,8 @@
 # TODO archive — `TODO_publishing.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 발행사 처리 기준 재분류 + 증권별 X 검정(커밋만 · push 보류)** — 티켓 `20261012T2115Z`: 하나생명 제1회·교보 2024-11 `type` tier2 -> tier1(발행사 K-ICS 표가 기본자본형으로 처리), 나머지 tier2 증권 10개사 12건은 발행 분기 X(항목13-49) 검정으로 보완자본형 확인, 판정 불가 3건(푸본 600·농협생명 제5회·코리안리 제6회)은 현 분류 유지(`issuer_check`). 소진율 tier1 은 하나생명 0.0 -> 238.2 만 변경(교보 70.1 불변), tier2·총자본 경로 불변, forward 의 `baseline_basis_flag` 류 필드는 사라짐. `tier1_overflow_into_tier2_eok`(공개 시트 1칸)가 옛 채권원장 추정(하나생명 665.7)으로 낡아 있던 것을 기본자본 소진율과 같은 출처(1,043.6)로 47사 통일 (`dbbffcb5`).
+  남은 것: ① owner: 판정 불가 3건의 발행사 처리 확인 필요 시 별도 근거(원문 표 재독)가 필요 ② 증빙 `data/_derived/capsec_reinstate_20261012/x1~x6` ③ 기존 DB손보 5건(기본자본형)은 이번 범위 밖 - 같은 X 검정 미실시.
+
 - **2026-10-12 소진율 도넛 + Forward Outlook 재공개(커밋만 · push 보류)** — 티켓 `20261012T2030Z`: 등재부 재분류(하나생명 제1회·푸본 600·농협생명 제5회·코리안리 제5/6회 -> tier2 확정, 교보 2024-11 type=tier2 + `issuer_type`=tier1) -> 소진율 tier1 만 4사 변경(하나생명 238.2->0.0 · 코리안리 205.1->94.0 · 농협생명 72.7->48.5 · 푸본 42.1->17.3), tier2 불변. forward 가 증권별 계층(기발행 15% · 기본자본형 10% · 보완자본형 기본자본 0)을 따르고 총자본 경로는 47사 불변. 비공개 목록 3종 비움 + 공개 스냅샷 3시트 재생성 (`ef62969`·`2729a53`).
   남은 것: ① designer: K-ICS.html fetch 복원과 같은 커밋에서 `LIVE_ARTIFACT_READERS` 에 루트 JSON 3개 선언(`tests/test_push_gate_wiring.py`) · `tests/test_deploy_assets.py` 의 「fetch 안 함」 단정 뒤집기 · `download-survey.js` 주석 해제 · `report-widget.js` 목록 ② owner: DB손보 2026 신종 3건·하나손해·하나생명은 census 1차가 다르게 읽음(아래 changelog), census 최종본 대조 ③ 증빙 `data/_derived/capsec_reinstate_20261012/`.
 

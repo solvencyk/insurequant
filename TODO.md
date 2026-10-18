@@ -1,30 +1,28 @@
 # Insurequant TODO — cross-stage
 
-> 갱신 2026-10-16 · 사실(게이트·inbox·커버리지)은 `scripts/status_report.py --fast` 가 정본이고, 이 파일은 의도만 적는다.
+> 갱신 2026-10-19 · 사실(게이트·inbox·커버리지)은 `scripts/status_report.py --fast` 가 정본이고, 이 파일은 의도만 적는다.
 > stage 별 TODO·프롬프트·이력 위치는 `CLAUDE.md` §1. 2026-10-07 정리 전 전문은 `docs/todo_archive_root.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-19 owner 승인 반영 · 후속 처리 완료(작업 브랜치 로컬 커밋; 푸시 전 풀 훅 → push → main 배포 진행).** 팝업 시작일 10-31 · 손해율 기본 Non-Par · IFRS17 현재가치 반올림 수정 · 다운로드 방명록 내부 접속 제외 · 문서 결정 7건(Status 5줄 · xlsx 단서 · 별첨/손보 경로 정정 · archive 이동 · 동시 에이전트/배포 주체 규칙) · compare·privacy 접근성 감사 18건.
+  규칙(owner 2026-10-19): 동시 에이전트 수는 메모리·CPU 여유로 정함. main 배포는 기본이 오케스트레이터 직접(구두 GO 뒤), push 가 막히면 2회 시도 뒤 owner 에게 Termux 명령·배치파일 제시. owner 결정 대기: 구분×포트폴리오 평면 8개 단위 선택기 · a11y 색 변경 5건 · 10-13 이월 4건.
 - **2026-10-18 TODO 일괄 처리 완료(작업 브랜치 로컬 커밋, 미푸시·미배포).** 손해율 가정 구분 선택기(compare·IFRS17 8절) · 3분기 안내 팝업(theme.js) · 작업 폴더 정리(격리 1259개 10.5GB, git status 체감 5초 → 1초 미만) · 문서 낡은 서술·깨진 참조 113건 정정 · 사업성 평가 보고서 · reach out 후보 28건(미추적 파일, 발송 안 함).
   독립 검증: 손해율 곡선은 마스터 재계산과 최대 0.05pp 차이(IFRS17 현재가치 5칸만 0.054pp, 이중 반올림), 팝업은 5페이지 위반 0. 남은 것: 현재가치 이중 반올림(publishing)·스위스리 Indirect-Par 21~25년 159.27 원문 확인(parser)·문서 규칙 충돌 owner 판단(아래 「owner 결정 대기」). 푸시 전 풀 훅을 미리 돌려 통과 확인(RED 0 · 오프라인 시험 951 통과, 5분 46초 포함 약 11분) — 푸시 때 같은 훅이 다시 돈다. 배포는 owner GO 뒤.
 - **2026-10-13 새벽 작업 브랜치 push `5414c81e`(풀 훅 gate-clear) · main 배포 `970259b8` 완료.** owner 결정으로 소진율 도넛·Forward Outlook 복원(발행현황 패널 유지 · 3시트와 루트 JSON 3개 재공개) — 위 오후 「내림」 결정은 번복됨. 신종 분류는 발행사 처리 기준(하나생명·교보 2024-11 기본자본형 · DB손보 기본자본형 확정), 보완자본 분자의 기발행 차감 = 원장의 2022-12-31 이전·콜 미경과 잔액(47사 독립 감사 PASS),
   「최신 공시 직전 컬럼」은 검산이 확실히 닫히는 것만 적용(K-ICS 16블록 65칸 · IFRS17 249셀 · 박제 예외 해제 · 재작성 장부 +29, 독립 검수 일치). 예별·롯데 전망의 가짜 개선 제거(자본잠식 해는 선을 안 그림 · 음수 △).
   배포: owner 취침 중 지시(「라이브 push 까지 쭉」)로 PC 의 격리 sparse 클론에서 `android_push_and_deploy.sh --from-origin --branch fix/csm-product-segmented-columns` 실행(기존 24개 갱신·신규 6개), 라이브 확인 완료(manifest build_id `99c7ead7` · 하나생명 기본자본 238.2 · 메리츠 보완자본 37.5 · 콘솔 오류 0). 별건 follow-up `inbox/parser/20261012T1820Z…`(푸본현대·흥국화재 2023.1Q 1Q 값, 삼성화재 2024.1Q 항목 13·14, 삼성생명 BS 단절). 아침 결정: 흥국화재·악사 콜 경과 방향 · 아이엠라이프 원장(전환우선주·기준일) · 코리안리·농협생명·푸본 4건 분류.
-- **2026-10-12 오후 작업 브랜치 push 직전(HEAD `0f143d2` 이후).** owner 결정: K-ICS 소진율 도넛·Forward Outlook 을 화면에서 내림(신종 분류 판단이 들어가는 숫자는 건조하게 못 뽑는다 — 유료화 후보) → 발행연도별 신종·후순위채 누적 막대 + 큼직한 셀 2개(최근 발행금리·총발행액 '23~·가장 가까운 콜 1건), 기본자본소진율·보완자본소진율·자본비율전망 3시트는 다운로드 목록에서 임시로 내림(파일·시트 그대로, `download-survey.js` 주석 해제로 복구).
-  공유 버튼 이용 기록(`shares` 탭) 라이브(`deploy/design-20261012`), IFRS17 「보험금 예실차비율」 독립 섹션 + 시트 신설, 재보사 PL 7칸 복원·처브 BS/ILP·분할표·퍼시픽/악사 K-ICS 칸 보정, 손해율 재보사 세그먼트 표준화 + 85MB→1MB(.gz). 남은 것: validation 골든·AIG R3 등재(`T1400Z`) → `git push origin fix/csm-product-segmented-columns`(풀 훅 ≈10분) → owner 폰 배포.
 
 ## 열린 일
 
 - [x] **정리 fan-out 1차(owner 2026-10-16, 2026-10-18 완료·로컬 커밋)** — 캐시·빈 폴더 43개 삭제, 1259개(10.5GB: pytest 임시 폴더 4.4GB · 게이트 보고서 6.3GB · `data/_derived` 111MB 등)를 `C:/Users/sangwook.cho/insurequant_quarantine_20261018`(MOVED.json·README.txt)로 이동(삭제 아님), 추적 백업 2개 제거, 문서 낡은 서술·깨진 참조 113건 정정(보관본·이력은 무수정 확인). 격리 폴더는 owner 가 직접 삭제함(2026-10-19). 남긴 것: `artifacts/kics_validation/report_*.json` 53개(문서가 이름을 언급), `scripts/_probes` 임시 이름 추적 스크립트 21개, 개인 파일. 문서끼리 규칙이 어긋난 곳은 바로 아래 항목.
-- [ ] **문서 규칙 충돌 owner 판단(2026-10-18, 문서 정리에서 발견 — 어느 쪽이 맞는지 정해야 고칠 수 있다)** —
-  ①② (해소 2026-10-19) 동시 에이전트는 그때 메모리·CPU 여유를 보고 정함(보통 4개 이내), main 배포는 기본이 오케스트레이터 직접(owner 구두 GO 뒤)이고 push 가 막히면 2회 시도 뒤 owner 에게 Termux 명령·배치파일을 제시 — `CLAUDE.md` §10·§11 과 관련 문서에 반영함
-  ③ 별첨 수집: `docs/agents/claude-agent-downloader.md` 「재무제표·감사보고서는 보지 마」 대 `.claude/agents/downloader.md` 「경영공시 별첨은 받아 attachments/ 에 저장(2026-10-11)」  ④ 손보 수집 경로: `docs/flows/` 협회 일괄 대 downloader 문서의 사별 스크립트(현행이 무엇인지)
-  ⑤ master xlsx: `CLAUDE.md` §8 「전체 재생성 금지」 대 `docs/launch_runbook.md` 「재생성 필수·마지막 수단 build_master_xlsx.py」, 그리고 「openpyxl 재저장 금지」 대 `sync_master_xlsx_sheet.py` 가 openpyxl 로 저장(수식 0개일 때만)  ⑥ `CLAUDE.md` §2 「Status 항목당 3줄」 대 실제 길이(규칙을 현실에 맞출지)
-  ⑦ 2026-05 스냅샷 `docs/roadmap.md`·`docs/strategy-monetization.md` 갱신 여부  ⑧ 임무가 끝난 `docs/handoff_20261007_*`·`handoff_20261008_*`·`docs/mockups/compare/` 를 보관으로 옮길지  ⑨ `docs/a11y_baseline.md` 는 4페이지만 감사(compare·privacy 빈칸)  ⑩ 훅 소요 표기는 약 11분으로 통일(이번에 `.githooks/pre-push` 문구를 고침, 에이전트 정의는 이미 약 11분, `CLAUDE.md` §5 「~10분」은 owner 확인 뒤)
-- [ ] **26년 3분기 업데이트 안내 팝업(owner 2026-10-16, 2026-10-18 완료·로컬 커밋·미배포)** — `theme.js` 맨 위 `NOTICE`(id 2026-3Q · owner 문구 네 줄 그대로 · hideAfter 2026-12-31), index·K-ICS·IFRS17·공시보고서·compare 5페이지에서 브라우저당 1회(닫으면 localStorage `iq_notice_seen`, 저장소 막히면 방문마다), 분석·공유 로그 호출 없음, 새 배포 파일 없음. 독립 검증 위반 0. owner 확인: 제목 「2026 3분기 업데이트 안내」·버튼 「닫기」는 임의로 지음 · 숨김 날짜 12-31 · 표시 범위(jp·privacy 제외) · `tests/regression_*.py` 3종은 팝업이 클릭을 가려 `iq_notice_seen=2026-3Q` 사전 주입 필요. 다음 분기는 `NOTICE.id` 만 바꾸면 다시 뜬다.
-- [ ] **reach out 후보 추가 발굴(owner 2026-10-16, 후보 확보 완료·발송은 owner 지시 뒤)** — 신규 28건(언론 15 · 비언론 13)을 `outreach_candidates_20261018_press.md`·`outreach_candidates_20261018_nonpress.md` 로 적음(루트 미추적, 이메일 포함이라 커밋 금지). 기존 96건·보낸 8곳은 제외. 보험연구원 후보 1명은 이미 보낸 연구원과 같은 기관(접촉 전 판단). 증권사 PDF 색인이 약해 이메일은 5곳만 확인. 아직 아무것도 보내거나 초안을 만들지 않았다.
-- [ ] **손해율 가정 비교를 구분(계약 유형) 단위로(owner 2026-10-16, 2026-10-18 구현·로컬 커밋·미배포)** — compare 손해율 카드(넓은 화면·좁은 화면·현재가치 표·업계 중앙값)와 IFRS17 8절에 구분 선택기(합계 · Non-Par · Indirect-Par · Direct-Par, 공시 이름 그대로, 기본 합계라 기존 숫자 불변, 주소 `g=`). 믹스 효과 설명은 ? 팝오버에만. 데이터는 `scripts/viz_build_compare_panel.py` 에 구분 축을 더해 `data/compare/panel_compare.json`(120KB → 153KB)을 다시 만듦(기존 필드 불변, 마스터 무수정). 검증: 전 회사 마스터 재계산과 곡선 최대 0.05pp 차이.
-  스위스리는 Non-Par 곡선이 꺾이지 않아 믹스 효과가 확인됐다(5년 70.7 → 11~15년 48.7 중 약 73%가 Indirect-Par 비중 32% → 75%). 다만 Indirect-Par 자체가 21~25년에 50.3 → 159.3 으로 뛰는데 원문 공시값이다(위험보험료 248억). 남은 것: ① (해소 2026-10-18) 원문 PDF 23쪽 직접 확인: 인쇄값 159.55(금액 395/248 은 반올림 금액이라 환산 159.27), 공시값 그대로 ② IFRS17 현재가치 구분 소계의 이중 반올림 5칸(최대 0.054pp, publishing 이 `viz_build_ifrs17_panels.py` 저장 자릿수와 골든 갱신) ③ 배포 때 HTML 2개 · `panel_compare.json` · `theme.js` 를 한 묶음으로(구판 JSON 이면 선택기만 숨겨질 뿐 깨지지 않음).
+- [ ] **문서 규칙 잔여(2026-10-19)** — 해소: 동시 에이전트 수(메모리·CPU 여유로 정함) · 배포 주체/경로(기본 오케스트레이터 직접, 막히면 Termux·배치파일 제시) · 별첨 수집 범위(경영공시 별첨 수집, DART 별첨 금지) · 손보 수집 경로(2026.2Q 는 사별 사이트 스크립트) · master xlsx 문구(`CLAUDE.md` §8 에 sync 스크립트의 수식·피벗 REFUSE 단서 추가) · Status 항목 5줄 · 끝난 `handoff` 2개와 `mockups/compare` 를 `docs/archive/` 로. 남은 것: `docs/roadmap.md`·`docs/strategy-monetization.md`(5월 스냅샷) 갱신은 사업성 평가 2차와 함께, compare·privacy 접근성 점검 결과 반영(`docs/a11y_baseline.md`).
+- [ ] **26년 3분기 업데이트 안내 팝업(owner 2026-10-16, 문구 승인 2026-10-19; 구현·로컬 커밋·미배포)** — `theme.js` 맨 위 `NOTICE`(id 2026-3Q · owner 문구 네 줄 그대로 · **showFrom 2026-10-31 · hideAfter 2026-12-31**). 방문자 로컬 날짜 기준이라 한국 0시 동시 점등이 필요하면 별도 처리. 5페이지 · 브라우저당 1회 · 분석 호출 없음 · 새 배포 파일 없음. `tests/regression_*.py` 3종은 팝업이 켜지는 기간에 `iq_notice_seen=2026-3Q` 사전 주입 필요. 다음 분기는 `NOTICE` 의 id · 날짜 · 문구만 바꾼다.
+- [ ] **reach out(owner 2026-10-16)** — owner 가 후보 28건을 읽고 몇 곳에 직접 더 보냈고, 조선비즈 인용 기사(2026-10-18)에 대한 감사 메일도 직접 보냄. 후보 파일은 루트 미추적(이메일 포함이라 커밋 금지). 남은 것: 새 발송일 · 답장을 받으면 사업성 평가 2차 입력으로 쓴다.
+- [ ] **손해율 가정 구분 단위 비교(owner 2026-10-16)** — ① 구현 완료·로컬 커밋·미배포: 구분 선택기(합계 · Non-Par · Indirect-Par · Direct-Par, 공시 이름 그대로), **기본 Non-Par(owner 2026-10-19)**, compare 손해율 카드 · IFRS17 8절. IFRS17 현재가치 이중 반올림도 고침(빌더 `viz_build_persistency_lossratio_panels.py`, `panel_loss_ratio.json` 206 → 282KB, 전 칸 표시값 차이 0.05pp 이하, 티켓 `20261018T0700Z` answered). 단일 구분 회사도 합계와 그 구분 두 선택지를 보인다.
+  ② 조사 `docs/loss_ratio_comparable_unit_20261019.md`(독립 검증 통과): Non-Par 한 줄만으로는 생보가 아직 왜곡(건강 95 대 사망 67, 회사별 비중 차이로 선이 중앙 4pp 어긋남). 최소 비교 단위 = 구분×포트폴리오 한 줄(생보 4개: Non-Par 건강 · Non-Par 사망 · Indirect-Par 사망 · Direct-Par 변액사망 / 손보 4개: Non-Par 상해 · 질병, Indirect-Par 상해 · 질병), 이 단위에서 비중 어긋남 중앙 0.1~0.3pp. 스위스리 Non-Par 는 4개 하위가 섞여 16년 이후 구성 효과가 최대 △20pp 라 재보사는 세그먼트×포트폴리오로 따로 봐야 한다.
+  ③ owner 결정 대기: 평면 8개 단위 선택기를 만들지. 추천: 기본값 생보 Non-Par 건강 · 손보 Non-Par 상해, 단위 없는 회사는 합계 대체 대신 빈 칸, 위험보험료 100억원 미만 칸(18%)은 흐리게, 재보사는 세그먼트×포트폴리오 목록으로 따로. ④ validation 티켓 `20261019T0200Z`: 카카오페이손보 잎 합 85.7 대 공시 합계 행 100.0(한 칸 14.3pp), 이상치 4건 원문 대조.
+- [ ] **다운로드 방명록 내부 접속 제외(owner 2026-10-19 승인; 구현·검증 완료·로컬 커밋·미배포)** — `download-survey.js` 가 `iq_internal=1`(주소 또는 localStorage)이면 수집기로 행을 보내지 않는다. 일반 방문은 종전과 동일. 오류 제보(`report-widget.js`)에도 같은 제외를 넣을지는 미정.
 - [ ] **사업성 평가 1차(owner 2026-10-16, 2026-10-18 완료)** — `docs/business_assessment_20261018.md`(독립 검수로 근거 없는 주장 정정). 결론: reach out 효과는 아직 판단 불가(호의적 반응 3, 연락 이후 유입 측정 0; 10-19 조선비즈 10-18 기사가 인슈어퀀트를 출처로 인용 — 발송 명단 밖 매체), 방명록 신규는 연락 이전부터 줄어든 추세(초기 3주 주 4.7건 → 최근 3주 2.3건), 병목은 노출이라는 가설. GA4·서치콘솔 수치는 이 환경에서 못 읽는다 — owner 가 주별 신규 이용자(첫 사용자 소스/매체별)·발송 매체 도메인 세션·서치콘솔 노출/클릭·실제 발송일을 주면 2차를 돌린다. 발송 링크에 utm 을 붙일지도 결정 필요.
 - [x] **DB손보 제1~5회 신종 = 기본자본형 확정(owner 2026-10-12 밤).** 독립 감사의 X 검정(2026.1Q+2Q 합산 재분류 증가 +8,915 대 기본자본형 기대 +5,942)이 보완자본형 쪽으로 기울었으나, owner: 「해약환급금준비금 규모가 늘어 보완자본도 늘어난 것 — 기본자본으로 냅둬」. 등재부 유지(소진율 151.6), 뒤집지 않는다(근거 기사 + 이 결정). 재감사 때 이 항목을 다시 플래그하지 말 것.
 - [x] **보완자본 소진율 분자의 경과조치 기발행분 차감 = 2023년 이전 발행분만(owner 2026-10-12 밤, 47사 전체).** owner: 「기발행은 그 시점까지 발행한 전체 물량 같다, 2023년 이전 것까지만 소진율 차감」. 구현: 차감액 = min(공시 인쇄 항목 53·54, 채권 원장의 2022-12-31 이전 발행 잔액), 미래에셋·DB생명 개별 예외는 일반 규칙으로 흡수. 기대 변화 메리츠 0.2→32.2·흥국생명 10.6→37.0·농협생명 18.8→21.1·농협손해 103.9→102.8(감사 실측). publishing(`a8ba3ca`) 진행, 티어1 기발행 갈래(항목 53 15%)는 이번에 바꾸지 않고 보고만.
@@ -33,9 +31,9 @@
   전체 표: `data/disclosure/_meta/final_validation_runlog_20261011.md`. 밤샘 스윕 지시·진행 상세는 `docs/todo_archive_root.md` 맨 위.
 - [ ] **신종자본증권·후순위채 분류 전수조사(내부, owner 2026-10-12)** — 화면에는 쓰지 않는다. parser-kics 진행 중 `inbox/parser/20261012T1230Z…`, 산출 `data/_derived/capital_securities_classification_census_20261012/`(원문 확정/시계열 추정/불명 3단계, 기존 등재부 `data/bonds/capital_tier_registry.json` 과 불일치 목록).
 - [ ] **신규 도메인: 채널별 유지율 · 손해율 추이 + 사별 비교 기능(owner 팀장 요청 2026-10-07)** — 추출 진행 중.
-  인수인계 `docs/handoff_20261007_persistency_lossratio_compare.md`(상태·census·남은 순서), 명세는 `inbox/parser/20261007T0*` 티켓 3개.
+  인수인계 `docs/archive/handoff_20261007_persistency_lossratio_compare.md`(상태·census·남은 순서), 명세는 `inbox/parser/20261007T0*` 티켓 3개.
   비교 기능은 owner 의 핵심 지표 목록 대기.
-- [ ] **재보사 K-ICS 스윕(KR1101~KR1108) 후속(2026-10-11 완료·push, 계약 `docs/handoff_20261008_reinsurer_pipeline.md`)** — 남은 것:
+- [ ] **재보사 K-ICS 스윕(KR1101~KR1108) 후속(2026-10-11 완료·push, 계약 `docs/archive/handoff_20261008_reinsurer_pipeline.md`)** — 남은 것:
   - ① 스위스리아시아 2023.2Q 는 새 완성본 전기 열로 적재 가능(새 RED 0)·2023.3Q 는 새 RED 2(룰 4·`8_life_census`) — owner 결정, 적재하면 census 면제 등재를 풀어야 함
   - ② 퍼시픽 2023.1Q·2Q 는 비율만 인쇄돼 버킷 불가
   - ③ 퍼시픽 금리민감도 2024.4Q·2025.2Q 는 MD 에 있고 마스터에 없음(12행)·KR1107 비율 정밀값 4칸

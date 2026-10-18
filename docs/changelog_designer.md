@@ -9,6 +9,13 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/designer/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-19 — 안내 팝업 시작일 · 손해율 기본 Non-Par · 방명록 내부 접속 제외 · a11y 감사 (owner 승인, 커밋·미배포)
+
+- **3분기 안내 팝업 시작일**: `theme.js` `NOTICE.showFrom` 2026-10-31 추가. 방문자 로컬 날짜가 showFrom 이상 hideAfter(2026-12-31) 이하일 때만 뜬다(hideAfter 와 같은 날짜 문자열 비교, 시간대 변환 없음). `scripts/check_notice_popup.py` 498건(Asia/Seoul · UTC · America/Los_Angeles 경계 포함) 위반 0, 독립 검증 47/47.
+- **손해율 구분 선택기 기본값 Non-Par**(compare.html 손해율 카드 · IFRS17.html 8절 · `scripts/check_loss_group.py`): compare 는 주소 `g` 없음이 Non-Par, 나머지는 `g=합계` 등으로 적고 옛 링크 `g=Non-Par`·`g=합계` 유지. Non-Par 가 없는 회사는 합계 → 첫 구분으로 대체하고 이름 옆에 구분을 적는다. IFRS17 8절도 같은 순서. 합계를 명시로 고르면 선택기 도입 직전 숫자와 글자 그대로 같다. 점검 316건 위반 0, 마스터 재계산 대조 최대 0.05pp. 단일 구분 회사도 합계와 그 구분 두 선택지를 보인다(카카오페이손보는 잎 합과 공시 합계 행이 한 칸 14.3pp 어긋나 validation 확인 중).
+- **다운로드 방명록 내부 접속 제외**(`download-survey.js`, `scripts/check_download_survey_internal.py`): `iq_internal=1`(주소 또는 localStorage)이면 수집기로 행을 보내지 않는다. 설문과 다운로드 화면은 그대로. 10개 시나리오(수집기·분석 요청 가로채 개수만 셈) 통과. 오류 제보(`report-widget.js`)는 범위 밖.
+- **a11y 감사(compare · privacy, 감사만)**: `docs/a11y_baseline.md` 를 6페이지로 넓히고 위반 18건(중간 6 · 낮음 9 · 참고 3)을 기록, designer 티켓 `20261019T1400Z` 발행. 텍스트 대비 최소 5.28:1(다크 6.10) · 포커스 링 6.09:1 이상 · 가림/키보드 함정/가로 넘침 0 통과. 색 변경 5건은 owner 승인 필요.
+
 ## 2026-10-18 — 손해율 가정 구분 선택기 + 2026 3분기 안내 팝업 (owner TODO 일괄 처리, 커밋·미배포)
 
 - **손해율 가정 구분 선택기(compare.html · IFRS17.html 8절 · `scripts/viz_build_compare_panel.py` · `data/compare/panel_compare.json` · `scripts/check_loss_group.py`)**: 회사 전체 포트폴리오 한 줄은 뒤쪽 경과차년에서 계약 유형 비중이 달라져 곡선이 꺾이므로(스위스리 사례) 구분(합계 · Non-Par · Indirect-Par · Direct-Par, 공시 이름 그대로) 선택기를 넣었다. 기본은 합계라 기존 숫자는 그대로(HEAD 와 동일 확인). compare 는 넓은 화면 Chart.js · 좁은 화면 SVG · 현재가치 표 · 업계 중앙값이 같은 선택을 따르고 주소 `g=` 로 공유한다. IFRS17 8절은 패널 JSON 에 이미 있는 구분 소계 행을 쓴다(합계 행이 없는 뮌헨 · 제네럴 · 퍼시픽라이프리 사업구분은 선택지에서 합계를 빼고 구분이 하나면 선택기를 숨김). 믹스 효과 설명은 ? 팝오버에만. 빌더에 구분 축(`loss_curve.g` · `med_g` · `note_g`, `loss_pv.vg` · `medg`)을 더해 `panel_compare.json` 120,456 → 153,426 바이트(기존 필드 불변, 마스터 무수정, `--check` OK).

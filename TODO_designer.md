@@ -1,16 +1,16 @@
 # Insurequant Designer TODO (Stage 5)
 
-> 갱신 2026-10-18 · 프롬프트 `docs/agents/claude-agent-designer.md` · 이력 `docs/changelog_designer.md`
+> 갱신 2026-10-19 · 프롬프트 `docs/agents/claude-agent-designer.md` · 이력 `docs/changelog_designer.md`
 > 2026-10-07 정리 전 전문(BS-TACCOUNT·DESIGN-V2·MOB 블록 포함)은 `docs/todo_archive_designer.md` 맨 위에 있다. designer 는 push 하지 않는다.
 
 ## Status (최신 3개)
 
+- **2026-10-19 안내 팝업 시작일 10-31 · 손해율 기본 Non-Par · 방명록 내부 접속 제외 · a11y 감사 완료(커밋·미배포; owner 승인)** — 팝업 `NOTICE.showFrom` 2026-10-31(독립 검증 47/47), 선택기 기본 Non-Par(마스터 재계산 0.05pp 이내), `download-survey.js` 가 `iq_internal=1` 방문을 수집기로 보내지 않음. compare·privacy 감사 18건(중간 6 · 낮음 9 · 참고 3)을 `docs/a11y_baseline.md` 와 티켓 `20261019T1400Z` 에.
+  남은 것: a11y 티켓 수정(? 팝오버 마우스 접근 · 포커스 유실 · 모바일 손해율 선 마커 등 코드 문제 먼저, 색 변경 5건은 owner 승인 뒤) · 구분 단위 평면 8개 선택기(owner 결정 대기, `TODO.md`) · 배포 때 HTML 2개 + `panel_compare.json` + `panel_loss_ratio.json` + `theme.js` + `download-survey.js` 한 묶음.
 - **2026-10-18 손해율 가정 구분 선택기 · 2026 3분기 안내 팝업 완료(compare.html · IFRS17.html · theme.js · 빌더 · 점검 스크립트, 커밋·미배포; owner TODO 일괄 처리)** — 선택기: 합계 · Non-Par · Indirect-Par · Direct-Par(공시 이름 그대로, 기본 합계라 기존 숫자 불변), `panel_compare.json` 153KB 로 재생성; 팝업: `theme.js` `NOTICE`, 5페이지 1회, 분석 호출 없음.
   독립 검증: 곡선 최대 0.05pp(마스터 재계산), 합계 선택 시 HEAD 와 동일, 1280/375/다크 위반 0 · 콘솔 0, 팝업 428건 위반 0. 남은 것: IFRS17 현재가치 구분 소계 이중 반올림(publishing 티켓 `20261018T0700Z`) · 팝업 제목 · 숨김일(12-31) · 범위 owner 확인 · 배포 때 HTML 2개 + `panel_compare.json` + `theme.js` 한 묶음.
 - **2026-10-13 발행현황 추정 행 툴팁 꼬리 + 새 JSON 47사 재점검 완료(K-ICS.html·점검 스크립트 2종, 커밋·미배포; 티켓 20261013T0030Z)** — `estimated: true` 행이 있는 해의 막대 툴팁에 「추정(원장 미갱신)」 한 줄(하나손해 2026). DB손해 신종 콜 칸은 날짜만(2030-09-01), 하나손해는 최근 발행금리 「—」·총발행액 1,999억·2026 막대·콜 2029-05-14 (1,000억)로 확인.
   새 JSON(HEAD 392efee2, publishing 보정 커밋 포함) 47사 x 1280/375/다크 141회: 도넛·숫자 줄·경과조치 기발행 후순위가 JSON 과 일치(`scripts/check_kics_donuts.py`), 전망·발행현황(`check_kics_forward_note.py`·`check_kics_capsec_cells.py`) 위반 0·콘솔 0·넘침 0. 남은 것: 없음.
-- **2026-10-13 K-ICS 전망 거짓 개선 제거 · △ 표기 · 375px 도넛 툴팁 폭 · 콜일 칸 내구성 완료(K-ICS.html·시험·검사 스크립트, 커밋·미배포; 티켓 20261012T2236Z)** — 자본잠식 해(`capacity_exhausted`·`basic_capacity_exhausted`)는 선·점 null, 툴팁 「자본잠식」, 노트 「2030 변화」 「—」 + 안내 한 줄, 노트·y축 음수 전부 △. 도넛 긴 줄을 2줄로 나누고 「보완자본형이면 X%」는 표시값과 다를 때만(6사 박스 329~349 -> 전부 캔버스 325 안). 콜일 칸은 잔액 null·빈 칸·표식이어도 날짜만, 날짜 아닌 값은 대시.
-  47사 x 1280/375/다크 141회 위반 0·콘솔 0·넘침 0(`scripts/check_kics_forward_note.py`, 옛 판에 돌리면 예별 +41.8%p·6사 폭 초과를 그대로 잡음), 콜일 합성 6변형 통과(`scripts/check_kics_callcell.py`), 시험 `tests/test_kics_forward_note.py` + 기존 4종 통과. 남은 것: 없음(배포는 owner GO, 발행사 JSON 변경(한도 10% 표기 등)은 publishing 커밋 후 재점검).
 
 ## publishing 이 배포 전에 해야 할 일
 

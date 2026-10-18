@@ -1,6 +1,6 @@
 # A11y baseline + audit (2026-07-21)
 
-> Ordered by [inbox/designer/20260721T0233Z](../inbox/_resolved/20260721T0233Z__owner__MULTI__adopt_a11y_audit_baseline.md) (`ui-ux-pro-max` external skill reviewed and passed on — see §4). Scope: baseline definition + audit + owner-review queue for the 4 deployed pages (`index.html`, `K-ICS.html`, `IFRS17.html`, `공시보고서.html`). **Owner-review queue sign-off received same day (2026-07-21) — all color/contrast items fixed, see §2b.**
+> Ordered by [inbox/designer/20260721T0233Z](../inbox/_resolved/20260721T0233Z__owner__MULTI__adopt_a11y_audit_baseline.md) (`ui-ux-pro-max` external skill reviewed and passed on — see §4). Scope: baseline definition + audit + owner-review queue for the 4 deployed pages (`index.html`, `K-ICS.html`, `IFRS17.html`, `공시보고서.html`). **Owner-review queue sign-off received same day (2026-07-21) — all color/contrast items fixed, see §2b.** **Since 2026-10-19 the scope is all 6 deployed pages (`index`, `K-ICS`, `IFRS17`, `공시보고서`, `compare`, `privacy`): `compare.html` and `privacy.html` were first audited on that date, see §5.**
 
 ## 1. Target level
 
@@ -73,3 +73,58 @@ IFRS17.html's waterfall bars (`#22c55e` positive / `#ef4444` negative) are a gre
 Per the order's delegation ("구현 형태는 위임 — 외부 스킬 설치 vs `skill-creator`로 로컬 스킬. 로컬 권장"): went **local**. `ui-ux-pro-max` isn't installed in this environment and installing an external skill needs its own approval step; more importantly this repo's a11y surface is small and specific (4 static-ish dashboards, a handful of recurring patterns — custom toggles, canvas charts, categorical color palettes) so a generic external auditor would spend most of its budget re-discovering context this project already has written down (design tokens, the owner-gated-value rule, the △ convention). A thin local skill that already knows those constraints is more useful here than a general-purpose one.
 
 Added `.claude/skills/a11y-audit/SKILL.md` — encodes this baseline (§1), the contrast-check script (`scripts/a11y_contrast_check.py`), the colorblind-simulation approach, and the "rendered value → owner-gated, don't auto-fix" rule, so a future designer session can re-run the same methodology instead of starting from zero.
+
+## 5. 2026-10-19 감사 — `compare.html` · `privacy.html` (6페이지로 확대)
+
+범위: 위 4페이지 감사(2026-07-21)에 없던 `compare.html`(사별 비교)과 `privacy.html`(개인정보처리방침·이용안내). 이번에는 **아무것도 고치지 않았다** — 위반은 designer 티켓 `inbox/designer/20261019T1400Z__orchestrator__MULTI_ALL__a11y_compare_privacy.md` 로 보냈다. 색·토큰 값을 바꾸는 항목은 §2b 규칙대로 owner 승인 대상이다.
+
+### 5a. 방법과 한계
+
+- **도구·조건**: Playwright(Chromium headless) + 저장소 루트 로컬 정적 서버(빈 포트). 주소는 전부 `?iq_internal=1`, GA 요청은 route 로 차단해 전송 0. 3분기 안내 팝업은 표시 시작일(2026-10-31) 전이라 시드 없이도 두 페이지 모두 안 뜬다(확인함). 측정 맥락에는 그래도 `iq_notice_seen` 을 심어 두었다.
+- **시나리오**: compare = 생보 4사(삼성생명·한화생명·교보생명·신한라이프) / 손보 4사(삼성화재·DB손보·현대해상·KB손보) / 회사 미선택, privacy = 1개. 각각 1280·375 폭 x 라이트·다크(총 18회 실행, reduced-motion 3회 포함). `data/compare/panel_compare.json` 은 다른 세션이 손해율 보기를 편집 중이라 2026-10-19 시점 스냅샷이다.
+- **측정**: 텍스트 대비 = 보이는 텍스트 노드(compare 실행당 169~217개, privacy 102개)의 computed color 를 불투명도·조상 배경까지 합성해 WCAG 상대휘도로 계산. 차트 색 = Chart.js 데이터셋·SVG stroke·막대 CSS 값을 `scripts/a11y_contrast_check.py` 로 대비·색각(protan/deutan) 계산. 포커스 = Tab 으로 끝까지 돌며 정지점마다 outline·포커스 전후 픽셀 차이·`elementFromPoint` 가려짐 확인(전환이 끝난 뒤 값으로 재측정). 이름 = aria-label·labelledby·label·내용. 키보드 조작은 실제 키 입력으로 시험.
+- **한계**: 실제 스크린리더는 쓰지 않았다(Playwright `aria_snapshot` 으로 이름·역할만 확인). hover 상태의 색과 Chart.js 캔버스 글자 색은 설정값으로만 확인했다. `index`·`K-ICS`·`IFRS17`·`공시보고서` 는 이번에 재측정하지 않았다 — 2026-09-20 에 팔레트가 바뀌었으므로(`common.css` 머리말) §2b 표의 토큰 값(`#6a737a` 등)은 교체 전 값이다. 측정 하니스는 저장소에 넣지 않았다(세션 임시 폴더). 고친 뒤 재측정용 검사 스크립트는 티켓에 요청했다.
+
+### 5b. 통과로 확인한 것 (측정값)
+
+| 항목 | 결과 |
+|---|---|
+| 텍스트 대비(1.4.3) | 18회 실행 전부 최소 라이트 **5.28:1** · 다크 **6.10:1**(탭 `K-ICS` 글자 `--muted` 위 `--card`). 예외 1건은 C4. 비활성 입력창의 placeholder(4.22:1)는 비활성 컨트롤이라 면제 |
+| 포커스 링(2.4.7) | Tab 정지점 compare 4사 63·손보 62·미선택 8, privacy 11~12개가 문서 끝까지 이어지고 키보드 함정 없음(375 폭은 25개 뒤 처음으로 순환). 링 2px solid, 배경 대비 라이트 **6.09:1**(칩 안 5.58) · 다크 **7.26:1**(칩 안 6.49). 활성 `.seg-btn` 안쪽 흰 링 6.09:1(다크 7.62), 모바일 섹션 FAB 17.72:1(다크 14.76). 포커스 전후 픽셀 차이 없는 정지점 0, 다른 요소에 가려진 정지점 0 |
+| 이름·라벨(3.3.2·4.1.2) | 이름 없는 컨트롤 0, 중복 id 0, 끊긴 aria 참조 0(18회 전부). 검색창은 sr-only label + combobox/listbox 패턴, 칩 제거 버튼은 「OO 제거」, 활성 탭은 `aria-current="page"` |
+| 키보드 조작 | 검색창 ↓ 열림·`aria-activedescendant`·Enter 선택·Esc/Tab 닫힘. 공유 메뉴 Enter → 첫 항목 포커스, ↓ ↑ Home End, Esc 시 버튼으로 복귀, Tab·바깥 클릭 닫힘. 구분 토글은 Space/Enter 뒤에도 같은 버튼이 포커스를 유지하고 스크롤 이동 0(경과조치 토글도 포커스 유지). 지표 가이드 Alt+↓ 순서 이동(「지급여력비율 표시 순서 2번째로 이동」 안내), 링크 Enter → 카드에 포커스. 모바일 FAB Enter → 시트 안으로 포커스, Esc → FAB 복귀 |
+| `?` 팝오버(키보드·위치) | 포커스로 열리고 Esc 로 닫힌다(1.4.13 해제 가능). 375 폭에서 실제 탭한 5곳과 1280 폭 12곳 전부 화면 안(375 폭 `[8,348]`). 마우스 경로는 C1 |
+| 반응형·리플로 | 1280·375·320 에서 가로 넘침 0(`scrollWidth` = `innerWidth`) |
+| 다크·콘솔 | 다크 7회 실행이 위 표와 같은 기준 통과(placeholder 제외). 콘솔 오류 0(내가 막은 GA 요청 제외) |
+| reduced motion(CSS) | 1ms 초과 전환 요소 44개 → 0개. Chart.js 는 C11 |
+| privacy | 텍스트 5.28~6.10:1, 표 `th scope="col"`, 본문 링크 밑줄 + `--primary-hover`(5.58:1), 가로 넘침 0 |
+
+### 5c. 지적 사항
+
+심각도: **중간** = WCAG 2.1 AA 기준 위반 가능성이 큼, **낮음** = 보조기기 사용성·개선 권장, **참고** = 2.1 AA 요건 밖(2.2 또는 AAA).
+위치 앞의 「공통」은 `common.css`·`theme.js` 라 6페이지 전부에 해당한다는 뜻이다. 색·토큰 값이 바뀌는 항목은 owner 승인 대상(§2b).
+
+| # | 심각도 | 위치 | 측정값 | 제안 |
+|---|---|---|---|---|
+| C1 | 중간 (1.4.13 가리킨 뒤 이동 가능) | 공통 `common.css` `.iq-help-pop` | 버튼 하단 y=314, 팝오버 상단 y=320, 사이 6px 틈에서 `:hover` 가 풀려 `pointer-events:none`. 1px 단위로 내려가면 y=315 불투명도 0.84 → y=323 0, 팝오버 안으로 못 들어감 | 팝오버에 `::before{content:"";position:absolute;left:0;right:0;top:-8px;height:8px}` 다리를 둔다(팝오버의 자식이라 hover 유지). 값이 안 바뀌는 추가 규칙 |
+| C2 | 중간 (2.4.3 포커스 순서) | `compare.html` 칩 제거·회사 추가 | 칩 제거 버튼에서 Enter → `activeElement` = `body`. 4번째 회사를 키보드로 추가하면 입력창이 비활성되며 포커스가 `body` 로 | 제거 뒤 다음(없으면 이전) 칩의 제거 버튼, 없으면 검색창으로 `focus()`. 4곳이 차면 첫 칩 제거 버튼으로 |
+| C3 | 중간 (1.4.11 UI 경계) | 공통 `--border` 를 쓰는 입력창·`?` 버튼·구분 토글 | 검색창 테두리 `#e4e4e2` on `#fff` **1.27:1**(다크 `#313431` on `#151615` 1.44:1). 입력창은 글자 라벨이 없어 테두리가 경계의 유일한 단서 | 입력창·체크박스용 새 토큰 `--control-border`(예: 라이트 `#85888d` 3.56:1, 다크 `#727772` 3.97:1)를 만들어 폼 컨트롤에만 쓴다. `--border` 값은 안 건드림. owner 승인 |
+| C4 | 중간 (1.4.3) | 공통 입력창 `::placeholder` | 다크에서 UA 기본 `#757575` on `#151615` **3.94:1**(라이트 4.61:1 통과). compare 검색창은 label 이 sr-only 라 placeholder 가 시각 라벨 | `input::placeholder{color:var(--muted)}`(라이트 5.76, 다크 6.83). 라이트 색이 약간 바뀌므로 owner 승인 |
+| C5 | 중간 (1.4.11·1.4.1) | `compare.html` 유지율 묶음 막대 `PAL_BAR` (넓은 화면 Chart.js) | 라이트 흰 배경 대비 `#8ccfc6` 1.77 · `#f6b49f` 1.76 · `#a8c1f0` 1.82 · `#e6d27e` **1.51:1**(다크는 9.98~12.00 통과). 색각 쌍 `#f6b49f`/`#e6d27e` ΔRGB 12·9, `#8ccfc6`/`#a8c1f0` 31·30. 완화 요소: 막대 위 수치 라벨, 묶음 안 고정 순서, 범례 | 막대에 어두운 윤곽(예: `#4a9d92`·`#d9764f`·`#6f94d6`·`#a38d1f` 각 3.05~3.29:1, `borderWidth` 1.5)을 두거나 팔레트를 어둡게. 팔레트 변경이라 owner 승인 |
+| C6 | 중간 (1.4.1) | `compare.html` 좁은 화면(≤640px) 손해율 SVG 꺾은선·표 견본 | 선이 모두 실선이고 마커·직접 라벨이 없어 색으로만 구분. 손보 4사에서 현대해상 `#ea690c` / KB손보 `#b88700` ΔRGB **40·49**(<60)(다크 `#F47920`/`#FFBC00` 48·47). 넓은 화면은 마커 모양(원·삼각·사각·마름모)이 있어 통과 | SVG 선에 넓은 화면 `PT` 와 같은 마커 모양을 달고 표 견본에도 같은 모양을 쓴다 |
+| C7 | 낮음 (1.4.11) | `compare.html` 손해율 선 폴백 팔레트 `PAL_LINE` (`lcShown`) | 코드 주석은 선·배경 3:1 이라 하지만 `visibleOn` 은 키컬러에만 적용. 라이트 `#4fb0a5` 2.60 · `#ee8f72` 2.38 · `#7b9fe6` 2.64 · `#cdb04a` **2.12:1**. 생보 4사 선택 시 신한라이프가 `#7b9fe6` | `lcShown` 이 폴백 색에도 `visibleOn` 을 적용(예: `#3a9a8f` 3.39 · `#e0693f` 3.35 · `#5f87dd` 3.50 · `#a68a1c` 3.35). 표시 색이 바뀌므로 owner 승인 |
+| C8 | 낮음 (1.3.1·2.4.6) | `compare.html` 카드 `h3` | `h3` 안에 `?` 버튼과 `role=tooltip` 설명이 들어가 제목의 접근 이름에 설명이 붙음. 이름 길이 56~585자(손해율 카드 585자) | `.iq-help` 를 `h3` 밖 형제로 옮기거나 `h3` 에 짧은 `aria-label` |
+| C9 | 낮음 (2.4.6·4.1.2) | 공통 `theme.js` 섹션 공유 버튼 | compare 10개가 전부 `aria-label` = 「이 섹션 스크린샷 공유」(섹션 이름은 `title` 뿐이고 `aria-label` 이 우선) | `aria-label` = 「<섹션 이름> 스크린샷 공유」 |
+| C10 | 낮음 (2.4.1 블록 건너뛰기) | `compare.html`·`privacy.html` | 두 페이지 모두 `<main>` 과 건너뛰기 링크 없음. compare 데스크톱에서 첫 카드 컨트롤까지 Tab **38번**(칩 4·가이드 링크 10·빼기 버튼 10 포함), privacy 본문 첫 링크까지 8번 | 본문 컨테이너를 `<main>` 으로, 머리말 앞에 「본문으로 건너뛰기」 링크, 가이드 빼기 버튼은 `tabindex="-1"`(Delete 키는 유지) 검토 |
+| C11 | 낮음 (감소 모션) | `compare.html` Chart.js · 공통 `theme.js` | reduced-motion 에서도 `Chart.defaults.animation.duration` **1000**(차트 2개 모두). `theme.js` `scrollBy({behavior:'smooth'})`(터치 팝오버 보정)는 reduce 판정이 없음(다른 두 곳은 판정함) | `IQTheme.applyChartJs` 에서 reduce 면 `animation=false`, `scrollBy` 도 reduce 면 `auto` |
+| C12 | 낮음 (4.1.3 상태 메시지) | `compare.html` 경과조치 토글·중앙값 체크박스 | 두 조작 뒤 `#live` 가 직전 값(「구분 Non-Par」) 그대로 — 카드가 다시 그려져도 안내 없음(칩·지표 이동·구분은 `say()` 함) | 두 `change`/클릭 핸들러에서 `say()` 호출 |
+| C13 | 낮음 (4.1.2) | 공통 `theme.js` 테마 토글 | `aria-pressed` 와 상태별로 바뀌는 `aria-label` 을 같이 씀: 「다크 모드로 전환」(false) → 「라이트 모드로 전환」(true). 「라이트 모드로 전환, 눌림」 으로 읽혀 모호 | 레이블을 고정하고 `aria-pressed` 만 바꾸거나, 레이블만 바꾸고 `aria-pressed` 제거 |
+| C14 | 낮음 (1.1.1) | `compare.html` 넓은 화면 손해율 꺾은선 | `canvas` `aria-label` 이 선마다 시작값→끝값만 담음(예: 삼성생명 88.4%에서 97.1%). 좁은 화면은 표가 있고 유지율 막대는 모든 값을 담아 통과. Chart.js 범례 클릭 토글·툴팁은 포인터 전용 | 좁은 화면의 현재가치 표를 넓은 화면에도 `<details>` 로 제공 |
+| C15 | 낮음 (4.1.2) | `privacy.html` `.policy-table-wrap` | 375 폭에서 가로 스크롤 영역이 Tab 정지점이지만 역할·이름이 없음 | `role="region"` · `aria-label="처리 위탁 표"` · `tabindex="0"` |
+| C16 | 참고 (2.5.8 은 WCAG 2.2, 2.5.5 는 AAA) | 공통 `?` 버튼·체크박스·레일 빼기·브랜드 링크 | 24px 미만: `?` 22x22(compare 12개), 체크박스 18x18, 레일 빼기 22x22, 375 폭 브랜드 링크 높이 19px. 44px 미만: 탭 33, 테마·공유 30, 칩 제거 28, 구분 버튼 28 | 2.2 AA 를 목표로 삼을 때 24px 이상으로 |
+| C17 | 참고 (1.3.1) | `compare.html`·`privacy.html` 제목 | compare 는 `h1` 다음이 바로 `h3`(`h2` 없음), privacy 는 `h1` 이 둘(개인정보처리방침·이용안내) | 카드 제목을 `h2` 로, 두 번째 문서는 `h1` 유지 가능 |
+| C18 | 참고 (1.4.11) | `compare.html` 막대 카드 | 처음 고른 회사 외 막대 = `--muted` 불투명도 .65 → 라이트 `#9a9c9f` on `#fff` **2.75:1**(다크 3.61 통과). 막대마다 수치 글자가 함께 있어 정보는 중복됨 | 불투명도 .65 를 .8 쯤으로(색 변화라 owner 승인) |
+
+### 5d. 후속
+
+위반 C1~C18 은 designer 티켓 한 건(`inbox/designer/20261019T1400Z__orchestrator__MULTI_ALL__a11y_compare_privacy.md`)에 묶었다. 색·토큰 항목(C3·C4·C5·C7·C18)은 owner 승인 뒤에만 고친다. 색을 바꾸지 않는 항목(C1·C2·C6·C8~C17)은 §2a 처럼 바로 고칠 수 있다.

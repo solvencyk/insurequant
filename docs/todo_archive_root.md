@@ -1,5 +1,8 @@
 # TODO archive — `TODO.md` (Status 이력, 읽기 지연)
 
+- **2026-10-12 오후 작업 브랜치 push 직전(HEAD `0f143d2` 이후).** owner 결정: K-ICS 소진율 도넛·Forward Outlook 을 화면에서 내림(신종 분류 판단이 들어가는 숫자는 건조하게 못 뽑는다 — 유료화 후보) → 발행연도별 신종·후순위채 누적 막대 + 큼직한 셀 2개(최근 발행금리·총발행액 '23~·가장 가까운 콜 1건), 기본자본소진율·보완자본소진율·자본비율전망 3시트는 다운로드 목록에서 임시로 내림(파일·시트 그대로, `download-survey.js` 주석 해제로 복구).
+  공유 버튼 이용 기록(`shares` 탭) 라이브(`deploy/design-20261012`), IFRS17 「보험금 예실차비율」 독립 섹션 + 시트 신설, 재보사 PL 7칸 복원·처브 BS/ILP·분할표·퍼시픽/악사 K-ICS 칸 보정, 손해율 재보사 세그먼트 표준화 + 85MB→1MB(.gz). 남은 것: validation 골든·AIG R3 등재(`T1400Z`) → `git push origin fix/csm-product-segmented-columns`(풀 훅 ≈10분) → owner 폰 배포.
+
 - **2026-10-12 아침 작업 브랜치 push(HEAD `6233594` 이후, 훅 gate-clear).** owner 취침 중 재보사 전면 재스윕: 손해율 가정 7곳(master_loss_ratio +1,904·예실차 37→44사)·PL 투자손익/영업외 +303·BS +49·CSM 계열(RGA·하노버 2025.4Q 등)·자본성증권 재확인(0 이 맞음). 화면: K-ICS 시나리오 컬럼명(공시 이름)·듀레이션 주석 ? 안으로·IFRS17 통합 현황 박스·NB 표·보험금 예실차비율 표·모바일 재보험 접기. 훅 소요 26분→약 11분(PDF 텍스트 캐시).
   라이브 `main` 배포는 owner 폰(`bash scripts/android_push_and_deploy.sh --from-origin --branch fix/csm-product-segmented-columns`, `bash` 필수). 결정 대기는 아래 「owner 결정 대기」.
 
