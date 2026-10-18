@@ -10,7 +10,7 @@
 | 1 downloader | `docs/agents/claude-agent-downloader.md` (+ `source-catalog.yaml`) | `TODO_downloader.md` | `docs/changelog_downloader.md` |
 | 2 parser (2 레인 ∥) | `docs/agents/claude-agent-parser.md` + `docs/domains/claude-agent-{kics,ifrs17}.md` | `TODO_parser_{kics,ifrs17}.md` | `docs/changelog_parser_{kics,ifrs17}.md` |
 | 3 validation | `docs/agents/claude-agent-validation.md` | `TODO_validation.md` | `docs/changelog_validation.md` |
-| 4 publishing (마스터 JSON·배포, `git push` 는 사람) | `docs/agents/claude-agent-publishing.md` | `TODO_publishing.md` | `docs/changelog_publishing.md` |
+| 4 publishing (마스터 JSON·배포; push·main 배포는 owner 구두 승인 뒤 오케스트레이터가 실행, §11) | `docs/agents/claude-agent-publishing.md` | `TODO_publishing.md` | `docs/changelog_publishing.md` |
 | 5 designer (HTML/CSS/차트) | `docs/agents/claude-agent-designer.md` | `TODO_designer.md` | `docs/changelog_designer.md` |
 | **jp** (일본 ESR, 2026-09-12 신설) | `docs/domains/claude-agent-jp.md` + 에이전트 `jp-collector` | `TODO_jp.md` | `docs/changelog_jp.md` |
 
@@ -45,7 +45,7 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 ## 5. push 게이트 (훅으로 강제)
 
 새 클론·워크트리는 먼저 `git config core.hooksPath .githooks` (설정은 클론마다 로컬; `git config --get core.hooksPath` 로 확인).
-훅 = `scripts/prepush_check.py`(~10분): ① data-contract 하드게이트 ①b K-ICS 룰 게이트(`validate_kics_disclosure.py`) ①c 도메인 게이트 ③ inbox 위생(`check_inbox_hygiene.py`)
+훅 = `scripts/prepush_check.py`(약 11분): ① data-contract 하드게이트 ①b K-ICS 룰 게이트(`validate_kics_disclosure.py`) ①c 도메인 게이트 ③ inbox 위생(`check_inbox_hygiene.py`)
 ④ 오프라인 테스트(골든 + `test_rule_coverage_manifest.py` + `test_identity_tautology.py`). `main` 처럼 `scripts/` 없는 slim 트리는 경고만.
 **"문서에 mandatory 라고 썼다" ≠ 강제.** 새 게이트는 `prepush_check.py` 에 호출을 넣었는지 그 자리에서 확인. `git push --no-verify` 를 썼으면 커밋에 남긴다.
 `test_rule_coverage_manifest.py` 는 룰↔항목 커버리지를 변이시험으로 대조한다 — 룰 추가·개명·삭제 시 매니페스트를 같이 고친다.
@@ -91,7 +91,7 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 - **에이전트 정의는 `.claude/agents/*.md` (저장소 추적).** downloader·parser-kics·parser-ifrs17·publishing·designer·jp-collector·validation = `sonnet`(별칭이라 최신 모델을 따라간다; validation 도 2026-10-08 owner 결정으로 Sonnet);
   스킬은 `.claude/skills/`(kics-parser·ifrs17-parser·a11y-audit·launch-runbook·incident-postmortem).
 - 독립 작업은 **서브에이전트를 한 메시지에서 병렬 발사**. 병렬 축은 ① stage 내부 fan-out(회사×분기×도메인) ② item 별 파이프라인 중첩. "stage 별 병렬" 은 틀린 프레임(순차 파이프라인).
-- 동시 ≤4, 서브-서브에이전트 금지, 각 에이전트에 이 파일 + 자기 stage 프롬프트·TODO 를 명시. 메인 세션은 오케스트레이션(조율·통합·게이트)만.
+- 동시 에이전트 수는 고정 상한이 아니라 **그때 PC 의 메모리·CPU 여유를 재서** 정한다(owner 2026-10-19; 보통 4개 이내, RAM 15.5GB·8코어 기준이고 docling 은 ≤2). 여유 메모리가 5GB 안팎이면 3개로 줄인다. 서브-서브에이전트 금지, 각 에이전트에 이 파일 + 자기 stage 프롬프트·TODO 를 명시. 메인 세션은 오케스트레이션(조율·통합·게이트)만.
 - **effort(생각 깊이)는 호출 때 덮어쓴다 — 이 줄이 owner 의 명시 허가다(2026-10-08).** 정의 파일 기본은 `high`(parser 2개만 `max`). 빠른 1차 결과(목업·스모크·"일단 먼저 보여줘")는 Agent 호출에 `effort: medium`, 딥다이브·장시간 감사·원인조사는 `effort: max`. Workflow 의 `agent()` 도 같은 `effort` 옵션이 있다. "빨리 1차 → 그다음 딥다이브" 순서가 기본 운영 방식이다.
 - 모델은 **티켓 유형으로** 고른다(정의 파일은 전부 `sonnet`): 기본은 Sonnet. Opus 는 ① 새 게이트 룰 설계 ② Sonnet 검증이 2회 돌고도 결론이 안 날 때만 Agent 호출에 `model: opus` 덮어쓰기(2026-10-08 owner 결정). 티켓 종결 노트에 모델·토큰·소요시간을 한 줄 남긴다(월 1회 같은 유형 Sonnet/Opus 비교).
 - "돌고 있냐" 는 세션 `subagents/agent-<id>.jsonl` mtime + 약속한 산출 파일로 판정(`tasks/<id>.output` 은 placeholder). 에이전트는 중간 산출을 디스크에 저장하며 진행.
@@ -99,5 +99,6 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 
 ## 11. 배포
 
-라이브 = `main`(GitHub Pages, `CNAME`). 작업 브랜치 push ≠ 라이브. 작업 브랜치 push 는 이 PC 에서도 된다(2026-10-06 실측). `main` 배포는 owner GO 뒤 owner 가 폰 Termux 에서
-`scripts/android_push_and_deploy.sh --from-origin --branch <브랜치>` 로 한다(저장소 클론 **안에서** 실행, 확인 프롬프트 없이 바로 push). 배포 후 `public_exports/manifest.json` 의 `build_id` 로 라이브 확인. 데이터를 HTML 에 인라인 금지(JSON fetch). 화면 음수는 전부 △.
+라이브 = `main`(GitHub Pages, `CNAME`). 작업 브랜치 push ≠ 라이브. 작업 브랜치 push 는 이 PC 에서도 된다(2026-10-06 실측). `main` 배포는 **기본이 오케스트레이터가 이 PC 에서 직접** 한다 — owner 가 구두로 GO 를 준 뒤에만: 작업 브랜치 push → 격리 sparse 클론에서
+`scripts/android_push_and_deploy.sh --from-origin --branch <브랜치>`(확인 프롬프트 없이 바로 push, 절차 `docs/launch_runbook.md`). 인터넷 환경 때문에 git live push 가 막히면 직접 2번 시도하고, 그래도 안 되면
+owner 에게 폰 Termux 명령(저장소 클론 **안에서** 실행)과 배치파일을 만들어 제시해 owner 가 push 하게 한다(owner 2026-10-19). 서브에이전트(publishing)는 준비·보고·권고까지만 한다. 배포 후 `public_exports/manifest.json` 의 `build_id` 로 라이브 확인. 데이터를 HTML 에 인라인 금지(JSON fetch). 화면 음수는 전부 △.

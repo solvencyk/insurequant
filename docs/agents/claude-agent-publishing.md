@@ -224,7 +224,7 @@ appears, tell designer the path and the schema delta. See [claude-agent-designer
 
 **절차 정본 = [`docs/launch_runbook.md`](../launch_runbook.md)** (격리 워크트리에서 main 으로 cherry-push · post-push 검증 · `git revert` 롤백).
 - 같은 폴더에서 `git checkout main` 으로 브랜치를 오가는 방식은 **쓰지 않는다**(공유 워킹트리의 다른 세션 작업을 덮는다).
-- owner 배포 경로: 폰 Termux 에서 저장소 클론 **안에서** `bash scripts/android_push_and_deploy.sh --from-origin --branch <작업브랜치>` —
+- 배포 경로(owner 2026-10-19): 기본은 오케스트레이터가 owner 구두 GO 뒤 이 PC 의 격리 sparse 클론에서 직접 실행한다. 인터넷 사정으로 git push 가 막히면 직접 2번 시도하고, 그래도 안 되면 owner 가 폰 Termux 에서 저장소 클론 **안에서** `bash scripts/android_push_and_deploy.sh --from-origin --branch <작업브랜치>` 를 실행하도록 명령과 배치파일을 제시한다. 서브에이전트(publishing)는 준비·보고·권고까지다. 스크립트 동작 —
   `origin/main` 과 작업 브랜치의 keep-list 차이 파일을 출력한 뒤 확인 없이 push 한다. 그래서 작업 브랜치를 먼저 push 해 둔다.
 - 배포 후 `public_exports/manifest.json` 의 `build_id` 로 라이브를 확인한다(회사망은 TLS 검사 때문에 `curl -k` 가 필요할 수 있다).
 

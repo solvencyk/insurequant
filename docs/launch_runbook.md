@@ -127,7 +127,7 @@ git worktree remove ../insurequant-main-deploy
 - 각 파일이 바뀐 이유 1줄
 - 게이트 결과: `RED=0` 확인 문구
 
-승인 없이 `git push`를 실행하지 않는다. 로컬 add/commit/checkout/worktree 명령은 승인 없이 스스로
+승인 없이 `git push`를 실행하지 않는다. 승인은 owner 의 구두 GO 이고, 받은 뒤의 실행은 오케스트레이터가 직접 한다(owner 2026-10-19). git live push 가 인터넷 환경으로 막히면 직접 2번 시도하고, 그래도 안 되면 owner 에게 폰 Termux 명령과 배치파일을 제시해 push 하게 한다(CLAUDE.md §11). 로컬 add/commit/checkout/worktree 명령은 승인 없이 스스로
 진행(계약상 "기계적 작업"). 사용자는 로그인(브라우저 인증)·push 승인·판단이 필요한 결정만 한다.
 
 ## 5. 배포 후 검증

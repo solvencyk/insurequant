@@ -15,9 +15,9 @@
 
 ## 열린 일
 
-- [x] **정리 fan-out 1차(owner 2026-10-16, 2026-10-18 완료·로컬 커밋)** — 캐시·빈 폴더 43개 삭제, 1259개(10.5GB: pytest 임시 폴더 4.4GB · 게이트 보고서 6.3GB · `data/_derived` 111MB 등)를 `C:/Users/sangwook.cho/insurequant_quarantine_20261018`(MOVED.json·README.txt)로 이동(삭제 아님), 추적 백업 2개 제거, 문서 낡은 서술·깨진 참조 113건 정정(보관본·이력은 무수정 확인). 비울지·되돌릴지는 owner 몫. 남긴 것: `artifacts/kics_validation/report_*.json` 53개(문서가 이름을 언급), `scripts/_probes` 임시 이름 추적 스크립트 21개, 개인 파일. 문서끼리 규칙이 어긋난 곳은 바로 아래 항목.
+- [x] **정리 fan-out 1차(owner 2026-10-16, 2026-10-18 완료·로컬 커밋)** — 캐시·빈 폴더 43개 삭제, 1259개(10.5GB: pytest 임시 폴더 4.4GB · 게이트 보고서 6.3GB · `data/_derived` 111MB 등)를 `C:/Users/sangwook.cho/insurequant_quarantine_20261018`(MOVED.json·README.txt)로 이동(삭제 아님), 추적 백업 2개 제거, 문서 낡은 서술·깨진 참조 113건 정정(보관본·이력은 무수정 확인). 격리 폴더는 owner 가 직접 삭제함(2026-10-19). 남긴 것: `artifacts/kics_validation/report_*.json` 53개(문서가 이름을 언급), `scripts/_probes` 임시 이름 추적 스크립트 21개, 개인 파일. 문서끼리 규칙이 어긋난 곳은 바로 아래 항목.
 - [ ] **문서 규칙 충돌 owner 판단(2026-10-18, 문서 정리에서 발견 — 어느 쪽이 맞는지 정해야 고칠 수 있다)** —
-  ① 동시 에이전트 상한: `CLAUDE.md` §10 「≤4」 대 실측 한도 ≤3(RAM 15.5GB, 2026-10-10)  ② main 배포 경로: `CLAUDE.md` §11(owner 폰 Termux) 대 `docs/launch_runbook.md`(격리 worktree 에서 `git push origin main`) 대 2026-10-13 PC 격리 sparse 클론 예외
+  ①② (해소 2026-10-19) 동시 에이전트는 그때 메모리·CPU 여유를 보고 정함(보통 4개 이내), main 배포는 기본이 오케스트레이터 직접(owner 구두 GO 뒤)이고 push 가 막히면 2회 시도 뒤 owner 에게 Termux 명령·배치파일을 제시 — `CLAUDE.md` §10·§11 과 관련 문서에 반영함
   ③ 별첨 수집: `docs/agents/claude-agent-downloader.md` 「재무제표·감사보고서는 보지 마」 대 `.claude/agents/downloader.md` 「경영공시 별첨은 받아 attachments/ 에 저장(2026-10-11)」  ④ 손보 수집 경로: `docs/flows/` 협회 일괄 대 downloader 문서의 사별 스크립트(현행이 무엇인지)
   ⑤ master xlsx: `CLAUDE.md` §8 「전체 재생성 금지」 대 `docs/launch_runbook.md` 「재생성 필수·마지막 수단 build_master_xlsx.py」, 그리고 「openpyxl 재저장 금지」 대 `sync_master_xlsx_sheet.py` 가 openpyxl 로 저장(수식 0개일 때만)  ⑥ `CLAUDE.md` §2 「Status 항목당 3줄」 대 실제 길이(규칙을 현실에 맞출지)
   ⑦ 2026-05 스냅샷 `docs/roadmap.md`·`docs/strategy-monetization.md` 갱신 여부  ⑧ 임무가 끝난 `docs/handoff_20261007_*`·`handoff_20261008_*`·`docs/mockups/compare/` 를 보관으로 옮길지  ⑨ `docs/a11y_baseline.md` 는 4페이지만 감사(compare·privacy 빈칸)  ⑩ 훅 소요 표기는 약 11분으로 통일(이번에 `.githooks/pre-push` 문구를 고침, 에이전트 정의는 이미 약 11분, `CLAUDE.md` §5 「~10분」은 owner 확인 뒤)
@@ -54,7 +54,7 @@
   - ⑥ 롯데손보 2026.2Q 항목 9=1 확인
   - ⑦ 추출기 공통 결함 7개
   - ⑧ compare 선 대비 2.1~2.6:1(키컬러 전환과 묶어 owner 확인, `TODO_designer.md`). 사이드카: 2-4 가 LIC 포함인 ABL·KDB생명·푸본현대(`ilp_includes_lic.json`).
-- [ ] **PC 부하 실측(owner 2026-10-10, 틈날 때)** — docling 변환 1건의 최대 메모리·소요를 에이전트가 쉬는 시간에 재서 보고. 현재 RAM 15.5GB(증설 불가)·8코어, owner 희망 RAM 32GB·12코어(즉시 교체 아님). 한도: 동시 에이전트 ≤3 · docling ≤2.
+- [ ] **PC 부하 실측(owner 2026-10-10, 틈날 때)** — docling 변환 1건의 최대 메모리·소요를 에이전트가 쉬는 시간에 재서 보고. 현재 RAM 15.5GB(증설 불가)·8코어, owner 희망 RAM 32GB·12코어(즉시 교체 아님). 한도: 동시 에이전트는 그때 메모리·CPU 여유를 보고 정함(보통 4개 이내) · docling ≤2.
 - [ ] **2026.3Q 정기경영공시 라운드** — 2Q 는 8/29~31 에 게시됐으니 3Q 는 11월 말 예상. 절차 `docs/flows/kics_quarterly_round.md`
   (라벨·스크립트를 3Q 로 바꿔 쓴다). owner 가 부르기 전에는 시작하지 않는다.
 - [ ] **J-ESR 10월 말 재census**(기한 2026-10-31 직후) → `TODO_jp.md`.
