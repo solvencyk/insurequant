@@ -22,6 +22,8 @@
 - 손해율: master_loss_ratio.json 합계/합계/현재가치 Σ예상보험금/Σ위험보험료 (세그먼트 합산)
 - 손해율 가정 곡선(loss_curve): 같은 합계/합계 행을 경과차년(1~10년·11~15·16~20·21~25·26~30·30년 이후)별로 같은 방식으로 합산.
   미래에셋생명만 1~10년을 한 구간("1~10년")으로 공시해 별도 칸에 둔다. 업계 중앙값은 칸별로 같은 규칙(같은 유형, 재보험·보증 제외, 5곳 미만 null).
+- 비교 단위(loss_curve.units·u·up·med_u·unit_note·default_unit, loss_pv.vu·medu; 2026-10-19 추가 키): 구분 x 상품구분 x 포트폴리오 한 줄 단위로 같은 방식 합산.
+  원수사(생보·손보 따로)는 최신 결산에서 10사 이상 공시 + 업권 위험보험료 1% 이상, 재보사는 세그먼트 x Non-Par x 포트폴리오로 4사 이상. 정본 docs/loss_ratio_comparable_unit_20261019.md.
 
 업계 중앙값: 같은 생/손보 유형 안에서, 재보험(KR1000)·보증(KR0150) 제외, 그 분기에 값이 있는 회사만으로 계산한다
 (결측은 0 으로 채우지 않고 건너뜀). 표본이 5곳 미만이면 중앙값을 만들지 않는다(null).
@@ -364,6 +366,241 @@ for ty in TYPES:
     loss_curve_med_g[ty] = per_g
 LR_GROUPS_SHOWN = [g for g in LR_GROUPS if loss_curve_g[g]]
 
+# ---------------------------------------------------------------- loss ratio by 비교 단위 (구분 x 상품구분 x 포트폴리오)
+# 정본 docs/loss_ratio_comparable_unit_20261019.md (2·4·7절). 합계·구분 경로는 그대로 두고 단위 축만 더한다(추가 키).
+# 단위 = 공시 표의 한 줄: 원수사(생보·손보 따로)는 구분 x 상품구분 x 포트폴리오, 재보사는 세그먼트(생명/장기손해) x Non-Par x 포트폴리오.
+# 목록에 넣는 규칙(전부 최신 공시분기 기준): 원수사 단위는 10사 이상이 위험보험료 합 > 0 으로 공시하고 업권 위험보험료의 1% 이상,
+# 재보사 단위는 4사 이상. 값 규칙(셀 배치·반올림·존재 조건)은 위 g 축과 같다: Σ예상보험금 / Σ위험보험료 x 100 (두 금액이 모두 있는 잎 행만), 합이 0 이하면 없음.
+UNIT_MIN_CO = 10               # 원수사 단위: 이 수 이상의 회사가 공시
+UNIT_MIN_SHARE_PCT = 1.0       # 원수사 단위: 업권 위험보험료 비중 하한(%)
+RE_UNIT_MIN_CO = 4             # 재보사 단위: 이 수 이상의 재보사가 공시
+UNIT_MEDIAN_MIN = 5            # 업계 중앙값: 값이 있는 회사 수 하한(g 축 med_g 와 같음)
+UNIT_FADE_EOK = 100            # 화면이 흐리게 그릴 위험보험료 기준(억원): up 이 이 값 미만인 칸
+UNIT_SECTOR = {"생보": "생보", "손보": "손보", T_RE: "재보"}      # roster type -> 단위 업권 이름
+RE_PAIRS = (("생명", "건강"), ("생명", "사망"), ("장기손해", "질병"), ("장기손해", "상해"))   # 재보사 Non-Par 후보 (세그먼트 x 포트폴리오)
+RE_NAME = "재보"
+# 마스터 위험보험료·예상보험금은 이미 억원이다(build_loss_ratio_master.py 가 백만원 원문을 ÷100 해서 싣고 `단위` 열에는 원문 표기만 남긴다).
+# 그래서 두 단위 모두 배수 1.0 이다(2026-10-19 수정: 0.01 로 또 나눠 백만원 공시사 up 이 100배 작았다). 모르는 단위 표기는 KeyError 로 멈춘다.
+UNIT_SCALE = {"억원": 1.0, "백만원": 1.0}
+# 키 토큰(ASCII): 단위가 생기면 아래 표에 없는 이름이 걸려 빌드가 멈춘다(조용히 지어내지 않는다).
+TOK_SECTOR = {"생보": "life", "손보": "nl", RE_NAME: "re"}
+TOK_GUBUN = {"Non-Par": "np", "Indirect-Par": "ip", "Direct-Par": "dp"}
+TOK_PRODUCT = {"무배당": "mb", "유배당": "yb", "변액": "va", "": "x"}
+TOK_PORTFOLIO = {"사망": "death", "건강": "health", "상해": "injury", "질병": "illness", "재물": "property",
+                 "연금저축": "pension", "자산연계형연금저축": "alpension", "기타": "other", "복합": "mixed"}
+TOK_SEGMENT = {"생명": "life", "장기손해": "ltnl"}
+
+
+def re_seg_group(seg, pf):
+    """재보사 잎 행의 세그먼트 묶음. 세그먼트가 '생명…'/'장기손해…'(공동·전통형 포함)이면 그대로, 비었으면 포트폴리오 이름으로 정한다."""
+    if seg.startswith("생명"):
+        return "생명"
+    if seg.startswith("장기손해"):
+        return "장기손해"
+    if seg == "":
+        return "생명" if pf in ("건강", "사망") else ("장기손해" if pf in ("질병", "상해") else None)
+    return None
+
+
+# 잎 행 수집: leaf[(코드, 분기)][(세그먼트, 구분, 상품구분, 포트폴리오)][경과차년] = (위험보험료, 예상보험금, 억원 환산 배수)
+leaf = defaultdict(dict)
+for r in lr:
+    if r["구분"] not in LR_GROUPS or r["포트폴리오"] in ("합계", ""):
+        continue
+    if r["원보험사코드"] not in roster or r["공시분기"] not in QI:
+        continue
+    yr = r["경과차년"]
+    if yr not in LR_SLOTS and yr != LR_PV:
+        continue
+    lk = (r.get("세그먼트") or "", r["구분"], r.get("상품구분") or "", r["포트폴리오"])
+    slot = leaf[(r["원보험사코드"], r["공시분기"])].setdefault(lk, {})
+    assert yr not in slot, ("잎 행 키 중복", r["원보험사코드"], r["공시분기"], lk, yr)
+    slot[yr] = (r["위험보험료"], r["예상보험금"], UNIT_SCALE[r["단위"]])
+UQ = max({q for (_, q) in leaf}, key=qkey)           # 단위 목록을 정하는 최신 공시분기
+for (c, q), lks in leaf.items():                    # 금액이 있는 칸의 단위는 한 공시 안에서 하나(금액 없는 '-' 칸은 단위가 달리 찍혀도 무시)
+    assert len({sc for ym in lks.values() for rp, ec, sc in ym.values() if rp is not None and ec is not None}) <= 1, (c, q)
+
+
+def leaf_weight(ym):
+    """업권 비중·회사 수 판정용 위험보험료(억원): 경과차년 칸(현재가치 제외)의 양수 합."""
+    return sum(rp * sc for y, (rp, ec, sc) in ym.items() if y in LR_SLOTS and rp is not None and rp > 0)
+
+
+def unit_of(sector, lk):
+    """잎 행 -> 단위 식별 튜플(없으면 None). 원수사: (업권, 구분, 상품구분, 포트폴리오). 재보사: (재보, 세그먼트 묶음, Non-Par, 포트폴리오)."""
+    seg, g, p, f = lk
+    if sector != RE_NAME:
+        return (sector, g, p, f)
+    sg = re_seg_group(seg, f)
+    if g != "Non-Par" or p not in ("", "무배당") or sg is None or (sg, f) not in RE_PAIRS:
+        return None
+    return (RE_NAME, sg, "Non-Par", f)
+
+
+roster_sector = {c: UNIT_SECTOR[d["type"]] for c, d in roster.items()}
+sector_cos = defaultdict(set)                        # 최신 분기에 잎 행이 있는 회사 (n/N 의 N)
+for (c, q), lks in leaf.items():
+    if q == UQ:
+        sector_cos[roster_sector[c]].add(c)
+
+u_rp = defaultdict(lambda: defaultdict(float))       # 단위 -> 회사 -> 최신 분기 위험보험료 합(억원)
+sector_total = defaultdict(float)
+co_labels = defaultdict(set)                         # 회사 -> {(구분, 상품구분, 포트폴리오)} (양의 위험보험료, 원수사만; 변액사망 구분 어긋남 확인용)
+for (c, q), lks in leaf.items():
+    if q != UQ:
+        continue
+    sec = roster_sector[c]
+    for lk, ym in lks.items():
+        w = leaf_weight(ym)
+        if w <= 0:
+            continue
+        sector_total[sec] += w
+        ukey = unit_of(sec, lk)
+        if ukey is not None:
+            u_rp[ukey][c] += w
+        if sec != RE_NAME:
+            co_labels[c].add(lk[1:])
+# 재보사: 같은 회사가 상품구분 '' 와 '무배당' 을 같은 단위에 함께 싣지 않았는지(둘을 더하면 이중 계상)
+for (c, q), lks in leaf.items():
+    if roster_sector[c] == RE_NAME:
+        seen = defaultdict(set)
+        for lk in lks:
+            uk = unit_of(RE_NAME, lk)
+            if uk is not None:
+                seen[(lk[0], uk)].add(lk[2])
+        assert all(len(v) == 1 for v in seen.values()), ("재보사 상품구분 공란·무배당 중복", c, q)
+
+units_sel = []
+for ukey, per_co in u_rp.items():
+    sec = ukey[0]
+    n = sum(1 for w in per_co.values() if w > 0)
+    share = sum(per_co.values()) / sector_total[sec] * 100.0
+    if (sec == RE_NAME and n >= RE_UNIT_MIN_CO) or (sec != RE_NAME and n >= UNIT_MIN_CO and share >= UNIT_MIN_SHARE_PCT):
+        units_sel.append((ukey, n, share))
+units_sel.sort(key=lambda t: (list(UNIT_SECTOR.values()).index(t[0][0]), -t[2]))
+selected_keys = {t[0] for t in units_sel}
+
+
+def unit_token(ukey):
+    sec, a, b, c3 = ukey
+    if sec == RE_NAME:
+        return "_".join((TOK_SECTOR[sec], TOK_SEGMENT[a], TOK_GUBUN[b], TOK_PORTFOLIO[c3]))
+    return "_".join((TOK_SECTOR[sec], TOK_GUBUN[a], TOK_PRODUCT[b], TOK_PORTFOLIO[c3]))
+
+
+def unit_label(ukey):
+    sec, a, b, c3 = ukey
+    return f"{a} {b} {c3}" if sec == RE_NAME else f"{a} {b}{c3}"
+
+
+UNITS = []
+for ukey, n, share in units_sel:
+    sec = ukey[0]
+    d = {"key": unit_token(ukey), "label": unit_label(ukey), "sector": sec}
+    if sec == RE_NAME:
+        d.update(gubun=ukey[2], seg=ukey[1], product="", portfolio=ukey[3])
+        alt = {}
+    else:
+        d.update(gubun=ukey[1], product=ukey[2], portfolio=ukey[3])
+        # 이 단위가 없는 회사 중 같은 상품구분 x 포트폴리오 이름을 다른 구분으로 공시했고 그 다른 구분 단위도 목록에 없는 회사: 이 단위에서는 빈 칸이 된다.
+        have = {c for c, w in u_rp[ukey].items() if w > 0}
+        alt = {}
+        for c in sector_cos[sec] - have:
+            gs = {lab[0] for lab in co_labels[c] if lab[1:] == ukey[2:] and lab[0] != ukey[1] and (sec,) + lab not in selected_keys}
+            if gs:
+                alt[c] = gs
+    d.update(n_companies=n, n_sector=len(sector_cos[sec]), share_pct=round(share, 1), alt_n=len(alt),
+             alt_gubun=sorted({g for gs in alt.values() for g in gs}))
+    UNITS.append(d)
+assert len({d["key"] for d in UNITS}) == len(UNITS), "단위 키 토큰 중복"
+UNIT_BY_KEY = {unit_token(t[0]): t[0] for t in units_sel}
+
+# 기본 단위(업권별): 그 업권 회사 전원이 공시한 목록 단위 중 위험보험료 비중이 가장 큰 것. 전원 공시 단위가 없으면 None.
+DEFAULT_UNIT = {}
+for sec in UNIT_SECTOR.values():
+    full = [d for d in UNITS if d["sector"] == sec and d["n_companies"] == d["n_sector"]]
+    DEFAULT_UNIT[sec] = max(full, key=lambda d: d["share_pct"])["key"] if full else None
+assert DEFAULT_UNIT["생보"] == "life_np_mb_health", DEFAULT_UNIT       # Non-Par 무배당건강 (보고서 7절 기본값)
+assert DEFAULT_UNIT["손보"] == "nl_np_mb_injury", DEFAULT_UNIT          # Non-Par 무배당상해
+
+
+def build_unit_cells(yrs):
+    """단위 -> 회사 -> 분기 -> 경과차년 -> [Σ위험보험료(원단위), Σ예상보험금(원단위), Σ위험보험료(억원)] (두 금액이 모두 있는 잎 행만)."""
+    acc = defaultdict(lambda: defaultdict(lambda: defaultdict(dict)))
+    for (c, q), lks in leaf.items():
+        sec = roster_sector[c]
+        for lk, ym in lks.items():
+            uk = unit_of(sec, lk)
+            if uk is None or uk not in selected_keys:
+                continue
+            for y, (rp, ec, sc) in ym.items():
+                if y not in yrs or rp is None or ec is None:
+                    continue
+                a = acc[uk][c][q].setdefault(y, [0.0, 0.0, 0.0])
+                a[0] += rp
+                a[1] += ec
+                a[2] += rp * sc
+    return acc
+
+
+unit_acc = build_unit_cells(set(LR_SLOTS))
+unit_acc_pv = build_unit_cells({LR_PV})
+unit_u, unit_up = {}, {}
+for t in units_sel:
+    uk, tok = t[0], unit_token(t[0])
+    ud, upd = {}, {}
+    for c in sorted(unit_acc[uk]):
+        qd, qpd = {}, {}
+        for q in sorted(unit_acc[uk][c], key=qkey):
+            row = [None] * len(LR_SLOTS)
+            prow = [None] * len(LR_SLOTS)
+            for y, (rp, ec, rpe) in unit_acc[uk][c][q].items():
+                if rp > 0:
+                    k = LR_SLOTS.index(y)
+                    row[k] = round(ec / rp * 100.0, 1)
+                    v = round(rpe, 2)
+                    prow[k] = int(v) if v == int(v) else v
+            if any(x is not None for x in row):
+                qd[q], qpd[q] = row, prow
+        if qd:
+            ud[c], upd[c] = qd, qpd
+    unit_u[tok], unit_up[tok] = ud, upd
+
+
+def unit_pool(sec):
+    if sec == RE_NAME:
+        return [c for c, d in roster.items() if d["type"] == T_RE and SEG_MAP.get(c, {}).get("tag") == "재보험"]
+    return [c for c, d in roster.items() if UNIT_SECTOR[d["type"]] == sec and d["median_pool"]]
+
+
+unit_med = {sec: {} for sec in UNIT_SECTOR.values()}
+for d in UNITS:
+    tok, sec = d["key"], d["sector"]
+    pool = unit_pool(sec)
+    byq = {}
+    for q in sorted({q for c in pool for q in unit_u[tok].get(c, {})}, key=qkey):
+        row = []
+        for k in range(len(LR_LABELS)):
+            xs = [unit_u[tok][c][q][k] for c in pool if q in unit_u[tok].get(c, {}) and unit_u[tok][c][q][k] is not None]
+            row.append(round(statistics.median(xs), 1) if len(xs) >= UNIT_MEDIAN_MIN else None)
+        if any(x is not None for x in row):
+            byq[q] = row
+    if byq:
+        unit_med[sec][tok] = byq
+
+# 변액사망 구분 어긋남 문구는 마스터에서 센 수로 쓴다(Direct-Par 변액사망 단위가 목록에 있을 때만).
+_va = next((d for d in UNITS if d["gubun"] == "Direct-Par" and d["product"] == "변액" and d["portfolio"] == "사망"), None)
+_unit_note_va = (f" Direct-Par 변액사망은 {_va['n_companies']}개 회사가 공시하고, {_va['alt_n']}개 회사는 같은 변액사망을 {', '.join(_va['alt_gubun'])}로 공시해 이 단위에서는 빈 칸입니다."
+                 if _va and _va["alt_n"] else "")
+UNIT_NOTE = (
+    "구분은 공시 각주의 금리 연동 분류입니다. Non-Par는 금융위험 가정 변화가 계약자 지급액에 상당한 영향을 주지 않는 계약 집합(무배당 금리확정형), "
+    "Indirect-Par는 영향을 주는 집합(유배당 또는 금리연동형), Direct-Par는 직접참가특성이 있는 집합(변액)이며, 사망·건강 같은 위험 종류가 아닙니다. "
+    "비교 단위는 공시 표의 한 줄(구분 × 상품구분 × 포트폴리오)이고, 같은 단위끼리만 비교합니다. "
+    f"원수보험사 목록에는 최신 결산에서 {UNIT_MIN_CO}개 회사 이상이 공시하고 같은 업권(생보·손보) 위험보험료의 {UNIT_MIN_SHARE_PCT:g}% 이상인 단위만 둡니다. "
+    f"재보험사는 세그먼트(생명·장기손해)와 포트폴리오로 나누고 {RE_UNIT_MIN_CO}개 회사 이상이 공시한 Non-Par 단위만 두며, 원수보험사와 섞어 비교하지 않습니다."
+    + _unit_note_va
+)
+
 # ---------------------------------------------------------------- metrics config
 NA = {
     "csm_closing": {"KR0051": "PAA 전용이라 CSM 없음", "KR0150": "보증보험이라 CSM 없음", "KR0004": "CSM 공시 거의 없음"},
@@ -508,6 +745,27 @@ for m in METRICS:
             m["vg"][g] = {c: full[c] for c in sorted(full) if any(x is not None for x in full[c])}
             mg, _ = medians(full)
             m["medg"][g] = {t: row for t, row in mg.items() if any(x is not None for x in row)}
+        # 비교 단위별 현재가치(위 vg·medg 와 같은 모양, 구분 대신 단위 키): vu[단위키][회사] = 분기별 배열, medu[단위키][업권] = 분기별 중앙값
+        m["vu"], m["medu"] = {}, {}
+        for d in UNITS:
+            uk, tok, sec = UNIT_BY_KEY[d["key"]], d["key"], d["sector"]
+            full = {}
+            for c in sorted(unit_acc_pv[uk]):
+                arr = [None] * NQ
+                for q, ym in unit_acc_pv[uk][c].items():
+                    rp, ec, _ = ym[LR_PV]
+                    if rp > 0:
+                        arr[QI[q]] = round(ec / rp * 100.0, m["dec"])
+                if any(x is not None for x in arr):
+                    full[c] = arr
+            m["vu"][tok] = full
+            pool = unit_pool(sec)
+            row = []
+            for i in range(NQ):
+                xs = [full[c][i] for c in pool if c in full and full[c][i] is not None]
+                row.append(round(statistics.median(xs), 1) if len(xs) >= UNIT_MEDIAN_MIN else None)
+            if any(x is not None for x in row):
+                m["medu"][tok] = {sec: row}
 
 # 화면이 쓰지 않는 필드는 싣지 않는다(파일 크기·오해 방지).
 COMPANY_KEYS = ("code", "name", "type", "short", "sector")
@@ -542,6 +800,14 @@ out = {
                    "공시 기준과 구성은 해마다 다를 수 있습니다."),
         "g": {g: {c: dict(sorted(loss_curve_g[g][c].items(), key=lambda kv: qkey(kv[0]))) for c in sorted(loss_curve_g[g])} for g in LR_GROUPS_SHOWN},
         "med_g": loss_curve_med_g,
+        "unit_rule": {"quarter": UQ, "min_companies": UNIT_MIN_CO, "min_share_pct": UNIT_MIN_SHARE_PCT,
+                      "re_min_companies": RE_UNIT_MIN_CO, "median_min": UNIT_MEDIAN_MIN, "fade_below_eok": UNIT_FADE_EOK},
+        "units": UNITS,
+        "default_unit": DEFAULT_UNIT,
+        "u": unit_u,
+        "up": unit_up,
+        "med_u": unit_med,
+        "unit_note": UNIT_NOTE,
     },
 }
 payload = json.dumps(out, ensure_ascii=False, separators=(",", ":")).encode("utf-8")

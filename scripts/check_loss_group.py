@@ -12,6 +12,9 @@ compare.html 손해율 카드와 IFRS17.html 8절이 그린 값을 마스터(dat
   - 대체(fallback): 실데이터에는 Non-Par 가 없는 회사가 없어서, panel_compare.json 을 가로채 Non-Par(또는 합계)를 지운 합성 시험으로 본다.
   - IFRS17: 회사 x (공시시점 x 사업구분) 전수 기본값 + 구분 선택지 x (1280 / 375 / 다크). 선택지 = 합계(합계 행이 있을 때) + 값이 있는 구분(선택지가 둘 미만이면 숨김),
     현 시점 선과 직전 연도 점선, 합계를 명시로 고른 화면은 BASE 의 옛 화면과 같은 숫자.
+2026-10-19 대체: 선택기가 구분 버튼에서 비교 단위 select 로 바뀌고 처음 화면이 업권별 기본 단위가 되어, 이 스크립트의 화면 읽기(버튼·주소 규칙)는 더는 맞지 않는다.
+  비교 단위·기본값·주소·흐림 칸·IFRS17 은 scripts/check_loss_unit.py 가 보고, 구분 수준 선택(합계·Non-Par·Direct-Par·Indirect-Par, 합성 대체 시험 포함)이
+  이미 배포된 동작 그대로인지는 `check_loss_unit.py --only regress` 가 배포본(커밋 ca717655)과 글자 그대로 대조한다. 이 파일은 --legacy 를 줄 때만 옛 방식으로 돈다.
 Playwright·망이 없으면 SKIP(exit 0) — SKIP 은 통과가 아니라 안 돌렸다는 뜻이다.
 실행: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/check_loss_group.py [--shots DIR]
 """
@@ -174,6 +177,9 @@ def nonnull(xs):
 
 
 def main():
+    if "--legacy" not in sys.argv:
+        print("SUPERSEDED: scripts/check_loss_unit.py 를 쓰세요(이 점검은 안 돌렸다). 옛 방식은 --legacy")
+        return 0
     try:
         from playwright.sync_api import sync_playwright
     except Exception as e:  # noqa: BLE001

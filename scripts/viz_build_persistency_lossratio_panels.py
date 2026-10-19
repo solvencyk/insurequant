@@ -6,6 +6,7 @@ Reads (READ ONLY, never written):
     data/loss_ratio/claims_ae_ratio.json     -> same panel, top-level `ae` block (actual-vs-expected claims ratio)
     data/persistency/master_persistency.json -> data/persistency/panel_persistency.json
 
+Loss-ratio leaf rows carry the risk premium (억원) as a 5th element (2026-10-19, see meta.rp_note); indexes 0-3 are unchanged.
 Both outputs are company -> disclosure-quarter nested with array-compressed rows, only the
 columns the screen draws, so each stays well under 1.5MB. IFRS17.html fetches them; nothing
 is inlined into the HTML.
@@ -121,6 +122,20 @@ def _ratio(v, a, b):
     return round(v, 2)
 
 
+# The master risk premium is already in 억원: build_loss_ratio_master.py divides 백만원 filings by 100 and keeps the original
+# unit label only in the `단위` column. So both labels scale by 1.0 (fixed 2026-10-19: an extra x0.01 made 백만원 filers 100x too small).
+# An unknown unit label still raises KeyError.
+RP_SCALE = {"억원": 1.0, "백만원": 1.0}
+
+
+def _rp_eok(b, scale):
+    """Risk premium of one cell in 억원 (2 decimals; integer when whole). None = the master has no amount."""
+    if b is None:
+        return None
+    v = round(b * scale, 2)
+    return int(v) if v == int(v) else v
+
+
 def _agg(leaves, years):
     """Group loss ratio per year column = sum(예상보험금) / sum(위험보험료) x 100 over the leaves
     that have BOTH amounts (never an average of ratios). Risk premium sum 0 / no leaf -> None."""
@@ -170,14 +185,19 @@ def build_loss_ratio() -> dict:
     names: dict[str, str] = {}
     cols_seen: dict = defaultdict(set)
     recon_bad = 0
+    rp_eok: dict = {}          # (code, quarter, segment, key, year) -> risk premium in 억원 (master value as is; the master already converted 백만원 filings)
+    unit_seen: dict = {}       # (code, quarter) -> 단위 of the rows that carry an amount (empty '-' rows may print a stray 억원)
     for r in rows:
         code, q, seg = r["원보험사코드"], r["공시분기"], r.get("세그먼트") or ""
         yr = r["경과차년"]
         names[code] = r["원수사명"]
+        if r.get("위험보험료") is not None or r.get("예상보험금") is not None:
+            assert unit_seen.setdefault((code, q), r["단위"]) == r["단위"], ("한 공시의 금액 행에 단위가 섞였다", code, q)
         key = (r["구분"], r.get("상품구분") or "", r["포트폴리오"])
         v = _num(r["손해율"])
         a, b = _num(r.get("예상보험금")), _num(r.get("위험보험료"))
         cells[(code, q, seg)].setdefault(key, {})[yr] = (_ratio(v, a, b), a, b)
+        rp_eok[(code, q, seg, key, yr)] = _rp_eok(b, RP_SCALE[r["단위"]])
         cols_seen[(code, q, seg)].add(yr)
         if v is not None and a is not None and b:
             if abs(a / b * 100 - v) > 0.6 + abs(v) * 0.005:
@@ -218,9 +238,11 @@ def build_loss_ratio() -> dict:
                 body.append([g, p, "", _agg([vals for _, vals in prods[p]], cols)])
                 group_rows += 1
                 for f, vals in prods[p]:
-                    body.append([g, p, f, [(vals.get(y) or (None,))[0] for y in cols]])
+                    body.append([g, p, f, [(vals.get(y) or (None,))[0] for y in cols],
+                                 [rp_eok.get((code, q, seg, (g, p, f), y)) for y in cols]])
             for f, vals in prods.get("", []):
-                body.append([g, "", f, [(vals.get(y) or (None,))[0] for y in cols]])
+                body.append([g, "", f, [(vals.get(y) or (None,))[0] for y in cols],
+                             [rp_eok.get((code, q, seg, (g, "", f), y)) for y in cols]])
         rows_out += len(body)
         c = comp.setdefault(code, {"n": names[code], "q": {}})
         qd = c["q"].setdefault(q, {"s": {}})
@@ -245,6 +267,9 @@ def build_loss_ratio() -> dict:
                      "소계 손해율=Σ예상보험금÷Σ위험보험료×100(빌더 계산, 마스터에는 소계 행 없음). 값은 소수 6자리까지 저장하고 화면이 소수 첫째 자리로 한 번만 반올림한다(공시 2자리 값이 금액으로 재현되면 반올림 전 비율을 싣고, 아니면 공시 2자리 값 그대로). 전 칸 '-' 인 행은 뺌. "
                      "ae[회사코드]={n:회사명,q:{공시분기:[[기준연도,사업구분(없으면 ''),예상손해율%,실제손해율%,예실차비율%p,[플래그...]]]}}: "
                      "claims_ae_ratio.json 값 그대로(반올림·재계산 없음, 공시값 '-'는 null), 플래그는 마스터 플래그 + 'identity_break'/'dash'."),
+            "rp_note": ("잎 행(포트폴리오 있음)만 다섯째 원소로 위험보험료 배열을 가진다: [구분,상품구분,포트폴리오,[손해율%...],[위험보험료 억원...]]. "
+                        "열 순서는 손해율 배열과 같고(칸 라벨 = c 또는 meta.years), 단위는 억원(마스터 값 그대로, 소수 둘째 자리까지, 마스터에 금액이 없는 칸은 null). "
+                        "합계·구분 소계·상품구분 소계 행에는 없다(4원소 그대로)."),
         },
         "companies": comp,
         "ae": ae,
