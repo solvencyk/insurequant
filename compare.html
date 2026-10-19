@@ -64,7 +64,7 @@
     .chip button:hover{background:var(--bg);color:var(--text)}
     .chip button[aria-disabled="true"]{opacity:.35;cursor:not-allowed}
     .add-wrap{display:flex;align-items:center;gap:6px;position:relative}
-    .add-wrap input{width:270px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px}
+    .add-wrap input{width:270px;padding:8px 10px;border:1px solid var(--control-border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px}
     .add-wrap input:disabled{background:var(--card);color:var(--muted)}
     .btn{padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px;font-weight:500;cursor:pointer}
     .btn:hover{border-color:var(--primary);color:var(--primary)}
@@ -74,9 +74,7 @@
     .opt{display:flex;flex-direction:column;gap:4px}
     .opt .seg-btn{padding:7px 12px;font-size:13px}
     .gsel{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin:2px 0 8px}
-    .gsel .seg-toggle{max-width:100%}
-    .gsel .seg-btn{padding:6px 11px;font-size:13px}
-    @media (max-width:420px){ .gsel .seg-btn{padding:6px 8px;font-size:12px} }
+    .gsel .select{max-width:100%;min-width:0;padding:6px 10px;font-size:13px}
     .check{display:inline-flex;align-items:center;gap:8px;min-height:34px;font-size:14px;cursor:pointer}
     .check-row{display:inline-flex;align-items:center}
     .check input{width:18px;height:18px;accent-color:var(--primary)}
@@ -109,7 +107,7 @@
     .lcm td{padding:6px 0;text-align:right;font-variant-numeric:tabular-nums;border:0;border-bottom:1px solid var(--border)}
     .lcm tr:last-child td{border-bottom:none}
     .lcm td:first-child{font-weight:600;word-break:keep-all}
-    .lcm td .sw{display:inline-block;width:22px;height:8px;margin-right:6px;vertical-align:middle}
+    .lcm td .sw{display:inline-block;width:22px;height:11px;margin-right:6px;vertical-align:middle}
     .empty{display:flex;align-items:center;justify-content:center;text-align:center;height:110px;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:13px;padding:0 16px}
     .msg{padding:24px;text-align:center;color:var(--muted)}
     .foot{font-size:12px;color:var(--muted);margin:8px 0 32px 0;line-height:1.6}
@@ -296,10 +294,13 @@
   var MAXC = 4;
   var DATA = null, CO = {}, Q = [], LAST = 0, CSM_M = null;
   var GALL = '합계', GDEF = 'Non-Par';
-  /* grp = 손해율 카드의 구분(합계 | Non-Par | Direct-Par | Indirect-Par). 기본은 Non-Par 이고 주소에는 적지 않는다(g 없음 = Non-Par).
-     기본(Non-Par)일 때만 회사별 대체가 걸린다: Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 첫 구분(grpFor). */
-  var S = { sel:[], basis:'post', med:true, units:[], grp:GDEF };
-  var GNOTE = '처음 화면은 Non-Par 입니다. Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 다른 구분을 대신 그리고, 그 선은 이름 옆에 구분을 적습니다.';
+  var FADE_BELOW_EOK = 100;   /* 억원: 비교 단위의 칸별 위험보험료가 이 값 미만이면 그 칸을 흐린 점선(표식은 속 빈 원)으로 그린다. 정본은 데이터의 unit_rule.fade_below_eok 와 같다 */
+  /* g = 손해율 카드의 비교 단위 선택. null = 처음 화면: 단위 목록이 있으면 첫 번째로 고른 회사 업권의 기본 단위(주소에 g 없음),
+     단위 목록이 없는 구판 JSON 이면 예전처럼 구분 Non-Par. 값이 구분 이름(합계 | Non-Par | Direct-Par | Indirect-Par)이면 구분 선택, 단위 키(life_np_mb_health 등)면 단위 선택.
+     구분 Non-Par 를 고른 때만 회사별 대체가 걸린다: Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 첫 구분(grpFor). 단위 선택에는 대체가 없다(공시하지 않은 회사는 선을 그리지 않음). */
+  var S = { sel:[], basis:'post', med:true, units:[], g:null };
+  var GNOTE_OLD = '처음 화면은 Non-Par 입니다. Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 다른 구분을 대신 그리고, 그 선은 이름 옆에 구분을 적습니다.';   /* 단위 목록이 없는 구판 JSON 에서만 */
+  var GNOTE = '구분을 고르면Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 다른 구분을 대신 그리고, 그 선은 이름 옆에 구분을 적습니다.';
   var UNITS = [], UNIT = {}, UNIT_OF = {}, DEF = [];   /* 지표 단위: chart_group 이 같은 지표(유지율 4회차)는 한 단위 */
   var $ = function(id){ return document.getElementById(id); };
 
@@ -344,7 +345,7 @@
     for(var j = asof; j >= 0; j--) if(by[Q[j]]) return true;
     return false;
   }
-  /* 고른 회사 중 한 곳이라도 그 구분을 공시한 구분만 고른다. 합계는 구분이 하나라도 있으면 함께 둔다(구분이 없으면 선택기 자체가 없다). */
+  /* 고른 회사 중 한 곳이라도 그 구분을 공시한 구분만 고른다. 합계는 구분이 하나라도 있으면 함께 둔다(구분이 없으면 구분 그룹 자체가 없다). */
   function grpOptions(asof){
     var C = DATA && DATA.loss_curve; if(!C || !C.g || !C.g_order) return [];
     var ok = C.g_order.filter(function(g){ return S.sel.some(function(s){ return lcHas(g, s.code, asof); }); });
@@ -354,28 +355,73 @@
     var a = lpAsof();
     return (DATA && DATA.loss_curve && S.sel.length && a >= 0 && curveOn()) ? grpOptions(a) : [];
   }
-  /* 선택기에서 눌려 보이는 구분. 기본(Non-Par)인데 고른 회사 누구도 Non-Par 를 공시하지 않았으면 합계가 눌려 보인다. */
+  /* ----- 비교 단위(구분 x 상품구분 x 포트폴리오 한 줄): 데이터의 loss_curve.units 가 있을 때만 켜진다. 정본 docs/loss_ratio_comparable_unit_20261019.md ----- */
+  function unitsOn(){ var C = DATA && DATA.loss_curve; return !!(C && C.units && C.units.length && C.u && C.default_unit); }
+  function unitDef(key){
+    var C = DATA && DATA.loss_curve; if(!key || !C || !C.units) return null;
+    for(var i = 0; i < C.units.length; i++) if(C.units[i].key === key) return C.units[i];
+    return null;
+  }
+  function secOf(code){ var t = CO[code].type; return (t === '생보' || t === '손보') ? t : '재보'; }   /* 단위 업권 이름: 생보 · 손보 · 재보(재보험·보증) */
+  function gValid(s){ var C = DATA && DATA.loss_curve; return !!(s && C && (s === GALL || (C.g && C.g[s]))); }
+  function ucHas(key, code, asof){
+    var by = DATA.loss_curve.u && DATA.loss_curve.u[key] && DATA.loss_curve.u[key][code]; if(!by) return false;
+    for(var j = asof; j >= 0; j--) if(by[Q[j]]) return true;
+    return false;
+  }
+  /* 처음 화면의 단위: 첫 번째로 고른 회사 업권의 기본 단위. 기본 단위가 없는 업권(재보)은 그 회사가 값을 가진 첫 단위, 그것도 없으면 그 업권의 첫 단위 */
+  function defUnit(){
+    var C = DATA.loss_curve, code = S.sel.length ? S.sel[0].code : null, sec = code ? secOf(code) : '생보';
+    var d = C.default_unit[sec]; if(d && unitDef(d)) return d;
+    var list = C.units.filter(function(u){ return u.sector === sec; }), a = lpAsof();
+    for(var i = 0; i < list.length; i++) if(code && ucHas(list[i].key, code, a)) return list[i].key;
+    return list.length ? list[0].key : null;
+  }
+  /* 지금 그리는 단위 키. 구분을 골랐거나 단위 목록이 없으면 null(구분 모드). 선택이 없으면 처음 화면의 단위 */
+  function curU(){
+    if(!unitsOn() || !S.sel.length) return null;
+    if(S.g && unitDef(S.g)) return S.g;
+    if(S.g && gValid(S.g)) return null;
+    return defUnit();
+  }
+  /* 구분 모드의 구분(눌린 값). 선택이 없으면 예전 처음 화면인 Non-Par */
+  function curGrp(){ return gValid(S.g) ? S.g : GDEF; }
+  /* 선택기에 올릴 단위 업권: 고른 회사들의 업권과, 주소로 고른 단위의 업권 */
+  function unitSectors(){
+    var set = {}, u = unitDef(S.g);
+    S.sel.forEach(function(s){ set[secOf(s.code)] = 1; });
+    if(u) set[u.sector] = 1;
+    return ['생보', '손보', '재보'].filter(function(x){ return set[x]; });
+  }
+  /* 선택기에서 눌려 보이는 구분. 구분 Non-Par 인데 고른 회사 누구도 Non-Par 를 공시하지 않았으면 합계가 눌려 보인다. */
   function grpPicked(){
     var o = gOpts(); if(!o.length) return GALL;
-    if(o.indexOf(S.grp) >= 0) return S.grp;
+    var g = curGrp();
+    if(o.indexOf(g) >= 0) return g;
     return o.indexOf(GALL) >= 0 ? GALL : o[0];
   }
-  /* 회사 하나가 실제로 그리는 구분 */
+  /* 회사 하나가 실제로 그리는 구분(구분 모드) */
   function grpFor(code){
     if(!gOpts().length) return GALL;
-    if(S.grp !== GDEF) return S.grp;
+    var g = curGrp();
+    if(g !== GDEF) return g;
     var C = DATA.loss_curve, a = lpAsof();
     if(lcHas(GDEF, code, a)) return GDEF;
     if(C.v[code] && Object.keys(C.v[code]).length) return GALL;
     for(var i = 0; i < C.g_order.length; i++) if(lcHas(C.g_order[i], code, a)) return C.g_order[i];
     return GALL;
   }
-  function normGrp(){
-    if(!DATA || S.grp === GDEF) return;
-    if(gOpts().indexOf(S.grp) < 0) S.grp = GDEF;
+  /* 주소·상태의 g 가 어디에도 없는 값이면 처음 화면(null)으로 */
+  function normG(){
+    if(!DATA || S.g == null) return;
+    if(unitsOn() && unitDef(S.g)) return;
+    if(S.g === GDEF && gValid(S.g)) return;
+    if(!gValid(S.g) || gOpts().indexOf(S.g) < 0) S.g = null;
   }
   function vals(m, code){
     if(m.id === 'loss_pv'){
+      var u = curU();
+      if(u) return (m.vu && m.vu[u] && m.vu[u][code]) || [];
       var g = grpFor(code);
       if(g !== GALL) return (m.vg && m.vg[g] && m.vg[g][code]) || [];
     }
@@ -383,6 +429,8 @@
   }
   function medArr(m, type){
     if(m.id === 'loss_pv'){
+      var u = curU();
+      if(u) return (m.medu && m.medu[u] && m.medu[u][unitDef(u).sector]) || null;
       var g = grpPicked();
       if(g !== GALL) return (m.medg && m.medg[g] && m.medg[g][type]) || null;
     }
@@ -390,11 +438,24 @@
     return src ? src[type] : null;
   }
   /* 손해율 curve 의 회사별 행({분기: 16칸})과 업계 중앙값({분기: 15칸}) — 구분별 것 */
-  function lcRows(code){ var C = DATA.loss_curve, g = grpFor(code); return (g === GALL ? C.v[code] : (C.g[g] && C.g[g][code])) || {}; }
-  function lcMed(type){ var C = DATA.loss_curve, g = grpPicked(); return (g === GALL ? (C.med && C.med[type]) : (C.med_g && C.med_g[type] && C.med_g[type][g])) || null; }
-  function grpTag(){ var g = grpPicked(); return g !== GALL ? ' · ' + g : ''; }
-  /* 선택기에서 고른 구분과 다른 구분으로 그린 회사(Non-Par 대체)는 이름 옆에 그 구분을 적는다 */
-  function fbTag(code){ var g = grpFor(code); return (gOpts().length && g !== grpPicked()) ? ' · ' + g : ''; }
+  function lcRows(code){
+    var C = DATA.loss_curve, u = curU();
+    if(u) return (C.u[u] && C.u[u][code]) || {};   /* 단위: 그 단위를 공시하지 않은 회사는 빈 칸(합계·다른 구분으로 바꾸지 않는다) */
+    var g = grpFor(code); return (g === GALL ? C.v[code] : (C.g[g] && C.g[g][code])) || {};
+  }
+  /* 단위 선택일 때 그 회사 행(lcRows)과 같은 분기·같은 열 순서의 칸별 위험보험료(억원) 배열. 없으면 null */
+  function lcUp(code, q){ var C = DATA.loss_curve, u = curU(); return (u && C.up && C.up[u] && C.up[u][code] && C.up[u][code][q]) || null; }
+  function lcMed(type){
+    var C = DATA.loss_curve, u = curU();
+    if(u) return (C.med_u && C.med_u[unitDef(u).sector] && C.med_u[unitDef(u).sector][u]) || null;
+    var g = grpPicked(); return (g === GALL ? (C.med && C.med[type]) : (C.med_g && C.med_g[type] && C.med_g[type][g])) || null;
+  }
+  function medType(type){ var u = curU(); return u ? unitDef(u).sector : type; }   /* 업계 중앙값 이름에 쓰는 업권 */
+  function grpTag(){ var u = curU(); if(u) return ' · ' + unitDef(u).label; var g = grpPicked(); return g !== GALL ? ' · ' + g : ''; }
+  /* 선택기에서 고른 구분과 다른 구분으로 그린 회사(Non-Par 대체)는 이름 옆에 그 구분을 적는다. 단위 선택에는 대체가 없다 */
+  function fbTag(code){ if(curU()) return ''; var g = grpFor(code); return (gOpts().length && g !== grpPicked()) ? ' · ' + g : ''; }
+  function josaEul(s){ var c = s.charCodeAt(s.length - 1); return (c >= 0xAC00 && c <= 0xD7A3 && (c - 0xAC00) % 28 === 0) ? '를' : '을'; }
+  function rpTxt(v){ return (Math.round(v * 100) / 100).toLocaleString('ko-KR', {maximumFractionDigits: 2}); }   /* 위험보험료(억원): 필요한 만큼만 소수 */
   var RE_T = '재보·보증';
   function selType(){ return S.sel.length ? CO[S.sel[0].code].type : null; }
   /* 지표의 최신 공시 분기: 39사 전체에서 값이 있는 가장 늦은 분기. 선택한 회사만 보면 오래된 값이 최신처럼 보인다. */
@@ -421,7 +482,22 @@
 
   /* 손해율 curve 에 선이 없는 회사의 사유: 구분을 고른 상태에서 합계 공시가 있으면 그 구분만 값이 없는 것 */
   function lcReason(m, code){
-    if(grpFor(code) !== GALL && ((DATA.loss_curve.v[code] && Object.keys(DATA.loss_curve.v[code]).length) || (m.v[code] || []).some(function(x){ return x != null; }))) return '이 구분 값 없음';
+    var u = curU();
+    if(u){
+      /* 단위 선택: 대체 없이 빈 칸. 사유는 ① 다른 업권의 단위 ② 회사 단위의 미공시 사유(마스터 na) ③ 손해율 가정 자체가 없음 ④ 그 단위만 값이 없음(변액사망은 구분이 갈린 회사 수를 함께 적는다) */
+      var d = unitDef(u);
+      if(secOf(code) !== d.sector) return '이 단위는 ' + d.sector + ' 단위입니다(' + secOf(code) + ' 회사에는 없음)';
+      if(m.na && m.na[code]) return m.na[code];
+      if(!((DATA.loss_curve.v[code] && Object.keys(DATA.loss_curve.v[code]).length) || (m.v[code] || []).some(function(x){ return x != null; }))) return naReason(m, code);
+      var pn = d.product + d.portfolio;
+      var ac = DATA.loss_curve.alt_co;   /* 단위별로 같은 이름을 다른 구분으로 공시한 회사 코드. 없는 옛 JSON 이면 예전 문구 */
+      if(ac && ac[u]){
+        if(ac[u].indexOf(code) < 0) return '이 단위 미공시';   /* 다른 구분으로도 공시하지 않은 회사: 다른 회사 이야기를 하지 않는다 */
+        return '이 단위 값 없음 · 같은 ' + pn + josaEul(pn) + ' ' + d.alt_gubun.join('·') + ' 로 공시하여 이 단위에서는 빈 칸';
+      }
+      return '이 단위 값 없음' + (d.alt_n ? ' · 같은 ' + pn + josaEul(pn) + ' ' + d.alt_gubun.join('·') + ' 로 공시한 회사가 ' + d.alt_n + '곳 있고 이 단위에서는 빈 칸' : '');
+    }
+    if(grpFor(code) !== GALL &&((DATA.loss_curve.v[code] && Object.keys(DATA.loss_curve.v[code]).length) || (m.v[code] || []).some(function(x){ return x != null; }))) return '이 구분 값 없음';
     return naReason(m, code);
   }
 
@@ -475,8 +551,8 @@
     S.sel = []; codes.slice(0, MAXC).forEach(addCo);
     S.basis = p.get('b') === 'pre' ? 'pre' : 'post';
     S.med = p.get('md') !== '0';
-    var gq = p.get('g');   /* g 없음 = Non-Par. 옛 링크의 g=Non-Par · g=합계 도 그대로 읽는다 */
-    S.grp = (gq === GALL || (gq && DATA.loss_curve && DATA.loss_curve.g && DATA.loss_curve.g[gq])) ? gq : GDEF; normGrp();
+    var gq = p.get('g');   /* g 없음 = 처음 화면(첫 회사 업권의 기본 단위). 구분 이름(옛 링크의 g=Non-Par · g=합계 · g=Direct-Par · g=Indirect-Par)이나 단위 키를 읽고, 없는 값은 처음 화면으로 */
+    S.g = (gq && (gValid(gq) || (unitsOn() && unitDef(gq)))) ? gq : null; normG();
     var ids = [];
     (p.get('m') || '').split(',').forEach(function(x){ var u = UNIT_OF[x.trim()]; if(u && ids.indexOf(u) < 0) ids.push(u); });
     S.units = ids.length ? ids : DEF.slice();
@@ -487,7 +563,7 @@
     if(S.units.length && !sameUnits(S.units, DEF)) p.set('m', S.units.join(','));
     if(S.basis === 'pre') p.set('b', 'pre');
     if(!S.med) p.set('md', '0');
-    if(S.grp !== GDEF) p.set('g', S.grp);
+    if(S.g != null) p.set('g', S.g);
     var q = p.toString().replace(/%2C/g, ',');
     try{ history.replaceState(null, '', location.pathname + (q ? '?' + q : '')); }catch(e){}
   }
@@ -502,9 +578,13 @@
       li.innerHTML = '<span>' + esc(c.short) + '</span><span class="tag">' + esc(c.sector || c.type) + '</span>';
       var b = document.createElement('button');
       b.type = 'button'; b.innerHTML = '&times;'; b.setAttribute('aria-label', c.short + ' 제거');
-      b.addEventListener('click', function(){
+      b.addEventListener('click', function(e){
+        var viaKey = e.detail === 0;   /* 키보드·보조기기로 누른 클릭. 마우스·터치일 때는 검색창을 열어 화면 키보드를 띄우지 않는다 */
         S.sel = S.sel.filter(function(x){ return x.code !== s.code; });
         say(c.short + ' 제거'); update(true);
+        /* 다시 그리면 눌렀던 버튼이 사라져 포커스가 body 로 빠진다 → 같은 자리에 온 다음 칩(없으면 이전 칩)의 제거 버튼, 칩이 없으면 검색창 */
+        var bs = $('chips').querySelectorAll('button'), t = bs[k] || bs[k - 1];
+        if(t) t.focus(); else if(viaKey) $('addco').focus();
       });
       li.appendChild(b); ul.appendChild(li);
     });
@@ -571,7 +651,12 @@
     });
   }
   function pick(code){
-    if(addCo(code)){ say(CO[code].short + ' 추가'); inp.value = ''; update(true); if(S.sel.length >= MAXC) closePop(); else openPop(); }
+    if(addCo(code)){
+      say(CO[code].short + ' 추가'); inp.value = ''; update(true);
+      if(S.sel.length >= MAXC){   /* 검색창이 비활성돼 포커스가 body 로 빠지니 첫 칩의 제거 버튼으로 옮긴다 */
+        closePop(); var f = $('chips').querySelector('button'); if(f) f.focus();
+      } else openPop();
+    }
   }
   function initPop(){
     pop = $('co-pop'); inp = $('addco');
@@ -626,6 +711,19 @@
     var hsl = toHsl(hexRgb(hex)), up = lumOf(hexRgb(bg)) < 0.5, l = hsl[2], out = hex;
     for(var i = 0; i < 50 && contrast(out, bg) < LC_MIN_CR; i++){ l += up ? 0.02 : -0.02; if(l <= 0 || l >= 1) break; out = rgbHex(fromHsl(hsl[0], hsl[1], l)); }
     return out;
+  }
+  /* 위험보험료가 작은 칸(FADE_BELOW_EOK 억원 미만)의 흐린 선 색: 선 색을 배경 쪽으로 FADE_MIX 만큼 섞는다. 섞은 뒤 배경 대비가 FADE_MIN_CR(2.2:1) 아래로 내려가면 섞는 양을 줄이고,
+     원래 색이 이미 그 값에 못 미치는 옅은 색이면 색은 그대로 두며 흐림은 점선(+넓은 화면은 속 빈 표식)이 맡는다. 색만으로 구분하지 않는다(실측 대비는 scripts/check_loss_unit.py 가 인쇄). */
+  var FADE_MIX = 0.45, FADE_MIN_CR = 2.2;
+  function fadeBg(){ var b = TH && TH.bg; return hexRgb(b) ? b : (TH && TH.dark ? BG_DARK : BG_LIGHT); }
+  function fadeColor(hex){
+    var bg = fadeBg(), a = hexRgb(hex), b = hexRgb(bg);
+    if(!a || !b || contrast(hex, bg) < FADE_MIN_CR) return hex;
+    for(var t = FADE_MIX; t > 0.001; t -= 0.05){
+      var out = rgbHex([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]);
+      if(contrast(out, bg) >= FADE_MIN_CR) return out;
+    }
+    return hex;
   }
   function toLab(hex){
     var c = hexRgb(hex).map(lin), X = (0.4124 * c[0] + 0.3576 * c[1] + 0.1805 * c[2]) / 0.95047, Y = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2], Z = (0.0193 * c[0] + 0.1192 * c[1] + 0.9505 * c[2]) / 1.08883;
@@ -783,6 +881,12 @@
   }
 
   /* 손해율 가정: x = 경과차년, y = 손해율, 회사별 꺾은선(부드러운 곡선). 회사마다 가장 최근 결산 공시 */
+  /* 업계 중앙값이 없을 때의 안내(이미 있던 두 문장 그대로, 단위 선택일 때는 그 단위 업권 기준) */
+  function medMiss(type){
+    var u = curU();
+    if(u){ var C = DATA.loss_curve, n = (C.unit_rule && C.unit_rule.median_min) || 5; return '값이 있는 ' + esc(unitDef(u).sector) + ' 회사가 ' + n + '곳 미만이라 업계 중앙값을 그리지 않습니다.'; }
+    return type === RE_T ? '재보험·보증은 업계 중앙값을 만들지 않습니다.' : '값이 있는 ' + esc(type) + '사가 5곳 미만이라 업계 중앙값을 그리지 않습니다.';
+  }
   function lrX(lab){
     var m = /^(\d+)년$/.exec(lab); if(m) return +m[1];
     m = /^(\d+)~(\d+)년$/.exec(lab); if(m) return (+m[1] + +m[2]) / 2;
@@ -791,7 +895,7 @@
   function lossChart(card, m){
     var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
     var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
-    var ds = [], nas = [], stale = [], coarse = [], any = false, LC = lineColors();
+    var ds = [], nas = [], stale = [], coarse = [], any = false, anyFade = false, LC = lineColors();
     S.sel.forEach(function(s, k){
       var nm = CO[s.code].short, byQ = lcRows(s.code), row = null, qi = -1;
       for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
@@ -802,11 +906,24 @@
       if(co){ coarse.push(nm); for(i = 0; i < 10; i++) pts[i].y = row[nstd]; }   /* 1~10년을 한 구간으로 공시한 회사 */
       var pv = cellFor(m, s.code, asof);
       if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
-      ds.push({label: nm + fbTag(s.code) + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm + fbTag(s.code), coarse: co, data: pts,
-        borderColor: LC[s.code], backgroundColor: LC[s.code], borderWidth: 3, pointStyle: PT[k % 4],
+      /* 단위 선택: 칸별 위험보험료(억원)가 FADE_BELOW_EOK 미만인 칸은 흐린 점선 + 속 빈 표식 */
+      var upq = lcUp(s.code, Q[qi]), fd = [], rpa = [], lc0 = LC[s.code];
+      for(i = 0; i < nstd; i++){ var rv = upq ? upq[(co && i < 10) ? nstd : i] : null; rpa.push(rv); fd.push(rv != null && rv < FADE_BELOW_EOK && pts[i].y != null); }
+      var faded = fd.some(Boolean), fcol = faded ? fadeColor(lc0) : lc0, fseg = function(c){ return fd[c.p0DataIndex] || fd[c.p1DataIndex]; };
+      if(faded) anyFade = true;
+      ds.push({label: nm + fbTag(s.code) + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm + fbTag(s.code), coarse: co, data: pts, fd: fd, rp: rpa,
+        borderColor: lc0, backgroundColor: lc0, borderWidth: 3, pointStyle: PT[k % 4],
+        segment: faded ? {borderColor: function(c){ return fseg(c) ? fcol : lc0; }, borderDash: function(c){ return fseg(c) ? [2, 4] : (co ? [5, 4] : []); }} : undefined,
+        pointBackgroundColor: faded ? function(c){ return (c.dataIndex != null && fd[c.dataIndex]) ? TH.bg : lc0; } : lc0,
+        pointBorderColor: faded ? function(c){ return (c.dataIndex != null && fd[c.dataIndex]) ? fcol : lc0; } : lc0,
+        pointBorderWidth: faded ? function(c){ return (c.dataIndex != null && fd[c.dataIndex]) ? 2 : 1; } : 1,
         pointRadius: co ? 0 : 4, pointHoverRadius: co ? 4 : 6, cubicInterpolationMode: 'monotone', spanGaps: false, borderDash: co ? [5, 4] : [], order: 1});
     });
-    if(!any){ card.insertAdjacentHTML('beforeend', '<div class="empty">선택한 회사 모두 이 지표를 공시하지 않습니다.</div>'); notes(card, []); return; }
+    if(!any){
+      card.insertAdjacentHTML('beforeend', '<div class="empty">' + (curU() ? '선택한 회사 모두 이 단위를 공시하지 않습니다.' : '선택한 회사 모두 이 지표를 공시하지 않습니다.') + '</div>'); notes(card, []);
+      if(curU() && nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
+      return;
+    }
     var mq = null, medShown = false, mmap = lcMed(type);
     if(S.med && mmap){
       for(j = asof; j >= 0; j--){
@@ -815,7 +932,7 @@
       }
       if(mq){
         medShown = true;
-        ds.push({label: type + ' 업계 중앙값' + grpTag(), short: type + ' 업계 중앙값' + grpTag(), data: xs.map(function(x, n){ return {x: x, y: mq[n]}; }),
+        ds.push({label: medType(type) + ' 업계 중앙값' + grpTag(), short: medType(type) + ' 업계 중앙값' + grpTag(), data: xs.map(function(x, n){ return {x: x, y: mq[n]}; }),
           borderColor: TH.muted, backgroundColor: TH.muted, borderWidth: 2, borderDash: [6, 4], pointRadius: 0, pointHoverRadius: 4,
           cubicInterpolationMode: 'monotone', spanGaps: false, order: 2});
       }
@@ -823,7 +940,7 @@
     var label = '손해율 가정 경과차년별 꺾은선' + grpTag() + '. ' + ds.map(function(d){
       var v = d.data.filter(function(p){ return p.y != null; });
       return v.length ? d.short + ' ' + nf(v[0].y, 1) + '%에서 ' + nf(v[v.length - 1].y, 1) + '%' : d.short + ' n/a';
-    }).join('. ');
+    }).join('. ') + (anyFade ? '. 위험보험료 ' + FADE_BELOW_EOK + '억원 미만 칸은 흐린 점선으로 그림' : '');
     var cv = chartCanvas(card, label); cv.parentNode.classList.add('tall');
     CHARTS.push(new Chart(cv.getContext('2d'), {
       type: 'line', data: {datasets: ds},
@@ -836,7 +953,11 @@
             filter: function(it){ return it.parsed.y != null; },
             callbacks: {
               title: function(items){ var n = xs.indexOf(items[0].parsed.x); return n >= 0 ? labs[n] : ''; },
-              label: function(c){ return c.dataset.short + ': ' + nf(c.parsed.y, 1) + '%' + (c.dataset.coarse && c.parsed.x <= 10 ? ' (1~10년 한 구간 값)' : ''); }
+              label: function(c){
+                var rv = c.dataset.rp ? c.dataset.rp[c.dataIndex] : null, fz = c.dataset.fd && c.dataset.fd[c.dataIndex];
+                return c.dataset.short + ': ' + nf(c.parsed.y, 1) + '%' + (c.dataset.coarse && c.parsed.x <= 10 ? ' (1~10년 한 구간 값)' : '') +
+                  (rv != null ? ' · 위험보험료 ' + rpTxt(rv) + '억원' + (fz ? ' (' + FADE_BELOW_EOK + '억원 미만)' : '') : '');
+              }
             }
           }
         },
@@ -855,37 +976,56 @@
     var foot = ['현재가치 기준 손해율은 선에 넣지 않고 범례 옆 숫자로 적었습니다.'];
     if(coarse.length) foot.push(esc(coarse.join(', ')) + '은 경과 1~10년을 한 구간으로 공시해 그 구간을 점선으로 그렸습니다.');
     if(stale.length) foot.push('최신 결산(' + Q[asof] + ')보다 오래된 공시: ' + esc(stale.join(', ')) + '.');
-    if(S.med && !medShown) foot.push(type === RE_T ? '재보험·보증은 업계 중앙값을 만들지 않습니다.' : '값이 있는 ' + esc(type) + '사가 5곳 미만이라 업계 중앙값을 그리지 않습니다.');
+    if(S.med && !medShown) foot.push(medMiss(type));
     notes(card, foot);
     if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
   }
 
-  /* 좁은 화면(~640px) 손해율 가정: 한 차트에 선택한 회사 곡선을 겹친 정적 SVG(카드 폭 전체, 점 표식·x 눈금 숫자·선 끝 라벨 없음) + 회사·현재가치 표.
-     회사 구분은 실선의 색만으로 한다(owner 2026-10-11). 색은 넓은 화면 꺾은선과 같은 lineColors() 이고, 아래 표의 색 견본이 선과 같은 색이라 표가 이름표다. 터치 상호작용은 없다. */
+  /* 좁은 화면(~640px) 손해율 가정: 한 차트에 선택한 회사 곡선을 겹친 정적 SVG(카드 폭 전체, 표식은 8차년마다 하나·x 눈금 숫자·선 끝 라벨 없음) + 회사·현재가치 표.
+     회사 구분은 선 색 + 표식 모양이다(색은 owner 2026-10-11, 모양은 a11y C6 2026-10-19). 색은 넓은 화면 꺾은선과 같은 lineColors() 이고 표식 모양은 넓은 화면 PT 와 같다. 아래 표의 견본이 선과 같은 색·모양이라 표가 이름표다. 터치 상호작용은 없다. */
   var MOB_LINES = 4;                                             /* 겹쳐 그리는 회사 선 상한(업계 중앙값 점선은 별도). 표에는 선택한 회사 전부 */
   var SVGNS = 'http://www.w3.org/2000/svg';
   function nfs(v, d){ return (v < 0 ? '△' : '') + nf(Math.abs(v), d); }   /* 음수는 △ */
   function svgEl(n, a, txt){ var e = document.createElementNS(SVGNS, n); for(var k in a) e.setAttribute(k, a[k]); if(txt != null) e.textContent = txt; return e; }
-  function swatch(color, dash){
-    return '<svg class="sw" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><line x1="1" x2="21" y1="4" y2="4" stroke="' + color + '" stroke-width="3" stroke-linecap="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/></svg>';
+  /* 넓은 화면 PT 와 같은 모양의 표식(a11y C6). 크기는 Chart.js pointRadius 4 에 맞춘 반지름 r: 원 · 정삼각형(위로 뾰족) · 정사각형 · 마름모(정사각형을 45도 돌린 것).
+     ptSpec 은 [태그, 속성]을 돌려주고, 선 그래프(svgEl)와 표 견본(문자열)이 같이 쓴다. data-pt 는 모양 이름(PT). hollow 표식은 호출하는 쪽이 fill 을 배경색으로 준다. */
+  function ptSpec(kind, x, y, r, fill, stroke, sw){
+    var a = {'class': 'mk', 'data-pt': kind, fill: fill, stroke: stroke, 'stroke-width': sw}, h = r * 0.7071, f = function(v){ return +v.toFixed(2); };
+    if(kind === 'triangle'){ a.points = f(x) + ',' + f(y - r) + ' ' + f(x + r * 0.866) + ',' + f(y + r * 0.5) + ' ' + f(x - r * 0.866) + ',' + f(y + r * 0.5); return ['polygon', a]; }
+    if(kind === 'rect'){ a.x = f(x - h); a.y = f(y - h); a.width = f(2 * h); a.height = f(2 * h); return ['rect', a]; }
+    if(kind === 'rectRot'){ a.points = f(x) + ',' + f(y - r) + ' ' + f(x + r) + ',' + f(y) + ' ' + f(x) + ',' + f(y + r) + ' ' + f(x - r) + ',' + f(y); return ['polygon', a]; }
+    a.cx = f(x); a.cy = f(y); a.r = r; return ['circle', a];
+  }
+  function ptMark(kind, x, y, r, fill, stroke, sw){ var p = ptSpec(kind, x, y, r, fill, stroke, sw); return svgEl(p[0], p[1]); }
+  function swatch(color, dash, kind){
+    var mk = '';
+    if(kind){ var p = ptSpec(kind, 11, 5.5, 4, color, color, 1); mk = '<' + p[0] + Object.keys(p[1]).map(function(k){ return ' ' + k + '="' + p[1][k] + '"'; }).join('') + '/>'; }
+    return '<svg class="sw" viewBox="0 0 22 11" aria-hidden="true" focusable="false"><line x1="1" x2="21" y1="5.5" y2="5.5" stroke="' + color + '" stroke-width="3" stroke-linecap="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>' + mk + '</svg>';
   }
   function lossMobile(card, m){
     var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
     var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
-    var items = [], nas = [], stale = [], coarse = [], any = false;
+    var items = [], nas = [], stale = [], coarse = [], any = false, anyFade = false;
     S.sel.forEach(function(s, k){
       var nm = CO[s.code].short, byQ = lcRows(s.code), row = null, qi = -1;
       for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
-      var it = {nm: nm, k: k, code: s.code, pv: cellFor(m, s.code, asof), pts: null, line: false};
+      var it = {nm: nm, k: k, code: s.code, pv: cellFor(m, s.code, asof), pts: null, line: false, fd: null};
       items.push(it);
       if(!row){ nas.push('<li><b>' + esc(nm) + '</b> n/a — ' + esc(lcReason(m, s.code)) + '</li>'); return; }
       any = true;
       var co = row[nstd] != null; it.pts = [];
       for(i = 0; i < nstd; i++) it.pts.push(co && i < 10 ? row[nstd] : row[i]);   /* 1~10년을 한 구간으로 공시한 회사 */
+      var upq = lcUp(s.code, Q[qi]);   /* 단위 선택: 칸별 위험보험료(억원)가 FADE_BELOW_EOK 미만인 칸은 흐린 점선으로 */
+      it.fd = it.pts.map(function(v, n){ var rv = upq ? upq[(co && n < 10) ? nstd : n] : null; return rv != null && rv < FADE_BELOW_EOK && v != null; });
+      if(it.fd.some(Boolean)) anyFade = true;
       if(co) coarse.push(nm);
       if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
     });
-    if(!any){ card.insertAdjacentHTML('beforeend', '<div class="empty">선택한 회사 모두 이 지표를 공시하지 않습니다.</div>'); notes(card, []); return; }
+    if(!any){
+      card.insertAdjacentHTML('beforeend', '<div class="empty">' + (curU() ? '선택한 회사 모두 이 단위를 공시하지 않습니다.' : '선택한 회사 모두 이 지표를 공시하지 않습니다.') + '</div>'); notes(card, []);
+      if(curU() && nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
+      return;
+    }
     var drawn = items.filter(function(it){ return it.pts; }), capped = drawn.length > MOB_LINES;
     var LC = lineColors();
     drawn.slice(0, MOB_LINES).forEach(function(it){ it.line = true; it.col = LC[S.sel[it.k].code]; });
@@ -908,10 +1048,24 @@
       pts.forEach(function(v, n){ if(v == null){ pen = false; return; } d += (pen ? 'L' : 'M') + X(xs[n]).toFixed(1) + ' ' + Y(v).toFixed(1); pen = true; });
       return d;
     }
+    /* 같은 모양(실선 | 흐린 점선)이 이어지는 구간마다 한 경로. 두 끝 중 하나라도 위험보험료 작은 칸이면 그 구간은 흐린 점선 */
+    function runsOf(pts, fd){
+      var out = [], cur = null, pi = -1;
+      pts.forEach(function(v, n){
+        if(v == null){ cur = null; pi = -1; return; }
+        if(pi >= 0){
+          var f = !!(fd && (fd[pi] || fd[n]));
+          if(!cur || cur.f !== f){ cur = {f: f, d: 'M' + X(xs[pi]).toFixed(1) + ' ' + Y(pts[pi]).toFixed(1)}; out.push(cur); }
+          cur.d += 'L' + X(xs[n]).toFixed(1) + ' ' + Y(v).toFixed(1);
+        }
+        pi = n;
+      });
+      return out;
+    }
     function lastOf(pts){ for(var n = pts.length - 1; n >= 0; n--) if(pts[n] != null) return {n: n, v: pts[n]}; return null; }
     function firstOf(pts){ for(var n = 0; n < pts.length; n++) if(pts[n] != null) return pts[n]; return null; }
     var label = '손해율 가정 경과차년별 꺾은선' + grpTag() + '. ' + lines.map(function(it){ return it.nm + fbTag(it.code) + ' ' + nfs(firstOf(it.pts), 1) + '%에서 ' + nfs(lastOf(it.pts).v, 1) + '%'; }).join('. ') +
-      (med ? '. ' + type + ' 업계 중앙값 ' + nfs(firstOf(med), 1) + '%에서 ' + nfs(lastOf(med).v, 1) + '%' : '') + '. 현재가치 손해율은 아래 표에 있습니다.';
+      (med ? '. ' + medType(type) + ' 업계 중앙값 ' + nfs(firstOf(med), 1) + '%에서 ' + nfs(lastOf(med).v, 1) + '%' : '') + (anyFade ? '. 위험보험료 ' + FADE_BELOW_EOK + '억원 미만 칸은 흐린 점선으로 그림' : '') + '. 현재가치 손해율은 아래 표에 있습니다.';
     var svg = svgEl('svg', {viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label});
     var step = (hi - lo) > 80 ? 40 : (hi - lo) > 30 ? 20 : 10;
     var ylabs = [];
@@ -921,7 +1075,36 @@
     }
     if(med) svg.appendChild(svgEl('path', {d: pathOf(med), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.5, 'stroke-dasharray': '1 4', 'stroke-linecap': 'round'}));
     lines.forEach(function(it){
-      svg.appendChild(svgEl('path', {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}));
+      if(!it.fd || !it.fd.some(Boolean)){
+        svg.appendChild(svgEl('path', {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'data-line': it.k}));
+        return;
+      }
+      var fc = fadeColor(it.col);
+      runsOf(it.pts, it.fd).forEach(function(r){
+        var a = {d: r.d, fill: 'none', stroke: r.f ? fc : it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'data-line': it.k};
+        if(r.f) a['stroke-dasharray'] = '2 4';
+        svg.appendChild(svgEl('path', a));
+      });
+    });
+    /* 선마다 넓은 화면과 같은 모양의 표식(a11y C6, 색만으로 구분하지 않기). 8차년마다 하나씩, 선마다 2차년씩 어긋나게 찍어 네 선이 겹쳐도 모양이 보인다.
+       위험보험료가 작은 칸의 표식은 넓은 화면처럼 속 빈 표식(배경색 채움 + 흐린 윤곽)이고, 흐린 구간마다 표식이 하나는 있게 한다. 선 색은 그대로. */
+    lines.forEach(function(it){
+      var kind = PT[it.k % 4], g = svgEl('g', {'class': 'mks', 'data-pt': kind, 'data-line': it.k}), fc = (it.fd && it.fd.some(Boolean)) ? fadeColor(it.col) : it.col, off = 2 * (it.k % 4), done = {};
+      function mark(n){
+        if(done[n]) return; done[n] = 1;
+        var hol = it.fd && it.fd[n];
+        g.appendChild(ptMark(kind, X(xs[n]), Y(it.pts[n]), 4, hol ? 'var(--bg)' : it.col, hol ? fc : it.col, hol ? 2 : 1));
+      }
+      it.pts.forEach(function(v, n){ if(v != null && n % 8 === off) mark(n); });
+      if(it.fd){   /* 흐린 구간(연속한 흐린 칸)에 표식이 하나도 없으면 구간의 첫 칸에 찍는다 */
+        var run = -1, has = false;
+        it.fd.concat([false]).forEach(function(f, n){
+          if(f){ if(run < 0){ run = n; has = false; } if(done[n]) has = true; }
+          else if(run >= 0){ if(!has) mark(run); run = -1; }
+        });
+      }
+      if(!g.childNodes.length) it.pts.some(function(v, n){ if(v == null) return false; mark(n); return true; });
+      svg.appendChild(g);
     });
     ylabs.forEach(function(t){ svg.appendChild(t); });   /* 눈금 숫자는 선 위에 얹어 선에 가려지지 않게 */
     svg.appendChild(svgEl('text', {x: ml + 2, y: H - 8, 'font-size': 11, class: 'm'}, '1년'));
@@ -931,18 +1114,18 @@
 
     /* 현재가치 표: 선택한 회사 전부(선이 없는 회사는 색 표시만 비움) */
     var tr = items.map(function(it){
-      var sw = it.line ? swatch(it.col) : '<span class="sw sw0"></span>';
+      var sw = it.line ? swatch(it.col, null, PT[it.k % 4]) : '<span class="sw sw0"></span>';
       var chip = (it.pv && it.pv.i !== asof) ? ' ' + qchip(it.pv.i, asof) : '';
-      return '<tr><td>' + sw + esc(it.nm + fbTag(it.code)) + chip + '</td><td><b>' + (it.pv ? nfs(it.pv.v, 1) + '%' : (grpFor(it.code) !== GALL ? '—' : 'n/a')) + '</b></td></tr>';
+      return '<tr><td>' + sw + esc(it.nm + fbTag(it.code)) + chip + '</td><td><b>' + (it.pv ? nfs(it.pv.v, 1) + '%' : ((curU() || grpFor(it.code) !== GALL) ? '—' : 'n/a')) + '</b></td></tr>';
     });
-    if(med && medPv) tr.push('<tr><td>' + swatch('var(--muted)', '1 4') + esc(type) + ' 중앙값' + grpTag() + (medPv.i !== asof ? ' ' + qchip(medPv.i, asof) : '') + '</td><td><b>' + nfs(medPv.v, 1) + '%</b></td></tr>');
+    if(med && medPv) tr.push('<tr><td>' + swatch('var(--muted)', '1 4') + esc(medType(type)) + ' 중앙값' + grpTag() + (medPv.i !== asof ? ' ' + qchip(medPv.i, asof) : '') + '</td><td><b>' + nfs(medPv.v, 1) + '%</b></td></tr>');
     wrap.insertAdjacentHTML('beforeend', '<table><caption class="sr-only">손해율 가정 현재가치 손해율</caption><thead><tr><th scope="col">회사</th><th scope="col">현재가치</th></tr></thead><tbody>' + tr.join('') + '</tbody></table>');
 
     var foot = ['현재가치 손해율은 선에 넣지 않고 아래 표에 함께 둡니다.'];
     if(capped) foot.push('모바일에서는 ' + MOB_LINES + '곳까지 겹쳐 봅니다. 나머지 회사는 아래 표에만 있습니다.');
     if(coarse.length) foot.push(esc(coarse.join(', ')) + '은 경과 1~10년을 한 구간으로 공시해 평평하게 그렸습니다.');
     if(stale.length) foot.push('최신 결산(' + Q[asof] + ')보다 오래된 공시: ' + esc(stale.join(', ')) + '.');
-    if(S.med && !med) foot.push(type === RE_T ? '재보험·보증은 업계 중앙값을 만들지 않습니다.' : '값이 있는 ' + esc(type) + '사가 5곳 미만이라 업계 중앙값을 그리지 않습니다.');
+    if(S.med && !med) foot.push(medMiss(type));
     notes(card, foot);
     if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
   }
@@ -1249,6 +1432,35 @@
     return {html:h + foot, summary:summary};
   }
 
+  /* 손해율 카드의 선택기 하나: 라벨 붙은 <select>, 옵션 머리글(optgroup)은 구분 · 생보 · 손보 · 재보. 구분 그룹은 예전 구분 선택지 그대로, 단위 그룹은 단위 목록(공시 표 이름 그대로) */
+  function gControl(gopts, gshown, cu){
+    var uOn = unitsOn(); if(!gopts.length && !uOn) return '';
+    var C = DATA.loss_curve, h = '<div class="gsel"><label class="control-label" for="sel-g">비교 단위</label><select id="sel-g" class="select">';
+    function opt(v, lab, on){ return '<option value="' + esc(v) + '"' + (on ? ' selected' : '') + '>' + esc(lab) + '</option>'; }
+    if(gopts.length) h += '<optgroup label="구분">' + gopts.map(function(g){ return opt(g, g, !cu && g === gshown); }).join('') + '</optgroup>';
+    if(uOn) unitSectors().forEach(function(sec){
+      var us = C.units.filter(function(u){ return u.sector === sec; });
+      if(us.length) h += '<optgroup label="' + esc(sec) + '">' + us.map(function(u){ return opt(u.key, u.label, cu === u.key); }).join('') + '</optgroup>';
+    });
+    return h + '</select></div>';
+  }
+  /* ? 팝오버 문장: 단위 선택이면 데이터의 unit_note + 처음 화면·빈 칸·흐림 규칙, 구분 선택이면 예전 문장 */
+  function lcHelp(C, gopts){
+    var cu = curU(), t = C.note;
+    if(unitsOn()){
+      var defs = ['생보', '손보'].filter(function(sec){ return C.default_unit[sec] && unitDef(C.default_unit[sec]); }).map(function(sec){ return sec + ' ' + unitDef(C.default_unit[sec]).label; });
+      t += ' 처음 화면은 첫 번째로 고른 회사 업권의 기본 단위입니다' + (defs.length ? '(' + defs.join(', ') + '; 재보는 그 회사가 공시한 첫 단위)' : '') + '.';
+      if(cu){
+        t += ' ' + (C.unit_note || '') + ' 단위를 고르면 그 단위를 공시하지 않은 회사는 선을 그리지 않고 합계나 다른 구분으로 바꿔 그리지 않으며, 이유는 n/a 줄에 적습니다.' +
+          ' 그 단위의 위험보험료가 ' + FADE_BELOW_EOK + '억원 미만인 칸은 분모가 작아 값이 크게 흔들리므로 흐린 점선(넓은 화면은 속 빈 표식)으로 그립니다.';
+      } else if(gopts.length && C.note_g){
+        t += ' ' + GNOTE + ' ' + C.note_g;
+      }
+      return t;
+    }
+    return t + (gopts.length && C.note_g ? ' ' + GNOTE_OLD + ' ' + C.note_g : '');
+  }
+
   function renderCards(){
     var grid = $('grid'); grid.innerHTML = ''; killCharts();
     if(!S.sel.length){ grid.innerHTML = '<div class="msg" style="grid-column:1/-1">비교할 회사를 위 검색창에서 골라 주세요.</div>'; return; }
@@ -1262,16 +1474,15 @@
       var title = curve ? curve.label : (grouped ? m0.chart_label : m0.label);
       var card = document.createElement('article'); card.className = 'card'; card.setAttribute('aria-label', title); card.setAttribute('data-share-section', title);
       var asofs = ms.map(mLast), amax = Math.max.apply(null, asofs), bt = (!grouped && m0.basis) ? (S.basis === 'pre' ? ' · 적용 전' : ' · 적용 후') : '';
-      var gopts = curve ? grpOptions(amax) : [], gshown = curve ? grpPicked() : GALL;
+      var gopts = curve ? grpOptions(amax) : [], gshown = curve ? grpPicked() : GALL, cu = curve ? curU() : null;
       var defn = curve ? curve.defn : m0.defn;
-      if(gshown !== GALL && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, gshown + ' 구분의 ');   /* 합계가 아닌 구분을 그릴 때는 정의 줄도 그 구분이다 */
+      if(cu && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, unitDef(cu).label + ' 단위의 ');   /* 단위를 그릴 때는 정의 줄도 그 단위다 */
+      else if(gshown !== GALL && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, gshown + ' 구분의 ');   /* 합계가 아닌 구분을 그릴 때는 정의 줄도 그 구분이다 */
       card.innerHTML = '<span class="anc" id="c-' + esc(id) + '"></span><h3>' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
         '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + m0.id + '">?</button>' +
-        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? curve.note + (gopts.length && curve.note_g ? ' ' + GNOTE + ' ' + curve.note_g : '') : m0.note) + '</span></span></h3>' +
+        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? lcHelp(curve, gopts) : m0.note) + '</span></span></h3>' +
         '<p class="def">' + esc(defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] + (m0.ytd ? ' · ' + ytdSpan(amax) : '') : '없음') + '</p>' +
-        (gopts.length ? '<div class="gsel"><span class="control-label" id="lb-grp">구분</span><div class="seg-toggle" role="group" aria-labelledby="lb-grp">' +
-          gopts.map(function(g){ var on = g === gshown; return '<button type="button" class="seg-btn' + (on ? ' active' : '') + '" data-g="' + esc(g) + '" aria-pressed="' + (on ? 'true' : 'false') + '">' + esc(g) + '</button>'; }).join('') +
-          '</div></div>' : '');
+        (curve ? gControl(gopts, gshown, cu) : '');
       grid.appendChild(card);
       if(curve && !chartsOn()){ lossMobile(card, m0); return; }
       if(chartMode){ card.classList.add('wide'); if(curve) lossChart(card, m0); else persistChart(card, ms); return; }
@@ -1300,7 +1511,7 @@
 
   /* ---------- 갱신 ---------- */
   function update(push){
-    renderChips(); syncSeg(); normGrp(); renderRail(); renderCards(); syncCmpH();
+    renderChips(); syncSeg(); normG(); renderRail(); renderCards(); syncCmpH();
     if(window.IQTheme && IQTheme.syncSectionNav) IQTheme.syncSectionNav();   /* 레일을 다시 그렸으니 현재 위치 표시를 바로 다시 잡는다 */
     if(push) writeURL();
   }
@@ -1317,15 +1528,17 @@
     var fq = $('footerQ'); if(fq) fq.textContent = DATA.meta.latest;
     $('opt-basis').addEventListener('click', function(e){ var b = e.target.closest('.seg-btn'); if(b){ S.basis = b.getAttribute('data-v'); update(true); } });
     $('med').addEventListener('change', function(){ S.med = $('med').checked; update(true); });
-    $('grid').addEventListener('click', function(e){
-      var b = e.target.closest ? e.target.closest('.gsel .seg-btn') : null; if(!b) return;
-      S.grp = b.getAttribute('data-g'); update(true); say('구분 ' + S.grp);
-      var nb = $('grid').querySelector('.gsel .seg-btn[data-g="' + S.grp + '"]'); if(nb) nb.focus();   /* 다시 그린 뒤에도 키보드 포커스 유지 */
+    $('grid').addEventListener('change', function(e){
+      var sel = e.target; if(!sel || sel.id !== 'sel-g') return;
+      var lab = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : sel.value;
+      S.g = sel.value; update(true); say('비교 단위 ' + lab);
+      var ns = $('sel-g'); if(ns) ns.focus();   /* 다시 그린 뒤에도 키보드 포커스 유지 */
     });
     function flipHelp(e){
       var h = e.target.closest ? e.target.closest('.iq-help') : null; if(!h) return;
       var pp = h.querySelector('.iq-help-pop'), r = h.getBoundingClientRect();
       pp.classList.toggle('iq-help-pop--right', r.left + Math.min(340, window.innerWidth - 32) > window.innerWidth - 12);
+      if(window.IQTheme && IQTheme.clampHelpPops) IQTheme.clampHelpPops();   /* 방향을 바꾼 뒤 화면 안으로 다시 민다. theme.js 의 같은 일이 이 핸들러보다 먼저 돌아, 375 폭 손해율 카드의 팝오버가 왼쪽 화면 밖([-291,49])에 남았다 */
     }
     document.addEventListener('mouseover', flipHelp); document.addEventListener('focusin', flipHelp);
     window.addEventListener('popstate', function(){ readURL(); update(false); });
