@@ -70,9 +70,12 @@
       tipBorder:cssVar('--tip-border','rgba(24,24,27,0.92)')
     };
   }
+  /* 감소 모션 설정(a11y C11). 켜져 있으면 Chart.js 그리기 애니메이션과 smooth 스크롤을 끈다. */
+  function reduceMotion(){ return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
   function applyChartJs(C){
     if(!C || !C.defaults) return;
     var t=chart();
+    if(reduceMotion()) C.defaults.animation=false;
     C.defaults.color=t.muted; C.defaults.borderColor=t.border;
     C.defaults.plugins.tooltip.backgroundColor=t.tipBg;
     C.defaults.plugins.tooltip.titleColor=t.tipText;
@@ -90,8 +93,8 @@
     b.textContent = dark ? '☀' : '☾';                 /* ☀ / ☾ */
     var label = ja ? (dark ? 'ライトモードに切替' : 'ダークモードに切替')
                    : (dark ? '라이트 모드로 전환' : '다크 모드로 전환');
-    b.setAttribute('aria-label', label); b.title=label;
-    b.setAttribute('aria-pressed', dark ? 'true' : 'false');
+    /* a11y C13: 상태에 따라 바뀌는 레이블만 쓴다. aria-pressed 를 같이 쓰면 「라이트 모드로 전환, 눌림」 으로 읽힌다. */
+    b.setAttribute('aria-label', label); b.title=label; b.removeAttribute('aria-pressed');
   }
   function fire(){
     paint();
@@ -270,7 +273,7 @@
     if(window.matchMedia && window.matchMedia('(pointer:coarse)').matches){
       var b = h.getBoundingClientRect(), want = r.bottom - (vh - 76), room = b.top - top;   /* 하단 76px = 우하단 고정 버튼 자리 */
       var dy = Math.min(want, room);
-      if(dy > 2) window.scrollBy({ top: Math.round(dy), behavior: 'smooth' });
+      if(dy > 2) window.scrollBy({ top: Math.round(dy), behavior: reduceMotion() ? 'auto' : 'smooth' });
     }
   }
   document.addEventListener('pointerenter', function(e){ var h = e.target && e.target.closest && e.target.closest('.iq-help'); if(h){ clearTimeout(h._iqGrace); h.classList.remove('is-grace'); flipHelpPop(h); clampHelpPops(); } }, true);
@@ -728,12 +731,29 @@
       if(has) continue;
       b = document.createElement('button');
       b.type = 'button'; b.className = 'iq-sec-share';
-      b.setAttribute('aria-label', '이 섹션 스크린샷 공유'); b.title = (el.getAttribute('data-share-section') || '이 섹션') + ' 스크린샷 공유';
+      b.setAttribute('aria-label', (el.getAttribute('data-share-section') || '이 섹션') + ' 스크린샷 공유'); b.title = (el.getAttribute('data-share-section') || '이 섹션') + ' 스크린샷 공유';
       b.innerHTML = SHARE_ICON;
       b.addEventListener('click', (function(sec, btn){ return function(e){ e.preventDefault(); e.stopPropagation(); shSection(sec, btn); }; })(el, b));
       if(head) head.parentNode.insertBefore(b, head.nextSibling); else el.insertBefore(b, el.firstChild);
     }
+    /* a11y C9: 옛 레이블 「이 섹션 스크린샷 공유」 는 한 페이지에 10개가 같아 구분이 안 됐다. 이제 「섹션이름 스크린샷 공유」 이고, 한 페이지 안에서 버튼 이름이 겹치지 않게 한다. 같은 섹션 이름이 또 나오면 「2번째」 를 붙인다(섹션 이름이 다 다르면 아무것도 안 붙는다). */
+    var seen = {}, all = document.querySelectorAll('[data-share-section] > .iq-sec-share');
+    for(i = 0; i < all.length; i++){
+      var base = (all[i].parentNode.getAttribute('data-share-section') || '이 섹션') + ' 스크린샷 공유';
+      seen[base] = (seen[base] || 0) + 1;
+      var nm = seen[base] > 1 ? base.replace(/ 스크린샷 공유$/, ' ' + seen[base] + '번째 스크린샷 공유') : base;
+      if(all[i].getAttribute('aria-label') !== nm) all[i].setAttribute('aria-label', nm);
+    }
   }
+  /* a11y C10: 건너뛰기 링크(.iq-skip). 주소 해시를 바꾸면 compare 의 popstate 가 화면을 다시 그리므로 href 의 요소에 직접 포커스를 옮긴다. */
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('a.iq-skip') : null; if(!a) return;
+    var t = document.getElementById((a.getAttribute('href') || '').slice(1)); if(!t) return;
+    e.preventDefault();
+    if(!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+    try{ t.focus({ preventScroll:true }); }catch(x){ t.focus(); }
+    t.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block:'start' });
+  });
   function mountShare(){
     if(ja) return;
     if(document.getElementById('iqShareBtn') || document.getElementById('share-btn')) return;   /* 페이지가 자체 메뉴를 이미 가진 경우 */
