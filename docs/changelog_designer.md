@@ -9,7 +9,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/designer/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
-## 2026-10-19 (밤 2) — 접근성 감사 C8~C15 · C17 (owner 「C8~C17 진행」, 커밋 후 미배포)
+## 2026-10-19 (밤 2) — 접근성 감사 C8~C15 · C17 (owner 「C8~C17 진행」, push `7fc4971f`, main 배포 `3a91a4ea` 완료)
 
 - **구현(`compare.html` · `privacy.html` · `theme.js` · `common.css`)**: C8 · C17 compare 카드 제목을 `h2` 로 바꾸고 `aria-label`(제목 + 단위)로 접근 이름을 최대 840자에서 16자로(`?` 버튼의 `aria-describedby` 유지, 계산된 모양 불변). C9 섹션 공유 버튼 이름에 섹션 이름을 넣고 중복은 「2번째」를 붙임. C10 compare · privacy 본문 `<main>` + 포커스 때만 보이는 건너뛰기 링크(compare 는 본문 · 비교 카드 두 개), 레일 빼기 버튼 `tabindex=-1`(Delete 키 유지). C11 감소 모션에서 Chart.js 애니메이션 끔(`applyChartJs`, index · K-ICS · IFRS17 차트 포함)과 `scrollBy` `auto`. C12 경과조치 · 중앙값 조작 뒤 `#live` 문구. C13 테마 토글은 바뀌는 레이블만(`aria-pressed` 제거). C14 compare 넓은 화면 손해율 카드에 화면 밖(1x1px) 현재가치 표. C15 privacy 표 영역 `role=region` + 이름, 가로로 넘칠 때만 `tabindex=0`.
 - **검사**: `scripts/check_a11y_compare_privacy.py` 에 해당 단언을 더해 `--step 3` 4,287개 통과(수집기 0 · 콘솔 오류 0). `scripts/check_share_screenshot.py` 는 옛 레이블 단언을 새 규칙에 맞춰 고침. 별도 검증자(25분 상자): 카드 제목 모양 HEAD 와 차이 0, 6페이지 공유 버튼 이름 고유, 건너뛰기 링크 동작, 감소 모션, 첫 화면 24조합은 노이즈 이내(compare 1280 은 카드 모서리 안티앨리어싱 최대 3/765). 못 잰 것: 스크린리더 낭독, 실기기 터치 `scrollBy`.
