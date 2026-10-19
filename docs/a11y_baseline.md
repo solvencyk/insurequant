@@ -141,6 +141,15 @@ owner 구두 결정(「접근성 추천대로」): C1 · C2 · C3 · C4 · C6 �
 | C4 | 처리됨 | `common.css` `input::placeholder, textarea::placeholder{color:var(--muted);opacity:1}` | placeholder 라이트 5.76 · 다크 6.83:1(옛 다크 3.94) |
 | C6 | 처리됨 | `compare.html` `lossMobile`(표식 · 견본) | 선마다 서로 다른 모양(원 · 삼각 · 사각 · 마름모, 선택 순서) = 표 견본 모양 = 넓은 화면 `pointStyle`, 색 불변. 흐린 점선 구간 표식은 속 빈 표식으로 구간마다 1개 이상 |
 | C5 · C7 · C18 | owner 거절 | 변경 없음 | `PAL_BAR` · `PAL_LINE` 원문 일치를 검사 스크립트가 단언 |
-| C8 ~ C17 | 열림 | 범위 밖 | — |
+| C8 | 처리됨 | `compare.html` 카드 제목 `h2 aria-label="제목 단위"`(`?` 버튼·설명은 제목 안에 그대로, `aria-describedby` 유지) | 접근성 트리 제목 이름 최대 16자(옛 판 제목 내용 최대 840자, 손해율 카드). 모양 불변(16px · 600 · 여백 0 · 오른쪽 44px) |
+| C9 | 처리됨 | `theme.js` `mountSectionShare` 「섹션이름 스크린샷 공유」(같은 이름이 또 나오면 「2번째」) | 6페이지 x 1280/375 x 라이트/다크 모두 한 페이지 안 이름 중복 0, 섹션 이름 포함(한 페이지 최대 10개) |
+| C10 | 처리됨 | `compare.html`·`privacy.html` `<main tabindex=-1>` + `common.css` `.iq-skip`(포커스 때만 보임) + `theme.js` 클릭 핸들러(해시를 안 바꿔 popstate 재렌더 없음). compare 는 링크 2개(본문 · 비교 카드), 레일 빼기 버튼 `tabindex=-1`(Delete 키·마우스 그대로) | 첫 Tab 에 링크가 보이고 Enter 로 main 포커스. compare 건너뛰기로 첫 카드 컨트롤까지 Tab 3번(+Enter), 순서대로 Tab 은 38 -> 30(링크 2개 포함). privacy 건너뛰기 Tab 2번, 순서대로 8 -> 9 |
+| C11 | 처리됨 | `theme.js` `applyChartJs`(reduce 면 `Chart.defaults.animation=false`) · `scrollBy` behavior | reduce 에서 compare 차트 2개 `options.animation` false(보통 환경 0개), 375x320 터치 `scrollBy` behavior reduce `auto` / 보통 `smooth` |
+| C12 | 처리됨 | `compare.html` 경과조치·중앙값 핸들러가 `say()` | `#live` 「경과조치 적용 전/후」 · 「같은 유형 업계 중앙값 표시/숨김」 일치 |
+| C13 | 처리됨 | `theme.js` `decorate` 바뀌는 레이블만, `aria-pressed` 제거 | 6페이지 x 2 뷰포트 x 2 색 구성표: 클릭 전후 모두 `aria-pressed` 없음, 레이블 「다크 모드로 전환」 <-> 「라이트 모드로 전환」 |
+| C14 | 처리됨 | `compare.html` `lossChart` 가 `.sr-only` 현재가치 표(`.lcpv`)를 카드에 추가 | 넓은 화면 생보·손보 4사에서 표 1x1px(레이아웃 불변), 접근성 트리에 `table`/`columnheader`, 값이 범례 「현재가치 N%」 와 같음(최대 5행). 좁은 화면은 기존 표만 |
+| C15 | 처리됨 | `privacy.html` `.policy-table-wrap` `role=region` + `aria-label`(처리 위탁 표 · 데이터 출처 표) + 가로로 넘칠 때만 `tabindex=0`(작은 스크립트) | 375 폭 처리 위탁 표만 넘쳐 `tabindex=0`(데이터 출처 표는 안 넘쳐 Tab 정지점 아님, 1280 은 둘 다 없음). 키보드 포커스 링 라이트 6.09 · 다크 7.26:1, 마우스 클릭엔 링 없음 |
+| C16 | 열림 | owner 가 WCAG 2.1 / 2.2 목표를 먼저 정해야 함 | — |
+| C17 | 처리됨 | `compare.html` 카드 제목 `h3` -> `h2`(css `.card h2`) | h1 1 -> h2 N 순서(건너뜀 0), 계산된 모양 불변. privacy 둘째 `h1` 은 유지 |
 
 덤: 375 폭 손해율 카드 `?` 팝오버가 키보드 포커스·탭에서 화면 왼쪽 밖(`[-291,49]`)에 남던 기존 버그를 고쳤다(`theme.js` 의 화면 안 보정이 `compare.html` 의 방향 전환보다 먼저 돌아 낡은 위치가 남음 → `IQTheme.clampHelpPops` 를 노출해 전환 뒤 다시 호출). 옛 판에서도 같은 값으로 재현됐다.

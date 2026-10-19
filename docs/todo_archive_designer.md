@@ -1,5 +1,8 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+- **2026-10-18 손해율 가정 구분 선택기 · 2026 3분기 안내 팝업 완료(compare.html · IFRS17.html · theme.js · 빌더 · 점검 스크립트, 커밋·미배포; owner TODO 일괄 처리)** — 선택기: 합계 · Non-Par · Indirect-Par · Direct-Par(공시 이름 그대로, 기본 합계라 기존 숫자 불변), `panel_compare.json` 153KB 로 재생성; 팝업: `theme.js` `NOTICE`, 5페이지 1회, 분석 호출 없음.
+  독립 검증: 곡선 최대 0.05pp(마스터 재계산), 합계 선택 시 HEAD 와 동일, 1280/375/다크 위반 0 · 콘솔 0, 팝업 428건 위반 0. 남은 것: IFRS17 현재가치 구분 소계 이중 반올림(publishing 티켓 `20261018T0700Z`) · 팝업 제목 · 숨김일(12-31) · 범위 owner 확인 · 배포 때 HTML 2개 + `panel_compare.json` + `theme.js` 한 묶음.
+
 - **2026-10-13 발행현황 추정 행 툴팁 꼬리 + 새 JSON 47사 재점검 완료(K-ICS.html·점검 스크립트 2종, 커밋·미배포; 티켓 20261013T0030Z)** — `estimated: true` 행이 있는 해의 막대 툴팁에 「추정(원장 미갱신)」 한 줄(하나손해 2026). DB손해 신종 콜 칸은 날짜만(2030-09-01), 하나손해는 최근 발행금리 「—」·총발행액 1,999억·2026 막대·콜 2029-05-14 (1,000억)로 확인.
   새 JSON(HEAD 392efee2, publishing 보정 커밋 포함) 47사 x 1280/375/다크 141회: 도넛·숫자 줄·경과조치 기발행 후순위가 JSON 과 일치(`scripts/check_kics_donuts.py`), 전망·발행현황(`check_kics_forward_note.py`·`check_kics_capsec_cells.py`) 위반 0·콘솔 0·넘침 0. 남은 것: 없음.
 

@@ -182,7 +182,7 @@ def run(args) -> int:
                         fails.append(f"{tag}: 섹션 {n_secs}개 < 기대 {want_secs}")
                     if n_btn != n_secs:
                         fails.append(f"{tag}: 버튼 {n_btn}개 != 섹션 {n_secs}개")
-                    lab = page.evaluate("[...document.querySelectorAll('.iq-sec-share')].every(b => b.getAttribute('aria-label') === '이 섹션 스크린샷 공유')")
+                    lab = page.evaluate("[...document.querySelectorAll('.iq-sec-share')].every((b, i, a) => { const l = b.getAttribute('aria-label') || ''; return l.endsWith(' 스크린샷 공유') && a.filter(x => x.getAttribute('aria-label') === l).length === 1; })")
                     if not lab:
                         fails.append(f"{tag}: 버튼 aria-label 불일치")
                     boxes = page.evaluate("[...document.querySelectorAll('.iq-sec-share')].map(b => { const r = b.getBoundingClientRect(); return [r.width, r.height]; })")

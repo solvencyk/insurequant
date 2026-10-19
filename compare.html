@@ -91,7 +91,8 @@
     .chart-box.tall{height:420px}
     @media (min-width:1080px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr))} }
     .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 14px 12px;min-width:0;display:flex;flex-direction:column}
-    .card h3{margin:0;font-size:16px;font-weight:600}
+    .card h2{margin:0;font-size:16px;font-weight:600}
+    #grid{scroll-margin-top:var(--cmp-h,0px)}   /* 건너뛰기 링크가 카드 목록으로 보낼 때 고정된 비교 회사 막대에 안 가리게 */
     .card .def{margin:2px 0 6px 0;font-size:12px;color:var(--muted);line-height:1.5}
     .card .na-list{margin:8px 0 0 0;padding:0;list-style:none;font-size:12px;color:var(--muted);line-height:1.6}
     .card .na-list b{color:var(--text);font-weight:600}
@@ -215,6 +216,8 @@
   </style>
 </head>
 <body>
+  <a class="iq-skip" href="#page">본문으로 건너뛰기</a>
+  <a class="iq-skip" href="#grid">비교 카드로 건너뛰기</a>
   <header>
     <a href="index.html" class="brand">InsureQuant <span class="hint-brand">사별 비교</span></a>
     <div class="header-row">
@@ -228,7 +231,7 @@
   </header>
 
 
-  <div class="container" id="page">
+  <main class="container iq-skip-target" id="page" tabindex="-1">
     <section class="cmp-bar" id="cmpbar" aria-label="비교 회사 선택">
       <div class="cmp-bar-in">
         <ul class="chips" id="chips" aria-label="비교 중인 회사"></ul>
@@ -279,10 +282,10 @@
     <div class="sr-only" role="status" aria-live="polite" id="live"></div>
 
     <div id="main-msg" class="msg" hidden>데이터를 불러오는 중입니다…</div>
-    <div class="grid" id="grid"></div>
+    <div class="grid iq-skip-target" id="grid" tabindex="-1"></div>
     <p class="foot">값이 없는 회사는 0이 아니라 n/a로 표시합니다. 음수는 △로 씁니다. 막대는 회사마다 가장 최근 공시 값이며, 그 지표의 최신 공시 분기보다 오래된 값에는 분기 칩(예: 25.4Q)이 붙습니다.</p>
     </div>
-  </div>
+  </main>
 
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">—</span>)<br/>
@@ -895,7 +898,7 @@
   function lossChart(card, m){
     var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
     var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
-    var ds = [], nas = [], stale = [], coarse = [], any = false, anyFade = false, LC = lineColors();
+    var ds = [], nas = [], stale = [], coarse = [], any = false, anyFade = false, LC = lineColors(), pvRows = [];
     S.sel.forEach(function(s, k){
       var nm = CO[s.code].short, byQ = lcRows(s.code), row = null, qi = -1;
       for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
@@ -905,6 +908,7 @@
       for(i = 0; i < nstd; i++) pts.push({x: xs[i], y: row[i]});
       if(co){ coarse.push(nm); for(i = 0; i < 10; i++) pts[i].y = row[nstd]; }   /* 1~10년을 한 구간으로 공시한 회사 */
       var pv = cellFor(m, s.code, asof);
+      pvRows.push('<tr><th scope="row">' + esc(nm + fbTag(s.code)) + '</th><td>' + (pv ? nfs(pv.v, 1) + '%' + (pv.i !== asof ? ' (' + esc(qshort(Q[pv.i])) + ' 공시)' : '') : 'n/a') + '</td></tr>');
       if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
       /* 단위 선택: 칸별 위험보험료(억원)가 FADE_BELOW_EOK 미만인 칸은 흐린 점선 + 속 빈 표식 */
       var upq = lcUp(s.code, Q[qi]), fd = [], rpa = [], lc0 = LC[s.code];
@@ -942,6 +946,10 @@
       return v.length ? d.short + ' ' + nf(v[0].y, 1) + '%에서 ' + nf(v[v.length - 1].y, 1) + '%' : d.short + ' n/a';
     }).join('. ') + (anyFade ? '. 위험보험료 ' + FADE_BELOW_EOK + '억원 미만 칸은 흐린 점선으로 그림' : '');
     var cv = chartCanvas(card, label); cv.parentNode.classList.add('tall');
+    /* a11y C14: 꺾은선의 텍스트 대안. 좁은 화면 표와 같은 현재가치를 넓은 화면에서도 스크린리더가 읽게 화면 밖(.sr-only)에 둔다. 레이아웃에는 영향이 없다. */
+    var pvMed = (medShown && m.median) ? medCell(m, type, asof) : null;
+    if(pvMed) pvRows.push('<tr><th scope="row">' + esc(medType(type) + ' 중앙값' + grpTag()) + '</th><td>' + nfs(pvMed.v, 1) + '%' + (pvMed.i !== asof ? ' (' + esc(qshort(Q[pvMed.i])) + ' 공시)' : '') + '</td></tr>');
+    card.insertAdjacentHTML('beforeend', '<div class="sr-only lcpv"><table><caption>손해율 가정 현재가치 손해율</caption><thead><tr><th scope="col">회사</th><th scope="col">현재가치</th></tr></thead><tbody>' + pvRows.join('') + '</tbody></table></div>');
     CHARTS.push(new Chart(cv.getContext('2d'), {
       type: 'line', data: {datasets: ds},
       options: {
@@ -1194,7 +1202,7 @@
       var u = UNIT[id];
       h += '<li class="ri" data-uid="' + esc(id) + '"><a href="#c-' + esc(id) + '" data-uid="' + esc(id) + '" draggable="false" title="' + esc(u.group) + '"' + (ed ? ' aria-describedby="rail-kb"' : '') + '>' +
         (ed ? '<span class="rg" aria-hidden="true">⋮⋮</span>' : '') + esc(unitName(u)) + '</a>' +
-        (ed ? '<button type="button" class="rx" data-uid="' + esc(id) + '" aria-label="' + esc(unitName(u)) + ' 빼기" title="빼기">&times;</button>' : '') + '</li>';
+        (ed ? '<button type="button" class="rx" tabindex="-1" data-uid="' + esc(id) + '" aria-label="' + esc(unitName(u)) + ' 빼기" title="빼기">&times;</button>' : '') + '</li>';
     });
     $('rail-ul').innerHTML = h;
     var box = $('rail-add'); box.hidden = !ed || !has;
@@ -1478,9 +1486,9 @@
       var defn = curve ? curve.defn : m0.defn;
       if(cu && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, unitDef(cu).label + ' 단위의 ');   /* 단위를 그릴 때는 정의 줄도 그 단위다 */
       else if(gshown !== GALL && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, gshown + ' 구분의 ');   /* 합계가 아닌 구분을 그릴 때는 정의 줄도 그 구분이다 */
-      card.innerHTML = '<span class="anc" id="c-' + esc(id) + '"></span><h3>' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
+      card.innerHTML = '<span class="anc" id="c-' + esc(id) + '"></span><h2 aria-label="' + esc(title + ' ' + (curve ? curve.unit : m0.unit) + bt) + '">' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
         '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + m0.id + '">?</button>' +
-        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? lcHelp(curve, gopts) : m0.note) + '</span></span></h3>' +
+        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? lcHelp(curve, gopts) : m0.note) + '</span></span></h2>' +
         '<p class="def">' + esc(defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] + (m0.ytd ? ' · ' + ytdSpan(amax) : '') : '없음') + '</p>' +
         (curve ? gControl(gopts, gshown, cu) : '');
       grid.appendChild(card);
@@ -1526,8 +1534,8 @@
     window.addEventListener('iq:themechange', function(){ readTheme(); update(false); });
     $('main-msg').hidden = true;
     var fq = $('footerQ'); if(fq) fq.textContent = DATA.meta.latest;
-    $('opt-basis').addEventListener('click', function(e){ var b = e.target.closest('.seg-btn'); if(b){ S.basis = b.getAttribute('data-v'); update(true); } });
-    $('med').addEventListener('change', function(){ S.med = $('med').checked; update(true); });
+    $('opt-basis').addEventListener('click', function(e){ var b = e.target.closest('.seg-btn'); if(b){ S.basis = b.getAttribute('data-v'); update(true); say('경과조치 ' + (S.basis === 'pre' ? '적용 전' : '적용 후')); } });
+    $('med').addEventListener('change', function(){ S.med = $('med').checked; update(true); say(S.med ? '같은 유형 업계 중앙값 표시' : '같은 유형 업계 중앙값 숨김'); });
     $('grid').addEventListener('change', function(e){
       var sel = e.target; if(!sel || sel.id !== 'sel-g') return;
       var lab = sel.options[sel.selectedIndex] ? sel.options[sel.selectedIndex].text : sel.value;

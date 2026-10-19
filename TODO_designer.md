@@ -5,12 +5,12 @@
 
 ## Status (최신 3개)
 
+- **2026-10-19 접근성 2차 C8~C15 · C17 완료(커밋 후 미배포, owner GO 대기; owner 「C8~C17 진행」)** — compare 카드 제목 h3 → h2(+ `aria-label` 로 접근 이름 최대 840 → 16자, 모양 불변), 섹션 공유 버튼 이름을 섹션별로 고유하게, compare · privacy `<main>` + 포커스 때만 보이는 건너뛰기 링크, 감소 모션에서 Chart.js 애니메이션 · smooth 스크롤 끔(index · K-ICS · IFRS17 차트도 같이), 경과조치 · 중앙값 조작 뒤 `#live` 문구, 테마 토글 `aria-pressed` 제거(바뀌는 레이블만), compare 넓은 화면 손해율 카드에 화면 밖 현재가치 표, privacy 표 영역 `role=region`.
+  검사: `scripts/check_a11y_compare_privacy.py --step 3` 4,287 단언 통과, 별도 검증자 25분 상자(제목 모양 HEAD 와 차이 0 · 6페이지 공유 버튼 이름 중복 0 · 건너뛰기 링크 · 감소 모션 · 첫 화면 24조합은 노이즈 이내). 남은 것: C16(WCAG 2.1 대 2.2 목표 결정) · C10 링크 없이 Tab 30번(링크 쓰면 3번) · 배포.
 - **2026-10-19 밤 손해율 비교 단위 선택기 · 오류 제보 내부 접속 제외 · a11y C1·C2·C3·C4·C6 완료(push `a8d9f193` · main 배포 `5221a1b4` 완료; owner 승인)** — 선택기: compare 손해율 카드 · IFRS17 8절 select 하나(구분 · 생보 · 손보 · 재보), 단위 없는 회사는 n/a 줄, 100억원 미만 칸 흐린 점선, 주소 `g=` 는 구분 이름과 단위 키 모두. `report-widget.js` 는 `iq_internal=1` 이면 수집기로 안 보냄. a11y: ? 팝오버 마우스 유예(`common.css` `.is-grace` + `theme.js` `pointerleave` 0.4초), 칩 제거·추가 뒤 포커스, 입력창 `--control-border` · placeholder `--muted`, 모바일 손해율 선 표식.
   독립 검증: 220+507 상태 · 회귀 82건 · 44상태 HEAD 대비 스타일 차이는 입력창 테두리·placeholder·팝오버 다리뿐. 버린 것: ? 옆 삼각형 호버 영역(오른쪽 끝에서 문서를 가로로 넓힘). 남은 것: C8~C17 · 일본 오류 제보 위젯 · n/a 문구를 ? 팝오버로 옮길지.
 - **2026-10-19 안내 팝업 시작일 10-31 · 손해율 기본 Non-Par · 방명록 내부 접속 제외 · a11y 감사 완료(main 배포 `f96f06b0` 완료; owner 승인)** — 팝업 `NOTICE.showFrom` 2026-10-31(독립 검증 47/47), 선택기 기본 Non-Par(마스터 재계산 0.05pp 이내), `download-survey.js` 가 `iq_internal=1` 방문을 수집기로 보내지 않음. compare·privacy 감사 18건(중간 6 · 낮음 9 · 참고 3)을 `docs/a11y_baseline.md` 와 티켓 `20261019T1400Z` 에.
   남은 것: a11y 티켓 수정(? 팝오버 마우스 접근 · 포커스 유실 · 모바일 손해율 선 마커 등 코드 문제 먼저, 색 변경 5건은 owner 승인 뒤) · 구분 단위 평면 8개 선택기(owner 결정 대기, `TODO.md`) · 배포 때 HTML 2개 + `panel_compare.json` + `panel_loss_ratio.json` + `theme.js` + `download-survey.js` 한 묶음.
-- **2026-10-18 손해율 가정 구분 선택기 · 2026 3분기 안내 팝업 완료(compare.html · IFRS17.html · theme.js · 빌더 · 점검 스크립트, 커밋·미배포; owner TODO 일괄 처리)** — 선택기: 합계 · Non-Par · Indirect-Par · Direct-Par(공시 이름 그대로, 기본 합계라 기존 숫자 불변), `panel_compare.json` 153KB 로 재생성; 팝업: `theme.js` `NOTICE`, 5페이지 1회, 분석 호출 없음.
-  독립 검증: 곡선 최대 0.05pp(마스터 재계산), 합계 선택 시 HEAD 와 동일, 1280/375/다크 위반 0 · 콘솔 0, 팝업 428건 위반 0. 남은 것: IFRS17 현재가치 구분 소계 이중 반올림(publishing 티켓 `20261018T0700Z`) · 팝업 제목 · 숨김일(12-31) · 범위 owner 확인 · 배포 때 HTML 2개 + `panel_compare.json` + `theme.js` 한 묶음.
 
 ## publishing 이 배포 전에 해야 할 일
 

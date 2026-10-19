@@ -117,3 +117,24 @@ owner 승인 기록(C3 · C4 요건): 2026-10-19 구두 결정 「접근성 추�
 - 검사에서 마우스 시험을 건너뛴 것은 K-ICS 의 닫힌 패널 안 `?` 버튼 2개뿐(보이지 않음).
 - compare 데스크톱 첫 화면에서 맨 위 제목 「사별 비교」 윗부분이 고정 검색줄 밑에 걸린다(옛 판에서도 동일, 이번 변경과 무관). 필요하면 별도 티켓.
 - `docs/a11y_baseline.md` §5e 에 처리 현황을 적었다.
+
+### 2차 처리 (2026-10-19 designer): C8 · C9 · C10 · C11 · C12 · C13 · C14 · C15 · C17 완료 (미커밋, 오케스트레이터 검토 대기)
+owner 결정(2026-10-19): C8~C15 · C17 을 한다. C16 은 하지 않는다(WCAG 2.1 / 2.2 중 목표를 owner 가 먼저 정해야 함). C5 · C7 · C18 거절은 그대로, 차트 색 변경 0.
+
+- C8 `compare.html` 카드 제목을 `h2 aria-label="제목 단위"` 로 바꿨다(C17 과 같은 변경). 접근성 트리 제목 이름 최대 16자(옛 판 제목 내용 최대 840자). `?` 버튼과 `aria-describedby` 설명은 제목 안에 그대로.
+- C9 `theme.js` 섹션 공유 버튼 `aria-label` = 「섹션이름 스크린샷 공유」, 같은 이름이 한 페이지에 또 나오면 「2번째」(지금은 6페이지 모두 중복 0). `scripts/check_share_screenshot.py` 의 옛 단언(「이 섹션 스크린샷 공유」 전부 동일)도 새 규칙으로 고쳤다.
+- C10 `<main>` + 건너뛰기 링크(`common.css` `.iq-skip`, 포커스 때만 보임). compare 는 링크 2개(「본문으로 건너뛰기」 · 「비교 카드로 건너뛰기」), privacy 는 1개. 레일 빼기 버튼 `tabindex=-1`(Delete 키와 마우스는 그대로).
+  주의: 티켓의 「첫 카드 컨트롤까지 Tab 15번 이하」 는 링크를 쓰는 경로로만 닿는다. 건너뛰기 링크 2번째로 카드 목록으로 간 뒤 Tab 1번이면 총 Tab 3번(+Enter). 링크 없이 순서대로 Tab 하면 38 -> 30 번이다(빼기 버튼 10개를 뺀 값에 링크 2개가 더해짐). 15 이하로 더 줄이려면 레일을 한 정지점으로 묶는 방향키 탐색(roving tabindex)이 필요한데 레일의 Alt+방향키 순서 이동과 겹쳐 이번에 하지 않았다.
+- C11 `theme.js` `applyChartJs` 가 감소 모션이면 `Chart.defaults.animation=false`(index · K-ICS · IFRS17 도 같은 함수를 써 감소 모션에서는 같이 꺼진다), `scrollBy` 도 감소 모션이면 `auto`.
+- C12 경과조치 토글 · 중앙값 체크박스 조작 뒤 `#live` 에 「경과조치 적용 전/후」 · 「같은 유형 업계 중앙값 표시/숨김」.
+- C13 테마 토글은 바뀌는 레이블만 쓰고 `aria-pressed` 를 뺐다(6페이지 공통).
+- C14 넓은 화면 손해율 카드에 `.sr-only` 현재가치 표(`.lcpv`). 값은 범례의 「현재가치 N%」 와 같고 업계 중앙값 행이 있으면 같이 들어간다.
+- C15 `privacy.html` 표 영역 `role=region` + `aria-label`(처리 위탁 표 · 데이터 출처 표). `tabindex=0` 은 가로로 넘칠 때만 붙는다: 375 폭에서는 처리 위탁 표만 넘치고 데이터 출처 표는 안 넘쳐서(옛 판에서도 Tab 정지점이 아니었음) 후자는 안 붙는다. 포커스 링은 기존 전역 `:focus-visible`(2px 주색)이라 키보드로만 보인다.
+- C17 카드 제목 `h3` -> `h2`. privacy 의 둘째 `h1` 은 유지.
+
+측정(`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/check_a11y_compare_privacy.py --step 3`, 종료코드 0, 4287개 단언 실패 0, 수집기·분석 요청 0, 콘솔 오류 0):
+- C8 이름 최대 16자 / 옛 840자. C9 6페이지 x 1280/375 x 라이트/다크 중복 0. C10 compare 링크 경로 Tab 3 · 순서대로 30(옛 38), privacy 링크 경로 2 · 순서대로 9(옛 8). C11 reduce 차트 2/2 `animation` false, 보통 0/2, `scrollBy` reduce `auto` · 보통 `smooth`. C12 4개 조작 문구 일치. C13 aria-pressed 0. C14 표 1x1px, 접근성 트리 table, 값 범례와 일치. C15 포커스 링 라이트 6.09 · 다크 7.26:1. C17 h3 0, 건너뜀 0, 계산된 모양 16px · 600 · 여백 0 · 오른쪽 44px 불변.
+- 첫 화면 24장(6페이지 x 1280/375 x 라이트/다크, 옛 판은 HEAD 4개 파일을 요청 가로채기로 대체)을 픽셀 비교: compare · privacy 8장은 전부 0픽셀 차이. index · K-ICS · 공시보고서 에서 52~56픽셀(헤더 오른쪽 달 아이콘 가장자리, K-ICS 모바일 다크 카드 글자 가장자리)이 달랐는데 확대해 보면 글자 가장자리 안티앨리어싱 잡음이다. 레이아웃 변화 없음(크기 동일). 건너뛰기 링크가 포커스 없이는 화면 밖(`top:-120px`)이라 첫 화면에는 안 보인다.
+- `pytest tests/test_deploy_assets.py tests/test_push_gate_wiring.py tests/test_share_screenshot.py -q` -> 85 passed, 2 skipped. `node --check theme.js` 통과.
+- 못 쟀다: 실제 스크린리더(NVDA · VoiceOver) 낭독은 못 들었다(접근성 트리 이름과 `aria_snapshot` 으로 대신). 페이지를 연 뒤 OS 감소 모션 설정을 바꿨을 때의 실시간 반영은 안 쟀다(로드 시점 설정만 쟀다).
+- 변이시험은 이번엔 안 돌렸다(1차 때 옛 판 겹쳐 서빙으로 311건 실패 확인한 방식이 `--root` 로 가능).

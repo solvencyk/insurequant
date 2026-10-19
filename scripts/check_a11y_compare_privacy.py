@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""접근성 감사 C1·C2·C3·C4·C6 회귀 검사 (2026-10-19 신설, designer).
+"""접근성 감사 C1·C2·C3·C4·C6·C8~C15·C17 회귀 검사 (2026-10-19 신설, designer).
 
 티켓 inbox/designer/20261019T1400Z__orchestrator__MULTI_ALL__a11y_compare_privacy.md 의 수락 기준을 그대로 단언한다.
   C1  `?` 팝오버가 마우스로 닿는다: 버튼 중앙에서 팝오버 중앙까지 1px 단위로 옮기는 동안(수직 우선 경로·직선 대각선·곡선 2개) 팝오버 opacity 가 내내 1(그리고 pointer-events:auto).
@@ -13,6 +13,16 @@
   C3  input#addco 테두리가 배경 대비 3.0:1 이상(라이트·다크). --border 값은 그대로, --control-border 는 #85888d / #727772. 네이티브 체크박스 테두리도 3:1 이상.
   C4  input#addco::placeholder 대비 4.5:1 이상(라이트·다크).
   C6  375 폭 손해율 꺾은선: 선마다 서로 다른 표식 모양, 현재가치 표 견본과 같은 모양, 넓은 화면 PT 와 같은 모양·색, 흐린 점선 구간에도 표식.
+  C8  compare 카드 제목(h2)의 접근성 트리 이름이 제목+단위(60자 이하), ? 버튼·aria-describedby 설명은 그대로.
+  C9  한 페이지(6페이지 전부)의 섹션 공유 버튼 aria-label 이 서로 다르고 섹션 이름을 포함.
+  C10 compare·privacy: main 하나, 첫 Tab 에 건너뛰기 링크(포커스 때만 보임), Enter 로 main 에 포커스. compare 레일 빼기 버튼 tabindex=-1(Delete 키는 그대로), 둘째 링크로 카드 목록 바로 가기.
+  C11 감소 모션: Chart.js options.animation=false, 터치 팝오버 보정 scrollBy behavior=auto.
+  C12 경과조치 토글·중앙값 체크박스 조작 뒤 #live 상태 문구.
+  C13 테마 토글: 바뀌는 레이블만(aria-pressed 없음).
+  C14 compare 넓은 화면 손해율: 화면 밖(.sr-only) 현재가치 표가 접근성 트리에 있고 범례 값과 같음.
+  C15 privacy 375 폭: 표 영역 role=region+aria-label+tabindex=0, 키보드 포커스 링 3:1 이상, 마우스로는 링 없음.
+  C17 compare 카드 제목 h2(h1 다음 건너뜀 없음, 모양은 h3 때와 같음). privacy 의 두 번째 h1 은 유지.
+  (`--only-ext` 는 C8~C17 만 도는 빠른 점검, 옵션 없이 돌리면 전부.)
 각 항목을 1280/375 x 라이트/다크 x compare 3 시나리오(생보 4사 · 손보 4사 · 회사 미선택)로 돈다.
 모든 주소는 ?iq_internal=1, GA·수집기 요청은 route 로 막고 수집기 요청 0 을 단언한다.
 
@@ -513,7 +523,7 @@ def run(args) -> int:
             # ======================= 실행 ==============================================================
             faded_seen = [0]
             wide_cache: dict = {}
-            for scheme in ("light", "dark"):
+            for scheme in (() if args.only_ext else ("light", "dark")):
                 # ---- 공통 css 페이지 6개: 토큰·가로 넘침 (1280/375) + 4개 페이지 `?` 마우스 경로(1280) ----
                 for vname, vw, vh in VIEWPORTS:
                     for name in ALL_PAGES:
@@ -651,7 +661,7 @@ def run(args) -> int:
             # ---------- 네이티브 체크박스 테두리(3:1) — 픽셀로 잰다 -------------------------------
             try:
                 from PIL import Image
-                for scheme in ("light", "dark"):
+                for scheme in (() if args.only_ext else ("light", "dark")):
                     ctx, pg, errs, reqs = new(1280, 900, scheme)
                     go(pg, "compare.html", SETS["life"][:1])
                     el = pg.query_selector("#med")
@@ -667,6 +677,293 @@ def run(args) -> int:
                     ctx.close()
             except ImportError:
                 skips.append("PIL 없음: 체크박스 테두리 픽셀 대비를 안 쟀다")
+            # ======================= C8~C17 (2026-10-19 추가) ==========================================
+            EXT_COMMON_JS = """() => {
+  const rows = [...document.querySelectorAll('[data-share-section] > .iq-sec-share')].map(b => ({l: b.getAttribute('aria-label'), s: b.parentNode.getAttribute('data-share-section'), t: b.title}));
+  const t = document.getElementById('iqThemeToggle');
+  return {rows, nsec: document.querySelectorAll('[data-share-section]').length,
+    tog: t ? {label: t.getAttribute('aria-label'), pressed: t.hasAttribute('aria-pressed'), title: t.title} : null,
+    main: document.querySelectorAll('main').length, skip: [...document.querySelectorAll('a.iq-skip')].map(a => { const r = a.getBoundingClientRect(); return {t: a.textContent, href: a.getAttribute('href'), top: r.top, bottom: r.bottom, pos: getComputedStyle(a).position}; }),
+    h: [...document.querySelectorAll('h1,h2,h3,h4,h5,h6')].map(h => +h.tagName[1]), sw: document.documentElement.scrollWidth, iw: innerWidth};
+}"""
+            SKIP_STATE_JS = """() => { const a = document.activeElement, r = a.getBoundingClientRect(), cs = getComputedStyle(a);
+  return {tag: a.tagName, id: a.id, cls: String(a.className), text: (a.textContent || '').trim().slice(0, 20), top: r.top, bottom: r.bottom, left: r.left, right: r.right, w: r.width, h: r.height,
+          ow: cs.outlineWidth, os: cs.outlineStyle, oc: cs.outlineColor, inCard: !!a.closest('.card'), inMain: !!a.closest('main'), tabindex: a.getAttribute('tabindex')}; }"""
+            HEAD_JS = """() => [...document.querySelectorAll('.card h2')].map(h => { const cs = getComputedStyle(h), b = h.querySelector('.iq-help-btn'), id = b ? b.getAttribute('aria-describedby') : null, tip = id ? document.getElementById(id) : null;
+  return {label: h.getAttribute('aria-label'), text: h.textContent.length, fs: cs.fontSize, fw: cs.fontWeight, mg: cs.margin, pr: cs.paddingRight, btn: !!b, tip: !!tip, tipRole: tip ? tip.getAttribute('role') : null, tipLen: tip ? tip.textContent.length : 0}; })"""
+            PV_JS = """() => { const d = document.querySelector('.lcpv'); if (!d) return null; const r = d.getBoundingClientRect(), cs = getComputedStyle(d);
+  return {rows: [...d.querySelectorAll('tbody tr')].map(tr => [tr.cells[0].textContent, tr.cells[1].textContent]), w: r.width, h: r.height, cls: d.className,
+          heads: [...d.querySelectorAll('th')].length, card: !!d.closest('.card'), disp: cs.display, vis: cs.visibility}; }"""
+            LEG_JS = """() => { const o = []; Object.values(Chart.instances).forEach(c => c.data.datasets.forEach(d => { if (d.short !== undefined && /현재가치/.test(d.label)) o.push([d.short, d.label]); })); return o; }"""
+            WRAP_JS = """() => [...document.querySelectorAll('.policy-table-wrap')].map(w => ({role: w.getAttribute('role'), label: w.getAttribute('aria-label'), tabindex: w.getAttribute('tabindex'), over: w.scrollWidth > w.clientWidth + 1}))"""
+            WRAP_FOCUS_JS = """() => { const a = document.activeElement, cs = getComputedStyle(a); return {on: a.classList.contains('policy-table-wrap'), ow: cs.outlineWidth, os: cs.outlineStyle, oc: cs.outlineColor,
+  fv: a.matches(':focus-visible'), label: a.getAttribute('aria-label')}; }"""
+            ext_n = [0]
+
+            def tabs_until(pg, js_pred, cap=80):
+                for i in range(1, cap + 1):
+                    pg.keyboard.press("Tab")
+                    if pg.evaluate(js_pred):
+                        return i
+                return None
+
+            def reload_cmp(pg):
+                pg.reload(wait_until="load")
+                pg.wait_for_function("() => document.getElementById('main-msg').hidden")
+                pg.wait_for_timeout(400)
+
+            def skip_flow(pg, tag, target_id):
+                """첫 Tab 에 건너뛰기 링크가 화면 안에 나타나고, Enter 로 본문에 포커스. 링크는 포커스가 없을 때 화면 밖."""
+                for k in pg.evaluate(EXT_COMMON_JS)["skip"]:
+                    check(k["bottom"] <= 0 and k["pos"] == "fixed", f"[{tag}] C10 건너뛰기 링크가 포커스 없이 화면 안에 있음 top={k['top']}")
+                pg.keyboard.press("Tab")
+                a = pg.evaluate(SKIP_STATE_JS)
+                check("iq-skip" in a["cls"] and a["text"] == "본문으로 건너뛰기", f"[{tag}] C10 첫 Tab 이 본문으로 건너뛰기 링크가 아님 {a['cls']!r} {a['text']!r}")
+                check(a["top"] >= 0 and a["bottom"] <= 120 and a["left"] >= 0 and a["w"] > 40 and a["os"] != "none", f"[{tag}] C10 건너뛰기 링크가 포커스 때 안 보임 top={a['top']} w={a['w']} outline={a['os']}")
+                pg.keyboard.press("Enter")
+                pg.wait_for_timeout(250)
+                m = pg.evaluate(SKIP_STATE_JS)
+                check(m["tag"] == "MAIN" and m["id"] == target_id, f"[{tag}] C10 Enter 뒤 포커스가 main#{target_id} 가 아님 {m['tag']}#{m['id']}")
+                check(m["os"] == "none" or m["ow"] == "0px", f"[{tag}] C10 본문 포커스에 링이 그려짐 {m['os']} {m['ow']}")
+                check(pg.evaluate("() => !location.hash"), f"[{tag}] C10 건너뛰기가 주소 해시를 바꿈")
+                pg.keyboard.press("Tab")
+                f = pg.evaluate(SKIP_STATE_JS)
+                check(f["inMain"] and f["tag"] != "MAIN", f"[{tag}] C10 본문 뒤 첫 Tab 이 본문 안 컨트롤이 아님 {f['tag']}")
+                return m
+
+            def ext_checks():
+                # ---- 공통(6페이지 x 1280/375 x 라이트/다크): C9 섹션 공유 이름, C13 테마 토글 ----
+                for scheme in ("light", "dark"):
+                    for vname, vw, vh in VIEWPORTS:
+                        for name in ALL_PAGES:
+                            tag = f"EXT {name}|{vname}|{scheme}"
+                            ctx, pg, errs, reqs = new(vw, vh, scheme)
+                            go(pg, name, SETS["life"] if name == "compare.html" else None)
+                            E = pg.evaluate(EXT_COMMON_JS)
+                            labs = [r["l"] for r in E["rows"]]
+                            check(len(labs) == E["nsec"], f"[{tag}] C9 섹션 {E['nsec']}개인데 공유 버튼 {len(labs)}개")
+                            check(len(set(labs)) == len(labs), f"[{tag}] C9 섹션 공유 버튼 이름이 겹침 {sorted(l for l in labs if labs.count(l) > 1)[:3]}")
+                            for r in E["rows"]:
+                                check(bool(r["s"]) and r["l"].startswith(r["s"]) and r["l"].endswith("스크린샷 공유"), f"[{tag}] C9 이름에 섹션 이름이 없음 {r['l']!r}/{r['s']!r}")
+                                check(not re.search(r"KR\d{4}", r["l"] + r["t"]), f"[{tag}] C9 회사코드 노출")
+                            mmax("C9 한 페이지 섹션 공유 버튼 수(최대)", len(labs))
+                            t = E["tog"]
+                            check(t is not None, f"[{tag}] C13 테마 토글 없음")
+                            if t:
+                                want = "다크 모드로 전환" if scheme == "light" else "라이트 모드로 전환"
+                                check(t["label"] == want and not t["pressed"], f"[{tag}] C13 라벨/aria-pressed {t['label']!r} pressed={t['pressed']}")
+                                pg.locator("#iqThemeToggle").click()
+                                pg.wait_for_timeout(200)
+                                t2 = pg.evaluate(EXT_COMMON_JS)["tog"]
+                                other = "라이트 모드로 전환" if scheme == "light" else "다크 모드로 전환"
+                                check(t2["label"] == other and not t2["pressed"], f"[{tag}] C13 클릭 뒤 라벨/aria-pressed {t2['label']!r} pressed={t2['pressed']}")
+                            if name in ("compare.html", "privacy.html"):
+                                check(E["main"] == 1, f"[{tag}] C10 main 개수 {E['main']}")
+                                check(any(k["href"] in ("#page", "#main-content") and k["t"] == "본문으로 건너뛰기" for k in E["skip"]), f"[{tag}] C10 건너뛰기 링크 없음")
+                            hs = E["h"]
+                            if name == "compare.html":
+                                check(all(b - a <= 1 for a, b in zip(hs, hs[1:])), f"[{tag}] C17 제목 단계 건너뜀 {hs[:12]}")
+                            check(not errs, f"[{tag}] 콘솔 오류 {errs[:3]}")
+                            tally(reqs, tag)
+                            ext_n[0] += 1
+                            ctx.close()
+
+                # ---- compare: C8·C10·C12·C14·C17 (생보/손보/미선택 x 1280/375 x 라이트/다크) ----
+                for scheme in ("light", "dark"):
+                    for sname, names in SETS.items():
+                        for vname, vw, vh in VIEWPORTS:
+                            tag = f"EXT compare|{sname}|{vname}|{scheme}"
+                            ctx, pg, errs, reqs = new(vw, vh, scheme)
+                            go(pg, "compare.html", names)
+                            hs = pg.evaluate(HEAD_JS)
+                            ncard = pg.evaluate("() => document.querySelectorAll('.card').length")
+                            check(len(hs) == ncard and pg.evaluate("() => document.querySelectorAll('.card h3').length") == 0, f"[{tag}] C17 카드 {ncard}개 h2 {len(hs)}개 h3 남음")
+                            check(pg.evaluate("() => document.querySelectorAll('h1').length") == 1, f"[{tag}] C17 h1 개수")
+                            for h in hs:
+                                check(h["label"] and len(h["label"]) <= 60, f"[{tag}] C8 제목 이름 {len(h['label'] or '')}자 {h['label']!r}")
+                                check(not re.search(r"KR\d{4}", h["label"] or ""), f"[{tag}] C8 회사코드 노출")
+                                check(h["btn"] and h["tip"] and h["tipRole"] == "tooltip" and h["tipLen"] > 20, f"[{tag}] C8 ? 버튼/aria-describedby/설명이 깨짐 {h}")
+                                check(h["fs"] == "16px" and h["fw"] == "600" and h["mg"] == "0px" and h["pr"] == "44px", f"[{tag}] C17 h2 모양이 h3 와 다름 {h['fs']} {h['fw']} {h['mg']} {h['pr']}")
+                                mmax("C8 카드 제목 접근 이름 최대 글자 수(aria-label)", len(h["label"] or ""))
+                                mmax("C8 옛 판 h3 내용 글자 수 최대(참고: 제목+단위+? 버튼+설명)", h["text"])
+                            for i in range(min(ncard, 12)):
+                                sn = pg.locator(".card h2").nth(i).aria_snapshot()
+                                mm = re.match(r'- heading "([^"]*)"', sn)
+                                check(bool(mm) and len(mm.group(1)) <= 60 and "[level=2]" in sn and "button" in sn, f"[{tag}] C8 카드{i} 접근성 트리 {sn[:100]!r}")
+                                if mm:
+                                    mmax("C8 카드 제목 접근성 트리 이름 최대 글자 수", len(mm.group(1)))
+                            # C14 넓은 화면 현재가치 표
+                            pv = pg.evaluate(PV_JS)
+                            if vname == "desktop" and sname != "none":
+                                wd = pg.evaluate(WIDE_JS)
+                                if wd is None:
+                                    skips.append(f"{tag}: Chart.js 가 안 떠 C14 현재가치 표를 못 쟀음")
+                                else:
+                                    check(pv is not None and pv["card"] and pv["disp"] != "none" and pv["vis"] != "hidden", f"[{tag}] C14 넓은 화면 현재가치 표 없음/숨김 {pv}")
+                                    if pv:
+                                        check(pv["w"] <= 2 and pv["h"] <= 2, f"[{tag}] C14 표가 화면 밖(.sr-only)이 아님 {pv['w']}x{pv['h']}")
+                                        check(len(pv["rows"]) >= len(names), f"[{tag}] C14 표 행 {len(pv['rows'])}<{len(names)}")
+                                        for nm in names:
+                                            check(any(r[0].startswith(nm) for r in pv["rows"]), f"[{tag}] C14 표에 {nm} 행 없음")
+                                        check(all(re.match(r"^(△?\d+(\.\d)?%|n/a)", r[1]) for r in pv["rows"]), f"[{tag}] C14 표 값 형식 {pv['rows']}")
+                                        for sh, lb in pg.evaluate(LEG_JS):   # 범례에 적힌 현재가치와 표가 같은 값
+                                            mv = re.search(r"현재가치 (△?[\d.]+)%", lb)
+                                            row = next((r for r in pv["rows"] if r[0].startswith(sh)), None)
+                                            check(row is not None and mv is not None and row[1].startswith(mv.group(1) + "%"), f"[{tag}] C14 범례 {lb!r} 와 표 {row}")
+                                        mmax("C14 넓은 화면 현재가치 표 행 수(최대)", len(pv["rows"]))
+                                        tsn = pg.locator(".lcpv table").aria_snapshot()
+                                        check("row" in tsn and "columnheader" in tsn, f"[{tag}] C14 표가 접근성 트리에 없음 {tsn[:80]!r}")
+                            if vname == "mobile":
+                                check(pv is None, f"[{tag}] C14 좁은 화면에 넓은 화면용 표가 있음")
+                            if sname == "none":
+                                check(pv is None, f"[{tag}] C14 회사 미선택인데 표가 있음")
+
+                            if sname == "life" and vname == "desktop" and scheme == "light":
+                                # C12 상태 안내
+                                for sel, act, want in (
+                                        (".seg-btn[data-v=pre]", "click", "경과조치 적용 전"), (".seg-btn[data-v=post]", "click", "경과조치 적용 후"),
+                                        ("#med", "uncheck", "같은 유형 업계 중앙값 숨김"), ("#med", "check", "같은 유형 업계 중앙값 표시")):
+                                    getattr(pg.locator(sel), act)()
+                                    pg.wait_for_timeout(200)
+                                    live = pg.evaluate("() => document.getElementById('live').textContent")
+                                    check(live == want, f"[{tag}] C12 #live {live!r} 기대 {want!r}")
+                                    ext_n[0] += 0
+                                # C10: 건너뛰기 링크 + 첫 카드 컨트롤까지 Tab 수
+                                reload_cmp(pg)
+                                skip_flow(pg, tag, "page")
+                                reload_cmp(pg)
+                                pg.keyboard.press("Tab")
+                                pg.keyboard.press("Tab")
+                                a2 = pg.evaluate(SKIP_STATE_JS)
+                                check(a2["text"] == "비교 카드로 건너뛰기", f"[{tag}] C10 둘째 링크 {a2['text']!r}")
+                                pg.keyboard.press("Enter")
+                                pg.wait_for_timeout(250)
+                                g = pg.evaluate(SKIP_STATE_JS)
+                                check(g["id"] == "grid", f"[{tag}] C10 둘째 링크 Enter 뒤 포커스 {g['tag']}#{g['id']}")
+                                pg.keyboard.press("Tab")
+                                c1 = pg.evaluate(SKIP_STATE_JS)
+                                check(c1["inCard"], f"[{tag}] C10 카드 목록 뒤 첫 Tab 이 카드 컨트롤이 아님 {c1['tag']}")
+                                mmax("C10 compare 건너뛰기로 첫 카드 컨트롤까지 Tab 수(링크 2번 + 카드 목록으로 Enter 뒤 1번)", 3)
+                                reload_cmp(pg)
+                                n_nat = tabs_until(pg, "() => !!document.activeElement.closest('.card')")
+                                check(n_nat is not None, f"[{tag}] C10 Tab 으로 카드 컨트롤에 못 닿음")
+                                if n_nat:
+                                    meas["C10 compare 순서대로 Tab 으로 첫 카드 컨트롤까지(생보 4사, 건너뛰기 링크 2개 포함, 옛 판 38)"] = n_nat
+                                nrx = pg.evaluate("() => [...document.querySelectorAll('#rail-ul .rx')].map(b => b.getAttribute('tabindex'))")
+                                check(len(nrx) >= 5 and all(x == "-1" for x in nrx), f"[{tag}] C10 레일 빼기 버튼 tabindex {nrx}")
+                                n_before = pg.evaluate("() => document.querySelectorAll('#rail-ul .ri').length")
+                                pg.locator("#rail-ul .ri a").first.focus()
+                                pg.keyboard.press("Delete")
+                                pg.wait_for_timeout(250)
+                                n_after = pg.evaluate("() => document.querySelectorAll('#rail-ul .ri').length")
+                                check(n_after == n_before - 1, f"[{tag}] C10 Delete 키로 레일 항목이 안 빠짐 {n_before}->{n_after}")
+                                pg.locator("#rail-ul .rx").first.click()   # 마우스로 빼기 버튼은 그대로 눌린다
+                                pg.wait_for_timeout(250)
+                                check(pg.evaluate("() => document.querySelectorAll('#rail-ul .ri').length") == n_after - 1, f"[{tag}] C10 마우스로 빼기 버튼이 안 눌림")
+                            if sname == "nonlife" and vname == "mobile" and scheme == "dark":
+                                reload_cmp(pg)
+                                skip_flow(pg, tag, "page")
+                            check(not errs, f"[{tag}] 콘솔 오류 {errs[:3]}")
+                            tally(reqs, tag)
+                            ext_n[0] += 1
+                            ctx.close()
+
+                # ---- privacy: C10·C15·C17 ----
+                for scheme in ("light", "dark"):
+                    for vname, vw, vh in VIEWPORTS:
+                        tag = f"EXT privacy|{vname}|{scheme}"
+                        ctx, pg, errs, reqs = new(vw, vh, scheme)
+                        go(pg, "privacy.html")
+                        W = pg.evaluate(WRAP_JS)
+                        check(len(W) == 2 and all(w["role"] == "region" and w["label"] for w in W) and len({w["label"] for w in W}) == 2, f"[{tag}] C15 표 영역 role/aria-label {W}")
+                        check(all((w["tabindex"] == "0") == w["over"] for w in W), f"[{tag}] C15 가로 스크롤이 있는 표 영역만 tabindex=0 이어야 함 {W}")
+                        if vname == "mobile":
+                            check(W[0]["over"] and W[0]["tabindex"] == "0", f"[{tag}] C15 375 폭 처리 위탁 표(가로 스크롤)가 tabindex=0 이 아님 {W}")   # 둘째 표(데이터 출처)는 375 폭에도 안 넘쳐 Tab 정지점이 아니다
+                            pg.locator(".policy-table-wrap").first.scroll_into_view_if_needed()
+                            for _ in range(40):
+                                pg.keyboard.press("Tab")
+                                if pg.evaluate("() => document.activeElement.classList.contains('policy-table-wrap')"):
+                                    break
+                            r = pg.evaluate(WRAP_FOCUS_JS)
+                            check(r["on"] and r["fv"] and r["os"] != "none" and float(r["ow"][:-2]) >= 2, f"[{tag}] C15 키보드 포커스 링 {r}")
+                            if r["on"]:
+                                cr = ratio(over(parse_color(r["oc"]), BG[scheme]), BG[scheme])
+                                check(cr >= 3.0, f"[{tag}] C15 포커스 링 대비 {cr:.2f}")
+                                mmin(f"C15 포커스 링 대비 최소 {scheme}", cr)
+                            pg.screenshot(path=str(out / f"privacy_focus_{vname}_{scheme}.png"))
+                            pg.evaluate("() => document.activeElement.blur()")
+                            pg.locator(".policy-table-wrap").first.click(position={"x": 10, "y": 10})   # 마우스·터치로 눌렀을 때는 링이 없다
+                            r2 = pg.evaluate(WRAP_FOCUS_JS)
+                            check(not r2["fv"], f"[{tag}] C15 마우스로 눌렀는데 포커스 링이 보임")
+                        pg.reload(wait_until="load")
+                        pg.wait_for_timeout(300)
+                        skip_flow(pg, tag, "main-content")
+                        hs = pg.evaluate("() => [...document.querySelectorAll('h1,h2,h3')].map(h => +h.tagName[1])")
+                        check(hs.count(1) == 2 and all(b - a <= 1 for a, b in zip(hs, hs[1:])), f"[{tag}] C17 privacy 제목 단계 {hs}")
+                        if vname == "desktop" and scheme == "light":
+                            pg.reload(wait_until="load")
+                            pg.wait_for_timeout(300)
+                            n_nat = tabs_until(pg, "() => !!document.activeElement.closest('main')")
+                            check(n_nat is not None, f"[{tag}] C10 privacy Tab 으로 본문에 못 닿음")
+                            if n_nat:
+                                meas["C10 privacy 순서대로 Tab 으로 본문 첫 링크까지(건너뛰기 링크 포함, 옛 판 8)"] = n_nat
+                            mmax("C10 privacy 건너뛰기로 본문 첫 링크까지 Tab 수(링크 1번 + Enter 뒤 1번)", 2)
+                        check(not errs, f"[{tag}] 콘솔 오류 {errs[:3]}")
+                        tally(reqs, tag)
+                        ext_n[0] += 1
+                        ctx.close()
+
+                # ---- C11 감소 모션 ----
+                for reduce in (True, False):
+                    ctx = browser.new_context(viewport={"width": 1280, "height": 900}, color_scheme="light", reduced_motion="reduce" if reduce else "no-preference", timezone_id="Asia/Seoul")
+                    pg = ctx.new_page()
+                    pg.set_default_timeout(30000)
+                    pg.clock.set_fixed_time(NOW)
+                    reqs = []
+                    pg.on("request", lambda r, q=reqs: q.append(r.url))
+                    pg.route(BLOCK, lambda r: r.abort())
+                    go(pg, "compare.html", SETS["life"])
+                    ci = pg.evaluate("() => typeof Chart === 'undefined' ? null : Object.values(Chart.instances).map(c => ({a: c.options.animation}))")
+                    tag = f"EXT C11 reduce={reduce}"
+                    if ci is None:
+                        skips.append(f"{tag}: Chart.js 가 안 떠 감소 모션 시험을 못 함")
+                    else:
+                        check(len(ci) >= 2, f"[{tag}] Chart.js 차트 {len(ci)}개(2개 이상이어야 함)")
+                        for c in ci:
+                            if reduce:
+                                check(c["a"] is False or (isinstance(c["a"], dict) and c["a"].get("duration") == 0), f"[{tag}] C11 options.animation {c['a']}")
+                            else:
+                                check(c["a"] is not False and not (isinstance(c["a"], dict) and c["a"].get("duration") == 0), f"[{tag}] C11 감소 모션이 아닌데 애니메이션이 꺼짐 {c['a']}")
+                        meas[f"C11 Chart.js 차트 options.animation 꺼진 수 (reduce={reduce}, 차트 {len(ci)}개)"] = sum(1 for c in ci if c["a"] is False)
+                    tally(reqs, tag)
+                    ctx.close()
+                # scrollBy: 터치 팝오버 보정 스크롤의 behavior
+                for reduce in (True, False):
+                    ctx = browser.new_context(viewport={"width": 375, "height": 320}, color_scheme="light", has_touch=True, is_mobile=True, reduced_motion="reduce" if reduce else "no-preference", timezone_id="Asia/Seoul")
+                    pg = ctx.new_page()
+                    pg.set_default_timeout(30000)
+                    pg.clock.set_fixed_time(NOW)
+                    reqs = []
+                    pg.on("request", lambda r, q=reqs: q.append(r.url))
+                    pg.route(BLOCK, lambda r: r.abort())
+                    go(pg, "compare.html", SETS["life"])
+                    pg.evaluate("() => { window.__sb = []; const o = window.scrollBy.bind(window); window.scrollBy = function(a){ window.__sb.push(a && a.behavior); return o(a); }; }")
+                    nb = pg.evaluate("() => document.querySelectorAll('.card .iq-help-btn').length")
+                    for i in range(nb):
+                        pg.evaluate("""(i) => { const b = document.querySelectorAll('.card .iq-help-btn')[i]; const r = b.getBoundingClientRect(); const hd = document.querySelector('header').getBoundingClientRect(); window.scrollTo(0, window.scrollY + r.top - (hd.bottom + 60)); b.dispatchEvent(new FocusEvent('focusin', {bubbles: true})); }""", i)
+                        pg.wait_for_timeout(60)
+                    sb = pg.evaluate("() => window.__sb")
+                    tag = f"EXT C11 scrollBy reduce={reduce}"
+                    if sb:
+                        want = "auto" if reduce else "smooth"
+                        check(all(x == want for x in sb), f"[{tag}] scrollBy behavior {sorted(set(sb))} 기대 {want}")
+                        meas[f"C11 scrollBy 호출 수 (reduce={reduce})"] = len(sb)
+                    else:
+                        info.append(f"{tag}: 팝오버 보정 scrollBy 가 한 번도 호출되지 않아 동적으로는 못 쟀음(정적 검사로 대신)")
+                    tally(reqs, tag)
+                    ctx.close()
+
+            ext_checks()
             browser.close()
     finally:
         stop_server(srv)
@@ -684,9 +981,20 @@ def run(args) -> int:
     check("var PAL_LINE = ['#4fb0a5', '#ee8f72', '#7b9fe6', '#cdb04a'];" in cmp_src, "[static] PAL_LINE 이 바뀜(C7 은 owner 가 하지 않기로 함)")
     check(not re.search(r"KR\d{4}", cmp_src.split("<script>", 1)[0]), "[static] compare.html 머리 부분에 회사코드")
     check("border:1px solid var(--control-border)" in cmp_src, "[static] compare 검색창 --control-border")
+    # C8~C17 정적 확인
+    check("reduceMotion()" in theme_src and "behavior: reduceMotion() ? 'auto' : 'smooth'" in theme_src and "C.defaults.animation=false" in theme_src, "[static] C11 theme.js 감소 모션 판정")
+    check("setAttribute('aria-pressed'" not in theme_src, "[static] C13 테마 토글에 aria-pressed 를 다시 달면 안 됨(바뀌는 레이블과 같이 쓰지 않는다)")
+    check("<h3" not in cmp_src and "</h3>" not in cmp_src, "[static] C17 compare.html 에 h3 가 남음")
+    check('class="rx" tabindex="-1"' in cmp_src, "[static] C10 레일 빼기 버튼 tabindex=-1")
+    check("<main" in cmp_src and "</main>" in cmp_src and 'class="iq-skip"' in cmp_src, "[static] C10 compare main·건너뛰기 링크")
+    prv_src = (root / "privacy.html").read_text(encoding="utf-8")
+    check(prv_src.count('class="policy-table-wrap" role="region" aria-label="') == 2 and "<main" in prv_src and 'class="iq-skip"' in prv_src, "[static] C10·C15 privacy main·건너뛰기 링크·표 영역")
+    check(".iq-skip" in css and ".iq-skip-target" in css, "[static] C10 common.css 건너뛰기 링크 규칙")
 
-    check(tested[0] >= 24, f"[C1] 마우스 경로를 실제로 잰 버튼이 {tested[0]}개뿐(24개 미만)")
-    check(hov_tested[0] >= 80, f"[C1] 호버 가로 넘침을 실제로 잰 버튼이 {hov_tested[0]}개뿐(80개 미만)")
+    if not args.only_ext:
+        check(tested[0] >= 24, f"[C1] 마우스 경로를 실제로 잰 버튼이 {tested[0]}개뿐(24개 미만)")
+        check(hov_tested[0] >= 80, f"[C1] 호버 가로 넘침을 실제로 잰 버튼이 {hov_tested[0]}개뿐(80개 미만)")
+    check(ext_n[0] >= 40, f"[C8~C17] 확장 시험 페이지/시나리오가 {ext_n[0]}개뿐(40개 미만)")
     print(f"checks={n_checks[0]} fails={len(fails)} mouse_paths={tested[0]} hover_overflow_buttons={hov_tested[0]} faded_cases={faded_seen[0]} collector_requests={stats['collector']} gtag_blocked={stats['gtag_blocked']}")
     if faded_seen[0] == 0:
         skips.append("흐린 점선 구간이 있는 단위를 못 만나 C6 의 흐린 구간 표식을 못 쟀다")
@@ -706,5 +1014,6 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=str(ROOT / "artifacts" / "designer" / "a11y_compare_privacy"))
     ap.add_argument("--step", type=int, default=1, help="마우스 경로를 N 점마다 잰다(기본 1 = 1px 단위, 티켓 수락 기준 그대로. 빠른 점검은 3)")
+    ap.add_argument("--only-ext", dest="only_ext", action="store_true", help="C8~C17 확장 시험만 돈다(개발 중 빠른 점검). 최종 보고는 이 옵션 없이 전체를 돈다")
     ap.add_argument("--root", default=str(ROOT), help="서빙할 폴더(기본 저장소 루트). 옛 판과 비교하는 변이시험용")
     sys.exit(run(ap.parse_args()))

@@ -9,6 +9,12 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/designer/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-19 (밤 2) — 접근성 감사 C8~C15 · C17 (owner 「C8~C17 진행」, 커밋 후 미배포)
+
+- **구현(`compare.html` · `privacy.html` · `theme.js` · `common.css`)**: C8 · C17 compare 카드 제목을 `h2` 로 바꾸고 `aria-label`(제목 + 단위)로 접근 이름을 최대 840자에서 16자로(`?` 버튼의 `aria-describedby` 유지, 계산된 모양 불변). C9 섹션 공유 버튼 이름에 섹션 이름을 넣고 중복은 「2번째」를 붙임. C10 compare · privacy 본문 `<main>` + 포커스 때만 보이는 건너뛰기 링크(compare 는 본문 · 비교 카드 두 개), 레일 빼기 버튼 `tabindex=-1`(Delete 키 유지). C11 감소 모션에서 Chart.js 애니메이션 끔(`applyChartJs`, index · K-ICS · IFRS17 차트 포함)과 `scrollBy` `auto`. C12 경과조치 · 중앙값 조작 뒤 `#live` 문구. C13 테마 토글은 바뀌는 레이블만(`aria-pressed` 제거). C14 compare 넓은 화면 손해율 카드에 화면 밖(1x1px) 현재가치 표. C15 privacy 표 영역 `role=region` + 이름, 가로로 넘칠 때만 `tabindex=0`.
+- **검사**: `scripts/check_a11y_compare_privacy.py` 에 해당 단언을 더해 `--step 3` 4,287개 통과(수집기 0 · 콘솔 오류 0). `scripts/check_share_screenshot.py` 는 옛 레이블 단언을 새 규칙에 맞춰 고침. 별도 검증자(25분 상자): 카드 제목 모양 HEAD 와 차이 0, 6페이지 공유 버튼 이름 고유, 건너뛰기 링크 동작, 감소 모션, 첫 화면 24조합은 노이즈 이내(compare 1280 은 카드 모서리 안티앨리어싱 최대 3/765). 못 잰 것: 스크린리더 낭독, 실기기 터치 `scrollBy`.
+- **열림 · 한계**: C16 터치 대상 크기는 owner 가 WCAG 2.1 대 2.2 목표를 정해야 한다. C10 의 「링크 없이 첫 카드 컨트롤까지 Tab 15번 이하」는 링크 없이 30번(옛 38번)이고, 링크를 쓰면 3번이다(레일을 한 정지점으로 묶으려면 Alt+방향키 레일 이동과 겹치지 않는 방향키 탐색 설계가 필요). C5 · C7 · C18 차트 색은 owner 가 하지 않기로 했다.
+
 ## 2026-10-19 (밤) — 손해율 비교 단위 선택기 · 오류 제보 내부 접속 제외 · a11y C1·C2·C3·C4·C6 (owner 승인, push `a8d9f193`, main 배포 `5221a1b4` 완료)
 
 - **비교 단위 선택기(compare.html · IFRS17.html 8절 · `scripts/check_loss_unit.py`)**: 구분 버튼을 라벨 붙은 select 하나(머리글: 구분 · 생보 · 손보 · 재보)로 바꿨다. 처음 화면은 업권별 기본 단위. 단위를 공시하지 않은 회사는 합계로 바꾸지 않고 선 없이 n/a 줄에 사유(변액사망은 Indirect-Par 로 공시한 회사에만 그 문구, `loss_curve.alt_co`). 위험보험료 100억원 미만 칸은 흐린 점선+속 빈 표식. 주소 `g=` 는 구분 이름과 단위 키 모두(옛 링크 유지). 구판 JSON 이면 단위 선택지가 숨고 예전 동작. 점검: 데이터 5,289칸 · compare 220상태 · IFRS17 507건 · 배포본 대비 회귀 82건, 위반 0 · 수집기 0.
