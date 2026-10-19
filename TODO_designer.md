@@ -5,8 +5,8 @@
 
 ## Status (최신 3개)
 
-- **2026-10-19 밤 손해율 비교 단위 선택기 · 오류 제보 내부 접속 제외 · a11y C1·C2·C3·C4·C6 완료(커밋 `3ba585b6` + 미커밋 후속; 미배포; owner 승인)** — 선택기: compare 손해율 카드 · IFRS17 8절 select 하나(구분 · 생보 · 손보 · 재보), 단위 없는 회사는 n/a 줄, 100억원 미만 칸 흐린 점선, 주소 `g=` 는 구분 이름과 단위 키 모두. `report-widget.js` 는 `iq_internal=1` 이면 수집기로 안 보냄. a11y: ? 팝오버 마우스 유예(`common.css` `.is-grace` + `theme.js` `pointerleave` 0.4초), 칩 제거·추가 뒤 포커스, 입력창 `--control-border` · placeholder `--muted`, 모바일 손해율 선 표식.
-  독립 검증: 220+507 상태 · 회귀 82건 · 44상태 HEAD 대비 스타일 차이는 입력창 테두리·placeholder·팝오버 다리뿐. 버린 것: ? 옆 삼각형 호버 영역(오른쪽 끝에서 문서를 가로로 넓힘). 남은 것: owner GO 뒤 배포 · C8~C17 · 일본 오류 제보 위젯 · n/a 문구를 ? 팝오버로 옮길지.
+- **2026-10-19 밤 손해율 비교 단위 선택기 · 오류 제보 내부 접속 제외 · a11y C1·C2·C3·C4·C6 완료(push `a8d9f193` · main 배포 `5221a1b4` 완료; owner 승인)** — 선택기: compare 손해율 카드 · IFRS17 8절 select 하나(구분 · 생보 · 손보 · 재보), 단위 없는 회사는 n/a 줄, 100억원 미만 칸 흐린 점선, 주소 `g=` 는 구분 이름과 단위 키 모두. `report-widget.js` 는 `iq_internal=1` 이면 수집기로 안 보냄. a11y: ? 팝오버 마우스 유예(`common.css` `.is-grace` + `theme.js` `pointerleave` 0.4초), 칩 제거·추가 뒤 포커스, 입력창 `--control-border` · placeholder `--muted`, 모바일 손해율 선 표식.
+  독립 검증: 220+507 상태 · 회귀 82건 · 44상태 HEAD 대비 스타일 차이는 입력창 테두리·placeholder·팝오버 다리뿐. 버린 것: ? 옆 삼각형 호버 영역(오른쪽 끝에서 문서를 가로로 넓힘). 남은 것: C8~C17 · 일본 오류 제보 위젯 · n/a 문구를 ? 팝오버로 옮길지.
 - **2026-10-19 안내 팝업 시작일 10-31 · 손해율 기본 Non-Par · 방명록 내부 접속 제외 · a11y 감사 완료(main 배포 `f96f06b0` 완료; owner 승인)** — 팝업 `NOTICE.showFrom` 2026-10-31(독립 검증 47/47), 선택기 기본 Non-Par(마스터 재계산 0.05pp 이내), `download-survey.js` 가 `iq_internal=1` 방문을 수집기로 보내지 않음. compare·privacy 감사 18건(중간 6 · 낮음 9 · 참고 3)을 `docs/a11y_baseline.md` 와 티켓 `20261019T1400Z` 에.
   남은 것: a11y 티켓 수정(? 팝오버 마우스 접근 · 포커스 유실 · 모바일 손해율 선 마커 등 코드 문제 먼저, 색 변경 5건은 owner 승인 뒤) · 구분 단위 평면 8개 선택기(owner 결정 대기, `TODO.md`) · 배포 때 HTML 2개 + `panel_compare.json` + `panel_loss_ratio.json` + `theme.js` + `download-survey.js` 한 묶음.
 - **2026-10-18 손해율 가정 구분 선택기 · 2026 3분기 안내 팝업 완료(compare.html · IFRS17.html · theme.js · 빌더 · 점검 스크립트, 커밋·미배포; owner TODO 일괄 처리)** — 선택기: 합계 · Non-Par · Indirect-Par · Direct-Par(공시 이름 그대로, 기본 합계라 기존 숫자 불변), `panel_compare.json` 153KB 로 재생성; 팝업: `theme.js` `NOTICE`, 5페이지 1회, 분석 호출 없음.

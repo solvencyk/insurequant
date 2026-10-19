@@ -9,7 +9,7 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/designer/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
-## 2026-10-19 (밤) — 손해율 비교 단위 선택기 · 오류 제보 내부 접속 제외 · a11y C1·C2·C3·C4·C6 (owner 승인, 커밋 `3ba585b6` + 미커밋 후속, 미배포)
+## 2026-10-19 (밤) — 손해율 비교 단위 선택기 · 오류 제보 내부 접속 제외 · a11y C1·C2·C3·C4·C6 (owner 승인, push `a8d9f193`, main 배포 `5221a1b4` 완료)
 
 - **비교 단위 선택기(compare.html · IFRS17.html 8절 · `scripts/check_loss_unit.py`)**: 구분 버튼을 라벨 붙은 select 하나(머리글: 구분 · 생보 · 손보 · 재보)로 바꿨다. 처음 화면은 업권별 기본 단위. 단위를 공시하지 않은 회사는 합계로 바꾸지 않고 선 없이 n/a 줄에 사유(변액사망은 Indirect-Par 로 공시한 회사에만 그 문구, `loss_curve.alt_co`). 위험보험료 100억원 미만 칸은 흐린 점선+속 빈 표식. 주소 `g=` 는 구분 이름과 단위 키 모두(옛 링크 유지). 구판 JSON 이면 단위 선택지가 숨고 예전 동작. 점검: 데이터 5,289칸 · compare 220상태 · IFRS17 507건 · 배포본 대비 회귀 82건, 위반 0 · 수집기 0.
 - **오류 제보 내부 접속 제외(`report-widget.js`, `scripts/check_report_widget_internal.py`)**: `iq_internal=1` 이면 수집기로 행을 보내지 않는다. 화면 흐름은 그대로, 일반 방문 페이로드 동일(9개 시나리오). 일본 사이트 `jp/report-widget.ja.js` 는 미적용.

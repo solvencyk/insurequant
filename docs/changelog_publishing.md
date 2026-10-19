@@ -12,7 +12,7 @@
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/publishing/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
-## 2026-10-19 (밤) — 손해율 비교 단위 데이터 · 위험보험료 단위환산 정정 · 반올림 통일 (커밋 `3ba585b6` + 미커밋 후속, 미배포)
+## 2026-10-19 (밤) — 손해율 비교 단위 데이터 · 위험보험료 단위환산 정정 · 반올림 통일 (push `a8d9f193`, main 배포 `5221a1b4` 완료)
 
 - `scripts/viz_build_compare_panel.py`: `loss_curve` 에 `units`(12) · `default_unit` · `u` · `up` · `med_u` · `unit_note` · `unit_rule` · `alt_co`, `loss_pv` 에 `vu` · `medu`(추가 전용). 선정 규칙: 최신 결산 10사 이상 + 업권 위험보험료 1% 이상(재보사 4사 이상). `panel_loss_ratio.json` 잎 행 839개에 5번째 원소로 위험보험료(억원).
 - **정정**: 마스터 위험보험료는 이미 억원인데 두 빌더(`UNIT_SCALE` · `RP_SCALE`)가 백만원 공시사를 한 번 더 ÷100 해 `loss_curve.up` 297칸 · 잎 행 695칸이 100배 작았다. 배수 1.0 으로 정정(상위 단위 비중 3개, 100억원 미만 칸 1,083→942).
