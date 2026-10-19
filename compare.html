@@ -64,7 +64,7 @@
     .chip button:hover{background:var(--bg);color:var(--text)}
     .chip button[aria-disabled="true"]{opacity:.35;cursor:not-allowed}
     .add-wrap{display:flex;align-items:center;gap:6px;position:relative}
-    .add-wrap input{width:270px;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px}
+    .add-wrap input{width:270px;padding:8px 10px;border:1px solid var(--control-border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px}
     .add-wrap input:disabled{background:var(--card);color:var(--muted)}
     .btn{padding:8px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px;font-weight:500;cursor:pointer}
     .btn:hover{border-color:var(--primary);color:var(--primary)}
@@ -107,7 +107,7 @@
     .lcm td{padding:6px 0;text-align:right;font-variant-numeric:tabular-nums;border:0;border-bottom:1px solid var(--border)}
     .lcm tr:last-child td{border-bottom:none}
     .lcm td:first-child{font-weight:600;word-break:keep-all}
-    .lcm td .sw{display:inline-block;width:22px;height:8px;margin-right:6px;vertical-align:middle}
+    .lcm td .sw{display:inline-block;width:22px;height:11px;margin-right:6px;vertical-align:middle}
     .empty{display:flex;align-items:center;justify-content:center;text-align:center;height:110px;border:1px dashed var(--border);border-radius:8px;color:var(--muted);font-size:13px;padding:0 16px}
     .msg{padding:24px;text-align:center;color:var(--muted)}
     .foot{font-size:12px;color:var(--muted);margin:8px 0 32px 0;line-height:1.6}
@@ -490,6 +490,11 @@
       if(m.na && m.na[code]) return m.na[code];
       if(!((DATA.loss_curve.v[code] && Object.keys(DATA.loss_curve.v[code]).length) || (m.v[code] || []).some(function(x){ return x != null; }))) return naReason(m, code);
       var pn = d.product + d.portfolio;
+      var ac = DATA.loss_curve.alt_co;   /* 단위별로 같은 이름을 다른 구분으로 공시한 회사 코드. 없는 옛 JSON 이면 예전 문구 */
+      if(ac && ac[u]){
+        if(ac[u].indexOf(code) < 0) return '이 단위 미공시';   /* 다른 구분으로도 공시하지 않은 회사: 다른 회사 이야기를 하지 않는다 */
+        return '이 단위 값 없음 · 같은 ' + pn + josaEul(pn) + ' ' + d.alt_gubun.join('·') + ' 로 공시하여 이 단위에서는 빈 칸';
+      }
       return '이 단위 값 없음' + (d.alt_n ? ' · 같은 ' + pn + josaEul(pn) + ' ' + d.alt_gubun.join('·') + ' 로 공시한 회사가 ' + d.alt_n + '곳 있고 이 단위에서는 빈 칸' : '');
     }
     if(grpFor(code) !== GALL &&((DATA.loss_curve.v[code] && Object.keys(DATA.loss_curve.v[code]).length) || (m.v[code] || []).some(function(x){ return x != null; }))) return '이 구분 값 없음';
@@ -573,9 +578,13 @@
       li.innerHTML = '<span>' + esc(c.short) + '</span><span class="tag">' + esc(c.sector || c.type) + '</span>';
       var b = document.createElement('button');
       b.type = 'button'; b.innerHTML = '&times;'; b.setAttribute('aria-label', c.short + ' 제거');
-      b.addEventListener('click', function(){
+      b.addEventListener('click', function(e){
+        var viaKey = e.detail === 0;   /* 키보드·보조기기로 누른 클릭. 마우스·터치일 때는 검색창을 열어 화면 키보드를 띄우지 않는다 */
         S.sel = S.sel.filter(function(x){ return x.code !== s.code; });
         say(c.short + ' 제거'); update(true);
+        /* 다시 그리면 눌렀던 버튼이 사라져 포커스가 body 로 빠진다 → 같은 자리에 온 다음 칩(없으면 이전 칩)의 제거 버튼, 칩이 없으면 검색창 */
+        var bs = $('chips').querySelectorAll('button'), t = bs[k] || bs[k - 1];
+        if(t) t.focus(); else if(viaKey) $('addco').focus();
       });
       li.appendChild(b); ul.appendChild(li);
     });
@@ -642,7 +651,12 @@
     });
   }
   function pick(code){
-    if(addCo(code)){ say(CO[code].short + ' 추가'); inp.value = ''; update(true); if(S.sel.length >= MAXC) closePop(); else openPop(); }
+    if(addCo(code)){
+      say(CO[code].short + ' 추가'); inp.value = ''; update(true);
+      if(S.sel.length >= MAXC){   /* 검색창이 비활성돼 포커스가 body 로 빠지니 첫 칩의 제거 버튼으로 옮긴다 */
+        closePop(); var f = $('chips').querySelector('button'); if(f) f.focus();
+      } else openPop();
+    }
   }
   function initPop(){
     pop = $('co-pop'); inp = $('addco');
@@ -967,14 +981,26 @@
     if(nas.length) card.insertAdjacentHTML('beforeend', '<ul class="na-list">' + nas.join('') + '</ul>');
   }
 
-  /* 좁은 화면(~640px) 손해율 가정: 한 차트에 선택한 회사 곡선을 겹친 정적 SVG(카드 폭 전체, 점 표식·x 눈금 숫자·선 끝 라벨 없음) + 회사·현재가치 표.
-     회사 구분은 실선의 색만으로 한다(owner 2026-10-11). 색은 넓은 화면 꺾은선과 같은 lineColors() 이고, 아래 표의 색 견본이 선과 같은 색이라 표가 이름표다. 터치 상호작용은 없다. */
+  /* 좁은 화면(~640px) 손해율 가정: 한 차트에 선택한 회사 곡선을 겹친 정적 SVG(카드 폭 전체, 표식은 8차년마다 하나·x 눈금 숫자·선 끝 라벨 없음) + 회사·현재가치 표.
+     회사 구분은 선 색 + 표식 모양이다(색은 owner 2026-10-11, 모양은 a11y C6 2026-10-19). 색은 넓은 화면 꺾은선과 같은 lineColors() 이고 표식 모양은 넓은 화면 PT 와 같다. 아래 표의 견본이 선과 같은 색·모양이라 표가 이름표다. 터치 상호작용은 없다. */
   var MOB_LINES = 4;                                             /* 겹쳐 그리는 회사 선 상한(업계 중앙값 점선은 별도). 표에는 선택한 회사 전부 */
   var SVGNS = 'http://www.w3.org/2000/svg';
   function nfs(v, d){ return (v < 0 ? '△' : '') + nf(Math.abs(v), d); }   /* 음수는 △ */
   function svgEl(n, a, txt){ var e = document.createElementNS(SVGNS, n); for(var k in a) e.setAttribute(k, a[k]); if(txt != null) e.textContent = txt; return e; }
-  function swatch(color, dash){
-    return '<svg class="sw" viewBox="0 0 22 8" aria-hidden="true" focusable="false"><line x1="1" x2="21" y1="4" y2="4" stroke="' + color + '" stroke-width="3" stroke-linecap="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/></svg>';
+  /* 넓은 화면 PT 와 같은 모양의 표식(a11y C6). 크기는 Chart.js pointRadius 4 에 맞춘 반지름 r: 원 · 정삼각형(위로 뾰족) · 정사각형 · 마름모(정사각형을 45도 돌린 것).
+     ptSpec 은 [태그, 속성]을 돌려주고, 선 그래프(svgEl)와 표 견본(문자열)이 같이 쓴다. data-pt 는 모양 이름(PT). hollow 표식은 호출하는 쪽이 fill 을 배경색으로 준다. */
+  function ptSpec(kind, x, y, r, fill, stroke, sw){
+    var a = {'class': 'mk', 'data-pt': kind, fill: fill, stroke: stroke, 'stroke-width': sw}, h = r * 0.7071, f = function(v){ return +v.toFixed(2); };
+    if(kind === 'triangle'){ a.points = f(x) + ',' + f(y - r) + ' ' + f(x + r * 0.866) + ',' + f(y + r * 0.5) + ' ' + f(x - r * 0.866) + ',' + f(y + r * 0.5); return ['polygon', a]; }
+    if(kind === 'rect'){ a.x = f(x - h); a.y = f(y - h); a.width = f(2 * h); a.height = f(2 * h); return ['rect', a]; }
+    if(kind === 'rectRot'){ a.points = f(x) + ',' + f(y - r) + ' ' + f(x + r) + ',' + f(y) + ' ' + f(x) + ',' + f(y + r) + ' ' + f(x - r) + ',' + f(y); return ['polygon', a]; }
+    a.cx = f(x); a.cy = f(y); a.r = r; return ['circle', a];
+  }
+  function ptMark(kind, x, y, r, fill, stroke, sw){ var p = ptSpec(kind, x, y, r, fill, stroke, sw); return svgEl(p[0], p[1]); }
+  function swatch(color, dash, kind){
+    var mk = '';
+    if(kind){ var p = ptSpec(kind, 11, 5.5, 4, color, color, 1); mk = '<' + p[0] + Object.keys(p[1]).map(function(k){ return ' ' + k + '="' + p[1][k] + '"'; }).join('') + '/>'; }
+    return '<svg class="sw" viewBox="0 0 22 11" aria-hidden="true" focusable="false"><line x1="1" x2="21" y1="5.5" y2="5.5" stroke="' + color + '" stroke-width="3" stroke-linecap="round"' + (dash ? ' stroke-dasharray="' + dash + '"' : '') + '/>' + mk + '</svg>';
   }
   function lossMobile(card, m){
     var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
@@ -1050,15 +1076,35 @@
     if(med) svg.appendChild(svgEl('path', {d: pathOf(med), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.5, 'stroke-dasharray': '1 4', 'stroke-linecap': 'round'}));
     lines.forEach(function(it){
       if(!it.fd || !it.fd.some(Boolean)){
-        svg.appendChild(svgEl('path', {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}));
+        svg.appendChild(svgEl('path', {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'data-line': it.k}));
         return;
       }
       var fc = fadeColor(it.col);
       runsOf(it.pts, it.fd).forEach(function(r){
-        var a = {d: r.d, fill: 'none', stroke: r.f ? fc : it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'};
+        var a = {d: r.d, fill: 'none', stroke: r.f ? fc : it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'data-line': it.k};
         if(r.f) a['stroke-dasharray'] = '2 4';
         svg.appendChild(svgEl('path', a));
       });
+    });
+    /* 선마다 넓은 화면과 같은 모양의 표식(a11y C6, 색만으로 구분하지 않기). 8차년마다 하나씩, 선마다 2차년씩 어긋나게 찍어 네 선이 겹쳐도 모양이 보인다.
+       위험보험료가 작은 칸의 표식은 넓은 화면처럼 속 빈 표식(배경색 채움 + 흐린 윤곽)이고, 흐린 구간마다 표식이 하나는 있게 한다. 선 색은 그대로. */
+    lines.forEach(function(it){
+      var kind = PT[it.k % 4], g = svgEl('g', {'class': 'mks', 'data-pt': kind, 'data-line': it.k}), fc = (it.fd && it.fd.some(Boolean)) ? fadeColor(it.col) : it.col, off = 2 * (it.k % 4), done = {};
+      function mark(n){
+        if(done[n]) return; done[n] = 1;
+        var hol = it.fd && it.fd[n];
+        g.appendChild(ptMark(kind, X(xs[n]), Y(it.pts[n]), 4, hol ? 'var(--bg)' : it.col, hol ? fc : it.col, hol ? 2 : 1));
+      }
+      it.pts.forEach(function(v, n){ if(v != null && n % 8 === off) mark(n); });
+      if(it.fd){   /* 흐린 구간(연속한 흐린 칸)에 표식이 하나도 없으면 구간의 첫 칸에 찍는다 */
+        var run = -1, has = false;
+        it.fd.concat([false]).forEach(function(f, n){
+          if(f){ if(run < 0){ run = n; has = false; } if(done[n]) has = true; }
+          else if(run >= 0){ if(!has) mark(run); run = -1; }
+        });
+      }
+      if(!g.childNodes.length) it.pts.some(function(v, n){ if(v == null) return false; mark(n); return true; });
+      svg.appendChild(g);
     });
     ylabs.forEach(function(t){ svg.appendChild(t); });   /* 눈금 숫자는 선 위에 얹어 선에 가려지지 않게 */
     svg.appendChild(svgEl('text', {x: ml + 2, y: H - 8, 'font-size': 11, class: 'm'}, '1년'));
@@ -1068,7 +1114,7 @@
 
     /* 현재가치 표: 선택한 회사 전부(선이 없는 회사는 색 표시만 비움) */
     var tr = items.map(function(it){
-      var sw = it.line ? swatch(it.col) : '<span class="sw sw0"></span>';
+      var sw = it.line ? swatch(it.col, null, PT[it.k % 4]) : '<span class="sw sw0"></span>';
       var chip = (it.pv && it.pv.i !== asof) ? ' ' + qchip(it.pv.i, asof) : '';
       return '<tr><td>' + sw + esc(it.nm + fbTag(it.code)) + chip + '</td><td><b>' + (it.pv ? nfs(it.pv.v, 1) + '%' : ((curU() || grpFor(it.code) !== GALL) ? '—' : 'n/a')) + '</b></td></tr>';
     });
@@ -1492,6 +1538,7 @@
       var h = e.target.closest ? e.target.closest('.iq-help') : null; if(!h) return;
       var pp = h.querySelector('.iq-help-pop'), r = h.getBoundingClientRect();
       pp.classList.toggle('iq-help-pop--right', r.left + Math.min(340, window.innerWidth - 32) > window.innerWidth - 12);
+      if(window.IQTheme && IQTheme.clampHelpPops) IQTheme.clampHelpPops();   /* 방향을 바꾼 뒤 화면 안으로 다시 민다. theme.js 의 같은 일이 이 핸들러보다 먼저 돌아, 375 폭 손해율 카드의 팝오버가 왼쪽 화면 밖([-291,49])에 남았다 */
     }
     document.addEventListener('mouseover', flipHelp); document.addEventListener('focusin', flipHelp);
     window.addEventListener('popstate', function(){ readURL(); update(false); });

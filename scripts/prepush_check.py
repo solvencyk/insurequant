@@ -564,6 +564,10 @@ def main(argv=None) -> int:
             # 되돌리면 GREEN ③ 탐지기 규칙을 무력화하는 killer 변이 6종이 실제로 케이스를
             # 죽이는지 ④ CSS `var()`·주석·정규식 노이즈 내성까지 매 push 확인한다. 8.6초.
             "tests/test_deployed_js_gate.py",
+            # 손해율 비교 단위 패널 vs 마스터 독립 재계산(2026-10-19 신설). 빌더 --check 는 "재빌드 == 디스크" 만 보므로 백만원 공시사를
+            # 한 번 더 ÷100 한 단위 환산 버그(위험보험료 100배 작음)를 못 잡았다. 빌더를 import 하지 않고 마스터에서 다시 계산해
+            # 위험보험료(a·b)·점프(c)·half-up 반올림(d)을 대조하고, 옛 x0.01 스케일을 넣으면 실패하는지 변이시험으로 확인한다. ~1초.
+            "tests/test_loss_unit_panels_vs_master.py",
             "tests/unit/"]
     if decision.reduced:
         # jp-scope: 한국 골든·룰 커버리지 묶음을 통째로 건너뛴다(위 1~1e 와 같은 이유).

@@ -12,6 +12,13 @@
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/publishing/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-19 (밤) — 손해율 비교 단위 데이터 · 위험보험료 단위환산 정정 · 반올림 통일 (커밋 `3ba585b6` + 미커밋 후속, 미배포)
+
+- `scripts/viz_build_compare_panel.py`: `loss_curve` 에 `units`(12) · `default_unit` · `u` · `up` · `med_u` · `unit_note` · `unit_rule` · `alt_co`, `loss_pv` 에 `vu` · `medu`(추가 전용). 선정 규칙: 최신 결산 10사 이상 + 업권 위험보험료 1% 이상(재보사 4사 이상). `panel_loss_ratio.json` 잎 행 839개에 5번째 원소로 위험보험료(억원).
+- **정정**: 마스터 위험보험료는 이미 억원인데 두 빌더(`UNIT_SCALE` · `RP_SCALE`)가 백만원 공시사를 한 번 더 ÷100 해 `loss_curve.up` 297칸 · 잎 행 695칸이 100배 작았다. 배수 1.0 으로 정정(상위 단위 비중 3개, 100억원 미만 칸 1,083→942).
+- **반올림 통일**: 이진값 기준 half-up. `panel_compare.json` 값 93칸이 +0.1(반올림 17 + 중앙값 동점 규칙 76), IFRS17 표시(JS `toFixed`)와 일치. `loss_curve.alt_co` = 같은 라벨을 다른 구분으로 공시한 회사 목록(변액사망 8사).
+- 신규 `tests/test_loss_unit_panels_vs_master.py`(`prepush_check.py` 배선): 마스터 독립 재계산 대조 · 분기 간 30배 점프 · 옛 ×0.01 변이 실패 확인. 이유: 빌더 `--check` 는 재현성만 봐서 100배 오류를 못 잡았다. 검증(validation 에이전트): 5,328칸 · 위험보험료 13,127칸 불일치 0, 백만원 공시사 5곳 원문 PDF 대조. 알지에이리인슈어런스의 세그먼트 장기손해는 원문 상품유형 열 그대로(owner 2026-10-12 규칙).
+
 ## 2026-10-19 — IFRS17 8절 현재가치 이중 반올림 수정 (티켓 `20261018T0700Z`, main 배포 `f96f06b0` 완료)
 
 - 저장 빌더는 `scripts/viz_build_persistency_lossratio_panels.py` 였다. `_ratio()` 가 공시 2자리 값이 금액으로 재현되면 반올림 전 비율(소수 6자리)을 싣고, 아니면 공시값을 유지한다(가드 `b != 0` 으로 위험보험료 음수 잎 32칸도 포함). `data/loss_ratio/panel_loss_ratio.json` 206,474 → 281,737 바이트, 구조 동일 · 바뀐 숫자 18,853개 모두 변화 0.005 이하 · meta.note 한 곳.

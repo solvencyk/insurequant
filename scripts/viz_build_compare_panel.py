@@ -22,7 +22,7 @@
 - 손해율: master_loss_ratio.json 합계/합계/현재가치 Σ예상보험금/Σ위험보험료 (세그먼트 합산)
 - 손해율 가정 곡선(loss_curve): 같은 합계/합계 행을 경과차년(1~10년·11~15·16~20·21~25·26~30·30년 이후)별로 같은 방식으로 합산.
   미래에셋생명만 1~10년을 한 구간("1~10년")으로 공시해 별도 칸에 둔다. 업계 중앙값은 칸별로 같은 규칙(같은 유형, 재보험·보증 제외, 5곳 미만 null).
-- 비교 단위(loss_curve.units·u·up·med_u·unit_note·default_unit, loss_pv.vu·medu; 2026-10-19 추가 키): 구분 x 상품구분 x 포트폴리오 한 줄 단위로 같은 방식 합산.
+- 비교 단위(loss_curve.units·u·up·med_u·unit_note·alt_co·default_unit, loss_pv.vu·medu; 2026-10-19 추가 키): 구분 x 상품구분 x 포트폴리오 한 줄 단위로 같은 방식 합산.
   원수사(생보·손보 따로)는 최신 결산에서 10사 이상 공시 + 업권 위험보험료 1% 이상, 재보사는 세그먼트 x Non-Par x 포트폴리오로 4사 이상. 정본 docs/loss_ratio_comparable_unit_20261019.md.
 
 업계 중앙값: 같은 생/손보 유형 안에서, 재보험(KR1000)·보증(KR0150) 제외, 그 분기에 값이 있는 회사만으로 계산한다
@@ -33,6 +33,7 @@ import re
 import statistics
 import sys
 from collections import defaultdict
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,6 +54,20 @@ def num(v):
     except ValueError:
         return None
     return x
+
+
+def round_hu(x, dec=1):
+    """손해율 반올림: 정확한 이진 값 기준 half-up. JS Number.toFixed(dec) 와 같다(파이썬 round() 는 x.x5 에서 짝수 쪽이라 화면과 0.1 어긋났다)."""
+    return float(Decimal(x).quantize(Decimal(1).scaleb(-dec), rounding=ROUND_HALF_UP))
+
+
+def median_hu(xs, dec=1):
+    """손해율 중앙값: 회사별로 이미 반올림한 값(화면에 보이는 소수 표기 repr)을 소수(Decimal)로 읽어 중앙값을 낸 뒤 half-up.
+    짝수 개 회사 평균이 x.x5 로 끝나는 동점 칸(89.3 과 89.4 의 평균 89.35)이 이진 부동소수 잡음 때문에 0.1 낮게 저장되던 것을 막는다."""
+    d = sorted(Decimal(repr(float(x))) for x in xs)
+    n = len(d)
+    m = d[n // 2] if n % 2 else (d[n // 2 - 1] + d[n // 2]) / 2
+    return float(m.quantize(Decimal(1).scaleb(-dec), rounding=ROUND_HALF_UP))
 
 
 NAME_ABBR = {
@@ -300,7 +315,7 @@ loss_curve_v = defaultdict(dict)
 for (c, q, lab), (rp, ec) in lr_acc.items():
     if rp > 0:
         row = loss_curve_v[c].setdefault(q, [None] * len(LR_SLOTS))
-        row[LR_SLOTS.index(lab)] = round(ec / rp * 100.0, 1)
+        row[LR_SLOTS.index(lab)] = round_hu(ec / rp * 100.0, 1)
 loss_curve_med = {}
 for ty in TYPES:
     pool = [c for c, d in roster.items() if d["type"] == ty and d["median_pool"]]
@@ -309,7 +324,7 @@ for ty in TYPES:
         row = []
         for k in range(len(LR_LABELS)):
             xs = [loss_curve_v[c][q][k] for c in pool if q in loss_curve_v.get(c, {}) and loss_curve_v[c][q][k] is not None]
-            row.append(round(statistics.median(xs), 1) if len(xs) >= 5 else None)
+            row.append(median_hu(xs, 1) if len(xs) >= 5 else None)
         byq[q] = row
     loss_curve_med[ty] = byq
 
@@ -347,7 +362,7 @@ for (g, c, q, lab), (rp, ec) in lrg2_acc.items():
         loss_pv_g[g][c][QI[q]] = ec / rp * 100.0
     else:
         row = loss_curve_g[g][c].setdefault(q, [None] * len(LR_SLOTS))
-        row[LR_SLOTS.index(lab)] = round(ec / rp * 100.0, 1)
+        row[LR_SLOTS.index(lab)] = round_hu(ec / rp * 100.0, 1)
 loss_curve_med_g = {}
 for ty in TYPES:
     pool = [c for c, d in roster.items() if d["type"] == ty and d["median_pool"]]
@@ -358,7 +373,7 @@ for ty in TYPES:
             row = []
             for k in range(len(LR_LABELS)):
                 xs = [loss_curve_g[g][c][q][k] for c in pool if q in loss_curve_g[g].get(c, {}) and loss_curve_g[g][c][q][k] is not None]
-                row.append(round(statistics.median(xs), 1) if len(xs) >= 5 else None)
+                row.append(median_hu(xs, 1) if len(xs) >= 5 else None)
             if any(x is not None for x in row):
                 byq[q] = row
         if byq:
@@ -494,6 +509,7 @@ def unit_label(ukey):
 
 
 UNITS = []
+ALT_CO = {}                                        # 단위 키 -> alt_n 에 센 회사 코드(정렬). 길이 = alt_n
 for ukey, n, share in units_sel:
     sec = ukey[0]
     d = {"key": unit_token(ukey), "label": unit_label(ukey), "sector": sec}
@@ -511,6 +527,7 @@ for ukey, n, share in units_sel:
                 alt[c] = gs
     d.update(n_companies=n, n_sector=len(sector_cos[sec]), share_pct=round(share, 1), alt_n=len(alt),
              alt_gubun=sorted({g for gs in alt.values() for g in gs}))
+    ALT_CO[d["key"]] = sorted(alt)
     UNITS.append(d)
 assert len({d["key"] for d in UNITS}) == len(UNITS), "단위 키 토큰 중복"
 UNIT_BY_KEY = {unit_token(t[0]): t[0] for t in units_sel}
@@ -557,7 +574,7 @@ for t in units_sel:
             for y, (rp, ec, rpe) in unit_acc[uk][c][q].items():
                 if rp > 0:
                     k = LR_SLOTS.index(y)
-                    row[k] = round(ec / rp * 100.0, 1)
+                    row[k] = round_hu(ec / rp * 100.0, 1)
                     v = round(rpe, 2)
                     prow[k] = int(v) if v == int(v) else v
             if any(x is not None for x in row):
@@ -582,7 +599,7 @@ for d in UNITS:
         row = []
         for k in range(len(LR_LABELS)):
             xs = [unit_u[tok][c][q][k] for c in pool if q in unit_u[tok].get(c, {}) and unit_u[tok][c][q][k] is not None]
-            row.append(round(statistics.median(xs), 1) if len(xs) >= UNIT_MEDIAN_MIN else None)
+            row.append(median_hu(xs, 1) if len(xs) >= UNIT_MEDIAN_MIN else None)
         if any(x is not None for x in row):
             byq[q] = row
     if byq:
@@ -702,15 +719,16 @@ METRICS = [
 def finalize_vals(mdef, key):
     src = mdef[key]
     out = {}
+    rnd = round_hu if mdef["id"] == "loss_pv" else round        # 손해율만 half-up(화면 toFixed 와 일치)
     for c in roster:
         arr = src[c] if c in src else [None] * NQ
-        out[c] = [None if x is None else round(x, mdef["dec"] if mdef["kind"] != "eok" else 0) for x in arr]
+        out[c] = [None if x is None else rnd(x, mdef["dec"] if mdef["kind"] != "eok" else 0) for x in arr]
         if mdef["kind"] == "eok":
             out[c] = [None if x is None else int(x) for x in out[c]]
     return out
 
 
-def medians(vals):
+def medians(vals, rnd=round):
     res = {}
     cnt = {}
     for t in TYPES:
@@ -719,7 +737,7 @@ def medians(vals):
         for i in range(NQ):
             xs = [vals[c][i] for c in pool if vals[c][i] is not None]
             nrow.append(len(xs))
-            row.append(round(statistics.median(xs), 1) if len(xs) >= 5 else None)
+            row.append(None if len(xs) < 5 else median_hu(xs, 1) if rnd is round_hu else rnd(statistics.median(xs), 1))
         res[t] = row
         cnt[t] = nrow
     return res, cnt
@@ -730,7 +748,7 @@ for m in METRICS:
     if m.get("basis"):
         m["v_pre"] = finalize_vals(m, "v_pre")
     if m["median"]:
-        m["med"], m["med_n"] = medians(m["v"])
+        m["med"], m["med_n"] = medians(m["v"], round_hu if m["id"] == "loss_pv" else round)
         if m.get("basis"):
             m["med_pre"], m["med_n_pre"] = medians(m["v_pre"])
     m["na"] = NA.get(m["id"], {})
@@ -740,10 +758,10 @@ for m in METRICS:
     if m["id"] == "loss_pv":      # 구분별 현재가치 시계열과 업계 중앙값(추가 필드, 위의 v·med 는 그대로)
         m["vg"], m["medg"] = {}, {}
         for g in LR_GROUPS_SHOWN:
-            full = {c: [None if x is None else round(x, m["dec"]) for x in (loss_pv_g[g][c] if c in loss_pv_g[g] else [None] * NQ)]
+            full = {c: [None if x is None else round_hu(x, m["dec"]) for x in (loss_pv_g[g][c] if c in loss_pv_g[g] else [None] * NQ)]
                     for c in roster}
             m["vg"][g] = {c: full[c] for c in sorted(full) if any(x is not None for x in full[c])}
-            mg, _ = medians(full)
+            mg, _ = medians(full, round_hu)
             m["medg"][g] = {t: row for t, row in mg.items() if any(x is not None for x in row)}
         # 비교 단위별 현재가치(위 vg·medg 와 같은 모양, 구분 대신 단위 키): vu[단위키][회사] = 분기별 배열, medu[단위키][업권] = 분기별 중앙값
         m["vu"], m["medu"] = {}, {}
@@ -755,7 +773,7 @@ for m in METRICS:
                 for q, ym in unit_acc_pv[uk][c].items():
                     rp, ec, _ = ym[LR_PV]
                     if rp > 0:
-                        arr[QI[q]] = round(ec / rp * 100.0, m["dec"])
+                        arr[QI[q]] = round_hu(ec / rp * 100.0, m["dec"])
                 if any(x is not None for x in arr):
                     full[c] = arr
             m["vu"][tok] = full
@@ -763,7 +781,7 @@ for m in METRICS:
             row = []
             for i in range(NQ):
                 xs = [full[c][i] for c in pool if c in full and full[c][i] is not None]
-                row.append(round(statistics.median(xs), 1) if len(xs) >= UNIT_MEDIAN_MIN else None)
+                row.append(median_hu(xs, 1) if len(xs) >= UNIT_MEDIAN_MIN else None)
             if any(x is not None for x in row):
                 m["medu"][tok] = {sec: row}
 
@@ -808,6 +826,7 @@ out = {
         "up": unit_up,
         "med_u": unit_med,
         "unit_note": UNIT_NOTE,
+        "alt_co": ALT_CO,
     },
 }
 payload = json.dumps(out, ensure_ascii=False, separators=(",", ":")).encode("utf-8")

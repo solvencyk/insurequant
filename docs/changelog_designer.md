@@ -9,6 +9,12 @@ Scope: HTML structure / styling / responsive breakpoints / chart layout / A11y. 
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/designer/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-19 (밤) — 손해율 비교 단위 선택기 · 오류 제보 내부 접속 제외 · a11y C1·C2·C3·C4·C6 (owner 승인, 커밋 `3ba585b6` + 미커밋 후속, 미배포)
+
+- **비교 단위 선택기(compare.html · IFRS17.html 8절 · `scripts/check_loss_unit.py`)**: 구분 버튼을 라벨 붙은 select 하나(머리글: 구분 · 생보 · 손보 · 재보)로 바꿨다. 처음 화면은 업권별 기본 단위. 단위를 공시하지 않은 회사는 합계로 바꾸지 않고 선 없이 n/a 줄에 사유(변액사망은 Indirect-Par 로 공시한 회사에만 그 문구, `loss_curve.alt_co`). 위험보험료 100억원 미만 칸은 흐린 점선+속 빈 표식. 주소 `g=` 는 구분 이름과 단위 키 모두(옛 링크 유지). 구판 JSON 이면 단위 선택지가 숨고 예전 동작. 점검: 데이터 5,289칸 · compare 220상태 · IFRS17 507건 · 배포본 대비 회귀 82건, 위반 0 · 수집기 0.
+- **오류 제보 내부 접속 제외(`report-widget.js`, `scripts/check_report_widget_internal.py`)**: `iq_internal=1` 이면 수집기로 행을 보내지 않는다. 화면 흐름은 그대로, 일반 방문 페이로드 동일(9개 시나리오). 일본 사이트 `jp/report-widget.ja.js` 는 미적용.
+- **a11y C1·C2·C3·C4·C6(`common.css` · `theme.js` · `compare.html` · `scripts/check_a11y_compare_privacy.py` · `docs/a11y_baseline.md` §5e · 티켓 `20261019T1400Z`)**: C1 ? 팝오버 마우스 접근(`::before` 다리 + 떠난 뒤 400ms 유예 `is-grace`; 먼저 넣은 옆 삼각형은 오른쪽 끝에서 문서를 가로로 넓혀 버림), C2 포커스 유지, C3 `--control-border`(라이트 3.56:1 · 다크 3.97:1) 글자 입력창만, C4 placeholder `var(--muted)`(5.76 · 6.83), C6 모바일 선 표식. 덤: 375 폭 손해율 카드 ? 팝오버가 화면 밖에 남던 버그 수정. C5 · C7 · C18 은 owner 가 하지 않기로, C8~C17 열림.
+
 ## 2026-10-19 — 안내 팝업 시작일 · 손해율 기본 Non-Par · 방명록 내부 접속 제외 · a11y 감사 (owner 승인, main 배포 `f96f06b0` 완료)
 
 - **3분기 안내 팝업 시작일**: `theme.js` `NOTICE.showFrom` 2026-10-31 추가. 방문자 로컬 날짜가 showFrom 이상 hideAfter(2026-12-31) 이하일 때만 뜬다(hideAfter 와 같은 날짜 문자열 비교, 시간대 변환 없음). `scripts/check_notice_popup.py` 498건(Asia/Seoul · UTC · America/Los_Angeles 경계 포함) 위반 0, 독립 검증 47/47.

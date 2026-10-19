@@ -16,11 +16,11 @@ Playwright·망이 없으면 SKIP(exit 0) — SKIP 은 통과가 아니라 안 �
 """
 from __future__ import annotations
 
+from decimal import Decimal, ROUND_HALF_UP
 import json
 import math
 import re
 import socket
-import statistics
 import subprocess
 import sys
 import time
@@ -44,6 +44,21 @@ VIEWS = [("1280", 1280, 900, "light"), ("375", 375, 812, "light"), ("1280-dark",
 
 BAD: list = []
 STATS: dict = defaultdict(float)
+SEEN_ALT: dict = defaultdict(set)     # (화면, 단위) -> 변액사망 문구를 본 alt_co 회사 코드
+SEEN_PLAIN: dict = defaultdict(set)   # (화면, 단위) -> 단순 사유를 본 alt_co 밖 회사 코드
+
+
+def round_hu(x, dec=1):
+    """패널 빌더와 같은 반올림: 정확한 이진 값 기준 half-up(파이썬 round() 는 x.x5 에서 짝수 쪽이라 0.1 어긋난다)."""
+    return float(Decimal(x).quantize(Decimal(1).scaleb(-dec), rounding=ROUND_HALF_UP))
+
+
+def median_hu(xs, dec=1):
+    """패널 빌더와 같은 중앙값 반올림: 회사별로 이미 반올림한 값을 소수(Decimal)로 읽어 중앙값을 내고 half-up(89.3 과 89.4 의 평균 89.35 는 89.4)."""
+    d = sorted(Decimal(repr(float(x))) for x in xs)
+    n = len(d)
+    m = d[n // 2] if n % 2 else (d[n // 2 - 1] + d[n // 2]) / 2
+    return float(m.quantize(Decimal(1).scaleb(-dec), rounding=ROUND_HALF_UP))
 
 
 def bad(where, msg):
@@ -134,7 +149,7 @@ class Expect:
         for s in SLOTS:
             a = self.acc.get((key, code, q, s))
             if a and a[0] > 0:
-                v.append(round(a[1] / a[0] * 100.0, 1))
+                v.append(round_hu(a[1] / a[0] * 100.0))
                 x = round(a[0], 2)
                 p.append(int(x) if x == int(x) else x)
                 any_ = True
@@ -145,7 +160,7 @@ class Expect:
 
     def pv(self, key, code, q):
         a = self.acc.get((key, code, q, PV))
-        return round(a[1] / a[0] * 100.0, 1) if a and a[0] > 0 else None
+        return round_hu(a[1] / a[0] * 100.0) if a and a[0] > 0 else None
 
     def latest(self, key, code):
         """화면이 그리는 행: asof 이하에서 가장 늦은 분기(없으면 None) -> (q, 손해율, 위험보험료)."""
@@ -169,7 +184,7 @@ class Expect:
                 r = self.row(key, c, q)
                 if r and r[0][k] is not None:
                     xs.append(r[0][k])
-            out.append(round(statistics.median(xs), 1) if len(xs) >= 5 else None)
+            out.append(median_hu(xs) if len(xs) >= 5 else None)
         return out
 
     def median_latest(self, key):
@@ -185,7 +200,7 @@ class Expect:
             xs = [self.pv(key, c, q) for c in self.pool(sec)]
             xs = [x for x in xs if x is not None]
             if len(xs) >= 5:
-                return q, round(statistics.median(xs), 1)
+                return q, median_hu(xs)
         return None
 
     def pv_latest(self, key, code):
@@ -615,6 +630,22 @@ def verify_cmp_state(E, o, names, key, vn, scheme, wide, tag, fade_seen):
         if E.sector[code] == u["sector"]:
             if u["alt_n"] and "이 단위 값 없음" in line and not ("변액사망" in line and "Indirect-Par" in line):
                 bad(where, f"변액사망 사유 문구 {line!r}")
+            # 회사별 사유: 같은 이름을 다른 구분으로 공시한 회사(패널 alt_co)만 그 문구, 나머지는 다른 회사·구분 이야기 없이 단순 사유
+            alt_list = E.C.get("alt_co", {}).get(key)
+            if alt_list is not None:
+                has_alt = "Indirect-Par" in line or "공시한 회사" in line or re.search(r"\d+곳", line)
+                if code in alt_list:
+                    SEEN_ALT[(vn, key)].add(code)
+                    if not ("이 단위 값 없음" in line and "변액사망" in line and "Indirect-Par" in line and "공시하여" in line):
+                        bad(where, f"alt_co 회사 {nm} 문구 {line!r}")
+                    if re.search(r"\d+곳|공시한 회사", line):
+                        bad(where, f"alt_co 회사 {nm} 문구에 다른 회사 수 {line!r}")
+                else:
+                    # 단위 수준 사유("이 단위 미공시")이거나 회사 수준 사유(마스터 na)이고, 어느 쪽이든 다른 회사·다른 구분 이야기가 없다
+                    if "이 단위 미공시" in line:
+                        SEEN_PLAIN[(vn, key)].add(code)
+                    if has_alt or ("미공시" not in line and "없음" not in line and "미산출" not in line):
+                        bad(where, f"alt_co 밖 회사 {nm} 사유 {line!r}")
             if not ("이 단위 값 없음" in line or "미공시" in line or "없음" in line or "미산출" in line):
                 bad(where, f"n/a 사유 {line!r}")
         else:
@@ -649,6 +680,17 @@ def compare_sweep(E, pg, base, vn, scheme, wide, fade_seen):
             o = pg.evaluate(CMP_READ)
             verify_cmp_state(E, o, names, key, vn, scheme, wide, "", fade_seen)
             n += 1
+    # 단위마다 alt_co 의 회사 전부가 별칭 문구를, 그 밖 회사는 단순 사유를 한 번 이상 봤는지(점검이 무력하지 않다는 증거)
+    for u in E.units:
+        key = u["key"]
+        alt = set(E.C.get("alt_co", {}).get(key, []))
+        if SEEN_ALT[(vn, key)] != alt:
+            bad(f"compare {vn} {key}", f"alt_co 문구를 본 회사 {sorted(SEEN_ALT[(vn, key)])} != alt_co {sorted(alt)}")
+        if key == "life_dp_va_death":
+            STATS[f"altwording_{vn}"] = len(SEEN_ALT[(vn, key)])
+            STATS[f"plainreason_{vn}"] = len(SEEN_PLAIN[(vn, key)])
+            if len(alt) != 8 or not SEEN_PLAIN[(vn, key)]:
+                bad(f"compare {vn} {key}", f"변액사망 alt_co {len(alt)}곳, 단순 사유 회사 {len(SEEN_PLAIN[(vn, key)])}곳")
     return n
 
 
@@ -1426,6 +1468,8 @@ def finish():
             print(f"[대비] {k} = {STATS[k]:.2f}")
         elif k.startswith("regress_"):
             print(f"[회귀] {k} = {int(STATS[k])}")
+        elif k.startswith("altwording_") or k.startswith("plainreason_"):
+            print(f"[변액사망 사유] {k} = {int(STATS[k])}")
         elif k.startswith("faded_n") or k.startswith("faded_same"):
             print(f"[흐린 구간] {k} = {int(STATS[k])}")
     print(f"violations {len(BAD)}")
