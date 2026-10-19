@@ -44,6 +44,19 @@
       .replace(/재보험$/, "").replace(/보증보험$/, "보증");
   }
 
+  // 내부 방문은 제보 행을 수집기로 보내지 않는다(owner 2026-10-19, download-survey.js 와 같은 규칙).
+  // 판정은 theme.js shInternal() 과 같다: 주소에 iq_internal=1 이거나 이 브라우저 localStorage iq_internal=1.
+  // 양식·검증·완료 문구는 그대로 동작한다.
+  function isInternalVisit() {
+    try { if (new URLSearchParams(location.search).get("iq_internal") === "1") return true; } catch (e) { /* ignore */ }
+    try { return localStorage.getItem("iq_internal") === "1"; } catch (e) { /* ignore */ }
+    return false;
+  }
+  function sendReport(values) {
+    if (isInternalVisit()) return Promise.resolve({ ok: false, reason: "internal" });
+    return window.IQ_FORMS.submit("report", values);
+  }
+
   function el(tag, attrs, children) {
     var e = document.createElement(tag);
     if (attrs) for (var k in attrs) {
@@ -168,7 +181,7 @@
       errorMsg.classList.remove("show");
       submitBtn.disabled = true;
       submitBtn.textContent = "제출 중…";
-      window.IQ_FORMS.submit("report", {
+      sendReport({
         sheet: sheet, company: companies.join(", "), period: quarters.join(", "), detail: detailVal
       }).then(function () {
         submitBtn.textContent = "제출 완료 — 감사합니다";

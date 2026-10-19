@@ -30,6 +30,7 @@
   --bg:#ffffff;             /* page + card-inner background          */
   --card:#f5f5f4;           /* panel / table-header / inactive-tab   */
   --border:#e4e4e2;         /* hairline borders                      */
+  --control-border:#85888d; /* 글자 입력창·체크박스 테두리 전용(owner 2026-10-19, WCAG 1.4.11 UI 경계 3:1) — --bg 대비 3.56:1. --border 값은 그대로 두고 폼 컨트롤에만 쓴다 */
   --text:#18181b;           /* primary ink                           */
   --muted:#63666b;          /* secondary ink, captions, placeholders — A11y: --bg 대비 5.6:1, --card 대비 5.3:1 (둘 다 AA 통과). 2026-07-21 에 #6c757d 가 --card 위에서 4.45:1 로 미달이던 것을 고쳤고, 2026-09-20 팔레트 B 에서도 그 조건을 유지했다 */
   --ink-strong:#3f4347;     /* axis labels / strong secondary        */
@@ -80,7 +81,7 @@
      (b) 토글: <html data-theme="dark"> set by theme.js from localStorage
    Every page colour must come from a token — a literal #fff anywhere is a light-mode leak. */
 :root[data-theme="dark"]{
-  --bg:#151615; --card:#1f211f; --border:#313431;
+  --bg:#151615; --card:#1f211f; --border:#313431; --control-border:#727772;   /* --control-border: --bg 대비 3.97:1 */
   --text:#e7e8e6; --muted:#9ba09c; --ink-strong:#c6cac6;
   --primary:#54b3aa; --primary-hover:#74c7bf; --on-primary:#0c110f;
   --pos:#77b34a; --pos-soft:#8fc765; --neg:#e0776a; --neg-strong:#d96a5c; --warn:#e0a93f;
@@ -90,7 +91,7 @@
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#151615; --card:#1f211f; --border:#313431;
+    --bg:#151615; --card:#1f211f; --border:#313431; --control-border:#727772;
     --text:#e7e8e6; --muted:#9ba09c; --ink-strong:#c6cac6;
     --primary:#54b3aa; --primary-hover:#74c7bf; --on-primary:#0c110f;
     --pos:#77b34a; --pos-soft:#8fc765; --neg:#e0776a; --neg-strong:#d96a5c; --warn:#e0a93f;
@@ -292,6 +293,14 @@ th.num, td.num, .num{ text-align:right; font-variant-numeric:tabular-nums; }
 .iq-help:hover > .iq-help-pop, .iq-help:focus-within > .iq-help-pop{ opacity:1; pointer-events:auto; }
 /* Esc 로 닫은 상태(WCAG 1.4.13) — theme.js 가 다시 들어오면(hover·focus) 해제한다. 위 규칙과 같은 명시도라 뒤에 둔다. */
 .iq-help.is-dismissed > .iq-help-pop{ opacity:0; pointer-events:none; }
+/* 마우스 다리(a11y C1, 2026-10-19): 버튼과 팝오버 사이 6px 틈에서 :hover 가 풀려 팝오버가 pointer-events:none 으로 돌아가던 것을 막는다.
+   팝오버의 자식이라 이 위를 지나는 동안에도 .iq-help:hover 가 유지된다. 아래로 열 때는 위쪽에, 위로 열 때(--up)는 아래쪽에 둔다. */
+.iq-help-pop::before{ content:""; position:absolute; left:0; right:0; top:-8px; height:8px; }
+.iq-help-pop.iq-help-pop--up::before{ top:auto; bottom:-8px; }
+/* 마우스 유예(a11y C1, 2026-10-19): 마우스가 ? 버튼의 옆면으로 나가 팝오버로 비스듬히 가면 틈에서 :hover 가 잠깐 풀린다. theme.js 가 .iq-help 를 떠난 뒤
+   400ms 동안 is-grace 를 붙여 팝오버를 유지한다(모양·크기를 더하지 않아 이웃 컨트롤을 가리지 않고 문서를 넓히지 않는다). Esc 로 닫은 상태가 우선한다. */
+.iq-help.is-grace > .iq-help-pop{ opacity:1; pointer-events:auto; }
+.iq-help.is-dismissed > .iq-help-pop{ opacity:0; pointer-events:none; }
 /* 오른쪽 가장자리에 붙는 트리거용 — 팝오버가 화면 밖으로 안 나가게 반대쪽으로 편다. */
 .iq-help-pop--right{ left:auto; right:0; }
 /* 트리거가 viewport 아래쪽이라 아래로 열면 잘릴 때 theme.js(flipHelpPop)가 붙인다 — 위로 편다. */
@@ -488,6 +497,10 @@ footer{ scroll-snap-align:end; }         /* 바닥·푸터 도달 보장 */
   box-sizing:border-box; width:100%; max-width:100%; min-width:0; padding:8px 10px; border:1px solid var(--border); border-radius:var(--r-md);
   background:var(--bg); color:var(--text); font-family:var(--font-sans); font-size:14px;
 }
+/* a11y C3·C4 (owner 2026-10-19): 글자 입력창만 테두리를 --control-border 로(선택 상자는 그대로), placeholder 는 --muted.
+   UA 기본 placeholder(#757575)는 다크 --bg 위에서 3.94:1 이라 4.5:1 에 못 미쳤다. opacity:1 은 Firefox 의 기본 .54 를 없애 값을 고정한다. */
+.iq-input, .iq-textarea{ border-color:var(--control-border); }
+input::placeholder, textarea::placeholder{ color:var(--muted); opacity:1; }
 .iq-textarea{ resize:vertical; min-height:80px; }
 .iq-combo{ position:relative; }
 .iq-combo-list{

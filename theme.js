@@ -273,7 +273,9 @@
       if(dy > 2) window.scrollBy({ top: Math.round(dy), behavior: 'smooth' });
     }
   }
-  document.addEventListener('pointerenter', function(e){ var h = e.target && e.target.closest && e.target.closest('.iq-help'); if(h){ flipHelpPop(h); clampHelpPops(); } }, true);
+  document.addEventListener('pointerenter', function(e){ var h = e.target && e.target.closest && e.target.closest('.iq-help'); if(h){ clearTimeout(h._iqGrace); h.classList.remove('is-grace'); flipHelpPop(h); clampHelpPops(); } }, true);
+  /* a11y C1: ? 를 떠난 뒤 400ms 동안 팝오버를 유지한다(common.css .is-grace) — 마우스가 버튼 옆면으로 나가 팝오버로 비스듬히 갈 때 :hover 가 틈에서 풀리지 않게. 터치는 제외. */
+  document.addEventListener('pointerleave', function(e){ var h = e.target; if(!h || !h.classList || !h.classList.contains('iq-help') || e.pointerType === 'touch') return; h.classList.add('is-grace'); clearTimeout(h._iqGrace); h._iqGrace = setTimeout(function(){ h.classList.remove('is-grace'); }, 400); }, true);
   document.addEventListener('focusin', function(e){ var h = e.target && e.target.closest && e.target.closest('.iq-help'); if(h){ flipHelpPop(h); clampHelpPops(); } });
   /* ? 팝오버: Esc 로 포인터·포커스를 옮기지 않고 닫는다(WCAG 1.4.13). 다시 들어오면 해제. */
   document.addEventListener('keydown', function(e){
@@ -880,6 +882,6 @@
 
   window.IQTheme={ isDark:function(){ return effective()==='dark'; }, current:effective, set:set, toggle:toggle,
                    chart:chart, applyChartJs:applyChartJs, echartsTooltip:echartsTooltip,
-                   syncSectionNav:syncSectionNav, keyColors:KEY_COLORS,
+                   syncSectionNav:syncSectionNav, clampHelpPops:clampHelpPops, keyColors:KEY_COLORS,
                    share:{ secOpts:shSecOpts, load:shLoadH2C, page:shShot, section:shSection, render:shRender, plan:shPlan, root:shRoot, mountSections:mountSectionShare, limits:{ maxDim:SH_MAX_DIM, minScale:SH_MIN_SCALE } } };
 })();
