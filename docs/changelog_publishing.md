@@ -19,6 +19,7 @@
 - 재생성(빌더만, 마스터는 안 씀): `build_nb_csm_multiple.py` -> `NB_CSM_multiple.json` KR0073 27셀(2023.1Q 신계약CSM +4.41 · 2023.2Q 연누계 -60.15 등 9분기, 다른 회사 0) · `viz_build_compare_panel.py` -> 31값 · `viz_build_csm_combo_panel.py` -> 19값(KR0073 9칸 + `meta.csm_mismatch` KR0073 2건 해소, 불일치 6->4건). `--check` 둘 다 OK.
 - 재생성하지 않은 것: `viz_build_csm_waterfall.py`·`viz_build_ifrs17_panels.py`(DART extracted 에서 만들며 두 마스터를 읽지 않는다 — 출력 바이트 불변) · `build_tidy_exports.py`(옛 viz 에서 마스터를 덮어쓰는 방향이라 실행 금지).
 - 게이트: `check_master_xlsx_drift` RED 2 -> 0, `validate_data_contract` RED=0 · YELLOW=169, `validate_live_artifacts` 신규 RED 2건은 `PUBLIC_EXPORT_DRIFT`(`CSM워터폴` · `손익분해PL`) — 공개본은 커밋 `eea3f61c` 뒤 `export_public_sheets.py` 로 재생성했다: `public_exports/` 변경 4파일(`CSM워터폴` 교보 51행·91셀 · `손익분해PL` 교보 152행·274셀 · `신계약CSM배수` 교보 9행·27셀 · `manifest.json` build_id `99c7ead7` -> `eea3f61c`·generated_at_utc 뿐, 시트별 행수·분기 범위 불변), 나머지 14시트 바이트 동일, `validate_live_artifacts` RED 0 · `validate_data_contract` RED=0.
+- **2라운드(parser `5f818b59`: 교보 2023.3Q `값_당분기` 19셀, 항목 15 는 빈 칸)**: `손익분해PL` 시트만 다시 동기화(`.bak_20261022_kyobo_pl_r2`, 변한 셀 19 전부 KR0073 2023.3Q `값_당분기`, 나머지 18시트 값 동일). `export_public_sheets.py` 재실행: `손익분해PL.json` 교보 19행 · `manifest.json`(build_id `eea3f61c` -> `5f818b59`, generated_at_utc) 뿐. 패널 2종은 `--check` 로 변동 없음 확인(비교 패널은 `값` YTD 만 읽음). `validate_data_contract` RED=0 · `validate_live_artifacts` RED=0 · `test_master_xlsx_clean_state_has_no_red` 통과. 배포 파일 9개 불변, 라이브 build_id = `5f818b59`.
 
 ## 2026-10-19 (밤) — 손해율 비교 단위 데이터 · 위험보험료 단위환산 정정 · 반올림 통일 (push `a8d9f193`, main 배포 `5221a1b4` 완료)
 
