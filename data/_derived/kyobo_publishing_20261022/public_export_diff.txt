@@ -1,0 +1,5 @@
+CSM워터폴 rows 2358 changed rows by company {'교보생명보험': 51} changed cells 91
+손익분해PL rows 13801 changed rows by company {'교보생명보험': 152} changed cells 274
+신계약CSM배수 rows 393 changed rows by company {'교보생명보험': 9} changed cells 27
+manifest diff: build_id 99c7ead7 -> eea3f61c
+manifest diff: generated_at_utc 2026-10-12T17:40:36Z -> 2026-10-21T16:38:58Z
