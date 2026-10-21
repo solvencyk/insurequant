@@ -1,0 +1,23 @@
+leaf diffs: 19
+  ['companies', 'KR0073'] 9
+  ['meta', 'csm_mismatch'] 9
+  ['meta', 'csm_recon'] 1
+    companies/KR0073/q/2023.1Q/8 3648.36 -> 3652.77
+    companies/KR0073/q/2023.2Q/8 3009.06 -> 2944.5
+    companies/KR0073/q/2023.3Q/8 3597.68 -> 3657.83
+    companies/KR0073/q/2023.4Q/8 3473.8 -> 3473.78
+    companies/KR0073/q/2024.1Q/8 3933.9 -> 3933.86
+    companies/KR0073/q/2024.2Q/8 3112.5 -> 3112.59
+    companies/KR0073/q/2024.3Q/8 3485.9 -> 3485.85
+    companies/KR0073/q/2026.1Q/8 4171.6 -> 4159.16
+    companies/KR0073/q/2026.2Q/8 3888.4 -> 3900.84
+    meta/csm_mismatch len6 -> len4
+    meta/csm_mismatch/2/0 KR0073 -> KR0097
+    meta/csm_mismatch/2/1 2024.1Q -> 2024.4Q
+    meta/csm_mismatch/2/2 58860.0 -> 4389.6
+    meta/csm_mismatch/2/3 62139.4 -> 4446.8
+    meta/csm_mismatch/3/0 KR0073 -> KR0099
+    meta/csm_mismatch/3/1 2024.2Q -> 2023.4Q
+    meta/csm_mismatch/3/2 57689.0 -> 31798.0
+    meta/csm_mismatch/3/3 61330.8 -> 30176.4
+    meta/csm_recon 포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 287건 중 불일치 6건(허용 0.5%) -> 포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 287건 중 불일치 4건(허용 0.5%)

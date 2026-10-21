@@ -1,0 +1,39 @@
+leaf diffs: 31
+  ['metrics', 15] 3
+  ['metrics', 16] 6
+  ['metrics', 2] 6
+  ['metrics', 3] 2
+  ['metrics', 4] 6
+  ['metrics', 5] 6
+  ['metrics', 6] 2
+    metrics/2/v/KR0073/0 50507 -> 58982
+    metrics/2/v/KR0073/1 52102 -> 60881
+    metrics/2/v/KR0073/2 63948 -> 62277
+    metrics/2/v/KR0073/4 62139 -> 58860
+    metrics/2/v/KR0073/5 61331 -> 57688
+    metrics/2/v/KR0073/12 67124 -> 66870
+    metrics/3/v/KR0073/1 11.1 -> 11.0
+    metrics/3/v/KR0073/12 10.7 -> 10.6
+    metrics/4/v/KR0073/0 None -> 531
+    metrics/4/v/KR0073/1 None -> 1905
+    metrics/4/v/KR0073/2 1879 -> 3814
+    metrics/4/v/KR0073/3 421 -> 2327
+    metrics/4/v/KR0073/4 1042 -> 1398
+    metrics/4/v/KR0073/5 3060 -> 3756
+    metrics/5/v/KR0073/0 4492 -> 4274
+    metrics/5/v/KR0073/1 6562 -> 6590
+    metrics/5/v/KR0073/2 6029 -> 7428
+    metrics/5/v/KR0073/3 4891 -> 6322
+    metrics/5/v/KR0073/4 3110 -> 3386
+    metrics/5/v/KR0073/5 6075 -> 6618
+    metrics/6/v/KR0073/4 13.5 -> 14.6
+    metrics/6/v/KR0073/5 14.0 -> 15.2
+    metrics/15/v/KR0073/0 3648 -> 3653
+    metrics/15/v/KR0073/1 6657 -> 6597
+    metrics/15/v/KR0073/12 4172 -> 4159
+    metrics/16/v/KR0073/0 None -> 5057
+    metrics/16/v/KR0073/1 None -> 6813
+    metrics/16/v/KR0073/2 6084 -> 6051
+    metrics/16/v/KR0073/3 6000 -> 6039
+    metrics/16/v/KR0073/4 2960 -> 2979
+    metrics/16/v/KR0073/5 4695 -> 4736

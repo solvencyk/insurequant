@@ -1,6 +1,6 @@
 # Insurequant Changelog — Publishing Stage
 
-> Last updated: 2026-10-19 · Stage 4/5 — publishing
+> Last updated: 2026-10-22 · Stage 4/5 — publishing
 > Prompt: docs/agents/claude-agent-publishing.md · TODO: TODO_publishing.md
 
 **Scope:** master JSON assembly + change reporting + git push command recommendation. HTML structure/styling is **designer** ([`docs/changelog_designer.md`](changelog_designer.md)).
@@ -11,6 +11,14 @@
 ---
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/publishing/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
+
+## 2026-10-22 — 교보생명(KR0073) CSM·PL 교정(parser `3e53aef8`) 파생 산출물 재생성 (xlsx 3시트 · NB 배수 · 비교/콤보 패널, 커밋 전)
+
+- 배경: parser-ifrs17 이 `CSM_waterfall.json` 51셀 · `PL_breakdown.json` 152셀(KR0073 한 사만)을 한 기준으로 맞췄다. `check_master_xlsx_drift` RED 2건(`CSM워터폴` 91셀 · `손익분해PL` 274셀).
+- xlsx: 시트마다 `.bak_20261022_kyobo_*` 를 뜨고 `sync_master_xlsx_sheet.py` 로 `CSM워터폴` · `손익분해PL` 를 동기화, NB 재빌드 뒤 `신계약CSM배수`(27셀)도 동기화. 시작 전·후 전 시트 셀 대조(`data/_derived/kyobo_publishing_20261022/xlsx_cell_diff*.txt`): 변한 셀은 세 시트의 KR0073 뿐이고 나머지 16시트는 동일, 행수 불변.
+- 재생성(빌더만, 마스터는 안 씀): `build_nb_csm_multiple.py` -> `NB_CSM_multiple.json` KR0073 27셀(2023.1Q 신계약CSM +4.41 · 2023.2Q 연누계 -60.15 등 9분기, 다른 회사 0) · `viz_build_compare_panel.py` -> 31값 · `viz_build_csm_combo_panel.py` -> 19값(KR0073 9칸 + `meta.csm_mismatch` KR0073 2건 해소, 불일치 6->4건). `--check` 둘 다 OK.
+- 재생성하지 않은 것: `viz_build_csm_waterfall.py`·`viz_build_ifrs17_panels.py`(DART extracted 에서 만들며 두 마스터를 읽지 않는다 — 출력 바이트 불변) · `build_tidy_exports.py`(옛 viz 에서 마스터를 덮어쓰는 방향이라 실행 금지).
+- 게이트: `check_master_xlsx_drift` RED 2 -> 0, `validate_data_contract` RED=0 · YELLOW=169, `validate_live_artifacts` 신규 RED 2건은 `PUBLIC_EXPORT_DRIFT`(`CSM워터폴` · `손익분해PL`) — 공개본은 커밋 뒤 `export_public_sheets.py` 로 재생성한다(다음 단계).
 
 ## 2026-10-19 (밤) — 손해율 비교 단위 데이터 · 위험보험료 단위환산 정정 · 반올림 통일 (push `a8d9f193`, main 배포 `5221a1b4` 완료)
 
