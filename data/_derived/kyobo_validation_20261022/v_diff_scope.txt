@@ -1,0 +1,21 @@
+== CSM_waterfall.json: rows HEAD~1=2358 HEAD=2358 keys added=0 removed=0 dup-key rows HEAD~1=0 HEAD=0
+   changed fields by company code: {'KR0073': 91}  distinct cells: 51  by field: {'값': 40, '값_당분기': 51}
+   cells by quarter (KR0073): {'2023.1Q': 6, '2023.2Q': 6, '2023.3Q': 6, '2023.4Q': 6, '2024.1Q': 6, '2024.2Q': 6, '2024.3Q': 5, '2026.1Q': 5, '2026.2Q': 5}
+== PL_breakdown.json: rows HEAD~1=13801 HEAD=13801 keys added=0 removed=0 dup-key rows HEAD~1=0 HEAD=0
+   changed fields by company code: {'KR0073': 274}  distinct cells: 152  by field: {'값_당분기': 152, '값': 122}
+   cells by quarter (KR0073): {'2023.1Q': 30, '2023.2Q': 30, '2023.3Q': 30, '2023.4Q': 20, '2024.1Q': 14, '2024.2Q': 14, '2024.3Q': 14}
+   first-time fills (값 None->value): 54 {'2023.3Q': 6, '2023.1Q': 24, '2023.2Q': 24}
+   cells with 값 changed: 122
+== CSM_waterfall_provenance.json: changed leaf paths=4
+   top-level path groups (first 3 comps): {'/cells[188]/owner_override': 1, '/cells[189]/owner_override': 1, '/merge_note_20261022_kr0073_csm_restated': 1, '/merge_note_20261021_kr0073_basis_fix': 1}
+   leaf paths NOT mentioning KR0073/교보: 4 ['/cells[188]/owner_override', '/cells[189]/owner_override', '/merge_note_20261022_kr0073_csm_restated', '/merge_note_20261021_kr0073_basis_fix']
+== PL_breakdown_provenance.json: changed leaf paths=289
+   top-level path groups (first 3 comps): {'/cells[422]/source_files[0]': 26, '/cells[424]/source_files[0]': 26, '/cells[426]/source_files[0]': 18, '/cells[432]/source_files[0]': 16, '/cells[428]/source_files[0]': 16, '/cells[430]/source_files[0]': 16, '/cells[428]/source_files[1]': 12, '/cells[432]/source_files[1]': 12, '/cells[430]/source_files[1]': 12, '/cells[426]/source_files[1]': 10, '/cells[433]/source_files[0]': 6, '/cells[431]/source_files[0]': 6, '/cells[425]/source_files[0]': 6, '/cells[423]/source_files[0]': 6, '/cells[429]/source_files[0]': 6, '/cells[427]/source_files[0]': 6, '/cells[433]/source_files[1]': 5, '/cells[431]/source_files[1]': 5, '/cells[429]/source_files[1]': 5, '/cells[432]/source_files[2]': 5, '/cells[430]/source_files[2]': 5, '/cells[428]/source_files[2]': 5, '/cells[426]/source_files[2]': 4, '/cells[431]/source_files[2]': 3, '/cells[433]/source_files[2]': 3}
+   leaf paths NOT mentioning KR0073/교보: 289 ['/cells[432]/source_files[0]/items[1]', '/cells[428]/source_files[0]/items[16]', '/cells[426]/resolution', '/cells[432]/source_files[0]/items[17]', '/cells[428]/source_files[1]/items[1]', '/cells[426]/source_files[1]/items[1]', '/cells[423]/source_file', '/cells[426]/source_files[0]/items[9]', '/cells[428]/source_files[1]/how', '/cells[426]/source_files[0]/items[11]', '/cells[423]/published_items', '/cells[426]/source_files[0]/items[2]', '/cells[425]/published_items', '/cells[426]/source_files[2]/items[0]', '/cells[431]/source_files[2]/how']
+== user_csm_cells.set: HEAD~1=303 HEAD=317 changed/added/removed keys=41 companies={'KR0073': 41}  other top-level keys equal: True
+== user_pl_cells.set: HEAD~1=360 HEAD=482 changed keys=122 companies={'KR0073': 122} removed=0 other top-level equal: True
+== gold_overlay_ledger: top keys ['_what', '_gate', '_reseed', '_basis', '_tolerance', '_measured_at', '_population', 'entries']
+   entries type dict 115 106
+   removed 13 {'?': 13}  added 4 {'?': 4}
+   meta keys changed: []
+== csm_amort_identity_ledger: entries 2 -> 1 removed: ['교보생명보험|2026.1Q'] meta changed: []

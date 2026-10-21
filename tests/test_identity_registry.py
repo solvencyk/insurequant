@@ -269,7 +269,10 @@ REGISTRY: dict[str, dict] = {
                      "부호는 대조하지 않는다 — 발행사마다 법인세비용의 부호 관행이 다르고"
                      "(양수 금액 vs 괄호 차감) 그것이 애초에 빌더가 item23 을 잔차로 덮은 "
                      "이유다(build_pl_breakdown.assemble L226-228 주석). "
-                     "2026-08-29 신설, ticket inbox/validation/20260829T2130Z.",
+                     "2026-08-29 신설, ticket inbox/validation/20260829T2130Z. "
+                     "2026-10-22: 원천 법인세는 같은 분기 원공시 판 또는 다음 해 같은 기간 FS-API "
+                     "캐시의 전기 열(최신 비교열 판, `_tax22_prior_tier1`) 중 하나와 맞으면 통과 "
+                     "(교보생명 2023.3Q~2024.2Q 소급재작성 법인세 4칸; 둘 다와 어긋나면 FAIL).",
         "impl": [("scripts/validate_master_tables.py", "_check_tax22_crosscheck")],
         "kind": "IDENTITY",
         "tol": {"abs": 200.0, "rel": 0.001, "unit": "백만원"},

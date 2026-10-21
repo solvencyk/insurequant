@@ -1,0 +1,2 @@
+exit=2
+SUMMARY coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3676P(진짜1291·구성상2050·부분335)/23F/2731S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:386P/2PIN/0F/5S | qoq_warn:266Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:22Y

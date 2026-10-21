@@ -1,0 +1,40 @@
+== 2023.2Q published 3M (prior-year column) vs master 값_당분기 (백만원)
+   item 1 pub3M=       137,395.7 master_qtr=       137,395.7 diff=          +0.0
+   item17 pub3M=       175,092.8 master_qtr=       175,595.7 diff=        +502.9
+   item19 pub3M=      -715,492.5 master_qtr=      -715,492.5 diff=          -0.0
+   item20 pub3M=       312,488.5 master_qtr=       312,991.4 diff=        +502.9
+   item22 pub3M=       312,292.0 master_qtr=       312,292.0 diff=          +0.0
+   item23 pub3M=        80,772.9 master_qtr=        80,772.9 diff=          +0.0
+   item24 pub3M=       231,519.1 master_qtr=       231,519.1 diff=          +0.0
+   item25 pub3M=       160,054.7 master_qtr=       160,054.7 diff=          +0.0
+   item31 pub3M=       391,573.8 master_qtr=       391,573.8 diff=          +0.0
+== 2023.3Q published 3M (prior-year column) vs master 값_당분기 (백만원)
+   item 1 pub3M=        89,281.8 master_qtr=       190,929.0 diff=    +101,647.2
+   item17 pub3M=       -77,480.4 master_qtr=       -76,265.2 diff=      +1,215.2
+   item19 pub3M=      -393,378.5 master_qtr=      -392,163.3 diff=      +1,215.2
+   item20 pub3M=        11,801.4 master_qtr=       114,663.8 diff=    +102,862.4
+   item22 pub3M=        11,134.5 master_qtr=       113,996.8 diff=    +102,862.4
+   item23 pub3M=         2,959.5 master_qtr=        30,115.1 diff=     +27,155.7
+   item24 pub3M=         8,175.0 master_qtr=        83,881.7 diff=     +75,706.7
+   item25 pub3M=       -52,630.0 master_qtr=       -52,630.0 diff=          +0.0
+   item31 pub3M=       -44,455.0 master_qtr=        31,251.8 diff=     +75,706.7
+== 2024.2Q published 3M (prior-year column) vs master 값_당분기 (백만원)
+   item 1 pub3M=       235,811.8 master_qtr=       235,811.8 diff=          +0.0
+   item17 pub3M=       175,682.1 master_qtr=       175,682.1 diff=          +0.0
+   item19 pub3M=    -1,025,806.0 master_qtr=    -1,025,806.0 diff=          -0.0
+   item20 pub3M=       411,493.9 master_qtr=       411,493.9 diff=          +0.0
+   item22 pub3M=       426,911.5 master_qtr=       426,911.5 diff=          +0.0
+   item23 pub3M=       103,724.8 master_qtr=       103,724.8 diff=          +0.0
+   item24 pub3M=       323,186.7 master_qtr=       323,186.7 diff=          +0.0
+   item25 pub3M=    -1,360,618.8 master_qtr=    -1,360,618.8 diff=          +0.0
+   item31 pub3M=    -1,037,432.1 master_qtr=    -1,037,432.1 diff=          +0.0
+== 2024.3Q published 3M (prior-year column) vs master 값_당분기 (백만원)
+   item 1 pub3M=       181,515.5 master_qtr=       181,515.5 diff=          +0.0
+   item17 pub3M=       170,298.1 master_qtr=       170,298.1 diff=          +0.0
+   item19 pub3M=      -634,935.1 master_qtr=      -634,935.1 diff=          +0.0
+   item20 pub3M=       351,813.7 master_qtr=       351,813.7 diff=          +0.0
+   item22 pub3M=       350,502.9 master_qtr=       350,502.9 diff=          +0.0
+   item23 pub3M=        72,400.2 master_qtr=        72,400.2 diff=          +0.0
+   item24 pub3M=       278,102.7 master_qtr=       278,102.7 diff=          +0.0
+   item25 pub3M=      -406,154.4 master_qtr=      -406,154.4 diff=          +0.0
+   item31 pub3M=      -128,051.7 master_qtr=      -128,051.7 diff=          +0.0
