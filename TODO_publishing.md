@@ -5,7 +5,7 @@
 
 ## Status (최신 3개)
 
-- **2026-10-22 교보생명(KR0073) 마스터 교정(parser `3e53aef8`) 파생 산출물 재생성(커밋·export 전 단계)** — xlsx 시트 3개만 cherry-pick(`CSM워터폴` 91셀 · `손익분해PL` 274셀 · `신계약CSM배수` 27셀, 전부 KR0073, 나머지 16시트 값 동일), `NB_CSM_multiple.json` 27셀 · `panel_compare.json` 31값 · `panel_csm_combo.json` 19값(전부 KR0073). `check_master_xlsx_drift` RED 2 -> 0, `validate_data_contract` RED=0.
+- **2026-10-22 교보생명(KR0073) 마스터 교정(parser `3e53aef8`) 파생 산출물 재생성 · 배포 완료(push `aefad044`, main `1a73d4c2`, 라이브 9파일 바이트 일치 · build_id `5f818b59` 확인)** — xlsx 시트 3개만 cherry-pick(`CSM워터폴` 91셀 · `손익분해PL` 274셀 · `신계약CSM배수` 27셀, 전부 KR0073, 나머지 16시트 값 동일), `NB_CSM_multiple.json` 27셀 · `panel_compare.json` 31값 · `panel_csm_combo.json` 19값(전부 KR0073). `check_master_xlsx_drift` RED 2 -> 0, `validate_data_contract` RED=0.
   2라운드(parser `5f818b59`, 교보 2023.3Q `값_당분기` 19셀): xlsx `손익분해PL` 19셀 재동기화 · 공개본 재생성(교보 19행 + manifest build_id `5f818b59`), 게이트 RED 0. 남은 것: 재커밋 뒤 배포 시 origin/main 과 다른 파일은 `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · 패널 2종 · 공개본 3시트 · manifest 뿐(HTML·viz 패널은 main 과 동일). 증빙 `data/_derived/kyobo_publishing_20261022/`.
 
 - **2026-10-19 밤 손해율 비교 단위 데이터 + 위험보험료 단위환산 정정 + 반올림 통일(push `a8d9f193` · main 배포 `5221a1b4` 완료)** — `viz_build_compare_panel.py` 가 `loss_curve` 에 `units`(12) · `default_unit` · `u` · `up` · `med_u` · `unit_note` · `unit_rule` · `alt_co`, `loss_pv` 에 `vu` · `medu` 를 더함, `panel_loss_ratio.json` 잎 행 5번째 원소 = 위험보험료(억원). **마스터 위험보험료는 이미 억원인데 두 빌더가 백만원 공시사를 또 ÷100 해 100배 작게 싣던 것 정정.** 반올림을 이진값 기준 half-up 으로 통일(**compare 값 93칸 +0.1**, IFRS17 표시와 일치).
