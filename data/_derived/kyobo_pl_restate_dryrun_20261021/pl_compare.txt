@@ -1,0 +1,168 @@
+=== A. harness fidelity: production-mode block of the later filing vs live master (same quarter)
+  2024.1Q: 32/32 items equal; differing: 
+  2024.2Q: 32/32 items equal; differing: 
+  2024.3Q: 32/32 items equal; differing: 
+  2024.4Q: 30/32 items equal; differing: item6 LOST master=128,048.00 harness=None; item7 LOST master=-360,673.93 harness=None
+  2025.1Q: 30/32 items equal; differing: item6 LOST master=50,690.00 harness=None; item7 LOST master=-53,417.52 harness=None
+  2025.2Q: 32/32 items equal; differing: 
+  2025.3Q: 32/32 items equal; differing: 
+  2025.4Q: 7/32 items equal; differing: item1 LOST master=391,590.33 harness=None; item2 LOST master=455,509.29 harness=None; item3 LOST master=446,262.13 harness=None; item6 LOST master=193,163.00 harness=None; item7 LOST master=-484,520.87 harness=None; item8 LOST master=9,247.17 harness=None; item12 LOST master=11,804.17 harness=None; item15 LOST master=0.00 harness=None ...
+
+=== B. restated (latest comparative) block vs live master
+--- 2023.1Q  (from filing 2024.1Q, Tier-1 data/dart/_fs_api_cache/00112882_2024_11013_OFS.json, reconciled=True)  {'SAME': 2, 'CHANGED': 6, 'FILL': 24, 'LOST': 0, 'BOTH_NONE': 0}
+    item 1 보험손익               FILL    old=            None new=       53,118.94
+    item 2 생명장기 손익            FILL    old=            None new=       61,601.11
+    item 3 생명장기 원수손익          FILL    old=            None new=       57,672.56
+    item 4 원수 CSM상각           CHANGED old=      104,567.00 new=      105,255.00  delta +688.00
+    item 5 원수 위험조정 변동         CHANGED old=       33,762.00 new=       33,667.00  delta -95.00
+    item 6 원수 예실차             FILL    old=            None new=       15,941.00
+    item 7 기타 생명장기 원수손익       FILL    old=            None new=      -97,190.44
+    item 8 생명장기 재보험손익         FILL    old=            None new=        3,928.55
+    item 9 재보험 CSM상각          FILL    old=            None new=       -1,824.00
+    item10 재보험 위험조정 변동        FILL    old=            None new=         -154.00
+    item11 재보험 예실차            FILL    old=            None new=        3,109.00
+    item12 기타 생명장기 재보험손익      FILL    old=            None new=        2,797.55
+    item15 기타영업수익             FILL    old=            None new=            0.00
+    item16 기타사업비용             CHANGED old=        8,500.00 new=        8,482.17  delta -17.83
+    item17 투자손익               FILL    old=            None new=      505,719.89
+    item18 투자이익               FILL    old=            None new=    1,924,360.05
+    item19 보험금융손익             FILL    old=            None new=   -1,418,640.16
+    item20 영업이익               FILL    old=            None new=      558,838.83
+    item21 영업외손익              FILL    old=            None new=       13,654.15
+    item22 세전이익               CHANGED old=      602,000.00 new=      572,492.98  delta -29,507.02
+    item23 법인세                CHANGED old=      152,800.00 new=      145,047.13  delta -7,752.87
+    item24 당기순이익              CHANGED old=      449,200.00 new=      427,445.85  delta -21,754.15
+    item25 기타포괄손익             FILL    old=            None new=     -563,658.81
+    item26 FVOCI 채무증권 평가손익    FILL    old=            None new=    1,177,698.21
+    item27 보험계약금융손익(OCI)      FILL    old=            None new=   -1,896,738.09
+    item28 위험회피 파생상품 평가손익     FILL    old=            None new=      156,313.50
+    item29 FVOCI 지분증권 평가손익    FILL    old=            None new=          435.74
+    item30 재보험금융손익(OCI)       FILL    old=            None new=      -10,838.73
+    item31 총포괄손익              FILL    old=            None new=     -136,212.96
+    item32 기타 포괄손익(미분류)       FILL    old=            None new=        9,470.56
+--- 2023.2Q  (from filing 2024.2Q, Tier-1 data/dart/_fs_api_cache/00112882_2024_11012_OFS.json, reconciled=True)  {'SAME': 2, 'CHANGED': 6, 'FILL': 24, 'LOST': 0, 'BOTH_NONE': 0}
+    item 1 보험손익               FILL    old=            None new=      190,514.61
+    item 2 생명장기 손익            FILL    old=            None new=      208,461.25
+    item 3 생명장기 원수손익          FILL    old=            None new=      203,506.81
+    item 4 원수 CSM상각           CHANGED old=      211,958.00 new=      212,034.00  delta +76.00
+    item 5 원수 위험조정 변동         CHANGED old=       68,469.00 new=       68,021.00  delta -448.00
+    item 6 원수 예실차             FILL    old=            None new=       37,927.00
+    item 7 기타 생명장기 원수손익       FILL    old=            None new=     -114,475.19
+    item 8 생명장기 재보험손익         FILL    old=            None new=        4,954.44
+    item 9 재보험 CSM상각          FILL    old=            None new=         -516.00
+    item10 재보험 위험조정 변동        FILL    old=            None new=         -467.00
+    item11 재보험 예실차            FILL    old=            None new=        4,253.00
+    item12 기타 생명장기 재보험손익      FILL    old=            None new=        1,684.44
+    item15 기타영업수익             FILL    old=            None new=            0.00
+    item16 기타사업비용             CHANGED old=       17,900.00 new=       17,946.64  delta +46.64
+    item17 투자손익               FILL    old=            None new=      681,315.62
+    item18 투자이익               FILL    old=            None new=    2,815,448.24
+    item19 보험금융손익             FILL    old=            None new=   -2,134,132.62
+    item20 영업이익               FILL    old=            None new=      871,830.23
+    item21 영업외손익              FILL    old=            None new=       12,954.73
+    item22 세전이익               CHANGED old=      881,100.00 new=      884,784.96  delta +3,684.96
+    item23 법인세                CHANGED old=      224,800.00 new=      225,820.03  delta +1,020.03
+    item24 당기순이익              CHANGED old=      656,200.00 new=      658,964.93  delta +2,764.93
+    item25 기타포괄손익             FILL    old=            None new=     -403,604.10
+    item26 FVOCI 채무증권 평가손익    FILL    old=            None new=      267,164.81
+    item27 보험계약금융손익(OCI)      FILL    old=            None new=     -715,534.27
+    item28 위험회피 파생상품 평가손익     FILL    old=            None new=       49,132.48
+    item29 FVOCI 지분증권 평가손익    FILL    old=            None new=        5,144.58
+    item30 재보험금융손익(OCI)       FILL    old=            None new=      -15,271.21
+    item31 총포괄손익              FILL    old=            None new=      255,360.83
+    item32 기타 포괄손익(미분류)       FILL    old=            None new=        5,759.50
+--- 2023.3Q  (from filing 2024.3Q, Tier-1 data/dart/_fs_api_cache/00112882_2024_11014_OFS.json, reconciled=True)  {'SAME': 12, 'CHANGED': 14, 'FILL': 6, 'LOST': 0, 'BOTH_NONE': 0}
+    item 1 보험손익               CHANGED old=      187,914.10 new=      381,443.59  delta +193,529.50
+    item 2 생명장기 손익            CHANGED old=      214,625.17 new=      408,154.67  delta +193,529.50
+    item 3 생명장기 원수손익          CHANGED old=      212,186.61 new=      405,716.11  delta +193,529.50
+    item 4 원수 CSM상각           CHANGED old=      321,786.00 new=      464,321.00  delta +142,535.00
+    item 5 원수 위험조정 변동         CHANGED old=      103,180.00 new=      102,821.00  delta -359.00
+    item 6 원수 예실차             FILL    old=            None new=       13,412.00
+    item 7 기타 생명장기 원수손익       FILL    old=            None new=     -174,837.89
+    item 9 재보험 CSM상각          FILL    old=            None new=       -1,969.00
+    item10 재보험 위험조정 변동        FILL    old=            None new=         -804.00
+    item11 재보험 예실차            FILL    old=            None new=        4,883.00
+    item12 기타 생명장기 재보험손익      FILL    old=            None new=          328.56
+    item17 투자손익               CHANGED old=      608,378.83 new=      605,050.41  delta -3,328.42
+    item19 보험금융손익             CHANGED old=   -2,522,967.50 new=   -2,526,295.92  delta -3,328.42
+    item20 영업이익               CHANGED old=      796,292.92 new=      986,494.00  delta +190,201.08
+    item22 세전이익               CHANGED old=      808,580.72 new=      998,781.80  delta +190,201.08
+    item23 법인세                CHANGED old=      205,721.86 new=      255,935.16  delta +50,213.30
+    item24 당기순이익              CHANGED old=      602,858.87 new=      742,846.64  delta +139,987.78
+    item25 기타포괄손익             CHANGED old=     -531,357.76 new=     -456,234.05  delta +75,123.71
+    item27 보험계약금융손익(OCI)      CHANGED old=      569,375.06 new=      644,498.76  delta +75,123.71
+    item31 총포괄손익              CHANGED old=       71,501.11 new=      286,612.59  delta +215,111.48
+--- 2023.4Q  (from filing 2024.4Q, Tier-1 data/dart/_fs_api_cache/00112882_2024_11011_OFS.json, reconciled=True)  {'SAME': 18, 'CHANGED': 12, 'FILL': 0, 'LOST': 2, 'BOTH_NONE': 0}
+    item 1 보험손익               CHANGED old=       42,073.68 new=      232,681.65  delta +190,607.97
+    item 2 생명장기 손익            CHANGED old=       78,483.65 new=      269,091.62  delta +190,607.97
+    item 3 생명장기 원수손익          CHANGED old=       75,032.43 new=      265,640.41  delta +190,607.97
+    item 4 원수 CSM상각           CHANGED old=      437,009.00 new=      627,701.00  delta +190,692.00
+    item 5 원수 위험조정 변동         CHANGED old=      138,314.00 new=      138,790.00  delta +476.00
+    item 6 원수 예실차             LOST    old=       19,583.00 new=            None
+    item 7 기타 생명장기 원수손익       LOST    old=     -519,873.57 new=            None
+    item17 투자손익               CHANGED old=      600,006.23 new=      603,853.46  delta +3,847.23
+    item19 보험금융손익             CHANGED old=   -4,291,696.29 new=   -4,287,849.06  delta +3,847.23
+    item20 영업이익               CHANGED old=      642,079.91 new=      836,535.11  delta +194,455.20
+    item22 세전이익               CHANGED old=      645,098.52 new=      839,553.72  delta +194,455.20
+    item23 법인세                CHANGED old=      156,016.94 new=      207,353.11  delta +51,336.17
+    item24 당기순이익              CHANGED old=      489,081.58 new=      632,200.61  delta +143,119.03
+    item31 총포괄손익              CHANGED old=     -432,557.64 new=     -289,438.61  delta +143,119.03
+--- 2024.1Q  (from filing 2025.1Q, Tier-1 data/dart/_fs_api_cache/00112882_2025_11013_OFS.json, reconciled=True)  {'SAME': 18, 'CHANGED': 12, 'FILL': 0, 'LOST': 2, 'BOTH_NONE': 0}
+    item 1 보험손익               CHANGED old=      104,234.17 new=      139,829.86  delta +35,595.69
+    item 2 생명장기 손익            CHANGED old=      113,941.26 new=      149,536.95  delta +35,595.69
+    item 3 생명장기 원수손익          CHANGED old=      115,496.95 new=      151,092.64  delta +35,595.69
+    item 4 원수 CSM상각           CHANGED old=      120,428.00 new=      156,015.00  delta +35,587.00
+    item 5 원수 위험조정 변동         CHANGED old=       36,794.00 new=       36,836.00  delta +42.00
+    item 6 원수 예실차             LOST    old=      -25,905.00 new=            None
+    item 7 기타 생명장기 원수손익       LOST    old=      -15,820.05 new=            None
+    item17 투자손익               CHANGED old=      296,034.38 new=      297,932.33  delta +1,897.95
+    item19 보험금융손익             CHANGED old=     -809,274.67 new=     -807,376.71  delta +1,897.95
+    item20 영업이익               CHANGED old=      400,268.55 new=      437,762.19  delta +37,493.64
+    item22 세전이익               CHANGED old=      405,275.28 new=      442,768.92  delta +37,493.64
+    item23 법인세                CHANGED old=       94,233.53 new=      104,131.85  delta +9,898.32
+    item24 당기순이익              CHANGED old=      311,041.74 new=      338,637.06  delta +27,595.32
+    item31 총포괄손익              CHANGED old=   -1,004,253.56 new=     -976,658.24  delta +27,595.32
+--- 2024.2Q  (from filing 2025.2Q, Tier-1 data/dart/_fs_api_cache/00112882_2025_11012_OFS.json, reconciled=True)  {'SAME': 16, 'CHANGED': 15, 'FILL': 0, 'LOST': 1, 'BOTH_NONE': 0}
+    item 1 보험손익               CHANGED old=      305,954.93 new=      375,641.68  delta +69,686.75
+    item 2 생명장기 손익            CHANGED old=      326,131.65 new=      395,818.40  delta +69,686.75
+    item 3 생명장기 원수손익          CHANGED old=      329,878.72 new=      399,565.47  delta +69,686.75
+    item 4 원수 CSM상각           CHANGED old=      234,307.00 new=      303,995.00  delta +69,688.00
+    item 5 원수 위험조정 변동         CHANGED old=       73,208.00 new=       73,284.00  delta +76.00
+    item 6 원수 예실차             CHANGED old=       23,434.00 new=       44,646.00  delta +21,212.00
+    item 7 기타 생명장기 원수손익       CHANGED old=       -1,070.28 new=      -22,359.53  delta -21,289.25
+    item17 투자손익               CHANGED old=      469,507.72 new=      473,614.41  delta +4,106.69
+    item19 보험금융손익             CHANGED old=   -1,837,289.40 new=   -1,833,182.71  delta +4,106.69
+    item20 영업이익               CHANGED old=      775,462.65 new=      849,256.10  delta +73,793.44
+    item22 세전이익               CHANGED old=      795,886.99 new=      869,680.44  delta +73,793.44
+    item23 법인세                CHANGED old=      188,375.22 new=      207,856.69  delta +19,481.47
+    item24 당기순이익              CHANGED old=      607,511.77 new=      661,823.75  delta +54,311.98
+    item29 FVOCI 지분증권 평가손익    LOST    old=       14,941.11 new=            None
+    item31 총포괄손익              CHANGED old=   -2,068,402.32 new=   -2,014,090.34  delta +54,311.98
+    item32 기타 포괄손익(미분류)       CHANGED old=      -12,872.48 new=        2,068.63  delta +14,941.11
+--- 2024.3Q  (from filing 2025.3Q, Tier-1 data/dart/_fs_api_cache/00112882_2025_11014_OFS.json, reconciled=True)  {'SAME': 32, 'CHANGED': 0, 'FILL': 0, 'LOST': 0, 'BOTH_NONE': 0}
+--- 2024.4Q  (from filing 2025.4Q, Tier-1 None, reconciled=None)  {'SAME': 7, 'CHANGED': 0, 'FILL': 0, 'LOST': 25, 'BOTH_NONE': 0}
+    item 1 보험손익               LOST    old=      473,623.86 new=            None
+    item 2 생명장기 손익            LOST    old=      514,574.15 new=            None
+    item 3 생명장기 원수손익          LOST    old=      516,557.07 new=            None
+    item 6 원수 예실차             LOST    old=      128,048.00 new=            None
+    item 7 기타 생명장기 원수손익       LOST    old=     -360,673.93 new=            None
+    item 8 생명장기 재보험손익         LOST    old=       -1,982.91 new=            None
+    item12 기타 생명장기 재보험손익      LOST    old=       -5,123.91 new=            None
+    item15 기타영업수익             LOST    old=            0.00 new=            None
+    item16 기타사업비용             LOST    old=       40,950.29 new=            None
+    item17 투자손익               LOST    old=      671,399.63 new=            None
+    item18 투자이익               LOST    old=    3,598,682.20 new=            None
+    item19 보험금융손익             LOST    old=   -2,927,282.57 new=            None
+    item20 영업이익               LOST    old=    1,145,023.49 new=            None
+    item21 영업외손익              LOST    old=     -264,233.61 new=            None
+    item22 세전이익               LOST    old=      880,789.88 new=            None
+    item23 법인세                LOST    old=      182,053.79 new=            None
+    item24 당기순이익              LOST    old=      698,736.09 new=            None
+    item25 기타포괄손익             LOST    old=   -3,876,051.40 new=            None
+    item26 FVOCI 채무증권 평가손익    LOST    old=      228,760.11 new=            None
+    item27 보험계약금융손익(OCI)      LOST    old=   -4,152,878.38 new=            None
+    item28 위험회피 파생상품 평가손익     LOST    old=       36,349.57 new=            None
+    item29 FVOCI 지분증권 평가손익    LOST    old=       25,102.61 new=            None
+    item30 재보험금융손익(OCI)       LOST    old=       -8,195.43 new=            None
+    item31 총포괄손익              LOST    old=   -3,177,315.31 new=            None
+    item32 기타 포괄손익(미분류)       LOST    old=       -5,189.89 new=            None

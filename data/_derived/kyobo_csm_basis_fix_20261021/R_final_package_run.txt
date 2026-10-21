@@ -1,0 +1,90 @@
+NOTE: scenario R without --with-amort-pins leaves 5 CSM_AMORT_IDENTITY_BREAK REDs until PL item 4 is restated too (owner 2026-10-22: pins rejected) -- apply it only together with data/_derived/kyobo_pl_restate_dryrun_20261021/apply_kr0073_pl_refresh.py in the same pass.
+  csm overrides: 317 set, 0 added, 2 companies excluded
+=== scenario R
+gold edits: 36 (22 update, 14 add)
+   gold update 2023.1Q item1: 46378.13 -> 55337.66
+   gold update 2023.1Q item2: 3648.36 -> 3652.77
+   gold update 2023.1Q item3: 6629.48 -> 7223.17
+   gold update 2023.1Q item4: -5103.75 -> -6179.53
+   gold update 2023.1Q item5: -1045.67 -> -1052.55
+   gold update 2023.1Q item6: 50506.55 -> 58981.52
+   gold update 2023.2Q item1: 46378.14 -> 55337.66
+   gold update 2023.2Q item2: 6657.42 -> 6597.27
+   gold update 2023.2Q item3: 7941.4 -> 7495.04
+   gold update 2023.2Q item4: -6755.88 -> -6428.69
+   gold update 2023.2Q item5: -2119.58 -> -2120.34
+   gold update 2023.2Q item6: 52101.5 -> 60880.94
+   gold update 2023.3Q item1: 46967.3 -> 54377.63
+   gold add    2023.3Q item2: None -> 10255.1
+   gold add    2023.3Q item3: None -> 4298.52
+   gold update 2023.3Q item4: 4188.86 -> -2011.29
+   gold update 2023.3Q item5: -3217.86 -> -4643.21
+   gold add    2023.3Q item6: None -> 62276.75
+   gold update 2023.4Q item1: 46967.3 -> 54377.63
+   gold add    2023.4Q item2: None -> 13728.88
+   gold add    2023.4Q item3: None -> 14526.0
+   gold update 2023.4Q item4: -12650.9 -> -18106.27
+   gold add    2023.4Q item5: None -> -6277.01
+   gold update 2023.4Q item6: 58249.2 -> 58249.23
+   gold update 2024.1Q item1: 58249.2 -> 58249.23
+   gold add    2024.1Q item2: None -> 3933.86
+   gold add    2024.1Q item3: None -> 840.31
+   gold update 2024.1Q item4: 301.4 -> -2603.32
+   gold add    2024.1Q item5: None -> -1560.15
+   gold add    2024.1Q item6: None -> 58859.93
+   gold update 2024.2Q item1: 58249.2 -> 58249.23
+   gold add    2024.2Q item2: None -> 7046.45
+   gold add    2024.2Q item3: None -> 3950.99
+   gold update 2024.2Q item4: -5613.5 -> -8518.48
+   gold add    2024.2Q item5: None -> -3039.95
+   gold add    2024.2Q item6: None -> 57688.24
+pins removed 13: ['CSM|KR0073|2023.1Q|1', 'CSM|KR0073|2023.1Q|2', 'CSM|KR0073|2023.1Q|3', 'CSM|KR0073|2023.1Q|4', 'CSM|KR0073|2023.1Q|5', 'CSM|KR0073|2023.1Q|6', 'CSM|KR0073|2023.2Q|1', 'CSM|KR0073|2023.2Q|2', 'CSM|KR0073|2023.2Q|3', 'CSM|KR0073|2023.2Q|4', 'CSM|KR0073|2023.2Q|5', 'CSM|KR0073|2023.2Q|6', 'CSM|KR0073|2023.3Q|5']
+pins added   4: ['CSM|KR0073|2023.3Q|2', 'CSM|KR0073|2023.4Q|2', 'CSM|KR0073|2024.1Q|2', 'CSM|KR0073|2024.2Q|2']
+census (gold cells, masked) (303, 86) -> (317, 77); flags after: unpinned=[] drift=[] stale=[]
+amort ledger removed [] added []
+provenance owner_override added for []
+master KR0073 cells changed: 41 (non-KR0073 differences vs fresh builder: 0)
+   master 2023.1Q item1: 값 46378.13 -> 55337.66 | 값_당분기 46378.13 -> 55337.66
+   master 2023.1Q item2: 값 3648.36 -> 3652.77 | 값_당분기 3648.36 -> 3652.77
+   master 2023.1Q item3: 값 6629.48 -> 7223.17 | 값_당분기 6629.48 -> 7223.17
+   master 2023.1Q item4: 값 -5103.75 -> -6179.53 | 값_당분기 -5103.75 -> -6179.53
+   master 2023.1Q item5: 값 -1045.67 -> -1052.55 | 값_당분기 -1045.67 -> -1052.55
+   master 2023.1Q item6: 값 50506.55 -> 58981.52 | 값_당분기 50506.55 -> 58981.52
+   master 2023.2Q item1: 값 46378.14 -> 55337.66 | 값_당분기 50506.55 -> 58981.52
+   master 2023.2Q item2: 값 6657.42 -> 6597.27 | 값_당분기 3009.06 -> 2944.5
+   master 2023.2Q item3: 값 7941.4 -> 7495.04 | 값_당분기 1311.92 -> 271.87
+   master 2023.2Q item4: 값 -6755.88 -> -6428.69 | 값_당분기 -1652.13 -> -249.16
+   master 2023.2Q item5: 값 -2119.58 -> -2120.34 | 값_당분기 -1073.91 -> -1067.79
+   master 2023.2Q item6: 값 52101.5 -> 60880.94 | 값_당분기 52101.5 -> 60880.94
+   master 2023.3Q item1: 값 46967.3 -> 54377.63 | 값_당분기 52101.5 -> 60880.94
+   master 2023.3Q item2: 값 10255.1 -> 10255.1 | 값_당분기 3597.68 -> 3657.83
+   master 2023.3Q item3: 값 5755.0 -> 4298.52 | 값_당분기 -2186.4 -> -3196.52
+   master 2023.3Q item4: 값 4188.86 -> -2011.29 | 값_당분기 10944.74 -> 4417.4
+   master 2023.3Q item5: 값 -3217.86 -> -4643.21 | 값_당분기 -1098.28 -> -2522.87
+   master 2023.3Q item6: 값 63948.4 -> 62276.75 | 값_당분기 63948.4 -> 62276.75
+   master 2023.4Q item1: 값 46967.3 -> 54377.63 | 값_당분기 63948.4 -> 62276.75
+   master 2023.4Q item2: 값 13728.9 -> 13728.88 | 값_당분기 3473.8 -> 3473.78
+   master 2023.4Q item3: 값 14574.1 -> 14526.0 | 값_당분기 8819.1 -> 10227.48
+   master 2023.4Q item4: 값 -12650.9 -> -18106.27 | 값_당분기 -16839.76 -> -16094.98
+   master 2023.4Q item5: 값 -4370.1 -> -6277.01 | 값_당분기 -1152.24 -> -1633.8
+   master 2023.4Q item6: 값 58249.2 -> 58249.23 | 값_당분기 58249.2 -> 58249.23
+   master 2024.1Q item1: 값 58249.2 -> 58249.23 | 값_당분기 58249.2 -> 58249.23
+   master 2024.1Q item2: 값 3933.9 -> 3933.86 | 값_당분기 3933.9 -> 3933.86
+   master 2024.1Q item3: 값 859.3 -> 840.31 | 값_당분기 859.3 -> 840.31
+   master 2024.1Q item4: 값 301.4 -> -2603.32 | 값_당분기 301.4 -> -2603.32
+   master 2024.1Q item5: 값 -1204.3 -> -1560.15 | 값_당분기 -1204.3 -> -1560.15
+   master 2024.1Q item6: 값 62139.4 -> 58859.93 | 값_당분기 62139.4 -> 58859.93
+   master 2024.2Q item1: 값 58249.2 -> 58249.23 | 값_당분기 62139.4 -> 58859.93
+   master 2024.2Q item2: 값 7046.4 -> 7046.45 | 값_당분기 3112.5 -> 3112.59
+   master 2024.2Q item3: 값 3991.7 -> 3950.99 | 값_당분기 3132.4 -> 3110.68
+   master 2024.2Q item4: 값 -5613.5 -> -8518.48 | 값_당분기 -5914.9 -> -5915.16
+   master 2024.2Q item5: 값 -2343.1 -> -3039.95 | 값_당분기 -1138.8 -> -1479.8
+   master 2024.2Q item6: 값 61330.8 -> 57688.24 | 값_당분기 61330.8 -> 57688.24
+   master 2024.3Q item1: 값 58249.2 -> 58249.2 | 값_당분기 61330.8 -> 57688.24
+   master 2024.3Q item2: 값 10532.3 -> 10532.3 | 값_당분기 3485.9 -> 3485.85
+   master 2024.3Q item3: 값 3242.4 -> 3242.4 | 값_당분기 -749.3 -> -708.59
+   master 2024.3Q item4: 값 -8306.3 -> -8306.3 | 값_당분기 -2692.8 -> 212.18
+   master 2024.3Q item5: 값 -4498.5 -> -4498.5 | 값_당분기 -2155.4 -> -1458.55
+YTD closure gaps of changed quarters: all closed (<=0.011)
+wrote C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\kyobo_csm_basis_fix_20261021\cell_changes_R.csv
+simulated post-apply files under C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\kyobo_csm_basis_fix_20261021\R_final_package

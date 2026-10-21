@@ -1,0 +1,25 @@
+OK  2023.1Q@FY2023_Q1                    cells_checked=  8 closure_gap_mn=-1 vec=[46378.13, 3648.36, 6629.48, -5103.75, -1045.67, 50506.55] same_as_extractor=True
+OK  2023.2Q@FY2023_Q2                    cells_checked=  8 closure_gap_mn=+0 vec=[46378.13, 6657.42, 7941.4, -6755.87, -2119.58, 52101.5] same_as_extractor=True
+OK  2023.3Q@FY2023_Q3                    cells_checked=  8 closure_gap_mn=+0 vec=[53627.54, 10255.1, 5754.97, -2471.36, -3217.86, 63948.39] same_as_extractor=True
+OK  2023.4Q@FY2023_Q4                    cells_checked=  8 closure_gap_mn=+0 vec=[55337.66, 13728.88, 14574.11, -18116.75, -4370.09, 61153.81] same_as_extractor=True
+OK  2023.1Q@FY2024_Q1prior               cells_checked=  8 closure_gap_mn=-1 vec=[55337.66, 3652.77, 7223.17, -6179.53, -1052.55, 58981.52] same_as_extractor=True
+OK  2023.2Q@FY2024_Q2prior               cells_checked=  8 closure_gap_mn=-1 vec=[55337.66, 6597.27, 7495.04, -6428.69, -2120.34, 60880.94] same_as_extractor=True
+OK  2023.3Q@FY2024_Q3prior               cells_checked=  8 closure_gap_mn=+0 vec=[54377.63, 10255.1, 4298.52, -2011.29, -4643.21, 62276.75] same_as_extractor=True
+OK  2023.4Q@FY2024_Q4prior               cells_checked=  8 closure_gap_mn=+0 vec=[54377.63, 13728.88, 14526.0, -18106.27, -6277.01, 58249.23] same_as_extractor=True
+OK  2024.1Q@FY2024_Q1                    cells_checked=  8 closure_gap_mn=+0 vec=[61153.81, 3933.86, 859.29, -2603.24, -1204.28, 62139.44] same_as_extractor=True
+OK  2024.2Q@FY2024_Q2                    cells_checked=  8 closure_gap_mn=+0 vec=[61153.81, 7046.45, 3991.65, -8518.09, -2343.07, 61330.75] same_as_extractor=True
+OK  2024.3Q@FY2024_Q3                    cells_checked=  8 closure_gap_mn=-1 vec=[58249.23, 10532.34, 3242.44, -8306.23, -4498.49, 59219.29] same_as_extractor=True
+OK  2024.4Q@FY2024_Q4                    cells_checked=  8 closure_gap_mn=+0 vec=[58249.23, 13715.68, 1033.71, -2608.2, -6009.84, 64380.58] same_as_extractor=True
+OK  2024.1Q@FY2025_Q1prior               cells_checked=  8 closure_gap_mn=-1 vec=[58249.23, 3933.86, 840.31, -2603.32, -1560.15, 58859.93] same_as_extractor=True
+OK  2024.2Q@FY2025_Q2prior               cells_checked=  8 closure_gap_mn=+0 vec=[58249.23, 7046.45, 3950.99, -8518.48, -3039.95, 57688.24] same_as_extractor=True
+OK  2024.3Q@FY2025_Q3prior               cells_checked=  8 closure_gap_mn=-1 vec=[58249.23, 10532.34, 3242.44, -8306.23, -4498.49, 59219.29] same_as_extractor=True
+OK  2024.4Q@FY2025_Q4prior_3blk          cells_checked= 24 closure_gap_mn=+1 vec=[58249.24, 13715.68, 1033.71, -2608.21, -6009.84, 64380.58] same_as_extractor=True
+OK  2024.4Q@FY2025_Q4prior_CONS_3blk     cells_checked= 24 closure_gap_mn=+2 vec=[58742.56, 13730.12, 1051.1, -2909.81, -6031.4, 64582.57] same_as_extractor=True
+OK  2024.4Q@FY2025_Q4cur_SEP_3blk_unused cells_checked= 24 closure_gap_mn=-2 vec=[64380.58, 12781.34, 1865.47, -8037.82, -5879.96, 65109.61] same_as_extractor=True
+OK  2025.1Q@FY2025_Q1                    cells_checked=  8 closure_gap_mn=-1 vec=[64380.58, 2572.98, 4489.23, -7993.1, -1470.74, 61978.95] same_as_extractor=True
+OK  2026.1Q@FY2026_Q1sep_cur_3blk        cells_checked= 24 closure_gap_mn=+1 vec=[65109.61, 4159.16, 487.2, -1349.14, -1537.33, 66869.5] same_as_extractor=True
+OK  2026.1Q@FY2026_Q1cons_cur_3blk       cells_checked= 24 closure_gap_mn=+1 vec=[65386.31, 4171.58, 489.87, -1382.07, -1541.72, 67123.97] same_as_extractor=True
+OK  2025.1Q@FY2026_Q1sep_prior_3blk      cells_checked= 24 closure_gap_mn=-1 vec=[64380.58, 2572.98, 463.44, -3967.31, -1470.74, 61978.95] same_as_extractor=True
+OK  2026.2Q@FY2026_Q2sep_cur_3blk        cells_checked= 24 closure_gap_mn=+1 vec=[65109.61, 8059.99, 992.89, -1726.83, -3185.54, 69250.12] same_as_extractor=True
+
+TOTAL cells re-read: 296; mismatches: 0

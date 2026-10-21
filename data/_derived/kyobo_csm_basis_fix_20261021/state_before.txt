@@ -1,0 +1,37 @@
+master rows for KR0073: 84 (total master rows 2358)
+2023.1Q: i1=46378.13|46378.13  i2=3648.36|3648.36  i3=6629.48|6629.48  i4=-5103.75|-5103.75  i5=-1045.67|-1045.67  i6=50506.55|50506.55
+2023.2Q: i1=46378.14|50506.55  i2=6657.42|3009.06  i3=7941.4|1311.92  i4=-6755.88|-1652.13  i5=-2119.58|-1073.91  i6=52101.5|52101.5
+2023.3Q: i1=46967.3|52101.5  i2=10255.1|3597.68  i3=5755.0|-2186.4  i4=4188.86|10944.74  i5=-3217.86|-1098.28  i6=63948.4|63948.4
+2023.4Q: i1=46967.3|63948.4  i2=13728.9|3473.8  i3=14574.1|8819.1  i4=-12650.9|-16839.76  i5=-4370.1|-1152.24  i6=58249.2|58249.2
+2024.1Q: i1=58249.2|58249.2  i2=3933.9|3933.9  i3=859.3|859.3  i4=301.4|301.4  i5=-1204.3|-1204.3  i6=62139.4|62139.4
+2024.2Q: i1=58249.2|62139.4  i2=7046.4|3112.5  i3=3991.7|3132.4  i4=-5613.5|-5914.9  i5=-2343.1|-1138.8  i6=61330.8|61330.8
+2024.3Q: i1=58249.2|61330.8  i2=10532.3|3485.9  i3=3242.4|-749.3  i4=-8306.3|-2692.8  i5=-4498.5|-2155.4  i6=59219.3|59219.3
+2024.4Q: i1=58249.2|59219.3  i2=13715.7|3183.4  i3=1033.7|-2208.7  i4=-2608.2|5698.1  i5=-6009.8|-1511.3  i6=64380.6|64380.6
+2025.1Q: i1=64380.6|64380.6  i2=2573.0|2573.0  i3=4489.2|4489.2  i4=-7993.1|-7993.1  i5=-1470.7|-1470.7  i6=61978.9|61978.9
+2025.2Q: i1=64380.6|61978.9  i2=5320.1|2747.1  i3=12197.0|7707.8  i4=-16568.3|-8575.2  i5=-2918.7|-1448.0  i6=62410.7|62410.7
+2025.3Q: i1=64380.6|62410.7  i2=9303.5|3983.4  i3=-5289.6|-17486.6  i4=-125.5|16442.8  i5=-4383.5|-1464.8  i6=63885.4|63885.4
+2025.4Q: i1=64380.6|63885.4  i2=12781.3|3477.8  i3=1865.5|7155.1  i4=-8037.9|-7912.4  i5=-5879.9|-1496.4  i6=65109.6|65109.6
+2026.1Q: i1=65109.6|65109.6  i2=4171.6|4171.6  i3=489.9|489.9  i4=-1105.5|-1105.5  i5=-1541.7|-1541.7  i6=67123.9|67123.9
+2026.2Q: i1=65109.6|67123.9  i2=8060.0|3888.4  i3=992.9|503.0  i4=-1726.8|-621.3  i5=-3185.5|-1643.8  i6=69250.1|69250.1
+
+=== gold overlay data/_gold/user_csm_cells.json ===
+top-level keys: ['_doc', 'exclude_companies', 'set']
+  _doc: Manual corrections from owner xlsx review (2026-06-10). Applied by build_root_masters.py AFTER loading diag, BEFORE 당분기 
+  exclude_companies: dict len 2; keys sample=['KR0051', 'KR0150']
+  set: list len 303; first={"원보험사코드": "KR0003", "항목번호": 1, "공시분기": "2023.1Q", "값": 16774.38, "was": "ROW_ABSENT", "why": "raw 교차확인 — 2023.1Q 자체 필링(rcept 20230515002687)엔 CSM 측정요소 노트가 없음(전체 162개 표 전수 스코어링 결과 '보험계약마진'/'측정요소'/'이행현금흐름'/'위험조정' 매칭 0건 — 자동추출 실패가 아니라 이 필링 자체에 표가 없는 것으로 판단됨, K-IFRS 1분기보고서 특성). 다만 항목1(기초 CSM)은 FY 내 상수이
+
+=== provenance KR0073 ===
+provenance cells for KR0073: 13
+  {"company_code": "KR0073", "quarter": "2023.1Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2023.2Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2023.3Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+  {"company_code": "KR0073", "quarter": "2023.4Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+  {"company_code": "KR0073", "quarter": "2024.1Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+  {"company_code": "KR0073", "quarter": "2024.2Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+  {"company_code": "KR0073", "quarter": "2024.3Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2024.4Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2025.1Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2025.2Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2025.3Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2025.4Q", "item_block": "csm_waterfall", "source_id": "DART"}
+  {"company_code": "KR0073", "quarter": "2026.1Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}

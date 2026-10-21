@@ -1,0 +1,6 @@
+E       assert not ["MASTER_XLSX_DRIFT|CSM\uc6cc\ud130\ud3f4: \uac12\uc774 \ub2e4\ub978 \uc140 15\uac74 / 2358\ud589 \u2014 ('KR0073', '\uad50\ubcf4\uc0dd\uba85\ubcf4\ud5d8', 'X', '\uc0dd\uba85\ubcf4\ud5d8', 2, '\uc2e0\uacc4\uc57d CSM', '2026.1Q')|\uac12: \uc2dc\ud2b8=4171.6 vs \ub9c8\uc2a4\ud130=4159.16 / ('KR0073', '\uad50\ubcf4\uc0dd\uba85\ubcf4\ud5d8', 'X', '\uc0dd\uba85\ubcf4\ud5d8', 2, '\uc2e0\uacc4\uc57d CSM', '"]
+
+tests\test_rule_coverage_manifest.py:1678: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_rule_coverage_manifest.py::test_master_xlsx_clean_state_has_no_red
+1 failed, 101 passed in 199.85s (0:03:19)

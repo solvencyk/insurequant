@@ -1,0 +1,21 @@
+{
+  "scenario": "R",
+  "with_amort_pins": false,
+  "before_sha256": {
+    "data/_gold/user_csm_cells.json": "d345715b538f4bb1423097e78593de04a8655b29ac0cfb96032ed3be5caf9ec2",
+    "CSM_waterfall.json": "4d6617ffdafe4e1165508d4a8fee1bfdfa090ba165165a89d8b6870e4c38c84b",
+    "data/_gold/csm_amort_identity_ledger.json": "8f90d83c1664982b0f5dd50272d5431a7233d16c1e1ac49f09e1e942dda0c303",
+    "CSM_waterfall_provenance.json": "2a3be3f0961c6e032b96869ae7076f2a3eb79856e63c2a94827cd23aa5b95915",
+    "data/_gold/gold_overlay_ledger.json": "3e01f4693c0300f5077b59fc083e9ca4f585f438d08ffa8c863858868ef8bbff",
+    "tests/test_rule_coverage_manifest.py": "d25741d7d7a9a12d94af8a3dad9121226225805fff577ea2139b1f11fe54da66"
+  },
+  "after_sha256": {
+    "data/_gold/user_csm_cells.json": "4cdb603ee7530963314fba8430efdc74a938081b5b21ade7b2fbd0341b8f4e96",
+    "CSM_waterfall.json": "778335bb428103dbffa1a43b4c352b57dcdf491be635cb5b226648133fa9b553",
+    "data/_gold/csm_amort_identity_ledger.json": "8f90d83c1664982b0f5dd50272d5431a7233d16c1e1ac49f09e1e942dda0c303",
+    "CSM_waterfall_provenance.json": "d42eb7501234f170818c2cbf0d6b39d951a2f62e2c81139f13c181c3b0269de3",
+    "data/_gold/gold_overlay_ledger.json": "3c09f55293a866323f7926bcc730905d9075b0e4a9d313c2d4ea4e7f61246371",
+    "tests/test_rule_coverage_manifest.py": "ebc4f4c80ed77220f39f094ff05191391e819f64e4d4a78a3a3075d0db2cc6ab"
+  },
+  "applied_at": "2026-10-22T00:53:48"
+}

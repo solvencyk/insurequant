@@ -1,0 +1,77 @@
+﻿master,company,quarter,item,field,old,new,kind,raw_file,raw_cite
+CSM_waterfall,KR0073,2023.1Q,1,값,46378.13,55337.66,target,data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,"5,533,766@L46690"
+CSM_waterfall,KR0073,2023.1Q,1,값_당분기,46378.13,55337.66,derived(builder rule),data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,
+CSM_waterfall,KR0073,2023.1Q,2,값,3648.36,3652.77,target,data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,"365,277@L46767"
+CSM_waterfall,KR0073,2023.1Q,2,값_당분기,3648.36,3652.77,derived(builder rule),data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,
+CSM_waterfall,KR0073,2023.1Q,3,값,6629.48,7223.17,target,data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,"722,317@L46877"
+CSM_waterfall,KR0073,2023.1Q,3,값_당분기,6629.48,7223.17,derived(builder rule),data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,
+CSM_waterfall,KR0073,2023.1Q,4,값,-5103.75,-6179.53,target,data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,"residual: est (617,954)@L46745"
+CSM_waterfall,KR0073,2023.1Q,4,값_당분기,-5103.75,-6179.53,derived(builder rule),data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,
+CSM_waterfall,KR0073,2023.1Q,5,값,-1045.67,-1052.55,target,data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,"(105,255)@L46789"
+CSM_waterfall,KR0073,2023.1Q,5,값_당분기,-1045.67,-1052.55,derived(builder rule),data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,
+CSM_waterfall,KR0073,2023.1Q,6,값,50506.55,58981.52,target,data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,"5,898,152@L46921"
+CSM_waterfall,KR0073,2023.1Q,6,값_당분기,50506.55,58981.52,derived(builder rule),data/dart/FY2024_Q1/raw/KR0073_교보생명보험/20240516001553.xml,
+CSM_waterfall,KR0073,2023.2Q,1,값,46378.14,55337.66,target,data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,"5,533,766@L49851"
+CSM_waterfall,KR0073,2023.2Q,1,값_당분기,50506.55,58981.52,derived(builder rule),data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,
+CSM_waterfall,KR0073,2023.2Q,2,값,6657.42,6597.27,target,data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,"659,727@L49895"
+CSM_waterfall,KR0073,2023.2Q,2,값_당분기,3009.06,2944.5,derived(builder rule),data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,
+CSM_waterfall,KR0073,2023.2Q,3,값,7941.4,7495.04,target,data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,"749,504@L50005"
+CSM_waterfall,KR0073,2023.2Q,3,값_당분기,1311.92,271.87,derived(builder rule),data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,
+CSM_waterfall,KR0073,2023.2Q,4,값,-6755.88,-6428.69,target,data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,"residual: est (642,870)@L49873"
+CSM_waterfall,KR0073,2023.2Q,4,값_당분기,-1652.13,-249.16,derived(builder rule),data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,
+CSM_waterfall,KR0073,2023.2Q,5,값,-2119.58,-2120.34,target,data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,"(212,034)@L49917"
+CSM_waterfall,KR0073,2023.2Q,5,값_당분기,-1073.91,-1067.79,derived(builder rule),data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,
+CSM_waterfall,KR0073,2023.2Q,6,값,52101.5,60880.94,target,data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,"6,088,094@L50082"
+CSM_waterfall,KR0073,2023.2Q,6,값_당분기,52101.5,60880.94,derived(builder rule),data/dart/FY2024_Q2/raw/KR0073_교보생명보험/20240814004365.xml,
+CSM_waterfall,KR0073,2023.3Q,1,값,46967.3,54377.63,target,data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,"5,437,763@L48484"
+CSM_waterfall,KR0073,2023.3Q,1,값_당분기,52101.5,60880.94,derived(builder rule),data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,
+CSM_waterfall,KR0073,2023.3Q,2,값_당분기,3597.68,3657.83,derived,data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,
+CSM_waterfall,KR0073,2023.3Q,3,값,5755.0,4298.52,target,data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,"429,852@L48671"
+CSM_waterfall,KR0073,2023.3Q,3,값_당분기,-2186.4,-3196.52,derived(builder rule),data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,
+CSM_waterfall,KR0073,2023.3Q,4,값,4188.86,-2011.29,target,data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,"residual: est (201,129)@L48539"
+CSM_waterfall,KR0073,2023.3Q,4,값_당분기,10944.74,4417.4,derived(builder rule),data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,
+CSM_waterfall,KR0073,2023.3Q,5,값,-3217.86,-4643.21,target,data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,"(464,321)@L48583"
+CSM_waterfall,KR0073,2023.3Q,5,값_당분기,-1098.28,-2522.87,derived(builder rule),data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,
+CSM_waterfall,KR0073,2023.3Q,6,값,63948.4,62276.75,target,data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,"6,227,675@L48715"
+CSM_waterfall,KR0073,2023.3Q,6,값_당분기,63948.4,62276.75,derived(builder rule),data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml,
+CSM_waterfall,KR0073,2023.4Q,1,값,46967.3,54377.63,target,data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,"5,437,763@L64517"
+CSM_waterfall,KR0073,2023.4Q,1,값_당분기,63948.4,62276.75,derived(builder rule),data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,
+CSM_waterfall,KR0073,2023.4Q,2,값,13728.9,13728.88,target,data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,"1,372,888@L64594"
+CSM_waterfall,KR0073,2023.4Q,2,값_당분기,3473.8,3473.78,derived(builder rule),data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,
+CSM_waterfall,KR0073,2023.4Q,3,값,14574.1,14526.0,target,data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,"1,452,600@L64704"
+CSM_waterfall,KR0073,2023.4Q,3,값_당분기,8819.1,10227.48,derived(builder rule),data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,
+CSM_waterfall,KR0073,2023.4Q,4,값,-12650.9,-18106.27,target,data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,"residual: est (1,810,627)@L64572"
+CSM_waterfall,KR0073,2023.4Q,4,값_당분기,-16839.76,-16094.98,derived(builder rule),data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,
+CSM_waterfall,KR0073,2023.4Q,5,값,-4370.1,-6277.01,target,data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,"(627,701)@L64616"
+CSM_waterfall,KR0073,2023.4Q,5,값_당분기,-1152.24,-1633.8,derived(builder rule),data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,
+CSM_waterfall,KR0073,2023.4Q,6,값,58249.2,58249.23,target,data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,"5,824,923@L64748"
+CSM_waterfall,KR0073,2023.4Q,6,값_당분기,58249.2,58249.23,derived(builder rule),data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml,
+CSM_waterfall,KR0073,2024.1Q,1,값,58249.2,58249.23,target,data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,"5,824,923@L45385"
+CSM_waterfall,KR0073,2024.1Q,1,값_당분기,58249.2,58249.23,derived(builder rule),data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,
+CSM_waterfall,KR0073,2024.1Q,2,값,3933.9,3933.86,target,data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,"393,386@L45462"
+CSM_waterfall,KR0073,2024.1Q,2,값_당분기,3933.9,3933.86,derived(builder rule),data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,
+CSM_waterfall,KR0073,2024.1Q,3,값,859.3,840.31,target,data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,"84,031@L45572"
+CSM_waterfall,KR0073,2024.1Q,3,값_당분기,859.3,840.31,derived(builder rule),data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,
+CSM_waterfall,KR0073,2024.1Q,4,값,301.4,-2603.32,target,data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,"residual: est (260,333)@L45440"
+CSM_waterfall,KR0073,2024.1Q,4,값_당분기,301.4,-2603.32,derived(builder rule),data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,
+CSM_waterfall,KR0073,2024.1Q,5,값,-1204.3,-1560.15,target,data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,"(156,015)@L45484"
+CSM_waterfall,KR0073,2024.1Q,5,값_당분기,-1204.3,-1560.15,derived(builder rule),data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,
+CSM_waterfall,KR0073,2024.1Q,6,값,62139.4,58859.93,target,data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,"5,885,993@L45616"
+CSM_waterfall,KR0073,2024.1Q,6,값_당분기,62139.4,58859.93,derived(builder rule),data/dart/FY2025_Q1/raw/KR0073_교보생명보험/xml/20250515002967.xml,
+CSM_waterfall,KR0073,2024.2Q,1,값,58249.2,58249.23,target,data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,"5,824,923@L48399"
+CSM_waterfall,KR0073,2024.2Q,1,값_당분기,62139.4,58859.93,derived(builder rule),data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,
+CSM_waterfall,KR0073,2024.2Q,2,값,7046.4,7046.45,target,data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,"704,645@L48476"
+CSM_waterfall,KR0073,2024.2Q,2,값_당분기,3112.5,3112.59,derived(builder rule),data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,
+CSM_waterfall,KR0073,2024.2Q,3,값,3991.7,3950.99,target,data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,"395,099@L48586"
+CSM_waterfall,KR0073,2024.2Q,3,값_당분기,3132.4,3110.68,derived(builder rule),data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,
+CSM_waterfall,KR0073,2024.2Q,4,값,-5613.5,-8518.48,target,data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,"residual: est (851,848)@L48454"
+CSM_waterfall,KR0073,2024.2Q,4,값_당분기,-5914.9,-5915.16,derived(builder rule),data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,
+CSM_waterfall,KR0073,2024.2Q,5,값,-2343.1,-3039.95,target,data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,"(303,995)@L48498"
+CSM_waterfall,KR0073,2024.2Q,5,값_당분기,-1138.8,-1479.8,derived(builder rule),data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,
+CSM_waterfall,KR0073,2024.2Q,6,값,61330.8,57688.24,target,data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,"5,768,824@L48630"
+CSM_waterfall,KR0073,2024.2Q,6,값_당분기,61330.8,57688.24,derived(builder rule),data/dart/FY2025_Q2/raw/KR0073_교보생명보험/xml/20250814004112.xml,
+CSM_waterfall,KR0073,2024.3Q,1,값_당분기,61330.8,57688.24,derived,,
+CSM_waterfall,KR0073,2024.3Q,2,값_당분기,3485.9,3485.85,derived,,
+CSM_waterfall,KR0073,2024.3Q,3,값_당분기,-749.3,-708.59,derived,,
+CSM_waterfall,KR0073,2024.3Q,4,값_당분기,-2692.8,212.18,derived,,
+CSM_waterfall,KR0073,2024.3Q,5,값_당분기,-2155.4,-1458.55,derived,,

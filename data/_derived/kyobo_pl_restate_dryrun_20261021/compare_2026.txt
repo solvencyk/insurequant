@@ -1,0 +1,17 @@
+--- 2025.1Q  restated (comparative of 2026.1Q)  reconciled=True  {'SAME': 26, 'CHANGED': 6, 'FILL': 0, 'LOST': 0, 'BOTH_NONE': 0}
+    item 6 원수 예실차             CHANGED master=       50,690.00 later=     -111,115.00  delta -161,805.00
+    item 7 기타 생명장기 원수손익       CHANGED master=      -53,417.52 later=      108,387.48  delta +161,805.00
+    item25 기타포괄손익             CHANGED master=     -938,259.50 later=     -943,000.24  delta -4,740.74
+    item26 FVOCI 채무증권 평가손익    CHANGED master=      885,761.56 later=      883,905.56  delta -1,856.00
+    item31 총포괄손익              CHANGED master=     -622,977.02 later=     -627,717.75  delta -4,740.74
+    item32 기타 포괄손익(미분류)       CHANGED master=        3,006.72 later=          121.98  delta -2,884.74
+--- 2026.1Q  production-mode block of 2026.1Q itself  reconciled=True  {'SAME': 30, 'CHANGED': 2, 'FILL': 0, 'LOST': 0, 'BOTH_NONE': 0}
+    item 6 원수 예실차             CHANGED master=       18,254.00 later=      -18,845.00  delta -37,099.00
+    item 7 기타 생명장기 원수손익       CHANGED master=       -6,013.39 later=       31,085.61  delta +37,099.00
+--- 2025.2Q  restated (comparative of 2026.2Q)  reconciled=True  {'SAME': 27, 'CHANGED': 4, 'FILL': 1, 'LOST': 0, 'BOTH_NONE': 0}
+    item25 기타포괄손익             CHANGED master=     -911,964.27 later=     -925,329.23  delta -13,364.96
+    item26 FVOCI 채무증권 평가손익    CHANGED master=      286,703.65 later=      277,560.22  delta -9,143.42
+    item29 FVOCI 지분증권 평가손익    FILL    master=            None later=       28,364.99
+    item31 총포괄손익              CHANGED master=     -326,656.78 later=     -340,021.75  delta -13,364.96
+    item32 기타 포괄손익(미분류)       CHANGED master=       32,614.15 later=           27.62  delta -32,586.53
+--- 2026.2Q  production-mode block of 2026.2Q itself  reconciled=True  {'SAME': 32, 'CHANGED': 0, 'FILL': 0, 'LOST': 0, 'BOTH_NONE': 0}

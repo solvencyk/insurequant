@@ -1,0 +1,3 @@
+fixture == baseline summary: True | fixture exit 2
+fixture == post-apply summary: False
+  moved: csm_amort_identity:386P/2PIN/0F/5S -> csm_amort_identity:387P/1PIN/0F/5S

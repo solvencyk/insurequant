@@ -1,0 +1,17 @@
+{
+  "scenario": "E5",
+  "with_amort_pins": false,
+  "before_sha256": {
+    "data/_gold/user_csm_cells.json": "fae7d4fcc318263c026d4f499a935ba99446f9379c9de9d1ebc3c67123a8a9f1",
+    "CSM_waterfall.json": "bb72391ecb43ed228da80ef5893148c1d2958757e7ff73c5289e84cac68afe12",
+    "data/_gold/csm_amort_identity_ledger.json": "b1582ee84852fadf48b721b73ec0b7465a442b315de428923a50979b7f58ebc9",
+    "CSM_waterfall_provenance.json": "d52e9282554ae80cdcbeabc190df2e41d6fd439b0dc3c32aa2a415d3c3c89cf5"
+  },
+  "after_sha256": {
+    "data/_gold/user_csm_cells.json": "d345715b538f4bb1423097e78593de04a8655b29ac0cfb96032ed3be5caf9ec2",
+    "CSM_waterfall.json": "4d6617ffdafe4e1165508d4a8fee1bfdfa090ba165165a89d8b6870e4c38c84b",
+    "data/_gold/csm_amort_identity_ledger.json": "8f90d83c1664982b0f5dd50272d5431a7233d16c1e1ac49f09e1e942dda0c303",
+    "CSM_waterfall_provenance.json": "2a3be3f0961c6e032b96869ae7076f2a3eb79856e63c2a94827cd23aa5b95915"
+  },
+  "applied_at": "2026-10-21T23:02:16"
+}

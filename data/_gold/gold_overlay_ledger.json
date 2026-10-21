@@ -115,110 +115,6 @@
       "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
       "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
     },
-    "CSM|KR0073|2023.1Q|1": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": 46378.13,
-      "src": 46378.1,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.1Q|2": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": 3648.36,
-      "src": 3648.4,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.1Q|3": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": 6629.48,
-      "src": 6629.5,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.1Q|4": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": -5103.75,
-      "src": -5103.8,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.1Q|5": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": -1045.67,
-      "src": -1045.7,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.1Q|6": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": 50506.55,
-      "src": 50506.6,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.2Q|1": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": 46378.14,
-      "src": 46378.1,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.2Q|2": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": 6657.42,
-      "src": 6657.4,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.2Q|3": {
-      "overlay": "CSM",
-      "verdict": "SAME_EXACT",
-      "gold": 7941.4,
-      "src": 7941.4,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.2Q|4": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": -6755.88,
-      "src": -6755.9,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.2Q|5": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": -2119.58,
-      "src": -2119.6,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.2Q|6": {
-      "overlay": "CSM",
-      "verdict": "SAME_EXACT",
-      "gold": 52101.5,
-      "src": 52101.5,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "CSM|KR0073|2023.3Q|5": {
-      "overlay": "CSM",
-      "verdict": "SAME_AT_1DP",
-      "gold": -3217.86,
-      "src": -3217.9,
-      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
     "CSM|KR0075|2024.4Q|1": {
       "overlay": "CSM",
       "verdict": "SAME_AT_1DP",
@@ -946,6 +842,38 @@
       "src": null,
       "source_file": "data/dart/viz/pl_breakdown_master.json",
       "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
+    },
+    "CSM|KR0073|2023.3Q|2": {
+      "overlay": "CSM",
+      "verdict": "SAME_EXACT",
+      "gold": 10255.1,
+      "src": 10255.1,
+      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
+      "note": "2026-10-21 parser/ifrs17 ticket 20261021T1310Z (KR0073 CSM basis/vintage fix): masked gold cell pinned (gold equals the builder diag within 1dp; gold carries the 2dp printed value). GOLD_OVERLAY_DRIFT RED if the builder source stops reproducing it."
+    },
+    "CSM|KR0073|2023.4Q|2": {
+      "overlay": "CSM",
+      "verdict": "SAME_AT_1DP",
+      "gold": 13728.88,
+      "src": 13728.9,
+      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
+      "note": "2026-10-21 parser/ifrs17 ticket 20261021T1310Z (KR0073 CSM basis/vintage fix): masked gold cell pinned (gold equals the builder diag within 1dp; gold carries the 2dp printed value). GOLD_OVERLAY_DRIFT RED if the builder source stops reproducing it."
+    },
+    "CSM|KR0073|2024.1Q|2": {
+      "overlay": "CSM",
+      "verdict": "SAME_AT_1DP",
+      "gold": 3933.86,
+      "src": 3933.9,
+      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
+      "note": "2026-10-21 parser/ifrs17 ticket 20261021T1310Z (KR0073 CSM basis/vintage fix): masked gold cell pinned (gold equals the builder diag within 1dp; gold carries the 2dp printed value). GOLD_OVERLAY_DRIFT RED if the builder source stops reproducing it."
+    },
+    "CSM|KR0073|2024.2Q|2": {
+      "overlay": "CSM",
+      "verdict": "SAME_AT_1DP",
+      "gold": 7046.45,
+      "src": 7046.4,
+      "source_file": "data/dart/viz/csm_waterfall_master_diag.json",
+      "note": "2026-10-21 parser/ifrs17 ticket 20261021T1310Z (KR0073 CSM basis/vintage fix): masked gold cell pinned (gold equals the builder diag within 1dp; gold carries the 2dp printed value). GOLD_OVERLAY_DRIFT RED if the builder source stops reproducing it."
     }
   }
 }

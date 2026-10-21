@@ -1,5 +1,16 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
+
+- **2026-10-12 11차: 최신 비교열 우선 원칙 드라이런(읽기 전용, 티켓 20261012T1930Z)** — 코어 예외·보류 254건 분류(ⓐ 24 → 30[+6 재분류] · ⓑ 11 · ⓒ 90 · ⓓ 83 → 77 · ⓔ 46), 블록 529개 판정: 최신 채택 39(† 32 · 예외 해소 7; 마스터 셀 약 240) · gold 충돌 59 · 현행 유지 24 · 조건부 2 · 후보 미검증 107(PL Tier-2 전기 컬럼 리더 부재) · 이전 라운드 7 · 변화 없음 206 · 추출 불가 84. ⓐ 30건 중 9건 해소(DB손보 PL_BRIDGE 3 + PIN 3 · 메리츠 2023.3Q · 농협생명 FY2023 WFY · 하나생명 ILP). 저장소 쓰기 0(입력 해시 동일, 남의 xlsx 재동기화 1건 제외) · 커밋은 `git log -1 -- data/_derived/ifrs17_latest_comparative_precedence_dryrun_20261012`.
+  추천 세트 임시 적재 게이트: pl_bridge FAIL 29 → 25 · csm_amort PIN 5 → 2 · 데이터 RED 0(xlsx 드리프트 3시트) · 연속성·ILP·NB·워터폴 불변. 라이나 CSM 2023.1Q·2Q = 새 증거 없음(최신 비교열 = 보류 행, 재작성 기준은 2023.3Q 비교열부터) → 보류 유지. 신규 발견 9건(2023.2Q HTML 폴백 Tier-1 3개월 열 오독 = 흥국화재 5셀 확정·한화생명 4셀 등), 룰 사각 12개.
+  남은 것: owner 가 추천 세트 적재 여부 결정(마스터만 고치면 빌더가 되돌리므로 gold-overlay 등재 또는 전기 컬럼 리더 필요) · 적재 시 xlsx 3시트 동기화·골든 `--update`·DB PIN 3줄 삭제 · 후보 미검증 107블록은 L1 리더 선행. 근거·재현 `data/_derived/ifrs17_latest_comparative_precedence_dryrun_20261012/`(`dryrun_stats.json` · `case_verdicts.csv` · `s100_consolidate.py` 머리 주석) · `docs/changelog_parser_ifrs17.md` 11차.
+
+## 2026-10-21 밀린 Status (최신 3개 밖, 문서 정리로 이동)
+
+- **2026-10-11 재작성 3셀 기준 통일** — 라이나 KR0074·미래에셋 KR0079·KB라이프 KR0099 2023.4Q 항목 10~15 를 FY2024 전기말(재작성) 열로 교체(값 8개 변경·4개 동일, 행 수 불변), 옛 값은 provenance `original_basis_value`. 사이드카 `data/_derived/ilp_restated_comparative.json` 신설(재작성 BS 보험계약부채 5,249.05 / 256,455.34 / 240,319.27억). 커밋 안 함.
+  남은 것: LIC 검산기 R-LIC1 RED 3(항목 15 대 원문 BS 항목 20)은 validation 이 사이드카 앵커로 분기 · 라이나 항목 8+10 대 BS 순액 −3,884.85억(자산 행 LIC −3,884.78억, 값 정상) · designer 패널 재빌드. 근거 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §10 · `scripts/unify_ilp_restated_3cells_2023_4q.py`.
+
 - **2026-10-12 10차: 스위스리 KR1102 2026.1Q ILP 합계 전체 행 합 적재(티켓 20261012T1450Z, owner 「2는 계산값 넣으면 안 되나?」)** — `insurance_liability_portfolio.json` 6,335 → 6,343행(+8 = 항목 1~8: BEL −12,221 · RA 794 · CSM 2,200 · 변동수수료·PAA 0 · 합계 −9,227; 생명 3행 + 손해 5행 전 행 합, 인쇄 합계는 Indirect-Par 행을 뺀 값이라 안 씀) + 사이드카 `lrc_model_cells` +1(`how=derived_sum_of_rows` + 비고) · 같은 공시 2-2 서술(CSM 2,353−153 = 2,200 · RA 794 · 생명·장기 CSM 1,948)이 행 합과 일치 · 시뮬레이션 뒤 적재: 포트폴리오 검증기 RED 1 → 0(YELLOW +1 = R4 항목 9, 이 공시에 2-5 절 없음), LIC 검산기·CSM 연속성·`master_tables`·live_artifacts 무변화, 데이터 계약 RED 1 → 2 · HEAD 대비 추가 8(= 계획)·삭제·변경 0 · 커밋 `4147fc1`.
   남은 것: 데이터 계약 신규 RED 1 = xlsx `보험계약부채` 시트 8행 미동기(publishing `sync_master_xlsx_sheet.py "보험계약부채"`; 기준표시·비고 「계산값」 표기는 `build_master_xlsx._ilp_basis_note` 가 `how` 를 아직 모른다) · designer `csm_combo` 패널 재빌드(KR1102 2026.1Q 신규) · 루트 `TODO.md` owner 결정 ③ 해소(오케스트레이터).
   근거·재현 `data/_derived/ilp_kr1102_derived_load_20261012/evidence.md`(원문 행·합 항등식표·전후 값·게이트 전후) · `scripts/load_ilp_kr1102_derived_20261012.py`(`--check` 읽기 전용 재현, `--revert --apply`) · 백업 `data/_derived/ilp_kr1102_derived_load_backup_20261012/`(git 제외).

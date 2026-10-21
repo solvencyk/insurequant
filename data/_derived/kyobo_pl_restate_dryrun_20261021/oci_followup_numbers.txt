@@ -1,0 +1,36 @@
+2024.4Q  later filing: FY2025 annual (rcept per FY2025_Q4 dir); Tier-1 source data/dart/_fs_api_cache/00112882_2025_11011_OFS.json
+   item25 기타포괄손익           master=   -3,876,051.40 later=   -3,856,082.25 delta=  +19,969.15  <-- differs
+   item26 FVOCI 채무증권 평가손익  master=      228,760.11 later=      239,691.87 delta=  +10,931.76  <-- differs
+   item27 보험계약금융손익(OCI)    master=   -4,152,878.38 later=   -4,152,878.38 delta=       +0.00
+   item28 위험회피 파생상품 평가손익   master=       36,349.57 later=       36,349.57 delta=       +0.00
+   item29 FVOCI 지분증권 평가손익  master=       25,102.61 later=       25,102.61 delta=       +0.00
+   item30 재보험금융손익(OCI)     master=       -8,195.43 later=       -8,195.43 delta=       +0.00
+   item31 총포괄손익            master=   -3,177,315.31 later=   -3,157,346.16 delta=  +19,969.15  <-- differs
+   item32 기타 포괄손익(미분류)     master=       -5,189.89 later=        3,847.51 delta=   +9,037.40  <-- differs
+   item24 당기순이익            master=      698,736.09 later=      698,736.09 delta=       +0.00
+   later-vector check 25 = 26+27+28+29+30+32: -3,856,082.25 vs -3,856,082.25 (residual +0.000)
+   master-vector check 25 = parts: -3,876,051.40 vs -3,876,051.40 (residual +0.000)
+2025.1Q  later filing: FY2026_Q1 filing rcept 20260813001077; Tier-1 source data/dart/_fs_api_cache/00112882_2026_11013_OFS.json
+   item25 기타포괄손익           master=     -938,259.50 later=     -943,000.24 delta=   -4,740.74  <-- differs
+   item26 FVOCI 채무증권 평가손익  master=      885,761.56 later=      883,905.56 delta=   -1,856.00  <-- differs
+   item27 보험계약금융손익(OCI)    master=   -1,867,731.82 later=   -1,867,731.82 delta=       +0.00
+   item28 위험회피 파생상품 평가손익   master=       39,664.58 later=       39,664.58 delta=       +0.00
+   item29 FVOCI 지분증권 평가손익  master=        7,425.34 later=        7,425.34 delta=       +0.00
+   item30 재보험금융손익(OCI)     master=       -6,385.89 later=       -6,385.89 delta=       +0.00
+   item31 총포괄손익            master=     -622,977.02 later=     -627,717.75 delta=   -4,740.74  <-- differs
+   item32 기타 포괄손익(미분류)     master=        3,006.72 later=          121.98 delta=   -2,884.74  <-- differs
+   item24 당기순이익            master=      315,282.49 later=      315,282.49 delta=       +0.00
+   later-vector check 25 = 26+27+28+29+30+32: -943,000.24 vs -943,000.24 (residual +0.000)
+   master-vector check 25 = parts: -938,259.50 vs -938,259.50 (residual -0.000)
+2025.2Q  later filing: FY2026_Q2 filing rcept 20260814004024; Tier-1 source data/dart/_fs_api_cache/00112882_2026_11012_OFS.json
+   item25 기타포괄손익           master=     -911,964.27 later=     -925,329.23 delta=  -13,364.96  <-- differs
+   item26 FVOCI 채무증권 평가손익  master=      286,703.65 later=      277,560.22 delta=   -9,143.42  <-- differs
+   item27 보험계약금융손익(OCI)    master=   -1,125,362.96 later=   -1,125,362.96 delta=       +0.00
+   item28 위험회피 파생상품 평가손익   master=     -100,273.75 later=     -100,273.75 delta=       +0.00
+   item29 FVOCI 지분증권 평가손익  master=            None later=       28,364.99 delta=              <-- differs
+   item30 재보험금융손익(OCI)     master=       -5,645.36 later=       -5,645.36 delta=       +0.00
+   item31 총포괄손익            master=     -326,656.78 later=     -340,021.75 delta=  -13,364.96  <-- differs
+   item32 기타 포괄손익(미분류)     master=       32,614.15 later=           27.62 delta=  -32,586.53  <-- differs
+   item24 당기순이익            master=      585,307.49 later=      585,307.49 delta=       +0.00
+   later-vector check 25 = 26+27+28+29+30+32: -925,329.23 vs -925,329.23 (residual +0.000)
+   master-vector check 25 = parts: -911,964.27 vs -911,964.27 (residual +0.000)

@@ -1,0 +1,16 @@
+== CSM_waterfall.json: rows HEAD 2358 / now 2358; only-in-HEAD 0; only-now 0; order same: True
+   changed cells (rows): 51 in companies ['KR0073']; fields touched: ['값', '값_당분기']; unexpected fields: []
+   per field: {'값': 40, '값_당분기': 51}
+   by quarter: 2023.1Q: 6; 2023.2Q: 6; 2023.3Q: 6; 2023.4Q: 6; 2024.1Q: 6; 2024.2Q: 6; 2024.3Q: 5; 2026.1Q: 5; 2026.2Q: 5
+== PL_breakdown.json: rows HEAD 13801 / now 13801; only-in-HEAD 0; only-now 0; order same: True
+   changed cells (rows): 152 in companies ['KR0073']; fields touched: ['값', '값_당분기']; unexpected fields: []
+   per field: {'값': 122, '값_당분기': 152}
+   by quarter: 2023.1Q: 30; 2023.2Q: 30; 2023.3Q: 30; 2023.4Q: 20; 2024.1Q: 14; 2024.2Q: 14; 2024.3Q: 14
+== data/_gold/user_csm_cells.json: entries HEAD 303 / now 317; added 14, updated 27, removed 0; companies touched ['KR0073']; other top-level keys unchanged: True
+== data/_gold/user_pl_cells.json: entries HEAD 360 / now 482; added 122, updated 0, removed 0; companies touched ['KR0073']; other top-level keys unchanged: True
+== data/_gold/gold_overlay_ledger.json[entries]: entries HEAD 115 / now 106; added 4 ['CSM|KR0073|2023.3Q|2', 'CSM|KR0073|2023.4Q|2', 'CSM|KR0073|2024.1Q|2', 'CSM|KR0073|2024.2Q|2']; removed 13 ['CSM|KR0073|2023.1Q|1', 'CSM|KR0073|2023.1Q|2', 'CSM|KR0073|2023.1Q|3', 'CSM|KR0073|2023.1Q|4', 'CSM|KR0073|2023.1Q|5', 'CSM|KR0073|2023.1Q|6', 'CSM|KR0073|2023.2Q|1', 'CSM|KR0073|2023.2Q|2', 'CSM|KR0073|2023.2Q|3', 'CSM|KR0073|2023.2Q|4', 'CSM|KR0073|2023.2Q|5', 'CSM|KR0073|2023.2Q|6', 'CSM|KR0073|2023.3Q|5']; updated 0 []
+== data/_gold/csm_amort_identity_ledger.json[entries]: entries HEAD 2 / now 1; added 0 []; removed 1 ['교보생명보험|2026.1Q']; updated 0 []
+== CSM_waterfall_provenance.json: cells HEAD 357 / now 357; added 0, removed 0, changed 2; companies ['KR0073']; top-level keys changed/added: ['merge_note_20261021_kr0073_basis_fix', 'merge_note_20261022_kr0073_csm_restated']
+   changed blocks: KR0073 2023.1Q csm_waterfall; KR0073 2023.2Q csm_waterfall
+== PL_breakdown_provenance.json: cells HEAD 1046 / now 1046; added 0, removed 0, changed 12; companies ['KR0073']; top-level keys changed/added: ['merge_note_20261022_kr0073_pl_refresh']
+   changed blocks: KR0073 2023.1Q contract_notes; KR0073 2023.1Q income_statement; KR0073 2023.2Q contract_notes; KR0073 2023.2Q income_statement; KR0073 2023.3Q contract_notes; KR0073 2023.3Q income_statement; KR0073 2023.4Q contract_notes; KR0073 2023.4Q income_statement; KR0073 2024.1Q contract_notes; KR0073 2024.1Q income_statement; KR0073 2024.2Q contract_notes; KR0073 2024.2Q income_statement

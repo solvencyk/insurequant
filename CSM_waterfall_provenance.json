@@ -1165,13 +1165,15 @@
       "company_code": "KR0073",
       "quarter": "2023.1Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0073",
       "quarter": "2023.2Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0073",
@@ -2266,5 +2268,7 @@
       "note": "영업양수 1,069억 포함, 인쇄값. 항목 4(가정 및 경험 조정) 950.77억은 잔차 항목이라 인쇄 CSM 변동표의 「2. 자산양수도」 CSM 1,069.43억(공정가치법 179.80 + 완전소급법 889.63)과 「보험계약마진을 변경하는 추정치 변동」 -118.67억(공정가치법 10.43 + 완전소급법 -129.10)을 함께 담는다(인쇄 기초 0, 2023 = 영업양수도 개시연도). 순수 가정 변동이 아니며 인쇄값 그대로 유지한다(owner 2026-10-12 결정 ⑳). 원천: FY2024 감사보고서 전기 표 인쇄 쪽 -49-(PDF 51쪽)."
     }
   ],
-  "merge_note_20261012_latest_comparative": "ticket 20261012T2230Z: 검증된 CSM 8블록(최신 공시 전기·전년동기 비교열)은 data/_gold/user_csm_cells.json 에 등재(owner_override 표시). 근거 쪽·인쇄값 data/_derived/ifrs17_latest_comparative_apply_20261012/applied_cells.csv"
+  "merge_note_20261012_latest_comparative": "ticket 20261012T2230Z: 검증된 CSM 8블록(최신 공시 전기·전년동기 비교열)은 data/_gold/user_csm_cells.json 에 등재(owner_override 표시). 근거 쪽·인쇄값 data/_derived/ifrs17_latest_comparative_apply_20261012/applied_cells.csv",
+  "merge_note_20261021_kr0073_basis_fix": "ticket 20261021T1310Z (KR0073 CSM basis/vintage fix): 2026.1Q items 2-6 re-set to the separate-basis sum of the three 17-4 sub-tables (data/_gold/user_csm_cells.json, owner_override); 2023.1Q/2Q already carried 12 gold cells (raw re-confirmation 2026-08-25) -> owner_override flag added. Evidence data/_derived/kyobo_csm_basis_fix_20261021/",
+  "merge_note_20261022_kr0073_csm_restated": "ticket 20261021T1310Z E1-E4 (owner decision 2026-10-22: no RESTATEMENT_BASIS pins, the PL block is restated instead): KR0073 CSM 2023.1Q-2024.2Q set to the latest-filing (restated) separate-basis vintage via data/_gold/user_csm_cells.json (owner_override already flagged on these blocks); item 4 = printed 추정치 변동 residual. Companion PL refresh: data/_gold/user_pl_cells.json (+122 KR0073 cells, PL_breakdown_provenance.json merge_note_20261022_kr0073_pl_refresh). Evidence data/_derived/kyobo_csm_basis_fix_20261021/ and data/_derived/kyobo_pl_restate_dryrun_20261021/"
 }
