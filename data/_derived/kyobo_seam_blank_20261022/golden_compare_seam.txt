@@ -1,0 +1,4 @@
+fixture exit_code: 2 (overlay gate exit before/after: see gates_*/master_tables.txt head, both 2)
+fixture == gate SUMMARY before the blanking: True
+fixture == gate SUMMARY after the blanking : False
+  moved: oci_vs_bs_aoci:22Y -> oci_vs_bs_aoci:21Y

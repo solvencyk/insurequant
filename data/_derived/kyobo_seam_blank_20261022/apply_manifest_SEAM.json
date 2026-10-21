@@ -1,0 +1,45 @@
+{
+  "before_sha256": {
+    "data/_gold/user_pl_cells.json": "9de4f229eb76e868e93bc086f7e4e06c21cb343d6e12ee2db99e3eb68ebc2902",
+    "PL_breakdown.json": "2db4510d1d78e7885174f211f1689fe9efffc1636320bcd4e585a67915935911",
+    "scripts/build_root_masters.py": "717425bfc8afd7fca24f8bc8d79a723b1737d63fa8d8e5d377350e1ca1628775",
+    "tests/test_gold_overlay_survives_rebuild.py": "d849d526214fafa244940c6bd5016af8e7eace12a84ba5ae2ba43da522d245bd"
+  },
+  "after_sha256": {
+    "data/_gold/user_pl_cells.json": "db913d87d534a5e599bef1af14ed85cdf20fa5e6205df8509d796114e6e88611",
+    "PL_breakdown.json": "8b889b705538741c7875861e6b507250d018b10f94b79009317be3f25c1163c2",
+    "scripts/build_root_masters.py": "da948c4593d244731794949541a55087788368c005d8465ab7539aa08723dc9c",
+    "tests/test_gold_overlay_survives_rebuild.py": "7c5187e27610b996744dac0761feef774b364478031312036f62954993cf4a9e"
+  },
+  "applied_at": "2026-10-22T02:11:10",
+  "blank_items": [
+    1,
+    2,
+    3,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32
+  ]
+}

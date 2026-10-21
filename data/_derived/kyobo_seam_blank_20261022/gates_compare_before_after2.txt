@@ -1,0 +1,40 @@
+==========================================================================================
+## master_tables
+  head(before): [gate_overlay] master_tables exit=2 lines=388 served_reads={} dropped_writes=['data\\_derived\\pl_oci_vs_bs_aoci_warn.json', 'data\\_derived\\qoq_warn.json'] -> master_tables.txt
+  head(after) : [gate_overlay] master_tables exit=2 lines=388 served_reads={} dropped_writes=['data\\_derived\\pl_oci_vs_bs_aoci_warn.json', 'data\\_derived\\qoq_warn.json'] -> master_tables.txt
+  summary lines identical: SUMMARY  coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3696P(진짜1299·구성상2060·부분337)/23F/2711S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_am
+==========================================================================================
+## data_contract
+  head(before): [gate_overlay] data_contract exit=0 lines=379 served_reads={} dropped_writes=[] -> data_contract.txt
+  head(after) : [gate_overlay] data_contract exit=2 lines=381 served_reads={} dropped_writes=[] -> data_contract.txt
+  summary lines differ:
+    - B: 6. GOLD OVERLAY vs BUILDER SOURCE (몇 칸이 조용히 덮여 있는가)   RED=0 YELLOW=2
+    - B: 7. K-ICS RESTATEMENT (발행사 소급재작성 / 마스터 기준이탈)   RED=0 YELLOW=14
+    - B: 8. MASTER XLSX (마스터 JSON ↔ insurequant_master_tables.xlsx 셀 단위)   RED=0 YELLOW=1
+    - B: SUMMARY  RED=0  YELLOW=169  provisional=False
+    + A: 6. GOLD OVERLAY vs BUILDER SOURCE (몇 칸이 조용히 덮여 있는가)   RED=0 YELLOW=2
+    + A: 7. K-ICS RESTATEMENT (발행사 소급재작성 / 마스터 기준이탈)   RED=0 YELLOW=14
+    + A: 8. MASTER XLSX (마스터 JSON ↔ insurequant_master_tables.xlsx 셀 단위)   RED=1 YELLOW=1
+    + A: SUMMARY  RED=1  YELLOW=169  provisional=False
+  parsed findings: before RED=0 YELLOW=169 | after RED=1 YELLOW=169
+    ADDED  : RED | master_tables.xlsx | MASTER_XLSX_DRIFT | - | 손익분해PL
+==========================================================================================
+## csm_continuity
+  head(before): [gate_overlay] csm_continuity exit=0 lines=4 served_reads={} dropped_writes=['data\\dart\\viz\\csm_continuity_validation.json'] -> csm_continuity.txt
+  head(after) : [gate_overlay] csm_continuity exit=0 lines=4 served_reads={} dropped_writes=['data\\dart\\viz\\csm_continuity_validation.json'] -> csm_continuity.txt
+  summary lines identical: [csm_continuity] companies=44 flagged=2 red=0
+==========================================================================================
+## csm_waterfall
+  head(before): [gate_overlay] csm_waterfall exit=0 lines=8 served_reads={} dropped_writes=['data\\dart\\viz\\csm_waterfall_validation.json'] -> csm_waterfall.txt
+  head(after) : [gate_overlay] csm_waterfall exit=0 lines=8 served_reads={} dropped_writes=['data\\dart\\viz\\csm_waterfall_validation.json'] -> csm_waterfall.txt
+  summary lines identical: pass=41 fail=0 nb_fail=0 in_scope=41 excluded_pre_ifrs17=6 total=47
+==========================================================================================
+## nb_csm
+  head(before): [gate_overlay] nb_csm exit=0 lines=3 served_reads={} dropped_writes=['data\\_derived\\nb_csm_validation.json'] -> nb_csm.txt
+  head(after) : [gate_overlay] nb_csm exit=0 lines=3 served_reads={} dropped_writes=['data\\_derived\\nb_csm_validation.json'] -> nb_csm.txt
+  summary lines identical: tested=5 pass=5 fail=0 fallback_pass=1
+==========================================================================================
+## csm_coverage
+  head(before): [gate_overlay] csm_coverage exit=1 lines=6 served_reads={} dropped_writes=[] -> csm_coverage.txt
+  head(after) : [gate_overlay] csm_coverage exit=1 lines=6 served_reads={} dropped_writes=[] -> csm_coverage.txt
+  summary lines identical: CSM COVERAGE GAPS PRESENT

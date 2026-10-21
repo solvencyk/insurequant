@@ -90,3 +90,102 @@ def test_pl_gold_path_is_data_gold_convention():
     data/dart/viz/ where this used to be (pl_manual_overrides.json)."""
     assert brm.PL_OVR == REPO / "data" / "_gold" / "user_pl_cells.json"
     assert brm.CSM_OVR == REPO / "data" / "_gold" / "user_csm_cells.json"
+
+
+def test_pl_null_dangi_blanks_only_the_listed_single_quarter(tmp_path, monkeypatch):
+    """gold `null_dangi.cells` forces 값_당분기 -> None for exactly the listed (code, quarter, item) cells; the cumulative 값 stays, the neighbours
+    (same item other quarter, other item same quarter) keep their derived single quarter, and the blank survives a second rebuild."""
+    src = tmp_path / "pl_breakdown_master.json"
+    out = tmp_path / "PL_breakdown.json"
+    ovr = tmp_path / "user_pl_cells.json"
+
+    def row(item, q, v):
+        return {"원보험사코드": "KR9999", "원수사명": "테스트생명", "티커": None, "생손보여부": "생명보험", "항목번호": item,
+                "항목명": f"항목{item}", "공시분기": q, "값": v}
+
+    _write(src, [row(1, "2023.1Q", 100), row(1, "2023.2Q", 250), row(1, "2023.3Q", 600),
+                 row(20, "2023.1Q", 10), row(20, "2023.2Q", 30), row(20, "2023.3Q", 70)])
+    _write(ovr, {"set": [], "null_dangi": {"cells": [["KR9999", "2023.3Q", 1]]}})
+    monkeypatch.setattr(brm, "PL_SRC", src)
+    monkeypatch.setattr(brm, "PL_OUT", out)
+    monkeypatch.setattr(brm, "PL_OVR", ovr)
+
+    def check():
+        rows = {(r["항목번호"], r["공시분기"]): r for r in json.loads(out.read_text(encoding="utf-8"))}
+        assert rows[(1, "2023.3Q")]["값"] == 600, "the cumulative 값 must stay"
+        assert rows[(1, "2023.3Q")]["값_당분기"] is None, "listed cell must be blank"
+        assert rows[(1, "2023.2Q")]["값_당분기"] == 150, "same item, other quarter must keep its derived value"
+        assert rows[(20, "2023.3Q")]["값_당분기"] == 40, "other item, same quarter must keep its derived value"
+        assert rows[(1, "2023.1Q")]["값_당분기"] == 100
+
+    brm.build_pl()
+    check()
+    brm.build_pl()          # second rebuild: the committed master is read back by _additive_merge; the blank must hold
+    check()
+
+
+def test_pl_without_null_dangi_key_is_unchanged(tmp_path, monkeypatch):
+    """no `null_dangi` key (every gold file before 2026-10-22) -> old behaviour: every derivable single quarter is filled."""
+    src = tmp_path / "pl_breakdown_master.json"
+    out = tmp_path / "PL_breakdown.json"
+    ovr = tmp_path / "user_pl_cells.json"
+    _write(src, [{"원보험사코드": "KR9999", "원수사명": "테스트생명", "티커": None, "생손보여부": "생명보험", "항목번호": 1,
+                  "항목명": "항목1", "공시분기": q, "값": v} for q, v in (("2023.1Q", 100), ("2023.2Q", 250), ("2023.3Q", 600))])
+    _write(ovr, {"set": []})
+    monkeypatch.setattr(brm, "PL_SRC", src)
+    monkeypatch.setattr(brm, "PL_OUT", out)
+    monkeypatch.setattr(brm, "PL_OVR", ovr)
+    brm.build_pl()
+    got = {r["공시분기"]: r["값_당분기"] for r in json.loads(out.read_text(encoding="utf-8"))}
+    assert got == {"2023.1Q": 100, "2023.2Q": 150, "2023.3Q": 350}
+
+
+def test_pl_set_dangi_uses_the_printed_single_quarter(tmp_path, monkeypatch):
+    """gold `set_dangi.cells` forces 값_당분기 to the printed value for exactly the listed cell (값 stays; neighbours keep their derived single quarter; a cell listed in null_dangi stays
+    blank; the result survives a second rebuild)."""
+    src = tmp_path / "pl_breakdown_master.json"
+    out = tmp_path / "PL_breakdown.json"
+    ovr = tmp_path / "user_pl_cells.json"
+
+    def row(item, q, v):
+        return {"원보험사코드": "KR9999", "원수사명": "테스트생명", "티커": None, "생손보여부": "생명보험", "항목번호": item,
+                "항목명": f"항목{item}", "공시분기": q, "값": v}
+
+    _write(src, [row(1, "2023.1Q", 100), row(1, "2023.2Q", 250), row(1, "2023.3Q", 600),
+                 row(20, "2023.1Q", 10), row(20, "2023.2Q", 30), row(20, "2023.3Q", 70),
+                 row(21, "2023.1Q", 1), row(21, "2023.2Q", 2), row(21, "2023.3Q", 3)])
+    _write(ovr, {"set": [], "set_dangi": {"cells": [["KR9999", "2023.3Q", 1, 123.5, "test"]]}, "null_dangi": {"cells": [["KR9999", "2023.3Q", 21]]}})
+    monkeypatch.setattr(brm, "PL_SRC", src)
+    monkeypatch.setattr(brm, "PL_OUT", out)
+    monkeypatch.setattr(brm, "PL_OVR", ovr)
+
+    def check():
+        rows = {(r["항목번호"], r["공시분기"]): r for r in json.loads(out.read_text(encoding="utf-8"))}
+        assert rows[(1, "2023.3Q")]["값"] == 600, "the cumulative 값 must stay"
+        assert rows[(1, "2023.3Q")]["값_당분기"] == 123.5, "listed cell must carry the printed value"
+        assert rows[(1, "2023.2Q")]["값_당분기"] == 150, "same item, other quarter must keep its derived value"
+        assert rows[(20, "2023.3Q")]["값_당분기"] == 40, "other item, same quarter must keep its derived value"
+        assert rows[(21, "2023.3Q")]["값_당분기"] is None, "a null_dangi cell must stay blank"
+        assert rows[(21, "2023.3Q")]["값"] == 3
+
+    brm.build_pl()
+    check()
+    brm.build_pl()
+    check()
+
+
+def test_pl_null_dangi_and_set_dangi_overlap_is_refused(tmp_path, monkeypatch):
+    """the same cell in null_dangi and set_dangi is a contradiction -> the build refuses instead of picking one silently."""
+    import pytest
+
+    src = tmp_path / "pl_breakdown_master.json"
+    out = tmp_path / "PL_breakdown.json"
+    ovr = tmp_path / "user_pl_cells.json"
+    _write(src, [{"원보험사코드": "KR9999", "원수사명": "테스트생명", "티커": None, "생손보여부": "생명보험", "항목번호": 1,
+                  "항목명": "항목1", "공시분기": q, "값": v} for q, v in (("2023.1Q", 100), ("2023.2Q", 250), ("2023.3Q", 600))])
+    _write(ovr, {"set": [], "set_dangi": {"cells": [["KR9999", "2023.3Q", 1, 123.5, "test"]]}, "null_dangi": {"cells": [["KR9999", "2023.3Q", 1]]}})
+    monkeypatch.setattr(brm, "PL_SRC", src)
+    monkeypatch.setattr(brm, "PL_OUT", out)
+    monkeypatch.setattr(brm, "PL_OVR", ovr)
+    with pytest.raises(ValueError):
+        brm.build_pl()

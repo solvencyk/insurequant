@@ -182,6 +182,27 @@ def _apply_pl_overrides(rows):
     return rows
 
 
+def _pl_null_dangi_keys(path):
+    """(코드, 분기, 항목번호) 집합 — PL gold 파일(PL_OVR)의 `null_dangi.cells`. 이 칸은 값(연누계)을 그대로 두고 값_당분기만 None 으로 만든다.
+    두 누계가 서로 다른 공시 기준(예: 재작성 전 상반기 + 재작성 후 9개월)이라 차분이 틀린 값이 되는 단일분기용이다 — 빈 칸이 틀린 값보다 낫다(owner 2026-10-22).
+    파일이나 키가 없으면 빈 집합(구 동작 그대로). 파싱 오류는 삼키지 않는다(조용히 풀리면 틀린 값이 되살아난다)."""
+    if not path.exists():
+        return set()
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    cells = (doc.get("null_dangi") or {}).get("cells", [])
+    return {(c, q, int(i)) for c, q, i in cells}
+
+
+def _pl_set_dangi_values(path):
+    """{(코드, 분기, 항목번호): 값} — PL gold 파일(PL_OVR)의 `set_dangi.cells` = [코드, 분기, 항목, 값, 출처]. 그 분기의 3개월 열이 공시에 인쇄돼 있고 누계 차분이 그 값과 어긋나는 칸
+    (재작성 전 상반기 누계 + 재작성 후 9개월 누계의 차)에 차분 대신 인쇄값을 값_당분기로 쓴다. 값(연누계)은 그대로. 파일이나 키가 없으면 빈 dict(구 동작 그대로)."""
+    if not path.exists():
+        return {}
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    cells = (doc.get("set_dangi") or {}).get("cells", [])
+    return {(c[0], c[1], int(c[2])): float(c[3]) for c in cells}
+
+
 def build_pl():
     rows = json.loads(PL_SRC.read_text(encoding="utf-8"))
     keep_null = _intentional_null_keys(PL_INTENTIONAL_NULLS)
@@ -189,6 +210,13 @@ def build_pl():
     print(f"  pl 의도적 null (0-fill 억제): {len(keep_null)} cells — 폴백을 끈다")
     rows = _zero_other_expense(rows)
     rows = _apply_pl_overrides(rows)
+    null_dangi = _pl_null_dangi_keys(PL_OVR)
+    print(f"  pl 값_당분기 의도적 null (누계 유지): {len(null_dangi)} cells")
+    set_dangi = _pl_set_dangi_values(PL_OVR)
+    print(f"  pl 값_당분기 공시 3개월 인쇄값 고정 (누계 유지): {len(set_dangi)} cells")
+    both = null_dangi & set(set_dangi)
+    if both:
+        raise ValueError(f"null_dangi 와 set_dangi 에 같은 칸이 있다: {sorted(both)[:3]}")
     # YTD by (code, item) -> {quarter: 값}
     ytd = defaultdict(dict)
     for r in rows:
@@ -198,6 +226,11 @@ def build_pl():
         key = (r["원보험사코드"], r["항목번호"])
         v = r.get("값")
         dangi = _flow_dangi(ytd[key], r["공시분기"]) if v is not None else None
+        k3 = (r["원보험사코드"], r["공시분기"], r["항목번호"])
+        if k3 in null_dangi:
+            dangi = None             # 인쇄된 3개월 값이 없고 차분은 틀린 단일분기 — 값(누계)은 유지
+        elif v is not None and k3 in set_dangi:
+            dangi = set_dangi[k3]    # 두 누계의 공시 기준이 달라 차분이 틀린 단일분기 — 공시 3개월 열 인쇄값 사용, 값(누계)은 유지
         nr = {k: r[k] for k in r if k != "값_당분기"}
         nr["값"] = v                 # 연누계(YTD)
         nr["값_당분기"] = dangi       # 당분기(quarterly) — all PL items are flows
