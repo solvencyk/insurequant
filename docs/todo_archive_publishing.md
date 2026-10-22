@@ -2,6 +2,9 @@
 
 ## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
+- **2026-10-19 IFRS17 8절 현재가치 이중 반올림 수정(티켓 `20261018T0700Z` resolved; main 배포 `f96f06b0` 완료)** — `viz_build_persistency_lossratio_panels.py` 가 반올림 전 비율(소수 6자리)을 싣도록 고침, `panel_loss_ratio.json` 206 → 282KB. 화면 표시값과 마스터 재계산 차이 0.05pp 초과 약 800칸 → 0(독립 검증).
+  남은 것: 배포 때 이 JSON 을 HTML 과 같이(기존 파일 갱신이라 NEW_FILES 불필요) · validation 티켓 `20261019T0200Z`(카카오페이손보 잎 합 85.7 대 합계 행 100.0 등)가 parser 로 route 되면 마스터 보정 후 패널 재빌드.
+
 - **2026-10-13 parser-ifrs17 `b8c37fff`(249 셀) 파생 산출물 재생성(커밋 `99c7ead7` · push 보류)** — RED NB_VS_WATERFALL(메리츠 2023.3Q) 해소: `NB_CSM_multiple.json` 12칸(동양 2023.1Q·2Q, 메리츠 2023.3Q·4Q) · `data/compare/panel_compare.json` 69잎(63 = b8c37fff·NB, 6 = 기존 낡음) · `data/csm_combo/panel_csm_combo.json` 8잎 · xlsx `신계약CSM배수` 12칸 · 공개본 `신계약CSM배수`. `viz_build_ifrs17_panels`·`viz_build_csm_waterfall` 은 `data/dart/extracted` 를 읽어 재실행해도 HEAD 와 바이트 동일(변경 없음).
   남은 것: ① validation: viz 골든 2종·IFRS17 골든(이 커밋 뒤에 실행) ② 증빙 `data/_derived/ifrs17_regen_20261013/`.
 

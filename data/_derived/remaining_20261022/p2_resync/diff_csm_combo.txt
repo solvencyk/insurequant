@@ -1,0 +1,7 @@
+leaf diffs: 4
+  ['companies', 'KR0073'] 3
+  ['meta', 'restated'] 1
+    companies/KR0073/q/2023.4Q/9 26927.46 -> 26927.47
+    companies/KR0073/q/2023.4Q/10 875333.4 -> 872428.79
+    companies/KR0073/q/2023.4Q/17 848405.9 -> 845501.32
+    meta/restated/KR0073/2023.4Q <absent> -> added

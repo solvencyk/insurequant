@@ -1,0 +1,20 @@
+sheets equal: True 19
+요약: identical
+17BS: changed cells=6 codes={'KR0073': 6} quarters={'부채': 2, '자본': 2, '자산': 2}
+K-ICS공시: identical
+유지율: identical
+손해율: identical
+CSM워터폴: identical
+CSM상각: identical
+신계약CSM배수: identical
+손익분해PL: changed cells=31 codes={'KR0073': 31} quarters={'2024.4Q': 8, '2025.1Q': 8, '2025.2Q': 10, '2025.3Q': 5}
+배당: identical
+기본자본소진율: identical
+보완자본소진율: identical
+자본비율전망: identical
+가정민감도: identical
+금리민감도: identical
+자본성증권발행현황: identical
+금리듀레이션갭: identical
+보험계약부채: changed cells=11 codes={'KR0073': 11} quarters={'보험부채_발생사고요소': 11}
+보험금예실차비율: identical

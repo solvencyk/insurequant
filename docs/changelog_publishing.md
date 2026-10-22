@@ -12,6 +12,14 @@
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/publishing/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-22 (오후) — 교보생명(KR0073) 기타포괄손익 13셀 · 17BS 6셀 · 보험계약부채 3셀(parser `e01f1395` · `59e6e459`) 파생 산출물 재생성 (커밋 전)
+
+- 시작 진단: `check_master_xlsx_drift` RED 4건 = `17BS` 6셀 · `손익분해PL` 31셀(`값_당분기` 비움 8셀 포함) · `보험계약부채` ROW_MISSING/ROW_EXTRA 4행(키에 `기준표시`=`부채 기준` -> `부채 기준(소급재작성)` 이 들어 있어 값이 아니라 행 교체로 나온다). `validate_data_contract` RED 4 · YELLOW 169.
+- xlsx: `sync_master_xlsx_sheet.py` 로 세 시트만(`--dry-run` 먼저). `보험계약부채` 는 스크립트가 delete 4 + insert 4 로 처리(행수 6343 불변), 다른 행은 손대지 않았다. 전 시트 셀 대조(`xlsx_cell_diff.txt`): 변한 셀은 `17BS` 6 · `손익분해PL` 31 · `보험계약부채` 11(값 3 + 기준표시 4 + 비고 4)뿐이고 전부 KR0073, 나머지 16시트 동일. 수식·피벗·차트 거부 사유 없음.
+- 빌더(`--check` 가 둘 다 어긋남을 확인한 뒤 실행): `viz_build_csm_combo_panel.py` -> 3값(KR0073 2023.4Q: 보험계약부채 875333.4 -> 872428.79, 합 848405.9 -> 845501.32, 반올림 26927.46 -> .47) + `meta.restated.KR0073.2023.4Q`; `viz_build_compare_panel.py` -> 7값(ROE 4 · 자산 2 · 자본 1), 전부 KR0073. `viz_build_ifrs17_panels`·`viz_build_csm_waterfall` 은 두 마스터를 읽지 않아 재생성하지 않았다. 재빌드 뒤 `--check` 둘 다 통과.
+- 공개본: `export_public_sheets.py` 전체 실행 -> 바뀐 파일은 `손익분해PL`(18행) · `17BS`(6행) · `보험계약부채`(4행) · manifest 뿐(전부 교보생명보험, `public_export_diff.txt`). build_id 는 실행 시점 HEAD(`9dfd28f9`)라 오케스트레이터가 커밋한 뒤 한 번 더 내보내야 HEAD 와 맞는다.
+- 게이트: drift RED 0 · data_contract RED=0 / YELLOW 169(불변) · validate_master_tables --no-build 요약 불변 · live_artifacts RED=0(기준선 25) · rule_coverage 104 통과 · master_tables/viz 골든 2종/deploy_assets/push_gate_wiring/loss_unit 통과. 증빙 `data/_derived/remaining_20261022/p2_resync/`.
+
 ## 2026-10-22 — 교보생명(KR0073) CSM·PL 교정(parser `3e53aef8`) 파생 산출물 재생성 (xlsx 3시트 · NB 배수 · 비교/콤보 패널, 커밋 전)
 
 - 배경: parser-ifrs17 이 `CSM_waterfall.json` 51셀 · `PL_breakdown.json` 152셀(KR0073 한 사만)을 한 기준으로 맞췄다. `check_master_xlsx_drift` RED 2건(`CSM워터폴` 91셀 · `손익분해PL` 274셀).

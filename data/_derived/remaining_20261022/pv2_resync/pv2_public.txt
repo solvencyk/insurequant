@@ -1,0 +1,20 @@
+changed public_exports files: ['17BS.json', 'manifest.json', '보험계약부채.json', '손익분해PL.json']
+untracked/added files in public_exports: M public_exports/17BS.json |  M public_exports/manifest.json |  M "public_exports/\353\263\264\355\227\230\352\263\204\354\225\275\353\266\200\354\261\204.json" |  M "public_exports/\354\206\220\354\235\265\353\266\204\355\225\264PL.json"
+manifest keys diff: {'build_id': ('5f818b59', '9dfd28f9'), 'generated_at_utc': ('2026-10-21T18:03:58Z', '2026-10-22T04:24:06Z')}
+manifest sheets identical to HEAD: True
+git rev-parse --short HEAD = 9dfd28f9 | manifest build_id = 9dfd28f9 | equal: True
+manifest key order same as HEAD: True
+manifest bytes == json.dumps(indent=2, ensure_ascii=False): False
+17BS: working file bytes == exporter-algorithm bytes from HEAD master: True (rows 11016)
+   row count old/new 11016/11016; same row order & keys per row: True
+   changed rows: 6 Counter({'교보생명보험': 6}) Counter({'2023.4Q': 5, '2024.4Q': 1})
+   changed columns: {'값': 6}
+보험계약부채: working file bytes == exporter-algorithm bytes from HEAD master: True (rows 6343)
+   row count old/new 6343/6343; same row order & keys per row: True
+   changed rows: 4 Counter({'교보생명보험': 4}) Counter({'2023.4Q': 4})
+   changed columns: {'값': 3, '기준표시': 4, '비고': 4}
+손익분해PL: working file bytes == exporter-algorithm bytes from HEAD master: True (rows 13801)
+   row count old/new 13801/13801; same row order & keys per row: True
+   changed rows: 18 Counter({'교보생명보험': 18}) Counter({'2025.2Q': 5, '2025.3Q': 5, '2024.4Q': 4, '2025.1Q': 4})
+   changed columns: {'값': 13, '값_당분기': 18}
+unchanged public sheets that differ from exporter output of HEAD masters: []
