@@ -5,6 +5,11 @@
 
 ## Status (최신 3개)
 
+- **2026-10-23 parser `afea4342`(READY-25 최신 비교열 · 9사 KR0001 KR0003 KR0010 KR0068 KR0070 KR0079 KR0083 KR0099 KR0104 · PL 440 + CSM 55셀) 파생 산출물 재생성(커밋 전)** — xlsx 3시트만 cherry-pick: `CSM워터폴` 132셀 · `손익분해PL` 1,045셀 · `신계약CSM배수` 20셀(NB_CSM_multiple.json 20셀을 셀 단위로 갱신, 메리츠 KR0001·한화생명 KR0068 2023.1Q~3Q뿐), 나머지 16시트 값 동일(수식·피벗·차트 거부 없음, 백업 `insurequant_master_tables.xlsx.bak_20261023_ready25`).
+  `panel_compare.json` 사별 91값 + 손보 ROE 중앙값 1(기말 CSM 11 · 보험손익 20 · 투자손익 22 · 당기순이익 22 · ROE 8 · 신계약CSM 4 · 배수 4, 큰 이동 한화생명 신계약CSM 2023.2Q 13,592 -> 11,643억, 메리츠 기말 CSM 2023.2Q 100,684 -> 97,015억), `panel_csm_combo.json` 20값(신계약 CSM 6 + 대조 메타 `csm_mismatch` 4 -> 3). 공개본 `손익분해PL` 1,045 · `CSM워터폴` 132 · manifest build_id `afea4342`.
+  `check_master_xlsx_drift` RED 2 -> 0 · `validate_live_artifacts` RED 6 -> 0(NB_VS_WATERFALL 4 + PUBLIC_EXPORT_DRIFT 2) · `validate_data_contract` RED=0 · YELLOW 169 불변 · `validate_master_tables --no-build` 요약이 parser 골든과 동일 · 골든 3종 · `test_rule_coverage_manifest` 104 · deploy_assets 12 · push_gate_wiring 66.
+  화면 노출: compare.html 0값 · CSM 워터폴/NB/콤보 0값 · IFRS17.html 3번 패널(PL 연도모드 4Q) 39셀만(KB손보 2023.4Q 15 · 미래에셋 2023.4Q 11 · 푸본현대 2024.4Q 10 · ABL 2024.4Q 3). 남은 것: 커밋 뒤 `export_public_sheets.py` 재실행(신계약CSM배수 20셀 + build_id). 증빙 `data/_derived/remaining_20261022/e21_ready25/p5_resync/`.
+
 - **2026-10-23 parser `5419a817`(최신 비교열 21버킷 · 11사 KR0032 KR0068 KR0069 KR0070 KR0071 KR0072 KR0082 KR0083 KR0087 KR0094 KR0104 · 값 84 + 값_당분기 110셀) 파생 산출물 재생성(커밋 전)** — xlsx `손익분해PL` 1시트만 cherry-pick 194셀(전부 11사, 13801행 불변), 나머지 18시트 값 동일(수식·피벗·차트 거부 없음, 백업 `insurequant_master_tables.xlsx.bak_20261023_pl_e20`).
   `panel_compare.json` 9값뿐(보험손익 3 · 투자손익 4 · 당기순이익 1 · ROE 1 = NH농협손보 2023.1Q · DB생명 2023.1Q/2Q · 푸본현대 2024.3Q), 중앙값·메타 불변. `panel_csm_combo.json` 은 `--check` 만(불변). 공개본 `손익분해PL` 194셀(11사) + manifest build_id `5419a817`.
   `check_master_xlsx_drift` RED 1 -> 0 · `validate_data_contract` RED=0 · YELLOW 169 불변 · `validate_master_tables --no-build` 요약은 직전과 같고 `oci_vs_bs_aoci` 23Y -> 21Y 만 달라짐(parser 쪽 실측과 동일) · 골든 3종 · `test_rule_coverage_manifest` 104 · live_artifacts RED=0.
@@ -14,10 +19,6 @@
   `panel_compare.json` 55값(보험손익 1 · 투자손익 19 · 당기순이익 18 · ROE 17 중 사별 51 + 그룹 중앙값 4), 사별 값은 전부 7사. `panel_csm_combo.json` 은 PL_breakdown 을 읽지 않아 `--check` 만(불변). 공개본 `손익분해PL` 386셀(7사) + manifest build_id `acdb2fe9`.
   `check_master_xlsx_drift` RED 1 -> 0 · `validate_data_contract` RED 1 -> 0 · YELLOW 169 불변 · `validate_master_tables --no-build` 요약 불변 · 골든 3종 · `test_rule_coverage_manifest` 104 · live_artifacts RED=0.
   남은 것: 재커밋 뒤 `export_public_sheets.py` 로 build_id 재생성(HEAD 가 바뀌므로). 증빙 `data/_derived/remaining_20261022/p3_resync/`.
-
-- **2026-10-22 교보생명(KR0073) 마스터 재교정 2건(parser `e01f1395` 기타포괄손익 13셀 · `59e6e459` 17BS 6셀 · 보험계약부채 3셀) 파생 산출물 재생성 · 배포 완료(push `ff12b9ef`, main `66af419c`, 라이브 8파일 바이트 일치 · build_id `9dfd28f9` 확인, 콘솔 오류 0)** — xlsx 시트 3개만 cherry-pick(`손익분해PL` 31셀 · `17BS` 6셀 · `보험계약부채` 4행 교체=값 3셀+기준표시/비고), 전부 KR0073, 나머지 16시트 값 동일.
-  `panel_csm_combo.json` 3값 + `meta.restated` 1(2023.4Q 소급재작성 표지) · `panel_compare.json` 7값(ROE 4 · 자본 1 · 자산 2), 전부 KR0073. 공개본 3시트(교보 28행) + manifest build_id `9dfd28f9`. `check_master_xlsx_drift` RED 4 -> 0, `validate_data_contract` RED=0 · YELLOW 169 불변,
-  `validate_master_tables --no-build` 불변 · 골든 3종 · `test_rule_coverage_manifest` 104 통과. 남은 것: 재커밋 뒤 `export_public_sheets.py` 로 build_id 재생성(HEAD 가 바뀌므로). 증빙 `data/_derived/remaining_20261022/p2_resync/`.
 
 ## 열린 일
 

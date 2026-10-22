@@ -1,0 +1,3 @@
+companies 48, quarters 2023.1Q~2026.2Q, 78,280 bytes; 포트폴리오 CSM(3+6) vs CSM_waterfall 기말(6): 대조 287건 중 불일치 3건(허용 0.5%)
+발생사고요소 셀: 실공시 401 · 사이드카(2-4 에 포함) 30 · 추정 85 · 없음 51 | 추정 불신 회사 12 | 미분리 음수 21
+FAIL data/csm_combo/panel_csm_combo.json: on-disk differs from fresh build
