@@ -1,0 +1,171 @@
+51
+== 한화손해보험 2023.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip=16,23 latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[37277.8, 4695.0, 1014.1, -1680.4, -2864.6, 38442.0] latest=[37277.8, 4695.0, 1014.1, -1680.4, -2864.6, 38442.0] | master now=[37277.8, 4695.0, 1014.1, -1680.4, -2864.6, 38442.0]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 한화손해보험 2024.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip= latest=16,23 gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[39268.6, 1985.8, 369.6, -914.8, -1027.0, 39682.2] latest=[39268.6, 1985.8, 369.6, -914.8, -1027.0, 39682.2] | master now=[39268.6, 1985.8, 369.6, -914.8, -1027.0, 39682.2]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 한화손해보험 2024.2Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip= latest=16,23 gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[39268.6, 3668.1, 744.5, -2016.0, -2052.7, 39612.5] latest=[39268.6, 3668.1, 744.5, -2016.0, -2052.7, 39612.5] | master now=[39268.6, 3668.1, 744.5, -2016.0, -2052.7, 39612.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 한화손해보험 2024.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip= latest=16,23 gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[39268.6, 5474.6, 1122.2, -3414.3, -3066.7, 39384.4] latest=[39268.6, 5474.6, 1122.2, -3414.3, -3066.7, 39384.4] | master now=[39268.6, 5474.6, 1122.2, -3414.3, -3066.7, 39384.4]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 한화손해보험 2024.4Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip= latest=16,23 gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[39268.6, 7409.9, 1499.7, -6048.6, -4097.4, 38032.2] latest=[39268.6, 7409.9, 1499.7, -6048.6, -4097.4, 38032.2] | master now=[39268.6, 7409.9, 1499.7, -6048.6, -4097.4, 38032.2]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 롯데손해보험 2023.4Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,26,27,31 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[16774.4, 5478.9, 780.5, 2801.0, -1868.5, 23966.2] latest=[16669.0, 5478.9, 777.0, 2795.0, -1859.0, 23860.8] | master now=[16774.4, 5478.9, 780.5, 2801.0, -1868.5, 23966.2]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== 롯데손해보험 2024.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,26,27,31 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[23966.2, 1266.7, 242.5, -598.9, -570.8, 24305.8] latest=[23860.8, 1266.7, 241.6, -608.4, -568.3, 24192.5] | master now=[23966.2, 1266.7, 242.5, -598.9, -570.8, 24305.8]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== 롯데손해보험 2024.2Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,26,27,31 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[23966.2, 2532.0, 489.1, -1241.9, -1147.3, 24598.0] latest=[23860.8, 2532.0, 487.3, -1261.4, -1142.0, 24476.6] | master now=[23966.2, 2532.0, 489.1, -1241.9, -1147.3, 24598.0]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== 롯데손해보험 2024.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,26,27,31 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[23966.2, 3645.5, 738.3, -2101.4, -1718.7, 24529.9] latest=[23860.8, 3645.5, 735.5, -2130.4, -1710.5, 24400.9] | master now=[23966.2, 3645.5, 738.3, -2101.4, -1718.7, 24529.9]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== 흥국화재 2023.3Q | PL10-12: gold 충돌 real=17,18,20,22,23,24,25,26,28,31,32 signflip= latest= gold=16 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[22144.7, 2096.9, 602.1, 6766.6, -1555.8, 30054.6] latest=[22144.7, 2096.9, 602.1, 6766.6, -1555.8, 30054.6] | master now=[22144.7, 2096.9, 602.1, 6766.6, -1555.8, 30054.6]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 흥국화재 2023.4Q | PL10-12: gold 충돌 real=17,18,19,20,22,23,24,25,26,28,31,32 signflip= latest= gold=16 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[22144.7, 2812.0, 874.1, 3331.2, -2108.1, 27053.9] latest=[22144.7, 2812.0, 874.1, 3331.2, -2108.1, 27053.9] | master now=[22144.7, 2812.0, 874.1, 3331.2, -2108.1, 27053.9]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 흥국화재 2024.1Q | PL10-12: gold 충돌 real=17,18,20,22,23,24,25,26,28,31 signflip= latest= gold=16 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[27053.9, 694.8, 244.7, -233.9, -576.1, 27183.3] latest=[27053.9, 694.8, 244.7, -233.9, -576.1, 27183.3] | master now=[27053.9, 694.8, 244.7, -233.9, -576.1, 27183.3]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 흥국화재 2024.2Q | PL10-12: gold 충돌 real=17,18,20,22,23,24,25,26,28,31,32 signflip= latest= gold=16 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[27053.9, 1157.3, 491.3, -434.9, -1145.5, 27122.1] latest=[27053.9, 1157.3, 491.3, -434.9, -1145.5, 27122.1] | master now=[27053.9, 1157.3, 491.3, -434.9, -1145.5, 27122.1]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 삼성화재해상보험 2023.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,24,31 signflip= latest= gold= 
+      CSM10-12: 조건부(PL 동반 필요) status=DIFF fid=SAME tier=trusted diff=1,3,5,6 current=[122013.1, 26067.9, 2875.9, -6814.9, -11548.6, 132593.4] latest=[121441.7, 26067.9, 2865.0, -6814.9, -11509.0, 132050.8] | master now=[121441.7, 26067.9, 2865.0, -6814.9, -11509.0, 132050.8]
+== 현대해상 2023.4Q | PL10-12: gold 충돌 real=1,17,19,20,22,23,24,25,27,31 signflip= latest= gold=11,12,13,14,3,6,7,8,16 
+      CSM10-12: 비교 컬럼 추출 불가 status=NO_PRIOR fid=SAME tier= diff= current=[88281.1, 16792.4, 2636.3, -7480.6, -8805.5, 91423.7] latest= | master now=[88281.1, 16792.4, 2636.3, -7480.6, -8805.5, 91423.7]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+      HELD CSM_waterfall [('hold', 'The comparative (prior-period) column could not be extracted from the later filing for this block (no prior block / unsupported layout / no ')]
+== KB손해보험 2023.4Q | PL10-12: gold 충돌 real=1,17,19,22,23,24,25,27,31,32 signflip= latest= gold=16 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[79451.8, 18369.7, 2909.7, -7431.0, -8120.9, 85179.2] latest=[79451.8, 18369.7, 2909.7, -7431.0, -8120.9, 85179.2] | master now=[79451.8, 18369.7, 2909.7, -7431.0, -8120.9, 85179.2]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== KB손해보험 2024.1Q | PL10-12: gold 충돌 real=1,17,19,20,22,23,24,25,27,31 signflip= latest= gold=16 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[85179.2, 4484.9, 771.8, 745.2, -2151.6, 89029.5] latest=[85179.2, 4484.9, 771.8, 745.2, -2151.6, 89029.5] | master now=[85179.2, 4484.9, 771.8, 745.2, -2151.6, 89029.5]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== KB손해보험 2024.2Q | PL10-12: gold 충돌 real=1,17,19,20,22,23,24,25,27,31 signflip= latest= gold=16 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[85179.2, 9015.2, 1587.7, -653.1, -4270.7, 90858.3] latest=[85179.2, 9015.2, 1587.7, -653.1, -4270.7, 90858.3] | master now=[85179.2, 9015.2, 1587.7, -653.1, -4270.7, 90858.3]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== KB손해보험 2024.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,31 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[85179.2, 13807.4, 2430.7, -1918.1, -6448.7, 93050.5] latest=[85179.2, 13807.4, 2430.7, -1918.1, -6448.7, 93050.5] | master now=[85179.2, 13807.4, 2430.7, -1918.1, -6448.7, 93050.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== NH농협손해보험 2023.4Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[21060.1, 3551.8, 858.2, -2525.2, -2393.3, 20551.5] latest=[21060.1, 3551.8, 858.2, -2525.2, -2393.3, 20551.5] | master now=[21060.1, 3551.8, 858.2, -2525.2, -2393.3, 20551.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== NH농협손해보험 2024.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[20551.5, 1059.0, 215.3, 800.4, -653.0, 21973.2] latest=[20551.5, 1059.0, 215.3, 800.4, -653.0, 21973.2] | master now=[20551.5, 1059.0, 215.3, 800.4, -653.0, 21973.2]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== NH농협손해보험 2024.2Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[20551.5, 1793.1, 442.7, -75.7, -1286.7, 21425.0] latest=[20551.5, 1793.1, 442.7, -75.7, -1286.7, 21425.0] | master now=[20551.5, 1793.1, 442.7, -75.7, -1286.7, 21425.0]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== NH농협손해보험 2024.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[20551.5, 2291.8, 663.0, -383.0, -1920.0, 21203.3] latest=[20551.5, 2291.8, 663.0, -383.0, -1920.0, 21203.3] | master now=[20551.5, 2291.8, 663.0, -383.0, -1920.0, 21203.3]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 삼성생명보험 2023.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip= latest=16,23 gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[107486.9, 27723.7, 2969.2, -11219.4, -9870.9, 117089.5] latest=[107486.9, 27723.7, 2969.2, -11219.4, -9870.9, 117089.5] | master now=[107486.9, 27723.7, 2969.2, -11219.4, -9870.9, 117089.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 에이비엘생명보험 2023.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,18,19,20,21,22,23,24,25,27,30,31 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,2,3,4,5,6 current=[7017.8, 2778.5, 211.1, 475.6, -751.8, 9731.2] latest=[7585.3, 2853.6, 208.3, -1512.0, -696.4, 8438.8] | master now=[7017.8, 2778.5, 211.1, 475.6, -751.8, 9731.2]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== 에이비엘생명보험 2023.4Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: gold 충돌 status=DIFF fid=SAME tier=gold diff=1,4 current=[7017.8, 3475.9, 280.2, -1148.8, -929.7, 8695.4] latest=[7585.3, 3475.9, 280.2, -1716.3, -929.7, 8695.4] | master now=[7017.8, 3475.9, 280.2, -1148.8, -929.7, 8695.4]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 에이비엘생명보험 2024.1Q | PL10-12: gold 충돌 real=17,19,20,22,23,24,25,27 signflip= latest= gold=4,7 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[8695.4, 866.6, 80.2, -475.3, -224.5, 8942.4] latest=[8695.4, 866.6, 80.2, -475.3, -224.5, 8942.4] | master now=[8695.4, 866.6, 80.2, -475.3, -224.5, 8942.4]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 에이비엘생명보험 2024.2Q | PL10-12: gold 충돌 real=17,19,20,22,23,24,25,27 signflip= latest= gold=4,7 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[8695.4, 1389.6, 164.8, -615.8, -449.9, 9184.1] latest=[8695.4, 1389.6, 164.8, -615.8, -449.9, 9184.1] | master now=[8695.4, 1389.6, 164.8, -615.8, -449.9, 9184.1]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 에이비엘생명보험 2024.3Q | PL10-12: gold 충돌 real=17,19,20,22,23,24,25,27 signflip= latest= gold=4,7 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[8695.4, 1937.6, 248.2, -515.2, -667.6, 9698.5] latest=[8695.4, 1937.6, 248.2, -515.2, -667.6, 9698.5] | master now=[8695.4, 1937.6, 248.2, -515.2, -667.6, 9698.5]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 케이디비생명보험 2023.3Q | PL10-12: gold 충돌 real=1,17,18,19,20,22,24,25,27,31 signflip= latest= gold=4,7 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[5239.4, 2210.7, 146.1, -1912.9, -352.5, 5330.8] latest=[5695.9, 2209.8, 134.0, -1830.2, -372.7, 5836.8] | master now=[5239.4, 2210.7, 146.1, -1912.9, -352.5, 5330.8]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== 미래에셋생명보험 2023.4Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,26,27,31,32 signflip= latest= gold= 
+      CSM10-12: 비교 컬럼 추출 불가 status=NO_PRIOR fid=SAME tier= diff= current=[19795.0, 2920.5, 454.5, -977.9, -1977.7, 20214.5] latest= | master now=[19795.0, 2920.5, 454.5, -977.9, -1977.7, 20214.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The comparative (prior-period) column could not be extracted from the later filing for this block (no prior block / unsupported layout / no ')]
+== 미래에셋생명보험 2024.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,26,27,31,32 signflip= latest= gold= 
+      CSM10-12: 비교 컬럼 추출 불가 status=NO_PRIOR fid=SAME tier= diff= current=[20214.5, 962.0, 118.2, 129.0, -507.3, 20916.3] latest= | master now=[20214.5, 962.0, 118.2, 129.0, -507.3, 20916.3]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The comparative (prior-period) column could not be extracted from the later filing for this block (no prior block / unsupported layout / no ')]
+== 미래에셋생명보험 2024.2Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,31 signflip= latest= gold= 
+      CSM10-12: 조건부(PL 동반 필요) status=DIFF fid=SAME tier=trusted diff=4,5 current=[20214.5, 1723.9, 243.2, -280.7, -1006.4, 20894.5] latest=[20214.5, 1723.9, 243.3, -271.6, -1007.0, 20903.2] | master now=[20214.5, 1723.9, 243.2, -280.7, -1006.4, 20894.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 미래에셋생명보험 2024.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,31 signflip= latest= gold= 
+      CSM10-12: 조건부(PL 동반 필요) status=DIFF fid=SAME tier=trusted diff=3,4,5 current=[20214.5, 2742.6, 374.5, -1199.7, -1486.3, 20645.6] latest=[20214.5, 2742.6, 374.7, -1190.5, -1487.1, 20654.1] | master now=[20214.5, 2742.6, 374.5, -1199.7, -1486.3, 20645.6]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== DB생명보험 2023.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,16,17,18 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[15523.6, 4086.0, 407.5, -1381.6, -1021.9, 17613.7] latest=[15523.6, 4086.0, 407.5, -1381.5, -1021.9, 17613.7] | master now=[15523.6, 4086.0, 407.5, -1381.6, -1021.9, 17613.7]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 푸본현대생명보험 2024.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[1658.3, 224.6, 18.1, -69.0, -50.1, 1782.0] latest=[1658.3, 224.6, 18.1, -69.0, -50.1, 1782.0] | master now=[1658.3, 224.6, 18.1, -69.0, -50.1, 1782.0]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 푸본현대생명보험 2024.2Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[1658.3, 314.6, 38.4, -137.5, -101.1, 1772.7] latest=[1658.2, 314.6, 38.4, -137.5, -101.1, 1772.7] | master now=[1658.3, 314.6, 38.4, -137.5, -101.1, 1772.7]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 푸본현대생명보험 2024.3Q | PL10-12: gold 충돌 real=17,19,20,22,23,24,25 signflip= latest=28,30 gold=27,28,30 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[1658.2, 412.7, 60.5, -189.4, -151.1, 1791.0] latest=[1658.2, 412.7, 60.5, -189.4, -151.1, 1791.0] | master now=[1658.2, 412.7, 60.5, -189.4, -151.1, 1791.0]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 푸본현대생명보험 2024.4Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,26,27,31 signflip= latest= gold= 
+      CSM10-12: 비교 컬럼 추출 불가 status=NO_PRIOR fid=SAME tier= diff= current=[1658.3, 528.8, 82.9, -675.8, -170.6, 1423.5] latest= | master now=[1658.3, 528.8, 82.9, -675.8, -170.6, 1423.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The comparative (prior-period) column could not be extracted from the later filing for this block (no prior block / unsupported layout / no ')]
+== 동양생명 2023.4Q | PL10-12: gold 충돌 real=17,19,20,22,23,24,25,27,31 signflip= latest= gold=10,11,12,9 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[23742.3, 7601.6, 709.1, -4057.8, -2577.2, 25418.0] latest=[23742.3, 7601.6, 709.1, -4057.8, -2577.2, 25418.0] | master now=[23742.3, 7601.6, 709.1, -4057.8, -2577.2, 25418.0]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 동양생명 2024.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,19,20,22,23,24,25,27 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[25418.0, 2043.5, 264.9, -172.9, -642.0, 26911.5] latest=[25418.0, 2043.5, 264.9, -172.9, -642.0, 26911.5] | master now=[25418.0, 2043.5, 264.9, -172.9, -642.0, 26911.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 동양생명 2024.2Q | PL10-12: gold 충돌 real=17,19,20,22,23,24,25,27 signflip= latest= gold=4,7 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[25418.0, 3435.2, 542.9, -561.3, -1294.4, 27540.3] latest=[25418.0, 3435.2, 542.9, -561.3, -1294.4, 27540.3] | master now=[25418.0, 3435.2, 542.9, -561.3, -1294.4, 27540.3]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== 동양생명 2024.3Q | PL10-12: gold 충돌 real=17,19,20,22,23,24,25,27 signflip= latest= gold=4,7 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[25418.0, 5671.0, 833.4, -1370.0, -1962.0, 28590.5] latest=[25418.0, 5671.0, 833.4, -1370.0, -1962.0, 28590.5] | master now=[25418.0, 5671.0, 833.4, -1370.0, -1962.0, 28590.5]
+      HELD PL_breakdown [('hold', 'An owner gold-overlay cell of this block (data/_gold/user_pl_cells.json / user_csm_cells.json) differs from the latest comparative column. T')]
+== KB라이프생명 2023.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,31,32 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[31201.3, 4539.3, 981.1, -2451.6, -2130.5, 32139.5] latest=[31327.6, 4539.3, 963.1, -2303.2, -2142.3, 32384.6] | master now=[31201.3, 4539.3, 981.1, -2451.6, -2130.5, 32139.5]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== KB라이프생명 2023.4Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,30,31 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=DIFF tier=trusted diff=1,3,4,5,6 current=[31327.6, 6346.7, 1197.6, -5856.4, -2839.1, 30176.4] latest=[33595.7, 6346.7, 1071.8, -6213.8, -3002.1, 31798.2] | master now=[31327.6, 6346.7, 1197.6, -5856.4, -2839.1, 30176.4]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== KB라이프생명 2024.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,31,32 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[30176.4, 1313.6, 349.8, -239.2, -714.3, 30886.4] latest=[31798.3, 1313.6, 319.2, -303.1, -742.4, 32385.5] | master now=[30176.4, 1313.6, 349.8, -239.2, -714.3, 30886.4]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== KB라이프생명 2024.2Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,31,32 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[30176.4, 2273.9, 681.3, -249.8, -1435.8, 31446.0] latest=[31798.3, 2273.9, 620.9, -797.2, -1482.3, 32413.5] | master now=[30176.4, 2273.9, 681.3, -249.8, -1435.8, 31446.0]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== KB라이프생명 2024.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=1,17,19,20,22,23,24,25,27,31,32 signflip= latest= gold= 
+      CSM10-12: 현행 유지 status=DIFF fid=SAME tier=trusted diff=1,3,4,5,6 current=[30176.4, 3729.8, 898.7, -990.8, -2161.5, 31652.7] latest=[31798.3, 3729.8, 809.1, -2669.6, -2204.9, 31462.7] | master now=[30176.4, 3729.8, 898.7, -990.8, -2161.5, 31652.7]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+      HELD CSM_waterfall [('hold', 'The dry run kept the current master: the latest comparative column does not close the strict gates better than the live values (or would wor')]
+== 농협생명보험 2023.3Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=17,18,20,22,23,24,28,31 signflip= latest= gold= 
+      CSM10-12: 변화 없음 status=SAME fid=SAME tier= diff= current=[42505.2, 4164.0, 1205.2, 1175.3, -2987.3, 46062.4] latest=[42505.2, 4164.0, 1205.2, 1175.3, -2987.3, 46062.4] | master now=[42505.2, 4164.0, 1205.2, 1175.3, -2987.3, 46062.4]
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 서울보증보험 2025.1Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip=16,23 latest= gold= 
+      CSM10-12: (no row)
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]
+== 서울보증보험 2025.2Q | PL10-12: 후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음) real=18,19 signflip= latest=16,23 gold= 
+      CSM10-12: (no row)
+      HELD PL_breakdown [('hold', 'A candidate for this block was not verified against the original filing table (reader gap listed in the dry-run blind-spot column). The tick')]

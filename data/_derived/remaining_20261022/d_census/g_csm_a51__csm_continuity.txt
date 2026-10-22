@@ -1,0 +1,8 @@
+[csm_continuity] companies=44 flagged=5 red=1
+  YELLOW KR0001 메리츠화재해상보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 96376~100384 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  YELLOW KR0070 에이비엘생명보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 7018~7585 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  YELLOW KR0072 케이디비생명보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 5239~5696 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  YELLOW KR0073 교보생명보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 54378~55338 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  RED KR0099 KB라이프생명: WITHIN_FY_OPENING_DRIFT — FY2023 기초 CSM 변동 31201~33596 (>1%) — 분기 간 basis/period mis-pick 의심
+  YELLOW KR0099 KB라이프생명: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2024 기초 CSM 변동 30176~31798 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+[written] C:\Users\sangwook.cho\Desktop\insurequant\data\dart\viz\csm_continuity_validation.json

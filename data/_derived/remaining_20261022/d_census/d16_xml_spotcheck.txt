@@ -1,0 +1,20 @@
+흥국화재 2023.3Q later=FY2024_Q3 files=1 i17:- i22:mn i24:mn i25:mn i31:-
+흥국화재 2023.4Q later=FY2024_Q4 files=2 i17:- i22:mn i24:mn i25:mn i31:-
+흥국화재 2024.1Q later=FY2025_Q1 files=1 i17:- i22:- i24:- i25:mn i31:mn
+흥국화재 2024.2Q later=FY2025_Q2 files=1 i17:- i22:mn i24:- i25:mn i31:mn
+NH농협손해보험 2023.4Q later=FY2024_Q4 files=2 i17:won/thou i22:won/mn i24:won/thou/mn i25:won i31:won/thou
+NH농협손해보험 2024.1Q later=FY2025_Q1 files=1 i17:won/thou i22:won/thou i24:won i25:won i31:won
+NH농협손해보험 2024.2Q later=FY2025_Q2 files=1 i17:won/thou i22:won/mn i24:won/thou/mn i25:won i31:won/mn
+NH농협손해보험 2024.3Q later=FY2025_Q3 files=1 i17:won i22:won/thou/mn i24:won/thou/mn i25:won/thou/mn i31:won/thou/mn
+에이비엘생명보험 2024.1Q later=FY2025_Q1 files=1 i17:won/thou i22:won i24:won/thou i25:won/mn i31:won/thou/mn
+에이비엘생명보험 2024.2Q later=FY2025_Q2 files=1 i17:won/thou i22:won i24:won i25:won/thou/mn i31:won/thou/mn
+에이비엘생명보험 2024.3Q later=FY2025_Q3 files=1 i17:won i22:won i24:won i25:won/thou/mn i31:won/mn
+DB생명보험 2023.3Q later=FY2024_Q3 files=1 i17:won i22:won/thou/mn i24:won i25:won/thou i31:won/thou/mn
+푸본현대생명보험 2024.1Q later=FY2025_Q1 files=1 i17:won i22:won i24:won i25:won i31:won/thou
+푸본현대생명보험 2024.2Q later=FY2025_Q2 files=1 i17:won/thou i22:won/thou i24:won i25:won/thou/mn i31:won/thou/mn
+동양생명 2023.4Q later=FY2024_Q4 files=2 i17:won/thou i22:won/mn i24:won/mn i25:won/mn i31:won/thou
+동양생명 2024.1Q later=FY2025_Q1 files=1 i17:won i22:won i24:won/thou i25:won/thou/mn i31:won/mn
+동양생명 2024.2Q later=FY2025_Q2 files=1 i17:won i22:won i24:won i25:won/mn i31:won
+동양생명 2024.3Q later=FY2025_Q3 files=1 i17:- i22:mn i24:mn i25:mn i31:mn
+농협생명보험 2023.3Q later=FY2024_Q3 files=1 i17:won i22:won/thou/mn i24:won/thou i25:won/mn i31:won
+printed prior value found in later-filing XML: 85/95 cells (units: won/thou/mn; numbers < 7 chars not accepted)

@@ -1,0 +1,60 @@
+== CSM_waterfall.json rows=2358 keys=['값', '값_당분기', '공시분기', '생손보여부', '원보험사코드', '원수사명', '티커', '항목명', '항목번호']
+  item     1 기초 CSM n=393
+  item     2 신계약 CSM n=393
+  item     3 이자 부리 n=393
+  item     4 가정 및 경험 조정 n=393
+  item     5 CSM 상각 n=393
+  item     6 기말 CSM n=393
+  quarters: 2023.1Q:138 2023.2Q:138 2023.3Q:144 2023.4Q:258 2024.1Q:144 2024.2Q:144 2024.3Q:144 2024.4Q:264 2025.1Q:144 2025.2Q:144 2025.3Q:144 2025.4Q:264 2026.1Q:144 2026.2Q:144
+  companies=44
+  값 non-null=2358  값_당분기 non-null=2058
+== PL_breakdown.json rows=13801 keys=['값', '값_당분기', '공시분기', '생손보여부', '원보험사코드', '원수사명', '티커', '항목명', '항목번호']
+  item     1 보험손익 n=643
+  item     2 생명장기 손익 n=374
+  item     3 생명장기 원수손익 n=374
+  item     4 원수 CSM상각 n=403
+  item     5 원수 위험조정 변동 n=374
+  item     6 원수 예실차 n=374
+  item     7 기타 생명장기 원수손익 n=374
+  item     8 생명장기 재보험손익 n=374
+  item     9 재보험 CSM상각 n=374
+  item    10 재보험 위험조정 변동 n=374
+  item    11 재보험 예실차 n=374
+  item    12 기타 생명장기 재보험손익 n=374
+  item    13 자동차손익 n=374
+  item    14 일반손익 n=374
+  item    15 기타영업수익 n=374
+  item    16 기타사업비용 n=642
+  item    17 투자손익 n=476
+  item    18 투자이익 n=374
+  item    19 보험금융손익 n=374
+  item    20 영업이익 n=476
+  item    21 영업외손익 n=476
+  item    22 세전이익 n=643
+  item    23 법인세 n=643
+  item    24 당기순이익 n=643
+  item    25 기타포괄손익 n=374
+  item    26 FVOCI 채무증권 평가손익 n=374
+  item    27 보험계약금융손익(OCI) n=374
+  item    28 위험회피 파생상품 평가손익 n=374
+  item    29 FVOCI 지분증권 평가손익 n=374
+  item    30 재보험금융손익(OCI) n=374
+  item    31 총포괄손익 n=374
+  item    32 기타 포괄손익(미분류) n=374
+  item   2-1 장기재보험 손익 n=14
+  item   3-1 장기재보험 수재손익 n=14
+  item   4-1 수재 CSM상각 n=14
+  item   5-1 수재 위험조정 변동 n=14
+  item   6-1 수재 예실차 n=14
+  item   7-1 기타 장기재보험 수재손익 n=14
+  item   8-1 장기재보험 출재손익 n=14
+  item   9-1 출재 CSM상각 n=14
+  item  10-1 출재 위험조정 변동 n=14
+  item  11-1 출재 예실차 n=14
+  item  12-1 기타 장기재보험 출재손익 n=14
+  quarters: 2023.1Q:878 2023.2Q:878 2023.3Q:879 2023.4Q:1295 2024.1Q:884 2024.2Q:879 2024.3Q:879 2024.4Q:1321 2025.1Q:911 2025.2Q:919 2025.3Q:910 2025.4Q:1330 2026.1Q:919 2026.2Q:919
+  companies=47
+  값 non-null=12291  값_당분기 non-null=10827
+user_pl_cells keys: ['_doc', 'set', 'null_dangi', 'set_dangi']
+  null_dangi: {"_doc": "KR0073 2023.3Q item 15 (기타영업수익): the separate statement of the FY2024 Q3 report prints no 기타영업수익 row, so there is no printed 3-month value (the cumulative 0.0 is an assemble() default for 생보); the single quarter stays blank, as it was before commit 3e53aef8. Ticket inbox/parser/20261021T1655Z__validation__KR0073_2023.3Q__single_quarter_vintage_seam.md", "cells": [["KR0073", "2023.3Q", 15]]}
+  set_dangi: {"_doc": "KR0073 2023.3Q single quarter = the restated THREE-MONTH value printed in the FY2024 Q3 report (data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml, separate basis, prior-year 3-month column of the income statement / OCI and of the 보험수익 / 보험서비스비용 / 재보험 notes; the cell line is the 5th element). Derived items (2, 3, 7, 8, 12, 18, 19, 32) apply the production assemble() definitions to printed 3-month cells. All 10 PL identities close on this vector (residual <= 1e-6 백만원) and an independent read (FS-API frmtrm_q_amount + the production Tier-2 handler) agrees for every cell. The cumulative 값 is not touched, so the four 2023 single quarters do not add up to the full-year value: the difference is the restated first-half correction that was never published (the FY2024 Q1/Q2 comparatives are pre-correction), e.g. 원수 CSM상각 105,255 + 106,779 + 150,548 + 163,380 = 525,962 vs 627,701 (difference 101,739). Items not printed stay null (null_dangi). Ticket inbox/parser/20261021T1655Z__validation__KR0073_2023.3Q__single_quarter_vintage_seam.md; evidence data/_derived/kyobo_seam_blank_20261022/ (seam_3m_extract.txt, seam_3m_vector.csv)", "cells": [["KR0073", "2023.3Q", 1, 89281.796027, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L36675 [보험손익] 89,281,796,027원"], ["KR0073", "2023.3Q", 2, 98046.234456, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml (derived: = item3 + item8)"], ["KR0073", "2023.3Q", 3, 100562.113269, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L36721 [보험수익] 973,945,725,182원 || data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L36790 [보험비용] 873,383,611,913원"], ["KR0073", "2023.3Q", 4, 150548.0, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50225 [(3) 당기손익에 인식한 보험계약마진 금액] 150,548백만"], ["KR0073", "2023.3Q", 5, 34585.0, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50193 [(2) 비금융위험에 대한 위험조정 변동분] 34,585백만"], ["KR0073", "2023.3Q", 6, -30114.0, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50161 [(1) 발생한 보험서비스비용] 751,324백만 || data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50403 [(1) 실제보험금] 475,057백만 || data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50411 [(2) 실제계약유지비용] 282,764백만 || data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50419 [(3) 실제투자관리비] 23,617백만"], ["KR0073", "2023.3Q", 7, -54456.886731, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml (derived: = item3 − item4 − item5 − item6)"], ["KR0073", "2023.3Q", 8, -2515.878813, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L36744 [재보험수익] 5,751,423,173원 || data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L36813 [재보험비용] 8,267,301,986원"], ["KR0073", "2023.3Q", 9, -1453.0, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50543 [보험계약마진상각] 1,453백만"], ["KR0073", "2023.3Q", 10, -337.0, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L50535 [위험조정변동] 337백만"], ["KR0073", "2023.3Q", 11, 631.0, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/202411

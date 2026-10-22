@@ -1,0 +1,608 @@
+== KR0002 한화손해보험 2023.3Q div=OFS/OFS
+   i 1: same=     227,852 prior=     227,852 master=     227,852 
+   i16: same=      80,303 prior=     -80,303 master=      80,303 DIFF d=-160,606
+   i17: same=      99,051 prior=      99,051 master=      99,051 
+   i18: same=     405,686 prior=    -225,582 master=     405,686 DIFF d=-631,268
+   i19: same=    -306,635 prior=     324,633 master=    -306,635 DIFF d=631,268
+   i20: same=     326,902 prior=     326,902 master=     326,902 
+   i21: same=       1,138 prior=       1,138 master=       1,138 
+   i22: same=     328,040 prior=     328,040 master=     328,040 
+   i23: same=      74,311 prior=     -74,311 master=      74,311 DIFF d=-148,623
+   i24: same=     253,729 prior=     253,729 master=     253,729 
+== KR0002 한화손해보험 2024.1Q div=OFS/OFS
+   i 1: same=     138,790 prior=     138,790 master=     138,790 
+   i16: same=     -39,871 prior=      39,871 master=      39,871 DIFF d=79,741
+   i17: same=      33,718 prior=      33,718 master=      33,718 
+   i18: same=     -74,606 prior=     134,244 master=     -74,606 DIFF d=208,851
+   i19: same=     108,325 prior=    -100,526 master=     108,325 DIFF d=-208,851
+   i20: same=     172,508 prior=     172,508 master=     172,508 
+   i21: same=         902 prior=         902 master=         902 
+   i22: same=     173,410 prior=     173,410 master=     173,410 
+   i23: same=     -48,554 prior=      48,554 master=      48,554 DIFF d=97,109
+   i24: same=     124,856 prior=     124,856 master=     124,856 
+== KR0002 한화손해보험 2024.2Q div=OFS/OFS
+   i 1: same=     262,432 prior=     262,432 master=     262,432 
+   i16: same=     -84,518 prior=      84,518 master=      84,518 DIFF d=169,037
+   i17: same=      73,743 prior=      73,743 master=      73,743 
+   i18: same=    -150,812 prior=     271,623 master=    -150,812 DIFF d=422,435
+   i19: same=     224,555 prior=    -197,879 master=     224,555 DIFF d=-422,435
+   i20: same=     336,175 prior=     336,175 master=     336,175 
+   i21: same=      -2,204 prior=      -2,204 master=      -2,204 
+   i22: same=     333,971 prior=     333,971 master=     333,971 
+   i23: same=     -79,246 prior=      79,246 master=      79,246 DIFF d=158,491
+   i24: same=     254,726 prior=     254,726 master=     254,726 
+== KR0002 한화손해보험 2024.3Q div=OFS/OFS
+   i 1: same=     339,124 prior=     339,124 master=     339,124 
+   i16: same=    -120,130 prior=     120,130 master=     120,130 DIFF d=240,260
+   i17: same=     122,893 prior=     122,893 master=     122,893 
+   i18: same=    -208,592 prior=     422,530 master=    -208,592 DIFF d=631,122
+   i19: same=     331,485 prior=    -299,637 master=     331,485 DIFF d=-631,122
+   i20: same=     462,017 prior=     462,017 master=     462,017 
+   i21: same=         552 prior=         552 master=         552 
+   i22: same=     462,569 prior=     462,569 master=     462,569 
+   i23: same=    -116,829 prior=     116,829 master=     116,829 DIFF d=233,657
+   i24: same=     345,740 prior=     345,740 master=     345,740 
+== KR0002 한화손해보험 2024.4Q div=OFS/OFS
+   i 1: same=     352,230 prior=     352,230 master=     352,230 
+   i16: same=    -171,192 prior=     171,192 master=     171,192 DIFF d=342,383
+   i17: same=     151,159 prior=     151,159 master=     151,159 
+   i18: same=    -298,348 prior=     550,815 master=    -298,348 DIFF d=849,163
+   i19: same=     449,507 prior=    -399,656 master=     449,507 DIFF d=-849,163
+   i20: same=     503,389 prior=     503,389 master=     503,389 
+   i21: same=       1,767 prior=       1,767 master=       1,767 
+   i22: same=     505,156 prior=     505,156 master=     505,156 
+   i23: same=    -122,880 prior=     122,880 master=     122,880 DIFF d=245,760
+   i24: same=     382,276 prior=     382,276 master=     382,276 
+== KR0003 롯데손해보험 2023.4Q div=OFS/OFS
+   i 1: same=     468,498 prior=     461,540 master=     468,498 DIFF d=-6,958
+   i17: same=     -72,207 prior=     -86,105 master=     -72,207 DIFF d=-13,898
+   i19: same=    -162,466 prior=    -176,364 master=    -162,466 DIFF d=-13,898
+   i20: same=     396,291 prior=     375,435 master=     396,291 DIFF d=-20,856
+   i21: same=      -1,952 prior=      -1,952 master=      -1,952 
+   i22: same=     394,339 prior=     373,483 master=     394,339 DIFF d=-20,856
+   i23: same=      92,703 prior=      87,902 master=      92,703 DIFF d=-4,801
+   i24: same=     301,636 prior=     285,580 master=     301,636 DIFF d=-16,056
+   i25: same=    -176,169 prior=    -154,441 master=    -176,169 DIFF d=21,728
+   i26: same=     244,993 prior=     255,922 master=     244,993 DIFF d=10,929
+   i27: same=    -507,219 prior=    -496,420 master=    -507,219 DIFF d=10,799
+   i31: same=     125,467 prior=     131,139 master=     125,467 DIFF d=5,672
+== KR0003 롯데손해보험 2024.1Q div=OFS/OFS
+   i 1: same=      41,361 prior=      36,991 master=      41,361 DIFF d=-4,369
+   i17: same=       9,787 prior=       5,210 master=       9,787 DIFF d=-4,576
+   i19: same=     -39,119 prior=     -43,695 master=     -39,119 DIFF d=-4,576
+   i20: same=      51,147 prior=      42,202 master=      51,147 DIFF d=-8,946
+   i21: same=       2,054 prior=       2,054 master=       2,054 
+   i22: same=      53,202 prior=      44,256 master=      53,202 DIFF d=-8,946
+   i23: same=      12,335 prior=      10,269 master=      12,335 DIFF d=-2,066
+   i24: same=      40,867 prior=      33,987 master=      40,867 DIFF d=-6,879
+   i25: same=    -202,720 prior=    -196,705 master=    -202,720 DIFF d=6,015
+   i26: same=     -96,095 prior=     -93,387 master=     -96,095 DIFF d=2,707
+   i27: same=     -52,212 prior=     -48,904 master=     -52,212 DIFF d=3,307
+   i31: same=    -161,853 prior=    -162,718 master=    -161,853 DIFF d=-864
+== KR0003 롯데손해보험 2024.2Q div=OFS/OFS
+   i 1: same=      83,792 prior=      75,045 master=      83,792 DIFF d=-8,747
+   i17: same=         171 prior=      -2,719 master=         171 DIFF d=-2,890
+   i19: same=     -82,132 prior=     -85,022 master=     -82,132 DIFF d=-2,890
+   i20: same=      83,963 prior=      72,326 master=      83,963 DIFF d=-11,637
+   i21: same=       3,209 prior=       3,209 master=       3,209 
+   i22: same=      87,172 prior=      75,535 master=      87,172 DIFF d=-11,637
+   i23: same=      20,917 prior=      18,229 master=      20,917 DIFF d=-2,688
+   i24: same=      66,255 prior=      57,306 master=      66,255 DIFF d=-8,949
+   i25: same=    -363,702 prior=    -356,479 master=    -363,702 DIFF d=7,223
+   i26: same=     -81,383 prior=     -75,969 master=     -81,383 DIFF d=5,414
+   i27: same=    -260,838 prior=    -259,030 master=    -260,838 DIFF d=1,808
+   i31: same=    -297,448 prior=    -299,173 master=    -297,448 DIFF d=-1,725
+== KR0003 롯데손해보험 2024.3Q div=OFS/OFS
+   i 1: same=     113,248 prior=     100,058 master=     113,248 DIFF d=-13,190
+   i17: same=      -5,424 prior=     -10,868 master=      -5,424 DIFF d=-5,444
+   i19: same=    -120,064 prior=    -125,508 master=    -120,064 DIFF d=-5,444
+   i20: same=     107,824 prior=      89,190 master=     107,824 DIFF d=-18,634
+   i21: same=       2,111 prior=       2,111 master=       2,111 
+   i22: same=     109,936 prior=      91,301 master=     109,936 DIFF d=-18,635
+   i23: same=      25,522 prior=      21,582 master=      25,522 DIFF d=-3,940
+   i24: same=      84,414 prior=      69,719 master=      84,414 DIFF d=-14,695
+   i25: same=    -459,856 prior=    -448,124 master=    -459,856 DIFF d=11,732
+   i26: same=      50,088 prior=      58,239 master=      50,088 DIFF d=8,151
+   i27: same=    -576,768 prior=    -573,187 master=    -576,768 DIFF d=3,581
+   i31: same=    -375,442 prior=    -378,405 master=    -375,442 DIFF d=-2,963
+== KR0005 흥국화재 2023.3Q div=OFS/OFS
+   i 1: same=     277,123 prior=     277,123 master=     277,123 
+   i17: same=     -42,056 prior=     -63,150 master=     -42,056 DIFF d=-21,094
+   i18: same=     217,893 prior=     196,799 master=     217,893 DIFF d=-21,094
+   i19: same=    -259,949 prior=    -259,949 master=    -259,949 
+   i20: same=     235,067 prior=     213,973 master=     235,067 DIFF d=-21,094
+   i21: same=        -970 prior=        -970 master=        -970 
+   i22: same=     234,097 prior=     213,003 master=     234,097 DIFF d=-21,094
+   i23: same=      52,285 prior=      47,747 master=      52,285 DIFF d=-4,538
+   i24: same=     181,812 prior=     165,256 master=     181,812 DIFF d=-16,556
+   i25: same=    -210,395 prior=    -189,519 master=    -210,395 DIFF d=20,876
+   i26: same=    -101,767 prior=     -80,901 master=    -101,767 DIFF d=20,866
+   i31: same=     -28,583 prior=     -24,263 master=     -28,583 DIFF d=4,320
+   i32: same=         141 prior=         136 master=         141 DIFF d=-5
+== KR0005 흥국화재 2023.4Q div=OFS/OFS
+   i 1: same=     308,412 prior=     308,412 master=     308,412 
+   i17: same=      99,358 prior=      72,613 master=      99,358 DIFF d=-26,745
+   i18: same=     446,988 prior=     418,462 master=     446,988 DIFF d=-28,526
+   i19: same=    -347,630 prior=    -345,849 master=    -347,630 DIFF d=1,781
+   i20: same=     407,770 prior=     381,025 master=     407,770 DIFF d=-26,745
+   i21: same=        -639 prior=        -639 master=        -639 
+   i22: same=     407,131 prior=     380,386 master=     407,131 DIFF d=-26,745
+   i23: same=      90,984 prior=      84,846 master=      90,984 DIFF d=-6,138
+   i24: same=     316,147 prior=     295,540 master=     316,147 DIFF d=-20,607
+   i25: same=    -400,409 prior=    -371,946 master=    -400,409 DIFF d=28,463
+   i26: same=     402,967 prior=     431,462 master=     402,967 DIFF d=28,495
+   i31: same=     -84,262 prior=     -76,406 master=     -84,262 DIFF d=7,856
+   i32: same=        -811 prior=        -818 master=        -811 DIFF d=-7
+== KR0005 흥국화재 2024.1Q div=OFS/OFS
+   i 1: same=     139,937 prior=     139,937 master=     139,937 
+   i17: same=     -71,099 prior=     -78,401 master=     -71,099 DIFF d=-7,302
+   i18: same=       9,640 prior=       2,338 master=       9,640 DIFF d=-7,302
+   i19: same=     -80,739 prior=     -80,739 master=     -80,739 
+   i20: same=      68,838 prior=      61,536 master=      68,838 DIFF d=-7,302
+   i21: same=        -345 prior=        -345 master=        -345 
+   i22: same=      68,493 prior=      61,191 master=      68,493 DIFF d=-7,302
+   i23: same=      20,483 prior=      21,979 master=      20,483 DIFF d=1,496
+   i24: same=      48,010 prior=      39,212 master=      48,010 DIFF d=-8,798
+   i25: same=    -308,151 prior=    -300,515 master=    -308,151 DIFF d=7,636
+   i26: same=    -139,223 prior=    -131,799 master=    -139,223 DIFF d=7,424
+   i28: same=     -81,173 prior=     -80,960 master=     -81,173 DIFF d=213
+   i31: same=    -260,141 prior=    -261,303 master=    -260,141 DIFF d=-1,162
+== KR0005 흥국화재 2024.2Q div=OFS/OFS
+   i 1: same=     182,019 prior=     182,019 master=     182,019 
+   i17: same=     -45,124 prior=     -62,135 master=     -45,124 DIFF d=-17,011
+   i18: same=     120,197 prior=     103,186 master=     120,197 DIFF d=-17,011
+   i19: same=    -165,321 prior=    -165,321 master=    -165,321 
+   i20: same=     136,895 prior=     119,884 master=     136,895 DIFF d=-17,011
+   i21: same=        -869 prior=        -869 master=        -869 
+   i22: same=     136,026 prior=     119,015 master=     136,026 DIFF d=-17,011
+   i23: same=      29,035 prior=      31,608 master=      29,035 DIFF d=2,573
+   i24: same=     106,991 prior=      87,407 master=     106,991 DIFF d=-19,584
+   i25: same=    -570,466 prior=    -553,328 master=    -570,466 DIFF d=17,138
+   i26: same=    -105,377 prior=     -87,646 master=    -105,377 DIFF d=17,731
+   i28: same=     -43,229 prior=     -43,819 master=     -43,229 DIFF d=-590
+   i31: same=    -463,475 prior=    -465,921 master=    -463,475 DIFF d=-2,446
+   i32: same=        -151 prior=        -154 master=        -151 DIFF d=-3
+== KR0008 삼성화재해상보험 2023.3Q div=OFS/OFS
+   i 1: same=   1,686,254 prior=   1,682,407 master=   1,682,407 DIFF d=-3,847
+   i17: same=     439,140 prior=     440,171 master=     440,171 DIFF d=1,031
+   i19: same=  -1,027,812 prior=  -1,026,781 master=  -1,026,781 DIFF d=1,031
+   i20: same=   2,125,394 prior=   2,122,578 master=   2,122,578 DIFF d=-2,816
+   i21: same=      20,126 prior=      20,126 master=      20,126 
+   i22: same=   2,145,520 prior=   2,142,704 master=   2,142,704 DIFF d=-2,816
+   i23: same=     557,788 prior=     557,788 master=     557,788 
+   i24: same=   1,587,732 prior=   1,584,916 master=   1,584,916 DIFF d=-2,816
+== KR0009 현대해상 2023.4Q div=OFS/OFS
+   i 1: same=     526,491 prior=     526,590 master=     526,491 
+   i17: same=     499,877 prior=     455,046 master=     499,877 DIFF d=-44,831
+   i19: same=    -783,459 prior=    -828,290 master=    -783,459 DIFF d=-44,831
+   i20: same=   1,026,368 prior=     981,636 master=   1,026,368 DIFF d=-44,732
+   i21: same=     -28,698 prior=     -28,698 master=     -28,698 
+   i22: same=     997,670 prior=     952,938 master=     997,670 DIFF d=-44,732
+   i23: same=     191,948 prior=     180,600 master=     191,948 DIFF d=-11,349
+   i24: same=     805,722 prior=     772,338 master=     805,722 DIFF d=-33,384
+   i25: same=    -496,923 prior=    -463,578 master=    -496,923 DIFF d=33,346
+   i27: same=  -1,545,242 prior=  -1,511,896 master=  -1,545,242 DIFF d=33,346
+== KR0010 KB손해보험 2023.4Q div=OFS/OFS
+   i 1: same=     832,922 prior=     831,979 master=     832,922 DIFF d=-943
+   i17: same=     210,520 prior=     157,718 master=     210,520 DIFF d=-52,802
+   i19: same=    -740,403 prior=    -793,205 master=    -740,403 DIFF d=-52,802
+   i20: same=        None prior=     989,697 master=   1,043,442 
+   i21: same=      -1,067 prior=      -1,067 master=      -1,067 
+   i22: same=   1,042,375 prior=     988,630 master=   1,042,375 DIFF d=-53,745
+   i23: same=     265,989 prior=     251,864 master=     265,989 DIFF d=-14,125
+   i24: same=     776,386 prior=     736,766 master=     776,386 DIFF d=-39,620
+   i25: same=     112,100 prior=     150,685 master=     112,100 DIFF d=38,585
+   i27: same=  -1,236,291 prior=  -1,197,707 master=  -1,236,291 DIFF d=38,584
+   i31: same=     888,486 prior=     887,451 master=     888,486 DIFF d=-1,035
+   i32: same=       3,005 prior=       2,936 master=       3,005 DIFF d=-69
+== KR0010 KB손해보험 2024.1Q div=OFS/OFS
+   i 1: same=     366,614 prior=     368,380 master=     366,614 DIFF d=1,766
+   i17: same=      35,664 prior=      30,681 master=      35,664 DIFF d=-4,983
+   i19: same=    -194,073 prior=    -199,056 master=    -194,073 DIFF d=-4,983
+   i20: same=     402,278 prior=     399,061 master=     402,278 DIFF d=-3,217
+   i21: same=        -605 prior=        -605 master=        -605 
+   i22: same=     401,673 prior=     398,456 master=     401,673 DIFF d=-3,217
+   i23: same=     103,371 prior=     102,522 master=     103,371 DIFF d=-849
+   i24: same=     298,302 prior=     295,934 master=     298,302 DIFF d=-2,368
+   i25: same=    -455,707 prior=    -452,129 master=    -455,707 DIFF d=3,578
+   i27: same=     -90,457 prior=     -86,879 master=     -90,457 DIFF d=3,578
+   i31: same=    -157,405 prior=    -156,195 master=    -157,405 DIFF d=1,210
+== KR0010 KB손해보험 2024.2Q div=OFS/OFS
+   i 1: same=     688,166 prior=     696,031 master=     688,166 DIFF d=7,865
+   i17: same=     108,206 prior=      99,627 master=     108,206 DIFF d=-8,579
+   i19: same=    -372,935 prior=    -381,514 master=    -372,935 DIFF d=-8,579
+   i20: same=     796,372 prior=     795,658 master=     796,372 
+   i21: same=      -1,822 prior=      -1,822 master=      -1,822 
+   i22: same=     794,550 prior=     793,836 master=     794,550 
+   i23: same=     205,457 prior=     205,269 master=     205,457 
+   i24: same=     589,093 prior=     588,567 master=     589,093 
+   i25: same=    -760,291 prior=    -754,145 master=    -760,291 DIFF d=6,146
+   i27: same=    -646,651 prior=    -640,505 master=    -646,651 DIFF d=6,146
+   i31: same=    -171,198 prior=    -165,578 master=    -171,198 DIFF d=5,620
+== KR0010 KB손해보험 2024.3Q div=OFS/OFS
+   i 1: same=     875,648 prior=     885,443 master=     875,648 DIFF d=9,795
+   i17: same=     153,971 prior=     144,414 master=     153,971 DIFF d=-9,557
+   i19: same=    -561,545 prior=    -571,102 master=    -561,545 DIFF d=-9,557
+   i20: same=   1,029,619 prior=   1,029,857 master=   1,029,619 
+   i21: same=      -1,597 prior=      -1,597 master=      -1,597 
+   i22: same=   1,028,022 prior=   1,028,260 master=   1,028,022 
+   i23: same=     269,164 prior=     269,227 master=     269,164 
+   i24: same=     758,858 prior=     759,033 master=     758,858 
+   i25: same=    -856,337 prior=    -849,509 master=    -856,337 DIFF d=6,828
+   i27: same=  -1,436,220 prior=  -1,429,392 master=  -1,436,220 DIFF d=6,828
+   i31: same=     -97,479 prior=     -90,476 master=     -97,479 DIFF d=7,003
+== KR0032 NH농협손해보험 2023.4Q div=OFS/OFS
+   i 1: same=     117,305 prior=     117,305 master=     117,305 
+   i17: same=      98,273 prior=      56,555 master=      98,273 DIFF d=-41,718
+   i19: same=    -241,969 prior=    -283,687 master=    -241,969 DIFF d=-41,718
+   i20: same=     215,579 prior=     173,860 master=     215,579 DIFF d=-41,718
+   i21: same=     -24,290 prior=     -24,290 master=     -24,290 
+   i22: same=     191,289 prior=     149,571 master=     191,289 DIFF d=-41,718
+   i23: same=      45,944 prior=      36,307 master=      45,944 DIFF d=-9,637
+   i24: same=     145,345 prior=     113,263 master=     145,345 DIFF d=-32,081
+   i25: same=     -53,277 prior=     -21,196 master=     -53,277 DIFF d=32,081
+   i27: same=    -347,693 prior=    -315,612 master=    -347,693 DIFF d=32,081
+== KR0032 NH농협손해보험 2024.1Q div=OFS/OFS
+   i 1: same=      61,590 prior=      61,590 master=      61,590 
+   i17: same=      22,440 prior=      14,157 master=      22,440 DIFF d=-8,283
+   i19: same=     -60,660 prior=     -68,944 master=     -60,660 DIFF d=-8,283
+   i20: same=      84,030 prior=      75,747 master=      84,030 DIFF d=-8,283
+   i21: same=      -6,344 prior=      -6,344 master=      -6,344 
+   i22: same=      77,686 prior=      69,403 master=      77,686 DIFF d=-8,283
+   i23: same=      17,897 prior=      15,984 master=      17,897 DIFF d=-1,913
+   i24: same=      59,789 prior=      53,419 master=      59,789 DIFF d=-6,370
+   i25: same=    -120,122 prior=    -113,753 master=    -120,122 DIFF d=6,370
+   i27: same=     -33,433 prior=     -27,063 master=     -33,433 DIFF d=6,370
+== KR0032 NH농협손해보험 2024.2Q div=OFS/OFS
+   i 1: same=     122,180 prior=     122,180 master=     122,180 
+   i17: same=      52,026 prior=      38,822 master=      52,026 DIFF d=-13,204
+   i19: same=    -124,035 prior=    -137,240 master=    -124,035 DIFF d=-13,204
+   i20: same=     174,206 prior=     161,002 master=     174,206 DIFF d=-13,204
+   i21: same=     -13,517 prior=     -13,517 master=     -13,517 
+   i22: same=     160,689 prior=     147,485 master=     160,689 DIFF d=-13,204
+   i23: same=      40,152 prior=      37,101 master=      40,152 DIFF d=-3,050
+   i24: same=     120,537 prior=     110,383 master=     120,537 DIFF d=-10,154
+   i25: same=    -255,678 prior=    -245,524 master=    -255,678 DIFF d=10,154
+   i27: same=    -232,253 prior=    -222,098 master=    -232,253 DIFF d=10,154
+== KR0032 NH농협손해보험 2024.3Q div=OFS/OFS
+   i 1: same=     132,019 prior=     132,019 master=     132,019 
+   i17: same=      90,932 prior=      73,915 master=      90,932 DIFF d=-17,017
+   i19: same=    -185,991 prior=    -203,008 master=    -185,991 DIFF d=-17,017
+   i20: same=     222,951 prior=     205,934 master=     222,951 DIFF d=-17,017
+   i21: same=     -20,426 prior=     -20,426 master=     -20,426 
+   i22: same=     202,525 prior=     185,508 master=     202,525 DIFF d=-17,017
+   i23: same=      50,721 prior=      46,790 master=      50,721 DIFF d=-3,931
+   i24: same=     151,804 prior=     138,718 master=     151,804 DIFF d=-13,086
+   i25: same=    -335,479 prior=    -322,393 master=    -335,479 DIFF d=13,086
+   i27: same=    -489,107 prior=    -476,020 master=    -489,107 DIFF d=13,086
+== KR0069 삼성생명보험 2023.3Q div=OFS/OFS
+   i 1: same=   1,206,065 prior=   1,206,065 master=   1,206,065 
+   i16: same=     -37,686 prior=      37,686 master=      37,686 DIFF d=75,372
+   i17: same=    -121,128 prior=    -121,128 master=    -121,128 
+   i18: same=  -8,131,033 prior=   5,843,783 master=  -8,131,033 DIFF d=13,974,816
+   i19: same=   8,009,905 prior=  -5,964,911 master=   8,009,905 DIFF d=-13,974,816
+   i20: same=   1,084,937 prior=   1,084,937 master=   1,084,937 
+   i21: same=     261,687 prior=     261,687 master=     261,687 
+   i22: same=   1,346,624 prior=   1,346,624 master=   1,346,624 
+   i23: same=    -220,561 prior=     220,561 master=     220,561 DIFF d=441,122
+   i24: same=   1,126,063 prior=   1,126,063 master=   1,126,063 
+== KR0070 에이비엘생명보험 2023.3Q div=OFS/OFS
+   i 1: same=      52,509 prior=      42,364 master=      52,509 DIFF d=-10,145
+   i17: same=      21,584 prior=      33,777 master=      21,584 DIFF d=12,193
+   i18: same=     520,792 prior=     536,095 master=     520,792 DIFF d=15,303
+   i19: same=    -499,208 prior=    -502,317 master=    -499,208 DIFF d=-3,109
+   i20: same=      74,093 prior=      76,141 master=      74,093 DIFF d=2,048
+   i21: same=     -23,910 prior=     -24,336 master=     -23,910 DIFF d=-426
+   i22: same=      50,183 prior=      51,805 master=      50,183 DIFF d=1,622
+   i23: same=      12,649 prior=      12,804 master=      12,649 DIFF d=155
+   i24: same=      37,534 prior=      39,001 master=      37,534 DIFF d=1,467
+   i25: same=      42,558 prior=     103,104 master=      42,558 DIFF d=60,546
+   i27: same=     127,776 prior=     190,485 master=     127,776 DIFF d=62,709
+   i30: same=       3,886 prior=       1,724 master=       3,886 DIFF d=-2,162
+   i31: same=      80,092 prior=     142,105 master=      80,092 DIFF d=62,013
+== KR0070 에이비엘생명보험 2023.4Q div=OFS/OFS
+   i 1: same=      38,813 prior=      38,813 master=      38,813 
+   i17: same=      93,667 prior=     107,659 master=      93,667 DIFF d=13,991
+   i19: same=    -732,332 prior=    -718,341 master=    -732,332 DIFF d=13,991
+   i20: same=     132,480 prior=     146,471 master=     132,480 DIFF d=13,991
+   i21: same=     -28,901 prior=     -28,901 master=     -28,901 
+   i22: same=     103,579 prior=     117,571 master=     103,579 DIFF d=13,991
+   i23: same=      23,144 prior=      26,376 master=      23,144 DIFF d=3,232
+   i24: same=      80,435 prior=      91,194 master=      80,435 DIFF d=10,759
+   i25: same=      17,958 prior=       7,198 master=      17,958 DIFF d=-10,759
+   i27: same=    -581,177 prior=    -591,937 master=    -581,177 DIFF d=-10,759
+== KR0070 에이비엘생명보험 2024.1Q div=OFS/OFS
+   i 1: same=      15,592 prior=      15,592 master=      15,592 
+   i17: same=      -5,720 prior=      -2,377 master=      -5,720 DIFF d=3,344
+   i19: same=    -206,447 prior=    -203,103 master=    -206,447 DIFF d=3,344
+   i20: same=       9,872 prior=      13,215 master=       9,872 DIFF d=3,344
+   i21: same=         374 prior=         374 master=         374 
+   i22: same=      10,246 prior=      13,589 master=      10,246 DIFF d=3,344
+   i23: same=       2,477 prior=       3,249 master=       2,477 DIFF d=772
+   i24: same=       7,769 prior=      10,340 master=       7,769 DIFF d=2,571
+   i25: same=    -217,002 prior=    -219,573 master=    -217,002 DIFF d=-2,571
+   i27: same=     -39,884 prior=     -42,455 master=     -39,884 DIFF d=-2,571
+== KR0070 에이비엘생명보험 2024.2Q div=OFS/OFS
+   i 1: same=      26,730 prior=      26,730 master=      26,730 
+   i17: same=      32,656 prior=      36,492 master=      32,656 DIFF d=3,836
+   i19: same=    -389,683 prior=    -385,847 master=    -389,683 DIFF d=3,836
+   i20: same=      59,386 prior=      63,222 master=      59,386 DIFF d=3,836
+   i21: same=      -3,993 prior=      -3,993 master=      -3,993 
+   i22: same=      55,393 prior=      59,229 master=      55,393 DIFF d=3,836
+   i23: same=      12,917 prior=      13,803 master=      12,917 DIFF d=886
+   i24: same=      42,476 prior=      45,426 master=      42,476 DIFF d=2,950
+   i25: same=    -399,586 prior=    -402,536 master=    -399,586 DIFF d=-2,950
+   i27: same=    -343,006 prior=    -345,956 master=    -343,006 DIFF d=-2,950
+== KR0070 에이비엘생명보험 2024.3Q div=OFS/OFS
+   i 1: same=      27,317 prior=      27,317 master=      27,317 
+   i17: same=      69,166 prior=      73,519 master=      69,166 DIFF d=4,352
+   i19: same=    -490,279 prior=    -485,926 master=    -490,279 DIFF d=4,352
+   i20: same=      96,483 prior=     100,836 master=      96,483 DIFF d=4,352
+   i21: same=      -8,314 prior=      -8,314 master=      -8,314 
+   i22: same=      88,170 prior=      92,522 master=      88,170 DIFF d=4,352
+   i23: same=      20,489 prior=      21,494 master=      20,489 DIFF d=1,005
+   i24: same=      67,681 prior=      71,028 master=      67,681 DIFF d=3,347
+   i25: same=    -490,074 prior=    -493,421 master=    -490,074 DIFF d=-3,347
+   i27: same=    -718,114 prior=    -721,461 master=    -718,114 DIFF d=-3,347
+== KR0072 케이디비생명보험 2023.3Q div=OFS/OFS
+   i 1: same=       4,637 prior=      16,711 master=       4,637 DIFF d=12,074
+   i17: same=      -6,025 prior=     -13,719 master=      -6,025 DIFF d=-7,693
+   i19: same=    -422,521 prior=    -429,979 master=    -422,521 DIFF d=-7,458
+   i20: same=      -1,388 prior=       2,993 master=      -1,388 DIFF d=4,381
+   i21: same=     -16,520 prior=     -16,520 master=     -16,520 
+   i22: same=     -17,908 prior=     -13,527 master=     -17,908 DIFF d=4,381
+   i23: same=          -0 prior=          -0 master=          -0 
+   i24: same=     -17,908 prior=     -13,527 master=     -17,908 DIFF d=4,381
+   i25: same=     278,659 prior=     271,338 master=     278,659 DIFF d=-7,321
+   i27: same=     417,524 prior=     410,203 master=     417,524 DIFF d=-7,321
+   i31: same=     260,751 prior=     257,811 master=     260,751 DIFF d=-2,940
+== KR0079 미래에셋생명보험 2023.4Q div=OFS/OFS
+   i 1: same=     169,001 prior=     169,001 master=     169,001 
+   i17: same=      -2,229 prior=     -22,624 master=      -2,229 DIFF d=-20,395
+   i19: same=  -2,321,219 prior=  -2,341,615 master=  -2,321,219 DIFF d=-20,395
+   i20: same=     166,772 prior=     146,376 master=     166,772 DIFF d=-20,395
+   i21: same=      -4,017 prior=      -4,017 master=      -4,017 
+   i22: same=     162,755 prior=     142,359 master=     162,755 DIFF d=-20,395
+   i23: same=      37,754 prior=      33,159 master=      37,754 DIFF d=-4,595
+   i24: same=     125,000 prior=     109,200 master=     125,000 DIFF d=-15,800
+   i25: same=      -1,613 prior=      34,586 master=      -1,613 DIFF d=36,199
+   i27: same=    -796,152 prior=    -759,953 master=    -796,152 DIFF d=36,199
+   i31: same=     123,387 prior=     143,786 master=     123,387 DIFF d=20,399
+   i32: same=      -3,341 prior=      -3,282 master=      -3,341 DIFF d=59
+== KR0079 미래에셋생명보험 2024.1Q div=OFS/OFS
+   i 1: same=      21,492 prior=      22,298 master=      21,492 DIFF d=806
+   i17: same=      28,574 prior=      21,158 master=      28,574 DIFF d=-7,415
+   i19: same=    -881,719 prior=    -889,135 master=    -881,719 DIFF d=-7,415
+   i20: same=      50,066 prior=      43,456 master=      50,066 DIFF d=-6,610
+   i21: same=      -1,381 prior=      -1,381 master=      -1,381 
+   i22: same=      48,685 prior=      42,075 master=      48,685 DIFF d=-6,610
+   i23: same=       9,250 prior=       9,752 master=       9,250 DIFF d=502
+   i24: same=      39,435 prior=      32,323 master=      39,435 DIFF d=-7,112
+   i25: same=    -326,029 prior=    -317,474 master=    -326,029 DIFF d=8,555
+   i27: same=     -21,116 prior=     -12,562 master=     -21,116 DIFF d=8,554
+   i31: same=    -286,595 prior=    -285,152 master=    -286,595 DIFF d=1,443
+   i32: same=         379 prior=         406 master=         379 DIFF d=27
+== KR0079 미래에셋생명보험 2024.2Q div=OFS/OFS
+   i 1: same=      67,199 prior=      68,016 master=      67,199 DIFF d=817
+   i17: same=       2,275 prior=      -9,663 master=       2,275 DIFF d=-11,938
+   i19: same=  -1,380,775 prior=  -1,392,713 master=  -1,380,775 DIFF d=-11,938
+   i20: same=      69,474 prior=      58,353 master=      69,474 DIFF d=-11,120
+   i21: same=       1,961 prior=       1,961 master=       1,961 
+   i22: same=      71,435 prior=      60,314 master=      71,435 DIFF d=-11,120
+   i23: same=      12,785 prior=      13,980 master=      12,785 DIFF d=1,195
+   i24: same=      58,650 prior=      46,335 master=      58,650 DIFF d=-12,316
+   i25: same=    -557,930 prior=    -537,664 master=    -557,930 DIFF d=20,266
+   i27: same=    -416,622 prior=    -396,356 master=    -416,622 DIFF d=20,266
+   i31: same=    -499,280 prior=    -491,330 master=    -499,280 DIFF d=7,950
+== KR0079 미래에셋생명보험 2024.3Q div=OFS/OFS
+   i 1: same=      98,344 prior=      99,420 master=      98,344 DIFF d=1,076
+   i17: same=     -22,944 prior=     -37,631 master=     -22,944 DIFF d=-14,686
+   i19: same=  -1,434,164 prior=  -1,448,850 master=  -1,434,164 DIFF d=-14,686
+   i20: same=      75,400 prior=      61,790 master=      75,400 DIFF d=-13,610
+   i21: same=        -112 prior=        -112 master=        -112 
+   i22: same=      75,288 prior=      61,678 master=      75,288 DIFF d=-13,610
+   i23: same=      13,117 prior=      14,296 master=      13,117 DIFF d=1,179
+   i24: same=      62,171 prior=      47,382 master=      62,171 DIFF d=-14,789
+   i25: same=    -571,634 prior=    -537,436 master=    -571,634 DIFF d=34,198
+   i27: same=    -870,949 prior=    -836,751 master=    -870,949 DIFF d=34,198
+   i31: same=    -509,463 prior=    -490,054 master=    -509,463 DIFF d=19,409
+== KR0082 DB생명보험 2023.3Q div=OFS/OFS
+   i 1: same=      84,042 prior=      85,928 master=      84,042 DIFF d=1,885
+   i16: same=       9,272 prior=       7,387 master=       9,272 DIFF d=-1,885
+   i17: same=      64,492 prior=      62,607 master=      64,492 DIFF d=-1,885
+   i18: same=     265,348 prior=     263,463 master=     265,348 DIFF d=-1,885
+   i19: same=    -200,856 prior=    -200,856 master=    -200,856 
+   i20: same=     148,534 prior=     148,534 master=     148,534 
+   i21: same=      -2,067 prior=      -2,067 master=      -2,067 
+   i22: same=     146,468 prior=     146,468 master=     146,468 
+   i23: same=      31,373 prior=      31,373 master=      31,373 
+   i24: same=     115,095 prior=     115,095 master=     115,095 
+== KR0083 푸본현대생명보험 2024.1Q div=OFS/OFS
+   i 1: same=      -7,253 prior=      -7,253 master=      -7,253 
+   i17: same=      42,172 prior=      40,401 master=      42,172 DIFF d=-1,771
+   i19: same=     -74,329 prior=     -76,100 master=     -74,329 DIFF d=-1,771
+   i20: same=      34,919 prior=      33,148 master=      34,919 DIFF d=-1,771
+   i21: same=       2,843 prior=       2,843 master=       2,843 
+   i22: same=      37,762 prior=      35,991 master=      37,762 DIFF d=-1,771
+   i23: same=       8,465 prior=       8,056 master=       8,465 DIFF d=-409
+   i24: same=      29,297 prior=      27,935 master=      29,297 DIFF d=-1,362
+   i25: same=     -75,838 prior=     -74,476 master=     -75,838 DIFF d=1,362
+   i27: same=      14,284 prior=      15,646 master=      14,284 DIFF d=1,362
+== KR0083 푸본현대생명보험 2024.2Q div=OFS/OFS
+   i 1: same=     -13,132 prior=     -13,132 master=     -13,132 
+   i17: same=      45,968 prior=      41,857 master=      45,968 DIFF d=-4,111
+   i19: same=    -150,710 prior=    -154,822 master=    -150,710 DIFF d=-4,111
+   i20: same=      32,836 prior=      28,724 master=      32,836 DIFF d=-4,111
+   i21: same=       2,696 prior=       2,696 master=       2,696 
+   i22: same=      35,532 prior=      31,421 master=      35,532 DIFF d=-4,111
+   i23: same=       8,294 prior=       7,344 master=       8,294 DIFF d=-950
+   i24: same=      27,238 prior=      24,077 master=      27,238 DIFF d=-3,162
+   i25: same=    -195,545 prior=    -192,383 master=    -195,545 DIFF d=3,162
+   i27: same=    -126,054 prior=    -122,892 master=    -126,054 DIFF d=3,162
+== KR0083 푸본현대생명보험 2024.3Q div=OFS/OFS
+   i 1: same=     -19,669 prior=     -19,669 master=     -19,669 
+   i17: same=     -67,391 prior=     -74,853 master=     -67,391 DIFF d=-7,462
+   i19: same=    -224,389 prior=    -231,851 master=    -224,389 DIFF d=-7,462
+   i20: same=     -87,059 prior=     -94,522 master=     -87,059 DIFF d=-7,462
+   i21: same=       2,546 prior=       2,546 master=       2,546 
+   i22: same=     -84,514 prior=     -91,976 master=     -84,514 DIFF d=-7,462
+   i23: same=     -19,776 prior=     -21,500 master=     -19,776 DIFF d=-1,724
+   i24: same=     -64,737 prior=     -70,476 master=     -64,737 DIFF d=-5,739
+   i25: same=    -148,840 prior=    -143,102 master=    -148,840 DIFF d=5,739
+   i27: same=     265,227 prior=    -259,488 master=    -265,227 DIFF d=-524,715
+   i28: same=       5,322 prior=      -5,322 master=      -5,322 DIFF d=-10,644
+   i30: same=         537 prior=        -537 master=        -537 DIFF d=-1,073
+== KR0083 푸본현대생명보험 2024.4Q div=OFS/OFS
+   i 1: same=     -59,817 prior=     -59,817 master=     -59,817 
+   i17: same=      14,811 prior=       3,566 master=      14,811 DIFF d=-11,245
+   i19: same=    -298,524 prior=    -309,769 master=    -298,524 DIFF d=-11,245
+   i20: same=     -45,006 prior=     -56,251 master=     -45,006 DIFF d=-11,245
+   i21: same=       1,133 prior=       1,133 master=       1,133 
+   i22: same=     -43,873 prior=     -55,118 master=     -43,873 DIFF d=-11,245
+   i23: same=      -9,829 prior=     -12,426 master=      -9,829 DIFF d=-2,598
+   i24: same=     -34,044 prior=     -42,691 master=     -34,044 DIFF d=-8,647
+   i25: same=    -342,851 prior=    -334,101 master=    -342,851 DIFF d=8,750
+   i26: same=     -43,582 prior=     -43,479 master=     -43,582 DIFF d=102
+   i27: same=    -298,379 prior=    -289,732 master=    -298,379 DIFF d=8,647
+== KR0087 동양생명 2023.4Q div=OFS/OFS
+   i 1: same=     234,128 prior=     234,128 master=     234,128 
+   i17: same=     125,031 prior=      84,954 master=     125,031 DIFF d=-40,077
+   i19: same=  -1,064,875 prior=  -1,104,952 master=  -1,064,875 DIFF d=-40,077
+   i20: same=     359,159 prior=     319,082 master=     359,159 DIFF d=-40,077
+   i21: same=      13,675 prior=      13,675 master=      13,675 
+   i22: same=     372,834 prior=     332,757 master=     372,834 DIFF d=-40,077
+   i23: same=      77,088 prior=      67,830 master=      77,088 DIFF d=-9,258
+   i24: same=     295,746 prior=     264,927 master=     295,746 DIFF d=-30,819
+   i25: same=    -338,572 prior=    -307,766 master=    -338,572 DIFF d=30,806
+   i27: same=  -1,152,111 prior=  -1,121,305 master=  -1,152,111 DIFF d=30,806
+== KR0087 동양생명 2024.1Q div=OFS/OFS
+   i 1: same=      56,272 prior=      56,272 master=      56,272 
+   i17: same=      49,235 prior=      37,409 master=      49,235 DIFF d=-11,826
+   i19: same=    -247,974 prior=    -259,800 master=    -247,974 DIFF d=-11,826
+   i20: same=     105,507 prior=      93,681 master=     105,507 DIFF d=-11,826
+   i21: same=       2,356 prior=       2,356 master=       2,356 
+   i22: same=     107,863 prior=      96,037 master=     107,863 DIFF d=-11,826
+   i23: same=      19,378 prior=      16,646 master=      19,378 DIFF d=-2,732
+   i24: same=      88,485 prior=      79,391 master=      88,485 DIFF d=-9,094
+   i25: same=    -382,468 prior=    -373,373 master=    -382,468 DIFF d=9,094
+   i27: same=     -94,625 prior=     -85,531 master=     -94,625 DIFF d=9,094
+== KR0087 동양생명 2024.2Q div=OFS/OFS
+   i 1: same=     136,848 prior=     136,848 master=     136,848 
+   i17: same=      83,254 prior=      68,597 master=      83,254 DIFF d=-14,657
+   i19: same=    -520,634 prior=    -535,290 master=    -520,634 DIFF d=-14,657
+   i20: same=     220,103 prior=     205,446 master=     220,103 DIFF d=-14,657
+   i21: same=        -152 prior=        -152 master=        -152 
+   i22: same=     219,951 prior=     205,294 master=     219,951 DIFF d=-14,657
+   i23: same=      44,608 prior=      41,222 master=      44,608 DIFF d=-3,386
+   i24: same=     175,343 prior=     164,072 master=     175,343 DIFF d=-11,271
+   i25: same=    -806,375 prior=    -795,104 master=    -806,375 DIFF d=11,271
+   i27: same=    -639,819 prior=    -628,548 master=    -639,819 DIFF d=11,271
+== KR0087 동양생명 2024.3Q div=OFS/OFS
+   i 1: same=     233,397 prior=     233,397 master=     233,397 
+   i17: same=     104,547 prior=      87,858 master=     104,547 DIFF d=-16,689
+   i19: same=    -720,765 prior=    -737,453 master=    -720,765 DIFF d=-16,688
+   i20: same=     337,944 prior=     321,255 master=     337,944 DIFF d=-16,689
+   i21: same=      -3,478 prior=      -3,477 master=      -3,478 
+   i22: same=     334,466 prior=     317,778 master=     334,466 DIFF d=-16,688
+   i23: same=      68,746 prior=      64,891 master=      68,746 DIFF d=-3,855
+   i24: same=     265,720 prior=     252,887 master=     265,720 DIFF d=-12,833
+   i25: same=  -1,011,265 prior=    -998,432 master=  -1,011,265 DIFF d=12,833
+   i27: same=  -1,339,372 prior=  -1,326,539 master=  -1,339,372 DIFF d=12,833
+== KR0099 KB라이프생명 2023.3Q div=OFS/OFS
+   i 1: same=     207,078 prior=     215,120 master=     207,078 DIFF d=8,042
+   i17: same=     189,878 prior=     180,415 master=     189,878 DIFF d=-9,463
+   i19: same=    -764,100 prior=    -773,564 master=    -764,100 DIFF d=-9,464
+   i20: same=     396,956 prior=     395,535 master=     396,956 DIFF d=-1,421
+   i21: same=        -704 prior=        -704 master=        -704 
+   i22: same=     396,252 prior=     394,831 master=     396,252 DIFF d=-1,421
+   i23: same=      99,378 prior=      98,969 master=      99,378 DIFF d=-409
+   i24: same=     296,874 prior=     295,862 master=     296,874 DIFF d=-1,012
+   i25: same=     290,911 prior=     283,175 master=     290,911 DIFF d=-7,736
+   i27: same=     536,004 prior=     528,267 master=     536,004 DIFF d=-7,737
+   i31: same=     587,785 prior=     579,037 master=     587,785 DIFF d=-8,748
+   i32: same=        -128 prior=         299 master=        -128 DIFF d=427
+== KR0099 KB라이프생명 2023.4Q div=OFS/OFS
+   i 1: same=     236,601 prior=     249,794 master=     236,601 DIFF d=13,193
+   i17: same=     119,185 prior=      76,008 master=     119,185 DIFF d=-43,177
+   i19: same=  -1,227,267 prior=  -1,270,444 master=  -1,227,267 DIFF d=-43,177
+   i20: same=     355,786 prior=     325,802 master=     355,786 DIFF d=-29,984
+   i21: same=      -5,768 prior=      -5,767 master=      -5,768 
+   i22: same=     350,018 prior=     320,035 master=     350,018 DIFF d=-29,983
+   i23: same=      91,507 prior=      83,632 master=      91,507 DIFF d=-7,875
+   i24: same=     258,511 prior=     236,403 master=     258,511 DIFF d=-22,108
+   i25: same=      56,787 prior=     126,232 master=      56,787 DIFF d=69,445
+   i27: same=  -1,059,866 prior=    -990,226 master=  -1,059,866 DIFF d=69,640
+   i30: same=      -2,169 prior=      -2,364 master=      -2,169 DIFF d=-195
+   i31: same=     315,298 prior=     362,635 master=     315,298 DIFF d=47,337
+== KR0099 KB라이프생명 2024.1Q div=OFS/OFS
+   i 1: same=      80,418 prior=      82,810 master=      80,418 DIFF d=2,392
+   i17: same=      63,343 prior=      48,560 master=      63,343 DIFF d=-14,783
+   i19: same=    -293,212 prior=    -307,995 master=    -293,212 DIFF d=-14,783
+   i20: same=     143,761 prior=     131,370 master=     143,761 DIFF d=-12,391
+   i21: same=         392 prior=         392 master=         392 
+   i22: same=     144,153 prior=     131,762 master=     144,153 DIFF d=-12,391
+   i23: same=      38,796 prior=      35,525 master=      38,796 DIFF d=-3,271
+   i24: same=     105,357 prior=      96,237 master=     105,357 DIFF d=-9,120
+   i25: same=    -466,143 prior=    -447,994 master=    -466,143 DIFF d=18,149
+   i27: same=     -77,068 prior=     -58,904 master=     -77,068 DIFF d=18,164
+   i31: same=    -360,786 prior=    -351,757 master=    -360,786 DIFF d=9,029
+   i32: same=        -274 prior=         134 master=        -274 DIFF d=408
+== KR0099 KB라이프생명 2024.2Q div=OFS/OFS
+   i 1: same=     159,757 prior=     163,793 master=     159,757 DIFF d=4,036
+   i17: same=     126,713 prior=      98,885 master=     126,713 DIFF d=-27,828
+   i19: same=    -680,137 prior=    -707,965 master=    -680,137 DIFF d=-27,828
+   i20: same=     286,470 prior=     262,678 master=     286,470 DIFF d=-23,792
+   i21: same=        -362 prior=        -363 master=        -362 
+   i22: same=     286,108 prior=     262,315 master=     286,108 DIFF d=-23,793
+   i23: same=      74,113 prior=      67,832 master=      74,113 DIFF d=-6,281
+   i24: same=     211,995 prior=     194,483 master=     211,995 DIFF d=-17,512
+   i25: same=    -862,281 prior=    -796,611 master=    -862,281 DIFF d=65,670
+   i27: same=    -699,580 prior=    -633,830 master=    -699,580 DIFF d=65,750
+   i31: same=    -650,286 prior=    -602,128 master=    -650,286 DIFF d=48,158
+   i32: same=      -1,357 prior=         175 master=      -1,357 DIFF d=1,532
+== KR0099 KB라이프생명 2024.3Q div=OFS/OFS
+   i 1: same=     236,457 prior=     241,218 master=     236,457 DIFF d=4,761
+   i17: same=     153,712 prior=     127,237 master=     153,712 DIFF d=-26,475
+   i19: same=    -835,090 prior=    -861,565 master=    -835,090 DIFF d=-26,475
+   i20: same=     390,169 prior=     368,455 master=     390,169 DIFF d=-21,714
+   i21: same=        -362 prior=        -362 master=        -362 
+   i22: same=     389,807 prior=     368,093 master=     389,807 DIFF d=-21,714
+   i23: same=      94,371 prior=      88,638 master=      94,371 DIFF d=-5,733
+   i24: same=     295,436 prior=     279,455 master=     295,436 DIFF d=-15,981
+   i25: same=  -1,158,766 prior=  -1,009,432 master=  -1,158,766 DIFF d=149,334
+   i27: same=  -1,553,936 prior=  -1,404,359 master=  -1,553,936 DIFF d=149,577
+   i31: same=    -863,330 prior=    -729,977 master=    -863,330 DIFF d=133,353
+   i32: same=      -2,706 prior=         266 master=      -2,706 DIFF d=2,972
+== KR0104 농협생명보험 2023.3Q div=OFS/OFS
+   i 1: same=     276,594 prior=     276,594 master=     276,594 
+   i17: same=     -40,273 prior=      18,306 master=     -40,273 DIFF d=58,579
+   i18: same=   1,076,805 prior=   1,135,384 master=   1,076,805 DIFF d=58,579
+   i19: same=  -1,117,078 prior=  -1,117,078 master=  -1,117,078 
+   i20: same=     236,321 prior=     294,900 master=     236,321 DIFF d=58,579
+   i21: same=     -65,493 prior=     -65,492 master=     -65,493 
+   i22: same=     170,828 prior=     229,407 master=     170,828 DIFF d=58,579
+   i23: same=      35,052 prior=      48,583 master=      35,052 DIFF d=13,531
+   i24: same=     135,776 prior=     180,824 master=     135,776 DIFF d=45,048
+   i31: same=     618,220 prior=     663,268 master=     618,220 DIFF d=45,048
+== KR0150 서울보증보험 2025.1Q div=OFS/OFS
+   i 1: same=       2,710 prior=       2,710 master=       2,710 
+   i16: same=      11,967 prior=     -11,967 master=      11,967 DIFF d=-23,935
+   i17: same=      23,670 prior=      23,670 master=      23,670 
+   i18: same=      50,360 prior=     -25,868 master=      50,360 DIFF d=-76,228
+   i19: same=     -26,690 prior=      49,538 master=     -26,690 DIFF d=76,228
+   i20: same=      26,379 prior=      26,379 master=      26,379 
+   i21: same=      -1,114 prior=      -1,114 master=      -1,114 
+   i22: same=      25,266 prior=      25,266 master=      25,266 
+   i23: same=       6,194 prior=      -6,194 master=       6,194 DIFF d=-12,389
+   i24: same=      19,072 prior=      19,072 master=      19,072 
+== KR0150 서울보증보험 2025.2Q div=OFS/OFS
+   i 1: same=      45,780 prior=      45,780 master=      45,780 
+   i16: same=     -23,261 prior=      23,261 master=      23,261 DIFF d=46,521
+   i17: same=      64,829 prior=      64,829 master=      64,829 
+   i18: same=     -52,505 prior=     105,512 master=     -52,505 DIFF d=158,017
+   i19: same=     117,334 prior=     -40,683 master=     117,334 DIFF d=-158,017
+   i20: same=     110,609 prior=     110,609 master=     110,609 
+   i21: same=        -424 prior=        -424 master=        -424 
+   i22: same=     110,185 prior=     110,185 master=     110,185 
+   i23: same=     -25,911 prior=      25,911 master=      25,911 DIFF d=51,823
+   i24: same=      84,274 prior=      84,274 master=      84,274 

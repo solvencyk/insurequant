@@ -1,0 +1,112 @@
+== SQ_CSM_DERIV (pinned HEAD)  cells=2358  mismatch=0
+== SQ_CSM_ROLL tol=max(0.1%,2억)  evaluated=333 fail=5 skip=60 ({'CHAIN_BREAK(q-1 bucket absent)': 60})
+== SQ_CSM_ROLL tol=max(0.2%,2억)  evaluated=333 fail=5 skip=60 ({'CHAIN_BREAK(q-1 bucket absent)': 60})
+   FAIL KR0001 메리츠화재해상보험 2023.3Q gap=+4007.30억 = YTDresid(q)+0.00 - YTDresid(q-1)+0.10 + FYopen drift(q-1 minus q)+4007.40  | FY opens by quarter {'2023.1Q': 100383.8, '2023.2Q': 100383.8, '2023.3Q': 96376.4, '2023.4Q': 96376.4} | prior FY 4Q close None | closes {'2023.1Q': 100033.5, '2023.2Q': 100684.2, '2023.3Q': 103383.0, '2023.4Q': 104687.3}
+   FAIL KR0003 롯데손해보험 2024.4Q gap=+105.30억 = YTDresid(q)-0.10 - YTDresid(q-1)+0.00 + FYopen drift(q-1 minus q)+105.40  | FY opens by quarter {'2024.1Q': 23966.2, '2024.2Q': 23966.2, '2024.3Q': 23966.2, '2024.4Q': 23860.8} | prior FY 4Q close 23966.2 | closes {'2024.1Q': 24305.8, '2024.2Q': 24598.0, '2024.3Q': 24529.9, '2024.4Q': 23201.6}
+   FAIL KR0068 한화생명 2023.3Q gap=-950.10억 = YTDresid(q)+0.10 - YTDresid(q-1)+0.00 + FYopen drift(q-1 minus q)-950.20  | FY opens by quarter {'2023.1Q': 96679.3, '2023.2Q': 96679.3, '2023.3Q': 97629.5, '2023.4Q': 97629.5} | prior FY 4Q close None | closes {'2023.1Q': 97125.1, '2023.2Q': 101167.4, '2023.3Q': 97991.1, '2023.4Q': 92384.9}
+   FAIL KR0073 교보생명보험 2023.3Q gap=+960.03억 = YTDresid(q)+0.00 - YTDresid(q-1)+0.00 + FYopen drift(q-1 minus q)+960.03  | FY opens by quarter {'2023.1Q': 55337.66, '2023.2Q': 55337.66, '2023.3Q': 54377.63, '2023.4Q': 54377.63} | prior FY 4Q close None | closes {'2023.1Q': 58981.52, '2023.2Q': 60880.94, '2023.3Q': 62276.75, '2023.4Q': 58249.23}
+   FAIL KR0099 KB라이프생명 2023.4Q gap=-126.40억 = YTDresid(q)-0.00 - YTDresid(q-1)+0.10 + FYopen drift(q-1 minus q)-126.30  | FY opens by quarter {'2023.1Q': 31201.3, '2023.2Q': 31201.3, '2023.3Q': 31201.3, '2023.4Q': 31327.6} | prior FY 4Q close None | closes {'2023.1Q': 31516.3, '2023.2Q': 31905.5, '2023.3Q': 32139.5, '2023.4Q': 30176.4}
+   skip detail: KR0004 예별손해보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0004 예별손해보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0004 예별손해보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0029 AIG손해보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0029 AIG손해보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0029 AIG손해보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0049 악사손해보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0049 악사손해보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0049 악사손해보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0050 하나손해보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0050 하나손해보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0050 하나손해보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0074 라이나생명보험 2023.3Q CHAIN_BREAK(q-1 bucket absent); KR0075 비엔피파리바카디프생명보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0075 비엔피파리바카디프생명보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0075 비엔피파리바카디프생명보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0076 아이엠라이프생명보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0076 아이엠라이프생명보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0076 아이엠라이프생명보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0080 에이아이에이생명보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0080 에이아이에이생명보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0080 에이아이에이생명보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0095 메트라이프생명보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0095 메트라이프생명보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0095 메트라이프생명보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0097 하나생명보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0097 하나생명보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0097 하나생명보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR0100 처브라이프생명보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR0100 처브라이프생명보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR0100 처브라이프생명보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1010 교보라이프플래닛생명보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR1010 교보라이프플래닛생명보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1010 교보라이프플래닛생명보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1011 IBK연금보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR1011 IBK연금보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1011 IBK연금보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1098 카카오페이손해보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1098 카카오페이손해보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1101 뮌헨재보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR1101 뮌헨재보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1101 뮌헨재보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1102 스위스리아시아 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR1102 스위스리아시아 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1102 스위스리아시아 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1103 제네럴재보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR1103 제네럴재보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1103 제네럴재보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1104 하노버재보험 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR1104 하노버재보험 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1104 하노버재보험 2025.4Q CHAIN_BREAK(q-1 bucket absent); KR1105 알지에이리인슈어런스 2023.4Q CHAIN_BREAK(q-1 bucket absent); KR1105 알지에이리인슈어런스 2024.4Q CHAIN_BREAK(q-1 bucket absent); KR1105 알지에이리인슈어런스 2025.4Q CHAIN_BREA
+   VAL_MISSING buckets: 
+
+== SQ_PL_DERIV  cells=13731  mismatch=430  by-kind={'diff': 430}
+   DERIV KR0003 롯데손해보험 2023.3Q item16 값=22804.267899 당분기=None expected=10404.267898999999 [diff]
+   DERIV KR0004 예별손해보험 2023.4Q item16 값=3000.0 당분기=None expected=500.0 [diff]
+   DERIV KR0004 예별손해보험 2024.4Q item1 값=-59535.8318 당분기=None expected=-96298.331299 [diff]
+   DERIV KR0004 예별손해보험 2024.4Q item16 값=5464.34801 당분기=None expected=264.3480099999997 [diff]
+   DERIV KR0004 예별손해보험 2024.4Q item22 값=-81804.499824 당분기=None expected=-109640.600289 [diff]
+   DERIV KR0004 예별손해보험 2024.4Q item23 값=61526.920608 당분기=None expected=61526.920608 [diff]
+   DERIV KR0004 예별손해보험 2024.4Q item24 값=-143331.420432 당분기=None expected=-171167.520897 [diff]
+   DERIV KR0004 예별손해보험 2025.3Q item1 값=12730.219901 당분기=None expected=23325.748749 [diff]
+   DERIV KR0004 예별손해보험 2025.3Q item22 값=7322.020577 당분기=None expected=35005.475979 [diff]
+   DERIV KR0004 예별손해보험 2025.3Q item23 값=0.0 당분기=None expected=-8079.68111 [diff]
+   DERIV KR0004 예별손해보험 2025.3Q item24 값=7322.020577 당분기=None expected=43085.157089 [diff]
+   DERIV KR0004 예별손해보험 2025.4Q item1 값=-22136.117075 당분기=None expected=-34866.336976 [diff]
+   DERIV KR0004 예별손해보험 2025.4Q item22 값=-148346.046092 당분기=None expected=-155668.066669 [diff]
+   DERIV KR0004 예별손해보험 2025.4Q item23 값=5941.13861 당분기=None expected=5941.13861 [diff]
+   DERIV KR0004 예별손해보험 2025.4Q item24 값=-154287.184702 당분기=None expected=-161609.205279 [diff]
+   DERIV KR0005 흥국화재 2023.3Q item16 값=13225.0 당분기=None expected=4925.0 [diff]
+   DERIV KR0005 흥국화재 2024.3Q item16 값=18000.0 당분기=None expected=6754.0 [diff]
+   DERIV KR0005 흥국화재 2024.4Q item16 값=27600.0 당분기=None expected=9600.0 [diff]
+   DERIV KR0009 현대해상 2023.3Q item1 값=754479.376712 당분기=None expected=254979.376712 [diff]
+   DERIV KR0009 현대해상 2023.3Q item16 값=35264.198998 당분기=None expected=26464.198998 [diff]
+   DERIV KR0009 현대해상 2023.3Q item22 값=1047009.744772 당분기=None expected=282009.744772 [diff]
+   DERIV KR0009 현대해상 2023.3Q item23 값=260654.437994 당분기=None expected=73654.437994 [diff]
+   DERIV KR0009 현대해상 2023.3Q item24 값=786355.306778 당분기=None expected=208355.30677799997 [diff]
+   DERIV KR0029 AIG손해보험 2023.4Q item1 값=93233.646695 당분기=None expected=15633.646695000003 [diff]
+   DERIV KR0029 AIG손해보험 2023.4Q item16 값=23278.474793 당분기=None expected=7278.474793000001 [diff]
+   DERIV KR0029 AIG손해보험 2023.4Q item22 값=107306.701135 당분기=None expected=19506.701134999996 [diff]
+   DERIV KR0029 AIG손해보험 2023.4Q item23 값=29932.074249 당분기=None expected=10032.074249000001 [diff]
+   DERIV KR0029 AIG손해보험 2023.4Q item24 값=77374.626886 당분기=None expected=9374.626885999998 [diff]
+   DERIV KR0029 AIG손해보험 2024.4Q item1 값=54251.566556 당분기=None expected=25151.566555999998 [diff]
+   DERIV KR0029 AIG손해보험 2024.4Q item16 값=18836.138297 당분기=None expected=2236.1382970000013 [diff]
+   DERIV KR0029 AIG손해보험 2024.4Q item22 값=75365.744239 당분기=None expected=29965.744239000007 [diff]
+   DERIV KR0029 AIG손해보험 2024.4Q item23 값=17613.093152 당분기=None expected=6113.093152000001 [diff]
+   DERIV KR0029 AIG손해보험 2024.4Q item24 값=57752.651087 당분기=None expected=23852.651087 [diff]
+   DERIV KR0029 AIG손해보험 2025.4Q item1 값=39760.90519 당분기=None expected=9960.905189999998 [diff]
+   DERIV KR0029 AIG손해보험 2025.4Q item16 값=32987.424721 당분기=None expected=8187.424721000003 [diff]
+   DERIV KR0029 AIG손해보험 2025.4Q item22 값=64670.382913 당분기=None expected=15570.382913000001 [diff]
+   DERIV KR0029 AIG손해보험 2025.4Q item23 값=14836.154834 당분기=None expected=3936.154834000001 [diff]
+   DERIV KR0029 AIG손해보험 2025.4Q item24 값=49834.228079 당분기=None expected=11634.228079 [diff]
+   DERIV KR0032 NH농협손해보험 2023.2Q item16 값=41900.0 당분기=None expected=20097.0 [diff]
+   DERIV KR0032 NH농협손해보험 2023.3Q item16 값=79739.314294 당분기=None expected=37839.314293999996 [diff]
+== PL census 값 present & 값_당분기 None: {'PREV_VAL_NONE': 997, 'UNEXPLAINED': 430, 'REGISTERED_null_dangi': 1, 'CHAIN_BREAK(q-1 bucket absent)': 35}
+   CHAIN_BREAK buckets: KR0150 서울보증보험 2023.4Q(5), KR0150 서울보증보험 2024.4Q(13), KR1104 하노버재보험 2025.4Q(9), KR1108 마이브라운반려동물전문보험 2025.2Q(8)
+   PREV_VAL_NONE buckets (102): KR0001 2023.3Q(10), KR0002 2023.3Q(22), KR0003 2023.2Q(6), KR0003 2023.3Q(8), KR0003 2023.4Q(12), KR0004 2023.4Q(3), KR0004 2024.4Q(12), KR0004 2025.4Q(13), KR0005 2023.3Q(21), KR0008 2025.4Q(6), KR0009 2023.3Q(14), KR0009 2023.4Q(8), KR0009 2024.4Q(6), KR0010 2023.3Q(8), KR0010 2024.4Q(1), KR0010 2025.2Q(1), KR0029 2023.4Q(8), KR0029 2024.4Q(12), KR0029 2025.4Q(12), KR0032 2023.3Q(15), KR0032 2023.4Q(4), KR0049 2023.4Q(19), KR0049 2024.4Q(19), KR0049 2025.4Q(19), KR0050 2023.4Q(10), KR0050 2024.4Q(10), KR0050 2025.4Q(10), KR0051 2023.4Q(6), KR0051 2024.4Q(18), KR0051 2025.4Q(18), KR0068 2023.3Q(14), KR0069 2023.3Q(20), KR0070 2023.3Q(12), KR0070 2024.4Q(3), KR0071 2023.2Q(2), KR0071 2023.3Q(20), KR0071 2026.2Q(2), KR0072 2023.2Q(6), KR0072 2023.3Q(11), KR0074 2023.3Q(1), KR0074 2023.4Q(18), KR0074 2024.4Q(18), KR0074 2025.4Q(18), KR0075 2023.4Q(7), KR0075 2024.4Q(18), KR0075 2025.4Q(18), KR0076 2023.4Q(12), KR0076 2024.4Q(12), KR0076 2025.4Q(12), KR0079 2023.3Q(7), KR0079 2025.2Q(2), KR0080 2023.4Q(11), KR0080 2024.4Q(15), KR0080 2025.4Q(19), KR0082 2023.3Q(8), KR0083 2023.3Q(10), KR0087 2023.3Q(9), KR0087 2023.4Q(3), KR0087 2024.4Q(3), KR0087 2025.4Q(1), KR0094 2023.3Q(15), KR0095 2023.4Q(3), KR0095 2024.4Q(19), KR0095 2025.4Q(19), KR0097 2023.4Q(8), KR0097 2024.4Q(17), KR0097 2025.4Q(19), KR0099 2023.3Q(15), KR0099 2024.4Q(1), KR0100 2023.4Q(17), KR0100 2024.4Q(17), KR0100 2025.4Q(17), KR0104 2023.3Q(20), KR1000 2023.3Q(15), KR1010 2023.4Q(19), KR1010 2024.4Q(18), KR1010 2025.4Q(12), KR1011 2023.4Q(19), KR1011 2024.4Q(19), KR1011 2025.4Q(19), KR1098 2023.4Q(9), KR1098 2024.4Q(9), KR1098 2025.4Q(9), KR1101 2023.4Q(1), KR1101 2024.4Q(1), KR1101 2025.4Q(1), KR1102 2023.4Q(1), KR1102 2024.4Q(1), KR1102 2025.4Q(1), KR1103 2023.4Q(1), KR1103 2024.4Q(1), KR1103 2025.4Q(1), KR1104 2023.4Q(1), KR1105 2023.4Q(1), KR1105 2024.4Q(1), KR1105 2025.4Q(1), KR1106 2023.4Q(1), KR1106 2024.4Q(1), KR1106 2025.4Q(1), KR1107 2023.4Q(1), KR1107 2024.4Q(1), KR1107 2025.4Q(1)
+   UNEXPLAINED: KR0003 2023.3Q item16, KR0004 2023.4Q item16, KR0004 2024.4Q item1, KR0004 2024.4Q item16, KR0004 2024.4Q item22, KR0004 2024.4Q item23, KR0004 2024.4Q item24, KR0004 2025.4Q item1, KR0004 2025.4Q item22, KR0004 2025.4Q item23, KR0004 2025.4Q item24, KR0005 2023.3Q item16, KR0005 2024.3Q item16, KR0005 2024.4Q item16, KR0009 2023.3Q item1, KR0009 2023.3Q item16, KR0009 2023.3Q item22, KR0009 2023.3Q item23, KR0009 2023.3Q item24, KR0029 2023.4Q item1, KR0029 2023.4Q item16, KR0029 2023.4Q item22, KR0029 2023.4Q item23, KR0029 2023.4Q item24, KR0029 2024.4Q item1, KR0029 2024.4Q item16, KR0029 2024.4Q item22, KR0029 2024.4Q item23, KR0029 2024.4Q item24, KR0029 2025.4Q item1, KR0029 2025.4Q item16, KR0029 2025.4Q item22, KR0029 2025.4Q item23, KR0029 2025.4Q item24, KR0032 2023.2Q item16, KR0032 2023.3Q item16, KR0032 2023.3Q item22, KR0032 2023.3Q item23, KR0032 2023.3Q item24, KR0049 2023.4Q item1, KR0049 2023.4Q item16, KR0049 2023.4Q item22, KR0049 2023.4Q item23, KR0049 2023.4Q item24, KR0049 2024.4Q item1, KR0049 2024.4Q item16, KR0049 2024.4Q item22, KR0049 2024.4Q item23, KR0049 2024.4Q item24, KR0049 2025.4Q item1, KR0049 2025.4Q item16, KR0049 2025.4Q item22, KR0049 2025.4Q item23, KR0049 2025.4Q item24, KR0050 2023.4Q item1, KR0050 2023.4Q item16, KR0050 2023.4Q item22, KR0050 2023.4Q item23, KR0050 2023.4Q item24, KR0050 2024.4Q item1, KR0050 2024.4Q item16, KR0050 2024.4Q item22, KR0050 2024.4Q item23, KR0050 2024.4Q item24, KR0050 2025.4Q item1, KR0050 2025.4Q item16, KR0050 2025.4Q item22, KR0050 2025.4Q item23, KR0050 2025.4Q item24, KR0051 2023.4Q item1, KR0051 2023.4Q item16, KR0051 2023.4Q item22, KR0051 2023.4Q item23, KR0051 2023.4Q item24, KR0051 2024.4Q item1, KR0051 2024.4Q item16, KR0051 2024.4Q item22, KR0051 2024.4Q item23, KR0051 2024.4Q item24, KR0051 2025.4Q item1, KR0051 2025.4Q item16, KR0051 2025.4Q item22, KR0051 2025.4Q item23, KR0051 2025.4Q item24, KR0069 2023.3Q item16, KR0069 2023.3Q item22, KR0069 2023.3Q item23, KR0069 2023.3Q
+
+== SQ_PL_EQS  evaluated=3189 pass=3165 fail=24  (YTD same engine: evaluated=3684 fail=14)
+   [REAL     ]   194P   0F  기타포괄손익 = FVOCI채무증권+보험계약금융(OCI)+위험회피파생상품+FVOCI지분증권+재보험금융(OCI)
+   [TAUTOLOGY]   567P   0F  당기순이익 = 세전-법인세
+   [REAL     ]   249P  13F  보험손익(dual)
+   [REAL     ]    28P  11F  보험손익(leg-coverage)
+   [PARTIAL  ]   287P   0F  생명장기손익 = 원수손익+재보험손익
+   [TAUTOLOGY]   273P   0F  생명장기원수손익 = 원수CSM상각+원수RA+원수예실차+기타원수
+   [TAUTOLOGY]   266P   0F  생명장기재보험손익 = 재보험CSM상각+재보험RA+재보험예실차+기타재보험
+   [TAUTOLOGY]   388P   0F  세전이익 = 영업이익+영업외손익
+   [REAL     ]   372P   0F  영업이익 = 보험손익+투자손익
+   [REAL     ]   254P   0F  총포괄손익 = 당기순이익+기타포괄손익
+   [TAUTOLOGY]   287P   0F  투자손익 = 투자이익+보험금융손익
+   fail classes: {'YTD_ALSO_FAILS': 20, 'DANGI_ONLY(both YTD pass)+set_dangi': 1, 'DANGI_ONLY(both YTD pass)': 3}
+   FAIL KR0099 KB라이프생명 2024.1Q [보험손익(dual)] lhs_q=80418.0 diff=+1136.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0099 KB라이프생명 2024.2Q [보험손익(dual)] lhs_q=79339.0 diff=-1136.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0073 교보생명보험 2023.3Q [보험손익(dual)] lhs_q=89281.8 diff=+8764.4  DANGI_ONLY(both YTD pass)+set_dangi  ytd_baselined=False
+   FAIL KR0087 동양생명 2023.1Q [보험손익(dual)] lhs_q=61068.3 diff=+6327.7  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0087 동양생명 2023.2Q [보험손익(dual)] lhs_q=55139.7 diff=+6232.3  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0001 메리츠화재해상보험 2023.2Q [보험손익(dual)] lhs_q=403070.0 diff=+463.2  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0001 메리츠화재해상보험 2023.3Q [보험손익(dual)] lhs_q=411097.6 diff=-825.7  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0094 신한라이프생명보험 2023.1Q [보험손익(leg-coverage)] lhs_q=133713.0 diff=-133713.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0094 신한라이프생명보험 2023.2Q [보험손익(leg-coverage)] lhs_q=178796.0 diff=-178796.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0094 신한라이프생명보험 2023.3Q [보험손익(leg-coverage)] lhs_q=182847.0 diff=-182847.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0072 케이디비생명보험 2023.2Q [보험손익(dual)] lhs_q=15553.6 diff=-2346.2  DANGI_ONLY(both YTD pass)  ytd_baselined=False
+   FAIL KR0072 케이디비생명보험 2023.3Q [보험손익(dual)] lhs_q=-18028.0 diff=+9241.6  DANGI_ONLY(both YTD pass)  ytd_baselined=False
+   FAIL KR0083 푸본현대생명보험 2023.1Q [보험손익(leg-coverage)] lhs_q=-16542.4 diff=+14542.4  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0083 푸본현대생명보험 2023.2Q [보험손익(leg-coverage)] lhs_q=3661.9 diff=-3661.9  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0083 푸본현대생명보험 2023.3Q [보험손익(leg-coverage)] lhs_q=757.6 diff=-757.6  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0068 한화생명 2023.1Q [보험손익(leg-coverage)] lhs_q=152373.0 diff=-152373.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0068 한화생명 2023.2Q [보험손익(leg-coverage)] lhs_q=244382.9 diff=-244382.9  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0068 한화생명 2023.3Q [보험손익(leg-coverage)] lhs_q=167782.8 diff=-167782.8  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0009 현대해상 2023.4Q [보험손익(leg-coverage)] lhs_q=-227988.7 diff=+676.9  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0009 현대해상 2025.3Q [보험손익(dual)] lhs_q=161430.0 diff=+48243.2  DANGI_ONLY(both YTD pass)  ytd_baselined=False
+   FAIL KR0071 흥국생명보험 2023.1Q [보험손익(leg-coverage)] lhs_q=128318.0 diff=-128318.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0005 흥국화재 2023.1Q [보험손익(dual)] lhs_q=85993.0 diff=-345.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0005 흥국화재 2025.1Q [보험손익(dual)] lhs_q=59132.0 diff=-714.0  YTD_ALSO_FAILS  ytd_baselined=True
+   FAIL KR0005 흥국화재 2025.2Q [보험손익(dual)] lhs_q=41229.0 diff=+714.0  YTD_ALSO_FAILS  ytd_baselined=True
+
+== SQ_PL_FYSUM  fail=12
+   FYSUM ('KR0073', '교보생명보험', 2023, '1', 232681.651806, 131034.467607)
+   FYSUM ('KR0073', '교보생명보험', 2023, '2', 269091.61822, 167444.434021)
+   FYSUM ('KR0073', '교보생명보험', 2023, '3', 265640.406074, 163993.221875)
+   FYSUM ('KR0073', '교보생명보험', 2023, '4', 627701.0, 525962.0)
+   FYSUM ('KR0073', '교보생명보험', 2023, '5', 138790.0, 138575.0)
+   FYSUM ('KR0073', '교보생명보험', 2023, '6', 30610.0, 25011.0)
+   FYSUM ('KR0073', '교보생명보험', 2023, '7', -531460.593926, -525554.778125)
+   FYSUM ('KR0073', '교보생명보험', 2023, '17', 603853.458701, 602638.258545)
+   FYSUM ('KR0073', '교보생명보험', 2023, '20', 836535.110507, 733672.726152)
+   FYSUM ('KR0073', '교보생명보험', 2023, '22', 839553.71999, 736691.335635)
+   FYSUM ('KR0073', '교보생명보험', 2023, '23', 207353.112783, 180197.443313)
+   FYSUM ('KR0073', '교보생명보험', 2023, '24', 632200.607207, 556493.892322)
+
+== SQ_AMORT  evaluated=327 fail=2  (tol = CSM_AMORT tol on |상각_q|)
+   AMORT KR0073 교보생명보험 2023.3Q resid_q=-1017.39억  ytd_resid(q)=0.0 ytd_resid(q-1)=0.0  ledger(q)=False ledger(q-1)=False
+   AMORT KR0083 푸본현대생명보험 2026.2Q resid_q=+0.15억  ytd_resid(q)=0.05 ytd_resid(q-1)=-0.1  ledger(q)=False ledger(q-1)=False

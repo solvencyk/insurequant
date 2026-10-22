@@ -1,0 +1,14 @@
+KR0068 restated H1 self-roll residual +0.00억
+   master 2023.2Q {1: 96679.3, 2: 13592.2, 3: 4520.1, 4: -8988.8, 5: -4635.4, 6: 101167.4}
+   master 2023.3Q {1: 97629.5, 2: 18559.5, 3: 2919.5, 4: -14433.9, 5: -6683.4, 6: 97991.1}
+   after swap: SQ roll 2023.3Q gap +0.06억 (before: see s1_sim)
+   after swap (2023.1Q NOT swapped): SQ roll 2023.2Q gap -950.26억 -> 2023.1Q must be refreshed too (FY2024 Q1 comparative)
+   WFY 2023 opens after swap: 1Q 96679.3 2Q 97629.46 3Q 97629.5
+   CSM_AMORT_IDENTITY 2023.2Q: PL item4(+4-1) 4635.41억 vs WF amort now 4635.4 / after swap 4514.16 -> residual now 0.01 after 121.25
+KR0001 restated H1 self-roll residual +0.00억
+   master 2023.2Q {1: 100383.8, 2: 8242.9, 3: 1457.6, 4: -3871.7, 5: -5528.3, 6: 100684.2}
+   master 2023.3Q {1: 96376.4, 2: 12197.6, 3: 2163.1, 4: 488.7, 5: -7842.8, 6: 103383.0}
+   after swap: SQ roll 2023.3Q gap -0.01억 (before: see s1_sim)
+   after swap (2023.1Q NOT swapped): SQ roll 2023.2Q gap +4007.41억 -> 2023.1Q must be refreshed too (FY2024 Q1 comparative)
+   WFY 2023 opens after swap: 1Q 100383.8 2Q 96376.39 3Q 96376.4
+   CSM_AMORT_IDENTITY 2023.2Q: PL item4(+4-1) 5528.32억 vs WF amort now 5528.3 / after swap 5150.14 -> residual now 0.02 after 378.18

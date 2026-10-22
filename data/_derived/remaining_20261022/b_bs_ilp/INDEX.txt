@@ -1,0 +1,39 @@
+KR0073 (Kyobo Life) IFRS17_BS + insurance_liability_portfolio vs latest comparative columns -- READ-ONLY measurement, 2026-10-22 (parser/ifrs17)
+Nothing here is read by any build or gate. No master, overlay, test or fixture was written. Python = C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, script files only.
+
+RESULT
+  proposed_cells.csv  tier A, 9 cells that close:  BS 2023.4Q items 1,2,3,20,31 (FY2024/FY2025 annual separate BS, restated 2023-12-31 column) + BS 2024.4Q item 1
+                      (completes the 2026-10-12 partial block) + ILP 2023.4Q items 10,14,15 (LRC restated; 10 is +0.01 rounding).
+  hold_cells.csv      27 rows: tier B (AOCI 5, ties PL OCI exactly), tier C (equity 3/31 of interim quarters, ILP 14/15 2023.1Q-3Q: block cannot close),
+                      tier ALT (2023.4Q items 1-4 on the later FY2025 policy-change opening, owner decision).
+  Closure 2023.4Q:    1 = 2 + 3 residual 0.000; d(2) = d(20) = -290,457.894 mn; d(1) = d(2) + d(3); RE roll 5,920,420.192 + 632,200.607 - 51,250 - 74,244.917 = 6,427,125.882
+                      (= item 31 and PL FY2023 net income 632,201); ILP 10 + 14 = 15; ILP15 == restated BS20/100 (872,428.79).
+  Restatement, not basis: every column read is the SEPARATE statement; master = original separate column for all 14 quarters (s10: every own-filing cell equal except item 13 of 2023.1Q/2Q, a definition gap);
+                      consolidated assets differ by ~15 tn won. LIC (items 10,13) is NOT restated (<= 0.02 eok at all quarters); the restatement hits LRC/BS20/DTA/RE.
+  Interim quarters:   later filings print only equity (statement of changes in equity) for 2023.1Q-3Q, 2024.1Q-2Q, 2025.1Q-2Q; assets and liabilities of those quarters are
+                      never printed. 2023.1Q/2Q are on the FSS-guideline (policy-change) basis only, the Nov-2024 error correction of 2023 H1 was never printed.
+                      2024.3Q: FY2025 Q3 comparative == master (no restatement). 2025.3Q/4Q, 2026.x: no change.
+  Existing gaps seen: 2024.4Q block off by 431.5 mn today (BS_IDENTITY tolerance 0.1% hides it); 2024.1Q/2Q ILP15 is on the restated basis while BS20 is original
+                      (documented in ilp_restated_comparative.json); item 13 of 2023.1Q/2Q excludes 기타수취채권 (905,497 / 818,508 mn) unlike 2023.3Q+ (out of scope, original vintage).
+
+SCREENS (grep of the HTML): IFRS17.html Panel 1 (재무상태표 T자, IFRS17_BS.json); IFRS17.html section 3 (보험계약부채 시계열, data/csm_combo/panel_csm_combo.json = ILP + BS20,
+  restated map meta.restated from ilp_restated_comparative.json); compare.html (data/compare/panel_compare.json: ROE uses BS item 3 of the prior 4Q, extra metrics 자본총계/자산총계).
+  index.html reads only csm_gen/csm_vfa of the combo panel (no effect). Exports: public_exports/17BS.json, 보험계약부채.json, xlsx sheets 17BS and 보험계약부채.
+  ROE effect of 2023.4Q equity 9,762,392 -> 9,975,755 (s17): 2024.1Q 14.64 -> 14.48, 2Q 15.20 -> 15.02, 3Q 14.30 -> 14.13, 4Q 8.19 -> 8.09 (screen 1-decimal: 14.6->14.5, 15.2->15.0, 14.3->14.1, 8.2->8.1).
+
+GOLDEN: yes. BS cells persist only through data/dart/viz/bs_manual_overrides.json, which build_ifrs17_bs.py reads; tests/test_ifrs17_bs_golden.py (about 8 min) compares the rebuilt
+  IFRS17_BS.json sha256, so it needs --update after the apply (validation's job, precedent b8c37fff), plus validate_golden_input_fingerprints (ifrs17_bs inputs/outputs).
+  ILP has no golden and no overlay (guarded loader, rerun after any rebuild). GOLD_OVERLAY_CENSUS (CSM/PL only) is not touched by BS cells.
+
+FILES (all top-level)
+  s4_bs_rows.py -> bs_rows_<FY>.txt      separate balance sheet rows with raw line numbers per filing (FY2026_Q2 xml has no section titles: FS-API used in s10)
+  s6_soce.py    -> soce_rows_<FY>.txt    statement of changes in equity rows
+  s10_bs_compare.py/.txt/.json           master vs every printed column (own filing and later comparatives)
+  s9_ilp_all.py/.txt/.json               ILP LIC/LRC/total from every filing, current and prior-period (swapped) tables, stage-1 engine without anchor
+  s13_ilp_compare.py/.txt/.json          ILP master vs own reading vs latest comparative reading
+  s8_ilp_prior_fy2024q4.py/.txt          anchored dry run of the unify engine for 2023.4Q (loaded, 15 - bs_liab = 0.0)
+  s15_restate_note.py + note_FY2024_Q3_sep_restate*.txt   FY2024 Q3 separate restatement-effect note (BS 전기말 table, equity bridge 2023.09.30)
+  s17_roe_impact.py/.txt                 compare.html ROE effect;  s20_aoci_tie.py/.txt  AOCI roll vs PL item 25 (restated deltas tie to 0.0)
+  s22_make_cells.py                      generates proposed_cells.csv and hold_cells.csv from the masters and the filing rows (asserts FY2024 == FY2025 column)
+Note: s20/s21 read PL_breakdown.json of the working tree, which carries the uncommitted OCI-lane edits (2024.4Q-2025.3Q item 25); HEAD ties 2025.1Q/2Q AOCI to the OLD
+  master, the working tree ties it to the restated one (so BS item 4 of 2025.1Q/2Q must move together with the OCI-lane PL cells).

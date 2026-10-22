@@ -1,0 +1,68 @@
+d_census -- vintage census of the 17 non-Kyobo companies / 51 buckets (CSM_waterfall / PL_breakdown), 2026-10-22, parser/ifrs17, READ-ONLY
+No master, gold file, provenance file or doc was written. Every gate run went through gate_overlay.py (repo writes dropped); candidate masters live in the session scratchpad, not in the repo.
+python = C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe (script files only).
+
+TABLE FILES
+  d_census_table.csv   one row per bucket, the 51 buckets (utf-8-sig).  Columns: scope, code, company, quarter, sheets, pl_items_differ, pl_delta_eok_top6, csm_items_differ, csm_delta_eok,
+                       cause_class, cause_detail, master_vintage, latest_vector_closes_block, closure_basis, fy_block_quarters, seam_neighbours_stale, gold_cells, adoption_effect_identity,
+                       adoption_effect_continuity, panels_showing_it, screen_change_class, screen_change_top3, disposition, disposition_reason, evidence
+  d_census_addl.csv    53 further buckets with the same columns (NOT part of the 51): 23 FY siblings (mostly 2023.1Q/2Q, original has no FS-API), 20 OCI-only 2024.4Q-2025.2Q (same class as the Kyobo OCI
+                       ticket), 10 CSM-only (CSM latest differs, PL Tier-1 agrees).  They are needed to judge whether a FY block closes as a unit.
+
+HEADLINE (51 buckets, 17 companies)
+  composition        42 genuine restatements | 5 master extraction errors on items 18/19 (sign, download-only, no vintage question) | 3 API sign-presentation artifacts (master correct) | 1 already at the later vector (삼성화재 2023.3Q)
+  latest vector closes the block   YES 20 | NO 19 | UNVERIFIED 3 | nothing to adopt 9
+  disposition        SAFE_NOW 0 | OWNER_DECISION 19 | STAY 32  (STAY = 22 not closing + 1 closing but owner gold cell on item 27 + 9 nothing to adopt)
+  the 19 owner buckets (closing, no gold overlap):  흥국화재 x4, NH농협손보 x4, 동양생명 x4, ABL x3, 푸본현대 x2, DB생명 x1, 농협생명 x1
+      on-screen: item 17 (투자손익) -417.2 .. +585.8 eok (-50% .. +145%), item 24 (당기순이익) -320.8 .. +450.5 eok (-22% .. +33%), item 25/27 OCI opposite; 17 of 19 move a headline by >= 20 eok, 15 of 19 by >= 5%
+      screen_change small (< 20 eok and < 5%) only DB생명 2023.3Q and 푸본현대 2024.1Q, and both sit next to quarters that stay at the other vintage (seam cells). At 50 eok/10% three buckets are small, at 100 eok/20% six.
+  not closing (22): 12 = LOB bridge breaks + CSM restated | 4 = LOB bridge breaks only | 3 = CSM prior column unreadable (현대해상 2023.4Q, 미래에셋 2023.4Q, 푸본현대 2024.4Q) | 1 = CSM restated + owner CSM gold (ABL 2023.4Q) | 1 = LOB bridge + CSM unreadable (미래에셋 2024.1Q) | 1 = CSM restated + pl_bridge already FAIL on the master (KB라이프 2024.1Q)
+                       (the 4 'LOB bridge only' are the KB손보 buckets: item 1 moves +/-9..98 eok with CSM unchanged, so the restatement sits in a non-CSM Tier-2 leg)
+
+DEFINITIONS USED
+  bucket            (company, quarter) master block, PL_breakdown items 1/16-32 (Tier-1) and CSM_waterfall items 1-6.  Vintage evidence = DART FS-API original column (thstrm) versus the next-year filing's prior column (frmtrm);
+                    master vs prior when the original has no API (2023.1Q/2Q).  Both columns are OFS (separate) in every bucket, no unit ratio anywhere.
+  sign artifact     |later| == |original| with opposite sign, or items 18/19 derived from such lines while items 1/17/20/22/24 are equal.
+  closing           (a) Tier-1 identities on the later vector: 20=1+17, |22-24|=|23|, 31=24+25 (gate tolerances); (b) the LOB bridge item1 = legs + 15 - 16 still closes with the current Tier-2 legs
+                    (item 1/15/16 equal, or offsetting); (c) CSM: later prior column equals the master (scan SAME), or it differs but the PL4<->CSM5 pair still passes AND the same-FY CSM chain is adoptable as a unit
+                    AND no owner gold conflicts AND the reader reproduced the master on the same filing; (d) gate simulation without new RED/FAIL.  Tier-2 prior-column readers do not exist, so (b) is a proxy.
+  screen change     material = any displayed item moves >= 20 eok, or a headline (보험손익/투자손익/당기순이익) >= 5%.  Displayed: compare.html 보험손익/투자손익/당기순이익/ROE/기말 CSM, IFRS17.html P3 bridge + OCI zone,
+                    CSM waterfall, csm_combo, index.html bubble, NB_CSM_multiple.  Items 18-20, 22, 25 are download-only (xlsx 손익분해PL / public_exports).
+  seam              derived 값_당분기 straddling two vintages; Kyobo precedent = blank (null_dangi), owner rule 2026-10-22.
+  gold              cell level (an item the adoption would change is an owner gold cell).  The 2026-10-12 dry run used the block level; 10 of the 19 owner buckets carry gold elsewhere in the block and were held then.
+
+GATE SIMULATIONS (candidate bytes served through gate_overlay; baseline g_base)
+  g_pl      37 closing buckets (A51 19 + ADDL 18), 234 PL cells + 309 recomputed single-quarter cells:  pl_bridge 3697P/23F/0NEW, tax22_src 282P/0F, csm_amort 387P/0F, continuity red 0, data_contract RED 1 (= baseline, xlsx drift)
+            only change: PL_OCI_VS_BS_AOCI YELLOW 23 -> 26 (IFRS17_BS AOCI stays original vintage).   gates_compare_pl.txt
+  plbreak   Tier-1 later vector adopted alone for the item-1-moving buckets (26 buckets, 260 cells): pl_bridge 23F -> 50F, 27 NEW fails (18 of them in 17 of the 51).   gates_plbreak_master_tables.txt, d17_newfail.txt
+  csm_a51   CSM latest for the 13 adoptable-looking A51 buckets (65 cells) WITHOUT the PL4 companion: csm_amort_identity 387P/0F -> 374P/13F, continuity red 1 (KB라이프 FY2023 opening), data_contract RED 1 -> 16
+  csm_chain 27 buckets (140 cells, A51 + FY siblings + CSM-only): amort 25F, continuity red 3 (롯데손보 FY2024, ABL FY2024, KB라이프 FY2023), RED 38.
+  csm_full  38 buckets (174 cells) incl. owner-gold blocks: amort 27F, continuity red 3, RED 39.  Even a complete chain breaks: the filings print different openings in different vintages (FY2025 quarterly filings
+            vs the FY2025 annual restate 2024 twice), so the 'latest per quarter' set is not one consistent vintage for 롯데손보, ABL, KB라이프.
+
+CAUSES (restatement notes, d13*.txt)
+  FSS-Q&A driven change of the systematic allocation of insurance finance income/expense (net income -> OCI): 롯데, KB손보, NH농협손보, 동양, 푸본현대, ABL, 미래에셋(+cash-flow logic error), KB라이프;
+  error corrections: 흥국화재 (expected maturity of FVOCI FX debt), 농협생명 (K-IFRS 1109 classification, raises net income), 미래에셋 (participating annuity liability);  현대해상, KDB, DB생명: note text not located.
+  items 18/19 master sign defects (7 cells master-wide: 한화손보 2023.4Q-2024.4Q, 삼성생명 2023.3Q, 흥국화재 2025.3Q small): d12_sign19_scan.txt.
+
+FILE MAP
+  d1_scan.py/.json              FS-API original vs later prior, every Tier-1 item, all company-quarters with a prior column (232)       d2_select.py  reproduces the 55 buckets (51 + Kyobo 4) of kyobo_validation_20261022/sim_other_vintage_buckets.txt
+  d4_join_old.py/.txt           51 buckets joined to the 2026-10-12 dry-run verdicts (ifrs17_latest_comparative_precedence_dryrun_20261012) and its CSM prior vectors
+  d5_analyze.py -> d5_buckets.json   per-bucket facts (classes, identities, gold, CSM vectors, FY status)     d6_classify.py -> d6_rows.json   kind, bridge, pair, materiality
+  d7_fyblocks.py/.txt/_status.json   per company x FY: master equals later prior (EQ) or differs (DIFF)     d9_disposition.py -> d9_disposition.json   closure + disposition + reasons
+  d8_candidates.py              builds candidate masters into the scratchpad (cand_*_cells.json = the changed cells)       d10_effects.py -> d10_effects.json, d10_gate_summary.txt   parses the gate runs
+  d11_table.py                  renders the two csv files       d11_summary.txt, d15_stats.*, d17_newfail.*, d18_misc.* headline numbers       d14_csm_universe.py   all CSM DIFF buckets of the 2026-10-12 scan vs the current master
+  d12_sign19_scan.*             item 19 sign defect scan        d13_*.txt restatement-note text        d16_xml_spotcheck.*  independent XML spot check: prior-column value printed in the later filing 85/95 cells (misses = items printed
+                                rounded in 백만원 for 흥국화재 and derived 투자손익 lines); this is a spot check, NOT the pre-load independent re-read the policy requires
+  g_base__* g_pl__* g_csm_a51__* g_csm_chain__* g_csm_full__*, gates_compare_*.txt   gate outputs (gate_overlay.py, run_gates.sh, compare_gates.py are copies of remaining_20261022/a_oci tools)
+
+REPRODUCE (order): d1_scan.py d5_analyze.py(needs d5_setA.json from d2/d5 first run) d6_classify.py d9_disposition.py d8_candidates.py <name> pl_closing|pl_bridgebreak|csm_a51|csm_chain|csm_chain_full
+  bash run_gates.sh <outdir> "PL_breakdown.json=<scratch>/cand_pl_PL_breakdown.json"  then d10_effects.py d11_table.py
+
+NOT VERIFIED / LIMITS
+  - Tier-2 (items 2-14) prior columns were not read (no generic reader; company handlers needed).  'Closing' for the 19 rests on item 1/15/16 equality + CSM equality as a proxy.
+  - CSM latest vectors come from the 2026-10-12 dry run (reader fidelity SAME on the same filing, tier trusted); they were not re-read independently now.  KB라이프 2023.4Q has fidelity DIFF.
+  - 흥국생명 2024.4Q: the latest CSM chain does not close with its own 2025.1Q (FY2026 Q1 report prints the un-restated opening); excluded from the chain simulation.
+  - Reinsurers KR1101-KR1108 and MyBrown are outside the measurement (no DART FS-API); the 2026-10-09 rule is applied at load there (data/disclosure/_meta/reinsurer_ifrs17_csm_runlog.md section 'latest prior column').
+  - Observation, not mine: a python3.13 process (PID 26648, started 09:50, ~5,000 s CPU) spins at 100 % CPU; it is not from this session.
+INPUT HASHES at start and end of the census were identical (input_hashes_start.txt): PL_breakdown.json, CSM_waterfall.json, user_pl_cells.json, user_csm_cells.json, both provenance files.
