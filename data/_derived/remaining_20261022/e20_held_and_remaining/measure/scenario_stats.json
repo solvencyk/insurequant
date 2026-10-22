@@ -1,0 +1,188 @@
+{
+ "R1": {
+  "PL": {
+   "value": 136,
+   "dangi": 180,
+   "autofollow": 44,
+   "per_company_value": {
+    "KR0010": 64,
+    "KR0070": 3,
+    "KR0079": 11,
+    "KR0083": 10,
+    "KR0104": 48
+   }
+  },
+  "CSM": {
+   "value": 0,
+   "dangi": 0,
+   "autofollow": 0,
+   "per_company_value": {}
+  }
+ },
+ "R1b_KB_siblings": {
+  "PL": {
+   "value": 50,
+   "dangi": 76,
+   "autofollow": 27,
+   "per_company_value": {
+    "KR0010": 50
+   }
+  },
+  "CSM": {
+   "value": 0,
+   "dangi": 0,
+   "autofollow": 0,
+   "per_company_value": {}
+  }
+ },
+ "R2": {
+  "PL": {
+   "value": 222,
+   "dangi": 322,
+   "autofollow": 100,
+   "per_company_value": {
+    "KR0001": 59,
+    "KR0003": 73,
+    "KR0068": 49,
+    "KR0079": 41
+   }
+  },
+  "CSM": {
+   "value": 53,
+   "dangi": 73,
+   "autofollow": 21,
+   "per_company_value": {
+    "KR0001": 12,
+    "KR0003": 15,
+    "KR0068": 15,
+    "KR0079": 11
+   }
+  }
+ },
+ "N1_KBlife_A": {
+  "PL": {
+   "value": 134,
+   "dangi": 156,
+   "autofollow": 23,
+   "per_company_value": {
+    "KR0099": 134
+   }
+  },
+  "CSM": {
+   "value": 37,
+   "dangi": 39,
+   "autofollow": 2,
+   "per_company_value": {
+    "KR0099": 37
+   }
+  }
+ },
+ "N2_KBlife_B": {
+  "PL": {
+   "value": 61,
+   "dangi": 83,
+   "autofollow": 22,
+   "per_company_value": {
+    "KR0099": 61
+   }
+  },
+  "CSM": {
+   "value": 15,
+   "dangi": 19,
+   "autofollow": 4,
+   "per_company_value": {
+    "KR0099": 15
+   }
+  }
+ },
+ "N3_KBlife_Aprime": {
+  "PL": {
+   "value": 117,
+   "dangi": 155,
+   "autofollow": 38,
+   "per_company_value": {
+    "KR0099": 117
+   }
+  },
+  "CSM": {
+   "value": 32,
+   "dangi": 38,
+   "autofollow": 6,
+   "per_company_value": {
+    "KR0099": 32
+   }
+  }
+ },
+ "N4_ABL_FY2023": {
+  "PL": {
+   "value": 75,
+   "dangi": 84,
+   "autofollow": 9,
+   "per_company_value": {
+    "KR0070": 75
+   }
+  },
+  "CSM": {
+   "value": 20,
+   "dangi": 23,
+   "autofollow": 3,
+   "per_company_value": {
+    "KR0070": 20
+   }
+  }
+ },
+ "N5_KDB_FY2023": {
+  "PL": {
+   "value": 70,
+   "dangi": 85,
+   "autofollow": 17,
+   "per_company_value": {
+    "KR0072": 70
+   }
+  },
+  "CSM": {
+   "value": 20,
+   "dangi": 22,
+   "autofollow": 3,
+   "per_company_value": {
+    "KR0072": 20
+   }
+  }
+ },
+ "N6_HD_FY2023": {
+  "PL": {
+   "value": 52,
+   "dangi": 72,
+   "autofollow": 20,
+   "per_company_value": {
+    "KR0009": 52
+   }
+  },
+  "CSM": {
+   "value": 18,
+   "dangi": 20,
+   "autofollow": 3,
+   "per_company_value": {
+    "KR0009": 18
+   }
+  }
+ },
+ "N7_Lotte_FY2023Q4": {
+  "PL": {
+   "value": 19,
+   "dangi": 12,
+   "autofollow": 0,
+   "per_company_value": {
+    "KR0003": 19
+   }
+  },
+  "CSM": {
+   "value": 5,
+   "dangi": 4,
+   "autofollow": 0,
+   "per_company_value": {
+    "KR0003": 5
+   }
+  }
+ }
+}

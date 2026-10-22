@@ -1,0 +1,23 @@
+e20 STEP 2 measurement worklog (READ-ONLY; python = venv script files only; never bare python/python3 -- PID 9272 orphan killed at 23:24)
+snapshot of masters used for all measurements: scratchpad/snap (hashes in scratchpad/snap_hashes_start.txt)
+
+FINDINGS SO FAR (verified by my own readers unless marked [dry-run]):
+F1 KR0104 2023.1Q/2Q: the census 'bridge FAIL -98,612.4/-191,659.9' is a proxy artifact (= -item1_later; master legs absent).  Real state: master has item 1,2,3,7,8,12,15,17-21,25-32 = null (20 of 32) and 16/22/23/24 = 경영공시 PDF 억-rounded (original vintage).
+   Old-dialect FY2023_Q1/Q2 statement ('영업수익/영업비용' form, <TD>) was never read.  FY2024_Q1/Q2 prior YTD column (separate, 원) fills all 24 cells/bucket, identities close to 0.000 (k6_kr0104_cells.*).  CSM unchanged.  => READY, 48 cells.
+F2 life buckets: master item 2/3/8 follow the income-statement insurance lines (m2-ISorig=0 in l1_bridge_scan) -> the later vector closes by the FS-API prior IS legs; NO Tier-2 LOB note reader needed for life (census text 'LOB note prior-column reader missing' is wrong for life).
+   exception: KB라이프 2024.1Q master items 2/8/12 are wrong already (item8 -832 vs IS-based -1,968; bridge +1,136).
+F3 non-life LOB prior readers: KB손보 = production extract_tier2_kb(later tables, item1=later item 1) -> 4/4 close (resid 0,0,-1,0); 롯데 = twin-table pick (combined 2nd table / bycontent 2nd / bounded split) -> 4/4 close.  현대해상: legs are owner/IR constants, bridge passes within 0.1% tolerance (-98.1 mn), no reader needed.
+F4 CSM prior readers verified: 푸본현대 FY2025_Q4 (6 product tables; '2) 전기말' paragraph marker lost) prior == master (SAME); 현대해상 FY2024_Q4 '(2) 전기' L76716 -> [83515.4,...,91422.7]; 미래에셋 FY2024/25 (당기/전기 are ROW BLOCKS in one table) FY2023 SAME, FY2024 Q1-Q3 tiny restatement (closing +8.9/+8.7/+8.5억), Q4 SAME.
+F5 dry-run MISREAD (chain_ok False): ABL 2024.4Q and 롯데 2024.4Q 'DIFF 1-6' are WRONG; FY2025 annual prior (2024) == master (SAME) for both (c4_*, c5 outputs).  => d_census 'two-times restated 롯데 FY2024 / ABL FY2024 continuity RED' is a misread; true RED candidates: KB라이프 FY2023 (3 vintages) and 롯데 FY2023 (Q4 annual comparative opening 16,669.0 vs Q1-Q3 16,774.4).
+F6 owner CSM gold on ABL/KDB/현대 FY2023 Q3/Q4 is chain-forcing (gold opening = Q1-Q2 original opening; builder 'was' = the later vintage) -> rule (b) literal, but reason disappears when Q1-Q3 move.
+
+TODO (remaining): 메리츠 LOB prior reader; PL4 prior spot checks (ABL, KB라이프, KDB, 한화생명, 메리츠, 현대); gold classification table; candidate masters + gate simulations (READY set; KB라이프/롯데 options); plan_table.csv + PLAN.md.
+
+--- addendum (second half of the session) ---
+F7 현대해상 FY2023: the restated LOB legs are NOT in DART (p_hyundai.py: the FY2024 Q1/Q2 filings print the LOB summary for the current period only) but ARE in raw: data/ir FY2024_Q1/Q2 factsheet '(3) UW Income' prior-year columns (w4_hd_ir_legs.py);
+   sum of the three LOB results == restated item 1 to the decimals (246,045.277 / 415,652.295 mn) -> bridge closes 0.0 (N6c).  BLOCKED -> NEEDS_OWNER (source policy + chain-forcing gold).
+F8 independent re-read of ALL READY CSM vectors: v1_csm_verify (롯데, 한화, KB라이프, ABL, KDB, 현대: totals printed in one table), v4_meritz_csm (3 CSM columns), v3_mirae_wide (wide roll-forward), c3 (row blocks).
+F9 R2b provenance RED was a simulation artefact (build_cands rewrote only DISCLOSURE blocks): generalized to blocks the master had no source for (롯데 2023.1Q contract_notes) -> data_contract RED = xlsx only.
+F10 READY_all (25 rows, 471 PL + 55 CSM): pl_bridge 3697P/23F -> 3755P/18F (NEW 0), data_contract RED 0 -> 2 (xlsx), NB_VS_WATERFALL RED 4 (메리츠, 한화 NB rows to rebuild).
+F11 WFY exemption sandbox (exc_make.py): ALL_latest + ("KB라이프생명","2023") + ("롯데손해보험","2023") -> continuity RED 1 -> 0 (YELLOW EXCEPTED), master_tables WFY 2 -> 0.
+F12 all 982 candidate cells: recorded old == current live master (final_old_vs_live.txt).  STEP 1 collision: none in YTD values; only 푸본 2024.4Q single-quarter cells (8) overlap.

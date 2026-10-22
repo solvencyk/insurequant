@@ -1,0 +1,299 @@
+{
+ "name": "N7_Lotte_FY2023Q4",
+ "specs": [
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "prov": "lotte",
+   "csm": true
+  }
+ ],
+ "pl_cells": [
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 1,
+   "old": 468498.419718,
+   "new": 461540.038638,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 2,
+   "old": 493210.0,
+   "new": 486250.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 3,
+   "old": 578755.0,
+   "new": 570025.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 4,
+   "old": 186853.0,
+   "new": 185905.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 6,
+   "old": 51324.0,
+   "new": 51323.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 7,
+   "old": 321061.0,
+   "new": 313280.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 8,
+   "old": -85545.0,
+   "new": -83775.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 9,
+   "old": -1756.0,
+   "new": -1973.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 12,
+   "old": -80138.0,
+   "new": -78151.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 17,
+   "old": -72207.217142,
+   "new": -86105.249856,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 19,
+   "old": -162465.640323,
+   "new": -176363.673037,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 20,
+   "old": 396291.202576,
+   "new": 375434.788782,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 22,
+   "old": 394339.12277,
+   "new": 373482.708976,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 23,
+   "old": 92703.196556,
+   "new": 87902.382833,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 24,
+   "old": 301635.926214,
+   "new": 285580.326143,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 25,
+   "old": -176169.223932,
+   "new": -154441.34843,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 26,
+   "old": 244992.729544,
+   "new": 255922.070529,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 27,
+   "old": -507218.600091,
+   "new": -496420.065574,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 31,
+   "old": 125466.702282,
+   "new": 131138.977713,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  }
+ ],
+ "csm_cells": [
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 1,
+   "old": 16774.4,
+   "new": 16669.0,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 3,
+   "old": 780.5,
+   "new": 777.0,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 4,
+   "old": 2801.0,
+   "new": 2795.0,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 5,
+   "old": -1868.5,
+   "new": -1859.0,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.4Q",
+   "item": 6,
+   "old": 23966.2,
+   "new": 23860.8,
+   "gold": null,
+   "gold_was": null
+  }
+ ],
+ "buckets": {
+  "KR0003|2023.4Q": {
+   "prov": "lotte",
+   "csm": true,
+   "n_pl": 19,
+   "n_csm": 5,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": -0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": -0.7466
+   },
+   "screen_eok": {
+    "보험손익": [
+     4684.98,
+     4615.4,
+     -69.58
+    ],
+    "투자손익": [
+     -722.07,
+     -861.05,
+     -138.98
+    ],
+    "당기순이익": [
+     3016.36,
+     2855.8,
+     -160.56
+    ],
+    "기타포괄손익": [
+     -1761.69,
+     -1544.41,
+     217.28
+    ],
+    "총포괄손익": [
+     1254.67,
+     1311.39,
+     56.72
+    ]
+   },
+   "reconciled": true
+  }
+ },
+ "log": [
+  "KR0003 2023.4Q [lotte+csm] PL cells=19 CSM cells=5 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': -0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': -0.747}",
+  "candidate masters written: PL cells 19 (+12 single-quarter recomputed), CSM cells 5 (+4 single-quarter recomputed) -> scratchpad cand/N7_Lotte_FY2023Q4_*"
+ ]
+}

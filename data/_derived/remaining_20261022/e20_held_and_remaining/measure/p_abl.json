@@ -1,0 +1,56 @@
+{
+ "2023.1Q": {
+  "later_current_col": {},
+  "later_prior_col": {},
+  "master": {
+   "4": 22664.0,
+   "5": 272.0,
+   "9": null,
+   "10": null
+  },
+  "note_table_line": null
+ },
+ "2023.2Q": {
+  "later_current_col": {},
+  "later_prior_col": {},
+  "master": {
+   "4": 48623.0,
+   "5": 6649.0,
+   "9": null,
+   "10": null
+  },
+  "note_table_line": null
+ },
+ "2023.3Q": {
+  "later_current_col": {},
+  "later_prior_col": {},
+  "master": {
+   "4": 75180.0,
+   "5": 11071.0,
+   "9": -9586.0,
+   "10": -474.0
+  },
+  "note_table_line": null
+ },
+ "2023.4Q": {
+  "later_current_col": {
+   "4": 88926.0,
+   "5": 12282.0,
+   "9": -9215.0,
+   "10": -785.0
+  },
+  "later_prior_col": {
+   "4": 92971.0,
+   "5": 16395.0,
+   "9": -9589.0,
+   "10": -728.0
+  },
+  "master": {
+   "4": 92971.0,
+   "5": 16395.0,
+   "9": -9589.0,
+   "10": -728.0
+  },
+  "note_table_line": 22033
+ }
+}

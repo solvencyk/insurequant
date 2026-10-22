@@ -1,0 +1,21 @@
+R0_KBlife_2024Q1_fix     PL  cells=   3 old==live:    3  differ: 0
+R0_KBlife_2024Q1_fix     CSM cells=   0 old==live:    0  differ: 0
+R1                       PL  cells= 136 old==live:  136  differ: 0
+R1                       CSM cells=   0 old==live:    0  differ: 0
+R1b_KB_siblings          PL  cells=  50 old==live:   50  differ: 0
+R1b_KB_siblings          CSM cells=   0 old==live:    0  differ: 0
+R2                       PL  cells= 222 old==live:  222  differ: 0
+R2                       CSM cells=  53 old==live:   53  differ: 0
+R2b_Lotte_2023_1Q2Q      PL  cells=  60 old==live:   60  differ: 0
+R2b_Lotte_2023_1Q2Q      CSM cells=   2 old==live:    2  differ: 0
+N1_KBlife_A              PL  cells= 134 old==live:  134  differ: 0
+N1_KBlife_A              CSM cells=  37 old==live:   37  differ: 0
+N4_ABL_FY2023            PL  cells=  75 old==live:   75  differ: 0
+N4_ABL_FY2023            CSM cells=  20 old==live:   20  differ: 0
+N5_KDB_FY2023            PL  cells=  70 old==live:   70  differ: 0
+N5_KDB_FY2023            CSM cells=  20 old==live:   20  differ: 0
+N6c_HD_FY2023_IRlegs     PL  cells=  58 old==live:   58  differ: 0
+N6c_HD_FY2023_IRlegs     CSM cells=  18 old==live:   18  differ: 0
+N7_Lotte_FY2023Q4        PL  cells=  19 old==live:   19  differ: 0
+N7_Lotte_FY2023Q4        CSM cells=   5 old==live:    5  differ: 0
+TOTAL cells 982  differ 0

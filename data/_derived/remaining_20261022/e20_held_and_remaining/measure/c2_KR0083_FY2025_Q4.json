@@ -1,0 +1,1766 @@
+[
+ {
+  "start": 48473,
+  "end": 48857,
+  "caption": "1) 당기말① 유배당보험",
+  "rows": {
+   "보험계약자산": [
+    {
+     "tr": 48515,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48524,
+     "line_oth": 48525,
+     "total": null
+    },
+    {
+     "tr": 48815,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48824,
+     "line_oth": 48825,
+     "total": null
+    }
+   ],
+   "보험계약부채": [
+    {
+     "tr": 48529,
+     "csm_fv": 15517.0,
+     "csm_oth": 7254.0,
+     "csm": 22771.0,
+     "line_fv": 48538,
+     "line_oth": 48539,
+     "total": 1462589.0
+    },
+    {
+     "tr": 48829,
+     "csm_fv": 12451.0,
+     "csm_oth": 8756.0,
+     "csm": 21207.0,
+     "line_fv": 48838,
+     "line_oth": 48839,
+     "total": 1396685.0
+    }
+   ],
+   "기초보험계약부채(자산)": [
+    {
+     "tr": 48543,
+     "csm_fv": 15517.0,
+     "csm_oth": 7254.0,
+     "csm": 22771.0,
+     "line_fv": 48552,
+     "line_oth": 48553,
+     "total": 1462589.0
+    }
+   ],
+   "해지율가정변경": [
+    {
+     "tr": 48561,
+     "csm_fv": 79.0,
+     "csm_oth": -181.0,
+     "csm": -102.0,
+     "line_fv": 48567,
+     "line_oth": 48568,
+     "total": null
+    }
+   ],
+   "위험률가정변경": [
+    {
+     "tr": 48572,
+     "csm_fv": -7832.0,
+     "csm_oth": -121.0,
+     "csm": -7953.0,
+     "line_fv": 48578,
+     "line_oth": 48579,
+     "total": null
+    }
+   ],
+   "사업비율가정변경": [
+    {
+     "tr": 48583,
+     "csm_fv": 3407.0,
+     "csm_oth": 815.0,
+     "csm": 4222.0,
+     "line_fv": 48589,
+     "line_oth": 48590,
+     "total": null
+    }
+   ],
+   "기타가정변경": [
+    {
+     "tr": 48594,
+     "csm_fv": 89.0,
+     "csm_oth": 1.0,
+     "csm": 90.0,
+     "line_fv": 48600,
+     "line_oth": 48601,
+     "total": null
+    }
+   ],
+   "물량차이및투자요소예실차등": [
+    {
+     "tr": 48605,
+     "csm_fv": -488.0,
+     "csm_oth": 531.0,
+     "csm": 43.0,
+     "line_fv": 48611,
+     "line_oth": 48612,
+     "total": null
+    }
+   ],
+   "손실요소": [
+    {
+     "tr": 48616,
+     "csm_fv": 2194.0,
+     "csm_oth": -381.0,
+     "csm": 1813.0,
+     "line_fv": 48622,
+     "line_oth": 48623,
+     "total": 1813.0
+    }
+   ],
+   "신계약인식": [
+    {
+     "tr": 48627,
+     "csm_fv": null,
+     "csm_oth": 615.0,
+     "csm": 615.0,
+     "line_fv": 48633,
+     "line_oth": 48634,
+     "total": 570.0
+    }
+   ],
+   "소계": [
+    {
+     "tr": 48638,
+     "csm_fv": -2551.0,
+     "csm_oth": 1279.0,
+     "csm": -1272.0,
+     "line_fv": 48644,
+     "line_oth": 48645,
+     "total": 2383.0
+    },
+    {
+     "tr": 48686,
+     "csm_fv": -974.0,
+     "csm_oth": -89.0,
+     "csm": -1063.0,
+     "line_fv": 48692,
+     "line_oth": 48693,
+     "total": -2358.0
+    },
+    {
+     "tr": 48738,
+     "csm_fv": 459.0,
+     "csm_oth": 312.0,
+     "csm": 771.0,
+     "line_fv": 48744,
+     "line_oth": 48745,
+     "total": -16167.0
+    },
+    {
+     "tr": 48797,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48803,
+     "line_oth": 48804,
+     "total": -50219.0
+    }
+   ],
+   "위험조정변동": [
+    {
+     "tr": 48653,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48659,
+     "line_oth": 48660,
+     "total": -21.0
+    }
+   ],
+   "보험계약마진상각": [
+    {
+     "tr": 48664,
+     "csm_fv": -974.0,
+     "csm_oth": -89.0,
+     "csm": -1063.0,
+     "line_fv": 48670,
+     "line_oth": 48671,
+     "total": -1063.0
+    }
+   ],
+   "당기손익인식대상경험조정": [
+    {
+     "tr": 48675,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48681,
+     "line_oth": 48682,
+     "total": -1274.0
+    }
+   ],
+   "발생사고부채변동": [
+    {
+     "tr": 48701,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48707,
+     "line_oth": 48708,
+     "total": 457.0
+    }
+   ],
+   "당기손익인식분": [
+    {
+     "tr": 48716,
+     "csm_fv": 459.0,
+     "csm_oth": 312.0,
+     "csm": 771.0,
+     "line_fv": 48722,
+     "line_oth": 48723,
+     "total": 47757.0
+    }
+   ],
+   "기타포괄손익인식분": [
+    {
+     "tr": 48727,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48733,
+     "line_oth": 48734,
+     "total": -63924.0
+    }
+   ],
+   "수취보험료": [
+    {
+     "tr": 48753,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48759,
+     "line_oth": 48760,
+     "total": 37488.0
+    }
+   ],
+   "보험취득현금흐름": [
+    {
+     "tr": 48764,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48770,
+     "line_oth": 48771,
+     "total": -74.0
+    }
+   ],
+   "투자요소를포함한지급보험금및기타보험서비스비용": [
+    {
+     "tr": 48775,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48781,
+     "line_oth": 48782,
+     "total": -90538.0
+    }
+   ],
+   "보험계약대출현금흐름": [
+    {
+     "tr": 48786,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48792,
+     "line_oth": 48793,
+     "total": 2905.0
+    }
+   ],
+   "기말보험계약부채(자산)": [
+    {
+     "tr": 48843,
+     "csm_fv": 12451.0,
+     "csm_oth": 8756.0,
+     "csm": 21207.0,
+     "line_fv": 48852,
+     "line_oth": 48853,
+     "total": 1396685.0
+    }
+   ]
+  }
+ },
+ {
+  "start": 48861,
+  "end": 49245,
+  "caption": "② 무배당보험",
+  "rows": {
+   "보험계약자산": [
+    {
+     "tr": 48903,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 48912,
+     "line_oth": 48913,
+     "total": null
+    },
+    {
+     "tr": 49203,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49212,
+     "line_oth": 49213,
+     "total": null
+    }
+   ],
+   "보험계약부채": [
+    {
+     "tr": 48917,
+     "csm_fv": 3211.0,
+     "csm_oth": 114348.0,
+     "csm": 117559.0,
+     "line_fv": 48926,
+     "line_oth": 48927,
+     "total": 6994837.0
+    },
+    {
+     "tr": 49217,
+     "csm_fv": 3564.0,
+     "csm_oth": 163370.0,
+     "csm": 166934.0,
+     "line_fv": 49226,
+     "line_oth": 49227,
+     "total": 6769941.0
+    }
+   ],
+   "기초보험계약부채(자산)": [
+    {
+     "tr": 48931,
+     "csm_fv": 3211.0,
+     "csm_oth": 114348.0,
+     "csm": 117559.0,
+     "line_fv": 48940,
+     "line_oth": 48941,
+     "total": 6994837.0
+    }
+   ],
+   "해지율가정변경": [
+    {
+     "tr": 48949,
+     "csm_fv": -16302.0,
+     "csm_oth": -28184.0,
+     "csm": -44486.0,
+     "line_fv": 48955,
+     "line_oth": 48956,
+     "total": null
+    }
+   ],
+   "위험률가정변경": [
+    {
+     "tr": 48960,
+     "csm_fv": -3634.0,
+     "csm_oth": -10423.0,
+     "csm": -14057.0,
+     "line_fv": 48966,
+     "line_oth": 48967,
+     "total": null
+    }
+   ],
+   "사업비율가정변경": [
+    {
+     "tr": 48971,
+     "csm_fv": 12440.0,
+     "csm_oth": 16094.0,
+     "csm": 28534.0,
+     "line_fv": 48977,
+     "line_oth": 48978,
+     "total": null
+    }
+   ],
+   "기타가정변경": [
+    {
+     "tr": 48982,
+     "csm_fv": -6976.0,
+     "csm_oth": -9544.0,
+     "csm": -16520.0,
+     "line_fv": 48988,
+     "line_oth": 48989,
+     "total": null
+    }
+   ],
+   "물량차이및투자요소예실차등": [
+    {
+     "tr": 48993,
+     "csm_fv": -16914.0,
+     "csm_oth": -23404.0,
+     "csm": -40318.0,
+     "line_fv": 48999,
+     "line_oth": 49000,
+     "total": null
+    }
+   ],
+   "손실요소": [
+    {
+     "tr": 49004,
+     "csm_fv": 32092.0,
+     "csm_oth": 15854.0,
+     "csm": 47946.0,
+     "line_fv": 49010,
+     "line_oth": 49011,
+     "total": 47946.0
+    }
+   ],
+   "신계약인식": [
+    {
+     "tr": 49015,
+     "csm_fv": null,
+     "csm_oth": 99063.0,
+     "csm": 99063.0,
+     "line_fv": 49021,
+     "line_oth": 49022,
+     "total": 3643.0
+    }
+   ],
+   "소계": [
+    {
+     "tr": 49026,
+     "csm_fv": 706.0,
+     "csm_oth": 59456.0,
+     "csm": 60162.0,
+     "line_fv": 49032,
+     "line_oth": 49033,
+     "total": 51589.0
+    },
+    {
+     "tr": 49074,
+     "csm_fv": -448.0,
+     "csm_oth": -16944.0,
+     "csm": -17392.0,
+     "line_fv": 49080,
+     "line_oth": 49081,
+     "total": -27096.0
+    },
+    {
+     "tr": 49126,
+     "csm_fv": 95.0,
+     "csm_oth": 6510.0,
+     "csm": 6605.0,
+     "line_fv": 49132,
+     "line_oth": 49133,
+     "total": -12502.0
+    },
+    {
+     "tr": 49185,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49191,
+     "line_oth": 49192,
+     "total": -229386.0
+    }
+   ],
+   "위험조정변동": [
+    {
+     "tr": 49041,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49047,
+     "line_oth": 49048,
+     "total": -3833.0
+    }
+   ],
+   "보험계약마진상각": [
+    {
+     "tr": 49052,
+     "csm_fv": -448.0,
+     "csm_oth": -16944.0,
+     "csm": -17392.0,
+     "line_fv": 49058,
+     "line_oth": 49059,
+     "total": -17392.0
+    }
+   ],
+   "당기손익인식대상경험조정": [
+    {
+     "tr": 49063,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49069,
+     "line_oth": 49070,
+     "total": -5871.0
+    }
+   ],
+   "발생사고부채변동": [
+    {
+     "tr": 49089,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49095,
+     "line_oth": 49096,
+     "total": -7501.0
+    }
+   ],
+   "당기손익인식분": [
+    {
+     "tr": 49104,
+     "csm_fv": 95.0,
+     "csm_oth": 6510.0,
+     "csm": 6605.0,
+     "line_fv": 49110,
+     "line_oth": 49111,
+     "total": 241974.0
+    }
+   ],
+   "기타포괄손익인식분": [
+    {
+     "tr": 49115,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49121,
+     "line_oth": 49122,
+     "total": -254476.0
+    }
+   ],
+   "수취보험료": [
+    {
+     "tr": 49141,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49147,
+     "line_oth": 49148,
+     "total": 992618.0
+    }
+   ],
+   "보험취득현금흐름": [
+    {
+     "tr": 49152,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49158,
+     "line_oth": 49159,
+     "total": -183060.0
+    }
+   ],
+   "투자요소를포함한지급보험금및기타보험서비스비용": [
+    {
+     "tr": 49163,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49169,
+     "line_oth": 49170,
+     "total": -1049865.0
+    }
+   ],
+   "보험계약대출현금흐름": [
+    {
+     "tr": 49174,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49180,
+     "line_oth": 49181,
+     "total": 10921.0
+    }
+   ],
+   "기말보험계약부채(자산)": [
+    {
+     "tr": 49231,
+     "csm_fv": 3564.0,
+     "csm_oth": 163370.0,
+     "csm": 166934.0,
+     "line_fv": 49240,
+     "line_oth": 49241,
+     "total": 6769941.0
+    }
+   ]
+  }
+ },
+ {
+  "start": 49250,
+  "end": 49634,
+  "caption": "③ 변액보험",
+  "rows": {
+   "보험계약자산": [
+    {
+     "tr": 49292,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49301,
+     "line_oth": 49302,
+     "total": null
+    },
+    {
+     "tr": 49592,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49601,
+     "line_oth": 49602,
+     "total": null
+    }
+   ],
+   "보험계약부채": [
+    {
+     "tr": 49306,
+     "csm_fv": 2019.0,
+     "csm_oth": null,
+     "csm": 2019.0,
+     "line_fv": 49315,
+     "line_oth": 49316,
+     "total": 15794.0
+    },
+    {
+     "tr": 49606,
+     "csm_fv": 2514.0,
+     "csm_oth": null,
+     "csm": 2514.0,
+     "line_fv": 49615,
+     "line_oth": 49616,
+     "total": 19188.0
+    }
+   ],
+   "기초보험계약부채(자산)": [
+    {
+     "tr": 49320,
+     "csm_fv": 2019.0,
+     "csm_oth": null,
+     "csm": 2019.0,
+     "line_fv": 49329,
+     "line_oth": 49330,
+     "total": 15794.0
+    }
+   ],
+   "해지율가정변경": [
+    {
+     "tr": 49338,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49344,
+     "line_oth": 49345,
+     "total": null
+    }
+   ],
+   "위험률가정변경": [
+    {
+     "tr": 49349,
+     "csm_fv": 94.0,
+     "csm_oth": null,
+     "csm": 94.0,
+     "line_fv": 49355,
+     "line_oth": 49356,
+     "total": null
+    }
+   ],
+   "사업비율가정변경": [
+    {
+     "tr": 49360,
+     "csm_fv": 47.0,
+     "csm_oth": null,
+     "csm": 47.0,
+     "line_fv": 49366,
+     "line_oth": 49367,
+     "total": null
+    }
+   ],
+   "기타가정변경": [
+    {
+     "tr": 49371,
+     "csm_fv": 186.0,
+     "csm_oth": null,
+     "csm": 186.0,
+     "line_fv": 49377,
+     "line_oth": 49378,
+     "total": null
+    }
+   ],
+   "물량차이및투자요소예실차등": [
+    {
+     "tr": 49382,
+     "csm_fv": 197.0,
+     "csm_oth": null,
+     "csm": 197.0,
+     "line_fv": 49388,
+     "line_oth": 49389,
+     "total": null
+    }
+   ],
+   "손실요소": [
+    {
+     "tr": 49393,
+     "csm_fv": -12.0,
+     "csm_oth": null,
+     "csm": -12.0,
+     "line_fv": 49399,
+     "line_oth": 49400,
+     "total": -12.0
+    }
+   ],
+   "신계약인식": [
+    {
+     "tr": 49404,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49410,
+     "line_oth": 49411,
+     "total": null
+    }
+   ],
+   "소계": [
+    {
+     "tr": 49415,
+     "csm_fv": 512.0,
+     "csm_oth": null,
+     "csm": 512.0,
+     "line_fv": 49421,
+     "line_oth": 49422,
+     "total": -12.0
+    },
+    {
+     "tr": 49463,
+     "csm_fv": -189.0,
+     "csm_oth": null,
+     "csm": -189.0,
+     "line_fv": 49469,
+     "line_oth": 49470,
+     "total": -254.0
+    },
+    {
+     "tr": 49515,
+     "csm_fv": 172.0,
+     "csm_oth": null,
+     "csm": 172.0,
+     "line_fv": 49521,
+     "line_oth": 49522,
+     "total": 4375.0
+    },
+    {
+     "tr": 49574,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49580,
+     "line_oth": 49581,
+     "total": -708.0
+    }
+   ],
+   "위험조정변동": [
+    {
+     "tr": 49430,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49436,
+     "line_oth": 49437,
+     "total": 27.0
+    }
+   ],
+   "보험계약마진상각": [
+    {
+     "tr": 49441,
+     "csm_fv": -189.0,
+     "csm_oth": null,
+     "csm": -189.0,
+     "line_fv": 49447,
+     "line_oth": 49448,
+     "total": -189.0
+    }
+   ],
+   "당기손익인식대상경험조정": [
+    {
+     "tr": 49452,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49458,
+     "line_oth": 49459,
+     "total": -92.0
+    }
+   ],
+   "발생사고부채변동": [
+    {
+     "tr": 49478,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49484,
+     "line_oth": 49485,
+     "total": -7.0
+    }
+   ],
+   "당기손익인식분": [
+    {
+     "tr": 49493,
+     "csm_fv": 172.0,
+     "csm_oth": null,
+     "csm": 172.0,
+     "line_fv": 49499,
+     "line_oth": 49500,
+     "total": 4375.0
+    }
+   ],
+   "기타포괄손익인식분": [
+    {
+     "tr": 49504,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49510,
+     "line_oth": 49511,
+     "total": null
+    }
+   ],
+   "수취보험료": [
+    {
+     "tr": 49530,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49536,
+     "line_oth": 49537,
+     "total": 767.0
+    }
+   ],
+   "보험취득현금흐름": [
+    {
+     "tr": 49541,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49547,
+     "line_oth": 49548,
+     "total": -1.0
+    }
+   ],
+   "투자요소를포함한지급보험금및기타보험서비스비용": [
+    {
+     "tr": 49552,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49558,
+     "line_oth": 49559,
+     "total": -1561.0
+    }
+   ],
+   "보험계약대출현금흐름": [
+    {
+     "tr": 49563,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49569,
+     "line_oth": 49570,
+     "total": 87.0
+    }
+   ],
+   "기말보험계약부채(자산)": [
+    {
+     "tr": 49620,
+     "csm_fv": 2514.0,
+     "csm_oth": null,
+     "csm": 2514.0,
+     "line_fv": 49629,
+     "line_oth": 49630,
+     "total": 19188.0
+    }
+   ]
+  }
+ },
+ {
+  "start": 49640,
+  "end": 50024,
+  "caption": "① 유배당보험",
+  "rows": {
+   "보험계약자산": [
+    {
+     "tr": 49682,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49691,
+     "line_oth": 49692,
+     "total": null
+    },
+    {
+     "tr": 49982,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49991,
+     "line_oth": 49992,
+     "total": null
+    }
+   ],
+   "보험계약부채": [
+    {
+     "tr": 49696,
+     "csm_fv": 24164.0,
+     "csm_oth": 5709.0,
+     "csm": 29873.0,
+     "line_fv": 49705,
+     "line_oth": 49706,
+     "total": 1366936.0
+    },
+    {
+     "tr": 49996,
+     "csm_fv": 15517.0,
+     "csm_oth": 7254.0,
+     "csm": 22771.0,
+     "line_fv": 50005,
+     "line_oth": 50006,
+     "total": 1462589.0
+    }
+   ],
+   "기초보험계약부채(자산)": [
+    {
+     "tr": 49710,
+     "csm_fv": 24164.0,
+     "csm_oth": 5709.0,
+     "csm": 29873.0,
+     "line_fv": 49719,
+     "line_oth": 49720,
+     "total": 1366936.0
+    }
+   ],
+   "해지율가정변경": [
+    {
+     "tr": 49728,
+     "csm_fv": -529.0,
+     "csm_oth": -572.0,
+     "csm": -1101.0,
+     "line_fv": 49734,
+     "line_oth": 49735,
+     "total": null
+    }
+   ],
+   "위험률가정변경": [
+    {
+     "tr": 49739,
+     "csm_fv": -25659.0,
+     "csm_oth": -153.0,
+     "csm": -25812.0,
+     "line_fv": 49745,
+     "line_oth": 49746,
+     "total": null
+    }
+   ],
+   "사업비율가정변경": [
+    {
+     "tr": 49750,
+     "csm_fv": -3575.0,
+     "csm_oth": -597.0,
+     "csm": -4172.0,
+     "line_fv": 49756,
+     "line_oth": 49757,
+     "total": null
+    }
+   ],
+   "기타가정변경": [
+    {
+     "tr": 49761,
+     "csm_fv": 399.0,
+     "csm_oth": -7.0,
+     "csm": 392.0,
+     "line_fv": 49767,
+     "line_oth": 49768,
+     "total": null
+    }
+   ],
+   "물량차이및투자요소예실차등": [
+    {
+     "tr": 49772,
+     "csm_fv": -1052.0,
+     "csm_oth": 338.0,
+     "csm": -714.0,
+     "line_fv": 49778,
+     "line_oth": 49779,
+     "total": null
+    }
+   ],
+   "손실요소": [
+    {
+     "tr": 49783,
+     "csm_fv": 22156.0,
+     "csm_oth": 295.0,
+     "csm": 22451.0,
+     "line_fv": 49789,
+     "line_oth": 49790,
+     "total": 22451.0
+    }
+   ],
+   "신계약인식": [
+    {
+     "tr": 49794,
+     "csm_fv": null,
+     "csm_oth": 1986.0,
+     "csm": 1986.0,
+     "line_fv": 49800,
+     "line_oth": 49801,
+     "total": 244.0
+    }
+   ],
+   "소계": [
+    {
+     "tr": 49805,
+     "csm_fv": -8260.0,
+     "csm_oth": 1290.0,
+     "csm": -6970.0,
+     "line_fv": 49811,
+     "line_oth": 49812,
+     "total": 22695.0
+    },
+    {
+     "tr": 49853,
+     "csm_fv": -1181.0,
+     "csm_oth": -46.0,
+     "csm": -1227.0,
+     "line_fv": 49859,
+     "line_oth": 49860,
+     "total": -928.0
+    },
+    {
+     "tr": 49905,
+     "csm_fv": 794.0,
+     "csm_oth": 301.0,
+     "csm": 1095.0,
+     "line_fv": 49911,
+     "line_oth": 49912,
+     "total": 126764.0
+    },
+    {
+     "tr": 49964,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49970,
+     "line_oth": 49971,
+     "total": -53179.0
+    }
+   ],
+   "위험조정변동": [
+    {
+     "tr": 49820,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49826,
+     "line_oth": 49827,
+     "total": 23.0
+    }
+   ],
+   "보험계약마진상각": [
+    {
+     "tr": 49831,
+     "csm_fv": -1181.0,
+     "csm_oth": -46.0,
+     "csm": -1227.0,
+     "line_fv": 49837,
+     "line_oth": 49838,
+     "total": -1227.0
+    }
+   ],
+   "당기손익인식대상경험조정": [
+    {
+     "tr": 49842,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49848,
+     "line_oth": 49849,
+     "total": 276.0
+    }
+   ],
+   "발생사고부채변동": [
+    {
+     "tr": 49868,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49874,
+     "line_oth": 49875,
+     "total": 301.0
+    }
+   ],
+   "당기손익인식분": [
+    {
+     "tr": 49883,
+     "csm_fv": 794.0,
+     "csm_oth": 301.0,
+     "csm": 1095.0,
+     "line_fv": 49889,
+     "line_oth": 49890,
+     "total": 49111.0
+    }
+   ],
+   "기타포괄손익인식분": [
+    {
+     "tr": 49894,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49900,
+     "line_oth": 49901,
+     "total": 77653.0
+    }
+   ],
+   "수취보험료": [
+    {
+     "tr": 49920,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49926,
+     "line_oth": 49927,
+     "total": 37484.0
+    }
+   ],
+   "보험취득현금흐름": [
+    {
+     "tr": 49931,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49937,
+     "line_oth": 49938,
+     "total": -140.0
+    }
+   ],
+   "투자요소를포함한지급보험금및기타보험서비스비용": [
+    {
+     "tr": 49942,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49948,
+     "line_oth": 49949,
+     "total": -90260.0
+    }
+   ],
+   "보험계약대출현금흐름": [
+    {
+     "tr": 49953,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 49959,
+     "line_oth": 49960,
+     "total": -263.0
+    }
+   ],
+   "기말보험계약부채(자산)": [
+    {
+     "tr": 50010,
+     "csm_fv": 15517.0,
+     "csm_oth": 7254.0,
+     "csm": 22771.0,
+     "line_fv": 50019,
+     "line_oth": 50020,
+     "total": 1462589.0
+    }
+   ]
+  }
+ },
+ {
+  "start": 50029,
+  "end": 50413,
+  "caption": "② 무배당보험",
+  "rows": {
+   "보험계약자산": [
+    {
+     "tr": 50071,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50080,
+     "line_oth": 50081,
+     "total": null
+    },
+    {
+     "tr": 50371,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50380,
+     "line_oth": 50381,
+     "total": null
+    }
+   ],
+   "보험계약부채": [
+    {
+     "tr": 50085,
+     "csm_fv": 20907.0,
+     "csm_oth": 114068.0,
+     "csm": 134975.0,
+     "line_fv": 50094,
+     "line_oth": 50095,
+     "total": 6665042.0
+    },
+    {
+     "tr": 50385,
+     "csm_fv": 3211.0,
+     "csm_oth": 114348.0,
+     "csm": 117559.0,
+     "line_fv": 50394,
+     "line_oth": 50395,
+     "total": 6994837.0
+    }
+   ],
+   "기초보험계약부채(자산)": [
+    {
+     "tr": 50099,
+     "csm_fv": 20907.0,
+     "csm_oth": 114068.0,
+     "csm": 134975.0,
+     "line_fv": 50108,
+     "line_oth": 50109,
+     "total": 6665042.0
+    }
+   ],
+   "해지율가정변경": [
+    {
+     "tr": 50117,
+     "csm_fv": -11201.0,
+     "csm_oth": -52089.0,
+     "csm": -63290.0,
+     "line_fv": 50123,
+     "line_oth": 50124,
+     "total": null
+    }
+   ],
+   "위험률가정변경": [
+    {
+     "tr": 50128,
+     "csm_fv": 10684.0,
+     "csm_oth": 541.0,
+     "csm": 11225.0,
+     "line_fv": 50134,
+     "line_oth": 50135,
+     "total": null
+    }
+   ],
+   "사업비율가정변경": [
+    {
+     "tr": 50139,
+     "csm_fv": -14767.0,
+     "csm_oth": -8552.0,
+     "csm": -23319.0,
+     "line_fv": 50145,
+     "line_oth": 50146,
+     "total": null
+    }
+   ],
+   "기타가정변경": [
+    {
+     "tr": 50150,
+     "csm_fv": 7322.0,
+     "csm_oth": 14803.0,
+     "csm": 22125.0,
+     "line_fv": 50156,
+     "line_oth": 50157,
+     "total": null
+    }
+   ],
+   "물량차이및투자요소예실차등": [
+    {
+     "tr": 50161,
+     "csm_fv": -24220.0,
+     "csm_oth": -14412.0,
+     "csm": -38632.0,
+     "line_fv": 50167,
+     "line_oth": 50168,
+     "total": null
+    }
+   ],
+   "손실요소": [
+    {
+     "tr": 50172,
+     "csm_fv": 14232.0,
+     "csm_oth": 17934.0,
+     "csm": 32166.0,
+     "line_fv": 50178,
+     "line_oth": 50179,
+     "total": 32166.0
+    }
+   ],
+   "신계약인식": [
+    {
+     "tr": 50183,
+     "csm_fv": null,
+     "csm_oth": 50890.0,
+     "csm": 50890.0,
+     "line_fv": 50189,
+     "line_oth": 50190,
+     "total": 10853.0
+    }
+   ],
+   "소계": [
+    {
+     "tr": 50194,
+     "csm_fv": -17950.0,
+     "csm_oth": 9115.0,
+     "csm": -8835.0,
+     "line_fv": 50200,
+     "line_oth": 50201,
+     "total": 43019.0
+    },
+    {
+     "tr": 50242,
+     "csm_fv": -382.0,
+     "csm_oth": -15306.0,
+     "csm": -15688.0,
+     "line_fv": 50248,
+     "line_oth": 50249,
+     "total": -17602.0
+    },
+    {
+     "tr": 50294,
+     "csm_fv": 636.0,
+     "csm_oth": 6471.0,
+     "csm": 7107.0,
+     "line_fv": 50300,
+     "line_oth": 50301,
+     "total": 559891.0
+    },
+    {
+     "tr": 50353,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50359,
+     "line_oth": 50360,
+     "total": -254383.0
+    }
+   ],
+   "위험조정변동": [
+    {
+     "tr": 50209,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50215,
+     "line_oth": 50216,
+     "total": -4372.0
+    }
+   ],
+   "보험계약마진상각": [
+    {
+     "tr": 50220,
+     "csm_fv": -382.0,
+     "csm_oth": -15306.0,
+     "csm": -15688.0,
+     "line_fv": 50226,
+     "line_oth": 50227,
+     "total": -15688.0
+    }
+   ],
+   "당기손익인식대상경험조정": [
+    {
+     "tr": 50231,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50237,
+     "line_oth": 50238,
+     "total": 2458.0
+    }
+   ],
+   "발생사고부채변동": [
+    {
+     "tr": 50257,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50263,
+     "line_oth": 50264,
+     "total": -1130.0
+    }
+   ],
+   "당기손익인식분": [
+    {
+     "tr": 50272,
+     "csm_fv": 636.0,
+     "csm_oth": 6471.0,
+     "csm": 7107.0,
+     "line_fv": 50278,
+     "line_oth": 50279,
+     "total": 260781.0
+    }
+   ],
+   "기타포괄손익인식분": [
+    {
+     "tr": 50283,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50289,
+     "line_oth": 50290,
+     "total": 299110.0
+    }
+   ],
+   "수취보험료": [
+    {
+     "tr": 50309,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50315,
+     "line_oth": 50316,
+     "total": 1061791.0
+    }
+   ],
+   "보험취득현금흐름": [
+    {
+     "tr": 50320,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50326,
+     "line_oth": 50327,
+     "total": -140928.0
+    }
+   ],
+   "투자요소를포함한지급보험금및기타보험서비스비용": [
+    {
+     "tr": 50331,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50337,
+     "line_oth": 50338,
+     "total": -1194695.0
+    }
+   ],
+   "보험계약대출현금흐름": [
+    {
+     "tr": 50342,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50348,
+     "line_oth": 50349,
+     "total": 19449.0
+    }
+   ],
+   "기말보험계약부채(자산)": [
+    {
+     "tr": 50399,
+     "csm_fv": 3211.0,
+     "csm_oth": 114348.0,
+     "csm": 117559.0,
+     "line_fv": 50408,
+     "line_oth": 50409,
+     "total": 6994837.0
+    }
+   ]
+  }
+ },
+ {
+  "start": 50418,
+  "end": 50802,
+  "caption": "③ 변액보험",
+  "rows": {
+   "보험계약자산": [
+    {
+     "tr": 50460,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50469,
+     "line_oth": 50470,
+     "total": null
+    },
+    {
+     "tr": 50760,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50769,
+     "line_oth": 50770,
+     "total": null
+    }
+   ],
+   "보험계약부채": [
+    {
+     "tr": 50474,
+     "csm_fv": 978.0,
+     "csm_oth": null,
+     "csm": 978.0,
+     "line_fv": 50483,
+     "line_oth": 50484,
+     "total": 16512.0
+    },
+    {
+     "tr": 50774,
+     "csm_fv": 2019.0,
+     "csm_oth": null,
+     "csm": 2019.0,
+     "line_fv": 50783,
+     "line_oth": 50784,
+     "total": 15794.0
+    }
+   ],
+   "기초보험계약부채(자산)": [
+    {
+     "tr": 50488,
+     "csm_fv": 978.0,
+     "csm_oth": null,
+     "csm": 978.0,
+     "line_fv": 50497,
+     "line_oth": 50498,
+     "total": 16512.0
+    }
+   ],
+   "해지율가정변경": [
+    {
+     "tr": 50506,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50512,
+     "line_oth": 50513,
+     "total": null
+    }
+   ],
+   "위험률가정변경": [
+    {
+     "tr": 50517,
+     "csm_fv": 78.0,
+     "csm_oth": null,
+     "csm": 78.0,
+     "line_fv": 50523,
+     "line_oth": 50524,
+     "total": null
+    }
+   ],
+   "사업비율가정변경": [
+    {
+     "tr": 50528,
+     "csm_fv": -13.0,
+     "csm_oth": null,
+     "csm": -13.0,
+     "line_fv": 50534,
+     "line_oth": 50535,
+     "total": null
+    }
+   ],
+   "기타가정변경": [
+    {
+     "tr": 50539,
+     "csm_fv": 922.0,
+     "csm_oth": null,
+     "csm": 922.0,
+     "line_fv": 50545,
+     "line_oth": 50546,
+     "total": null
+    }
+   ],
+   "물량차이및투자요소예실차등": [
+    {
+     "tr": 50550,
+     "csm_fv": 84.0,
+     "csm_oth": null,
+     "csm": 84.0,
+     "line_fv": 50556,
+     "line_oth": 50557,
+     "total": null
+    }
+   ],
+   "손실요소": [
+    {
+     "tr": 50561,
+     "csm_fv": 26.0,
+     "csm_oth": null,
+     "csm": 26.0,
+     "line_fv": 50567,
+     "line_oth": 50568,
+     "total": 26.0
+    }
+   ],
+   "신계약인식": [
+    {
+     "tr": 50572,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50578,
+     "line_oth": 50579,
+     "total": null
+    }
+   ],
+   "소계": [
+    {
+     "tr": 50583,
+     "csm_fv": 1097.0,
+     "csm_oth": null,
+     "csm": 1097.0,
+     "line_fv": 50589,
+     "line_oth": 50590,
+     "total": 26.0
+    },
+    {
+     "tr": 50631,
+     "csm_fv": -145.0,
+     "csm_oth": null,
+     "csm": -145.0,
+     "line_fv": 50637,
+     "line_oth": 50638,
+     "total": -74.0
+    },
+    {
+     "tr": 50683,
+     "csm_fv": 89.0,
+     "csm_oth": null,
+     "csm": 89.0,
+     "line_fv": 50689,
+     "line_oth": 50690,
+     "total": -28.0
+    },
+    {
+     "tr": 50742,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50748,
+     "line_oth": 50749,
+     "total": -690.0
+    }
+   ],
+   "위험조정변동": [
+    {
+     "tr": 50598,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50604,
+     "line_oth": 50605,
+     "total": -7.0
+    }
+   ],
+   "보험계약마진상각": [
+    {
+     "tr": 50609,
+     "csm_fv": -145.0,
+     "csm_oth": null,
+     "csm": -145.0,
+     "line_fv": 50615,
+     "line_oth": 50616,
+     "total": -145.0
+    }
+   ],
+   "당기손익인식대상경험조정": [
+    {
+     "tr": 50620,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50626,
+     "line_oth": 50627,
+     "total": 78.0
+    }
+   ],
+   "발생사고부채변동": [
+    {
+     "tr": 50646,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50652,
+     "line_oth": 50653,
+     "total": 48.0
+    }
+   ],
+   "당기손익인식분": [
+    {
+     "tr": 50661,
+     "csm_fv": 89.0,
+     "csm_oth": null,
+     "csm": 89.0,
+     "line_fv": 50667,
+     "line_oth": 50668,
+     "total": -29.0
+    }
+   ],
+   "기타포괄손익인식분": [
+    {
+     "tr": 50672,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50678,
+     "line_oth": 50679,
+     "total": 1.0
+    }
+   ],
+   "수취보험료": [
+    {
+     "tr": 50698,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50704,
+     "line_oth": 50705,
+     "total": 987.0
+    }
+   ],
+   "보험취득현금흐름": [
+    {
+     "tr": 50709,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50715,
+     "line_oth": 50716,
+     "total": null
+    }
+   ],
+   "투자요소를포함한지급보험금및기타보험서비스비용": [
+    {
+     "tr": 50720,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50726,
+     "line_oth": 50727,
+     "total": -1866.0
+    }
+   ],
+   "보험계약대출현금흐름": [
+    {
+     "tr": 50731,
+     "csm_fv": null,
+     "csm_oth": null,
+     "csm": 0,
+     "line_fv": 50737,
+     "line_oth": 50738,
+     "total": 189.0
+    }
+   ],
+   "기말보험계약부채(자산)": [
+    {
+     "tr": 50788,
+     "csm_fv": 2019.0,
+     "csm_oth": null,
+     "csm": 2019.0,
+     "line_fv": 50797,
+     "line_oth": 50798,
+     "total": 15794.0
+    }
+   ]
+  }
+ }
+]

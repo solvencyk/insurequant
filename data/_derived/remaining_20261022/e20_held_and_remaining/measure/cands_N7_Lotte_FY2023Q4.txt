@@ -1,0 +1,2 @@
+KR0003 2023.4Q [lotte+csm] PL cells=19 CSM cells=5 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': -0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': -0.747}
+candidate masters written: PL cells 19 (+12 single-quarter recomputed), CSM cells 5 (+4 single-quarter recomputed) -> scratchpad cand/N7_Lotte_FY2023Q4_*

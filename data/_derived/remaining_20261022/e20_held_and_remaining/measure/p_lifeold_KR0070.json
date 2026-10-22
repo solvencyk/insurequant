@@ -1,0 +1,54 @@
+{
+ "2023.1Q": {
+  "orig_run": {},
+  "master": {
+   "4": 22664.0,
+   "5": 272.0,
+   "6": null,
+   "9": null,
+   "10": null,
+   "11": null
+  },
+  "later_current_col": {},
+  "later_prior_col": {}
+ },
+ "2023.2Q": {
+  "orig_run": {},
+  "master": {
+   "4": 48623.0,
+   "5": 6649.0,
+   "6": null,
+   "9": null,
+   "10": null,
+   "11": null
+  },
+  "later_current_col": {},
+  "later_prior_col": {}
+ },
+ "2023.3Q": {
+  "orig_run": {},
+  "master": {
+   "4": 75180.0,
+   "5": 11071.0,
+   "6": null,
+   "9": -9586.0,
+   "10": -474.0,
+   "11": null
+  },
+  "later_current_col": {},
+  "later_prior_col": {}
+ },
+ "2023.4Q": {
+  "orig_run": {},
+  "master": {
+   "4": 92971.0,
+   "5": 16395.0,
+   "6": null,
+   "9": -9589.0,
+   "10": -728.0,
+   "11": null
+  },
+  "later_current_col": {},
+  "later_prior_col": {}
+ }
+}

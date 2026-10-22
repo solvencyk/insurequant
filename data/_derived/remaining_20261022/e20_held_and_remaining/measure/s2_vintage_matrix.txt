@@ -1,0 +1,22 @@
+##### KR0001 메리츠화재해상보험
+  FY2023:  q | master open->close | later-comparative open->close (status/fid/diff) | later filing
+     2023.1Q  master 100383.8 -> 100033.5 | later 96376.4 -> 96454.4  (DIFF/SAME/1,2,3,4,5,6) [2024.1Q]
+     2023.2Q  master 100383.8 -> 100684.2 | later 96376.4 -> 97015.4  (DIFF/SAME/1,2,3,4,5,6) [2024.2Q]
+     2023.3Q  master 96376.4 -> 103383.0 | later 96376.4 -> 103383.0  (DIFF/SAME/1,2,3,4,5,6) [2024.3Q]
+     2023.4Q  master 96376.4 -> 104687.3 | later 96376.4 -> 104687.3  (SAME/SAME/-) [2024.4Q]
+  FY2024:  q | master open->close | later-comparative open->close (status/fid/diff) | later filing
+     2024.1Q  master 104687.3 -> 107426.8 | later 104687.3 -> 107426.8  (SAME/SAME/-) [2025.1Q]
+     2024.2Q  master 104687.3 -> 106641.6 | later 104687.3 -> 106641.6  (SAME/SAME/-) [2025.2Q]
+     2024.3Q  master 104687.3 -> 106416.6 | later 104687.3 -> 106416.6  (SAME/SAME/-) [2025.3Q]
+     2024.4Q  master 104687.3 -> 111878.9 | later 104687.3 -> 111878.9  (SAME/SAME/-) [2025.4Q]
+##### KR0068 한화생명
+  FY2023:  q | master open->close | later-comparative open->close (status/fid/diff) | later filing
+     2023.1Q  master 96679.3 -> 97125.1 | later 97629.5 -> 98791.1  (DIFF/SAME/1,2,3,4,5,6) [2024.1Q]
+     2023.2Q  master 96679.3 -> 101167.4 | later 97629.5 -> 101226.9  (DIFF/SAME/1,2,3,4,5,6) [2024.2Q]
+     2023.3Q  master 97629.5 -> 97991.1 | later 97629.5 -> 97991.2  (DIFF/SAME/3,4) [2024.3Q]
+     2023.4Q  master 97629.5 -> 92384.9 | later 97629.5 -> 92384.9  (SAME/SAME/-) [2024.4Q]
+  FY2024:  q | master open->close | later-comparative open->close (status/fid/diff) | later filing
+     2024.1Q  master 92384.9 -> 92435.9 | later 92384.9 -> 92435.9  (SAME/SAME/-) [2025.1Q]
+     2024.2Q  master 92384.9 -> 91537.1 | later 92384.9 -> 91537.1  (SAME/SAME/-) [2025.2Q]
+     2024.3Q  master 92384.9 -> 91297.5 | later 92384.9 -> 91297.5  (SAME/SAME/-) [2025.3Q]
+     2024.4Q  master 92384.9 -> 91091.4 | later 92384.9 -> 91091.4  (SAME/SAME/-) [2025.4Q]

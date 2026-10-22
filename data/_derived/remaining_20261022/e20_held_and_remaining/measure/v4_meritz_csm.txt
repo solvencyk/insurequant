@@ -1,0 +1,30 @@
+##### data/dart/FY2024_Q1/raw/KR0001_메리츠화재해상보험/20240516001162.xml separate notes from L35848
+  T46266-46603: 억원 [기초,신계약,이자,조정,상각,기말]=[104687.3, 3722.7, 829.8, 1077.4, -2890.3, 107426.8]  (잔차 기말-합=+0.00)
+       open: row L46313 CSM cells L46317..L46319 = 104,687.26 eok
+       new: row L46343 CSM cells L46347..L46349 = 3,722.66 eok
+       int: row L46483 CSM cells L46487..L46489 = 829.75 eok
+       adj: row L46353 CSM cells L46357..L46359 = 1,077.40 eok
+       amort: row L46393 CSM cells L46397..L46399 = -2,890.27 eok
+       close: row L46573 CSM cells L46577..L46579 = 107,426.80 eok
+  T46620-46957: 억원 [기초,신계약,이자,조정,상각,기말]=[96376.4, 4171.8, 682.8, -2209.6, -2567.0, 96454.4]  (잔차 기말-합=+0.00)
+       open: row L46667 CSM cells L46671..L46673 = 96,376.39 eok
+       new: row L46697 CSM cells L46701..L46703 = 4,171.84 eok
+       int: row L46837 CSM cells L46841..L46843 = 682.81 eok
+       adj: row L46707 CSM cells L46711..L46713 = -2,209.64 eok
+       amort: row L46747 CSM cells L46751..L46753 = -2,566.96 eok
+       close: row L46927 CSM cells L46931..L46933 = 96,454.44 eok
+##### data/dart/FY2024_Q2/raw/KR0001_메리츠화재해상보험/20240814003013.xml separate notes from L39131
+  T49893-50230: 억원 [기초,신계약,이자,조정,상각,기말]=[104687.3, 7141.9, 1685.1, -1113.3, -5759.4, 106641.6]  (잔차 기말-합=+0.00)
+       open: row L49940 CSM cells L49944..L49946 = 104,687.26 eok
+       new: row L49970 CSM cells L49974..L49976 = 7,141.92 eok
+       int: row L50110 CSM cells L50114..L50116 = 1,685.08 eok
+       adj: row L49980 CSM cells L49984..L49986 = -1,113.27 eok
+       amort: row L50020 CSM cells L50024..L50026 = -5,759.41 eok
+       close: row L50200 CSM cells L50204..L50206 = 106,641.58 eok
+  T50248-50585: 억원 [기초,신계약,이자,조정,상각,기말]=[96376.4, 8096.9, 1408.3, -3716.0, -5150.1, 97015.4]  (잔차 기말-합=+0.00)
+       open: row L50295 CSM cells L50299..L50301 = 96,376.39 eok
+       new: row L50325 CSM cells L50329..L50331 = 8,096.94 eok
+       int: row L50465 CSM cells L50469..L50471 = 1,408.26 eok
+       adj: row L50335 CSM cells L50339..L50341 = -3,716.01 eok
+       amort: row L50375 CSM cells L50379..L50381 = -5,150.14 eok
+       close: row L50555 CSM cells L50559..L50561 = 97,015.44 eok

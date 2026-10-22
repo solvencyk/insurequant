@@ -1,0 +1,22 @@
+﻿code,quarter,note_prior_mn,csm_prior_item5_eok,diff_eok,gate_tol_eok,within,reader_source
+KR0003,2023.4Q,185905.0,-1859.0,0.05,0.929,True,p_lotte_run (2nd table of the LOB note pair)
+KR0003,2024.1Q,56827.0,-568.3,-0.03,0.284,True,p_lotte_run (2nd table of the LOB note pair)
+KR0003,2024.2Q,114203.0,-1142.0,0.03,0.571,True,p_lotte_run (2nd table of the LOB note pair)
+KR0003,2024.3Q,171048.0,-1710.5,-0.02,0.855,True,p_lotte_run (2nd table of the LOB note pair)
+KR0099,2023.3Q,214229.0,-2142.3,-0.01,1.071,True,p_kblife (전기/twin table block)
+KR0099,2023.4Q,300213.0,-3002.1,0.03,1.501,True,p_kblife (전기/twin table block)
+KR0099,2024.1Q,74241.0,-742.4,0.01,0.371,True,p_kblife (전기/twin table block)
+KR0099,2024.2Q,148231.0,-1482.3,0.01,0.741,True,p_kblife (전기/twin table block)
+KR0099,2024.3Q,220490.0,-2204.9,0.0,1.102,True,p_kblife (전기/twin table block)
+KR0072,2023.1Q,11641.0,-116.4,0.01,0.1,True,"p_lifeold (old-life L2, one period block to the right)"
+KR0072,2023.2Q,24509.0,-245.1,-0.01,0.123,True,"p_lifeold (old-life L2, one period block to the right)"
+KR0072,2023.3Q,37266.0,-372.7,-0.04,0.186,True,"p_lifeold (old-life L2, one period block to the right)"
+KR0072,2023.4Q,51198.0,-512.0,-0.02,0.256,True,"p_lifeold (old-life L2, one period block to the right)"
+KR0068,2023.1Q,225103.0,-2251.0,0.03,1.125,True,"p_hanwha (L1, 2nd table)"
+KR0068,2023.2Q,451415.0,-4514.2,-0.05,2.257,True,"p_hanwha (L1, 2nd table)"
+KR0068,2023.3Q,668342.0,-6683.4,0.02,3.342,True,"p_hanwha (L1, 2nd table)"
+KR0001,2023.1Q,256695.0,-2567.0,-0.05,1.284,True,p_meritz (Format-B 2nd 상세내역 table)
+KR0001,2023.2Q,515014.0,-5150.1,0.04,2.575,True,p_meritz (Format-B 2nd 상세내역 table)
+KR0070,2023.2Q,46789,-467.9,-0.01,0.234,True,FY2024_Q2 note '(1) 당반기와 전반기 중 보험영업수익' 보험계약마진상각 prior-YTD cell L22569
+KR0070,2023.3Q,69639,-696.4,-0.01,0.348,True,FY2024_Q3 same note cell L22013
+KR0070,2023.4Q,92971,-929.7,0.01,0.465,True,FY2024_Q4 [구분|당기|전기] note 전기 col (p_abl)

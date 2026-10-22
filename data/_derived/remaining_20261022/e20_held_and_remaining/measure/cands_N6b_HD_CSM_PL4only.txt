@@ -1,0 +1,7 @@
+KR0009 2023.1Q [keep_nonlife+csm] PL cells=20 CSM cells=6 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': -0.0, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': 8429.798}
+KR0009 2023.2Q [keep_nonlife+csm] PL cells=20 CSM cells=6 closure={'I1 20=1+17': -0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': -0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 75080.623}
+KR0009 2023.3Q: WARNING assemble RC gate suppressed Tier-2 (legs do not reconcile)
+KR0009 2023.3Q [keep_nonlife+csm] PL cells=0 CSM cells=2 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': None}
+KR0009 2023.4Q [keep_nonlife+csm] PL cells=12 CSM cells=4 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': -98.12}
+PL_ONLY_ITEMS=[4]: PL cells 52 -> 3
+candidate masters written: PL cells 3 (+4 single-quarter recomputed), CSM cells 18 (+20 single-quarter recomputed) -> scratchpad cand/N6b_HD_CSM_PL4only_*

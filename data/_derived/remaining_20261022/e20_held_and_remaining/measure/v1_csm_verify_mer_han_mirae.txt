@@ -1,0 +1,16 @@
+KR0001 2023.1Q later FY2024_Q1 vec=[96376.4, 4171.8, 682.8, -2209.6, -2567.0, 96454.4]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)
+KR0001 2023.2Q later FY2024_Q2 vec=[96376.4, 8096.9, 1408.3, -3716.0, -5150.1, 97015.4]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)
+KR0068 2023.1Q later FY2024_Q1 vec=[97629.5, 5444.3, 829.0, -2860.7, -2251.0, 98791.1]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)
+KR0068 2023.2Q later FY2024_Q2 vec=[97629.5, 11643.1, 1702.9, -5234.4, -4514.2, 101226.9]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)
+KR0068 2023.3Q later FY2024_Q3 vec=[97629.5, 18559.5, 2616.6, -14130.9, -6683.4, 97991.2]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)
+KR0079 2024.1Q later FY2025_Q1 vec=[20214.5, 962.0, 118.2, 138.1, -507.6, 20925.2]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)
+KR0079 2024.2Q later FY2025_Q2 vec=[20214.5, 1723.9, 243.3, -271.6, -1007.0, 20903.2]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)
+KR0079 2024.3Q later FY2025_Q3 vec=[20214.5, 2742.6, 374.7, -1190.5, -1487.1, 20654.1]
+   no single table matches >=3 items (vector is a sum over product/LOB tables or not printed)

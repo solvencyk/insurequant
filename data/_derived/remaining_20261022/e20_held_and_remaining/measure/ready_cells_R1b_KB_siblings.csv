@@ -1,0 +1,51 @@
+﻿scenario,code,company,quarter,item,item_name,old,new,delta,gold_overlap_old_gold_value,later_filing,cite(label|line|text),how
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,1,보험손익,258881.0,248907.0,-9974.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅰ.보험손익|L25798|248,907",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,2,생명장기 손익,234263.0,231611.0,-2652.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,3 + 8
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,3,생명장기 원수손익,233223.0,230571.0,-2652.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,보험수익 - 발행보험서비스비용 (statement lines)
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,6,원수 예실차,-4947.0,-7598.0,-2651.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,derived from note legs
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,7,기타 생명장기 원수손익,-4035.0,-4036.0,-1.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,3 - (4+5+6)
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,14,일반손익,-6066.0,-13388.0,-7322.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,derived from note legs
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,16,기타사업비용,92565.0,91710.0,-855.0,92565.0,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"(3)기타사업비용|L25959|91,710",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,17,투자손익,95710.0,105631.0,9921.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅱ.투자손익|L25982|105,631",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,18,투자이익,283184.0,293214.0,10030.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,17 - 19
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,19,보험금융손익,-187474.0,-187583.0,-109.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,보험금융수익-비용 합 (FS-API def.)
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,20,영업이익,354591.0,354538.0,-53.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅲ.영업이익|L26534|354,538",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,21,영업외손익,1689.0,1076.0,-613.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅳ.영업외손익|L26557|1,076",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,22,세전이익,356280.0,355614.0,-666.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅴ.법인세비용차감전순이익|L26626|355,614",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,23,법인세,93054.0,91329.0,-1725.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅵ.법인세비용|L26649|91,329",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,24,당기순이익,263226.0,264285.0,1059.0,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅶ.분기순이익|L26672|264,285",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,25,기타포괄손익,,79763.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅷ.기타포괄손익|L26764|79,763",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,26,FVOCI 채무증권 평가손익,,550908.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"(1)기타포괄손익-공정가치측정금융자산 평가손익|L26879|550,908",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,27,보험계약금융손익(OCI),,-548766.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"(5)보험계약 관련 금융손익|L26971|(548,766)",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,28,위험회피 파생상품 평가손익,,60858.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"(3)현금흐름위험회피파생상품평가손익|L26925|60,858",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,29,FVOCI 지분증권 평가손익,,-197.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,(2)기타포괄손익-공정가치측정 지분증권 관련손익|L26833|(197),statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,30,재보험금융손익(OCI),,15109.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"(6)재보험계약 관련 금융손익|L26994|15,109",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,31,총포괄손익,,344048.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,"Ⅸ.분기총포괄손익|L27017|344,048",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.1Q,32,기타 포괄손익(미분류),,1851.0,,,data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml,,OCI catch-all (leaf rows not in 26..30)
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,1,보험손익,553823.0,529083.0,-24740.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅰ.보험손익|L28876|529,083",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,2,생명장기 손익,474858.0,470177.0,-4681.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,3 + 8
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,3,생명장기 원수손익,481073.0,476393.0,-4680.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,보험수익 - 발행보험서비스비용 (statement lines)
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,6,원수 예실차,-14476.0,-19155.0,-4679.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,derived from note legs
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,7,기타 생명장기 원수손익,5575.0,5574.0,-1.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,3 - (4+5+6)
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,8,생명장기 재보험손익,-6215.0,-6216.0,-1.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,재보험수익 - 재보험비용 (statement lines)
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,10,재보험 위험조정 변동,-4098.0,-4099.0,-1.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,derived from note legs
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,11,재보험 예실차,-12642.0,-12641.0,1.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,derived from note legs
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,12,기타 생명장기 재보험손익,12765.0,12764.0,-1.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,8 - (9+10+11)
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,14,일반손익,8510.0,-11549.0,-20059.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,derived from note legs
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,16,기타사업비용,190719.0,189068.0,-1651.0,190719.0,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"(3)기타사업비용|L29037|189,068",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,17,투자손익,176508.0,208650.0,32142.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅱ.투자손익|L29060|208,650",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,18,투자이익,539435.0,571581.0,32146.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,17 - 19
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,19,보험금융손익,-362927.0,-362931.0,-4.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,보험금융수익-비용 합 (FS-API def.)
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,20,영업이익,730331.0,737733.0,7402.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅲ.영업이익|L29612|737,733",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,21,영업외손익,2162.0,828.0,-1334.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,Ⅳ.영업외손익|L29635|828,statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,22,세전이익,732493.0,738561.0,6068.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅴ.법인세비용차감전순이익|L29704|738,561",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,23,법인세,193576.0,192341.0,-1235.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅵ.법인세비용|L29727|192,341",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,24,당기순이익,538917.0,546220.0,7303.0,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅶ.반기순이익|L29750|546,220",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,25,기타포괄손익,,79903.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅷ.기타포괄손익|L29842|79,903",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,26,FVOCI 채무증권 평가손익,,216006.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"(1)기타포괄손익-공정가치측정금융자산 평가손익|L29957|216,006",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,27,보험계약금융손익(OCI),,-162659.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"(5)보험계약 관련 금융손익|L30049|(162,659)",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,28,위험회피 파생상품 평가손익,,9823.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"(3)현금흐름위험회피파생상품평가손익|L30003|9,823",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,29,FVOCI 지분증권 평가손익,,-1381.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"(2)기타포괄손익-공정가치측정 지분증권 관련손익|L29911|(1,381)",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,30,재보험금융손익(OCI),,15888.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"(6)재보험계약 관련 금융손익|L30072|15,888",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,31,총포괄손익,,626123.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,"Ⅸ.반기총포괄손익|L30095|626,123",statement prior-YTD cell
+R1b_KB_siblings,KR0010,KB손해보험,2023.2Q,32,기타 포괄손익(미분류),,2226.0,,,data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml,,OCI catch-all (leaf rows not in 26..30)

@@ -1,0 +1,352 @@
+{
+ "name": "N6b_HD_CSM_PL4only",
+ "specs": [
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "prov": "keep_nonlife",
+   "csm": true
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "prov": "keep_nonlife",
+   "csm": true
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.3Q",
+   "prov": "keep_nonlife",
+   "csm": true
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.4Q",
+   "prov": "keep_nonlife",
+   "csm": true
+  }
+ ],
+ "pl_cells": [
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 4,
+   "old": 216346.662,
+   "new": 206660.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 4,
+   "old": 441028.976,
+   "new": 417840.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.4Q",
+   "item": 4,
+   "old": 880547.066,
+   "new": 880540.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  }
+ ],
+ "csm_cells": [
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 1,
+   "old": 88281.1,
+   "new": 83515.4,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 2,
+   "old": 4946.7,
+   "new": 4572.8,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 3,
+   "old": 653.8,
+   "new": 614.8,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 4,
+   "old": -2509.5,
+   "new": -2103.2,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 5,
+   "old": -2163.5,
+   "new": -2066.6,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.1Q",
+   "item": 6,
+   "old": 89208.6,
+   "new": 84533.2,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 1,
+   "old": 88281.1,
+   "new": 83515.4,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 2,
+   "old": 9542.1,
+   "new": 8755.9,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 3,
+   "old": 1339.0,
+   "new": 1260.7,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 4,
+   "old": -3391.1,
+   "new": -3369.2,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 5,
+   "old": -4410.3,
+   "new": -4178.4,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.2Q",
+   "item": 6,
+   "old": 91360.8,
+   "new": 85984.3,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.3Q",
+   "item": 1,
+   "old": 88281.1,
+   "new": 83515.4,
+   "gold": 88281.1,
+   "gold_was": 83515.4
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.3Q",
+   "item": 4,
+   "old": -7991.9,
+   "new": -3226.2,
+   "gold": -7991.9,
+   "gold_was": -3226.2
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.4Q",
+   "item": 1,
+   "old": 88281.1,
+   "new": 83515.4,
+   "gold": 88281.1,
+   "gold_was": 83515.4
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.4Q",
+   "item": 4,
+   "old": -7480.6,
+   "new": -2716.0,
+   "gold": -7480.6,
+   "gold_was": -2714.9
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.4Q",
+   "item": 5,
+   "old": -8805.5,
+   "new": -8805.4,
+   "gold": null,
+   "gold_was": null
+  },
+  {
+   "code": "KR0009",
+   "q": "2023.4Q",
+   "item": 6,
+   "old": 91423.7,
+   "new": 91422.7,
+   "gold": null,
+   "gold_was": null
+  }
+ ],
+ "buckets": {
+  "KR0009|2023.1Q": {
+   "prov": "keep_nonlife",
+   "csm": true,
+   "n_pl": 20,
+   "n_csm": 6,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": -0.0,
+    "I6 17=18+19": -0.0,
+    "I7 LOB bridge (min of bare/adj)": 8429.7983
+   },
+   "screen_eok": {
+    "보험손익": [
+     2585.0,
+     2460.45,
+     -124.55
+    ],
+    "당기순이익": [
+     3336.0,
+     3153.02,
+     -182.98
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0009|2023.2Q": {
+   "prov": "keep_nonlife",
+   "csm": true,
+   "n_pl": 20,
+   "n_csm": 6,
+   "closure": {
+    "I1 20=1+17": -0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": -0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": 75080.623
+   },
+   "screen_eok": {
+    "보험손익": [
+     4995.0,
+     4156.52,
+     -838.48
+    ],
+    "당기순이익": [
+     5780.0,
+     4969.63,
+     -810.37
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0009|2023.3Q": {
+   "prov": "keep_nonlife",
+   "csm": true,
+   "n_pl": 0,
+   "n_csm": 2,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": null
+   },
+   "screen_eok": {},
+   "reconciled": false
+  },
+  "KR0009|2023.4Q": {
+   "prov": "keep_nonlife",
+   "csm": true,
+   "n_pl": 12,
+   "n_csm": 4,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": -98.1201
+   },
+   "screen_eok": {
+    "보험손익": [
+     5264.91,
+     5265.9,
+     0.99
+    ],
+    "투자손익": [
+     4998.77,
+     4550.46,
+     -448.31
+    ],
+    "당기순이익": [
+     8057.22,
+     7723.38,
+     -333.84
+    ],
+    "기타포괄손익": [
+     -4969.23,
+     -4635.78,
+     333.46
+    ],
+    "총포괄손익": [
+     3087.99,
+     3087.6,
+     -0.38
+    ]
+   },
+   "reconciled": true
+  }
+ },
+ "log": [
+  "KR0009 2023.1Q [keep_nonlife+csm] PL cells=20 CSM cells=6 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': -0.0, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': 8429.798}",
+  "KR0009 2023.2Q [keep_nonlife+csm] PL cells=20 CSM cells=6 closure={'I1 20=1+17': -0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': -0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 75080.623}",
+  "KR0009 2023.3Q: WARNING assemble RC gate suppressed Tier-2 (legs do not reconcile)",
+  "KR0009 2023.3Q [keep_nonlife+csm] PL cells=0 CSM cells=2 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': None}",
+  "KR0009 2023.4Q [keep_nonlife+csm] PL cells=12 CSM cells=4 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': -98.12}",
+  "PL_ONLY_ITEMS=[4]: PL cells 52 -> 3",
+  "candidate masters written: PL cells 3 (+4 single-quarter recomputed), CSM cells 18 (+20 single-quarter recomputed) -> scratchpad cand/N6b_HD_CSM_PL4only_*"
+ ]
+}

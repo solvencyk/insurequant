@@ -1,0 +1,63 @@
+KR0001 2023.3Q item1: gold=96376.4 | master=96376.4 | later-comparative=96376.4 | was=100383.8 | note=2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026-10-12). rcept 20241114001986 (FY2024_Q3) 측정요소 변동표 전기열 (CSM 3열 합)
+KR0001 2023.3Q item2: gold=12197.6 | master=12197.6 | later-comparative=12197.6 | was=12346.8 | note=2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026-10-12). rcept 20241114001986 (FY2024_Q3) 측정요소 변동표 전기열 (CSM 3열 합)
+KR0001 2023.3Q item3: gold=2163.1 | master=2163.1 | later-comparative=2163.1 | was=2236.9 | note=2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026-10-12). rcept 20241114001986 (FY2024_Q3) 측정요소 변동표 전기열 (CSM 3열 합)
+KR0001 2023.3Q item4: gold=488.7 | master=488.7 | later-comparative=488.7 | was=198.6 | note=2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026-10-12). rcept 20241114001986 (FY2024_Q3) 측정요소 변동표 전기열 (CSM 3열 합)
+KR0001 2023.3Q item5: gold=-7842.8 | master=-7842.8 | later-comparative=-7842.8 | was=-8379.7 | note=2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026-10-12). rcept 20241114001986 (FY2024_Q3) 측정요소 변동표 전기열 (CSM 3열 합)
+KR0001 2023.3Q item6: gold=103383.0 | master=103383.0 | later-comparative=103383.0 | was=106786.4 | note=2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026-10-12). rcept 20241114001986 (FY2024_Q3) 측정요소 변동표 전기열 (CSM 3열 합)
+KR0001 2026.1Q item1: gold=111037.0 | master=111037.0 | later-comparative=None | was=111893.5 | note=
+KR0001 2026.1Q item2: gold=4402.5 | master=4402.5 | later-comparative=None | was=3567.9 | note=
+KR0001 2026.1Q item3: gold=887.6 | master=887.6 | later-comparative=None | was=895.9 | note=
+KR0001 2026.1Q item4: gold=-368.6 | master=-368.6 | later-comparative=None | was=-1796.2 | note=
+KR0001 2026.1Q item5: gold=-3041.2 | master=-3041.2 | later-comparative=None | was=-2878.3 | note=
+KR0001 2026.1Q item6: gold=112917.3 | master=112917.3 | later-comparative=None | was=111682.8 | note=
+KR0001 2026.2Q item1: gold=111037.0 | master=111037.0 | later-comparative=None | was=111893.5 | note=
+KR0001 2026.2Q item2: gold=8942.2 | master=8942.2 | later-comparative=None | was=7299.4 | note=
+KR0001 2026.2Q item3: gold=1797.0 | master=1797.0 | later-comparative=None | was=1798.6 | note=
+KR0001 2026.2Q item4: gold=5690.0 | master=5690.0 | later-comparative=None | was=-2753.1 | note=
+KR0001 2026.2Q item5: gold=-6258.5 | master=-6258.5 | later-comparative=None | was=-5748.0 | note=
+KR0001 2026.2Q item6: gold=121207.6 | master=121207.6 | later-comparative=None | was=112490.4 | note=
+KR0003 2023.1Q item1: gold=16774.38 | master=16774.38 | later-comparative=16774.4 | was=ROW_ABSENT | note=
+KR0003 2023.1Q item2: gold=1553.18 | master=1553.18 | later-comparative=1553.2 | was=ROW_ABSENT | note=
+KR0003 2023.1Q item3: gold=174.43 | master=174.43 | later-comparative=174.4 | was=ROW_ABSENT | note=
+KR0003 2023.1Q item4: gold=-681.62 | master=-681.62 | later-comparative=-174.3 | was=ROW_ABSENT | note=
+KR0003 2023.1Q item5: gold=-392.84 | master=-392.84 | later-comparative=-392.8 | was=ROW_ABSENT | note=
+KR0003 2023.1Q item6: gold=17427.53 | master=17427.53 | later-comparative=17934.9 | was=ROW_ABSENT | note=
+KR0003 2023.2Q item1: gold=16774.38 | master=16774.38 | later-comparative=16774.4 | was=18004.6 | note=
+KR0003 2023.2Q item2: gold=2654.34 | master=2654.34 | later-comparative=2654.3 | was=2651.0 | note=
+KR0003 2023.2Q item3: gold=358.76 | master=358.76 | later-comparative=358.8 | was=377.9 | note=
+KR0003 2023.2Q item4: gold=-361.99 | master=-361.99 | later-comparative=-362.0 | was=-556.7 | note=
+KR0003 2023.2Q item5: gold=-807.85 | master=-807.85 | later-comparative=-807.9 | was=-843.4 | note=
+KR0003 2023.2Q item6: gold=18617.64 | master=18617.64 | later-comparative=18617.6 | was=19633.5 | note=
+KR0009 2023.3Q item1: gold=88281.1 | master=88281.1 | later-comparative=83515.4 | was=83515.4 | note=
+KR0009 2023.3Q item4: gold=-7991.9 | master=-7991.9 | later-comparative=-3226.2 | was=-3226.2 | note=
+KR0009 2023.4Q item1: gold=88281.1 | master=88281.1 | later-comparative=None | was=83515.4 | note=
+KR0009 2023.4Q item4: gold=-7480.6 | master=-7480.6 | later-comparative=None | was=-2714.9 | note=
+KR0079 2023.1Q item1: gold=19794.95 | master=19794.95 | later-comparative=None | was=ROW_ABSENT | note=
+KR0079 2023.1Q item2: gold=572.47 | master=572.47 | later-comparative=None | was=ROW_ABSENT | note=
+KR0079 2023.1Q item3: gold=116.0 | master=116.0 | later-comparative=None | was=ROW_ABSENT | note=
+KR0079 2023.1Q item4: gold=105.28 | master=105.28 | later-comparative=None | was=ROW_ABSENT | note=
+KR0079 2023.1Q item5: gold=-520.14 | master=-520.14 | later-comparative=None | was=ROW_ABSENT | note=
+KR0079 2023.1Q item6: gold=20068.56 | master=20068.56 | later-comparative=None | was=ROW_ABSENT | note=
+KR0079 2025.2Q item1: gold=20782.12 | master=20782.12 | later-comparative=20782.1 | was=20782.1 | note=
+KR0079 2025.2Q item2: gold=2451.95 | master=2451.95 | later-comparative=2451.9 | was=2451.9 | note=
+KR0079 2025.2Q item3: gold=295.77 | master=295.77 | later-comparative=295.8 | was=295.8 | note=
+KR0079 2025.2Q item4: gold=-685.5 | master=-685.5 | later-comparative=-685.5 | was=-1677.6 | note=
+KR0079 2025.2Q item5: gold=-992.07 | master=-992.07 | later-comparative=-992.1 | was=None | note=
+KR0079 2025.2Q item6: gold=21852.27 | master=21852.27 | later-comparative=21852.3 | was=21852.3 | note=
+KR0079 2025.3Q item1: gold=20782.12 | master=20782.12 | later-comparative=None | was=20782.1 | note=
+KR0079 2025.3Q item2: gold=3962.89 | master=3962.89 | later-comparative=None | was=3962.9 | note=
+KR0079 2025.3Q item3: gold=448.69 | master=448.69 | later-comparative=None | was=448.7 | note=
+KR0079 2025.3Q item4: gold=-333.17 | master=-333.17 | later-comparative=None | was=-1864.4 | note=
+KR0079 2025.3Q item5: gold=-1531.21 | master=-1531.21 | later-comparative=None | was=None | note=
+KR0079 2025.3Q item6: gold=23329.32 | master=23329.32 | later-comparative=None | was=23329.3 | note=
+KR0079 2025.4Q item1: gold=20782.12 | master=20782.12 | later-comparative=None | was=20775.6 | note=
+KR0079 2025.4Q item2: gold=5398.78 | master=5398.78 | later-comparative=None | was=5360.6 | note=
+KR0079 2025.4Q item3: gold=606.58 | master=606.58 | later-comparative=None | was=606.4 | note=
+KR0079 2025.4Q item4: gold=-4144.94 | master=-4144.94 | later-comparative=None | was=-4134.2 | note=
+KR0079 2025.4Q item5: gold=-2058.31 | master=-2058.31 | later-comparative=None | was=-2056.2 | note=
+KR0079 2025.4Q item6: gold=20584.23 | master=20584.23 | later-comparative=None | was=20552.3 | note=
+KR0079 2026.1Q item1: gold=20584.23 | master=20584.23 | later-comparative=None | was=20584.2 | note=
+KR0079 2026.1Q item4: gold=-174.32 | master=-174.32 | later-comparative=None | was=-711.4 | note=
+KR0079 2026.1Q item5: gold=-537.11 | master=-537.11 | later-comparative=None | was=None | note=
+KR0099 2024.4Q item1: gold=30176.4 | master=30176.4 | later-comparative=31798.3 | was=31798.3 | note=
+KR0099 2024.4Q item4: gold=-3384.2 | master=-3384.2 | later-comparative=-5006.1 | was=-5006.1 | note=

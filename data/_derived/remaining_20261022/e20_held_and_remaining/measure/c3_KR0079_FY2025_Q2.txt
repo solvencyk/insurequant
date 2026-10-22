@@ -1,0 +1,13 @@
+##### data/dart/FY2025_Q2/raw/KR0079_미래에셋생명/xml/20250814003532.xml  note_from=70364  tables found=0 issued used=[]
+  cur: sum(백만원)={}  -> 억원 [기초,신계약,이자,가정,상각,기말]=None
+      open: 
+      new: 
+      int: 
+      amort: 
+      close: 
+  prior: sum(백만원)={}  -> 억원 [기초,신계약,이자,가정,상각,기말]=None
+      open: 
+      new: 
+      int: 
+      amort: 
+      close: 

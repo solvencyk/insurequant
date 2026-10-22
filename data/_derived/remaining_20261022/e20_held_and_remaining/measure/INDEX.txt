@@ -1,0 +1,74 @@
+e20 STEP 2 measurement (READ-ONLY) -- file map and reproduction order
+Folder: data/_derived/remaining_20261022/e20_held_and_remaining/measure/
+Ticket: inbox/parser/20261022T1800Z__orchestrator__MULTI_2023.1Q-2025.2Q__latest_comparative_held_and_remaining.md (STEP 2 only)
+Rules kept: python only as C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe with script files and stdin from /dev/null; no repo master / gold / provenance / test / TODO / changelog written; no commit, no push;
+            every gate ran through gate_overlay.py (in-process, all repo writes dropped); candidate masters live in the session scratchpad (cand/), start snapshot in scratchpad (snap/).
+
+=====================================================================================================================================================
+A. READ FIRST (deliverables)
+=====================================================================================================================================================
+PLAN.md                    ranked plan (READY / NEEDS_OWNER / BLOCKED), answers to scope items (1)-(5), owner decision tables D1-D3, gate simulation table, reader-change inventory, apply notes, limits
+plan_table.csv             the plan, 46 rows (one per company x quarter): cause, filing/table lines, reader change, verification, gate simulation, cell counts, screen effect, decision/blocker
+ready_cells_ALL.csv        526 READY candidate cells (PL 471 + CSM 55): old, new, delta, gold overlap, later filing, cite(label|line|text), how
+ready_cells_<scn>.csv      the same per scenario (R0_KBlife_2024Q1_fix, R1, R1b_KB_siblings, R2, R2b_Lotte_2023_1Q2Q);  ready_csm_cells.csv = the CSM part with separate-basis table lines
+csm_vector_sources.csv     printed source table / row lines of the CSM vectors of the decision-table companies (KB라이프, ABL, KDB, 현대해상, 롯데 2023.4Q)
+vintage_table.md / .csv    every vintage each filing prints (9 companies x FY2023/FY2024 x 4 quarters): rcept numbers, original vs later comparative, within-FY spread, FY-boundary continuity
+stay_mapping.csv           d_census STAY rows (+ addl rows) mapped to the plan (rows marked "(not in plan)" are outside the ticket's STEP 2 scope)
+gold_cells_replaced.csv    owner gold cells a candidate would replace (scenario, sheet, value, builder value, candidate)
+pl4_equality.csv           note-printed CSM amortisation (PL4 prior) vs CSM item 5 of the restated vector (21/21 within the gate tolerance)
+gate_digest_all.txt        compact gate results of every scenario vs the baseline;  gates_compare_<scn>.txt = full diff;  g_<scn>/ = raw gate outputs (g_base = baseline)
+final_old_vs_live.txt      every candidate cell's recorded old value vs the CURRENT live master (982 cells, 0 differences)
+scenario_stats.txt/.json   value cells, single-quarter cells, auto-follow cells per scenario
+
+=====================================================================================================================================================
+B. SCENARIOS (cands_<name>.json/.txt = cell lists; candidate masters in scratchpad cand/<name>_*.json)
+=====================================================================================================================================================
+R0_KBlife_2024Q1_fix  KB라이프 2024.1Q master error (3 cells)              R1  nine buckets (농협 x2, 푸본, ABL 2024.4Q, 미래에셋 2023.4Q, KB손보 x4)
+R1b_KB_siblings       KB손보 2023.1Q/2Q                                    R2  롯데 2024.1Q-3Q, 미래에셋 2024.1Q-3Q, 메리츠 x2, 한화 x3
+R2b_Lotte_2023_1Q2Q   롯데 2023.1Q/2Q                                      READY_all  R0+R1+R1b+R2+R2b (the 25 READY rows, 471 PL + 55 CSM cells)
+N1_KBlife_A / N2_KBlife_B / N3_KBlife_Aprime   decision D1 options          N4_ABL_FY2023 / N5_KDB_FY2023   decision D3
+N6_HD_FY2023 (DART legs, not selectable) / N6b_HD_CSM_PL4only / N6c_HD_FY2023_IRlegs   decision D3 (현대해상)
+N7_Lotte_FY2023Q4     decision D2                                          ALL_latest   everything except 현대해상;  g_exc_ALL_latest = same with the WFY exemption sandbox
+X_mirae2023           exploration (미래에셋 2023 quarters)
+
+=====================================================================================================================================================
+C. LIBRARIES (import only)
+=====================================================================================================================================================
+mlib.py (loaders, line-oriented DART XML table reader with exact line numbers; SNAP path = session scratchpad snapshot)   stmtlib.py (statement reader)   fsapi.py (FS-API cache, prior/same)
+prod.py (production Tier-2 handlers, read-only)   cand.py (assemble() wrapper)   plan_lib.py (closure, changed cells, screen effect)   csmvec.py (CSM latest vectors + e20 corrections)
+lotte_lib.py (롯데 prior-column reader prototype)   p_meritz_lib.py (메리츠 prototype)
+
+=====================================================================================================================================================
+D. BUILDERS AND DRIVERS (in running order)
+=====================================================================================================================================================
+1. build_cands.py <name> "<CODE:Q[:provider[:csm]],...>"   candidate cells + candidate masters/provenance (providers life_is | kb | lotte | meritz | keep_nonlife | same)
+      env PL_ONLY_ITEMS="4"  keep only the listed PL items;   env IR_LEGS=<hd_ir_legs.json>  take 현대해상 LOB legs 2/13/14 from the IR factsheet
+2. gates_scn.sh <name>  (runs run_gates.sh = 7 gates through gate_overlay.py, then compare_gates.py vs g_base);  gate_digest.py <name...> = compact digest
+      run_gates_exc.sh <name> + exc_make.py (sandbox copies of validate_master_tables.py / validate_csm_continuity.py with two extra WFY_EXCEPTIONS entries; repo untouched)
+3. cite_cells.py <name...> -> ready_cells_<name>.csv;  ready_csm_cells.py -> ready_csm_cells.csv + csm_vector_sources.csv;  ready_cells_merge.py -> ready_cells_ALL.csv
+4. plan_build.py -> plan_table.csv;  plan_md.py -> PLAN.md;  q7_stay_map.py -> stay_mapping.csv;  gold_list.py <name...> -> gold_cells_replaced.csv;  scenario_stats.py;  final_old_vs_live.py
+Baseline gates were run once as g_base (run_gates.sh g_base on the snapshot masters).
+
+=====================================================================================================================================================
+E. EVIDENCE READERS (each writes a .txt/.json with the same stem)
+=====================================================================================================================================================
+k5_kr0104_read.py, k6_kr0104_candidates.py  -> k6_kr0104_cells.txt   농협생명 old-dialect statement, 48 cells with XML lines
+l1_bridge_scan.py                           census 104 buckets: master legs vs FS-API statement legs
+p_kb.py / kb_cands.py                       KB손보 prior LOB note (production extract_tier2_kb with item1 steering)
+lotte_lib.py + p_lotte_run.py               롯데 prior LOB note (combined / bycontent / split)
+p_meritz.py + p_meritz_lib.py               메리츠 Format-B second table
+p_lifeold.py, p_kblife.py, p_hanwha.py, p_abl.py   PL4 prior readers (KDB / KB라이프 / 한화 / ABL)
+p_hyundai.py                                production 현대해상 handler in prior mode: no prior-period LOB split in DART
+w1_hd_xlsx.py, w3_hd_uw.py, w4_hd_ir_legs.py -> hd_ir_legs.json   현대해상 IR factsheet "(3) UW Income" prior-year LOB insurance results (sum = restated item 1)
+v1_csm_verify.py                            independent re-read of a CSM vector: tables whose printed cells (unit-agnostic) match the 6 items;  outputs v1_csm_verify_*.txt/json (one per run)
+v3_mirae_wide.py / v4_meritz_csm.py         미래에셋 wide roll-forward (5 products x CSM 3 columns) / 메리츠 3-column CSM sum
+c1..c5 (c2 푸본, c3 미래에셋 row blocks, c4 ABL, c5 롯데)   CSM product-table readers for FY2025 / FY2024 annual filings
+n1_find_tables.py, n2_dump_table.py, n3_list_tables_in_file.py, stmt_rows.py   table finders / dumpers
+m0..m4, s1..s3, step1_*.py, t1_probe.py, oci_check.py, prov_peek.py, q*.py    census views, STEP 1 interaction checks, probes and one-off views
+
+=====================================================================================================================================================
+F. REPRODUCING ON ANOTHER DAY
+=====================================================================================================================================================
+mlib.SNAP points to the session scratchpad snapshot of the masters taken at the start (hashes: scratchpad snap_hashes_start.txt; the snapshot is a working-tree state while STEP 1 was applying, so it equals no commit).
+To rerun: copy PL_breakdown.json, CSM_waterfall.json, the two provenance sidecars and data/_gold/user_pl_cells.json + user_csm_cells.json into a folder, set mlib.SNAP (and SP in gates_scn.sh / build_cands.py) to it, then run D.1 - D.4.
+All cell values in PLAN.md were checked against the live masters after STEP 1 (final_old_vs_live.txt).

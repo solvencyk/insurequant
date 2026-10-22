@@ -1,0 +1,1758 @@
+{
+ "name": "R1",
+ "specs": [
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "prov": "life_is",
+   "csm": false
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "prov": "life_is",
+   "csm": false
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "prov": "life_is",
+   "csm": false
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "prov": "kb",
+   "csm": false
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "prov": "kb",
+   "csm": false
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "prov": "kb",
+   "csm": false
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "prov": "kb",
+   "csm": false
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "prov": "life_is",
+   "csm": false
+  },
+  {
+   "code": "KR0070",
+   "q": "2024.4Q",
+   "prov": "life_is",
+   "csm": false
+  }
+ ],
+ "pl_cells": [
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 1,
+   "old": null,
+   "new": 98612.395934,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 2,
+   "old": null,
+   "new": 107810.25656800004,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 3,
+   "old": null,
+   "new": 109847.43373000005,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 7,
+   "old": null,
+   "new": -962.566269999952,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 8,
+   "old": null,
+   "new": -2037.177162,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 12,
+   "old": null,
+   "new": -2619.177162,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 15,
+   "old": null,
+   "new": 0.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 16,
+   "old": 9200.0,
+   "new": 9197.860634,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 17,
+   "old": null,
+   "new": 84273.393049,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 18,
+   "old": null,
+   "new": 447383.104651,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 19,
+   "old": null,
+   "new": -363109.711602,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 20,
+   "old": null,
+   "new": 182885.788983,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 21,
+   "old": null,
+   "new": -21448.528138,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 22,
+   "old": 170500.0,
+   "new": 161437.260845,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 23,
+   "old": 55900.0,
+   "new": 53766.25509,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 24,
+   "old": 114600.0,
+   "new": 107671.005755,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 25,
+   "old": null,
+   "new": 620221.638116,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 26,
+   "old": null,
+   "new": 826761.59941,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 27,
+   "old": null,
+   "new": -231084.647737,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 28,
+   "old": null,
+   "new": 31658.511524,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 29,
+   "old": null,
+   "new": 1497.882893,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 30,
+   "old": null,
+   "new": -4460.200897,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 31,
+   "old": null,
+   "new": 727892.643871,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.1Q",
+   "item": 32,
+   "old": null,
+   "new": -4151.507077,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 1,
+   "old": null,
+   "new": 191659.943298,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 2,
+   "old": null,
+   "new": 213476.71078799994,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 3,
+   "old": null,
+   "new": 214326.58855799993,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 7,
+   "old": null,
+   "new": -8374.41144200007,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 8,
+   "old": null,
+   "new": -849.8777699999991,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 12,
+   "old": null,
+   "new": 1319.1222300000009,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 15,
+   "old": null,
+   "new": 0.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 16,
+   "old": 21800.0,
+   "new": 21816.76749,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 17,
+   "old": null,
+   "new": 35263.467988,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 18,
+   "old": null,
+   "new": 775787.1956430001,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 19,
+   "old": null,
+   "new": -740523.727655,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 20,
+   "old": null,
+   "new": 226923.411286,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 21,
+   "old": null,
+   "new": -43037.63277,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 22,
+   "old": 178300.0,
+   "new": 183885.778516,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 23,
+   "old": 36800.0,
+   "new": 38120.043903,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 24,
+   "old": 141500.0,
+   "new": 145765.734613,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 25,
+   "old": null,
+   "new": 660390.518644,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 26,
+   "old": null,
+   "new": 384481.522459,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 27,
+   "old": null,
+   "new": 244225.259984,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 28,
+   "old": null,
+   "new": 35178.266428,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 29,
+   "old": null,
+   "new": 1643.519369,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 30,
+   "old": null,
+   "new": -1779.090534,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 31,
+   "old": null,
+   "new": 806156.253257,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0104",
+   "q": "2023.2Q",
+   "item": 32,
+   "old": null,
+   "new": -3358.959062,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 17,
+   "old": 14810.751299,
+   "new": 3565.855574,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 19,
+   "old": -298524.147644,
+   "new": -309769.043369,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 20,
+   "old": -45005.871819,
+   "new": -56250.767544,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 22,
+   "old": -43872.859422,
+   "new": -55117.755147,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 23,
+   "old": -9828.768399,
+   "new": -12426.339311,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 24,
+   "old": -34044.091023,
+   "new": -42691.415836,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 25,
+   "old": -342850.798182,
+   "new": -334101.246013,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 26,
+   "old": -43581.575333,
+   "new": -43479.347977,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 27,
+   "old": -298379.095916,
+   "new": -289731.771103,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0083",
+   "q": "2024.4Q",
+   "item": 31,
+   "old": -376894.889205,
+   "new": -376792.661849,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 1,
+   "old": 832922.0,
+   "new": 831979.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 2,
+   "old": 805975.0,
+   "new": 805032.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 8,
+   "old": 26299.0,
+   "new": 25356.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 9,
+   "old": -4332.0,
+   "new": -9409.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 11,
+   "old": -18635.0,
+   "new": -21705.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 12,
+   "old": 57131.0,
+   "new": 64335.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 17,
+   "old": 210520.0,
+   "new": 157718.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 19,
+   "old": -740403.0,
+   "new": -793205.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 20,
+   "old": 1043442.0,
+   "new": 989697.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 22,
+   "old": 1042375.0,
+   "new": 988630.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 23,
+   "old": 265989.0,
+   "new": 251864.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 24,
+   "old": 776386.0,
+   "new": 736766.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 25,
+   "old": 112100.0,
+   "new": 150685.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 27,
+   "old": -1236291.0,
+   "new": -1197707.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 30,
+   "old": 30193.0,
+   "new": 30194.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 31,
+   "old": 888486.0,
+   "new": 887451.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.4Q",
+   "item": 32,
+   "old": 3005.0,
+   "new": 2936.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 1,
+   "old": 366614.0,
+   "new": 368380.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 2,
+   "old": 340863.0,
+   "new": 342629.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 8,
+   "old": -40238.0,
+   "new": -38472.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 9,
+   "old": -495.0,
+   "new": -298.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 11,
+   "old": -21034.0,
+   "new": -23139.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 12,
+   "old": -16386.0,
+   "new": -12712.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 17,
+   "old": 35664.0,
+   "new": 30681.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 19,
+   "old": -194073.0,
+   "new": -199056.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 20,
+   "old": 402278.0,
+   "new": 399061.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 22,
+   "old": 401673.0,
+   "new": 398456.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 23,
+   "old": 103371.0,
+   "new": 102522.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 24,
+   "old": 298302.0,
+   "new": 295934.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 25,
+   "old": -455707.0,
+   "new": -452129.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 27,
+   "old": -90457.0,
+   "new": -86879.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.1Q",
+   "item": 31,
+   "old": -157405.0,
+   "new": -156195.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 1,
+   "old": 688166.0,
+   "new": 696031.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 2,
+   "old": 619922.0,
+   "new": 627787.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 8,
+   "old": -51502.0,
+   "new": -43637.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 9,
+   "old": -467.0,
+   "new": -931.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 11,
+   "old": -31030.0,
+   "new": -35247.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 12,
+   "old": -15393.0,
+   "new": -2847.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 16,
+   "old": 192135.0,
+   "new": 192136.0,
+   "gold": 192135.0,
+   "gold_was": 0.0,
+   "gold_note": "inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 "
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 17,
+   "old": 108206.0,
+   "new": 99627.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 19,
+   "old": -372935.0,
+   "new": -381514.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 20,
+   "old": 796372.0,
+   "new": 795658.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 22,
+   "old": 794550.0,
+   "new": 793836.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 23,
+   "old": 205457.0,
+   "new": 205269.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 24,
+   "old": 589093.0,
+   "new": 588567.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 25,
+   "old": -760291.0,
+   "new": -754145.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 27,
+   "old": -646651.0,
+   "new": -640505.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.2Q",
+   "item": 31,
+   "old": -171198.0,
+   "new": -165578.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 1,
+   "old": 875648.0,
+   "new": 885443.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 2,
+   "old": 821005.0,
+   "new": 830800.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 8,
+   "old": -53924.0,
+   "new": -44129.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 9,
+   "old": -355.0,
+   "new": -1481.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 11,
+   "old": -32208.0,
+   "new": -38622.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 12,
+   "old": -14433.0,
+   "new": 2902.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 16,
+   "old": null,
+   "new": 284474.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 17,
+   "old": 153971.0,
+   "new": 144414.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 19,
+   "old": -561545.0,
+   "new": -571102.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 20,
+   "old": 1029619.0,
+   "new": 1029857.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 22,
+   "old": 1028022.0,
+   "new": 1028260.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 23,
+   "old": 269164.0,
+   "new": 269227.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 24,
+   "old": 758858.0,
+   "new": 759033.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 25,
+   "old": -856337.0,
+   "new": -849509.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 27,
+   "old": -1436220.0,
+   "new": -1429392.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2024.3Q",
+   "item": 31,
+   "old": -97479.0,
+   "new": -90476.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 17,
+   "old": -2228.957191,
+   "new": -22624.423384,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 19,
+   "old": -2321219.326115,
+   "new": -2341614.792308,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 20,
+   "old": 166771.809417,
+   "new": 146376.343224,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 22,
+   "old": 162754.68258,
+   "new": 142359.216387,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 23,
+   "old": 37754.460046,
+   "new": 33159.361512,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 24,
+   "old": 125000.222534,
+   "new": 109199.854875,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 25,
+   "old": -1613.288506,
+   "new": 34585.665711,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 26,
+   "old": 653391.347447,
+   "new": 653331.95833,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 27,
+   "old": -796152.00388,
+   "new": -759953.049663,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 31,
+   "old": 123386.934028,
+   "new": 143785.520586,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0079",
+   "q": "2023.4Q",
+   "item": 32,
+   "old": -3341.479546,
+   "new": -3282.090429,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0070",
+   "q": "2024.4Q",
+   "item": 25,
+   "old": -507359.119783,
+   "new": -507108.237816,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0070",
+   "q": "2024.4Q",
+   "item": 26,
+   "old": 237228.331423,
+   "new": 237479.21339,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0070",
+   "q": "2024.4Q",
+   "item": 31,
+   "old": -402577.4553,
+   "new": -402326.573333,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  }
+ ],
+ "csm_cells": [],
+ "buckets": {
+  "KR0104|2023.1Q": {
+   "prov": "life_is",
+   "csm": false,
+   "n_pl": 24,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": 0.0
+   },
+   "screen_eok": {
+    "당기순이익": [
+     1146.0,
+     1076.71,
+     -69.29
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0104|2023.2Q": {
+   "prov": "life_is",
+   "csm": false,
+   "n_pl": 24,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": -0.0
+   },
+   "screen_eok": {
+    "당기순이익": [
+     1415.0,
+     1457.66,
+     42.66
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0083|2024.4Q": {
+   "prov": "life_is",
+   "csm": false,
+   "n_pl": 10,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": null,
+    "I6 17=18+19": -0.0,
+    "I7 LOB bridge (min of bare/adj)": -0.0
+   },
+   "screen_eok": {
+    "투자손익": [
+     148.11,
+     35.66,
+     -112.45
+    ],
+    "당기순이익": [
+     -340.44,
+     -426.91,
+     -86.47
+    ],
+    "기타포괄손익": [
+     -3428.51,
+     -3341.01,
+     87.5
+    ],
+    "총포괄손익": [
+     -3768.95,
+     -3767.93,
+     1.02
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0010|2023.4Q": {
+   "prov": "kb",
+   "csm": false,
+   "n_pl": 17,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": -69.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": 0.0
+   },
+   "screen_eok": {
+    "보험손익": [
+     8329.22,
+     8319.79,
+     -9.43
+    ],
+    "투자손익": [
+     2105.2,
+     1577.18,
+     -528.02
+    ],
+    "당기순이익": [
+     7763.86,
+     7367.66,
+     -396.2
+    ],
+    "기타포괄손익": [
+     1121.0,
+     1506.85,
+     385.85
+    ],
+    "총포괄손익": [
+     8884.86,
+     8874.51,
+     -10.35
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0010|2024.1Q": {
+   "prov": "kb",
+   "csm": false,
+   "n_pl": 15,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": 0.0
+   },
+   "screen_eok": {
+    "보험손익": [
+     3666.14,
+     3683.8,
+     17.66
+    ],
+    "투자손익": [
+     356.64,
+     306.81,
+     -49.83
+    ],
+    "당기순이익": [
+     2983.02,
+     2959.34,
+     -23.68
+    ],
+    "기타포괄손익": [
+     -4557.07,
+     -4521.29,
+     35.78
+    ],
+    "총포괄손익": [
+     -1574.05,
+     -1561.95,
+     12.1
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0010|2024.2Q": {
+   "prov": "kb",
+   "csm": false,
+   "n_pl": 16,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": -1.0
+   },
+   "screen_eok": {
+    "보험손익": [
+     6881.66,
+     6960.31,
+     78.65
+    ],
+    "투자손익": [
+     1082.06,
+     996.27,
+     -85.79
+    ],
+    "당기순이익": [
+     5890.93,
+     5885.67,
+     -5.26
+    ],
+    "기타포괄손익": [
+     -7602.91,
+     -7541.45,
+     61.46
+    ],
+    "총포괄손익": [
+     -1711.98,
+     -1655.78,
+     56.2
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0010|2024.3Q": {
+   "prov": "kb",
+   "csm": false,
+   "n_pl": 16,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": 0.0
+   },
+   "screen_eok": {
+    "보험손익": [
+     8756.48,
+     8854.43,
+     97.95
+    ],
+    "투자손익": [
+     1539.71,
+     1444.14,
+     -95.57
+    ],
+    "당기순이익": [
+     7588.58,
+     7590.33,
+     1.75
+    ],
+    "기타포괄손익": [
+     -8563.37,
+     -8495.09,
+     68.28
+    ],
+    "총포괄손익": [
+     -974.79,
+     -904.76,
+     70.03
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0079|2023.4Q": {
+   "prov": "life_is",
+   "csm": false,
+   "n_pl": 11,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": -0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": null,
+    "I6 17=18+19": -0.0,
+    "I7 LOB bridge (min of bare/adj)": -0.0
+   },
+   "screen_eok": {
+    "투자손익": [
+     -22.29,
+     -226.24,
+     -203.95
+    ],
+    "당기순이익": [
+     1250.0,
+     1092.0,
+     -158.0
+    ],
+    "기타포괄손익": [
+     -16.13,
+     345.86,
+     361.99
+    ],
+    "총포괄손익": [
+     1233.87,
+     1437.86,
+     203.99
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0070|2024.4Q": {
+   "prov": "life_is",
+   "csm": false,
+   "n_pl": 3,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": null,
+    "I6 17=18+19": -0.0,
+    "I7 LOB bridge (min of bare/adj)": -0.0
+   },
+   "screen_eok": {
+    "기타포괄손익": [
+     -5073.59,
+     -5071.08,
+     2.51
+    ],
+    "총포괄손익": [
+     -4025.77,
+     -4023.27,
+     2.51
+    ]
+   },
+   "reconciled": true
+  }
+ },
+ "log": [
+  "KR0104 2023.1Q [life_is] PL cells=24 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}",
+  "KR0104 2023.2Q [life_is] PL cells=24 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': -0.0}",
+  "KR0083 2024.4Q [life_is] PL cells=10 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': -0.0}",
+  "KR0010 2023.4Q [kb] PL cells=17 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': -69.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}",
+  "KR0010 2024.1Q [kb] PL cells=15 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}",
+  "KR0010 2024.2Q [kb] PL cells=16 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': -1.0}",
+  "KR0010 2024.3Q [kb] PL cells=16 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}",
+  "KR0079 2023.4Q [life_is] PL cells=11 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': -0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': -0.0}",
+  "KR0070 2024.4Q [life_is] PL cells=3 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': -0.0}",
+  "candidate masters written: PL cells 136 (+180 single-quarter recomputed), CSM cells 0 (+0 single-quarter recomputed) -> scratchpad cand/R1_*"
+ ]
+}

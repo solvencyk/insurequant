@@ -1,0 +1,593 @@
+{
+ "name": "R1b_KB_siblings",
+ "specs": [
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "prov": "kb",
+   "csm": false
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "prov": "kb",
+   "csm": false
+  }
+ ],
+ "pl_cells": [
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 1,
+   "old": 258881.0,
+   "new": 248907.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 2,
+   "old": 234263.0,
+   "new": 231611.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 3,
+   "old": 233223.0,
+   "new": 230571.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 6,
+   "old": -4947.0,
+   "new": -7598.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 7,
+   "old": -4035.0,
+   "new": -4036.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 14,
+   "old": -6066.0,
+   "new": -13388.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 16,
+   "old": 92565.0,
+   "new": 91710.0,
+   "gold": 92565.0,
+   "gold_was": 0.0,
+   "gold_note": "parser adjudication 2026-08-25 (PL_breakdown.json builder-drift audit): 2023.1Q/"
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 17,
+   "old": 95710.0,
+   "new": 105631.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 18,
+   "old": 283184.0,
+   "new": 293214.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 19,
+   "old": -187474.0,
+   "new": -187583.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 20,
+   "old": 354591.0,
+   "new": 354538.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 21,
+   "old": 1689.0,
+   "new": 1076.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 22,
+   "old": 356280.0,
+   "new": 355614.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 23,
+   "old": 93054.0,
+   "new": 91329.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 24,
+   "old": 263226.0,
+   "new": 264285.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 25,
+   "old": null,
+   "new": 79763.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 26,
+   "old": null,
+   "new": 550908.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 27,
+   "old": null,
+   "new": -548766.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 28,
+   "old": null,
+   "new": 60858.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 29,
+   "old": null,
+   "new": -197.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 30,
+   "old": null,
+   "new": 15109.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 31,
+   "old": null,
+   "new": 344048.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.1Q",
+   "item": 32,
+   "old": null,
+   "new": 1851.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 1,
+   "old": 553823.0,
+   "new": 529083.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 2,
+   "old": 474858.0,
+   "new": 470177.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 3,
+   "old": 481073.0,
+   "new": 476393.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 6,
+   "old": -14476.0,
+   "new": -19155.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 7,
+   "old": 5575.0,
+   "new": 5574.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 8,
+   "old": -6215.0,
+   "new": -6216.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 10,
+   "old": -4098.0,
+   "new": -4099.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 11,
+   "old": -12642.0,
+   "new": -12641.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 12,
+   "old": 12765.0,
+   "new": 12764.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 14,
+   "old": 8510.0,
+   "new": -11549.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 16,
+   "old": 190719.0,
+   "new": 189068.0,
+   "gold": 190719.0,
+   "gold_was": 0.0,
+   "gold_note": "parser adjudication 2026-08-25 (PL_breakdown.json builder-drift audit): 위 2023.1"
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 17,
+   "old": 176508.0,
+   "new": 208650.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 18,
+   "old": 539435.0,
+   "new": 571581.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 19,
+   "old": -362927.0,
+   "new": -362931.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 20,
+   "old": 730331.0,
+   "new": 737733.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 21,
+   "old": 2162.0,
+   "new": 828.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 22,
+   "old": 732493.0,
+   "new": 738561.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 23,
+   "old": 193576.0,
+   "new": 192341.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 24,
+   "old": 538917.0,
+   "new": 546220.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 25,
+   "old": null,
+   "new": 79903.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 26,
+   "old": null,
+   "new": 216006.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 27,
+   "old": null,
+   "new": -162659.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 28,
+   "old": null,
+   "new": 9823.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 29,
+   "old": null,
+   "new": -1381.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 30,
+   "old": null,
+   "new": 15888.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 31,
+   "old": null,
+   "new": 626123.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0010",
+   "q": "2023.2Q",
+   "item": 32,
+   "old": null,
+   "new": 2226.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  }
+ ],
+ "csm_cells": [],
+ "buckets": {
+  "KR0010|2023.1Q": {
+   "prov": "kb",
+   "csm": false,
+   "n_pl": 23,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": 0.0
+   },
+   "screen_eok": {
+    "보험손익": [
+     2588.81,
+     2489.07,
+     -99.74
+    ],
+    "투자손익": [
+     957.1,
+     1056.31,
+     99.21
+    ],
+    "당기순이익": [
+     2632.26,
+     2642.85,
+     10.59
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0010|2023.2Q": {
+   "prov": "kb",
+   "csm": false,
+   "n_pl": 27,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": 0.0
+   },
+   "screen_eok": {
+    "보험손익": [
+     5538.23,
+     5290.83,
+     -247.4
+    ],
+    "투자손익": [
+     1765.08,
+     2086.5,
+     321.42
+    ],
+    "당기순이익": [
+     5389.17,
+     5462.2,
+     73.03
+    ]
+   },
+   "reconciled": true
+  }
+ },
+ "log": [
+  "KR0010 2023.1Q [kb] PL cells=23 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}",
+  "KR0010 2023.2Q [kb] PL cells=27 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}",
+  "candidate masters written: PL cells 50 (+76 single-quarter recomputed), CSM cells 0 (+0 single-quarter recomputed) -> scratchpad cand/R1b_KB_siblings_*"
+ ]
+}

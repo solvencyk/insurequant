@@ -1,0 +1,66 @@
+=== 2023.1Q  later filing data/dart/FY2024_Q1/raw/KR0104_농협생명보험/20240514001371.xml  statement table L5592-L6957
+  xcheck vs FS-API prior (d5): max |diff| = 18395.721268 over 18 items; diffs>1e-6: {16: 18395.721268}
+  identity 1 = 2 + 15 - 16: residual +0.000000 mn
+  identity 20 = 1 + 17: residual +0.000000 mn
+  identity 22 = 20 + 21: residual +0.000000 mn
+  identity 24 = 22 - 23: residual +0.000000 mn
+  identity 31 = 24 + 25: residual +0.000000 mn
+  identity 25 = 26+27+28+29+30+32: residual +0.000000 mn
+  identity 17 = 18 + 19: residual +0.000000 mn
+  item  1 보험손익                   old=            None new=     98,612.395934  CHANGE src: 보험손익 98,612,395,934 @L5657
+  item  2 생명장기 손익                old=            None new=    107,810.256568  CHANGE src:  3 + 8 @Lderived
+  item  3 생명장기 원수손익              old=            None new=    109,847.433730  CHANGE src:  보험수익@5703 - 발행보험서비스비용@5772 @Lderived
+  item  7 기타 생명장기 원수손익           old=            None new=       -962.566270  CHANGE src:  3 - (4+5+6)  [4,5,6 = live master note values] @Lderived
+  item  8 생명장기 재보험손익             old=            None new=     -2,037.177162  CHANGE src:  재보험수익@5726 - 재보험비용@5795 @Lderived
+  item 12 기타 생명장기 재보험손익          old=            None new=     -2,619.177162  CHANGE src:  8 - (9+10+11)  [9,10,11 = live master note values] @Lderived
+  item 15 기타영업수익                 old=            None new=          0.000000  CHANGE src:  no 기타영업수익 in the operating block -> 0.0 @Lbuilder rule
+  item 16 기타사업비용                 old=          9200.0 new=      9,197.860634  CHANGE src: 기타사업비용 9,197,860,634 @L5818
+  item 17 투자손익                   old=            None new=     84,273.393049  CHANGE src: 투자손익 84,273,393,049 @L5841
+  item 18 투자이익                   old=            None new=    447,383.104651  CHANGE src:  17 - 19 @Lderived
+  item 19 보험금융손익                 old=            None new=   -363,109.711602  CHANGE src: 보험금융비용 + 재보험금융비용 362,299,046,843 + 810,664,759@6163 @L6140
+  item 20 영업이익                   old=            None new=    182,885.788983  CHANGE src: 영업이익 182,885,788,983 @L6390
+  item 21 영업외손익                  old=            None new=    -21,448.528138  CHANGE src: 영업외손익 (21,448,528,138) @L6413
+  item 22 세전이익                   old=        170500.0 new=    161,437.260845  CHANGE src: 법인세차감전순이익 161,437,260,845 @L6482
+  item 23 법인세                    old=         55900.0 new=     53,766.255090  CHANGE src: 법인세비용 53,766,255,090 @L6505
+  item 24 당기순이익                  old=        114600.0 new=    107,671.005755  CHANGE src: 분기순이익 107,671,005,755 @L6528
+  item 25 기타포괄손익                 old=            None new=    620,221.638116  CHANGE src: 기타포괄손익 620,221,638,116 @L6597
+  item 26 FVOCI 채무증권 평가손익        old=            None new=    826,761.599410  CHANGE src: 기타포괄손익-공정가치측정금융자산관련손익 826,761,599,410 @L6712
+  item 27 보험계약금융손익(OCI)          old=            None new=   -231,084.647737  CHANGE src: 보험계약자산(부채)순금융손익 (231,084,647,737) @L6804
+  item 28 위험회피 파생상품 평가손익         old=            None new=     31,658.511524  CHANGE src: 현금흐름위험회피파생상품평가손익 31,658,511,524 @L6781
+  item 29 FVOCI 지분증권 평가손익        old=            None new=      1,497.882893  CHANGE src: 기타포괄손익-공정가치측정금융자산평가손익 1,497,882,893 @L6666
+  item 30 재보험금융손익(OCI)           old=            None new=     -4,460.200897  CHANGE src: 재보험계약자산(부채)순금융손익 (4,460,200,897) @L6827
+  item 31 총포괄손익                  old=            None new=    727,892.643871  CHANGE src: 총포괄손익 727,892,643,871 @L6850
+  item 32 기타 포괄손익(미분류)           old=            None new=     -4,151.507077  CHANGE src:  확정급여제도의재측정요소@6643+기타포괄손익-공정가치측정신용손실@6735+관계기업기타포괄손익지분@6758 @Lderived
+=== 2023.2Q  later filing data/dart/FY2024_Q2/raw/KR0104_농협생명보험/20240814002115.xml  statement table L5706-L7074
+  xcheck vs FS-API prior (d5): max |diff| = 0.000000 over 18 items; diffs>1e-6: {}
+  identity 1 = 2 + 15 - 16: residual -0.000000 mn
+  identity 20 = 1 + 17: residual +0.000000 mn
+  identity 22 = 20 + 21: residual +0.000000 mn
+  identity 24 = 22 - 23: residual +0.000000 mn
+  identity 31 = 24 + 25: residual +0.000000 mn
+  identity 25 = 26+27+28+29+30+32: residual +0.000000 mn
+  identity 17 = 18 + 19: residual +0.000000 mn
+  item  1 보험손익                   old=            None new=    191,659.943298  CHANGE src: 보험손익 191,659,943,298 @L5771
+  item  2 생명장기 손익                old=            None new=    213,476.710788  CHANGE src:  3 + 8 @Lderived
+  item  3 생명장기 원수손익              old=            None new=    214,326.588558  CHANGE src:  보험수익@5817 - 발행보험서비스비용@5886 @Lderived
+  item  7 기타 생명장기 원수손익           old=            None new=     -8,374.411442  CHANGE src:  3 - (4+5+6)  [4,5,6 = live master note values] @Lderived
+  item  8 생명장기 재보험손익             old=            None new=       -849.877770  CHANGE src:  재보험수익@5840 - 재보험비용@5909 @Lderived
+  item 12 기타 생명장기 재보험손익          old=            None new=      1,319.122230  CHANGE src:  8 - (9+10+11)  [9,10,11 = live master note values] @Lderived
+  item 15 기타영업수익                 old=            None new=          0.000000  CHANGE src:  no 기타영업수익 in the operating block -> 0.0 @Lbuilder rule
+  item 16 기타사업비용                 old=         21800.0 new=     21,816.767490  CHANGE src: 기타사업비용 21,816,767,490 @L5932
+  item 17 투자손익                   old=            None new=     35,263.467988  CHANGE src: 투자손익 35,263,467,988 @L5955
+  item 18 투자이익                   old=            None new=    775,787.195643  CHANGE src:  17 - 19 @Lderived
+  item 19 보험금융손익                 old=            None new=   -740,523.727655  CHANGE src: 보험금융비용 + 재보험금융비용 739,102,281,791 + 1,421,445,864@6277 @L6254
+  item 20 영업이익                   old=            None new=    226,923.411286  CHANGE src: 영업이익 226,923,411,286 @L6507
+  item 21 영업외손익                  old=            None new=    -43,037.632770  CHANGE src: 영업외손익 (43,037,632,770) @L6530
+  item 22 세전이익                   old=        178300.0 new=    183,885.778516  CHANGE src: 법인세차감전순이익 183,885,778,516 @L6599
+  item 23 법인세                    old=         36800.0 new=     38,120.043903  CHANGE src: 법인세비용 38,120,043,903 @L6622
+  item 24 당기순이익                  old=        141500.0 new=    145,765.734613  CHANGE src: 반기순이익 145,765,734,613 @L6645
+  item 25 기타포괄손익                 old=            None new=    660,390.518644  CHANGE src: 기타포괄손익 660,390,518,644 @L6714
+  item 26 FVOCI 채무증권 평가손익        old=            None new=    384,481.522459  CHANGE src: 기타포괄손익-공정가치측정금융자산관련손익 384,481,522,459 @L6829
+  item 27 보험계약금융손익(OCI)          old=            None new=    244,225.259984  CHANGE src: 보험계약자산(부채)순금융손익 244,225,259,984 @L6921
+  item 28 위험회피 파생상품 평가손익         old=            None new=     35,178.266428  CHANGE src: 현금흐름위험회피파생상품평가손익 35,178,266,428 @L6898
+  item 29 FVOCI 지분증권 평가손익        old=            None new=      1,643.519369  CHANGE src: 기타포괄손익-공정가치측정금융자산평가손익 1,643,519,369 @L6783
+  item 30 재보험금융손익(OCI)           old=            None new=     -1,779.090534  CHANGE src: 재보험계약자산(부채)순금융손익 (1,779,090,534) @L6944
+  item 31 총포괄손익                  old=            None new=    806,156.253257  CHANGE src: 총포괄손익 806,156,253,257 @L6967
+  item 32 기타 포괄손익(미분류)           old=            None new=     -3,358.959062  CHANGE src:  확정급여제도의재측정요소@6760+기타포괄손익-공정가치측정신용손실@6852+관계기업기타포괄손익지분@6875 @Lderived

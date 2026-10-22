@@ -1,0 +1,4 @@
+2023.1Q: later filing FY2024_Q1 note LNone: 당기col {} | 전기col {} | master 4/5/9/10 = [22664.0, 272.0, None, None]
+2023.2Q: later filing FY2024_Q2 note LNone: 당기col {} | 전기col {} | master 4/5/9/10 = [48623.0, 6649.0, None, None]
+2023.3Q: later filing FY2024_Q3 note LNone: 당기col {} | 전기col {} | master 4/5/9/10 = [75180.0, 11071.0, -9586.0, -474.0]
+2023.4Q: later filing FY2024_Q4 note L22033: 당기col {4: 88926.0, 5: 12282.0, 9: -9215.0, 10: -785.0} | 전기col {4: 92971.0, 5: 16395.0, 9: -9589.0, 10: -728.0} | master 4/5/9/10 = [92971.0, 16395.0, -9589.0, -728.0]

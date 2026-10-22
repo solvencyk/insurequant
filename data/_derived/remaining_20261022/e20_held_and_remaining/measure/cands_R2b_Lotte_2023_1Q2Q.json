@@ -1,0 +1,702 @@
+{
+ "name": "R2b_Lotte_2023_1Q2Q",
+ "specs": [
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "prov": "lotte",
+   "csm": true
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "prov": "lotte",
+   "csm": true
+  }
+ ],
+ "pl_cells": [
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 1,
+   "old": null,
+   "new": 22226.492874,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 2,
+   "old": null,
+   "new": 21320.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 3,
+   "old": null,
+   "new": 15627.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 4,
+   "old": null,
+   "new": 39284.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 5,
+   "old": null,
+   "new": 4569.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 6,
+   "old": null,
+   "new": 18900.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 7,
+   "old": null,
+   "new": -47126.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 8,
+   "old": null,
+   "new": 5693.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 9,
+   "old": null,
+   "new": -631.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 10,
+   "old": null,
+   "new": -34.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 11,
+   "old": null,
+   "new": -1089.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 12,
+   "old": null,
+   "new": 7447.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 13,
+   "old": null,
+   "new": 3049.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 14,
+   "old": null,
+   "new": 4817.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 15,
+   "old": null,
+   "new": 0.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 16,
+   "old": 7000.0,
+   "new": 6959.111876,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 17,
+   "old": null,
+   "new": 53833.730313,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 18,
+   "old": null,
+   "new": 94028.27707499999,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 19,
+   "old": null,
+   "new": -40194.546762,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 20,
+   "old": 105030.0,
+   "new": 76060.223187,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 21,
+   "old": -1628.0,
+   "new": -1627.636197,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 22,
+   "old": 103402.0,
+   "new": 74432.58699,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 23,
+   "old": 24028.0,
+   "new": 18020.309116,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 24,
+   "old": 79375.0,
+   "new": 56412.277874,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 25,
+   "old": null,
+   "new": -34528.702551,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 26,
+   "old": null,
+   "new": 142924.02039,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 27,
+   "old": null,
+   "new": -181725.221594,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 28,
+   "old": null,
+   "new": 884.262735,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 29,
+   "old": null,
+   "new": 1587.800424,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 30,
+   "old": null,
+   "new": 2446.62683,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 31,
+   "old": null,
+   "new": 21883.575323,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 32,
+   "old": null,
+   "new": -646.191336,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 1,
+   "old": 102897.623102,
+   "new": 67802.720284,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 2,
+   "old": null,
+   "new": 69680.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 3,
+   "old": null,
+   "new": 63756.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 5,
+   "old": null,
+   "new": 9373.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 6,
+   "old": null,
+   "new": 40611.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 7,
+   "old": null,
+   "new": -67013.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 8,
+   "old": null,
+   "new": 5924.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 9,
+   "old": null,
+   "new": -1362.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 10,
+   "old": null,
+   "new": -4.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 11,
+   "old": null,
+   "new": -2008.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 12,
+   "old": null,
+   "new": 9298.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 13,
+   "old": null,
+   "new": 2914.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 14,
+   "old": null,
+   "new": 7630.0,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 16,
+   "old": 12400.0,
+   "new": 12421.712427,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 17,
+   "old": 49559.293107,
+   "new": 40401.591012,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 19,
+   "old": -71316.307049,
+   "new": -80474.009144,
+   "gold": -71316.307049,
+   "gold_was": -35335.383645,
+   "gold_note": "2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 원 공시 포괄손익계산서의 3개월 열이 누적으로 적재돼 있던"
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 20,
+   "old": 152456.916209,
+   "new": 108204.311296,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 22,
+   "old": 151086.176638,
+   "new": 106833.571725,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 23,
+   "old": 38114.430179,
+   "new": 25509.949945,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 24,
+   "old": 112971.746459,
+   "new": 81323.62178,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 25,
+   "old": null,
+   "new": -14861.315709,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 26,
+   "old": null,
+   "new": 71123.029053,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 27,
+   "old": null,
+   "new": -43257.926082,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 28,
+   "old": null,
+   "new": -43873.553655,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 29,
+   "old": null,
+   "new": 1365.55493,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 30,
+   "old": null,
+   "new": 1158.001712,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 31,
+   "old": null,
+   "new": 66462.306071,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.2Q",
+   "item": 32,
+   "old": null,
+   "new": -1376.421667,
+   "gold": null,
+   "gold_was": null,
+   "gold_note": null
+  }
+ ],
+ "csm_cells": [
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 4,
+   "old": -681.62,
+   "new": -174.3,
+   "gold": -681.62,
+   "gold_was": "ROW_ABSENT"
+  },
+  {
+   "code": "KR0003",
+   "q": "2023.1Q",
+   "item": 6,
+   "old": 17427.53,
+   "new": 17934.9,
+   "gold": 17427.53,
+   "gold_was": "ROW_ABSENT"
+  }
+ ],
+ "buckets": {
+  "KR0003|2023.1Q": {
+   "prov": "lotte",
+   "csm": true,
+   "n_pl": 32,
+   "n_csm": 2,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": -0.0,
+    "I4 31=24+25": -0.0,
+    "I5 25=26..30+32": -0.0,
+    "I6 17=18+19": -0.0,
+    "I7 LOB bridge (min of bare/adj)": 0.3953
+   },
+   "screen_eok": {
+    "당기순이익": [
+     793.75,
+     564.12,
+     -229.63
+    ]
+   },
+   "reconciled": true
+  },
+  "KR0003|2023.2Q": {
+   "prov": "lotte",
+   "csm": true,
+   "n_pl": 28,
+   "n_csm": 0,
+   "closure": {
+    "I1 20=1+17": 0.0,
+    "I2 22=20+21": 0.0,
+    "I3 24=22-23": 0.0,
+    "I4 31=24+25": 0.0,
+    "I5 25=26..30+32": 0.0,
+    "I6 17=18+19": 0.0,
+    "I7 LOB bridge (min of bare/adj)": -0.4327
+   },
+   "screen_eok": {
+    "보험손익": [
+     1028.98,
+     678.03,
+     -350.95
+    ],
+    "투자손익": [
+     495.59,
+     404.02,
+     -91.58
+    ],
+    "당기순이익": [
+     1129.72,
+     813.24,
+     -316.48
+    ]
+   },
+   "reconciled": true
+  }
+ },
+ "log": [
+  "KR0003 2023.1Q [lotte+csm] PL cells=32 CSM cells=2 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': -0.0, 'I4 31=24+25': -0.0, 'I5 25=26..30+32': -0.0, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': 0.395}",
+  "KR0003 2023.2Q [lotte+csm] PL cells=28 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': 0.0, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': -0.433}",
+  "candidate masters written: PL cells 60 (+80 single-quarter recomputed), CSM cells 2 (+4 single-quarter recomputed) -> scratchpad cand/R2b_Lotte_2023_1Q2Q_*"
+ ]
+}

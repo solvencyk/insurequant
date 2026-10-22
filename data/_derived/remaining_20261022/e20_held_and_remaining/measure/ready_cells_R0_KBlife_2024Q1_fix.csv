@@ -1,0 +1,4 @@
+﻿scenario,code,company,quarter,item,item_name,old,new,delta,gold_overlap_old_gold_value,later_filing,cite(label|line|text),how
+R0_KBlife_2024Q1_fix,KR0099,KB라이프생명,2024.1Q,2,생명장기 손익,85633.0,84497.0,-1136.0,,data/dart/FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml,,3 + 8
+R0_KBlife_2024Q1_fix,KR0099,KB라이프생명,2024.1Q,8,생명장기 재보험손익,-832.0,-1968.0,-1136.0,,data/dart/FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml,,재보험수익 - 재보험비용 (statement lines)
+R0_KBlife_2024Q1_fix,KR0099,KB라이프생명,2024.1Q,12,기타 생명장기 재보험손익,-24.0,-1160.0,-1136.0,,data/dart/FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml,,8 - (9+10+11)

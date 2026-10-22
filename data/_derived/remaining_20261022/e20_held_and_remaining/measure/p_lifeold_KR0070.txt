@@ -1,0 +1,16 @@
+KR0070 2023.1Q: master 4/5/6/9/10/11=[22664.0, 272.0, None, None, None, None]
+    orig-filing run   {}
+    later current col {}
+    later PRIOR col   {}
+KR0070 2023.2Q: master 4/5/6/9/10/11=[48623.0, 6649.0, None, None, None, None]
+    orig-filing run   {}
+    later current col {}
+    later PRIOR col   {}
+KR0070 2023.3Q: master 4/5/6/9/10/11=[75180.0, 11071.0, None, -9586.0, -474.0, None]
+    orig-filing run   {}
+    later current col {}
+    later PRIOR col   {}
+KR0070 2023.4Q: master 4/5/6/9/10/11=[92971.0, 16395.0, None, -9589.0, -728.0, None]
+    orig-filing run   {}
+    later current col {}
+    later PRIOR col   {}

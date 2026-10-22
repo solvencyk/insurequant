@@ -1,0 +1,153 @@
+====================================================================================================
+1 READY scope 1 농협생명보험 KR0104 ['2023.1Q', '2023.2Q'] scn R1
+  [census(d_census)] STAY: 'bridge already FAIL (-98,612.4 / -191,659.9 mn) and stays FAIL'
+  [e20_cause] census 산식 인공물: 마스터에 보험손익·LOB 다리가 비어 있어 -(후속 item1)로 계산됨. 실제 결함 = FY2023 Q1/Q2 DART 구양식('영업수익/영업비용', <TD>) 포괄손익계산서를 Tier-1 이 못 읽음(FS-API status 013 + HTML 추출기 None) -> 32칸 중 20칸 공란, 16/22/23/24 는 경영공시 PDF 억원 반올림(원 판)
+  [source_filing_and_tables] 후속 공시 FY2024_Q1 20240514001371.xml 4-2 포괄손익계산서 L5592-6957 (전기 누계 4번째 열) / FY2024_Q2 20240814002115.xml L5706-7074
+  [reader_change] 없음(적재는 gold set + provenance 블록 교체, e19 방식). 근본 수정은 tier1 가 '영업수익/영업비용' 양식에서 보험수익·재보험수익·보험서비스비용·재보험비용·사업비를 읽어 item1=그 합으로 파생(소) — 불요
+  [verified_on] k6_kr0104_cells.txt: 독립 XML 재독 = FS-API 전기값 18/18 일치, 항등식 7종 잔차 0.000000, 생보 LOB 가교 item1=2+15-16 정확히 0
+  [gate_simulation] R1 9버킷 136칸: RED 0->1(xlsx 손익분해PL 동기화 뿐) · pl_bridge +18P/0 NEW/FAIL 23 불변 · 연속성·워터폴·NB·live_artifacts 불변
+  [decision_or_blocker] owner 승인 불요(18차 농협생명 2023.3Q 선례와 같은 방식). 2023.1Q/2Q CSM 은 이미 최신(불변). 적재 시 provenance income_statement 블록을 DISCLOSURE->OWNER_GOLD 로 같이 교체(안 하면 CONCEPT_MIXED_DISCLOSURE_INTO_DART RED 2건)
+====================================================================================================
+2 READY scope 3,4 푸본현대생명보험 KR0083 ['2024.4Q'] scn R1
+  [census(d_census)] STAY: 'CSM prior column could not be extracted' (UNVERIFIED)
+  [e20_cause] CSM 전기열이 없는 것이 아니라 라벨링 실패: FY2025 사업보고서 별도 주석에 제품별 3표(유배당/무배당/변액)가 당기말 3개 + 전기말 3개로 이어지는데 '2) 전기말' 문단이 하위 캡션 규칙에 먹혀 표 캡션이 '① 유배당보험' 뿐이라 prior 로 안 잡힘. 전기 벡터를 합산하면 [1658.3,528.8,82.9,-675.8,-170.6,1423.5] = 마스터 2024.4Q (SAME) -> CSM 변경 없음, PL 만 적재
+  [source_filing_and_tables] FY2025_Q4 20260331002089.xml 별도 주석: 당기 L48473/L48861/L49250, '2) 전기말' 문단 L49637, 전기 표 L49640(유배당)/L50029(무배당)/L50418(변액) (기초 CSM L49719-20 등, 합 c2_KR0083_FY2025_Q4.txt); 손익계산서 L35083-35454
+  [reader_change] CSM 적재 불필요. (선택) dry-run prior_csm.label_blocks 에 '문단 마커(N) 당기말/전기말' 상속 규칙 추가 — 소
+  [verified_on] c2_csm_product_tables.py: 6표 합산 prior == master 6항목; life_cands 10칸 항등식 0
+  [gate_simulation] R1 9버킷 136칸: RED 0->1(xlsx 손익분해PL 동기화 뿐) · pl_bridge +18P/0 NEW/FAIL 23 불변 · 연속성·워터폴·NB·live_artifacts 불변
+  [decision_or_blocker] 2024.3Q(STEP 1, gold 27 교체)와 같이 적재해야 단일분기 이음매가 없다
+====================================================================================================
+3 READY scope 2 에이비엘생명보험 KR0070 ['2024.4Q'] scn R1
+  [census(d_census)] ADDL_CSM_ONLY: 'CSM restated items 1-6, PL4 not read, residual -14.34 eok' (STAY)
+  [e20_cause] dry-run 리더 오독(자체 chain_ok=False): '별도세그합산' 이 연결/별도·당기/전기를 섞어 [9287.7..10070.9] 를 만듦. 별도 감사 첨부 _00760 의 제품별 4표 합산 = 전기 [8695.4,2458.4,341.4,-1231.4,-889.3,9374.6] == 마스터(SAME), 당기 [9374.6,...,9702.5] == 마스터 2025.4Q. -14.34억 = 오독 상각 -903.6 대 -889.3 의 차. 남는 것은 OCI 3칸(25,26,31)뿐
+  [source_filing_and_tables] FY2025_Q4 20260331003080_00760.xml 당기 L16202/L16459/L16716/L16973, 전기 L17230/L17487/L17744/L18001 (c4_KR0070_FY2025_Q4.txt)
+  [reader_change] 없음(CSM 불변). dry-run 의 '별도세그합산' 모드는 annual 에서 chain_ok False 면 폐기
+  [verified_on] c4_abl_product_csm.py: 당기 == 2025.4Q 마스터 · 전기 == 2024.4Q 마스터 (6항목 모두 일치)
+  [gate_simulation] R1 9버킷 136칸: RED 0->1(xlsx 손익분해PL 동기화 뿐) · pl_bridge +18P/0 NEW/FAIL 23 불변 · 연속성·워터폴·NB·live_artifacts 불변
+  [decision_or_blocker] 없음. OCI-only 3칸
+====================================================================================================
+4 READY scope 4 미래에셋생명보험 KR0079 ['2023.4Q'] scn R1
+  [census(d_census)] STAY: UNVERIFIED (CSM prior column unreadable)
+  [e20_cause] 당기/전기가 한 표 안의 '행 블록'(마커 행 '당기' / '전기')이라 prior 표로 안 잡힘. 제품 5표(사망/건강/연금/저축/기타)의 CSM 소계 열을 전기 블록에서 합산하면 [19795.0,2920.5,454.5,-977.9,-1977.6,20214.5] == 마스터(SAME; 상각 0.1억 반올림). 보험손익 불변 -> Tier-1 PL 만 적재(투자손익 -204억, OCI +362억)
+  [source_filing_and_tables] FY2024_Q4 20250318001228.xml 별도 주석 제품표 L63671/L64337/L65003/L65666/L66329 전기 행블록 (기초 L64085.. 등, c3_KR0079_FY2024_Q4.txt); 손익계산서
+  [reader_change] CSM 적재 불필요. (선택) 같은 표 안에서 '전기' 마커 행 이후를 prior 블록으로 쪼개는 규칙 — 소(아래 R2 의 2024.1Q 에서 필요)
+  [verified_on] c3_mirae_product_csm.py FY2024_Q1..Q4 + FY2025_Q1 (현재열 == 마스터 재현)
+  [gate_simulation] R1 9버킷 136칸: RED 0->1(xlsx 손익분해PL 동기화 뿐) · pl_bridge +18P/0 NEW/FAIL 23 불변 · 연속성·워터폴·NB·live_artifacts 불변
+  [decision_or_blocker] 연도말만 재작성(FY2023 Q1~Q3 비교열은 불변)이라 2023.4Q 단일분기가 구조적으로 이음매 — 18차 선례대로 단일분기 null_dangi(11칸)
+====================================================================================================
+5 READY scope 4(블록) KB손해보험 KR0010 ['2023.1Q', '2023.2Q'] scn R1b_KB_siblings
+  [census(d_census)] ADDL_SIBLING STAY (gold 16other)
+  [e20_cause] FY2023 블록의 형제: 2023.1Q/2Q 마스터는 OCI(25~32) 공란 + 항목 16 gold(=원 공시 인쇄값 92,565 @FY2023_Q1 L6171 / 190,719 @FY2023_Q2 L7649). 후속 전기열 91,710 / 189,068 로 교체(규칙 ⓐ)
+  [source_filing_and_tables] FY2024_Q1 20240516001008.xml L35403 (총 보험서비스결과 L35684: 231,611|(8,090)|30,684|(5,298)|248,907) / FY2024_Q2 20240814002750.xml L38795
+  [reader_change] 위와 동일
+  [verified_on] kb_cands_sib2.txt + gate R1b
+  [gate_simulation] R1b 2버킷 50칸: RED 0->1(xlsx) · pl_bridge +4P · 나머지 불변
+  [decision_or_blocker] FY2023 블록을 한 판으로 만들려면 2023.4Q 와 같이
+====================================================================================================
+5 READY scope 4 KB손해보험 KR0010 ['2023.4Q', '2024.1Q', '2024.2Q', '2024.3Q'] scn R1
+  [census(d_census)] STAY: 'Tier-2 legs do not sum to later item 1 (residual 943/-1766/-7866/-9795 mn): LOB note prior-column reader missing'
+  [e20_cause] 손보 LOB 주석 '(N) 당기와 전기 중 보험손익의 상세내역'(별도, 장기/일반/자동차/해외 열) 의 전기 쌍둥이 표를 안 읽음. 재작성은 장기 다리(item 2 = 총 보험서비스결과 장기)와 재보험 다리(8,9,11,12)에만 있고 원수 4,5,6·자동차·일반은 불변, CSM 불변
+  [source_filing_and_tables] FY2024_Q4 20250314001697.xml 전기 표 L65978 (총 보험서비스결과 R66268: 805,032|(2,892)|48,834|(18,995)|831,979, 셀 L66270-74) / FY2025_Q1 20250515001437.xml L36148 (R36438) / FY2025_Q2 20250814003072.xml L39399 (R39850, 누적 반 L39857-61) / FY2025_Q3 20251114001554.xml L33735 (R34186, 누적 반 L34193-97)
+  [reader_change] 생산 핸들러 extract_tier2_kb 를 후속 필링 표에 item1=후속 전기 item1 로 호출하면 그 표를 스스로 고름 -> 코드 변경 사실상 0 (prior 모드 인자 1개)
+  [verified_on] p_kb.py: 같은 필링 재현 4/4 OK, 전기열 합 - item1 = 0 / 0 / -1 / 0
+  [gate_simulation] R1 9버킷 136칸: RED 0->1(xlsx 손익분해PL 동기화 뿐) · pl_bridge +18P/0 NEW/FAIL 23 불변 · 연속성·워터폴·NB·live_artifacts 불변
+  [decision_or_blocker] 2024.2Q item16 gold 192,135 -> 192,136 은 1 mn 재인쇄 차이: 제외 권고(반올림 규칙). 단일분기 이음매: FY2024 Q4 가 불변이라 4Q 단일분기 auto-follow
+====================================================================================================
+6 READY scope 4 KB라이프생명 KR0099 ['2024.1Q (마스터 오류 정정 3칸)'] scn R0_KBlife_2024Q1_fix
+  [census(d_census)] STAY: 'bridge already FAIL on the current master (-1256.0 mn) and stays FAIL'
+  [e20_cause] 마스터 자체 결함(벤더 판 무관): extract_tier2_kblife 가 '총 재보험수익' 을 abs() 로 읽어 음수(-568)를 +568 로 뒤집음 -> item8 -832 (정답 -568-1,400 = -1,968), 가교 +1,136 mn. 2/8/12 세 칸. 같은 판(원 공시)에서 IS 4줄(보험수익 202,164·재보험수익 (568)·보험서비스비용 115,699·재보험비용 1,400)로 정정
+  [source_filing_and_tables] FY2024_Q1 20240516001445.xml 손익계산서 L25433-26241: 재보험영업수익 (568) @L25538, 재보험영업비용 1,400 @L25589, 보험수익 202,164 @L25521
+  [reader_change] extract_tier2_kblife 의 _jang_rerev/_jang_recost 에서 abs() 제거(1줄)(assemble 주석: 재보험수익은 음수 가능)
+  [verified_on] cand_selftest: 같은 판 candidate 가 마스터와 3칸(2,8,12)만 다름; gate R0 FAIL 23->22
+  [gate_simulation] R0 3칸: RED 0->1(xlsx) · pl_bridge FAIL 23->22 (KB라이프 2024.1Q 보험손익(dual) +1,136 해소)
+  [decision_or_blocker] 없음(최신 비교열 문제와 독립). KB라이프 블록 결정(D1)과 무관하게 먼저 적재 가능
+====================================================================================================
+7 READY scope 4,5 롯데손해보험 KR0003 ['2024.1Q', '2024.2Q', '2024.3Q'] scn R2
+  [census(d_census)] STAY: LOB bridge break + CSM restated + PL4 not read + 'chain not adoptable'
+  [e20_cause] (1) LOB: 2번째(전기) 쌍둥이 표 — 2024.1Q 표 L20090 'bycontent', 2024.2Q/3Q 는 split 양식(전반기 마커) — 의 다리 합이 후속 item1 에 닫힘(잔차 -0.53/0/0). (2) CSM: FY2025 Q1~Q3 비교열 기초 23,860.8(=2024.4Q 마스터 기초) 이라 FY2024 는 Q4 마스터와 한 판으로 닫힘. (3) PL4 전기열 = |CSM5'| ±0.05억(4/4)
+  [source_filing_and_tables] FY2025_Q1 20250515002628.xml 전기 표 L20090(LOB)/L15356(CSM, 기초 L15400 기말 L15609 상각 L15444) / FY2025_Q2 20250814003966.xml split 전반기 표 L58037..61879 / FY2025_Q3 20251114002985.xml L32050..34035
+  [reader_change] extract_tier2_lotte 3개 레이아웃에 prior 스위치(둘째 표 / 전반기 마커 표; split 은 마커 뒤 연속 LOB 표로 한정) — lotte_lib.py 100줄 미만
+  [verified_on] p_lotte_run.py: 같은 필링 재현 4/4, 전기열 합-목표 -0.75/-0.53/0/0 (2023.4Q 포함); CSM 2024.1Q 독립 재독 == dry-run
+  [gate_simulation] R2 11버킷 222+53칸: RED 0->2(xlsx 2시트) · pl_bridge +21P·FAIL 23->20(메리츠 2023.2Q·한화 2023.1Q/2Q 해소)·NEW 0 · 메리츠 FY2023 WFY 면제 소멸 · NB_VS_WATERFALL RED 4(메리츠2·한화2 = NB 마스터 재빌드 필요) · OCI_VS_BS_AOCI YELLOW +4
+  [decision_or_blocker] PL+CSM+PL4 를 같이 적재(짝). CSM 3칸군 + FY2024 Q4 는 SAME(오독 정정)
+====================================================================================================
+7.5 READY scope 4(블록) 롯데손해보험 KR0003 ['2023.1Q', '2023.2Q'] scn R2b_Lotte_2023_1Q2Q
+  [census(d_census)] ADDL_SIBLING STAY (2023.1Q CSM gold items 1-6; 2023.2Q gold item 19)
+  [e20_cause] FY2023 블록 형제: 2023.1Q 는 CSM 4·6(기말 17,427.5 -> 17,934.9)만 재작성, 2023.2Q CSM 은 불변(SAME). Q1~Q3 비교열 기초는 16,774.4 그대로라 Q4 결정(D2)과 독립. PL 은 LOB 다리를 FY2024 Q1/Q2 전기 표에서 읽으면 가교 +0.4/-0.4. 마스터 2023.1Q 는 item1·LOB 가 비어 있고 PL4 도 공란(PL_CSM_AMORT_MISSING_DOCUMENTED) -> PL4 도 채워짐
+  [source_filing_and_tables] FY2024_Q1 20240516001888.xml 전기 LOB 표(p_lotte_run: combined), FY2024_Q2 20240814002875.xml; CSM 비교열 dry-run(2023.1Q open_ok)
+  [reader_change] lotte_lib 와 동일 + 마스터에 없던 provenance 블록 생성
+  [verified_on] gate R2b (가교·PL4 항등 통과)
+  [gate_simulation] R2b 2버킷 60+2칸: 롯데 2023.2Q leg-coverage FAIL(-102,898) 해소 · csm_amort_identity 388P(PL4 공란 1칸 해소) · RED: xlsx 2 + 2023.1Q provenance 블록 부재(MISSING_PROVENANCE/SOURCE_ID_LINEAGE_MISMATCH = 적재 시 provenance 생성 필요) · PL_CSM_AMORT_MISSING 등재 1줄 불용
+  [decision_or_blocker] gold(CSM 6칸 ⓐ 원 인쇄값, 2023.2Q 항목 19 ⓐ) 교체. 2023.1Q provenance 블록 신규. 단일분기: 2023.2Q 값_당분기 auto-follow
+====================================================================================================
+8 READY scope 4 미래에셋생명보험 KR0079 ['2024.1Q', '2024.2Q', '2024.3Q'] scn R2
+  [census(d_census)] STAY: 2024.1Q LOB bridge + CSM unreadable; 2024.2Q/3Q LOB bridge + CSM restated (3..6)
+  [e20_cause] LOB 다리는 손익계산서 4줄 전기열로 닫힘(생보 — 새 리더 불요). CSM 은 소폭 재작성(기말 +8.9/+8.7/+8.5억, 기초 20,214.5 불변 -> FY2024 한 판 유지). 2024.1Q 전기열은 행 블록 레이아웃이라 못 읽었음 -> 행 블록 합산으로 [20214.5,962.0,118.2,138.1,-507.6,20925.2]
+  [source_filing_and_tables] FY2025_Q1 20250515001717.xml 제품 5표 L42459/L43126/L43793/L44457/L45121 전기 행블록; 2024.2Q/3Q 는 FY2025_Q2/Q3 prior 블록(csm_sources.txt)
+  [reader_change] CSM prior 라벨러에 '표 안 마커 행(전기/전분기/전반기) 이후 = prior' 규칙(소) + PL4 는 같은 표 합(= -CSM5')
+  [verified_on] c3_mirae_product_csm.py (FY2024_Q1~Q4, FY2025_Q1)
+  [gate_simulation] R2 11버킷 222+53칸: RED 0->2(xlsx 2시트) · pl_bridge +21P·FAIL 23->20(메리츠 2023.2Q·한화 2023.1Q/2Q 해소)·NEW 0 · 메리츠 FY2023 WFY 면제 소멸 · NB_VS_WATERFALL RED 4(메리츠2·한화2 = NB 마스터 재빌드 필요) · OCI_VS_BS_AOCI YELLOW +4
+  [decision_or_blocker] 없음
+====================================================================================================
+9 READY scope 5 메리츠화재해상보험 KR0001 ['2023.1Q', '2023.2Q'] scn R2
+  [census(d_census)] ADDL_SIBLING STAY (single-quarter vintage seam; gold 16other)
+  [e20_cause] 같은 뿌리의 단일분기 어긋남: FY2023 마스터가 Q1/Q2=원 판(기초 100,383.8), Q3/Q4=최신(96,376.4, 2026-10-12 채택). FY2024 Q1/Q2 비교열(기초 96,376.4)로 갱신하면 FY2023 이 한 판. LOB: Format-B 상세내역 전기 쌍둥이 표 장기 357,082 / 790,286, 가교 +0.5 / -1.2 (item16 부호 보존 필수: 1Q 음수)
+  [source_filing_and_tables] FY2024_Q1 20240516001162.xml 전기 표 L48018 (총 보험서비스결과 R48309: 357,082|18,331|14,528|389,941; 보험계약마진 L48079) / FY2024_Q2 20240814003013.xml L51801
+  [reader_change] extract_tier2_sonbo_structured 에 둘째 표 선택(prior) — p_meritz_lib.py
+  [verified_on] p_meritz.py 같은 필링 재현 OK, 가교 +0.5/-1.2, PL4 256,695/515,014 == CSM5' (±0.05억)
+  [gate_simulation] R2 11버킷 222+53칸: RED 0->2(xlsx 2시트) · pl_bridge +21P·FAIL 23->20(메리츠 2023.2Q·한화 2023.1Q/2Q 해소)·NEW 0 · 메리츠 FY2023 WFY 면제 소멸 · NB_VS_WATERFALL RED 4(메리츠2·한화2 = NB 마스터 재빌드 필요) · OCI_VS_BS_AOCI YELLOW +4
+  [decision_or_blocker] gold 16 (원 인쇄값 L5994/L9430) 교체 ⓐ. NB_CSM 마스터 2행 재빌드, pl_bridge_baseline 1줄·WFY_EXCEPTIONS 삭제
+====================================================================================================
+10 READY scope 5 한화생명 KR0068 ['2023.1Q', '2023.2Q', '2023.3Q'] scn R2
+  [census(d_census)] ADDL_SIBLING STAY (gold 20other / 21other)
+  [e20_cause] 같은 뿌리: FY2023 Q1/Q2 원 판(기초 96,679.3) vs Q3/Q4(97,629.5). FY2024 Q1~Q3 비교열(기초 97,629.5)로 갱신하면 한 판. 마스터 2023.1Q/2Q 는 item2(생명장기손익)가 공란이라 가교가 0 으로 채워져 FAIL(-152,373/-396,756) -> 손익계산서 4줄 전기열로 채워 해소. 순이익 2023.1Q +1,139.9억, 2Q +1,053.7억(발행사 재작성)
+  [source_filing_and_tables] FY2024_Q1 20240514000837.xml 손익계산서 L66068-67252 (분기순이익 전기누계 470,912,058,790 @L66938); FY2024_Q2 20240813000860.xml; FY2024_Q3 20241113000407.xml
+  [reader_change] 없음(손익계산서 4줄 + PL4 L1 둘째 표 p_hanwha.py)
+  [verified_on] p_hanwha.py 2Q/3Q PL4 451,415/668,342 == CSM5'; gate R2
+  [gate_simulation] R2 11버킷 222+53칸: RED 0->2(xlsx 2시트) · pl_bridge +21P·FAIL 23->20(메리츠 2023.2Q·한화 2023.1Q/2Q 해소)·NEW 0 · 메리츠 FY2023 WFY 면제 소멸 · NB_VS_WATERFALL RED 4(메리츠2·한화2 = NB 마스터 재빌드 필요) · OCI_VS_BS_AOCI YELLOW +4
+  [decision_or_blocker] gold 20(2023.1Q 원 인쇄 L52688)/21(2023.2Q 원 누적에서 파생) 교체 ⓐ. NB 2행 재빌드, pl_bridge_baseline 2줄
+====================================================================================================
+11 NEEDS_OWNER scope 4,5 KB라이프생명 KR0099 ['2023.1Q', '2023.2Q', '2023.3Q', '2023.4Q', '2024.1Q', '2024.2Q', '2024.3Q', '2024.4Q'] scn N1_KBlife_A
+  [census(d_census)] STAY (5): LOB bridge + CSM restated + PL4 not read + 'chain not adoptable'
+  [e20_cause] LOB 다리는 IS 4줄로 닫힘(새 리더 불요), PL4 전기열 5/5 일치(KB라이프 2023.3Q..2024.3Q 5표). 막는 것은 CSM 3가지 판: V0(Q1~Q3 원 기초 31,201.3) / V1(FY2023 연간 원본 = FY2024 Q1~Q3 비교열, 31,327.6) / V2(FY2024 연간 비교열 33,595.7 -> 기말 31,798.2) — V2 는 Q4 만 인쇄(Q1~Q3 의 V2 는 어느 필링에도 없음). FY2024 는 Q1~Q4 모두 최신 31,798.3, 원은 30,176.4(+Q4 gold 30,176.4 = 연쇄 맞추기용 ⓑ)
+  [source_filing_and_tables] FY2024_Q4 20250314000905.xml 전기 표 L50518 (기초 L50565 기말 L50765); 분기 비교열 FY2024 Q1~Q3 / FY2025 Q1~Q3 (csm_sources)
+  [reader_change] 없음(CSM prior 는 dry-run 5/5 + 독립 재독 1건)
+  [verified_on] p_kblife.py PL4 5/5; gate N1/N2/N3
+  [gate_simulation] A(8버킷 134+37칸): 연속성 RED 1(FY2023 기초 31,328~33,596, 6.75%) · pl_bridge FAIL 23->22 · xlsx RED 2
+  [decision_or_blocker] D1: A(분기별 최신 전체, 연속성 RED 1) / B(FY2023 Q1~Q3 만, RED 0) / C(현 상태). A'(2023.4Q 만 빼기)는 CONT RED 4 로 최악
+====================================================================================================
+12 NEEDS_OWNER scope 4,5 롯데손해보험 KR0003 ['2023.4Q'] scn N7_Lotte_FY2023Q4
+  [census(d_census)] STAY: LOB bridge + CSM restated
+  [e20_cause] LOB·PL4 는 닫힘(잔차 -0.75, PL4 185,905 == 1859.0억). 그러나 FY2024 연간 보고서가 2023 기초를 16,669.0 으로 재작성(FY2024 Q1~Q3 의 2023 비교열은 16,774.4 그대로) -> 분기별 최신으로 쓰면 FY2023 기초가 16,774.4 x3 / 16,669.0 (0.63%) 로 WFY 깨짐 (원=한 판, 최신=두 판)
+  [source_filing_and_tables] FY2024_Q4 20250320001732_00760.xml 전기 표 L10874 (기초 16,669.0 L10918, 기말 23,860.8 L11127)
+  [reader_change] LOB·PL4 는 lotte_lib 로 읽힘
+  [verified_on] own-read FY2024_Q4 _00760; gate N7
+  [gate_simulation] 롯데 2023.4Q 단독 19+5칸: WFY 0->1(FY2023 기초 16,774.4 x3 / 16,669.0, 0.63% > 0.5%) · 연속성 스크립트는 1% 미만이라 RED 0
+  [decision_or_blocker] D2: 보류(현 상태 유지) vs 채택(+WFY_EXCEPTIONS 등재). 보류해도 FY2024 Q1~Q3 채택(R2)은 CONT 0.44% < 0.5% 로 통과
+====================================================================================================
+13 NEEDS_OWNER scope 2,4 에이비엘생명보험 KR0070 ['2023.1Q', '2023.2Q', '2023.3Q', '2023.4Q'] scn N4_ABL_FY2023
+  [census(d_census)] STAY: 2023.3Q LOB bridge + CSM restated; 2023.4Q CSM restated + owner CSM gold (items 1,4); siblings 2023.1Q/2Q
+  [e20_cause] FY2023 은 분기 4개 모두 최신 비교열 기초 7,585.3 으로 한 판(WFY 0, 4Q 기말 8,695.4 = 마스터) — 닫힘. LOB 다리는 IS 4줄(2023.3Q 잔차 -6,748 은 이것으로 해소). 막는 것 = owner CSM gold 2023.4Q 항목 1(7,017.8)·4(-1,148.8): 원 인쇄값(7,585.3/-1,716.3)도 최신값도 아님 = Q1~Q3 원 기초를 Q4 에 강제한 연쇄용 gold(ⓑ). Q1~Q3 가 7,585.3 이 되면 이유 소멸
+  [source_filing_and_tables] FY2024_Q4 20250331001358_00760.xml 전기 표 L14100 (기초 L14127, 신계약 L14175, 상각 L14191, 기말 L14290대); FY2024 Q1~Q3 CSM 비교열; PL4 후속 '(1) 당분기와 전분기 중 보험영업수익' 보험계약마진상각 prior-YTD: Q2 L22569 46,789 · Q3 L22013 69,639
+  [reader_change] PL4 분기 prior = 보험영업수익 주석 '보험계약마진상각' 행의 마지막 숫자 셀(생산 extract_tier2_abl 캡션 게이트는 분기 양식 미일치 — 위치만 고치면 됨)
+  [verified_on] c4_abl_product_csm.py(연간 전기), pl4_equality.csv ABL 3/3, gate N4
+  [gate_simulation] ABL FY2023 4버킷 75+20칸: 연속성·워터폴 RED 0 · xlsx RED 2 · NB_VS_WATERFALL RED 3(ABL 2023.1Q~3Q, NB 재빌드 필요)
+  [decision_or_blocker] D3: gold 2개 교체(ⓑ-연쇄) 승인 + PL gold 2023.1Q 항목4(22,664)·7 ⓐ 교체. NB 재빌드 3행
+====================================================================================================
+14 NEEDS_OWNER scope 4 케이디비생명보험 KR0072 ['2023.1Q', '2023.2Q', '2023.3Q', '2023.4Q'] scn N5_KDB_FY2023
+  [census(d_census)] STAY: 2023.3Q LOB bridge + CSM restated + PL4 not read + chain not adoptable (owner gold)
+  [e20_cause] FY2023 4분기 모두 최신 기초 5,695.9 로 한 판(Q4 기말 5,830.5 = 마스터). 생보라 LOB 는 IS 4줄. 막는 것 = owner CSM gold 2023.4Q 1·4 (5,239.4/-2,103.5: Q1~Q3 원 기초 강제, ⓑ-연쇄) + 2023.1Q 4·5·6 / 2023.2Q 4·5 (원 인쇄값 정밀판, ⓐ) + PL gold 2023.2Q/3Q 항목 4·7(축척 오류 정정치, ⓐ)
+  [source_filing_and_tables] FY2024 Q1~Q4 KDB 별도 CSM 비교열(dry-run open/chain OK); PL4 prior: p_lifeold (OLD life L2, 한 기간 블록 우측) 11,641/24,509/37,266/51,198
+  [reader_change] _oll_num 에 prior 인자(pair: ns[3], single: ns[1]) — 4줄
+  [verified_on] p_lifeold.py(KDB) + pl4_equality 4/4; gate N5 clean
+  [gate_simulation] KDB FY2023 4버킷 70+20칸: 새 RED/FAIL 0 (xlsx RED 2 뿐) · OCI_VS_BS_AOCI YELLOW +1
+  [decision_or_blocker] D3: gold 7+4칸 교체(ⓑ-연쇄 2 · ⓐ 9) 승인
+====================================================================================================
+15 BLOCKED scope 4,5 현대해상 KR0009 ['2023.1Q', '2023.2Q', '2023.3Q', '2023.4Q'] scn N6_HD_FY2023
+  [census(d_census)] STAY: 2023.4Q CSM prior column unreadable (UNVERIFIED); siblings CSM restated
+  [e20_cause] CSM 전기열은 읽힘: FY2024 연간 별도 '(2) 전기' 표(단일 합계 열, 짧은 캡션이라 prior 로 안 잡힘) -> [83515.4,16792.4,2636.3,-2716.0,-8805.4,91422.7]; FY2023 4분기 모두 기초 83,515.4 로 일관. 그러나 PL 쪽: 2023.1Q/2Q 보험손익이 -124.6/-838.5억 재작성되는데 LOB 다리(2/13/14)는 owner IR 상수라 갱신할 DART 원천이 없음 -> 채택하면 가교 FAIL 2. 2023.4Q 는 -98 mn 로 허용오차 안(0.1%)
+  [source_filing_and_tables] FY2024_Q4 20250313001346.xml '(2) 전기' L76716-76963 (기초 L76757→8,351,537,263천원, 신계약 L76783, 이자 L76807, 상각 L76799, 기말 L76815)
+  [reader_change] CSM: 짧은 캡션 '(2) 전기' 표를 직전 '(1) 당기' 표의 헤더와 같으면 prior 로 상속(dry-run short_prior_blocks 존재) + 단일 합계열 waterfall — 소
+  [verified_on] own-read(시트 합 확인), gate N6 (LOB FAIL 확인)
+  [gate_simulation] 현대 FY2023 4버킷 52+18칸: 신규 FAIL 2(보험손익(dual) 2023.1Q +8,429.8 · 2023.2Q +75,080.6 = LOB 다리 미갱신) · NB RED 2
+  [decision_or_blocker] BLOCKED: 2023.1Q/2Q 재작성 LOB 분해는 DART 에 없음 -> downloader: 현대해상 FY2024 1Q/2Q IR 장표(전년동기 비교 LOB 보험손익) 또는 owner 가 보험종목별 수지(영업현황 표 L2963..)로 파생 허용. CSM+PL4 만 적재하는 안(PL Tier-1 원 판 유지)은 owner 결정

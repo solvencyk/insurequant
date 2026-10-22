@@ -1,0 +1,482 @@
+[
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 1,
+  "old": null,
+  "new": 98612.395934,
+  "src_line": 5657,
+  "src_text": "98,612,395,934",
+  "src_label": "보험손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 2,
+  "old": null,
+  "new": 107810.256568,
+  "src_line": "derived",
+  "src_text": "3 + 8",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 3,
+  "old": null,
+  "new": 109847.43373,
+  "src_line": "derived",
+  "src_text": "보험수익@5703 - 발행보험서비스비용@5772",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 7,
+  "old": null,
+  "new": -962.56627,
+  "src_line": "derived",
+  "src_text": "3 - (4+5+6)  [4,5,6 = live master note values]",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 8,
+  "old": null,
+  "new": -2037.177162,
+  "src_line": "derived",
+  "src_text": "재보험수익@5726 - 재보험비용@5795",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 12,
+  "old": null,
+  "new": -2619.177162,
+  "src_line": "derived",
+  "src_text": "8 - (9+10+11)  [9,10,11 = live master note values]",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 15,
+  "old": null,
+  "new": 0.0,
+  "src_line": "builder rule",
+  "src_text": "no 기타영업수익 in the operating block -> 0.0",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 16,
+  "old": 9200.0,
+  "new": 9197.860634,
+  "src_line": 5818,
+  "src_text": "9,197,860,634",
+  "src_label": "기타사업비용"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 17,
+  "old": null,
+  "new": 84273.393049,
+  "src_line": 5841,
+  "src_text": "84,273,393,049",
+  "src_label": "투자손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 18,
+  "old": null,
+  "new": 447383.104651,
+  "src_line": "derived",
+  "src_text": "17 - 19",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 19,
+  "old": null,
+  "new": -363109.711602,
+  "src_line": 6140,
+  "src_text": "362,299,046,843 + 810,664,759@6163",
+  "src_label": "보험금융비용 + 재보험금융비용"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 20,
+  "old": null,
+  "new": 182885.788983,
+  "src_line": 6390,
+  "src_text": "182,885,788,983",
+  "src_label": "영업이익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 21,
+  "old": null,
+  "new": -21448.528138,
+  "src_line": 6413,
+  "src_text": "(21,448,528,138)",
+  "src_label": "영업외손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 22,
+  "old": 170500.0,
+  "new": 161437.260845,
+  "src_line": 6482,
+  "src_text": "161,437,260,845",
+  "src_label": "법인세차감전순이익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 23,
+  "old": 55900.0,
+  "new": 53766.25509,
+  "src_line": 6505,
+  "src_text": "53,766,255,090",
+  "src_label": "법인세비용"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 24,
+  "old": 114600.0,
+  "new": 107671.005755,
+  "src_line": 6528,
+  "src_text": "107,671,005,755",
+  "src_label": "분기순이익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 25,
+  "old": null,
+  "new": 620221.638116,
+  "src_line": 6597,
+  "src_text": "620,221,638,116",
+  "src_label": "기타포괄손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 26,
+  "old": null,
+  "new": 826761.59941,
+  "src_line": 6712,
+  "src_text": "826,761,599,410",
+  "src_label": "기타포괄손익-공정가치측정금융자산관련손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 27,
+  "old": null,
+  "new": -231084.647737,
+  "src_line": 6804,
+  "src_text": "(231,084,647,737)",
+  "src_label": "보험계약자산(부채)순금융손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 28,
+  "old": null,
+  "new": 31658.511524,
+  "src_line": 6781,
+  "src_text": "31,658,511,524",
+  "src_label": "현금흐름위험회피파생상품평가손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 29,
+  "old": null,
+  "new": 1497.882893,
+  "src_line": 6666,
+  "src_text": "1,497,882,893",
+  "src_label": "기타포괄손익-공정가치측정금융자산평가손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 30,
+  "old": null,
+  "new": -4460.200897,
+  "src_line": 6827,
+  "src_text": "(4,460,200,897)",
+  "src_label": "재보험계약자산(부채)순금융손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 31,
+  "old": null,
+  "new": 727892.643871,
+  "src_line": 6850,
+  "src_text": "727,892,643,871",
+  "src_label": "총포괄손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.1Q",
+  "item": 32,
+  "old": null,
+  "new": -4151.507077,
+  "src_line": "derived",
+  "src_text": "확정급여제도의재측정요소@6643+기타포괄손익-공정가치측정신용손실@6735+관계기업기타포괄손익지분@6758",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 1,
+  "old": null,
+  "new": 191659.943298,
+  "src_line": 5771,
+  "src_text": "191,659,943,298",
+  "src_label": "보험손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 2,
+  "old": null,
+  "new": 213476.710788,
+  "src_line": "derived",
+  "src_text": "3 + 8",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 3,
+  "old": null,
+  "new": 214326.588558,
+  "src_line": "derived",
+  "src_text": "보험수익@5817 - 발행보험서비스비용@5886",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 7,
+  "old": null,
+  "new": -8374.411442,
+  "src_line": "derived",
+  "src_text": "3 - (4+5+6)  [4,5,6 = live master note values]",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 8,
+  "old": null,
+  "new": -849.87777,
+  "src_line": "derived",
+  "src_text": "재보험수익@5840 - 재보험비용@5909",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 12,
+  "old": null,
+  "new": 1319.12223,
+  "src_line": "derived",
+  "src_text": "8 - (9+10+11)  [9,10,11 = live master note values]",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 15,
+  "old": null,
+  "new": 0.0,
+  "src_line": "builder rule",
+  "src_text": "no 기타영업수익 in the operating block -> 0.0",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 16,
+  "old": 21800.0,
+  "new": 21816.76749,
+  "src_line": 5932,
+  "src_text": "21,816,767,490",
+  "src_label": "기타사업비용"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 17,
+  "old": null,
+  "new": 35263.467988,
+  "src_line": 5955,
+  "src_text": "35,263,467,988",
+  "src_label": "투자손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 18,
+  "old": null,
+  "new": 775787.195643,
+  "src_line": "derived",
+  "src_text": "17 - 19",
+  "src_label": ""
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 19,
+  "old": null,
+  "new": -740523.727655,
+  "src_line": 6254,
+  "src_text": "739,102,281,791 + 1,421,445,864@6277",
+  "src_label": "보험금융비용 + 재보험금융비용"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 20,
+  "old": null,
+  "new": 226923.411286,
+  "src_line": 6507,
+  "src_text": "226,923,411,286",
+  "src_label": "영업이익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 21,
+  "old": null,
+  "new": -43037.63277,
+  "src_line": 6530,
+  "src_text": "(43,037,632,770)",
+  "src_label": "영업외손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 22,
+  "old": 178300.0,
+  "new": 183885.778516,
+  "src_line": 6599,
+  "src_text": "183,885,778,516",
+  "src_label": "법인세차감전순이익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 23,
+  "old": 36800.0,
+  "new": 38120.043903,
+  "src_line": 6622,
+  "src_text": "38,120,043,903",
+  "src_label": "법인세비용"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 24,
+  "old": 141500.0,
+  "new": 145765.734613,
+  "src_line": 6645,
+  "src_text": "145,765,734,613",
+  "src_label": "반기순이익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 25,
+  "old": null,
+  "new": 660390.518644,
+  "src_line": 6714,
+  "src_text": "660,390,518,644",
+  "src_label": "기타포괄손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 26,
+  "old": null,
+  "new": 384481.522459,
+  "src_line": 6829,
+  "src_text": "384,481,522,459",
+  "src_label": "기타포괄손익-공정가치측정금융자산관련손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 27,
+  "old": null,
+  "new": 244225.259984,
+  "src_line": 6921,
+  "src_text": "244,225,259,984",
+  "src_label": "보험계약자산(부채)순금융손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 28,
+  "old": null,
+  "new": 35178.266428,
+  "src_line": 6898,
+  "src_text": "35,178,266,428",
+  "src_label": "현금흐름위험회피파생상품평가손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 29,
+  "old": null,
+  "new": 1643.519369,
+  "src_line": 6783,
+  "src_text": "1,643,519,369",
+  "src_label": "기타포괄손익-공정가치측정금융자산평가손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 30,
+  "old": null,
+  "new": -1779.090534,
+  "src_line": 6944,
+  "src_text": "(1,779,090,534)",
+  "src_label": "재보험계약자산(부채)순금융손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 31,
+  "old": null,
+  "new": 806156.253257,
+  "src_line": 6967,
+  "src_text": "806,156,253,257",
+  "src_label": "총포괄손익"
+ },
+ {
+  "code": "KR0104",
+  "q": "2023.2Q",
+  "item": 32,
+  "old": null,
+  "new": -3358.959062,
+  "src_line": "derived",
+  "src_text": "확정급여제도의재측정요소@6760+기타포괄손익-공정가치측정신용손실@6852+관계기업기타포괄손익지분@6875",
+  "src_label": ""
+ }
+]

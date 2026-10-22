@@ -1,0 +1,5 @@
+KR0079 2023.1Q [life_is] PL cells=22 CSM cells=0 closure={'I1 20=1+17': -0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': -0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': -0.0}
+KR0079 2023.2Q [life_is] PL cells=22 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}
+KR0079 2023.3Q [life_is] PL cells=0 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': -0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': -0.0}
+KR0079 2023.4Q [life_is] PL cells=11 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': -0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': -0.0, 'I7 LOB bridge (min of bare/adj)': -0.0}
+candidate masters written: PL cells 55 (+76 single-quarter recomputed), CSM cells 0 (+0 single-quarter recomputed) -> scratchpad cand/X_mirae2023_*

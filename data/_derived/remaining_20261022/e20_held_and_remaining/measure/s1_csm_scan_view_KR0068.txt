@@ -1,0 +1,40 @@
+KR0068 한화생명    later=2024.1Q prior_of=2023.1Q DIFF     fid=SAME  diff=1,2,3,4,5,6  nblk=5   src=combined-agn+u:lit-conf     
+      prior(later filing) [97629.5, 5444.3, 829.0, -2860.7, -2251.0, 98791.1]
+      master(prior_q)     [96679.3, 5715.6, 3245.0, -6372.5, -2142.2, 97125.1]
+      current(later_q)    [92384.9, 5154.0, 844.6, -3744.6, -2203.0, 92435.9]
+KR0068 한화생명    later=2024.2Q prior_of=2023.2Q DIFF     fid=SAME  diff=1,2,3,4,5,6  nblk=9   src=combined-agn+u:lit-conf     
+      prior(later filing) [97629.5, 11643.1, 1702.9, -5234.4, -4514.2, 101226.9]
+      master(prior_q)     [96679.3, 13592.2, 4520.1, -8988.8, -4635.4, 101167.4]
+      current(later_q)    [92384.9, 9964.9, 1704.1, -8159.3, -4357.6, 91537.1]
+KR0068 한화생명    later=2024.3Q prior_of=2023.3Q DIFF     fid=SAME  diff=3,4          nblk=3   src=combined-agn+u:lit-conf     
+      prior(later filing) [97629.5, 18559.5, 2616.6, -14130.9, -6683.4, 97991.2]
+      master(prior_q)     [97629.5, 18559.5, 2919.5, -14433.9, -6683.4, 97991.1]
+      current(later_q)    [92384.9, 15385.3, 2583.7, -12584.2, -6472.3, 91297.5]
+KR0068 한화생명    later=2024.4Q prior_of=2023.4Q SAME     fid=SAME  diff=             nblk=7   src=combined-agn+u:lit-conf     
+      prior(later filing) [97629.5, 25412.2, 3528.6, -25308.2, -8877.1, 92384.9]
+      master(prior_q)     [97629.5, 25412.2, 3528.6, -25308.2, -8877.1, 92384.9]
+      current(later_q)    [92384.9, 21230.9, 3500.8, -17506.0, -8519.2, 91091.4]
+KR0068 한화생명    later=2025.1Q prior_of=2024.1Q SAME     fid=SAME  diff=             nblk=10  src=combined-agn+u:lit-conf     
+      prior(later filing) [92384.9, 5154.0, 844.6, -3744.6, -2203.0, 92435.9]
+      master(prior_q)     [92384.9, 5154.0, 844.6, -3744.6, -2203.0, 92435.9]
+      current(later_q)    [91091.4, 4881.9, 886.4, -6216.2, -1986.4, 88657.1]
+KR0068 한화생명    later=2025.2Q prior_of=2024.2Q SAME     fid=SAME  diff=             nblk=32  src=배당칼럼합산+u:lit-conf           
+      prior(later filing) [92384.9, 9964.9, 1704.1, -8159.3, -4357.6, 91537.1]
+      master(prior_q)     [92384.9, 9964.9, 1704.1, -8159.3, -4357.6, 91537.1]
+      current(later_q)    [91091.4, 9255.2, 1769.7, -9840.5, -3944.8, 88331.0]
+KR0068 한화생명    later=2025.3Q prior_of=2024.3Q SAME     fid=SAME  diff=             nblk=37  src=배당칼럼합산+u:lit-conf           
+      prior(later filing) [92384.9, 15385.3, 2583.7, -12584.2, -6472.3, 91297.5]
+      master(prior_q)     [92384.9, 15385.3, 2583.7, -12584.2, -6472.3, 91297.5]
+      current(later_q)    [91091.4, 14898.1, 2662.5, -12153.3, -5904.8, 90594.0]
+KR0068 한화생명    later=2025.4Q prior_of=2024.4Q SAME     fid=SAME  diff=             nblk=71  src=별도세그합산+u:lit-conf           
+      prior(later filing) [92384.9, 21230.9, 3500.8, -17506.0, -8519.2, 91091.4]
+      master(prior_q)     [92384.9, 21230.9, 3500.8, -17506.0, -8519.2, 91091.4]
+      current(later_q)    [91091.4, 20662.6, 3577.7, -20322.2, -7872.9, 87136.5]
+KR0068 한화생명    later=2026.1Q prior_of=2025.1Q SAME     fid=SAME  diff=             nblk=31  src=배당칼럼합산+u:lit-conf           
+      prior(later filing) [91091.4, 4881.9, 886.4, -6216.2, -1986.4, 88657.1]
+      master(prior_q)     [91091.4, 4881.9, 886.4, -6216.2, -1986.4, 88657.1]
+      current(later_q)    [87136.5, 6109.3, 885.4, -3007.5, -1914.4, 89209.4]
+KR0068 한화생명    later=2026.2Q prior_of=2025.2Q SAME     fid=SAME  diff=             nblk=28  src=배당칼럼합산+u:lit-conf           
+      prior(later filing) [91091.4, 9255.2, 1769.7, -9840.5, -3944.8, 88331.0]
+      master(prior_q)     [91091.4, 9255.2, 1769.7, -9840.5, -3944.8, 88331.0]
+      current(later_q)    [87136.5, 13001.1, 1804.5, -8927.2, -3730.2, 89284.6]

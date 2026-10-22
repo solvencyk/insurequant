@@ -1,0 +1,155 @@
+====================================================================================================
+SCENARIO R0_KBlife_2024Q1_fix
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3698P(진짜1301·구성상2060·부분337)/22F/2710S/0NEW
+  - master_tables: FAIL KB라이프생명        2024.1Q  [보험손익(dual)]  lhs=80418.0 diff=+1136.0
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=1  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO R1
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3715P(진짜1308·구성상2068·부분339)/23F/2692S/0NEW
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=1  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO R1b_KB_siblings
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3701P(진짜1304·구성상2060·부분337)/23F/2706S/0NEW
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=1  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO R2
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3718P(진짜1313·구성상2066·부분339)/20F/2692S/0NEW
+  master_tables SUMMARY: qoq_warn:262Y   ->   qoq_warn:263Y
+  master_tables SUMMARY: oci_vs_bs_aoci:23Y   ->   oci_vs_bs_aoci:27Y
+  - master_tables: FAIL 메리츠화재해상보험      2023.2Q  [보험손익(dual)]  lhs=822607.0 diff=+825.4
+  - master_tables: FAIL 한화생명           2023.1Q  [보험손익(leg-coverage)]  lhs=152373.0 diff=-152373.0
+  - master_tables: FAIL 한화생명           2023.2Q  [보험손익(leg-coverage)]  lhs=396756.0 diff=-396756.0
+  - master_tables: WFYEX 메리츠화재해상보험      FY2023 (documented: legit restatement) {'2023.1Q': 100383.8, '2023.2Q': 100383.8, '2023.3Q': 96376.4, '2023.4Q': 96376.4}
+  - master_tables: WFYEX 한화생명           FY2023 (documented: legit restatement) {'2023.1Q': 96679.3, '2023.2Q': 96679.3, '2023.3Q': 97629.5, '2023.4Q': 97629.5}
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=1 red=0
+  - continuity:   YELLOW KR0001 메리츠화재해상보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 96376~100384 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  live_artifacts: ['SUMMARY live_artifacts  RED=4  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=29']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO R2b_Lotte_2023_1Q2Q
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3711P(진짜1307·구성상2065·부분339)/22F/2697S/0NEW
+  master_tables SUMMARY: csm_amort_identity:387P/1PIN/0F/5S   ->   csm_amort_identity:388P/1PIN/0F/4S
+  master_tables SUMMARY: oci_vs_bs_aoci:23Y   ->   oci_vs_bs_aoci:25Y
+  - master_tables: FAIL 롯데손해보험         2023.2Q  [보험손익(leg-coverage)]  lhs=102897.6 diff=-102897.6
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  + data_contract: ('YELLOW', 'PL_breakdown', 'PL_CSM_AMORT_MISSING_LEDGER_INERT', '롯데손해보험 2023.1Q')
+  - data_contract: ('YELLOW', 'PL_breakdown', 'PL_CSM_AMORT_MISSING_DOCUMENTED', '롯데손해보험 2023.1Q')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=1  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=26']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO N1_KBlife_A
+  master_tables SUMMARY: plausibility:0dup/1spike/1cont/0wfy/0zamort   ->   plausibility:0dup/1spike/1cont/1wfy/0zamort
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3711P(진짜1310·구성상2064·부분337)/22F/2697S/0NEW
+  master_tables SUMMARY: qoq_warn:262Y   ->   qoq_warn:261Y
+  master_tables SUMMARY: oci_vs_bs_aoci:23Y   ->   oci_vs_bs_aoci:24Y
+  + master_tables: WFY   KB라이프생명        FY2023 기초 불일치: {'2023.1Q': 31327.6, '2023.2Q': 31327.6, '2023.3Q': 31327.6, '2023.4Q': 33595.7}
+  - master_tables: FAIL KB라이프생명        2024.1Q  [보험손익(dual)]  lhs=80418.0 diff=+1136.0
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=3 red=1
+  + continuity:   RED KR0099 KB라이프생명: WITHIN_FY_OPENING_DRIFT — FY2023 기초 CSM 변동 31328~33596 (>1%) — 분기 간 basis/period mis-pick 의심
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO N2_KBlife_B
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3707P(진짜1306·구성상2064·부분337)/23F/2700S/0NEW
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO N3_KBlife_Aprime
+  master_tables SUMMARY: plausibility:0dup/1spike/1cont/0wfy/0zamort   ->   plausibility:0dup/1spike/5cont/0wfy/0zamort
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3711P(진짜1310·구성상2064·부분337)/22F/2697S/0NEW
+  master_tables SUMMARY: qoq_warn:262Y   ->   qoq_warn:261Y
+  master_tables SUMMARY: oci_vs_bs_aoci:23Y   ->   oci_vs_bs_aoci:24Y
+  + master_tables: CONT  KB라이프생명        2024.1Q 기초=31798 ≠ 2023.4Q 기말=30176  (Δ+1622)
+  + master_tables: CONT  KB라이프생명        2024.2Q 기초=31798 ≠ 2023.4Q 기말=30176  (Δ+1622)
+  + master_tables: CONT  KB라이프생명        2024.3Q 기초=31798 ≠ 2023.4Q 기말=30176  (Δ+1622)
+  + master_tables: CONT  KB라이프생명        2024.4Q 기초=31798 ≠ 2023.4Q 기말=30176  (Δ+1622)
+  - master_tables: FAIL KB라이프생명        2024.1Q  [보험손익(dual)]  lhs=80418.0 diff=+1136.0
+  + data_contract: ('RED', 'CSM_waterfall', 'CSM_CONTINUITY_FY_BOUNDARY', 'KB라이프생명 2024.1Q')
+  + data_contract: ('RED', 'CSM_waterfall', 'CSM_CONTINUITY_FY_BOUNDARY', 'KB라이프생명 2024.2Q')
+  + data_contract: ('RED', 'CSM_waterfall', 'CSM_CONTINUITY_FY_BOUNDARY', 'KB라이프생명 2024.3Q')
+  + data_contract: ('RED', 'CSM_waterfall', 'CSM_CONTINUITY_FY_BOUNDARY', 'KB라이프생명 2024.4Q')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=6  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO N4_ABL_FY2023
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3703P(진짜1304·구성상2062·부분337)/23F/2704S/0NEW
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=3  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=28']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO N5_KDB_FY2023
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3703P(진짜1305·구성상2061·부분337)/23F/2704S/0NEW
+  master_tables SUMMARY: qoq_warn:262Y   ->   qoq_warn:263Y
+  master_tables SUMMARY: oci_vs_bs_aoci:23Y   ->   oci_vs_bs_aoci:24Y
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO N6_HD_FY2023
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3705P(진짜1304·구성상2064·부분337)/25F/2700S/2NEW
+  master_tables SUMMARY: qoq_warn:262Y   ->   qoq_warn:264Y
+  master_tables SUMMARY: oci_vs_bs_aoci:23Y   ->   oci_vs_bs_aoci:25Y
+  + master_tables: FAIL 현대해상           2023.1Q  [보험손익(dual)]  lhs=246045.3 diff=+8429.8
+  + master_tables: FAIL 현대해상           2023.2Q  [보험손익(dual)]  lhs=415652.3 diff=+75080.6
+  + master_tables: NEW-FAIL  현대해상|2023.1Q|보험손익(dual)   <- 등재부에 없다. 진짜 회귀인지 확인하고 고치거나 등재하라
+  + master_tables: NEW-FAIL  현대해상|2023.2Q|보험손익(dual)   <- 등재부에 없다. 진짜 회귀인지 확인하고 고치거나 등재하라
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=2  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=27']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO N7_Lotte_FY2023Q4
+  master_tables SUMMARY: plausibility:0dup/1spike/1cont/0wfy/0zamort   ->   plausibility:0dup/1spike/1cont/1wfy/0zamort
+  + master_tables: WFY   롯데손해보험         FY2023 기초 불일치: {'2023.1Q': 16774.4, '2023.2Q': 16774.4, '2023.3Q': 16774.4, '2023.4Q': 16669.0}
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=0
+  live_artifacts: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']
+====================================================================================================
+SCENARIO ALL_latest
+  master_tables SUMMARY: plausibility:0dup/1spike/1cont/0wfy/0zamort   ->   plausibility:0dup/1spike/1cont/2wfy/0zamort
+  master_tables SUMMARY: pl_bridge:3697P(진짜1300·구성상2060·부분337)/23F/2710S/0NEW   ->   pl_bridge:3766P(진짜1344·구성상2081·부분341)/19F/2645S/0NEW
+  master_tables SUMMARY: qoq_warn:262Y   ->   qoq_warn:263Y
+  master_tables SUMMARY: oci_vs_bs_aoci:23Y   ->   oci_vs_bs_aoci:29Y
+  + master_tables: WFY   KB라이프생명        FY2023 기초 불일치: {'2023.1Q': 31327.6, '2023.2Q': 31327.6, '2023.3Q': 31327.6, '2023.4Q': 33595.7}
+  + master_tables: WFY   롯데손해보험         FY2023 기초 불일치: {'2023.1Q': 16774.4, '2023.2Q': 16774.4, '2023.3Q': 16774.4, '2023.4Q': 16669.0}
+  - master_tables: FAIL KB라이프생명        2024.1Q  [보험손익(dual)]  lhs=80418.0 diff=+1136.0
+  - master_tables: FAIL 메리츠화재해상보험      2023.2Q  [보험손익(dual)]  lhs=822607.0 diff=+825.4
+  - master_tables: FAIL 한화생명           2023.1Q  [보험손익(leg-coverage)]  lhs=152373.0 diff=-152373.0
+  - master_tables: FAIL 한화생명           2023.2Q  [보험손익(leg-coverage)]  lhs=396756.0 diff=-396756.0
+  - master_tables: WFYEX 메리츠화재해상보험      FY2023 (documented: legit restatement) {'2023.1Q': 100383.8, '2023.2Q': 100383.8, '2023.3Q': 96376.4, '2023.4Q': 96376.4}
+  - master_tables: WFYEX 한화생명           FY2023 (documented: legit restatement) {'2023.1Q': 96679.3, '2023.2Q': 96679.3, '2023.3Q': 97629.5, '2023.4Q': 97629.5}
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')
+  + data_contract: ('RED', 'master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- 손익분해PL')
+  data_contract SUMMARY: ['SUMMARY  RED=0  YELLOW=173  provisional=False'] -> ['SUMMARY  RED=2  YELLOW=173  provisional=False']
+  continuity before: [csm_continuity] companies=44 flagged=2 red=0 | after: [csm_continuity] companies=44 flagged=2 red=1
+  + continuity:   RED KR0099 KB라이프생명: WITHIN_FY_OPENING_DRIFT — FY2023 기초 CSM 변동 31328~33596 (>1%) — 분기 간 basis/period mis-pick 의심
+  - continuity:   YELLOW KR0001 메리츠화재해상보험: WITHIN_FY_OPENING_DRIFT_EXCEPTED — FY2023 기초 CSM 변동 96376~100384 (>1%) — 분기 간 basis/period mis-pick 의심 [문서화된 면제: 원천 소급재작성, validate_master_tables.WFY_EXCEPTIONS]
+  live_artifacts: ['SUMMARY live_artifacts  RED=7  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=32']  base: ['SUMMARY live_artifacts  RED=0  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=25']

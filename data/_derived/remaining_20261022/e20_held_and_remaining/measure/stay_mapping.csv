@@ -1,0 +1,86 @@
+﻿source,code,company,quarter,census_disposition,cause_class,plan_readiness,plan_scenario,plan_rank
+d_census_table,KR0099,KB라이프생명,2023.3Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_table,KR0099,KB라이프생명,2023.4Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_table,KR0099,KB라이프생명,2024.1Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_table,KR0099,KB라이프생명,2024.2Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_table,KR0099,KB라이프생명,2024.3Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_table,KR0010,KB손해보험,2023.4Q,STAY,restatement,READY,R1,5
+d_census_table,KR0010,KB손해보험,2024.1Q,STAY,restatement,READY,R1,5
+d_census_table,KR0010,KB손해보험,2024.2Q,STAY,restatement,READY,R1,5
+d_census_table,KR0010,KB손해보험,2024.3Q,STAY,restatement,READY,R1,5
+d_census_table,KR0003,롯데손해보험,2023.4Q,STAY,restatement,NEEDS_OWNER,N7_Lotte_FY2023Q4,12
+d_census_table,KR0003,롯데손해보험,2024.1Q,STAY,restatement,READY,R2,7
+d_census_table,KR0003,롯데손해보험,2024.2Q,STAY,restatement,READY,R2,7
+d_census_table,KR0003,롯데손해보험,2024.3Q,STAY,restatement,READY,R2,7
+d_census_table,KR0079,미래에셋생명보험,2023.4Q,STAY,restatement,READY,R1,4
+d_census_table,KR0079,미래에셋생명보험,2024.1Q,STAY,restatement,READY,R2,8
+d_census_table,KR0079,미래에셋생명보험,2024.2Q,STAY,restatement,READY,R2,8
+d_census_table,KR0079,미래에셋생명보험,2024.3Q,STAY,restatement,READY,R2,8
+d_census_table,KR0069,삼성생명보험,2023.3Q,STAY,master_extraction_error,(not in plan: see note),,
+d_census_table,KR0008,삼성화재해상보험,2023.3Q,STAY,already_adopted,(not in plan: see note),,
+d_census_table,KR0150,서울보증보험,2025.1Q,STAY,api_sign_presentation,(not in plan: see note),,
+d_census_table,KR0150,서울보증보험,2025.2Q,STAY,api_sign_presentation,(not in plan: see note),,
+d_census_table,KR0070,에이비엘생명보험,2023.3Q,STAY,restatement,NEEDS_OWNER,N4_ABL_FY2023,13
+d_census_table,KR0070,에이비엘생명보험,2023.4Q,STAY,restatement,NEEDS_OWNER,N4_ABL_FY2023,13
+d_census_table,KR0072,케이디비생명보험,2023.3Q,STAY,restatement,NEEDS_OWNER,N5_KDB_FY2023,14
+d_census_table,KR0083,푸본현대생명보험,2024.3Q,STAY,restatement,(not in plan: see note),,
+d_census_table,KR0083,푸본현대생명보험,2024.4Q,STAY,restatement,READY,R1,2
+d_census_table,KR0002,한화손해보험,2023.3Q,STAY,api_sign_presentation,(not in plan: see note),,
+d_census_table,KR0002,한화손해보험,2024.1Q,STAY,master_extraction_error,(not in plan: see note),,
+d_census_table,KR0002,한화손해보험,2024.2Q,STAY,master_extraction_error,(not in plan: see note),,
+d_census_table,KR0002,한화손해보험,2024.3Q,STAY,master_extraction_error,(not in plan: see note),,
+d_census_table,KR0002,한화손해보험,2024.4Q,STAY,master_extraction_error,(not in plan: see note),,
+d_census_table,KR0009,현대해상,2023.4Q,STAY,restatement,NEEDS_OWNER,N6c_HD_FY2023_IRlegs,15
+d_census_addl,KR0082,DB생명보험,2023.1Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0082,DB생명보험,2023.2Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0099,KB라이프생명,2023.1Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_addl,KR0099,KB라이프생명,2023.2Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_addl,KR0010,KB손해보험,2023.1Q,STAY,restatement,READY,R1b_KB_siblings,5
+d_census_addl,KR0010,KB손해보험,2023.2Q,STAY,restatement,READY,R1b_KB_siblings,5
+d_census_addl,KR0032,NH농협손해보험,2023.1Q,SAFE_NOW,restatement,(not in plan: see note),,
+d_census_addl,KR0104,농협생명보험,2023.1Q,STAY,restatement,READY,R1,1
+d_census_addl,KR0104,농협생명보험,2023.2Q,STAY,restatement,READY,R1,1
+d_census_addl,KR0003,롯데손해보험,2023.1Q,STAY,restatement,READY,R2b_Lotte_2023_1Q2Q,7.5
+d_census_addl,KR0003,롯데손해보험,2023.2Q,STAY,restatement,READY,R2b_Lotte_2023_1Q2Q,7.5
+d_census_addl,KR0001,메리츠화재해상보험,2023.1Q,STAY,restatement,READY,R2,9
+d_census_addl,KR0001,메리츠화재해상보험,2023.2Q,STAY,restatement,READY,R2,9
+d_census_addl,KR0070,에이비엘생명보험,2023.1Q,STAY,restatement,NEEDS_OWNER,N4_ABL_FY2023,13
+d_census_addl,KR0070,에이비엘생명보험,2023.2Q,STAY,restatement,NEEDS_OWNER,N4_ABL_FY2023,13
+d_census_addl,KR0072,케이디비생명보험,2023.1Q,STAY,restatement,NEEDS_OWNER,N5_KDB_FY2023,14
+d_census_addl,KR0072,케이디비생명보험,2023.2Q,STAY,restatement,NEEDS_OWNER,N5_KDB_FY2023,14
+d_census_addl,KR1000,코리안리재보험,2024.3Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0068,한화생명,2023.1Q,STAY,restatement,READY,R2,10
+d_census_addl,KR0068,한화생명,2023.2Q,STAY,restatement,READY,R2,10
+d_census_addl,KR0009,현대해상,2023.1Q,STAY,restatement,NEEDS_OWNER,N6c_HD_FY2023_IRlegs,15
+d_census_addl,KR0009,현대해상,2023.2Q,STAY,restatement,NEEDS_OWNER,N6c_HD_FY2023_IRlegs,15
+d_census_addl,KR0071,흥국생명보험,2023.1Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0099,KB라이프생명,2024.4Q,STAY,restatement,NEEDS_OWNER,N1_KBlife_A,11
+d_census_addl,KR0003,롯데손해보험,2024.4Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0070,에이비엘생명보험,2024.4Q,STAY,restatement,READY,R1,3
+d_census_addl,KR0072,케이디비생명보험,2023.4Q,STAY,restatement,NEEDS_OWNER,N5_KDB_FY2023,14
+d_census_addl,KR1000,코리안리재보험,2023.4Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR1000,코리안리재보험,2024.2Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR1000,코리안리재보험,2024.4Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR1000,코리안리재보험,2025.1Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0068,한화생명,2023.3Q,STAY,restatement,READY,R2,10
+d_census_addl,KR0009,현대해상,2023.3Q,STAY,restatement,NEEDS_OWNER,N6c_HD_FY2023_IRlegs,15
+d_census_addl,KR0104,농협생명보험,2024.4Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0104,농협생명보험,2025.1Q,SAFE_NOW,restatement,(not in plan: see note),,
+d_census_addl,KR0104,농협생명보험,2025.2Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0087,동양생명,2024.4Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0087,동양생명,2025.1Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0087,동양생명,2025.2Q,SAFE_NOW,restatement,(not in plan: see note),,
+d_census_addl,KR0069,삼성생명보험,2024.4Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0069,삼성생명보험,2025.1Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0069,삼성생명보험,2025.2Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0094,신한라이프생명보험,2025.2Q,SAFE_NOW,restatement,(not in plan: see note),,
+d_census_addl,KR0070,에이비엘생명보험,2025.1Q,SAFE_NOW,restatement,(not in plan: see note),,
+d_census_addl,KR0070,에이비엘생명보험,2025.2Q,SAFE_NOW,restatement,(not in plan: see note),,
+d_census_addl,KR0072,케이디비생명보험,2024.4Q,SAFE_NOW,restatement,(not in plan: see note),,
+d_census_addl,KR0072,케이디비생명보험,2025.2Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0068,한화생명,2024.4Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0068,한화생명,2025.1Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0068,한화생명,2025.2Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0071,흥국생명보험,2024.4Q,STAY,restatement,(not in plan: see note),,
+d_census_addl,KR0071,흥국생명보험,2025.1Q,OWNER_DECISION,restatement,(not in plan: see note),,
+d_census_addl,KR0071,흥국생명보험,2025.2Q,OWNER_DECISION,restatement,(not in plan: see note),,

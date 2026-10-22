@@ -1,0 +1,2 @@
+KR0099 2024.1Q [same] PL cells=3 CSM cells=0 closure={'I1 20=1+17': 0.0, 'I2 22=20+21': 0.0, 'I3 24=22-23': 0.0, 'I4 31=24+25': 0.0, 'I5 25=26..30+32': None, 'I6 17=18+19': 0.0, 'I7 LOB bridge (min of bare/adj)': 0.0}
+candidate masters written: PL cells 3 (+6 single-quarter recomputed), CSM cells 0 (+0 single-quarter recomputed) -> scratchpad cand/R0_KBlife_2024Q1_fix_*
