@@ -318,7 +318,11 @@ REGISTRY: dict[str, dict] = {
                   "갈라놓을 수 있다. 4Q 쏠림은 이 저장소에 이미 문서화된 별개 패턴(build_root_"
                   "masters.py: '신계약CSM 당분기가 음수(4Q 연차 재서술 artifact)')과 같은 계열 "
                   "— 4Q 연차보고서가 계리적 가정 개정 등을 자본에 직접 반영하는 사례. owner "
-                  "지시대로 RED 아닌 YELLOW(다운스트림/exit code 미차단)로 배선했다.",
+                  "지시대로 RED 아닌 YELLOW(다운스트림/exit code 미차단)로 배선했다. "
+                  "2026-10-23: PL 쪽 값_당분기 공란 칸은 비교하지 않은 칸이므로 「tol 이내」로 세지 않는다 -- "
+                  "SUMMARY 필드는 `Y/blank/bsskip`(flag / 공란으로 비교 못 한 칸 / BS 결측으로 비교 못 한 칸)이고 "
+                  "test_master_tables_golden.py::test_oci_vs_bs_aoci_counts_blank_cells_as_not_compared 가 "
+                  "세 갈래 계수를 합성 입력으로 박제한다(티켓 20261023T0030Z).",
         "mutation": "tests/test_master_tables_golden.py",
     },
     "dividend_payout": {

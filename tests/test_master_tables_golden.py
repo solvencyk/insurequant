@@ -54,6 +54,37 @@ def test_master_tables_summary_matches_golden():
     )
 
 
+def test_oci_vs_bs_aoci_counts_blank_cells_as_not_compared(tmp_path, monkeypatch, capsys):
+    """2026-10-23 (ticket 20261023T0030Z): a PL item-25 cell whose 값_당분기 is None is NOT compared, so it must
+    not be counted as 'tol 이내'.  Synthetic masters: one cell of each kind.  The flagged set must be exactly the
+    real mismatch -- the counting fix may not change which cells are flagged."""
+    sys.path.insert(0, str(REPO / "scripts"))
+    import validate_master_tables as V
+
+    def pl(co, q, dangi):
+        return {"원수사명": co, "공시분기": q, "항목번호": 25, "항목명": "기타포괄손익", "값": 0, "값_당분기": dangi}
+
+    def bs(co, q, v):
+        return {"원수사명": co, "공시분기": q, "항목번호": 4, "항목명": "기타포괄손익누계액", "값": v}
+
+    pl_rows = [pl("A", "2024.2Q", 100000.0),    # compared, closes (dBS 100000)
+               pl("A", "2024.3Q", None),        # blank: must be neither compared nor 'within tol'
+               pl("A", "2024.4Q", 50000.0),     # compared, dBS 0 -> real mismatch (flagged)
+               pl("B", "2024.2Q", 5.0)]         # BS missing for B -> bs_skip
+    bs_rows = [bs("A", "2024.1Q", 0.0), bs("A", "2024.2Q", 100000.0),
+               bs("A", "2024.3Q", 100000.0), bs("A", "2024.4Q", 100000.0)]
+    (tmp_path / V.PL_PATH).write_text(json.dumps(pl_rows, ensure_ascii=False), encoding="utf-8")
+    (tmp_path / V.BS_PATH).write_text(json.dumps(bs_rows, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(V, "ROOT", tmp_path)
+
+    counts: dict = {}
+    rows = V._check_pl_oci_vs_bs_aoci(counts_out=counts)
+    assert [(r[0], r[1]) for r in rows] == [("A", "2024.4Q")], rows
+    assert counts == {"compared": 2, "blank": 1, "bs_skip": 1, "flagged": 1}, counts
+    out = capsys.readouterr().out
+    assert "비교한 2건 중 tol 이내 1건" in out and "단일분기 공란 1건" in out and "BS 결측 1건" in out, out
+
+
 def _update() -> int:
     r = _run()
     r["_what"] = ("Refactor safety net for validate_master_tables.main(). Captured "

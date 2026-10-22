@@ -1,0 +1,10 @@
+entries=8
+KB라이프생명      FY2024  master_tables_flags=False  continuity_flags=False  -> UNUSED (safe to remove)
+교보생명보험       FY2023  master_tables_flags=True   continuity_flags=True   -> KEEP
+교보생명보험       FY2024  master_tables_flags=False  continuity_flags=False  -> UNUSED (safe to remove)
+메리츠화재해상보험    FY2023  master_tables_flags=False  continuity_flags=False  -> UNUSED (safe to remove)
+에이비엘생명보험     FY2023  master_tables_flags=False  continuity_flags=False  -> UNUSED (safe to remove)
+케이디비생명보험     FY2023  master_tables_flags=False  continuity_flags=False  -> UNUSED (safe to remove)
+한화생명         FY2023  master_tables_flags=False  continuity_flags=False  -> UNUSED (safe to remove)
+현대해상         FY2023  master_tables_flags=False  continuity_flags=False  -> UNUSED (safe to remove)
+flags outside the set (would be new RED if exceptions were all gone): []

@@ -1,0 +1,64 @@
+=== insurance_liability_portfolio.json gate ===
+rows=6343  (company,quarter) pairs=567
+
+--- RED (0) ---
+
+--- YELLOW (611) ---
+  R3_CROSS_CHECK KR0001 2025.1Q: item8(LRC-only)=234,543.0억 item20(BS full)=259,716.5억 gap=25,173.5억 (+10.7%)
+  R3_CROSS_CHECK KR0001 2025.2Q: item8(LRC-only)=229,281.0억 item20(BS full)=254,722.3억 gap=25,441.3억 (+11.1%)
+  R3_CROSS_CHECK KR0001 2025.3Q: item8(LRC-only)=228,939.0억 item20(BS full)=255,207.5억 gap=26,268.5억 (+11.5%)
+  R3_CROSS_CHECK KR0001 2025.4Q: item8(LRC-only)=210,197.0억 item20(BS full)=237,157.1억 gap=26,960.1억 (+12.8%)
+  R3_CROSS_CHECK KR0001 2026.1Q: item8(LRC-only)=194,105.0억 item20(BS full)=220,921.1억 gap=26,816.1억 (+13.8%)
+  R3_CROSS_CHECK KR0001 2026.2Q: item8(LRC-only)=178,203.0억 item20(BS full)=208,011.0억 gap=29,808.0억 (+16.7%)
+  R3_CROSS_CHECK KR0002 2025.1Q: item8(LRC-only)=143,215.0억 item20(BS full)=160,155.4억 gap=16,940.4억 (+11.8%)
+  R3_CROSS_CHECK KR0002 2025.2Q: item8(LRC-only)=140,592.0억 item20(BS full)=158,156.4억 gap=17,564.4억 (+12.5%)
+  R3_CROSS_CHECK KR0002 2025.3Q: item8(LRC-only)=140,160.0억 item20(BS full)=158,214.4억 gap=18,054.4억 (+12.9%)
+  R3_CROSS_CHECK KR0002 2025.4Q: item8(LRC-only)=131,222.0억 item20(BS full)=153,485.2억 gap=22,263.2억 (+17.0%)
+  R3_CROSS_CHECK KR0002 2026.1Q: item8(LRC-only)=120,477.0억 item20(BS full)=142,317.3억 gap=21,840.3억 (+18.1%)
+  R3_CROSS_CHECK KR0002 2026.2Q: item8(LRC-only)=110,240.0억 item20(BS full)=135,318.3억 gap=25,078.3억 (+22.7%)
+  R3_CROSS_CHECK KR0003 2025.1Q: item8(LRC-only)=59,538.0억 item20(BS full)=67,122.0억 gap=7,584.0억 (+12.7%)
+  R3_CROSS_CHECK KR0003 2025.2Q: item8(LRC-only)=57,419.0억 item20(BS full)=65,055.6억 gap=7,636.6억 (+13.3%)
+  R3_CROSS_CHECK KR0003 2025.3Q: item8(LRC-only)=57,274.0억 item20(BS full)=65,092.2억 gap=7,818.2억 (+13.7%)
+  R3_CROSS_CHECK KR0003 2025.4Q: item8(LRC-only)=52,394.0억 item20(BS full)=59,965.4억 gap=7,571.4억 (+14.5%)
+  R3_CROSS_CHECK KR0003 2026.1Q: item8(LRC-only)=46,291.0억 item20(BS full)=53,889.9억 gap=7,598.9억 (+16.4%)
+  R3_CROSS_CHECK KR0004 2025.1Q: item8(LRC-only)=40,377.0억 item20(BS full)=43,702.1억 gap=3,325.1억 (+8.2%)
+  R3_CROSS_CHECK KR0004 2025.2Q: item8(LRC-only)=39,125.0억 item20(BS full)=42,470.7억 gap=3,345.7억 (+8.6%)
+  R3_CROSS_CHECK KR0004 2025.3Q: item8(LRC-only)=40,897.0억 item20(BS full)=44,091.0억 gap=3,194.0억 (+7.8%)
+  R3_CROSS_CHECK KR0004 2026.1Q: item8(LRC-only)=36,567.0억 item20(BS full)=39,516.2억 gap=2,949.2억 (+8.1%)
+  R3_CROSS_CHECK KR0005 2025.1Q: item8(LRC-only)=112,954.0억 item20(BS full)=121,144.7억 gap=8,190.7억 (+7.3%)
+  R3_CROSS_CHECK KR0005 2025.2Q: item8(LRC-only)=110,272.0억 item20(BS full)=118,603.4억 gap=8,331.4억 (+7.6%)
+  R3_CROSS_CHECK KR0005 2025.3Q: item8(LRC-only)=109,556.0억 item20(BS full)=117,737.1억 gap=8,181.1억 (+7.5%)
+  R3_CROSS_CHECK KR0005 2025.4Q: item8(LRC-only)=101,892.0억 item20(BS full)=110,772.4억 gap=8,880.4억 (+8.7%)
+  R3_CROSS_CHECK KR0005 2026.1Q: item8(LRC-only)=92,623.0억 item20(BS full)=101,613.5억 gap=8,990.5억 (+9.7%)
+  R3_CROSS_CHECK KR0005 2026.2Q: item8(LRC-only)=84,390.0억 item20(BS full)=93,412.2억 gap=9,022.2억 (+10.7%)
+  R3_CROSS_CHECK KR0008 2025.1Q: item8(LRC-only)=457,654.0억 item20(BS full)=519,619.9억 gap=61,965.9억 (+13.5%)
+  R3_CROSS_CHECK KR0008 2025.2Q: item8(LRC-only)=446,677.0억 item20(BS full)=509,685.2억 gap=63,008.2억 (+14.1%)
+  R3_CROSS_CHECK KR0008 2025.3Q: item8(LRC-only)=437,167.0억 item20(BS full)=501,078.0억 gap=63,911.0억 (+14.6%)
+  R3_CROSS_CHECK KR0008 2025.4Q: item8(LRC-only)=421,823.0억 item20(BS full)=487,348.1억 gap=65,525.1억 (+15.5%)
+  R3_CROSS_CHECK KR0008 2026.1Q: item8(LRC-only)=403,604.0억 item20(BS full)=468,349.7억 gap=64,745.7억 (+16.0%)
+  R3_CROSS_CHECK KR0008 2026.2Q: item8(LRC-only)=383,743.0억 item20(BS full)=449,388.4억 gap=65,645.4억 (+17.1%)
+  R3_CROSS_CHECK KR0009 2025.1Q: item8(LRC-only)=321,305.0억 item20(BS full)=367,301.5억 gap=45,996.5억 (+14.3%)
+  R3_CROSS_CHECK KR0009 2025.2Q: item8(LRC-only)=315,137.0억 item20(BS full)=363,351.7억 gap=48,214.7억 (+15.3%)
+  R3_CROSS_CHECK KR0009 2025.3Q: item8(LRC-only)=313,854.0억 item20(BS full)=362,908.8억 gap=49,054.8억 (+15.6%)
+  R3_CROSS_CHECK KR0009 2025.4Q: item8(LRC-only)=298,652.0억 item20(BS full)=348,529.2억 gap=49,877.2억 (+16.7%)
+  R3_CROSS_CHECK KR0009 2026.1Q: item8(LRC-only)=279,162.0억 item20(BS full)=328,566.1억 gap=49,404.1억 (+17.7%)
+  R3_CROSS_CHECK KR0009 2026.2Q: item8(LRC-only)=259,000.0억 item20(BS full)=309,308.0억 gap=50,308.0억 (+19.4%)
+  R3_CROSS_CHECK KR0010 2025.2Q: item8(LRC-only)=236,183.0억 item20(BS full)=276,565.0억 gap=40,382.0억 (+17.1%)
+  R3_CROSS_CHECK KR0011 2025.1Q: item8(LRC-only)=279,906.0억 item20(BS full)=337,661.6억 gap=57,755.6억 (+20.6%)
+  R3_CROSS_CHECK KR0011 2025.2Q: item8(LRC-only)=273,308.0억 item20(BS full)=333,935.5억 gap=60,627.5억 (+22.2%)
+  R3_CROSS_CHECK KR0011 2025.3Q: item8(LRC-only)=272,952.0억 item20(BS full)=334,632.5억 gap=61,680.5억 (+22.6%)
+  R3_CROSS_CHECK KR0011 2025.4Q: item8(LRC-only)=254,095.0억 item20(BS full)=315,801.0억 gap=61,706.0억 (+24.3%)
+  R3_CROSS_CHECK KR0011 2026.1Q: item8(LRC-only)=235,367.0억 item20(BS full)=298,606.4억 gap=63,239.4억 (+26.9%)
+  R3_CROSS_CHECK KR0011 2026.2Q: item8(LRC-only)=211,274.0억 item20(BS full)=280,017.3억 gap=68,743.3억 (+32.5%)
+  R3_CROSS_CHECK KR0029 2025.1Q: item8(LRC-only)=-94.0억 item20(BS full)=2,880.6억 gap=2,974.6억 (-3164.5%)
+  R3_CROSS_CHECK KR0029 2025.2Q: item8(LRC-only)=-318.0억 item20(BS full)=2,676.3억 gap=2,994.3억 (-941.6%)
+  R3_CROSS_CHECK KR0029 2025.3Q: item8(LRC-only)=-519.0억 item20(BS full)=2,265.9억 gap=2,784.9억 (-536.6%)
+  R3_CROSS_CHECK KR0029 2025.4Q: item8(LRC-only)=-614.0억 item20(BS full)=2,136.6억 gap=2,750.6억 (-448.0%)
+  ... and 561 more
+
+--- documented exceptions applied (1) ---
+  R3_CROSS_CHECK KR0029 2024.4Q: SKIP (pinned) -- AIG손해보험 2024.4Q: 2-4 표의 순 LRC 가 잔여보장자산 상계로 0 근처(+31.0억, DART 순 LRC 30.23)이고 BS 항목 20 은 부채 기준 LRC 884.60 + LIC 2,033.08 = 2,917.7억이라 10배 규칙에 걸린다. 값은 맞고 구조적이다(원문 재확인 parser-ifrs17, data/disclosure/_meta/ifrs17_owner_followups_runlog_20261012.md §4 ⑧; 단위 오류 아님).
+
+--- R2_CENSUS not yet in scope (재보사 IFRS17 미적재, 0칸) ---
+
+SUMMARY RED=0 YELLOW=611 exceptions=1 not_in_scope=0

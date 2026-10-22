@@ -1,0 +1,126 @@
+state      universe  blank bs_miss compared flagged  comparable(old print)  comparable(corrected) overstated_by
+b8c37fff        374    109       2      263      22                    350                    241           109
+3e53aef8        374    106       3      265      22                    349                    243           106
+5f818b59        374    106       3      265      22                    349                    243           106
+e01f1395        374    108       3      263      23                    348                    240           108
+59e6e459        374    108       3      263      23                    348                    240           108
+acdb2fe9        374    110       3      261      23                    348                    238           110
+5419a817        374    122       3      249      21                    350                    228           122
+afea4342        374    108       8      258      26                    340                    232           108
+WORKTREE        374    108       8      258      26                    340                    232           108
+
+identity universe = blank + bs_missing + compared holds in every state; overstatement == blank count in every state
+
+=== YELLOW rows that left the list between consecutive states ===
+
+b8c37fff -> 3e53aef8: Y 22 -> 22  gone=1 new=1  gone-because-blank=0
+   resolved 교보생명보험       2023.4Q  was resid=   -130345.4  now compared/within-tol or bs-missing
+   NEW-Y    교보생명보험       2023.3Q  resid=   -501234.5
+
+3e53aef8 -> 5f818b59: Y 22 -> 22  gone=0 new=0  gone-because-blank=0
+
+5f818b59 -> e01f1395: Y 22 -> 23  gone=0 new=1  gone-because-blank=0
+   NEW-Y    교보생명보험       2025.2Q  resid=     +8624.2
+
+e01f1395 -> 59e6e459: Y 23 -> 23  gone=0 new=0  gone-because-blank=0
+
+59e6e459 -> acdb2fe9: Y 23 -> 23  gone=1 new=1  gone-because-blank=1
+   BLANKED  NH농협손해보험     2023.4Q  was resid=    +40909.6 (dBS=-54498.5, PL당분기=-95408.1)  now 값_당분기=None
+   NEW-Y    동양생명         2024.4Q  resid=    +35860.7
+
+acdb2fe9 -> 5419a817: Y 23 -> 21  gone=2 new=0  gone-because-blank=2
+   BLANKED  농협생명보험       2024.4Q  was resid=    -31361.1 (dBS=-1181.3, PL당분기=30179.8)  now 값_당분기=None
+   BLANKED  동양생명         2024.4Q  was resid=    +35860.7 (dBS=-127899.0, PL당분기=-163759.7)  now 값_당분기=None
+
+5419a817 -> afea4342: Y 21 -> 26  gone=1 new=6  gone-because-blank=1
+   BLANKED  KB손해보험       2023.4Q  was resid=    +77358.0 (dBS=224159.0, PL당분기=146801.0)  now 값_당분기=None
+   NEW-Y    롯데손해보험       2023.2Q  resid=    -19347.0
+   NEW-Y    롯데손해보험       2023.3Q  resid=    +97533.6
+   NEW-Y    메리츠화재해상보험    2023.3Q  resid=   +290151.8
+   NEW-Y    미래에셋생명보험     2024.3Q  resid=    -13932.2
+   NEW-Y    미래에셋생명보험     2024.4Q  resid=    +34313.4
+   NEW-Y    한화생명         2023.3Q  resid=   -384010.1
+
+afea4342 -> WORKTREE: Y 26 -> 26  gone=0 new=0  gone-because-blank=0
+
+=== cumulative: baseline (b8c37fff) vs worktree ===
+Y 22 -> 26; gone 4; of them now blank: 3
+newly blank cells (populated in b8c37fff, None in worktree): [('KB손해보험', '2023.4Q'), ('NH농협손해보험', '2023.4Q'), ('교보생명보험', '2024.4Q'), ('교보생명보험', '2025.3Q'), ('농협생명보험', '2024.4Q'), ('농협생명보험', '2025.3Q'), ('동양생명', '2023.4Q'), ('동양생명', '2024.4Q'), ('동양생명', '2025.3Q'), ('미래에셋생명보험', '2023.4Q'), ('삼성생명보험', '2025.3Q'), ('신한라이프생명보험', '2025.3Q'), ('에이비엘생명보험', '2025.3Q'), ('케이디비생명보험', '2024.4Q'), ('한화생명', '2024.4Q'), ('한화생명', '2025.3Q'), ('흥국생명보험', '2025.3Q')]
+newly populated cells (None in b8c37fff, populated in worktree): [('KB손해보험', '2023.1Q'), ('KB손해보험', '2023.2Q'), ('KB손해보험', '2023.3Q'), ('교보생명보험', '2023.1Q'), ('교보생명보험', '2023.2Q'), ('교보생명보험', '2023.3Q'), ('농협생명보험', '2023.1Q'), ('농협생명보험', '2023.2Q'), ('농협생명보험', '2023.3Q'), ('롯데손해보험', '2023.1Q'), ('롯데손해보험', '2023.2Q'), ('롯데손해보험', '2023.3Q'), ('메리츠화재해상보험', '2023.1Q'), ('메리츠화재해상보험', '2023.2Q'), ('메리츠화재해상보험', '2023.3Q'), ('한화생명', '2023.1Q'), ('한화생명', '2023.2Q'), ('한화생명', '2023.3Q')]
+
+=== SHADOW (informational, not a gate input): today's blank cells re-derived as YTD difference ===
+blank cells with both BS AOCI quarters and YTD pair available: 17 of 108; would exceed tol: 6
+blank cells by quarter-of-year: {'1Q': 15, '2Q': 15, '3Q': 23, '4Q': 55}
+   shadow-Y 농협생명보험       2024.4Q  dBS=     -1181.3 YTDdiff=     38117.2 resid=    -39298.5
+   shadow-Y 미래에셋생명보험     2023.4Q  dBS=    -21665.7 YTDdiff=     14417.9 resid=    -36083.7
+   shadow-Y 동양생명         2024.4Q  dBS=   -127899.0 YTDdiff=   -160050.0 resid=    +32151.0
+   shadow-Y 한화생명         2025.3Q  dBS=    -77675.0 YTDdiff=    -55384.0 resid=    -22291.0
+   shadow-Y 농협생명보험       2025.3Q  dBS=    -11241.4 YTDdiff=      1877.0 resid=    -13118.4
+   shadow-Y 흥국생명보험       2025.3Q  dBS=    -15389.1 YTDdiff=    -18930.9 resid=     +3541.8
+
+=== worktree blank list by company ===
+   동양생명           6  2023.1Q,2023.2Q,2023.3Q,2023.4Q,2024.4Q,2025.3Q
+   NH농협손해보험       4  2023.1Q,2023.2Q,2023.3Q,2023.4Q
+   미래에셋생명보험       4  2023.1Q,2023.2Q,2023.3Q,2023.4Q
+   삼성생명보험         4  2023.1Q,2023.2Q,2023.3Q,2025.3Q
+   신한라이프생명보험      4  2023.1Q,2023.2Q,2023.3Q,2025.3Q
+   에이비엘생명보험       4  2023.1Q,2023.2Q,2023.3Q,2025.3Q
+   케이디비생명보험       4  2023.1Q,2023.2Q,2023.3Q,2024.4Q
+   흥국생명보험         4  2023.1Q,2023.2Q,2023.3Q,2025.3Q
+   AIG손해보험        3  2023.4Q,2024.4Q,2025.4Q
+   DB생명보험         3  2023.1Q,2023.2Q,2023.3Q
+   IBK연금보험        3  2023.4Q,2024.4Q,2025.4Q
+   KB라이프생명        3  2023.1Q,2023.2Q,2023.3Q
+   교보라이프플래닛생명보험   3  2023.4Q,2024.4Q,2025.4Q
+   라이나생명보험        3  2023.4Q,2024.4Q,2025.4Q
+   메트라이프생명보험      3  2023.4Q,2024.4Q,2025.4Q
+   비엔피파리바카디프생명보험   3  2023.4Q,2024.4Q,2025.4Q
+   신한이지손해보험       3  2023.4Q,2024.4Q,2025.4Q
+   아이엠라이프생명보험     3  2023.4Q,2024.4Q,2025.4Q
+   악사손해보험         3  2023.4Q,2024.4Q,2025.4Q
+   에이아이에이생명보험     3  2023.4Q,2024.4Q,2025.4Q
+   예별손해보험         3  2023.4Q,2024.4Q,2025.4Q
+   처브라이프생명보험      3  2023.4Q,2024.4Q,2025.4Q
+   카카오페이손해보험      3  2023.4Q,2024.4Q,2025.4Q
+   코리안리재보험        3  2023.1Q,2023.2Q,2023.3Q
+   푸본현대생명보험       3  2023.1Q,2023.2Q,2023.3Q
+   하나생명보험         3  2023.4Q,2024.4Q,2025.4Q
+   하나손해보험         3  2023.4Q,2024.4Q,2025.4Q
+   한화손해보험         3  2023.1Q,2023.2Q,2023.3Q
+   현대해상           3  2023.1Q,2023.2Q,2023.3Q
+   흥국화재           3  2023.1Q,2023.2Q,2023.3Q
+   교보생명보험         2  2024.4Q,2025.3Q
+   농협생명보험         2  2024.4Q,2025.3Q
+   한화생명           2  2024.4Q,2025.3Q
+   KB손해보험         1  2023.4Q
+   서울보증보험         1  2024.4Q
+
+worktree bs_missing: [('DB손해보험', '2023.1Q'), ('KB손해보험', '2023.1Q'), ('교보생명보험', '2023.1Q'), ('농협생명보험', '2023.1Q'), ('롯데손해보험', '2023.1Q'), ('메리츠화재해상보험', '2023.1Q'), ('삼성화재해상보험', '2023.1Q'), ('한화생명', '2023.1Q')]
+
+worktree flagged ( 26 ):
+   삼성생명보험       2025.1Q  resid=  -6617862.0
+   삼성생명보험       2024.4Q  resid=  +5391139.0
+   삼성생명보험       2025.4Q  resid=  +5391139.0
+   교보생명보험       2023.3Q  resid=   -501234.5
+   한화생명         2023.3Q  resid=   -384010.1
+   메리츠화재해상보험    2023.3Q  resid=   +290151.8
+   DB손해보험       2023.3Q  resid=   +137809.1
+   KB라이프생명      2023.4Q  resid=   -102032.0
+   롯데손해보험       2023.3Q  resid=    +97533.6
+   에이비엘생명보험     2023.4Q  resid=    -94418.0
+   롯데손해보험       2024.4Q  resid=    +86286.0
+   KB손해보험       2024.4Q  resid=    +84185.0
+   KB라이프생명      2024.4Q  resid=    -67917.0
+   흥국생명보험       2025.4Q  resid=    -59067.1
+   NH농협손해보험     2024.4Q  resid=    +53275.2
+   NH농협손해보험     2024.1Q  resid=    -46558.8
+   흥국화재         2024.3Q  resid=    +45601.0
+   삼성화재해상보험     2025.1Q  resid=    -40204.6
+   미래에셋생명보험     2024.4Q  resid=    +34313.4
+   농협생명보험       2025.4Q  resid=    -31550.8
+   에이비엘생명보험     2024.4Q  resid=    -26863.4
+   DB손해보험       2023.2Q  resid=    -20670.1
+   롯데손해보험       2023.2Q  resid=    -19347.0
+   미래에셋생명보험     2024.3Q  resid=    -13932.2
+   에이비엘생명보험     2026.2Q  resid=    -13196.0
+   교보생명보험       2025.2Q  resid=     +8624.2

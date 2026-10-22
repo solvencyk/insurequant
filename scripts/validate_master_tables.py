@@ -161,9 +161,11 @@ CSM_AMORT_PL_LEGS = ("원수CSM상각", "수재CSM상각")
 # `scripts/validate_csm_continuity.py` 의 WITHIN_FY_OPENING_DRIFT. 정본은 여기 하나다.
 WFY_EXCEPTIONS = {
     ("교보생명보험", "2023"), ("교보생명보험", "2024"), ("KB라이프생명", "2024"),
-    ("한화생명", "2023"), ("현대해상", "2023"), ("케이디비생명보험", "2023"),
-    ("메리츠화재해상보험", "2023"), ("에이비엘생명보험", "2023"),
+    ("현대해상", "2023"), ("케이디비생명보험", "2023"),
+    ("에이비엘생명보험", "2023"),
 }
+# 2026-10-23: 한화생명 FY2023 · 메리츠화재해상보험 FY2023 을 뺐다(최신 비교열 적재로 FY내 기초가 한 판으로 통일돼
+# 두 게이트 모두 면제 없이도 안 걸린다 -- data/_derived/remaining_20261022/e22_gate_cleanup/probe_wfy_exceptions*.txt).
 
 
 def csm_amort_tol(amort_eok: float) -> float:
@@ -1839,10 +1841,16 @@ OCI_AOCI_TOL_REL = 0.20
 OCI_AOCI_TOL_ABS_MN = 2000.0
 
 
-def _check_pl_oci_vs_bs_aoci() -> list:
+def _check_pl_oci_vs_bs_aoci(counts_out: dict | None = None) -> list:
     """PL_OCI_VS_BS_AOCI: PL 항목25 값_당분기 vs BS 항목4 QoQ delta.  YELLOW만 — exit code
     미반영.  Prints its own section, writes data/_derived/pl_oci_vs_bs_aoci_warn.json,
-    returns the flagged rows.  New 2026-08-28 (ticket inbox/parser/20260828T0113Z)."""
+    returns the flagged rows.  New 2026-08-28 (ticket inbox/parser/20260828T0113Z).
+
+    2026-10-23: 칸을 세 갈래로 센다 -- 비교한 칸 / 단일분기(값_당분기) 공란이라 비교 못 한 칸(blank) /
+    BS 결측으로 비교 못 한 칸(bs_skip).  종전에는 공란 칸이 「비교가능 N건은 tol 이내」에 섞여 들어갔다
+    (len(pl_dangi) - n_skip - len(rows) 에 None 칸이 포함) -- 비교 안 한 칸이 통과로 집계되는 SKIP-on-missing 이었다.
+    `counts_out` 이 주어지면 {"compared","blank","bs_skip","flagged"} 를 채운다(SUMMARY 가 읽는다).
+    어느 칸이 flag 되는지는 바뀌지 않는다(판정식 불변)."""
     bs_path = ROOT / BS_PATH
     if not bs_path.exists():
         print()
@@ -1854,8 +1862,10 @@ def _check_pl_oci_vs_bs_aoci() -> list:
     pl_dangi = load_pl_dangi(PL_PATH, 25)
     rows = []
     n_skip = 0
+    n_blank = 0
     for (co, q), dangi in sorted(pl_dangi.items()):
         if dangi is None:
+            n_blank += 1
             continue
         cur = bs.get((co, q), {}).get("기타포괄손익누계액")
         pq = prev_quarter(q)
@@ -1869,11 +1879,14 @@ def _check_pl_oci_vs_bs_aoci() -> list:
         if abs(resid) > tol:
             rows.append((co, q, delta_bs, dangi, resid))
     rows.sort(key=lambda r: -abs(r[4]))
+    n_compared = len(pl_dangi) - n_blank - n_skip
+    if counts_out is not None:
+        counts_out.update(compared=n_compared, blank=n_blank, bs_skip=n_skip, flagged=len(rows))
     print()
     print("=" * 78)
     print(f"6. PL_OCI_VS_BS_AOCI (PL 항목25 당분기 vs BS 항목4 QoQ delta, 백만원, YELLOW)  "
-          f"flagged={len(rows)} (비교가능 {len(pl_dangi) - n_skip - len(rows)}건은 tol 이내, "
-          f"BS 결측 skip={n_skip})")
+          f"flagged={len(rows)} (비교한 {n_compared}건 중 tol 이내 {n_compared - len(rows)}건 | "
+          f"비교 못 함: 단일분기 공란 {n_blank}건 + BS 결측 {n_skip}건)")
     print(f"   tol = max({OCI_AOCI_TOL_REL*100:.0f}%·|ΔBS|, {OCI_AOCI_TOL_ABS_MN:.0f}백만) — "
           f"재분류조정·자본거래·법인세, 특히 4Q 연차재서술로 구조적 잔차 존재(owner 지시: RED 아님)")
     print("=" * 78)
@@ -1959,7 +1972,8 @@ def main() -> int:
 
     sens_red, sens_yellow, sens_dir = _check_sensitivity()
 
-    oci_aoci_rows = _check_pl_oci_vs_bs_aoci()
+    oci_counts: dict = {}
+    oci_aoci_rows = _check_pl_oci_vs_bs_aoci(counts_out=oci_counts)
 
     pb_base, pb_new, pb_stale = _report_pl_baseline(pb_fail)
 
@@ -1989,7 +2003,8 @@ def main() -> int:
           f"lob_na:{len(lob_na)}NA/{len(lob_stale) + len(lob_dangle)}BAD | "
           f"csm_amort_identity:{cc_pass}P/{cc_pinned}PIN/{len(cc_fail)}F/{cc_skip}S | "
           f"qoq_warn:{len(qoq_rows)}Y | sens:{len(sens_red)}R/{len(sens_yellow)}Y/{len(sens_dir)}dir | "
-          f"oci_vs_bs_aoci:{len(oci_aoci_rows)}Y")
+          f"oci_vs_bs_aoci:{len(oci_aoci_rows)}Y/{oci_counts.get('blank', 0)}blank/"
+          f"{oci_counts.get('bs_skip', 0)}bsskip")
     print("#" * 78)
     # QOQ/sens_yellow는 YELLOW(anomaly)라 exit code에 반영 안 함. wfy/zamort/zleg/impossible0/sens_red은 데이터 오류라 반영.
     # lob_stale/lob_dangle = 게이트 자신의 등재부가 마스터와 어긋난 것 → RED(인쇄되는 문장이 거짓).
