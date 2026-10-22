@@ -1,0 +1,39 @@
+=== KR0005
+('int', 'NoneType', None, None, '백만원'): n=36 e.g. [('2023.3Q', 17), ('2023.3Q', 20), ('2023.3Q', 22), ('2023.3Q', 23)]
+('list', 'NoneType', None, None, '백만원'): n=9 e.g. [('2023.3Q', 18), ('2023.3Q', 32), ('2023.4Q', 18), ('2023.4Q', 19)]
+MULTI {"quarter": "2023.3Q", "item": 18, "new": 196799.0, "xml_line": [4012, 4058, 4081, 4357, 4380], "xml_lines": null, "derivation": null}
+SINGLE {"quarter": "2023.3Q", "item": 17, "new": -63150.0, "xml_line": 4012, "xml_lines": null, "derivation": null}
+=== KR0032
+('int', 'list', 'direct print', '원', '백만원'): n=28 e.g. [('2023.4Q', 17), ('2023.4Q', 20), ('2023.4Q', 22), ('2023.4Q', 23)]
+('int', 'list', 'sum of printed lines (signs in xml_lines)', '원', '백만원'): n=4 e.g. [('2023.4Q', 19), ('2024.1Q', 19), ('2024.2Q', 19), ('2024.3Q', 19)]
+MULTI {"quarter": "2023.4Q", "item": 19, "new": -283687.064548, "xml_line": 6729, "xml_lines": [{"label": "1)보험금융수익", "line": 6729, "printed": "57,946,841,857", "sign": 1}, {"label": "2)재보험금융수익", "line": 6748, "printed": "13,032,836,054", "sign": 1}, {"label": "1)보험금융비용", "line": 6995, "printed": "349,156,315,044", "sign": -1}, {"label": "2)재보험금융비용", "line": 7014, "printed": "5,510,427,415", "sign": -1}], "derivation": "sum of printed lines (signs in xml_lines)"}
+SINGLE {"quarter": "2023.4Q", "item": 17, "new": 56554.861367, "xml_line": 6691, "xml_lines": [{"label": "Ⅱ.투자손익", "line": 6691, "printed": "56,554,861,367", "sign": 1}], "derivation": "direct print"}
+=== KR0070
+('int', 'list', 'direct print', '원', '백만원'): n=21 e.g. [('2024.1Q', 17), ('2024.1Q', 20), ('2024.1Q', 22), ('2024.1Q', 23)]
+('int', 'list', 'sum of printed lines (signs in xml_lines)', '원', '백만원'): n=3 e.g. [('2024.1Q', 19), ('2024.2Q', 19), ('2024.3Q', 19)]
+MULTI {"quarter": "2024.1Q", "item": 19, "new": -203103.24191, "xml_line": 25846, "xml_lines": [{"label": "보험금융수익", "line": 25846, "printed": "0", "sign": 1}, {"label": "재보험금융수익", "line": 25869, "printed": "0", "sign": 1}, {"label": "보험금융비용", "line": 26145, "printed": "202,262,704,759", "sign": -1}, {"label": "재보험금융비용", "line": 26168, "printed": "840,537,151", "sign": -1}], "derivation": "sum of printed lines (signs in xml_lines)"}
+SINGLE {"quarter": "2024.1Q", "item": 17, "new": -2376.553043, "xml_line": 25800, "xml_lines": [{"label": "투자손익", "line": 25800, "printed": "(2,376,553,043)", "sign": 1}], "derivation": "direct print"}
+=== KR0082
+('int', 'list', 'direct print', '원', '백만원'): n=3 e.g. [('2023.3Q', 1), ('2023.3Q', 16), ('2023.3Q', 17)]
+('int', 'list', 'derived item 18 = item 17 - item 19 (production definition; contributions in xml_lines)', '원', '백만원'): n=1 e.g. [('2023.3Q', 18)]
+MULTI {"quarter": "2023.3Q", "item": 18, "new": 263463.285896, "xml_line": 25542, "xml_lines": [{"label": "투자손익", "line": 25542, "printed": "62,606,894,604", "contribution_mn": 62606.894604}, {"label": "보험금융수익", "line": 25588, "printed": "61,175,443,868", "contribution_mn": -61175.443868}, {"label": "재보험금융수익", "line": 25611, "printed": "1,061,308,369", "contribution_mn": -1061.308369}, {"label": "보험금융비용", "line": 25841, "printed": "260,666,025,466", "contribution_mn": 260666.025466}, {"label": "재보험금융비용", "line": 25864, "printed": "2,427,118,063", "contribution_mn": 2427.118063}], "derivation": "derived item 18 = item 17 - item 19 (production definition; contributions in xml_lines)"}
+SINGLE {"quarter": "2023.3Q", "item": 1, "new": 85927.536898, "xml_line": 25358, "xml_lines": [{"label": "보험손익", "line": 25358, "printed": "85,927,536,898", "contribution_mn": 85927.536898}], "derivation": "direct print"}
+=== KR0083
+('int', 'list', 'direct print', '원', '백만원'): n=14 e.g. [('2024.1Q', 17), ('2024.1Q', 20), ('2024.1Q', 22), ('2024.1Q', 23)]
+('int', 'list', 'sum of printed lines (signs in xml_lines)', '원', '백만원'): n=2 e.g. [('2024.1Q', 19), ('2024.2Q', 19)]
+MULTI {"quarter": "2024.1Q", "item": 19, "new": -76099.867346, "xml_line": 24422, "xml_lines": [{"label": "보험금융비용", "line": 24422, "printed": "76,096,059,144", "sign": -1}, {"label": "재보험금융비용", "line": 24445, "printed": "3,808,202", "sign": -1}], "derivation": "sum of printed lines (signs in xml_lines)"}
+SINGLE {"quarter": "2024.1Q", "item": 17, "new": 40401.054964, "xml_line": 24100, "xml_lines": [{"label": "투자손익", "line": 24100, "printed": "40,401,054,964", "sign": 1}], "derivation": "direct print"}
+=== KR0087
+('int', 'list', 'direct print', '원', '백만원'): n=22 e.g. [('2023.4Q', 17), ('2023.4Q', 20), ('2023.4Q', 22), ('2023.4Q', 23)]
+('int', 'list', 'sum of printed lines (signs in xml_lines)', '원', '백만원'): n=3 e.g. [('2023.4Q', 19), ('2024.1Q', 19), ('2024.2Q', 19)]
+('int', 'list', 'direct print', '백만원', '백만원'): n=7 e.g. [('2024.3Q', 17), ('2024.3Q', 20), ('2024.3Q', 22), ('2024.3Q', 23)]
+('int', 'list', 'sum of printed lines (signs in xml_lines)', '백만원', '백만원'): n=1 e.g. [('2024.3Q', 19)]
+MULTI {"quarter": "2023.4Q", "item": 19, "new": -1104952.226382, "xml_line": 38231, "xml_lines": [{"label": "보험금융수익", "line": 38231, "printed": "647,468,881", "sign": 1}, {"label": "재보험금융수익", "line": 38250, "printed": "315,441,843", "sign": 1}, {"label": "보험금융비용", "line": 38489, "printed": "1,105,915,137,106", "sign": -1}], "derivation": "sum of printed lines (signs in xml_lines)"}
+SINGLE {"quarter": "2023.4Q", "item": 17, "new": 84954.043343, "xml_line": 38193, "xml_lines": [{"label": "II . 투자손익", "line": 38193, "printed": "84,954,043,343", "sign": 1}], "derivation": "direct print"}
+=== KR0104
+('int', 'list', 'direct print', '원', '백만원'): n=15 e.g. [('2023.3Q', 1), ('2023.3Q', 16), ('2023.3Q', 17), ('2023.3Q', 20)]
+('int', 'list', 'derived item 18 = item 17 - item 19 (production definition; contributions in xml_lines)', '원', '백만원'): n=1 e.g. [('2023.3Q', 18)]
+('int', 'list', 'derived item 19 = -(보험금융비용 + 재보험금융비용) (no 수익 rows in the KR0104 statement)', '원', '백만원'): n=1 e.g. [('2023.3Q', 19)]
+('int', 'list', 'derived item 32 = item 25 - (26+27+28+29+30) (production definition)', '원', '백만원'): n=1 e.g. [('2023.3Q', 32)]
+MULTI {"quarter": "2023.3Q", "item": 18, "new": 1135383.508318, "xml_line": 5816, "xml_lines": [{"label": "투자손익", "line": 5816, "printed": "18,305,755,710", "contribution_mn": 18305.75571}, {"label": "보험금융비용", "line": 6138, "printed": "1,115,113,668,944", "contribution_mn": 1115113.668944}, {"label": "재보험금융비용", "line": 6161, "printed": "1,964,083,664", "contribution_mn": 1964.083664}], "derivation": "derived item 18 = item 17 - item 19 (production definition; contributions in xml_lines)"}
+SINGLE {"quarter": "2023.3Q", "item": 1, "new": 276593.79133, "xml_line": 5632, "xml_lines": [{"label": "보험손익", "line": 5632, "printed": "276,593,791,330", "contribution_mn": 276593.79133}], "derivation": "direct print"}

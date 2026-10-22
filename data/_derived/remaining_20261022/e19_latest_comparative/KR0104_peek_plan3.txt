@@ -1,0 +1,1328 @@
+top keys: code,company,generated,source_tool,master_unit,statement,cause,scope_decision,buckets,cells,seam_cells,neighbour_effects,auto_follow_cells,verification,apply_contract
+--- code
+"KR0104"
+--- company
+"농협생명"
+--- generated
+"2026-10-22"
+--- source_tool
+"data/_derived/remaining_20261022/e19_latest_comparative/KR0104_plan.py"
+--- master_unit
+"백만원"
+--- statement
+"separate (OFS) 4-2. 포괄손익계산서 (section 4. 재무제표), prior-year cumulative column of the next-year Q3 report"
+--- cause
+"전기오류 정정: K-IFRS 제1109호 최초적용(2023.1.1) 시 일부 금융상품(당기손익-공정가치측정유가증권, 상각후원가측정유가증권)의 SPPI 판단 오류로 인한 분류 오류, FY2024 Q1-Q3 보고서가 비교표시된 2023 분기 손익계산서를 재작성. 순이익 증가(+45,047 백만원, 2023 9M), OCI 불변"
+--- scope_decision
+{
+ "recommended": "B_all_differing_items",
+ "n_cells": 18,
+ "classes": {
+  "RESTATED": [
+   17,
+   18,
+   20,
+   22,
+   23,
+   24,
+   31
+  ],
+  "PRINT_ROUNDING": [
+   1,
+   16,
+   19,
+   21,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   32
+  ]
+ },
+ "census_list": [
+  17,
+  18,
+  20,
+  22,
+  23,
+  24,
+  28,
+  31
+ ],
+ "why": "The ticket / census list is 17,18,20,22,23,24,28,31. Item 28 moves only by the original print's footing plug (-1.093 mn, the restatement note shows no OCI change), and adopting 28 alone leaves 25 - sum(parts) = +1.093 mn. The rounded original 백만원 prints of the other items differ from the 원-precise later print by < 1.1 mn; refreshing the whole bucket to one column keeps every identity exact to the won (owner rule: rounding differences take the precise side). Alternative A_census_8 (8 cells) and A_restated_only (7 cells) are fully specified in apply_contract.alternatives."
+}
+--- seam_cells
+[
+ {
+  "quarter": "2023.3Q",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "old_live": null,
+  "old_fresh_build": 12114.0,
+  "derived_after_adoption": 12113.84606,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": 33914.0,
+   "ytd_after": 33913.84606,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": 21800.0,
+   "ytd_after": 21800.0,
+   "adopted": false
+  },
+  "class": "seam",
+  "proposed": "set_dangi",
+  "proposed_value": 12097.07857,
+  "three_month_print": {
+   "value": 12097.07857,
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml",
+   "xml_rcept": "20241114000851",
+   "xml_period_column": "prior-year 3-month column (2023.7.1-9.30) of the separate/OFS 4-2 statement, position 3 of 4",
+   "xml_lines": [
+    {
+     "label": "기타사업비용",
+     "line": 5789,
+     "printed": "12,097,078,570",
+     "contribution_mn": 12097.07857
+    }
+   ],
+   "derivation": "direct print"
+  },
+  "cross_check_9M_minus_6M_both_new_vintage": {
+   "later_9M_prior_cum": 33913.84606,
+   "fy2024_q2_report_6M_prior_cum": 21816.76749,
+   "difference": 12097.07857,
+   "diff_vs_3m_print": 0.0,
+   "ok": true,
+   "fy2024_q2_line": 5932,
+   "fy2024_q2_file": "data/dart/FY2024_Q2/raw/KR0104_농협생명보험/20240814002115.xml"
+  },
+  "old_derived_mixed_vintage": 12113.84606,
+  "set_dangi_cell": [
+   "KR0104",
+   "2023.3Q",
+   16,
+   12097.07857,
+   "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml:L5789 [기타사업비용] 12,097,078,570원"
+  ],
+  "original_3m_print": 12097.0,
+  "reason": "9M adopted (later vintage), 6M (2023.2Q) stays at the old vintage (경영공시 summary value in 억, outside the approved list) -> build_pl would subtract two vintages (it would also resurrect a value that is blank in the live master); the FY2024 Q3 report prints the restated 3-month column -> single quarter = printed 3-month value"
+ },
+ {
+  "quarter": "2023.3Q",
+  "item": 22,
+  "item_name": "세전이익",
+  "old_live": null,
+  "old_fresh_build": -7472.0,
+  "derived_after_adoption": 51107.199304,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": 170828.0,
+   "ytd_after": 229407.199304,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": 178300.0,
+   "ytd_after": 178300.0,
+   "adopted": false
+  },
+  "class": "seam",
+  "proposed": "set_dangi",
+  "proposed_value": 45521.420788,
+  "three_month_print": {
+   "value": 45521.420788,
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml",
+   "xml_rcept": "20241114000851",
+   "xml_period_column": "prior-year 3-month column (2023.7.1-9.30) of the separate/OFS 4-2 statement, position 3 of 4",
+   "xml_lines": [
+    {
+     "label": "법인세차감전순이익",
+     "line": 6479,
+     "printed": "45,521,420,788",
+     "contribution_mn": 45521.420788
+    }
+   ],
+   "derivation": "direct print"
+  },
+  "cross_check_9M_minus_6M_both_new_vintage": {
+   "later_9M_prior_cum": 229407.199304,
+   "fy2024_q2_report_6M_prior_cum": 183885.778516,
+   "difference": 45521.420788,
+   "diff_vs_3m_print": 0.0,
+   "ok": true,
+   "fy2024_q2_line": 6599,
+   "fy2024_q2_file": "data/dart/FY2024_Q2/raw/KR0104_농협생명보험/20240814002115.xml"
+  },
+  "old_derived_mixed_vintage": 51107.199304,
+  "set_dangi_cell": [
+   "KR0104",
+   "2023.3Q",
+   22,
+   45521.420788,
+   "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml:L6479 [법인세차감전순이익] 45,521,420,788원"
+  ],
+  "original_3m_print": -7499.0,
+  "reason": "9M adopted (later vintage), 6M (2023.2Q) stays at the old vintage (경영공시 summary value in 억, outside the approved list) -> build_pl would subtract two vintages (it would also resurrect a value that is blank in the live master); the FY2024 Q3 report prints the restated 3-month column -> single quarter = printed 3-month value"
+ },
+ {
+  "quarter": "2023.3Q",
+  "item": 23,
+  "item_name": "법인세",
+  "old_live": null,
+  "old_fresh_build": -1748.0,
+  "derived_after_adoption": 11783.465239,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": 35052.0,
+   "ytd_after": 48583.465239,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": 36800.0,
+   "ytd_after": 36800.0,
+   "adopted": false
+  },
+  "class": "seam",
+  "proposed": "set_dangi",
+  "proposed_value": 10463.421336,
+  "three_month_print": {
+   "value": 10463.421336,
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml",
+   "xml_rcept": "20241114000851",
+   "xml_period_column": "prior-year 3-month column (2023.7.1-9.30) of the separate/OFS 4-2 statement, position 3 of 4",
+   "xml_lines": [
+    {
+     "label": "법인세비용(수익)",
+     "line": 6502,
+     "printed": "10,463,421,336",
+     "contribution_mn": 10463.421336
+    }
+   ],
+   "derivation": "direct print"
+  },
+  "cross_check_9M_minus_6M_both_new_vintage": {
+   "later_9M_prior_cum": 48583.465239,
+   "fy2024_q2_report_6M_prior_cum": 38120.043903,
+   "difference": 10463.421336,
+   "diff_vs_3m_print": 0.0,
+   "ok": true,
+   "fy2024_q2_line": 6622,
+   "fy2024_q2_file": "data/dart/FY2024_Q2/raw/KR0104_농협생명보험/20240814002115.xml"
+  },
+  "old_derived_mixed_vintage": 11783.465239,
+  "set_dangi_cell": [
+   "KR0104",
+   "2023.3Q",
+   23,
+   10463.421336,
+   "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml:L6502 [법인세비용(수익)] 10,463,421,336원"
+  ],
+  "original_3m_print": -1784.0,
+  "reason": "9M adopted (later vintage), 6M (2023.2Q) stays at the old vintage (경영공시 summary value in 억, outside the approved list) -> build_pl would subtract two vintages (it would also resurrect a value that is blank in the live master); the FY2024 Q3 report prints the restated 3-month column -> single quarter = printed 3-month value"
+ },
+ {
+  "quarter": "2023.3Q",
+  "item": 24,
+  "item_name": "당기순이익",
+  "old_live": null,
+  "old_fresh_build": -5724.0,
+  "derived_after_adoption": 39323.734065,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": 135776.0,
+   "ytd_after": 180823.734065,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": 141500.0,
+   "ytd_after": 141500.0,
+   "adopted": false
+  },
+  "class": "seam",
+  "proposed": "set_dangi",
+  "proposed_value": 35057.999452,
+  "three_month_print": {
+   "value": 35057.999452,
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml",
+   "xml_rcept": "20241114000851",
+   "xml_period_column": "prior-year 3-month column (2023.7.1-9.30) of the separate/OFS 4-2 statement, position 3 of 4",
+   "xml_lines": [
+    {
+     "label": "분기순이익",
+     "line": 6525,
+     "printed": "35,057,999,452",
+     "contribution_mn": 35057.999452
+    }
+   ],
+   "derivation": "direct print"
+  },
+  "cross_check_9M_minus_6M_both_new_vintage": {
+   "later_9M_prior_cum": 180823.734065,
+   "fy2024_q2_report_6M_prior_cum": 145765.734613,
+   "difference": 35057.999452,
+   "diff_vs_3m_print": -0.0,
+   "ok": true,
+   "fy2024_q2_line": 6645,
+   "fy2024_q2_file": "data/dart/FY2024_Q2/raw/KR0104_농협생명보험/20240814002115.xml"
+  },
+  "old_derived_mixed_vintage": 39323.734065,
+  "set_dangi_cell": [
+   "KR0104",
+   "2023.3Q",
+   24,
+   35057.999452,
+   "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/2024111400085
+--- neighbour_effects
+[
+ {
+  "quarter": "2023.1Q",
+  "item": 1,
+  "item_name": "보험손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": null,
+  "class": "q1_equals_ytd_unchanged",
+  "why": "single quarter = YTD of Q1 (not adopted)"
+ },
+ {
+  "quarter": "2023.2Q",
+  "item": 1,
+  "item_name": "보험손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "unchanged_both_old",
+  "why": "both YTD operands stay at the old vintage, nothing changes"
+ },
+ {
+  "quarter": "2023.3Q",
+  "item": 1,
+  "item_name": "보험손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": 276594.0,
+   "ytd_after": 276593.79133,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "blank_before_and_after",
+  "why": "6M (2023.2Q) cumulative is empty in the master, so build_pl derives no single quarter (live is blank as well); nothing is mixed, the cell stays blank"
+ },
+ {
+  "quarter": "2023.1Q",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "old_live": 9200.0,
+  "old_fresh_build": 9200.0,
+  "derived_after_adoption": 9200.0,
+  "operand_cur": {
+   "q": "2023.1Q",
+   "ytd_before": 9200.0,
+   "ytd_after": 9200.0,
+   "adopted": false
+  },
+  "operand_prev": null,
+  "class": "q1_equals_ytd_unchanged",
+  "why": "single quarter = YTD of Q1 (not adopted)"
+ },
+ {
+  "quarter": "2023.2Q",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "old_live": 12600.0,
+  "old_fresh_build": 12600.0,
+  "derived_after_adoption": 12600.0,
+  "operand_cur": {
+   "q": "2023.2Q",
+   "ytd_before": 21800.0,
+   "ytd_after": 21800.0,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.1Q",
+   "ytd_before": 9200.0,
+   "ytd_after": 9200.0,
+   "adopted": false
+  },
+  "class": "unchanged_both_old",
+  "why": "both YTD operands stay at the old vintage, nothing changes"
+ },
+ {
+  "quarter": "2023.1Q",
+  "item": 17,
+  "item_name": "투자손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": null,
+  "class": "q1_equals_ytd_unchanged",
+  "why": "single quarter = YTD of Q1 (not adopted)"
+ },
+ {
+  "quarter": "2023.2Q",
+  "item": 17,
+  "item_name": "투자손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "unchanged_both_old",
+  "why": "both YTD operands stay at the old vintage, nothing changes"
+ },
+ {
+  "quarter": "2023.3Q",
+  "item": 17,
+  "item_name": "투자손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": -40273.0,
+   "ytd_after": 18305.75571,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "blank_before_and_after",
+  "why": "6M (2023.2Q) cumulative is empty in the master, so build_pl derives no single quarter (live is blank as well); nothing is mixed, the cell stays blank"
+ },
+ {
+  "quarter": "2023.1Q",
+  "item": 18,
+  "item_name": "투자이익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": null,
+  "class": "q1_equals_ytd_unchanged",
+  "why": "single quarter = YTD of Q1 (not adopted)"
+ },
+ {
+  "quarter": "2023.2Q",
+  "item": 18,
+  "item_name": "투자이익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "unchanged_both_old",
+  "why": "both YTD operands stay at the old vintage, nothing changes"
+ },
+ {
+  "quarter": "2023.3Q",
+  "item": 18,
+  "item_name": "투자이익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": 1076805.0,
+   "ytd_after": 1135383.508318,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "blank_before_and_after",
+  "why": "6M (2023.2Q) cumulative is empty in the master, so build_pl derives no single quarter (live is blank as well); nothing is mixed, the cell stays blank"
+ },
+ {
+  "quarter": "2023.1Q",
+  "item": 19,
+  "item_name": "보험금융손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": null,
+  "class": "q1_equals_ytd_unchanged",
+  "why": "single quarter = YTD of Q1 (not adopted)"
+ },
+ {
+  "quarter": "2023.2Q",
+  "item": 19,
+  "item_name": "보험금융손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "unchanged_both_old",
+  "why": "both YTD operands stay at the old vintage, nothing changes"
+ },
+ {
+  "quarter": "2023.3Q",
+  "item": 19,
+  "item_name": "보험금융손익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.3Q",
+   "ytd_before": -1117078.0,
+   "ytd_after": -1117077.752608,
+   "adopted": true
+  },
+  "operand_prev": {
+   "q": "2023.2Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "class": "blank_before_and_after",
+  "why": "6M (2023.2Q) cumulative is empty in the master, so build_pl derives no single quarter (live is blank as well); nothing is mixed, the cell stays blank"
+ },
+ {
+  "quarter": "2023.1Q",
+  "item": 20,
+  "item_name": "영업이익",
+  "old_live": null,
+  "old_fresh_build": null,
+  "derived_after_adoption": null,
+  "operand_cur": {
+   "q": "2023.1Q",
+   "ytd_before": null,
+   "ytd_after": null,
+   "adopted": false
+  },
+  "operand_prev": null,
+  "class": "q1_equals_ytd_unchanged",
+  "why": "single quarter = YTD of Q1 (not adopted)"
+ },
+ {
+  "quarter": "2023.2Q",
+  "item": 20,
+  "item_name": "영업이익",
+  "old_live": null,
+
+--- auto_follow_cells
+[
+ {
+  "quarter": "2023.4Q",
+  "item": 1,
+  "item_name": "보험손익",
+  "old_live": 54447.488735,
+  "old_fresh_build": 54447.488735,
+  "derived_after_adoption": 54447.697405,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": 331041.488735,
+   "ytd_after": 331041.488735,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.3Q",
+   "ytd_before": 276594.0,
+   "ytd_after": 276593.79133,
+   "adopted": true
+  },
+  "class": "consistent_after_adoption",
+  "why": "annual 2023 (master = FY2023 annual print; equals the FY2024 annual prior print to 0.000000 mn) is already at the later vintage; 9M adopted now at the later vintage -> annual - 9M has both operands at the same vintage (before adoption it mixed the later-vintage annual with the original 9M)",
+  "annual_checks": {
+   "master_annual": 331041.488735,
+   "fy2023_annual_print": 331041.488735,
+   "fy2024_annual_prior_print": 331041.488735,
+   "xml_line_orig": 35375,
+   "xml_line_later": 6198
+  }
+ },
+ {
+  "quarter": "2023.4Q",
+  "item": 16,
+  "item_name": "기타사업비용",
+  "old_live": 15171.784632,
+  "old_fresh_build": 15171.784632,
+  "derived_after_adoption": 15171.938572,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": 49085.784632,
+   "ytd_after": 49085.784632,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.3Q",
+   "ytd_before": 33914.0,
+   "ytd_after": 33913.84606,
+   "adopted": true
+  },
+  "class": "consistent_after_adoption",
+  "why": "annual 2023 (master = FY2023 annual print; equals the FY2024 annual prior print to 0.000000 mn) is already at the later vintage; 9M adopted now at the later vintage -> annual - 9M has both operands at the same vintage (before adoption it mixed the later-vintage annual with the original 9M)",
+  "annual_checks": {
+   "master_annual": 49085.784632,
+   "fy2023_annual_print": 49085.784632,
+   "fy2024_annual_prior_print": 49085.784632,
+   "xml_line_orig": 35565,
+   "xml_line_later": 6331
+  }
+ },
+ {
+  "quarter": "2023.4Q",
+  "item": 17,
+  "item_name": "투자손익",
+  "old_live": 17866.657834,
+  "old_fresh_build": 17866.657834,
+  "derived_after_adoption": -40712.097876,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": -22406.342166,
+   "ytd_after": -22406.342166,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.3Q",
+   "ytd_before": -40273.0,
+   "ytd_after": 18305.75571,
+   "adopted": true
+  },
+  "class": "consistent_after_adoption",
+  "why": "annual 2023 (master = FY2023 annual print; equals the FY2024 annual prior print to 0.000390 mn) is already at the later vintage; 9M adopted now at the later vintage -> annual - 9M has both operands at the same vintage (before adoption it mixed the later-vintage annual with the original 9M)",
+  "annual_checks": {
+   "master_annual": -22406.342166,
+   "fy2023_annual_print": -22406.342166,
+   "fy2024_annual_prior_print": -22406.342556,
+   "xml_line_orig": 35660,
+   "xml_line_later": 6350
+  }
+ },
+ {
+  "quarter": "2023.4Q",
+  "item": 18,
+  "item_name": "투자이익",
+  "old_live": 419082.927994,
+  "old_fresh_build": 419082.927994,
+  "derived_after_adoption": 360504.419676,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": 1495887.927994,
+   "ytd_after": 1495887.927994,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.3Q",
+   "ytd_before": 1076805.0,
+   "ytd_after": 1135383.508318,
+   "adopted": true
+  },
+  "class": "consistent_after_adoption",
+  "why": "annual 2023 (master = FY2023 annual print; equals the FY2024 annual prior print to 0.000390 mn) is already at the later vintage; 9M adopted now at the later vintage -> annual - 9M has both operands at the same vintage (before adoption it mixed the later-vintage annual with the original 9M)",
+  "annual_checks": {
+   "master_annual": 1495887.927994,
+   "fy2023_annual_print": 1495887.927994,
+   "fy2024_annual_prior_print": 1495887.927604,
+   "xml_line_orig": 35660,
+   "xml_line_later": 6350
+  }
+ },
+ {
+  "quarter": "2023.4Q",
+  "item": 19,
+  "item_name": "보험금융손익",
+  "old_live": -401216.27016,
+  "old_fresh_build": -401216.27016,
+  "derived_after_adoption": -401216.517552,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": -1518294.27016,
+   "ytd_after": -1518294.27016,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.3Q",
+   "ytd_before": -1117078.0,
+   "ytd_after": -1117077.752608,
+   "adopted": true
+  },
+  "class": "consistent_after_adoption",
+  "why": "annual 2023 (master = FY2023 annual print; equals the FY2024 annual prior print to 0.000000 mn) is already at the later vintage; 9M adopted now at the later vintage -> annual - 9M has both operands at the same vintage (before adoption it mixed the later-vintage annual with the original 9M)",
+  "annual_checks": {
+   "master_annual": -1518294.27016,
+   "fy2023_annual_print": -1518294.27016,
+   "fy2024_annual_prior_print": -1518294.27016,
+   "xml_line_orig": 35945,
+   "xml_line_later": 6654
+  }
+ },
+ {
+  "quarter": "2023.4Q",
+  "item": 20,
+  "item_name": "영업이익",
+  "old_live": 72314.146569,
+  "old_fresh_build": 72314.146569,
+  "derived_after_adoption": 13735.599529,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": 308635.146569,
+   "ytd_after": 308635.146569,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.3Q",
+   "ytd_before": 236321.0,
+   "ytd_after": 294899.54704,
+   "adopted": true
+  },
+  "class": "consistent_after_adoption",
+  "why": "annual 2023 (master = FY2023 annual print; equals the FY2024 annual prior print to 0.000390 mn) is already at the later vintage; 9M adopted now at the later vintage -> annual - 9M has both operands at the same vintage (before adoption it mixed the later-vintage annual with the original 9M)",
+  "annual_checks": {
+   "master_annual": 308635.146569,
+   "fy2023_annual_print": 308635.146569,
+   "fy2024_annual_prior_print": 308635.146179,
+   "xml_line_orig": 36173,
+   "xml_line_later": 6882
+  }
+ },
+ {
+  "quarter": "2023.4Q",
+  "item": 21,
+  "item_name": "영업외손익",
+  "old_live": -21309.107537,
+  "old_fresh_build": -21309.107537,
+  "derived_after_adoption": -21309.759801,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": -86802.107537,
+   "ytd_after": -86802.107537,
+   "adopted": false
+  },
+  "operand_prev": {
+   "q": "2023.3Q",
+   "ytd_before": -65493.0,
+   "ytd_after": -65492.347736,
+   "adopted": true
+  },
+  "class": "consistent_after_adoption",
+  "why": "annual 2023 (master = FY2023 annual print; equals the FY2024 annual prior print to 0.000000 mn) is already at the later vintage; 9M adopted now at the later vintage -> annual - 9M has both operands at the same vintage (before adoption it mixed the later-vintage annual with the original 9M)",
+  "annual_checks": {
+   "master_annual": -86802.107537,
+   "fy2023_annual_print": -86802.107537,
+   "fy2024_annual_prior_print": -86802.107537,
+   "xml_line_orig": 36192,
+   "xml_line_later": 6901
+  }
+ },
+ {
+  "quarter": "2023.4Q",
+  "item": 22,
+  "item_name": "세전이익",
+  "old_live": 51005.039032,
+  "old_fresh_build": 51005.039032,
+  "derived_after_adoption": -7574.160272,
+  "operand_cur": {
+   "q": "2023.4Q",
+   "ytd_before": 221833.
+--- verification
+{
+ "master_equals_original_print_all": true,
+ "n_master_items_checked_vs_original": 18,
+ "warnings": [],
+ "dangi_model_mismatch_vs_live_master": [
+  [
+   16,
+   "2023.3Q",
+   12114.0,
+   null
+  ],
+  [
+   22,
+   "2023.3Q",
+   -7472.0,
+   null
+  ],
+  [
+   23,
+   "2023.3Q",
+   -1748.0,
+   null
+  ],
+  [
+   24,
+   "2023.3Q",
+   -5724.0,
+   null
+  ]
+ ],
+ "dangi_model_mismatch_note": "pre-existing, not caused by the adoption: the live master has 값_당분기 blank for 2023.3Q items 16/22/23/24 (6M = 억-rounded 경영공시 value) while a fresh build_pl() derives 12114 / -7472 / -1748 / -5724 (see KR0104_sim_baseline.txt); the apply step splices build_pl() output, so these four cells MUST be pinned (set_dangi) or they would turn into wrong numbers",
+ "census_vs_xml": {
+  "n_cells": 18,
+  "max_abs_diff_fsapi_vs_xml": 0.0,
+  "census_list": [
+   17,
+   18,
+   20,
+   22,
+   23,
+   24,
+   28,
+   31
+  ],
+  "census_list_in_plan_cells": [
+   17,
+   18,
+   20,
+   22,
+   23,
+   24,
+   28,
+   31
+  ],
+  "plan_cells_not_in_census_list": [
+   1,
+   16,
+   19,
+   21,
+   25,
+   26,
+   27,
+   29,
+   30,
+   32
+  ],
+  "census_candidate_cells": [
+   17,
+   18,
+   20,
+   21,
+   22,
+   23,
+   24,
+   28,
+   31
+  ],
+  "candidate_diff_vs_xml": {
+   "18": 0.247392
+  },
+  "candidate_note": "cand_pl_cells.json item 18 = 1135383.75571 keeps the rounded item 19 (-1117078) while XML item 19 is -1117077.752608, so 18 differs by 0.2474 mn; the plan takes 18 and 19 from one column"
+ },
+ "alt_path": {
+  "n": 12,
+  "n_ok": 12,
+  "items_without_alt_path": [
+   19,
+   26,
+   27,
+   28,
+   29,
+   30
+  ]
+ },
+ "restatement_note": {
+  "n_rows_in_plan": 8,
+  "within_print_band": 8,
+  "rows": {
+   "1": {
+    "after": 276593.0,
+    "delta": 0.0,
+    "line_after": 25400
+   },
+   "17": {
+    "after": 18306.0,
+    "delta": 58579.0,
+    "line_after": 25407
+   },
+   "20": {
+    "after": 294899.0,
+    "delta": 58579.0,
+    "line_after": 25414
+   },
+   "21": {
+    "after": -65493.0,
+    "delta": 0.0,
+    "line_after": 25421
+   },
+   "22": {
+    "after": 229406.0,
+    "delta": 58579.0,
+    "line_after": 25428
+   },
+   "23": {
+    "after": 48583.0,
+    "delta": 13532.0,
+    "line_after": 25435
+   },
+   "24": {
+    "after": 180823.0,
+    "delta": 45047.0,
+    "line_after": 25442
+   },
+   "31": {
+    "after": 663267.0,
+    "delta": 45047.0,
+    "line_after": 25449
+   }
+  },
+  "oci_restated_by_note": "no: 분기총기타포괄이익 수정 전 482,444 / 수정금액 - / 수정 후 482,444 (FY2024 Q3 L25516-L25518); items 25-30, 32 differ from the later print only by print rounding"
+ },
+ "gold": {
+  "KR0104_gold_set_cells": 0,
+  "KR0104_gold_set_keys": [],
+  "adopted_cells_hitting_gold": [],
+  "user_pl_confirmed_cells_mentions_of_KR0104": 0,
+  "null_dangi_existing": [],
+  "set_dangi_existing": [],
+  "set_dangi_proposed_hitting_existing_null_or_set": []
+ },
+ "seam_3m_vs_9M_minus_6M": {
+  "n": 4,
+  "n_ok": 4
+ },
+ "original_3m_vs_later_3m": {
+  "rows": [
+   {
+    "item": 1,
+    "orig_3m": 84934.0,
+    "later_3m": 84933.848032,
+    "diff": -0.151968,
+    "restated": false
+   },
+   {
+    "item": 16,
+    "orig_3m": 12097.0,
+    "later_3m": 12097.07857,
+    "diff": 0.07857,
+    "restated": false
+   },
+   {
+    "item": 17,
+    "orig_3m": -69977.0,
+    "later_3m": -16957.712278,
+    "diff": 53019.287722,
+    "restated": true
+   },
+   {
+    "item": 18,
+    "orig_3m": 306578.0,
+    "later_3m": 359596.312675,
+    "diff": 53018.312675,
+    "restated": true
+   },
+   {
+    "item": 19,
+    "orig_3m": -376555.0,
+    "later_3m": -376554.024953,
+    "diff": 0.975047,
+    "restated": false
+   },
+   {
+    "item": 20,
+    "orig_3m": 14957.0,
+    "later_3m": 67976.135754,
+    "diff": 53019.135754,
+    "restated": true
+   },
+   {
+    "item": 21,
+    "orig_3m": -22456.0,
+    "later_3m": -22454.714966,
+    "diff": 1.285034,
+    "restated": false
+   },
+   {
+    "item": 22,
+    "orig_3m": -7499.0,
+    "later_3m": 45521.420788,
+    "diff": 53020.420788,
+    "restated": true
+   },
+   {
+    "item": 23,
+    "orig_3m": -1784.0,
+    "later_3m": 10463.421336,
+    "diff": 12247.421336,
+    "restated": true
+   },
+   {
+    "item": 24,
+    "orig_3m": -5715.0,
+    "later_3m": 35057.999452,
+    "diff": 40772.999452,
+    "restated": true
+   },
+   {
+    "item": 25,
+    "orig_3m": -177946.0,
+    "later_3m": -177946.651094,
+    "diff": -0.651094,
+    "restated": false
+   },
+   {
+    "item": 26,
+    "orig_3m": -487090.0,
+    "later_3m": -487090.667504,
+    "diff": -0.667504,
+    "restated": false
+   },
+   {
+    "item": 27,
+    "orig_3m": 335803.0,
+    "later_3m": 335802.580018,
+    "diff": -0.419982,
+    "restated": false
+   },
+   {
+    "item": 28,
+    "orig_3m": -32307.0,
+    "later_3m": -32307.359636,
+    "diff": -0.359636,
+    "restated": false
+   },
+   {
+    "item": 29,
+    "orig_3m": 608.0,
+    "later_3m": 608.221088,
+    "diff": 0.221088,
+    "restated": false
+   },
+   {
+    "item": 30,
+    "orig_3m": 4761.0,
+    "later_3m": 4761.649625,
+    "diff": 0.649625,
+    "restated": false
+   },
+   {
+    "item": 31,
+    "orig_3m": -183661.0,
+    "later_3m": -142888.651642,
+    "diff": 40772.348358,
+    "restated": true
+   },
+   {
+    "item": 32,
+    "orig_3m": 279.0,
+    "later_3m": 278.925315,
+    "diff": -0.074685,
+    "restated": false
+   }
+  ],
+  "n_restated": 7
+ },
+ "live_2023_3Q_single_quarter_tier1": {
+  "1": null,
+  "16": null,
+  "17": null,
+  "18": null,
+  "19": null,
+  "20": null,
+  "21": null,
+  "22": null,
+  "23": null,
+  "24": null,
+  "25": null,
+  "26": null,
+  "27": null,
+  "28": null,
+  "29": null,
+  "30": null,
+  "31": null,
+  "32": null
+ },
+ "hybrid_single_2023_3Q_closure": [
+  {
+   "name": "24 = 22 - 23 (single, 3M prints)",
+   "resid": -0.0,
+   "ok": true
+  },
+  {
+   "name": "printed 3M: 20 = 1 + 17",
+   "resid": 0.0,
+   "ok": true
+  },
+  {
+   "name": "printed 3M: 22 = 20 + 21",
+   "resid": 0.0,
+   "ok": true
+  },
+  {
+   "name": "printed 3M: 24 = 22 - 23",
+   "resid": -0.0,
+   "ok": true
+  },
+  {
+   "name": "printed 3M: 31 = 24 + 25",
+   "resid": 0.0,
+   "ok": true
+  }
+ ],
+ "tier2_proxy_printed_lines_orig_vs_later_9M": {
+  "ins_rev": {
+   "label": "보험수익",
+   "orig_mn": 1141732.0,
+   "later_mn": 1141732.002538,
+   "delta": 0.002538,
+   "line_orig": 26250,
+   "line_later": 5678
+  },
+  "reins_rev": {
+   "label": "재보험수익",
+   "orig_mn": 13268.0,
+   "later_mn": 13268.225497,
+   "delta": 0.225497,
+   "line_orig": 26273,
+   "line_later": 5701
+  },
+  "cost_ins": {
+   "label": "보험영업비용",
+   "orig_mn": 878406.0,
+   "later_mn": 878406.436705,
+   "delta": 0.436705,
+   "line_orig": 26296,
+   "line_later": 5724
+  },
+  "svc": {
+   "label": "보험서비스비용",
+   "orig_mn": 829044.0,
+   "later_mn": 829044.06224,
+   "delta": 0.06224,
+   "line_orig": 26319,
+   "line_later": 5747
+  },
+  "reins_cost": {
+   "label": "재보험비용",
+   "orig_mn": 15448.0,
+   "later_mn": 15448.528405,
+   "delta": 0.528405,
+   "line_orig": 26342,
+   "line_later": 5770
+  },
+  "inv_rev": {
+   "label": "투자영업수익",
+   "orig_mn": 1958895.0,
+   "later_mn": 2017511.716588,
+   "delta": 58616.716588,
+   "line_orig": 26411,
+   "line_later": 5839
+  },
+  "inv_cost": {
+   "label": "투자영업
+--- apply_contract
+{
+ "gold_set_cells": [
+  [
+   "KR0104",
+   1,
+   "2023.3Q",
+   276593.79133,
+   276594.0
+  ],
+  [
+   "KR0104",
+   16,
+   "2023.3Q",
+   33913.84606,
+   33914.0
+  ],
+  [
+   "KR0104",
+   17,
+   "2023.3Q",
+   18305.75571,
+   -40273.0
+  ],
+  [
+   "KR0104",
+   18,
+   "2023.3Q",
+   1135383.508318,
+   1076805.0
+  ],
+  [
+   "KR0104",
+   19,
+   "2023.3Q",
+   -1117077.752608,
+   -1117078.0
+  ],
+  [
+   "KR0104",
+   20,
+   "2023.3Q",
+   294899.54704,
+   236321.0
+  ],
+  [
+   "KR0104",
+   21,
+   "2023.3Q",
+   -65492.347736,
+   -65493.0
+  ],
+  [
+   "KR0104",
+   22,
+   "2023.3Q",
+   229407.199304,
+   170828.0
+  ],
+  [
+   "KR0104",
+   23,
+   "2023.3Q",
+   48583.465239,
+   35052.0
+  ],
+  [
+   "KR0104",
+   24,
+   "2023.3Q",
+   180823.734065,
+   135776.0
+  ],
+  [
+   "KR0104",
+   25,
+   "2023.3Q",
+   482443.86755,
+   482444.0
+  ],
+  [
+   "KR0104",
+   26,
+   "2023.3Q",
+   -102609.145045,
+   -102610.0
+  ],
+  [
+   "KR0104",
+   27,
+   "2023.3Q",
+   580027.840002,
+   580028.0
+  ],
+  [
+   "KR0104",
+   28,
+   "2023.3Q",
+   2870.906792,
+   2872.0
+  ],
+  [
+   "KR0104",
+   29,
+   "2023.3Q",
+   2251.740457,
+   2252.0
+  ],
+  [
+   "KR0104",
+   30,
+   "2023.3Q",
+   2982.559091,
+   2982.0
+  ],
+  [
+   "KR0104",
+   31,
+   "2023.3Q",
+   663267.601615,
+   618220.0
+  ],
+  [
+   "KR0104",
+   32,
+   "2023.3Q",
+   -3080.033747,
+   -3080.0
+  ]
+ ],
+ "gold_set_notes": {
+  "2023.3Q|1": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 276593.79133 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5632. 단위 원(정확 인쇄). 현재 마스터값 276594.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -0.208670: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(276,594)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. 정정 주석 표도 이 항목의 수정금액이 0(L25399)이다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|16": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 33913.84606 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5793. 단위 원(정확 인쇄). 현재 마스터값 33914.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -0.153940: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(33,914)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|17": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 18305.75571 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5816. 단위 원(정확 인쇄). 현재 마스터값 -40273.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58578.755710: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 18,306 (L25407, 수정금액 58,579 L25406). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|18": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 1135383.508318 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5816 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 현재 마스터값 1076805.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58578.508318: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다 (파생 항목, 구성 줄의 변동에서 따라 움직임). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|19": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = -1117077.752608 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6138 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 현재 마스터값 -1117078.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +0.247392: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(-1,117,078)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|20": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 294899.54704 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6391. 단위 원(정확 인쇄). 현재 마스터값 236321.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58578.547040: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 294,899 (L25414, 수정금액 58,579 L25413). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|21": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = -65492.347736 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6414. 단위 원(정확 인쇄). 현재 마스터값 -65493.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +0.652264: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(-65,493)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. 정정 주석 표도 이 항목의 수정금액이 0(L25420)이다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|22": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 229407.199304 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6483. 단위 원(정확 인쇄). 현재 마스터값 170828.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58579.199304: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 229,406 (L25428, 수정금액 58,579 L25427). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json",
+  "2023.3Q|23": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 48583.465239 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6506. 단위 원(정확 인쇄). 현재 마스터값 35052.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +13531.465239: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 

@@ -1,0 +1,60 @@
+keys: status,message,list
+status 000
+CIS|dart_InvestmentIncomeExpenses|투자손익|6|th=16005167581|thadd=28896050062|fr=None|fradd=18305755710
+CIS|dart_OperatingExpenseInvestment|투자영업비용|7|th=114418083551|thadd=1636782583536|fr=None|fradd=1999205960878
+CIS|dart_AdditionalImpairmentLossesOfFinancialAssets|신용손실충당금 전입액|8|th=32845381|thadd=843602874|fr=None|fradd=23311109500
+CIS|dart_FinanceExpensesFromReinsuranceContractsHeldRecognisedInProfitOrLoss|재보험금융비용|9|th=615452988|thadd=1875356760|fr=None|fradd=1964083664
+CIS|dart_InsuranceFinanceExpensesFromInsuranceContractsIssuedRecognisedInProfitOrLoss|보험금융비용|10|th=365143773155|thadd=1105221629277|fr=None|fradd=1115113668944
+CIS|dart_LossFromFinancialInstrumentsAtAmortisedCost|상각후원가측정금융상품관련손실|11|th=0|thadd=1957095|fr=None|fradd=897725
+CIS|dart_LossFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome|기타포괄손익-공정가치측정금융상품관련손실|12|th=12619173827|thadd=18841677327|fr=None|fradd=45612416253
+CIS|dart_LossFromFinancialInstrumentsAtFairValueThroughProfitOrLoss|당기손익-공정가치측정금융상품관련손실|13|th=33435237794|thadd=118468950329|fr=None|fradd=144951801926
+CIS|dart_LossesFromDerivatives|파생상품관련비용|14|th=-322138100986|thadd=319374889121|fr=None|fradd=567472731257
+CIS|dart_OtherOperatingExpenseInvestment|기타투자비용|15|th=7805203274|thadd=18742749293|fr=None|fradd=22754651362
+CIS|ifrs-full_ForeignExchangeLoss|외화거래손실|16|th=1288944855|thadd=1668500627|fr=None|fradd=7735690449
+CIS|ifrs-full_InterestExpense|이자비용|17|th=13988635236|thadd=48279598872|fr=None|fradd=67078468721
+CIS|ifrs-full_SellingGeneralAndAdministrativeExpense|재산관리비|18|th=1626918027|thadd=3463671961|fr=None|fradd=3210441077
+CIS|ifrs-full_InvestmentIncome|투자영업수익|19|th=130423251132|thadd=1665678633598|fr=None|fradd=2017511716588
+CIS|dart_GainArisingFromDerecognitionOfFinancialInstrumentsMeasuredAtAmortisedCost|상각후원가측정금융상품관련이익|20|th=1846540|thadd=1846540|fr=None|fradd=0
+CIS|dart_GainFromDerivatives|파생상품관련수익|21|th=40876084716|thadd=53258196850|fr=None|fradd=34154674302
+CIS|dart_GainFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome|기타포괄손익-공정가치측정금융상품관련이익|22|th=351852428|thadd=614775346|fr=None|fradd=6028556645
+CIS|dart_GainFromFinancialInstrumentsAtFairValueThroughProfitOrLoss|당기손익-공정가치측정금융상품관련이익|23|th=108476669491|thadd=295817944758|fr=None|fradd=377555519006
+CIS|dart_OtherOperatingIncomeInvestment|기타투자수익|24|th=6582211113|thadd=18510370296|fr=None|fradd=15483542862
+CIS|dart_ReversalsOfImpairmentLossesOfFinancialAssets|신용손실충당금 환입액|25|th=4456180252|thadd=8968324778|fr=None|fradd=1325267540
+CIS|ifrs-full_ForeignExchangeGain|외화거래이익|26|th=-384026239252|thadd=219471418524|fr=None|fradd=513079506127
+CIS|ifrs-full_RevenueFromDividends|배당금수익|27|th=999013480|thadd=3746008925|fr=None|fradd=5696508788
+CIS|ifrs-full_RevenueFromInterest|이자수익|28|th=352705632364|thadd=1065289747581|fr=None|fradd=1064188141318
+CIS|dart_InterestRevenueOnFinancialAssetsAtFairValueThroughProfitOrLoss|당기손익-공정가치로 측정하는 금융자산의 이자수익|29|th=2900382786|thadd=12601461979|fr=None|fradd=19001872029
+CIS|ifrs-full_InterestRevenueCalculatedUsingEffectiveInterestMethod|유효이자율법 적용 이자수익|30|th=349805249578|thadd=1052688285602|fr=None|fradd=1045186269289
+CIS|dart_NonOperatingProfitLoss|영업외손익|31|th=-42670666417|thadd=-122983890716|fr=None|fradd=-65492347736
+CIS|dart_NonOperatingExpense|영업외비용|32|th=41521927556|thadd=126710938633|fr=None|fradd=72297554994
+CIS|dart_NonOperatingIncome|영업외수익|33|th=-1148738861|thadd=3727047917|fr=None|fradd=6805207258
+CIS|ifrs-full_ComprehensiveIncome|총포괄손익|34|th=13902279248|thadd=-451007367362|fr=None|fradd=663267601615
+CIS|ifrs-full_ComprehensiveIncomeAttributableToNoncontrollingInterests|비지배지분포괄손익|35|th=0|thadd=0|fr=None|fradd=0
+CIS|ifrs-full_ComprehensiveIncomeAttributableToOwnersOfParent|지배기업지분포괄손익|36|th=13902279248|thadd=-451007367362|fr=None|fradd=663267601615
+CIS|ifrs-full_BasicEarningsLossPerShare|보통주기본주당이익|38|th=600|thadd=1773|fr=None|fradd=1294
+CIS|ifrs-full_DilutedEarningsLossPerShare|보통주희석주당이익|39|th=600|thadd=1773|fr=None|fradd=1294
+CIS|ifrs-full_IncomeTaxExpenseContinuingOperations|법인세비용(수익)|40|th=24534800030|thadd=74736549102|fr=None|fradd=48583465239
+CIS|ifrs-full_InsuranceServiceResult|보험손익|41|th=135139060599|thadd=416667414859|fr=None|fradd=276593791330
+CIS|dart_OperatingExpenseInsurance|보험영업비용|42|th=266456788943|thadd=780410719055|fr=None|fradd=878406436705
+CIS|dart_OtherOperatingExpenseInsurance|기타사업비용|43|th=15173123441|thadd=39182867576|fr=None|fradd=33913846060
+CIS|ifrs-full_ExpensesFromAllocationOfPremiumsPaidToReinsurer|재보험비용|44|th=4034488982|thadd=10017482516|fr=None|fradd=15448528405
+CIS|ifrs-full_InsuranceServiceExpensesFromInsuranceContractsIssued|발행한 보험계약에서 생기는 보험서비스비용|45|th=247249176520|thadd=731210368963|fr=None|fradd=829044062240
+CIS|dart_OperatingIncomeInsurance|보험영업수익|46|th=401595849542|thadd=1197078133914|fr=None|fradd=1155000228035
+CIS|ifrs-full_IncomeFromAmountsRecoveredFromReinsurer|재보험수익|47|th=3322603734|thadd=7954101407|fr=None|fradd=13268225497
+CIS|ifrs-full_InsuranceRevenue|보험수익|48|th=398273245808|thadd=1189124032507|fr=None|fradd=1141732002538
+CIS|ifrs-full_OtherComprehensiveIncome|기타포괄손익|49|th=-70036482485|thadd=-698850392465|fr=None|fradd=482443867550
+CIS|ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax|후속적으로 당기손익으로 재분류될 수 있는 포괄손익|50|th=-70437166592|thadd=-702378069557|fr=None|fradd=483992850192
+CIS|dart_OtherComprehensiveIncomeNetOfTaxCreditLossesOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome|기타포괄손익-공정가치측정 신용손실|51|th=-68352064|thadd=115310358|fr=None|fradd=720689352
+CIS|ifrs-full_OtherComprehensiveIncomeNetOfTaxCashFlowHedges|현금흐름위험회피파생상품평가손익|52|th=-38199133743|thadd=-29172611979|fr=None|fradd=2870906792
+CIS|ifrs-full_OtherComprehensiveIncomeNetOfTaxFinanceIncomeExpensesFromReinsuranceContractsHeldExcludedFromProfitOrLoss|재보험계약자산(부채)순금융손익|53|th=-4528948954|thadd=-10028326066|fr=None|fradd=2982559091
+CIS|ifrs-full_OtherComprehensiveIncomeNetOfTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome|기타포괄손익-공정가치측정금융자산관련손익|54|th=632218720262|thadd=544975664474|fr=None|fradd=-102609145045
+CIS|ifrs-full_OtherComprehensiveIncomeNetOfTaxInsuranceFinanceIncomeExpensesFromInsuranceContractsIssuedExcludedFromProfitOrLossThatWillBeReclassifiedToProfitOrLoss|보험계약자산(부채)순금융손익|55|th=-659859452093|thadd=-1208268106344|fr=None|fradd=580027840002
+CIS|ifrs-full_ShareOfOtherComprehensiveIncomeOfAssociatesAndJointVenturesAccountedForUsingEquityMethodThatWillBeReclassifiedToProfitOrLossNetOfTax|관계기업 기타포괄손익지분|56|th=0|thadd=0|fr=None|fradd=0
+CIS|ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax|후속적으로 당기손익으로 재분류되지 않는 포괄손익|57|th=400684107|thadd=3527677092|fr=None|fradd=-1548982642
+CIS|ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments|기타포괄손익-공정가치측정금융자산평가손익|58|th=463832757|thadd=3468787248|fr=None|fradd=2251740457
+CIS|ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesOnRemeasurementsOfDefinedBenefitPlans|확정급여제도의재측정요소|59|th=-63148650|thadd=58889844|fr=None|fradd=-3800723099
+CIS|ifrs-full_ProfitLoss|분기순이익|60|th=83938761733|thadd=247843025103|fr=None|fradd=180823734065
+CIS|ifrs-full_ProfitLossAttributableToNoncontrollingInterests|비지배지분순이익|61|th=0|thadd=0|fr=None|fradd=0
+CIS|ifrs-full_ProfitLossAttributableToOwnersOfParent|지배기업지분순이익|62|th=83938761733|thadd=247843025103|fr=None|fradd=180823734065
+CIS|ifrs-full_ProfitLossBeforeTax|법인세차감전순이익|63|th=108473561763|thadd=322579574205|fr=None|fradd=229407199304
+CIS|ifrs-full_ProfitLossFromOperatingActivities|영업이익(손실)|64|th=151144228180|thadd=445563464921|fr=None|fradd=294899547040

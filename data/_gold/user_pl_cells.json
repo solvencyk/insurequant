@@ -3986,6 +3986,1374 @@
       "값": 27.621529,
       "was": 32614.147839,
       "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 반기보고서 rcept 20260814004024 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L31682+L31724 = 27.621529 백만원 (원 공시 FY2025 반기보고서 rcept 20250814004112 현재 마스터 기준값 32614.147839, 원문 L37943+L38081+L38104). 합성 변동 -32,586.53 = 계정 태그 이동 -28,364.99(항목29 로 이동; 원 공시도 같은 줄 인쇄) + 재작성 -4,221.54(유형자산재평가잉여금 4,221.538 제거; '4,222백만원 과대계상' L49799). 남는 값 = 손실충당금 344.046 + 재측정 -316.424. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 17,
+      "공시분기": "2023.3Q",
+      "값": -63150.0,
+      "was": -42056.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4012 [Ⅱ.투자손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed -42,056 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 18,
+      "공시분기": "2023.3Q",
+      "값": 196799.0,
+      "was": 217893.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4012,L4058,L4081,L4357,L4380 [derived 17 - 19]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed 217,893 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 20,
+      "공시분기": "2023.3Q",
+      "값": 213973.0,
+      "was": 235067.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4564 [Ⅲ.영업이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed 235,067 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 22,
+      "공시분기": "2023.3Q",
+      "값": 213003.0,
+      "was": 234097.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4610 [Ⅴ.법인세비용차감전순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed 234,097 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 23,
+      "공시분기": "2023.3Q",
+      "값": 47747.0,
+      "was": 52285.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4633 [Ⅵ.법인세비용]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed 52,285 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 24,
+      "공시분기": "2023.3Q",
+      "값": 165256.0,
+      "was": 181812.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4656 [Ⅶ.분기순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed 181,812 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 25,
+      "공시분기": "2023.3Q",
+      "값": -189519.0,
+      "was": -210395.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4748 [Ⅸ.기타포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed -210,395 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 26,
+      "공시분기": "2023.3Q",
+      "값": -80901.0,
+      "was": -101767.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4863 [(1)기타포괄손익-공정가치측정금융자산련평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed -101,767 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 28,
+      "공시분기": "2023.3Q",
+      "값": -135740.0,
+      "was": -135755.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4909 [(3)현금흐름위험회피파생상품평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed -135,755 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 31,
+      "공시분기": "2023.3Q",
+      "값": -24263.0,
+      "was": -28583.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4978 [Ⅹ.분기총포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed -28,583 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 32,
+      "공시분기": "2023.3Q",
+      "값": 136.0,
+      "was": 141.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q3 20241114002739 (data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml) L4794,L4817,L4886 [(1)재평가잉여금/(2)확정급여부채의재측정요소/(2)기타포괄손익-공정가치측정금융자산기대신용손실]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20231114002611 printed 141 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 17,
+      "공시분기": "2023.4Q",
+      "값": 72613.0,
+      "was": 99358.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L5657 [Ⅱ.투자손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 99,358 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 18,
+      "공시분기": "2023.4Q",
+      "값": 418462.0,
+      "was": 446988.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L5657,L5695,L5714,L5999,L6018 [derived 17 - 19]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 446,988 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 19,
+      "공시분기": "2023.4Q",
+      "값": -345849.0,
+      "was": -347630.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L5695,L5714,L5999,L6018 [보험금융수익/재보험금융수익/보험금융비용/재보험금융비용]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed -347,630 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 20,
+      "공시분기": "2023.4Q",
+      "값": 381025.0,
+      "was": 407770.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6208 [Ⅲ.영업이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 407,770 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 22,
+      "공시분기": "2023.4Q",
+      "값": 380386.0,
+      "was": 407131.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6246 [Ⅴ.법인세비용차감전순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 407,131 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 23,
+      "공시분기": "2023.4Q",
+      "값": 84846.0,
+      "was": 90984.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6265 [Ⅵ.법인세비용]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 90,984 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 24,
+      "공시분기": "2023.4Q",
+      "값": 295540.0,
+      "was": 316147.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6284 [Ⅶ.당기순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 316,147 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 25,
+      "공시분기": "2023.4Q",
+      "값": -371946.0,
+      "was": -400409.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6360 [Ⅷ.기타포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed -400,409 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 26,
+      "공시분기": "2023.4Q",
+      "값": 431462.0,
+      "was": 402967.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6455 [(1)기타포괄손익-공정가치측정금융자산관련평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 402,967 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 28,
+      "공시분기": "2023.4Q",
+      "값": 71810.0,
+      "was": 71835.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6531 [(5)현금흐름위험회피파생상품평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed 71,835 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 31,
+      "공시분기": "2023.4Q",
+      "값": -76406.0,
+      "was": -84262.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6588 [Ⅸ.총포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed -84,262 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 32,
+      "공시분기": "2023.4Q",
+      "값": -818.0,
+      "was": -811.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2024_Q4 20250320001444 (data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml) L6398,L6417,L6474,L6493,L6512 [(1)재평가잉여금/(2)확정급여부채의재측정요소/(2)기타포괄손익-공정가치측정금융자산기대신용손실/(3)매도가능금융자산평가손익/(4)만기보유금융자산평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240321001884 printed -811 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 17,
+      "공시분기": "2024.1Q",
+      "값": -78401.0,
+      "was": -71099.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4061 [Ⅱ.투자손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed -71,099 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 18,
+      "공시분기": "2024.1Q",
+      "값": 2338.0,
+      "was": 9640.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4061,L4107,L4130,L4406,L4429 [derived 17 - 19]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed 9,640 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 20,
+      "공시분기": "2024.1Q",
+      "값": 61536.0,
+      "was": 68838.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4613 [Ⅲ.영업이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed 68,838 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 22,
+      "공시분기": "2024.1Q",
+      "값": 61191.0,
+      "was": 68493.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4659 [Ⅴ.법인세비용차감전순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed 68,493 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 23,
+      "공시분기": "2024.1Q",
+      "값": 21979.0,
+      "was": 20483.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4682 [Ⅵ.법인세비용]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed 20,483 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 24,
+      "공시분기": "2024.1Q",
+      "값": 39212.0,
+      "was": 48010.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4705 [Ⅶ.당기순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed 48,010 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 25,
+      "공시분기": "2024.1Q",
+      "값": -300515.0,
+      "was": -308151.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4797 [Ⅷ.기타포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed -308,151 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 26,
+      "공시분기": "2024.1Q",
+      "값": -131799.0,
+      "was": -139223.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4912 [(1)기타포괄손익-공정가치측정금융자산관련평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed -139,223 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 28,
+      "공시분기": "2024.1Q",
+      "값": -80960.0,
+      "was": -81173.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4958 [(3)현금흐름위험회피파생상품평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed -81,173 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 31,
+      "공시분기": "2024.1Q",
+      "값": -261303.0,
+      "was": -260141.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L5027 [Ⅸ.총포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed -260,141 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 32,
+      "공시분기": "2024.1Q",
+      "값": -200.0,
+      "was": -199.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q1 20250515002476 (data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml) L4843,L4866,L4935 [(1)재평가잉여금/(2)확정급여부채의재측정요소/(2)기타포괄손익-공정가치측정금융자산기대신용손실]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240516002177 printed -199 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 17,
+      "공시분기": "2024.2Q",
+      "값": -62135.0,
+      "was": -45124.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L4832 [Ⅱ.투자손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed -45,124 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 18,
+      "공시분기": "2024.2Q",
+      "값": 103186.0,
+      "was": 120197.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L4832,L4872,L4889,L5162,L5180 [derived 17 - 19]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed 120,197 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 20,
+      "공시분기": "2024.2Q",
+      "값": 119884.0,
+      "was": 136895.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5351 [Ⅲ.영업이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed 136,895 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 22,
+      "공시분기": "2024.2Q",
+      "값": 119015.0,
+      "was": 136026.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5397 [Ⅴ.법인세비용차감전순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed 136,026 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 23,
+      "공시분기": "2024.2Q",
+      "값": 31608.0,
+      "was": 29035.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5420 [Ⅵ.법인세비용]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed 29,035 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 24,
+      "공시분기": "2024.2Q",
+      "값": 87407.0,
+      "was": 106991.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5443 [Ⅶ.당기순이익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed 106,991 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 25,
+      "공시분기": "2024.2Q",
+      "값": -553328.0,
+      "was": -570466.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5535 [Ⅷ.기타포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed -570,466 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 26,
+      "공시분기": "2024.2Q",
+      "값": -87646.0,
+      "was": -105377.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5638 [(1)기타포괄손익-공정가치측정금융자산관련손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed -105,377 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 28,
+      "공시분기": "2024.2Q",
+      "값": -43819.0,
+      "was": -43229.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5684 [(3)현금흐름위험회피파생상품평가손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed -43,229 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 31,
+      "공시분기": "2024.2Q",
+      "값": -465921.0,
+      "was": -463475.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5753 [Ⅸ.총포괄손익]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed -463,475 (= master)."
+    },
+    {
+      "원보험사코드": "KR0005",
+      "항목번호": 32,
+      "공시분기": "2024.2Q",
+      "값": -154.0,
+      "was": -151.0,
+      "note": "2026-10-22 parser/ifrs17 ticket 20261022T0900Z (owner 2026-10-22: latest comparative column, separate basis, closing block only): FVOCI foreign-currency debt expected-maturity error correction restated the comparative. Cumulative column printed in FY2025_Q2 20250814003425 (data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml) L5570,L5592,L5661 [(1)재평가잉여금/(2)확정급여부채의재측정요소/(2)기타포괄손익-공정가치측정신용손실]; agrees with the restatement note table and the DART FS-API prior column. Original filing 20240814004299 printed -151 (= master)."
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 17,
+      "공시분기": "2023.4Q",
+      "값": 56554.861367,
+      "was": 98273.181594,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L6691. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 19,
+      "공시분기": "2023.4Q",
+      "값": -283687.064548,
+      "was": -241968.744321,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L6729 외 합산 줄(xml_lines). 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 20,
+      "공시분기": "2023.4Q",
+      "값": 173860.215998,
+      "was": 215578.536225,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L7242. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 22,
+      "공시분기": "2023.4Q",
+      "값": 149570.506921,
+      "was": 191288.827148,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L7299. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 23,
+      "공시분기": "2023.4Q",
+      "값": 36307.157681,
+      "was": 45944.089653,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L7318. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 24,
+      "공시분기": "2023.4Q",
+      "값": 113263.34924,
+      "was": 145344.737495,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L7337. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 25,
+      "공시분기": "2023.4Q",
+      "값": -21195.764805,
+      "was": -53277.15306,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L7413. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 27,
+      "공시분기": "2023.4Q",
+      "값": -315612.10217,
+      "was": -347693.490425,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2024_Q4 rcept 20250331003247 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml L7584. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 17,
+      "공시분기": "2024.1Q",
+      "값": 14156.750149,
+      "was": 22440.106317,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7038. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 19,
+      "공시분기": "2024.1Q",
+      "값": -68943.782211,
+      "was": -60660.426043,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7084 외 합산 줄(xml_lines). 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 20,
+      "공시분기": "2024.1Q",
+      "값": 75746.534057,
+      "was": 84029.890225,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7567. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 22,
+      "공시분기": "2024.1Q",
+      "값": 69402.712271,
+      "was": 77686.068439,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7636. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 23,
+      "공시분기": "2024.1Q",
+      "값": 15983.611576,
+      "was": 17897.066851,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7659. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 24,
+      "공시분기": "2024.1Q",
+      "값": 53419.100695,
+      "was": 59789.001588,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7682. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 25,
+      "공시분기": "2024.1Q",
+      "값": -113752.544639,
+      "was": -120122.445532,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7774. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 27,
+      "공시분기": "2024.1Q",
+      "값": -27062.604281,
+      "was": -33432.505174,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q1 rcept 20250515001078 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml L7935. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 17,
+      "공시분기": "2024.2Q",
+      "값": 38821.757495,
+      "was": 52025.948782,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L6670. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 19,
+      "공시분기": "2024.2Q",
+      "값": -137239.631864,
+      "was": -124035.440577,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L6716 외 합산 줄(xml_lines). 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 20,
+      "공시분기": "2024.2Q",
+      "값": 161001.967687,
+      "was": 174206.158974,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L7199. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 22,
+      "공시분기": "2024.2Q",
+      "값": 147484.91091,
+      "was": 160689.102197,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L7268. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 23,
+      "공시분기": "2024.2Q",
+      "값": 37101.499582,
+      "was": 40151.667769,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L7291. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 24,
+      "공시분기": "2024.2Q",
+      "값": 110383.411328,
+      "was": 120537.434428,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L7314. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 25,
+      "공시분기": "2024.2Q",
+      "값": -245523.778952,
+      "was": -255677.802052,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L7406. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 27,
+      "공시분기": "2024.2Q",
+      "값": -222098.496217,
+      "was": -232252.519317,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q2 rcept 20250814001701 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml L7567. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 17,
+      "공시분기": "2024.3Q",
+      "값": 73914.688645,
+      "was": 90932.025639,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6059. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 19,
+      "공시분기": "2024.3Q",
+      "값": -203008.232252,
+      "was": -185990.895258,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6075 외 합산 줄(xml_lines). 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 20,
+      "공시분기": "2024.3Q",
+      "값": 205933.813054,
+      "was": 222951.150048,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6243. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 22,
+      "공시분기": "2024.3Q",
+      "값": 185508.152315,
+      "was": 202525.489309,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6267. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 23,
+      "공시분기": "2024.3Q",
+      "값": 46790.270228,
+      "was": 50721.275074,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6275. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 24,
+      "공시분기": "2024.3Q",
+      "값": 138717.882087,
+      "was": 151804.214235,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6283. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 25,
+      "공시분기": "2024.3Q",
+      "값": -322393.012296,
+      "was": -335479.344444,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6315. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치; 재작성 주석 표 수정 후 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0032",
+      "항목번호": 27,
+      "공시분기": "2024.3Q",
+      "값": -476020.477864,
+      "was": -489106.810012,
+      "note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 누계. FY2025_Q3 rcept 20251114001790 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml L6371. 단위 원(정밀). 2차 근거 FS-API frmtrm 일치. 재작성 사유: 금리연동형 보험계약 보험금융손익 체계적배분 변경(당기순이익 -> 기타포괄손익). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0032.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 17,
+      "공시분기": "2024.1Q",
+      "값": -2376.553043,
+      "was": -5720.079812,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L25800. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 19,
+      "공시분기": "2024.1Q",
+      "값": -203103.24191,
+      "was": -206446.768679,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L25846 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 20,
+      "공시분기": "2024.1Q",
+      "값": 13215.401413,
+      "was": 9871.874644,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L26444. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 22,
+      "공시분기": "2024.1Q",
+      "값": 13589.058625,
+      "was": 10245.531856,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L26536. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 23,
+      "공시분기": "2024.1Q",
+      "값": 3248.914173,
+      "was": 2476.559489,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L26559. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 24,
+      "공시분기": "2024.1Q",
+      "값": 10340.144452,
+      "was": 7768.972367,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L26605. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 25,
+      "공시분기": "2024.1Q",
+      "값": -219573.483545,
+      "was": -217002.31146,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L26651. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 27,
+      "공시분기": "2024.1Q",
+      "값": -42454.677092,
+      "was": -39883.505007,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002435 의 전기 누적 열(PFY2024dFQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L26743. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 17,
+      "공시분기": "2024.2Q",
+      "값": 36491.7661,
+      "was": 32655.613464,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L29208. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 19,
+      "공시분기": "2024.2Q",
+      "값": -385846.59831,
+      "was": -389682.750946,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L29254 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 20,
+      "공시분기": "2024.2Q",
+      "값": 63221.71967,
+      "was": 59385.567034,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L29852. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 22,
+      "공시분기": "2024.2Q",
+      "값": 59228.973822,
+      "was": 55392.821186,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L29944. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 23,
+      "공시분기": "2024.2Q",
+      "값": 13803.417059,
+      "was": 12917.2658,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L29967. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 24,
+      "공시분기": "2024.2Q",
+      "값": 45425.556763,
+      "was": 42475.555386,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L30013. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 25,
+      "공시분기": "2024.2Q",
+      "값": -402536.215166,
+      "was": -399586.213789,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L30059. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 27,
+      "공시분기": "2024.2Q",
+      "값": -345956.069971,
+      "was": -343006.068594,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814004404 의 전기 누적 열(PFY2024dHYA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L30151. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 17,
+      "공시분기": "2024.3Q",
+      "값": 73518.576723,
+      "was": 69166.349415,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23357. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 19,
+      "공시분기": "2024.3Q",
+      "값": -485926.322462,
+      "was": -490278.54977,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23373 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 20,
+      "공시분기": "2024.3Q",
+      "값": 100835.615912,
+      "was": 96483.388604,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23581. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 22,
+      "공시분기": "2024.3Q",
+      "값": 92522.093551,
+      "was": 88169.866243,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23613. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 23,
+      "공시분기": "2024.3Q",
+      "값": 21494.442966,
+      "was": 20489.078458,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23621. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 24,
+      "공시분기": "2024.3Q",
+      "값": 71027.650585,
+      "was": 67680.787785,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23629. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 25,
+      "공시분기": "2024.3Q",
+      "값": -493420.717482,
+      "was": -490073.854682,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23637. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 27,
+      "공시분기": "2024.3Q",
+      "값": -721460.964747,
+      "was": -718114.101947,
+      "note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002593 의 전기 누적 열(PFY2024dTQA) = 재작성 값(FSS Q&A 보험금융손익 체계적 배분 변경). 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L23669. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0070.json"
+    },
+    {
+      "원보험사코드": "KR0082",
+      "항목번호": 1,
+      "공시분기": "2023.3Q",
+      "값": 85927.536898,
+      "was": 84042.329124,
+      "note": "2026-10-22 parser/ifrs17 (KR0082 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114001831 의 전기(2023.9.30 누적) 열 = 85927.536898 백만원. 원문 data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml L25358. 단위 원(정확 인쇄). 현재 마스터값 84042.329124 는 원 공시 FY2023_Q3 rcept 20231114002805 인쇄값과 일치. 변동 +1885.207774: 후속 공시 비교열에서 기타사업비용 일부 1,885.207774 백만원이 보험서비스비용에서 투자영업비용으로 옮겨 인쇄됨(보험서비스비용 -1,885.207774 = 투자영업비용 +1,885.207774, 영업이익 불변). 재작성 사유 주석은 해당 공시에서 찾지 못함. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0082.json"
+    },
+    {
+      "원보험사코드": "KR0082",
+      "항목번호": 16,
+      "공시분기": "2023.3Q",
+      "값": 7387.164615,
+      "was": 9272.372389,
+      "note": "2026-10-22 parser/ifrs17 (KR0082 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114001831 의 전기(2023.9.30 누적) 열 = 7387.164615 백만원. 원문 data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml L25519. 단위 원(정확 인쇄). 현재 마스터값 9272.372389 는 원 공시 FY2023_Q3 rcept 20231114002805 인쇄값과 일치. 변동 -1885.207774: 후속 공시 비교열에서 기타사업비용 일부 1,885.207774 백만원이 보험서비스비용에서 투자영업비용으로 옮겨 인쇄됨(보험서비스비용 -1,885.207774 = 투자영업비용 +1,885.207774, 영업이익 불변). 재작성 사유 주석은 해당 공시에서 찾지 못함. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0082.json"
+    },
+    {
+      "원보험사코드": "KR0082",
+      "항목번호": 17,
+      "공시분기": "2023.3Q",
+      "값": 62606.894604,
+      "was": 64492.102378,
+      "note": "2026-10-22 parser/ifrs17 (KR0082 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114001831 의 전기(2023.9.30 누적) 열 = 62606.894604 백만원. 원문 data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml L25542. 단위 원(정확 인쇄). 현재 마스터값 64492.102378 는 원 공시 FY2023_Q3 rcept 20231114002805 인쇄값과 일치. 변동 -1885.207774: 후속 공시 비교열에서 기타사업비용 일부 1,885.207774 백만원이 보험서비스비용에서 투자영업비용으로 옮겨 인쇄됨(보험서비스비용 -1,885.207774 = 투자영업비용 +1,885.207774, 영업이익 불변). 재작성 사유 주석은 해당 공시에서 찾지 못함. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0082.json"
+    },
+    {
+      "원보험사코드": "KR0082",
+      "항목번호": 18,
+      "공시분기": "2023.3Q",
+      "값": 263463.285896,
+      "was": 265348.49367,
+      "note": "2026-10-22 parser/ifrs17 (KR0082 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114001831 의 전기(2023.9.30 누적) 열 = 263463.285896 백만원. 원문 data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml L25542 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 현재 마스터값 265348.49367 는 원 공시 FY2023_Q3 rcept 20231114002805 인쇄값과 일치. 변동 -1885.207774: 후속 공시 비교열에서 기타사업비용 일부 1,885.207774 백만원이 보험서비스비용에서 투자영업비용으로 옮겨 인쇄됨(보험서비스비용 -1,885.207774 = 투자영업비용 +1,885.207774, 영업이익 불변). 재작성 사유 주석은 해당 공시에서 찾지 못함. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0082.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 17,
+      "공시분기": "2024.1Q",
+      "값": 40401.054964,
+      "was": 42172.415112,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24100. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 19,
+      "공시분기": "2024.1Q",
+      "값": -76099.867346,
+      "was": -74328.507198,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24422 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 20,
+      "공시분기": "2024.1Q",
+      "값": 33147.876982,
+      "was": 34919.23713,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24675. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 22,
+      "공시분기": "2024.1Q",
+      "값": 35991.051898,
+      "was": 37762.412046,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24767. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 23,
+      "공시분기": "2024.1Q",
+      "값": 8056.068315,
+      "was": 8465.252508,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24790. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 24,
+      "공시분기": "2024.1Q",
+      "값": 27934.983583,
+      "was": 29297.159538,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24813. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 25,
+      "공시분기": "2024.1Q",
+      "값": -74475.541715,
+      "was": -75837.71767,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24836. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 27,
+      "공시분기": "2024.1Q",
+      "값": 15646.306744,
+      "was": 14284.130789,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515002207 의 전기 누적 열(PFY2024dFQA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml L24951. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 17,
+      "공시분기": "2024.2Q",
+      "값": 41856.821248,
+      "was": 45968.030947,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L25924. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 19,
+      "공시분기": "2024.2Q",
+      "값": -154821.654506,
+      "was": -150710.444807,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L25970 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 20,
+      "공시분기": "2024.2Q",
+      "값": 28724.334906,
+      "was": 32835.544605,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L26522. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 22,
+      "공시분기": "2024.2Q",
+      "값": 31420.732187,
+      "was": 35531.941886,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L26614. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 23,
+      "공시분기": "2024.2Q",
+      "값": 7343.933475,
+      "was": 8293.622915,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L26637. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 24,
+      "공시분기": "2024.2Q",
+      "값": 24076.798712,
+      "was": 27238.318971,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L26660. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 25,
+      "공시분기": "2024.2Q",
+      "값": -192383.207173,
+      "was": -195544.727432,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L26683. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0083",
+      "항목번호": 27,
+      "공시분기": "2024.2Q",
+      "값": -122892.164844,
+      "was": -126053.685103,
+      "note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814001834 의 전기 누적 열(PFY2024dHYA) = 재작성 값(보험금융수익(비용) 체계적 배분 회계정책 변경, 재무제표 주석 50 소급재작성). 원문 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml L26798. 단위 원(정확 인쇄). 2차 근거 FS-API frmtrm 일치 및 주석 50 소급후 금액 일치(백만원 반올림). 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0083.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 17,
+      "공시분기": "2023.4Q",
+      "값": 84954.043343,
+      "was": 125030.941279,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38193. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 19,
+      "공시분기": "2023.4Q",
+      "값": -1104952.226382,
+      "was": -1064875.328446,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38231 외 합산 줄(xml_lines). 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 20,
+      "공시분기": "2023.4Q",
+      "값": 319082.305554,
+      "was": 359159.20349,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38716. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 22,
+      "공시분기": "2023.4Q",
+      "값": 332757.005527,
+      "was": 372833.903463,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38773. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 23,
+      "공시분기": "2023.4Q",
+      "값": 67830.078929,
+      "was": 77087.84235,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38792. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 24,
+      "공시분기": "2023.4Q",
+      "값": 264926.926598,
+      "was": 295746.061113,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38811. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 25,
+      "공시분기": "2023.4Q",
+      "값": -307765.773898,
+      "was": -338571.625238,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38830. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 27,
+      "공시분기": "2023.4Q",
+      "값": -1121304.812252,
+      "was": -1152110.663592,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L38929. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 31,
+      "공시분기": "2023.4Q",
+      "값": -42838.8473,
+      "was": -42825.564125,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2024_Q4 rcept 20250319000486 의 전기 누적 열(PFY2023dFY) = 재작성 값. 원문 data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml L39040. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 17,
+      "공시분기": "2024.1Q",
+      "값": 37409.282506,
+      "was": 49235.409915,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L23929. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 19,
+      "공시분기": "2024.1Q",
+      "값": -259800.047219,
+      "was": -247973.91981,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L23975 외 합산 줄(xml_lines). 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 20,
+      "공시분기": "2024.1Q",
+      "값": 93681.171243,
+      "was": 105507.298652,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L24458. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 22,
+      "공시분기": "2024.1Q",
+      "값": 96037.32098,
+      "was": 107863.448389,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L24527. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 23,
+      "공시분기": "2024.1Q",
+      "값": 16646.134716,
+      "was": 19377.970147,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L24550. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 24,
+      "공시분기": "2024.1Q",
+      "값": 79391.186264,
+      "was": 88485.478242,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L24573. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 25,
+      "공시분기": "2024.1Q",
+      "값": -373373.248153,
+      "was": -382467.540131,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L24596. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 27,
+      "공시분기": "2024.1Q",
+      "값": -85530.563213,
+      "was": -94624.855191,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q1 rcept 20250515001025 의 전기 누적 열(PFY2024dFQA) = 재작성 값. 원문 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml L24688. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 17,
+      "공시분기": "2024.2Q",
+      "값": 68597.487671,
+      "was": 83254.398093,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90109. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 19,
+      "공시분기": "2024.2Q",
+      "값": -535290.446408,
+      "was": -520633.535986,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90155 외 합산 줄(xml_lines). 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 20,
+      "공시분기": "2024.2Q",
+      "값": 205445.97732,
+      "was": 220102.887742,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90638. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 22,
+      "공시분기": "2024.2Q",
+      "값": 205293.65857,
+      "was": 219950.568992,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90707. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 23,
+      "공시분기": "2024.2Q",
+      "값": 41222.01876,
+      "was": 44607.765067,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90730. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 24,
+      "공시분기": "2024.2Q",
+      "값": 164071.63981,
+      "was": 175342.803925,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90753. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 25,
+      "공시분기": "2024.2Q",
+      "값": -795104.178537,
+      "was": -806375.342652,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90776. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 27,
+      "공시분기": "2024.2Q",
+      "값": -628547.709989,
+      "was": -639818.874104,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q2 rcept 20250814002600 의 전기 누적 열(PFY2024dHYA) = 재작성 값. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L90868. 단위 원. 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 17,
+      "공시분기": "2024.3Q",
+      "값": 87858.0,
+      "was": 104546.935054,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37705. 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 19,
+      "공시분기": "2024.3Q",
+      "값": -737453.0,
+      "was": -720764.508309,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37721 외 합산 줄(xml_lines). 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 20,
+      "공시분기": "2024.3Q",
+      "값": 321255.0,
+      "was": 337943.763635,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37897. 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 22,
+      "공시분기": "2024.3Q",
+      "값": 317778.0,
+      "was": 334466.261644,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37921. 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 23,
+      "공시분기": "2024.3Q",
+      "값": 64891.0,
+      "was": 68746.080362,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37929. 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 24,
+      "공시분기": "2024.3Q",
+      "값": 252887.0,
+      "was": 265720.181282,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37937. 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 25,
+      "공시분기": "2024.3Q",
+      "값": -998432.0,
+      "was": -1011265.174689,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37945. 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0087",
+      "항목번호": 27,
+      "공시분기": "2024.3Q",
+      "값": -1326539.0,
+      "was": -1339372.347613,
+      "note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준, FY2025_Q3 rcept 20251114002594 의 전기 누적 열(PFY2024dTQA) = 재작성 값. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L37977. 단위 백만원 (백만원 반올림 인쇄). 2차 근거 FS-API frmtrm 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0087.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 1,
+      "공시분기": "2023.3Q",
+      "값": 276593.79133,
+      "was": 276594.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 276593.79133 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5632. 단위 원(정확 인쇄). 현재 마스터값 276594.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -0.208670: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(276,594)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. 정정 주석 표도 이 항목의 수정금액이 0(L25399)이다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 16,
+      "공시분기": "2023.3Q",
+      "값": 33913.84606,
+      "was": 33914.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 33913.84606 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5793. 단위 원(정확 인쇄). 현재 마스터값 33914.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -0.153940: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(33,914)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 17,
+      "공시분기": "2023.3Q",
+      "값": 18305.75571,
+      "was": -40273.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 18305.75571 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5816. 단위 원(정확 인쇄). 현재 마스터값 -40273.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58578.755710: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 18,306 (L25407, 수정금액 58,579 L25406). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 18,
+      "공시분기": "2023.3Q",
+      "값": 1135383.508318,
+      "was": 1076805.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 1135383.508318 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L5816 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 현재 마스터값 1076805.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58578.508318: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다 (파생 항목, 구성 줄의 변동에서 따라 움직임). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 19,
+      "공시분기": "2023.3Q",
+      "값": -1117077.752608,
+      "was": -1117078.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = -1117077.752608 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6138 외 합산 줄(xml_lines). 단위 원(정확 인쇄). 현재 마스터값 -1117078.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +0.247392: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(-1,117,078)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 20,
+      "공시분기": "2023.3Q",
+      "값": 294899.54704,
+      "was": 236321.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 294899.54704 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6391. 단위 원(정확 인쇄). 현재 마스터값 236321.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58578.547040: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 294,899 (L25414, 수정금액 58,579 L25413). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 21,
+      "공시분기": "2023.3Q",
+      "값": -65492.347736,
+      "was": -65493.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = -65492.347736 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6414. 단위 원(정확 인쇄). 현재 마스터값 -65493.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +0.652264: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(-65,493)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. 정정 주석 표도 이 항목의 수정금액이 0(L25420)이다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 22,
+      "공시분기": "2023.3Q",
+      "값": 229407.199304,
+      "was": 170828.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 229407.199304 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6483. 단위 원(정확 인쇄). 현재 마스터값 170828.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +58579.199304: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 229,406 (L25428, 수정금액 58,579 L25427). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 23,
+      "공시분기": "2023.3Q",
+      "값": 48583.465239,
+      "was": 35052.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 48583.465239 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6506. 단위 원(정확 인쇄). 현재 마스터값 35052.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +13531.465239: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 48,583 (L25435, 수정금액 13,532 L25434). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 24,
+      "공시분기": "2023.3Q",
+      "값": 180823.734065,
+      "was": 135776.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 180823.734065 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6529. 단위 원(정확 인쇄). 현재 마스터값 135776.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +45047.734065: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 180,823 (L25442, 수정금액 45,047 L25441). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 25,
+      "공시분기": "2023.3Q",
+      "값": 482443.86755,
+      "was": 482444.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 482443.86755 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6598. 단위 원(정확 인쇄). 현재 마스터값 482444.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -0.132450: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(482,444)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 26,
+      "공시분기": "2023.3Q",
+      "값": -102609.145045,
+      "was": -102610.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = -102609.145045 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6713. 단위 원(정확 인쇄). 현재 마스터값 -102610.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +0.854955: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(-102,610)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 27,
+      "공시분기": "2023.3Q",
+      "값": 580027.840002,
+      "was": 580028.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 580027.840002 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6805. 단위 원(정확 인쇄). 현재 마스터값 580028.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -0.159998: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(580,028)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 28,
+      "공시분기": "2023.3Q",
+      "값": 2870.906792,
+      "was": 2872.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 2870.906792 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6782. 단위 원(정확 인쇄). 현재 마스터값 2872.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -1.093208: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(2,872)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 29,
+      "공시분기": "2023.3Q",
+      "값": 2251.740457,
+      "was": 2252.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 2251.740457 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6667. 단위 원(정확 인쇄). 현재 마스터값 2252.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 -0.259543: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(2,252)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 30,
+      "공시분기": "2023.3Q",
+      "값": 2982.559091,
+      "was": 2982.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 2982.559091 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6828. 단위 원(정확 인쇄). 현재 마스터값 2982.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +0.559091: 재작성이 아니라 반올림 차이다. 원 공시는 백만원으로 반올림 인쇄(2,982)했고 후속 공시는 원 단위로 인쇄한 정밀값을 쓴다. owner 규칙 '반올림 차이는 정밀한 쪽'에 따라 한 열의 값으로 맞춘다. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
+    },
+    {
+      "원보험사코드": "KR0104",
+      "항목번호": 31,
+      "공시분기": "2023.3Q",
+      "값": 663267.601615,
+      "was": 618220.0,
+      "note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114000851 의 전기(2023.9.30 누적) 열 = 663267.601615 백만원. 원문 data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml L6851. 단위 원(정확 인쇄). 현재 마스터값 618220.0 는 원 공시 FY2023_Q3 rcept 20231114001637(단위 백만원) 인쇄값과 일치. 변동 +45047.601615: 후속 공시(FY2024 3분기보고서)가 전기오류(K-IFRS 제1109호 최초적용 시 일부 금융상품 분류 오류, 주석 '전기오류의 성격' 20241114000851.xml L25325)를 정정해 재작성한 비교열이다. 정정 주석 표 수정 후 663,267 (L25449, 수정금액 45,047 L25448). 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0104.json"
     }
   ],
   "null_dangi": {
@@ -4035,9 +5403,95 @@
         "KR0073",
         "2025.3Q",
         32
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        17
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        19
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        20
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        22
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        23
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        24
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        25
+      ],
+      [
+        "KR0032",
+        "2023.4Q",
+        27
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        17
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        19
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        20
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        22
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        23
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        24
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        25
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        27
+      ],
+      [
+        "KR0087",
+        "2023.4Q",
+        31
       ]
     ],
-    "_doc_oci_20261022": "KR0073 OCI refresh 2026-10-22 (ticket 20261021T1556Z): 값_당분기 of items 25/26/31/32 for 2024.4Q and 2025.3Q is blanked. After the cumulative refresh of 2024.4Q (FY2025 annual restated column) and 2025.1Q/2025.2Q (FY2026 Q1/Q2 restated comparatives) the builder difference of those cells would subtract a restated cumulative from a cumulative of another filing basis (2024.3Q and 2025.3Q are still as originally filed; the restated 3-month columns are not published: annual report has none, the FY2026 Q3 report is not filed yet). Owner rule 2026-10-22: a blank beats a wrong value. Re-derive once the FY2026 Q3 report restates 2025.3Q. Items 27/28/29/30/24 are unaffected (same basis in both filings)."
+    "_doc_oci_20261022": "KR0073 OCI refresh 2026-10-22 (ticket 20261021T1556Z): 값_당분기 of items 25/26/31/32 for 2024.4Q and 2025.3Q is blanked. After the cumulative refresh of 2024.4Q (FY2025 annual restated column) and 2025.1Q/2025.2Q (FY2026 Q1/Q2 restated comparatives) the builder difference of those cells would subtract a restated cumulative from a cumulative of another filing basis (2024.3Q and 2025.3Q are still as originally filed; the restated 3-month columns are not published: annual report has none, the FY2026 Q3 report is not filed yet). Owner rule 2026-10-22: a blank beats a wrong value. Re-derive once the FY2026 Q3 report restates 2025.3Q. Items 27/28/29/30/24 are unaffected (same basis in both filings).",
+    "_doc_e19_20261022": "2026-10-22 ticket 20261022T0900Z (parser/ifrs17, owner go 2026-10-22 'latest comparative for the other companies, same as Kyobo'): 값_당분기 forced blank for KR0032 2023.4Q items 17/19/20/22/23/24/25/27 and KR0087 2023.4Q items 17/19/20/22/23/24/25/27/31. The 4Q cumulative is now the restated annual comparative while the 9M cumulative of the same year is still the original print (the FY2024 Q1-Q3 reports still print the pre-change 2023 columns) and the annual report prints no 3-month Q4 column, so the builder difference would mix two vintages. Blank beats wrong; re-derive when a restated 9M-2023 comparative exists."
   },
   "set_dangi": {
     "_doc": "KR0073 2023.3Q single quarter = the restated THREE-MONTH value printed in the FY2024 Q3 report (data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml, separate basis, prior-year 3-month column of the income statement / OCI and of the 보험수익 / 보험서비스비용 / 재보험 notes; the cell line is the 5th element). Derived items (2, 3, 7, 8, 12, 18, 19, 32) apply the production assemble() definitions to printed 3-month cells. All 10 PL identities close on this vector (residual <= 1e-6 백만원) and an independent read (FS-API frmtrm_q_amount + the production Tier-2 handler) agrees for every cell. The cumulative 값 is not touched, so the four 2023 single quarters do not add up to the full-year value: the difference is the restated first-half correction that was never published (the FY2024 Q1/Q2 comparatives are pre-correction), e.g. 원수 CSM상각 105,255 + 106,779 + 150,548 + 163,380 = 525,962 vs 627,701 (difference 101,739). Items not printed stay null (null_dangi). Ticket inbox/parser/20261021T1655Z__validation__KR0073_2023.3Q__single_quarter_vintage_seam.md; evidence data/_derived/kyobo_seam_blank_20261022/ (seam_3m_extract.txt, seam_3m_vector.csv)",
@@ -4244,7 +5698,148 @@
         32,
         137.989264,
         "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml (derived: = item25 − Σ(26..30))"
+      ],
+      [
+        "KR0005",
+        "2023.3Q",
+        20,
+        19608.0,
+        "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml:L4560 [Ⅲ.영업이익] 3-month column printed in the later filing; FY2024 3Q report note 41 table 2) 전분기 포괄손익계산서, 3개월 수정 후: 19,608 @L25597 (수정 전 25,638, the pre-correction value that the master 6M-based single quarter still uses)"
+      ],
+      [
+        "KR0005",
+        "2023.3Q",
+        22,
+        19025.0,
+        "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml:L4606 [Ⅴ.법인세비용차감전순이익] 3-month column printed in the later filing; FY2024 3Q report note 41 table 2) 전분기 포괄손익계산서, 3개월 수정 후: 19,025 @L25608 (수정 전 25,055, the pre-correction value that the master 6M-based single quarter still uses)"
+      ],
+      [
+        "KR0005",
+        "2023.3Q",
+        23,
+        5738.0,
+        "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml:L4629 [Ⅵ.법인세비용] 3-month column printed in the later filing; FY2024 3Q report note 41 table 2) 전분기 포괄손익계산서, 3개월 수정 후: 5,738 @L25619 (수정 전 6,971, the pre-correction value that the master 6M-based single quarter still uses)"
+      ],
+      [
+        "KR0005",
+        "2023.3Q",
+        24,
+        13287.0,
+        "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml:L4652 [Ⅶ.분기순이익] 3-month column printed in the later filing; FY2024 3Q report note 41 table 2) 전분기 포괄손익계산서, 3개월 수정 후: 13,287 @L25630 (수정 전 18,084, the pre-correction value that the master 6M-based single quarter still uses)"
+      ],
+      [
+        "KR0082",
+        "2023.3Q",
+        1,
+        25276.415839,
+        "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25354 [보험손익] 25,276,415,839원"
+      ],
+      [
+        "KR0082",
+        "2023.3Q",
+        16,
+        2468.525942,
+        "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25515 [기타사업비용] 2,468,525,942원"
+      ],
+      [
+        "KR0082",
+        "2023.3Q",
+        17,
+        -21348.590171,
+        "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25538 [투자손익] (21,348,590,171)원"
+      ],
+      [
+        "KR0082",
+        "2023.3Q",
+        18,
+        16742.113684,
+        "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25538 [투자손익] (21,348,590,171)원 (derived: item17 - item19; item19 = + L25584 [보험금융수익] 33,075,850,004원 + L25607 [재보험금융수익] 367,218,616원 - L25837 [보험금융비용] 70,696,792,460원 - L25860 [재보험금융비용] 836,980,015원; in the 2024 filings the 비용 lines are printed positive)"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        17,
+        -116710.044721,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21695 [투자손익] (116,710,044,721)원"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        19,
+        -77029.404569,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21711 [재보험금융수익] 14,252,527원 || data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21815 [보험금융비용] 77,043,657,096원 (expense line, subtracted)"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        20,
+        -123246.09902,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21895 [영업이익(손실)] (123,246,099,020)원"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        22,
+        -123396.856774,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21927 [법인세차감전순이익(손실)] (123,396,856,774)원"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        23,
+        -28844.151026,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21935 [법인세비용(수익)] (28,844,151,026)원"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        24,
+        -94552.705748,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21943 [분기순이익(손실)] (94,552,705,748)원"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        25,
+        49281.693124,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21951 [기타포괄손익] 49,281,693,124원"
+      ],
+      [
+        "KR0083",
+        "2024.3Q",
+        27,
+        -136596.159635,
+        "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml:L21991 [보험계약자산(부채)순금융손익] (136,596,159,635)원"
+      ],
+      [
+        "KR0104",
+        "2023.3Q",
+        16,
+        12097.07857,
+        "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml:L5789 [기타사업비용] 12,097,078,570원"
+      ],
+      [
+        "KR0104",
+        "2023.3Q",
+        22,
+        45521.420788,
+        "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml:L6479 [법인세차감전순이익] 45,521,420,788원"
+      ],
+      [
+        "KR0104",
+        "2023.3Q",
+        23,
+        10463.421336,
+        "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml:L6502 [법인세비용(수익)] 10,463,421,336원"
+      ],
+      [
+        "KR0104",
+        "2023.3Q",
+        24,
+        35057.999452,
+        "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml:L6525 [분기순이익] 35,057,999,452원"
       ]
-    ]
+    ],
+    "_doc_e19_20261022": "2026-10-22 ticket 20261022T0900Z (parser/ifrs17): 값_당분기 = the 3-month column printed in the later filing for single quarters whose two cumulatives are on different vintages: KR0005 2023.3Q items 20/22/23/24 (FY2024 Q3 3-month column, restated), KR0082 2023.3Q items 1/16/17/18 (FY2024 Q3 prior 3-month column), KR0083 2024.3Q items 17/19/20/22/23/24/25/27 (FY2025 Q3 prior 3-month column PFY2024dTQQ), KR0104 2023.3Q items 16/22/23/24 (FY2024 Q3 prior 3-month column). 5th element = the cell line / derivation; 값 (cumulative) is kept."
   }
 }

@@ -1,0 +1,126 @@
+== 2023.1Q keys ['code', 'name', 'q', 'scope', 'div', 'its', 'cls', 'real', 'rel_master', 'id_latest', 'id_master', 'disp', 'tag_move_eok', 'd24_eok', 'd25_eok', 'd31_eok', 'gold_overlap', 'gold_in_block', 'gold_val', 'csm', 'fy_status', 'pl_verdict_1012']
+  code: "KR0082"
+  name: "DB생명보험"
+  q: "2023.1Q"
+  scope: "ADDL_SIBLING"
+  div: [null, "OFS"]
+  it1: {"same": null, "prior": 25057.342149, "master": 24548.24847}
+  it16: {"same": null, "prior": 2067.960023, "master": 2577.053702}
+  it17: {"same": null, "prior": 57656.757116, "master": 58165.850794}
+  it18: {"same": null, "prior": 155626.201135, "master": 156135.294813}
+  it19: {"same": null, "prior": -97969.444019, "master": -97969.444019}
+  it20: {"same": null, "prior": 82714.099265, "master": 82714.099264}
+  it21: {"same": null, "prior": -1465.656008, "master": -1465.656007}
+  it22: {"same": null, "prior": 81248.443257, "master": 81248.443257}
+  it23: {"same": null, "prior": 17623.190647, "master": 17623.190647}
+  it24: {"same": null, "prior": 63625.25261, "master": 63625.25261}
+  it25: {"same": null, "prior": -77080.378732, "master": null}
+  it26: {"same": null, "prior": 166014.417062, "master": null}
+  it27: {"same": null, "prior": -259505.239678, "master": null}
+  it28: {"same": null, "prior": 9916.594671, "master": null}
+  it29: {"same": null, "prior": 10653.068255, "master": null}
+  it30: {"same": null, "prior": -4150.597549, "master": null}
+  it31: {"same": null, "prior": -13455.126122, "master": null}
+  it32: {"same": null, "prior": -8.621493, "master": null}
+  cls: {"1": "REAL", "16": "REAL", "17": "REAL", "18": "REAL", "19": "EQ", "20": "EQ", "21": "EQ", "22": "EQ", "23": "EQ", "24": "EQ", "25": "NA", "26": "NA", "27": "NA", "28": "NA", "29": "NA", "30": "NA", "31": "NA", "32": "NA"}
+  real: [1, 16, 17, 18]
+  rel_master: {"1": "ORIGINAL_NOAPI", "16": "ORIGINAL_NOAPI", "17": "ORIGINAL_NOAPI", "18": "ORIGINAL_NOAPI", "19": "LATEST", "20": "LATEST", "21": "LATEST", "22": "LATEST", "23": "LATEST", "24": "LATEST", "25": "NONE", "26": "NONE", "27": "NONE", "28": "NONE", "29": "NONE", "30": "NONE", "31": "NONE", "32": "NONE"}
+  id_latest: {"I1": true, "I2": true, "I3": true}
+  id_master: {"I1": true, "I2": true, "I3": null}
+  disp: [{"item": 1, "name": "보험손익", "master_eok": 245.48, "latest_eok": 250.57, "delta_eok": 5.09, "rel": 0.0207, "panel": "compare(보험손익)+IFRS17-P3"}, {"item": 16, "name": "기타사업비용", "master_eok": 25.77, "latest_eok": 20.68, "delta_eok": -5.09, "rel": -0.1975, "panel": "IFRS17-P3"}, {"item": 17, "name": "투자손익", "master_eok": 581.66, "latest_eok": 576.57, "delta_eok": -5.09, "rel": -0.0088, "panel": "compare(투자손익)+IFRS17-P3"}, {"item": 18, "name": "투자이익", "master_eok": 1561.35, "latest_eok": 1556.26, "delta_eok": -5.09, "rel": -0.0033, "panel": "download-only"}]
+  tag_move_eok: null
+  d24_eok: 0.0
+  d25_eok: null
+  d31_eok: null
+  gold_overlap: [1, 16, 17, 18]
+  gold_in_block: ["1", "16", "17", "18", "19"]
+  gold_val: {"1": "other", "16": "other", "17": "other", "18": "other", "19": "=latest"}
+  csm: {"status": "DIFF", "verdict_1012": "최신 채택(진짜 재작성 †)", "diff_items": [3, 4], "now": [15523.6, 1239.3, 123.6, 85.7, -323.1, 16649.0], "latest": [15523.6, 1239.3, 123.6, 85.7, -323.1, 16649.0], "rel_now": "LATEST", "gold": [3, 4], "fid": "SAME", "tier": "trusted", "current1012": [15523.6, 1239.3, 82.1, 127.1, -323.1, 16649.0], "pl4_eok": 323.1}
+  fy_status: {"2023.1Q": "DIFF", "2023.2Q": "DIFF", "2023.3Q": "DIFF", "2023.4Q": "EQ"}
+  pl_verdict_1012: "gold 충돌"
+== 2023.2Q keys ['code', 'name', 'q', 'scope', 'div', 'its', 'cls', 'real', 'rel_master', 'id_latest', 'id_master', 'disp', 'tag_move_eok', 'd24_eok', 'd25_eok', 'd31_eok', 'gold_overlap', 'gold_in_block', 'gold_val', 'csm', 'fy_status', 'pl_verdict_1012']
+  code: "KR0082"
+  name: "DB생명보험"
+  q: "2023.2Q"
+  scope: "ADDL_SIBLING"
+  div: [null, "OFS"]
+  it1: {"same": null, "prior": 60651.121059, "master": 59719.308746}
+  it16: {"same": null, "prior": 4918.638673, "master": 5850.450986}
+  it17: {"same": null, "prior": 83955.484775, "master": 84887.297088}
+  it18: {"same": null, "prior": 246721.172212, "master": 247652.984525}
+  it19: {"same": null, "prior": -162765.687437, "master": -162765.687437}
+  it20: {"same": null, "prior": 144606.605834, "master": 144606.605834}
+  it21: {"same": null, "prior": -1835.777079, "master": -1835.777079}
+  it22: {"same": null, "prior": 142770.828755, "master": 142770.828755}
+  it23: {"same": null, "prior": 31495.99776, "master": 31495.99776}
+  it24: {"same": null, "prior": 111274.830995, "master": 111274.830995}
+  it25: {"same": null, "prior": -3455.474658, "master": null}
+  it26: {"same": null, "prior": 46879.427544, "master": null}
+  it27: {"same": null, "prior": -65159.24936, "master": null}
+  it28: {"same": null, "prior": 8618.162702, "master": null}
+  it29: {"same": null, "prior": 8617.413282, "master": null}
+  it30: {"same": null, "prior": -1823.904606, "master": null}
+  it31: {"same": null, "prior": 107819.356337, "master": null}
+  it32: {"same": null, "prior": -587.32422, "master": null}
+  cls: {"1": "REAL", "16": "REAL", "17": "REAL", "18": "REAL", "19": "EQ", "20": "EQ", "21": "EQ", "22": "EQ", "23": "EQ", "24": "EQ", "25": "NA", "26": "NA", "27": "NA", "28": "NA", "29": "NA", "30": "NA", "31": "NA", "32": "NA"}
+  real: [1, 16, 17, 18]
+  rel_master: {"1": "ORIGINAL_NOAPI", "16": "ORIGINAL_NOAPI", "17": "ORIGINAL_NOAPI", "18": "ORIGINAL_NOAPI", "19": "LATEST", "20": "LATEST", "21": "LATEST", "22": "LATEST", "23": "LATEST", "24": "LATEST", "25": "NONE", "26": "NONE", "27": "NONE", "28": "NONE", "29": "NONE", "30": "NONE", "31": "NONE", "32": "NONE"}
+  id_latest: {"I1": true, "I2": true, "I3": true}
+  id_master: {"I1": true, "I2": true, "I3": null}
+  disp: [{"item": 1, "name": "보험손익", "master_eok": 597.19, "latest_eok": 606.51, "delta_eok": 9.32, "rel": 0.0156, "panel": "compare(보험손익)+IFRS17-P3"}, {"item": 16, "name": "기타사업비용", "master_eok": 58.5, "latest_eok": 49.19, "delta_eok": -9.32, "rel": -0.1593, "panel": "IFRS17-P3"}, {"item": 17, "name": "투자손익", "master_eok": 848.87, "latest_eok": 839.55, "delta_eok": -9.32, "rel": -0.011, "panel": "compare(투자손익)+IFRS17-P3"}, {"item": 18, "name": "투자이익", "master_eok": 2476.53, "latest_eok": 2467.21, "delta_eok": -9.32, "rel": -0.0038, "panel": "download-only"}]
+  tag_move_eok: null
+  d24_eok: 0.0
+  d25_eok: null
+  d31_eok: null
+  gold_overlap: [1, 16, 17, 18]
+  gold_in_block: ["1", "16", "17", "18", "19"]
+  gold_val: {"1": "other", "16": "other", "17": "other", "18": "other", "19": "=latest"}
+  csm: {"status": "SAME", "verdict_1012": "변화 없음", "diff_items": [], "now": [15523.6, 2441.7, 259.5, -373.6, -678.4, 17172.8], "latest": [15523.6, 2441.7, 259.5, -373.6, -678.4, 17172.8], "rel_now": "LATEST", "gold": [], "fid": "SAME", "tier": "", "current1012": [15523.6, 2441.7, 259.5, -373.6, -678.4, 17172.8], "pl4_eok": 678.36}
+  fy_status: {"2023.1Q": "DIFF", "2023.2Q": "DIFF", "2023.3Q": "DIFF", "2023.4Q": "EQ"}
+  pl_verdict_1012: "gold 충돌"
+== 2023.3Q keys ['code', 'name', 'q', 'scope', 'div', 'its', 'cls', 'real', 'rel_master', 'id_latest', 'id_master', 'disp', 'tag_move_eok', 'd24_eok', 'd25_eok', 'd31_eok', 'gold_overlap', 'gold_in_block', 'gold_val', 'csm', 'fy_status', 'pl_verdict_1012']
+  code: "KR0082"
+  name: "DB생명보험"
+  q: "2023.3Q"
+  scope: "A51"
+  div: ["OFS", "OFS"]
+  it1: {"same": 84042.329124, "prior": 85927.536898, "master": 84042.329124}
+  it16: {"same": 9272.372389, "prior": 7387.164615, "master": 9272.372389}
+  it17: {"same": 64492.102378, "prior": 62606.894604, "master": 64492.102378}
+  it18: {"same": 265348.49367, "prior": 263463.285896, "master": 265348.49367}
+  it19: {"same": -200856.391292, "prior": -200856.391292, "master": -200856.391292}
+  it20: {"same": 148534.431502, "prior": 148534.431502, "master": 148534.431502}
+  it21: {"same": -2066.542465, "prior": -2066.542465, "master": -2066.542465}
+  it22: {"same": 146467.889037, "prior": 146467.889037, "master": 146467.889037}
+  it23: {"same": 31373.205338, "prior": 31373.205338, "master": 31373.205338}
+  it24: {"same": 115094.683699, "prior": 115094.683699, "master": 115094.683699}
+  it25: {"same": 32455.69746, "prior": 32455.69746, "master": 32455.69746}
+  it26: {"same": -165417.124807, "prior": -165417.124807, "master": -165417.124807}
+  it27: {"same": 193218.885642, "prior": 193218.885642, "master": 193218.885642}
+  it28: {"same": -5145.575333, "prior": -5145.575333, "master": -5145.575333}
+  it29: {"same": 4226.932786, "prior": 4226.932786, "master": 4226.932786}
+  it30: {"same": 1095.93456, "prior": 1095.93456, "master": 1095.93456}
+  it31: {"same": 147550.381159, "prior": 147550.381159, "master": 147550.381159}
+  it32: {"same": 4476.644612, "prior": 4476.644612, "master": 4476.644612}
+  cls: {"1": "REAL", "16": "REAL", "17": "REAL", "18": "REAL", "19": "EQ", "20": "EQ", "21": "EQ", "22": "EQ", "23": "EQ", "24": "EQ", "25": "EQ", "26": "EQ", "27": "EQ", "28": "EQ", "29": "EQ", "30": "EQ", "31": "EQ", "32": "EQ"}
+  real: [1, 16, 17, 18]
+  rel_master: {"1": "ORIGINAL", "16": "ORIGINAL", "17": "ORIGINAL", "18": "ORIGINAL", "19": "ORIGINAL", "20": "ORIGINAL", "21": "ORIGINAL", "22": "ORIGINAL", "23": "ORIGINAL", "24": "ORIGINAL", "25": "ORIGINAL", "26": "ORIGINAL", "27": "ORIGINAL", "28": "ORIGINAL", "29": "ORIGINAL", "30": "ORIGINAL", "31": "ORIGINAL", "32": "ORIGINAL"}
+  id_latest: {"I1": true, "I2": true, "I3": true}
+  id_master: {"I1": true, "I2": true, "I3": true}
+  disp: [{"item": 1, "name": "보험손익", "master_eok": 840.42, "latest_eok": 859.28, "delta_eok": 18.85, "rel": 0.0224, "panel": "compare(보험손익)+IFRS17-P3"}, {"item": 16, "name": "기타사업비용", "master_eok": 92.72, "latest_eok": 73.87, "delta_eok": -18.85, "rel": -0.2033, "panel": "IFRS17-P3"}, {"item": 17, "name": "투자손익", "master_eok": 644.92, "latest_eok": 626.07, "delta_eok": -18.85, "rel": -0.0292, "panel": "compare(투자손익)+IFRS17-P3"}, {"item": 18, "name": "투자이익", "master_eok": 2653.48, "latest_eok": 2634.63, "delta_eok": -18.85, "rel": -0.0071, "panel": "download-only"}]
+  tag_move_eok: 0.0
+  d24_eok: 0.0
+  d25_eok: 0.0
+  d31_eok: 0.0
+  gold_overlap: []
+  gold_in_block: []
+  gold_val: {}
+  csm: {"status": "SAME", "verdict_1012": "변화 없음", "diff_items": [], "now": [15523.6, 4086.0, 407.5, -1381.6, -1021.9, 17613.7], "latest": [15523.6, 4086.0, 407.5, -1381.5, -1021.9, 17613.7], "rel_now": "ORIGINAL", "gold": [], "fid": "SAME", "tier": "", "current1012": [15523.6, 4086.0, 407.5, -1381.6, -1021.9, 17613.7], "pl4_eok": 1021.86}
+  fy_status: {"2023.1Q": "DIFF", "2023.2Q": "DIFF", "2023.3Q": "DIFF", "2023.4Q": "EQ"}
+  pl_verdict_1012: "후보 불완전(Tier-1 닫힘/닫힘·LOB 다리 후보 없음)"
+D9 type dict
+CAND list 234
+C ["KR0082", "2023.3Q", 1, 84042.329124, 85927.536898]
+C ["KR0082", "2023.3Q", 16, 9272.372389, 7387.164615]
+C ["KR0082", "2023.3Q", 17, 64492.102378, 62606.894604]
+C ["KR0082", "2023.3Q", 18, 265348.49367, 263463.285896]

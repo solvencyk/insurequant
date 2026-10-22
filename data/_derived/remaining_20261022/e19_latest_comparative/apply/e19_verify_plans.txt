@@ -1,0 +1,32 @@
+KR0005: cells 45, all checks ok 45
+KR0032: cells 32, all checks ok 32
+KR0070: cells 24, all checks ok 24
+KR0082: cells 4, all checks ok 4
+KR0083: cells 16, all checks ok 16
+KR0087: cells 33, all checks ok 33
+KR0104: cells 18, all checks ok 18
+
+cell position inside the <TR> (idx, ncells) per bucket (must be one dominant position; the prior-period cumulative column):
+  KR0005 2023.3Q: {(4, 5): 17}
+  KR0005 2023.4Q: {(2, 4): 23}
+  KR0005 2024.1Q: {(4, 5): 17}
+  KR0005 2024.2Q: {(4, 5): 17}
+  KR0032 2023.4Q: {(2, 4): 11}
+  KR0032 2024.1Q: {(4, 5): 11}
+  KR0032 2024.2Q: {(4, 5): 11}
+  KR0032 2024.3Q: {(4, 5): 11}
+  KR0070 2024.1Q: {(4, 5): 11}
+  KR0070 2024.2Q: {(4, 5): 11}
+  KR0070 2024.3Q: {(4, 5): 11}
+  KR0082 2023.3Q: {(4, 5): 8}
+  KR0083 2024.1Q: {(4, 5): 9}
+  KR0083 2024.2Q: {(4, 5): 10}
+  KR0087 2023.4Q: {(2, 4): 11}
+  KR0087 2024.1Q: {(4, 5): 10}
+  KR0087 2024.2Q: {(4, 5): 10}
+  KR0087 2024.3Q: {(4, 5): 10}
+  KR0104 2023.3Q: {(4, 5): 26}
+
+ACONTEXT of the cited cells: {"none": 53, "PFY2023dFY": 45, "PFY2024dFQA": 58, "PFY2024dHYA": 57, "PFY2024dTQA": 32}
+cells with blank cell(s) counted as 0: [["KR0005", "2024.2Q", 18, [5180]], ["KR0005", "2024.2Q", 32, [5570]]]
+problems: 0

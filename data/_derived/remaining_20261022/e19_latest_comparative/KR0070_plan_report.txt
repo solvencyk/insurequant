@@ -1,0 +1,198 @@
+== 2024.1Q adopt=True cells=8 items=[17, 19, 20, 22, 23, 24, 25, 27] equal_items=[1, 16, 18, 21, 26, 28, 30, 31, 32] census_items_equal=True gold_in_block=[4, 7] overlap=[]
+   later FY2025_Q1 rcept 20250515002435 unit 원 col PFY2024dFQA
+   closure_master_before:
+      I1 20 = 1 + 17: resid=0.0 tol=0.002 ok=True
+      I2 |22-24| = |23|: resid=-0.0 tol=0.002 ok=True
+      I2b 22 = 20 + 21: resid=0.0 tol=0.002 ok=True
+      I3 31 = 24 + 25: resid=0.0 tol=0.002 ok=True
+      I4 25 = sum of OCI parts the master carries: resid=0.0 tol=0.002 ok=True
+      I5 17 = 18 + 19: resid=0.0 tol=0.002 ok=True
+      I6 LOB bridge 1 = 2+13+14 + 15 - 16: resid=-0.0 tol=0.002 ok=True
+      I7 Tier-2 tree (informational, unchanged by adoption): resids={'2 = 3 + 8': 0.0, '3 = 4+5+6+7': 0.0} ok=True
+   closure_merged_after:
+      I1 20 = 1 + 17: resid=0.0 tol=0.002 ok=True
+      I2 |22-24| = |23|: resid=-0.0 tol=0.002 ok=True
+      I2b 22 = 20 + 21: resid=0.0 tol=0.002 ok=True
+      I3 31 = 24 + 25: resid=0.0 tol=0.002 ok=True
+      I4 25 = sum of OCI parts the master carries: resid=0.0 tol=0.002 ok=True
+      I5 17 = 18 + 19: resid=0.0 tol=0.002 ok=True
+      I6 LOB bridge 1 = 2+13+14 + 15 - 16: resid=-0.0 tol=0.002 ok=True
+      I7 Tier-2 tree (informational, unchanged by adoption): resids={'2 = 3 + 8': 0.0, '3 = 4+5+6+7': 0.0} ok=True
+   closure_printed_later_filing:
+      printed 20 = printed 1 + printed 17: resid=0.0 tol=0.002 ok=True
+      printed 21 = nonop income - nonop expense: resid=-0.0 tol=0.002 ok=True
+      printed 22 = printed 20 + printed 21: resid=0.0 tol=0.002 ok=True
+      printed 24 = printed 22 - printed 23: resid=0.0 tol=0.002 ok=True
+      printed 31 = printed 24 + printed 25: resid=0.0 tol=0.002 ok=True
+      printed 25 = 26+27+28+30+32 (leaf rows): resid=0.0 tol=0.002 ok=True
+== 2024.2Q adopt=True cells=8 items=[17, 19, 20, 22, 23, 24, 25, 27] equal_items=[1, 16, 18, 21, 26, 28, 30, 31, 32] census_items_equal=True gold_in_block=[4, 7] overlap=[]
+   later FY2025_Q2 rcept 20250814004404 unit 원 col PFY2024dHYA
+   closure_master_before:
+      I1 20 = 1 + 17: resid=0.0 tol=0.002 ok=True
+      I2 |22-24| = |23|: resid=0.0 tol=0.002 ok=True
+      I2b 22 = 20 + 21: resid=0.0 tol=0.002 ok=True
+      I3 31 = 24 + 25: resid=0.0 tol=0.002 ok=True
+      I4 25 = sum of OCI parts the master carries: resid=0.0 tol=0.002 ok=True
+      I5 17 = 18 + 19: resid=0.0 tol=0.002 ok=True
+      I6 LOB bridge 1 = 2+13+14 + 15 - 16: resid=0.0 tol=0.002 ok=True
+      I7 Tier-2 tree (informational, unchanged by adoption): resids={'2 = 3 + 8': 0.0, '3 = 4+5+6+7': -0.0} ok=True
+   closure_merged_after:
+      I1 20 = 1 + 17: resid=-0.0 tol=0.002 ok=True
+      I2 |22-24| = |23|: resid=0.0 tol=0.002 ok=True
+      I2b 22 = 20 + 21: resid=0.0 tol=0.002 ok=True
+      I3 31 = 24 + 25: resid=0.0 tol=0.002 ok=True
+      I4 25 = sum of OCI parts the master carries: resid=0.0 tol=0.002 ok=True
+      I5 17 = 18 + 19: resid=-0.0 tol=0.002 ok=True
+      I6 LOB bridge 1 = 2+13+14 + 15 - 16: resid=0.0 tol=0.002 ok=True
+      I7 Tier-2 tree (informational, unchanged by adoption): resids={'2 = 3 + 8': 0.0, '3 = 4+5+6+7': -0.0} ok=True
+   closure_printed_later_filing:
+      printed 20 = printed 1 + printed 17: resid=-0.0 tol=0.002 ok=True
+      printed 21 = nonop income - nonop expense: resid=-0.0 tol=0.002 ok=True
+      printed 22 = printed 20 + printed 21: resid=0.0 tol=0.002 ok=True
+      printed 24 = printed 22 - printed 23: resid=0.0 tol=0.002 ok=True
+      printed 31 = printed 24 + printed 25: resid=0.0 tol=0.002 ok=True
+      printed 25 = 26+27+28+30+32 (leaf rows): resid=0.0 tol=0.002 ok=True
+== 2024.3Q adopt=True cells=8 items=[17, 19, 20, 22, 23, 24, 25, 27] equal_items=[1, 16, 18, 21, 26, 28, 30, 31, 32] census_items_equal=True gold_in_block=[4, 7] overlap=[]
+   later FY2025_Q3 rcept 20251114002593 unit 원 col PFY2024dTQA
+   closure_master_before:
+      I1 20 = 1 + 17: resid=0.0 tol=0.002 ok=True
+      I2 |22-24| = |23|: resid=0.0 tol=0.002 ok=True
+      I2b 22 = 20 + 21: resid=-0.0 tol=0.002 ok=True
+      I3 31 = 24 + 25: resid=0.0 tol=0.002 ok=True
+      I4 25 = sum of OCI parts the master carries: resid=0.0 tol=0.002 ok=True
+      I5 17 = 18 + 19: resid=0.0 tol=0.002 ok=True
+      I6 LOB bridge 1 = 2+13+14 + 15 - 16: resid=0.0 tol=0.002 ok=True
+      I7 Tier-2 tree (informational, unchanged by adoption): resids={'2 = 3 + 8': -0.0, '3 = 4+5+6+7': 0.0} ok=True
+   closure_merged_after:
+      I1 20 = 1 + 17: resid=-0.0 tol=0.002 ok=True
+      I2 |22-24| = |23|: resid=0.0 tol=0.002 ok=True
+      I2b 22 = 20 + 21: resid=0.0 tol=0.002 ok=True
+      I3 31 = 24 + 25: resid=0.0 tol=0.002 ok=True
+      I4 25 = sum of OCI parts the master carries: resid=0.0 tol=0.002 ok=True
+      I5 17 = 18 + 19: resid=0.0 tol=0.002 ok=True
+      I6 LOB bridge 1 = 2+13+14 + 15 - 16: resid=0.0 tol=0.002 ok=True
+      I7 Tier-2 tree (informational, unchanged by adoption): resids={'2 = 3 + 8': -0.0, '3 = 4+5+6+7': 0.0} ok=True
+   closure_printed_later_filing:
+      printed 20 = printed 1 + printed 17: resid=-0.0 tol=0.002 ok=True
+      printed 21 = nonop income - nonop expense: resid=0.0 tol=0.002 ok=True
+      printed 22 = printed 20 + printed 21: resid=0.0 tol=0.002 ok=True
+      printed 24 = printed 22 - printed 23: resid=0.0 tol=0.002 ok=True
+      printed 31 = printed 24 + printed 25: resid=0.0 tol=0.002 ok=True
+      printed 25 = 26+27+28+30+32 (leaf rows): resid=0.0 tol=0.002 ok=True
+
+CELL 2024.1Q i17 투자손익: old=-5720.079812 new=-2376.553043 delta=3343.526769 L25800 fsapi=-2376.553043 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.1Q i19 보험금융손익: old=-206446.768679 new=-203103.24191 delta=3343.526769 L25846 fsapi=-203103.24191 diff=-0.0 mastEqOrig=True deriv=sum of printed lines (signs in xml_lines)
+CELL 2024.1Q i20 영업이익: old=9871.874644 new=13215.401413 delta=3343.526769 L26444 fsapi=13215.401413 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.1Q i22 세전이익: old=10245.531856 new=13589.058625 delta=3343.526769 L26536 fsapi=13589.058625 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.1Q i23 법인세: old=2476.559489 new=3248.914173 delta=772.354684 L26559 fsapi=3248.914173 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.1Q i24 당기순이익: old=7768.972367 new=10340.144452 delta=2571.172085 L26605 fsapi=10340.144452 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.1Q i25 기타포괄손익: old=-217002.31146 new=-219573.483545 delta=-2571.172085 L26651 fsapi=-219573.483545 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.1Q i27 보험계약금융손익(OCI): old=-39883.505007 new=-42454.677092 delta=-2571.172085 L26743 fsapi=-42454.677092 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.2Q i17 투자손익: old=32655.613464 new=36491.7661 delta=3836.152636 L29208 fsapi=36491.7661 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.2Q i19 보험금융손익: old=-389682.750946 new=-385846.59831 delta=3836.152636 L29254 fsapi=-385846.59831 diff=0.0 mastEqOrig=True deriv=sum of printed lines (signs in xml_lines)
+CELL 2024.2Q i20 영업이익: old=59385.567034 new=63221.71967 delta=3836.152636 L29852 fsapi=63221.71967 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.2Q i22 세전이익: old=55392.821186 new=59228.973822 delta=3836.152636 L29944 fsapi=59228.973822 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.2Q i23 법인세: old=12917.2658 new=13803.417059 delta=886.151259 L29967 fsapi=13803.417059 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.2Q i24 당기순이익: old=42475.555386 new=45425.556763 delta=2950.001377 L30013 fsapi=45425.556763 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.2Q i25 기타포괄손익: old=-399586.213789 new=-402536.215166 delta=-2950.001377 L30059 fsapi=-402536.215166 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.2Q i27 보험계약금융손익(OCI): old=-343006.068594 new=-345956.069971 delta=-2950.001377 L30151 fsapi=-345956.069971 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.3Q i17 투자손익: old=69166.349415 new=73518.576723 delta=4352.227308 L23357 fsapi=73518.576723 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.3Q i19 보험금융손익: old=-490278.54977 new=-485926.322462 delta=4352.227308 L23373 fsapi=-485926.322462 diff=0.0 mastEqOrig=True deriv=sum of printed lines (signs in xml_lines)
+CELL 2024.3Q i20 영업이익: old=96483.388604 new=100835.615912 delta=4352.227308 L23581 fsapi=100835.615912 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.3Q i22 세전이익: old=88169.866243 new=92522.093551 delta=4352.227308 L23613 fsapi=92522.093551 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.3Q i23 법인세: old=20489.078458 new=21494.442966 delta=1005.364508 L23621 fsapi=21494.442966 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.3Q i24 당기순이익: old=67680.787785 new=71027.650585 delta=3346.8628 L23629 fsapi=71027.650585 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.3Q i25 기타포괄손익: old=-490073.854682 new=-493420.717482 delta=-3346.8628 L23637 fsapi=-493420.717482 diff=0.0 mastEqOrig=True deriv=direct print
+CELL 2024.3Q i27 보험계약금융손익(OCI): old=-718114.101947 new=-721460.964747 delta=-3346.8628 L23669 fsapi=-721460.964747 diff=0.0 mastEqOrig=True deriv=direct print
+
+SEAM (0):
+NEIGHBOUR (8):
+   2024.4Q i17 class=consistent_after_adoption old=54302.461768 after=49950.23446
+   2024.4Q i19 class=consistent_after_adoption old=-133147.997746 after=-137500.225054
+   2024.4Q i20 class=consistent_after_adoption old=36961.955211 after=32609.727903
+   2024.4Q i22 class=consistent_after_adoption old=32561.021214 after=28208.793906
+   2024.4Q i23 class=consistent_after_adoption old=-4539.855484 after=-5545.219992
+   2024.4Q i24 class=consistent_after_adoption old=37100.876698 after=33754.013898
+   2024.4Q i25 class=pre_existing_difference_outside_scope old=-17285.265101 after=-13938.402301
+   2024.4Q i27 class=consistent_after_adoption old=-36902.888856 after=-33556.026056
+AUTO_FOLLOW (24):
+   2024.1Q i17 Q1 old=-5720.079812 after=-2376.553043
+   2024.2Q i17 both_adopted old=38375.693276 after=38868.319143
+   2024.3Q i17 both_adopted old=36510.735951 after=37026.810623
+   2024.1Q i19 Q1 old=-206446.768679 after=-203103.24191
+   2024.2Q i19 both_adopted old=-183235.982267 after=-182743.3564
+   2024.3Q i19 both_adopted old=-100595.798824 after=-100079.724152
+   2024.1Q i20 Q1 old=9871.874644 after=13215.401413
+   2024.2Q i20 both_adopted old=49513.69239 after=50006.318257
+   2024.3Q i20 both_adopted old=37097.82157 after=37613.896242
+   2024.1Q i22 Q1 old=10245.531856 after=13589.058625
+   2024.2Q i22 both_adopted old=45147.28933 after=45639.915197
+   2024.3Q i22 both_adopted old=32777.045057 after=33293.119729
+   2024.1Q i23 Q1 old=2476.559489 after=3248.914173
+   2024.2Q i23 both_adopted old=10440.706311 after=10554.502886
+   2024.3Q i23 both_adopted old=7571.812658 after=7691.025907
+   2024.1Q i24 Q1 old=7768.972367 after=10340.144452
+   2024.2Q i24 both_adopted old=34706.583019 after=35085.412311
+   2024.3Q i24 both_adopted old=25205.232399 after=25602.093822
+   2024.1Q i25 Q1 old=-217002.31146 after=-219573.483545
+   2024.2Q i25 both_adopted old=-182583.902329 after=-182962.731621
+   2024.3Q i25 both_adopted old=-90487.640893 after=-90884.502316
+   2024.1Q i27 Q1 old=-39883.505007 after=-42454.677092
+   2024.2Q i27 both_adopted old=-303122.563587 after=-303501.392879
+   2024.3Q i27 both_adopted old=-375108.033353 after=-375504.894776
+VERIFICATION {"master_equals_original_print_all": true, "warnings": [], "dangi_model_mismatch_vs_live_master": [[16, "2023.4Q", 9200.0, null]], "census_vs_xml": {"n_cells": 24, "max_abs_diff": 0.0, "items_equal_to_census_all_buckets": true}, "gold": {"KR0070_gold_set_cells": 14, "KR0070_gold_set_keys": [["KR0070", 4, "2023.1Q"], ["KR0070", 4, "2024.1Q"], ["KR0070", 4, "2024.2Q"], ["KR0070", 4, "2024.3Q"], ["KR0070", 4, "2025.1Q"], ["KR0070", 4, "2025.2Q"], ["KR0070", 4, "2025.3Q"], ["KR0070", 7, "2023.1Q"], ["KR0070", 7, "2024.1Q"], ["KR0070", 7, "2024.2Q"], ["KR0070", 7, "2024.3Q"], ["KR0070", 7, "2025.1Q"], ["KR0070", 7, "2025.2Q"], ["KR0070", 7, "2025.3Q"]], "adopted_cells_hitting_gold": [], "user_pl_confirmed_cells_mentions_of_KR0070": 0, "null_dangi_existing": [], "set_dangi_existing": []}, "q2025_master_vs_own_print": {"n": 51, "n_equal": 51, "differing": []}, "q2023_4Q_master_vs_fy2024_annual_prior_informational": {"equal_items": [1, 18, 21, 26, 28, 30, 31, 32], "differing_items": [16, 17, 19, 20, 22, 23, 24, 25, 27]}}
+3M check: n=24 ok=24 max|diff|=0.0
+   2024.1Q i17 derived=-2376.553043 printed3m=-2376.553043 diff=0.0 L25796 ok=True
+   2024.1Q i19 derived=-203103.24191 printed3m=-203103.24191 diff=-0.0 L25842 ok=True
+   2024.1Q i20 derived=13215.401413 printed3m=13215.401413 diff=0.0 L26440 ok=True
+   2024.1Q i22 derived=13589.058625 printed3m=13589.058625 diff=0.0 L26532 ok=True
+   2024.1Q i23 derived=3248.914173 printed3m=3248.914173 diff=0.0 L26555 ok=True
+   2024.1Q i24 derived=10340.144452 printed3m=10340.144452 diff=0.0 L26601 ok=True
+   2024.1Q i25 derived=-219573.483545 printed3m=-219573.483545 diff=0.0 L26647 ok=True
+   2024.1Q i27 derived=-42454.677092 printed3m=-42454.677092 diff=0.0 L26739 ok=True
+   2024.2Q i17 derived=38868.319143 printed3m=38868.319143 diff=0.0 L29204 ok=True
+   2024.2Q i19 derived=-182743.3564 printed3m=-182743.3564 diff=0.0 L29250 ok=True
+   2024.2Q i20 derived=50006.318257 printed3m=50006.318257 diff=0.0 L29848 ok=True
+   2024.2Q i22 derived=45639.915197 printed3m=45639.915197 diff=0.0 L29940 ok=True
+   2024.2Q i23 derived=10554.502886 printed3m=10554.502886 diff=0.0 L29963 ok=True
+   2024.2Q i24 derived=35085.412311 printed3m=35085.412311 diff=0.0 L30009 ok=True
+   2024.2Q i25 derived=-182962.731621 printed3m=-182962.731621 diff=0.0 L30055 ok=True
+   2024.2Q i27 derived=-303501.392879 printed3m=-303501.392879 diff=0.0 L30147 ok=True
+   2024.3Q i17 derived=37026.810623 printed3m=37026.810623 diff=0.0 L23356 ok=True
+   2024.3Q i19 derived=-100079.724152 printed3m=-100079.724152 diff=0.0 L23372 ok=True
+   2024.3Q i20 derived=37613.896242 printed3m=37613.896242 diff=0.0 L23580 ok=True
+   2024.3Q i22 derived=33293.119729 printed3m=33293.119729 diff=0.0 L23612 ok=True
+   2024.3Q i23 derived=7691.025907 printed3m=7691.025907 diff=0.0 L23620 ok=True
+   2024.3Q i24 derived=25602.093822 printed3m=25602.093822 diff=0.0 L23628 ok=True
+   2024.3Q i25 derived=-90884.502316 printed3m=-90884.502316 diff=0.0 L23636 ok=True
+   2024.3Q i27 derived=-375504.894776 printed3m=-375504.894776 diff=0.0 L23668 ok=True
+2024.4Q master vs annual prints:
+   {"item": 1, "master": 9976.532632, "fy2024_annual_current_print": 9976.532632, "fy2025_annual_prior_print": 9976.532632, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 35219, "xml_line_fy2025": 38779}
+   {"item": 16, "master": 28864.927062, "fy2024_annual_current_print": 28864.927062, "fy2025_annual_prior_print": 28864.927062, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 35352, "xml_line_fy2025": 38828}
+   {"item": 17, "master": 123468.811183, "fy2024_annual_current_print": 123468.811183, "fy2025_annual_prior_print": 123468.811183, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 35371, "xml_line_fy2025": 38835}
+   {"item": 18, "master": 746895.358699, "fy2024_annual_current_print": 746895.358699, "fy2025_annual_prior_print": 746895.358699, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": null, "xml_line_fy2025": null}
+   {"item": 19, "master": -623426.547516, "fy2024_annual_current_print": -623426.547516, "fy2025_annual_prior_print": -623426.547516, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 35409, "xml_line_fy2025": 38849}
+   {"item": 20, "master": 133445.343815, "fy2024_annual_current_print": 133445.343815, "fy2025_annual_prior_print": 133445.343815, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 35941, "xml_line_fy2025": 39038}
+   {"item": 21, "master": -12714.456358, "fy2024_annual_current_print": -12714.456358, "fy2025_annual_prior_print": -12714.456358, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 35960, "xml_line_fy2025": 39045}
+   {"item": 22, "master": 120730.887457, "fy2024_annual_current_print": 120730.887457, "fy2025_annual_prior_print": 120730.887457, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 36017, "xml_line_fy2025": 39066}
+   {"item": 23, "master": 15949.222974, "fy2024_annual_current_print": 15949.222974, "fy2025_annual_prior_print": 15949.222974, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 36036, "xml_line_fy2025": 39073}
+   {"item": 24, "master": 104781.664483, "fy2024_annual_current_print": 104781.664483, "fy2025_annual_prior_print": 104781.664483, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 36093, "xml_line_fy2025": 39080}
+   {"item": 25, "master": -507359.119783, "fy2024_annual_current_print": -507359.119783, "fy2025_annual_prior_print": -507108.237816, "master_eq_annual_print": true, "master_eq_fy2025_prior": false, "diff_vs_fy2025_prior": -250.881967, "xml_line_fy2024": 36131, "xml_line_fy2025": 39087}
+   {"item": 26, "master": 237228.331423, "fy2024_annual_current_print": 237228.331423, "fy2025_annual_prior_print": 237479.21339, "master_eq_annual_print": true, "master_eq_fy2025_prior": false, "diff_vs_fy2025_prior": -250.881967, "xml_line_fy2024": 36169, "xml_line_fy2025": 39101}
+   {"item": 27, "master": -755016.990803, "fy2024_annual_current_print": -755016.990803, "fy2025_annual_prior_print": -755016.990803, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 36207, "xml_line_fy2025": 39115}
+   {"item": 28, "master": 25793.345537, "fy2024_annual_current_print": 25793.345537, "fy2025_annual_prior_print": 25793.345537, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 36245, "xml_line_fy2025": 39129}
+   {"item": 30, "master": -15615.663968, "fy2024_annual_current_print": -15615.663968, "fy2025_annual_prior_print": -15615.663968, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 36226, "xml_line_fy2025": 39122}
+   {"item": 31, "master": -402577.4553, "fy2024_annual_current_print": -402577.4553, "fy2025_annual_prior_print": -402326.573333, "master_eq_annual_print": true, "master_eq_fy2025_prior": false, "diff_vs_fy2025_prior": -250.881967, "xml_line_fy2024": 36283, "xml_line_fy2025": 39143}
+   {"item": 32, "master": 251.858028, "fy2024_annual_current_print": 251.858028, "fy2025_annual_prior_print": 251.858028, "master_eq_annual_print": true, "master_eq_fy2025_prior": true, "diff_vs_fy2025_prior": 0.0, "xml_line_fy2024": 36188, "xml_line_fy2025": 39108}
+2024.4Q single quarter:
+   i17 {"live_dangi": 54302.461768, "derived_after_adoption": 49950.23446, "ytd4_master": 123468.811183, "ytd3_before": 69166.349415, "ytd3_after": 73518.576723, "ytd4_fy2025_annual_prior": 123468.811183}
+   i19 {"live_dangi": -133147.997746, "derived_after_adoption": -137500.225054, "ytd4_master": -623426.547516, "ytd3_before": -490278.54977, "ytd3_after": -485926.322462, "ytd4_fy2025_annual_prior": -623426.547516}
+   i20 {"live_dangi": 36961.955211, "derived_after_adoption": 32609.727903, "ytd4_master": 133445.343815, "ytd3_before": 96483.388604, "ytd3_after": 100835.615912, "ytd4_fy2025_annual_prior": 133445.343815}
+   i22 {"live_dangi": 32561.021214, "derived_after_adoption": 28208.793906, "ytd4_master": 120730.887457, "ytd3_before": 88169.866243, "ytd3_after": 92522.093551, "ytd4_fy2025_annual_prior": 120730.887457}
+   i23 {"live_dangi": -4539.855484, "derived_after_adoption": -5545.219992, "ytd4_master": 15949.222974, "ytd3_before": 20489.078458, "ytd3_after": 21494.442966, "ytd4_fy2025_annual_prior": 15949.222974}
+   i24 {"live_dangi": 37100.876698, "derived_after_adoption": 33754.013898, "ytd4_master": 104781.664483, "ytd3_before": 67680.787785, "ytd3_after": 71027.650585, "ytd4_fy2025_annual_prior": 104781.664483}
+   i25 {"live_dangi": -17285.265101, "derived_after_adoption": -13938.402301, "ytd4_master": -507359.119783, "ytd3_before": -490073.854682, "ytd3_after": -493420.717482, "ytd4_fy2025_annual_prior": -507108.237816}
+   i26 {"live_dangi": 6908.686434, "derived_after_adoption": 6908.686434, "ytd4_master": 237228.331423, "ytd3_before": 230319.644989, "ytd3_after": 230319.644989, "ytd4_fy2025_annual_prior": 237479.21339}
+   i27 {"live_dangi": -36902.888856, "derived_after_adoption": -33556.026056, "ytd4_master": -755016.990803, "ytd3_before": -718114.101947, "ytd3_after": -721460.964747, "ytd4_fy2025_annual_prior": -755016.990803}
+   i31 {"live_dangi": 19815.611597, "derived_after_adoption": 19815.611597, "ytd4_master": -402577.4553, "ytd3_before": -422393.066897, "ytd3_after": -422393.066897, "ytd4_fy2025_annual_prior": -402326.573333}
+   i32 {"live_dangi": 341.270898, "derived_after_adoption": 341.270898, "ytd4_master": 251.858028, "ytd3_before": -89.41287, "ytd3_after": -89.41287, "ytd4_fy2025_annual_prior": 251.858028}

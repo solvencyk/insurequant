@@ -1,0 +1,37 @@
+gold set keys KR0083: [('KR0083', 18, '2023.2Q'), ('KR0083', 19, '2023.2Q'), ('KR0083', 21, '2023.2Q'), ('KR0083', 27, '2024.3Q'), ('KR0083', 28, '2024.3Q'), ('KR0083', 30, '2024.3Q')]
+gold null_dangi KR0083: [] ; set_dangi KR0083: []
+live 2024.1Q i17 master=42172.415112 plan_old=42172.415112 ok=True gold_hit=False
+live 2024.1Q i19 master=-74328.507198 plan_old=-74328.507198 ok=True gold_hit=False
+live 2024.1Q i20 master=34919.23713 plan_old=34919.23713 ok=True gold_hit=False
+live 2024.1Q i22 master=37762.412046 plan_old=37762.412046 ok=True gold_hit=False
+live 2024.1Q i23 master=8465.252508 plan_old=8465.252508 ok=True gold_hit=False
+live 2024.1Q i24 master=29297.159538 plan_old=29297.159538 ok=True gold_hit=False
+live 2024.1Q i25 master=-75837.71767 plan_old=-75837.71767 ok=True gold_hit=False
+live 2024.1Q i27 master=14284.130789 plan_old=14284.130789 ok=True gold_hit=False
+live 2024.2Q i17 master=45968.030947 plan_old=45968.030947 ok=True gold_hit=False
+live 2024.2Q i19 master=-150710.444807 plan_old=-150710.444807 ok=True gold_hit=False
+live 2024.2Q i20 master=32835.544605 plan_old=32835.544605 ok=True gold_hit=False
+live 2024.2Q i22 master=35531.941886 plan_old=35531.941886 ok=True gold_hit=False
+live 2024.2Q i23 master=8293.622915 plan_old=8293.622915 ok=True gold_hit=False
+live 2024.2Q i24 master=27238.318971 plan_old=27238.318971 ok=True gold_hit=False
+live 2024.2Q i25 master=-195544.727432 plan_old=-195544.727432 ok=True gold_hit=False
+live 2024.2Q i27 master=-126053.685103 plan_old=-126053.685103 ok=True gold_hit=False
+live seam 2024.3Q i17 dangi=-113358.815784 plan_old=-113358.815784 ok=True
+live seam 2024.3Q i19 dangi=-73678.175632 plan_old=-73678.175632 ok=True
+live seam 2024.3Q i20 dangi=-119894.870083 plan_old=-119894.870083 ok=True
+live seam 2024.3Q i22 dangi=-120045.627837 plan_old=-120045.627837 ok=True
+live seam 2024.3Q i23 dangi=-28070.017142 plan_old=-28070.017142 ok=True
+live seam 2024.3Q i24 dangi=-91975.610695 plan_old=-91975.610695 ok=True
+live seam 2024.3Q i25 dangi=46704.598071 plan_old=46704.598071 ok=True
+live seam 2024.3Q i27 dangi=-139173.254688 plan_old=-139173.254688 ok=True
+4Q i17 ytd4=14810.751299 ytd3=-67390.784837 dangi4=82201.536136 derived=82201.536136
+4Q i19 ytd4=-298524.147644 ytd3=-224388.620439 dangi4=-74135.527205 derived=-74135.52720500002
+4Q i20 ytd4=-45005.871819 ytd3=-87059.325478 dangi4=42053.453659 derived=42053.453659
+4Q i22 ytd4=-43872.859422 ytd3=-84513.685951 dangi4=40640.826529 derived=40640.826529000005
+4Q i23 ytd4=-9828.768399 ytd3=-19776.394227 dangi4=9947.625828 derived=9947.625828
+4Q i24 ytd4=-34044.091023 ytd3=-64737.291724 dangi4=30693.200701 derived=30693.200701
+4Q i25 ytd4=-342850.798182 ytd3=-148840.129361 dangi4=-194010.668821 derived=-194010.668821
+4Q i27 ytd4=-298379.095916 ytd3=-265226.939791 dangi4=-33152.156125 derived=-33152.15612500004
+closure 2024.1Q {'20=1+17': 0.0, '|22-24|=|23|': -0.0, '31=24+25': 0.0, '25=26+27+28+30+32': 0.0, '17=18+19': 0.0, '22=20+21': -0.0, '1=2+13+14+15-16': -0.0}
+closure 2024.2Q {'20=1+17': 0.0, '|22-24|=|23|': 0.0, '31=24+25': 0.0, '25=26+27+28+30+32': 0.0, '17=18+19': -0.0, '22=20+21': 0.0, '1=2+13+14+15-16': 0.0}
+BAD=0

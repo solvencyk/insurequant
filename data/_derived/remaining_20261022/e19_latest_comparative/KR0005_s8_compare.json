@@ -1,0 +1,785 @@
+{
+ "2023.3Q": {
+  "1": {
+   "master": 277123.0,
+   "orig_xml": 277123.0,
+   "later_xml": 277123.0,
+   "census_new": null,
+   "api_prior": 277123.0,
+   "api_same": 277123.0,
+   "flags": []
+  },
+  "15": {
+   "master": 0.0,
+   "orig_xml": 0.0,
+   "later_xml": 0.0,
+   "census_new": null,
+   "api_prior": 0.0,
+   "api_same": 0.0,
+   "flags": []
+  },
+  "16": {
+   "master": 13225.0,
+   "orig_xml": 13225.0,
+   "later_xml": 13225.0,
+   "census_new": null,
+   "api_prior": 13225.0,
+   "api_same": 13225.0,
+   "flags": []
+  },
+  "17": {
+   "master": -42056.0,
+   "orig_xml": -42056.0,
+   "later_xml": -63150.0,
+   "census_new": -63150.0,
+   "api_prior": -63150.0,
+   "api_same": -42056.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "18": {
+   "master": 217893.0,
+   "orig_xml": 217893.0,
+   "later_xml": 196799.0,
+   "census_new": 196799.0,
+   "api_prior": 196799.0,
+   "api_same": 217893.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "19": {
+   "master": -259949.0,
+   "orig_xml": -259949.0,
+   "later_xml": -259949.0,
+   "census_new": null,
+   "api_prior": -259949.0,
+   "api_same": -259949.0,
+   "flags": []
+  },
+  "20": {
+   "master": 235067.0,
+   "orig_xml": 235067.0,
+   "later_xml": 213973.0,
+   "census_new": 213973.0,
+   "api_prior": 213973.0,
+   "api_same": 235067.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "21": {
+   "master": -970.0,
+   "orig_xml": -970.0,
+   "later_xml": -970.0,
+   "census_new": null,
+   "api_prior": -970.0,
+   "api_same": -970.0,
+   "flags": []
+  },
+  "22": {
+   "master": 234097.0,
+   "orig_xml": 234097.0,
+   "later_xml": 213003.0,
+   "census_new": 213003.0,
+   "api_prior": 213003.0,
+   "api_same": 234097.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "23": {
+   "master": 52285.0,
+   "orig_xml": 52285.0,
+   "later_xml": 47747.0,
+   "census_new": 47747.0,
+   "api_prior": 47747.0,
+   "api_same": 52285.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "24": {
+   "master": 181812.0,
+   "orig_xml": 181812.0,
+   "later_xml": 165256.0,
+   "census_new": 165256.0,
+   "api_prior": 165256.0,
+   "api_same": 181812.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "25": {
+   "master": -210395.0,
+   "orig_xml": -210395.0,
+   "later_xml": -189519.0,
+   "census_new": -189519.0,
+   "api_prior": -189519.0,
+   "api_same": -210395.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "26": {
+   "master": -101767.0,
+   "orig_xml": -101767.0,
+   "later_xml": -80901.0,
+   "census_new": -80901.0,
+   "api_prior": -80901.0,
+   "api_same": -101767.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "27": {
+   "master": 30103.0,
+   "orig_xml": 30103.0,
+   "later_xml": 30103.0,
+   "census_new": null,
+   "api_prior": 30103.0,
+   "api_same": 30103.0,
+   "flags": []
+  },
+  "28": {
+   "master": -135755.0,
+   "orig_xml": -135755.0,
+   "later_xml": -135740.0,
+   "census_new": -135740.0,
+   "api_prior": -135740.0,
+   "api_same": -135755.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "29": {
+   "master": null,
+   "orig_xml": null,
+   "later_xml": null,
+   "census_new": null,
+   "api_prior": null,
+   "api_same": null,
+   "flags": []
+  },
+  "30": {
+   "master": -3117.0,
+   "orig_xml": -3117.0,
+   "later_xml": -3117.0,
+   "census_new": null,
+   "api_prior": -3117.0,
+   "api_same": -3117.0,
+   "flags": []
+  },
+  "31": {
+   "master": -28583.0,
+   "orig_xml": -28583.0,
+   "later_xml": -24263.0,
+   "census_new": -24263.0,
+   "api_prior": -24263.0,
+   "api_same": -28583.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "32": {
+   "master": 141.0,
+   "orig_xml": 141.0,
+   "later_xml": 136.0,
+   "census_new": 136.0,
+   "api_prior": 136.0,
+   "api_same": 141.0,
+   "flags": [
+    "DIFF"
+   ]
+  }
+ },
+ "2023.4Q": {
+  "1": {
+   "master": 308412.0,
+   "orig_xml": 308412.0,
+   "later_xml": 308412.0,
+   "census_new": null,
+   "api_prior": 308412.0,
+   "api_same": 308412.0,
+   "flags": []
+  },
+  "15": {
+   "master": 0.0,
+   "orig_xml": 0.0,
+   "later_xml": 0.0,
+   "census_new": null,
+   "api_prior": 0.0,
+   "api_same": 0.0,
+   "flags": []
+  },
+  "16": {
+   "master": 18758.0,
+   "orig_xml": 18758.0,
+   "later_xml": 18758.0,
+   "census_new": null,
+   "api_prior": 18758.0,
+   "api_same": 18758.0,
+   "flags": []
+  },
+  "17": {
+   "master": 99358.0,
+   "orig_xml": 99358.0,
+   "later_xml": 72613.0,
+   "census_new": 72613.0,
+   "api_prior": 72613.0,
+   "api_same": 99358.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "18": {
+   "master": 446988.0,
+   "orig_xml": 446988.0,
+   "later_xml": 418462.0,
+   "census_new": 418462.0,
+   "api_prior": 418462.0,
+   "api_same": 446988.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "19": {
+   "master": -347630.0,
+   "orig_xml": -347630.0,
+   "later_xml": -345849.0,
+   "census_new": -345849.0,
+   "api_prior": -345849.0,
+   "api_same": -347630.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "20": {
+   "master": 407770.0,
+   "orig_xml": 407770.0,
+   "later_xml": 381025.0,
+   "census_new": 381025.0,
+   "api_prior": 381025.0,
+   "api_same": 407770.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "21": {
+   "master": -639.0,
+   "orig_xml": -639.0,
+   "later_xml": -639.0,
+   "census_new": null,
+   "api_prior": -639.0,
+   "api_same": -639.0,
+   "flags": []
+  },
+  "22": {
+   "master": 407131.0,
+   "orig_xml": 407131.0,
+   "later_xml": 380386.0,
+   "census_new": 380386.0,
+   "api_prior": 380386.0,
+   "api_same": 407131.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "23": {
+   "master": 90984.0,
+   "orig_xml": 90984.0,
+   "later_xml": 84846.0,
+   "census_new": 84846.0,
+   "api_prior": 84846.0,
+   "api_same": 90984.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "24": {
+   "master": 316147.0,
+   "orig_xml": 316147.0,
+   "later_xml": 295540.0,
+   "census_new": 295540.0,
+   "api_prior": 295540.0,
+   "api_same": 316147.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "25": {
+   "master": -400409.0,
+   "orig_xml": -400409.0,
+   "later_xml": -371946.0,
+   "census_new": -371946.0,
+   "api_prior": -371946.0,
+   "api_same": -400409.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "26": {
+   "master": 402967.0,
+   "orig_xml": 402967.0,
+   "later_xml": 431462.0,
+   "census_new": 431462.0,
+   "api_prior": 431462.0,
+   "api_same": 402967.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "27": {
+   "master": -888760.0,
+   "orig_xml": -888760.0,
+   "later_xml": -888760.0,
+   "census_new": null,
+   "api_prior": -888760.0,
+   "api_same": -888760.0,
+   "flags": []
+  },
+  "28": {
+   "master": 71835.0,
+   "orig_xml": 71835.0,
+   "later_xml": 71810.0,
+   "census_new": 71810.0,
+   "api_prior": 71810.0,
+   "api_same": 71835.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "29": {
+   "master": null,
+   "orig_xml": null,
+   "later_xml": null,
+   "census_new": null,
+   "api_prior": null,
+   "api_same": null,
+   "flags": []
+  },
+  "30": {
+   "master": 14360.0,
+   "orig_xml": 14360.0,
+   "later_xml": 14360.0,
+   "census_new": null,
+   "api_prior": 14360.0,
+   "api_same": 14360.0,
+   "flags": []
+  },
+  "31": {
+   "master": -84262.0,
+   "orig_xml": -84262.0,
+   "later_xml": -76406.0,
+   "census_new": -76406.0,
+   "api_prior": -76406.0,
+   "api_same": -84262.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "32": {
+   "master": -811.0,
+   "orig_xml": -811.0,
+   "later_xml": -818.0,
+   "census_new": -818.0,
+   "api_prior": -818.0,
+   "api_same": -811.0,
+   "flags": [
+    "DIFF"
+   ]
+  }
+ },
+ "2024.1Q": {
+  "1": {
+   "master": 139937.0,
+   "orig_xml": 139937.0,
+   "later_xml": 139937.0,
+   "census_new": null,
+   "api_prior": 139937.0,
+   "api_same": 139937.0,
+   "flags": []
+  },
+  "15": {
+   "master": 0.0,
+   "orig_xml": 0.0,
+   "later_xml": 0.0,
+   "census_new": null,
+   "api_prior": 0.0,
+   "api_same": 0.0,
+   "flags": []
+  },
+  "16": {
+   "master": 5112.0,
+   "orig_xml": 5112.0,
+   "later_xml": 5112.0,
+   "census_new": null,
+   "api_prior": 5112.0,
+   "api_same": 5112.0,
+   "flags": []
+  },
+  "17": {
+   "master": -71099.0,
+   "orig_xml": -71099.0,
+   "later_xml": -78401.0,
+   "census_new": -78401.0,
+   "api_prior": -78401.0,
+   "api_same": -71099.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "18": {
+   "master": 9640.0,
+   "orig_xml": 9640.0,
+   "later_xml": 2338.0,
+   "census_new": 2338.0,
+   "api_prior": 2338.0,
+   "api_same": 9640.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "19": {
+   "master": -80739.0,
+   "orig_xml": -80739.0,
+   "later_xml": -80739.0,
+   "census_new": null,
+   "api_prior": -80739.0,
+   "api_same": -80739.0,
+   "flags": []
+  },
+  "20": {
+   "master": 68838.0,
+   "orig_xml": 68838.0,
+   "later_xml": 61536.0,
+   "census_new": 61536.0,
+   "api_prior": 61536.0,
+   "api_same": 68838.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "21": {
+   "master": -345.0,
+   "orig_xml": -345.0,
+   "later_xml": -345.0,
+   "census_new": null,
+   "api_prior": -345.0,
+   "api_same": -345.0,
+   "flags": []
+  },
+  "22": {
+   "master": 68493.0,
+   "orig_xml": 68493.0,
+   "later_xml": 61191.0,
+   "census_new": 61191.0,
+   "api_prior": 61191.0,
+   "api_same": 68493.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "23": {
+   "master": 20483.0,
+   "orig_xml": 20483.0,
+   "later_xml": 21979.0,
+   "census_new": 21979.0,
+   "api_prior": 21979.0,
+   "api_same": 20483.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "24": {
+   "master": 48010.0,
+   "orig_xml": 48010.0,
+   "later_xml": 39212.0,
+   "census_new": 39212.0,
+   "api_prior": 39212.0,
+   "api_same": 48010.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "25": {
+   "master": -308151.0,
+   "orig_xml": -308151.0,
+   "later_xml": -300515.0,
+   "census_new": -300515.0,
+   "api_prior": -300515.0,
+   "api_same": -308151.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "26": {
+   "master": -139223.0,
+   "orig_xml": -139223.0,
+   "later_xml": -131799.0,
+   "census_new": -131799.0,
+   "api_prior": -131799.0,
+   "api_same": -139223.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "27": {
+   "master": -90836.0,
+   "orig_xml": -90836.0,
+   "later_xml": -90836.0,
+   "census_new": null,
+   "api_prior": -90836.0,
+   "api_same": -90836.0,
+   "flags": []
+  },
+  "28": {
+   "master": -81173.0,
+   "orig_xml": -81173.0,
+   "later_xml": -80960.0,
+   "census_new": -80960.0,
+   "api_prior": -80960.0,
+   "api_same": -81173.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "29": {
+   "master": null,
+   "orig_xml": null,
+   "later_xml": null,
+   "census_new": null,
+   "api_prior": null,
+   "api_same": null,
+   "flags": []
+  },
+  "30": {
+   "master": 3280.0,
+   "orig_xml": 3280.0,
+   "later_xml": 3280.0,
+   "census_new": null,
+   "api_prior": 3280.0,
+   "api_same": 3280.0,
+   "flags": []
+  },
+  "31": {
+   "master": -260141.0,
+   "orig_xml": -260141.0,
+   "later_xml": -261303.0,
+   "census_new": -261303.0,
+   "api_prior": -261303.0,
+   "api_same": -260141.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "32": {
+   "master": -199.0,
+   "orig_xml": -199.0,
+   "later_xml": -200.0,
+   "census_new": null,
+   "api_prior": -200.0,
+   "api_same": -199.0,
+   "flags": [
+    "DIFF",
+    "census-membership?"
+   ]
+  }
+ },
+ "2024.2Q": {
+  "1": {
+   "master": 182019.0,
+   "orig_xml": 182019.0,
+   "later_xml": 182019.0,
+   "census_new": null,
+   "api_prior": 182019.0,
+   "api_same": 182019.0,
+   "flags": []
+  },
+  "15": {
+   "master": 0.0,
+   "orig_xml": 0.0,
+   "later_xml": 0.0,
+   "census_new": null,
+   "api_prior": 0.0,
+   "api_same": 0.0,
+   "flags": []
+  },
+  "16": {
+   "master": 11246.0,
+   "orig_xml": 11246.0,
+   "later_xml": 11246.0,
+   "census_new": null,
+   "api_prior": 11246.0,
+   "api_same": 11246.0,
+   "flags": []
+  },
+  "17": {
+   "master": -45124.0,
+   "orig_xml": -45124.0,
+   "later_xml": -62135.0,
+   "census_new": -62135.0,
+   "api_prior": -62135.0,
+   "api_same": -45124.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "18": {
+   "master": 120197.0,
+   "orig_xml": 120197.0,
+   "later_xml": 103186.0,
+   "census_new": 103186.0,
+   "api_prior": 103186.0,
+   "api_same": 120197.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "19": {
+   "master": -165321.0,
+   "orig_xml": -165321.0,
+   "later_xml": -165321.0,
+   "census_new": null,
+   "api_prior": -165321.0,
+   "api_same": -165321.0,
+   "flags": []
+  },
+  "20": {
+   "master": 136895.0,
+   "orig_xml": 136895.0,
+   "later_xml": 119884.0,
+   "census_new": 119884.0,
+   "api_prior": 119884.0,
+   "api_same": 136895.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "21": {
+   "master": -869.0,
+   "orig_xml": -869.0,
+   "later_xml": -869.0,
+   "census_new": null,
+   "api_prior": -869.0,
+   "api_same": -869.0,
+   "flags": []
+  },
+  "22": {
+   "master": 136026.0,
+   "orig_xml": 136026.0,
+   "later_xml": 119015.0,
+   "census_new": 119015.0,
+   "api_prior": 119015.0,
+   "api_same": 136026.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "23": {
+   "master": 29035.0,
+   "orig_xml": 29035.0,
+   "later_xml": 31608.0,
+   "census_new": 31608.0,
+   "api_prior": 31608.0,
+   "api_same": 29035.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "24": {
+   "master": 106991.0,
+   "orig_xml": 106991.0,
+   "later_xml": 87407.0,
+   "census_new": 87407.0,
+   "api_prior": 87407.0,
+   "api_same": 106991.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "25": {
+   "master": -570466.0,
+   "orig_xml": -570466.0,
+   "later_xml": -553328.0,
+   "census_new": -553328.0,
+   "api_prior": -553328.0,
+   "api_same": -570466.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "26": {
+   "master": -105377.0,
+   "orig_xml": -105377.0,
+   "later_xml": -87646.0,
+   "census_new": -87646.0,
+   "api_prior": -87646.0,
+   "api_same": -105377.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "27": {
+   "master": -432328.0,
+   "orig_xml": -432328.0,
+   "later_xml": -432328.0,
+   "census_new": null,
+   "api_prior": -432328.0,
+   "api_same": -432328.0,
+   "flags": []
+  },
+  "28": {
+   "master": -43229.0,
+   "orig_xml": -43229.0,
+   "later_xml": -43819.0,
+   "census_new": -43819.0,
+   "api_prior": -43819.0,
+   "api_same": -43229.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "29": {
+   "master": null,
+   "orig_xml": null,
+   "later_xml": null,
+   "census_new": null,
+   "api_prior": null,
+   "api_same": null,
+   "flags": []
+  },
+  "30": {
+   "master": 10619.0,
+   "orig_xml": 10619.0,
+   "later_xml": 10619.0,
+   "census_new": null,
+   "api_prior": 10619.0,
+   "api_same": 10619.0,
+   "flags": []
+  },
+  "31": {
+   "master": -463475.0,
+   "orig_xml": -463475.0,
+   "later_xml": -465921.0,
+   "census_new": -465921.0,
+   "api_prior": -465921.0,
+   "api_same": -463475.0,
+   "flags": [
+    "DIFF"
+   ]
+  },
+  "32": {
+   "master": -151.0,
+   "orig_xml": -151.0,
+   "later_xml": -154.0,
+   "census_new": -154.0,
+   "api_prior": -154.0,
+   "api_same": -151.0,
+   "flags": [
+    "DIFF"
+   ]
+  }
+ }
+}

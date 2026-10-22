@@ -1,0 +1,28 @@
+값 changed 171 ; all in NEW gold entries: True ; any in existing gold: []
+new gold entries 171 ; each 'was' equals HEAD master 값: True
+new gold entries each 값 equals current master 값: True
+existing gold 값 equals master (HEAD vs cur identical): True
+값_당분기 changed 215; of which keys in EXISTING owner gold: 1
+   existing-gold key with changed dangi: ('KR0083', 27, '2024.3Q') head=-139173.254688 cur=-136596.159635 gold_note=inbox/parser/20260828T1200Z__orchestrator__KR0083_2024.3Q__dart_api_sign_reversa
+existing gold keys in the 19 buckets (same company+quarter as a changed 값):
+   ('KR0087', 10, '2023.4Q') item 10 val=1400.0 master_cur=1400.0 head=1400.0
+   ('KR0087', 11, '2023.4Q') item 11 val=-1306.0 master_cur=-1306.0 head=-1306.0
+   ('KR0087', 12, '2023.4Q') item 12 val=8332.654626 master_cur=8332.654626 head=8332.654626
+   ('KR0087', 9, '2023.4Q') item 9 val=-2185.0 master_cur=-2185.0 head=-2185.0
+   ('KR0005', 16, '2023.3Q') item 16 val=13225.0 master_cur=13225.0 head=13225.0
+   ('KR0005', 16, '2023.4Q') item 16 val=18758.0 master_cur=18758.0 head=18758.0
+   ('KR0005', 16, '2024.1Q') item 16 val=5112.0 master_cur=5112.0 head=5112.0
+   ('KR0005', 16, '2024.2Q') item 16 val=11246.0 master_cur=11246.0 head=11246.0
+   ('KR0070', 4, '2024.1Q') item 4 val=22447.0 master_cur=22447.0 head=22447.0
+   ('KR0070', 4, '2024.2Q') item 4 val=44994.0 master_cur=44994.0 head=44994.0
+   ('KR0070', 4, '2024.3Q') item 4 val=66762.0 master_cur=66762.0 head=66762.0
+   ('KR0087', 4, '2024.2Q') item 4 val=129439.0 master_cur=129439.0 head=129439.0
+   ('KR0087', 4, '2024.3Q') item 4 val=196194.0 master_cur=196194.0 head=196194.0
+   ('KR0070', 7, '2024.1Q') item 7 val=-4442.757812 master_cur=-4442.757812 head=-4442.757812
+   ('KR0070', 7, '2024.2Q') item 7 val=-3602.139877 master_cur=-3602.139877 head=-3602.139877
+   ('KR0070', 7, '2024.3Q') item 7 val=-21693.010136 master_cur=-21693.010136 head=-21693.010136
+   ('KR0087', 7, '2024.2Q') item 7 val=-3670.662495 master_cur=-3670.662495 head=-3670.662495
+   ('KR0087', 7, '2024.3Q') item 7 val=40979.623446 master_cur=40979.623446 head=40979.623446
+existing null_dangi preserved: True ; existing set_dangi preserved: True
+sections: ['_doc', 'set', 'null_dangi', 'set_dangi']
+keys in both null and set dangi: set()

@@ -1,0 +1,56 @@
+2023.3Q item 17 투자손익             cum    -42056.0->   -63150.0 prev-cum        None  dangi stored        None emul-old        None emul-new        None printed3m    -68469.0 new-printed      None
+2023.3Q item 18 투자이익             cum    217893.0->   196799.0 prev-cum        None  dangi stored        None emul-old        None emul-new        None printed3m     15675.0 new-printed      None
+2023.3Q item 20 영업이익             cum    235067.0->   213973.0 prev-cum    209429.0  dangi stored     25638.0 emul-old     25638.0 emul-new      4544.0 printed3m     19608.0 new-printed  -15064.0
+2023.3Q item 22 세전이익             cum    234097.0->   213003.0 prev-cum    209042.0  dangi stored     25055.0 emul-old     25055.0 emul-new      3961.0 printed3m     19025.0 new-printed  -15064.0
+2023.3Q item 23 법인세              cum     52285.0->    47747.0 prev-cum     45314.0  dangi stored      6971.0 emul-old      6971.0 emul-new      2433.0 printed3m      5738.0 new-printed   -3305.0
+2023.3Q item 24 당기순이익            cum    181812.0->   165256.0 prev-cum    163728.0  dangi stored     18084.0 emul-old     18084.0 emul-new      1528.0 printed3m     13287.0 new-printed  -11759.0
+2023.3Q item 25 기타포괄손익           cum   -210395.0->  -189519.0 prev-cum        None  dangi stored        None emul-old        None emul-new        None printed3m    -52095.0 new-printed      None
+2023.3Q item 26 FVOCI 채무증권 평가손익  cum   -101767.0->   -80901.0 prev-cum        None  dangi stored        None emul-old        None emul-new        None printed3m   -154690.0 new-printed      None
+2023.3Q item 28 위험회피 파생상품 평가손익   cum   -135755.0->  -135740.0 prev-cum        None  dangi stored        None emul-old        None emul-new        None printed3m    -50966.0 new-printed      None
+2023.3Q item 31 총포괄손익            cum    -28583.0->   -24263.0 prev-cum        None  dangi stored        None emul-old        None emul-new        None printed3m    -38808.0 new-printed      None
+2023.3Q item 32 기타 포괄손익(미분류)     cum       141.0->      136.0 prev-cum        None  dangi stored        None emul-old        None emul-new        None printed3m        87.0 new-printed      None
+2023.4Q item 17 투자손익             cum     99358.0->    72613.0 prev-cum    -63150.0  dangi stored    141414.0 emul-old    141414.0 emul-new    135763.0 printed3m        None new-printed      None
+2023.4Q item 18 투자이익             cum    446988.0->   418462.0 prev-cum    196799.0  dangi stored    229095.0 emul-old    229095.0 emul-new    221663.0 printed3m        None new-printed      None
+2023.4Q item 19 보험금융손익           cum   -347630.0->  -345849.0 prev-cum   -259949.0  dangi stored    -87681.0 emul-old    -87681.0 emul-new    -85900.0 printed3m        None new-printed      None
+2023.4Q item 20 영업이익             cum    407770.0->   381025.0 prev-cum    213973.0  dangi stored    172703.0 emul-old    172703.0 emul-new    167052.0 printed3m        None new-printed      None
+2023.4Q item 22 세전이익             cum    407131.0->   380386.0 prev-cum    213003.0  dangi stored    173034.0 emul-old    173034.0 emul-new    167383.0 printed3m        None new-printed      None
+2023.4Q item 23 법인세              cum     90984.0->    84846.0 prev-cum     47747.0  dangi stored     38699.0 emul-old     38699.0 emul-new     37099.0 printed3m        None new-printed      None
+2023.4Q item 24 당기순이익            cum    316147.0->   295540.0 prev-cum    165256.0  dangi stored    134335.0 emul-old    134335.0 emul-new    130284.0 printed3m        None new-printed      None
+2023.4Q item 25 기타포괄손익           cum   -400409.0->  -371946.0 prev-cum   -189519.0  dangi stored   -190014.0 emul-old   -190014.0 emul-new   -182427.0 printed3m        None new-printed      None
+2023.4Q item 26 FVOCI 채무증권 평가손익  cum    402967.0->   431462.0 prev-cum    -80901.0  dangi stored    504734.0 emul-old    504734.0 emul-new    512363.0 printed3m        None new-printed      None
+2023.4Q item 28 위험회피 파생상품 평가손익   cum     71835.0->    71810.0 prev-cum   -135740.0  dangi stored    207590.0 emul-old    207590.0 emul-new    207550.0 printed3m        None new-printed      None
+2023.4Q item 31 총포괄손익            cum    -84262.0->   -76406.0 prev-cum    -24263.0  dangi stored    -55679.0 emul-old    -55679.0 emul-new    -52143.0 printed3m        None new-printed      None
+2023.4Q item 32 기타 포괄손익(미분류)     cum      -811.0->     -818.0 prev-cum       136.0  dangi stored      -952.0 emul-old      -952.0 emul-new      -954.0 printed3m        None new-printed      None
+2024.1Q item 17 투자손익             cum    -71099.0->   -78401.0 prev-cum        None  dangi stored    -71099.0 emul-old    -71099.0 emul-new    -78401.0 printed3m        None new-printed      None
+2024.1Q item 18 투자이익             cum      9640.0->     2338.0 prev-cum        None  dangi stored      9640.0 emul-old      9640.0 emul-new      2338.0 printed3m        None new-printed      None
+2024.1Q item 20 영업이익             cum     68838.0->    61536.0 prev-cum        None  dangi stored     68838.0 emul-old     68838.0 emul-new     61536.0 printed3m        None new-printed      None
+2024.1Q item 22 세전이익             cum     68493.0->    61191.0 prev-cum        None  dangi stored     68493.0 emul-old     68493.0 emul-new     61191.0 printed3m        None new-printed      None
+2024.1Q item 23 법인세              cum     20483.0->    21979.0 prev-cum        None  dangi stored     20483.0 emul-old     20483.0 emul-new     21979.0 printed3m        None new-printed      None
+2024.1Q item 24 당기순이익            cum     48010.0->    39212.0 prev-cum        None  dangi stored     48010.0 emul-old     48010.0 emul-new     39212.0 printed3m        None new-printed      None
+2024.1Q item 25 기타포괄손익           cum   -308151.0->  -300515.0 prev-cum        None  dangi stored   -308151.0 emul-old   -308151.0 emul-new   -300515.0 printed3m        None new-printed      None
+2024.1Q item 26 FVOCI 채무증권 평가손익  cum   -139223.0->  -131799.0 prev-cum        None  dangi stored   -139223.0 emul-old   -139223.0 emul-new   -131799.0 printed3m        None new-printed      None
+2024.1Q item 28 위험회피 파생상품 평가손익   cum    -81173.0->   -80960.0 prev-cum        None  dangi stored    -81173.0 emul-old    -81173.0 emul-new    -80960.0 printed3m        None new-printed      None
+2024.1Q item 31 총포괄손익            cum   -260141.0->  -261303.0 prev-cum        None  dangi stored   -260141.0 emul-old   -260141.0 emul-new   -261303.0 printed3m        None new-printed      None
+2024.1Q item 32 기타 포괄손익(미분류)     cum      -199.0->     -200.0 prev-cum        None  dangi stored      -199.0 emul-old      -199.0 emul-new      -200.0 printed3m        None new-printed      None
+2024.2Q item 17 투자손익             cum    -45124.0->   -62135.0 prev-cum    -78401.0  dangi stored     25975.0 emul-old     25975.0 emul-new     16266.0 printed3m     16266.0 new-printed       0.0
+2024.2Q item 18 투자이익             cum    120197.0->   103186.0 prev-cum      2338.0  dangi stored    110557.0 emul-old    110557.0 emul-new    100848.0 printed3m    100848.0 new-printed       0.0
+2024.2Q item 20 영업이익             cum    136895.0->   119884.0 prev-cum     61536.0  dangi stored     68057.0 emul-old     68057.0 emul-new     58348.0 printed3m     58348.0 new-printed       0.0
+2024.2Q item 22 세전이익             cum    136026.0->   119015.0 prev-cum     61191.0  dangi stored     67533.0 emul-old     67533.0 emul-new     57824.0 printed3m     57824.0 new-printed       0.0
+2024.2Q item 23 법인세              cum     29035.0->    31608.0 prev-cum     21979.0  dangi stored      8552.0 emul-old      8552.0 emul-new      9629.0 printed3m      9630.0 new-printed      -1.0
+2024.2Q item 24 당기순이익            cum    106991.0->    87407.0 prev-cum     39212.0  dangi stored     58981.0 emul-old     58981.0 emul-new     48195.0 printed3m     48194.0 new-printed       1.0
+2024.2Q item 25 기타포괄손익           cum   -570466.0->  -553328.0 prev-cum   -300515.0  dangi stored   -262315.0 emul-old   -262315.0 emul-new   -252813.0 printed3m   -252813.0 new-printed       0.0
+2024.2Q item 26 FVOCI 채무증권 평가손익  cum   -105377.0->   -87646.0 prev-cum   -131799.0  dangi stored     33846.0 emul-old     33846.0 emul-new     44153.0 printed3m     44153.0 new-printed       0.0
+2024.2Q item 28 위험회피 파생상품 평가손익   cum    -43229.0->   -43819.0 prev-cum    -80960.0  dangi stored     37944.0 emul-old     37944.0 emul-new     37141.0 printed3m     37141.0 new-printed       0.0
+2024.2Q item 31 총포괄손익            cum   -463475.0->  -465921.0 prev-cum   -261303.0  dangi stored   -203334.0 emul-old   -203334.0 emul-new   -204618.0 printed3m   -204619.0 new-printed       1.0
+2024.2Q item 32 기타 포괄손익(미분류)     cum      -151.0->     -154.0 prev-cum      -200.0  dangi stored        48.0 emul-old        48.0 emul-new        46.0 printed3m        46.0 new-printed       0.0
+2024.3Q item 17 투자손익             cum     34117.0->    34117.0 prev-cum    -62135.0  dangi stored     79241.0 emul-old     79241.0 emul-new     96252.0 printed3m     96252.0 new-printed       0.0
+2024.3Q item 18 투자이익             cum    286137.0->   286137.0 prev-cum    103186.0  dangi stored    165940.0 emul-old    165940.0 emul-new    182951.0 printed3m    182951.0 new-printed       0.0
+2024.3Q item 20 영업이익             cum    261707.0->   261707.0 prev-cum    119884.0  dangi stored    124812.0 emul-old    124812.0 emul-new    141823.0 printed3m    141823.0 new-printed       0.0
+2024.3Q item 22 세전이익             cum    260572.0->   260572.0 prev-cum    119015.0  dangi stored    124546.0 emul-old    124546.0 emul-new    141557.0 printed3m    141557.0 new-printed       0.0
+2024.3Q item 23 법인세              cum     62737.0->    62737.0 prev-cum     31608.0  dangi stored     33702.0 emul-old     33702.0 emul-new     31129.0 printed3m     31130.0 new-printed      -1.0
+2024.3Q item 24 당기순이익            cum    197835.0->   197835.0 prev-cum     87407.0  dangi stored     90844.0 emul-old     90844.0 emul-new    110428.0 printed3m    110427.0 new-printed       1.0
+2024.3Q item 25 기타포괄손익           cum   -626213.0->  -626213.0 prev-cum   -553328.0  dangi stored    -55747.0 emul-old    -55747.0 emul-new    -72885.0 printed3m    -72885.0 new-printed       0.0
+2024.3Q item 26 FVOCI 채무증권 평가손익  cum    181380.0->   181380.0 prev-cum    -87646.0  dangi stored    286757.0 emul-old    286757.0 emul-new    269026.0 printed3m    269026.0 new-printed       0.0
+2024.3Q item 28 위험회피 파생상품 평가손익   cum     61370.0->    61370.0 prev-cum    -43819.0  dangi stored    104599.0 emul-old    104599.0 emul-new    105189.0 printed3m    105189.0 new-printed       0.0
+2024.3Q item 31 총포괄손익            cum   -428378.0->  -428378.0 prev-cum   -465921.0  dangi stored     35097.0 emul-old     35097.0 emul-new     37543.0 printed3m     37542.0 new-printed       1.0
+2024.3Q item 32 기타 포괄손익(미분류)     cum      -272.0->     -272.0 prev-cum      -154.0  dangi stored      -121.0 emul-old      -121.0 emul-new      -118.0 printed3m      -118.0 new-printed       0.0

@@ -1,0 +1,52 @@
+CELL 2024.1Q i17 L24100 text='40,401,054,964' printed='40,401,054,964' ctx=PFY2024dFQA:SEP row_label='투자손익' plan_label='투자손익' -> OK
+ORIG 2024.1Q i17 L23410 text='42,172,415,112' value=42172.415112 master_old=42172.415112 -> OK
+CELL 2024.1Q i19 L24422 text='76,096,059,144' printed='76,096,059,144' ctx=PFY2024dFQA:SEP row_label='보험금융비용' plan_label='보험금융비용' -> OK
+CELL 2024.1Q i19 L24445 text='3,808,202' printed='3,808,202' ctx=PFY2024dFQA:SEP row_label='재보험금융비용' plan_label='재보험금융비용' -> OK
+CELL 2024.1Q i20 L24675 text='33,147,876,982' printed='33,147,876,982' ctx=PFY2024dFQA:SEP row_label='영업이익(손실)' plan_label='영업이익(손실)' -> OK
+ORIG 2024.1Q i20 L23962 text='34,919,237,130' value=34919.23713 master_old=34919.23713 -> OK
+CELL 2024.1Q i22 L24767 text='35,991,051,898' printed='35,991,051,898' ctx=PFY2024dFQA:SEP row_label='법인세차감전순이익(손실)' plan_label='법인세차감전순이익(손실)' -> OK
+ORIG 2024.1Q i22 L24054 text='37,762,412,046' value=37762.412046 master_old=37762.412046 -> OK
+CELL 2024.1Q i23 L24790 text='8,056,068,315' printed='8,056,068,315' ctx=PFY2024dFQA:SEP row_label='법인세비용(수익)' plan_label='법인세비용(수익)' -> OK
+ORIG 2024.1Q i23 L24077 text='8,465,252,508' value=8465.252508 master_old=8465.252508 -> OK
+CELL 2024.1Q i24 L24813 text='27,934,983,583' printed='27,934,983,583' ctx=PFY2024dFQA:SEP row_label='분기순이익(손실)' plan_label='분기순이익(손실)' -> OK
+ORIG 2024.1Q i24 L24100 text='29,297,159,538' value=29297.159538 master_old=29297.159538 -> OK
+CELL 2024.1Q i25 L24836 text='(74,475,541,715)' printed='(74,475,541,715)' ctx=PFY2024dFQA:SEP row_label='기타포괄손익' plan_label='기타포괄손익' -> OK
+ORIG 2024.1Q i25 L24123 text='(75,837,717,670)' value=-75837.71767 master_old=-75837.71767 -> OK
+CELL 2024.1Q i27 L24951 text='15,646,306,744' printed='15,646,306,744' ctx=PFY2024dFQA:SEP row_label='보험계약자산(부채)순금융손익' plan_label='보험계약자산(부채)순금융손익' -> OK
+ORIG 2024.1Q i27 L24238 text='14,284,130,789' value=14284.130789 master_old=14284.130789 -> OK
+CELL 2024.2Q i17 L25924 text='41,856,821,248' printed='41,856,821,248' ctx=PFY2024dHYA:SEP row_label='투자손익' plan_label='투자손익' -> OK
+ORIG 2024.2Q i17 L25995 text='45,968,030,947' value=45968.030947 master_old=45968.030947 -> OK
+CELL 2024.2Q i19 L25970 text='6,095,331' printed='6,095,331' ctx=PFY2024dHYA:SEP row_label='재보험금융수익' plan_label='재보험금융수익' -> OK
+CELL 2024.2Q i19 L26269 text='154,827,749,837' printed='154,827,749,837' ctx=PFY2024dHYA:SEP row_label='보험금융비용' plan_label='보험금융비용' -> OK
+CELL 2024.2Q i19 L26292 text='0' printed='0' ctx=PFY2024dHYA:SEP row_label='재보험금융비용' plan_label='재보험금융비용' -> OK
+CELL 2024.2Q i20 L26522 text='28,724,334,906' printed='28,724,334,906' ctx=PFY2024dHYA:SEP row_label='영업이익(손실)' plan_label='영업이익(손실)' -> OK
+ORIG 2024.2Q i20 L26593 text='32,835,544,605' value=32835.544605 master_old=32835.544605 -> OK
+CELL 2024.2Q i22 L26614 text='31,420,732,187' printed='31,420,732,187' ctx=PFY2024dHYA:SEP row_label='법인세차감전순이익(손실)' plan_label='법인세차감전순이익(손실)' -> OK
+ORIG 2024.2Q i22 L26685 text='35,531,941,886' value=35531.941886 master_old=35531.941886 -> OK
+CELL 2024.2Q i23 L26637 text='7,343,933,475' printed='7,343,933,475' ctx=PFY2024dHYA:SEP row_label='법인세비용(수익)' plan_label='법인세비용(수익)' -> OK
+ORIG 2024.2Q i23 L26708 text='8,293,622,915' value=8293.622915 master_old=8293.622915 -> OK
+CELL 2024.2Q i24 L26660 text='24,076,798,712' printed='24,076,798,712' ctx=PFY2024dHYA:SEP row_label='반기순이익(손실)' plan_label='반기순이익(손실)' -> OK
+ORIG 2024.2Q i24 L26731 text='27,238,318,971' value=27238.318971 master_old=27238.318971 -> OK
+CELL 2024.2Q i25 L26683 text='(192,383,207,173)' printed='(192,383,207,173)' ctx=PFY2024dHYA:SEP row_label='기타포괄손익' plan_label='기타포괄손익' -> OK
+ORIG 2024.2Q i25 L26754 text='(195,544,727,432)' value=-195544.727432 master_old=-195544.727432 -> OK
+CELL 2024.2Q i27 L26798 text='(122,892,164,844)' printed='(122,892,164,844)' ctx=PFY2024dHYA:SEP row_label='보험계약자산(부채)순금융손익' plan_label='보험계약자산(부채)순금융손익' -> OK
+ORIG 2024.2Q i27 L26869 text='(126,053,685,103)' value=-126053.685103 master_old=-126053.685103 -> OK
+SEAM 2024.3Q i17 L21695 text='(116,710,044,721)' ctx=PFY2024dTQQ:SEP row_label='투자손익' -> OK
+SEAM 2024.3Q i19 L21711 text='14,252,527' ctx=PFY2024dTQQ:SEP row_label='재보험금융수익' -> OK
+SEAM 2024.3Q i19 L21815 text='77,043,657,096' ctx=PFY2024dTQQ:SEP row_label='보험금융비용' -> OK
+SEAM 2024.3Q i20 L21895 text='(123,246,099,020)' ctx=PFY2024dTQQ:SEP row_label='영업이익(손실)' -> OK
+SEAM 2024.3Q i22 L21927 text='(123,396,856,774)' ctx=PFY2024dTQQ:SEP row_label='법인세차감전순이익(손실)' -> OK
+SEAM 2024.3Q i23 L21935 text='(28,844,151,026)' ctx=PFY2024dTQQ:SEP row_label='법인세비용(수익)' -> OK
+SEAM 2024.3Q i24 L21943 text='(94,552,705,748)' ctx=PFY2024dTQQ:SEP row_label='분기순이익(손실)' -> OK
+SEAM 2024.3Q i25 L21951 text='49,281,693,124' ctx=PFY2024dTQQ:SEP row_label='기타포괄손익' -> OK
+SEAM 2024.3Q i27 L21991 text='(136,596,159,635)' ctx=PFY2024dTQQ:SEP row_label='보험계약자산(부채)순금융손익' -> OK
+SRC 2024.3Q i17 L21695 '(116,710,044,721)' vs source string '(116,710,044,721)' -> OK
+SRC 2024.3Q i19 L21711 '14,252,527' vs source string '14,252,527' -> OK
+SRC 2024.3Q i19 L21815 '77,043,657,096' vs source string '77,043,657,096' -> OK
+SRC 2024.3Q i20 L21895 '(123,246,099,020)' vs source string '(123,246,099,020)' -> OK
+SRC 2024.3Q i22 L21927 '(123,396,856,774)' vs source string '(123,396,856,774)' -> OK
+SRC 2024.3Q i23 L21935 '(28,844,151,026)' vs source string '(28,844,151,026)' -> OK
+SRC 2024.3Q i24 L21943 '(94,552,705,748)' vs source string '(94,552,705,748)' -> OK
+SRC 2024.3Q i25 L21951 '49,281,693,124' vs source string '49,281,693,124' -> OK
+SRC 2024.3Q i27 L21991 '(136,596,159,635)' vs source string '(136,596,159,635)' -> OK
+TOTAL line checks 51, problems 0

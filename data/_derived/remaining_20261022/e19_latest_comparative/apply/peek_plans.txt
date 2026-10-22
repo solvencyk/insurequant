@@ -1,0 +1,1929 @@
+=== KR0005
+{
+ "company": "KR0005",
+ "name": "흥국화재",
+ "basis": "separate (OFS) statement, prior-period cumulative column of ",
+ "unit": "백만원",
+ "restatement_cause": "error correction: expected maturity of FVOCI foreign-currenc",
+ "buckets": [
+  4,
+  {
+   "quarter": "2023.3Q",
+   "adopt": true,
+   "n_cells": 11,
+   "items": [
+    11,
+    "int"
+   ],
+   "later_filing": "FY2024_Q3 rcept 20241114002739",
+   "original_filing": "FY2023_Q3 rcept 20231114002611",
+   "owner_gold_cells_in_block": [
+    1,
+    "int"
+   ],
+   "owner_gold_overlap_with_adopted": [
+    0,
+    null
+   ],
+   "closure_merged": {
+    "20-(1+17)": "float",
+    "22-24-23": "float",
+    "31-(24+25)": "float",
+    "25-parts": "float",
+    "17-(18+19)": "float",
+    "22-(20+21)": "float",
+    "1-legs(bare)": "float",
+    "1-(legs+15-16)": "float"
+   },
+   "gate_pl_bridge_merged": {
+    "pass": "int",
+    "fail": "list",
+    "skip": "int"
+   },
+   "gate_pl_bridge_old": {
+    "pass": "int",
+    "fail": "list",
+    "skip": "int"
+   },
+   "reason": "closes on the merged vector (20=1+17, 22-24=23, 31=24+25, 25"
+  }
+ ],
+ "cells": [
+  45,
+  {
+   "quarter": "2023.3Q",
+   "item": 17,
+   "name": "투자손익",
+   "old": -42056.0,
+   "new": -63150.0,
+   "unit": "백만원",
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml",
+   "xml_line": 4012,
+   "xml_label": [
+    1,
+    "str"
+   ],
+   "xml_column": "FY2024 3Q report (prior-year 3Q cumulative column, col 4 of ",
+   "xml_cites": null,
+   "orig_check": {
+    "file": "str",
+    "value": "float",
+    "line": "int",
+    "equals_master": "bool"
+   },
+   "second_source": {
+    "restatement_note": "str",
+    "restatement_note_agrees": "bool",
+    "fs_api_cache": "str",
+    "fs_api_value": "float",
+    "fs_api_agrees": "bool"
+   },
+   "census_new": -63150.0,
+   "agrees_with_census": true,
+   "census_note": null,
+   "owner_gold_cell": false,
+   "gold_set_entry": {
+    "원보험사코드": "str",
+    "항목번호": "int",
+    "공시분기": "str",
+    "값": "float",
+    "was": "float",
+    "note": "str"
+   }
+  }
+ ],
+ "seam_cells": [
+  4,
+  {
+   "quarter": "2023.3Q",
+   "item": 20,
+   "name": "영업이익",
+   "old_dangi": 25638.0,
+   "derived_if_unfixed": 4544.0,
+   "proposal": "set_dangi",
+   "value": 19608.0,
+   "unit": "백만원",
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml",
+   "xml_line": 4560,
+   "xml_label": "Ⅲ.영업이익",
+   "second_source": "FY2024 3Q report note 41 table 2) 전분기 포괄손익계산서, 3개월 수정 후: 19,",
+   "gold_line": [
+    5,
+    "str"
+   ],
+   "reason": "operands straddle bases: 9M cumulative adopted from the FY20"
+  }
+ ],
+ "blank_before_and_after": [
+  7,
+  {
+   "quarter": "2023.3Q",
+   "item": 17,
+   "name": "투자손익",
+   "reason": "prior cumulative (2023.2Q) is blank in the master, single qu"
+  }
+ ],
+ "side_effect_single_quarters": [
+  45,
+  {
+   "quarter": "2023.4Q",
+   "item": 17,
+   "name": "투자손익",
+   "old_dangi_stored": 141414.0,
+   "old_dangi_emulated": 141414.0,
+   "new_dangi": 135763.0,
+   "printed_3m_later": null,
+   "new_minus_printed": null,
+   "operand_vintages": "both post-correction (B)"
+  }
+ ],
+ "verification": {
+  "n_cells": 45,
+  "n_cells_all_sources_agree": 45,
+  "n_cells_original_xml_equals_master": 45,
+  "vintage_checks": {
+   "2023.4Q: FY2024 annual col 78기 vs FY2025 annual col 78기 (differences)": {},
+   "2024.3Q: original FY2024 3Q vs FY2025 3Q prior column (differences)": {},
+   "2024.4Q: original FY2024 annual vs FY2025 annual prior column (differences)": {}
+  },
+  "units_and_periods_header_rows_of_the_statements": {
+   "FY2024_Q3": [
+    3,
+    "str"
+   ],
+   "FY2024_Q4": [
+    4,
+    "str"
+   ],
+   "FY2025_Q1": [
+    3,
+    "str"
+   ],
+   "FY2025_Q2": [
+    3,
+    "str"
+   ],
+   "FY2023_Q3": [
+    3,
+    "str"
+   ],
+   "FY2023_Q4": [
+    4,
+    "str"
+   ],
+   "FY2024_Q1": [
+    3,
+    "str"
+   ],
+   "FY2024_Q2": [
+    3,
+    "str"
+   ],
+   "FY2025_Q3": [
+    3,
+    "str"
+   ],
+   "FY2025_Q4": [
+    4,
+    "str"
+   ]
+  },
+  "census_differences": "none for 44 cells; 1 extra cell vs census: 2024.1Q item 32 (",
+  "owner_gold": "gold set cells in these four blocks: item 16 only (2023.3Q 1",
+  "closure_basis": "gate code validate_master_tables._check_pl_bridge (source_id",
+  "neighbour_observations_outside_scope": [
+   23,
+   {
+    "quarter": "str",
+    "item": "int",
+    "master": "float",
+    "later_xml_prior_col": "float",
+    "later_xml_line": "int",
+    "original_xml": "NoneType"
+   }
+  ],
+  "apply_notes": [
+   5,
+   "Write the 45 gold_set_entry objects into data/_gold/user_pl_"
+  ]
+ }
+}
+=== KR0032
+{
+ "code": "KR0032",
+ "company": "NH농협손해보험",
+ "generated": "2026-10-22",
+ "source_tool": "data/_derived/remaining_20261022/e19_latest_comparative/KR00",
+ "master_unit": "백만원",
+ "statement": "separate (OFS) 4-2. 포괄손익계산서, prior-period cumulative column ",
+ "buckets": [
+  4,
+  {
+   "quarter": "2023.4Q",
+   "adopt": true,
+   "n_cells": 8,
+   "items": [
+    8,
+    "int"
+   ],
+   "original_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int",
+    "unit": "str",
+    "column": "str"
+   },
+   "later_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int",
+    "unit": "str",
+    "column": "str",
+    "three_month_column": "NoneType",
+    "restatement_note": "dict"
+   },
+   "census_items": [
+    8,
+    "int"
+   ],
+   "items_equal_to_census": true,
+   "gold_cells_in_block": [
+    0,
+    null
+   ],
+   "gold_overlap_with_adopted_items": [
+    0,
+    null
+   ],
+   "closure_master_before": [
+    8,
+    "dict"
+   ],
+   "closure_merged_after": [
+    8,
+    "dict"
+   ],
+   "closure_printed_later_filing": [
+    5,
+    "dict"
+   ],
+   "csm_vs_master": "SAME",
+   "lob_bridge": {
+    "resid_before": "float",
+    "resid_after": "float",
+    "unchanged_by_adoption": "bool",
+    "within_gate_tolerance": "bool",
+    "gate_tolerance": "float"
+   },
+   "reason": "closes on the merged vector (G1-G7 strict 0.002 million won;"
+  }
+ ],
+ "cells": [
+  32,
+  {
+   "quarter": "2023.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 98273.181594,
+   "new": 56554.861367,
+   "delta": -41718.320227,
+   "unit": "백만원",
+   "source_unit": "원",
+   "source_print": "won (exact)",
+   "xml_file": "data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250",
+   "xml_rcept": "20250331003247",
+   "xml_period_column": "PFY2023dFY (separate/OFS statement, prior-period cumulative)",
+   "xml_line": 6691,
+   "xml_lines": [
+    1,
+    "dict"
+   ],
+   "derivation": "direct print",
+   "second_source": {
+    "kind": "str",
+    "value": "float",
+    "diff_vs_xml": "float"
+   },
+   "note_table_source": {
+    "kind": "str",
+    "file": "str",
+    "label": "str",
+    "line_after": "int",
+    "line_before": "int",
+    "after": "float",
+    "before": "float",
+    "adj": "float",
+    "after_vs_xml_diff": "float",
+    "before_vs_master_diff": "float",
+    "ok_after": "bool",
+    "ok_before": "bool"
+   },
+   "third_xml_source": {
+    "kind": "str",
+    "file": "str",
+    "line": "int",
+    "value": "float",
+    "diff_vs_xml": "float",
+    "ok": "bool"
+   },
+   "census_new": 56554.861367,
+   "census_master": 98273.181594,
+   "master_equals_original_print": true,
+   "original_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_line": "int"
+   },
+   "gold_cell": false,
+   "gold_note": "2026-10-22 parser/ifrs17 (KR0032 최신 비교열 채택, owner 결정 2026-10"
+  }
+ ],
+ "seam_cells": [
+  8,
+  {
+   "quarter": "2023.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 17587.714285,
+   "derived_after_adoption": -24130.605942,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "vintage_after": "str",
+    "adopted": "bool"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "vintage_after": "str",
+    "adopted": "bool"
+   },
+   "class": "seam",
+   "proposed": "null_dangi",
+   "printed_three_month_column_in_later_filing": false,
+   "three_month_check_filing": {
+    "file": "str",
+    "statement_contexts": "list"
+   },
+   "reason": "YTD of this quarter is the restated comparative of the FY202"
+  }
+ ],
+ "neighbour_effects": [
+  8,
+  {
+   "quarter": "2024.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": -5444.723882,
+   "derived_after_adoption": 11572.613112,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "vintage_after": "str",
+    "adopted": "bool"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "vintage_after": "str",
+    "adopted": "bool"
+   },
+   "class": "consistent_after_adoption"
+  }
+ ],
+ "auto_follow_cells": [
+  24,
+  {
+   "quarter": "2024.1Q",
+   "item": 17,
+   "old": 22440.106317,
+   "derived_after": 14156.750149,
+   "why": "Q1 single quarter = YTD of the same bucket (also printed as "
+  }
+ ],
+ "verification": {
+  "master_equals_original_print_all": true,
+  "n_master_vs_original_cells": 72,
+  "warnings": [
+   0,
+   null
+  ],
+  "dangi_model_mismatch_vs_live_master": [
+   3,
+   [
+    4,
+    "int"
+   ]
+  ],
+  "statements": {
+   "FY2023_Q3": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict",
+    "col_header_row": "dict"
+   },
+   "FY2023_Q4": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict"
+   },
+   "FY2024_Q1": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict",
+    "col_header_row": "dict"
+   },
+   "FY2024_Q2": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict",
+    "col_header_row": "dict"
+   },
+   "FY2024_Q3": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict",
+    "col_header_row": "dict"
+   },
+   "FY2024_Q4": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict"
+   },
+   "FY2025_Q1": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict",
+    "col_header_row": "dict"
+   },
+   "FY2025_Q2": {
+    "file": "str",
+    "title_line": "int",
+    "end_line": "int",
+    "unit": "str",
+    "contexts": "list",
+    "period_header_row": "dict",
+    "col_h
+=== KR0070
+{
+ "code": "KR0070",
+ "company": "ABL생명",
+ "generated": "2026-10-22",
+ "source_tool": "data/_derived/remaining_20261022/e19_latest_comparative/KR00",
+ "master_unit": "백만원",
+ "statement": "separate (OFS) 4-2. 포괄손익계산서, prior-period cumulative column ",
+ "buckets": [
+  3,
+  {
+   "quarter": "2024.1Q",
+   "adopt": true,
+   "n_cells": 8,
+   "items": [
+    8,
+    "int"
+   ],
+   "items_equal_to_later_print": [
+    9,
+    "int"
+   ],
+   "original_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int"
+   },
+   "later_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int",
+    "unit": "str",
+    "column": "str",
+    "three_month_column": "str"
+   },
+   "census_items": [
+    8,
+    "int"
+   ],
+   "items_equal_to_census": true,
+   "gold_cells_in_block": [
+    2,
+    "int"
+   ],
+   "gold_overlap_with_adopted_items": [
+    0,
+    null
+   ],
+   "user_pl_confirmed_cells_mentions_of_code": 0,
+   "closure_master_before": [
+    8,
+    "dict"
+   ],
+   "closure_merged_after": [
+    8,
+    "dict"
+   ],
+   "closure_printed_later_filing": [
+    6,
+    "dict"
+   ],
+   "csm_vs_master": "SAME",
+   "reason": "closes on the merged vector; no owner gold cell among the ch"
+  }
+ ],
+ "cells": [
+  24,
+  {
+   "quarter": "2024.1Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": -5720.079812,
+   "new": -2376.553043,
+   "delta": 3343.526769,
+   "unit": "백만원",
+   "source_unit": "원",
+   "source_print": "won (exact)",
+   "xml_file": "data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml",
+   "xml_rcept": "20250515002435",
+   "xml_period_column": "PFY2024dFQA (separate/OFS statement, prior-period cumulative",
+   "xml_line": 25800,
+   "xml_lines": [
+    1,
+    "dict"
+   ],
+   "derivation": "direct print",
+   "second_source": {
+    "kind": "str",
+    "value": "float",
+    "diff_vs_xml": "float"
+   },
+   "census_new": -2376.553043,
+   "census_master": -5720.079812,
+   "master_equals_original_print": true,
+   "original_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_line": "int"
+   },
+   "gold_cell": false,
+   "gold_note": "2026-10-22 parser/ifrs17 (KR0070 최신 비교열 채택, owner 결정 2026-10"
+  }
+ ],
+ "seam_cells": [
+  0,
+  null
+ ],
+ "neighbour_effects": [
+  8,
+  {
+   "quarter": "2024.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 54302.461768,
+   "derived_after_adoption": 49950.23446,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "status": "str"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "status": "str"
+   },
+   "class": "consistent_after_adoption"
+  }
+ ],
+ "auto_follow_cells": [
+  24,
+  {
+   "quarter": "2024.1Q",
+   "item": 17,
+   "old": -5720.079812,
+   "derived_after": -2376.553043,
+   "why": "Q1 single quarter = YTD of the same bucket"
+  }
+ ],
+ "verification": {
+  "master_equals_original_print_all": true,
+  "warnings": [
+   0,
+   null
+  ],
+  "dangi_model_mismatch_vs_live_master": [
+   1,
+   [
+    4,
+    "int"
+   ]
+  ],
+  "census_vs_xml": {
+   "n_cells": 24,
+   "max_abs_diff": 0.0,
+   "items_equal_to_census_all_buckets": true
+  },
+  "gold": {
+   "KR0070_gold_set_cells": 14,
+   "KR0070_gold_set_keys": [
+    14,
+    "list"
+   ],
+   "adopted_cells_hitting_gold": [
+    0,
+    null
+   ],
+   "user_pl_confirmed_cells_mentions_of_KR0070": 0,
+   "null_dangi_existing": [
+    0,
+    null
+   ],
+   "set_dangi_existing": [
+    0,
+    null
+   ]
+  },
+  "printed_three_month_check": {
+   "n": 24,
+   "n_ok": 24,
+   "max_abs_diff": 0.0,
+   "rows": [
+    24,
+    "dict"
+   ]
+  },
+  "q2024_4Q": {
+   "rows": [
+    17,
+    "dict"
+   ],
+   "items_master_eq_annual_print": [
+    17,
+    "int"
+   ],
+   "items_differing_from_fy2025_prior": [
+    3,
+    "int"
+   ],
+   "single_quarter": {
+    "17": "dict",
+    "19": "dict",
+    "20": "dict",
+    "22": "dict",
+    "23": "dict",
+    "24": "dict",
+    "25": "dict",
+    "26": "dict",
+    "27": "dict",
+    "31": "dict",
+    "32": "dict"
+   }
+  },
+  "q2025_master_vs_own_print": {
+   "n": 51,
+   "n_equal": 51,
+   "differing": [
+    0,
+    null
+   ]
+  },
+  "q2023_4Q_master_vs_fy2024_annual_prior_informational": {
+   "equal_items": [
+    8,
+    "int"
+   ],
+   "differing_items": [
+    9,
+    "int"
+   ]
+  },
+  "xml_line_reread": {
+   "script": "KR0070_line_verify.py (own parser)",
+   "n_line_checks": 33,
+   "n_problems": 0,
+   "report": "KR0070_line_verify.txt"
+  }
+ },
+ "apply_contract": {
+  "gold_set_cells": [
+   24,
+   [
+    5,
+    "str"
+   ]
+  ],
+  "null_dangi_cells": [
+   0,
+   null
+  ],
+  "set_dangi_cells": [
+   0,
+   null
+  ],
+  "expected_master_changes": {
+   "value_cells_changed": 24,
+   "dangi_cells_changed": 32,
+   "dangi_cells_set_to_null": 0,
+   "dangi_cells_changed_outside_bucket_values": "2024.4Q items [17, 19, 20, 22, 23, 24, 25, 27] (derived from"
+  },
+  "do_not_touch": {
+   "owner_gold_cells": [
+    14,
+    "list"
+   ],
+   "csm_waterfall": "unchanged for the three buckets (census SAME)",
+   "items_not_in_cells": "all other items, incl. 1, 16, 18, 21, 26, 28, 30, 32 (equal "
+  },
+  "gate_notes": "adopt 2024.1Q-3Q together (2Q and 3Q single quarters need bo"
+ }
+}
+=== KR0082
+{
+ "code": "KR0082",
+ "company": "DB생명",
+ "generated": "2026-10-22",
+ "source_tool": "data/_derived/remaining_20261022/e19_latest_comparative/KR00",
+ "master_unit": "백만원",
+ "statement": "separate (OFS) 4-2. 포괄손익계산서 (section 4. 재무제표), prior-year cu",
+ "buckets": [
+  3,
+  {
+   "quarter": "2023.1Q",
+   "adopt": false,
+   "approved_by_owner": false,
+   "n_cells": 0,
+   "items": [
+    0,
+    null
+   ],
+   "items_that_differ_from_later_print": [
+    4,
+    "int"
+   ],
+   "items_equal_to_later_print": [
+    6,
+    "int"
+   ],
+   "later_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int",
+    "parent_section": "list",
+    "unit": "str",
+    "cumulative_column_position": "int",
+    "three_month_column_position": "int"
+   },
+   "census_items": [
+    4,
+    "int"
+   ],
+   "items_equal_to_census": true,
+   "gold_cells_in_block": [
+    5,
+    "int"
+   ],
+   "gold_overlap_with_changed_items": [
+    4,
+    "int"
+   ],
+   "user_pl_confirmed_cells_mentions_of_code": 0,
+   "closure_master_before": [
+    8,
+    "dict"
+   ],
+   "closure_merged_after": [
+    8,
+    "dict"
+   ],
+   "closure_printed_later_filing": [
+    10,
+    "dict"
+   ],
+   "csm": {
+    "status": "str",
+    "master_vector": "list",
+    "later_vector": "list",
+    "pl4_eok": "float"
+   },
+   "csm_vs_master": "DIFF",
+   "reason": "outside the approved list (stays at the old vintage): owner "
+  }
+ ],
+ "cells": [
+  4,
+  {
+   "quarter": "2023.3Q",
+   "item": 1,
+   "item_name": "보험손익",
+   "old": 84042.329124,
+   "new": 85927.536898,
+   "delta": 1885.207774,
+   "unit": "백만원",
+   "source_unit": "원",
+   "source_print": "won (exact)",
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml",
+   "xml_rcept": "20241114001831",
+   "xml_period_column": "prior-year cumulative column (9M 2023) of the separate/OFS 4",
+   "xml_line": 25358,
+   "xml_lines": [
+    1,
+    "dict"
+   ],
+   "derivation": "direct print",
+   "sign_note": null,
+   "second_source": {
+    "fsapi": "dict",
+    "alt_path": "dict"
+   },
+   "census_new": 85927.536898,
+   "census_master": 84042.329124,
+   "census_candidate_new": 85927.536898,
+   "census_candidate_diff_vs_xml": 0.0,
+   "master_equals_original_print": true,
+   "original_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_line": "int",
+    "rcept": "str"
+   },
+   "gold_cell": false,
+   "gold_note": "2026-10-22 parser/ifrs17 (KR0082 최신 비교열 채택, owner 결정 2026-10"
+  }
+ ],
+ "seam_cells": [
+  4,
+  {
+   "quarter": "2023.3Q",
+   "item": 1,
+   "item_name": "보험손익",
+   "old": 24323.020378,
+   "derived_after_adoption": 26208.228152,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "class": "seam",
+   "proposed": "set_dangi",
+   "proposed_value": 25276.415839,
+   "three_month_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_rcept": "str",
+    "xml_period_column": "str",
+    "xml_lines": "list",
+    "derivation": "str"
+   },
+   "cross_check_9M_minus_6M_both_new_vintage": {
+    "later_9M_prior_cum": "float",
+    "fy2024_q2_report_6M_prior_cum": "float",
+    "difference": "float",
+    "diff_vs_3m_print": "float",
+    "ok": "bool",
+    "fy2024_q2_line": "int",
+    "fy2024_q2_file": "str"
+   },
+   "old_derived_mixed_vintage": 26208.228152,
+   "set_dangi_cell": [
+    5,
+    "str"
+   ],
+   "reason": "9M adopted (later vintage), 6M (2023.2Q) stays at the old vi"
+  }
+ ],
+ "neighbour_effects": [
+  8,
+  {
+   "quarter": "2023.1Q",
+   "item": 1,
+   "item_name": "보험손익",
+   "old": 24548.24847,
+   "derived_after_adoption": 24548.24847,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "operand_prev": null,
+   "class": "q1_equals_ytd_unchanged",
+   "why": "single quarter = YTD of Q1 (not adopted)"
+  }
+ ],
+ "auto_follow_cells": [
+  4,
+  {
+   "quarter": "2023.4Q",
+   "item": 1,
+   "item_name": "보험손익",
+   "old": 6588.281823,
+   "derived_after_adoption": 4703.074049,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "class": "consistent_after_adoption",
+   "why": "annual 2023 (master = FY2023 annual print = FY2024 annual pr",
+   "annual_checks": {
+    "master_annual": "float",
+    "fy2023_annual_print": "float",
+    "fy2024_annual_prior_print": "float",
+    "xml_line_orig": "int",
+    "xml_line_later": "int"
+   }
+  }
+ ],
+ "verification": {
+  "master_equals_original_print_all": true,
+  "warnings": [
+   0,
+   null
+  ],
+  "dangi_model_mismatch_vs_live_master": [
+   0,
+   null
+  ],
+  "census_vs_xml": {
+   "n_cells": 4,
+   "max_abs_diff": 0.0,
+   "items_equal_to_census": [
+    1,
+    "bool"
+   ],
+   "candidate_cells_in_cand_pl_cells": 4,
+   "candidate_max_abs_diff_vs_xml": 0.0
+  },
+  "alt_path": {
+   "n": 4,
+   "n_ok": 4
+  },
+  "gold": {
+   "KR0082_gold_set_cells": 10,
+   "KR0082_gold_set_keys": [
+    10,
+    "list"
+   ],
+   "adopted_cells_hitting_gold": [
+    0,
+    null
+   ],
+   "user_pl_confirmed_cells_mentions_of_KR0082": 0,
+   "null_dangi_existing": [
+    0,
+    null
+   ],
+   "set_dangi_existing": [
+    0,
+    null
+   ],
+   "set_dangi_proposed_hitting_existing_null_or_set": [
+    0,
+    null
+   ]
+  },
+  "seam_3m_vs_9M_minus_6M": {
+   "n": 4,
+   "n_ok": 4
+  },
+  "unchanged_items_3m_later_print_vs_live_single_2023_3Q": {
+   "n": 6,
+   "n_ok": 6,
+   "not_ok": [
+    0,
+    null
+   ]
+  },
+  "original_3m_print_vs_live_single_2023_3Q": {
+   "n": 10,
+   "n_ok": 6,
+   "not_ok": [
+    4,
+    "dict"
+   ]
+  },
+  "hybrid_single_2023_3Q_closure": [
+   6,
+   {
+    "name": "str",
+    "lhs": "float",
+    "rhs": "float",
+    "resid": "float",
+    "tol": "float",
+    "ok": "bool"
+   }
+  ],
+  "tier2_proxy_printed_lines_orig_vs_later_9M": {
+   "ins_re
+=== KR0083
+{
+ "code": "KR0083",
+ "company": "푸본현대생명",
+ "generated": "2026-10-22",
+ "source_tool": "data/_derived/remaining_20261022/e19_latest_comparative/KR00",
+ "master_unit": "백만원",
+ "statement": "separate (OFS) 4-2. 포괄손익계산서, prior-period cumulative column ",
+ "buckets": [
+  3,
+  {
+   "quarter": "2024.1Q",
+   "adopt": true,
+   "approved_by_owner": true,
+   "n_cells": 8,
+   "items": [
+    8,
+    "int"
+   ],
+   "items_that_differ_from_later_print": [
+    8,
+    "int"
+   ],
+   "items_equal_to_later_print": [
+    9,
+    "int"
+   ],
+   "original_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int"
+   },
+   "later_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int",
+    "unit": "str",
+    "column": "str",
+    "three_month_column": "str"
+   },
+   "census_items": [
+    8,
+    "int"
+   ],
+   "items_equal_to_census": true,
+   "gold_cells_in_block": [
+    0,
+    null
+   ],
+   "gold_overlap_with_changed_items": [
+    0,
+    null
+   ],
+   "user_pl_confirmed_cells_mentions_of_code": 0,
+   "closure_master_before": [
+    8,
+    "dict"
+   ],
+   "closure_merged_after": [
+    8,
+    "dict"
+   ],
+   "closure_printed_later_filing": [
+    6,
+    "dict"
+   ],
+   "csm": {
+    "status": "str",
+    "master_vector": "list",
+    "later_vector": "list",
+    "pl4_eok": "float"
+   },
+   "csm_vs_master": "SAME",
+   "reason": "closes on the merged vector; no owner gold cell in the block"
+  }
+ ],
+ "cells": [
+  16,
+  {
+   "quarter": "2024.1Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 42172.415112,
+   "new": 40401.054964,
+   "delta": -1771.360148,
+   "unit": "백만원",
+   "source_unit": "원",
+   "source_print": "won (exact)",
+   "xml_file": "data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml",
+   "xml_rcept": "20250515002207",
+   "xml_period_column": "PFY2024dFQA (separate/OFS statement, prior-period cumulative",
+   "xml_line": 24100,
+   "xml_lines": [
+    1,
+    "dict"
+   ],
+   "derivation": "direct print",
+   "second_source": {
+    "fsapi": "dict",
+    "note50": "dict"
+   },
+   "census_new": 40401.054964,
+   "census_master": 42172.415112,
+   "census_candidate_new": 40401.054964,
+   "census_candidate_diff_vs_xml": 0.0,
+   "master_equals_original_print": true,
+   "original_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_line": "int",
+    "rcept": "str"
+   },
+   "gold_cell": false,
+   "gold_note": "2026-10-22 parser/ifrs17 (KR0083 최신 비교열 채택, owner 결정 2026-10"
+  }
+ ],
+ "seam_cells": [
+  8,
+  {
+   "quarter": "2024.3Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": -113358.815784,
+   "derived_after_adoption": -109247.606085,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool",
+    "vintage": "str"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "class": "seam",
+   "proposed": "set_dangi",
+   "proposed_value": -116710.044721,
+   "three_month_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_rcept": "str",
+    "xml_period_column": "str",
+    "xml_lines": "list",
+    "derivation": "str"
+   },
+   "three_month_vs_prior_cumulative_diff": {
+    "later_prior_cum_this_quarter": "float",
+    "adopted_prev_cum": "float",
+    "difference": "float",
+    "diff_vs_3m_print": "float",
+    "ok": "bool"
+   },
+   "set_dangi_cell": [
+    5,
+    "str"
+   ],
+   "old_derived_mixed_vintage": -109247.606085,
+   "reason": "YTD of this quarter stays at the old vintage (outside the ap",
+   "ytd_stays_old_because": "owner gold cells [27, 28, 30] in this block"
+  }
+ ],
+ "neighbour_effects": [
+  8,
+  {
+   "quarter": "2024.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 82201.536136,
+   "derived_after_adoption": 82201.536136,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool",
+    "vintage": "str"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "class": "unchanged_both_old"
+  }
+ ],
+ "auto_follow_cells": [
+  16,
+  {
+   "quarter": "2024.1Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 42172.415112,
+   "derived_after": 40401.054964,
+   "class": "q1_equals_ytd",
+   "why": "Q1 single quarter = YTD of the same (adopted) bucket"
+  }
+ ],
+ "verification": {
+  "master_equals_original_print_all": true,
+  "master_vs_original_print_exceptions_2024_3Q": [
+   0,
+   null
+  ],
+  "warnings": [
+   0,
+   null
+  ],
+  "dangi_model_mismatch_vs_live_master": [
+   1,
+   [
+    4,
+    "int"
+   ]
+  ],
+  "census_vs_xml": {
+   "n_cells": 16,
+   "max_abs_diff": 0.0,
+   "items_equal_to_census_all_approved_buckets": true,
+   "candidate_cells_in_cand_pl_cells": 16,
+   "candidate_max_abs_diff_vs_xml": 0.0
+  },
+  "note50_second_source": {
+   "n_cells_with_note50": 16,
+   "n_ok": 16,
+   "cells_without_note50_row": [
+    0,
+    null
+   ],
+   "rows": {
+    "FY2025_Q1": "list",
+    "FY2025_Q2": "list",
+    "FY2025_Q3": "list"
+   }
+  },
+  "gold": {
+   "KR0083_gold_set_cells": 6,
+   "KR0083_gold_set_keys": [
+    6,
+    "list"
+   ],
+   "adopted_cells_hitting_gold": [
+    0,
+    null
+   ],
+   "user_pl_confirmed_cells_mentions_of_KR0083": 0,
+   "null_dangi_existing": [
+    0,
+    null
+   ],
+   "set_dangi_existing": [
+    0,
+    null
+   ],
+   "set_dangi_proposed_hitting_existing_null_or_set": [
+    0,
+    null
+   ]
+  },
+  "printed_three_month_check": {
+   "n": 16,
+   "n_ok": 16,
+   "max_abs_diff": 0.0,
+   "rows": [
+    16,
+    "dict"
+   ]
+  },
+  "unchanged_items_three_month_vs_live_single": {
+   "n": 27,
+   "n_ok": 27,
+   "not_ok": [
+    0,
+    null
+   ]
+  },
+  "seam_3m_vs_cumulative_difference": {
+   "n": 8,
+   "n_ok": 8
+  },
+  "hybrid_single_2024_3Q_closure": [
+   7,
+   {
+    "name": "str",
+    "lhs": "float",
+    "rhs": "float",
+    "resid": "float",
+    "tol": "float",
+    "ok": "bool"
+   }
+  ],
+  "q2024_4Q": {
+   "rows": [
+    17,
+    "dict"
+   ],
+   "items_master_eq_annual_print": [
+ 
+=== KR0087
+{
+ "code": "KR0087",
+ "company": "동양생명",
+ "generated": "2026-10-22",
+ "source_tool": "data/_derived/remaining_20261022/e19_latest_comparative/KR00",
+ "master_unit": "백만원",
+ "statement": "separate (OFS) 4-2. 포괄손익계산서, prior-period cumulative column ",
+ "buckets": [
+  4,
+  {
+   "quarter": "2023.4Q",
+   "adopt": true,
+   "n_cells": 9,
+   "items": [
+    9,
+    "int"
+   ],
+   "original_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int"
+   },
+   "later_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int",
+    "unit": "str",
+    "column": "str",
+    "three_month_column": "NoneType"
+   },
+   "census_items": [
+    9,
+    "int"
+   ],
+   "items_equal_to_census": true,
+   "gold_cells_in_block": [
+    4,
+    "int"
+   ],
+   "gold_overlap_with_adopted_items": [
+    0,
+    null
+   ],
+   "closure_master_before": [
+    7,
+    "dict"
+   ],
+   "closure_merged_after": [
+    7,
+    "dict"
+   ],
+   "closure_printed_later_filing": [
+    5,
+    "dict"
+   ],
+   "csm_vs_master": "SAME",
+   "reason": "closes on the merged vector; no owner gold cell among the ch"
+  }
+ ],
+ "cells": [
+  33,
+  {
+   "quarter": "2023.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 125030.941279,
+   "new": 84954.043343,
+   "delta": -40076.897936,
+   "unit": "백만원",
+   "source_unit": "원",
+   "source_print": "won (exact)",
+   "xml_file": "data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/202503190",
+   "xml_rcept": "20250319000486",
+   "xml_period_column": "PFY2023dFY (separate/OFS statement, prior-period cumulative)",
+   "xml_line": 38193,
+   "xml_lines": [
+    1,
+    "dict"
+   ],
+   "derivation": "direct print",
+   "second_source": {
+    "kind": "str",
+    "value": "float",
+    "diff_vs_xml": "float"
+   },
+   "census_new": 84954.043343,
+   "census_master": 125030.941279,
+   "master_equals_original_print": true,
+   "original_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_line": "int"
+   },
+   "gold_cell": false,
+   "gold_note": "2026-10-22 parser/ifrs17 (KR0087 최신 비교열 채택, owner 결정 2026-10"
+  }
+ ],
+ "seam_cells": [
+  9,
+  {
+   "quarter": "2023.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 34336.486491,
+   "derived_after_adoption": -5740.411445,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "status": "str"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "status": "str"
+   },
+   "class": "seam",
+   "proposed": "null_dangi",
+   "printed_three_month_column_in_later_filing": false,
+   "reason": "YTD of this quarter is the FY2024 annual report restated com"
+  }
+ ],
+ "neighbour_effects": [
+  8,
+  {
+   "quarter": "2024.4Q",
+   "item": 17,
+   "item_name": "투자손익",
+   "old": 97.925088,
+   "derived_after_adoption": 16786.860142,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "status": "str"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "status": "str"
+   },
+   "class": "consistent_after_adoption"
+  }
+ ],
+ "auto_follow_cells": [
+  24,
+  {
+   "quarter": "2024.1Q",
+   "item": 17,
+   "old": 49235.409915,
+   "derived_after": 37409.282506,
+   "why": "Q1 single quarter = YTD of the same bucket"
+  }
+ ],
+ "verification": {
+  "master_equals_original_print_all": true,
+  "warnings": [
+   0,
+   null
+  ],
+  "dangi_model_mismatch_vs_live_master": [
+   0,
+   null
+  ],
+  "census_vs_xml": {
+   "n_cells": 33,
+   "max_abs_diff": 0.0,
+   "items_equal_to_census_all_buckets": true
+  },
+  "gold": {
+   "KR0087_gold_set_cells": 19,
+   "adopted_cells_hitting_gold": [
+    0,
+    null
+   ],
+   "null_dangi_existing": [
+    0,
+    null
+   ],
+   "set_dangi_existing": [
+    0,
+    null
+   ]
+  },
+  "printed_three_month_check": {
+   "n": 24,
+   "n_ok": 24,
+   "max_abs_diff": 0.821463,
+   "rows": [
+    24,
+    "dict"
+   ]
+  },
+  "q2024_4Q_oci_only_items": {
+   "25": {
+    "old": "float",
+    "after": "float",
+    "ytd4_master": "float",
+    "ytd3_before": "float",
+    "ytd3_after": "float"
+   },
+   "26": {
+    "old": "float",
+    "after": "float",
+    "ytd4_master": "float",
+    "ytd3_before": "float",
+    "ytd3_after": "float"
+   },
+   "31": {
+    "old": "float",
+    "after": "float",
+    "ytd4_master": "float",
+    "ytd3_before": "float",
+    "ytd3_after": "float"
+   },
+   "32": {
+    "old": "float",
+    "after": "float",
+    "ytd4_master": "float",
+    "ytd3_before": "float",
+    "ytd3_after": "float"
+   }
+  },
+  "fy2023_q1_q3_master_vs_fy2024_filings_prior_print": {
+   "n": 27,
+   "n_compared": 21,
+   "n_equal": 21,
+   "rows": [
+    27,
+    "dict"
+   ]
+  },
+  "q2024_4Q_master_vs_fy2025_annual_prior_print": {
+   "n": 11,
+   "equal_items": [
+    7,
+    "int"
+   ],
+   "differing_items": [
+    4,
+    "int"
+   ],
+   "rows": [
+    11,
+    "dict"
+   ]
+  }
+ },
+ "apply_contract": {
+  "gold_set_cells": [
+   33,
+   [
+    5,
+    "str"
+   ]
+  ],
+  "null_dangi_cells": [
+   9,
+   [
+    3,
+    "str"
+   ]
+  ],
+  "set_dangi_cells": [
+   0,
+   null
+  ],
+  "expected_master_changes": {
+   "value_cells_changed": 33,
+   "dangi_cells_changed": 41,
+   "dangi_cells_set_to_null": 9,
+   "dangi_cells_changed_outside_bucket_values": "2024.4Q items 17,19,20,22,23,24,25,27 (derived from the adop"
+  },
+  "do_not_touch": {
+   "owner_gold_cells": [
+    19,
+    "list"
+   ],
+   "csm_waterfall": "unchanged for all four buckets (census SAME)",
+   "items_not_in_cells": "all other items, incl. 18, 21, 26, 28, 29, 30, 32 (equal to "
+  },
+  "gate_notes": "adopt all four buckets together: 2023.4Q alone leaves the FY"
+ }
+}
+=== KR0104
+{
+ "code": "KR0104",
+ "company": "농협생명",
+ "generated": "2026-10-22",
+ "source_tool": "data/_derived/remaining_20261022/e19_latest_comparative/KR01",
+ "master_unit": "백만원",
+ "statement": "separate (OFS) 4-2. 포괄손익계산서 (section 4. 재무제표), prior-year cu",
+ "cause": "전기오류 정정: K-IFRS 제1109호 최초적용(2023.1.1) 시 일부 금융상품(당기손익-공정가치측정유",
+ "scope_decision": {
+  "recommended": "B_all_differing_items",
+  "n_cells": 18,
+  "classes": {
+   "RESTATED": [
+    7,
+    "int"
+   ],
+   "PRINT_ROUNDING": [
+    11,
+    "int"
+   ]
+  },
+  "census_list": [
+   8,
+   17
+  ],
+  "why": "The ticket / census list is 17,18,20,22,23,24,28,31. Item 28"
+ },
+ "buckets": [
+  4,
+  {
+   "quarter": "2023.1Q",
+   "adopt": false,
+   "approved_by_owner": false,
+   "n_cells": 0,
+   "items": [
+    0,
+    null
+   ],
+   "items_that_differ_from_later_print": [
+    4,
+    "int"
+   ],
+   "items_equal_to_later_print": [
+    0,
+    null
+   ],
+   "later_filing": {
+    "fy": "str",
+    "rcept": "str",
+    "file": "str",
+    "statement_title_line": "int",
+    "parent_section": "list",
+    "unit": "str",
+    "cumulative_column_position": "int",
+    "three_month_column_position": "int"
+   },
+   "census_items": [
+    4,
+    "int"
+   ],
+   "gold_cells_in_block": [
+    0,
+    null
+   ],
+   "gold_overlap_with_changed_items": [
+    0,
+    null
+   ],
+   "user_pl_confirmed_cells_mentions_of_code": 0,
+   "csm": {
+    "status": "str",
+    "master_vector_eok": "list",
+    "later_vector_eok": "list",
+    "pl4_eok": "float",
+    "fidelity": "str"
+   },
+   "reason": "outside the approved list (stays at the old vintage; seam ne"
+  }
+ ],
+ "cells": [
+  18,
+  {
+   "quarter": "2023.3Q",
+   "item": 1,
+   "item_name": "보험손익",
+   "old": 276594.0,
+   "new": 276593.79133,
+   "delta": -0.20867,
+   "cls": "PRINT_ROUNDING",
+   "in_census_list": false,
+   "unit": "백만원",
+   "source_unit": "원",
+   "source_print": "won (exact)",
+   "xml_file": "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml",
+   "xml_rcept": "20241114000851",
+   "xml_period_column": "prior-year cumulative column (2023.1.1-9.30) of the separate",
+   "xml_line": 5632,
+   "xml_lines": [
+    1,
+    "dict"
+   ],
+   "derivation": "direct print",
+   "sign_note": null,
+   "second_source": {
+    "fsapi": "dict",
+    "alt_path": "dict",
+    "restatement_note": "dict"
+   },
+   "census_new": 276593.79133,
+   "census_master": 276594.0,
+   "census_candidate_new": null,
+   "census_candidate_diff_vs_xml": null,
+   "master_equals_original_print": true,
+   "original_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_line": "int",
+    "rcept": "str",
+    "unit": "str",
+    "xml_lines": "list"
+   },
+   "gold_cell": false,
+   "gold_note": "2026-10-22 parser/ifrs17 (KR0104 최신 비교열 채택, owner 결정 2026-10"
+  }
+ ],
+ "seam_cells": [
+  4,
+  {
+   "quarter": "2023.3Q",
+   "item": 16,
+   "item_name": "기타사업비용",
+   "old_live": null,
+   "old_fresh_build": 12114.0,
+   "derived_after_adoption": 12113.84606,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "class": "seam",
+   "proposed": "set_dangi",
+   "proposed_value": 12097.07857,
+   "three_month_print": {
+    "value": "float",
+    "xml_file": "str",
+    "xml_rcept": "str",
+    "xml_period_column": "str",
+    "xml_lines": "list",
+    "derivation": "str"
+   },
+   "cross_check_9M_minus_6M_both_new_vintage": {
+    "later_9M_prior_cum": "float",
+    "fy2024_q2_report_6M_prior_cum": "float",
+    "difference": "float",
+    "diff_vs_3m_print": "float",
+    "ok": "bool",
+    "fy2024_q2_line": "int",
+    "fy2024_q2_file": "str"
+   },
+   "old_derived_mixed_vintage": 12113.84606,
+   "set_dangi_cell": [
+    5,
+    "str"
+   ],
+   "original_3m_print": 12097.0,
+   "reason": "9M adopted (later vintage), 6M (2023.2Q) stays at the old vi"
+  }
+ ],
+ "neighbour_effects": [
+  50,
+  {
+   "quarter": "2023.1Q",
+   "item": 1,
+   "item_name": "보험손익",
+   "old_live": null,
+   "old_fresh_build": null,
+   "derived_after_adoption": null,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "NoneType",
+    "ytd_after": "NoneType",
+    "adopted": "bool"
+   },
+   "operand_prev": null,
+   "class": "q1_equals_ytd_unchanged",
+   "why": "single quarter = YTD of Q1 (not adopted)"
+  }
+ ],
+ "auto_follow_cells": [
+  18,
+  {
+   "quarter": "2023.4Q",
+   "item": 1,
+   "item_name": "보험손익",
+   "old_live": 54447.488735,
+   "old_fresh_build": 54447.488735,
+   "derived_after_adoption": 54447.697405,
+   "operand_cur": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "operand_prev": {
+    "q": "str",
+    "ytd_before": "float",
+    "ytd_after": "float",
+    "adopted": "bool"
+   },
+   "class": "consistent_after_adoption",
+   "why": "annual 2023 (master = FY2023 annual print; equals the FY2024",
+   "annual_checks": {
+    "master_annual": "float",
+    "fy2023_annual_print": "float",
+    "fy2024_annual_prior_print": "float",
+    "xml_line_orig": "int",
+    "xml_line_later": "int"
+   }
+  }
+ ],
+ "verification": {
+  "master_equals_original_print_all": true,
+  "n_master_items_checked_vs_original": 18,
+  "warnings": [
+   0,
+   null
+  ],
+  "dangi_model_mismatch_vs_live_master": [
+   4,
+   [
+    4,
+    "int"
+   ]
+  ],
+  "dangi_model_mismatch_note": "pre-existing, not caused by the adoption: the live master ha",
+  "census_vs_xml": {
+   "n_cells": 18,
+   "max_abs_diff_fsapi_vs_xml": 0.0,
+   "census_list": [
+    8,
+    "int"
+   ],
+   "census_list_in_plan_cells": [
+    8,
+    "int"
+   ],
+   "plan_cells_not_in_census_list": [
+    10,
+    "int"
+   ],
+   "census_candidate_cells": [
+    9,
+    "int"
+   ],
+   "candidate_diff_vs_xml": {
+    "18": "float"
+   },
+   "candidate_note": "cand_pl_cells.json item 18 = 1135383.75571 keeps the rounded"
+  },
+  "alt_path": {
+   "n": 12,
+   "n_ok": 12,
+   "items_without_alt_path": [
+    6,
+    "int"
+   ]
+  },
+  "restatement_note": {
+   "n_rows_in_plan": 8,
+   "within_print_ba

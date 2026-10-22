@@ -5,6 +5,17 @@
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/parser_ifrs17/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-22 (18차: 7사 19버킷 PL 최신 비교열 적재 — 티켓 20261022T0900Z)
+
+커밋 안 함, push 안 함. 서브에이전트·docling 안 씀. `build_root_masters.main()`·`build_pl_breakdown`·xlsx·public_exports·CSM 마스터 미접촉. 증거 `data/_derived/remaining_20261022/e19_latest_comparative/apply/`(`INDEX.txt`).
+
+- **owner 질문(「재공시 vs 현행 공시 충돌 RED 는 없다고 했는데 왜 또 고치나」)에 대한 답**: RED 가 있어서 고친 것이 아니다. 게이트는 한 판(원 공시 한 벌) 안의 산술만 보므로 옛 값도 새 값도 각자 닫혀 RED 가 없었고 지금도 없다(적재 전후 RED 변화는 xlsx 동기화 지연 1건뿐). 이번 적재는 owner 결정(2026-10-22 「교보생명과 같이 최신 비교열로」)이다.
+- **확인**: 계획서 7개의 172칸을 필링 XML 줄(값·단위·행 라벨·열 ACONTEXT/위치·이전 마스터값)로 독립 재독(`e19_verify_plans.py`) 172/172, 이음매 3개월 열 20/20. 1칸 제외: 농협생명 2023.3Q 항목 32(−3,080 → −3,080.034, 반올림만) — gold 값이 빌더 소스와 0.05 이내면 「마스크 칸」이 되어 등재부(ledger) 박제가 있어야 테스트가 통과하므로 박제 없이 원 인쇄값을 둔다(항목 25 − 부분합 잔차 0.034 백만원).
+- **적재**: gold set +171(495→666, 마스크 29 불변) · null_dangi +17 · set_dangi +20 · PL 235칸(값 171, 값_당분기 215) · 출처표 19블록(income_statement) + 병합 노트 키 · `GOLD_OVERLAY_CENSUS` PL (666, 29) · `_TAX22_LATEST_COMPARATIVE_ONLY` 22칸(테스트가 교보 4칸만 박아 둬서 확장). 하네스 `e19_apply.py`(교보 `apply_kr0073_oci.py` 일반화; 옛 gold/새 gold 두 번의 실제 `build_pl()` 차이만 반영해 기존 드리프트 495셀은 건드리지 않음).
+- **효과(누계, 억원)**: 투자손익 −417.2~+585.8 · 당기순이익 −320.8~+450.5 · 기타포괄손익 −33.5~+320.8(총 19버킷, 버킷별 전후 표 `onscreen_eok.txt`). 보험금융손익 배분 변경 4사(NH농협손보·동양·ABL·푸본현대)와 DB생명은 순이익↔OCI 이동 또는 보험서비스↔투자영업비용 재분류라 총포괄손익 불변, 오류 정정인 흥국화재(총포괄 +43.2/+78.6/−11.6/−24.5)와 농협생명(순이익 +450.5)만 총포괄손익이 움직인다. 인접 분기 단일분기도 같이 정리됐다(흥국 2024.3Q · NH·ABL·동양 2024.4Q · DB생명·농협생명 2023.4Q · 푸본현대 2024.3Q).
+- **게이트 전→후**: 데이터계약 RED 0→1(MASTER_XLSX_DRIFT 손익분해PL) · master_tables 출력 SUMMARY 동일(tax22 「최신 비교열로만 통과」 4→22, OCI_VS_BS_AOCI 23건 집합만 교체) · 연속성/워터폴/NB/live_artifacts 불변 · gold_overlay 7 · identity 14 · master_tables 골든 · PL 골든 통과 · 지문 RED 0 · rule_coverage 104 중 xlsx 청결 1건만 실패.
+- **남은 것**: publishing xlsx `손익분해PL` 동기화·panel·public_exports / 옛 판으로 남는 인접 분기(푸본현대 2024.3Q·4Q, DB생명 2023.1Q·2Q, 농협생명 2023.1Q·2Q·4Q 무변경) / 유지 32·부속 53버킷.
+
 ## 2026-10-22 (17차: 교보생명 KR0073 2023.4Q BS·ILP 재작성 블록 — 오케스트레이터 지시)
 
 커밋 안 함, push 안 함. 서브에이전트·docling 안 씀. `build_root_masters.main()`·xlsx·public_exports·viz 패널 미접촉(panel_csm_combo 재생성 안 함). 증거 `data/_derived/remaining_20261022/a2_bs_ilp/`.

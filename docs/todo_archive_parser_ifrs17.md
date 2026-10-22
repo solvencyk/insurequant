@@ -2,6 +2,14 @@
 
 ## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
+- **2026-10-22 15차: 교보생명 KR0073 2023.3Q PL 단일분기 = FY2024 Q3 보고서 3개월 열 인쇄값(검증 티켓 20261021T1655Z, 코디네이터 「옵션 B-lite」)** — 3e53aef8 이 만든 2023.3Q 값_당분기(재작성 전 상반기 누계와 재작성 후 9개월 누계의 차; 보험손익 190,929 대 공시 3개월 열 89,282 · CSM상각 252,287 대 150,548)를 보고서(`20241114003039.xml` 별도 기준 전기 3개월 열)가 인쇄한 값으로 바꿨다: 인쇄되고 항등식 10개가 닫히는 29칸(항목 1~12 · 16~32)은 인쇄값(SET), 인쇄 안 된 항목 15 는 공란(NULL), 0.0 인 13·14 와 2023.2Q·4Q·2024.3Q·값(누계)은 불변. 독립 두 판독(원문 XML 줄 ↔ FS-API+생산 Tier-2 핸들러) 29/29 일치.
+  장치: gold `user_pl_cells.json` 의 선택 키 `set_dangi.cells`([코드,분기,항목,값,출처 줄])·`null_dangi.cells`(항목 15)를 `build_root_masters.build_pl()` 이 읽는다(기존 억제 장치가 없어 최소 확장, 게이트 예외·등재부 없음, 겹치면 거부, 테스트 4개). 네 분기 단일분기 합은 연 누계와 어긋난다 = 공시된 적 없는 재작성 상반기 보정(원수 CSM상각 525,962 대 627,701, 차 101,739). CSM 2023.3Q 단일분기 +960.03억(적재 전 −589.16)은 그대로.
+  게이트 전→후: 데이터계약 RED 0→1(xlsx `손익분해PL` 19셀 = 시트가 옛 파생값을 들고 있음) · YELLOW 169 · master_tables SUMMARY 전 필드 불변 · 연속성 red 0 · 워터폴/NB/live_artifacts 불변 · 실제 `build_pl()` 재실행 KR0073 448행 차이 0(다른 회사 기존 드리프트 495셀 같은 집합) · 테스트: survive-rebuild 7/7(신규 4) · gold 10 · identity 14 · viz 골든 2종 · 지문 6 spec ok · PL 골든(266초) 통과, manifest 103/104(실패 1 = xlsx 드리프트 19셀), master_tables 골든 SUMMARY 전 필드 일치(--update 불요).
+  남은 것: publishing = xlsx `손익분해PL` 2023.3Q 값_당분기 HEAD 대비 19셀(항목 1~7 · 11 · 12 · 15 · 17 · 19 · 20 · 22~25 · 28 · 31)·`public_exports` / validation = 게이트·골든 재실행(마스터 SUMMARY 는 불변). 커밋 안 함.
+  근거·재현 `data/_derived/kyobo_seam_blank_20261022/`(`INDEX.txt` · `seam_3m_extract.txt` · `apply_seam_set.py --verify` / `--revert --apply`) · `docs/changelog_parser_ifrs17.md` 15차.
+
+## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
+
 - **2026-10-22 14차: 교보생명 KR0073 PL 최신 비교열 갱신 + CSM 재작성 기준(R) 적재(티켓 20261021T1310Z E1~E4 완결 · owner 「박제 거부, PL 마스터가 낡았다」)** — PL 2023.1Q~2024.2Q 6분기 122셀(변경 68 · 신규 채움 54; 예: 2023.4Q 항목 4 원수 CSM상각 437,009→627,701, 연간 순이익 489,082→632,201백만)을 후속 공시 별도 전기(누적) 열로 `user_pl_cells.json` 에 +122 등재(마스터 KR0073 152셀, 출처표 12블록 = emitter 산출)하고 CSM R 패키지(6분기 41셀 · gold +14/갱신 27[E5 포함] · 박제 없음)를 E5 위에 적재. 항등식 10개 · PL↔CSM 상각 짝 6/6 정확히 닫힘, 빌더 재실행이 CSM 2,358행 · PL KR0073 448행을 그대로 재현.
   게이트 전→후: 데이터계약 RED 1→2(xlsx `손익분해PL` 추가, `CSM워터폴`은 기존) · YELLOW 169 불변 · master_tables csm_amort 387P/1PIN/0F/5S 불변(박제안의 신규 RED 5 소멸) · pl_bridge 3676→3696P · qoq 266→262 · **tax22_src 282P/0F→278P/4F**(2023.3Q~2024.2Q; 룰이 원 공시 법인세와 대조 → validation `9f69ffcf` 가 룰을 고쳐 282P/0F 로 복귀) · 연속성 red 0 · 워터폴/NB/커버리지/live_artifacts 불변 · 테스트: gold 10 · identity 14 · viz 골든 2종 · PL 골든(364초) 통과, manifest 101/102(실패 1 = xlsx 드리프트), master_tables 골든은 SUMMARY 4필드 이동(validation `--update` 대기).
   범위 밖(별도 open 티켓 `20261021T1556Z`): 2024.4Q·2025.1Q·2025.2Q OCI 13칸이 후속 공시 전기 열과 다르다. 이월: `IFRS17_BS` 2023.4Q·ILP LIC 는 원 공시 기준 그대로(PL 순이익과 어긋남, 별도 갱신 필요); 2023.3Q 당분기 이음매는 15차에서 공시 3개월 열 인쇄값으로 교체했다.

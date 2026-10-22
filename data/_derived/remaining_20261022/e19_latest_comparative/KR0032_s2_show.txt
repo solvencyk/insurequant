@@ -1,0 +1,123 @@
+{
+ "2023.1Q": {
+  "n_master_cells": 10,
+  "n_equal_won": 0,
+  "n_equal_rounded": 6,
+  "unequal_items": [
+   1,
+   16,
+   17,
+   18
+  ],
+  "empty_master_items": [
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32
+  ]
+ },
+ "2023.2Q": {
+  "n_master_cells": 4,
+  "n_equal_won": 0,
+  "n_equal_rounded": 0,
+  "unequal_items": [
+   16,
+   22,
+   23,
+   24
+  ],
+  "empty_master_items": [
+   1,
+   17,
+   18,
+   19,
+   20,
+   21,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32
+  ]
+ },
+ "2023.3Q": {
+  "n_master_cells": 18,
+  "n_equal_won": 18,
+  "n_equal_rounded": 18,
+  "unequal_items": [],
+  "empty_master_items": []
+ }
+}
+2023.1Q i 1 master=54280.0 later_print=55130.707378 diff=-850.707378 L6601 FY2024_Q1
+2023.1Q i16 master=21803.0 later_print=20951.967361 diff=851.032639 L6762 FY2024_Q1
+2023.1Q i17 master=55216.0 later_print=54365.643131 diff=850.356869 L6785 FY2024_Q1
+2023.1Q i18 master=111812.0 later_print=110961.09562 diff=850.90438 LNone FY2024_Q1
+2023.1Q i19 master=-56596.0 later_print=-56595.452489 diff=-0.547511 L6831 FY2024_Q1
+2023.1Q i20 master=109496.0 later_print=109496.350509 diff=-0.350509 L7308 FY2024_Q1
+2023.1Q i21 master=-5871.0 later_print=-5871.58859 diff=0.58859 L7331 FY2024_Q1
+2023.1Q i22 master=103625.0 later_print=103624.761919 diff=0.238081 L7377 FY2024_Q1
+2023.1Q i23 master=24680.0 later_print=24679.473634 diff=0.526366 L7400 FY2024_Q1
+2023.1Q i24 master=78945.0 later_print=78945.288285 diff=-0.288285 L7423 FY2024_Q1
+2023.1Q i25 master=None later_print=946.363096 diff=None L7515 FY2024_Q1
+2023.1Q i26 master=None later_print=107043.618556 diff=None L7630 FY2024_Q1
+2023.1Q i27 master=None later_print=-134270.119529 diff=None L7676 FY2024_Q1
+2023.1Q i28 master=None later_print=13702.510768 diff=None L7653 FY2024_Q1
+2023.1Q i29 master=None later_print=2628.459715 diff=None L7584 FY2024_Q1
+2023.1Q i30 master=None later_print=11867.955382 diff=None L7699 FY2024_Q1
+2023.1Q i31 master=None later_print=79891.651381 diff=None L7722 FY2024_Q1
+2023.1Q i32 master=None later_print=-26.061796 diff=None L7561 FY2024_Q1
+2023.2Q i 1 master=None later_print=113301.721794 diff=None L6493 FY2024_Q2
+2023.2Q i16 master=41900.0 later_print=40748.545805 diff=1151.454195 L6654 FY2024_Q2
+2023.2Q i17 master=None later_print=78508.134986 diff=None L6677 FY2024_Q2
+2023.2Q i18 master=None later_print=193067.163749 diff=None LNone FY2024_Q2
+2023.2Q i19 master=None later_print=-114559.028763 diff=None L6723 FY2024_Q2
+2023.2Q i20 master=None later_print=191809.85678 diff=None L7206 FY2024_Q2
+2023.2Q i21 master=None later_print=-11911.001073 diff=None L7229 FY2024_Q2
+2023.2Q i22 master=179900.0 later_print=179898.855707 diff=1.144293 L7275 FY2024_Q2
+2023.2Q i23 master=38600.0 later_print=38631.2877 diff=-31.2877 L7298 FY2024_Q2
+2023.2Q i24 master=141300.0 later_print=141267.568007 diff=32.431993 L7321 FY2024_Q2
+2023.2Q i25 master=None later_print=20012.596881 diff=None L7413 FY2024_Q2
+2023.2Q i26 master=None later_print=48991.210301 diff=None L7528 FY2024_Q2
+2023.2Q i27 master=None later_print=-9328.698015 diff=None L7574 FY2024_Q2
+2023.2Q i28 master=None later_print=-26936.188637 diff=None L7551 FY2024_Q2
+2023.2Q i29 master=None later_print=2405.373888 diff=None L7482 FY2024_Q2
+2023.2Q i30 master=None later_print=4898.771236 diff=None L7597 FY2024_Q2
+2023.2Q i31 master=None later_print=161280.164888 diff=None L7620 FY2024_Q2
+2023.2Q i32 master=None later_print=-17.871892 diff=None L7459 FY2024_Q2
+2023.3Q i 1 master=63966.11964 later_print=63966.11964 diff=0.0 L6498 FY2024_Q3
+2023.3Q i16 master=79739.314294 later_print=79739.314294 diff=0.0 L6659 FY2024_Q3
+2023.3Q i17 master=80685.467309 later_print=80685.467309 diff=0.0 L6682 FY2024_Q3
+2023.3Q i18 master=257079.264315 later_print=257079.264315 diff=0.0 LNone FY2024_Q3
+2023.3Q i19 master=-176393.797006 later_print=-176393.797006 diff=0.0 L6728 FY2024_Q3
+2023.3Q i20 master=144651.586949 later_print=144651.586949 diff=0.0 L7202 FY2024_Q3
+2023.3Q i21 master=-18126.412726 later_print=-18126.412726 diff=0.0 L7225 FY2024_Q3
+2023.3Q i22 master=126525.174223 later_print=126525.174223 diff=0.0 L7271 FY2024_Q3
+2023.3Q i23 master=31486.717874 later_print=31486.717874 diff=0.0 L7294 FY2024_Q3
+2023.3Q i24 master=95038.456349 later_print=95038.456349 diff=0.0 L7317 FY2024_Q3
+2023.3Q i25 master=42130.996145 later_print=42130.996145 diff=0.0 L7409 FY2024_Q3
+2023.3Q i26 master=-24632.831625 later_print=-24632.831625 diff=0.0 L7524 FY2024_Q3
+2023.3Q i27 master=141581.087425 later_print=141581.087425 diff=0.0 L7570 FY2024_Q3
+2023.3Q i28 master=-61213.945292 later_print=-61213.945292 diff=0.0 L7547 FY2024_Q3
+2023.3Q i29 master=2656.281516 later_print=2656.281516 diff=0.0 L7478 FY2024_Q3
+2023.3Q i30 master=-16214.650478 later_print=-16214.650478 diff=0.0 L7593 FY2024_Q3
+2023.3Q i31 master=137169.452494 later_print=137169.452494 diff=0.0 L7616 FY2024_Q3
+2023.3Q i32 master=-44.945401 later_print=-44.945401 diff=0.0 L7455 FY2024_Q3
+--- statements
+FY2023_Q3 data/dart/FY2023_Q3/raw/KR0032_NH농협손해보험/20231114000995.xml title L6361 end L7707 unit 원 ctx [] hdr={'tr_line': 6425, 'texts': ['3개월', '누적', '3개월', '누적'], 'lines': [6428, 6432, 6436, 6440]} per={'tr_line': 6413, 'texts': ['제 12 기 3분기', '제 11 기 3분기'], 'lines': [6417, 6421]}
+FY2023_Q4 data/dart/FY2023_Q4/raw/KR0032_NH농협손해보험_20240329001662/20240329001662.xml title L6348 end L7555 unit 원 ctx [] hdr=None per={'tr_line': 6406, 'texts': ['제 12 기', '제 11 기', '제 10 기'], 'lines': [6410, 6414, 6418]}
+FY2024_Q1 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml title L6496 end L7789 unit 원 ctx [] hdr={'tr_line': 6560, 'texts': ['3개월', '누적', '3개월', '누적'], 'lines': [6563, 6567, 6571, 6575]} per={'tr_line': 6548, 'texts': ['제 13 기 1분기', '제 12 기 1분기'], 'lines': [6552, 6556]}
+FY2024_Q2 data/dart/FY2024_Q2/raw/KR0032_NH농협손해보험/20240814001448.xml title L6388 end L7687 unit 원 ctx [] hdr={'tr_line': 6452, 'texts': ['3개월', '누적', '3개월', '누적'], 'lines': [6455, 6459, 6463, 6467]} per={'tr_line': 6440, 'texts': ['제 13 기 반기', '제 12 기 반기'], 'lines': [6444, 6448]}
+FY2024_Q3 data/dart/FY2024_Q3/raw/KR0032_NH농협손해보험/20241114001354.xml title L6393 end L7683 unit 원 ctx [] hdr={'tr_line': 6457, 'texts': ['3개월', '누적', '3개월', '누적'], 'lines': [6460, 6464, 6468, 6472]} per={'tr_line': 6445, 'texts': ['제 13 기 3분기', '제 12 기 3분기'], 'lines': [6449, 6453]}
+FY2024_Q4 data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml title L6451 end L7685 unit 원 ctx ['BPFY2022dFY_ifrs-ful:SEP', 'CFY2024dFY:SEP', 'PFY2023dFY:SEP'] hdr=None per={'tr_line': 6509, 'texts': ['제 13 기', '제 12 기', '제 11 기'], 'lines': [6513, 6517, 6521]}
+FY2025_Q1 data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml title L6749 end L8047 unit 원 ctx ['CFY2025dFQA:SEP', 'CFY2025dFQQ:SEP', 'PFY2024dFQA:SEP', 'PFY2024dFQQ:SEP'] hdr={'tr_line': 6813, 'texts': ['3개월', '누적', '3개월', '누적'], 'lines': [6816, 6820, 6824, 6828]} per={'tr_line': 6801, 'texts': ['제 14 기 1분기', '제 13 기 1분기'], 'lines': [6805, 6809]}
+FY2025_Q2 data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml title L6381 end L7680 unit 원 ctx ['CFY2025dHYA:SEP', 'CFY2025dHYQ:SEP', 'PFY2024dHYA:SEP', 'PFY2024dHYQ:SEP'] hdr={'tr_line': 6445, 'texts': ['3개월', '누적', '3개월', '누적'], 'lines': [6448, 6452, 6456, 6460]} per={'tr_line': 6433, 'texts': ['제 14 기 반기', '제 13 기 반기'], 'lines': [6437, 6441]}
+FY2025_Q3 data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml title L5934 end L6419 unit 원 ctx ['CFY2025dTQA:SEP', 'CFY2025dTQQ:SEP', 'PFY2024dTQA:SEP', 'PFY2024dTQQ:SEP'] hdr={'tr_line': 5980, 'texts': ['3개월', '누적', '3개월', '누적'], 'lines': [5981, 5982, 5983, 5984]} per={'tr_line': 5974, 'texts': ['제 14 기 3분기', '제 13 기 3분기'], 'lines': [5976, 5977]}
+FY2025_Q4 data/dart/FY2025_Q4/raw/KR0032_NH농협손해보험_20260331004099/20260331004099.xml title L5701 end L6131 unit 원 ctx ['BPFY2023dFY_ifrs-ful:SEP', 'CFY2025dFY:SEP', 'PFY2024dFY:SEP'] hdr=None per={'tr_line': 5744, 'texts': ['제 14 기', '제 13 기', '제 12 기'], 'lines': [5746, 5747, 5748]}
+--- preexisting mismatch [[22, "2023.3Q", -53374.825777, null], [23, "2023.3Q", -7113.282126, null], [24, "2023.3Q", -46261.543651, null]]

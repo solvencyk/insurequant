@@ -1,0 +1,5 @@
+rows live=13801 sim=13801; KR0104 cells where a fresh build_pl() != live: 4; other-company drift cells: 491
+KR0104 2023.3Q i16 live 값=33914.0 당분기=None   fresh-build 값=33914.0 당분기=12114.0
+KR0104 2023.3Q i22 live 값=170828.0 당분기=None   fresh-build 값=170828.0 당분기=-7472.0
+KR0104 2023.3Q i23 live 값=35052.0 당분기=None   fresh-build 값=35052.0 당분기=-1748.0
+KR0104 2023.3Q i24 live 값=135776.0 당분기=None   fresh-build 값=135776.0 당분기=-5724.0

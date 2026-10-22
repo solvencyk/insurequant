@@ -1,0 +1,56 @@
+== KR0005 top keys ['company', 'name', 'basis', 'unit', 'restatement_cause', 'buckets', 'cells', 'seam_cells', 'blank_before_and_after', 'side_effect_single_quarters', 'verification']
+  bucket {'quarter': '2023.3Q', 'adopt': True, 'n_cells': 11, 'items': [17, 18, 20, 22, 23, 24, 25, 26, 28, 31, 32], 'reason': 'closes on the merged vector (20=1+17, 22-24=23, 31=24+25, 25=26+27+28+29+30+32, 17=18+19, LOB bridge unchanged); no owner gold cell changes; CSM unchanged (insurance result and CSM identical in both vintages)'}
+  bucket {'quarter': '2023.4Q', 'adopt': True, 'n_cells': 12, 'items': [17, 18, 19, 20, 22, 23, 24, 25, 26, 28, 31, 32], 'reason': 'closes on the merged vector (20=1+17, 22-24=23, 31=24+25, 25=26+27+28+29+30+32, 17=18+19, LOB bridge unchanged); no owner gold cell changes; CSM unchanged (insurance result and CSM identical in both vintages)'}
+  bucket {'quarter': '2024.1Q', 'adopt': True, 'n_cells': 11, 'items': [17, 18, 20, 22, 23, 24, 25, 26, 28, 31, 32], 'reason': 'closes on the merged vector (20=1+17, 22-24=23, 31=24+25, 25=26+27+28+29+30+32, 17=18+19, LOB bridge unchanged); no owner gold cell changes; CSM unchanged (insurance result and CSM identical in both vintages)'}
+  bucket {'quarter': '2024.2Q', 'adopt': True, 'n_cells': 11, 'items': [17, 18, 20, 22, 23, 24, 25, 26, 28, 31, 32], 'reason': 'closes on the merged vector (20=1+17, 22-24=23, 31=24+25, 25=26+27+28+29+30+32, 17=18+19, LOB bridge unchanged); no owner gold cell changes; CSM unchanged (insurance result and CSM identical in both vintages)'}
+  cells 45 keys ['quarter', 'item', 'name', 'old', 'new', 'unit', 'xml_file', 'xml_line', 'xml_label', 'xml_column', 'xml_cites', 'orig_check', 'second_source', 'census_new', 'agrees_with_census', 'census_note', 'owner_gold_cell', 'gold_set_entry']
+   seam_cells 4
+   auto_follow_cells 0
+   neighbour_effects 0
+== KR0032 top keys ['code', 'company', 'generated', 'source_tool', 'master_unit', 'statement', 'buckets', 'cells', 'seam_cells', 'neighbour_effects', 'auto_follow_cells', 'verification', 'neighbours_outside_approved_list', 'apply_contract']
+  bucket {'quarter': '2023.4Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector (G1-G7 strict 0.002 million won; G8 LOB bridge residual 0.099324 is pre-existing, identical before/after, far inside the gate tolerance 200.0); no owner gold cell in the block; CSM latest = master (census SAME)'}
+  bucket {'quarter': '2024.1Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector (G1-G7 strict 0.002 million won; G8 LOB bridge residual -0.756917 is pre-existing, identical before/after, far inside the gate tolerance 200.0); no owner gold cell in the block; CSM latest = master (census SAME)'}
+  bucket {'quarter': '2024.2Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector (G1-G7 strict 0.002 million won; G8 LOB bridge residual 0.064959 is pre-existing, identical before/after, far inside the gate tolerance 200.0); no owner gold cell in the block; CSM latest = master (census SAME)'}
+  bucket {'quarter': '2024.3Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector (G1-G7 strict 0.002 million won; G8 LOB bridge residual -0.226153 is pre-existing, identical before/after, far inside the gate tolerance 200.0); no owner gold cell in the block; CSM latest = master (census SAME)'}
+  cells 32 keys ['quarter', 'item', 'item_name', 'old', 'new', 'delta', 'unit', 'source_unit', 'source_print', 'xml_file', 'xml_rcept', 'xml_period_column', 'xml_line', 'xml_lines', 'derivation', 'second_source', 'note_table_source', 'third_xml_source', 'census_new', 'census_master', 'master_equals_original_print', 'original_print', 'gold_cell', 'gold_note']
+   seam_cells 8
+   auto_follow_cells 24
+   neighbour_effects 8
+  apply_contract keys ['gold_set_cells', 'null_dangi_cells', 'set_dangi_cells', 'expected_master_changes', 'do_not_touch', 'gate_notes']
+== KR0070 top keys ['code', 'company', 'generated', 'source_tool', 'master_unit', 'statement', 'buckets', 'cells', 'seam_cells', 'neighbour_effects', 'auto_follow_cells', 'verification', 'apply_contract']
+  bucket {'quarter': '2024.1Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell among the changed items; CSM latest = master (SAME), PL4/CSM5 pair untouched'}
+  bucket {'quarter': '2024.2Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell among the changed items; CSM latest = master (SAME), PL4/CSM5 pair untouched'}
+  bucket {'quarter': '2024.3Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell among the changed items; CSM latest = master (SAME), PL4/CSM5 pair untouched'}
+  cells 24 keys ['quarter', 'item', 'item_name', 'old', 'new', 'delta', 'unit', 'source_unit', 'source_print', 'xml_file', 'xml_rcept', 'xml_period_column', 'xml_line', 'xml_lines', 'derivation', 'second_source', 'census_new', 'census_master', 'master_equals_original_print', 'original_print', 'gold_cell', 'gold_note']
+   seam_cells 0
+   auto_follow_cells 24
+   neighbour_effects 8
+  apply_contract keys ['gold_set_cells', 'null_dangi_cells', 'set_dangi_cells', 'expected_master_changes', 'do_not_touch', 'gate_notes']
+== KR0082 top keys ['code', 'company', 'generated', 'source_tool', 'master_unit', 'statement', 'buckets', 'cells', 'seam_cells', 'neighbour_effects', 'auto_follow_cells', 'verification', 'apply_contract']
+  bucket {'quarter': '2023.1Q', 'adopt': False, 'n_cells': 0, 'items': [], 'reason': 'outside the approved list (stays at the old vintage): owner gold cells in the block [1, 16, 17, 18, 19], item(s) [1, 16, 17, 18] would change; the stored gold holds the original-vintage values (2023.1Q/2Q reports), the later print is a different vintage'}
+  bucket {'quarter': '2023.2Q', 'adopt': False, 'n_cells': 0, 'items': [], 'reason': 'outside the approved list (stays at the old vintage): owner gold cells in the block [1, 16, 17, 18, 19], item(s) [1, 16, 17, 18] would change; the stored gold holds the original-vintage values (2023.1Q/2Q reports), the later print is a different vintage'}
+  bucket {'quarter': '2023.3Q', 'adopt': True, 'n_cells': 4, 'items': [1, 16, 17, 18], 'reason': 'closes on the merged vector (20=1+17, |22-24|=|23|, 31=24+25, 25=sum of OCI parts, 17=18+19, LOB bridge 1 = 2+13+14+15-16 with master Tier-2 legs); no owner gold cell in the block; CSM latest = master (SAME), PL4/CSM5 pair untouched; only 1/16/17/18 move (+18.852 / -18.852 / -18.852 / -18.852 eok), 20/22/23/24/25-32 are equal to the won'}
+  cells 4 keys ['quarter', 'item', 'item_name', 'old', 'new', 'delta', 'unit', 'source_unit', 'source_print', 'xml_file', 'xml_rcept', 'xml_period_column', 'xml_line', 'xml_lines', 'derivation', 'sign_note', 'second_source', 'census_new', 'census_master', 'census_candidate_new', 'census_candidate_diff_vs_xml', 'master_equals_original_print', 'original_print', 'gold_cell', 'gold_note']
+   seam_cells 4
+   auto_follow_cells 4
+   neighbour_effects 8
+  apply_contract keys ['gold_set_cells', 'gold_set_notes', 'null_dangi_cells', 'set_dangi_cells', 'expected_master_changes', 'do_not_touch', 'census_note', 'gate_notes']
+== KR0083 top keys ['code', 'company', 'generated', 'source_tool', 'master_unit', 'statement', 'buckets', 'cells', 'seam_cells', 'neighbour_effects', 'auto_follow_cells', 'verification', 'apply_contract']
+  bucket {'quarter': '2024.1Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell in the block; CSM latest = master (SAME), PL4/CSM5 pair untouched; LOB bridge unchanged (items 1/15/16 and Tier-2 legs equal)'}
+  bucket {'quarter': '2024.2Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell in the block; CSM latest = master (SAME), PL4/CSM5 pair untouched; LOB bridge unchanged (items 1/15/16 and Tier-2 legs equal)'}
+  bucket {'quarter': '2024.3Q', 'adopt': False, 'n_cells': 0, 'items': [], 'reason': 'outside the approved list (stays at the old vintage): owner gold cells in the block [27, 28, 30], item(s) [27] would change'}
+  cells 16 keys ['quarter', 'item', 'item_name', 'old', 'new', 'delta', 'unit', 'source_unit', 'source_print', 'xml_file', 'xml_rcept', 'xml_period_column', 'xml_line', 'xml_lines', 'derivation', 'second_source', 'census_new', 'census_master', 'census_candidate_new', 'census_candidate_diff_vs_xml', 'master_equals_original_print', 'original_print', 'gold_cell', 'gold_note']
+   seam_cells 8
+   auto_follow_cells 16
+   neighbour_effects 8
+  apply_contract keys ['gold_set_cells', 'gold_set_notes', 'null_dangi_cells', 'set_dangi_cells', 'expected_master_changes', 'do_not_touch', 'gate_notes']
+== KR0087 top keys ['code', 'company', 'generated', 'source_tool', 'master_unit', 'statement', 'buckets', 'cells', 'seam_cells', 'neighbour_effects', 'auto_follow_cells', 'verification', 'apply_contract']
+  bucket {'quarter': '2023.4Q', 'adopt': True, 'n_cells': 9, 'items': [17, 19, 20, 22, 23, 24, 25, 27, 31], 'reason': 'closes on the merged vector; no owner gold cell among the changed items; CSM latest = master'}
+  bucket {'quarter': '2024.1Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell among the changed items; CSM latest = master'}
+  bucket {'quarter': '2024.2Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell among the changed items; CSM latest = master'}
+  bucket {'quarter': '2024.3Q', 'adopt': True, 'n_cells': 8, 'items': [17, 19, 20, 22, 23, 24, 25, 27], 'reason': 'closes on the merged vector; no owner gold cell among the changed items; CSM latest = master'}
+  cells 33 keys ['quarter', 'item', 'item_name', 'old', 'new', 'delta', 'unit', 'source_unit', 'source_print', 'xml_file', 'xml_rcept', 'xml_period_column', 'xml_line', 'xml_lines', 'derivation', 'second_source', 'census_new', 'census_master', 'master_equals_original_print', 'original_print', 'gold_cell', 'gold_note']
+   seam_cells 9
+   auto_follow_cells 24
+   neighbour_effects 8
+  apply_contract keys ['gold_set_cells', 'null_dangi_cells', 'set_dangi_cells', 'expected_master_changes', 'do_not_touch', 'gate_notes']

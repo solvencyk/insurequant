@@ -1,0 +1,368 @@
+{
+ "FY2025_Q1": [
+  {
+   "label": "I. 보험손익",
+   "before": -7253.0,
+   "after": -7253.0,
+   "delta": 0.0,
+   "line_before": 41699,
+   "line_after": 41701,
+   "line_delta": 41702,
+   "label_line": 41698
+  },
+  {
+   "label": "II. 투자손익",
+   "before": 42172.0,
+   "after": 40401.0,
+   "delta": -1771.0,
+   "line_before": 41707,
+   "line_after": 41709,
+   "line_delta": 41710,
+   "label_line": 41706
+  },
+  {
+   "label": "투자영업비용",
+   "before": 487433.0,
+   "after": 489204.0,
+   "delta": 1771.0,
+   "line_before": 41715,
+   "line_after": 41717,
+   "line_delta": 41718,
+   "label_line": 41714
+  },
+  {
+   "label": "보험금융비용",
+   "before": 74329.0,
+   "after": 76100.0,
+   "delta": 1771.0,
+   "line_before": 41723,
+   "line_after": 41725,
+   "line_delta": 41726,
+   "label_line": 41722
+  },
+  {
+   "label": "III. 영업이익(손실)",
+   "before": 34919.0,
+   "after": 33148.0,
+   "delta": -1771.0,
+   "line_before": 41731,
+   "line_after": 41733,
+   "line_delta": 41734,
+   "label_line": 41730
+  },
+  {
+   "label": "IV. 영업외손익",
+   "before": 2843.0,
+   "after": 2843.0,
+   "delta": 0.0,
+   "line_before": 41739,
+   "line_after": 41741,
+   "line_delta": 41742,
+   "label_line": 41738
+  },
+  {
+   "label": "V. 법인세차감전순이익(손실)",
+   "before": 37762.0,
+   "after": 35991.0,
+   "delta": -1771.0,
+   "line_before": 41747,
+   "line_after": 41752,
+   "line_delta": 41753,
+   "label_line": 41746
+  },
+  {
+   "label": "VI. 법인세비용(수익)",
+   "before": 8465.0,
+   "after": 8056.0,
+   "delta": -409.0,
+   "line_before": 41758,
+   "line_after": 41760,
+   "line_delta": 41761,
+   "label_line": 41757
+  },
+  {
+   "label": "VII. 분기순이익(손실)",
+   "before": 29297.0,
+   "after": 27935.0,
+   "delta": -1362.0,
+   "line_before": 41766,
+   "line_after": 41768,
+   "line_delta": 41769,
+   "label_line": 41765
+  },
+  {
+   "label": "VIII. 기타포괄손익",
+   "before": -75838.0,
+   "after": -74476.0,
+   "delta": 1362.0,
+   "line_before": 41774,
+   "line_after": 41776,
+   "line_delta": 41777,
+   "label_line": 41773
+  },
+  {
+   "label": "보험계약자산(부채) 순금융손익",
+   "before": 14284.0,
+   "after": 15646.0,
+   "delta": 1362.0,
+   "line_before": 41782,
+   "line_after": 41784,
+   "line_delta": 41785,
+   "label_line": 41781
+  },
+  {
+   "label": "IX. 총포괄손익",
+   "before": -46541.0,
+   "after": -46541.0,
+   "delta": 0.0,
+   "line_before": 41790,
+   "line_after": 41792,
+   "line_delta": 41793,
+   "label_line": 41789
+  }
+ ],
+ "FY2025_Q2": [
+  {
+   "label": "I. 보험손익",
+   "before": -13132.0,
+   "after": -13132.0,
+   "delta": 0.0,
+   "line_before": 44041,
+   "line_after": 44043,
+   "line_delta": 44044,
+   "label_line": 44040
+  },
+  {
+   "label": "II. 투자손익",
+   "before": 45968.0,
+   "after": 41857.0,
+   "delta": -4111.0,
+   "line_before": 44049,
+   "line_after": 44051,
+   "line_delta": 44052,
+   "label_line": 44048
+  },
+  {
+   "label": "투자영업비용",
+   "before": 878291.0,
+   "after": 882402.0,
+   "delta": 4111.0,
+   "line_before": 44057,
+   "line_after": 44059,
+   "line_delta": 44060,
+   "label_line": 44056
+  },
+  {
+   "label": "보험금융비용",
+   "before": 150717.0,
+   "after": 154828.0,
+   "delta": 4111.0,
+   "line_before": 44065,
+   "line_after": 44067,
+   "line_delta": 44068,
+   "label_line": 44064
+  },
+  {
+   "label": "III. 영업이익(손실)",
+   "before": 32836.0,
+   "after": 28725.0,
+   "delta": -4111.0,
+   "line_before": 44073,
+   "line_after": 44075,
+   "line_delta": 44076,
+   "label_line": 44072
+  },
+  {
+   "label": "IV. 영업외손익",
+   "before": 2696.0,
+   "after": 2696.0,
+   "delta": 0.0,
+   "line_before": 44081,
+   "line_after": 44083,
+   "line_delta": 44084,
+   "label_line": 44080
+  },
+  {
+   "label": "V. 법인세차감전순이익(손실)",
+   "before": 35532.0,
+   "after": 31421.0,
+   "delta": -4111.0,
+   "line_before": 44089,
+   "line_after": 44091,
+   "line_delta": 44092,
+   "label_line": 44088
+  },
+  {
+   "label": "VI. 법인세비용(수익)",
+   "before": 8294.0,
+   "after": 7344.0,
+   "delta": -950.0,
+   "line_before": 44097,
+   "line_after": 44099,
+   "line_delta": 44100,
+   "label_line": 44096
+  },
+  {
+   "label": "VII. 반기순이익(손실)",
+   "before": 27238.0,
+   "after": 24077.0,
+   "delta": -3161.0,
+   "line_before": 44105,
+   "line_after": 44107,
+   "line_delta": 44108,
+   "label_line": 44104
+  },
+  {
+   "label": "VIII. 기타포괄손익",
+   "before": -195544.0,
+   "after": -192383.0,
+   "delta": 3161.0,
+   "line_before": 44113,
+   "line_after": 44115,
+   "line_delta": 44116,
+   "label_line": 44112
+  },
+  {
+   "label": "보험계약자산(부채) 순금융손익",
+   "before": -126053.0,
+   "after": -122892.0,
+   "delta": 3161.0,
+   "line_before": 44121,
+   "line_after": 44123,
+   "line_delta": 44124,
+   "label_line": 44120
+  },
+  {
+   "label": "IX. 총포괄손익",
+   "before": -168306.0,
+   "after": -168306.0,
+   "delta": 0.0,
+   "line_before": 44129,
+   "line_after": 44131,
+   "line_delta": 44132,
+   "label_line": 44128
+  }
+ ],
+ "FY2025_Q3": [
+  {
+   "label": "I. 보험손익",
+   "before": -19669.0,
+   "after": -19669.0,
+   "delta": 0.0,
+   "line_before": 38306,
+   "line_after": 38308,
+   "line_delta": 38309,
+   "label_line": 38305
+  },
+  {
+   "label": "II. 투자손익",
+   "before": -67390.0,
+   "after": -74853.0,
+   "delta": -7463.0,
+   "line_before": 38314,
+   "line_after": 38316,
+   "line_delta": 38317,
+   "label_line": 38313
+  },
+  {
+   "label": "투자영업비용",
+   "before": 987246.0,
+   "after": 994709.0,
+   "delta": 7463.0,
+   "line_before": 38322,
+   "line_after": 38324,
+   "line_delta": 38325,
+   "label_line": 38321
+  },
+  {
+   "label": "보험금융비용",
+   "before": 224408.0,
+   "after": 231871.0,
+   "delta": 7463.0,
+   "line_before": 38330,
+   "line_after": 38332,
+   "line_delta": 38333,
+   "label_line": 38329
+  },
+  {
+   "label": "III. 영업이익(손실)",
+   "before": -87059.0,
+   "after": -94522.0,
+   "delta": -7463.0,
+   "line_before": 38338,
+   "line_after": 38340,
+   "line_delta": 38341,
+   "label_line": 38337
+  },
+  {
+   "label": "IV. 영업외손익",
+   "before": 2546.0,
+   "after": 2546.0,
+   "delta": 0.0,
+   "line_before": 38346,
+   "line_after": 38348,
+   "line_delta": 38349,
+   "label_line": 38345
+  },
+  {
+   "label": "V. 법인세차감전순이익(손실)",
+   "before": -84513.0,
+   "after": -91976.0,
+   "delta": -7463.0,
+   "line_before": 38354,
+   "line_after": 38356,
+   "line_delta": 38357,
+   "label_line": 38353
+  },
+  {
+   "label": "VI. 법인세비용(수익)",
+   "before": -19776.0,
+   "after": -21500.0,
+   "delta": -1724.0,
+   "line_before": 38362,
+   "line_after": 38364,
+   "line_delta": 38365,
+   "label_line": 38361
+  },
+  {
+   "label": "VII. 분기순이익(손실)",
+   "before": -64737.0,
+   "after": -70476.0,
+   "delta": -5739.0,
+   "line_before": 38370,
+   "line_after": 38372,
+   "line_delta": 38373,
+   "label_line": 38369
+  },
+  {
+   "label": "VIII. 기타포괄손익",
+   "before": -148840.0,
+   "after": -143101.0,
+   "delta": 5739.0,
+   "line_before": 38378,
+   "line_after": 38380,
+   "line_delta": 38381,
+   "label_line": 38377
+  },
+  {
+   "label": "보험계약자산(부채) 순금융손익",
+   "before": -265227.0,
+   "after": -259488.0,
+   "delta": 5739.0,
+   "line_before": 38386,
+   "line_after": 38388,
+   "line_delta": 38389,
+   "label_line": 38385
+  },
+  {
+   "label": "IX. 총포괄손익",
+   "before": -213577.0,
+   "after": -213577.0,
+   "delta": 0.0,
+   "line_before": 38394,
+   "line_after": 38396,
+   "line_delta": 38397,
+   "label_line": 38393
+  }
+ ]
+}

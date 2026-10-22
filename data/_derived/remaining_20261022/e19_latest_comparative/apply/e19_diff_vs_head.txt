@@ -1,0 +1,24 @@
+[PASS] PL rows count equal and same key order (13801 rows)
+[PASS] no changed row outside the 7 companies (0)
+[PASS] no changed field other than 값 / 값_당분기 ([])
+[PASS] 값 changed cells == the 171 manifest cells (changed 171, manifest 171)
+[PASS] every changed 값 equals the manifest value 
+[PASS] every changed 값 had the manifest 'was' value before 
+[PASS] null_dangi cells are blank in the master 
+[PASS] set_dangi cells hold the printed 3-month value 
+   값_당분기 changed 215 cells {'KR0005': 49, 'KR0032': 40, 'KR0070': 32, 'KR0082': 8, 'KR0083': 24, 'KR0087': 41, 'KR0104': 21}; of which dangi-only (값 unchanged) 64
+[PASS] file ends the same way and uses the same newline convention 
+[PASS] gold: existing set entries untouched (prefix equal) (495 -> 666)
+[PASS] gold: added entries == manifest (value, was, note) 
+[PASS] gold: every added entry has keys 원보험사코드/항목번호/공시분기/값/was/note only 
+[PASS] gold: null_dangi existing cells untouched, +17 
+[PASS] gold: set_dangi existing cells untouched, +20 
+[PASS] gold: existing doc keys untouched 
+[PASS] provenance: same block keys and order 
+[PASS] provenance: changed blocks only of the 7 companies (19 blocks: [('KR0005', '2023.3Q', 'income_statement'), ('KR0005', '2023.4Q', 'income_statement'), ('KR0005', '2024.1Q', 'income_statement'), ('KR0005', '2024.2Q', 'income_statement'), ('KR0032', '2023.4Q', 'income_statement'), ('KR0032', '2024.1Q', 'income_statement'), ('KR0032', '2024.2Q', 'income_statement'), ('KR0032', '2024.3Q', 'income_statement'), ('KR0070', '2024.1Q', 'income_statement'), ('KR0070', '2024.2Q', 'income_statement'), ('KR0070', '2024.3Q', 'income_statement'), ('KR0082', '2023.3Q', 'income_statement'), ('KR0083', '2024.1Q', 'income_statement'), ('KR0083', '2024.2Q', 'income_statement'), ('KR0087', '2023.4Q', 'income_statement'), ('KR0087', '2024.1Q', 'income_statement'), ('KR0087', '2024.2Q', 'income_statement'), ('KR0087', '2024.3Q', 'income_statement'), ('KR0104', '2023.3Q', 'income_statement')])
+[PASS] provenance: only the new merge note key added at top level, others untouched (['merge_note_20261022_e19_latest_comparative'])
+[PASS] provenance: every cell whose 값 changed belongs to a replaced (company, quarter) block 
+   dangi-only cells in quarters without a changed provenance block (the sidecar records sources, not 값_당분기): 64
+[PASS] test file: only the census declaration changed (+1 comment line) (3 differing lines, lines 2233 -> 2234)
+   GOLD_OVERLAY_CENSUS = {"CSM": (317, 77), "PL": (666, 29)}
+ALL PASS

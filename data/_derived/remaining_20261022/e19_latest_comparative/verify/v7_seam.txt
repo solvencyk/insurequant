@@ -1,0 +1,94 @@
+KR0082 2023.1Q: missing filing data (orig=False later=True)
+KR0082 2023.2Q: missing filing data (orig=False later=True)
+KR0032 2023.1Q: missing filing data (orig=False later=True)
+KR0032 2023.2Q: missing filing data (orig=False later=True)
+KR0104 2023.1Q: missing filing data (orig=False later=True)
+KR0104 2023.2Q: missing filing data (orig=False later=True)
+KR0087 2023.1Q: missing filing data (orig=False later=True)
+KR0087 2023.2Q: missing filing data (orig=False later=True)
+KR0070 2023.1Q: missing filing data (orig=False later=True)
+KR0070 2023.2Q: missing filing data (orig=False later=True)
+KR0083 2023.1Q: missing filing data (orig=False later=True)
+KR0083 2023.2Q: missing filing data (orig=False later=True)
+KR0005 2023.1Q: missing filing data (orig=False later=True)
+KR0005 2023.2Q: missing filing data (orig=False later=True)
+STATE KR0082 2023.1Q {None: 18}
+STATE KR0082 2023.2Q {None: 18}
+STATE KR0082 2023.3Q {'new': 6, 'neutral': 12}
+STATE KR0082 2023.4Q {'neutral': 18}
+STATE KR0082 2024.1Q {'neutral': 18}
+STATE KR0082 2024.2Q {'neutral': 18}
+STATE KR0082 2024.3Q {'neutral': 18}
+STATE KR0082 2024.4Q {'neutral': 15, 'orig': 3}
+STATE KR0032 2023.1Q {None: 18}
+STATE KR0032 2023.2Q {None: 18}
+STATE KR0032 2023.3Q {'neutral': 17, '?': 1}
+STATE KR0032 2023.4Q {'neutral': 9, 'new': 8, '?': 1}
+STATE KR0032 2024.1Q {'neutral': 9, 'new': 8, '?': 1}
+STATE KR0032 2024.2Q {'neutral': 9, 'new': 8, '?': 1}
+STATE KR0032 2024.3Q {'neutral': 9, 'new': 8, '?': 1}
+STATE KR0032 2024.4Q {'neutral': 10, '?': 8}
+STATE KR0104 2023.1Q {None: 18}
+STATE KR0104 2023.2Q {None: 18}
+STATE KR0104 2023.3Q {'neutral': 6, 'new': 10, 'neither': 1, '?': 1}
+STATE KR0104 2023.4Q {'neutral': 16, 'neither': 1, '?': 1}
+STATE KR0104 2024.1Q {'neutral': 12, 'orig': 4, 'neither': 1, '?': 1}
+STATE KR0104 2024.2Q {'neutral': 12, 'orig': 4, 'neither': 1, '?': 1}
+STATE KR0104 2024.3Q {'neutral': 16, 'new': 1, '?': 1}
+STATE KR0104 2024.4Q {'neutral': 14, 'orig': 2, 'neither': 1, '?': 1}
+STATE KR0087 2023.1Q {None: 18}
+STATE KR0087 2023.2Q {None: 18}
+STATE KR0087 2023.3Q {'neutral': 17, '?': 1}
+STATE KR0087 2023.4Q {'neutral': 8, 'new': 9, '?': 1}
+STATE KR0087 2024.1Q {'neutral': 9, 'new': 8, '?': 1}
+STATE KR0087 2024.2Q {'neutral': 9, 'new': 8, '?': 1}
+STATE KR0087 2024.3Q {'neutral': 8, 'orig': 1, 'new': 8, '?': 1}
+STATE KR0087 2024.4Q {'neutral': 13, '?': 1, 'orig': 4}
+STATE KR0070 2023.1Q {None: 18}
+STATE KR0070 2023.2Q {None: 18}
+STATE KR0070 2023.3Q {'orig': 10, '?': 1, 'neither': 3, 'neutral': 3, None: 1}
+STATE KR0070 2023.4Q {'neutral': 7, '?': 1, 'orig': 6, 'new': 1, 'neither': 2, None: 1}
+STATE KR0070 2024.1Q {'neutral': 9, 'new': 8, None: 1}
+STATE KR0070 2024.2Q {'neutral': 9, 'new': 8, None: 1}
+STATE KR0070 2024.3Q {'neutral': 9, 'new': 8, None: 1}
+STATE KR0070 2024.4Q {'neutral': 14, 'orig': 3, None: 1}
+STATE KR0083 2023.1Q {None: 18}
+STATE KR0083 2023.2Q {None: 18}
+STATE KR0083 2023.3Q {'neutral': 15, '?': 1, 'new': 1, None: 1}
+STATE KR0083 2023.4Q {'neutral': 11, 'new': 4, None: 2, 'neither': 1}
+STATE KR0083 2024.1Q {'neutral': 9, 'new': 8, None: 1}
+STATE KR0083 2024.2Q {'neutral': 9, 'new': 8, None: 1}
+STATE KR0083 2024.3Q {'neutral': 9, 'orig': 8, None: 1}
+STATE KR0083 2024.4Q {'neutral': 7, 'orig': 10, None: 1}
+STATE KR0005 2023.1Q {None: 18}
+STATE KR0005 2023.2Q {None: 18}
+STATE KR0005 2023.3Q {'neutral': 6, 'new': 11, None: 1}
+STATE KR0005 2023.4Q {'neutral': 5, 'new': 12, None: 1}
+STATE KR0005 2024.1Q {'neutral': 6, 'new': 11, None: 1}
+STATE KR0005 2024.2Q {'neutral': 6, 'new': 11, None: 1}
+STATE KR0005 2024.3Q {'?': 2, 'neutral': 15, None: 1}
+STATE KR0005 2024.4Q {'neutral': 16, 'neither': 1, None: 1}
+SEAM cells (prev state / this state): 23
+   SEAM KR0104 2023.3Q item 26 prev=None this=neither dangi=None cumdiff=None -> null
+   SEAM KR0104 2023.4Q item 26 prev=neither this=neither dangi=1473889.950176 cumdiff=1473889.950176 -> = cumdiff(MIXED)
+   SEAM KR0104 2024.2Q item 26 prev=neither this=neither dangi=250102.284188 cumdiff=250102.28418800002 -> = cumdiff(MIXED)
+   SEAM KR0104 2024.3Q item 26 prev=neither this=new dangi=632218.720262 cumdiff=632218.720262 -> = cumdiff(MIXED)
+   SEAM KR0104 2024.4Q item 26 prev=new this=neither dangi=-90727.444638 cumdiff=-90727.44463799999 -> = cumdiff(MIXED)
+   SEAM KR0087 2024.4Q item 25 prev=new this=orig dangi=-163759.677356 cumdiff=-163759.67735600006 -> = cumdiff(MIXED)
+   SEAM KR0070 2023.3Q item 18 prev=None this=neither dangi=None cumdiff=None -> null
+   SEAM KR0070 2023.3Q item 19 prev=None this=neither dangi=None cumdiff=None -> null
+   SEAM KR0070 2023.3Q item 23 prev=None this=neither dangi=-1573.0 cumdiff=-1573.0 -> = cumdiff(MIXED)
+   SEAM KR0070 2023.4Q item 18 prev=neither this=new dangi=305207.793276 cumdiff=305207.79327599995 -> = cumdiff(MIXED)
+   SEAM KR0070 2023.4Q item 19 prev=neither this=neither dangi=-233124.404721 cumdiff=-233124.404721 -> = cumdiff(MIXED)
+   SEAM KR0070 2023.4Q item 23 prev=neither this=neither dangi=10495.232133 cumdiff=10495.232133000001 -> = cumdiff(MIXED)
+   SEAM KR0070 2024.4Q item 25 prev=new this=orig dangi=-13938.402301 cumdiff=-13938.402300999966 -> = cumdiff(MIXED)
+   SEAM KR0083 2023.4Q item 32 prev=neutral this=neither dangi=388561.800625 cumdiff=388561.800625 -> = cumdiff(MIXED)
+   SEAM KR0083 2024.3Q item 17 prev=new this=orig dangi=-116710.044721 cumdiff=-109247.606085 -> other(set?)
+   SEAM KR0083 2024.3Q item 19 prev=new this=orig dangi=-77029.404569 cumdiff=-69566.965933 -> other(set?)
+   SEAM KR0083 2024.3Q item 20 prev=new this=orig dangi=-123246.09902 cumdiff=-115783.660384 -> other(set?)
+   SEAM KR0083 2024.3Q item 22 prev=new this=orig dangi=-123396.856774 cumdiff=-115934.41813800001 -> other(set?)
+   SEAM KR0083 2024.3Q item 23 prev=new this=orig dangi=-28844.151026 cumdiff=-27120.327702000002 -> other(set?)
+   SEAM KR0083 2024.3Q item 24 prev=new this=orig dangi=-94552.705748 cumdiff=-88814.090436 -> other(set?)
+   SEAM KR0083 2024.3Q item 25 prev=new this=orig dangi=49281.693124 cumdiff=43543.077812 -> other(set?)
+   SEAM KR0083 2024.3Q item 27 prev=new this=orig dangi=-136596.159635 cumdiff=-142334.77494699997 -> other(set?)
+   SEAM KR0005 2024.4Q item 16 prev=? this=neither dangi=None cumdiff=9600.0 -> null

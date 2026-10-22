@@ -1,0 +1,81 @@
+== FY2023_Q4 data/dart/FY2023_Q4/raw/KR0083_푸본현대생명보험_20240329002122/20240329002122.xml exists=True
+  L7135 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ATOCID="144">2. 연결재무제표</TITLE>
+  L7139 <TITLE ATOC="Y" ATOCID="156">2-1. 연결 재무상태표</TITLE>
+  L8053 <TITLE ATOC="Y" ATOCID="157">2-2. 연결 포괄손익계산서</TITLE>
+  L14374 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ATOCID="149">3. 연결재무제표 주석</TITLE>
+  L34535 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ATOCID="150">4. 재무제표</TITLE>
+  L34539 <TITLE ATOC="Y" ATOCID="160">4-1. 재무상태표</TITLE>
+  L35440 <TITLE ATOC="Y" ATOCID="161">4-2. 포괄손익계산서</TITLE>
+  L41235 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ATOCID="155">5. 재무제표 주석</TITLE>
+== FY2024_Q1 data/dart/FY2024_Q1/raw/KR0083_푸본현대생명보험/20240516000426.xml exists=True
+  L4492 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ATOCID="48">2. 연결재무제표</TITLE>
+  L4496 <TITLE ATOC="Y" ATOCID="60">2-1. 연결 재무상태표</TITLE>
+  L5187 <TITLE ATOC="Y" ATOCID="61">2-2. 연결 포괄손익계산서</TITLE>
+  L8167 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ATOCID="53">3. 연결재무제표 주석</TITLE>
+  L22449 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ATOCID="54">4. 재무제표</TITLE>
+  L22453 <TITLE ATOC="Y" ATOCID="64">4-1. 재무상태표</TITLE>
+  L23129 <TITLE ATOC="Y" ATOCID="65">4-2. 포괄손익계산서</TITLE>
+  L25802 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ATOCID="59">5. 재무제표 주석</TITLE>
+== FY2024_Q2 data/dart/FY2024_Q2/raw/KR0083_푸본현대생명보험/20240814002545.xml exists=True
+  L6479 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ATOCID="68">2. 연결재무제표</TITLE>
+  L6482 <TITLE ATOC="Y" ATOCID="69">2-1. 연결 재무상태표</TITLE>
+  L7173 <TITLE ATOC="Y" ATOCID="70">2-2. 연결 포괄손익계산서</TITLE>
+  L10307 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ATOCID="73">3. 연결재무제표 주석</TITLE>
+  L25035 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ATOCID="74">4. 재무제표</TITLE>
+  L25038 <TITLE ATOC="Y" ATOCID="75">4-1. 재무상태표</TITLE>
+  L25714 <TITLE ATOC="Y" ATOCID="76">4-2. 포괄손익계산서</TITLE>
+  L28525 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ATOCID="79">5. 재무제표 주석</TITLE>
+== FY2024_Q3 data/dart/FY2024_Q3/raw/KR0083_푸본현대생명보험/20241114000568.xml exists=True
+  L3837 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ATOCID="120">2. 연결재무제표</TITLE>
+  L3840 <TITLE ATOC="Y" ATOCID="132">2-1. 연결 재무상태표</TITLE>
+  L4546 <TITLE ATOC="Y" ATOCID="133">2-2. 연결 포괄손익계산서</TITLE>
+  L7897 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ATOCID="125">3. 연결재무제표 주석</TITLE>
+  L22271 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ATOCID="126">4. 재무제표</TITLE>
+  L22274 <TITLE ATOC="Y" ATOCID="136">4-1. 재무상태표</TITLE>
+  L22965 <TITLE ATOC="Y" ATOCID="137">4-2. 포괄손익계산서</TITLE>
+  L25961 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ATOCID="131">5. 재무제표 주석</TITLE>
+== FY2024_Q4 data/dart/FY2024_Q4/raw/KR0083_푸본현대생명보험_20250328000873/20250328000873.xml exists=True
+  L5319 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ENG="2. Consolidated financial statements" ATOCID="166">2. 연결재무제표</TITLE>
+  L5322 <TITLE ATOC="Y" ENG="2-1. Consolidated Statement Of FinancialPosition" ATOCID="167">2-1. 연결 재무상태표</TITLE>
+  L6185 <TITLE ATOC="Y" ENG="2-2. Consolidated Statement Of ComprehensiveIncome" ATOCID="168">2-2. 연결 포괄손익계산서</TITLE>
+  L10602 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ENG="3. Notes to the consolidated financial statements" ATOCID="171">3. 연결재무제표 주석</TITLE>
+  L32076 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ENG="4. Separate financial statements" ATOCID="172">4. 재무제표</TITLE>
+  L32079 <TITLE ATOC="Y" ENG="4-1. Statement Of FinancialPosition" ATOCID="173">4-1. 재무상태표</TITLE>
+  L32923 <TITLE ATOC="Y" ENG="4-2. Statement Of ComprehensiveIncome" ATOCID="174">4-2. 포괄손익계산서</TITLE>
+  L36795 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ENG="5. Notes to the separate financial statements" ATOCID="177">5. 재무제표 주석</TITLE>
+== FY2025_Q1 data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml exists=True
+  L3817 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ENG="2. Consolidated financial statements" ATOCID="132">2. 연결재무제표</TITLE>
+  L3820 <TITLE ATOC="Y" ENG="2-1. Consolidated Statement Of FinancialPosition" ATOCID="144">2-1. 연결 재무상태표</TITLE>
+  L4511 <TITLE ATOC="Y" ENG="2-2. Consolidated Statement Of ComprehensiveIncome" ATOCID="145">2-2. 연결 포괄손익계산서</TITLE>
+  L7592 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ENG="3. Notes to the consolidated financial statements" ATOCID="137">3. 연결재무제표 주석</TITLE>
+  L23132 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ENG="4. Separate financial statements" ATOCID="138">4. 재무제표</TITLE>
+  L23135 <TITLE ATOC="Y" ENG="4-1. Statement Of FinancialPosition" ATOCID="148">4-1. 재무상태표</TITLE>
+  L23811 <TITLE ATOC="Y" ENG="4-2. Statement Of ComprehensiveIncome" ATOCID="149">4-2. 포괄손익계산서</TITLE>
+  L26548 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ENG="5. Notes to the separate financial statements" ATOCID="143">5. 재무제표 주석</TITLE>
+== FY2025_Q2 data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml exists=True
+  L5330 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ENG="2. Consolidated financial statements" ATOCID="80">2. 연결재무제표</TITLE>
+  L5333 <TITLE ATOC="Y" ENG="2-1. Consolidated Statement Of FinancialPosition" ATOCID="116">2-1. 연결 재무상태표</TITLE>
+  L6024 <TITLE ATOC="Y" ENG="2-2. Consolidated Statement Of ComprehensiveIncome" ATOCID="117">2-2. 연결 포괄손익계산서</TITLE>
+  L9128 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ENG="3. Notes to the consolidated financial statements" ATOCID="85">3. 연결재무제표 주석</TITLE>
+  L24956 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ENG="4. Separate financial statements" ATOCID="86">4. 재무제표</TITLE>
+  L24959 <TITLE ATOC="Y" ENG="4-1. Statement Of FinancialPosition" ATOCID="120">4-1. 재무상태표</TITLE>
+  L25635 <TITLE ATOC="Y" ENG="4-2. Statement Of ComprehensiveIncome" ATOCID="121">4-2. 포괄손익계산서</TITLE>
+  L28395 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ENG="5. Notes to the separate financial statements" ATOCID="91">5. 재무제표 주석</TITLE>
+== FY2025_Q3 data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml exists=True
+  L3770 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ENG="2. Consolidated financial statements" ATOCID="60">2. 연결재무제표</TITLE>
+  L3773 <TITLE ATOC="Y" ENG="2-1. Consolidated Statement Of FinancialPosition" ATOCID="80">2-1. 연결 재무상태표</TITLE>
+  L4079 <TITLE ATOC="Y" ENG="2-2. Consolidated Statement Of ComprehensiveIncome" ATOCID="81">2-2. 연결 포괄손익계산서</TITLE>
+  L5304 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ENG="3. Notes to the consolidated financial statements" ATOCID="65">3. 연결재무제표 주석</TITLE>
+  L21268 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ENG="4. Separate financial statements" ATOCID="66">4. 재무제표</TITLE>
+  L21271 <TITLE ATOC="Y" ENG="4-1. Statement Of FinancialPosition" ATOCID="84">4-1. 재무상태표</TITLE>
+  L21571 <TITLE ATOC="Y" ENG="4-2. Statement Of ComprehensiveIncome" ATOCID="85">4-2. 포괄손익계산서</TITLE>
+  L22680 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ENG="5. Notes to the separate financial statements" ATOCID="71">5. 재무제표 주석</TITLE>
+== FY2025_Q4 data/dart/FY2025_Q4/raw/KR0083_푸본현대생명보험_20260331002089/20260331002089.xml exists=True
+  L5247 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-2-0" ENG="2. Consolidated financial statements" ATOCID="76">2. 연결재무제표</TITLE>
+  L5250 <TITLE ATOC="Y" ENG="2-1. Consolidated Statement Of FinancialPosition" ATOCID="104">2-1. 연결 재무상태표</TITLE>
+  L5618 <TITLE ATOC="Y" ENG="2-2. Consolidated Statement Of ComprehensiveIncome" ATOCID="105">2-2. 연결 포괄손익계산서</TITLE>
+  L7206 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-3-0" ENG="3. Notes to the consolidated financial statements" ATOCID="81">3. 연결재무제표 주석</TITLE>
+  L34687 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-4-0" ENG="4. Separate financial statements" ATOCID="82">4. 재무제표</TITLE>
+  L34690 <TITLE ATOC="Y" ENG="4-1. Statement Of FinancialPosition" ATOCID="108">4-1. 재무상태표</TITLE>
+  L35051 <TITLE ATOC="Y" ENG="4-2. Statement Of ComprehensiveIncome" ATOCID="109">4-2. 포괄손익계산서</TITLE>
+  L36475 <TITLE ATOC="Y" AASSOCNOTE="D-0-3-5-0" ENG="5. Notes to the separate financial statements" ATOCID="87">5. 재무제표 주석</TITLE>

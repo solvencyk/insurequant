@@ -1,0 +1,713 @@
+{
+ "unit_header_F3": [
+  "(단위 : 원)"
+ ],
+ "label_hit_counts": {
+  "1": 1,
+  "16": 1,
+  "17": 1,
+  "20": 1,
+  "21": 1,
+  "22": 1,
+  "23": 1,
+  "24": 1,
+  "25": 1,
+  "26": 1,
+  "27": 1,
+  "28": 1,
+  "29": 1,
+  "30": 1,
+  "31": 1
+ },
+ "cells_check": [
+  {
+   "item": 1,
+   "old_plan": 276594.0,
+   "old_live": 276594.0,
+   "old_ok": true,
+   "new_plan": 276593.79133,
+   "new_mine": 276593.79133,
+   "new_ok": true,
+   "line_plan": 5632,
+   "line_mine": 5632,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": -0.20867
+  },
+  {
+   "item": 16,
+   "old_plan": 33914.0,
+   "old_live": 33914.0,
+   "old_ok": true,
+   "new_plan": 33913.84606,
+   "new_mine": 33913.84606,
+   "new_ok": true,
+   "line_plan": 5793,
+   "line_mine": 5793,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": -0.15394
+  },
+  {
+   "item": 17,
+   "old_plan": -40273.0,
+   "old_live": -40273.0,
+   "old_ok": true,
+   "new_plan": 18305.75571,
+   "new_mine": 18305.75571,
+   "new_ok": true,
+   "line_plan": 5816,
+   "line_mine": 5816,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "RESTATED",
+   "delta": 58578.75571
+  },
+  {
+   "item": 18,
+   "old_plan": 1076805.0,
+   "old_live": 1076805.0,
+   "old_ok": true,
+   "new_plan": 1135383.508318,
+   "new_mine": 1135383.508318,
+   "new_ok": true,
+   "line_plan": 5816,
+   "line_mine": 5816,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "RESTATED",
+   "delta": 58578.508318
+  },
+  {
+   "item": 19,
+   "old_plan": -1117078.0,
+   "old_live": -1117078.0,
+   "old_ok": true,
+   "new_plan": -1117077.752608,
+   "new_mine": -1117077.752608,
+   "new_ok": true,
+   "line_plan": 6138,
+   "line_mine": [
+    6138,
+    6161
+   ],
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": 0.247392
+  },
+  {
+   "item": 20,
+   "old_plan": 236321.0,
+   "old_live": 236321.0,
+   "old_ok": true,
+   "new_plan": 294899.54704,
+   "new_mine": 294899.54704,
+   "new_ok": true,
+   "line_plan": 6391,
+   "line_mine": 6391,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "RESTATED",
+   "delta": 58578.54704
+  },
+  {
+   "item": 21,
+   "old_plan": -65493.0,
+   "old_live": -65493.0,
+   "old_ok": true,
+   "new_plan": -65492.347736,
+   "new_mine": -65492.347736,
+   "new_ok": true,
+   "line_plan": 6414,
+   "line_mine": 6414,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": 0.652264
+  },
+  {
+   "item": 22,
+   "old_plan": 170828.0,
+   "old_live": 170828.0,
+   "old_ok": true,
+   "new_plan": 229407.199304,
+   "new_mine": 229407.199304,
+   "new_ok": true,
+   "line_plan": 6483,
+   "line_mine": 6483,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "RESTATED",
+   "delta": 58579.199304
+  },
+  {
+   "item": 23,
+   "old_plan": 35052.0,
+   "old_live": 35052.0,
+   "old_ok": true,
+   "new_plan": 48583.465239,
+   "new_mine": 48583.465239,
+   "new_ok": true,
+   "line_plan": 6506,
+   "line_mine": 6506,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "RESTATED",
+   "delta": 13531.465239
+  },
+  {
+   "item": 24,
+   "old_plan": 135776.0,
+   "old_live": 135776.0,
+   "old_ok": true,
+   "new_plan": 180823.734065,
+   "new_mine": 180823.734065,
+   "new_ok": true,
+   "line_plan": 6529,
+   "line_mine": 6529,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "RESTATED",
+   "delta": 45047.734065
+  },
+  {
+   "item": 25,
+   "old_plan": 482444.0,
+   "old_live": 482444.0,
+   "old_ok": true,
+   "new_plan": 482443.86755,
+   "new_mine": 482443.86755,
+   "new_ok": true,
+   "line_plan": 6598,
+   "line_mine": 6598,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": -0.13245
+  },
+  {
+   "item": 26,
+   "old_plan": -102610.0,
+   "old_live": -102610.0,
+   "old_ok": true,
+   "new_plan": -102609.145045,
+   "new_mine": -102609.145045,
+   "new_ok": true,
+   "line_plan": 6713,
+   "line_mine": 6713,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": 0.854955
+  },
+  {
+   "item": 27,
+   "old_plan": 580028.0,
+   "old_live": 580028.0,
+   "old_ok": true,
+   "new_plan": 580027.840002,
+   "new_mine": 580027.840002,
+   "new_ok": true,
+   "line_plan": 6805,
+   "line_mine": 6805,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": -0.159998
+  },
+  {
+   "item": 28,
+   "old_plan": 2872.0,
+   "old_live": 2872.0,
+   "old_ok": true,
+   "new_plan": 2870.906792,
+   "new_mine": 2870.906792,
+   "new_ok": true,
+   "line_plan": 6782,
+   "line_mine": 6782,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": -1.093208
+  },
+  {
+   "item": 29,
+   "old_plan": 2252.0,
+   "old_live": 2252.0,
+   "old_ok": true,
+   "new_plan": 2251.740457,
+   "new_mine": 2251.740457,
+   "new_ok": true,
+   "line_plan": 6667,
+   "line_mine": 6667,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": -0.259543
+  },
+  {
+   "item": 30,
+   "old_plan": 2982.0,
+   "old_live": 2982.0,
+   "old_ok": true,
+   "new_plan": 2982.559091,
+   "new_mine": 2982.559091,
+   "new_ok": true,
+   "line_plan": 6828,
+   "line_mine": 6828,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": 0.559091
+  },
+  {
+   "item": 31,
+   "old_plan": 618220.0,
+   "old_live": 618220.0,
+   "old_ok": true,
+   "new_plan": 663267.601615,
+   "new_mine": 663267.601615,
+   "new_ok": true,
+   "line_plan": 6851,
+   "line_mine": 6851,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "RESTATED",
+   "delta": 45047.601615
+  },
+  {
+   "item": 32,
+   "old_plan": -3080.0,
+   "old_live": -3080.0,
+   "old_ok": true,
+   "new_plan": -3080.033747,
+   "new_mine": -3080.0337469999795,
+   "new_ok": true,
+   "line_plan": 6598,
+   "line_mine": 6598,
+   "line_ok": true,
+   "file_ok": true,
+   "unit": "백만원",
+   "source_unit": "원",
+   "cls": "PRINT_ROUNDING",
+   "delta": -0.033747
+  }
+ ],
+ "diff_items_vs_later": [
+  [
+   1,
+   276594.0,
+   276593.79133
+  ],
+  [
+   16,
+   33914.0,
+   33913.84606
+  ],
+  [
+   17,
+   -40273.0,
+   18305.75571
+  ],
+  [
+   18,
+   1076805.0,
+   1135383.508318
+  ],
+  [
+   19,
+   -1117078.0,
+   -1117077.752608
+  ],
+  [
+   20,
+   236321.0,
+   294899.54704
+  ],
+  [
+   21,
+   -65493.0,
+   -65492.347736
+  ],
+  [
+   22,
+   170828.0,
+   229407.199304
+  ],
+  [
+   23,
+   35052.0,
+   48583.465239
+  ],
+  [
+   24,
+   135776.0,
+   180823.734065
+  ],
+  [
+   25,
+   482444.0,
+   482443.86755
+  ],
+  [
+   26,
+   -102610.0,
+   -102609.145045
+  ],
+  [
+   27,
+   580028.0,
+   580027.840002
+  ],
+  [
+   28,
+   2872.0,
+   2870.906792
+  ],
+  [
+   29,
+   2252.0,
+   2251.740457
+  ],
+  [
+   30,
+   2982.0,
+   2982.559091
+  ],
+  [
+   31,
+   618220.0,
+   663267.601615
+  ],
+  [
+   32,
+   -3080.0,
+   -3080.033747
+  ]
+ ],
+ "census8_delta": {
+  "17": 58578.75571,
+  "18": 58578.508318,
+  "20": 58578.54704,
+  "22": 58579.199304,
+  "23": 13531.465239,
+  "24": 45047.734065,
+  "28": -1.093208,
+  "31": 45047.601615
+ },
+ "master_eq_original_mismatches": [],
+ "orig_unit_header": [
+  "(단위 : 백만원)"
+ ],
+ "fsapi_mismatch": {},
+ "closure_before": {
+  "I1 20=1+17": 0.0,
+  "I2 |22-24|-|23|": 0.0,
+  "I2b 22=20+21": 0.0,
+  "I3 31=24+25": 0.0,
+  "I4 25=26..30+32": 0.0,
+  "I5 17=18+19": 0.0,
+  "I6 LOB 1=2+13+14+15-16": 0.0,
+  "I7a 2=3+8": 0.0,
+  "I7b 3=4+5+6+7": 0.0,
+  "I7c 8=9+10+11+12": 0.0
+ },
+ "closure_after_18": {
+  "I1 20=1+17": 0.0,
+  "I2 |22-24|-|23|": 0.0,
+  "I2b 22=20+21": 0.0,
+  "I3 31=24+25": 0.0,
+  "I4 25=26..30+32": 0.0,
+  "I5 17=18+19": 0.0,
+  "I6 LOB 1=2+13+14+15-16": -0.36261,
+  "I7a 2=3+8": 0.0,
+  "I7b 3=4+5+6+7": 0.0,
+  "I7c 8=9+10+11+12": 0.0
+ },
+ "closure_after_census8": {
+  "I1 20=1+17": -0.20867,
+  "I2 |22-24|-|23|": 0.0,
+  "I2b 22=20+21": 0.652264,
+  "I3 31=24+25": -0.13245,
+  "I4 25=26..30+32": 1.093208,
+  "I5 17=18+19": 0.247392,
+  "I6 LOB 1=2+13+14+15-16": 0.0,
+  "I7a 2=3+8": 0.0,
+  "I7b 3=4+5+6+7": 0.0,
+  "I7c 8=9+10+11+12": 0.0
+ },
+ "closure_after_restated7": {
+  "I1 20=1+17": -0.20867,
+  "I2 |22-24|-|23|": 0.0,
+  "I2b 22=20+21": 0.652264,
+  "I3 31=24+25": -0.13245,
+  "I4 25=26..30+32": 0.0,
+  "I5 17=18+19": 0.247392,
+  "I6 LOB 1=2+13+14+15-16": 0.0,
+  "I7a 2=3+8": 0.0,
+  "I7b 3=4+5+6+7": 0.0,
+  "I7c 8=9+10+11+12": 0.0
+ },
+ "gold_KR0104": {
+  "set": 0,
+  "null_dangi": 0,
+  "set_dangi": 0
+ },
+ "dangi_diff_cells": [
+  {
+   "quarter": "2023.4Q",
+   "item": 1,
+   "live_dangi": 54447.488735,
+   "fresh_before": 54447.488735,
+   "fresh_after": 54447.697405
+  },
+  {
+   "quarter": "2023.3Q",
+   "item": 16,
+   "live_dangi": null,
+   "fresh_before": 12114.0,
+   "fresh_after": 12113.84606
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 16,
+   "live_dangi": 15171.784632,
+   "fresh_before": 15171.784632,
+   "fresh_after": 15171.938572
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 17,
+   "live_dangi": 17866.657834,
+   "fresh_before": 17866.657834,
+   "fresh_after": -40712.097876
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 18,
+   "live_dangi": 419082.927994,
+   "fresh_before": 419082.927994,
+   "fresh_after": 360504.419676
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 19,
+   "live_dangi": -401216.27016,
+   "fresh_before": -401216.27016,
+   "fresh_after": -401216.517552
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 20,
+   "live_dangi": 72314.146569,
+   "fresh_before": 72314.146569,
+   "fresh_after": 13735.599529
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 21,
+   "live_dangi": -21309.107537,
+   "fresh_before": -21309.107537,
+   "fresh_after": -21309.759801
+  },
+  {
+   "quarter": "2023.3Q",
+   "item": 22,
+   "live_dangi": null,
+   "fresh_before": -7472.0,
+   "fresh_after": 51107.199304
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 22,
+   "live_dangi": 51005.039032,
+   "fresh_before": 51005.039032,
+   "fresh_after": -7574.160272
+  },
+  {
+   "quarter": "2023.3Q",
+   "item": 23,
+   "live_dangi": null,
+   "fresh_before": -1748.0,
+   "fresh_after": 11783.465239
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 23,
+   "live_dangi": 5074.314198,
+   "fresh_before": 5074.314198,
+   "fresh_after": -8457.151041
+  },
+  {
+   "quarter": "2023.3Q",
+   "item": 24,
+   "live_dangi": null,
+   "fresh_before": -5724.0,
+   "fresh_after": 39323.734065
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 24,
+   "live_dangi": 45930.724834,
+   "fresh_before": 45930.724834,
+   "fresh_after": 882.990769
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 25,
+   "live_dangi": -124397.308663,
+   "fresh_before": -124397.308663,
+   "fresh_after": -124397.176213
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 26,
+   "live_dangi": 1473890.805131,
+   "fresh_before": 1473890.805131,
+   "fresh_after": 1473889.950176
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 27,
+   "live_dangi": -1626047.47662,
+   "fresh_before": -1626047.47662,
+   "fresh_after": -1626047.316622
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 28,
+   "live_dangi": 41824.213782,
+   "fresh_before": 41824.213782,
+   "fresh_after": 41825.30699
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 29,
+   "live_dangi": 1920.696291,
+   "fresh_before": 1920.696291,
+   "fresh_after": 1920.955834
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 30,
+   "live_dangi": -11756.275146,
+   "fresh_before": -11756.275146,
+   "fresh_after": -11756.834237
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 31,
+   "live_dangi": -78466.583829,
+   "fresh_before": -78466.583829,
+   "fresh_after": -123514.185444
+  },
+  {
+   "quarter": "2023.4Q",
+   "item": 32,
+   "live_dangi": -4229.272101,
+   "fresh_before": -4229.272101,
+   "fresh_after": -4229.238354
+  }
+ ],
+ "seam_3m": {
+  "16": {
+   "three_month_mn": 12097.07857,
+   "line": 5789,
+   "printed": "12,097,078,570",
+   "six_month_prior_cum_F2_mn": 21816.76749,
+   "line_F2": 5932,
+   "nine_minus_six": 12097.07857,
+   "ok": true
+  },
+  "22": {
+   "three_month_mn": 45521.420788,
+   "line": 6479,
+   "printed": "45,521,420,788",
+   "six_month_prior_cum_F2_mn": 183885.778516,
+   "line_F2": 6599,
+   "nine_minus_six": 45521.420788,
+   "ok": true
+  },
+  "23": {
+   "three_month_mn": 10463.421336,
+   "line": 6502,
+   "printed": "10,463,421,336",
+   "six_month_prior_cum_F2_mn": 38120.043903,
+   "line_F2": 6622,
+   "nine_minus_six": 10463.421336,
+   "ok": true
+  },
+  "24": {
+   "three_month_mn": 35057.999452,
+   "line": 6525,
+   "printed": "35,057,999,452",
+   "six_month_prior_cum_F2_mn": 145765.734613,
+   "line_F2": 6645,
+   "nine_minus_six": 35057.999452,
+   "ok": true
+  }
+ },
+ "seam_vs_plan": {
+  "2023.3Q|16": {
+   "plan_value": 12097.07857,
+   "mine": 12097.07857,
+   "ok": true,
+   "proposed": "set_dangi"
+  },
+  "2023.3Q|22": {
+   "plan_value": 45521.420788,
+   "mine": 45521.420788,
+   "ok": true,
+   "proposed": "set_dangi"
+  },
+  "2023.3Q|23": {
+   "plan_value": 10463.421336,
+   "mine": 10463.421336,
+   "ok": true,
+   "proposed": "set_dangi"
+  },
+  "2023.3Q|24": {
+   "plan_value": 35057.999452,
+   "mine": 35057.999452,
+   "ok": true,
+   "proposed": "set_dangi"
+  }
+ }
+}

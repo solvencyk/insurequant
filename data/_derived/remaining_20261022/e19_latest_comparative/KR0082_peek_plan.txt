@@ -1,0 +1,75 @@
+unchanged_items_3m_later_print_vs_live_single_2023_3Q {"n": 6, "n_ok": 6, "not_ok": []}
+original_3m_print_vs_live_single_2023_3Q {"n": 10, "n_ok": 6, "not_ok": [{"item": 1, "live_dangi": 24323.020378, "orig_printed_3m": 24512.410372, "diff": -189.389994, "ok": false}, {"item": 16, "live_dangi": 3421.921403, "orig_printed_3m": 3232.531409, "diff": 189.389994, "ok": false}, {"item": 17, "live_dangi": -20395.19471, "orig_printed_3m": -20584.584704, "diff": 189.389994, "ok": false}, {"item": 18, "live_dangi": 17695.509145, "orig_printed_3m": 17506.119151, "diff": 189.389994, "ok": false}]}
+hybrid_single_2023_3Q_closure [{"name": "20 = 1 + 17", "lhs": 3927.825668, "rhs": 3927.825668, "resid": -0.0, "tol": 0.002, "ok": true}, {"name": "22 = 20 + 21", "lhs": 3697.060282, "rhs": 3697.060282, "resid": 0.0, "tol": 0.002, "ok": true}, {"name": "24 = 22 - 23", "lhs": 3819.852704, "rhs": 3819.852704, "resid": 0.0, "tol": 0.002, "ok": true}, {"name": "17 = 18 + 19", "lhs": -21348.590171, "rhs": -21348.590171, "resid": 0.0, "tol": 0.002, "ok": true}, {"name": "1 (single) = 2+13+14+15-16 (live Tier-2 singles)", "lhs": 25276.415839, "rhs": 25276.415839, "resid": 0.0, "tol": 0.002, "ok": true}, {"name": "3M print: 20 = 1 + 17 (printed in the later filing)", "lhs": 3927.825668, "rhs": 3927.825668, "resid": -0.0, "tol": 0.002, "ok": true}]
+seam_3m_vs_9M_minus_6M {"n": 4, "n_ok": 4}
+alt_path {"n": 4, "n_ok": 4}
+census_vs_xml {"n_cells": 4, "max_abs_diff": 0.0, "items_equal_to_census": [true], "candidate_cells_in_cand_pl_cells": 4, "candidate_max_abs_diff_vs_xml": 0.0}
+dangi_model_mismatch_vs_live_master []
+SET_DANGI ["KR0082", "2023.3Q", 1, 25276.415839, "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25354 [보험손익] 25,276,415,839원"]
+SET_DANGI ["KR0082", "2023.3Q", 16, 2468.525942, "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25515 [기타사업비용] 2,468,525,942원"]
+SET_DANGI ["KR0082", "2023.3Q", 17, -21348.590171, "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25538 [투자손익] (21,348,590,171)원"]
+SET_DANGI ["KR0082", "2023.3Q", 18, 16742.113684, "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml:L25538 [투자손익] (21,348,590,171)원 (derived: item17 - item19; item19 = + L25584 [보험금융수익] 33,075,850,004원 + L25607 [재보험금융수익] 367,218,616원 - L25837 [보험금융비용] 70,696,792,460원 - L25860 [재보험금융비용] 836,980,015원; in the 2024 filings the 비용 lines are printed positive)"]
+{
+ "quarter": "2023.3Q",
+ "item": 1,
+ "item_name": "보험손익",
+ "old": 84042.329124,
+ "new": 85927.536898,
+ "delta": 1885.207774,
+ "unit": "백만원",
+ "source_unit": "원",
+ "source_print": "won (exact)",
+ "xml_file": "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml",
+ "xml_rcept": "20241114001831",
+ "xml_period_column": "prior-year cumulative column (9M 2023) of the separate/OFS 4-2 statement; 4 numeric cells [3M cur, cum cur, 3M prior, cum prior], position 4",
+ "xml_line": 25358,
+ "xml_lines": [
+  {
+   "label": "보험손익",
+   "line": 25358,
+   "printed": "85,927,536,898",
+   "contribution_mn": 85927.536898
+  }
+ ],
+ "derivation": "direct print",
+ "sign_note": null,
+ "second_source": {
+  "fsapi": {
+   "kind": "DART FS-API frmtrm column of the same FY2024 Q3 filing (census d5_buckets.json prior)",
+   "value": 85927.536898,
+   "diff_vs_xml": 0.0
+  },
+  "alt_path": {
+   "kind": "independent arithmetic path from other printed lines of the same column",
+   "formula": "보험영업수익 - 보험서비스비용",
+   "value": 85927.536898,
+   "diff_vs_xml": -0.0,
+   "ok": true,
+   "lines": [
+    {
+     "label": "보험영업수익",
+     "line": 25381,
+     "printed": "499,948,010,149"
+    },
+    {
+     "label": "보험서비스비용",
+     "line": 25450,
+     "printed": "414,020,473,251"
+    }
+   ]
+  }
+ },
+ "census_new": 85927.536898,
+ "census_master": 84042.329124,
+ "census_candidate_new": 85927.536898,
+ "census_candidate_diff_vs_xml": 0.0,
+ "master_equals_original_print": true,
+ "original_print": {
+  "value": 84042.329124,
+  "xml_file": "data/dart/FY2023_Q3/raw/KR0082_DB생명보험/20231114002805.xml",
+  "xml_line": 24129,
+  "rcept": "20231114002805"
+ },
+ "gold_cell": false,
+ "gold_note": "2026-10-22 parser/ifrs17 (KR0082 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2024_Q3 rcept 20241114001831 의 전기(2023.9.30 누적) 열 = 85927.536898 백만원. 원문 data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml L25358. 단위 원(정확 인쇄). 현재 마스터값 84042.329124 는 원 공시 FY2023_Q3 rcept 20231114002805 인쇄값과 일치. 변동 +1885.207774: 후속 공시 비교열에서 기타사업비용 일부 1,885.207774 백만원이 보험서비스비용에서 투자영업비용으로 옮겨 인쇄됨(보험서비스비용 -1,885.207774 = 투자영업비용 +1,885.207774, 영업이익 불변). 재작성 사유 주석은 해당 공시에서 찾지 못함. 2차 근거 FS-API frmtrm 일치 및 같은 열의 다른 인쇄 줄에 의한 독립 산식 일치. 증거 data/_derived/remaining_20261022/e19_latest_comparative/plan_KR0082.json"
+}
