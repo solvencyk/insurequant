@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261022T1800Z
-status: open
+status: resolved
 route: reparse
 lane: ifrs17
 company: MULTI (KR0082 KR0083 KR0087 KR0070 KR0104 + census 17사)
@@ -113,3 +113,6 @@ OCI 효과의 원인은 금융감독원 2025-12 질의회신(생명보험사 계
 `data/_derived/remaining_20261022/e20_held_and_remaining/apply/` — `INDEX.txt` 가 파일 지도. 재독 `e20_verify_plans.py`(git HEAD 기준이라 적재 후에도 같은 답) · 적재 검증 `e20_apply.py --verify` · HEAD 대비 `e20_diff_vs_head.py` · 게이트 `bash run_gates.sh gates_after` · 테스트 `bash run_tests.sh after` · 되돌림 `e20_apply.py --revert --apply`(마스터 골든 fixture 는 `git checkout tests/fixtures/master_tables_golden.json`). 계획 `e20_plan.py` 는 적재 전 상태를 읽어 재실행을 막아 두었다(`e20_plan.json` 보존).
 
 **10. 바뀐 파일 (커밋 대상, 파일을 명시해 add)**: `PL_breakdown.json` · `PL_breakdown_provenance.json` · `data/_gold/user_pl_cells.json` · `data/_gold/gold_overlay_ledger.json`(박제 4건 삭제) · `tests/test_rule_coverage_manifest.py` · `tests/fixtures/master_tables_golden.json` · `data/_derived/pl_oci_vs_bs_aoci_warn.json`(게이트 부수 산출 갱신) · `TODO_parser_ifrs17.md` · `docs/changelog_parser_ifrs17.md` · `docs/todo_archive_parser_ifrs17.md`(16차 Status 이동) · 이 티켓 · 증거 `data/_derived/remaining_20261022/e20_held_and_remaining/apply/`(약 175개 파일, 2.3MB, 50MB 초과 없음; 같은 폴더의 `measure/` 는 단계 2 에이전트 몫). 내 작업 전부터 수정돼 있던 3건(`data/_derived/capital_securities_classification_census_20261012/census_issue_quarter_test.csv`·`.txt`, `data/_derived/remaining_20261022/e19_latest_comparative/apply/peek_gold.py`)은 내가 건드리지 않았으니 이번 커밋에 넣지 않는다. 개인 문서·백업 폴더도 건드리지 않았다.
+
+### 오케스트레이터 종결 메모 (2026-10-23)
+단계 1 은 parser `5419a817` · publishing `2d14e4e5` 로 적재 · 독립 검수 PASS(6개 점검). 단계 2(읽기 전용 측정)는 `data/_derived/remaining_20261022/e20_held_and_remaining/measure/PLAN.md` 로 끝났다: READY 25행(PL 471 · CSM 55칸) · NEEDS_OWNER 21행(D1 KB라이프 FY2023 판 선택 · D2 롯데 FY2023.4Q · D3 ABL/KDB/현대해상 연쇄용 gold·IR 레그). READY 적재는 후속 티켓 `20261023T0300Z__orchestrator__MULTI_2023.1Q-2024.4Q__latest_comparative_ready_25_rows.md` 로 발주했다.
