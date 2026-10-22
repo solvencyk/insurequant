@@ -1,0 +1,244 @@
+keys of file: ['name', 'specs', 'pl_cells', 'csm_cells', 'buckets', 'log']
+PL cells with gold:
+   KR0010 2023.1Q i 16 old 92565.0 new 91710.0 gold 92565.0 was 0.0 note parser adjudication 2026-08-25 (PL_breakdown.json builder-drift audit): 2023.1Q/
+   KR0010 2023.2Q i 16 old 190719.0 new 189068.0 gold 190719.0 was 0.0 note parser adjudication 2026-08-25 (PL_breakdown.json builder-drift audit): 위 2023.1
+   KR0010 2024.2Q i 16 old 192135.0 new 192136.0 gold 192135.0 was 0.0 note inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 
+   KR0003 2023.2Q i 19 old -71316.307049 new -80474.009144 gold -71316.307049 was -35335.383645 note 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 원 공시 포괄손익계산서의 3개월 열이 누적으로 적재돼 있던
+   KR0001 2023.1Q i 16 old -12370.224177 new -11048.069618 gold -12370.224177 was None note inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defect
+   KR0001 2023.2Q i 16 old 71546.566619 new 73064.945045 gold 71546.566619 was None note inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defect
+   KR0068 2023.1Q i 20 old 375708.317423 new 602647.143874 gold 375708.317423 was 114569.359386 note parser adjudication 2026-08-15 (inbox/parser/20260814T1637Z): same cause as KR00
+   KR0068 2023.2Q i 21 old 189467.309969 new 9851.919348 gold 189467.309969 was 98854.352757 note 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 원 공시 포괄손익계산서의 3개월 열이 누적으로 적재돼 있던
+CSM cells with gold:
+   KR0003 2023.1Q i 4 old -681.62 new -174.3 gold -681.62 was ROW_ABSENT note None
+   KR0003 2023.1Q i 6 old 17427.53 new 17934.9 gold 17427.53 was ROW_ABSENT note None
+PL gold set total 741 of READY companies:
+   PLG KR0068 2023.1Q i 20 375708.317423 was 114569.359386
+   PLG KR0010 2024.1Q i 16 93892.0 was 0.0
+   PLG KR0010 2024.2Q i 16 192135.0 was 0.0
+   PLG KR0010 2026.2Q i 16 199561.0 was 0.0
+   PLG KR0010 2023.1Q i 16 92565.0 was 0.0
+   PLG KR0010 2023.2Q i 16 190719.0 was 0.0
+   PLG KR0010 2023.3Q i 16 282385.0 was None
+   PLG KR0010 2023.4Q i 16 390033.0 was None
+   PLG KR0010 2026.1Q i 16 97277.0 was None
+   PLG KR0070 2023.1Q i 4 22664.0 was 3364.0
+   PLG KR0070 2024.1Q i 4 22447.0 was 2313.0
+   PLG KR0070 2024.2Q i 4 44994.0 was 4652.0
+   PLG KR0070 2024.3Q i 4 66762.0 was 7155.0
+   PLG KR0003 2023.2Q i 4 80785.0 was None
+   PLG KR0003 2023.3Q i 4 131623.0 was None
+   PLG KR0070 2023.1Q i 7 -1767.0 was 17533.0
+   PLG KR0070 2024.1Q i 7 -4442.757812 was 17032.242188
+   PLG KR0070 2024.2Q i 7 -3602.139877 was 38012.860123
+   PLG KR0070 2024.3Q i 7 -21693.010136 was 41616.989864
+   PLG KR0070 2025.1Q i 4 20087.0 was 22447.0
+   PLG KR0070 2025.1Q i 7 -2356.3682289999997 was -8307.368229
+   PLG KR0070 2025.2Q i 4 40080.0 was 44994.0
+   PLG KR0070 2025.2Q i 7 -6485.469520000001 was -20597.46952
+   PLG KR0070 2025.3Q i 4 61207.0 was 66762.0
+   PLG KR0070 2025.3Q i 7 -11985.492374000001 was -29739.492374
+   PLG KR0001 2023.1Q i 16 -12370.224177 was None
+   PLG KR0001 2023.2Q i 16 71546.566619 was None
+   PLG KR0083 2024.3Q i 27 -259488.324479 was -265226.939791
+   PLG KR0083 2024.3Q i 28 -5322.135208 was 5322.135208
+   PLG KR0083 2024.3Q i 30 -536.616012 was 536.616012
+   PLG KR0001 2023.3Q i 2 1401735.0 was 1469131.0
+   PLG KR0001 2023.3Q i 3 1572457.0 was 1650155.0
+   PLG KR0001 2023.3Q i 4 784280.0 was 837969.0
+   PLG KR0001 2023.3Q i 5 90879.0 was 90263.0
+   PLG KR0001 2023.3Q i 6 415090.0 was 415719.0
+   PLG KR0001 2023.3Q i 7 282208.0 was 306204.0
+   PLG KR0001 2023.3Q i 8 -170722.0 was -181024.0
+   PLG KR0001 2023.3Q i 9 -123293.0 was -131855.0
+   PLG KR0001 2023.3Q i 10 -6053.0 was -6093.0
+   PLG KR0001 2023.3Q i 11 -71626.0 was -63669.0
+   PLG KR0001 2023.3Q i 12 30250.0 was 20593.0
+   PLG KR0003 2023.2Q i 19 -71316.307049 was -35335.383645
+   PLG KR0003 2023.2Q i 18 120875.600156 was 84894.676752
+   PLG KR0068 2023.2Q i 21 189467.309969 was 98854.352757
+   PLG KR0083 2023.2Q i 19 -144630.478387 was -72348.679758
+   PLG KR0083 2023.2Q i 18 191977.302659 was 119695.50403
+   PLG KR0083 2023.2Q i 21 -317.572727 was -134.061855
+   PLG KR0070 2024.1Q i 17 -2376.553043 was -5720.079812
+   PLG KR0070 2024.1Q i 19 -203103.24191 was -206446.768679
+   PLG KR0070 2024.1Q i 20 13215.401413 was 9871.874644
+   PLG KR0070 2024.1Q i 22 13589.058625 was 10245.531856
+   PLG KR0070 2024.1Q i 23 3248.914173 was 2476.559489
+   PLG KR0070 2024.1Q i 24 10340.144452 was 7768.972367
+   PLG KR0070 2024.1Q i 25 -219573.483545 was -217002.31146
+   PLG KR0070 2024.1Q i 27 -42454.677092 was -39883.505007
+   PLG KR0070 2024.2Q i 17 36491.7661 was 32655.613464
+   PLG KR0070 2024.2Q i 19 -385846.59831 was -389682.750946
+   PLG KR0070 2024.2Q i 20 63221.71967 was 59385.567034
+   PLG KR0070 2024.2Q i 22 59228.973822 was 55392.821186
+   PLG KR0070 2024.2Q i 23 13803.417059 was 12917.2658
+   PLG KR0070 2024.2Q i 24 45425.556763 was 42475.555386
+   PLG KR0070 2024.2Q i 25 -402536.215166 was -399586.213789
+   PLG KR0070 2024.2Q i 27 -345956.069971 was -343006.068594
+   PLG KR0070 2024.3Q i 17 73518.576723 was 69166.349415
+   PLG KR0070 2024.3Q i 19 -485926.322462 was -490278.54977
+   PLG KR0070 2024.3Q i 20 100835.615912 was 96483.388604
+   PLG KR0070 2024.3Q i 22 92522.093551 was 88169.866243
+   PLG KR0070 2024.3Q i 23 21494.442966 was 20489.078458
+   PLG KR0070 2024.3Q i 24 71027.650585 was 67680.787785
+   PLG KR0070 2024.3Q i 25 -493420.717482 was -490073.854682
+   PLG KR0070 2024.3Q i 27 -721460.964747 was -718114.101947
+   PLG KR0083 2024.1Q i 17 40401.054964 was 42172.415112
+   PLG KR0083 2024.1Q i 19 -76099.867346 was -74328.507198
+   PLG KR0083 2024.1Q i 20 33147.876982 was 34919.23713
+   PLG KR0083 2024.1Q i 22 35991.051898 was 37762.412046
+   PLG KR0083 2024.1Q i 23 8056.068315 was 8465.252508
+   PLG KR0083 2024.1Q i 24 27934.983583 was 29297.159538
+   PLG KR0083 2024.1Q i 25 -74475.541715 was -75837.71767
+   PLG KR0083 2024.1Q i 27 15646.306744 was 14284.130789
+   PLG KR0083 2024.2Q i 17 41856.821248 was 45968.030947
+   PLG KR0083 2024.2Q i 19 -154821.654506 was -150710.444807
+   PLG KR0083 2024.2Q i 20 28724.334906 was 32835.544605
+   PLG KR0083 2024.2Q i 22 31420.732187 was 35531.941886
+   PLG KR0083 2024.2Q i 23 7343.933475 was 8293.622915
+   PLG KR0083 2024.2Q i 24 24076.798712 was 27238.318971
+   PLG KR0083 2024.2Q i 25 -192383.207173 was -195544.727432
+   PLG KR0083 2024.2Q i 27 -122892.164844 was -126053.685103
+   PLG KR0104 2023.3Q i 1 276593.79133 was 276594.0
+   PLG KR0104 2023.3Q i 16 33913.84606 was 33914.0
+   PLG KR0104 2023.3Q i 17 18305.75571 was -40273.0
+   PLG KR0104 2023.3Q i 18 1135383.508318 was 1076805.0
+   PLG KR0104 2023.3Q i 19 -1117077.752608 was -1117078.0
+   PLG KR0104 2023.3Q i 20 294899.54704 was 236321.0
+   PLG KR0104 2023.3Q i 21 -65492.347736 was -65493.0
+   PLG KR0104 2023.3Q i 22 229407.199304 was 170828.0
+   PLG KR0104 2023.3Q i 23 48583.465239 was 35052.0
+   PLG KR0104 2023.3Q i 24 180823.734065 was 135776.0
+   PLG KR0104 2023.3Q i 25 482443.86755 was 482444.0
+   PLG KR0104 2023.3Q i 26 -102609.145045 was -102610.0
+   PLG KR0104 2023.3Q i 27 580027.840002 was 580028.0
+   PLG KR0104 2023.3Q i 28 2870.906792 was 2872.0
+   PLG KR0104 2023.3Q i 29 2251.740457 was 2252.0
+   PLG KR0104 2023.3Q i 30 2982.559091 was 2982.0
+   PLG KR0104 2023.3Q i 31 663267.601615 was 618220.0
+   PLG KR0083 2024.3Q i 17 -74853.223473 was -67390.784837
+   PLG KR0083 2024.3Q i 19 -231851.059075 was -224388.620439
+   PLG KR0083 2024.3Q i 20 -94521.764114 was -87059.325478
+   PLG KR0083 2024.3Q i 22 -91976.124587 was -84513.685951
+   PLG KR0083 2024.3Q i 23 -21500.217551 was -19776.394227
+   PLG KR0083 2024.3Q i 24 -70475.907036 was -64737.291724
+   PLG KR0083 2024.3Q i 25 -143101.514049 was -148840.129361
+   PLG KR0104 2024.4Q i 25 -660733.19329 was -668670.593624
+   PLG KR0104 2024.4Q i 26 462185.62017 was 454248.219836
+   PLG KR0104 2024.4Q i 31 -414678.777639 was -422616.177973
+   PLG KR0104 2025.1Q i 25 -285249.322996 was -284114.041712
+   PLG KR0104 2025.1Q i 26 406566.879005 was 407702.160289
+   PLG KR0104 2025.1Q i 31 -220105.772097 was -218970.490813
+   PLG KR0104 2025.2Q i 25 -50768.228489 was -37649.831398
+   PLG KR0104 2025.2Q i 26 306506.574952 was 319624.972043
+   PLG KR0104 2025.2Q i 31 103947.998187 was 117066.395278
+   PLG KR0070 2025.1Q i 25 -120703.859109 was -119949.196636
+   PLG KR0070 2025.1Q i 26 242136.802786 was 242891.465259
+   PLG KR0070 2025.1Q i 31 -103105.714473 was -102351.052
+   PLG KR0070 2025.2Q i 25 -154753.660739 was -154051.095606
+   PLG KR0070 2025.2Q i 26 74445.58057 was 75148.145703
+   PLG KR0070 2025.2Q i 31 -122680.147244 was -121977.582111
+   PLG KR0068 2024.4Q i 25 -2243643.0 was -2235618.873643
+   PLG KR0068 2024.4Q i 26 1181250.0 was 1187895.853671
+   PLG KR0068 2024.4Q i 29 842.0 was 538.040119
+   PLG KR0068 2024.4Q i 31 -1523073.0 was -1515049.144474
+   PLG KR0068 2024.4Q i 32 -9731.0 was -8048.650235
+   PLG KR0068 2025.1Q i 25 -886546.0 was -879190.0
+   PLG KR0068 2025.1Q i 26 985573.0 was 990494.0
+   PLG KR0068 2025.1Q i 31 -764555.0 was -757199.0
+   PLG KR0068 2025.1Q i 32 0.0 was 2435.0
+   PLG KR0068 2025.2Q i 25 -812576.0 was -790286.0
+   PLG KR0068 2025.2Q i 26 276212.0 was 295502.0
+   PLG KR0068 2025.2Q i 31 -632875.0 was -610585.0
+   PLG KR0068 2025.2Q i 32 0.0 was 3000.0
+CSM gold set total 317 of READY companies:
+   CSMG KR0003 2023.1Q i 1 16774.38 raw 교차확인 — 2023.1Q 자체 필링(rcept 20230515002687)엔 CSM 측정요소 노트가 없음(전체 162개 표 전수 스코어
+   CSMG KR0003 2023.2Q i 1 16774.38 raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6
+   CSMG KR0003 2023.1Q i 2 1553.18 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스
+   CSMG KR0003 2023.2Q i 2 2654.34 raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6
+   CSMG KR0003 2023.1Q i 3 174.43 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스
+   CSMG KR0003 2023.2Q i 3 358.76 raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6
+   CSMG KR0003 2023.1Q i 4 -681.62 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스
+   CSMG KR0003 2023.2Q i 4 -361.99 raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6
+   CSMG KR0003 2023.1Q i 5 -392.84 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스
+   CSMG KR0003 2023.2Q i 5 -807.85 raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6
+   CSMG KR0003 2023.1Q i 6 17427.53 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스
+   CSMG KR0003 2023.2Q i 6 18617.64 raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6
+   CSMG KR0079 2023.1Q i 1 19794.95 raw 직접 재구성(rcept 20230515002900, 1분기보고서, 노트 '14.보험계약 및 재보험계약'). 자동추출기(extract_me
+   CSMG KR0079 2025.2Q i 1 20782.12 raw 재확인(rcept 20250814003532, 반기보고서). 상품별 WIDE 표(사망/건강/연금/저축/기타 열그룹, header '계약의
+   CSMG KR0079 2025.3Q i 1 20782.12 raw 직접 재구성(rcept 20251114002791, 3분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.12
+   CSMG KR0079 2025.4Q i 1 20782.12 raw 직접 재구성(rcept 20260318001664, 사업보고서/연차). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.
+   CSMG KR0079 2026.1Q i 1 20584.23 raw 직접 재구성(rcept 20260529001897, 1분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20584.23
+   CSMG KR0079 2023.1Q i 2 572.47 raw 직접 재구성(rcept 20230515002900, 1분기보고서, 노트 '14.보험계약 및 재보험계약'). 자동추출기(extract_me
+   CSMG KR0079 2025.2Q i 2 2451.95 raw 재확인(rcept 20250814003532, 반기보고서). 상품별 WIDE 표(사망/건강/연금/저축/기타 열그룹, header '계약의
+   CSMG KR0079 2025.3Q i 2 3962.89 raw 직접 재구성(rcept 20251114002791, 3분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.12
+   CSMG KR0079 2025.4Q i 2 5398.78 raw 직접 재구성(rcept 20260318001664, 사업보고서/연차). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.
+   CSMG KR0079 2023.1Q i 3 116.0 raw 직접 재구성(rcept 20230515002900, 1분기보고서, 노트 '14.보험계약 및 재보험계약'). 자동추출기(extract_me
+   CSMG KR0079 2025.2Q i 3 295.77 raw 재확인(rcept 20250814003532, 반기보고서). 상품별 WIDE 표(사망/건강/연금/저축/기타 열그룹, header '계약의
+   CSMG KR0079 2025.3Q i 3 448.69 raw 직접 재구성(rcept 20251114002791, 3분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.12
+   CSMG KR0079 2025.4Q i 3 606.58 raw 직접 재구성(rcept 20260318001664, 사업보고서/연차). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.
+   CSMG KR0079 2023.1Q i 4 105.28 raw 직접 재구성(rcept 20230515002900, 1분기보고서, 노트 '14.보험계약 및 재보험계약'). 자동추출기(extract_me
+   CSMG KR0079 2025.2Q i 4 -685.5 validation 2026-08-30 판정(inbox/validation/20260830T0400Z): 원문 배분 채택. rcept 20250
+   CSMG KR0079 2025.3Q i 4 -333.17 raw 직접 재구성(rcept 20251114002791, 3분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.12
+   CSMG KR0079 2025.4Q i 4 -4144.94 raw 직접 재구성(rcept 20260318001664, 사업보고서/연차). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.
+   CSMG KR0079 2026.1Q i 4 -174.32 raw 직접 재구성(rcept 20260529001897, 1분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20584.23
+   CSMG KR0079 2023.1Q i 5 -520.14 raw 직접 재구성(rcept 20230515002900, 1분기보고서, 노트 '14.보험계약 및 재보험계약'). 자동추출기(extract_me
+   CSMG KR0079 2025.2Q i 5 -992.07 validation 2026-08-30 판정(inbox/validation/20260830T0400Z): 원문 배분 채택. rcept 20250
+   CSMG KR0079 2025.3Q i 5 -1531.21 raw 직접 재구성(rcept 20251114002791, 3분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.12
+   CSMG KR0079 2025.4Q i 5 -2058.31 raw 직접 재구성(rcept 20260318001664, 사업보고서/연차). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.
+   CSMG KR0079 2026.1Q i 5 -537.11 raw 직접 재구성(rcept 20260529001897, 1분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20584.23
+   CSMG KR0079 2023.1Q i 6 20068.56 raw 직접 재구성(rcept 20230515002900, 1분기보고서, 노트 '14.보험계약 및 재보험계약'). 자동추출기(extract_me
+   CSMG KR0079 2025.2Q i 6 21852.27 raw 재확인(rcept 20250814003532, 반기보고서). 상품별 WIDE 표(사망/건강/연금/저축/기타 열그룹, header '계약의
+   CSMG KR0079 2025.3Q i 6 23329.32 raw 직접 재구성(rcept 20251114002791, 3분기보고서). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.12
+   CSMG KR0079 2025.4Q i 6 20584.23 raw 직접 재구성(rcept 20260318001664, 사업보고서/연차). 상품별 WIDE 표 5상품 CSM소계 합산 — 항목1=20782.
+   CSMG KR0083 2026.1Q i 1 1906.5 CSM continuity fix 2026-06-16 (owner-verified + workflow): product-sum 유+무+변; pa
+   CSMG KR0083 2026.1Q i 2 231.5 CSM continuity fix 2026-06-16 (owner-verified + workflow): product-sum 유+무+변; pa
+   CSMG KR0083 2026.1Q i 3 17.4 CSM continuity fix 2026-06-16 (owner-verified + workflow): product-sum 유+무+변; pa
+   CSMG KR0083 2026.1Q i 4 -52.8 CSM continuity fix 2026-06-16 (owner-verified + workflow): product-sum 유+무+변; pa
+   CSMG KR0083 2026.1Q i 5 -57.2 CSM continuity fix 2026-06-16 (owner-verified + workflow): product-sum 유+무+변; pa
+   CSMG KR0083 2026.1Q i 6 2045.4 CSM continuity fix 2026-06-16 (owner-verified + workflow): product-sum 유+무+변; pa
+   CSMG KR0001 2026.1Q i 1 111037.0 CSM continuity fix 2026-06-16 (owner-verified + workflow): 유+무 당분기; parser blend
+   CSMG KR0001 2026.1Q i 2 4402.5 CSM continuity fix 2026-06-16 (owner-verified + workflow): 유+무 당분기; parser blend
+   CSMG KR0001 2026.1Q i 3 887.6 CSM continuity fix 2026-06-16 (owner-verified + workflow): 유+무 당분기; parser blend
+   CSMG KR0001 2026.1Q i 4 -368.6 CSM continuity fix 2026-06-16 (owner-verified + workflow): 유+무 당분기; parser blend
+   CSMG KR0001 2026.1Q i 5 -3041.2 CSM continuity fix 2026-06-16 (owner-verified + workflow): 유+무 당분기; parser blend
+   CSMG KR0001 2026.1Q i 6 112917.3 CSM continuity fix 2026-06-16 (owner-verified + workflow): 유+무 당분기; parser blend
+   CSMG KR0070 2026.1Q i 1 9702.5 CSM continuity fix 2026-06-16 (owner-verified + workflow): 4 product slices; ope
+   CSMG KR0070 2026.1Q i 2 1177.2 CSM continuity fix 2026-06-16 (owner-verified + workflow): 4 product slices; ope
+   CSMG KR0070 2026.1Q i 3 99 CSM continuity fix 2026-06-16 (owner-verified + workflow): 4 product slices; ope
+   CSMG KR0070 2026.1Q i 4 -432.2 CSM continuity fix 2026-06-16 (owner-verified + workflow): 4 product slices; ope
+   CSMG KR0070 2026.1Q i 5 -236.8 CSM continuity fix 2026-06-16 (owner-verified + workflow): 4 product slices; ope
+   CSMG KR0070 2026.1Q i 6 10309.7 CSM continuity fix 2026-06-16 (owner-verified + workflow): 4 product slices; ope
+   CSMG KR0070 2023.4Q i 1 7017.8 CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1
+   CSMG KR0070 2023.4Q i 4 -1148.8 CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1
+   CSMG KR0099 2024.4Q i 1 30176.4 CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2024 year-start (= 
+   CSMG KR0099 2024.4Q i 4 -3384.2 CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2024 year-start (= 
+   CSMG KR0001 2026.2Q i 1 111037.0 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0001 2026.2Q i 2 8942.2 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0001 2026.2Q i 3 1797.0 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0001 2026.2Q i 4 5690.0 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0001 2026.2Q i 5 -6258.5 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0001 2026.2Q i 6 121207.6 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0070 2026.2Q i 1 9702.5 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0070 2026.2Q i 2 1965.7 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0070 2026.2Q i 3 197.8 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0070 2026.2Q i 4 -690.5 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0070 2026.2Q i 5 -471.4 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0070 2026.2Q i 6 10704.1 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0083 2026.2Q i 1 1906.5 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0083 2026.2Q i 2 702.9 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0083 2026.2Q i 3 26.0 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0083 2026.2Q i 4 -756.9 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0083 2026.2Q i 5 -90.2 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0083 2026.2Q i 6 1788.2 CSM continuity fix 2026-08-15 (inbox/parser/20260815T0042Z Q-1 rejection iter2, 
+   CSMG KR0104 2023.1Q i 1 42505.2 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0104 2023.1Q i 4 1836.4 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0104 2023.1Q i 6 45314.9 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0001 2023.3Q i 1 96376.4 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0001 2023.3Q i 2 12197.6 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0001 2023.3Q i 3 2163.1 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0001 2023.3Q i 4 488.7 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0001 2023.3Q i 5 -7842.8 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+   CSMG KR0001 2023.3Q i 6 103383.0 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 최신 공시의 전기·전년동기 비교열 채택(owner 2026
+null_dangi total 76 READY cos: [['KR0083', '2024.4Q', 17], ['KR0083', '2024.4Q', 19], ['KR0083', '2024.4Q', 20], ['KR0083', '2024.4Q', 22], ['KR0083', '2024.4Q', 23], ['KR0083', '2024.4Q', 24], ['KR0083', '2024.4Q', 25], ['KR0083', '2024.4Q', 27], ['KR0104', '2024.4Q', 25], ['KR0104', '2025.3Q', 25], ['KR0104', '2024.4Q', 26], ['KR0104', '2025.3Q', 26], ['KR0104', '2024.4Q', 31], ['KR0104', '2025.3Q', 31], ['KR0070', '2025.3Q', 25], ['KR0070', '2025.3Q', 26], ['KR0070', '2025.3Q', 31], ['KR0068', '2024.4Q', 25], ['KR0068', '2025.3Q', 25], ['KR0068', '2024.4Q', 26], ['KR0068', '2025.3Q', 26], ['KR0068', '2024.4Q', 29], ['KR0068', '2024.4Q', 31], ['KR0068', '2025.3Q', 31], ['KR0068', '2024.4Q', 32], ['KR0068', '2025.3Q', 32]]
+set_dangi total 40 READY cos: [['KR0104', '2023.3Q', 16, 12097.07857], ['KR0104', '2023.3Q', 22, 45521.420788], ['KR0104', '2023.3Q', 23, 10463.421336], ['KR0104', '2023.3Q', 24, 35057.999452]]

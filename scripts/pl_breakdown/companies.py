@@ -3344,7 +3344,9 @@ def extract_tier2_kblife(tables):
     if jc is not None:
         out["_jang_cost"] = abs(jc)
     if jrr is not None:
-        out["_jang_rerev"] = abs(jrr)
+        # 재보험수익 can be genuinely negative (KB라이프 2024.1Q: (568)); abs() flipped the sign and made item 8 = -832 instead of -1,968
+        # (assemble(): "REV legs stay signed"; the cost leg below is an expense, so its magnitude is right).
+        out["_jang_rerev"] = jrr
     if jrc is not None:
         out["_jang_recost"] = abs(jrc)
     return out

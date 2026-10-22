@@ -69,7 +69,7 @@
     "data/ifrs17/table_scoring_keywords.yaml": 1,
     "kics_disclosure.json": 1
    },
-   "code_sha256": "ac3a4e4c54a6776b5f1a718d9a4ddc0134b53acc1880ae0832720ba517e62c1b",
+   "code_sha256": "ca5d0bf4be9fd1f2e8a359e4a2afd91af7009810093eee6c201c4dda70d429f2",
    "code_files": [
     "scripts/build_net_income_breakdown.py",
     "scripts/build_pl_breakdown.py",
@@ -86,12 +86,12 @@
     "src/ifrs17/opendart_client.py",
     "src/ifrs17/scoring.py"
    ],
-   "fixture_sha256": "a5e2a8014037bba0d011eb60b3e6b8e103d46fed7bbb476a94049d37cadcc499",
+   "fixture_sha256": "58ec07d1b76a8ae4ee6692a840460fd4bfb1c0f6d8f47ee86d2387074e0b8cea",
    "outputs": {
     "sha256_master": {
      "path": "data/dart/viz/pl_breakdown_master.json",
-     "fixture_sha256": "f9c841fd1a5568ddb6e5009312210857c332ba2b7e475dba46a2f28803dfb602",
-     "ondisk_sha256": "f9c841fd1a5568ddb6e5009312210857c332ba2b7e475dba46a2f28803dfb602"
+     "fixture_sha256": "b7137dab7d50ce000d9980fd840135df7ee28095823e6e7a7652d5b1287dca44",
+     "ondisk_sha256": "b7137dab7d50ce000d9980fd840135df7ee28095823e6e7a7652d5b1287dca44"
     },
     "sha256_coverage": {
      "path": "data/_derived/pl_breakdown_coverage.json",
@@ -136,9 +136,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_csm_waterfall.py (관측 47개 = *_measurement.json; 패턴은 넉넉히 extracted/*.json 전체)"
   },
   "viz_ifrs17_panels": {
-   "inputs_sha256": "8baa9257b27dcda4a305c17693874612a7ea30f9f57b3e71afcf80c2c49994f8",
+   "inputs_sha256": "5596d278f80b8baacd86236970cf450eb3f12f48a52458874a62ce9810d442da",
    "input_files": 769,
-   "input_bytes": 51368537,
+   "input_bytes": 51368524,
    "input_files_per_pattern": {
     "data/dart/extracted/*.json": 767,
     "CSM_waterfall.json": 1,

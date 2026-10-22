@@ -1,0 +1,59 @@
+티켓 20261023T0300Z (READY-25 적재, 2026-10-23) 증거 폴더 색인
+================================================================
+상태: 적재 완료·미커밋·push 안 함. 서브에이전트·docling 안 씀. build_root_masters.main()·build_ifrs17_bs·xlsx·panel·public_exports 미접촉.
+파이썬은 항상 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, 스크립트 파일로, stdin /dev/null.
+
+1) 무엇을 적재했나 (git HEAD 대비 실측, e21_diff_vs_head.txt = 49 PASS / ALL PASS)
+   PL_breakdown.json            값 440칸 + 값_당분기 605칸 (9사 KR0001/0003/0010/0068/0070/0079/0083/0099/0104, 필드는 값·값_당분기만)
+   CSM_waterfall.json           값 55칸 + 값_당분기 77칸 (KR0001/0003/0068/0079)
+   data/_gold/user_pl_cells.json   set 741->1171 (신규 430 + 제자리 교체 7), null_dangi 76->98, set_dangi 40->37
+   data/_gold/user_csm_cells.json  set 317->370 (신규 53 + 제자리 교체 2: 롯데 2023.1Q 항목 4·6)
+   data/_gold/gold_overlay_ledger.json  박제 3건 제거(교체한 마스크 칸: PL|KR0010|2023.1Q|16, PL|KR0010|2023.2Q|16, PL|KR0068|2023.1Q|20), 새 박제 0
+   PL_breakdown_provenance.json     42블록 교체(샌드박스 emit_pl_provenance 사본) + 병합 노트 키 2개(merge_note_20261023_e21_ready25 / ..._e21_klife_gold_removed)
+   CSM_waterfall_provenance.json    11블록 owner_override + 병합 노트 키
+   tests/test_rule_coverage_manifest.py  GOLD_OVERLAY_CENSUS = {"CSM": (370, 77), "PL": (1171, 22)}, _TAX22_LATEST_COMPARATIVE_ONLY 33칸
+   scripts/pl_breakdown/companies.py     extract_tier2_kblife 3347행 abs(jrr) -> jrr (1줄 + 주석 2줄)
+   data/dart/viz/pl_breakdown_master.json  KR0099 2024.1Q 항목 2/8/12 3칸만 (84,497 / -1,968 / -1,160; 고친 핸들러로 재빌드한 빌더 소스)
+   tests/fixtures/pl_breakdown_golden.json  sha256_master 만 이동 (f9c841fd... -> b7137dab...), 이유 = 위 3칸
+   tests/fixtures/master_tables_golden.json SUMMARY 4필드 (pl_bridge 3697P/23F -> 3755P/18F, csm_amort_identity 387P/5S -> 388P/4S, qoq_warn 262Y -> 263Y, oci_vs_bs_aoci 21Y -> 26Y)
+   tests/fixtures/builder_input_fingerprints.json  validate_golden_input_fingerprints.py --update 6줄 (pl_breakdown code/fixture/output 해시 4 + viz_ifrs17_panels inputs 해시·바이트 2); 갱신 전 RED 3 (pl_breakdown CODE_MOVED·FIXTURE_MOVED, viz_ifrs17_panels INPUTS_MOVED), 뒤 RED 0
+                                                    (fingerprints_final_before_update.txt / fingerprints_final_update.txt / fingerprints_final_after_update.txt)
+   부수 산출(master_tables 골든 테스트가 쓰는 것): data/_derived/qoq_warn.json, data/_derived/pl_oci_vs_bs_aoci_warn.json
+   문서: TODO_parser_ifrs17.md (20차 항목 + 열린 일 갱신, 17차는 doc_rotate 로 docs/todo_archive_parser_ifrs17.md 이동), docs/changelog_parser_ifrs17.md (20차), 티켓 inbox/parser/20261023T0300Z... ## 답변 (status 는 open)
+
+   최종 검증 결과 (이 폴더): gates_final/ = 7게이트 (gates_compare_final.txt: before 대비, gates_compare_after_vs_final.txt: 적재 직후와 동일),
+   pytest_*_final.txt = gold_overlay 7 passed · identity 14 passed · master_tables_golden passed · viz 골든 2 passed · rule_coverage 103 passed 1 failed(xlsx 청결) · PL 골든 passed(263초)
+   KB라이프 2024.1Q 항목 2/8/12 의 gold 3칸은 e21_post_klife.py 가 제거(빌더 소스가 같은 값을 내므로 gold 로 남기면 마스크 칸이 되어 박제가 필요).
+
+2) 파일 지도
+   독립 판독/계획: e21_read.py e21_t2.py e21_t2b.py e21_life.py e21_raw.py e21_csm.py e21_csm2.py e21_plan_lib.py e21_plan.py e21_plan_full.py e21_plan_stage1.py
+                   -> e21_plan.json (적용 계약 apply_contract 포함), e21_plan_report.txt, e21_stage1_report.txt, e21_seam_explore.txt
+   독립 검증(계획기와 다른 코드, 정규식으로 필링 XML 줄을 다시 읽음): e21_verify.py -> e21_verify.txt/json (problems: 0), e21_vp_new.txt
+   적재 도구: e21_apply.py  (--snapshot-drift | --check | --out-dir | --apply | --verify | --revert --apply)
+              매니페스트 apply_manifest_e21.json, 드리프트 스냅샷 drift_before.json, 보고서 e21_apply_report.txt (회사·분기별 전->후, 억원)
+              e21_apply.py --verify 의 종료코드 2 = 대상 9사 출처표 중 12블록이 적재 전부터 emitter 와 다른 것(HEAD 에서 16블록, 이번에 4블록 해소, 새로 어긋난 블록 0: e21_prov_check.txt)
+   KB라이프 핸들러 수정: e21_klife_fix.py (실험: e21_klife_exp_*, 유지: e21_klife_keep_*), e21_post_klife.py (+ post_klife_manifest.json)
+   HEAD 대비 독립 차분: e21_diff_vs_head.py -> e21_diff_vs_head.txt ; 출처표 vs emitter: e21_prov_check.py -> e21_prov_check.txt
+   게이트: run_gates.sh <폴더> (gate_overlay.py 가 저장소 쓰기를 모두 이 폴더로 돌린다) -> gates_before/ gates_sim/ gates_after/ gates_final/, compare_gates.py -> gates_compare_*.txt
+   테스트: run_tests.sh <before|after> , run_tests_final.sh final -> pytest_*_{before,after,final}.txt, 지문 fingerprints_after_apply.txt, master_tables_golden_update.txt
+   탐침: a*.py / a*.txt (읽기 전용), 일회성 패치 e21_patch_*.py (스크립트 안의 문자열 치환; 재현에는 불필요)
+   NOTICE_SECOND_AGENT.txt, second_agent/ : 중복 기동된 두 번째 에이전트의 흔적(읽기 전용 작업만 함, 오케스트레이터가 중단시킴). 증거로 남김.
+
+3) 재현 순서 (적재 전 상태 = git HEAD 의 마스터/gold 에서만 계획서가 같게 나온다; 적재 뒤에는 e21_plan.json 이 동결본)
+   1. e21_plan_stage1.py -> e21_plan_full.py            (계획서)
+   2. e21_verify.py                                     (독립 재독, problems 0)
+   3. e21_apply.py --snapshot-drift ; --check ; --out-dir <임시폴더> ; --apply
+   4. e21_apply.py --verify                             (PL 440 · 단일분기 31 · CSM 55 모두 새 빌드와 일치, 새 드리프트 0)
+   5. e21_klife_fix.py klife_keep --keep                (고친 핸들러로 build_pl_breakdown 재실행; viz 마스터는 3칸만 바뀜) -> e21_post_klife.py --check ; --apply
+   6. tests/test_pl_breakdown_golden.py --update  (RUN_PL_GOLDEN=1 로 통과 확인), tests/test_master_tables_golden.py --update, validate_golden_input_fingerprints.py --update
+   7. e21_diff_vs_head.py ; e21_prov_check.py ; run_gates.sh gates_final ; run_tests_final.sh final
+
+4) 되돌리는 순서
+   a. e21_post_klife.py --revert --apply      (gold/출처표/테스트 파일을 post-klife 이전으로; 적재 직후 해시가 그대로일 때만 동작)
+   b. e21_apply.py --revert --apply           (적재 전 백업으로 마스터 4개·gold·출처표·ledger·테스트 파일 복원; 백업은 스크래치패드 e21_backup)
+   c. git checkout -- data/dart/viz/pl_breakdown_master.json scripts/pl_breakdown/companies.py tests/fixtures/pl_breakdown_golden.json tests/fixtures/master_tables_golden.json data/_derived/qoq_warn.json data/_derived/pl_oci_vs_bs_aoci_warn.json
+   d. validate_golden_input_fingerprints.py --update (지문 복원)
+   백업 사본: backup_before_apply/ (적재 직전 8개 파일 = apply_manifest_e21.json 의 before_sha256 와 일치, post_klife/ = KB라이프 조정 직전 3개 파일, SHA256.txt). e21_apply.py 의 백업 경로는 세션 스크래치패드라서
+              스크래치패드가 정리됐으면 이 사본을 같은 상대 경로로 저장소에 복사하면 된다(복사 전 현재 파일 해시가 apply_manifest_e21.json 의 after_sha256 / post_klife_manifest.json 과 같은지 확인; 다르면 그 사이 누가 고친 것이다).
+              커밋 전이라면 git checkout -- <변경 파일> 로도 같은 상태가 된다(적재 직전 작업트리 = git HEAD 였다, e21_diff_vs_head.py 의 기준).
+   롯데 2023.1Q CSM gold 2칸만 되돌리려면 user_csm_cells.json 의 KR0003 2023.1Q 항목 4·6 의 was 값(-681.62 / 17427.53)으로 돌리고 CSM 빌더 사본을 같은 방식으로 다시 돌린다.

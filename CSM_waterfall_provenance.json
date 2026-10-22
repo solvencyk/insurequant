@@ -16,13 +16,15 @@
       "company_code": "KR0001",
       "quarter": "2023.1Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0001",
       "quarter": "2023.2Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0001",
@@ -193,19 +195,22 @@
       "company_code": "KR0003",
       "quarter": "2024.1Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0003",
       "quarter": "2024.2Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0003",
       "quarter": "2024.3Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0003",
@@ -768,19 +773,22 @@
       "company_code": "KR0068",
       "quarter": "2023.1Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0068",
       "quarter": "2023.2Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0068",
       "quarter": "2023.3Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0068",
@@ -1308,19 +1316,22 @@
       "company_code": "KR0079",
       "quarter": "2024.1Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0079",
       "quarter": "2024.2Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0079",
       "quarter": "2024.3Q",
       "item_block": "csm_waterfall",
-      "source_id": "DART"
+      "source_id": "DART",
+      "owner_override": true
     },
     {
       "company_code": "KR0079",
@@ -2270,5 +2281,6 @@
   ],
   "merge_note_20261012_latest_comparative": "ticket 20261012T2230Z: 검증된 CSM 8블록(최신 공시 전기·전년동기 비교열)은 data/_gold/user_csm_cells.json 에 등재(owner_override 표시). 근거 쪽·인쇄값 data/_derived/ifrs17_latest_comparative_apply_20261012/applied_cells.csv",
   "merge_note_20261021_kr0073_basis_fix": "ticket 20261021T1310Z (KR0073 CSM basis/vintage fix): 2026.1Q items 2-6 re-set to the separate-basis sum of the three 17-4 sub-tables (data/_gold/user_csm_cells.json, owner_override); 2023.1Q/2Q already carried 12 gold cells (raw re-confirmation 2026-08-25) -> owner_override flag added. Evidence data/_derived/kyobo_csm_basis_fix_20261021/",
-  "merge_note_20261022_kr0073_csm_restated": "ticket 20261021T1310Z E1-E4 (owner decision 2026-10-22: no RESTATEMENT_BASIS pins, the PL block is restated instead): KR0073 CSM 2023.1Q-2024.2Q set to the latest-filing (restated) separate-basis vintage via data/_gold/user_csm_cells.json (owner_override already flagged on these blocks); item 4 = printed 추정치 변동 residual. Companion PL refresh: data/_gold/user_pl_cells.json (+122 KR0073 cells, PL_breakdown_provenance.json merge_note_20261022_kr0073_pl_refresh). Evidence data/_derived/kyobo_csm_basis_fix_20261021/ and data/_derived/kyobo_pl_restate_dryrun_20261021/"
+  "merge_note_20261022_kr0073_csm_restated": "ticket 20261021T1310Z E1-E4 (owner decision 2026-10-22: no RESTATEMENT_BASIS pins, the PL block is restated instead): KR0073 CSM 2023.1Q-2024.2Q set to the latest-filing (restated) separate-basis vintage via data/_gold/user_csm_cells.json (owner_override already flagged on these blocks); item 4 = printed 추정치 변동 residual. Companion PL refresh: data/_gold/user_pl_cells.json (+122 KR0073 cells, PL_breakdown_provenance.json merge_note_20261022_kr0073_pl_refresh). Evidence data/_derived/kyobo_csm_basis_fix_20261021/ and data/_derived/kyobo_pl_restate_dryrun_20261021/",
+  "merge_note_20261023_e21_ready25_csm": "ticket 20261023T0300Z (READY-25 load): CSM cells of 롯데손해보험 2023.1Q + 2024.1Q-3Q, 미래에셋생명 2024.1Q-3Q, 메리츠화재 2023.1Q-2Q, 한화생명 2023.1Q-3Q set to the latest-filing (next-year prior column, separate basis, issued-contract CSM) vector via data/_gold/user_csm_cells.json (owner_override flagged on these blocks); item 4 = printed estimate change (plug close-(open+new+int+amort) for 미래에셋). Evidence data/_derived/remaining_20261022/e21_ready25/"
 }

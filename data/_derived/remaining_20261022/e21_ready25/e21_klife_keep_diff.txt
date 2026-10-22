@@ -1,0 +1,8 @@
+builder rc=0 in 177s
+rows 12122 -> 12122; sha256 master f9c841fd1a55 -> b7137dab7d50; coverage 9cc06bdc2fea -> 9cc06bdc2fea
+changed/new cells in the viz master: 3; vanished: 0
+   ('KR0099', 2, '2024.1Q'): 값: 85633.0 -> 84497.0
+   ('KR0099', 8, '2024.1Q'): 값: -832.0 -> -1968.0
+   ('KR0099', 12, '2024.1Q'): 값: -24.0 -> -1160.0
+coverage rows 431 -> 431; coverage identical: True
+--keep: the rebuilt files stay in place

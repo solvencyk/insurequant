@@ -1,0 +1,58 @@
+KR0104 2023.1Q: cells 24, all checks ok 24
+KR0104 2023.2Q: cells 24, all checks ok 24
+KR0083 2024.4Q: cells 10, all checks ok 10
+KR0070 2024.4Q: cells 3, all checks ok 3
+KR0079 2023.4Q: cells 11, all checks ok 11
+KR0079 2024.1Q: cells 15, all checks ok 15
+KR0079 2024.2Q: cells 13, all checks ok 13
+KR0079 2024.3Q: cells 13, all checks ok 13
+KR0010 2023.1Q: cells 23, all checks ok 23
+KR0010 2023.2Q: cells 23, all checks ok 23
+KR0010 2023.4Q: cells 15, all checks ok 15
+KR0010 2024.1Q: cells 15, all checks ok 15
+KR0010 2024.2Q: cells 15, all checks ok 15
+KR0010 2024.3Q: cells 15, all checks ok 15
+KR0099 2024.1Q: cells 3, all checks ok 3
+KR0003 2023.1Q: cells 32, all checks ok 32
+KR0003 2023.2Q: cells 28, all checks ok 28
+KR0003 2024.1Q: cells 18, all checks ok 18
+KR0003 2024.2Q: cells 18, all checks ok 18
+KR0003 2024.3Q: cells 18, all checks ok 18
+KR0001 2023.1Q: cells 29, all checks ok 29
+KR0001 2023.2Q: cells 29, all checks ok 29
+KR0068 2023.1Q: cells 23, all checks ok 23
+KR0068 2023.2Q: cells 23, all checks ok 23
+KR0068 2023.3Q: cells 0, all checks ok 0
+position of the cited cell among the numeric cells of its row (position, n) per bucket:
+  KR0001 2023.1Q: {(3, 4): 26, (0, 4): 28}
+  KR0001 2023.2Q: {(3, 4): 26, (1, 8): 28}
+  KR0003 2023.1Q: {(3, 4): 30, (0, 4): 28, (2, 4): 4, (1, 4): 4}
+  KR0003 2023.2Q: {(3, 4): 24, (1, 8): 26, (5, 8): 4, (3, 8): 4}
+  KR0003 2024.1Q: {(3, 4): 14, (0, 4): 16}
+  KR0003 2024.2Q: {(3, 4): 14, (1, 8): 16}
+  KR0003 2024.3Q: {(3, 4): 14, (1, 8): 16}
+  KR0010 2023.1Q: {(3, 4): 30, (0, 5): 10, (1, 5): 1, (3, 5): 1}
+  KR0010 2023.2Q: {(3, 4): 30, (5, 10): 10, (6, 10): 1, (8, 10): 1}
+  KR0010 2023.4Q: {(1, 3): 13, (0, 5): 12}
+  KR0010 2024.1Q: {(3, 4): 13, (0, 5): 12}
+  KR0010 2024.2Q: {(3, 4): 13, (5, 10): 12}
+  KR0010 2024.3Q: {(3, 4): 13, (5, 10): 12}
+  KR0068 2023.1Q: {(3, 4): 39, (5, 6): 1}
+  KR0068 2023.2Q: {(3, 4): 39, (11, 12): 1}
+  KR0070 2024.4Q: {(1, 3): 3}
+  KR0079 2023.4Q: {(1, 3): 16, (1, 2): 2}
+  KR0079 2024.1Q: {(3, 4): 23, (6, 7): 5}
+  KR0079 2024.2Q: {(3, 4): 17, (0, 25): 1, (1, 25): 1, (2, 25): 1, (3, 25): 1, (4, 25): 1, (5, 25): 1, (6, 25): 1, (7, 25): 1, (8, 25): 1, (9, 25): 1, (10, 25): 1, (11, 25): 1, (12, 25): 1, (13, 25): 1, (14, 25): 1, (15, 25): 1, (16, 25): 1, (17, 25): 1, (18, 25): 1, (19, 25): 1, (20, 25): 1, (21, 25): 1, (22, 25): 1, (23, 25): 1, (24, 25): 1}
+  KR0079 2024.3Q: {(3, 4): 17, (0, 25): 1, (1, 25): 1, (2, 25): 1, (3, 25): 1, (4, 25): 1, (5, 25): 1, (6, 25): 1, (7, 25): 1, (8, 25): 1, (9, 25): 1, (10, 25): 1, (11, 25): 1, (12, 25): 1, (13, 25): 1, (14, 25): 1, (15, 25): 1, (16, 25): 1, (17, 25): 1, (18, 25): 1, (19, 25): 1, (20, 25): 1, (21, 25): 1, (22, 25): 1, (23, 25): 1, (24, 25): 1}
+  KR0083 2024.4Q: {(1, 3): 11}
+  KR0099 2024.1Q: {(0, 2): 6}
+  KR0104 2023.1Q: {(3, 4): 38}
+  KR0104 2023.2Q: {(3, 4): 38}
+PL cells: 440, all checks ok 440
+original-print checks (gold overlaps): 7, ok 7
+seam printed-3-month re-reads: 240, ok 240
+contract dangi: null_remove 8, set_remove 4, null_add 30, set_add 1
+CSM cells: 55, ok 55
+CSM gold class evidence: 2 cells
+identity checks on the merged vectors: 196, outside tolerance 0
+problems: 0

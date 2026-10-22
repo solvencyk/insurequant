@@ -1,0 +1,72 @@
+[PASS] PL rows count equal and same key order (13801 rows)
+[PASS] no changed row outside the 9 companies (0)
+[PASS] no changed field other than 값 / 값_당분기 ([])
+[PASS] 값 changed cells == the 440 plan cells (changed 440, plan 440)
+[PASS] every changed 값 equals the plan value 
+[PASS] every planned cell had the plan 'was' value in HEAD 
+[PASS] null_dangi_add cells: 값_당분기 blank, 값 kept (30)
+[PASS] set_dangi_add cells hold the printed 3-month value (1)
+[PASS] set_dangi_remove cells: 값_당분기 identical to HEAD (value-neutral removal) (4)
+[PASS] null_dangi_remove cells: 값_당분기 = 값(q) - 값(q-1) derived from the live cumulatives (8)
+   값_당분기 changed 605 cells {'KR0001': 87, 'KR0003': 152, 'KR0010': 143, 'KR0068': 69, 'KR0070': 3, 'KR0079': 67, 'KR0083': 10, 'KR0099': 6, 'KR0104': 68}; of which dangi-only (값 unchanged) 166
+[PASS] every changed 값_당분기 cell is a planned cell / its successor / a seam-table cell / a pin change ([])
+[PASS] every cell that turned blank is a planned null_dangi cell (30 blanked, 30 planned pins)
+[PASS] every other changed 값_당분기 equals the cumulative difference of the live cells (Q1 = cumulative) ([])
+[PASS] file ends the same way and uses the same newline convention 
+[PASS] gold: exactly the replaced entries differ among the existing ones (7 differ, plan 7)
+[PASS] gold: replaced entries keep the same key set and order 
+[PASS] gold: replaced entries changed only 값 / was / note 
+[PASS] gold: replaced entries == plan (값, was, note) 
+[PASS] gold: appended entries == plan new entries minus the 3 KB라이프 cells removed after the handler fix (order, 값, was, note) 
+[PASS] gold: the 3 KB라이프 2024.1Q cells (2/8/12) are NOT in the gold file (the fixed builder source carries them) 
+[PASS] viz builder master: exactly the 3 KB라이프 cells changed, to the plan values ([('KR0099', 2, '2024.1Q'), ('KR0099', 8, '2024.1Q'), ('KR0099', 12, '2024.1Q')])
+[PASS] PL golden manifest: only sha256_master moved (['sha256_master'])
+[PASS] companies.py: only the extract_tier2_kblife _jang_rerev line (abs removed, + 2 comment lines) (4 lines)
+   -        out["_jang_rerev"] = abs(jrr)
+   +        # 재보험수익 can be genuinely negative (KB라이프 2024.1Q: (568)); abs() flipped the sign and made item 8 = -832 instead of -1,968
+   +        # (assemble(): "REV legs stay signed"; the cost leg below is an expense, so its magnitude is right).
+   +        out["_jang_rerev"] = jrr
+[PASS] gold: every appended entry has keys 원보험사코드/항목번호/공시분기/값/was/note only 
+[PASS] gold: null_dangi = existing minus the removed pins, + plan cells (76 -> 98)
+[PASS] gold: set_dangi = existing minus the removed pins, + plan cells (40 -> 37, removed 4)
+[PASS] gold: existing doc keys untouched 
+[PASS] gold: only the new _doc_e21 keys added to the dangi dicts 
+[PASS] CSM rows count equal and same key order (2358 rows)
+[PASS] CSM: no changed row outside the 4 companies, no other field ([] [])
+[PASS] CSM: 값 changed cells == the 55 plan cells with the plan values (55)
+[PASS] CSM: every planned cell had the plan 'was' value in HEAD 
+   CSM 값_당분기 changed 77 cells (builder derivation: flows = cumulative differences; 기초 = previous 기말; 기말 = point)
+[PASS] CSM gold: exactly the replaced entries differ (2 differ, plan 2)
+[PASS] CSM gold: replaced entries changed only 값 / was / why and == plan 
+[PASS] CSM gold: appended entries == plan new entries 
+[PASS] CSM gold: other top-level keys untouched 
+[PASS] CSM provenance: same block keys and order 
+[PASS] CSM provenance: changed blocks only gained owner_override=True and belong to the touched (company, quarter)s (11 blocks)
+[PASS] CSM provenance: every touched block carries owner_override 
+[PASS] CSM provenance: only the new merge note key added (['merge_note_20261023_e21_ready25_csm'])
+[PASS] ledger: only removals, nothing added or changed 
+[PASS] ledger: removed pins == replaced owner-gold cells that were masked (['PL|KR0010|2023.1Q|16', 'PL|KR0010|2023.2Q|16', 'PL|KR0068|2023.1Q|20'])
+[PASS] provenance: same block keys and order 
+[PASS] provenance: changed blocks only of the planned companies (41 blocks)
+[PASS] provenance: only the two new merge note keys added at top level (load + KB라이프 gold removal), others untouched (['merge_note_20261023_e21_klife_gold_removed', 'merge_note_20261023_e21_ready25'])
+[PASS] provenance: KR0099 2024.1Q income_statement block == HEAD block (re-emitted after the gold removal; the builder-source cells carry the same sidecar record as at HEAD; emitter == sidecar is proven by e21_prov_check.txt) 
+[PASS] provenance: every cell whose 값 changed belongs to a replaced (company, quarter) block, or is a REPLACED owner-gold cell, or is one of the 3 KB라이프 builder-source cells (block == HEAD) (3 cells in unchanged blocks: [('KR0099', 2, '2024.1Q'), ('KR0099', 8, '2024.1Q'), ('KR0099', 12, '2024.1Q')])
+[PASS] test file: only the census declaration (+1 comment) and the TAX22 lines changed (16 differing lines, lines 2242 -> 2250)
+   -GOLD_OVERLAY_CENSUS = {"CSM": (317, 77), "PL": (741, 25)}
+   +# 2026-10-23 ticket 20261023T0300Z (parser/ifrs17, READY-25: 25 PL buckets of 9 companies + 12 CSM buckets refreshed to the latest comparative; 7 PL + 2 CSM owner-gold cells replaced in place): CSM gold 317->370 cells, masked 77-
+   +# 2026-10-23 ticket 20261023T0300Z (KB라이프 extract_tier2_kblife abs() fix): the builder source now carries KR0099 2024.1Q items 2/8/12, so their 3 gold cells are removed (masked gold would need new pins): PL gold 1174->1171 cells,
+   +GOLD_OVERLAY_CENSUS = {"CSM": (370, 77), "PL": (1171, 22)}
+   +# 2026-10-23 ticket 20261023T0300Z: READY-25 적재(농협생명·KB손보·롯데·메리츠·한화생명 등)로 최신 비교열 판 버킷이 늘었다 -> 총 33칸(실측).
+   -    ("NH농협손해보험", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {("농협생명보험", "2023.3Q")} | {
+   +    ("KB손해보험", q) for q in ("2023.4Q", "2024.1Q")} | {
+   +    ("NH농협손해보험", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {
+   +    ("농협생명보험", "2023.3Q")} | {
+   -    ("에이비엘생명보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q")} | {("푸본현대생명보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q")} | {
+   +    ("롯데손해보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q")} | {
+   +    ("미래에셋생명보험", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {
+   +    ("에이비엘생명보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q")} | {
+   +    ("푸본현대생명보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q")} | {
+   -    # (a) 분기를 빼면 최신 비교열로만 통과하는 23칸(교보 4 + 다른 6사 19)이 RED 로 돌아온다 = 이 분기가 실제로 읽힌다
+   +    # (a) 분기를 빼면 최신 비교열로만 통과하는 33칸(교보 4 + 다른 9사 29)이 RED 로 돌아온다 = 이 분기가 실제로 읽힌다
+   GOLD_OVERLAY_CENSUS = {"CSM": (370, 77), "PL": (1171, 22)}
+ALL PASS
