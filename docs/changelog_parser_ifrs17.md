@@ -5,6 +5,16 @@
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/parser_ifrs17/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-22 (16차: 교보생명 KR0073 OCI 13칸 최신 비교열 적재 — 티켓 20261021T1556Z)
+
+커밋 안 함(메인이 통합), push 안 함. 서브에이전트·docling 안 씀. `build_root_masters.main()`·`build_pl_breakdown`·xlsx·public_exports·CSM 마스터 미접촉. 산출·증거 `data/_derived/remaining_20261022/a_oci/`(`INDEX.txt`).
+
+- **확인**: 필링 XML 별도 포괄손익계산서의 원 공시 현재 누계 열과 후속 공시 전기 누계 열을 줄 번호로 읽어(`verify_xml.py`) 항목 24~32 를 잎 행에서 직접 산출했다. 13칸이 FS-API(Tier-1) 값과 1e-6 백만원까지 일치하고, 세 분기 모두 양쪽 필링에서 25 = 26+27+28+29+30+32 · 31 = 24+25 잔차 0.000000.
+- **성격**: 2024.4Q·2025.1Q 는 순수 소급재작성(주석 「과소/과대계상」 금액과 일치: 10,932 · 9,037 · 1,856 · 2,885). 2025.2Q 는 26 −9,143.42 · 재평가 제거 −4,221.54(재작성)와 항목 32→29 태그 이동 28,364.99(원 공시도 같은 줄 인쇄, 마스터 29 가 비어 있던 것)의 혼합.
+- **적재**: gold set +13(482→495, 마스크 29 불변) · KR0073 18행(값 13 + 단일분기 5) · 출처표 3블록 + 새 병합 노트 키 · `GOLD_OVERLAY_CENSUS` PL (495, 29) · 하네스 `apply_kr0073_oci.py`(이전 PL 갱신 하네스의 사본, 백업은 저장소 밖). 단일분기 이음매 8칸(2024.4Q·2025.3Q 의 25·26·31·32)은 `null_dangi` 로 공란. 첫 쓰기에서 출처표의 이전 병합 노트 키를 덮어써서 `patch_prov_note.py` 로 복구했다(HEAD 와 동일, 새 키 분리).
+- **게이트**: 데이터계약 RED 0→1(xlsx `손익분해PL` 31셀) · master_tables SUMMARY 2필드 이동(골든 `--update`, exit code 2 불변) · 나머지 불변 · PL 골든·gold_overlay·지문 통과 · rule_coverage 103/104(실패 1 = xlsx RED).
+- **남은 것**: publishing xlsx 시트 동기화 · 2025.4Q 단일분기 이음매(후보) · FY2026 3분기 보고서 제출 뒤 2025.3Q 재갱신.
+
 ## 2026-10-22 (15차: 교보생명 KR0073 2023.3Q PL 단일분기(값_당분기) = FY2024 Q3 보고서 3개월 열 인쇄값 — 검증 티켓 20261021T1655Z, 코디네이터 결정 「옵션 B-lite」)
 
 커밋 안 함(메인이 통합), push 안 함. 서브에이전트·docling 안 씀. `validate_master_tables.py`·픽스처·CSM 마스터·xlsx·public_exports 미접촉. 산출·증거 `data/_derived/kyobo_seam_blank_20261022/`(`INDEX.txt` · `seam_3m_extract.txt` · `seam_3m_vector.csv` · `diff_vs_head_seam2.txt`), 적재 스크립트 `apply_seam_blank.py`(1단계: 28칸 비움; 이 항목에서 대체됨)와 `apply_seam_set.py`(2단계, 현행: `--check` · `--apply` · `--revert --apply` · `--verify`).

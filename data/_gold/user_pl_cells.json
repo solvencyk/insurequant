@@ -3882,6 +3882,110 @@
       "값": -2014090.343567,
       "was": -2068402.31889,
       "note": "2026-10-22 parser/ifrs17 (KR0073 PL refresh, coordinator instruction 2026-10-21 after owner rejected the amortization pins): latest-comparative, 별도 기준. FY2025_Q2 rcept 20250814004112 의 전기(누적) 열 = 재작성 값. 값 근거·원문 줄 번호 data/_derived/kyobo_pl_restate_dryrun_20261021/pl_cell_changes.csv"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 25,
+      "공시분기": "2024.4Q",
+      "값": -3856082.245314,
+      "was": -3876051.397954,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2025 사업보고서 rcept 20260331004015 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml L47126 = -3,856,082.245314 백만원 (원 공시 FY2024 사업보고서 rcept 20250331004015 현재 마스터 기준값 -3876051.397954, 원문 L51069). 재작성(유배당보험계약 회계정책 변경 소급): 후속 사업보고서 주석 44-3 L71412 표 기타포괄손익 수정후 -3,856,081 / 수정전 -3,876,050 / 증감 19,969(백만원). 26+32 변동의 합. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 26,
+      "공시분기": "2024.4Q",
+      "값": 239691.866004,
+      "was": 228760.108684,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2025 사업보고서 rcept 20260331004015 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml L47140 = 239,691.866004 백만원 (원 공시 FY2024 사업보고서 rcept 20250331004015 현재 마스터 기준값 228760.108684, 원문 L51107). 재작성: 주석 변경내용 L71068 '10,932백만원 과소계상'; 원문 라벨 기타포괄손익-공정가치측정금융자산관련손익(원 공시) -> 기타포괄손익-공정가치측정채무증권평가손익(후속 공시). 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 31,
+      "공시분기": "2024.4Q",
+      "값": -3157346.155974,
+      "was": -3177315.308614,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2025 사업보고서 rcept 20260331004015 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml L47217 = -3,157,346.155974 백만원 (원 공시 FY2024 사업보고서 rcept 20250331004015 현재 마스터 기준값 -3177315.308614, 원문 L51316). 재작성: 총포괄손익 = 당기순이익(변동 없음) + 항목25. 24+25 로 닫힘. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 32,
+      "공시분기": "2024.4Q",
+      "값": 3847.508523,
+      "was": -5189.886797,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2025 사업보고서 rcept 20260331004015 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2025_Q4/raw/KR0073_교보생명보험_20260331004015/20260331004015.xml L47147+L47168+L47196+L47203+L47210 = 3,847.508523 백만원 (원 공시 FY2024 사업보고서 rcept 20250331004015 현재 마스터 기준값 -5189.886797, 원문 L51126+L51145+L51202+L51278+L51297). 재작성: 원 공시 자산재평가손익 -9,037.395 -> 후속 공시 유형자산재평가잉여금 0 ('9,037백만원 과소계상' L71068). 신용손실/손실충당금 -3,355.361 과 확정급여재측정 7,202.870 은 두 공시 같음. 계정 태그 이동 없음. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 25,
+      "공시분기": "2025.1Q",
+      "값": -943000.241356,
+      "was": -938259.504881,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 1분기보고서 rcept 20260813001077 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q1/raw/KR0073_교보생명보험/20260813001077.xml L33890 = -943,000.241356 백만원 (원 공시 FY2025 1분기보고서 rcept 20250515002967 현재 마스터 기준값 -938259.504881, 원문 L34875). 재작성(회계정책 변경 소급): 26(-1,856.00) + 32(-2,884.74)의 합. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 26,
+      "공시분기": "2025.1Q",
+      "값": 883905.561868,
+      "was": 885761.558926,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 1분기보고서 rcept 20260813001077 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q1/raw/KR0073_교보생명보험/20260813001077.xml L33906 = 883,905.561868 백만원 (원 공시 FY2025 1분기보고서 rcept 20250515002967 현재 마스터 기준값 885761.558926, 원문 L34921). 재작성: 주석 변경내용 L54117 '1,856백만원 과대계상'. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 31,
+      "공시분기": "2025.1Q",
+      "값": -627717.754517,
+      "was": -622977.018042,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 1분기보고서 rcept 20260813001077 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q1/raw/KR0073_교보생명보험/20260813001077.xml L33970 = -627,717.754517 백만원 (원 공시 FY2025 1분기보고서 rcept 20250515002967 현재 마스터 기준값 -622977.018042, 원문 L35128). 재작성: 총포괄손익 = 당기순이익(변동 없음) + 항목25. 24+25 로 닫힘. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 32,
+      "공시분기": "2025.1Q",
+      "값": 121.9819,
+      "was": 3006.721317,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 1분기보고서 rcept 20260813001077 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q1/raw/KR0073_교보생명보험/20260813001077.xml L33914+L33962 = 121.981900 백만원 (원 공시 FY2025 1분기보고서 rcept 20250515002967 현재 마스터 기준값 3006.721317, 원문 L34944+L35082+L35105). 재작성: 원 공시 유형자산재평가잉여금 2,884.739 가 후속 공시 계산서에서 사라짐('2,885백만원 과대계상' L54117). 손실충당금 338.357 과 재측정 -216.375 는 같음. 계정 태그 이동 없음(항목29 7,425.340 은 두 공시 같음). 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 25,
+      "공시분기": "2025.2Q",
+      "값": -925329.232358,
+      "was": -911964.270304,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 반기보고서 rcept 20260814004024 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L31661 = -925,329.232358 백만원 (원 공시 FY2025 반기보고서 rcept 20250814004112 현재 마스터 기준값 -911964.270304, 원문 L37874). 재작성(회계정책 변경 소급): 26(-9,143.42) + 유형자산재평가잉여금 제거(-4,221.54, 항목32 안)의 합. 주석 43-2 표 기타포괄손익 수정후 (925,329) / 수정전 (911,964) / 증감 (13,365). 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 26,
+      "공시분기": "2025.2Q",
+      "값": 277560.224443,
+      "was": 286703.648672,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 반기보고서 rcept 20260814004024 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L31675 = 277,560.224443 백만원 (원 공시 FY2025 반기보고서 rcept 20250814004112 현재 마스터 기준값 286703.648672, 원문 L37920). 재작성: 주석 변경내용 L49799 '9,143백만원 과대계상'. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 29,
+      "공시분기": "2025.2Q",
+      "값": 28364.988485,
+      "was": null,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 반기보고서 rcept 20260814004024 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L31717 = 28,364.988485 백만원 (원 공시 FY2025 반기보고서 rcept 20250814004112 현재 마스터 기준값 None, 원문 L38058 (원 공시 별도 포괄손익계산서도 28,364.988485 인쇄)). 재작성 아님(계정 태그 이동의 정상화): 원 공시 계산서도 같은 줄 '기타포괄손익-공정가치측정지정지분증권평가손익' 28,364,988,485원 을 인쇄(FY2025_Q2 xml L38058) — 마스터 29 가 비었던 것은 원 공시 시점 FS-API 태그가 이 줄을 항목32 로 보냈기 때문. 빈칸을 채움. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 31,
+      "공시분기": "2025.2Q",
+      "값": -340021.745884,
+      "was": -326656.78383,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 반기보고서 rcept 20260814004024 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L31731 = -340,021.745884 백만원 (원 공시 FY2025 반기보고서 rcept 20250814004112 현재 마스터 기준값 -326656.78383, 원문 L38127). 재작성: 총포괄손익 = 당기순이익(변동 없음) + 항목25. 24+25 로 닫힘. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
+    },
+    {
+      "원보험사코드": "KR0073",
+      "항목번호": 32,
+      "공시분기": "2025.2Q",
+      "값": 27.621529,
+      "was": 32614.147839,
+      "note": "2026-10-22 parser/ifrs17 (KR0073 OCI refresh, ticket 20261021T1556Z): latest-comparative, 별도 기준 누계. FY2026 반기보고서 rcept 20260814004024 별도 포괄손익계산서 전기(누적) 열 data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml L31682+L31724 = 27.621529 백만원 (원 공시 FY2025 반기보고서 rcept 20250814004112 현재 마스터 기준값 32614.147839, 원문 L37943+L38081+L38104). 합성 변동 -32,586.53 = 계정 태그 이동 -28,364.99(항목29 로 이동; 원 공시도 같은 줄 인쇄) + 재작성 -4,221.54(유형자산재평가잉여금 4,221.538 제거; '4,222백만원 과대계상' L49799). 남는 값 = 손실충당금 344.046 + 재측정 -316.424. 블록 닫힘: 25=26+27+28+29+30+32 잔차 0.000, 31=24+25. 근거 data/_derived/remaining_20261022/a_oci/verify_xml.txt"
     }
   ],
   "null_dangi": {
@@ -3891,8 +3995,49 @@
         "KR0073",
         "2023.3Q",
         15
+      ],
+      [
+        "KR0073",
+        "2024.4Q",
+        25
+      ],
+      [
+        "KR0073",
+        "2024.4Q",
+        26
+      ],
+      [
+        "KR0073",
+        "2024.4Q",
+        31
+      ],
+      [
+        "KR0073",
+        "2024.4Q",
+        32
+      ],
+      [
+        "KR0073",
+        "2025.3Q",
+        25
+      ],
+      [
+        "KR0073",
+        "2025.3Q",
+        26
+      ],
+      [
+        "KR0073",
+        "2025.3Q",
+        31
+      ],
+      [
+        "KR0073",
+        "2025.3Q",
+        32
       ]
-    ]
+    ],
+    "_doc_oci_20261022": "KR0073 OCI refresh 2026-10-22 (ticket 20261021T1556Z): 값_당분기 of items 25/26/31/32 for 2024.4Q and 2025.3Q is blanked. After the cumulative refresh of 2024.4Q (FY2025 annual restated column) and 2025.1Q/2025.2Q (FY2026 Q1/Q2 restated comparatives) the builder difference of those cells would subtract a restated cumulative from a cumulative of another filing basis (2024.3Q and 2025.3Q are still as originally filed; the restated 3-month columns are not published: annual report has none, the FY2026 Q3 report is not filed yet). Owner rule 2026-10-22: a blank beats a wrong value. Re-derive once the FY2026 Q3 report restates 2025.3Q. Items 27/28/29/30/24 are unaffected (same basis in both filings)."
   },
   "set_dangi": {
     "_doc": "KR0073 2023.3Q single quarter = the restated THREE-MONTH value printed in the FY2024 Q3 report (data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml, separate basis, prior-year 3-month column of the income statement / OCI and of the 보험수익 / 보험서비스비용 / 재보험 notes; the cell line is the 5th element). Derived items (2, 3, 7, 8, 12, 18, 19, 32) apply the production assemble() definitions to printed 3-month cells. All 10 PL identities close on this vector (residual <= 1e-6 백만원) and an independent read (FS-API frmtrm_q_amount + the production Tier-2 handler) agrees for every cell. The cumulative 값 is not touched, so the four 2023 single quarters do not add up to the full-year value: the difference is the restated first-half correction that was never published (the FY2024 Q1/Q2 comparatives are pre-correction), e.g. 원수 CSM상각 105,255 + 106,779 + 150,548 + 163,380 = 525,962 vs 627,701 (difference 101,739). Items not printed stay null (null_dangi). Ticket inbox/parser/20261021T1655Z__validation__KR0073_2023.3Q__single_quarter_vintage_seam.md; evidence data/_derived/kyobo_seam_blank_20261022/ (seam_3m_extract.txt, seam_3m_vector.csv)",

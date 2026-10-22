@@ -896,7 +896,8 @@ GOLD_OVERLAY_RULES = {
 # 2026-10-13 ticket 20261012T2230Z (parser/ifrs17): gold 만 늘었다 -- CSM +27 · PL +157 (마스크 칸 수 86·29 불변 = 허용오차 불변, 새 gold 칸은 전부 소스와 다르다).
 # 2026-10-22 ticket 20261021T1310Z (parser/ifrs17, KR0073 CSM restated vintage E1-E4): CSM gold 303->317 cells, masked 86->77 (pins re-derived).
 # 2026-10-22 ticket 20261021T1310Z (parser/ifrs17, KR0073 PL refresh to the latest comparative): PL gold 360->482 cells, masked 29->29 (no new pins).
-GOLD_OVERLAY_CENSUS = {"CSM": (317, 77), "PL": (482, 29)}
+# 2026-10-22 ticket 20261021T1556Z (parser/ifrs17, KR0073 OCI items 2024.4Q-2025.2Q refreshed to the latest comparative): PL gold 482->495 cells, masked 29->29 (no new pins).
+GOLD_OVERLAY_CENSUS = {"CSM": (317, 77), "PL": (495, 29)}
 
 
 def _gate():

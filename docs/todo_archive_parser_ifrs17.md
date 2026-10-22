@@ -2,6 +2,12 @@
 
 ## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
+- **2026-10-21 13차: 교보생명 KR0073 CSM 워터폴 기준·시점 혼합 정정(티켓 20261021T1310Z)** — E1~E5 를 원문 296셀 독립 재독(불일치 0)으로 재확인하고 **E5 먼저 적재**: 2026.1Q 항목 2~6 을 별도 3블록(유배당+무배당+변액) 합으로 교체(4,159.16 · 487.20 · −1,349.13 · −1,537.33 · 66,869.50; 종전은 연결 합이 별도 기초 밑에 섞여 있었다). 마스터 KR0073 15필드 · gold 5칸 · CSM_AMORT 등재부 `교보생명보험|2026.1Q`(−4.36억) 해제 · 사이드카 2023.1Q·2Q `owner_override`. E1~E4(2023.1Q~2024.2Q)는 그때 PL 항목 4 가 원 공시 기준이라 `CSM_AMORT_IDENTITY` 신규 RED 5 가 생겨 보류했고 **14차에서 PL 갱신과 함께 박제 없이 적재**했다.
+  폐기한 대안: 원 공시 기준 복귀(연속성 RED 2) · E1 만 고치기(당분기 갭 3Q 589→7,249억 · 4Q 0→1,710억). E5 단독 게이트: 데이터계약 RED 0→1(xlsx `CSM워터폴`) · csm_amort 386P/2PIN→387P/1PIN.
+  근거·재현 `data/_derived/kyobo_csm_basis_fix_20261021/`(`INDEX.txt` · `verification_matrix.csv` · `cell_changes_E5.csv` · `cell_changes_R.csv` · `apply_kr0073_fix.py` `--verify` / `--scenario E5|R --revert --apply`) · `docs/changelog_parser_ifrs17.md` 13차.
+
+## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
+
 - **2026-10-13 12차: 최신 비교열 우선 원칙 적재(티켓 20261012T2230Z, owner 「확실히 검산 닫히는 것만 최신 공시로 덮어쓰기」 + 3개월 열 오적재 전수 확장)** — 249셀 적재: CSM 27(8블록) · PL 157(최신 비교열 141 = 7블록 · 2023.2Q 3개월 열 오적재 정정 14 · 한화손보 2023.1Q·2Q 기타사업비용 후속 공시 해당 분기 열 오적재 2) · BS 65(연말 19블록). 전부 원 공시 표·PDF 인쇄값을 독립 코드로 재독(65/65·249/249), 지속은 gold-overlay(`user_pl_cells` +157 · `user_csm_cells` +27) + `bs_manual_overrides` +65. 예외 해제 10줄(PL_BRIDGE 기지 6 · CSM_AMORT PIN 3 · WFY 1). 게이트: pl_bridge FAIL 29 → 23(신규 0) · csm_amort PIN 5 → 2 · qoq_warn 267 → 266 · 데이터 RED 0 → (적재 직후 xlsx 드리프트 3시트 RED 3) → 3시트 셀 단위 동기 뒤 0 · 연속성·ILP 2종·NB·워터폴·커버리지 불변. 보류·확인 불가 311행은 `held_blocks.csv`. 커밋은 `git log -1 -- scripts/apply_latest_comparative_20261012.py`, push 안 함.
   남은 것: validation 이 골든 갱신·독립 검증(`test_master_tables_golden` SUMMARY · `test_ifrs17_bs_golden`[8분] · `validate_golden_input_fingerprints.py --update` RED 3) · publishing `public_exports` 재생성(BS 2024.4Q 값이 사이트에 보인다) · owner: gold 충돌 59블록, 후보 미검증 107블록은 L1 전기 컬럼 리더가 선행 · 라이나 CSM 2023.1Q·2Q·KR0075 BS 2023.4Q·KR0097 ILP/BS 2024.4Q 보류 유지.
   근거·재현 `data/_derived/ifrs17_latest_comparative_apply_20261012/`(`applied_cells.csv` · `held_blocks.csv` · `plan_final.json` · `evidence_*`) · `scripts/apply_latest_comparative_20261012.py`(`--check` 읽기 전용, `--revert --apply`) · 백업 `data/_derived/ifrs17_latest_comparative_apply_backup_20261012/`(git 제외) · `docs/changelog_parser_ifrs17.md` 12차.

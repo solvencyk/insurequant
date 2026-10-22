@@ -1,0 +1,163 @@
+==================== 2024.4Q
+ORIG separate-statement block L51043-L51309 {24: 698736.08934, 25: -3876051.397954, 26: 228760.108684, 27: -4152878.380603, 28: 36349.57474, 29: 25102.6146, 30: -8195.428578, 31: -3177315.308614, 32: -5189.886797}
+ORIG other leaf rows (lines) [(51119, '기타포괄손익-공정가치측정 신용', -3355.361292), (51138, '매도가능및만기보유금융자산평가손', 0.0), (51195, '관계종속기업투자평가손익', 0.0), (51271, '자산재평가손익', -9037.39532), (51290, '확정급여제도의재측정요소', 7202.869815)]
+PASS 2024.4Q ORIG 25 = 26+27+28+29+30+32 residual 0.000000000
+PASS 2024.4Q ORIG 31 = 24+25 residual 0.000000000
+LATE separate-statement block L47116-L47214 {24: 698736.08934, 25: -3856082.245314, 26: 239691.866004, 27: -4152878.380603, 28: 36349.57474, 29: 25102.6146, 30: -8195.428578, 31: -3157346.155974, 32: 3847.508523}
+LATE other leaf rows (lines) [(47144, '기타포괄손익-공정가치측정채무증', -3355.361292), (47165, '관계종속기업투자평가손익', 0.0), (47200, '유형자산재평가잉여금', 0.0), (47207, '확정급여제도의재측정요소', 7202.869815)]
+PASS 2024.4Q LATE 25 = 26+27+28+29+30+32 residual 0.000000000
+PASS 2024.4Q LATE 31 = 24+25 residual 0.000000000
+PASS 2024.4Q NI(24) original == latest (698736.089340)
+item 24 orig_raw 698736.089340 | HEAD 698736.08934 | latest_raw 698736.089340 | CUR 698736.08934
+PASS 2024.4Q item 24 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 24 CUR master == LATEST filing prior column
+item 25 orig_raw -3876051.397954 | HEAD -3876051.397954 | latest_raw -3856082.245314 | CUR -3856082.245314
+PASS 2024.4Q item 25 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 25 CUR master == LATEST filing prior column
+item 26 orig_raw 228760.108684 | HEAD 228760.108684 | latest_raw 239691.866004 | CUR 239691.866004
+PASS 2024.4Q item 26 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 26 CUR master == LATEST filing prior column
+item 27 orig_raw -4152878.380603 | HEAD -4152878.380603 | latest_raw -4152878.380603 | CUR -4152878.380603
+PASS 2024.4Q item 27 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 27 CUR master == LATEST filing prior column
+item 28 orig_raw 36349.574740 | HEAD 36349.57474 | latest_raw 36349.574740 | CUR 36349.57474
+PASS 2024.4Q item 28 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 28 CUR master == LATEST filing prior column
+item 29 orig_raw 25102.614600 | HEAD 25102.6146 | latest_raw 25102.614600 | CUR 25102.6146
+PASS 2024.4Q item 29 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 29 CUR master == LATEST filing prior column
+item 30 orig_raw -8195.428578 | HEAD -8195.428578 | latest_raw -8195.428578 | CUR -8195.428578
+PASS 2024.4Q item 30 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 30 CUR master == LATEST filing prior column
+item 31 orig_raw -3177315.308614 | HEAD -3177315.308614 | latest_raw -3157346.155974 | CUR -3157346.155974
+PASS 2024.4Q item 31 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 31 CUR master == LATEST filing prior column
+item 32 orig_raw -5189.886797 | HEAD -5189.886797 | latest_raw 3847.508523 | CUR 3847.508523
+PASS 2024.4Q item 32 HEAD master == ORIGINAL filing current column
+PASS 2024.4Q item 32 CUR master == LATEST filing prior column
+==================== 2025.1Q
+ORIG separate-statement block L34841-L35117 {24: 315282.486839, 25: -938259.504881, 26: 885761.558926, 27: -1867731.819741, 28: 39664.583682, 29: 7425.339946, 30: -6385.889011, 31: -622977.018042, 32: 3006.721317}
+ORIG other leaf rows (lines) [(34933, '기타포괄손익-공정가치측정채무증', 338.356994), (35071, '유형자산재평가잉여금', 2884.739417), (35094, '확정급여제도의재측정요소', -216.375094)]
+PASS 2025.1Q ORIG 25 = 26+27+28+29+30+32 residual -0.000000000
+PASS 2025.1Q ORIG 31 = 24+25 residual 0.000000000
+LATE separate-statement block L33877-L33965 {24: 315282.486839, 25: -943000.241356, 26: 883905.561868, 27: -1867731.819741, 28: 39664.583682, 29: 7425.339946, 30: -6385.889011, 31: -627717.754517, 32: 121.9819}
+LATE other leaf rows (lines) [(33909, '기타포괄손익-공정가치측정채무증', 338.356994), (33957, '확정급여제도의재측정요소', -216.375094)]
+PASS 2025.1Q LATE 25 = 26+27+28+29+30+32 residual 0.000000000
+PASS 2025.1Q LATE 31 = 24+25 residual -0.000000000
+PASS 2025.1Q NI(24) original == latest (315282.486839)
+item 24 orig_raw 315282.486839 | HEAD 315282.486839 | latest_raw 315282.486839 | CUR 315282.486839
+PASS 2025.1Q item 24 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 24 CUR master == LATEST filing prior column
+item 25 orig_raw -938259.504881 | HEAD -938259.504881 | latest_raw -943000.241356 | CUR -943000.241356
+PASS 2025.1Q item 25 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 25 CUR master == LATEST filing prior column
+item 26 orig_raw 885761.558926 | HEAD 885761.558926 | latest_raw 883905.561868 | CUR 883905.561868
+PASS 2025.1Q item 26 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 26 CUR master == LATEST filing prior column
+item 27 orig_raw -1867731.819741 | HEAD -1867731.819741 | latest_raw -1867731.819741 | CUR -1867731.819741
+PASS 2025.1Q item 27 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 27 CUR master == LATEST filing prior column
+item 28 orig_raw 39664.583682 | HEAD 39664.583682 | latest_raw 39664.583682 | CUR 39664.583682
+PASS 2025.1Q item 28 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 28 CUR master == LATEST filing prior column
+item 29 orig_raw 7425.339946 | HEAD 7425.339946 | latest_raw 7425.339946 | CUR 7425.339946
+PASS 2025.1Q item 29 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 29 CUR master == LATEST filing prior column
+item 30 orig_raw -6385.889011 | HEAD -6385.889011 | latest_raw -6385.889011 | CUR -6385.889011
+PASS 2025.1Q item 30 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 30 CUR master == LATEST filing prior column
+item 31 orig_raw -622977.018042 | HEAD -622977.018042 | latest_raw -627717.754517 | CUR -627717.754517
+PASS 2025.1Q item 31 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 31 CUR master == LATEST filing prior column
+item 32 orig_raw 3006.721317 | HEAD 3006.721317 | latest_raw 121.981900 | CUR 121.9819
+PASS 2025.1Q item 32 HEAD master == ORIGINAL filing current column
+PASS 2025.1Q item 32 CUR master == LATEST filing prior column
+latest filing printed 3M col {24: 315282.486839, 25: -943000.241356, 26: 883905.561868, 27: -1867731.819741, 28: 39664.583682, 29: 7425.339946, 30: -6385.889011, 31: -627717.754517, 32: 121.9819}
+PASS 2025.1Q item 25 CUR 값_당분기 (-943000.241356) == printed 3M (-943000.241356)
+PASS 2025.1Q item 26 CUR 값_당분기 (883905.561868) == printed 3M (883905.561868)
+PASS 2025.1Q item 29 CUR 값_당분기 (7425.339946) == printed 3M (7425.339946)
+PASS 2025.1Q item 31 CUR 값_당분기 (-627717.754517) == printed 3M (-627717.754517)
+PASS 2025.1Q item 32 CUR 값_당분기 (121.9819) == printed 3M (121.981900)
+==================== 2025.2Q
+ORIG separate-statement block L37840-L38116 {24: 585307.486474, 25: -911964.270304, 26: 286703.648672, 27: -1125362.963739, 28: -100273.747007, 29: 28364.988485, 30: -5645.356069, 31: -326656.78383, 32: 4249.159354}
+ORIG other leaf rows (lines) [(37932, '기타포괄손익-공정가치측정채무증', 344.045666), (38070, '유형자산재평가잉여금', 4221.537825), (38093, '확정급여제도의재측정요소', -316.424137)]
+PASS 2025.2Q ORIG 25 = 26+27+28+29+30+32 residual 0.000000000
+PASS 2025.2Q ORIG 31 = 24+25 residual 0.000000000
+LATE separate-statement block L31649-L31726 {24: 585307.486474, 25: -925329.232358, 26: 277560.224443, 27: -1125362.963739, 28: -100273.747007, 29: 28364.988485, 30: -5645.356069, 31: -340021.745884, 32: 27.621529}
+LATE other leaf rows (lines) [(31677, '기타포괄손익-공정가치측정채무증', 344.045666), (31719, '확정급여제도의재측정요소', -316.424137)]
+PASS 2025.2Q LATE 25 = 26+27+28+29+30+32 residual 0.000000000
+PASS 2025.2Q LATE 31 = 24+25 residual 0.000000000
+PASS 2025.2Q NI(24) original == latest (585307.486474)
+item 24 orig_raw 585307.486474 | HEAD 585307.486474 | latest_raw 585307.486474 | CUR 585307.486474
+PASS 2025.2Q item 24 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 24 CUR master == LATEST filing prior column
+item 25 orig_raw -911964.270304 | HEAD -911964.270304 | latest_raw -925329.232358 | CUR -925329.232358
+PASS 2025.2Q item 25 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 25 CUR master == LATEST filing prior column
+item 26 orig_raw 286703.648672 | HEAD 286703.648672 | latest_raw 277560.224443 | CUR 277560.224443
+PASS 2025.2Q item 26 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 26 CUR master == LATEST filing prior column
+item 27 orig_raw -1125362.963739 | HEAD -1125362.963739 | latest_raw -1125362.963739 | CUR -1125362.963739
+PASS 2025.2Q item 27 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 27 CUR master == LATEST filing prior column
+item 28 orig_raw -100273.747007 | HEAD -100273.747007 | latest_raw -100273.747007 | CUR -100273.747007
+PASS 2025.2Q item 28 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 28 CUR master == LATEST filing prior column
+item 29 orig_raw 28364.988485 | HEAD None | latest_raw 28364.988485 | CUR 28364.988485
+FAIL 2025.2Q item 29 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 29 CUR master == LATEST filing prior column
+item 30 orig_raw -5645.356069 | HEAD -5645.356069 | latest_raw -5645.356069 | CUR -5645.356069
+PASS 2025.2Q item 30 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 30 CUR master == LATEST filing prior column
+item 31 orig_raw -326656.783830 | HEAD -326656.78383 | latest_raw -340021.745884 | CUR -340021.745884
+PASS 2025.2Q item 31 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 31 CUR master == LATEST filing prior column
+item 32 orig_raw 4249.159354 | HEAD 32614.147839 | latest_raw 27.621529 | CUR 27.621529
+FAIL 2025.2Q item 32 HEAD master == ORIGINAL filing current column
+PASS 2025.2Q item 32 CUR master == LATEST filing prior column
+latest filing printed 3M col {24: 270024.999635, 25: 17671.008998, 26: -606345.337425, 27: 742368.856002, 28: -139938.330689, 29: 20939.648539, 30: 740.532942, 31: 287696.008633, 32: -94.360371}
+PASS 2025.2Q item 25 CUR 값_당분기 (17671.008998) == printed 3M (17671.008998)
+PASS 2025.2Q item 26 CUR 값_당분기 (-606345.337425) == printed 3M (-606345.337425)
+PASS 2025.2Q item 29 CUR 값_당분기 (20939.648539) == printed 3M (20939.648539)
+PASS 2025.2Q item 31 CUR 값_당분기 (287696.008633) == printed 3M (287696.008633)
+PASS 2025.2Q item 32 CUR 값_당분기 (-94.360371) == printed 3M (-94.360371)
+PASS 2025.2Q item 25 값_당분기 == cum2Q - cum1Q (17671.008998)
+PASS 2025.2Q item 26 값_당분기 == cum2Q - cum1Q (-606345.337425)
+PASS 2025.2Q item 29 값_당분기 == cum2Q - cum1Q (20939.648539)
+PASS 2025.2Q item 31 값_당분기 == cum2Q - cum1Q (287696.008633)
+PASS 2025.2Q item 32 값_당분기 == cum2Q - cum1Q (-94.360371)
+ORIG_2025Q3 contexts ['CFY2025dTQA', 'CFY2025dTQQ', 'PFY2024dTQA', 'PFY2024dTQQ']
+3Q 9M {24: 846971.897826, 25: -782579.454099, 26: -27870.880264, 27: -615502.386663, 28: -176242.505061, 29: 36160.649707, 30: -4220.275438, 31: 64392.443727, 32: 5095.94362}
+3Q 3M {24: 261664.411352, 25: 129384.816205, 26: -314574.528936, 27: 509860.577076, 28: -75968.758054, 29: 7795.661222, 30: 1425.080631, 31: 391049.227557, 32: 846.784266}
+3Q item 25 HEAD val/dangi (-782579.454099, 129384.816205) CUR val/dangi (-782579.454099, None) printed 9M -782579.454099 printed 3M 129384.816205
+PASS 2025.3Q item 25 값 unchanged == original 9M
+3Q item 26 HEAD val/dangi (-27870.880264, -314574.528936) CUR val/dangi (-27870.880264, None) printed 9M -27870.880264 printed 3M -314574.528936
+PASS 2025.3Q item 26 값 unchanged == original 9M
+3Q item 29 HEAD val/dangi (36160.649707, None) CUR val/dangi (36160.649707, 7795.661222) printed 9M 36160.649707 printed 3M 7795.661222
+PASS 2025.3Q item 29 값 unchanged == original 9M
+3Q item 31 HEAD val/dangi (64392.443727, 391049.227557) CUR val/dangi (64392.443727, None) printed 9M 64392.443727 printed 3M 391049.227557
+PASS 2025.3Q item 31 값 unchanged == original 9M
+3Q item 32 HEAD val/dangi (5095.94362, -27518.204219) CUR val/dangi (5095.94362, None) printed 9M 5095.943620 printed 3M 846.784266
+PASS 2025.3Q item 32 값 unchanged == original 9M
+PASS 2025.3Q item 29 값_당분기 (7795.661222) == printed 3M in original Q3 filing (7795.661222)
+PASS 2025.3Q item 29 dangi == cum3Q - cum2Q
+PASS item 25 2025.3Q and 2024.4Q 값_당분기 blank
+  note: HEAD 2025.3Q item 25 dangi 129384.816205 vs original-filing printed 3M 129384.816205 (blanked in CUR)
+PASS item 26 2025.3Q and 2024.4Q 값_당분기 blank
+  note: HEAD 2025.3Q item 26 dangi -314574.528936 vs original-filing printed 3M -314574.528936 (blanked in CUR)
+PASS item 31 2025.3Q and 2024.4Q 값_당분기 blank
+  note: HEAD 2025.3Q item 31 dangi 391049.227557 vs original-filing printed 3M 391049.227557 (blanked in CUR)
+PASS item 32 2025.3Q and 2024.4Q 값_당분기 blank
+  note: HEAD 2025.3Q item 32 dangi -27518.204219 vs original-filing printed 3M 846.784266 (blanked in CUR)
+PASS items 1-24, 27, 28, 30 (incl 1 보험손익, 6, 7, 17 투자손익, 24 당기순이익) identical HEAD vs CUR across 2023.4Q..2026.1Q; diffs=[]
+PASS CUR master 2024.4Q cum 25 = parts (resid 0.000000000)
+PASS CUR master 2024.4Q cum 31 = 24+25 (resid 0.000000000)
+PASS CUR master 2025.1Q cum 25 = parts (resid 0.000000000)
+PASS CUR master 2025.1Q cum 31 = 24+25 (resid -0.000000000)
+PASS CUR master 2025.2Q cum 25 = parts (resid 0.000000000)
+PASS CUR master 2025.2Q cum 31 = 24+25 (resid 0.000000000)
+PASS CUR master 2025.1Q single 25 = parts (resid 0.000000000)
+PASS CUR master 2025.1Q single 31 = 24+25 (resid -0.000000000)
+PASS CUR master 2025.2Q single 25 = parts (resid -0.000000000)
+PASS CUR master 2025.2Q single 31 = 24+25 (resid 0.000000000)
+CHECKS 106 OVERALL FAIL

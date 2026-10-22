@@ -1,0 +1,31 @@
+00112882_2025_11011_OFS.json dict 294 ['rcept_no', 'reprt_code', 'bsns_year', 'corp_code', 'sj_div', 'sj_nm', 'account_id', 'account_nm', 'account_detail', 'thstrm_nm', 'thstrm_amount', 'frmtrm_nm', 'frmtrm_amount', 'bfefrmtrm_nm', 'bfefrmtrm_amount', 'ord', 'currency']
+   CIS dart_LossFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정금융상품관련손실 75809304090  255556756810 None
+   CIS dart_GainFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정금융상품관련이익 276904159932  228921930422 None
+   CIS ifrs-full_ComprehensiveIncome 연결총포괄손익 584731912739  -3157346155974 None
+   CIS ifrs-full_OtherComprehensiveIncome 기타포괄손익 -178478564860  -3856082245314 None
+   CIS ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax 당기손익으로 재분류되는 세후기타포괄손익의 구성요소 -224941331686  -3888387729729 None
+   CIS dart_OtherComprehensiveIncomeNetOfTaxCreditLossesOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정채무증권 손실충당금 -501579554  -3355361292 None
+   CIS ifrs-full_OtherComprehensiveIncomeNetOfTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정채무증권평가손익 -1900861564421  239691866004 None
+   CIS ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax 당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소 46462766826  32305484415 None
+   CIS ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments 기타포괄손익-공정가치측정지정지분증권평가손익 48270258580  25102614600 None
+   CIS ifrs-full_ProfitLoss 연결당기순이익 763210477599  698736089340 None
+00112882_2026_11013_OFS.json dict 236 ['rcept_no', 'reprt_code', 'bsns_year', 'corp_code', 'sj_div', 'sj_nm', 'account_id', 'account_nm', 'account_detail', 'thstrm_nm', 'thstrm_amount', 'frmtrm_nm', 'frmtrm_amount', 'ord', 'currency']
+   CIS dart_LossFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정금융상품관련손실 60120576992 60120576992 None 10312121314
+   CIS dart_GainFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정금융상품관련이익 26729766280 26729766280 None 157281586514
+   CIS ifrs-full_ComprehensiveIncome 연결분기총포괄손익 732419615220 732419615220 None -627717754517
+   CIS ifrs-full_OtherComprehensiveIncome 기타포괄손익 402279205320 402279205320 None -943000241356
+   CIS ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax 당기손익으로 재분류되는 세후기타포괄손익의 구성요소 396122325535 396122325535 None -950209206208
+   CIS dart_OtherComprehensiveIncomeNetOfTaxCreditLossesOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정채무증권 손실충당금 54191605 54191605 None 338356994
+   CIS ifrs-full_OtherComprehensiveIncomeNetOfTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정채무증권평가손익 -2269108424206 -2269108424206 None 883905561868
+   CIS ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax 당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소 6156879785 6156879785 None 7208964852
+   CIS ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments 기타포괄손익-공정가치측정지정지분증권평가손익 7164645186 7164645186 None 7425339946
+00112882_2026_11012_OFS.json dict 251 ['rcept_no', 'reprt_code', 'bsns_year', 'corp_code', 'sj_div', 'sj_nm', 'account_id', 'account_nm', 'account_detail', 'thstrm_nm', 'thstrm_amount', 'frmtrm_nm', 'frmtrm_amount', 'ord', 'currency']
+   CIS dart_LossFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정금융상품관련손실 86008234337 146128811329 None 25303135582
+   CIS dart_GainFromFinancialInstrumentsAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정금융상품관련이익 3339713759 30069480039 None 241091406644
+   CIS ifrs-full_ComprehensiveIncome 연결반기총포괄손익 962443332951 1694862948171 None -340021745884
+   CIS ifrs-full_OtherComprehensiveIncome 기타포괄손익 813956725667 1216235930987 None -925329232358
+   CIS ifrs-full_OtherComprehensiveIncomeThatWillBeReclassifiedToProfitOrLossNetOfTax 당기손익으로 재분류되는 세후기타포괄손익의 구성요소 820092337236 1216214662771 None -953377796706
+   CIS dart_OtherComprehensiveIncomeNetOfTaxCreditLossesOfFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정채무증권 손실충당금 1742436710 1796628315 None 344045666
+   CIS ifrs-full_OtherComprehensiveIncomeNetOfTaxFinancialAssetsMeasuredAtFairValueThroughOtherComprehensiveIncome 기타포괄손익-공정가치측정채무증권평가손익 -1235087797030 -3504196221236 None 277560224443
+   CIS ifrs-full_OtherComprehensiveIncomeThatWillNotBeReclassifiedToProfitOrLossNetOfTax 당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소 -6135611569 21268216 None 28048564348
+   CIS ifrs-full_OtherComprehensiveIncomeNetOfTaxGainsLossesFromInvestmentsInEquityInstruments 기타포괄손익-공정가치측정지정지분증권평가손익 -5602246915 1562398271 None 28364988485
