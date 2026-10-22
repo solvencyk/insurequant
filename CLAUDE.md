@@ -17,7 +17,7 @@
 - stage 는 **순차 파이프라인**(downloader→parser→validation→publishing→designer). 4↔5 는 서로 파일을 안 건드린다(publishing = 마스터 JSON, designer = HTML).
 - parser 는 kics(`src/solvency/parser/`→`kics_disclosure.json`)·ifrs17(`src/ifrs17/`→CSM/PL/17BS 마스터) 두 레인을 **별도 세션에서 병렬**로. 공유 inbox `inbox/parser/` frontmatter `lane:`.
 - **jp 레인은 이 브랜치에서 작업·커밋하지 않는다**(2026-10-22 owner: 세션 컨텍스트 오염). jp 는 `../iq_jp`(브랜치 `lane/jp`)에서만 하고, 그쪽 jp 레인은 한국 stage 프롬프트를 읽지 않는다. 이 브랜치에 jp 파일이 추적되면 `tests/test_jp_lane_absent.py` 가 push 를 막는다. designer·publishing 은 공유(각 프롬프트의 jp 절).
-- **두 브랜치를 통째로 merge 하지 않는다** — 한쪽의 jp 삭제가 다른 쪽 jp 파일을 지운다. 공유 파일(게이트·CLAUDE.md·배포 스크립트)은 cherry-pick. `android_push_and_deploy.sh --branch lane/jp` 도 쓰지 않는다: 그 스크립트는 main 의 **모든** 파일을 브랜치와 비교해 덮으므로 lane/jp 의 낡은 한국 파일이 라이브를 되돌린다(범위 한정 옵션이 생기기 전까지).
+- **두 브랜치를 통째로 merge 하지 않는다** — 한쪽의 jp 삭제가 다른 쪽 jp 파일을 지운다. 공유 파일(게이트·CLAUDE.md·배포 스크립트)은 cherry-pick. jp 배포는 `android_push_and_deploy.sh --from-origin --branch lane/jp --only jp/` 로만 한다: 그 스크립트는 main 의 **모든** 파일을 브랜치와 비교해 덮으므로 `--only` 없이는 lane/jp 의 낡은 한국 파일이 라이브를 되돌린다(스크립트가 거부한다; `tests/test_deploy_only_scope.py`, 훅 밖이라 스크립트를 고친 뒤 손으로 돌린다).
 - cross-stage 항목은 루트 `TODO.md` + `docs/claude-changelog.md`. 도메인 참고 `docs/domains/`, 흐름도 `docs/flows/`.
 
 ## 2. 세션 시작·갱신
