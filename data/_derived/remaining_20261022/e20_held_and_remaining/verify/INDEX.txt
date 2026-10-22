@@ -1,0 +1,12 @@
+e20 independent verification (validation stage, 2026-10-23). Own reader vx_reader.py (no scripts/src imports except gate runs); python = venv full path, script files only.
+1  v1_diff.py / v1b_list.py / v1_diff.txt / v1b_list.txt   cell diff PL_breakdown.json vs HEAD: 84 값 + 110 값_당분기, 29 company-quarters, 11 companies, 0 rows added/removed
+   v8_prov*.py / v8_prov3.txt                              provenance: 19 blocks changed (all inside the 21 cum company-quarters) + merge_note; KR0082 blocks unchanged (already gold-overlay sourced)
+2  v3_check_cum.py / v3_check_cum.txt   84/84 changed cumulative cells re-read from the NEXT-YEAR filing prior cumulative column (unit, sign, label), 21 company-quarters
+   v4_gold_diff.py / v4_gold_diff.txt / v4b_db_orig.txt / v17_orig_vintage.txt   9 changed gold cells: old gold == original print; old master == original print (63/63 testable)
+   v10*_restate*.txt                    restatement-reason lines per filing (policy change on 유배당 배당금 지급의무 / 보험금융 체계적배분)
+3  v9_ledger.py / v9_ledger.txt / v9b_gate_census.txt   4 deleted pins -> LOAD_BEARING (diff 509 / 932 / 932 / 5,739 백만원 vs builder src); gate census PL 741 gold / 25 masked / 25 pinned / 0 unpinned
+4  v5_single.py / v5_single.txt / v6_3m.txt / v7_seam4q.txt / v16_removed_setdangi.txt / v15_registry_effect.txt   single-quarter identity and seam registry effects
+5  gate_overlay.py + run_gates.sh -> gates_before/ (HEAD bytes served) gates_after/ (live); pytest_*.txt; hash_before_tests.txt
+6  v11_identity.py (+txt) identities before/after + headline deltas (억원); v12_mixed.py mixed-vintage scan; v13_resid.txt; v14_nullcount.txt
+Ticket: inbox/validation/20261023T0030Z__validation__MULTI_2024.4Q-2025.3Q__pl_oci_vs_bs_aoci_null_counted_as_comparable.md
+Nothing under the repo outside this folder and the one inbox ticket was written (git status file list unchanged: 13 modified).

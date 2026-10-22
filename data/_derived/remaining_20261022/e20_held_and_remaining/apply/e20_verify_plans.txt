@@ -1,0 +1,54 @@
+KR0082 2023.1Q: cells 4, all checks ok 4
+KR0082 2023.2Q: cells 4, all checks ok 4
+KR0083 2024.3Q: cells 8, all checks ok 8
+KR0087 2024.4Q: cells 4, all checks ok 4
+KR0087 2025.1Q: cells 4, all checks ok 4
+KR0087 2025.2Q: cells 4, all checks ok 4
+KR0032 2023.1Q: cells 4, all checks ok 4
+KR0104 2024.4Q: cells 3, all checks ok 3
+KR0104 2025.1Q: cells 3, all checks ok 3
+KR0104 2025.2Q: cells 3, all checks ok 3
+KR0069 2025.1Q: cells 4, all checks ok 4
+KR0069 2025.2Q: cells 4, all checks ok 4
+KR0094 2025.2Q: cells 3, all checks ok 3
+KR0070 2025.1Q: cells 3, all checks ok 3
+KR0070 2025.2Q: cells 3, all checks ok 3
+KR0072 2024.4Q: cells 3, all checks ok 3
+KR0068 2024.4Q: cells 5, all checks ok 5
+KR0068 2025.1Q: cells 4, all checks ok 4
+KR0068 2025.2Q: cells 4, all checks ok 4
+KR0071 2025.1Q: cells 5, all checks ok 5
+KR0071 2025.2Q: cells 5, all checks ok 5
+
+position of the cited cell among the numeric cells of its row (position, n numeric cells) per bucket (must be ONE dominant position = prior-period cumulative column):
+  KR0032 2023.1Q: {(3, 4): 8}
+  KR0068 2024.4Q: {(1, 3): 10}
+  KR0068 2025.1Q: {(3, 4): 9}
+  KR0068 2025.2Q: {(3, 4): 9}
+  KR0069 2025.1Q: {(3, 4): 4}
+  KR0069 2025.2Q: {(3, 4): 4}
+  KR0070 2025.1Q: {(3, 4): 3}
+  KR0070 2025.2Q: {(3, 4): 3}
+  KR0071 2025.1Q: {(3, 4): 10}
+  KR0071 2025.2Q: {(3, 4): 10}
+  KR0072 2024.4Q: {(1, 3): 3}
+  KR0082 2023.1Q: {(3, 4): 8}
+  KR0082 2023.2Q: {(3, 4): 8}
+  KR0083 2024.3Q: {(3, 4): 9}
+  KR0087 2024.4Q: {(1, 3): 9}
+  KR0087 2025.1Q: {(3, 4): 9}
+  KR0087 2025.2Q: {(3, 4): 9}
+  KR0094 2025.2Q: {(3, 4): 3}
+  KR0104 2024.4Q: {(1, 3): 3}
+  KR0104 2025.1Q: {(3, 4): 3}
+  KR0104 2025.2Q: {(3, 4): 3}
+
+set_dangi_add KR0094 2025.2Q i25: value 96393.0; re-read [(31847, '96,393')] ok=True sum=96393.0
+set_dangi_add KR0094 2025.2Q i26: value -428618.0; re-read [(31863, '(428,618)')] ok=True sum=-428618.0
+set_dangi_add KR0094 2025.2Q i31: value 276028.0; re-read [(31919, '276,028')] ok=True sum=276028.0
+set_dangi_add bad: 0
+set_dangi_remove: 12 pins removed; pinned value == live single quarter (so removal is value-neutral if the builder derives it): [('KR0082', '2023.3Q', 1, 25276.415839, 25276.415839, True), ('KR0082', '2023.3Q', 16, 2468.525942, 2468.525942, True), ('KR0082', '2023.3Q', 17, -21348.590171, -21348.590171, True), ('KR0082', '2023.3Q', 18, 16742.113684, 16742.113684, True), ('KR0083', '2024.3Q', 17, -116710.044721, -116710.044721, True), ('KR0083', '2024.3Q', 19, -77029.404569, -77029.404569, True), ('KR0083', '2024.3Q', 20, -123246.09902, -123246.09902, True), ('KR0083', '2024.3Q', 22, -123396.856774, -123396.856774, True), ('KR0083', '2024.3Q', 23, -28844.151026, -28844.151026, True), ('KR0083', '2024.3Q', 24, -94552.705748, -94552.705748, True), ('KR0083', '2024.3Q', 25, 49281.693124, 49281.693124, True), ('KR0083', '2024.3Q', 27, -136596.159635, -136596.159635, True)]
+cause lines re-read: 22, not stating a restatement / policy change: 0 []
+ACONTEXT of the cited cells: {"none": 50, "PFY2024dTQA": 9, "PFY2024dFY": 25, "PFY2025dFQA": 38, "PFY2025dHYA": 15}
+problems: 0
+TOTAL cells 84, all checks ok 84

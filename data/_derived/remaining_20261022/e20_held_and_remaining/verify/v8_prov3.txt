@@ -1,0 +1,80 @@
+blocks old 1046 new 1046 added 0 removed 0
+changed blocks 19
+master cq with 값 change: 21; any change: 29; provenance cq changed: 19
+prov changed not in master-cum cq: []
+master-cum cq with no prov change: [('KR0082', '2023.1Q'), ('KR0082', '2023.2Q')]
+top-level diff: merge_note_20261022_e20_latest_comparative_held_remaining
+('KR0032', '2023.1Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "scripts/build_pl_breakdown.py", "how": "gold_cell_override", "items": [1, 2, 3, 7, 8, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]}]
+   new: [{"file": "scripts/build_pl_breakdown.py", "how": "gold_cell_override", "items": [2, 3, 7, 8, 12, 15, 19, 20, 21, 22, 23, 24]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [1, 16, 17, 18]}]
+   owner_override: None -> True
+('KR0068', '2024.4Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00113058_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2024_Q4/raw/KR0068_한화생명_20250312000939", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00113058_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 30]}, {"file": "data/dart/FY2024_Q4/raw/KR0068_한화생명_20250312000939", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 29, 31, 32]}]
+   owner_override: None -> True
+('KR0068', '2025.1Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00113058_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0068_한화생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00113058_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30]}, {"file": "data/dart/FY2025_Q1/raw/KR0068_한화생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31, 32]}]
+   owner_override: None -> True
+('KR0068', '2025.2Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00113058_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0068_한화생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00113058_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30]}, {"file": "data/dart/FY2025_Q2/raw/KR0068_한화생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31, 32]}]
+   owner_override: None -> True
+('KR0069', '2025.1Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00126256_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0069_삼성생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00126256_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 30, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0069_삼성생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 29, 31]}]
+   owner_override: None -> True
+('KR0069', '2025.2Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00126256_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0069_삼성생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00126256_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 30, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0069_삼성생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 29, 31]}]
+   owner_override: None -> True
+('KR0070', '2025.1Q', 'income_statement'): fields ['source_files']
+   old: [{"file": "data/dart/_fs_api_cache/00148391_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험", "how": "raw_filing_derived", "items": [2, 3, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [7]}]
+   new: [{"file": "data/dart/_fs_api_cache/00148391_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 30, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험", "how": "raw_filing_derived", "items": [2, 3, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [7, 25, 26, 31]}]
+('KR0070', '2025.2Q', 'income_statement'): fields ['source_files']
+   old: [{"file": "data/dart/_fs_api_cache/00148391_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험", "how": "raw_filing_derived", "items": [2, 3, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [7]}]
+   new: [{"file": "data/dart/_fs_api_cache/00148391_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 30, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험", "how": "raw_filing_derived", "items": [2, 3, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [7, 25, 26, 31]}]
+('KR0071', '2025.1Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00167068_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0071_흥국생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00167068_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 30]}, {"file": "data/dart/FY2025_Q1/raw/KR0071_흥국생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 29, 31, 32]}]
+   owner_override: None -> True
+('KR0071', '2025.2Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00167068_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0071_흥국생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00167068_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 30]}, {"file": "data/dart/FY2025_Q2/raw/KR0071_흥국생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 29, 31, 32]}]
+   owner_override: None -> True
+('KR0072', '2024.4Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00104069_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00104069_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30, 32]}, {"file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31]}]
+   owner_override: None -> True
+('KR0083', '2024.3Q', 'income_statement'): fields ['resolution', 'source_id', 'source_files', 'source_file']
+   resolution: fs_api_tier1 -> owner_gold_overlay
+   source_id: DART -> OWNER_GOLD
+   old: [{"file": "data/dart/_fs_api_cache/00459844_2024_11014_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 31, 32]}, {"file": "data/dart/FY2024_Q3/raw/KR0083_푸본현대생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [27, 28, 30]}]
+   new: [{"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [17, 19, 20, 22, 23, 24, 25, 27, 28, 30]}, {"file": "data/dart/_fs_api_cache/00459844_2024_11014_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 21, 26, 31, 32]}, {"file": "data/dart/FY2024_Q3/raw/KR0083_푸본현대생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   source_file: data/dart/_fs_api_cache/00459844_2024_11014_OFS.json -> data/_gold/user_pl_cells.json
+('KR0087', '2024.4Q', 'income_statement'): fields ['source_files']
+   old: [{"file": "data/dart/_fs_api_cache/00117267_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486", "how": "raw_filing_derived", "items": [2, 3, 8, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [12]}, {"file": "scripts/build_pl_breakdown.py", "how": "gold_cell_override", "items": [7]}]
+   new: [{"file": "data/dart/_fs_api_cache/00117267_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [12, 25, 26, 31, 32]}, {"file": "data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486", "how": "raw_filing_derived", "items": [2, 3, 8, 18]}, {"file": "scripts/build_pl_breakdown.py", "how": "gold_cell_override", "items": [7]}]
+('KR0087', '2025.1Q', 'income_statement'): fields ['source_files']
+   old: [{"file": "data/dart/_fs_api_cache/00117267_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0087_동양생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [12]}]
+   new: [{"file": "data/dart/_fs_api_cache/00117267_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30]}, {"file": "data/dart/FY2025_Q1/raw/KR0087_동양생명", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [12, 25, 26, 31, 32]}]
+('KR0087', '2025.2Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00117267_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0087_동양생명", "how": "raw_filing_derived", "items": [2, 3, 8, 18]}, {"file": "scripts/build_pl_breakdown.py", "how": "gold_cell_override", "items": [7, 12]}]
+   new: [{"file": "data/dart/_fs_api_cache/00117267_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30]}, {"file": "data/dart/FY2025_Q2/raw/KR0087_동양생명", "how": "raw_filing_derived", "items": [2, 3, 8, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31, 32]}, {"file": "scripts/build_pl_breakdown.py", "how": "gold_cell_override", "items": [7, 12]}]
+   owner_override: None -> True
+('KR0094', '2025.2Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00137517_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0094_신한라이프생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00137517_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0094_신한라이프생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31]}]
+   owner_override: None -> True
+('KR0104', '2024.4Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00909349_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2024_Q4/raw/KR0104_농협생명보험_20250331003065", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00909349_2024_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30, 32]}, {"file": "data/dart/FY2024_Q4/raw/KR0104_농협생명보험_20250331003065", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31]}]
+   owner_override: None -> True
+('KR0104', '2025.1Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00909349_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0104_농협생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00909349_2025_11013_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30, 32]}, {"file": "data/dart/FY2025_Q1/raw/KR0104_농협생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31]}]
+   owner_override: None -> True
+('KR0104', '2025.2Q', 'income_statement'): fields ['source_files', 'owner_override']
+   old: [{"file": "data/dart/_fs_api_cache/00909349_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0104_농협생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}]
+   new: [{"file": "data/dart/_fs_api_cache/00909349_2025_11012_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 27, 28, 29, 30, 32]}, {"file": "data/dart/FY2025_Q2/raw/KR0104_농협생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [25, 26, 31]}]
+   owner_override: None -> True

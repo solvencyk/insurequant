@@ -1,0 +1,12 @@
+removed set_dangi ('KR0082', '2023.3Q', 1): registry printed 3M=25276.415839 | HEAD master 값_당분기=25276.415839 | NEW master 값_당분기=25276.415839 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0082', '2023.3Q', 16): registry printed 3M=2468.525942 | HEAD master 값_당분기=2468.525942 | NEW master 값_당분기=2468.525942 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0082', '2023.3Q', 17): registry printed 3M=-21348.590171 | HEAD master 값_당분기=-21348.590171 | NEW master 값_당분기=-21348.590171 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0082', '2023.3Q', 18): registry printed 3M=16742.113684 | HEAD master 값_당분기=16742.113684 | NEW master 값_당분기=16742.113684 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 17): registry printed 3M=-116710.044721 | HEAD master 값_당분기=-116710.044721 | NEW master 값_당분기=-116710.044721 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 19): registry printed 3M=-77029.404569 | HEAD master 값_당분기=-77029.404569 | NEW master 값_당분기=-77029.404569 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 20): registry printed 3M=-123246.09902 | HEAD master 값_당분기=-123246.09902 | NEW master 값_당분기=-123246.09902 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 22): registry printed 3M=-123396.856774 | HEAD master 값_당분기=-123396.856774 | NEW master 값_당분기=-123396.856774 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 23): registry printed 3M=-28844.151026 | HEAD master 값_당분기=-28844.151026 | NEW master 값_당분기=-28844.151026 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 24): registry printed 3M=-94552.705748 | HEAD master 값_당분기=-94552.705748 | NEW master 값_당분기=-94552.705748 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 25): registry printed 3M=49281.693124 | HEAD master 값_당분기=49281.693124 | NEW master 값_당분기=49281.693124 | diff new-vs-printed=0.000000000
+removed set_dangi ('KR0083', '2024.3Q', 27): registry printed 3M=-136596.159635 | HEAD master 값_당분기=-136596.159635 | NEW master 값_당분기=-136596.159635 | diff new-vs-printed=0.000000000

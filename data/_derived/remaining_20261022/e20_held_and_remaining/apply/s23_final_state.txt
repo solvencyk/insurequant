@@ -1,0 +1,14 @@
+(1) post-apply hash check (manifest after_sha256 vs current)
+   data/_gold/user_pl_cells.json: manifest a1a006faa7f08f0a9024e68c49d0e51afaedcd32d4068db0d938f1ee21d89cc2 current a1a006faa7f08f0a9024e68c49d0e51afaedcd32d4068db0d938f1ee21d89cc2 -> SAME
+   PL_breakdown.json: manifest b48a08a255f53d3e451ec3424144e919288afe8d4499598e93186cec9a6c30b3 current b48a08a255f53d3e451ec3424144e919288afe8d4499598e93186cec9a6c30b3 -> SAME
+   PL_breakdown_provenance.json: manifest 57d62c2a30b31aec057fe334f160672c34d6aeab77c56eea94d0c57417613e6a current 57d62c2a30b31aec057fe334f160672c34d6aeab77c56eea94d0c57417613e6a -> SAME
+   data/_gold/gold_overlay_ledger.json: manifest 91dd0bba9a41e47f7d4ecee4793343ae3eb63706150dc5782b1b193f9fa4eb63 current 91dd0bba9a41e47f7d4ecee4793343ae3eb63706150dc5782b1b193f9fa4eb63 -> SAME
+   tests/test_rule_coverage_manifest.py: manifest dde60d5af5c5a247b4b9eeeb00b9061675a90ce2d151bf2d4fcbfa6635383f39 current dde60d5af5c5a247b4b9eeeb00b9061675a90ce2d151bf2d4fcbfa6635383f39 -> SAME
+(2) evidence dir data\_derived\remaining_20261022\e20_held_and_remaining: 467 files, 4.45 MB; biggest:
+   0.50 MB apply\e20_plan.json
+   0.11 MB apply\s8_validate_reader.txt
+   0.09 MB measure\l1_bridge_scan.json
+   0.08 MB apply\e20_verify_plans.json
+   0.08 MB apply\s7_master_vectors.txt
+   files over 50 MB: []
+(3) __pycache__ dirs under the evidence dir:

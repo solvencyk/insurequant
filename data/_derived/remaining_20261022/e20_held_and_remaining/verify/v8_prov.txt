@@ -1,0 +1,4 @@
+top keys old ['master', 'generated_at', 'emitter', 'emitted_by', 'fields_owned', 'fields_pending_downloader', 'key', 'source_id_values'] new ['master', 'generated_at', 'emitter', 'emitted_by', 'fields_owned', 'fields_pending_downloader', 'key', 'source_id_values']
+diff entries: 2
+CHANGED	['cells']
+ADDED	['merge_note_20261022_e20_latest_comparative_held_remaining']

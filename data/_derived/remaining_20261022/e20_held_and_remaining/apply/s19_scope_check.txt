@@ -1,0 +1,35 @@
+loaded buckets 21; d_census_addl rows 53; d_census_table rows 51
+scope counts addl: {'ADDL_SIBLING': 23, 'ADDL_CSM_ONLY': 10, 'ADDL_OCI_ONLY': 20}
+scope counts table: {'A51': 51}
+closes(YES/NO) by scope addl: {('ADDL_SIBLING', 'YES'): 3, ('ADDL_SIBLING', 'NO'): 20, ('ADDL_CSM_ONLY', 'NO'): 10, ('ADDL_OCI_ONLY', 'YES'): 17, ('ADDL_OCI_ONLY', 'UNVERIFIED'): 1, ('ADDL_OCI_ONLY', 'NO'): 2}
+closes(YES/NO) by scope table: {('A51', 'YES'): 20, ('A51', 'NO'): 19, ('A51', 'UNVERIFIED'): 3, ('A51', 'N/A (nothing to adopt)'): 9}
+disposition table: {('A51', 'OWNER_DECISION'): 19, ('A51', 'STAY'): 32}
+disposition addl: {('ADDL_SIBLING', 'STAY'): 22, ('ADDL_SIBLING', 'SAFE_NOW'): 1, ('ADDL_CSM_ONLY', 'STAY'): 10, ('ADDL_OCI_ONLY', 'OWNER_DECISION'): 11, ('ADDL_OCI_ONLY', 'SAFE_NOW'): 6, ('ADDL_OCI_ONLY', 'STAY'): 3}
+per loaded bucket: where it sits in the census
+  ('KR0032', '2023.1Q'): addl=('ADDL_SIBLING', 'YES', 'SAFE_NOW') table=None
+  ('KR0068', '2024.4Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0068', '2025.1Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0068', '2025.2Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0069', '2025.1Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0069', '2025.2Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0070', '2025.1Q'): addl=('ADDL_OCI_ONLY', 'YES', 'SAFE_NOW') table=None
+  ('KR0070', '2025.2Q'): addl=('ADDL_OCI_ONLY', 'YES', 'SAFE_NOW') table=None
+  ('KR0071', '2025.1Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0071', '2025.2Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0072', '2024.4Q'): addl=('ADDL_OCI_ONLY', 'YES', 'SAFE_NOW') table=None
+  ('KR0082', '2023.1Q'): addl=('ADDL_SIBLING', 'YES', 'STAY') table=None
+  ('KR0082', '2023.2Q'): addl=('ADDL_SIBLING', 'YES', 'STAY') table=None
+  ('KR0083', '2024.3Q'): addl=None table=('A51', 'YES', 'STAY')
+  ('KR0087', '2024.4Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0087', '2025.1Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0087', '2025.2Q'): addl=('ADDL_OCI_ONLY', 'YES', 'SAFE_NOW') table=None
+  ('KR0094', '2025.2Q'): addl=('ADDL_OCI_ONLY', 'YES', 'SAFE_NOW') table=None
+  ('KR0104', '2024.4Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+  ('KR0104', '2025.1Q'): addl=('ADDL_OCI_ONLY', 'YES', 'SAFE_NOW') table=None
+  ('KR0104', '2025.2Q'): addl=('ADDL_OCI_ONLY', 'YES', 'OWNER_DECISION') table=None
+loaded in addl only 20; table only 1; both 0; neither 0 []
+
+still not loaded after this round:
+  addl not loaded 33: {('ADDL_SIBLING', 'NO', 'STAY'): 20, ('ADDL_CSM_ONLY', 'NO', 'STAY'): 10, ('ADDL_OCI_ONLY', 'UNVERIFIED', 'STAY'): 1, ('ADDL_OCI_ONLY', 'NO', 'STAY'): 2}
+  table not loaded 50: {('A51', 'YES', 'OWNER_DECISION'): 19, ('A51', 'NO', 'STAY'): 19, ('A51', 'UNVERIFIED', 'STAY'): 3, ('A51', 'N/A (nothing to adopt)', 'STAY'): 9}
+  table (STAY/OWNER_DECISION) rows that were adopted already in round 18 are not in this file; see TODO Status 18차

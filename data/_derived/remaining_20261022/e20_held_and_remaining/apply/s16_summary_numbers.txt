@@ -1,0 +1,24 @@
+KR0032: buckets ['2023.1Q(1,16,17,18)'] cells 4 replaced-gold 0 rounding_only_items(not touched) 6
+KR0068: buckets ['2024.4Q(25,26,29,31,32)', '2025.1Q(25,26,31,32)', '2025.2Q(25,26,31,32)'] cells 13 replaced-gold 0 rounding_only_items(not touched) 13
+KR0069: buckets ['2025.1Q(25,26,29,31)', '2025.2Q(25,26,29,31)'] cells 8 replaced-gold 0 rounding_only_items(not touched) 0
+KR0070: buckets ['2025.1Q(25,26,31)', '2025.2Q(25,26,31)'] cells 6 replaced-gold 0 rounding_only_items(not touched) 0
+KR0071: buckets ['2025.1Q(25,26,29,31,32)', '2025.2Q(25,26,29,31,32)'] cells 10 replaced-gold 0 rounding_only_items(not touched) 0
+KR0072: buckets ['2024.4Q(25,26,31)'] cells 3 replaced-gold 0 rounding_only_items(not touched) 0
+KR0082: buckets ['2023.1Q(1,16,17,18)', '2023.2Q(1,16,17,18)'] cells 8 replaced-gold 8 rounding_only_items(not touched) 0
+KR0083: buckets ['2024.3Q(17,19,20,22,23,24,25,27)'] cells 8 replaced-gold 1 rounding_only_items(not touched) 0
+KR0087: buckets ['2024.4Q(25,26,31,32)', '2025.1Q(25,26,31,32)', '2025.2Q(25,26,31,32)'] cells 12 replaced-gold 0 rounding_only_items(not touched) 42
+KR0094: buckets ['2025.2Q(25,26,31)'] cells 3 replaced-gold 0 rounding_only_items(not touched) 0
+KR0104: buckets ['2024.4Q(25,26,31)', '2025.1Q(25,26,31)', '2025.2Q(25,26,31)'] cells 9 replaced-gold 0 rounding_only_items(not touched) 0
+TOTAL cells 84; rounding-only items left untouched across buckets: 61; FS-API second source: 84 cells, max |diff| 0.0
+contract: gold_new 75, gold_replace 9, null_dangi_add 50, set_dangi_add 3, set_dangi_remove 12, held 0
+replaced gold cells (old gold value = original-vintage print -> latest comparative):
+  KR0082 2023.1Q i1: 24548.24847 -> 25057.342149  (was in old entry: 22946.356594)
+  KR0082 2023.1Q i16: 2577.053702 -> 2067.960023  (was in old entry: None)
+  KR0082 2023.1Q i17: 58165.850794 -> 57656.757116  (was in old entry: 59767.74267)
+  KR0082 2023.1Q i18: 156135.294813 -> 155626.201135  (was in old entry: None)
+  KR0082 2023.2Q i1: 59719.308746 -> 60651.121059  (was in old entry: 60174.304424)
+  KR0082 2023.2Q i16: 5850.450986 -> 4918.638673  (was in old entry: None)
+  KR0082 2023.2Q i17: 84887.297088 -> 83955.484775  (was in old entry: 84432.30141)
+  KR0082 2023.2Q i18: 247652.984525 -> 246721.172212  (was in old entry: None)
+  KR0083 2024.3Q i27: -265226.939791 -> -259488.324479  (was in old entry: 265226.939791)
+null_dangi by company/quarter: {"KR0083 2024.4Q": 8, "KR0087 2024.4Q": 4, "KR0087 2025.3Q": 4, "KR0032 2023.2Q": 1, "KR0104 2024.4Q": 3, "KR0104 2025.3Q": 3, "KR0069 2025.3Q": 4, "KR0094 2025.3Q": 3, "KR0070 2025.3Q": 3, "KR0072 2024.4Q": 3, "KR0068 2024.4Q": 5, "KR0068 2025.3Q": 4, "KR0071 2025.3Q": 5}

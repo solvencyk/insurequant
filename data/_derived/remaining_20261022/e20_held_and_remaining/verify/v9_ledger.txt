@@ -1,0 +1,9 @@
+ledger entries old 106 new 102; removed ['PL|KR0082|2023.1Q|1', 'PL|KR0082|2023.2Q|1', 'PL|KR0082|2023.2Q|16', 'PL|KR0083|2024.3Q|27']; added []
+ledger entries modified (kept keys): []
+ledger non-entry top-level keys unchanged: {'_what': True, '_gate': True, '_reseed': True, '_basis': True, '_tolerance': True, '_measured_at': True, '_population': True}
+REMOVED PIN PL|KR0082|2023.1Q|1: pin(gold=24548.24847, src=24548.24847) | now gold=25057.342149 builder-src(viz pl_breakdown_master)=24548.24847 diff=509.093679 -> LOAD_BEARING | master PL_breakdown 값 = {25057.342149}
+REMOVED PIN PL|KR0082|2023.2Q|1: pin(gold=59719.308746, src=59719.308746) | now gold=60651.121059 builder-src(viz pl_breakdown_master)=59719.308746 diff=931.812313 -> LOAD_BEARING | master PL_breakdown 값 = {60651.121059}
+REMOVED PIN PL|KR0082|2023.2Q|16: pin(gold=5850.450986, src=5850.450986) | now gold=4918.638673 builder-src(viz pl_breakdown_master)=5850.450986 diff=-931.812313 -> LOAD_BEARING | master PL_breakdown 값 = {4918.638673}
+REMOVED PIN PL|KR0083|2024.3Q|27: pin(gold=-265226.939791, src=-265226.939791) | now gold=-259488.324479 builder-src(viz pl_breakdown_master)=-265226.939791 diff=5738.615312 -> LOAD_BEARING | master PL_breakdown 값 = {-259488.324479}
+PL gold census (own computation): 741 entries {'SAME_EXACT': 21, 'SAME_AT_1DP': 3, 'LOAD_BEARING': 717, 'ABSENT': 0}; masked=24; unpinned masked=[]
+remaining PL pins no longer masked (would be DRIFT): []

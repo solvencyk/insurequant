@@ -3,8 +3,8 @@
     "company": "삼성생명보험",
     "quarter": "2025.1Q",
     "delta_bs_mn": -6668513.0,
-    "pl_oci_dangi_mn": -1163157.0,
-    "residual_mn": -5505356.0
+    "pl_oci_dangi_mn": -50651.0,
+    "residual_mn": -6617862.0
   },
   {
     "company": "삼성생명보험",
@@ -112,25 +112,11 @@
     "residual_mn": -40204.595
   },
   {
-    "company": "동양생명",
-    "quarter": "2024.4Q",
-    "delta_bs_mn": -127898.984,
-    "pl_oci_dangi_mn": -163759.677,
-    "residual_mn": 35860.693
-  },
-  {
     "company": "농협생명보험",
     "quarter": "2025.4Q",
     "delta_bs_mn": 78869.235,
     "pl_oci_dangi_mn": 110420.077,
     "residual_mn": -31550.842
-  },
-  {
-    "company": "농협생명보험",
-    "quarter": "2024.4Q",
-    "delta_bs_mn": -1181.329,
-    "pl_oci_dangi_mn": 30179.799,
-    "residual_mn": -31361.128
   },
   {
     "company": "에이비엘생명보험",

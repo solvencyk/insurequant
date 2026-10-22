@@ -8619,16 +8619,12 @@
      "file": "scripts/build_pl_breakdown.py",
      "how": "gold_cell_override",
      "items": [
-      1,
       2,
       3,
       7,
       8,
       12,
       15,
-      16,
-      17,
-      18,
       19,
       20,
       21,
@@ -8636,11 +8632,22 @@
       23,
       24
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      1,
+      16,
+      17,
+      18
+     ]
     }
    ],
    "resolution": "gold_cell_override",
    "published_items": 16,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0032",
@@ -10694,14 +10701,9 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
-      29,
-      30,
-      31,
-      32
+      30
      ]
     },
     {
@@ -10715,11 +10717,23 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      29,
+      31,
+      32
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0068",
@@ -10778,14 +10792,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
-      30,
-      31,
-      32
+      30
      ]
     },
     {
@@ -10799,11 +10809,22 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31,
+      32
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0068",
@@ -10862,14 +10883,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
-      30,
-      31,
-      32
+      30
      ]
     },
     {
@@ -10883,11 +10900,22 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31,
+      32
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0068",
@@ -11902,13 +11930,9 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
-      29,
       30,
-      31,
       32
      ]
     },
@@ -11923,11 +11947,22 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      29,
+      31
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0069",
@@ -11986,13 +12021,9 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
-      29,
       30,
-      31,
       32
      ]
     },
@@ -12007,11 +12038,22 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      29,
+      31
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0069",
@@ -13090,12 +13132,9 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       30,
-      31,
       32
      ]
     },
@@ -13114,7 +13153,10 @@
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      7
+      7,
+      25,
+      26,
+      31
      ]
     }
    ],
@@ -13187,12 +13229,9 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       30,
-      31,
       32
      ]
     },
@@ -13211,7 +13250,10 @@
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      7
+      7,
+      25,
+      26,
+      31
      ]
     }
    ],
@@ -14263,14 +14305,9 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
-      29,
-      30,
-      31,
-      32
+      30
      ]
     },
     {
@@ -14284,11 +14321,23 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      29,
+      31,
+      32
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0071",
@@ -14347,14 +14396,9 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
-      29,
-      30,
-      31,
-      32
+      30
      ]
     },
     {
@@ -14368,11 +14412,23 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      29,
+      31,
+      32
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0071",
@@ -15340,13 +15396,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
       30,
-      31,
       32
      ]
     },
@@ -15361,11 +15414,21 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0072",
@@ -20825,9 +20888,25 @@
    "company_code": "KR0083",
    "quarter": "2024.3Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": "data/dart/_fs_api_cache/00459844_2024_11014_OFS.json",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      17,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      27,
+      28,
+      30
+     ]
+    },
     {
      "file": "data/dart/_fs_api_cache/00459844_2024_11014_OFS.json",
      "how": "fs_api_tier1",
@@ -20835,14 +20914,7 @@
       1,
       15,
       16,
-      17,
-      19,
-      20,
       21,
-      22,
-      23,
-      24,
-      25,
       26,
       31,
       32
@@ -20859,18 +20931,9 @@
       12,
       18
      ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      27,
-      28,
-      30
-     ]
     }
    ],
-   "resolution": "fs_api_tier1",
+   "resolution": "owner_gold_overlay",
    "published_items": 23,
    "schema_items": 24,
    "owner_override": true
@@ -22102,12 +22165,19 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
-      30,
+      30
+     ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      12,
+      25,
+      26,
       31,
       32
      ]
@@ -22120,13 +22190,6 @@
       3,
       8,
       18
-     ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      12
      ]
     },
     {
@@ -22212,14 +22275,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
-      30,
-      31,
-      32
+      30
      ]
     },
     {
@@ -22237,7 +22296,11 @@
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      12
+      12,
+      25,
+      26,
+      31,
+      32
      ]
     }
    ],
@@ -22310,14 +22373,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
-      30,
-      31,
-      32
+      30
      ]
     },
     {
@@ -22331,6 +22390,16 @@
      ]
     },
     {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31,
+      32
+     ]
+    },
+    {
      "file": "scripts/build_pl_breakdown.py",
      "how": "gold_cell_override",
      "items": [
@@ -22341,7 +22410,8 @@
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0087",
@@ -23493,13 +23563,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
       30,
-      31,
       32
      ]
     },
@@ -23514,11 +23581,21 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0094",
@@ -26200,13 +26277,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
       30,
-      31,
       32
      ]
     },
@@ -26221,11 +26295,21 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0104",
@@ -26284,13 +26368,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
       30,
-      31,
       32
      ]
     },
@@ -26305,11 +26386,21 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0104",
@@ -26368,13 +26459,10 @@
       22,
       23,
       24,
-      25,
-      26,
       27,
       28,
       29,
       30,
-      31,
       32
      ]
     },
@@ -26389,11 +26477,21 @@
       12,
       18
      ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      25,
+      26,
+      31
+     ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0104",
@@ -37541,5 +37639,6 @@
  "merge_note_20261012_latest_comparative": "ticket 20261012T2230Z (owner 2026-10-12 「확실히 검산 닫히는 것만 최신 공시로 덮어쓰기」): 검증된 7블록의 최신 공시 전기·전년동기 비교열 채택 + 원 공시 2Q 포괄손익계산서의 3개월 열이 누적으로 적재된 14칸 정정 + 한화손해보험 2023.1Q·2Q 기타사업비용의 후속 공시 해당 분기 열 오적재 2칸 정정. 값은 data/_gold/user_pl_cells.json 에 등재(빌드 마지막 UPSERT 라 재빌드가 되돌리지 못한다), 이 블록의 해당 항목은 owner_gold_overlay 항목으로 옮겼다. 정정 전후 값·근거 쪽·인쇄값은 data/_derived/ifrs17_latest_comparative_apply_20261012/applied_cells.csv. 재현 scripts/apply_latest_comparative_20261012.py",
  "merge_note_20261022_kr0073_pl_refresh": "KR0073 PL 2023.1Q-2024.2Q refreshed to the latest-comparative (restated) separate-basis columns via data/_gold/user_pl_cells.json (+122 cells). The 12 affected blocks are the output of scripts/emit_pl_provenance.py for the post-apply masters (touched items moved to the owner_gold_overlay entry; blocks whose published items are all gold-overlaid become OWNER_GOLD). Evidence data/_derived/kyobo_pl_restate_dryrun_20261021/",
  "merge_note_20261022_kr0073_oci_refresh": "KR0073 PL OCI items (25/26/29/31/32) of 2024.4Q, 2025.1Q, 2025.2Q refreshed to the latest-comparative (restated) separate-basis cumulative columns via data/_gold/user_pl_cells.json (+13 cells). The 6 blocks of those quarters are the output of scripts/emit_pl_provenance.py for the post-apply masters. Evidence data/_derived/remaining_20261022/a_oci/",
- "merge_note_20261022_e19_latest_comparative": "PL Tier-1 items of 19 buckets of 7 companies (KR0005 2023.3Q-2024.2Q, KR0032 2023.4Q-2024.3Q, KR0070 2024.1Q-3Q, KR0082 2023.3Q, KR0083 2024.1Q-2Q, KR0087 2023.4Q-2024.3Q, KR0104 2023.3Q) refreshed to the latest-comparative (separate basis, prior cumulative column of the next-year filing) via data/_gold/user_pl_cells.json (+171 set, +17 null_dangi, +20 set_dangi). The blocks that changed are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e19_latest_comparative/apply/"
+ "merge_note_20261022_e19_latest_comparative": "PL Tier-1 items of 19 buckets of 7 companies (KR0005 2023.3Q-2024.2Q, KR0032 2023.4Q-2024.3Q, KR0070 2024.1Q-3Q, KR0082 2023.3Q, KR0083 2024.1Q-2Q, KR0087 2023.4Q-2024.3Q, KR0104 2023.3Q) refreshed to the latest-comparative (separate basis, prior cumulative column of the next-year filing) via data/_gold/user_pl_cells.json (+171 set, +17 null_dangi, +20 set_dangi). The blocks that changed are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e19_latest_comparative/apply/",
+ "merge_note_20261022_e20_latest_comparative_held_remaining": "PL Tier-1 items of 21 buckets of 11 companies (KR0082 2023.1Q-2Q, KR0083 2024.3Q, KR0087 2024.4Q-2025.2Q, KR0032 2023.1Q, KR0104 2024.4Q-2025.2Q, KR0069 2025.1Q-2Q, KR0094 2025.2Q, KR0070 2025.1Q-2Q, KR0072 2024.4Q (OCI only), KR0068 2024.4Q-2025.2Q, KR0071 2025.1Q-2Q) refreshed to the latest-comparative (separate basis, prior cumulative column of the next-year filing) via data/_gold/user_pl_cells.json (9 owner-gold cells replaced: gold == original-vintage print; 75 new set cells; null_dangi/set_dangi pins per e20_plan.json). The blocks that changed are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e20_held_and_remaining/apply/"
 }

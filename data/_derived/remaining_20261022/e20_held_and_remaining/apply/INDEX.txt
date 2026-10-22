@@ -1,0 +1,21 @@
+e20 (parser/ifrs17) STEP 1 of ticket inbox/parser/20261022T1800Z__orchestrator__MULTI_2023.1Q-2025.2Q__latest_comparative_held_and_remaining.md: 21 PL_breakdown buckets of 11 companies -> latest comparative column, applied 2026-10-22
+python = C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe (script files only, stdin from /dev/null). Nothing here is read by a build or gate.
+inputs  : ../d_census/ (51 + 53 bucket census), ../e19_latest_comparative/apply/ (round-18 method), live PL_breakdown.json / data/_gold/user_pl_cells.json / PL_breakdown_provenance.json / data/_gold/gold_overlay_ledger.json (input_hashes_start.txt)
+READERS (own code, no scripts/ or src/ imports): e20_xml.py (ATOC xml + HTML physical-line reader), e20_read.py (separate-basis '4-2. 포괄손익계산서' -> master items 1,16..32 with the production definitions
+        18 = 17-19, 19 = (보험금융수익+재보험금융수익)-(보험금융비용+재보험금융비용), 21, 32 = 25-(26+27+28+29+30)), e20_oldlayout.py (2023 plain-table layout of DB생명 Q1 / H1 originals)
+STEP 0  s0_* census view (53 + 51 buckets) | s1 round-18 plan structure | s2 owner gold dump | s3 titles | s4 statement dumps s4_stmt_*.txt (39 filings) | s5 d5 facts | s6/s7 key rows + master vectors
+        s8_validate_reader.* reader validation: original filing -> master == orig for every item of the 21 new buckets; later filing -> exactly the census items differ; 10 round-18 buckets: later == master
+        s9_group_ab.txt DB생명 2023.1Q/2Q old-layout original vs gold vs latest | s10 owner-confirmed registry (no target company) | s11/s12 restatement cause lines | s17 CSM-only reasons | s16 numbers
+STEP 1  e20_plan.py -> e20_plan.json / e20_plan_report.txt   per bucket: original + later read, changed vs rounding-only items, identity closure on the merged vector, gold classification, citations, seam analysis, apply contract
+STEP 2  e20_verify_plans.py -> e20_verify_plans.txt/.json    INDEPENDENT re-read of all 84 cells (+3 set_dangi sources, 22 cause lines): value, unit read from the filing header, sign, row label, column position, ACONTEXT,
+        old == git HEAD master, original-vintage print re-read: 84/84 ok (the script reads the PRE-apply state from git HEAD, so it gives the same answer after the apply)
+STEP 3  e20_apply.py --snapshot-drift | --check | --out-dir DIR | --apply | --verify | --revert --apply     (backups in the session scratchpad e20_backup/; apply_manifest_e20.json = before/after sha256)
+        real build_pl() on a temp copy run twice (live gold / new gold), only the cells that differ between the two runs are written (cell level); pre-existing builder drift (pl_drift_before.json, 491 cells) untouched
+STEP 4  e20_diff_vs_head.py -> e20_diff_vs_head.txt           independent cell-level diff vs git HEAD: ALL PASS
+STEP 5  gates: run_gates.sh via gate_overlay.py (repo writes dropped) gates_before/ gates_sim/ (candidate bytes served before the apply) gates_after/ gates_compare_sim.txt gates_compare.txt
+        tests: run_tests.sh before|after -> pytest_*_before/after.txt ; s14_prov_nonrepro.py (19 provenance blocks the emitter does not reproduce are pre-existing and none belongs to an adopted bucket)
+Revert: e20_apply.py --revert --apply restores gold / PL / provenance / ledger / test from the scratchpad backups (only while the live files still carry the post-apply hashes); the master_tables golden fixture
+        (tests/fixtures/master_tables_golden.json) is restored with git checkout.
+STEP 6  documentation: s18_claims_check (KDB live I1 residual per quarter, KR0083 note-50 second source, the one pre-existing drift cell fixed) | s19_scope_check (21 loaded buckets = 20 addl YES + 1 A51; what is left: 55 + 9) | s20/s21/s22/s23 peek, newline convention (docs are plain LF, masters CRLF), long-line check, post-apply hash check (5 written files = apply_manifest after_sha256)
+        e20_docs_insert.py inserted the 19th-round Status item / changelog block / ticket answer (LF-aware, idempotent; the open item was split into 4 lines by hand afterwards because doc_rotate flags lines over 1200 bytes); scripts/doc_rotate.py todo --today 2026-10-23 --apply moved the 16th-round Status item to docs/todo_archive_parser_ifrs17.md
+        NOTE: ../measure/ belongs to the STEP 2 agent (read-only measurement, other evidence dir); this apply/ dir is only STEP 1.

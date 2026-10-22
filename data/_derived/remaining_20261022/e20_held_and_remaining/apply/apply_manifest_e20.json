@@ -1,0 +1,17 @@
+{
+  "before_sha256": {
+    "data/_gold/user_pl_cells.json": "a43f2d0a9c7a174a2ebce3ff13ebfd723a8324b74b3a12443b6b18587d2ee427",
+    "PL_breakdown.json": "2c7566cccff2cccb3750efed5d69f8f3090ce3cdd5644d743d9b56d2861a0c0e",
+    "PL_breakdown_provenance.json": "d7360cf4b7c1bd8ae45476c31644a011d99b387b9196ffe31749b5d0a58e8c8c",
+    "data/_gold/gold_overlay_ledger.json": "3c09f55293a866323f7926bcc730905d9075b0e4a9d313c2d4ea4e7f61246371",
+    "tests/test_rule_coverage_manifest.py": "eb0a33234d4698c9ecab83de9956241cd655b856bf1f18e1249c27014f01fb94"
+  },
+  "after_sha256": {
+    "data/_gold/user_pl_cells.json": "a1a006faa7f08f0a9024e68c49d0e51afaedcd32d4068db0d938f1ee21d89cc2",
+    "PL_breakdown.json": "b48a08a255f53d3e451ec3424144e919288afe8d4499598e93186cec9a6c30b3",
+    "PL_breakdown_provenance.json": "57d62c2a30b31aec057fe334f160672c34d6aeab77c56eea94d0c57417613e6a",
+    "data/_gold/gold_overlay_ledger.json": "91dd0bba9a41e47f7d4ecee4793343ae3eb63706150dc5782b1b193f9fa4eb63",
+    "tests/test_rule_coverage_manifest.py": "dde60d5af5c5a247b4b9eeeb00b9061675a90ce2d151bf2d4fcbfa6635383f39"
+  },
+  "applied_at": "2026-10-22T23:27:45"
+}

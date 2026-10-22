@@ -787,38 +787,6 @@
       "source_file": "data/dart/viz/pl_breakdown_master.json",
       "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
     },
-    "PL|KR0082|2023.1Q|1": {
-      "overlay": "PL",
-      "verdict": "SAME_EXACT",
-      "gold": 24548.24847,
-      "src": 24548.24847,
-      "source_file": "data/dart/viz/pl_breakdown_master.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "PL|KR0082|2023.2Q|1": {
-      "overlay": "PL",
-      "verdict": "SAME_EXACT",
-      "gold": 59719.308746,
-      "src": 59719.308746,
-      "source_file": "data/dart/viz/pl_breakdown_master.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "PL|KR0082|2023.2Q|16": {
-      "overlay": "PL",
-      "verdict": "SAME_EXACT",
-      "gold": 5850.450986,
-      "src": 5850.450986,
-      "source_file": "data/dart/viz/pl_breakdown_master.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
-    "PL|KR0083|2024.3Q|27": {
-      "overlay": "PL",
-      "verdict": "SAME_EXACT",
-      "gold": -265226.939791,
-      "src": -265226.939791,
-      "source_file": "data/dart/viz/pl_breakdown_master.json",
-      "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."
-    },
     "PL|KR0083|2024.3Q|28": {
       "overlay": "PL",
       "verdict": "SAME_EXACT",
