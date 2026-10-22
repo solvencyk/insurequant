@@ -1,0 +1,382 @@
+##############################################################################
+DATA CONTRACT GATE — Phase 1  (census + as-of/effective + cross-source guard)
+##############################################################################
+==============================================================================
+1. COMPLETENESS CENSUS (missing cell / parent-child / impossible-0)   RED=0 YELLOW=86
+==============================================================================
+  YELLOW [IFRS17_BS] R_RSV_1  롯데손해보험 2026.1Q~2026.2Q
+         2분기 연속 동일값 76,287
+  YELLOW [IFRS17_BS] R_RSV_6  롯데손해보험 2025.1Q
+         2024.4Q 1,400 → 2025.1Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  롯데손해보험 2025.3Q
+         2025.2Q 1,400 → 2025.3Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  한화생명 2026.1Q
+         2025.4Q 237,209 → 2026.1Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  케이디비생명보험 2025.2Q
+         2025.1Q 1,338 → 2025.2Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  비엔피파리바카디프생명보험 2023.4Q
+         2023.3Q 1,900 → 2023.4Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  아이엠라이프생명보험 2024.4Q
+         2024.3Q 800 → 2024.4Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_6  DB생명보험 2024.4Q
+         2024.3Q 39,904 → 2024.4Q 정확히 0 — 추출 누락 의심. 진짜 0이면 레지스트리에 등재할 것
+  YELLOW [IFRS17_BS] R_RSV_1  DB생명보험 2023.4Q~2024.3Q
+         4분기 연속 동일값 39,904 (FY경계+4Q 포함 — 결산 적립이 안 움직였다)  [BASELINE — 2026-08-20 동결된 기존 결함, 비차단]
+  YELLOW [IFRS17_BS] R_RSV_5  서울보증보험 2024.4Q
+         스케일 점프 ×0.0: 2024.3Q 1,036 → 2024.4Q 48 — 단위/자릿수 오류 의심
+  YELLOW [IFRS17_BS] R_RSV_5  서울보증보험 2025.4Q
+         스케일 점프 ×28.2: 2025.3Q 26 → 2025.4Q 736 — 단위/자릿수 오류 의심
+  YELLOW [IFRS17_BS] R_RSV_5  코리안리재보험 2025.4Q
+         스케일 점프 ×0.0: 2025.3Q 22,637 → 2025.4Q 1,028 — 단위/자릿수 오류 의심
+  YELLOW [IFRS17_BS] R_RSV_9  AIG손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  DB손해보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  NH농협손해보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  교보생명보험 -
+         첫 공시(2025.3Q) 이전 2셀 부재: 2025.1Q, 2025.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  롯데손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  메리츠화재해상보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  비엔피파리바카디프생명보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  케이디비생명보험 -
+         첫 공시(2025.1Q) 이전 8셀 부재: 2023.1Q, 2023.2Q, 2023.3Q, 2023.4Q, 2024.1Q, 2024.2Q, 2024.3Q, 2024.4Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  코리안리재보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  흥국생명보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  AIG손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  롯데손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  서울보증보험 -
+         첫 공시(2023.4Q) 이전 1셀 부재: 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  악사손해보험 -
+         첫 공시(2023.1Q) 이전 1셀 부재: 2022.4Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  코리안리재보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  AIG손해보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  롯데손해보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  비엔피파리바카디프생명보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  서울보증보험 -
+         첫 공시(2023.4Q) 이전 1셀 부재: 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  코리안리재보험 -
+         첫 공시(2023.3Q) 이전 2셀 부재: 2023.1Q, 2023.2Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  DB생명보험 -
+         첫 공시(2023.4Q) 이전 3셀 부재: 2023.1Q, 2023.2Q, 2023.3Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  신한라이프생명보험 -
+         첫 공시(2023.2Q) 이전 1셀 부재: 2023.1Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_9  케이디비생명보험 -
+         첫 공시(2024.1Q) 이전 4셀 부재: 2023.1Q, 2023.2Q, 2023.3Q, 2023.4Q — 서식·제도 문제일 수 있어 비차단. 원문에 값이 있으면 추출 대상이다
+  YELLOW [IFRS17_BS] R_RSV_10  - 2026.2Q
+         업권 합 64,482,376 vs 보도 58,100,000 (+11.0%). 셀결측 0사[-] / 그 분기 BS부재 0사[-]
+  YELLOW [IFRS17_BS] RESERVE_RULES_SUMMARY  - -
+         법정준비금 R-RSV 룰: 신규 RED=0 · 기존 baseline=4(건별 열거, data/_gold/statutory_reserve_baseline.json) · ORANGE=44 · legit-zero 면제=37. baseline 이 0 이 되면 이 축은 완전 차단 모드가 된다
+  YELLOW [dividend] DIV_NO_FILING_COMPANY  - -
+         15개사는 전 기간 alotMatter 필링 자체가 없다(status 013 전량) — 비상장이라 이 엔드포인트가 다루지 않는 정상 상태. 기대 그리드에서 제외됨: KR0004, KR0029, KR0049, KR0050, KR0051, KR0074, KR0075, KR0076, KR0080, KR0095, KR0097, KR0100, KR1010, KR1011, KR1098
+  YELLOW [kics_disclosure] MISSING_FILER_CELL_SOURCE_ABSENT  하노버재보험 2023.4Q
+         원천부재 면제 [DOCUMENT_PENDING_NOTICE] (owner 2026-10-10) — 하노버재보험 (KR1104) 2023.4Q 버킷 없음. raw sha·매니페스트·원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  YELLOW [kics_disclosure] MISSING_FILER_CELL_SOURCE_ABSENT  하노버재보험 2025.3Q
+         원천부재 면제 [NOT_POSTED] (owner 2026-10-10) — 하노버재보험 (KR1104) 2025.3Q 버킷 없음. raw sha·매니페스트·원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-21 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf p[10, 15, 16](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-21 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q1/raw/KR0010_KB손해보험.pdf p[10, 15, 16](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.3Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2025.3Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q3/raw/KR0010_KB손해보험.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf p[16, 17, 18](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  KB손해보험 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0010_KB손해보험.pdf p[16, 17, 18](0-idx) — 인쇄된 문구: * 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험(또는 금리위험)도 같은 문구). (1)공통적용 경과조치 표는 TFI 적용(O)이지만 순효과가 0이다 — 지급여력비율 191.19 · 지급여력금액 12,377,040 · 보완자본 7,298,639 
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0079_미래에셋생명.pdf p[16, 17](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.3Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2025.3Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  미래에셋생명보험 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0079_미래에셋생명.pdf p[17, 18, 19](0-idx) — 인쇄된 문구: * 당사는 경과조치 전·후 금액 및 비율이 동일함 — (1)공통적용 경과조치 표 전 행 적용전=적용후 동일(지급여력기준금액 1,883,004 백만원), 그리고 '경과조치의 종류' 표의 적용여부 칸이 공통 TFI·선택 TAC/TIR/TER/TIRR·적기시정조치 **전부 X**. [2025.1Q 수치, validation 직
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2025_Q1/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.3Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2025.3Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2025_Q3/raw/KR0080_에이아이에이생명보험.pdf p[15, 16](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf p[16, 17](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  에이아이에이생명보험 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 BORDERLINE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 판독일=2026-08-24 sender재현=sibling_quarter data/disclosure/FY2026_Q1/raw/KR0080_에이아이에이생명보험.pdf p[16, 17](0-idx) — 인쇄된 문구: 당사는 경과조치를 적용하지 않아, 경과조치 전후 금액 및 비율이 동일합니다. — '경과조치의 종류' 표 적용여부 칸이 전 행 X. [2025.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  동양생명 2026.1Q
+         item17후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf p[16](0-idx) — 인쇄된 문구: 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험도 같은 문구). (1)공통적용 경과조치 표는 전 행 적용전=적용후 동일(지급여력기준금액 2,292,632 백만원 · 지급여력비율 189.6). [2026.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] SOURCE_VISION_VERIFIED  동양생명 2026.1Q
+         item19후 세부결측(후=전) — raw 텍스트레이어 UNREADABLE 이지만 **육안 판독으로 판정 완료**. 판독자=parser-kics 2026-08-24 / validation 2026-08-24 재현 판독일=2026-08-24 sender재현=yes data/disclosure/FY2026_Q1/raw/KR0087_동양생명.pdf p[16](0-idx) — 인쇄된 문구: 당사는 자본감소분 경과조치를 적용하지 않아 경과조치 전·후 금액 및 비율이 동일함 (②장수·사업비·해지·대재해, ③주식위험도 같은 문구). (1)공통적용 경과조치 표는 전 행 적용전=적용후 동일(지급여력기준금액 2,292,632 백만원 · 지급여력비율 189.6). [2026.1Q, validation 직접 판독]
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  제네럴재보험 2026.2Q
+         [R5_기준금액] 공시후=295.0 계산후=218.0 diff=77.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  제네럴재보험 2026.2Q
+         [R6_item16] 공시후=34.0 계산후=111.0 diff=-77.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  하노버재보험 2026.2Q
+         [R2_순자산합] 공시후=579.0 계산후=569.0 diff=10.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  알지에이리인슈어런스 2025.1Q
+         [R2_순자산합] 공시후=0.0 계산후=6309.0 diff=-6309.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  알지에이리인슈어런스 2026.1Q
+         [R2_순자산합] 공시후=0.0 계산후=5769.0 diff=-5769.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] TRANSITION_AFTER_IDENTITY_PINNED  알지에이리인슈어런스 2026.2Q
+         [R2_순자산합] 공시후=0.0 계산후=5499.0 diff=-5499.0 — 발행사 자기모순 documented exception(박제잔차 일치, 비차단)
+  YELLOW [kics_disclosure] EXEMPTION_VERIFIED_BY_IMAGE_ONLY  KR0079 2023.2Q
+         [_LIFE8_ISSUER_INCONSISTENT] 판독방식=PyMuPDF(fitz) 200dpi 렌더링 후 육안 판독 판독자=validation 2026-08-21 p[11, 12, 15, 16] — 기계검증 불가 사유: 이 PDF는 텍스트레이어가 존재하지만 행 단위로 잘려 있다 — p11 360자 / p15 76자 / p16 323자(58페이지 전체 4,773자)이고, 추출되는 문자열이 '3. 시장위험액9,53' 처럼 값 중간에서 끊긴다. 따라서 absent_markers 부분문자열 검사는 마커를 절대 찾지 못하고 항상 '주장 확인'으로 끝난다(검사처럼 보이는 무검사). 게이트는 대신 인용 페이지 텍스트밀도를 매 실행 재측정해 이 사유 자체를 검증한다. (인용페이지 텍스트 810자/4p 로 확인)
+  YELLOW [kics_disclosure] EXEMPTION_ABSENCE_PIN_VALUE_PRESENT  KR0097 2024.4Q
+         [_AFTER_SUBRISK_NOT_DISCLOSED] 원장은 '원천 부재' 인데 값이 있다 → 파생값이다. 이 셀들의 면제는 무효이고 해당 축은 정상 검산 중이다: item29후=230.82, item30후=0, item31후=391.46, item32후=0, item33후=1377.71, item34후=714.73, item35후=0
+  YELLOW [forward_capital] CAPSEC_AMOUNT_MISMATCH  흥국화재 2026.2Q
+         흥국화재(KR0005): 마스터 6,320.0억 ≠ 소스 7,320.0억 (all 슬라이스, tol 73.2) — 부분 유실/이중계상 의심(관찰기 YELLOW)
+  YELLOW [forward_capital] CAPSEC_AMOUNT_MISMATCH  하나손해보험 2026.2Q
+         하나손해보험(KR0050): 마스터 1,000.0억 ≠ 소스 1,999.0억 (all 슬라이스, tol 20.0) — 부분 유실/이중계상 의심(관찰기 YELLOW)
+  YELLOW [tier1_utilization] CAPSEC_COVERAGE_AXIS_MOVED  - 2026.2Q
+         tier1_utilization: 소스가 경영공시(item6/item47)로 바뀌어 per-bond 커버리지 대조가 성립하지 않는다 — 결측·0 검사는 CHECK 1 census 가 담당한다. 채권 커버리지 축은 forward_capital 이 계속 진다.
+  YELLOW [tier2_utilization] CAPSEC_COVERAGE_AXIS_MOVED  - 2026.2Q
+         tier2_utilization: 소스가 경영공시(item6/item47)로 바뀌어 per-bond 커버리지 대조가 성립하지 않는다 — 결측·0 검사는 CHECK 1 census 가 담당한다. 채권 커버리지 축은 forward_capital 이 계속 진다.
+  YELLOW [PL_breakdown] MASTER_HOLE_SOURCE_ABSENT  서울보증보험 2024.2Q
+         원천부재 면제 [SITE_ROLLED_OFF] (owner 2026-10-12) -- 서울보증보험 2024.2Q PL 버킷 없음. 사이트 미게시 -- 마스터 버킷 부재 · raw 폴더 · 매니페스트 · 원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  YELLOW [PL_breakdown] MASTER_HOLE_SOURCE_ABSENT  서울보증보험 2024.3Q
+         원천부재 면제 [SITE_ROLLED_OFF] (owner 2026-10-12) -- 서울보증보험 2024.3Q PL 버킷 없음. 사이트 미게시 -- 마스터 버킷 부재 · raw 폴더 · 매니페스트 · 원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  YELLOW [PL_breakdown] MASTER_HOLE_SOURCE_ABSENT  하노버재보험 2025.3Q
+         원천부재 면제 [NOT_POSTED] (owner 2026-10-11) -- 하노버재보험 2025.3Q PL 버킷 없음. 사이트 미게시 -- 마스터 버킷 부재 · raw 폴더 · 매니페스트 · 원장 마커 재검산 통과(통째 skip 아님, 매 실행 인쇄)
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  뮌헨재보험 2023.4Q
+         투자손익 누계 -1,800.0 → 0.0 — owner 확정 셀(owner 2026-10-12 (inbox/validation/20261012T1010Z 티켓에 인용된 채팅 승인 「나머지는 다 승인」, TODO.md 결정 ⑯ 재보사 인쇄된 0 7칸)). 값 박제·원천 문구(data/disclosure/FY2023_Q4/raw/KR1101_뮌헨재보험.pdf p[9]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  스위스리아시아 2023.2Q
+         법인세 누계 -900.0 → 0.0 — owner 확정 셀(owner 2026-10-11 (채팅 승인: 「법인세는 네 제안대로 승인」, 법인세 0 은 원문에 0 으로 인쇄된 것으로 처리)). 값 박제·원천 문구(data/disclosure/FY2023_Q2/raw/KR1102_스위스리아시아.pdf p[5]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  알지에이리인슈어런스 2023.2Q
+         영업외손익 누계 -100.0 → 0.0 — owner 확정 셀(owner 2026-10-12 (inbox/validation/20261012T1010Z 티켓에 인용된 채팅 승인 「나머지는 다 승인」, TODO.md 결정 ⑯ 재보사 인쇄된 0 7칸)). 값 박제·원천 문구(data/disclosure/FY2024_Q2/raw/KR1105_알지에이리인슈어런스.pdf p[5]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  알지에이리인슈어런스 2025.3Q
+         영업외손익 누계 100.0 → 0.0 — owner 확정 셀(owner 2026-10-12 (inbox/validation/20261012T1010Z 티켓에 인용된 채팅 승인 「나머지는 다 승인」, TODO.md 결정 ⑯ 재보사 인쇄된 0 7칸)). 값 박제·원천 문구(data/disclosure/FY2025_Q3/raw/KR1105_알지에이리인슈어런스.pdf p[4]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  예별손해보험 2025.3Q
+         법인세 누계 8,079.7 → 0.0 — owner 확정 셀(owner 2026-10-10). 값 박제·원천 문구(data/disclosure/FY2025_Q3/raw/KR0004_예별손해보험.pdf p[25, 26]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  제네럴재보험 2024.3Q
+         영업외손익 누계 22.0 → 0.0 — owner 확정 셀(owner 2026-10-12 (inbox/validation/20261012T1010Z 티켓에 인용된 채팅 승인 「나머지는 다 승인」, TODO.md 결정 ⑯ 재보사 인쇄된 0 7칸)). 값 박제·원천 문구(data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf p[4]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  제네럴재보험 2025.3Q
+         영업외손익 누계 -34.0 → 0.0 — owner 확정 셀(owner 2026-10-12 (inbox/validation/20261012T1010Z 티켓에 인용된 채팅 승인 「나머지는 다 승인」, TODO.md 결정 ⑯ 재보사 인쇄된 0 7칸)). 값 박제·원천 문구(data/disclosure/FY2025_Q3/raw/KR1103_제네럴재보험.pdf p[4]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  퍼시픽라이프리 2024.4Q
+         법인세 누계 500.0 → 0.0 — owner 확정 셀(owner 2026-10-11 (채팅 승인: 「법인세는 네 제안대로 승인」, 법인세 0 은 원문에 0 으로 인쇄된 것으로 처리)). 값 박제·원천 문구(data/disclosure/FY2024_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf p[8]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  퍼시픽라이프리 2025.4Q
+         법인세 누계 200.0 → 0.0 — owner 확정 셀(owner 2026-10-11 (채팅 승인: 「법인세는 네 제안대로 승인」, 법인세 0 은 원문에 0 으로 인쇄된 것으로 처리)). 값 박제·원천 문구(data/disclosure/FY2025_Q4/raw_aux/KR1107_퍼시픽라이프리__audit.pdf p[8]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  퍼시픽라이프리 2023.3Q
+         영업외손익 누계 70.0 → 0.0 — owner 확정 셀(owner 2026-10-12 (inbox/validation/20261012T1010Z 티켓에 인용된 채팅 승인 「나머지는 다 승인」, TODO.md 결정 ⑯ 재보사 인쇄된 0 7칸)). 값 박제·원천 문구(data/disclosure/FY2024_Q3/raw/KR1107_퍼시픽라이프리.pdf p[4]) 재확인 통과, 비차단
+  YELLOW [PL_breakdown] PL_YTD_COLLAPSE_OWNER_CONFIRMED  퍼시픽라이프리 2025.3Q
+         영업외손익 누계 100.0 → 0.0 — owner 확정 셀(owner 2026-10-12 (inbox/validation/20261012T1010Z 티켓에 인용된 채팅 승인 「나머지는 다 승인」, TODO.md 결정 ⑯ 재보사 인쇄된 0 7칸)). 값 박제·원천 문구(data/disclosure/FY2025_Q3/raw/KR1107_퍼시픽라이프리.pdf p[4]) 재확인 통과, 비차단
+==============================================================================
+2. AS-OF MATCH + EFFECTIVE-LIST (stale baseline / donut bug)   RED=0 YELLOW=1
+==============================================================================
+  YELLOW [capital_securities_effective_list] EFFECTIVE_LIST_NA_DISCLOSURE  - -
+         DISCLOSURE 계보(소진율 분자=경영공시 item6/item47)는 채권별 effective 필터 개념이 없다 — 이 축은 forward_capital(DART)이 진다.
+==============================================================================
+3. CROSS-SOURCE same-concept tolerance + different-concept guard   RED=0 YELLOW=61
+==============================================================================
+  YELLOW [PL_breakdown] PL_CSM_AMORT_MISSING_DOCUMENTED  롯데손해보험 2023.1Q
+         PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 392.8억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재된 예외 [NOT_DISCLOSED_SOURCE] — data/dart/FY2023_Q1/raw/KR0003_롯데손해보험/xml/20230515002687.xml (rcept 20230515002687) L4816-5242 확인: '4.재무제표'~'5
+  YELLOW [PL_breakdown] PL_CSM_AMORT_MISSING_DOCUMENTED  에이아이에이생명보험 2023.4Q
+         PL 원수CSM상각=None 인데 같은 분기 CSM_waterfall 상각은 1,417.0억 — 한쪽만 비었다(생명장기 분해 결측 지문). 등재된 예외 [NOT_DISCLOSED_SOURCE] — raw data/dart/FY2023_Q4/raw/KR0080_에이아이에이생명보험_20240409002583/20240409002583_00760.xml 전체를 훑어 확인(TODO_parser_if
+  YELLOW [PL_breakdown] CSM_AMORT_IDENTITY_PINNED  하나생명보험 2024.4Q
+         PL(원수+수재) CSM상각 398.57억 vs 워터폴 상각 403.70억 — 잔차 -5.13억 (1.271%), 허용 0.20억. 등재부 박제 [RESTATEMENT_BASIS] — 원인 미규명 — 처리 중 부작용 발견 후 원복. build_csm() 재실행 시 diag(더 최신, item5=-398.6=PL과 소수 첫째자리까지 일치)로 자동 동기화되는 것을 확인했으나, 그 값
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  흥국화재 2023.4Q
+         이익잉여금: 17BS 4,747억 vs K-ICS 4,953억 (이탈 4.2%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  NH농협손해보험 2023.4Q
+         이익잉여금: 17BS 9,190억 vs K-ICS 9,592억 (이탈 4.2%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  하나손해보험 2023.1Q
+         이익잉여금: 17BS -509억 vs K-ICS -703억 (이탈 27.6%, 이 회사 평소 6.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  신한이지손해보험 2023.3Q
+         이익잉여금: 17BS -168억 vs K-ICS -157억 (이탈 6.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.2Q
+         이익잉여금: 17BS 56,959억 vs K-ICS 40,194억 (이탈 29.4%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.1Q
+         이익잉여금: 17BS 55,555억 vs K-ICS 38,946억 (이탈 29.9%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  미래에셋생명보험 2023.3Q
+         이익잉여금: 17BS 17,475억 vs K-ICS 18,200억 (이탈 4.0%, 이 회사 평소 0.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  미래에셋생명보험 2023.4Q
+         이익잉여금: 17BS 18,179억 vs K-ICS 17,024억 (이탈 6.4%, 이 회사 평소 0.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이아이에이생명보험 2023.1Q
+         이익잉여금: 17BS 11,380억 vs K-ICS 22,193억 (이탈 48.7%, 이 회사 평소 3.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  푸본현대생명보험 2024.4Q
+         이익잉여금: 17BS -3,743억 vs K-ICS -3,623억 (이탈 3.2%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  IBK연금보험 2023.2Q
+         이익잉여금: 17BS 4,339억 vs K-ICS 4,488억 (이탈 3.3%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  IBK연금보험 2023.1Q
+         이익잉여금: 17BS 4,478억 vs K-ICS 4,675억 (이탈 4.2%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  뮌헨재보험 2023.3Q
+         이익잉여금: 17BS 1,534억 vs K-ICS 1,695억 (이탈 9.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  뮌헨재보험 2023.2Q
+         이익잉여금: 17BS 1,387억 vs K-ICS 1,628억 (이탈 14.8%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  뮌헨재보험 2023.1Q
+         이익잉여금: 17BS 1,313억 vs K-ICS 1,497억 (이탈 12.3%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  제네럴재보험 2023.1Q
+         이익잉여금: 17BS 599억 vs K-ICS 658억 (이탈 9.0%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  하노버재보험 2026.2Q
+         이익잉여금: 17BS 234억 vs K-ICS 224억 (이탈 4.4%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.3Q
+         이익잉여금: 17BS 1,940억 vs K-ICS 3,772억 (이탈 48.6%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.1Q
+         이익잉여금: 17BS 1,465억 vs K-ICS 3,404억 (이탈 57.0%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2024.2Q
+         이익잉여금: 17BS 2,517억 vs K-ICS 1,998억 (이탈 20.6%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2026.2Q
+         이익잉여금: 17BS 2,638억 vs K-ICS 2,557억 (이탈 3.1%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  메리츠화재해상보험 2023.3Q
+         AOCI: 17BS 5,427억 vs K-ICS 2,415억 (이탈 55.5%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  한화손해보험 2023.4Q
+         AOCI: 17BS 190억 vs K-ICS 179억 (이탈 6.0%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  롯데손해보험 2023.2Q
+         AOCI: 17BS 2,049억 vs K-ICS 3,582억 (이탈 42.8%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  롯데손해보험 2023.1Q
+         AOCI: 17BS 2,046억 vs K-ICS 3,538억 (이탈 42.2%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  예별손해보험 2025.4Q
+         AOCI: 17BS -20억 vs K-ICS -469억 (이탈 95.8%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  흥국화재 2023.4Q
+         AOCI: 17BS 3,560억 vs K-ICS 3,276억 (이탈 8.0%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  현대해상 2023.2Q
+         AOCI: 17BS -1,051억 vs K-ICS -242억 (이탈 77.0%, 이 회사 평소 5.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  현대해상 2023.1Q
+         AOCI: 17BS -2,000억 vs K-ICS -1,174억 (이탈 41.3%, 이 회사 평소 5.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  현대해상 2023.3Q
+         AOCI: 17BS 924억 vs K-ICS 1,734억 (이탈 46.7%, 이 회사 평소 5.3%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  KB손해보험 2024.3Q
+         AOCI: 17BS -5,696억 vs K-ICS -4,831억 (이탈 15.2%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  KB손해보험 2023.4Q
+         AOCI: 17BS 3,641억 vs K-ICS 2,858억 (이탈 21.5%, 이 회사 평소 0.7%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB손해보험 2023.4Q
+         AOCI: 17BS 1,041억 vs K-ICS -1,464억 (이탈 171.1%, 이 회사 평소 38.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB손해보험 2023.1Q
+         AOCI: 17BS 590억 vs K-ICS -749억 (이탈 178.8%, 이 회사 평소 38.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  NH농협손해보험 2023.4Q
+         AOCI: 17BS 2,062억 vs K-ICS 1,660억 (이탈 19.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  한화생명 2024.1Q
+         AOCI: 17BS 834억 vs K-ICS 49억 (이탈 94.1%, 이 회사 평소 16.9%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  한화생명 2026.2Q
+         AOCI: 17BS 134억 vs K-ICS -2,149억 (이탈 106.3%, 이 회사 평소 16.9%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2026.1Q
+         AOCI: 17BS 606,840억 vs K-ICS 434,646억 (이탈 28.4%, 이 회사 평소 3.6%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2025.4Q
+         AOCI: 17BS 433,581억 vs K-ICS 306,324억 (이탈 29.4%, 이 회사 평소 3.6%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2024.4Q
+         AOCI: 17BS 184,921억 vs K-ICS 131,436억 (이탈 28.9%, 이 회사 평소 3.6%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  삼성생명보험 2026.2Q
+         AOCI: 17BS 1,235,558억 vs K-ICS 865,137억 (이탈 30.0%, 이 회사 평소 3.6%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이비엘생명보험 2023.4Q
+         AOCI: 17BS 2,862억 vs K-ICS 3,092억 (이탈 7.4%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이비엘생명보험 2023.1Q
+         AOCI: 17BS 3,722억 vs K-ICS 3,165억 (이탈 15.0%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이비엘생명보험 2023.2Q
+         AOCI: 17BS 3,680억 vs K-ICS 3,135억 (이탈 14.8%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  흥국생명보험 2024.1Q
+         AOCI: 17BS 662억 vs K-ICS -532억 (이탈 180.3%, 이 회사 평소 32.4%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.2Q
+         AOCI: 17BS 369억 vs K-ICS 1,956억 (이탈 81.1%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  라이나생명보험 2024.1Q
+         AOCI: 17BS -312억 vs K-ICS 1,519억 (이탈 120.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  에이아이에이생명보험 2023.1Q
+         AOCI: 17BS 2,106억 vs K-ICS -2,741억 (이탈 176.9%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB생명보험 2023.3Q
+         AOCI: 17BS -508억 vs K-ICS -716억 (이탈 29.1%, 이 회사 평소 2.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  DB생명보험 2023.2Q
+         AOCI: 17BS -867억 vs K-ICS -1,051억 (이탈 17.5%, 이 회사 평소 2.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  동양생명 2023.4Q
+         AOCI: 17BS 564억 vs K-ICS 362억 (이탈 35.8%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  KB라이프생명 2023.4Q
+         AOCI: 17BS 13,366억 vs K-ICS 14,048억 (이탈 4.9%, 이 회사 평소 0.1%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  처브라이프생명보험 2023.3Q
+         AOCI: 17BS 573억 vs K-ICS 1,015억 (이탈 43.5%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  농협생명보험 2026.2Q
+         AOCI: 17BS -15,653억 vs K-ICS -15,171억 (이탈 3.1%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  IBK연금보험 2023.3Q
+         AOCI: 17BS -1,837억 vs K-ICS -1,777억 (이탈 3.3%, 이 회사 평소 0.0%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.3Q
+         AOCI: 17BS -796억 vs K-ICS -124억 (이탈 84.4%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.2Q
+         AOCI: 17BS -679억 vs K-ICS -703억 (이탈 3.3%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+  YELLOW [kics_disclosure] BS_KICS_BASELINE_BREAK  스코리재보험 2023.1Q
+         AOCI: 17BS -423억 vs K-ICS -74억 (이탈 82.5%, 이 회사 평소 0.2%) — 두 마스터가 평소에는 붙는데 이 분기만 벌어졌다
+==============================================================================
+4. DOMAIN IDENTITY (capital recognition-limit 분모=SCR×50% / 소진율≤100%)   RED=0 YELLOW=4
+==============================================================================
+  YELLOW [CSM_waterfall] CSM_CONTINUITY_FY_BOUNDARY_EXCEPTED  하나생명보험 2024.4Q
+         기초 CSM 3,089 != 2023.4Q 기말 3,016 [Δ+73] — 등재된 예외(raw 확정 소급재작성, 데이터 정정으로 못 닫음, 박제 재검산 통과): FY2025 사업보고서(rcept 20260325000201) note 38 '재무제표 재작성': 보험금융수익(비용) 인식 회계정책을 K-IFRS 1008호에 따라 소급 적용, 비교표시된 전기(FY2024) 재무제표를 재작성. 재무상태표 영향표(line 25567-25570/25811-25815)가 전기말(2024.12.31) 보험계약부채 +5,726,404천원(+57.26억), 전기초(2024.1.1) +7,292,841천원(+72.93억)를 명문 공시 — 델타의 소재도 CSM '이외모든계약' 서브컬럼(주석 14-4)으로 정확히 일치 확인(둘 다 소수점 둘째자리까지 일치). 2024.4Q 6항목은 FY2025 필링의 <전기> 비교표(주석 14-4)에서 전부 단일 표로 가져왔다 — 기초/신계약/이자/조정/상각/기말 어느 것도 plug 아님(조정=그 표 자신의 '보험계약마진을 조정하는 추정치의 변동분' 행). 그래서 2025.4Q 와는 닫히지만(같은 표 내부 자기정합), 2023.4Q(FY2023 원본 필링 주석 13-3 자기 값) 와는 이 재작성 때문에 +73억 못 닫는다. note 38 이 재작성한 대차대조표 시점은 2024.1.1/2024.12.31 뿐(2023 이전 소급 없음) — 이 경계를 닫으려면 어느 필링에도 없는 숫자를 지어내야 한다(금지). [validation iter4 정정] 종전 이 자리에 있던 'FY2024 필링의 <전기> 비교표와 완전 일치' 라는 문장은 실측상 과장이었다: FY2024 필링 <전기> 표는 조정 -750.59 / 상각 -279.56 / 기말 3,016.13 을 인쇄하는데 FY2023 자기 표는 -751.05(기타행 -41,413천원 포함) / -279.14 / 3,016.09 다(최대 0.46억 차, 마스터 소수 1자리에서 2셀이 갈린다). 결론은 안 바뀐다 — 어느 쪽을 쓰든 2023.4Q 기말은 3,016.1 이고 이 경계 Δ 는 +73.0 이다. inbox/parser/20260825T0230Z(iter2·iter4) 및 TODO_parser_ifrs17.md 참조.
+  YELLOW [CSM_waterfall] CSM_SIGN_CONVENTION_EXCEPTED  예별손해보험 2025.4Q
+         신계약CSM=-11.7 — 등재된 예외: raw 확인(20260406003175): 이 회사는 손실부담계약 전입/환입을 **CSM 열 안에** 표시한다(표준 표기는 CSM 열을 비운다 — 라이나 동일 표 대조). 그래서 신계약인식효과 행이 onerous 분을 net 한 (1,166,995)천원으로 찍힌다. PV +380,349 / RA +786,646 / CSM (1,166,995) 합계 0 으로 행이 닫히고, 같은 필링의 상각은 (17,399,016) 로 **정상 부호**라 2023.4Q 식 부호역전이 아니다. 공시 표기를 그대로 옮긴 값.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  NH농협손해보험 2026.2Q
+         보완자본 인정한도 소진율 102.8% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+  YELLOW [tier2_utilization] T2_UTIL_OVER_100_DISCLOSED  동양생명 2026.2Q
+         보완자본 인정한도 소진율 105.0% >100% — 분자가 발행사 공시값(item47)이라 artifact 가 아니라 실제 한도초과다. 초과분은 [별표22] 1.라.(6)으로 가용자본에서 차감된다. 화면 표기 '100%+'.
+==============================================================================
+5. GENERIC ANOMALY DISCOVERY (metric-agnostic; learned from cohort)   [게이트에서 분리됨 2026-08-25]
+==============================================================================
+  YELLOW 전용(RED 0)이라 push 를 막은 적이 없고 게이트 YELLOW 의 75%를 혼자 만들었다.
+  손으로 돌린다: scripts/scan_generic_anomalies.py  (스캔 + 트리아지 + 리뷰 큐)
+==============================================================================
+6. GOLD OVERLAY vs BUILDER SOURCE (몇 칸이 조용히 덮여 있는가)   RED=0 YELLOW=2
+==============================================================================
+  YELLOW [CSM] GOLD_OVERLAY_REDUNDANT  - -
+         CSM gold 오버레이 317칸 중 **77칸이 소스와 같다**(마스크: SAME_EXACT=27 · SAME_AT_1DP=50, 9개사). 나머지 = LOAD_BEARING 220 · ROW_ABSENT 18 · NULL_IN_SOURCE 2 · GOLD_SUPPRESSES 0. 박제 77칸 — 박제된 칸만 회귀 탐지가 된다
+  YELLOW [PL] GOLD_OVERLAY_REDUNDANT  - -
+         PL gold 오버레이 495칸 중 **29칸이 소스와 같다**(마스크: SAME_EXACT=26 · SAME_AT_1DP=3, 7개사). 나머지 = LOAD_BEARING 233 · ROW_ABSENT 0 · NULL_IN_SOURCE 233 · GOLD_SUPPRESSES 0. 박제 29칸 — 박제된 칸만 회귀 탐지가 된다
+==============================================================================
+7. K-ICS RESTATEMENT (발행사 소급재작성 / 마스터 기준이탈)   RED=0 YELLOW=14
+==============================================================================
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0003 2023.4Q
+         롯데손해보험 2023.4Q: 발행사가 이 분기를 소급재작성했다 — 항목 [4] 1칸(최대 Δ 항목4 2,481→24,807). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 자기 공시의 활자 오류: FY2023_Q4(amended) p41 [경과조치 적용 전 지급여력비율 세부]가 Ⅰ.순자산 23.4Q 를 2,481 로 인쇄한다(같은 표의 구성 6행 합 6,390+454+3,804+503+1,412+12,245 = 24,808, 기본자본 5,514 = 24,807 - 31 - 19,262 로 닫힘). 후속 공시 두 곳이 
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0003 2025.1Q
+         롯데손해보험 2025.1Q: 발행사가 이 분기를 소급재작성했다 — 항목 [13] 1칸(최대 Δ 항목13 19,202→17,997). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 19202.0 → 직전분기 열 17997.0 · 전전분기 열 17997.0 . 같은 열의 기본자본 (2,348) = 순자산 15,657 - 불인정 8 - 재분류 17,997 로 정확히 닫힌다(자기 공시의 19,202 는 닫히지 않는다: -3,553).
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0004 2023.1Q
+         예별손해보험 2023.1Q: 발행사가 이 분기를 소급재작성했다 — 항목 [5, 6, 11] 3칸(최대 Δ 항목11 3,823→3,224). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 3823 → 직전분기 열 3224.0 · 전전분기 열 3224.0 . 지급여력금액·기본자본·보완자본·순자산 헤드라인은 두 판 모두 같고(6,774 · 4,384 · 2,390 · 5,890) 순자산 구성(보통주 · 자본증권 · 조정준비금)만 다시 인쇄됐다. 후속 공시 둘이 같은 
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0004 2024.1Q
+         예별손해보험 2024.1Q: 발행사가 이 분기를 소급재작성했다 — 항목 [7, 11] 2칸(최대 Δ 항목7 -2,200→-2,190). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 2932.0 → 직전분기 열 2923.0 · 전전분기 열 2923.0
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0009 2023.1Q
+         현대해상 2023.1Q: 발행사가 이 분기를 소급재작성했다 — 항목 [1, 2, 3, 4, 6, 11, 13, 15] 8칸(최대 Δ 항목2 73,537→68,456). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 133398 → 직전분기 열 133381.0 · 전전분기 열 133381.0 . 재작성 열이 자기 안에서 닫힌다: 순자산 127,214 = 구성 6행 합 127,214, 지급여력금액 133,381 = 기본자본 68,456 + 보완자본 64,925 (자기 공시 열은 순자산 127,
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0009 2023.2Q
+         현대해상 2023.2Q: 발행사가 이 분기를 소급재작성했다 — 항목 [6, 11] 2칸(최대 Δ 항목11 50,884→50,866). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 50884.0 → 직전분기 열 50866.0 · 전전분기 열 50866.0
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0032 2024.3Q
+         NH농협손해보험 2024.3Q: 발행사가 이 분기를 소급재작성했다 — 항목 [13] 1칸(최대 Δ 항목13 8,867→9,390). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 8867.0 → 직전분기 열 9390.0 · 전전분기 열 9390.0 . 같은 열의 기본자본 14,089 ~ 순자산 23,478 - 불인정 0 - 재분류 9,390 = 14,088(반올림 1). 자기 공시의 8,867 은 522 어긋났다.
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0050 2025.3Q
+         하나손해보험 2025.3Q: 발행사가 이 분기를 소급재작성했다 — 항목 [13] 1칸(최대 Δ 항목13 4,608→4,609). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 4608.0 → 직전분기 열 4609.0 · 전전분기 열 4609.0 . 같은 열의 기본자본 378 = 순자산 4,987 - 불인정 0 - 재분류 4,609 로 정확히 닫힌다(자기 공시의 4,608 은 379).
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0069 2024.2Q
+         삼성생명보험 2024.2Q: 발행사가 이 분기를 소급재작성했다 — 항목 [1, 2, 10, 11, 16, 24] 6칸(최대 Δ 항목1 532,470→532,471). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 532470.0 → 직전분기 열 532471.0 · 전전분기 열 532471.0
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0072 2025.2Q
+         케이디비생명보험 2025.2Q: 발행사가 이 분기를 소급재작성했다 — 항목 [12] 1칸(최대 Δ 항목12 0→328). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 - → 직전분기 열 328.0 · 전전분기 열 328.0 . 후속 공시 TFI 표의 보완자본 한도초과분(item47-48 = 327.68억)이 불인정 328 과 일치하고 같은 열의 기본자본 -5,954 = 순자산 1,542 - (328 - 327.68) - 재분류 7,496 으로
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0073 2026.1Q
+         교보생명보험 2026.1Q: 발행사가 이 분기를 소급재작성했다 — 항목 [1, 2, 4, 11, 14, 15, 16, 19, 20, 22] 10칸(최대 Δ 항목15 105,171→106,059). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 자기 기술(2026.2Q 공시본 '* 주요변동요인 (경과조치 적용 전)'): "지급여력기준금액 : 종속회사 인수에 따른 기타요구자본 증가, 감독원 계리적가정 가이드라인 반영으로 인한 보험위험액 증가 등으로 직전 분기 대비 증가". data/disclosure/FY2026_Q2/parsed/KR0073_교보생명보험.md L455.
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0095 2024.4Q
+         메트라이프생명보험 2024.4Q: 발행사가 이 분기를 소급재작성했다 — 항목 [2, 17] 2칸(최대 Δ 항목17 14,427→14,428). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 14427.0 → 직전분기 열 14428.0 · 전전분기 열 14428.0
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_PINNED  KR0099 2024.3Q
+         KB라이프생명 2024.3Q: 발행사가 이 분기를 소급재작성했다 — 항목 [11] 1칸(최대 Δ 항목11 14,591→14,590). 마스터는 **재작성값(as_restated) 을 채택** 하며 그 사실을 방금 재검산했다. 사유: 발행사 정정 사유 미기재. 후속 공시 두 곳이 같은 값을 인쇄한다: 자기 공시 14591.0 → 직전분기 열 14590.0 · 전전분기 열 14590.0
+  YELLOW [kics_disclosure] KICS_RESTATEMENT_CENSUS  - -
+         소급재작성 축 census(2026.1Q): 39사 중 재작성 1사 · 무변동 38사 · 미판독 0사. 등재 39칸을 매 실행 마스터에 대고 재검산한다 — 등재된 칸만 기준이탈 탐지가 된다
+==============================================================================
+8. MASTER XLSX (마스터 JSON ↔ insurequant_master_tables.xlsx 셀 단위)   RED=1 YELLOW=1
+==============================================================================
+  RED    [master_tables.xlsx] MASTER_XLSX_DRIFT  - 손익분해PL
+         값이 다른 셀 31건 / 13801행 — ('KR0073', '교보생명보험', None, '생명보험', 25, '기타포괄손익', '2024.4Q')|값: 시트=-3876051.397954 vs 마스터=-3856082.245314 / ('KR0073', '교보생명보험', None, '생명보험', 25, '기타포괄손익', '2024.4Q')|값_당분기: 시트='-793982.889263' vs 마스터=None / ('KR0073', '교보생명보험', None, '생명보험', 26, 'FVOCI 채무증권 평가손익', '2024.4Q')|값: 시트=228760.108684 vs 마스터=239691.866004 / ('KR0073', '교보생명보험', None, '생명보험', 26, 'FVOCI 채무증권 평가손익', '2024.4Q')|값_당분기: 시트='-555051.943645' vs 마스터=None / ('KR0073', '교보생명보험', None, '생명보험', 31, '총포괄손익', '2024.4Q')|값: 시트=-3177315.308614 vs 마스터=-3157346.155974 (+26건 더). 마스터가 갱신됐는데 시트 동기화가 밀렸다: python scripts/sync_master_xlsx_sheet.py "손익분해PL"
+  YELLOW [master_tables.xlsx] MASTER_XLSX_CENSUS  - -
+         insurequant_master_tables.xlsx census: 선언 시트 18 · 대조 시트 18 · 대조 행 120704 · 드리프트 셀 31. 대조 시트 수가 선언보다 적으면 그만큼이 무검사다
+------------------------------------------------------------------------------
+notes:
+  - PL_breakdown provenance: published 1040셀 검증 (빌더파생 면제 1셀) · 사이드카 1046셀 중 as_of_date 부재 1046셀 → 그만큼 STALE_AS_OF 축이 침묵한다(downloader 가 필링 meta 의 보고기간 종료일을 채워야 살아난다)
+  - cross_source comparable (DART↔IR CSM steps): 36 step-pairs checked (IR JSON present)
+  - cross_source guard (tier2 Face↔BS reference-only): 0 wrong-concept penalties detected (must be 0)
+  - cross_source guard (경영공시↔DART PL 개념): DISCLOSURE 계보 302셀 / 1424값 검사 · 허용항목 [1, 16, 22, 23, 24] · reference_only [17, 20, 21] 혼입 0 이어야 한다
+  - cross_source guard (경영공시 계보 PL 의 재무제표 주석 허용): 29셀 / 29값 제외 · 허용 {how: 항목} = {'fs_note_csm_amort': [4]} · 그 항목 값은 워터폴과 별도 대조(PL_CSM_AMORT_VS_WATERFALL)
+  - cross_source guard (경영공시 요약 PL 계보 reference_only 허용, DART 없는 회사 한정): 102셀 / 306값 제외 · 회사 ['KR1101', 'KR1102', 'KR1103', 'KR1104', 'KR1105', 'KR1106', 'KR1107', 'KR1108'] (DART 계보 없는 회사 8곳) · 허용 {how: 항목} = {'disclosure_summary_pl_reinsurer': [17, 20, 21]} · 인쇄값·쪽 없는 항목은 계속 RED
+  - cross_source 17BS↔K-ICS 자본계정: 회사별 기준선 대비 이탈 + 한쪽만 0 축. 절대 허용오차를 안 쓰는 이유는 17BS 별도 ↔ K-ICS 연결 혼재(전수 p90 17~28%)다
+##############################################################################
+SUMMARY  RED=1  YELLOW=169  provisional=False
+##############################################################################
+exit 2  secs 37

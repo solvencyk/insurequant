@@ -228,13 +228,39 @@
     "14": 3844.2,
     "15": 4405.19
    }
+  },
+  {
+   "company_code": "KR0073",
+   "quarter": "2023.4Q",
+   "basis": "latest_filing_comparative_restatable",
+   "restatement_reason": "FY2024 사업보고서 주석 44 「재무제표 소급재작성 효과」(20250331004015.xml L75082-75083): 「당사는 보험계약마진 상각을 위한 시간가치 계산의 오류로 당기순이익 과소계상 및 보험계약부채 과대계상을 발견하여, 비교표시된 과거 재무제표를 소급재작성하였습니다」 (비교대상 전기말 = 2023-12-31, 보험계약부채 수정전 87,533,336 -> 수정후 87,242,879 백만원)",
+   "restated_bs_insurance_contract_liability_eok": 872428.79,
+   "restated_bs_insurance_contract_asset_eok": 0.0,
+   "restated_bs_net_eok": 872428.79,
+   "restated_bs_source": "FY2024 and FY2025 annual reports, separate balance sheet 2023-12-31 column (identical); IFRS17_BS item 20 of this quarter was moved to the same value in the same change",
+   "bs_item20_fy2023_original_eok": 875333.36,
+   "bs_item20_original_eok": 875333.36,
+   "bs_source_file": "data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml",
+   "items_10_15_restated": {
+    "10": 26927.47,
+    "13": 26927.46,
+    "14": 845501.32,
+    "15": 872428.79
+   },
+   "items_10_15_original": {
+    "10": 26927.46,
+    "13": 26927.46,
+    "14": 848405.9,
+    "15": 875333.36
+   }
   }
  ],
- "extended_at": "20261011T0135Z",
+ "extended_at": "20261022T0326Z",
  "extended_by": [
   "scripts/load_ilp_interim_2023_2024.py",
   "scripts/load_ilp_interim_2023_2024.py",
   "scripts/load_ilp_interim_2023_2024.py",
-  "scripts/load_ilp_lic_stage3b_pdf.py"
+  "scripts/load_ilp_lic_stage3b_pdf.py",
+  "scripts/apply_kr0073_bs_ilp_restated_20261022.py"
  ]
 }

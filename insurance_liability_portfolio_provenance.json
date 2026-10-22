@@ -14099,8 +14099,8 @@
    "item_block": "lic_dart_note",
    "source_id": "DART",
    "as_of_date": "2023-12-31",
-   "source_file": "data/dart/FY2023_Q4/raw/KR0073_교보생명보험_20240329003502/xml/20240329003502.xml",
-   "rcept_no": "20240329003502",
+   "source_file": "data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml",
+   "rcept_no": "20250331004015",
    "report_kind": "사업보고서",
    "corp_code": "00112882",
    "scope": "separate",
@@ -14115,36 +14115,84 @@
    "unit_source": "cue",
    "tables": [
     {
-     "table": 495,
-     "note": "5. 재무제표 주석",
+     "table": null,
+     "note": "17-2) 2) 전기 기말 보험계약자산 및 부채 (별도 재무제표 주석)",
      "unit": "백만원",
      "unit_src": "cue",
      "period_src": "cue",
      "row": "LIAB",
-     "tot_eok": 875333.36
+     "tot_eok": 872428.79,
+     "lines": "FY2024_Q4 xml L63748-L63775"
     }
    ],
    "dropped_tables": [],
    "dedupe": [],
-   "flags": [],
+   "flags": [
+    "restated_comparative_prior_period_tables"
+   ],
    "checks": {
     "r_lic1": "pass",
-    "bs20_eok": 875333.36,
+    "bs20_eok": 872428.79,
     "ratio_bs20": 1.0,
-    "filing_bs_eok": 875333.36,
+    "filing_bs_eok": 872428.79,
     "ratio_filing_bs": 1.0,
-    "r_lic3_gap_eok": 0.0,
+    "r_lic3_gap_eok": -0.0,
     "tag_tables": 0,
     "tag_cells": 0,
     "tag_mismatch": 0
    },
-   "net_lrc_eok": 848405.9,
+   "net_lrc_eok": 845501.32,
    "items_eok": {
+    "10": 26927.47,
+    "13": 26927.46,
+    "14": 845501.32,
+    "15": 872428.79
+   },
+   "original_basis": {
+    "source_file": "data/dart/FY2023_Q4/raw/KR0073_교보생명보험_20240329003502/xml/20240329003502.xml",
+    "rcept_no": "20240329003502",
+    "report_kind": "사업보고서",
+    "basis": "liability",
+    "unit": "백만원",
+    "unit_source": "cue",
+    "items_eok": {
+     "10": 26927.46,
+     "13": 26927.46,
+     "14": 848405.9,
+     "15": 875333.36
+    },
+    "checks": {
+     "r_lic1": "pass",
+     "bs20_eok": 875333.36,
+     "ratio_bs20": 1.0,
+     "filing_bs_eok": 875333.36,
+     "ratio_filing_bs": 1.0,
+     "r_lic3_gap_eok": 0.0,
+     "tag_tables": 0,
+     "tag_cells": 0,
+     "tag_mismatch": 0
+    },
+    "net_lrc_eok": 848405.9
+   },
+   "original_basis_value": {
     "10": 26927.46,
     "13": 26927.46,
     "14": 848405.9,
     "15": 875333.36
-   }
+   },
+   "checks_restated": {
+    "chk_15_minus_10_14": 0.0,
+    "chk_15_minus_bs_liab": 0.004
+   },
+   "restated_bs_prior_col": {
+    "liab_eok": 872428.79,
+    "asset_eok": 0.0,
+    "source_file": "data/dart/FY2024_Q4/raw/KR0073_교보생명보험_20250331004015/xml/20250331004015.xml"
+   },
+   "period_basis": "latest_filing_comparative_restatable",
+   "basis_note": "items 10, 14, 15 set to the FY2024 annual report prior-year-end (2023-12-31, restated) separate note column (printed LRC 83,536,489 + loss component 1,013,643 = 84,550,132 mn; LIC 2,692,746 mn unchanged within rounding; total 87,242,879 mn = restated BS item 20); item 10 +0.01 is the rounding that closes 10 + 14 = 15 against the unrounded BS 87,242,878.594 mn (item 13, the printed LIC, stays 26927.46); original FY2023 values kept in original_basis_value / original_basis",
+   "unified_at": "20261022T0326Z",
+   "restatement_ticket": "orchestrator 2026-10-22 parser/ifrs17 KR0073 BS+ILP restated block (evidence data/_derived/remaining_20261022/a2_bs_ilp/)"
   },
   {
    "company_code": "KR0074",
@@ -42478,6 +42526,13 @@
    "emitted_by": "scripts/load_ilp_kr1102_derived_20261012.py",
    "ticket": "inbox/parser/20261012T1450Z__orchestrator__KR1102_2026.1Q__ilp_total_derived_load.md",
    "note": "KR1102 2026.1Q items 1-8 := sum of all rows of the 2-4 tables (the printed totals omit the Indirect-Par rows); how=derived_sum_of_rows"
+  },
+  {
+   "stage": "kr0073_2023.4Q_restated_block_20261022",
+   "at": "20261022T0326Z",
+   "emitted_by": "scripts/apply_kr0073_bs_ilp_restated_20261022.py",
+   "ticket": "orchestrator 2026-10-22 parser/ifrs17 KR0073 BS+ILP restated block (evidence data/_derived/remaining_20261022/a2_bs_ilp/)",
+   "note": "KR0073 2023.4Q items 10/14/15 set to the FY2024 prior-year-end (restated) column; IFRS17_BS item 20 of the same quarter moves with it (bs_manual_overrides); originals in original_basis_value"
   }
  ],
  "indirect_lic_cells": [
