@@ -1,0 +1,12 @@
+ins_profit KR0032 latest idx value: 805 ( 2026.2Q ) non-null last: 2026.2Q
+ins_profit KR0082 latest idx value: 544 ( 2026.2Q ) non-null last: 2026.2Q
+ins_profit KR0083 latest idx value: -1 ( 2026.2Q ) non-null last: 2026.2Q
+net_income KR0032 latest idx value: 717 ( 2026.2Q ) non-null last: 2026.2Q
+net_income KR0082 latest idx value: 1981 ( 2026.2Q ) non-null last: 2026.2Q
+net_income KR0083 latest idx value: 1586 ( 2026.2Q ) non-null last: 2026.2Q
+roe KR0032 latest idx value: 7.6 ( 2026.2Q ) non-null last: 2026.2Q
+roe KR0082 latest idx value: 26.5 ( 2026.2Q ) non-null last: 2026.2Q
+roe KR0083 latest idx value: 20.0 ( 2026.2Q ) non-null last: 2026.2Q
+inv_profit KR0032 latest idx value: 255 ( 2026.2Q ) non-null last: 2026.2Q
+inv_profit KR0082 latest idx value: 1991 ( 2026.2Q ) non-null last: 2026.2Q
+inv_profit KR0083 latest idx value: 2082 ( 2026.2Q ) non-null last: 2026.2Q

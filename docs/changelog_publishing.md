@@ -12,6 +12,15 @@
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/publishing/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
 
+## 2026-10-23 — parser `5419a817`(11사 21버킷 최신 비교열 채택: 값 84셀 · 값_당분기 110셀) 파생 산출물 재생성 (커밋 전)
+
+- 시작 진단: `check_master_xlsx_drift` RED 1 = `손익분해PL` 194셀(11사 KR0032 8 · KR0068 30 · KR0069 20 · KR0070 15 · KR0071 25 · KR0072 6 · KR0082 16 · KR0083 16 · KR0087 28 · KR0094 9 · KR0104 21; 분기 2023.1Q 16 · 2023.2Q 8 · 2024.3Q 8 · 2024.4Q 38 · 2025.1Q 46 · 2025.2Q 52 · 2025.3Q 26). HEAD = `5419a817`, 마스터는 커밋 상태.
+- xlsx: 시작 전 `insurequant_master_tables.xlsx.bak_20261023_pl_e20` 백업 -> `sync_master_xlsx_sheet.py "손익분해PL" --dry-run` 후 실행(행 추가·삭제 0, 13801행 불변, 스크립트 사후 검증 OK). 전 시트 셀 대조(`xlsx_cell_diff.txt`): 변한 셀은 `손익분해PL` 194 뿐이고 전부 11사, 나머지 18시트 동일.
+- 빌더: `viz_build_compare_panel.py` `--check` 가 어긋남을 확인한 뒤 실행 -> 9값(보험손익 3 · 투자손익 4 · 당기순이익 1 · ROE 1; NH농협손보 2023.1Q, DB생명 2023.1Q/2Q, 푸본현대 2024.3Q). meta·companies·loss_curve·중앙값 불변(`diff_compare_labeled.txt`). 나머지 194셀 중 대부분은 compare 지표(항목 1·17·24)가 아니거나 억원 반올림 안에서 같아 패널이 안 바뀐다. `viz_build_csm_combo_panel` `--check` 불변, `viz_build_ifrs17_panels`·`viz_build_csm_waterfall` 은 PL 마스터를 안 읽어(DART 추출물) 재생성 없음, 골든 통과.
+- 공개본: `export_public_sheets.py` 전체 실행(HEAD `5419a817`) -> 바뀐 파일은 `손익분해PL.json`(194셀, 11사) · manifest(build_id `5419a817`) 뿐(`public_export_diff.txt`). 커밋하면 HEAD 가 바뀌므로 한 번 더 내보내야 build_id 가 맞는다.
+- 노출 확인(`exposure_check.txt`): compare.html 은 사별 최신 분기 값만 쓰고(분기 선택기 없음, 세 회사 모두 2026.2Q 값 있음) IFRS17.html 3번 패널은 `PL_breakdown.json` 을 직접 읽어 연도모드=각 4Q+최신 `값`, 분기모드=최근 5분기 `값_당분기` 를 그린다. 바뀐 194셀 중 표 창에 드는 것은 67셀(2024.4Q `값` 15 · 최근 5분기 `값_당분기` 52), 2023.1Q/2Q 3개 회사분기(NH농협손보 2023.1Q, DB생명 2023.1Q/2Q)는 표·차트에 안 나오고 공개 다운로드(엑셀·`손익분해PL.json`)와 패널 JSON 안에만 있다.
+- 게이트: drift RED 0 · data_contract RED=0 / YELLOW 169(불변) · validate_master_tables --no-build 요약이 p3 와 같고 `oci_vs_bs_aoci` 23Y -> 21Y 만 다름(parser e20 `gates_after` 와 동일) · golden fingerprint RED=0 · live_artifacts RED=0(기준선 25) · rule_coverage 104 · master_tables/viz 골든 2종/deploy_assets/push_gate_wiring/loss_unit 통과. 게이트 실행 뒤 추적 파일 변경 없음. 증빙 `data/_derived/remaining_20261022/e20_held_and_remaining/p4_resync/`.
+
 ## 2026-10-22 (저녁) — parser `acdb2fe9`(7사 19버킷 최신 비교열 채택: 값 171셀 · 값_당분기 215셀) 파생 산출물 재생성 (커밋 전)
 
 - 시작 진단: `check_master_xlsx_drift` RED 1 = `손익분해PL` 386셀(7사 KR0005 94 · KR0032 72 · KR0070 56 · KR0082 12 · KR0083 40 · KR0087 74 · KR0104 38; 분기 2023.3Q~2024.4Q). `validate_data_contract` RED 1 · YELLOW 169.

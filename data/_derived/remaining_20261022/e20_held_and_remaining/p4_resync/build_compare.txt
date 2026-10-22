@@ -1,0 +1,21 @@
+wrote C:\Users\sangwook.cho\Desktop\insurequant\data\compare\panel_compare.json 238749 bytes; 47 companies; 19 metrics; 14 quarters
+  loss_curve: 44 companies, quarters ['2023.4Q', '2024.4Q', '2025.4Q']
+  kics_ratio   last-quarter n=47  any-data n=47
+  kics_basic   last-quarter n=47  any-data n=47
+  csm_closing  last-quarter n=24  any-data n=44
+  nb_multiple  last-quarter n=23  any-data n=36
+  ins_profit   last-quarter n=47  any-data n=47
+  net_income   last-quarter n=47  any-data n=47
+  roe          last-quarter n=46  any-data n=47
+  surrender_reserve last-quarter n=37  any-data n=37
+  persist13    last-quarter n=37  any-data n=37
+  persist25    last-quarter n=36  any-data n=36
+  persist37    last-quarter n=36  any-data n=36
+  persist61    last-quarter n=35  any-data n=36
+  loss_pv      last-quarter n= 0  any-data n=44
+  kics_avail   last-quarter n=47  any-data n=47
+  kics_scr     last-quarter n=47  any-data n=47
+  nb_csm       last-quarter n=24  any-data n=44
+  inv_profit   last-quarter n=32  any-data n=47
+  equity       last-quarter n=47  any-data n=47
+  assets       last-quarter n=47  any-data n=47

@@ -1,0 +1,14 @@
+leaf diffs: 9
+  ['metrics', 16] 4
+  ['metrics', 4] 3
+  ['metrics', 5] 1
+  ['metrics', 6] 1
+    metrics/4/v/KR0032/0 543 -> 551
+    metrics/4/v/KR0082/0 245 -> 251
+    metrics/4/v/KR0082/1 597 -> 607
+    metrics/5/v/KR0083/6 -647 -> -705
+    metrics/6/v/KR0083/6 -11.3 -> -12.3
+    metrics/16/v/KR0032/0 552 -> 544
+    metrics/16/v/KR0082/0 582 -> 577
+    metrics/16/v/KR0082/1 849 -> 840
+    metrics/16/v/KR0083/6 -674 -> -749

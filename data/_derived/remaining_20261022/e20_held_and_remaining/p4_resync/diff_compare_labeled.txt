@@ -1,0 +1,13 @@
+ins_profit   KR0032 NH농협손해보험 2023.1Q: 543 -> 551
+ins_profit   KR0082 DB생명보험 2023.1Q: 245 -> 251
+ins_profit   KR0082 DB생명보험 2023.2Q: 597 -> 607
+net_income   KR0083 푸본현대생명보험 2024.3Q: -647 -> -705
+roe          KR0083 푸본현대생명보험 2024.3Q: -11.3 -> -12.3
+inv_profit   KR0032 NH농협손해보험 2023.1Q: 552 -> 544
+inv_profit   KR0082 DB생명보험 2023.1Q: 582 -> 577
+inv_profit   KR0082 DB생명보험 2023.2Q: 849 -> 840
+inv_profit   KR0083 푸본현대생명보험 2024.3Q: -674 -> -749
+changed values: 9
+meta identical
+companies identical
+loss_curve identical
