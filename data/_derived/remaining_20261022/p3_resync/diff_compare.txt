@@ -1,0 +1,60 @@
+leaf diffs: 55
+  ['metrics', 16] 19
+  ['metrics', 4] 1
+  ['metrics', 5] 18
+  ['metrics', 6] 17
+    metrics/4/v/KR0082/2 840 -> 859
+    metrics/5/v/KR0005/2 1818 -> 1653
+    metrics/5/v/KR0005/3 3161 -> 2955
+    metrics/5/v/KR0005/4 480 -> 392
+    metrics/5/v/KR0005/5 1070 -> 874
+    metrics/5/v/KR0032/3 1453 -> 1133
+    metrics/5/v/KR0032/4 598 -> 534
+    metrics/5/v/KR0032/5 1205 -> 1104
+    metrics/5/v/KR0032/6 1518 -> 1387
+    metrics/5/v/KR0070/4 78 -> 103
+    metrics/5/v/KR0070/5 425 -> 454
+    metrics/5/v/KR0070/6 677 -> 710
+    metrics/5/v/KR0083/4 293 -> 279
+    metrics/5/v/KR0083/5 272 -> 241
+    metrics/5/v/KR0087/3 2957 -> 2649
+    metrics/5/v/KR0087/4 885 -> 794
+    metrics/5/v/KR0087/5 1753 -> 1641
+    metrics/5/v/KR0087/6 2657 -> 2529
+    metrics/5/v/KR0104/2 1358 -> 1808
+    metrics/6/med/생보/5 7.1 -> 6.9
+    metrics/6/med/손보/4 13.9 -> 12.7
+    metrics/6/med/손보/5 14.9 -> 14.2
+    metrics/6/med/손보/6 13.1 -> 12.6
+    metrics/6/v/KR0005/4 15.6 -> 12.7
+    metrics/6/v/KR0005/5 18.9 -> 15.5
+    metrics/6/v/KR0032/4 13.6 -> 12.2
+    metrics/6/v/KR0032/5 14.0 -> 12.8
+    metrics/6/v/KR0032/6 11.9 -> 10.9
+    metrics/6/v/KR0070/4 3.1 -> 4.1
+    metrics/6/v/KR0070/5 9.1 -> 9.8
+    metrics/6/v/KR0070/6 10.1 -> 10.6
+    metrics/6/v/KR0083/4 13.8 -> 13.2
+    metrics/6/v/KR0083/5 6.9 -> 6.1
+    metrics/6/v/KR0087/4 12.8 -> 11.5
+    metrics/6/v/KR0087/5 13.5 -> 12.6
+    metrics/6/v/KR0087/6 14.0 -> 13.3
+    metrics/16/v/KR0005/2 -421 -> -632
+    metrics/16/v/KR0005/3 994 -> 726
+    metrics/16/v/KR0005/4 -711 -> -784
+    metrics/16/v/KR0005/5 -451 -> -621
+    metrics/16/v/KR0032/3 983 -> 566
+    metrics/16/v/KR0032/4 224 -> 142
+    metrics/16/v/KR0032/5 520 -> 388
+    metrics/16/v/KR0032/6 909 -> 739
+    metrics/16/v/KR0070/4 -57 -> -24
+    metrics/16/v/KR0070/5 327 -> 365
+    metrics/16/v/KR0070/6 692 -> 735
+    metrics/16/v/KR0082/2 645 -> 626
+    metrics/16/v/KR0083/4 422 -> 404
+    metrics/16/v/KR0083/5 460 -> 419
+    metrics/16/v/KR0087/3 1250 -> 850
+    metrics/16/v/KR0087/4 492 -> 374
+    metrics/16/v/KR0087/5 833 -> 686
+    metrics/16/v/KR0087/6 1045 -> 879
+    metrics/16/v/KR0104/2 -403 -> 183

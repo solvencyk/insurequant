@@ -2,6 +2,9 @@
 
 ## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
+- **2026-10-19 밤 손해율 비교 단위 데이터 + 위험보험료 단위환산 정정 + 반올림 통일(push `a8d9f193` · main 배포 `5221a1b4` 완료)** — `viz_build_compare_panel.py` 가 `loss_curve` 에 `units`(12) · `default_unit` · `u` · `up` · `med_u` · `unit_note` · `unit_rule` · `alt_co`, `loss_pv` 에 `vu` · `medu` 를 더함, `panel_loss_ratio.json` 잎 행 5번째 원소 = 위험보험료(억원). **마스터 위험보험료는 이미 억원인데 두 빌더가 백만원 공시사를 또 ÷100 해 100배 작게 싣던 것 정정.** 반올림을 이진값 기준 half-up 으로 통일(**compare 값 93칸 +0.1**, IFRS17 표시와 일치).
+  검증: 마스터 독립 재계산 불일치 0(5,328칸 · 중앙값 · 위험보험료 13,127칸 · alt_co), 신규 `tests/test_loss_unit_panels_vs_master.py`(옛 ×0.01 변이로 실제 실패 확인, `prepush_check.py` 배선). 남은 것: 빌더 `--check` 는 재현성만 보므로 마스터 대조는 위 테스트가 맡음.
+
 - **2026-10-19 IFRS17 8절 현재가치 이중 반올림 수정(티켓 `20261018T0700Z` resolved; main 배포 `f96f06b0` 완료)** — `viz_build_persistency_lossratio_panels.py` 가 반올림 전 비율(소수 6자리)을 싣도록 고침, `panel_loss_ratio.json` 206 → 282KB. 화면 표시값과 마스터 재계산 차이 0.05pp 초과 약 800칸 → 0(독립 검증).
   남은 것: 배포 때 이 JSON 을 HTML 과 같이(기존 파일 갱신이라 NEW_FILES 불필요) · validation 티켓 `20261019T0200Z`(카카오페이손보 잎 합 85.7 대 합계 행 100.0 등)가 parser 로 route 되면 마스터 보정 후 패널 재빌드.
 

@@ -1,0 +1,12 @@
+changed public_exports files: ['manifest.json', '손익분해PL.json']
+untracked/added files in public_exports: M public_exports/manifest.json |  M "public_exports/\354\206\220\354\235\265\353\266\204\355\225\264PL.json"
+manifest keys diff: {'build_id': ('9dfd28f9', 'acdb2fe9'), 'generated_at_utc': ('2026-10-22T04:24:06Z', '2026-10-22T11:20:10Z')}
+manifest sheets identical to HEAD: True
+git rev-parse --short HEAD = acdb2fe9 | manifest build_id = acdb2fe9 | equal: True
+manifest key order same as HEAD: True
+manifest bytes == json.dumps(indent=2, ensure_ascii=False): False
+손익분해PL: working file bytes == exporter-algorithm bytes from HEAD master: True (rows 13801)
+   row count old/new 13801/13801; same row order & keys per row: True
+   changed rows: 235 Counter({'흥국화재': 56, '동양생명': 41, 'NH농협손해보험': 40, '농협생명보험': 34, '에이비엘생명보험': 32, '푸본현대생명보험': 24, 'DB생명보험': 8}) Counter({'2023.4Q': 50, '2024.1Q': 43, '2024.2Q': 43, '2024.3Q': 43, '2023.3Q': 32, '2024.4Q': 24})
+   changed columns: {'값': 171, '값_당분기': 215}
+unchanged public sheets that differ from exporter output of HEAD masters: []
