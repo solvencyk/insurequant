@@ -12,11 +12,12 @@
 | 3 validation | `docs/agents/claude-agent-validation.md` | `TODO_validation.md` | `docs/changelog_validation.md` |
 | 4 publishing (마스터 JSON·배포; push·main 배포는 owner 구두 승인 뒤 오케스트레이터가 실행, §11) | `docs/agents/claude-agent-publishing.md` | `TODO_publishing.md` | `docs/changelog_publishing.md` |
 | 5 designer (HTML/CSS/차트) | `docs/agents/claude-agent-designer.md` | `TODO_designer.md` | `docs/changelog_designer.md` |
-| **jp** (일본 ESR, 2026-09-12 신설) | `docs/domains/claude-agent-jp.md` + 에이전트 `jp-collector` | `TODO_jp.md` | `docs/changelog_jp.md` |
+| **jp** (일본 ESR) | **이 브랜치에 없다** — 브랜치 `lane/jp`, 워크트리 `../iq_jp` (2026-10-22 분리, owner) | 그쪽 `TODO_jp.md` | 그쪽 `docs/changelog_jp.md` |
 
 - stage 는 **순차 파이프라인**(downloader→parser→validation→publishing→designer). 4↔5 는 서로 파일을 안 건드린다(publishing = 마스터 JSON, designer = HTML).
 - parser 는 kics(`src/solvency/parser/`→`kics_disclosure.json`)·ifrs17(`src/ifrs17/`→CSM/PL/17BS 마스터) 두 레인을 **별도 세션에서 병렬**로. 공유 inbox `inbox/parser/` frontmatter `lane:`.
-- **jp 레인은 한국 stage 프롬프트를 읽지 않는다.** 일본 공시는 양식·주기·언어가 다르므로 자기 도메인 문서와 `inbox/jp/` 만 쓴다. designer·publishing 은 공유(각 프롬프트의 jp 절).
+- **jp 레인은 이 브랜치에서 작업·커밋하지 않는다**(2026-10-22 owner: 세션 컨텍스트 오염). jp 는 `../iq_jp`(브랜치 `lane/jp`)에서만 하고, 그쪽 jp 레인은 한국 stage 프롬프트를 읽지 않는다. 이 브랜치에 jp 파일이 추적되면 `tests/test_jp_lane_absent.py` 가 push 를 막는다. designer·publishing 은 공유(각 프롬프트의 jp 절).
+- **두 브랜치를 통째로 merge 하지 않는다** — 한쪽의 jp 삭제가 다른 쪽 jp 파일을 지운다. 공유 파일(게이트·CLAUDE.md·배포 스크립트)은 cherry-pick. `android_push_and_deploy.sh --branch lane/jp` 도 쓰지 않는다: 그 스크립트는 main 의 **모든** 파일을 브랜치와 비교해 덮으므로 lane/jp 의 낡은 한국 파일이 라이브를 되돌린다(범위 한정 옵션이 생기기 전까지).
 - cross-stage 항목은 루트 `TODO.md` + `docs/claude-changelog.md`. 도메인 참고 `docs/domains/`, 흐름도 `docs/flows/`.
 
 ## 2. 세션 시작·갱신
@@ -49,7 +50,7 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 ④ 오프라인 테스트(골든 + `test_rule_coverage_manifest.py` + `test_identity_tautology.py`). `main` 처럼 `scripts/` 없는 slim 트리는 경고만.
 **"문서에 mandatory 라고 썼다" ≠ 강제.** 새 게이트는 `prepush_check.py` 에 호출을 넣었는지 그 자리에서 확인. `git push --no-verify` 를 썼으면 커밋에 남긴다.
 `test_rule_coverage_manifest.py` 는 룰↔항목 커버리지를 변이시험으로 대조한다 — 룰 추가·개명·삭제 시 매니페스트를 같이 고친다.
-**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12) — `prepush_check.py` §0 이 코드로 판정한다.** 번들 diff 가 `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·배포 `.sh`·`CLAUDE.md` 뿐이면 한국 마스터 게이트(data-contract·K-ICS 룰·도메인 7종·DART raw·골든 지문·배포 JS 런타임)를 건너뛰고 `tests/test_jp_source_gate.py` + `tests/test_jp_deploy_matches_census.py` + `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` + `tests/test_prepush_scope.py` + `check_inbox_hygiene.py` 만 돌린다(실측 ~5초). 루트 마스터 JSON·`scripts/*.py`(배포 `.sh` 제외)·루트 HTML·`src/`·`data/`·`tests/`(jp 2종 제외)가 하나라도 섞이면 전체 게이트.
+**게이트 범위는 변경 범위에 맞춘다(owner 2026-09-12) — `prepush_check.py` §0 이 코드로 판정한다.** 번들 diff 가 `jp/`·`J-ESR/`·`docs/`·`inbox/`·`.claude/`·루트 `TODO*.md`·배포 `.sh`·`CLAUDE.md` 뿐이면 한국 마스터 게이트(data-contract·K-ICS 룰·도메인 7종·DART raw·골든 지문·배포 JS 런타임)를 건너뛰고 `tests/test_jp_lane_absent.py` + `tests/test_deploy_assets.py` + `tests/test_push_gate_wiring.py` + `tests/test_prepush_scope.py` + `check_inbox_hygiene.py` 만 돌린다(실측 ~5초). 루트 마스터 JSON·`scripts/*.py`(배포 `.sh` 제외)·루트 HTML·`src/`·`data/`·`tests/`가 하나라도 섞이면 전체 게이트.
 **판정은 fail-closed다**: `@{upstream}` 없음·git 실패·빈 diff·모르는 경로 1개 → 전부 전체 게이트. 비교 기준은 `merge-base(@{upstream},HEAD)..HEAD` + 스테이지 + 워킹트리 + 미추적이고, 판정 근거(비교 ref·파일 수·결정적 파일)를 매 실행 인쇄한다. 축소 시 verdict 는 `SKIPPED(jp-scope)` — **"안 돌렸다"는 "통과했다"가 아니다.** 수동 오버라이드는 `--full`(강제 전체)·`--scope-only`(판정만 인쇄, 게이트 미실행) 둘뿐이고 **환경변수 우회로는 없다**. 범위 목록을 고치려면 `tests/test_prepush_scope.py`(변이시험)를 같이 통과시켜야 한다.
 
 ## 6. K-ICS validation gate (mandatory)
@@ -88,7 +89,7 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 
 ## 10. 멀티에이전트
 
-- **에이전트 정의는 `.claude/agents/*.md` (저장소 추적).** downloader·parser-kics·parser-ifrs17·publishing·designer·jp-collector·validation = `sonnet`(별칭이라 최신 모델을 따라간다; validation 도 2026-10-08 owner 결정으로 Sonnet);
+- **에이전트 정의는 `.claude/agents/*.md` (저장소 추적).** downloader·parser-kics·parser-ifrs17·publishing·designer·validation = `sonnet`(별칭이라 최신 모델을 따라간다; validation 도 2026-10-08 owner 결정으로 Sonnet);
   스킬은 `.claude/skills/`(kics-parser·ifrs17-parser·a11y-audit·launch-runbook·incident-postmortem).
 - 독립 작업은 **서브에이전트를 한 메시지에서 병렬 발사**. 병렬 축은 ① stage 내부 fan-out(회사×분기×도메인) ② item 별 파이프라인 중첩. "stage 별 병렬" 은 틀린 프레임(순차 파이프라인).
 - 동시 에이전트 수는 고정 상한이 아니라 **그때 PC 의 메모리·CPU 여유를 재서** 정한다(owner 2026-10-19; 보통 4개 이내, RAM 15.5GB·8코어 기준이고 docling 은 ≤2). 여유 메모리가 5GB 안팎이면 3개로 줄인다. 서브-서브에이전트 금지, 각 에이전트에 이 파일 + 자기 stage 프롬프트·TODO 를 명시. 메인 세션은 오케스트레이션(조율·통합·게이트)만.

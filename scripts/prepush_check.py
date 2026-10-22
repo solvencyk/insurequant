@@ -58,6 +58,8 @@ import validate_deployed_js as deployjs                 # noqa: E402
 # `--full`(강제 전체) 하나뿐이고 `--scope-only` 는 판정만 인쇄하고 끝나는 디버그 모드다.
 
 # jp 범위로 **인정하는** 디렉토리. 여기 없는 것은 전부 전체 게이트다.
+# (이 브랜치에는 jp/·J-ESR/ 가 없다 — 2026-10-22 에 lane/jp 로 분리했다. 목록은 그대로 두고,
+#  jp 파일이 되살아나면 축소 묶음 안의 tests/test_jp_lane_absent.py 가 push 를 막는다.)
 JP_SCOPE_DIRS: tuple[tuple[str, str], ...] = (
     ("jp/", "일본 ESR 레인 산출·페이지(한국 마스터와 파일이 겹치지 않는다)"),
     ("J-ESR/", "일본 원문·추출 중간산출"),
@@ -71,10 +73,6 @@ JP_SCOPE_FILES: dict[str, str] = {
     "scripts/android_push_and_deploy.sh":
         "배포 스크립트(.sh) — 마스터·파생 JSON 을 만들지 않는다. `scripts/*.py` 는 배포용이라도"
         " 여기 넣지 않는다(예: sync_tier_utilization_to_deploy.py 는 배포 JSON 을 쓴다).",
-    "tests/test_jp_source_gate.py":
-        "jp 출처 게이트 자신 — 축소 묶음이 이 파일을 실제로 실행하므로 검사 범위가 줄지 않는다",
-    "tests/test_jp_deploy_matches_census.py":
-        "jp 배포=census 게이트 자신 — 축소 묶음이 이 파일을 실제로 실행한다",
     # CLAUDE.md 를 jp 범위에 넣는 판단(2026-09-13). owner 규칙 원문에는 없고, 넣을지는 이
     # 세션의 판단이라 근거를 남긴다.
     #  · 넣는 이유 — jp 라운드는 거의 매번 이 파일의 jp 절(§1 표·§5 게이트 범위)을 같이 고친다.
@@ -94,7 +92,7 @@ FULL_SCOPE_DIRS: tuple[tuple[str, str], ...] = (
     ("data/", "한국 원천·중간산출 — 마스터의 입력"),
     ("src/", "파서·빌더 코드"),
     ("scripts/", "게이트·빌더 스크립트(배포 .sh 만 예외)"),
-    ("tests/", "테스트(jp 2종만 예외)"),
+    ("tests/", "테스트"),
     ("templates/", "배포 HTML 템플릿"),
     ("public_exports/", "사용자가 내려받는 공개 스냅샷"),
     ("config/", "파이프라인 설정"),
@@ -109,10 +107,10 @@ FULL_SCOPE_DIRS: tuple[tuple[str, str], ...] = (
 ROOT_FULL_SUFFIXES = (".json", ".html", ".xlsx", ".xls", ".js", ".css", ".xml", ".csv")
 
 # 축소 모드에서 도는 pytest 묶음. **한국 골든·룰 커버리지는 여기 없다**(그게 축소의 정의다).
-# jp 게이트 2종 + 배포 자산 + 게이트 자신의 배선/범위판정 테스트만 남는다. 실측 ~3.3초.
+# jp 레인 부재 가드 + 배포 자산 + 게이트 자신의 배선/범위판정 테스트만 남는다. 실측 ~3.3초.
+# (jp 게이트 2종 test_jp_source_gate·test_jp_deploy_matches_census 는 jp 레인과 함께 lane/jp 로 옮겼다.)
 REDUCED_TEST_BUNDLE = [
-    "tests/test_jp_source_gate.py",
-    "tests/test_jp_deploy_matches_census.py",
+    "tests/test_jp_lane_absent.py",
     "tests/test_deploy_assets.py",
     # 아래 둘은 owner 규칙 원문에 없지만 **더한다**(축소는 빼는 방향만 위험하다):
     # 게이트 자신의 배선 매니페스트와, 이 범위 판정기의 셀프테스트. CLAUDE.md 가 jp 범위에
@@ -543,18 +541,11 @@ def main(argv=None) -> int:
             # ② 게이트가 리터럴 지평을 다시 심지 않았는지를 강제한다. 변이시험 확인:
             # QS 를 옛 리터럴로 되돌리면 2건 FAIL. <1초.
             "tests/test_quarter_horizon.py",
-            # jp 레인 출처 게이트(2026-09-13 신설, UH-18). census 의 posted 행이 만료 호스트를
-            # 1차 출처로 쓰는지 · 죽은 URL 인지 · **점검을 돌리긴 했는지**(증거 신선도)를
-            # `build_jesr_page_json.py` self-check 가 막는다. 변이시험 5종(배선 끊기·만료호스트
-            # 집합 비우기·dead 분류 비우기·절차룰 면제 허용·예외 필수키 검사 제거)이 전부
-            # 발화하는 것을 확인했다. 여기 안 넣으면 "빌더를 안 돌리면 게이트도 안 돈다" 라
-            # 또 honor-system 이 된다. <1초.
-            "tests/test_jp_source_gate.py",
-            # 불변식 1번의 jp 판(2026-09-13 신설, UH-19). **배포 JSON = census 재빌드 결과**.
-            # census 만 고치고 jp/jesr_esr.json 을 재생성 안 한 커밋이 실제로 있었고(62eed63),
-            # jp 게이트가 빌더 실행 시에만 도는 구조라 아무 검사에도 안 걸렸다. 변이시험:
-            # 배포본 수치 하나를 흔들면 즉시 FAIL. <1초.
-            "tests/test_jp_deploy_matches_census.py",
+            # jp 레인 부재 가드(2026-10-22 신설, owner). jp 레인은 브랜치 lane/jp(워크트리 iq_jp)로
+            # 분리됐다 — 이 브랜치에 jp 파일이 다시 추적되면(옛 세션이 메인 폴더에서 jp 를 고치는 경우)
+            # 여기서 막는다. 문서로만 "여기서 jp 하지 마라" 라고 두면 honor-system 이다. <1초.
+            # (jp 출처 게이트·jp 배포=census 게이트 2종은 lane/jp 쪽 훅이 돌린다.)
+            "tests/test_jp_lane_absent.py",
             # 범위 판정기(§0)의 셀프테스트 + 변이시험(2026-09-13 신설). 게이트를 **좁히는**
             # 유일한 코드라 여기 안 넣으면 축소 목록이 조용히 넓어져도 아무도 못 잡는다 —
             # 한국 마스터가 무검사로 나가고 verdict 는 `gate-clear` 를 찍는다. <1초.

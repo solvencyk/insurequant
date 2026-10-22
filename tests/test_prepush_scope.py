@@ -51,8 +51,6 @@ MUST_BE_JP = [
     "TODO.md",
     "TODO_validation.md",
     "scripts/android_push_and_deploy.sh",
-    "tests/test_jp_source_gate.py",
-    "tests/test_jp_deploy_matches_census.py",
     "CLAUDE.md",
 ]
 
