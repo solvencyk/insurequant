@@ -27,6 +27,12 @@
 #   --from-origin 은 --branch 필수, 번들 모드는 번들 안의 ref 에서 읽는다.
 #   스크립트가 매 실행 브랜치명을 인쇄하고, origin 에 없으면 중단한다.
 #
+#   **범위 한정 배포**(2026-10-23): `--only <경로접두>` 를 주면 그 접두 아래(끝이 `/` 일 때) 또는 정확히
+#   그 파일 하나만 비교·배포·비공개 제거한다. 이 스크립트는 main 의 **모든** 파일을 브랜치 사본과 비교해
+#   다르면 덮기 때문에, 한국 파일이 낡은 브랜치(lane/jp)로 범위 없이 돌리면 라이브가 과거로 되돌아간다.
+#   bash scripts/android_push_and_deploy.sh --from-origin --branch lane/jp --only jp/
+#   lane/jp 는 `--only` 없이는 스크립트가 중단한다. 옵션을 안 주면 동작은 종전과 같다.
+#
 # 인증: HTTPS 는 비밀번호가 아니라 **토큰(PAT)** 이다.
 #   Username = solvencyk / Password = 토큰
 #   매번 묻는 게 귀찮으면: git config --global credential.helper store  (최초 1회만 입력)
@@ -46,6 +52,9 @@ set -eu
 #   --from-origin → --branch (또는 DEPLOY_BRANCH) 필수
 #   번들 모드     → 번들 안의 ref 에서 브랜치명을 읽는다(번들이 정답을 들고 있다)
 BRANCH="${DEPLOY_BRANCH:-}"
+# --only 범위 한정(위 사용법 참조). 비어 있으면 종전처럼 전부.
+ONLY=""
+ONLY_GIVEN=0
 # jp 비공개 프리뷰 (owner 2026-09-12): 저장소의 `jp/` 는 main 에서 아래 폴더명으로 배포한다(추측 불가 경로 + noindex).
 # 공개 시점에는 이 값을 빈 문자열로 바꾸고, main 의 옛 비공개 폴더는 그 라운드에서 `git rm -r` 로 지운다.
 # 주의: 이 저장소는 공개 repo 라 폴더명 자체는 repo 를 읽는 사람에게는 보인다 — "링크·검색으로 안 드러남" 수준의 비공개다.
@@ -72,6 +81,15 @@ is_private() {
   for _p in $PRIVATE_PATHS; do [ "$_p" = "$1" ] && return 0; done
   return 1
 }
+# 이 경로가 --only 범위 안인가. ONLY 가 비면 전부 안. ONLY 가 `/` 로 끝나면 그 아래 전부, 아니면 정확히 그 파일.
+in_scope() {
+  if [ -z "$ONLY" ]; then return 0; fi
+  if [ "$1" = "$ONLY" ]; then return 0; fi
+  case "$ONLY" in
+    */) case "$1" in "$ONLY"*) return 0 ;; esac ;;
+  esac
+  return 1
+}
 BUNDLE=""
 FROM_ORIGIN=0
 DEPLOY=1
@@ -81,6 +99,8 @@ while [ $# -gt 0 ]; do
     --no-deploy)   DEPLOY=0 ;;
     --branch)      shift; BRANCH="${1:-}" ;;
     --branch=*)    BRANCH="${1#--branch=}" ;;
+    --only)        shift; ONLY="${1:-}"; ONLY_GIVEN=1 ;;
+    --only=*)      ONLY="${1#--only=}"; ONLY_GIVEN=1 ;;
     -*)            printf '모르는 옵션: %s\n' "$1" >&2; exit 2 ;;
     *)             BUNDLE="$1" ;;
   esac
@@ -116,7 +136,21 @@ else
   (origin 의 브랜치 목록: git ls-remote --heads origin)"
 fi
 
+if [ "$ONLY_GIVEN" -eq 1 ]; then
+  case "$ONLY" in
+    ""|/*|*..*) die "--only 값이 이상하다: '$ONLY' (저장소 상대경로여야 한다. 예: jp/)" ;;
+  esac
+fi
+# lane/jp(jp 레인)는 한국 파일이 낡은 사본이다(2026-10-22 분리). 범위 없이 돌리면 main 의 한국 파일이
+# 그 낡은 사본으로 덮여 라이브가 과거로 되돌아간다 — 그래서 범위 한정 없이는 아예 시작하지 않는다.
+case "$BRANCH" in
+  lane/jp|lane/jp/*)
+    [ -n "$ONLY" ] || die "$BRANCH 는 --only 없이 배포할 수 없다(한국 파일이 낡은 사본이라 라이브가 과거로 되돌아간다).
+  bash scripts/android_push_and_deploy.sh --from-origin --branch $BRANCH --only jp/" ;;
+esac
+
 printf '\n배포 브랜치: %s%s\n' "$BRANCH" "$([ "$FROM_ORIGIN" -eq 1 ] && printf ' (origin 에서 직접, 번들 없음)')"
+[ -z "$ONLY" ] || printf '배포 범위 한정(--only): %s 아래만 비교·배포·비공개 제거한다.\n' "$ONLY"
 
 if [ "$FROM_ORIGIN" -eq 1 ]; then
   step "원격 동기화"
@@ -156,6 +190,7 @@ while IFS= read -r f; do
   is_private "$f" && continue                       # 비공개 경로는 갱신 대상이 아니다(아래에서 지운다)
   src="$f"
   case "$f" in "$JP_PRIVATE_DIR"/*) [ -n "$JP_PRIVATE_DIR" ] && src="jp/${f#"$JP_PRIVATE_DIR"/}" ;; esac
+  in_scope "$src" || continue                        # --only 범위 밖은 비교조차 하지 않는다
   a=$(git rev-parse "origin/main:$f" 2>/dev/null) || continue
   b=$(git rev-parse "$BRANCH:$src" 2>/dev/null) || continue
   [ "$a" = "$b" ] || CHANGED="$CHANGED$src
@@ -169,6 +204,7 @@ EOF
 # 여기 적힌 파일은 브랜치에 있고 main 에 없으면 배포 목록에 넣는다.
 NEW_FILES="LICENSE theme.js compare.html data/compare/panel_compare.json data/company_segment.json data/csm_combo/panel_csm_combo.json jp/index.html jp/jesr_esr.json jp/jesr.html jp/jgaap.html jp/disclosure.html jp/jesr_app.js jp/jp.css jp/jesr_detail.json jp/terms.html jp/report-widget.ja.js public_exports/보험계약부채.json public_exports/보험금예실차비율.json kics_capital_securities_timeline.json kics_tier1_utilization.json kics_tier2_utilization.json kics_forward_capital.json public_exports/기본자본소진율.json public_exports/보완자본소진율.json public_exports/자본비율전망.json"
 for f in $NEW_FILES; do
+  in_scope "$f" || continue
   is_private "$f" && continue
   git rev-parse "origin/main:$(deploy_path "$f")" >/dev/null 2>&1 && continue
   git rev-parse "$BRANCH:$f" >/dev/null 2>&1 || continue
@@ -179,6 +215,7 @@ done
 # main 에 아직 남아 있는 비공개 경로 -> 이번 배포 커밋에서 지운다.
 REMOVE=""
 for f in $PRIVATE_PATHS; do
+  in_scope "$f" || continue
   if git rev-parse "origin/main:$f" >/dev/null 2>&1; then REMOVE="$REMOVE$f
 "; fi
 done
@@ -200,7 +237,7 @@ trap cleanup EXIT
 ( cd "$WT"
   git checkout -B main origin/main >/dev/null 2>&1
   # 비공개 프리뷰: main 에 공개 경로 jp/ 가 남아 있으면 지운다(첫 전환 라운드에만 해당).
-  if [ -n "$JP_PRIVATE_DIR" ] && [ -d jp ]; then git rm -r -q jp; fi
+  if [ -n "$JP_PRIVATE_DIR" ] && [ -d jp ] && in_scope "jp/"; then git rm -r -q jp; fi
   # 비공개 경로 제거(작업 브랜치에는 그대로 있다 — main 에서만 지운다)
   while IFS= read -r f; do
     [ -n "$f" ] || continue
