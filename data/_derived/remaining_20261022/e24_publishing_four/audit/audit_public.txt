@@ -1,0 +1,7 @@
+public json top: list {"원수사명": "메리츠화재해상보험", "티커": "000060", "생손보여부": "손해보험", "항목번호": 1, "항목명": "기초 CSM", "공시분기": "2023.1Q", "값": 96376.4, "값_당분기": 96376.4}
+CSM워터폴 xlsx_HEAD public rows 2358 xlsx rows 2358 cols 8 cells 18864 cell diffs public vs xlsx_HEAD : 0
+CSM워터폴 xlsx_NOW public rows 2358 xlsx rows 2358 cols 8 cells 18864 cell diffs public vs xlsx_NOW : 124
+손익분해PL xlsx_HEAD public rows 13801 xlsx rows 13801 cols 8 cells 110408 cell diffs public vs xlsx_HEAD : 154
+손익분해PL xlsx_NOW public rows 13801 xlsx rows 13801 cols 8 cells 110408 cell diffs public vs xlsx_NOW : 620
+신계약CSM배수 xlsx_HEAD public rows 393 xlsx rows 393 cols 10 cells 3930 cell diffs public vs xlsx_HEAD : 0
+신계약CSM배수 xlsx_NOW public rows 393 xlsx rows 393 cols 10 cells 3930 cell diffs public vs xlsx_NOW : 24

@@ -1,0 +1,2 @@
+OK   data\compare\panel_compare.json: 238,742 bytes, identical to a rebuild from the masters
+rc=0

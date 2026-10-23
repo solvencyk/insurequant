@@ -2,6 +2,11 @@
 
 ## 2026-10-22 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
+- **2026-10-22 parser `acdb2fe9`(최신 비교열 19버킷 · 7사 KR0005 KR0032 KR0070 KR0082 KR0083 KR0087 KR0104) 파생 산출물 재생성 · 배포 완료(push `2a05378c`, main `80ba3c1d`, 라이브 4파일 바이트 일치 · build_id `acdb2fe9` 확인, 콘솔 오류 0)** — xlsx `손익분해PL` 1시트만 cherry-pick 386셀(값 171 + 값_당분기 215), 전부 7사, 나머지 18시트 값 동일(수식·피벗·차트 거부 없음).
+  `panel_compare.json` 55값(보험손익 1 · 투자손익 19 · 당기순이익 18 · ROE 17 중 사별 51 + 그룹 중앙값 4), 사별 값은 전부 7사. `panel_csm_combo.json` 은 PL_breakdown 을 읽지 않아 `--check` 만(불변). 공개본 `손익분해PL` 386셀(7사) + manifest build_id `acdb2fe9`.
+  `check_master_xlsx_drift` RED 1 -> 0 · `validate_data_contract` RED 1 -> 0 · YELLOW 169 불변 · `validate_master_tables --no-build` 요약 불변 · 골든 3종 · `test_rule_coverage_manifest` 104 · live_artifacts RED=0.
+  남은 것: 재커밋 뒤 `export_public_sheets.py` 로 build_id 재생성(HEAD 가 바뀌므로). 증빙 `data/_derived/remaining_20261022/p3_resync/`.
+
 - **2026-10-22 교보생명(KR0073) 마스터 재교정 2건(parser `e01f1395` 기타포괄손익 13셀 · `59e6e459` 17BS 6셀 · 보험계약부채 3셀) 파생 산출물 재생성 · 배포 완료(push `ff12b9ef`, main `66af419c`, 라이브 8파일 바이트 일치 · build_id `9dfd28f9` 확인, 콘솔 오류 0)** — xlsx 시트 3개만 cherry-pick(`손익분해PL` 31셀 · `17BS` 6셀 · `보험계약부채` 4행 교체=값 3셀+기준표시/비고), 전부 KR0073, 나머지 16시트 값 동일.
   `panel_csm_combo.json` 3값 + `meta.restated` 1(2023.4Q 소급재작성 표지) · `panel_compare.json` 7값(ROE 4 · 자본 1 · 자산 2), 전부 KR0073. 공개본 3시트(교보 28행) + manifest build_id `9dfd28f9`. `check_master_xlsx_drift` RED 4 -> 0, `validate_data_contract` RED=0 · YELLOW 169 불변,
   `validate_master_tables --no-build` 불변 · 골든 3종 · `test_rule_coverage_manifest` 104 통과. 남은 것: 재커밋 뒤 `export_public_sheets.py` 로 build_id 재생성(HEAD 가 바뀌므로). 증빙 `data/_derived/remaining_20261022/p2_resync/`.

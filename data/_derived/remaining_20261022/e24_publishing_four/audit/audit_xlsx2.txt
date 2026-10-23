@@ -1,0 +1,24 @@
+
+== CSM워터폴 xlsx rows 2358 json rows 2358 pre-load json rows 2358 dups in key (json) 0
+ keyset xlsx==json True xlsx-json 0 json-xlsx 0
+ cells compared 4716 mismatch xlsx vs JSON(HEAD, committed) 0
+ JSON cells changed pre-load->HEAD: 124  by co {'KR0099': 34, 'KR0070': 43, 'KR0009': 38, 'KR0003': 9}
+ xlsx cells changed HEAD->NOW: 124  by co {'KR0099': 34, 'KR0070': 43, 'KR0009': 38, 'KR0003': 9}
+ A-B 0  B-A 0
+ value->blank 0  blank->value 0
+ sample value->blank: []
+ value->blank by co/quarter {}
+ NOW raw types of changed cells (col idx,type): {(8, 'str'): 66, (7, 'float'): 51, (7, 'int'): 7}
+ typical col8 type among unchanged: {'str': 1992, 'NoneType': 300}
+
+== 손익분해PL xlsx rows 13801 json rows 13801 pre-load json rows 13801 dups in key (json) 0
+ keyset xlsx==json False xlsx-json 154 json-xlsx 154
+ cells compared 27294 mismatch xlsx vs JSON(HEAD, committed) 0
+ JSON cells changed pre-load->HEAD: 466  by co {'KR0009': 135, 'KR0099': 143, 'KR0070': 158, 'KR0003': 30}
+ xlsx cells changed HEAD->NOW: 466  by co {'KR0009': 135, 'KR0099': 143, 'KR0070': 158, 'KR0003': 30}
+ A-B 0  B-A 0
+ value->blank 23  blank->value 205
+ sample value->blank: [('KR0003', 1, '보험손익', '2023.4Q', 8, '14146.452562'), ('KR0003', 4, '원수 CSM상각', '2023.4Q', 8, '55230.0'), ('KR0003', 17, '투자손익', '2023.4Q', 8, '37241.776652'), ('KR0003', 19, '보험금융손익', '2023.4Q', 8, '-37343.769511'), ('KR0003', 20, '영업이익', '2023.4Q', 8, '51388.229214'), ('KR0003', 22, '세전이익', '2023.4Q', 8, '51743.644326'), ('KR0003', 23, '법인세', '2023.4Q', 8, '12986.198744'), ('KR0003', 24, '당기순이익', '2023.4Q', 8, '38757.445582'), ('KR0003', 25, '기타포괄손익', '2023.4Q', 8, '-128445.081761'), ('KR0003', 26, 'FVOCI 채무증권 평가손익', '2023.4Q', 8, '299329.064947'), ('KR0003', 27, '보험계약금융손익(OCI)', '2023.4Q', 8, '-600799.981244'), ('KR0003', 31, '총포괄손익', '2023.4Q', 8, '-89687.636179')]
+ value->blank by co/quarter {('KR0003', '2023.4Q'): 12, ('KR0009', '2023.4Q'): 11}
+ NOW raw types of changed cells (col idx,type): {(7, 'int'): 72, (7, 'float'): 137, (8, 'str'): 234, (8, 'NoneType'): 23}
+ typical col8 type among unchanged: {'str': 10824, 'NoneType': 2720}

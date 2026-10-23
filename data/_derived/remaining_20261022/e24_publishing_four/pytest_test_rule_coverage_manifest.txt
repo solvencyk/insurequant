@@ -1,0 +1,16 @@
+.........................................F.............................. [ 68%]
+.................................                                        [100%]
+================================== FAILURES ===================================
+_______________ test_public_export_clean_state_has_no_findings ________________
+
+    def test_public_export_clean_state_has_no_findings():
+        """지금 상태에서 발견 0건이어야 한다 — 아니면 스냅샷 재생성이 밀린 것이다."""
+        rows = _pe_run()
+>       assert not rows, [f"{r['rule']}|{r['key']}: {r['detail'][:120]}" for r in rows]
+E       AssertionError: ["PUBLIC_EXPORT_DRIFT|CSM워터폴: 값이 다른 셀 124건 — ('현대해상', '001450', '손해보험', '2023.3Q', 1, '기초 CSM')|값: 공개=88281.1 vs 마스터=8...다른 셀 466건 — ('KB라이프생명', None, '생명보험', '2023.3Q', 18, '투자이익')|값_당분기: 공개=None vs 마스터=94513.0 / ('현대해상', None, '손해보험', '"]
+E       assert not [{'artifact': 'public_exports/CSM워터폴.json', 'detail': "값이 다른 셀 124건 — ('현대해상', '001450', '손해보험', '2023.3Q', 1, '기초 CSM...9.0. 마스터가 커밋됐는데 스냅샷 재생성이 밀렸다: python scripts/export_public_sheets.py", 'key': '손익분해PL', 'rule': 'PUBLIC_EXPORT_DRIFT'}]
+
+tests\test_rule_coverage_manifest.py:1198: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_rule_coverage_manifest.py::test_public_export_clean_state_has_no_findings
+1 failed, 104 passed in 153.30s (0:02:33)

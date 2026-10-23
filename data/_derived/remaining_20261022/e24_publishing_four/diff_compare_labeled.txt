@@ -1,0 +1,56 @@
+csm_closing  KR0003 롯데손해보험 2023.4Q: 23966 -> 23861
+csm_closing  KR0009 현대해상 2023.1Q: 89209 -> 84533
+csm_closing  KR0009 현대해상 2023.2Q: 91361 -> 85984
+csm_closing  KR0009 현대해상 2023.4Q: 91424 -> 91423
+csm_closing  KR0070 에이비엘생명보험 2023.1Q: 7550 -> 7898
+csm_closing  KR0070 에이비엘생명보험 2023.2Q: 8840 -> 8666
+csm_closing  KR0070 에이비엘생명보험 2023.3Q: 9731 -> 8439
+csm_closing  KR0099 KB라이프생명 2023.1Q: 31516 -> 31614
+csm_closing  KR0099 KB라이프생명 2023.2Q: 31906 -> 32122
+csm_closing  KR0099 KB라이프생명 2023.3Q: 32140 -> 32385
+nb_multiple  KR0009 현대해상 2023.1Q: 13.4 -> 12.4
+nb_multiple  KR0009 현대해상 2023.2Q: 12.5 -> 11.5
+nb_multiple  KR0070 에이비엘생명보험 2023.1Q: 12.5 -> 13.1
+nb_multiple  KR0070 에이비엘생명보험 2023.2Q: 12.1 -> 12.5
+nb_multiple  KR0070 에이비엘생명보험 2023.3Q: 11.3 -> 11.6
+ins_profit   KR0003 롯데손해보험 2023.4Q: 4685 -> 4615
+ins_profit   KR0009 현대해상 2023.1Q: 2585 -> 2460
+ins_profit   KR0009 현대해상 2023.2Q: 4995 -> 4157
+ins_profit   KR0009 현대해상 2023.4Q: 5265 -> 5266
+ins_profit   KR0070 에이비엘생명보험 2023.1Q: 170 -> 112
+ins_profit   KR0070 에이비엘생명보험 2023.2Q: 379 -> 274
+ins_profit   KR0070 에이비엘생명보험 2023.3Q: 525 -> 424
+ins_profit   KR0099 KB라이프생명 2023.1Q: None -> 566
+ins_profit   KR0099 KB라이프생명 2023.2Q: None -> 1402
+ins_profit   KR0099 KB라이프생명 2023.3Q: 2071 -> 2151
+net_income   KR0003 롯데손해보험 2023.4Q: 3016 -> 2856
+net_income   KR0009 현대해상 2023.1Q: 3336 -> 3153
+net_income   KR0009 현대해상 2023.2Q: 5780 -> 4970
+net_income   KR0009 현대해상 2023.4Q: 8057 -> 7723
+net_income   KR0070 에이비엘생명보험 2023.1Q: 77 -> 106
+net_income   KR0070 에이비엘생명보험 2023.2Q: 428 -> 473
+net_income   KR0070 에이비엘생명보험 2023.3Q: 375 -> 390
+net_income   KR0070 에이비엘생명보험 2023.4Q: 804 -> 912
+net_income   KR0099 KB라이프생명 2023.1Q: 1298 -> 1326
+net_income   KR0099 KB라이프생명 2023.2Q: 2348 -> 2350
+net_income   KR0099 KB라이프생명 2023.3Q: 2969 -> 2959
+nb_csm       KR0009 현대해상 2023.1Q: 4947 -> 4573
+nb_csm       KR0009 현대해상 2023.2Q: 9542 -> 8756
+nb_csm       KR0070 에이비엘생명보험 2023.1Q: 604 -> 634
+nb_csm       KR0070 에이비엘생명보험 2023.2Q: 1655 -> 1713
+nb_csm       KR0070 에이비엘생명보험 2023.3Q: 2778 -> 2854
+inv_profit   KR0003 롯데손해보험 2023.4Q: -722 -> -861
+inv_profit   KR0009 현대해상 2023.1Q: None -> 1750
+inv_profit   KR0009 현대해상 2023.2Q: None -> 2572
+inv_profit   KR0009 현대해상 2023.4Q: 4999 -> 4550
+inv_profit   KR0070 에이비엘생명보험 2023.1Q: None -> 123
+inv_profit   KR0070 에이비엘생명보험 2023.2Q: None -> 512
+inv_profit   KR0070 에이비엘생명보험 2023.3Q: 216 -> 338
+inv_profit   KR0070 에이비엘생명보험 2023.4Q: 937 -> 1077
+inv_profit   KR0099 KB라이프생명 2023.1Q: None -> 1197
+inv_profit   KR0099 KB라이프생명 2023.2Q: None -> 1626
+inv_profit   KR0099 KB라이프생명 2023.3Q: 1899 -> 1804
+changed values: 52
+meta identical
+companies identical
+loss_curve identical

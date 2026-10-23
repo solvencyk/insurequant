@@ -1,0 +1,7 @@
+............                                                             [100%]
+============================== warnings summary ===============================
+tests/test_deploy_assets.py::test_every_python_file_parses
+  <unknown>:3: SyntaxWarning: invalid escape sequence '\s'
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+12 passed, 1 warning in 18.33s

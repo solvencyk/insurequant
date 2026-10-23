@@ -1,0 +1,46 @@
+top-level equal parts: {'meta': True, 'companies': True, 'metrics': False, 'loss_curve': True}
+metric ids same/order True
+changed leaf values (v/v_pre): 52 ; changed other fields: []
+by metric {('csm_closing', 'v'): 10, ('nb_multiple', 'v'): 5, ('ins_profit', 'v'): 10, ('net_income', 'v'): 11, ('nb_csm', 'v'): 5, ('inv_profit', 'v'): 11}
+by company {'KR0003': 4, 'KR0099': 12, 'KR0009': 16, 'KR0070': 20}
+NOT in FOUR: []
+blank->value: 8  value->blank: 0
+changed values checked against masters: ok 52 bad 0
+full-grid six metrics: cells 3948 mismatch 0
+
+Top movers (억원):
+  csm_closing  KR0009 2023.2Q 91361 -> 85984  (Δ -5377)
+  csm_closing  KR0009 2023.1Q 89209 -> 84533  (Δ -4676)
+  inv_profit   KR0009 2023.2Q None -> 2572  (Δ None)
+  inv_profit   KR0009 2023.1Q None -> 1750  (Δ None)
+  inv_profit   KR0099 2023.2Q None -> 1626  (Δ None)
+  ins_profit   KR0099 2023.2Q None -> 1402  (Δ None)
+  csm_closing  KR0070 2023.3Q 9731 -> 8439  (Δ -1292)
+  inv_profit   KR0099 2023.1Q None -> 1197  (Δ None)
+  ins_profit   KR0009 2023.2Q 4995 -> 4157  (Δ -838)
+  net_income   KR0009 2023.2Q 5780 -> 4970  (Δ -810)
+  nb_csm       KR0009 2023.2Q 9542 -> 8756  (Δ -786)
+  ins_profit   KR0099 2023.1Q None -> 566  (Δ None)
+  inv_profit   KR0070 2023.2Q None -> 512  (Δ None)
+  inv_profit   KR0009 2023.4Q 4999 -> 4550  (Δ -449)
+
+median/na fields changed: []
+
+combo meta equal True companies keys equal True
+columns ['csm_gen', 'csm_vfa', 'bel_gen', 'bel_vfa', 'ra_gen', 'ra_vfa', 'paa', 'lrc_total', 'nb_csm', 'lic_total', 'bs20', 'lic_bel', 'lic_ra', 'lic_unsplit', 'lic_bel_calc', 'lic_ra_calc', 'lic_kind', 'lrc_dart']
+combo changed cells 7 companies {'KR0009': 3, 'KR0070': 4} cols {'nb_csm': 7}
+   ('KR0009', '2023.1Q', 'nb_csm', 4946.7, 4572.8)
+   ('KR0009', '2023.2Q', 'nb_csm', 4595.4, 4183.1)
+   ('KR0009', '2023.3Q', 'nb_csm', 3679.3, 4465.5)
+   ('KR0070', '2023.1Q', 'nb_csm', 604.3, 634.3)
+   ('KR0070', '2023.2Q', 'nb_csm', 1051.0, 1078.8)
+   ('KR0070', '2023.3Q', 'nb_csm', 1123.2, 1140.5)
+   ('KR0070', '2023.4Q', 'nb_csm', 697.4, 622.3)
+combo nb_csm vs NB 당분기: cells 567 mismatch 0
+  combo spot KR0009 2023.1Q new 4572.8 NB master 당분기 4572.8
+  combo spot KR0009 2023.2Q new 4183.1 NB master 당분기 4183.1
+  combo spot KR0009 2023.3Q new 4465.5 NB master 당분기 4465.5
+  combo spot KR0070 2023.1Q new 634.3 NB master 당분기 634.3
+  combo spot KR0070 2023.2Q new 1078.8 NB master 당분기 1078.8
+  combo spot KR0070 2023.3Q new 1140.5 NB master 당분기 1140.5
+  combo spot KR0070 2023.4Q new 622.3 NB master 당분기 622.3

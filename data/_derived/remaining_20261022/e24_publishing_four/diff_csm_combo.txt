@@ -1,0 +1,10 @@
+leaf diffs: 7
+  ['companies', 'KR0009'] 3
+  ['companies', 'KR0070'] 4
+    companies/KR0009/q/2023.1Q/8 4946.7 -> 4572.8
+    companies/KR0009/q/2023.2Q/8 4595.4 -> 4183.1
+    companies/KR0009/q/2023.3Q/8 3679.3 -> 4465.5
+    companies/KR0070/q/2023.1Q/8 604.3 -> 634.3
+    companies/KR0070/q/2023.2Q/8 1051.0 -> 1078.8
+    companies/KR0070/q/2023.3Q/8 1123.2 -> 1140.5
+    companies/KR0070/q/2023.4Q/8 697.4 -> 622.3
