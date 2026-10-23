@@ -1175,9 +1175,9 @@
       "원보험사코드": "KR0070",
       "항목번호": 4,
       "공시분기": "2023.1Q",
-      "값": 22664.0,
-      "was": 3364.0,
-      "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회수 관련 보험료 배분액은...' 표현이라 미매칭 -> extract_tier2_life_old 자기가드 통과 -> 제네릭 extract_tier2_life 로 폴백 -> _pick_life_table 이 '재보험수익' substring 을 '보험수익' 으로 오매칭해 출재(재보험) 레그를 원수로 잘못 뽑음. 진짜 원수 CSM상각은 별개 노트(전환방법별 CSM 변동표, '제공된 서비스 관련 당기손익 인식' 행, 합계열)에 있고 두 함수 모두 _is_rollforward() 로 그 노트를 건너뜀 -- raw 직접 재검증(합계열)으로 override, 코드 수정은 공용함수 blast-radius 커서 별건 후속. 2026-08-17."
+      "값": 22411.0,
+      "was": 22664.0,
+      "note": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv · 분류 ⓐ 원 인쇄값): 이전 gold 값 22664.0, 이전 was 3364.0, 이전 note 원문 「inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회수 관련 보험료 배분액은...' 표현이라 미매칭 -> extract_tier2_life_old 자기가드 통과 -> 제네릭 extract_tier2_life 로 폴백 -> _pick_life_table 이 '재보험수익' substring 을 '보험수익' 으로 오매칭해 출재(재보험) 레그를 원수로 잘못 뽑음. 진짜 원수 CSM상각은 별개 노트(전환방법별 CSM 변동표, '제공된 서비스 관련 당기손익 인식' 행, 합계열)에 있고 두 함수 모두 _is_rollforward() 로 그 노트를 건너뜀 -- raw 직접 재검증(합계열)으로 override, 코드 수정은 공용함수 blast-radius 커서 별건 후속. 2026-08-17.」. 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 22411.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L41498. 현재 마스터값(gold) 22664.0 는 원 공시 rcept 20230515002903(단위 백만원) 별도 기준 인쇄값(22664.0, 원문 L26968「해당 기간에 서비스의 이전으로 당기손익에 인식한 보험계약마진 금액」22,664)과 일치. 변동 -253.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
     },
     {
       "원보험사코드": "KR0070",
@@ -9394,6 +9394,1670 @@
       "값": -2582.345343,
       "was": null,
       "note": "2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q2 rcept 20240813000860 의 전기 2023.2Q 누적(6월) 열 → -2582.345343 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml L67347 외 합산 6줄(증거 e21_plan.json parts). 단위 원. 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 1,
+      "공시분기": "2023.1Q",
+      "값": 56633.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 56633.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25492. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 2,
+      "공시분기": "2023.1Q",
+      "값": 66201.0,
+      "was": 65577.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 66201.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25526 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 65577.0. 변동 624.0. 산식: 3 + 8. 피연산자: 8번=-2146.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 3,
+      "공시분기": "2023.1Q",
+      "값": 68347.0,
+      "was": 67723.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 68347.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25526 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 67723.0. 변동 624.0. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 4,
+      "공시분기": "2023.1Q",
+      "값": 68479.0,
+      "was": 68345.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 68479.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L38391. 변경 전 마스터값 68345.0. 변동 134.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 7,
+      "공시분기": "2023.1Q",
+      "값": -22959.0,
+      "was": -23449.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -22959.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25526 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 -23449.0. 변동 490.0. 산식: 3 - (4+5+6). 피연산자: 4번=68479.0(plan), 5번=7750.0(master HEAD), 6번=15077.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 15,
+      "공시분기": "2023.1Q",
+      "값": 0.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 0.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml 인쇄 줄 없음(빌더 기본값 또는 마스터 피연산자). 변동 신규. 산식: no 기타영업수익 line in the insurance section of the statement -> builder default 0.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 16,
+      "공시분기": "2023.1Q",
+      "값": 9568.0,
+      "was": 9500.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 9568.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25611. 변경 전 마스터값 9500.0. 변동 68.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 17,
+      "공시분기": "2023.1Q",
+      "값": 119675.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 119675.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25628 외 합산 2줄(증거 e23_plan_kblife.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 18,
+      "공시분기": "2023.1Q",
+      "값": 583923.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 583923.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25628 외 합산 4줄(증거 e23_plan_kblife.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 19,
+      "공시분기": "2023.1Q",
+      "값": -464248.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -464248.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25931 외 합산 2줄(증거 e23_plan_kblife.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 20,
+      "공시분기": "2023.1Q",
+      "값": 176308.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 176308.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25965. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 21,
+      "공시분기": "2023.1Q",
+      "값": -344.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -344.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L25982. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 22,
+      "공시분기": "2023.1Q",
+      "값": 175964.0,
+      "was": 172200.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 175964.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26033. 변경 전 마스터값 172200.0. 변동 3764.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 23,
+      "공시분기": "2023.1Q",
+      "값": 43352.0,
+      "was": 42400.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 43352.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26050. 변경 전 마스터값 42400.0. 변동 952.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 24,
+      "공시분기": "2023.1Q",
+      "값": 132612.0,
+      "was": 129800.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 132612.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26067. 변경 전 마스터값 129800.0. 변동 2812.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 25,
+      "공시분기": "2023.1Q",
+      "값": 64067.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 64067.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26084. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 26,
+      "공시분기": "2023.1Q",
+      "값": 570055.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 570055.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26169. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 27,
+      "공시분기": "2023.1Q",
+      "값": -506711.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -506711.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26186. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 28,
+      "공시분기": "2023.1Q",
+      "값": 29.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 29.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26220. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 29,
+      "공시분기": "2023.1Q",
+      "값": 1911.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 1911.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26135. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 30,
+      "공시분기": "2023.1Q",
+      "값": -1118.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -1118.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26203. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 31,
+      "공시분기": "2023.1Q",
+      "값": 196679.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 196679.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26237. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 32,
+      "공시분기": "2023.1Q",
+      "값": -99.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -99.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L26084 외 합산 6줄(증거 e23_plan_kblife.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 1,
+      "공시분기": "2023.2Q",
+      "값": 140176.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 140176.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28573. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 2,
+      "공시분기": "2023.2Q",
+      "값": 156939.0,
+      "was": 152021.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 156939.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28619 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 152021.0. 변동 4918.0. 산식: 3 + 8. 피연산자: 8번=-2603.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 3,
+      "공시분기": "2023.2Q",
+      "값": 159542.0,
+      "was": 154624.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 159542.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28619 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 154624.0. 변동 4918.0. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": 140581.0,
+      "was": 139938.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 140581.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L42521. 변경 전 마스터값 139938.0. 변동 643.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 7,
+      "공시분기": "2023.2Q",
+      "값": -14775.0,
+      "was": -19050.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -14775.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28619 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 -19050.0. 변동 4275.0. 산식: 3 - (4+5+6). 피연산자: 4번=140581.0(plan), 5번=15918.0(master HEAD), 6번=17818.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 15,
+      "공시분기": "2023.2Q",
+      "값": 0.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 0.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml 인쇄 줄 없음(빌더 기본값 또는 마스터 피연산자). 변동 신규. 산식: no 기타영업수익 line in the insurance section of the statement -> builder default 0.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 16,
+      "공시분기": "2023.2Q",
+      "값": 16763.0,
+      "was": 16800.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 16763.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28734. 변경 전 마스터값 16800.0. 변동 -37.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 17,
+      "공시분기": "2023.2Q",
+      "값": 162557.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 162557.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28757. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 18,
+      "공시분기": "2023.2Q",
+      "값": 859465.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 859465.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28757 외 합산 5줄(증거 e23_plan_kblife.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 19,
+      "공시분기": "2023.2Q",
+      "값": -696908.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -696908.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L28803 외 합산 4줄(증거 e23_plan_kblife.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 20,
+      "공시분기": "2023.2Q",
+      "값": 302733.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 302733.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29231. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 21,
+      "공시분기": "2023.2Q",
+      "값": -1002.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -1002.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29254. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 22,
+      "공시분기": "2023.2Q",
+      "값": 301731.0,
+      "was": 301500.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 301731.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29323. 변경 전 마스터값 301500.0. 변동 231.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 23,
+      "공시분기": "2023.2Q",
+      "값": 66693.0,
+      "was": 66700.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 66693.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29346. 변경 전 마스터값 66700.0. 변동 -7.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 24,
+      "공시분기": "2023.2Q",
+      "값": 235038.0,
+      "was": 234800.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 235038.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29369. 변경 전 마스터값 234800.0. 변동 238.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 25,
+      "공시분기": "2023.2Q",
+      "값": 115434.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 115434.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29392. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 26,
+      "공시분기": "2023.2Q",
+      "값": 143966.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 143966.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29507. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 27,
+      "공시분기": "2023.2Q",
+      "값": -30834.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -30834.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29530. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 28,
+      "공시분기": "2023.2Q",
+      "값": 62.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 62.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29576. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 29,
+      "공시분기": "2023.2Q",
+      "값": 2607.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 2607.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29461. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 30,
+      "공시분기": "2023.2Q",
+      "값": -366.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -366.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29553. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 31,
+      "공시분기": "2023.2Q",
+      "값": 350472.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 350472.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29599. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 32,
+      "공시분기": "2023.2Q",
+      "값": -1.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -1.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml L29392 외 합산 6줄(증거 e23_plan_kblife.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 1,
+      "공시분기": "2023.3Q",
+      "값": 215120.0,
+      "was": 207078.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 215120.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L24681. 변경 전 마스터값 207078.0. 변동 8042.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 2,
+      "공시분기": "2023.3Q",
+      "값": 239310.0,
+      "was": 231267.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 239310.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L24727 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 231267.0. 변동 8043.0. 산식: 3 + 8. 피연산자: 8번=-2721.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 3,
+      "공시분기": "2023.3Q",
+      "값": 242031.0,
+      "was": 233988.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 242031.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L24727 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 233988.0. 변동 8043.0. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 4,
+      "공시분기": "2023.3Q",
+      "값": 214229.0,
+      "was": 213049.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 214229.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L38495. 변경 전 마스터값 213049.0. 변동 1180.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 7,
+      "공시분기": "2023.3Q",
+      "값": -6967.0,
+      "was": -13830.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -6967.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L24727 외 합산 2줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 -13830.0. 변동 6863.0. 산식: 3 - (4+5+6). 피연산자: 4번=214229.0(plan), 5번=24345.0(master HEAD), 6번=10424.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 17,
+      "공시분기": "2023.3Q",
+      "값": 180415.0,
+      "was": 189878.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 180415.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L24865. 변경 전 마스터값 189878.0. 변동 -9463.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 19,
+      "공시분기": "2023.3Q",
+      "값": -773564.0,
+      "was": -764100.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -773564.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L24911 외 합산 4줄(증거 e23_plan_kblife.json parts). 변경 전 마스터값 -764100.0. 변동 -9464.0. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 20,
+      "공시분기": "2023.3Q",
+      "값": 395535.0,
+      "was": 396956.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 395535.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L25342. 변경 전 마스터값 396956.0. 변동 -1421.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 22,
+      "공시분기": "2023.3Q",
+      "값": 394831.0,
+      "was": 396252.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 394831.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L25431. 변경 전 마스터값 396252.0. 변동 -1421.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 23,
+      "공시분기": "2023.3Q",
+      "값": 98969.0,
+      "was": 99378.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 98969.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L25454. 변경 전 마스터값 99378.0. 변동 -409.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 24,
+      "공시분기": "2023.3Q",
+      "값": 295862.0,
+      "was": 296874.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 295862.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L25477. 변경 전 마스터값 296874.0. 변동 -1012.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 25,
+      "공시분기": "2023.3Q",
+      "값": 283175.0,
+      "was": 290911.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 283175.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L25500. 변경 전 마스터값 290911.0. 변동 -7736.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 27,
+      "공시분기": "2023.3Q",
+      "값": 528267.0,
+      "was": 536004.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 528267.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L25638. 변경 전 마스터값 536004.0. 변동 -7737.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 31,
+      "공시분기": "2023.3Q",
+      "값": 579037.0,
+      "was": 587785.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 579037.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml L25707. 변경 전 마스터값 587785.0. 변동 -8748.0. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 1,
+      "공시분기": "2023.4Q",
+      "값": 461540.038638,
+      "was": 468498.419718,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 461540.038638 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L6538. 변경 전 마스터값 468498.419718. 변동 -6958.38108. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 2,
+      "공시분기": "2023.4Q",
+      "값": 486250.0,
+      "was": 493210.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 486250.0 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L25411 외 합산 4줄(증거 e23_plan_lotte.json parts). 변경 전 마스터값 493210.0. 변동 -6960.0. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 3,
+      "공시분기": "2023.4Q",
+      "값": 570025.0,
+      "was": 578755.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 570025.0 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L25411 외 합산 2줄(증거 e23_plan_lotte.json parts). 변경 전 마스터값 578755.0. 변동 -8730.0. 산식: 총 보험수익(장기) - 총 보험비용(장기). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 185905.0,
+      "was": 186853.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 185905.0 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L25387. 변경 전 마스터값 186853.0. 변동 -948.0. 산식: |보험계약마진 상각(보험수익 구간, 장기)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 7,
+      "공시분기": "2023.4Q",
+      "값": 313279.0,
+      "was": 321061.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 313279.0 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L25411 외 합산 3줄(증거 e23_plan_lotte.json parts). 변경 전 마스터값 321061.0. 변동 -7782.0. 산식: 3 - (4+5+6). 피연산자: 5번=19517.0(master HEAD), 6번=51324.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 8,
+      "공시분기": "2023.4Q",
+      "값": -83775.0,
+      "was": -85545.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -83775.0 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L25499 외 합산 2줄(증거 e23_plan_lotte.json parts). 변경 전 마스터값 -85545.0. 변동 1770.0. 산식: 총 재보험수익(장기) - 총 재보험비용(장기). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 9,
+      "공시분기": "2023.4Q",
+      "값": -1973.0,
+      "was": -1756.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -1973.0 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L25539. 변경 전 마스터값 -1756.0. 변동 -217.0. 산식: -|보험계약마진 상각(재보험비용 구간)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 12,
+      "공시분기": "2023.4Q",
+      "값": -78151.0,
+      "was": -80138.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -78151.0 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L25499 외 합산 3줄(증거 e23_plan_lotte.json parts). 변경 전 마스터값 -80138.0. 변동 1987.0. 산식: 8 - (9+10+11). 피연산자: 10번=-737.0(master HEAD), 11번=-2914.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 17,
+      "공시분기": "2023.4Q",
+      "값": -86105.249856,
+      "was": -72207.217142,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -86105.249856 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L6690. 변경 전 마스터값 -72207.217142. 변동 -13898.032714. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 19,
+      "공시분기": "2023.4Q",
+      "값": -176363.673037,
+      "was": -162465.640323,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -176363.673037 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L6728 외 합산 4줄(증거 e23_plan_lotte.json parts). 변경 전 마스터값 -162465.640323. 변동 -13898.032714. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 20,
+      "공시분기": "2023.4Q",
+      "값": 375434.788782,
+      "was": 396291.202576,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 375434.788782 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7165. 변경 전 마스터값 396291.202576. 변동 -20856.413794. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 22,
+      "공시분기": "2023.4Q",
+      "값": 373482.708976,
+      "was": 394339.12277,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 373482.708976 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7260. 변경 전 마스터값 394339.12277. 변동 -20856.413794. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 23,
+      "공시분기": "2023.4Q",
+      "값": 87902.382833,
+      "was": 92703.196556,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 87902.382833 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7279. 변경 전 마스터값 92703.196556. 변동 -4800.813723. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 24,
+      "공시분기": "2023.4Q",
+      "값": 285580.326143,
+      "was": 301635.926214,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 285580.326143 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7298. 변경 전 마스터값 301635.926214. 변동 -16055.600071. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 25,
+      "공시분기": "2023.4Q",
+      "값": -154441.34843,
+      "was": -176169.223932,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -154441.34843 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7374. 변경 전 마스터값 -176169.223932. 변동 21727.875502. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 26,
+      "공시분기": "2023.4Q",
+      "값": 255922.070529,
+      "was": 244992.729544,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 255922.070529 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7412. 변경 전 마스터값 244992.729544. 변동 10929.340985. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 27,
+      "공시분기": "2023.4Q",
+      "값": -496420.065574,
+      "was": -507218.600091,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -496420.065574 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7469. 변경 전 마스터값 -507218.600091. 변동 10798.534517. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 31,
+      "공시분기": "2023.4Q",
+      "값": 131138.977713,
+      "was": 125466.702282,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 lotte 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 131138.977713 백만원. 원문 data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml L7583. 변경 전 마스터값 125466.702282. 변동 5672.275431. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 1,
+      "공시분기": "2023.1Q",
+      "값": 11177.777711,
+      "was": 17007.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 11177.777711 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25572. 변경 전 마스터값 17007.0. 변동 -5829.222289. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2023.1Q",
+      "값": 14701.765491,
+      "was": 17007.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 14701.765491 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25618 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 17007.0. 변동 -2305.234509. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2023.1Q",
+      "값": 17205.63653,
+      "was": 21169.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 17205.63653 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25618 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 21169.0. 변동 -3963.36347. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 8,
+      "공시분기": "2023.1Q",
+      "값": -2503.871039,
+      "was": -4162.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -2503.871039 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25641 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -4162.0. 변동 1658.128961. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 16,
+      "공시분기": "2023.1Q",
+      "값": 3523.98778,
+      "was": 3500.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 3523.98778 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25733. 변경 전 마스터값 3500.0. 변동 23.98778. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 17,
+      "공시분기": "2023.1Q",
+      "값": 12268.965324,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 12268.965324 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25756. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 18,
+      "공시분기": "2023.1Q",
+      "값": 246664.821635,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 246664.821635 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25756 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 19,
+      "공시분기": "2023.1Q",
+      "값": -234395.856311,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -234395.856311 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25802 외 합산 4줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 20,
+      "공시분기": "2023.1Q",
+      "값": 23446.743035,
+      "was": 20299.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 23446.743035 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26400. 변경 전 마스터값 20299.0. 변동 3147.743035. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 21,
+      "공시분기": "2023.1Q",
+      "값": -8533.969538,
+      "was": -8849.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -8533.969538 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26423. 변경 전 마스터값 -8849.0. 변동 315.030462. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 22,
+      "공시분기": "2023.1Q",
+      "값": 14912.773497,
+      "was": 11450.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 14912.773497 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26492. 변경 전 마스터값 11450.0. 변동 3462.773497. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 23,
+      "공시분기": "2023.1Q",
+      "값": 4301.267556,
+      "was": 3721.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 4301.267556 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26515. 변경 전 마스터값 3721.0. 변동 580.267556. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 24,
+      "공시분기": "2023.1Q",
+      "값": 10611.505941,
+      "was": 7729.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 10611.505941 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26584. 변경 전 마스터값 7729.0. 변동 2882.505941. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 25,
+      "공시분기": "2023.1Q",
+      "값": 25272.694757,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 25272.694757 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26630. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 26,
+      "공시분기": "2023.1Q",
+      "값": 328821.85025,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 328821.85025 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26676. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 27,
+      "공시분기": "2023.1Q",
+      "값": -306198.441686,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -306198.441686 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26745. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 28,
+      "공시분기": "2023.1Q",
+      "값": 9302.23831,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 9302.23831 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26722. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 30,
+      "공시분기": "2023.1Q",
+      "값": -6660.917782,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -6660.917782 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26768. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 31,
+      "공시분기": "2023.1Q",
+      "값": 35884.200698,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 35884.200698 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26814. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 32,
+      "공시분기": "2023.1Q",
+      "값": 7.965665,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 7.965665 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26630 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 1,
+      "공시분기": "2023.2Q",
+      "값": 27404.89041,
+      "was": 37860.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 27404.89041 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26852. 변경 전 마스터값 37860.0. 변동 -10455.10959. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2023.2Q",
+      "값": 40776.446685,
+      "was": 37860.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 40776.446685 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26898 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 37860.0. 변동 2916.446685. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2023.2Q",
+      "값": 45409.757784,
+      "was": 44795.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 45409.757784 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26898 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 44795.0. 변동 614.757784. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": 46789.0,
+      "was": 48623.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 46789.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L43180. 변경 전 마스터값 48623.0. 변동 -1834.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 8,
+      "공시분기": "2023.2Q",
+      "값": -4633.311099,
+      "was": -6935.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -4633.311099 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26921 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -6935.0. 변동 2301.688901. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 16,
+      "공시분기": "2023.2Q",
+      "값": 13371.556275,
+      "was": 13400.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 13371.556275 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27013. 변경 전 마스터값 13400.0. 변동 -28.443725. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 17,
+      "공시분기": "2023.2Q",
+      "값": 51170.86295,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 51170.86295 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27036. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 18,
+      "공시분기": "2023.2Q",
+      "값": 450057.809937,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 450057.809937 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27036 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 19,
+      "공시분기": "2023.2Q",
+      "값": -398886.946987,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -398886.946987 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27082 외 합산 4줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 20,
+      "공시분기": "2023.2Q",
+      "값": 78575.75336,
+      "was": 73535.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 78575.75336 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27680. 변경 전 마스터값 73535.0. 변동 5040.75336. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 21,
+      "공시분기": "2023.2Q",
+      "값": -16024.829261,
+      "was": -16539.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -16024.829261 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27703. 변경 전 마스터값 -16539.0. 변동 514.170739. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 22,
+      "공시분기": "2023.2Q",
+      "값": 62550.924099,
+      "was": 56996.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 62550.924099 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27772. 변경 전 마스터값 56996.0. 변동 5554.924099. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 23,
+      "공시분기": "2023.2Q",
+      "값": 15286.0134,
+      "was": 14222.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 15286.0134 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27795. 변경 전 마스터값 14222.0. 변동 1064.0134. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 24,
+      "공시분기": "2023.2Q",
+      "값": 47264.910699,
+      "was": 42774.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 47264.910699 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27864. 변경 전 마스터값 42774.0. 변동 4490.910699. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 25,
+      "공시분기": "2023.2Q",
+      "값": 22339.669884,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 22339.669884 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27910. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 26,
+      "공시분기": "2023.2Q",
+      "값": 109588.147278,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 109588.147278 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27956. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 27,
+      "공시분기": "2023.2Q",
+      "값": -80088.403465,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -80088.403465 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28025. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 28,
+      "공시분기": "2023.2Q",
+      "값": -5441.478255,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -5441.478255 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28002. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 30,
+      "공시분기": "2023.2Q",
+      "값": -1831.255691,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -1831.255691 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28048. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 31,
+      "공시분기": "2023.2Q",
+      "값": 69604.580583,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 69604.580583 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28094. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 32,
+      "공시분기": "2023.2Q",
+      "값": 112.660017,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 112.660017 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27910 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 1,
+      "공시분기": "2023.3Q",
+      "값": 42363.52959,
+      "was": 52509.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 42363.52959 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26270. 변경 전 마스터값 52509.0. 변동 -10145.47041. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2023.3Q",
+      "값": 59257.282376,
+      "was": 52509.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 59257.282376 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26316 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 52509.0. 변동 6748.282376. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2023.3Q",
+      "값": 65938.991086,
+      "was": 61965.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 65938.991086 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26316 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 61965.0. 변동 3973.991086. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2023.3Q",
+      "값": 69639.0,
+      "was": 75180.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 69639.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L42248. 변경 전 마스터값 75180.0. 변동 -5541.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 8,
+      "공시분기": "2023.3Q",
+      "값": -6681.70871,
+      "was": -9456.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -6681.70871 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26339 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -9456.0. 변동 2774.29129. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 16,
+      "공시분기": "2023.3Q",
+      "값": 16893.752786,
+      "was": 16900.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 16893.752786 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26431. 변경 전 마스터값 16900.0. 변동 -6.247214. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 17,
+      "공시분기": "2023.3Q",
+      "값": 33777.476556,
+      "was": 21584.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 33777.476556 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26454. 변경 전 마스터값 21584.0. 변동 12193.476556. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 18,
+      "공시분기": "2023.3Q",
+      "값": 536094.60946,
+      "was": 520792.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 536094.60946 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26454 외 합산 5줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 520792.0. 변동 15302.60946. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 19,
+      "공시분기": "2023.3Q",
+      "값": -502317.132904,
+      "was": -499208.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -502317.132904 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26500 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -499208.0. 변동 -3109.132904. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 20,
+      "공시분기": "2023.3Q",
+      "값": 76141.006146,
+      "was": 74093.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 76141.006146 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27098. 변경 전 마스터값 74093.0. 변동 2048.006146. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 21,
+      "공시분기": "2023.3Q",
+      "값": -24336.161594,
+      "was": -23910.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -24336.161594 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27121. 변경 전 마스터값 -23910.0. 변동 -426.161594. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 22,
+      "공시분기": "2023.3Q",
+      "값": 51804.844552,
+      "was": 50183.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 51804.844552 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27190. 변경 전 마스터값 50183.0. 변동 1621.844552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 23,
+      "공시분기": "2023.3Q",
+      "값": 12803.669025,
+      "was": 12649.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 12803.669025 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27213. 변경 전 마스터값 12649.0. 변동 154.669025. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 24,
+      "공시분기": "2023.3Q",
+      "값": 39001.175527,
+      "was": 37534.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 39001.175527 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27282. 변경 전 마스터값 37534.0. 변동 1467.175527. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 25,
+      "공시분기": "2023.3Q",
+      "값": 103104.307885,
+      "was": 42558.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 103104.307885 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27328. 변경 전 마스터값 42558.0. 변동 60546.307885. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 26,
+      "공시분기": "2023.3Q",
+      "값": -70737.941856,
+      "was": -70738.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -70737.941856 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27374. 변경 전 마스터값 -70738.0. 변동 0.058144. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 27,
+      "공시분기": "2023.3Q",
+      "값": 190484.951946,
+      "was": 127776.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 190484.951946 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27443. 변경 전 마스터값 127776.0. 변동 62708.951946. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 28,
+      "공시분기": "2023.3Q",
+      "값": -18420.128391,
+      "was": -18420.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -18420.128391 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27420. 변경 전 마스터값 -18420.0. 변동 -0.128391. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 30,
+      "공시분기": "2023.3Q",
+      "값": 1723.519067,
+      "was": 3886.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 1723.519067 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27466. 변경 전 마스터값 3886.0. 변동 -2162.480933. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 31,
+      "공시분기": "2023.3Q",
+      "값": 142105.483412,
+      "was": 80092.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 142105.483412 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27512. 변경 전 마스터값 80092.0. 변동 62013.483412. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 32,
+      "공시분기": "2023.3Q",
+      "값": 53.907119,
+      "was": 54.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 53.907119 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27328 외 합산 5줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 54.0. 변동 -0.092881. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2023.4Q",
+      "값": 64874.466059,
+      "was": 38812.795396,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 64874.466059 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35261 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 38812.795396. 변동 26061.670663. 산식: 3 + 8. 피연산자: 8번=-8192.746853(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2023.4Q",
+      "값": 73067.212912,
+      "was": 47005.542249,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 73067.212912 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35261 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 47005.542249. 변동 26061.670663. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 16,
+      "공시분기": "2023.4Q",
+      "값": 26061.670663,
+      "was": 26100.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 26061.670663 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35356. 변경 전 마스터값 26100.0. 변동 -38.329337. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 17,
+      "공시분기": "2023.4Q",
+      "값": 107658.657107,
+      "was": 93667.388555,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 107658.657107 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35375. 변경 전 마스터값 93667.388555. 변동 13991.268552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 19,
+      "공시분기": "2023.4Q",
+      "값": -718341.136169,
+      "was": -732332.404721,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -718341.136169 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35413 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -732332.404721. 변동 13991.268552. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 20,
+      "공시분기": "2023.4Q",
+      "값": 146471.452503,
+      "was": 132480.183951,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 146471.452503 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35945. 변경 전 마스터값 132480.183951. 변동 13991.268552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 22,
+      "공시분기": "2023.4Q",
+      "값": 117570.521606,
+      "was": 103579.253054,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 117570.521606 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36021. 변경 전 마스터값 103579.253054. 변동 13991.268552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 23,
+      "공시분기": "2023.4Q",
+      "값": 26376.215168,
+      "was": 23144.232133,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 26376.215168 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36040. 변경 전 마스터값 23144.232133. 변동 3231.983035. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 24,
+      "공시분기": "2023.4Q",
+      "값": 91194.306438,
+      "was": 80435.020921,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 91194.306438 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36097. 변경 전 마스터값 80435.020921. 변동 10759.285517. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 25,
+      "공시분기": "2023.4Q",
+      "값": 7198.361074,
+      "was": 17957.646591,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 7198.361074 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36135. 변경 전 마스터값 17957.646591. 변동 -10759.285517. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 27,
+      "공시분기": "2023.4Q",
+      "값": -591936.534943,
+      "was": -581177.249426,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -591936.534943 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36211. 변경 전 마스터값 -581177.249426. 변동 -10759.285517. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 1,
+      "공시분기": "2023.1Q",
+      "값": 246045.277087,
+      "was": 258500.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 246045.277087 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L28343. 변경 전 마스터값 258500.0. 변동 -12454.722913. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 2,
+      "공시분기": "2023.1Q",
+      "값": 144794.375034,
+      "was": 156041.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23: DART 에 전분기 LOB 분해 표가 없어 IR 팩트시트를 LOB 레그 원천으로 허용): LOB 레그 항목 2(장기 보험손익) = 현대해상 FY2024 1분기 IR 자료 팩트시트 data/ir/FY2024_Q1/raw/KR0009_현대해상/dd7e547e6e1f9cc171b77dcb4bf67d58.xlsx 시트 '(3) UW Income' 셀 L26 (행 라벨 셀 C26 「보 험 손 익」, 종목 블록 셀 B12 「장기」, 열 머리글 셀 L6 「23.1Q 누계」 = 전년동기(2023.1Q) 누계 열, 단위 L4 「(단위:백만원)」), 인쇄값 144794.37503400003 백만원 → 저장 144794.375034 백만원. 일반 L11 + 장기 L26 + 자동차 L30 = 246045.277087 백만원 = 합계 셀 L31 246045.277087 = 같은 분기보고서 DART 별도 포괄손익계산서 전년동기 누적 보험손익 246,045,277,087원 (L28343, 항목 1)과 원 단위까지 일치. 변경 전 마스터값 156041.0 (원 공시 보험종목별 수지 인쇄값, 비재작성 판). 2023.4Q 레그 13/14 도 IR 유래 owner gold 라 같은 방식의 선례가 있다. 변동 -11246.624966. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json, kr0009_verify.txt"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 4,
+      "공시분기": "2023.1Q",
+      "값": 206656.546,
+      "was": 216346.662,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 206656.546 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L40323. 변경 전 마스터값 216346.662. 변동 -9690.116. 산식: |보험계약마진상각 (장기 열) of the 보험수익 note, prior-period cumulative|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 13,
+      "공시분기": "2023.1Q",
+      "값": 75575.317419,
+      "was": 76348.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23: DART 에 전분기 LOB 분해 표가 없어 IR 팩트시트를 LOB 레그 원천으로 허용): LOB 레그 항목 13(자동차 보험손익) = 현대해상 FY2024 1분기 IR 자료 팩트시트 data/ir/FY2024_Q1/raw/KR0009_현대해상/dd7e547e6e1f9cc171b77dcb4bf67d58.xlsx 시트 '(3) UW Income' 셀 L30 (행 라벨 셀 C30 「보 험 손 익」, 종목 블록 셀 B27 「자동차」, 열 머리글 셀 L6 「23.1Q 누계」 = 전년동기(2023.1Q) 누계 열, 단위 L4 「(단위:백만원)」), 인쇄값 75575.31741899991 백만원 → 저장 75575.317419 백만원. 일반 L11 + 장기 L26 + 자동차 L30 = 246045.277087 백만원 = 합계 셀 L31 246045.277087 = 같은 분기보고서 DART 별도 포괄손익계산서 전년동기 누적 보험손익 246,045,277,087원 (L28343, 항목 1)과 원 단위까지 일치. 변경 전 마스터값 76348.0 (원 공시 보험종목별 수지 인쇄값, 비재작성 판). 2023.4Q 레그 13/14 도 IR 유래 owner gold 라 같은 방식의 선례가 있다. 변동 -772.682581. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json, kr0009_verify.txt"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 14,
+      "공시분기": "2023.1Q",
+      "값": 25675.584634,
+      "was": 26137.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23: DART 에 전분기 LOB 분해 표가 없어 IR 팩트시트를 LOB 레그 원천으로 허용): LOB 레그 항목 14(일반 보험손익) = 현대해상 FY2024 1분기 IR 자료 팩트시트 data/ir/FY2024_Q1/raw/KR0009_현대해상/dd7e547e6e1f9cc171b77dcb4bf67d58.xlsx 시트 '(3) UW Income' 셀 L11 (행 라벨 셀 C11 「보 험 손 익」, 종목 블록 셀 B8 「일반」, 열 머리글 셀 L6 「23.1Q 누계」 = 전년동기(2023.1Q) 누계 열, 단위 L4 「(단위:백만원)」), 인쇄값 25675.584634000013 백만원 → 저장 25675.584634 백만원. 일반 L11 + 장기 L26 + 자동차 L30 = 246045.277087 백만원 = 합계 셀 L31 246045.277087 = 같은 분기보고서 DART 별도 포괄손익계산서 전년동기 누적 보험손익 246,045,277,087원 (L28343, 항목 1)과 원 단위까지 일치. 변경 전 마스터값 26137.0 (원 공시 보험종목별 수지 인쇄값, 비재작성 판). 2023.4Q 레그 13/14 도 IR 유래 owner gold 라 같은 방식의 선례가 있다. 변동 -461.415366. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json, kr0009_verify.txt"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 15,
+      "공시분기": "2023.1Q",
+      "값": 0.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 0.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml 마스터 피연산자만. 변동 신규. 산식: no 기타영업수익 line in the insurance section of the statement -> builder default 0.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 16,
+      "공시분기": "2023.1Q",
+      "값": 4050.924606,
+      "was": 4100.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 4050.924606 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L28504. 변경 전 마스터값 4100.0. 변동 -49.075394. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 17,
+      "공시분기": "2023.1Q",
+      "값": 174950.85334,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 174950.85334 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L28527. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 18,
+      "공시분기": "2023.1Q",
+      "값": 370703.670846,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 370703.670846 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L28527 외 합산 5줄(증거 e23_plan_hd.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 19,
+      "공시분기": "2023.1Q",
+      "값": -195752.817506,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -195752.817506 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L28573 외 합산 4줄(증거 e23_plan_hd.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 20,
+      "공시분기": "2023.1Q",
+      "값": 420996.130427,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 420996.130427 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29263. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 21,
+      "공시분기": "2023.1Q",
+      "값": -7850.136275,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -7850.136275 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29286. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 22,
+      "공시분기": "2023.1Q",
+      "값": 413145.994152,
+      "was": 435300.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 413145.994152 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29378. 변경 전 마스터값 435300.0. 변동 -22154.005848. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 23,
+      "공시분기": "2023.1Q",
+      "값": 97844.31067,
+      "was": 101700.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 97844.31067 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29401. 변경 전 마스터값 101700.0. 변동 -3855.68933. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 24,
+      "공시분기": "2023.1Q",
+      "값": 315301.683482,
+      "was": 333600.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 315301.683482 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29424. 변경 전 마스터값 333600.0. 변동 -18298.316518. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 25,
+      "공시분기": "2023.1Q",
+      "값": -61784.991652,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -61784.991652 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29516. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 26,
+      "공시분기": "2023.1Q",
+      "값": 579877.893584,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 579877.893584 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29562. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 27,
+      "공시분기": "2023.1Q",
+      "값": -654376.896346,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -654376.896346 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29654. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 28,
+      "공시분기": "2023.1Q",
+      "값": 16689.535871,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 16689.535871 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29631. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 29,
+      "공시분기": "2023.1Q",
+      "값": 908.73772,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 908.73772 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29769. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 30,
+      "공시분기": "2023.1Q",
+      "값": 52.934994,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 52.934994 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29677. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 31,
+      "공시분기": "2023.1Q",
+      "값": 253516.69183,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 253516.69183 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29838. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 32,
+      "공시분기": "2023.1Q",
+      "값": -4937.197475,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -4937.197475 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L29516 외 합산 6줄(증거 e23_plan_hd.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 1,
+      "공시분기": "2023.2Q",
+      "값": 415652.294609,
+      "was": 499500.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 415652.294609 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L31372. 변경 전 마스터값 499500.0. 변동 -83847.705391. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 2,
+      "공시분기": "2023.2Q",
+      "값": 224031.047706,
+      "was": 304478.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23: DART 에 전분기 LOB 분해 표가 없어 IR 팩트시트를 LOB 레그 원천으로 허용): LOB 레그 항목 2(장기 보험손익) = 현대해상 FY2024 반기 IR 자료 팩트시트 data/ir/FY2024_Q2/raw/KR0009_현대해상/d33c3d385303361798f75607750ca360.xlsx 시트 '(3) UW Income' 셀 L26 (행 라벨 셀 C26 「보 험 손 익」, 종목 블록 셀 B12 「장기」, 열 머리글 셀 L6 「23.2Q 누계」 = 전년동기(2023.2Q) 누계 열, 단위 L4 「(단위:백만원)」), 인쇄값 224031.0477060001 백만원 → 저장 224031.047706 백만원. 일반 L11 + 장기 L26 + 자동차 L30 = 415652.294609 백만원 = 합계 셀 L31 415652.294609 = 같은 분기보고서 DART 별도 포괄손익계산서 전년동기 누적 보험손익 415,652,294,609원 (L31372, 항목 1)과 원 단위까지 일치. 변경 전 마스터값 304478.0 (원 공시 보험종목별 수지 인쇄값, 비재작성 판). 2023.4Q 레그 13/14 도 IR 유래 owner gold 라 같은 방식의 선례가 있다. 변동 -80446.952294. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json, kr0009_verify.txt"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": 417840.268,
+      "was": 441028.976,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 417840.268 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L43389. 변경 전 마스터값 441028.976. 변동 -23188.708. 산식: |보험계약마진상각 (장기 열) of the 보험수익 note, prior-period cumulative|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 13,
+      "공시분기": "2023.2Q",
+      "값": 148940.254712,
+      "was": 154127.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23: DART 에 전분기 LOB 분해 표가 없어 IR 팩트시트를 LOB 레그 원천으로 허용): LOB 레그 항목 13(자동차 보험손익) = 현대해상 FY2024 반기 IR 자료 팩트시트 data/ir/FY2024_Q2/raw/KR0009_현대해상/d33c3d385303361798f75607750ca360.xlsx 시트 '(3) UW Income' 셀 L30 (행 라벨 셀 C30 「보 험 손 익」, 종목 블록 셀 B27 「자동차」, 열 머리글 셀 L6 「23.2Q 누계」 = 전년동기(2023.2Q) 누계 열, 단위 L4 「(단위:백만원)」), 인쇄값 148940.25471200002 백만원 → 저장 148940.254712 백만원. 일반 L11 + 장기 L26 + 자동차 L30 = 415652.294609 백만원 = 합계 셀 L31 415652.294609 = 같은 분기보고서 DART 별도 포괄손익계산서 전년동기 누적 보험손익 415,652,294,609원 (L31372, 항목 1)과 원 단위까지 일치. 변경 전 마스터값 154127.0 (원 공시 보험종목별 수지 인쇄값, 비재작성 판). 2023.4Q 레그 13/14 도 IR 유래 owner gold 라 같은 방식의 선례가 있다. 변동 -5186.745288. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json, kr0009_verify.txt"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 14,
+      "공시분기": "2023.2Q",
+      "값": 42680.992191,
+      "was": 40912.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23: DART 에 전분기 LOB 분해 표가 없어 IR 팩트시트를 LOB 레그 원천으로 허용): LOB 레그 항목 14(일반 보험손익) = 현대해상 FY2024 반기 IR 자료 팩트시트 data/ir/FY2024_Q2/raw/KR0009_현대해상/d33c3d385303361798f75607750ca360.xlsx 시트 '(3) UW Income' 셀 L11 (행 라벨 셀 C11 「보 험 손 익」, 종목 블록 셀 B8 「일반」, 열 머리글 셀 L6 「23.2Q 누계」 = 전년동기(2023.2Q) 누계 열, 단위 L4 「(단위:백만원)」), 인쇄값 42680.99219100003 백만원 → 저장 42680.992191 백만원. 일반 L11 + 장기 L26 + 자동차 L30 = 415652.294609 백만원 = 합계 셀 L31 415652.294609 = 같은 분기보고서 DART 별도 포괄손익계산서 전년동기 누적 보험손익 415,652,294,609원 (L31372, 항목 1)과 원 단위까지 일치. 변경 전 마스터값 40912.0 (원 공시 보험종목별 수지 인쇄값, 비재작성 판). 2023.4Q 레그 13/14 도 IR 유래 owner gold 라 같은 방식의 선례가 있다. 변동 +1768.992191. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json, kr0009_verify.txt"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 15,
+      "공시분기": "2023.2Q",
+      "값": 0.0,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 0.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml 마스터 피연산자만. 변동 신규. 산식: no 기타영업수익 line in the insurance section of the statement -> builder default 0.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 16,
+      "공시분기": "2023.2Q",
+      "값": 8784.082441,
+      "was": 8800.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 8784.082441 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L31533. 변경 전 마스터값 8800.0. 변동 -15.917559. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 17,
+      "공시분기": "2023.2Q",
+      "값": 257230.481327,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 257230.481327 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L31556. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 18,
+      "공시분기": "2023.2Q",
+      "값": 647086.799503,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 647086.799503 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L31556 외 합산 5줄(증거 e23_plan_hd.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 19,
+      "공시분기": "2023.2Q",
+      "값": -389856.318176,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -389856.318176 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L31602 외 합산 4줄(증거 e23_plan_hd.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 20,
+      "공시분기": "2023.2Q",
+      "값": 672882.775936,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 672882.775936 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32154. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 21,
+      "공시분기": "2023.2Q",
+      "값": -15434.175576,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -15434.175576 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32177. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 22,
+      "공시분기": "2023.2Q",
+      "값": 657448.60036,
+      "was": 765000.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 657448.60036 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32269. 변경 전 마스터값 765000.0. 변동 -107551.39964. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 23,
+      "공시분기": "2023.2Q",
+      "값": 160485.164598,
+      "was": 187000.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 160485.164598 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32292. 변경 전 마스터값 187000.0. 변동 -26514.835402. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 24,
+      "공시분기": "2023.2Q",
+      "값": 496963.435762,
+      "was": 578000.0,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 496963.435762 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32315. 변경 전 마스터값 578000.0. 변동 -81036.564238. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 25,
+      "공시분기": "2023.2Q",
+      "값": 90734.016334,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 90734.016334 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32407. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 26,
+      "공시분기": "2023.2Q",
+      "값": 196337.990577,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 196337.990577 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32453. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 27,
+      "공시분기": "2023.2Q",
+      "값": -121036.336179,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -121036.336179 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32545. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 28,
+      "공시분기": "2023.2Q",
+      "값": 17086.261152,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 17086.261152 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32522. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 29,
+      "공시분기": "2023.2Q",
+      "값": 145.872947,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 145.872947 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32614. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 30,
+      "공시분기": "2023.2Q",
+      "값": 1154.947018,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 1154.947018 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32568. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 31,
+      "공시분기": "2023.2Q",
+      "값": 587697.452096,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 587697.452096 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32683. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 32,
+      "공시분기": "2023.2Q",
+      "값": -2954.719181,
+      "was": null,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -2954.719181 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L32407 외 합산 6줄(증거 e23_plan_hd.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 1,
+      "공시분기": "2023.4Q",
+      "값": 526589.620124,
+      "was": 526490.675922,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 526589.620124 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L51619. 변경 전 마스터값 526490.675922. 변동 98.944202. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 880544.842,
+      "was": 880547.066,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 880544.842 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L71221. 변경 전 마스터값 880547.066. 변동 -2.224. 산식: |보험계약마진상각 (장기 열) of the 보험수익 note, prior-period cumulative|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 17,
+      "공시분기": "2023.4Q",
+      "값": 455046.121937,
+      "was": 499877.274602,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 455046.121937 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L51771. 변경 전 마스터값 499877.274602. 변동 -44831.152665. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 19,
+      "공시분기": "2023.4Q",
+      "값": -828290.264638,
+      "was": -783459.111973,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -828290.264638 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L51809 외 합산 4줄(증거 e23_plan_hd.json parts). 변경 전 마스터값 -783459.111973. 변동 -44831.152665. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 20,
+      "공시분기": "2023.4Q",
+      "값": 981635.742061,
+      "was": 1026367.950524,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 981635.742061 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L52379. 변경 전 마스터값 1026367.950524. 변동 -44732.208463. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 22,
+      "공시분기": "2023.4Q",
+      "값": 952937.585573,
+      "was": 997669.794036,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 952937.585573 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L52474. 변경 전 마스터값 997669.794036. 변동 -44732.208463. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 23,
+      "공시분기": "2023.4Q",
+      "값": 180599.569103,
+      "was": 191948.13039,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 180599.569103 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L52493. 변경 전 마스터값 191948.13039. 변동 -11348.561287. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 24,
+      "공시분기": "2023.4Q",
+      "값": 772338.01647,
+      "was": 805721.663646,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 772338.01647 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L52512. 변경 전 마스터값 805721.663646. 변동 -33383.647176. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 25,
+      "공시분기": "2023.4Q",
+      "값": -463577.530269,
+      "was": -496923.049652,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -463577.530269 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L52588. 변경 전 마스터값 -496923.049652. 변동 33345.519383. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 27,
+      "공시분기": "2023.4Q",
+      "값": -1511896.424558,
+      "was": -1545241.943941,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -1511896.424558 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L52702. 변경 전 마스터값 -1545241.943941. 변동 33345.519383. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 31,
+      "공시분기": "2023.4Q",
+      "값": 308760.486201,
+      "was": 308798.613994,
+      "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 별도(OFS) 기준 hd 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 308760.486201 백만원. 원문 data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml L52854. 변경 전 마스터값 308798.613994. 변동 -38.127793. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
     }
   ],
   "null_dangi": {
@@ -9888,12 +11552,129 @@
         "KR0083",
         "2024.4Q",
         31
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        1
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        4
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        17
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        19
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        20
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        22
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        23
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        24
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        25
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        26
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        27
+      ],
+      [
+        "KR0003",
+        "2023.4Q",
+        31
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        1
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        4
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        17
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        19
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        20
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        22
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        23
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        24
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        25
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        27
+      ],
+      [
+        "KR0009",
+        "2023.4Q",
+        31
       ]
     ],
     "_doc_oci_20261022": "KR0073 OCI refresh 2026-10-22 (ticket 20261021T1556Z): 값_당분기 of items 25/26/31/32 for 2024.4Q and 2025.3Q is blanked. After the cumulative refresh of 2024.4Q (FY2025 annual restated column) and 2025.1Q/2025.2Q (FY2026 Q1/Q2 restated comparatives) the builder difference of those cells would subtract a restated cumulative from a cumulative of another filing basis (2024.3Q and 2025.3Q are still as originally filed; the restated 3-month columns are not published: annual report has none, the FY2026 Q3 report is not filed yet). Owner rule 2026-10-22: a blank beats a wrong value. Re-derive once the FY2026 Q3 report restates 2025.3Q. Items 27/28/29/30/24 are unaffected (same basis in both filings).",
     "_doc_e19_20261022": "2026-10-22 ticket 20261022T0900Z (parser/ifrs17, owner go 2026-10-22 'latest comparative for the other companies, same as Kyobo'): 값_당분기 forced blank for KR0032 2023.4Q items 17/19/20/22/23/24/25/27 and KR0087 2023.4Q items 17/19/20/22/23/24/25/27/31. The 4Q cumulative is now the restated annual comparative while the 9M cumulative of the same year is still the original print (the FY2024 Q1-Q3 reports still print the pre-change 2023 columns) and the annual report prints no 3-month Q4 column, so the builder difference would mix two vintages. Blank beats wrong; re-derive when a restated 9M-2023 comparative exists.",
     "_doc_e20_20261022": "2026-10-22 ticket 20261022T1800Z STEP 1 (parser/ifrs17, owner 「쭉 진행」): 값_당분기 forced blank for single quarters whose two cumulatives sit on different filings / vintages after the adoption. (a) 2024.4Q: the annual comparative is restated while the 9M cumulative comes from another filing and annual reports print no 3-month Q4 column: KR0083 17/19/20/22/23/24/25/27 (2024.4Q itself is still the original annual print, only the 9M moved), KR0087 25/26/31/32, KR0104 25/26/31, KR0072 25/26/31, KR0068 25/26/29/31/32. (b) 2025.3Q: the 9M cumulative is still the original print while the 6M is restated and the FY2026 Q3 report is not filed yet: KR0087 25/26/31/32, KR0104 25/26/31, KR0069 25/26/29/31, KR0094 25/26/31, KR0070 25/26/31, KR0068 25/26/31/32, KR0071 25/26/29/31/32. (c) KR0032 2023.2Q item 16: the live single quarter was already blank; the 2023.2Q cumulative 41,900 is the 경영공시 0.01억-rounded 6M and the FY2024 Q2 report prints a 3-month 19,796.578 that does not match 6M - restated Q1 (the blank is kept). Blank beats wrong; re-derive when the FY2025 filings restate the 2024 quarters / the FY2026 Q3 report restates 2025.3Q.",
-    "_doc_e21_20261023": "2026-10-23 ticket 20261023T0300Z (parser/ifrs17, READY-25): 값_당분기 forced blank for 2023.4Q / 2024.4Q single quarters whose annual cumulative is adopted from the next-year annual comparative while the 9M cumulative (still the original-vintage print, comparative == master) sits on another basis: KB손해보험 2023.4Q (15 cells), 미래에셋생명 2023.4Q (11), 에이비엘생명 2024.4Q 26/31, 푸본현대생명 2024.4Q 26/31 (the FVOCI correction of the annual comparative is not in the 9M comparative). REMOVED the 2026-10-22 pins of 푸본현대생명 2024.4Q 17/19/20/22/23/24/25/27: after the adoption of the annual comparative both cumulatives (9M adopted 2026-10-22, FY now) are on the restated basis. Blank beats wrong; annual reports print no 3-month Q4 column."
+    "_doc_e21_20261023": "2026-10-23 ticket 20261023T0300Z (parser/ifrs17, READY-25): 값_당분기 forced blank for 2023.4Q / 2024.4Q single quarters whose annual cumulative is adopted from the next-year annual comparative while the 9M cumulative (still the original-vintage print, comparative == master) sits on another basis: KB손해보험 2023.4Q (15 cells), 미래에셋생명 2023.4Q (11), 에이비엘생명 2024.4Q 26/31, 푸본현대생명 2024.4Q 26/31 (the FVOCI correction of the annual comparative is not in the 9M comparative). REMOVED the 2026-10-22 pins of 푸본현대생명 2024.4Q 17/19/20/22/23/24/25/27: after the adoption of the annual comparative both cumulatives (9M adopted 2026-10-22, FY now) are on the restated basis. Blank beats wrong; annual reports print no 3-month Q4 column.",
+    "_doc_e23_kr0003_20261023": "2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D2): 값_당분기 forced blank for KR0003 롯데손해보험 2023.4Q items 1/4/17/19/20/22/23/24/25/26/27/31 (12 cells). The annual cumulative is adopted from the FY2024 annual report's FY2023 comparative column (restated: accounting-policy change of the insurance finance income/expense allocation) while the 9M cumulative of 2023.3Q is the original-vintage print (the FY2024 Q3 report's prior 9M column is equal to the master on all 11 Tier-1 items, 11/11) -> the difference of the two cumulatives mixes two bases. The annual report prints no 3-month Q4 column. Blank beats wrong. (Items 2/3/7/8/9/12 have no 2023.3Q cumulative, so their single quarter stays blank without a pin.)",
+    "_doc_e23_kr0009_20261023": "2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3): 값_당분기 left blank (null_dangi) for KR0009 현대해상 2023.4Q items 1 / 4 / 17 / 19 / 20 / 22 / 23 / 24 / 25 / 27 / 31: the 4Q cumulative is taken from the FY2024 annual report (restated comparative) while the 9M cumulative of the FY2024 Q3 report equals the originally filed 2023.3Q value (the annual restatement is not in the 9M comparative), so the difference of the two cumulatives is not the fourth quarter (owner rule 2026-10-22). Evidence kr0009_verify.txt section D4."
   },
   "set_dangi": {
     "_doc": "KR0073 2023.3Q single quarter = the restated THREE-MONTH value printed in the FY2024 Q3 report (data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml, separate basis, prior-year 3-month column of the income statement / OCI and of the 보험수익 / 보험서비스비용 / 재보험 notes; the cell line is the 5th element). Derived items (2, 3, 7, 8, 12, 18, 19, 32) apply the production assemble() definitions to printed 3-month cells. All 10 PL identities close on this vector (residual <= 1e-6 백만원) and an independent read (FS-API frmtrm_q_amount + the production Tier-2 handler) agrees for every cell. The cumulative 값 is not touched, so the four 2023 single quarters do not add up to the full-year value: the difference is the restated first-half correction that was never published (the FY2024 Q1/Q2 comparatives are pre-correction), e.g. 원수 CSM상각 105,255 + 106,779 + 150,548 + 163,380 = 525,962 vs 627,701 (difference 101,739). Items not printed stay null (null_dangi). Ticket inbox/parser/20261021T1655Z__validation__KR0073_2023.3Q__single_quarter_vintage_seam.md; evidence data/_derived/kyobo_seam_blank_20261022/ (seam_3m_extract.txt, seam_3m_vector.csv)",

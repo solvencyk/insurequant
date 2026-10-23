@@ -1,0 +1,413 @@
+{
+ "problems": [
+  {
+   "where": "2023.1Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.2Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.3Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.4Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.1Q i1",
+   "problem": "value plan 8298.413391 != re-read 4891.371317; part L24253 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i2",
+   "problem": "value plan 10644.5813 != re-read 7490.431503000009; part L24299 sits in column 4, the prior-year cumulative column is 2; part L24368 sits in column 4, the prior-year cumulative column is 2; part L24322 sits in column 4, the prior-year cumulative column is 2; part L24391 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i3",
+   "problem": "value plan 9933.938179 != re-read 995.6255630000087; part L24299 sits in column 4, the prior-year cumulative column is 2; part L24368 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i4",
+   "problem": "value plan 11641.0 != re-read 13531.0; PL4 part L40388 11,641 백만원 '(3) 제공된 서비스의 보험계약마진 [전기/전분기 누적]' != note L40387 13,531 백만원; PL4 contribution"
+  },
+  {
+   "where": "2023.1Q i8",
+   "problem": "value plan 710.643121 != re-read 6494.80594; part L24322 sits in column 4, the prior-year cumulative column is 2; part L24391 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i17",
+   "problem": "value plan 32877.150458 != re-read 9513.600698; part L24437 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i18",
+   "problem": "value plan 200651.791133 != re-read 154518.00575599997; part L24437 sits in column 4, the prior-year cumulative column is 2; part L24483 sits in column 4, the prior-year cumulative column is 2; part L24506 sits in column 4, the prior-year cumulative column is 2; part L24782 sits in column 4, the prior-year cumulative column is 2; part L24805 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i19",
+   "problem": "value plan -167774.640675 != re-read -145004.40505799997; part L24483 sits in column 4, the prior-year cumulative column is 2; part L24506 sits in column 4, the prior-year cumulative column is 2; part L24782 sits in column 4, the prior-year cumulative column is 2; part L24805 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i20",
+   "problem": "value plan 41175.563849 != re-read 14404.972015; part L25012 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i22",
+   "problem": "value plan 35749.866307 != re-read 7115.631417; part L25104 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i24",
+   "problem": "value plan 35750.07563 != re-read 7115.631417; part L25150 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i25",
+   "problem": "value plan 19314.399668 != re-read -157900.256814; part L25173 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i26",
+   "problem": "value plan 371376.033894 != re-read -227175.485088; part L25219 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i27",
+   "problem": "value plan -357827.17141 != re-read 70465.48302; part L25288 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i28",
+   "problem": "value plan 1334.458429 != re-read -1554.113022; part L25265 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i29",
+   "problem": "value plan 5564.18644 != re-read 301.211743; part L25357 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i30",
+   "problem": "value plan -1073.51445 != re-read 192.199229; part L25311 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i31",
+   "problem": "value plan 55064.475298 != re-read -150784.625397; part L25403 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.1Q i32",
+   "problem": "value plan -59.593235 != re-read -129.55269599999997; part L25173 sits in column 4, the prior-year cumulative column is 2; part L25219 sits in column 4, the prior-year cumulative column is 2; part L25288 sits in column 4, the prior-year cumulative column is 2; part L25265 sits in column 4, the prior-year cumulative column is 2; part L25357 sits in column 4, the prior-year cumulative column is 2; part L25311 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i1",
+   "problem": "value plan 27825.949019 != re-read 26063.570916999997; part L27613 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i2",
+   "problem": "value plan 33175.292214 != re-read 31059.340877999995; part L27659 sits in column 4, the prior-year cumulative column is 2; part L27728 sits in column 4, the prior-year cumulative column is 2; part L27682 sits in column 4, the prior-year cumulative column is 2; part L27751 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i3",
+   "problem": "value plan 24217.993827 != re-read 36862.731122; part L27659 sits in column 4, the prior-year cumulative column is 2; part L27728 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i4",
+   "problem": "value plan 24509.0 != re-read 33833.0; PL4 part L44795 24,509 백만원 '(3) 제공된 서비스의 보험계약마진 [전기/전분기 누적]' != note L44793 33,833 백만원; PL4 contribution"
+  },
+  {
+   "where": "2023.2Q i7",
+   "problem": "value plan -7462.006173 != re-read -4141.268878000003; part L27659 sits in column 4, the prior-year cumulative column is 2; part L27728 sits in column 4, the prior-year cumulative column is 2; operand item 4 24509.0 (plan): live 23415.0 / re-read 33833.0"
+  },
+  {
+   "where": "2023.2Q i8",
+   "problem": "value plan 8957.298387 != re-read -5803.390244000002; part L27682 sits in column 4, the prior-year cumulative column is 2; part L27751 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i12",
+   "problem": "value plan 1374.298387 != re-read -13386.390244000002; part L27682 sits in column 4, the prior-year cumulative column is 2; part L27751 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i16",
+   "problem": "value plan 5349.343195 != re-read 4995.769961; part L27774 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i17",
+   "problem": "value plan 45706.602817 != re-read -8337.018387; part L27797 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i18",
+   "problem": "value plan 354676.718654 != re-read 282353.347194; part L27797 sits in column 4, the prior-year cumulative column is 2; part L27843 sits in column 4, the prior-year cumulative column is 2; part L27866 sits in column 4, the prior-year cumulative column is 2; part L28142 sits in column 4, the prior-year cumulative column is 2; part L28165 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i19",
+   "problem": "value plan -308970.115837 != re-read -290690.365581; part L27843 sits in column 4, the prior-year cumulative column is 2; part L27866 sits in column 4, the prior-year cumulative column is 2; part L28142 sits in column 4, the prior-year cumulative column is 2; part L28165 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i20",
+   "problem": "value plan 73532.551836 != re-read 17726.55253; part L28372 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i21",
+   "problem": "value plan -10908.33116 != re-read -10712.475887999999; part L28395 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i22",
+   "problem": "value plan 62624.220676 != re-read 7014.076642; part L28464 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i24",
+   "problem": "value plan 62624.429999 != re-read 7014.577469; part L28510 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i25",
+   "problem": "value plan 183006.320644 != re-read -527453.837002; part L28533 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i26",
+   "problem": "value plan 106941.629211 != re-read -126952.31211999999; part L28579 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i27",
+   "problem": "value plan 70522.063628 != re-read -399454.30636399996; part L28648 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i28",
+   "problem": "value plan 1205.926925 != re-read 897.316599; part L28625 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i29",
+   "problem": "value plan 6604.167588 != re-read 1724.610903; part L28717 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i30",
+   "problem": "value plan -2251.456083 != re-read -3503.3455369999997; part L28671 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i31",
+   "problem": "value plan 245630.750643 != re-read -520439.259533; part L28763 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.2Q i32",
+   "problem": "value plan -16.010625 != re-read -165.80048299999999; part L28533 sits in column 4, the prior-year cumulative column is 2; part L28579 sits in column 4, the prior-year cumulative column is 2; part L28648 sits in column 4, the prior-year cumulative column is 2; part L28625 sits in column 4, the prior-year cumulative column is 2; part L28717 sits in column 4, the prior-year cumulative column is 2; part L28671 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i1",
+   "problem": "value plan 16711.142687 != re-read 53441.922118999995; part L3974 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i2",
+   "problem": "value plan 25952.699723 != re-read 63847.921613; part L4020 sits in column 4, the prior-year cumulative column is 2; part L4089 sits in column 4, the prior-year cumulative column is 2; part L4043 sits in column 4, the prior-year cumulative column is 2; part L4112 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i3",
+   "problem": "value plan 8568.280371 != re-read 65993.9302; part L4020 sits in column 4, the prior-year cumulative column is 2; part L4089 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i4",
+   "problem": "value plan 37266.0 != re-read 53684.0; PL4 part L22520 37,266 백만원 '(3) 제공된 서비스의 보험계약마진 [전기/전분기 누적]' != note L22518 53,684 백만원; PL4 contribution"
+  },
+  {
+   "where": "2023.3Q i7",
+   "problem": "value plan -41277.719629 != re-read -270.0697999999975; part L4020 sits in column 4, the prior-year cumulative column is 2; part L4089 sits in column 4, the prior-year cumulative column is 2; operand item 4 37266.0 (plan): live 35250.0 / re-read 53684.0"
+  },
+  {
+   "where": "2023.3Q i8",
+   "problem": "value plan 17384.419352 != re-read -2146.008587000004; part L4043 sits in column 4, the prior-year cumulative column is 2; part L4112 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i12",
+   "problem": "value plan 11978.419352 != re-read -7552.008587000004; part L4043 sits in column 4, the prior-year cumulative column is 2; part L4112 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i17",
+   "problem": "value plan -13718.605641 != re-read -26279.241226; part L4158 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i18",
+   "problem": "value plan 416260.554977 != re-read 376667.27889799996; part L4158 sits in column 4, the prior-year cumulative column is 2; part L4204 sits in column 4, the prior-year cumulative column is 2; part L4227 sits in column 4, the prior-year cumulative column is 2; part L4503 sits in column 4, the prior-year cumulative column is 2; part L4526 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i19",
+   "problem": "value plan -429979.160618 != re-read -402946.520124; part L4204 sits in column 4, the prior-year cumulative column is 2; part L4227 sits in column 4, the prior-year cumulative column is 2; part L4503 sits in column 4, the prior-year cumulative column is 2; part L4526 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i20",
+   "problem": "value plan 2992.537046 != re-read 27162.680892999997; part L4733 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i22",
+   "problem": "value plan -13527.406967 != re-read 12965.114939; part L4825 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i24",
+   "problem": "value plan -13527.197644 != re-read 12965.615765999999; part L4871 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i25",
+   "problem": "value plan 271338.272061 != re-read -587196.367829; part L4894 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i27",
+   "problem": "value plan 410202.722556 != re-read -888700.965689; part L5009 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.3Q i31",
+   "problem": "value plan 257811.074417 != re-read -574230.752063; part L5124 sits in column 4, the prior-year cumulative column is 2"
+  },
+  {
+   "where": "2023.4Q i17",
+   "problem": "value plan -18428.269919 != re-read -60251.942875; part L5555 sits in column 2, the prior-year cumulative column is 1"
+  },
+  {
+   "where": "2023.4Q i18",
+   "problem": "value plan 582561.462069 != re-read 455743.489541; part L5555 sits in column 2, the prior-year cumulative column is 1; part L5593 sits in column 2, the prior-year cumulative column is 1; part L5612 sits in column 2, the prior-year cumulative column is 1; part L5878 sits in column 2, the prior-year cumulative column is 1; part L5897 sits in column 2, the prior-year cumulative column is 1"
+  },
+  {
+   "where": "2023.4Q i20",
+   "problem": "value plan 46820.26106 != re-read 39161.199079; part L6106 sits in column 2, the prior-year cumulative column is 1"
+  },
+  {
+   "where": "2023.4Q i22",
+   "problem": "value plan 23949.37807 != re-read 20417.688391; part L6182 sits in column 2, the prior-year cumulative column is 1"
+  },
+  {
+   "where": "2023.4Q i24",
+   "problem": "value plan 23949.587393 != re-read 20418.189218; part L6220 sits in column 2, the prior-year cumulative column is 1"
+  },
+  {
+   "where": "2023.4Q i31",
+   "problem": "value plan -95924.017765 != re-read -629918.566087; part L6467 sits in column 2, the prior-year cumulative column is 1"
+  },
+  {
+   "where": "2023.1Q i16",
+   "problem": "not in the plan but live 2346.17 != re-read 2599.0601859999997"
+  },
+  {
+   "where": "2023.1Q i21",
+   "problem": "not in the plan but live -5425.7 != re-read -7289.340598"
+  },
+  {
+   "where": "2023.1Q i23",
+   "problem": "rounding-only difference that is NOT excluded for a mask reason:  | builder source -0.209323 -> a gold cell of 0.000000 would be NOT masked"
+  },
+  {
+   "where": "2023.2Q i23",
+   "problem": "rounding-only difference that is NOT excluded for a mask reason:  | builder source -0.2 -> a gold cell of -0.500827 would be NOT masked"
+  },
+  {
+   "where": "2023.3Q i16",
+   "problem": "not in the plan but live 9241.557036 != re-read 10405.999494"
+  },
+  {
+   "where": "2023.3Q i21",
+   "problem": "not in the plan but live -16519.944013 != re-read -14197.565954"
+  },
+  {
+   "where": "2023.3Q i23",
+   "problem": "rounding-only difference that is NOT excluded for a mask reason:  | builder source -0.209323 -> a gold cell of -0.500827 would be NOT masked"
+  },
+  {
+   "where": "2023.3Q i26",
+   "problem": "not in the plan but live -142708.043542 != re-read 303318.91188599996"
+  },
+  {
+   "where": "2023.3Q i28",
+   "problem": "not in the plan but live 550.330481 != re-read -1431.5909829999998"
+  },
+  {
+   "where": "2023.3Q i29",
+   "problem": "not in the plan but live 6874.687033 != re-read 4965.081555"
+  },
+  {
+   "where": "2023.3Q i30",
+   "problem": "not in the plan but live -3587.572436 != re-read -5229.252652"
+  },
+  {
+   "where": "2023.3Q i32",
+   "problem": "not in the plan but live 6.147969 != re-read -118.55194599999999"
+  },
+  {
+   "where": "2023.4Q i1",
+   "problem": "not in the plan but live 65248.530979 != re-read 99413.14195399999"
+  },
+  {
+   "where": "2023.4Q i2",
+   "problem": "not in the plan but live 78011.749804 != re-read 113630.89777900002"
+  },
+  {
+   "where": "2023.4Q i3",
+   "problem": "not in the plan but live 67805.264694 != re-read 107111.17606000003"
+  },
+  {
+   "where": "2023.4Q i4",
+   "problem": "not in the plan but live 51198.0 != re-read 71048.0"
+  },
+  {
+   "where": "2023.4Q i7",
+   "problem": "not in the plan but live -3348.735306 != re-read 16107.176060000027"
+  },
+  {
+   "where": "2023.4Q i8",
+   "problem": "not in the plan but live 10206.48511 != re-read 6519.721718999997"
+  },
+  {
+   "where": "2023.4Q i12",
+   "problem": "not in the plan but live 9834.48511 != re-read 6147.721718999997"
+  },
+  {
+   "where": "2023.4Q i16",
+   "problem": "not in the plan but live 12763.218825 != re-read 14217.755825"
+  },
+  {
+   "where": "2023.4Q i19",
+   "problem": "not in the plan but live -600989.731988 != re-read -515995.432416"
+  },
+  {
+   "where": "2023.4Q i21",
+   "problem": "not in the plan but live -22870.88299 != re-read -18743.510688"
+  },
+  {
+   "where": "2023.4Q i23",
+   "problem": "rounding-only difference that is NOT excluded for a mask reason:  | builder source -0.209323 -> a gold cell of -0.500827 would be NOT masked"
+  },
+  {
+   "where": "2023.4Q i25",
+   "problem": "not in the plan but live -119873.605158 != re-read -650336.755305"
+  },
+  {
+   "where": "2023.4Q i26",
+   "problem": "not in the plan but live 721351.741715 != re-read 315818.649798"
+  },
+  {
+   "where": "2023.4Q i27",
+   "problem": "not in the plan but live -851813.499295 != re-read -957065.26472"
+  },
+  {
+   "where": "2023.4Q i28",
+   "problem": "not in the plan but live -349.760634 != re-read -813.131226"
+  },
+  {
+   "where": "2023.4Q i29",
+   "problem": "not in the plan but live 11589.35712 != re-read 5480.723738"
+  },
+  {
+   "where": "2023.4Q i30",
+   "problem": "not in the plan but live -48.499287 != re-read -5756.34342"
+  },
+  {
+   "where": "2023.4Q i32",
+   "problem": "not in the plan but live -602.944777 != re-read -8001.389475"
+  },
+  {
+   "where": "2023.2Q PL4 seam",
+   "problem": "derived 20302.0 vs printed 12869.0"
+  },
+  {
+   "where": "2023.3Q PL4 seam",
+   "problem": "derived 19851.0 vs printed 12756.0"
+  }
+ ],
+ "res": {
+  "pl_cells": 65,
+  "pl_cells_ok": 1,
+  "csm_cells": 20,
+  "csm_cells_ok": 20,
+  "control_bad": 0
+ },
+ "mutate": "col",
+ "ok": false
+}

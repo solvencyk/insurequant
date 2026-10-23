@@ -1,0 +1,14 @@
+changed/appeared/vanished: 12
+  expected-touchable CSM_waterfall.json | before eb86a95bd0b7 after b6e329d66da9
+  expected-touchable CSM_waterfall_provenance.json | before a3eabb649cef after 5b8777d4fb7c
+  expected-touchable PL_breakdown.json | before 5df3fe6660ae after 2c2283f4420c
+  expected-touchable PL_breakdown_provenance.json | before 07f8d462ec93 after 21dc327b06ed
+  expected-touchable data/_derived/pl_oci_vs_bs_aoci_warn.json | before 8121b3295b25 after 736fa73a9c85
+  expected-touchable data/_derived/qoq_warn.json | before 65d3eadc7309 after c6b519fc5a81
+  expected-touchable data/_gold/gold_overlay_ledger.json | before eb87ce0c88fc after 84f1abdce350
+  expected-touchable data/_gold/user_csm_cells.json | before cd11d341e864 after bf9e91b7cfcc
+  expected-touchable data/_gold/user_pl_cells.json | before a81180044bd7 after cd4ac5fbbb25
+  expected-touchable tests/fixtures/builder_input_fingerprints.json | before 5e525b02c53f after 6bf0987788d4
+  expected-touchable tests/fixtures/master_tables_golden.json | before d323cb0ac1ef after 02e87f229e21
+  expected-touchable tests/test_rule_coverage_manifest.py | before ace58adbb017 after b9d8b61a89d9
+UNEXPECTED count: 0

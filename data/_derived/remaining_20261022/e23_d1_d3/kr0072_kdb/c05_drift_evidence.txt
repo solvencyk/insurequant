@@ -1,0 +1,23 @@
+  pl 의도적 null (0-fill 억제): 50 cells — 폴백을 끈다
+  pl 기타사업비(item16)->null: 37 cells (보험손익 closes without -16, was silently 0)
+  pl overrides: 1322 set
+  pl 값_당분기 의도적 null (누계 유지): 110 cells
+  pl 값_당분기 공시 3개월 인쇄값 고정 (누계 유지): 37 cells
+KR0072: live master value | value of a fresh build_pl() with the live gold | formula value from the LIVE legs | gold entry
+  2023.2Q i 7: live               -17294.0 | fresh build               -18990.0 | formula(live legs)               -17294.0 | gold               -18990.0
+  2023.3Q i 7: live          -52310.275872 | fresh build          -44935.275872 | formula(live legs)          -52310.275872 | gold          -44935.275872
+  2023.2Q i12: live                 1790.0 | fresh build                 3984.0 | formula(live legs)                 1790.0 | gold                   None
+  2023.3Q i12: live           12952.808227 | fresh build           20566.808227 | formula(live legs)     12952.808227000001 | gold                   None
+  2023.2Q i16: live                 5400.0 | fresh build                   None | formula(live legs)                   None | gold                   None
+all documented pairs reproduced; for items 7 / 12 the live cell equals the formula value of the live legs (hand-corrected after the A2 leg fix), the fresh build does not
+drift_before.json: KR0072 drift cells (live != fresh build with the live gold): 49
+    2023.2Q [5, 6, 7, 9, 10, 11, 12, 16]
+    2023.3Q [5, 6, 7, 9, 10, 11, 12]
+    2023.4Q [5, 6, 7, 9, 10, 11, 12]
+    2024.2Q [6, 7, 9, 10, 11, 12]
+    2024.3Q [6, 7, 9, 10, 11, 12]
+    2024.4Q [6, 7, 9, 10, 11, 12]
+    2025.2Q [6, 7]
+    2025.3Q [6, 7]
+    2025.4Q [6, 7]
+    2026.2Q [6, 7, 11]

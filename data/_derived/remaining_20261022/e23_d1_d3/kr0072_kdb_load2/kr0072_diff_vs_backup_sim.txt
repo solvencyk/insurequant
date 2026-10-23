@@ -1,0 +1,79 @@
+post state read from: C:\Users\sangwook.cho\AppData\Local\Temp\claude\C--Users-sangwook-cho-Desktop-insurequant\429689e1-5ae3-4467-ae2a-745748238c8b\scratchpad\e23_kr0072_load2_sim
+[PASS] backup data/_gold/user_pl_cells.json == Hyundai manifest after_sha256 (= state right before this load) 
+[PASS] backup PL_breakdown.json == Hyundai manifest after_sha256 (= state right before this load) 
+[PASS] backup PL_breakdown_provenance.json == Hyundai manifest after_sha256 (= state right before this load) 
+[PASS] backup data/_gold/user_csm_cells.json == Hyundai manifest after_sha256 (= state right before this load) 
+[PASS] backup CSM_waterfall.json == Hyundai manifest after_sha256 (= state right before this load) 
+[PASS] backup CSM_waterfall_provenance.json == Hyundai manifest after_sha256 (= state right before this load) 
+[PASS] PL rows count equal and same key order (13801 rows)
+[PASS] no changed row outside KR0072 2023.1Q-2023.4Q (KR0099, KR0003, KR0070, KR0009 and all others untouched) (0)
+[PASS] no changed field other than 값 / 값_당분기 ([])
+[PASS] 값 changed cells == the 65 plan cells (changed 65, plan 65)
+[PASS] every changed 값 equals the plan value 
+[PASS] every changed 값 equals the INDEPENDENTLY re-read value (kr0072_verify_values.json; items 7 / 12 / 15 are derived from the live legs there too) (65 cells)
+[PASS] every planned cell had the plan 'old' value before (live master value, not the gold value) 
+[PASS] every changed 값_당분기 equals cum - previous-quarter cum of the post master, or the pinned printed 3-month column (81 cells; bad [])
+[PASS] every pinned cell (8) holds its printed 3-month value in the post master (8 cells)
+[PASS] every changed 값_당분기 belongs to a changed cumulative (this quarter or the previous one of the same item) ([])
+[PASS] changed 2023.2Q / 2023.3Q single quarters of the re-read items equal the PRINTED 3-month column of the later filing (to 1e-4 백만원; the 8 pinned cells exactly) ([])
+[PASS] 2024.x quarters of KR0072 untouched 
+   값 changed items [1, 2, 3, 4, 7, 8, 12, 15, 16, 17, 18, 19, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32] (quarters ['2023.1Q', '2023.2Q', '2023.3Q', '2023.4Q']); 값_당분기 changed cells 81 (dangi-only 18)
+[PASS] PL file keeps the newline convention and the ending 
+[PASS] gold: all existing set entries untouched except the 4 replaced ones (same order) 
+[PASS] gold: replaced entry ('KR0072', 4, '2023.2Q') == plan (값, was, note; same position; old note quoted verbatim) 
+[PASS] gold: replaced entry ('KR0072', 4, '2023.3Q') == plan (값, was, note; same position; old note quoted verbatim) 
+[PASS] gold: replaced entry ('KR0072', 7, '2023.2Q') == plan (값, was, note; same position; old note quoted verbatim) 
+[PASS] gold: replaced entry ('KR0072', 7, '2023.3Q') == plan (값, was, note; same position; old note quoted verbatim) 
+[PASS] gold: appended entries == plan new entries (order, 값, was, note) (61 appended)
+[PASS] gold: every appended entry has keys 원보험사코드/항목번호/공시분기/값/was/note only 
+[PASS] gold: null_dangi untouched 
+[PASS] gold: set_dangi existing cells untouched (same order) 
+[PASS] gold: set_dangi appended cells == plan set_dangi_add (8, order and source text) (8 appended)
+[PASS] gold: set_dangi only gained cells + the doc key _doc_e23_kr0072_20261023 
+[PASS] gold: other top-level keys untouched 
+[PASS] CSM rows count equal and same key order (2358 rows)
+[PASS] CSM: no changed row outside KR0072 2023.1Q-2023.4Q, no other field ([] [])
+[PASS] CSM: 값 changed cells == the 20 plan cells with the plan values (20)
+[PASS] CSM: every changed 값 equals the INDEPENDENTLY re-read stored value (2 decimals for 2023.1Q/2Q, 1 decimal for 2023.3Q/4Q) 
+[PASS] CSM: every planned cell had the plan 'old' value before 
+[PASS] CSM: all 24 FY2023 cells now equal the independently re-read vector (to the stored precision; 2023.4Q items 2/3/5/6 unchanged at 1 decimal) 
+[PASS] CSM: every changed 값_당분기 equals the derivation from the post cumulative cells (23 cells, [])
+   CSM 값_당분기 changed 23 cells: [(1, '2023.1Q', 5239.4, 5695.95), (1, '2023.2Q', 4727.25, 5138.2), (1, '2023.3Q', 5583.7, 6043.35), (1, '2023.4Q', 5330.8, 5836.8), (2, '2023.1Q', 387.3, 384.11), (2, '2023.2Q', 786.7, 788.95), (2, '2023.3Q', 1036.7, 1036.74), (2, '2023.4Q', 812.4, 813.3), (3, '2023.1Q', 45.1, 42.25), (3, '2023.2Q', 44.9, 40.79), (3, '2023.3Q', 56.1, 50.96), (3, '2023.4Q', 37.3, 49.4), (4, '2023.1Q', -833.3, -867.71), (4, '2023.2Q', 147.75, 204.11), (4, '2023.3Q', -1227.35, -1166.6), (4, '2023.4Q', -190.6, -729.8), (5, '2023.1Q', -111.25, -116.41), (5, '2023.2Q', -122.9, -128.68), (5, '2023.3Q', -118.35, -127.61), (5, '2023.4Q', -159.5, -139.3), (6, '2023.1Q', 4727.25, 5138.2), (6, '2023.2Q', 5583.7, 6043.35), (6, '2023.3Q', 5330.8, 5836.8)]
+[PASS] CSM gold: the 2 chain-forced entries are gone, every other existing entry untouched except the 5 replaced ones (same order) 
+[PASS] CSM gold: replaced entry ('KR0072', 4, '2023.1Q') == plan (값, was, why; same position; old why quoted verbatim) 
+[PASS] CSM gold: replaced entry ('KR0072', 4, '2023.2Q') == plan (값, was, why; same position; old why quoted verbatim) 
+[PASS] CSM gold: replaced entry ('KR0072', 5, '2023.1Q') == plan (값, was, why; same position; old why quoted verbatim) 
+[PASS] CSM gold: replaced entry ('KR0072', 5, '2023.2Q') == plan (값, was, why; same position; old why quoted verbatim) 
+[PASS] CSM gold: replaced entry ('KR0072', 6, '2023.1Q') == plan (값, was, why; same position; old why quoted verbatim) 
+[PASS] CSM gold: removed entries were exactly the plan's old entries 
+[PASS] CSM gold: appended entries == plan new entries (13 appended)
+[PASS] CSM gold: only the documentation key _doc_e23_kr0072_20261023 was added at top level 
+[PASS] CSM provenance: same block keys and order 
+[PASS] CSM provenance: changed blocks == 2023.3Q gaining owner_override=True and 2023.4Q losing it (2023.1Q/2Q already carried it, no gold left on 2023.4Q) ([('KR0072', '2023.3Q', 'csm_waterfall'), ('KR0072', '2023.4Q', 'csm_waterfall')])
+[PASS] CSM provenance: only the new merge note key added (['merge_note_20261023_e23_kr0072_kdb_csm'])
+[PASS] ledger: exactly the 3 pins of the replaced masked CSM gold cells were removed (none added, none changed) (99 -> 96)
+[PASS] data/_gold/pl_bridge_baseline.json: equal to git HEAD (not touched by the chain so far or by this load) 
+[PASS] data/_gold/pl_csm_amort_missing_ledger.json: equal to git HEAD (not touched by the chain so far or by this load) 
+[PASS] scripts/validate_data_contract.py: equal to git HEAD (not touched by the chain so far or by this load) 
+[PASS] scripts/pl_breakdown/companies.py: equal to git HEAD (not touched by the chain so far or by this load) 
+[PASS] insurequant_master_tables.xlsx: equal to git HEAD (not touched by the chain so far or by this load) 
+[PASS] NB_CSM_multiple.json: equal to git HEAD (not touched by the chain so far or by this load) 
+[PASS] data/dart/viz/pl_breakdown_master.json: equal to git HEAD (not touched by the chain so far or by this load) 
+[PASS] scripts/validate_master_tables.py: equal to the validation cleanup post copy (gate_cleanup/post_copies; this load does not touch gate scripts) 
+[PASS] tests/fixtures/pl_breakdown_golden.json, viz fixtures: byte-equal to the pre-load backup (this load must not need a PL golden update) 
+[PASS] provenance: no block removed 
+[PASS] provenance: the surviving blocks keep their relative order 
+[PASS] provenance: changed or inserted blocks only of KR0072 2023.1Q-2023.4Q (5 blocks: [('2023.1Q', 'contract_notes'), ('2023.1Q', 'income_statement'), ('2023.2Q', 'income_statement'), ('2023.3Q', 'income_statement'), ('2023.4Q', 'income_statement')]; inserted [])
+[PASS] provenance: only the new merge note key added at top level, others untouched (['merge_note_20261023_e23_kr0072_kdb'])
+[PASS] provenance: every cell whose 값 changed belongs to a re-emitted (company, quarter) block (0 cells in unchanged blocks: [])
+   provenance block re-emitted: ('KR0072', '2023.1Q', 'contract_notes'); source_id OWNER_GOLD resolution gold_cell_override keys ['company_code', 'item_block', 'owner_override', 'published_items', 'quarter', 'resolution', 'schema_items', 'source_file']
+   provenance block re-emitted: ('KR0072', '2023.1Q', 'income_statement'); source_id OWNER_GOLD resolution owner_gold_overlay keys ['company_code', 'item_block', 'owner_override', 'published_items', 'quarter', 'resolution', 'schema_items', 'source_file']
+   provenance block re-emitted: ('KR0072', '2023.2Q', 'income_statement'); source_id OWNER_GOLD resolution owner_gold_overlay keys ['company_code', 'item_block', 'owner_override', 'published_items', 'quarter', 'resolution', 'schema_items', 'source_file']
+   provenance block re-emitted: ('KR0072', '2023.3Q', 'income_statement'); source_id OWNER_GOLD resolution owner_gold_overlay keys ['company_code', 'item_block', 'owner_override', 'published_items', 'quarter', 'resolution', 'schema_items', 'source_file']
+   provenance block re-emitted: ('KR0072', '2023.4Q', 'income_statement'); source_id DART resolution fs_api_tier1 keys ['company_code', 'item_block', 'owner_override', 'published_items', 'quarter', 'resolution', 'schema_items', 'source_file']
+[PASS] test file: only the census declaration (+1 comment) changed (3 differing lines, lines 2296 -> 2297)
+   -GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1379, 22)}
+   +# 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 케이디비생명보험 KR0072 FY2023 2023.1Q-2023.4Q refreshed to the latest comparative; 4 PL + 5 CSM owner-gold cells replaced in place, 2 CSM chain-forced owner-gold cells removed because the approved value equals the builder source, ledger pins of the 3 
+   +GOLD_OVERLAY_CENSUS = {"CSM": (428, 74), "PL": (1440, 22)}
+   GOLD_OVERLAY_CENSUS = {"CSM": (428, 74), "PL": (1440, 22)}
+ALL PASS

@@ -1,0 +1,167 @@
+CSM gold keys: ['_doc', 'exclude_companies', 'set']
+  _doc Manual corrections from owner xlsx review (2026-06-10). Applied by build_root_masters.py AFTER loading diag, BEFORE 당분기 recompute. set: upsert 값 by (code,item,quarter). exclude_companies: drop entirely from root CSM master.
+  exclude_companies dict keys ['KR0051', 'KR0150']
+  set list 385 {"원보험사코드": "KR0003", "항목번호": 1, "공시분기": "2023.1Q", "값": 16774.38, "was": "ROW_ABSENT", "why": "raw 교차확인 — 2023.1Q 자체 필링(rcept 20230515002687)엔 CSM 측정요소 노트가 없음(전체 162개 표 전수 스코어링 결과 '보험계약마진'/'측정요소'/'이행현금흐름'/'위험조정' 매칭 0건 — 자동추출 실패가 아니라 이 필링 자체에 표가 없는 것으로 판단됨, K-IFRS 1분기보고서 특성). 다만 항목1(기초 CSM)은 FY 내 상수이므로 2023.4Q(연차, rcept 20240321001822) 필링이 독립적으로 보고하는 FY2023 기초(=anchor)와 대조 가능 — 그 값이 16774.4로 gold(16774.38)와 일치(반올림오차 0.02). 항목2~6은 이 방법으로 확인 불가(아래 해당 항목 참조)."}
+PL gold keys: ['_doc', 'set', 'null_dangi', 'set_dangi']
+  _doc Owner manual xlsx fills (review-loop). Applied by build_root_masters.build_pl() AFTER _zero_other_expense, BEFORE 값_당분기 recompute. set: upsert 값 by (code,item,quarter). Owner already synced these to root; this file makes them survive master rebuilds. estimate=true (현대해상 생명장기 leg): provenance/designe
+  set list 1231 {"원보험사코드": "KR0009", "항목번호": 11, "공시분기": "2023.4Q", "값": -15460.571360999998, "was": null, "note": "owner xlsx fill (review-loop 2026-06-19/20)", "estimate": true}
+  null_dangi dict keys ['_doc', 'cells', '_doc_oci_20261022', '_doc_e19_20261022', '_doc_e20_20261022', '_doc_e21_20261023']
+      _doc KR0073 2023.3Q item 15 (기타영업수익): the separate statement of the FY2024 Q3 report prints no 기타영업수익 row, so there is no printed 3-month value (the cumulative 0.0 is an assemble() default for 생보); the sin
+      cells list 98 [["KR0073", "2023.3Q", 15], ["KR0073", "2024.4Q", 25]]
+      _doc_oci_20261022 KR0073 OCI refresh 2026-10-22 (ticket 20261021T1556Z): 값_당분기 of items 25/26/31/32 for 2024.4Q and 2025.3Q is blanked. After the cumulative refresh of 2024.4Q (FY2025 annual restated column) and 2025.1
+      _doc_e19_20261022 2026-10-22 ticket 20261022T0900Z (parser/ifrs17, owner go 2026-10-22 'latest comparative for the other companies, same as Kyobo'): 값_당분기 forced blank for KR0032 2023.4Q items 17/19/20/22/23/24/25/27 a
+      _doc_e20_20261022 2026-10-22 ticket 20261022T1800Z STEP 1 (parser/ifrs17, owner 「쭉 진행」): 값_당분기 forced blank for single quarters whose two cumulatives sit on different filings / vintages after the adoption. (a) 2024.4Q:
+      _doc_e21_20261023 2026-10-23 ticket 20261023T0300Z (parser/ifrs17, READY-25): 값_당분기 forced blank for 2023.4Q / 2024.4Q single quarters whose annual cumulative is adopted from the next-year annual comparative while the 
+  set_dangi dict keys ['_doc', 'cells', '_doc_e19_20261022', '_doc_e20_20261022', '_doc_e21_20261023']
+      _doc KR0073 2023.3Q single quarter = the restated THREE-MONTH value printed in the FY2024 Q3 report (data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml, separate basis, prior-year 3-month column of t
+      cells list 37 [["KR0073", "2023.3Q", 1, 89281.796027, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L36675 [보험손익] 89,281,796,027원"], ["KR0073", "2023.3Q", 2, 98046.234456, "data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml (derived: = item3 + item8)"]]
+      _doc_e19_20261022 2026-10-22 ticket 20261022T0900Z (parser/ifrs17): 값_당분기 = the 3-month column printed in the later filing for single quarters whose two cumulatives are on different vintages: KR0005 2023.3Q items 20/22
+      _doc_e20_20261022 2026-10-22 ticket 20261022T1800Z STEP 1 (parser/ifrs17): added KR0094 2025.2Q items 25/26/31 = the restated 3-month column printed in the FY2026 half-year report (96,393 / (428,618) / 276,028; 6M rest
+      _doc_e21_20261023 2026-10-23 ticket 20261023T0300Z (parser/ifrs17, READY-25): added KR0104 2023.3Q item 32 = the 3-month column printed in the FY2024 Q3 report (278.925315; the cumulative difference 278.959062 differs 
+== KR0003 PL gold set entries
+   2023.2Q 4 80785.0 was None | inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): FY2023_Q2 raw 부재(다운로더 갭, 한화손보와 동
+   2023.3Q 4 131623.0 was None | inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_VS_WATERFALL, group A): extract_tier2_lotte 의 3개 서브전략 전부
+   2023.2Q 19 -80474.009144 was -71316.307049 | owner gold 를 최신 비교열로 갱신(owner 2026-10-12·2026-10-22 규칙, gold == 원 공시 인쇄값인 경우만): 이전 gold 값 -71316.307049, 이전 wa
+   2023.2Q 18 120875.600156 was 84894.676752 | 2026-10-12 parser/ifrs17 ticket 20261012T2230Z: 원 공시 포괄손익계산서의 3개월 열이 누적으로 적재돼 있던 것을 누적 열로 정정. rcept 2023081400
+   2023.1Q 1 22226.492874 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 2 21320.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 3 15627.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 4 39284.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 5 4569.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 6 18900.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 7 -47126.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 8 5693.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 9 -631.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 10 -34.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 11 -1089.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 12 7447.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 13 3049.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 14 4817.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 15 0.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 16 6959.111876 was 7000.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 17 53833.730313 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 18 94028.277075 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 19 -40194.546762 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 20 76060.223187 was 105030.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 21 -1627.636197 was -1628.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 22 74432.58699 was 103402.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 23 18020.309116 was 24028.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 24 56412.277874 was 79375.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 25 -34528.702551 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 26 142924.02039 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 27 -181725.221594 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 28 884.262735 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 29 1587.800424 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 30 2446.62683 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 31 21883.575323 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.1Q 32 -646.191336 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 1 67802.720284 was 102897.623102 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 2 69680.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 3 63756.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 5 9373.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 6 40611.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 7 -67013.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 8 5924.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 9 -1362.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 10 -4.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 11 -2008.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 12 9298.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 13 2914.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 14 7630.0 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 16 12421.712427 was 12400.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 17 40401.591012 was 49559.293107 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 20 108204.311296 was 152456.916209 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 22 106833.571725 was 151086.176638 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 23 25509.949945 was 38114.430179 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 24 81323.62178 was 112971.746459 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 25 -14861.315709 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 26 71123.029053 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 27 -43257.926082 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 28 -43873.553655 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 29 1365.55493 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 30 1158.001712 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 31 66462.306071 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2023.2Q 32 -1376.421667 was None | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 1 36991.399739 was 41360.838913 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 2 41109.0 was 45480.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 3 39098.0 was 44471.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 4 56827.0 was 57082.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 7 -27874.0 was -22756.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 8 2011.0 was 1009.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 9 -431.0 was -348.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 12 2534.0 was 1449.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 17 5210.468758 was 9786.618088 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 19 -43695.280367 was -39119.131037 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 20 42201.868497 was 51147.457001 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 22 44256.339667 was 53201.928171 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 23 10268.865716 was 12335.29666 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 24 33987.473951 was 40866.631511 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 25 -196705.345197 was -202720.064416 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 26 -93387.294814 was -96094.590074 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 27 -48904.160019 was -52211.583978 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.1Q 31 -162717.871246 was -161853.432905 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 1 75045.0 was 83792.068174 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 2 84880.0 was 93627.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 3 83339.0 was 94075.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 4 114203.0 was 114732.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 7 -51022.0 was -40815.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 8 1541.0 was -448.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 9 -973.0 was -792.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 12 4348.0 was 2178.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 17 -2719.0 was 170.887443 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 19 -85022.0 was -82132.001073 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 20 72326.0 was 83962.955617 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 22 75535.0 was 87171.840547 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 23 18229.0 was 20917.312265 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 24 57306.0 was 66254.528282 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 25 -356479.0 was -363702.043743 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 26 -75969.0 was -81382.692898 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 27 -259030.0 was -260838.414611 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.2Q 31 -299173.0 was -297447.515461 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 1 100058.0 was 113248.111102 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 2 120520.0 was 133709.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 3 113503.0 was 129651.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 4 171048.0 was 171871.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 7 -85857.0 was -70532.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 8 7017.0 was 4058.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 9 -1520.0 was -1223.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 12 9028.0 was 5772.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 17 -10868.0 was -5423.849047 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 19 -125508.0 was -120064.03384 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 20 89190.0 was 107824.262055 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 22 91301.0 was 109935.627545 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 23 21582.0 was 25522.103118 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 24 69719.0 was 84413.524427 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 25 -448124.0 was -459855.829507 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 26 58239.0 was 50087.740622 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 27 -573187.0 was -576768.05462 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+   2024.3Q 31 -378405.0 was -375442.30508 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(
+== KR0003 CSM gold set entries
+   2023.1Q 1 16774.38 was ROW_ABSENT | raw 교차확인 — 2023.1Q 자체 필링(rcept 20230515002687)엔 CSM 측정요소 노트가 없음(전체 162개 표 전수 스코어링 결과 '보험계약마진'/'측정요소'/'이행현금흐름'/
+   2023.2Q 1 16774.38 was 18004.6 | raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6/2651.0/377.9/-556.7/-843.4/19
+   2023.1Q 2 1553.18 was ROW_ABSENT | 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스코어링 매칭 0건, 자동추출기 결함이 아니라 원문 미공
+   2023.2Q 2 2654.34 was 2651.0 | raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6/2651.0/377.9/-556.7/-843.4/19
+   2023.1Q 3 174.43 was ROW_ABSENT | 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스코어링 매칭 0건, 자동추출기 결함이 아니라 원문 미공
+   2023.2Q 3 358.76 was 377.9 | raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6/2651.0/377.9/-556.7/-843.4/19
+   2023.1Q 4 -174.28 was -681.62 | 이전 gold -681.62 (이전 was ROW_ABSENT) 를 교체: class C: 이전 gold -681.62 는 총 부채 기준 기말 17427.53 에 맞춘 닫힘 플러그(기말 - (기초+
+   2023.2Q 4 -361.99 was -556.7 | raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6/2651.0/377.9/-556.7/-843.4/19
+   2023.1Q 5 -392.84 was ROW_ABSENT | 출처 불명, 재확인 필요 — 2023.1Q 필링(rcept 20230515002687)에 CSM 측정요소 노트 자체가 없음(전체 162개 표 스코어링 매칭 0건, 자동추출기 결함이 아니라 원문 미공
+   2023.2Q 5 -807.85 was -843.4 | raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6/2651.0/377.9/-556.7/-843.4/19
+   2023.1Q 6 17934.87 was 17427.53 | 이전 gold 17427.53 (이전 was ROW_ABSENT) 를 교체: class C (원 공시 2023.1Q 에는 CSM 표가 없어 원 인쇄값이 존재하지 않음): 이전 gold 17427.5
+   2023.2Q 6 18617.64 was 19633.5 | raw 확인 — 2023.2Q 자체 필링(rcept 20230814002928)의 '<제79(당)기 반기>' 표 자체 값(was: 18004.6/2651.0/377.9/-556.7/-843.4/19
+   2024.1Q 1 23860.8 was 23966.2 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.1Q 3 241.6 was 242.5 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.1Q 4 -608.4 was -598.9 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.1Q 5 -568.3 was -570.8 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.1Q 6 24192.5 was 24305.8 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.2Q 1 23860.8 was 23966.2 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.2Q 3 487.3 was 489.1 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.2Q 4 -1261.4 was -1241.9 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.2Q 5 -1142.0 was -1147.3 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.2Q 6 24476.6 was 24598.0 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.3Q 1 23860.8 was 23966.2 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.3Q 3 735.5 was 738.3 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.3Q 4 -2130.4 was -2101.4 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.3Q 5 -1710.5 was -1718.7 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+   2024.3Q 6 24400.9 was 24529.9 | 2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 
+== KR0003 null_dangi/set_dangi

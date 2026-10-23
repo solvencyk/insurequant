@@ -1,0 +1,39 @@
+PROPOSAL ONLY (not applied; validation-owned files) -- what has to change in the push-gate coverage declarations before the KDB load (KR0072 FY2023, scenario N5_KDB_FY2023) can be applied.
+
+Why
+---
+The 2023.2Q block of KR0072 is the ONLY place where the item-23 (법인세) constructive mutation test is detected today:
+  tests/test_rule_coverage_manifest.py::PL_CONSTRUCTIVE_GUARDED[23]  says "narrow coverage: PL_YTD_COLLAPSE_TO_ZERO catches it only when the overwritten value happens to be exactly 0.0".
+  The mutation recomputes item 23 = item 22 - item 24 for every cell.  It becomes exactly 0.0 (and then collapses against a non-zero previous quarter) only where 22 == 24 to the won.
+  Candidate cells of that kind in the live PL master (c16_tax_collapse_candidates.txt):
+      KR0004 2025.3Q, KR0072 2023.2Q, KR1102 2023.2Q, KR1107 2024.4Q, KR1107 2025.4Q
+  Four of them remain after the load, and the test still reports item 23 as undetected, so none of those four produces a NEW blocking finding: KR0072 2023.2Q is the only one that did (it is the one the
+  manifest text of 2026-09-12 names).  (Why each of the four stays silent was not investigated; the pytest result is the evidence.)
+  Its live values 22 = 24 = 57,750.0 are the hand-entered integer overrides of the ORIGINAL half-year report (`_GOLD_CELL_OVERRIDE` in scripts/build_pl_breakdown.py).
+  The latest comparative (FY2024 half-year report, prior-year 누적 column: L28464 and L28510 of rcept 20240814000801) prints 22 = 62,624.220676 and 24 = 62,624.429999 (법인세 -0.209323), so after ANY correct load of the restated
+  2023.2Q the recomputed item 23 is -0.209323, not 0.0, and the mutation is no longer detected.
+  Result with the KDB load applied (pytest_test_rule_coverage_manifest_after1.txt): test_pl_constructive_coverage_matches_manifest[23] FAILS ("item23(법인세) 이 무방비다").
+  Without the load (reverted tree) the same test passes (pytest_item23_after_revert.txt).
+
+What the what-if run showed (pytest_whatif_manifest_item23_blind.txt)
+--------------------------------------------------------------------
+With the load applied and ONLY the manifest edit below (a temporary copy tests/test_zz_whatif_kr0072_manifest.py, deleted afterwards), the file runs 102 passed / 2 failed:
+  - test_master_xlsx_clean_state_has_no_red  (expected: xlsx sync, publishing)
+  - test_pl_blind_items_are_declared_in_the_gate  (needs the gate-side list below)
+
+Edits (both belong to validation: they change a coverage declaration and a gate script)
+-------------------------------------------------------------------------------------
+1. tests/test_rule_coverage_manifest.py
+     - delete the entry   23: "법인세 — **좁은 커버리지** ..."   from PL_CONSTRUCTIVE_GUARDED
+     - add to PL_CONSTRUCTIVE_BLIND (after the entry 19):
+         23: "법인세 — assemble 이 22-24 로 무조건 덮어쓴다. 유일한 탐지였던 PL_YTD_COLLAPSE_TO_ZERO(같은 FY 인접분기, 직전값 non-zero -> 이번값 정확히 0.0)는 "
+             "KR0072 2023.2Q 의 override 22 = 24 = 57,750.0 이라는 우연에 걸려 있었고, 2023.2Q 가 최신 비교열(22 = 62,624.220676, 24 = 62,624.429999, 법인세 -0.209323)로 "
+             "바뀌면 사라진다(2026-10-23 e23 D3). 대상 회사-분기가 없으면 이 축은 BLIND",
+2. scripts/validate_master_tables.py
+     - add 23 to PL_ITEMS_UNCHECKABLE_BY_EQUATION (test_pl_blind_items_are_declared_in_the_gate compares the gate's printed list [5, 6, 9, 10, 11, 19] with the manifest's BLIND set);
+       if the printed list is part of the master_tables SUMMARY fixture, run tests/test_master_tables_golden.py --update afterwards.
+
+Honest reading: this is a loss of a declared (accidental) coverage, not of a rule.  An alternative that keeps a real guard (a gate that compares item 23 with the printed 법인세 line of the filing) would be a new gate design
+and is not part of this load.
+
+Then resume the KDB load (INDEX.txt section 6).

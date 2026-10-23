@@ -1,0 +1,287 @@
+KR0072 independent re-read | plan N5_KDB_FY2023 | masters from C:\Users\sangwook.cho\Desktop\insurequant | mutation 'unit'
+input hashes: N1=75fa900916f6, N2=6c843c5e7ca5, N3=8e7ccca3dc0e, N4=4071667e504d, N4AUD=b168679c4a94, O1=b82229e006bd, O2=2bbcd5b255ca, O3=ca83d9c6f03b, O4=0a8278fd91d2, O4AUD=8e1d2d9f089f, A25=4ebfe691c8b3
+
+== B. CANDIDATE: FY2024 filings, separate 4-2 statement, prior-year (2023) cumulative column, read with the production definitions
+  2023.1Q: data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml | unit 원 (line 24182) | column 4 header ['제 36 기 1분기', '누적'] | period header (L24175) 제 36 기 1분기 2023.01.01 부터 2023.03.31 까지
+  2023.2Q: data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml | unit 원 (line 27542) | column 4 header ['제 36 기 반기', '누적'] | period header (L27535) 제 36 기 반기 2023.01.01 부터 2023.06.30 까지
+  2023.3Q: data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml | unit 원 (line 3903) | column 4 header ['제 36 기 3분기', '누적'] | period header (L3896) 제 36 기 3분기 2023.01.01 부터 2023.09.30 까지
+  2023.4Q: data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml | unit 원 (line 5356) | column 2 header ['제 36 기'] | period header (L5342) 제 36 기 2023.01.01 부터 2023.12.31 까지
+  PL4 (CSM amortisation, 백만원): 구성내역 note (prior cumulative) | CSM roll-forward row 5 (prior table)
+    2023.1Q: note 11,641 (L40388, table L40344, 2 numeric cells, unit 백만원 in-table) | roll-forward row 5 (11,641) (L36369) -> AGREE
+    2023.2Q: note 24,509 (L44795, table L44734, 4 numeric cells, unit 백만원 in-table) | prior 3개월 12,869 (L44794) | roll-forward row 5 (24,509) (L40728) -> AGREE
+    2023.3Q: note 37,266 (L22520, table L22459, 4 numeric cells, unit 백만원 in-table) | prior 3개월 12,756 (L22519) | roll-forward row 5 (37,266) (L18436) -> AGREE
+    2023.4Q: note 51,198 (L33230, table L33186, 2 numeric cells, unit 백만원 in-table) | roll-forward row 5 (51,198) (L26284) -> AGREE
+
+== B1. every planned PL cell: value, unit, sign, row label, physical line of each part
+  planned PL cells 65, fully matching the independent re-read: 65
+  2023.4Q cited cells carry ACONTEXT PFY2023dFY ... SeparateMember (XBRL prior fiscal year, separate basis): all
+
+== B2. completeness: items re-read from the filing but NOT in the plan (live master vs re-read) and the 'masked gold cell' test against the builder source
+  2023.1Q i15: live         0.000000 re-read         0.000000 diff +0.000000 -> equal
+  2023.1Q i16: live     2,346.170000 re-read     2,346.167909 diff -0.002091 -> rounding | builder source 2346.17 -> a gold cell of 2346.167909 would be MASKED (needs a ledger pin)
+  2023.1Q i21: live    -5,425.700000 re-read    -5,425.697542 diff +0.002458 -> rounding | builder source -5425.7 -> a gold cell of -5425.697542 would be MASKED (needs a ledger pin)
+  2023.1Q i23: live        -0.209323 re-read        -0.209323 diff +0.000000 -> equal
+  2023.2Q i23: live        -0.200000 re-read        -0.209323 diff -0.009323 -> rounding | builder source -0.2 -> a gold cell of -0.209323 would be MASKED (needs a ledger pin)
+  2023.3Q i15: live         0.000000 re-read         0.000000 diff +0.000000 -> equal
+  2023.3Q i16: live     9,241.557036 re-read     9,241.557036 diff +0.000000 -> equal
+  2023.3Q i21: live   -16,519.944013 re-read   -16,519.944013 diff +0.000000 -> equal
+  2023.3Q i23: live        -0.209323 re-read        -0.209323 diff +0.000000 -> equal
+  2023.3Q i26: live  -142,708.043542 re-read  -142,708.043542 diff +0.000000 -> equal
+  2023.3Q i28: live       550.330481 re-read       550.330481 diff +0.000000 -> equal
+  2023.3Q i29: live     6,874.687033 re-read     6,874.687033 diff -0.000000 -> equal
+  2023.3Q i30: live    -3,587.572436 re-read    -3,587.572436 diff +0.000000 -> equal
+  2023.3Q i32: live         6.147969 re-read         6.147969 diff +0.000000 -> equal
+  2023.4Q i 1: live    65,248.530979 re-read    65,248.530979 diff -0.000000 -> equal
+  2023.4Q i 2: live    78,011.749804 re-read    78,011.749804 diff +0.000000 -> equal
+  2023.4Q i 3: live    67,805.264694 re-read    67,805.264694 diff +0.000000 -> equal
+  2023.4Q i 4: live    51,198.000000 re-read    51,198.000000 diff +0.000000 -> equal
+  2023.4Q i 7: live    -3,348.735306 re-read    -3,348.735306 diff +0.000000 -> equal
+  2023.4Q i 8: live    10,206.485110 re-read    10,206.485110 diff -0.000000 -> equal
+  2023.4Q i12: live     9,834.485110 re-read     9,834.485110 diff -0.000000 -> equal
+  2023.4Q i15: live         0.000000 re-read         0.000000 diff +0.000000 -> equal
+  2023.4Q i16: live    12,763.218825 re-read    12,763.218825 diff +0.000000 -> equal
+  2023.4Q i19: live  -600,989.731988 re-read  -600,989.731988 diff +0.000000 -> equal
+  2023.4Q i21: live   -22,870.882990 re-read   -22,870.882990 diff +0.000000 -> equal
+  2023.4Q i23: live        -0.209323 re-read        -0.209323 diff +0.000000 -> equal
+  2023.4Q i25: live  -119,873.605158 re-read  -119,873.605158 diff +0.000000 -> equal
+  2023.4Q i26: live   721,351.741715 re-read   721,351.741715 diff +0.000000 -> equal
+  2023.4Q i27: live  -851,813.499295 re-read  -851,813.499295 diff +0.000000 -> equal
+  2023.4Q i28: live      -349.760634 re-read      -349.760634 diff +0.000000 -> equal
+  2023.4Q i29: live    11,589.357120 re-read    11,589.357120 diff -0.000000 -> equal
+  2023.4Q i30: live       -48.499287 re-read       -48.499287 diff +0.000000 -> equal
+  2023.4Q i32: live      -602.944777 re-read      -602.944777 diff +0.000000 -> equal
+  planned PL cells that would be masked gold cells (|new - builder source| <= 0.05): 0
+
+== B3. issuer statement on restatement in the FY2024 filings (information)
+  N1 L44270: 가. 재무제표 재작성 등 유의사항 (1) (연결)재무제표를 재작성한 경우 재작성사유, 내용 및 (연결)재무제표에 미치는 영향 - 해당사항 없음
+  N2 L49530: 가. 재무제표 재작성 등 유의사항 (1) (연결)재무제표를 재작성한 경우 재작성사유, 내용 및 (연결)재무제표에 미치는 영향 - 해당사항 없음
+  N3 L27360: 가. 재무제표 재작성 등 유의사항(1) (연결)재무제표를 재작성한 경우 재작성사유, 내용 및 (연결)재무제표에 미치는 영향 - 해당사항 없음 (2) 합병, 분할, 자산양수도, 영업양수도 - 해당사항 없음(3) 자산유동화와 관련한 자산 매각의 회계처리 및 우발채무 등에 관한 사항 - 해당사항 없음(4) 기
+  N4 L38267: 가. 재무제표 재작성 등 유의사항(1) 재무제표를 재작성한 경우 재작성사유, 내용 및 재무제표에 미치는 영향 - 해당사항 없음 (2) 합병, 분할, 자산양수도, 영업양수도 - 해당사항 없음(3) 자산유동화와 관련한 자산 매각의 회계처리 및 우발채무 등에 관한 사항 - 해당사항 없음(4) 기타 재무제표 이
+
+== B4. every planned CSM cell: stored value (억원), exact 2-decimal value, label, line, printed
+  !! PROBLEM [2023.1Q CSM i1] table unit 백만원 (in)
+  !! PROBLEM [2023.1Q CSM i2] table unit 백만원 (in)
+  !! PROBLEM [2023.1Q CSM i3] table unit 백만원 (in)
+  !! PROBLEM [2023.1Q CSM i4] table unit 백만원 (in)
+  !! PROBLEM [2023.1Q CSM i5] table unit 백만원 (in)
+  !! PROBLEM [2023.1Q CSM i6] table unit 백만원 (in)
+  planned CSM cells 20, fully matching the independent re-read: 14
+  2023.4Q CSM i2: not in the plan, live 3023.1 vs re-read 3023.1 (tol 0.0501) -> equal within the print rounding
+  2023.4Q CSM i3: not in the plan, live 183.4 vs re-read 183.4 (tol 0.0501) -> equal within the print rounding
+  2023.4Q CSM i5: not in the plan, live -512.0 vs re-read -512.0 (tol 0.0501) -> equal within the print rounding
+  2023.4Q CSM i6: not in the plan, live 5830.5 vs re-read 5830.5 (tol 0.0501) -> equal within the print rounding
+
+  CSM roll-forward closure (printed, 백만원) and stored (억원):
+    2023.1Q: printed [569595.0, 38411.0, 4225.0, -86771.0, -11641.0, 513820.0] closure residual (1+2+3+4+5-6) -1.0 백만원 | 5.보험서비스결과 (60,001) vs 2+3+4 -60001: +0 | 6. 보험금융손익 4225 vs (1)+(2) -> +0
+    2023.2Q: printed [569595.0, 117306.0, 8304.0, -66360.0, -24509.0, 604335.0] closure residual (1+2+3+4+5-6) +1.0 백만원 | 5.보험서비스결과 26,437 vs 2+3+4 +26437: +0 | 6. 보험금융손익 8304 vs (1)+(2) -> +0
+    2023.3Q: printed [569595.0, 220979.0, 13398.0, -183022.0, -37266.0, 583684.0] closure residual (1+2+3+4+5-6) +0.0 백만원 | 5.보험서비스결과 691 vs 2+3+4 +691: +0 | 6. 보험금융손익 13398 vs (1)+(2) -> +0
+    2023.4Q: printed [569595.0, 302310.0, 18337.0, -255997.0, -51198.0, 583047.0] closure residual (1+2+3+4+5-6) +0.0 백만원 | 5.보험서비스결과 (4,885) vs 2+3+4 -4885: +0 | 6. 보험금융손익 18337 vs (1)+(2) -> +0
+    FY2023 opening per quarter (백만원): {'2023.1Q': 569595.0, '2023.2Q': 569595.0, '2023.3Q': 569595.0, '2023.4Q': 569595.0} -> ONE vintage
+    FY boundary: 2023.4Q closing 583,047 (L26396) == FY2024 Q1 opening 583,047 (L36076) -> EQUAL
+
+== C. statement identities from freshly read printed cells (백만원)
+  2023.1Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: +0.000000 OK
+  2023.1Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.1Q 세전이익 = 영업이익+영업외손익: +0.000000 OK
+  2023.1Q 당기순이익 = 세전-법인세: +0.000000 OK
+  2023.1Q 총포괄손익 = 당기순이익+기타포괄손익: +0.000000 OK
+  2023.1Q 기타포괄손익 = 재분류 소계 + 비재분류 소계: +0.000000 OK
+  2023.1Q 재분류 소계 = 재분류 leaf 합: +0.000000 OK
+  2023.1Q 비재분류 소계 = 비재분류 leaf 합: +0.000000 OK
+  2023.1Q bridge item1 = item2 + item15 - item16: residual +0.000000
+  2023.1Q 25 = 26+27+28+29+30+32: +0.000000 | 17 = 18+19: +0.000000 | 20 = 1+17: +0.000000
+  2023.2Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: +0.000000 OK
+  2023.2Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.2Q 세전이익 = 영업이익+영업외손익: +0.000000 OK
+  2023.2Q 당기순이익 = 세전-법인세: +0.000000 OK
+  2023.2Q 총포괄손익 = 당기순이익+기타포괄손익: -0.000000 OK
+  2023.2Q 기타포괄손익 = 재분류 소계 + 비재분류 소계: +0.000000 OK
+  2023.2Q 재분류 소계 = 재분류 leaf 합: +0.000000 OK
+  2023.2Q 비재분류 소계 = 비재분류 leaf 합: +0.000000 OK
+  2023.2Q bridge item1 = item2 + item15 - item16: residual +0.000000
+  2023.2Q 25 = 26+27+28+29+30+32: -0.000000 | 17 = 18+19: +0.000000 | 20 = 1+17: +0.000000
+  2023.3Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: -0.000000 OK
+  2023.3Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.3Q 세전이익 = 영업이익+영업외손익: +0.000000 OK
+  2023.3Q 당기순이익 = 세전-법인세: +0.000000 OK
+  2023.3Q 총포괄손익 = 당기순이익+기타포괄손익: +0.000000 OK
+  2023.3Q 기타포괄손익 = 재분류 소계 + 비재분류 소계: +0.000000 OK
+  2023.3Q 재분류 소계 = 재분류 leaf 합: +0.000000 OK
+  2023.3Q 비재분류 소계 = 비재분류 leaf 합: +0.000000 OK
+  2023.3Q bridge item1 = item2 + item15 - item16: residual +0.000000
+  2023.3Q 25 = 26+27+28+29+30+32: +0.000000 | 17 = 18+19: +0.000000 | 20 = 1+17: +0.000000
+  2023.4Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: +0.000000 OK
+  2023.4Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.4Q 세전이익 = 영업이익+영업외손익: +0.000000 OK
+  2023.4Q 당기순이익 = 세전-법인세: +0.000000 OK
+  2023.4Q 총포괄손익 = 당기순이익+기타포괄손익: +0.000000 OK
+  2023.4Q 기타포괄손익 = 재분류 소계 + 비재분류 소계: +0.000000 OK
+  2023.4Q 재분류 소계 = 재분류 leaf 합: -0.000000 OK
+  2023.4Q 비재분류 소계 = 비재분류 leaf 합: +0.000000 OK
+  2023.4Q bridge item1 = item2 + item15 - item16: residual +0.000000
+  2023.4Q 25 = 26+27+28+29+30+32: -0.000000 | 17 = 18+19: +0.000000 | 20 = 1+17: +0.000000
+
+== C2. second source for the annual: audit report attachment 20250331002302_00760.xml (separate FS)
+  CSM prior table of the attachment (L15270): ['569,595', '302,310', '18,337', '(255,997)', '(51,198)', '583,047'] lines [15301, 15349, 15416, 15333, 15365, 15483] -> EQUAL to the main document
+  original FY2023 annual attachment (rcept 20240401002710_00760) CSM current table L16075: ['569,595', '302,310', '18,337', '(255,997)', '(51,198)', '583,047'] -> EQUAL to the FY2024 prior column
+
+== D. SEAM evidence
+  D1 single quarter derived from the cumulatives as they will stand in the master (new where planned, live otherwise) vs the printed 3-month column of the same filing (백만원):
+    2023.2Q i16: derived     3,003.173195 printed 3m     3,003.175286 diff -0.002091 -> seam (set_dangi proposed by the plan: True)
+    2023.2Q i21: derived    -5,482.631160 printed 3m    -5,482.633618 diff +0.002458 -> seam (set_dangi proposed by the plan: True)
+    2023.3Q i17: derived   -59,425.208458 printed 3m   -58,698.285464 diff -726.922994 -> seam (set_dangi proposed by the plan: True)
+    2023.3Q i18: derived    61,583.836323 printed 3m    62,310.759317 diff -726.922994 -> seam (set_dangi proposed by the plan: True)
+    2023.3Q i20: derived   -70,540.014790 printed 3m   -69,813.091796 diff -726.922994 -> seam (set_dangi proposed by the plan: True)
+    2023.3Q i22: derived   -76,151.627643 printed 3m   -75,424.704649 diff -726.922994 -> seam (set_dangi proposed by the plan: True)
+    2023.3Q i24: derived   -76,151.627643 printed 3m   -75,424.704649 diff -726.922994 -> seam (set_dangi proposed by the plan: True)
+    2023.3Q i31: derived    12,180.323774 printed 3m    12,907.246768 diff -726.922994 -> seam (set_dangi proposed by the plan: True)
+      cite check 2023.2Q i16: L27770 row '기타사업비용' printed 3,003,175,286 in the prior-year 3개월 column 3
+      cite check 2023.2Q i21: L28391 row '영업외손익' printed (5,482,633,618) in the prior-year 3개월 column 3
+      cite check 2023.3Q i17: L4154 row '투자손익' printed (58,698,285,464) in the prior-year 3개월 column 3
+      cite check 2023.3Q i18: L4154 row '투자손익' printed (58,698,285,464) in the prior-year 3개월 column 3
+      cite check 2023.3Q i20: L4729 row '영업이익' printed (69,813,091,796) in the prior-year 3개월 column 3
+      cite check 2023.3Q i22: L4821 row '법인세차감전순이익(손실)' printed (75,424,704,649) in the prior-year 3개월 column 3
+      cite check 2023.3Q i24: L4867 row '당기순이익(손실)' printed (75,424,704,649) in the prior-year 3개월 column 3
+      cite check 2023.3Q i31: L5120 row '당기총포괄손익' printed 12,907,246,768 in the prior-year 3개월 column 3
+    items whose derived single quarter equals the printed 3-month column to the print precision: 25 planned item-quarters (the rest are the seams above or have no previous-quarter cumulative)
+    explanation of the 2023.3Q seams: 6M implied by the FY2024 Q3 report (9M cumulative - 3개월) vs 6M printed in the FY2024 Q2 report:
+      i 1: implied 6M    27,825.949019 | printed 6M    27,825.949019 | diff +0.000000
+      i17: implied 6M    44,979.679823 | printed 6M    45,706.602817 | diff -726.922994
+      i18: implied 6M   353,949.795660 | printed 6M   354,676.718654 | diff -726.922994
+      i19: implied 6M  -308,970.115837 | printed 6M  -308,970.115837 | diff +0.000000
+      i20: implied 6M    72,805.628842 | printed 6M    73,532.551836 | diff -726.922994
+      i22: implied 6M    61,897.297682 | printed 6M    62,624.220676 | diff -726.922994
+      i24: implied 6M    61,897.507005 | printed 6M    62,624.429999 | diff -726.922994
+      i25: implied 6M   183,006.320644 | printed 6M   183,006.320644 | diff +0.000000
+      i31: implied 6M   244,903.827649 | printed 6M   245,630.750643 | diff -726.922994
+    PL4 2023.2Q: derived 12,868 vs printed prior 3개월 12,869 (L44794) diff -1 (print rounding of 백만원 sums)
+    PL4 2023.3Q: derived 12,757 vs printed prior 3개월 12,756 (L22519) diff +1 (print rounding of 백만원 sums)
+  D2 FY2025 annual report (rcept 20260331004180) third column (제 36 기 = FY2023) vs the FY2024 annual prior column:
+      renamed row (same value to the won): FY2024 annual L5726 '당기손익-공정가치측정금융상품관련이익' 186,418,357,921 == FY2025 annual L4923 '당기손익-공정가치측정금융자산관련이익'
+      renamed row (same value to the won): FY2024 annual L5764 '기타포괄손익-공정가치측정금융상품관련이익' 30,132,468 == FY2025 annual L4930 '기타포괄손익-공정가치측정금융자산관련이익'
+      renamed row (same value to the won): FY2024 annual L5935 '당기손익-공정가치측정금융상품관련손실' 108,369,893,448 == FY2025 annual L4986 '당기손익-공정가치측정금융자산관련손실'
+      renamed row (same value to the won): FY2024 annual L5973 '기타포괄손익-공정가치측정금융상품관련손실' 8,154,583,219 == FY2025 annual L4993 '기타포괄손익-공정가치측정금융자산관련손실'
+      renamed row (same value to the won): FY2024 annual L6296 '기타포괄손익-공정가치측정신용손실환입(전입)' -19,151,652 == FY2025 annual L5126 '기타포괄손익-공정가치측정신용손실'
+      renamed row (same value to the won): FY2024 annual L6496 '지배기업의소유주에게귀속되는당기순이익' 23,949,587,393 == FY2025 annual L5189 '지배기업의소유주에게귀속되는당기순이익(손실)'
+    FY2024 annual prior column rows 69 | same label (or shifted label) and same value to the won 55 | renamed row with the same value 6 | zero rows of obsolete labels not reprinted 8 | NOT reproduced 0
+    key rows (보험손익 투자손익 당기순이익 기타포괄손익 총포괄손익) equal in both: True -> no later restatement of FY2023
+
+== A. CONTROL: ORIGINAL FY2023 filings read with the same definitions vs the LIVE (pre-load) master
+  2023.3Q original data/dart/FY2023_Q3/raw/KR0072_케이디비생명보험/xml/20231114002983.xml (unit 원) separate statement, cumulative column:
+     i 1: live     4,636.975319 original print     4,636.975319 diff +0.000000 -> reproduced
+     i 2: live    13,878.532355 original print    13,878.532355 diff +0.000000 -> reproduced
+     i 3: live    -4,480.275872 original print    -4,480.275872 diff +0.000000 -> reproduced
+     i 8: live    18,358.808227 original print    18,358.808227 diff +0.000000 -> reproduced
+     i15: live 0.0 (builder default 0.0, no 기타영업수익 row)
+     i16: live     9,241.557036 original print     9,241.557036 diff +0.000000 -> reproduced
+     i17: live    -6,025.166046 original print    -6,025.166046 diff +0.000000 -> reproduced
+     i18: live   416,495.756650 original print   416,495.756650 diff -0.000000 -> reproduced
+     i19: live  -422,520.922696 original print  -422,520.922696 diff +0.000000 -> reproduced
+     i20: live    -1,388.190727 original print    -1,388.190727 diff +0.000000 -> reproduced
+     i21: live   -16,519.944013 original print   -16,519.944013 diff +0.000000 -> reproduced
+     i22: live   -17,908.134740 original print   -17,908.134740 diff +0.000000 -> reproduced
+     i23: live        -0.209323 original print        -0.209323 diff +0.000000 -> reproduced
+     i24: live   -17,907.925417 original print   -17,907.925417 diff +0.000000 -> reproduced
+     i25: live   278,659.391567 original print   278,659.391567 diff +0.000000 -> reproduced
+     i26: live  -142,708.043542 original print  -142,708.043542 diff +0.000000 -> reproduced
+     i27: live   417,523.842062 original print   417,523.842062 diff -0.000000 -> reproduced
+     i28: live       550.330481 original print       550.330481 diff +0.000000 -> reproduced
+     i29: live     6,874.687033 original print     6,874.687033 diff -0.000000 -> reproduced
+     i30: live    -3,587.572436 original print    -3,587.572436 diff +0.000000 -> reproduced
+     i31: live   260,751.466150 original print   260,751.466150 diff +0.000000 -> reproduced
+     i32: live         6.147969 original print         6.147969 diff +0.000000 -> reproduced
+     i 4: live 35,250.0 original note '(3) 제공된 서비스의 보험계약마진' current cumulative 35,250 (L46159) -> reproduced [owner gold]
+  2023.4Q original data/dart/FY2023_Q4/raw/KR0072_케이디비생명보험_20240401002710/xml/20240401002710.xml (unit 원) separate statement, cumulative column:
+     i 1: live    65,248.530979 original print    65,248.530979 diff -0.000000 -> reproduced
+     i 2: live    78,011.749804 original print    78,011.749804 diff +0.000000 -> reproduced
+     i 3: live    67,805.264694 original print    67,805.264694 diff +0.000000 -> reproduced
+     i 8: live    10,206.485110 original print    10,206.485110 diff -0.000000 -> reproduced
+     i15: live 0.0 (builder default 0.0, no 기타영업수익 row)
+     i16: live    12,763.218825 original print    12,763.218825 diff +0.000000 -> reproduced
+     i17: live   -18,358.723814 original print   -18,358.723814 diff +0.000000 -> reproduced
+     i18: live   582,631.008174 original print   582,631.008174 diff +0.000000 -> reproduced
+     i19: live  -600,989.731988 original print  -600,989.731988 diff +0.000000 -> reproduced
+     i20: live    46,889.807165 original print    46,889.807165 diff +0.000000 -> reproduced
+     i21: live   -22,870.882990 original print   -22,870.882990 diff +0.000000 -> reproduced
+     i22: live    24,018.924175 original print    24,018.924175 diff +0.000000 -> reproduced
+     i23: live        -0.209323 original print        -0.209323 diff +0.000000 -> reproduced
+     i24: live    24,019.133498 original print    24,019.133498 diff +0.000000 -> reproduced
+     i25: live  -119,873.605158 original print  -119,873.605158 diff +0.000000 -> reproduced
+     i26: live   721,351.741715 original print   721,351.741715 diff +0.000000 -> reproduced
+     i27: live  -851,813.499295 original print  -851,813.499295 diff +0.000000 -> reproduced
+     i28: live      -349.760634 original print      -349.760634 diff +0.000000 -> reproduced
+     i29: live    11,589.357120 original print    11,589.357120 diff -0.000000 -> reproduced
+     i30: live       -48.499287 original print       -48.499287 diff +0.000000 -> reproduced
+     i31: live   -95,854.471660 original print   -95,854.471660 diff +0.000000 -> reproduced
+     i32: live      -602.944777 original print      -602.944777 diff +0.000000 -> reproduced
+     i 4: live 51,198.0 original note '(3) 제공된 서비스의 보험계약마진' current cumulative 51,198 (L63686) -> reproduced
+  2023.1Q original data/dart/FY2023_Q1/raw/KR0072_케이디비생명보험/xml/20230515002450.xml (unit 원, above-table L21122): old-layout separate statement (table L21127), current-period column = 분기
+     i 2: live     9,457.510000 original cumulative     9,457.513273 diff +0.003273 -> reproduced
+     i 3: live     8,746.100000 original cumulative     8,746.101500 diff +0.001500 -> reproduced
+     i 8: live       711.410000 original cumulative       711.411773 diff +0.001773 -> reproduced
+     i16: live     2,346.170000 original cumulative     2,346.167909 diff -0.002091 -> reproduced
+     i19: live  -164,722.790000 original cumulative  -164,722.793180 diff -0.003180 -> reproduced
+     i20: live    43,098.090000 original cumulative    43,098.093298 diff +0.003298 -> reproduced
+     i21: live    -5,425.700000 original cumulative    -5,425.697542 diff +0.002458 -> reproduced
+     i22: live    37,672.400000 original cumulative    37,672.395756 diff -0.004244 -> reproduced
+     i23: live        -0.209323 original cumulative        -0.209323 diff +0.000000 -> reproduced
+     i24: live    37,672.610000 original cumulative    37,672.605079 diff -0.004921 -> reproduced
+     i 1: live 7,111.35 | the original statement has no 보험손익 row; original item 2 9,457.513, original item 16 2,346.168 -> item 1 = original item 2 - original item 16 (rounded to 2 decimals), the standard definition
+  2023.2Q original data/dart/FY2023_Q2/raw/KR0072_케이디비생명보험/xml/20230814003052.xml (unit 원, above-table L25008): old-layout separate statement (table L25013), current-period column = 누적
+     i 2: live    22,665.000000 original cumulative    22,665.103400 diff +0.103400 -> reproduced
+     i 3: live    13,292.000000 original cumulative    13,291.915388 diff -0.084612 -> reproduced
+     i 8: live     9,373.000000 original cumulative     9,373.188012 diff +0.188012 -> reproduced
+     i16: live     5,400.000000 original cumulative     5,349.343195 diff -50.656805 -> differs (live item 16 = 5,400 comes from the 경영공시 PDF in 억원; the filing prints 5,349.343195 = the builder override 5,349)
+     i19: live  -303,458.000000 original cumulative  -303,458.343594 diff -0.343594 -> reproduced
+     i20: live    68,658.000000 original cumulative    68,658.133929 diff +0.133929 -> reproduced
+     i21: live   -10,908.000000 original cumulative   -10,908.331160 diff -0.331160 -> reproduced
+     i22: live    57,750.000000 original cumulative    57,749.802769 diff -0.197231 -> reproduced
+     i23: live        -0.200000 original cumulative        -0.209323 diff -0.009323 -> reproduced
+     i24: live    57,750.000000 original cumulative    57,750.012092 diff +0.012092 -> reproduced
+     i 1: live 22,665.00 | the original statement has no 보험손익 row; original item 2 22,665.103, original item 16 5,349.343 -> item 1 = original item 2 (기타사업비용 NOT deducted: a different definition than 2023.1Q/3Q/4Q, where item 1 = item 2 - item 16; on the standard definition the live value would be 17,315.760)
+     i 4: live 23,415.0 (owner gold) | original note (3) 제공된 서비스의 보험계약마진: 3개월 12,290 (L40300) / 누적 23,415 (L40301) -> the live value is the CUMULATIVE column (the pre-fix builder value 12,290 was the 3개월 column)
+  2023.1Q original: PL4 live 11,125 vs original CSM roll-forward row 서비스 제공으로 당기손익으로 인식된보험계약마진 (11,125) (L30834) -> reproduced
+  CSM original current-period tables (separate notes) vs the live (pre-load) CSM master (억원):
+     2023.1Q CSM i1: live  5,239.40 original print   523,940 (L30800) =  5,239.40 -> consistent 
+     2023.1Q CSM i2: live    387.30 original print    38,734 (L30825) =    387.34 -> consistent 
+     2023.1Q CSM i3: live     45.10 original print     4,509 (L30876) =     45.09 -> consistent 
+     2023.1Q CSM i4: live   -833.30 original print  (83,333) (L30809) =   -833.33 -> consistent [owner gold -833.3; builder value `was` -944.6; gold vs original print +0.03 -> class A (original print)]
+     2023.1Q CSM i5: live   -111.25 original print  (11,125) (L30834) =   -111.25 -> consistent [owner gold -111.25; builder value `was` None; gold vs original print +0.00 -> class A (original print)]
+     2023.1Q CSM i6: live  4,727.25 original print   472,725 (L30950) =  4,727.25 -> consistent [owner gold 4727.25; builder value `was` 4727.2; gold vs original print +0.00 -> class A (original print)]
+     2023.2Q CSM i1: live  5,239.40 original print   523,940 (L35910) =  5,239.40 -> consistent 
+     2023.2Q CSM i2: live  1,174.00 original print   117,395 (L35958) =  1,173.95 -> consistent 
+     2023.2Q CSM i3: live     90.00 original print     8,998 (L36022) =     89.98 -> consistent 
+     2023.2Q CSM i4: live   -685.55 original print  (68,551) (L35942) =   -685.51 -> consistent [owner gold -685.55; builder value `was` -685.5; gold vs original print -0.04 -> class A (original print)]
+     2023.2Q CSM i5: live   -234.15 original print  (23,415) (L35974) =   -234.15 -> consistent [owner gold -234.15; builder value `was` -234.2; gold vs original print +0.00 -> class A (original print)]
+     2023.2Q CSM i6: live  5,583.70 original print   558,367 (L36086) =  5,583.67 -> consistent 
+     2023.3Q CSM i1: live  5,239.40 original print   523,940 (L41707) =  5,239.40 -> consistent 
+     2023.3Q CSM i2: live  2,210.70 original print   221,067 (L41755) =  2,210.67 -> consistent 
+     2023.3Q CSM i3: live    146.10 original print    14,614 (L41819) =    146.14 -> consistent 
+     2023.3Q CSM i4: live -1,912.90 original print (191,289) (L41739) = -1,912.89 -> consistent 
+     2023.3Q CSM i5: live   -352.50 original print  (35,250) (L41771) =   -352.50 -> consistent 
+     2023.3Q CSM i6: live  5,330.80 original print   533,082 (L41883) =  5,330.82 -> consistent 
+     2023.4Q CSM i1: live  5,239.40 original print   569,595 (L57765) =  5,695.95 -> consistent [owner gold 5239.4; builder value `was` 5695.9; gold vs original print -456.55 -> class B (not the original print)]
+     2023.4Q CSM i2: live  3,023.10 original print   302,310 (L57813) =  3,023.10 -> consistent 
+     2023.4Q CSM i3: live    183.40 original print    18,337 (L57877) =    183.37 -> consistent 
+     2023.4Q CSM i4: live -2,103.50 original print (255,997) (L57797) = -2,559.97 -> consistent [owner gold -2103.5; builder value `was` -2560.0; gold vs original print +456.47 -> class B (not the original print)]
+     2023.4Q CSM i5: live   -512.00 original print  (51,198) (L57829) =   -511.98 -> consistent 
+     2023.4Q CSM i6: live  5,830.50 original print   583,047 (L57941) =  5,830.47 -> consistent 
+
+== E. plan sanity
+  contract: PL gold_new 61 gold_replace 4 | CSM gold_new 13 gold_replace 5 gold_remove 2 | null_dangi_add 0 set_dangi_add 8 held 0
+  old values == live master for all 65 PL and 20 CSM cells; replaced owner gold = [('2023.2Q', 4), ('2023.2Q', 7), ('2023.3Q', 4), ('2023.3Q', 7)] PL, [('2023.1Q', 4), ('2023.1Q', 5), ('2023.1Q', 6), ('2023.2Q', 4), ('2023.2Q', 5), ('2023.4Q', 1), ('2023.4Q', 4)] CSM (the approved list)
+  PL gold 2023.2Q i4: gold 23415.0 == original note cumulative 23,415 (L40301) of the separate notes of rcept 20230814003052 (the 3개월 column prints 10,342) -> class A (original print); latest print 24,509 (L44795)
+  PL gold 2023.2Q i7: derived plug 3-(4+5+6): gold -18990.0 | formula from the live legs -17,294.000000 | live master -17,294.000000 -> the live master cell equals the formula (hand-corrected after the 2026-10-11 A2 leg fix); the gold entry is stale
+  PL gold 2023.3Q i4: gold 35250.0 == original note cumulative 35,250 (L46159) of the separate notes of rcept 20231114002983 (the 3개월 column prints 10,894) -> class A (original print); latest print 37,266 (L22520)
+  PL gold 2023.3Q i7: derived plug 3-(4+5+6): gold -44935.275872 | formula from the live legs -52,310.275872 | live master -52,310.275872 -> the live master cell equals the formula (hand-corrected after the 2026-10-11 A2 leg fix); the gold entry is stale
+  CSM gold 2023.1Q i4: gold -833.3 (builder value `was` -944.6) | original print -833.33 | latest comparative -867.71 -> class A (original print)
+  CSM gold 2023.1Q i5: gold -111.25 (builder value `was` None) | original print -111.25 | latest comparative -116.41 -> class A (original print)
+  CSM gold 2023.1Q i6: gold 4727.25 (builder value `was` 4727.2) | original print 4727.25 | latest comparative 5138.2 -> class A (original print)
+  CSM gold 2023.2Q i4: gold -685.55 (builder value `was` -685.5) | original print -685.51 | latest comparative -663.6 -> class A (original print)
+  CSM gold 2023.2Q i5: gold -234.15 (builder value `was` -234.2) | original print -234.15 | latest comparative -245.09 -> class A (original print)
+  CSM gold 2023.4Q i1: gold 5239.4 (builder value `was` 5695.9) | original print 5695.95 | latest comparative 5695.95 -> class B (chain-forced: neither the original print nor the latest comparative)
+  CSM gold 2023.4Q i4: gold -2103.5 (builder value `was` -2560.0) | original print -2559.97 | latest comparative -2559.97 -> class B (chain-forced: neither the original print nor the latest comparative)
+  CSM 2023.4Q i1: planned 5695.9 is within 0.05 of the builder diag value 5695.9 -> a gold entry would be MASKED (approved chain-forced entry: REMOVED instead of replaced)
+  CSM 2023.4Q i4: planned -2560.0 is within 0.05 of the builder diag value -2560.0 -> a gold entry would be MASKED (approved chain-forced entry: REMOVED instead of replaced)
+
+RESULT: 6 PROBLEM(S) | PL cells 65/65 | CSM cells 14/20 | control problems 0

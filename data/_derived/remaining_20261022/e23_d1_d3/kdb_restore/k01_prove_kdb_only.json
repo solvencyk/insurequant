@@ -1,0 +1,332 @@
+{
+ "cur_root": "C:/Users/sangwook.cho/Desktop/insurequant",
+ "n_checks": 65,
+ "n_fail": 0,
+ "checks": [
+  {
+   "name": "A unchanged file is byte-identical: tests/fixtures/pl_breakdown_golden.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "A unchanged file is byte-identical: tests/fixtures/viz_ifrs17_panels_golden.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "A unchanged file is byte-identical: tests/fixtures/viz_csm_waterfall_golden.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "A unchanged file is byte-identical: data/dart/viz/csm_continuity_validation.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "A unchanged file is byte-identical: NB_CSM_multiple.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "A unchanged file is byte-identical: data/dart/viz/pl_breakdown_master.json",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "A unchanged file is byte-identical: scripts/validate_master_tables.py",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "B1 no duplicate cell keys",
+   "ok": true,
+   "detail": "dups old 0 new 0"
+  },
+  {
+   "name": "B2 row count unchanged (no rows added/removed)",
+   "ok": true,
+   "detail": "rows 13801 -> 13801, added 0 removed 0"
+  },
+  {
+   "name": "B3 every changed cell is KR0072",
+   "ok": true,
+   "detail": "non-KDB touched: 0"
+  },
+  {
+   "name": "B4 only fields 값 / 값_당분기 changed",
+   "ok": true,
+   "detail": "fields changed: ['값', '값_당분기']"
+  },
+  {
+   "name": "B5 non-KDB rows identical and in the same order",
+   "ok": true,
+   "detail": "non-KDB rows 13353"
+  },
+  {
+   "name": "B6 CLAIM loader: PL 값 65 (1Q 19, 2Q 24, 3Q 16, 4Q 6)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "B7 CLAIM loader: PL 값_당분기 81 (63 with 값 + 18 followed)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "B8 all changed KDB cells are FY2023 quarters",
+   "ok": true,
+   "detail": "quarters {'2023.1Q': 19, '2023.2Q': 24, '2023.3Q': 24, '2023.4Q': 16}"
+  },
+  {
+   "name": "B9 self-test: a mutated non-KDB cell is detected by the checker",
+   "ok": true,
+   "detail": "detected 1"
+  },
+  {
+   "name": "C1 no duplicate cell keys",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "C2 row count unchanged",
+   "ok": true,
+   "detail": "rows 2358 -> 2358"
+  },
+  {
+   "name": "C3 every changed cell is KR0072",
+   "ok": true,
+   "detail": "non-KDB touched: 0"
+  },
+  {
+   "name": "C4 only fields 값 / 값_당분기 changed",
+   "ok": true,
+   "detail": "fields changed: ['값', '값_당분기']"
+  },
+  {
+   "name": "C5 non-KDB rows identical and in the same order",
+   "ok": true,
+   "detail": "non-KDB rows 2274"
+  },
+  {
+   "name": "C6 CLAIM loader: CSM 값 20 (1Q 6, 2Q 6, 3Q 6, 4Q 2)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "C7 CLAIM loader: CSM 값_당분기 23",
+   "ok": true,
+   "detail": "measured 23"
+  },
+  {
+   "name": "C8 all changed KDB cells are FY2023 quarters",
+   "ok": true,
+   "detail": "quarters {'2023.1Q': 6, '2023.2Q': 6, '2023.3Q': 6, '2023.4Q': 5}"
+  },
+  {
+   "name": "D1 top level: only the KDB merge note was added, only `cells` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "D2 cells: nothing added/removed, count unchanged",
+   "ok": true,
+   "detail": "cells 1046 -> 1046"
+  },
+  {
+   "name": "D3 every changed cell block is KR0072",
+   "ok": true,
+   "detail": "non-KDB touched 0"
+  },
+  {
+   "name": "D4 non-KDB cell blocks identical and in the same order",
+   "ok": true,
+   "detail": "non-KDB blocks 1018"
+  },
+  {
+   "name": "D5 CLAIM loader: 5 KR0072 blocks replaced (2023.1Q contract_notes + income_statement, 2023.2Q/3Q/4Q income_statement)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "E1 top level: only the KDB CSM merge note was added, only `cells` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "E2 cells: nothing added/removed, count unchanged",
+   "ok": true,
+   "detail": "cells 357 -> 357"
+  },
+  {
+   "name": "E3 every changed cell block is KR0072",
+   "ok": true,
+   "detail": "non-KDB touched 0"
+  },
+  {
+   "name": "E4 non-KDB cell blocks identical and in the same order",
+   "ok": true,
+   "detail": "non-KDB blocks 344"
+  },
+  {
+   "name": "E5 CLAIM loader: 2023.3Q owner_override added, 2023.4Q cleared",
+   "ok": true,
+   "detail": "changed quarters ['2023.3Q', '2023.4Q']"
+  },
+  {
+   "name": "F1 top level: no key added/removed, only `set` and `set_dangi` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "F2 set: no duplicate cell keys",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "F3 set: no entry removed",
+   "ok": true,
+   "detail": "removed 0"
+  },
+  {
+   "name": "F4 set: every added/changed entry is KR0072",
+   "ok": true,
+   "detail": "non-KDB touched 0"
+  },
+  {
+   "name": "F5 set: non-KDB entries identical and in the same order",
+   "ok": true,
+   "detail": "non-KDB entries 1372"
+  },
+  {
+   "name": "F6 CLAIM loader: set 1379 -> 1440 (61 new + 4 replaced)",
+   "ok": true,
+   "detail": "1379 -> 1440, added 61, changed 4"
+  },
+  {
+   "name": "F7 null_dangi identical (whole dict)",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "F8 set_dangi: only the KDB doc key added, only `cells` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "F9 set_dangi.cells: nothing removed/changed, only KR0072 entries added",
+   "ok": true,
+   "detail": "added 8 (all KR0072: True)"
+  },
+  {
+   "name": "F10 set_dangi.cells: non-KDB entries identical and in the same order",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "F11 CLAIM loader: set_dangi 37 -> 45 (+8)",
+   "ok": true,
+   "detail": "37 -> 45"
+  },
+  {
+   "name": "G1 top level: only the KDB doc key added, only `set` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "G2 set: no duplicate cell keys",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "G3 set: every added/changed/removed entry is KR0072",
+   "ok": true,
+   "detail": "non-KDB touched 0"
+  },
+  {
+   "name": "G4 set: non-KDB entries identical and in the same order",
+   "ok": true,
+   "detail": "non-KDB entries 410"
+  },
+  {
+   "name": "G5 CLAIM loader: set 417 -> 428 (13 new, 5 replaced, 2 removed)",
+   "ok": true,
+   "detail": "417 -> 428, added 13, changed 5, removed 2"
+  },
+  {
+   "name": "H1 top level: only `entries` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "H2 entries: exactly 3 removed, all KR0072 CSM pins; none added; none changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "H3 entries: remaining order identical",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "I1 removed lines are exactly the old GOLD_OVERLAY_CENSUS line",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "I2 added lines are exactly the KDB comment line + the new GOLD_OVERLAY_CENSUS line",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "J1 only `summary` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "J2 same token count; changed tokens are exactly pl_bridge, qoq_warn, oci_vs_bs_aoci",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "K1 only `specs` changed",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "K2 only specs.viz_ifrs17_panels changed",
+   "ok": true,
+   "detail": "['viz_ifrs17_panels']"
+  },
+  {
+   "name": "K3 within it only inputs_sha256 and input_bytes changed",
+   "ok": true,
+   "detail": "['input_bytes', 'inputs_sha256']"
+  },
+  {
+   "name": "K4 input_bytes delta equals the CSM_waterfall.json size delta (it is an input of that builder)",
+   "ok": true,
+   "detail": "delta 14 vs 14"
+  },
+  {
+   "name": "L1 qoq_warn only 케이디비생명보험 rows differ",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "L1 qoq_warn non-KDB rows identical and in the same order",
+   "ok": true,
+   "detail": "243 rows"
+  },
+  {
+   "name": "L2 oci_vs_bs_aoci_warn only 케이디비생명보험 rows differ",
+   "ok": true,
+   "detail": ""
+  },
+  {
+   "name": "L2 oci_vs_bs_aoci_warn non-KDB rows identical and in the same order",
+   "ok": true,
+   "detail": "28 rows"
+  }
+ ]
+}

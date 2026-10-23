@@ -1,0 +1,21 @@
+{
+ "problems": [
+  {
+   "where": "2023.1Q i1",
+   "problem": "part 보험손익 line 25573 != re-read L25572"
+  },
+  {
+   "where": "2023.1Q CSM i1",
+   "problem": "part L37356 758,530 != re-read L37355 758,530"
+  }
+ ],
+ "res": {
+  "pl_cells": 74,
+  "pl_cells_ok": 73,
+  "csm_cells": 20,
+  "csm_cells_ok": 19,
+  "control_bad": 0
+ },
+ "mutate": "line",
+ "ok": false
+}

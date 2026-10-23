@@ -1,0 +1,42 @@
+=== Lotte 2023.4Q lotte_combined_read
+  i 3 old=578755.0 read=570025.0 cand=570025.0  총 보험수익(장기) - 총 보험비용(장기) | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25411 1,363,933 sign 1 abs False col 0 총 보험수익 [총보험수익]
+        part L25459 793,908 sign -1 abs False col 0 총 보험비용 [총보험비용]
+  i 4 old=186853.0 read=185905.0 cand=185905.0  |보험계약마진 상각(보험수익 구간, 장기)| | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25387 185,905 sign 1 abs True col 0 원수 CSM상각 [보험계약마진상각]
+  i 5 old=19517.0 read=19517.0 cand=None  |위험조정 변동(보험수익 구간, 장기)| | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25379 19,517 sign 1 abs True col 0 원수 RA [위험조정변동]
+  i 6 old=51324.0 read=51323.0 cand=51323.0  예상보험금 - 발생보험금 (부호 인쇄값 그대로) | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25371 948,427 sign 1 abs False col 0 예상보험금 [예상보험금및예상기타보험서비스비용]
+        part L25427 897,104 sign -1 abs False col 0 발생보험금 [발생보험금및기타서비스비용]
+  i 8 old=-85545.0 read=-83775.0 cand=-83775.0  총 재보험수익(장기) - 총 재보험비용(장기) | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25499 (42,291) sign 1 abs False col 0 총 재보험수익 [총재보험수익]
+        part L25555 41,484 sign -1 abs False col 0 총 재보험비용 [총재보험비용]
+  i 9 old=-1756.0 read=-1973.0 cand=-1973.0  -|보험계약마진 상각(재보험비용 구간)| | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25539 1,973 sign -1 abs True col 0 재보험 CSM [보험계약마진상각]
+  i10 old=-737.0 read=-737.0 cand=None  -|위험조정 변동(재보험비용 구간)| | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25531 (737) sign -1 abs True col 0 재보험 RA [위험조정변동]
+  i11 old=-2914.0 read=-2914.0 cand=None  |발생보험금 및 기타재보험수익| - |회수예상 보험금| | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25475 37,165 sign 1 abs True col 0 회수가능 [발생보험금및기타재보험수익]
+        part L25523 40,079 sign -1 abs True col 0 회수예상 [회수예상보험금및기타보험서비스비용]
+  i13 old=-1029.0 read=-1029.0 cand=None  자동차 열: 보험수익 - 보험비용 + 재보험수익 - 재보험비용 | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25413 125,401 sign 1 abs False col 2 총 보험수익 [총보험수익]
+        part L25461 123,928 sign -1 abs False col 2 총 보험비용 [총보험비용]
+        part L25501 7,083 sign 1 abs False col 2 총 재보험수익 [총재보험수익]
+        part L25557 9,585 sign -1 abs False col 2 총 재보험비용 [총재보험비용]
+  i14 old=8128.0 read=8128.0 cand=None  일반 열: 보험수익 - 보험비용 + 재보험수익 - 재보험비용 | data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L25326 unit 백만원
+        part L25412 156,379 sign 1 abs False col 1 총 보험수익 [총보험수익]
+        part L25460 75,687 sign -1 abs False col 1 총 보험비용 [총보험비용]
+        part L25500 15,831 sign 1 abs False col 1 총 재보험수익 [총재보험수익]
+        part L25556 88,395 sign -1 abs False col 1 총 재보험비용 [총재보험비용]
+KR0099 2023.1Q i2: old=65577.0 read=66201.0 cand=66201.0 | i3: old=67723.0 read=68347.0 cand=68347.0 | i8: old=-2146.0 read=-2146.0 cand=None
+KR0099 2023.2Q i2: old=152021.0 read=156939.0 cand=156939.0 | i3: old=154624.0 read=159542.0 cand=159542.0 | i8: old=-2603.0 read=-2603.0 cand=None
+KR0099 2023.3Q i2: old=231267.0 read=239310.0 cand=239310.0 | i3: old=233988.0 read=242031.0 cand=242031.0 | i8: old=-2721.0 read=-2721.0 cand=None
+KR0070 2023.1Q i2: old=17007.0 read=14701.765491 cand=14701.765491000018 | i3: old=21169.0 read=17205.63653 cand=17205.636530000018 | i8: old=-4162.0 read=-2503.871039 cand=-2503.8710389999997
+KR0070 2023.2Q i2: old=37860.0 read=40776.446685 cand=40776.44668499996 | i3: old=44795.0 read=45409.757784 cand=45409.75778399996 | i8: old=-6935.0 read=-4633.311099 cand=-4633.311098999999
+KR0070 2023.3Q i2: old=52509.0 read=59257.282376 cand=59257.28237599999 | i3: old=61965.0 read=65938.991086 cand=65938.991086 | i8: old=-9456.0 read=-6681.70871 cand=-6681.708710000006
+KR0070 2023.4Q i2: old=38812.795396 read=64874.466059 cand=64874.46605900001 | i3: old=47005.542249 read=73067.212912 cand=73067.21291200002 | i8: old=-8192.746853 read=-8192.746853 cand=None
+KR0072 2023.1Q i2: old=9457.51 read=10644.5813 cand=10644.581299999989 | i3: old=8746.1 read=9933.938179 cand=9933.93817899999 | i8: old=711.41 read=710.643121 cand=710.6431209999992
+KR0072 2023.2Q i2: old=22665.0 read=33175.292214 cand=33175.292214 | i3: old=13292.0 read=24217.993827 cand=24217.993827 | i8: old=9373.0 read=8957.298387 cand=8957.298386999999
+KR0072 2023.3Q i2: old=13878.532355 read=25952.699723 cand=25952.699722999998 | i3: old=-4480.275872 read=8568.280371 cand=8568.280371 | i8: old=18358.808227 read=17384.419352 cand=17384.419351999997
+KR0072 2023.4Q i2: old=78011.749804 read=78011.749804 cand=None | i3: old=67805.264694 read=67805.264694 cand=None | i8: old=10206.48511 read=10206.48511 cand=None

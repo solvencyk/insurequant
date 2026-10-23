@@ -1,0 +1,18 @@
+SAME PL_breakdown.json
+SAME CSM_waterfall.json
+SAME PL_breakdown_provenance.json
+SAME CSM_waterfall_provenance.json
+SAME data/_gold/user_pl_cells.json
+SAME data/_gold/user_csm_cells.json
+SAME data/_gold/gold_overlay_ledger.json
+SAME tests/test_rule_coverage_manifest.py
+SAME tests/fixtures/master_tables_golden.json
+SAME tests/fixtures/builder_input_fingerprints.json
+SAME tests/fixtures/pl_breakdown_golden.json
+SAME tests/fixtures/viz_ifrs17_panels_golden.json
+SAME tests/fixtures/viz_csm_waterfall_golden.json
+SAME data/_derived/pl_oci_vs_bs_aoci_warn.json
+SAME data/_derived/qoq_warn.json
+SAME NB_CSM_multiple.json
+SAME data/dart/viz/pl_breakdown_master.json
+same 17 diff 0

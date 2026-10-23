@@ -1,0 +1,305 @@
+====================================================================================================
+NEW ('KR0099', '2023.1Q', 'income_statement')
+{
+ "company_code": "KR0099",
+ "quarter": "2023.1Q",
+ "item_block": "income_statement",
+ "source_id": "OWNER_GOLD",
+ "source_file": "data/_gold/user_pl_cells.json",
+ "source_files": [
+  {
+   "file": "data/_gold/user_pl_cells.json",
+   "how": "owner_gold_overlay",
+   "items": [
+    1,
+    2,
+    3,
+    7,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32
+   ]
+  },
+  {
+   "file": "data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험",
+   "how": "raw_filing_derived",
+   "items": [
+    8,
+    12
+   ]
+  }
+ ],
+ "resolution": "owner_gold_overlay",
+ "published_items": 24,
+ "schema_items": 24,
+ "owner_override": true
+}
+OLD {"company_code": "KR0099", "quarter": "2023.1Q", "item_block": "income_statement", "source_id": "DART", "source_file": "data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험", "source_files": [{"file": "data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12]}, {"file": "data/disclosure/FY2023_Q1/raw/KR0099_케이비라이프생명보험.pdf", "how": "disclosure_summary_pl", "items": [16, 22, 23, 24]}], "resolution": "raw_filing_derived", "published_items": 9, "schema_items": 24}
+====================================================================================================
+NEW ('KR0099', '2023.1Q', 'contract_notes')
+{
+ "company_code": "KR0099",
+ "quarter": "2023.1Q",
+ "item_block": "contract_notes",
+ "source_id": "DART",
+ "source_file": "data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험",
+ "source_files": [
+  {
+   "file": "data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험",
+   "how": "raw_filing",
+   "items": [
+    5,
+    6,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "file": "data/_gold/user_pl_cells.json",
+   "how": "owner_gold_overlay",
+   "items": [
+    4
+   ]
+  },
+  {
+   "file": null,
+   "how": "life_lob_zero_builder_rule",
+   "items": [
+    13,
+    14
+   ]
+  }
+ ],
+ "resolution": "raw_filing",
+ "published_items": 8,
+ "schema_items": 8,
+ "builder_derived_items": [
+  13,
+  14
+ ],
+ "owner_override": true
+}
+OLD {"company_code": "KR0099", "quarter": "2023.1Q", "item_block": "contract_notes", "source_id": "DART", "source_file": "data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험", "source_files": [{"file": "data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험", "how": "raw_filing", "items": [4, 5, 6, 9, 10, 11]}, {"file": null, "how": "life_lob_zero_builder_rule", "items": [13, 14]}], "resolution": "raw_filing", "published_items": 8, "schema_items": 8, "builder_derived_items": [13, 14]}
+====================================================================================================
+NEW ('KR0099', '2023.2Q', 'income_statement')
+{
+ "company_code": "KR0099",
+ "quarter": "2023.2Q",
+ "item_block": "income_statement",
+ "source_id": "OWNER_GOLD",
+ "source_file": "data/_gold/user_pl_cells.json",
+ "source_files": [
+  {
+   "file": "data/_gold/user_pl_cells.json",
+   "how": "owner_gold_overlay",
+   "items": [
+    1,
+    2,
+    3,
+    7,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32
+   ]
+  },
+  {
+   "file": "data/dart/FY2023_Q2/raw/KR0099_케이비라이프생명보험",
+   "how": "raw_filing_derived",
+   "items": [
+    8,
+    12
+   ]
+  }
+ ],
+ "resolution": "owner_gold_overlay",
+ "published_items": 24,
+ "schema_items": 24,
+ "owner_override": true
+}
+OLD {"company_code": "KR0099", "quarter": "2023.2Q", "item_block": "income_statement", "source_id": "DART", "source_file": "data/dart/FY2023_Q2/raw/KR0099_케이비라이프생명보험", "source_files": [{"file": "data/dart/FY2023_Q2/raw/KR0099_케이비라이프생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12]}, {"file": "data/disclosure/FY2023_Q2/raw/KR0099_케이비라이프생명보험.pdf", "how": "disclosure_summary_pl", "items": [16, 22, 23, 24]}], "resolution": "raw_filing_derived", "published_items": 9, "schema_items": 24}
+====================================================================================================
+NEW ('KR0099', '2023.2Q', 'contract_notes')
+{
+ "company_code": "KR0099",
+ "quarter": "2023.2Q",
+ "item_block": "contract_notes",
+ "source_id": "DART",
+ "source_file": "data/dart/FY2023_Q2/raw/KR0099_케이비라이프생명보험",
+ "source_files": [
+  {
+   "file": "data/dart/FY2023_Q2/raw/KR0099_케이비라이프생명보험",
+   "how": "raw_filing",
+   "items": [
+    5,
+    6,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "file": "data/_gold/user_pl_cells.json",
+   "how": "owner_gold_overlay",
+   "items": [
+    4
+   ]
+  },
+  {
+   "file": null,
+   "how": "life_lob_zero_builder_rule",
+   "items": [
+    13,
+    14
+   ]
+  }
+ ],
+ "resolution": "raw_filing",
+ "published_items": 8,
+ "schema_items": 8,
+ "builder_derived_items": [
+  13,
+  14
+ ],
+ "owner_override": true
+}
+OLD {"company_code": "KR0099", "quarter": "2023.2Q", "item_block": "contract_notes", "source_id": "DART", "source_file": "data/dart/FY2023_Q2/raw/KR0099_케이비라이프생명보험", "source_files": [{"file": "data/dart/FY2023_Q2/raw/KR0099_케이비라이프생명보험", "how": "raw_filing", "items": [4, 5, 6, 9, 10, 11]}, {"file": null, "how": "life_lob_zero_builder_rule", "items": [13, 14]}], "resolution": "raw_filing", "published_items": 8, "schema_items": 8, "builder_derived_items": [13, 14]}
+====================================================================================================
+NEW ('KR0099', '2023.3Q', 'income_statement')
+{
+ "company_code": "KR0099",
+ "quarter": "2023.3Q",
+ "item_block": "income_statement",
+ "source_id": "OWNER_GOLD",
+ "source_file": "data/_gold/user_pl_cells.json",
+ "source_files": [
+  {
+   "file": "data/_gold/user_pl_cells.json",
+   "how": "owner_gold_overlay",
+   "items": [
+    1,
+    2,
+    3,
+    7,
+    17,
+    19,
+    20,
+    22,
+    23,
+    24,
+    25,
+    27,
+    31
+   ]
+  },
+  {
+   "file": "data/dart/_fs_api_cache/00160393_2023_11014_OFS.json",
+   "how": "fs_api_tier1",
+   "items": [
+    15,
+    16,
+    21,
+    26,
+    28,
+    29,
+    30,
+    32
+   ]
+  },
+  {
+   "file": "data/dart/FY2023_Q3/raw/KR0099_케이비라이프생명보험",
+   "how": "raw_filing_derived",
+   "items": [
+    8,
+    12,
+    18
+   ]
+  }
+ ],
+ "resolution": "owner_gold_overlay",
+ "published_items": 24,
+ "schema_items": 24,
+ "owner_override": true
+}
+OLD {"company_code": "KR0099", "quarter": "2023.3Q", "item_block": "income_statement", "source_id": "DART", "source_file": "data/dart/_fs_api_cache/00160393_2023_11014_OFS.json", "source_files": [{"file": "data/dart/_fs_api_cache/00160393_2023_11014_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2023_Q3/raw/KR0099_케이비라이프생명보험", "how": "raw_filing_derived", "items": [2, 3, 7, 8, 12, 18]}], "resolution": "fs_api_tier1", "published_items": 24, "schema_items": 24}
+====================================================================================================
+NEW ('KR0099', '2023.3Q', 'contract_notes')
+{
+ "company_code": "KR0099",
+ "quarter": "2023.3Q",
+ "item_block": "contract_notes",
+ "source_id": "DART",
+ "source_file": "data/dart/FY2023_Q3/raw/KR0099_케이비라이프생명보험",
+ "source_files": [
+  {
+   "file": "data/dart/FY2023_Q3/raw/KR0099_케이비라이프생명보험",
+   "how": "raw_filing",
+   "items": [
+    5,
+    6,
+    9,
+    10,
+    11
+   ]
+  },
+  {
+   "file": "data/_gold/user_pl_cells.json",
+   "how": "owner_gold_overlay",
+   "items": [
+    4
+   ]
+  },
+  {
+   "file": null,
+   "how": "life_lob_zero_builder_rule",
+   "items": [
+    13,
+    14
+   ]
+  }
+ ],
+ "resolution": "raw_filing",
+ "published_items": 8,
+ "schema_items": 8,
+ "builder_derived_items": [
+  13,
+  14
+ ],
+ "owner_override": true
+}
+OLD {"company_code": "KR0099", "quarter": "2023.3Q", "item_block": "contract_notes", "source_id": "DART", "source_file": "data/dart/FY2023_Q3/raw/KR0099_케이비라이프생명보험", "source_files": [{"file": "data/dart/FY2023_Q3/raw/KR0099_케이비라이프생명보험", "how": "raw_filing", "items": [4, 5, 6, 9, 10, 11]}, {"file": null, "how": "life_lob_zero_builder_rule", "items": [13, 14]}], "resolution": "raw_filing", "published_items": 8, "schema_items": 8, "builder_derived_items": [13, 14]}
+ticket 20261023T0900Z (parser/ifrs17, owner decision D1 = option B of 2026-10-23): PL cells of KB라이프생명 KR0099 2023.1Q-2023.3Q refreshed to the latest comparative (separate basis, prior-year cumulative column of the FY2024 Q1/Q2/Q3 reports; 2023.4Q and 2024 untouched) via data/_gold/user_pl_cells.json (new set cells only, no owner-gold cell replaced, no pin changed). Blocks that changed or appeared are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/
+CSM 2023.1Q csm_waterfall owner_override True {"source_id": "DART", "owner_override": true}
+CSM 2023.2Q csm_waterfall owner_override True {"source_id": "DART", "owner_override": true}
+CSM 2023.3Q csm_waterfall owner_override True {"source_id": "DART", "owner_override": true}
+CSM 2023.4Q csm_waterfall owner_override None {"source_id": "DART"}

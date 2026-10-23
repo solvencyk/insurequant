@@ -1,0 +1,34 @@
+KDB생명 KR0072 적재 되돌리기 증거 색인 (2026-10-23 22:xx, parser/ifrs17)
+==============================================================================================
+owner 결정(2026-10-23, 채팅): 케이디비생명보험은 D1~D3 묶음에서 빼고 HEAD 값(현상 유지)으로 둔다. 나머지 4사는 그대로 진행한다.
+이유: 2023.3Q·2023.4Q 항목 17·18·20·22·24·31 이 연결 값인데 별도(OFS)로 적재됐다
+      (inbox/parser/20261023T1320Z__validation__KR0072__2023.3Q-2023.4Q__kdb_consolidated_vs_separate_basis_mix.md, 열림).
+상태: 되돌림 완료 · 미커밋 · push 안 함. 게이트 스크립트·다른 시험·문서·티켓은 건드리지 않았다(scripts/validate_master_tables.py 는 바이트 그대로).
+파이썬은 풀패스 venv, 스크립트 파일로, stdin /dev/null. 서브에이전트·docling 안 씀.
+
+1) 순서와 결과
+   a. 적재 직후 12개 파일을 ../kr0072_kdb_load2/post_load_copies/ 에 보존(+SHA256_post_load_copies.txt, README.txt). 현재 파일과 바이트 동일 12/12 확인.
+   b. k00_peek_structure.py / k00b_peek_gold_ledger.py : 파일 구조 확인(읽기 전용) -> .txt
+   c. k01_prove_kdb_only.py -> k01_prove_kdb_only.txt/.json : (적재 후 12개) 대 (백업) 의 차이가 KR0072 뿐임을 칸 단위로 증명, 65/65 PASS.
+        PL_breakdown 13,801행 중 KR0072 값 65칸(1Q 19·2Q 24·3Q 16·4Q 6)+값_당분기 81칸, 나머지 13,353행 값·순서 동일 / CSM 2,358행 값 20칸+당분기 23칸, 나머지 2,274행 동일 /
+        출처표 PL 5블록·CSM 2블록 + 병합 노트 키 각 1개 / gold PL set +61 신규·교체 4·set_dangi +8 / gold CSM set +13·교체 5·제거 2 / 원장 박제 3줄 삭제 /
+        시험 파일은 주석 1줄+GOLD_OVERLAY_CENSUS 1줄 / fixture 2개와 경고 부수 산출 2개는 KDB 줄만. 검사기 자체 변이시험(B9) 포함.
+        k01_prove_kdb_only_snapshot.* : 같은 증명을 보존 사본(post_load_copies)에 대해 다시 돌린 것 (보고서 동일, 재현 확인). (k01 은 첫 실행 뒤 경로 대체 한 줄만 추가했다.)
+   d. k02_restore.sh -> k02_restore.log : 보호 확인(현재 12개 == 적재 직후 사본) 뒤 백업에서 cp 로 바이트 복원. 재생성·e23_apply --revert 안 씀.
+   e. k04_sha_after_restore.txt : 19개 파일 sha256 3자 대조(작업 트리 = 백업 = SHA256_preload.txt) 19/19, cmp 19/19, 복원 12개 BOM 0.
+   f. k03_vs_head.py -> k03_vs_head_pre.txt(복원 전) / k03_vs_head_post.txt(복원 후, 29/29 PASS):
+        복원 후 KR0072 는 HEAD 와 변경 칸 0 (PL 448행·CSM 84행, gold set 7/null_dangi 3/set_dangi 0/CSM set 7, 원장 박제 3줄, 출처표 28/13블록 모두 HEAD 와 동일),
+        4사의 HEAD 대비 값 변경 칸 PL KB라이프 60·롯데 18·ABL 74·현대해상 57, CSM 15·5·20·18, 4사 칸은 보존 사본과 동일.
+        (k03 은 pre 실행 뒤 키 점검 한 곳만 고쳤다: HEAD 에 원래 있는 merge_note_20261011_A2_kr0072 를 KDB 적재 키로 오인하지 않게.)
+   g. k05_run_gates.sh -> gates_restored/ , k06_gates_restored_vs_before.txt, k06_compare_gates_py.txt : 적재 전에 쓴 같은 도구(gate_overlay.py, 저장소 쓰기를 모두 버린다)로 게이트 7종.
+        master_tables·csm_continuity·csm_waterfall·nb_csm·csm_coverage·live_artifacts 출력이 적재 전(../kr0072_kdb_load2/gates_before/)과 바이트 동일,
+        data_contract 는 같은 줄의 집합(줄 순서만 다름): RED 2 YELLOW 168. RED 2 = MASTER_XLSX_DRIFT CSM워터폴 124칸·손익분해PL 466칸(KDB 가 있을 때 167·612), live_artifacts RED 5 = ABL 3 + 현대해상 2 (불변).
+   h. k08_run_tests.sh -> k08_run_tests.log, pytest_*.txt, k09_hash_vs_backup.log : 시험 전후로 19개 파일이 백업과 같음을 확인(0/19 차이).
+        test_gold_overlay_survives_rebuild 7 passed · test_master_tables_golden 2 passed(SUMMARY 가 적재 전으로 돌아옴: pl_bridge 3783P·qoq_warn 265Y·oci_vs_bs_aoci 28Y/101blank/11bsskip) ·
+        test_rule_coverage_manifest 103 passed + 2 failed:
+          - test_pl_constructive_coverage_matches_manifest[23] : validation 정리의 (b) 항목 23 BLIND 선언이 그대로인데 KDB 가 빠져 2023.2Q 손입력 칸(22 = 24 = 57,750.0)이 되살아나 룰이 다시 잡는다. (b) 되돌림 대기 중(범위 밖).
+          - test_master_xlsx_clean_state_has_no_red : xlsx 동기화 지연(4사분, 위 124·466칸). KDB 적재 전에도 같은 원인.
+   i. head_copies/ : git HEAD 사본(비교용). head_copies_SHA256.txt.
+
+2) 다시 적재하려면: ../kr0072_kdb_load2/post_load_copies/README.txt 참고. 별도-연결 결함의 owner 결정(A/B/C) 전에는 하지 않는다.
+3) 이 작업이 건드린 파일: 12개 복원분(위) + 이 폴더 + ../kr0072_kdb_load2/post_load_copies/ + ../answers/kr0072_kdb.md 끝에 보류 메모 추가. 그 외 없음.

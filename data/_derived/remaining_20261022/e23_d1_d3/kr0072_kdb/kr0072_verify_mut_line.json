@@ -1,0 +1,21 @@
+{
+ "problems": [
+  {
+   "where": "2023.1Q i1",
+   "problem": "part line 24254 is not a statement value cell; sum of parts+operands 0.0 != cell 8298.413391"
+  },
+  {
+   "where": "2023.1Q CSM i1",
+   "problem": "part L36306 569,595 != re-read L36305 569,595"
+  }
+ ],
+ "res": {
+  "pl_cells": 65,
+  "pl_cells_ok": 64,
+  "csm_cells": 20,
+  "csm_cells_ok": 19,
+  "control_bad": 0
+ },
+ "mutate": "line",
+ "ok": false
+}

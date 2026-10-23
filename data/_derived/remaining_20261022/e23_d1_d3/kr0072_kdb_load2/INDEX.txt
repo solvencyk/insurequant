@@ -1,0 +1,65 @@
+티켓 20261023T0900Z (D3 = 케이디비생명보험 KR0072 FY2023 2023.1Q~2023.4Q 최신 비교열 채택 · 시나리오 N5_KDB_FY2023, 적재 2회차, 2026-10-23) 증거 폴더 색인
+==============================================================================================================================
+상태: 적재 완료 · 미커밋 · push 안 함. 서브에이전트·docling 안 씀. build_root_masters.main()·build_ifrs17_bs·xlsx·panel·public_exports·NB·TODO·changelog·티켓 파일·WFY_EXCEPTIONS·pl_bridge_baseline·
+pl_csm_amort_missing_ledger·게이트 스크립트·핸들러 코드는 건드리지 않았다. 건드린 장부는 gold_overlay_ledger.json 의 박제 3줄 삭제뿐이다(추가 0; 남기면 GOLD_OVERLAY_DRIFT RED 3: gates_pins_kept/).
+파이썬은 항상 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, 스크립트 파일로, stdin /dev/null.
+1회차(보류, 전부 복구)의 증거는 ../kr0072_kdb/ 에 그대로 있다. 보류 원인(rule_coverage [23])은 validation 정리(항목 23 BLIND 선언)로 해소됐다.
+이 적재 직전 트리 = 현대해상(KR0009) 적재 직후 상태(마스터·출처표·gold 6개 파일이 kr0009_hyundai/apply_manifest_e23_hd.json after_sha256 와 바이트 동일) + validation 정리 결과(시험 파일·골든 fixture·게이트 스크립트가
+gate_cleanup/post_copies 와 동일). KR0072 칸은 마스터·gold·출처표 모두 git HEAD 와 같았다(a01_precheck.txt).
+
+1) 무엇을 적재했나 (적재 전 백업 대비 실측; kr0072_diff_vs_backup.txt = 66개 점검 ALL PASS)
+   PL_breakdown.json            값 65칸 (2023.1Q 19 · 2Q 24 · 3Q 16 · 4Q 6) + 값_당분기 81칸(값도 바뀐 63 + 따라 움직인 18), 필드는 값·값_당분기뿐, 다른 회사·2024 분기 0
+   CSM_waterfall.json           값 20칸 (1Q·2Q·3Q 각 6, 4Q 2) + 값_당분기 23칸(파생), 다른 회사 0
+   data/_gold/user_pl_cells.json   set 1379 -> 1440 (신규 61, 교체 4: 2023.2Q·3Q 항목 4·7), set_dangi 37 -> 45 (+8: 2023.2Q 항목 16·21, 2023.3Q 항목 17·18·20·22·24·31), null_dangi 불변 + 문서 키 _doc_e23_kr0072_20261023
+   data/_gold/user_csm_cells.json  set 417 -> 428 (신규 13, 교체 5: 2023.1Q 항목 4·5·6, 2023.2Q 항목 4·5, 제거 2: 2023.4Q 항목 1·4), 문서 키 _doc_e23_kr0072_20261023
+   data/_gold/gold_overlay_ledger.json  99 -> 96 (교체된 마스크 CSM gold 3칸의 박제 삭제: CSM|KR0072|2023.1Q|6, 2023.2Q|4, 2023.2Q|5; 새 박제 0)
+   PL_breakdown_provenance.json     KR0072 5블록 교체(샌드박스 emit_pl_provenance 사본: 2023.1Q contract_notes·income_statement, 2023.2Q·3Q·4Q income_statement) + 병합 노트 키 merge_note_20261023_e23_kr0072_kdb
+   CSM_waterfall_provenance.json    KR0072 csm_waterfall 2023.3Q owner_override 추가, 2023.4Q 해제(그 블록에 gold 가 더는 없다) + 병합 노트 키 merge_note_20261023_e23_kr0072_kdb_csm
+   tests/test_rule_coverage_manifest.py  GOLD_OVERLAY_CENSUS = {"CSM": (428, 74), "PL": (1440, 22)} (주석 1줄 추가); _TAX22_LATEST_COMPARATIVE_ONLY 는 37칸 그대로(실측 37 -> 37)
+   tests/fixtures/master_tables_golden.json  SUMMARY 한 줄만(pl_bridge 3783P(1351·2089·343)/2629S -> 3789P(1356·2090·343)/2623S, qoq_warn 265Y -> 266Y, oci_vs_bs_aoci 28Y/101blank/11bsskip -> 29Y/98blank/12bsskip)
+   tests/fixtures/builder_input_fingerprints.json  viz_ifrs17_panels 의 inputs_sha256 · input_bytes 두 줄만(CSM_waterfall.json 이 그 빌더의 입력; viz 골든 2종 통과 확인 뒤 --update; RED 1 -> 0)
+   data/_derived/qoq_warn.json · pl_oci_vs_bs_aoci_warn.json  master_tables 골든 테스트의 부수 산출: KDB 행만 바뀜(qoq +1 신규·6 변경, oci +1 신규; d03_warn_files_diff.txt)
+   미접촉: PL 골든 fixture, viz 골든 fixture, data/dart/viz/*, scripts/*, src/*, xlsx, NB, WFY_EXCEPTIONS, 기준선·누락 원장 (주변 파일 820개 해시 비교: a03_side_hashes_diff.txt, 예상한 12개 외 변경 0)
+
+2) 판정과 근거 요약
+   - 계획 e20 후보 70 -> 65: 2023.1Q 항목 16·21, 2023.2Q 항목 23 은 반올림 차이뿐이라 gold 로 두면 마스크 칸(새 박제 필요) -> 제외, 2023.4Q 항목 4·7 은 마스터와 같아 제외.
+   - 계획기를 현재 트리에 다시 돌린 결과 == 보류 전 계획(a02_plan_vs_earlier.txt: 정규화 후 차이 0), 옛값 PL 65 + CSM 20 이 라이브 마스터와 일치.
+   - 독립 재독: kr0072_verify.py (+ kdb_raw/kdb_stmt/kdb_notes; 표준 라이브러리만, 계획기·e21_*·e23_* 임포트 0) -> kr0072_verify.txt/.json: PL 65/65, CSM 20/20, 문제 0; 변이 5종 모두 검출(kr0072_verify_mutation.txt);
+     적재 뒤 백업 대상 재실행 kr0072_verify_prebackup.txt (KR0072_BASE=<백업 폴더>); validation 의 읽기 코드 사본(b01_crosscheck_validation_reader.py)으로 196개 인용 셀 0 불일치.
+   - 2023.4Q 단일분기: null_dangi 0. 누계가 바뀌는 6칸은 3분기 누계도 같은 적재에서 같은 판으로 바뀌고(consistent_both_restated), 누계가 그대로인 10칸은 연간 비교열이 마스터와 같다(q4_unchanged_q3_adopted); a04_seams.txt.
+   - 2023.3Q 단일분기 6칸은 FY2024 3분기 보고서가 반기 보고서보다 6개월 값을 726.923 낮게 내놓는 두 번째 재작성 때문에 3개월 열 인쇄값으로 고정(set_dangi), 2023.2Q 항목 16·21 은 제외한 반올림 칸 때문에 생기는 0.002 차이를 인쇄값으로 맞춤.
+   - 항목 5·6·9·10·11 은 옛 판 그대로(범위 밖, validation 티켓 20261023T1255Z 열려 있음): a05_items_5_6_9_10_11.txt.
+
+3) 게이트 (gates_before/ = 적재 전, gates_sim/ = 적재 전 모의, gates_after/ = 적재 후; gates_compare_sim.txt · gates_compare_after.txt · gates_compare_after_vs_sim.txt = 모의와 직후 동일)
+   master_tables SUMMARY: pl_bridge 3783P/18F/0NEW -> 3789P/18F/0NEW, qoq_warn 265Y -> 266Y, oci_vs_bs_aoci 28Y/101blank/11bsskip -> 29Y/98blank/12bsskip, 나머지 필드 동일
+   data_contract: RED 2 / YELLOW 168 같은 발견 집합 (MASTER_XLSX_DRIFT CSM워터폴 124 -> 167칸 · 손익분해PL 466 -> 612칸; +43 = 20+23, +146 = 65+81 와 정확히 같다)
+   csm_continuity flagged 1 · RED 0 / csm_waterfall 41 pass / nb_csm 5/5 / csm_coverage 기존 갭 1(카카오페이 2023.4Q) / live_artifacts RED 5(ABL 3 + 현대해상 2) YELLOW 25: 모두 불변
+   gates_pins_kept/: 원장 박제를 남긴 채(옛 원장 서빙) data_contract 를 돌린 반사실 확인 -> GOLD_OVERLAY_DRIFT RED 3 (RED 2 -> 5). 그래서 박제 3줄 삭제가 필요하다.
+   테스트: pytest_*_after1.txt (적재 직후), pytest_test_master_tables_golden_final.txt (fixture 갱신 뒤): gold_overlay 7 · identity 14 · identity_tautology 10 · master_tables_golden 2 · viz 골든 2종 · dividend 골든 · deploy_assets 12 모두 passed,
+           rule_coverage 104 passed + 1 failed (test_master_xlsx_clean_state_has_no_red = xlsx 동기화 RED 와 같은 원인), [23] 통과(pytest_rule_coverage_selected_after1.txt), PL 골든 RUN_PL_GOLDEN=1 -> pytest_pl_golden_after1.txt 1 passed (260초),
+           추가(pytest_*_extra.txt): csm_continuity_exception 18 · pl_fs_note_lineage 12 · pl_reinsurer_disclosure_lineage 14 · pl_source_absent_exemption 24 · pl_source_absent_site_rolled_off 22 · prepush_scope 63 · push_gate_wiring 66(1 skipped).
+           지문: fingerprints_before_update.txt RED 1 -> fingerprints_after_update.txt RED 0.
+
+4) 파일 지도
+   계획·판독: p01_make_plan_copy.py -> p02_patch_plan.py (공유 e23_plan.py 사본 수정) -> e23_plan.py kdb -> e23_plan_kdb.json / _report.txt / _stdout.txt -> p03_finalize_plan.py -> e23_plan_kdb_final.json (적용 계약 포함)
+   독립 검증: kr0072_verify.py (+ kdb_*.py) / kr0072_verify_mutation.py / b01_crosscheck_validation_reader.py / a02_plan_vs_earlier.py
+   적재 도구: p10_make_helpers.py (보류 전 폴더의 감사된 도구에서 이 폴더용을 생성: 경로·현대해상 선행 상태·TAX22 주석 위치만 치환) -> e23_apply.py (--snapshot-drift | --check | --out-dir | --apply | --verify | --revert --apply),
+              apply_manifest_e23_kdb.json (적재 전후 sha256), drift_before.json, e23_apply_report.txt, e23_apply_{snapshot,check,outdir,run,verify}.log
+              --verify 종료코드 2 = KR0072 2026.2Q 출처표 2블록이 적재 전부터 emitter 와 달라서이고 새로 어긋난 블록은 0이다(c13_emitter_prestate.txt: 적재 전 4블록 -> 후 2블록).
+   차분: kr0072_diff_vs_backup.py -> kr0072_diff_vs_backup.txt (적재 후 ALL PASS 66) · kr0072_diff_vs_backup_sim.txt (적재 전 모의 ALL PASS) ; c18_sim_vs_applied.txt (모의 == 적용 바이트 동일) ; summarize_changes.py -> changes_old_new.txt (옛 -> 새 전표 + 화면 표)
+   백업 검증: b03_backup_preload.py (적재 전 19개 파일) -> ../backup_before_apply/kr0072_kdb_load2/ + SHA256_preload.txt · b04_backup_check.txt · a01_precheck.txt · a03_side_hashes.py · d07_final_hashes.py -> final_state_sha256.txt
+   게이트: run_gates.sh <폴더> (gate_overlay.py 가 저장소 쓰기를 모두 이 폴더로 돌린다) -> gates_before/ gates_sim/ gates_after/ gates_pins_kept/, compare_gates.py -> gates_compare_*.txt
+   위생: p28_bom_scan.py (BOM·UTF-8·구문 점검) · p29_recode_logs.py (콘솔 cp949 캡처를 UTF-8 로 재인코딩)
+   답변(한국어): ../answers/kr0072_kdb.md
+
+5) 재현 순서 (적재 전 상태 = 현대해상 적재 직후 + validation 정리; 적재 뒤에는 e23_plan_kdb_final.json 이 동결본)
+   1. a01_precheck.py ; p01 -> p02 -> e23_plan.py kdb -> p03 ; a02_plan_vs_earlier.py ; kr0072_verify.py (KR0072_PLAN=e23_plan_kdb_final.json; 적재 뒤에는 KR0072_BASE=<백업 폴더>) -> kr0072_verify_mutation.py ; b01_crosscheck_validation_reader.py
+   2. b03_backup_preload.py ; a03_side_hashes.py snapshot before ; run_gates.sh gates_before ; p10_make_helpers.py ; e23_apply.py --snapshot-drift ; --check ; --out-dir <임시폴더> ; kr0072_diff_vs_backup.py (KR0072_POST_ROOT=<임시폴더>, KR0072_DIFF_TAG=_sim) ;
+      run_gates.sh gates_sim <name>=<임시폴더 파일> ... ; --apply
+   3. e23_apply.py --verify ; kr0072_diff_vs_backup.py ; c18 ; b04 ; run_gates.sh gates_after ; compare_gates.py ; 시험 (tests/test_master_tables_golden.py --update, scripts/validate_golden_input_fingerprints.py --update 는 예상한 칸만 움직일 때)
+
+6) 되돌리는 순서
+   a. e23_apply.py --revert --apply   (적재 직후 해시가 그대로일 때만 동작: 마스터 2 + 출처표 2 + gold 2 + 원장 + 시험 파일 복원; 지금 유효 = final_state_sha256.txt)
+   b. ../backup_before_apply/kr0072_kdb_load2/ 의 4개 파일을 같은 상대 경로로 복사: tests/fixtures/master_tables_golden.json, tests/fixtures/builder_input_fingerprints.json, data/_derived/qoq_warn.json, data/_derived/pl_oci_vs_bs_aoci_warn.json
+      (작업 트리에 KB라이프·롯데·ABL·현대해상 적재분이 있으므로 git checkout 으로 되돌리면 그쪽까지 지워진다 — 쓰지 말 것)
+   백업: ../backup_before_apply/kr0072_kdb_load2/ (적재 직전 19개 파일).

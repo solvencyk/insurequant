@@ -1,0 +1,7 @@
+Independent validation of KR0003 롯데손보 2023.4Q uncommitted load (HEAD d5077c7b). Read-only; no repo file edited.
+v01_diff.py/.txt      cell diff vs HEAD (PL 18 cum + 12 single, CSM 5 cum + 4 single; provenance 3 blocks; no rows added/removed)
+v02_gold.py/.txt, v03_nulldangi.py, v12_gold_identity.py/.txt   gold diff: 18 PL + 5 CSM new set entries, 12 null_dangi, 0 replaced
+v04..v05, v08_reread.py/.txt   own XML reader: FY2024_Q4 prior column (separate) vs live; calibrated on FY2023 original current column vs HEAD (29/29)
+v10_single_chain.py/.txt   FY2024_Q3 prior 9M/3M check, 4Q single recompute, CSM chain
+v11_csm_reread.py/.txt     CSM table L19837 + audit attachment L10874, calibrated on original FY2023 table L21144
+vlib.py                    stdlib-only reader

@@ -1,0 +1,131 @@
+keys: ['generated', 'ticket', 'company', 'code', 'name', 'decision', 'scenario', 'buckets', 'csm_buckets', 'seams', 'findings', 'notes', '_log_pl', 'csm_gold_class', 'apply_contract', 'n_pl_cells', 'n_csm_cells']
+== KR0072 2023.1Q file data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml unit 원 cells 19
+   i 1 보험손익           old 7111.35 new 8298.413391 delta 1187.063391 cand 8298.413391 gold False cls changed | sum | L24253:보험손익:8,298,413,391
+   i 2 생명장기 손익        old 9457.51 new 10644.5813 delta 1187.0713 cand 10644.581299999989 gold False cls changed | derived | L24299:보험수익:117,588,022,764; L24368:보험비용:107,654,084,585; L24322:재보험수익:7,540,888,778; L24391:재보험비용:6,830,245,657
+   i 3 원수손익(장기)       old 8746.1 new 9933.938179 delta 1187.838179 cand 9933.93817899999 gold False cls changed | sum | L24299:보험수익:117,588,022,764; L24368:보험비용:107,654,084,585
+   i 4 원수 CSM상각       old 11125.0 new 11641.0 delta 516.0 cand 11640.0 gold False cls changed | sum | L40388:(3) 제공된 서비스의 보험계약마진 [전:11,641
+   i 8 재보험손익(장기)      old 711.41 new 710.643121 delta -0.766879 cand 710.6431209999992 gold False cls changed | sum | L24322:재보험수익:7,540,888,778; L24391:재보험비용:6,830,245,657
+   i17 투자손익           old 35986.75 new 32877.150458 delta -3109.599542 cand 32877.150458 gold False cls changed | sum | L24437:투자손익:32,877,150,458
+   i18 투자이익           old 200709.54 new 200651.791133 delta -57.748867 cand 200651.791133 gold False cls changed | sum | L24437:투자손익:32,877,150,458; L24483:보험금융수익:14,104,708,080; L24506:재보험금융수익:292,001,794; L24782:보험금융비용:181,665,556,922
+   i19 보험금융손익         old -164722.79 new -167774.640675 delta -3051.850675 cand -167774.640675 gold False cls changed | sum | L24483:보험금융수익:14,104,708,080; L24506:재보험금융수익:292,001,794; L24782:보험금융비용:181,665,556,922; L24805:재보험금융비용:505,793,627
+   i20 영업이익           old 43098.09 new 41175.563849 delta -1922.526151 cand 41175.563849 gold False cls changed | sum | L25012:영업이익:41,175,563,849
+   i22 세전이익           old 37672.4 new 35749.866307 delta -1922.533693 cand 35749.866307 gold False cls changed | sum | L25104:법인세차감전순이익:35,749,866,307
+   i24 당기순이익          old 37672.61 new 35750.07563 delta -1922.53437 cand 35750.07563 gold False cls changed | sum | L25150:당기순이익:35,750,075,630
+   i25 기타포괄손익         old None new 19314.399668 delta None cand 19314.399668 gold False cls fill | sum | L25173:당기기타포괄손익:19,314,399,668
+   i26 FVOCI 채무증권     old None new 371376.033894 delta None cand 371376.033894 gold False cls fill | sum | L25219:기타포괄손익-공정가치측정금융자산평가손익:371,376,033,894
+   i27 보험계약금융손익(OCI)  old None new -357827.17141 delta None cand -357827.17141 gold False cls fill | sum | L25288:보험계약자산(부채)순금융손익:(357,827,171,410)
+   i28 위험회피 파생상품      old None new 1334.458429 delta None cand 1334.458429 gold False cls fill | sum | L25265:현금흐름위험회피파생상품평가손익:1,334,458,429
+   i29 FVOCI 지분증권     old None new 5564.18644 delta None cand 5564.18644 gold False cls fill | sum | L25357:기타포괄손익-공정가치측정금융자산평가손익:5,564,186,440
+   i30 재보험금융손익(OCI)   old None new -1073.51445 delta None cand -1073.51445 gold False cls fill | sum | L25311:재보험계약자산(부채)순금융손익:(1,073,514,450)
+   i31 총포괄손익          old None new 55064.475298 delta None cand 55064.475298 gold False cls fill | sum | L25403:당기총포괄손익:55,064,475,298
+   i32 기타 포괄손익(미분류)   old None new -59.593235 delta None cand -59.593235 gold False cls fill | sum | L25173:당기기타포괄손익:19,314,399,668; L25219:기타포괄손익-공정가치측정금융자산평가손익:371,376,033,894; L25288:보험계약자산(부채)순금융손익:(357,827,171,410); L25265:현금흐름위험회피파생상품평가손익:1,334,458,429
+   DROPPED i16: old 2346.17 new 2346.167909 cls masked reason would be a masked gold cell (== builder source); a new ledger pin is forbidden by the ticket
+   DROPPED i21: old -5425.7 new -5425.697542 cls masked reason would be a masked gold cell (== builder source); a new ledger pin is forbidden by the ticket
+== KR0072 2023.2Q file data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml unit 원 cells 24
+   i 1 보험손익           old 22665.0 new 27825.949019 delta 5160.949019 cand 27825.949019 gold False cls changed | sum | L27613:보험손익:27,825,949,019
+   i 2 생명장기 손익        old 22665.0 new 33175.292214 delta 10510.292214 cand 33175.292214 gold False cls changed | derived | L27659:보험수익:237,662,988,510; L27728:보험비용:213,444,994,683; L27682:재보험수익:28,559,376,972; L27751:재보험비용:19,602,078,585
+   i 3 원수손익(장기)       old 13292.0 new 24217.993827 delta 10925.993827 cand 24217.993827 gold False cls changed | sum | L27659:보험수익:237,662,988,510; L27728:보험비용:213,444,994,683
+   i 4 원수 CSM상각       old 23415.0 new 24509.0 delta 1094.0 cand 24510.0 gold True cls changed | sum | L44795:(3) 제공된 서비스의 보험계약마진 [전:24,509
+   i 7 기타 원수          old -17294.0 new -7462.006173 delta 9831.993827 cand -7463.006173000002 gold True cls changed | derived | L27659:보험수익:237,662,988,510; L27728:보험비용:213,444,994,683
+   i 8 재보험손익(장기)      old 9373.0 new 8957.298387 delta -415.701613 cand 8957.298386999999 gold False cls changed | sum | L27682:재보험수익:28,559,376,972; L27751:재보험비용:19,602,078,585
+   i12 기타 재보험         old 1790.0 new 1374.298387 delta -415.701613 cand 1374.298386999999 gold False cls changed | derived | L27682:재보험수익:28,559,376,972; L27751:재보험비용:19,602,078,585
+   i15 기타영업수익         old None new 0.0 delta None cand 0.0 gold False cls fill | sum | 
+   i16 기타사업비용         old 5400.0 new 5349.343195 delta -50.656805 cand 5349.343195 gold False cls changed | sum | L27774:기타사업비용:5,349,343,195
+   i17 투자손익           old None new 45706.602817 delta None cand 45706.602817 gold False cls fill | sum | L27797:투자손익:45,706,602,817
+   i18 투자이익           old None new 354676.718654 delta None cand 354676.718654 gold False cls fill | sum | L27797:투자손익:45,706,602,817; L27843:보험금융수익:23,661,064,901; L27866:재보험금융수익:954,847,023; L28142:보험금융비용:332,151,083,732
+   i19 보험금융손익         old -303458.0 new -308970.115837 delta -5512.115837 cand -308970.115837 gold False cls changed | sum | L27843:보험금융수익:23,661,064,901; L27866:재보험금융수익:954,847,023; L28142:보험금융비용:332,151,083,732; L28165:재보험금융비용:1,434,944,029
+   i20 영업이익           old 68658.0 new 73532.551836 delta 4874.551836 cand 73532.551836 gold False cls changed | sum | L28372:영업이익:73,532,551,836
+   i21 영업외손익          old -10908.0 new -10908.33116 delta -0.33116 cand -10908.33116 gold False cls changed | sum | L28395:영업외손익:(10,908,331,160)
+   i22 세전이익           old 57750.0 new 62624.220676 delta 4874.220676 cand 62624.220676 gold False cls changed | sum | L28464:법인세차감전순이익(손실):62,624,220,676
+   i24 당기순이익          old 57750.0 new 62624.429999 delta 4874.429999 cand 62624.429999 gold False cls changed | sum | L28510:당기순이익(손실):62,624,429,999
+   i25 기타포괄손익         old None new 183006.320644 delta None cand 183006.320644 gold False cls fill | sum | L28533:당기기타포괄손익:183,006,320,644
+   i26 FVOCI 채무증권     old None new 106941.629211 delta None cand 106941.629211 gold False cls fill | sum | L28579:기타포괄손익-공정가치측정금융자산평가손익:106,941,629,211
+   i27 보험계약금융손익(OCI)  old None new 70522.063628 delta None cand 70522.063628 gold False cls fill | sum | L28648:보험계약자산(부채)순금융손익:70,522,063,628
+   i28 위험회피 파생상품      old None new 1205.926925 delta None cand 1205.926925 gold False cls fill | sum | L28625:현금흐름위험회피파생상품평가손익:1,205,926,925
+   i29 FVOCI 지분증권     old None new 6604.167588 delta None cand 6604.167588 gold False cls fill | sum | L28717:기타포괄손익-공정가치측정금융자산평가손익:6,604,167,588
+   i30 재보험금융손익(OCI)   old None new -2251.456083 delta None cand -2251.456083 gold False cls fill | sum | L28671:재보험계약자산(부채)순금융손익:(2,251,456,083)
+   i31 총포괄손익          old None new 245630.750643 delta None cand 245630.750643 gold False cls fill | sum | L28763:당기총포괄손익:245,630,750,643
+   i32 기타 포괄손익(미분류)   old None new -16.010625 delta None cand -16.010625 gold False cls fill | sum | L28533:당기기타포괄손익:183,006,320,644; L28579:기타포괄손익-공정가치측정금융자산평가손익:106,941,629,211; L28648:보험계약자산(부채)순금융손익:70,522,063,628; L28625:현금흐름위험회피파생상품평가손익:1,205,926,925
+   DROPPED i23: old -0.2 new -0.209323 cls masked reason would be a masked gold cell (== builder source); a new ledger pin is forbidden by the ticket
+== KR0072 2023.3Q file data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml unit 원 cells 16
+   i 1 보험손익           old 4636.975319 new 16711.142687 delta 12074.167368 cand 16711.142687 gold False cls changed | sum | L3974:보험손익:16,711,142,687
+   i 2 생명장기 손익        old 13878.532355 new 25952.699723 delta 12074.167368 cand 25952.699722999998 gold False cls changed | derived | L4020:보험수익:360,950,037,897; L4089:보험비용:352,381,757,526; L4043:재보험수익:47,492,558,085; L4112:재보험비용:30,108,138,733
+   i 3 원수손익(장기)       old -4480.275872 new 8568.280371 delta 13048.556243 cand 8568.280371 gold False cls changed | sum | L4020:보험수익:360,950,037,897; L4089:보험비용:352,381,757,526
+   i 4 원수 CSM상각       old 35250.0 new 37266.0 delta 2016.0 cand 37270.0 gold True cls changed | sum | L22520:(3) 제공된 서비스의 보험계약마진 [전:37,266
+   i 7 기타 원수          old -52310.275872 new -41277.719629 delta 11032.556243 cand -41281.719629 gold True cls changed | derived | L4020:보험수익:360,950,037,897; L4089:보험비용:352,381,757,526
+   i 8 재보험손익(장기)      old 18358.808227 new 17384.419352 delta -974.388875 cand 17384.419351999997 gold False cls changed | sum | L4043:재보험수익:47,492,558,085; L4112:재보험비용:30,108,138,733
+   i12 기타 재보험         old 12952.808227 new 11978.419352 delta -974.388875 cand 11978.419351999997 gold False cls changed | derived | L4043:재보험수익:47,492,558,085; L4112:재보험비용:30,108,138,733
+   i17 투자손익           old -6025.166046 new -13718.605641 delta -7693.439595 cand -13718.605641 gold False cls changed | sum | L4158:투자손익:(13,718,605,641)
+   i18 투자이익           old 416495.75665 new 416260.554977 delta -235.201673 cand 416260.55497700005 gold False cls changed | sum | L4158:투자손익:(13,718,605,641); L4204:보험금융수익:33,304,509,051; L4227:재보험금융수익:1,952,151,959; L4503:보험금융비용:462,651,368,820
+   i19 보험금융손익         old -422520.922696 new -429979.160618 delta -7458.237922 cand -429979.160618 gold False cls changed | sum | L4204:보험금융수익:33,304,509,051; L4227:재보험금융수익:1,952,151,959; L4503:보험금융비용:462,651,368,820; L4526:재보험금융비용:2,584,452,808
+   i20 영업이익           old -1388.190727 new 2992.537046 delta 4380.727773 cand 2992.537046 gold False cls changed | sum | L4733:영업이익:2,992,537,046
+   i22 세전이익           old -17908.13474 new -13527.406967 delta 4380.727773 cand -13527.406967 gold False cls changed | sum | L4825:법인세차감전순이익(손실):(13,527,406,967)
+   i24 당기순이익          old -17907.925417 new -13527.197644 delta 4380.727773 cand -13527.197644 gold False cls changed | sum | L4871:당기순이익(손실):(13,527,197,644)
+   i25 기타포괄손익         old 278659.391567 new 271338.272061 delta -7321.119506 cand 271338.272061 gold False cls changed | sum | L4894:당기기타포괄손익:271,338,272,061
+   i27 보험계약금융손익(OCI)  old 417523.842062 new 410202.722556 delta -7321.119506 cand 410202.722556 gold False cls changed | sum | L5009:보험계약자산(부채)순금융손익:410,202,722,556
+   i31 총포괄손익          old 260751.46615 new 257811.074417 delta -2940.391733 cand 257811.074417 gold False cls changed | sum | L5124:당기총포괄손익:257,811,074,417
+== KR0072 2023.4Q file data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml unit 원 cells 6
+   i17 투자손익           old -18358.723814 new -18428.269919 delta -69.546105 cand -18428.269919 gold False cls changed | sum | L5555:투자손익:(18,428,269,919)
+   i18 투자이익           old 582631.008174 new 582561.462069 delta -69.546105 cand 582561.462069 gold False cls changed | sum | L5555:투자손익:(18,428,269,919); L5593:보험금융수익:52,317,583,109; L5612:재보험금융수익:2,923,820,361; L5878:보험금융비용:652,591,402,462
+   i20 영업이익           old 46889.807165 new 46820.26106 delta -69.546105 cand 46820.26106 gold False cls changed | sum | L6106:영업이익:46,820,261,060
+   i22 세전이익           old 24018.924175 new 23949.37807 delta -69.546105 cand 23949.37807 gold False cls changed | sum | L6182:법인세차감전순이익:23,949,378,070
+   i24 당기순이익          old 24019.133498 new 23949.587393 delta -69.546105 cand 23949.587393 gold False cls changed | sum | L6220:당기순이익:23,949,587,393
+   i31 총포괄손익          old -95854.47166 new -95924.017765 delta -69.546105 cand -95924.017765 gold False cls changed | sum | L6467:당기총포괄손익:(95,924,017,765)
+   DROPPED i4: old 51198.0 new 51198.0 cls equal reason equal to the master
+
+== CSM KR0072 2023.1Q 2dp True file data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원
+   exact [5695.95, 384.11, 42.25, -867.71, -116.41, 5138.2] stored [5695.95, 384.11, 42.25, -867.71, -116.41, 5138.2] old [5239.4, 387.3, 45.1, -833.3, -111.25, 4727.25] closure_resid -0.01
+   i1 기초 CSM: old 5239.4 new 5695.95 delta 456.55 exact 5695.95 cand 5695.9 gold False | [(36305, '569,595')]
+   i2 신계약 CSM: old 387.3 new 384.11 delta -3.19 exact 384.11 cand 384.1 gold False | [(36353, '38,411')]
+   i3 이자 부리: old 45.1 new 42.25 delta -2.85 exact 42.25 cand 42.2 gold False | [(36417, '4,225')]
+   i4 가정 및 경험 조정: old -833.3 new -867.71 delta -34.41 exact -867.71 cand -867.7 gold True | [(36337, '(86,771)')]
+   i5 CSM 상각: old -111.25 new -116.41 delta -5.16 exact -116.41 cand -116.4 gold True | [(36369, '(11,641)')]
+   i6 기말 CSM: old 4727.25 new 5138.2 delta 410.95 exact 5138.2 cand 5138.2 gold True | [(36481, '513,820')]
+== CSM KR0072 2023.2Q 2dp True file data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원
+   exact [5695.95, 1173.06, 83.04, -663.6, -245.09, 6043.35] stored [5695.95, 1173.06, 83.04, -663.6, -245.09, 6043.35] old [5239.4, 1174.0, 90.0, -685.55, -234.15, 5583.7] closure_resid 0.01
+   i1 기초 CSM: old 5239.4 new 5695.95 delta 456.55 exact 5695.95 cand 5695.9 gold False | [(40664, '569,595')]
+   i2 신계약 CSM: old 1174.0 new 1173.06 delta -0.94 exact 1173.06 cand 1173.1 gold False | [(40712, '117,306')]
+   i3 이자 부리: old 90.0 new 83.04 delta -6.96 exact 83.04 cand 83.0 gold False | [(40776, '8,304')]
+   i4 가정 및 경험 조정: old -685.55 new -663.6 delta 21.95 exact -663.6 cand -663.6 gold True | [(40696, '(66,360)')]
+   i5 CSM 상각: old -234.15 new -245.09 delta -10.94 exact -245.09 cand -245.1 gold True | [(40728, '(24,509)')]
+   i6 기말 CSM: old 5583.7 new 6043.35 delta 459.65 exact 6043.35 cand 6043.4 gold False | [(40840, '604,335')]
+== CSM KR0072 2023.3Q 2dp False file data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원
+   exact [5695.95, 2209.79, 133.98, -1830.22, -372.66, 5836.84] stored [5695.9, 2209.8, 134.0, -1830.2, -372.7, 5836.8] old [5239.4, 2210.7, 146.1, -1912.9, -352.5, 5330.8] closure_resid 0.0
+   i1 기초 CSM: old 5239.4 new 5695.9 delta 456.5 exact 5695.95 cand 5695.9 gold False | [(18372, '569,595')]
+   i2 신계약 CSM: old 2210.7 new 2209.8 delta -0.9 exact 2209.79 cand 2209.8 gold False | [(18420, '220,979')]
+   i3 이자 부리: old 146.1 new 134.0 delta -12.1 exact 133.98 cand 134.0 gold False | [(18487, '13,398')]
+   i4 가정 및 경험 조정: old -1912.9 new -1830.2 delta 82.7 exact -1830.22 cand -1830.2 gold False | [(18404, '(183,022)')]
+   i5 CSM 상각: old -352.5 new -372.7 delta -20.2 exact -372.66 cand -372.7 gold False | [(18436, '(37,266)')]
+   i6 기말 CSM: old 5330.8 new 5836.8 delta 506.0 exact 5836.84 cand 5836.8 gold False | [(18554, '583,684')]
+== CSM KR0072 2023.4Q 2dp False file data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml table@L26189 unit 백만원
+   exact [5695.95, 3023.1, 183.37, -2559.97, -511.98, 5830.47] stored [5695.9, 3023.1, 183.4, -2560.0, -512.0, 5830.5] old [5239.4, 3023.1, 183.4, -2103.5, -512.0, 5830.5] closure_resid -0.1
+   i1 기초 CSM: old 5239.4 new 5695.9 delta 456.5 exact 5695.95 cand 5695.9 gold True | [(26220, '569,595')]
+   i4 가정 및 경험 조정: old -2103.5 new -2560.0 delta -456.5 exact -2559.97 cand -2560.0 gold True | [(26252, '(255,997)')]
+
+gold_new 61
+gold_replace 4
+csm_gold_new 13
+csm_gold_replace 7
+null_dangi_add 0
+null_dangi_remove 0
+set_dangi_add 8
+set_dangi_remove 0
+held 0
+seams (non-trivial):
+   2023.2Q i 7 derived_none none D None printed3m None live_dangi None
+   2023.2Q i 12 derived_none none D None printed3m None live_dangi None
+   2023.2Q i 16 seam set_dangi D 3003.1731950000003 printed3m 3003.175286 live_dangi None
+   2023.2Q i 21 seam set_dangi D -5482.63116 printed3m -5482.633618 live_dangi -5482.3
+   2023.3Q i 17 seam set_dangi D -59425.208458 printed3m -58698.285464 live_dangi None
+   2023.3Q i 18 seam set_dangi D 61583.83632299997 printed3m 62310.759317 live_dangi None
+   2023.3Q i 20 seam set_dangi D -70540.01479 printed3m -69813.091796 live_dangi -70046.190727
+   2023.3Q i 22 seam set_dangi D -76151.627643 printed3m -75424.704649 live_dangi -75658.13474
+   2023.3Q i 24 seam set_dangi D -76151.627643 printed3m -75424.704649 live_dangi -75657.925417
+   2023.3Q i 31 seam set_dangi D 12180.32377399999 printed3m 12907.246768 live_dangi None
+   2023.4Q i 17 consistent_both_restated none D -4709.664277999998 printed3m None live_dangi -12333.557768
+   2023.4Q i 18 consistent_both_restated none D 166300.907092 printed3m None live_dangi 166135.251524
+   2023.4Q i 20 consistent_both_restated none D 43827.724014 printed3m None live_dangi 48277.997892
+   2023.4Q i 22 consistent_both_restated none D 37476.785037 printed3m None live_dangi 41927.058915
+   2023.4Q i 24 consistent_both_restated none D 37476.785037 printed3m None live_dangi 41927.058915
+   2023.4Q i 31 consistent_both_restated none D -353735.092182 printed3m None live_dangi -356605.93781
+findings: [{'code': 'KR0072', 'quarter': '2023.1Q', 'item': 16, 'kind': 'masked gold cell not loaded', 'text': 'latest comparative 2346.167909 equals the builder source value; master stays 2346.17; loading it needs a new ledger pin'}, {'code': 'KR0072', 'quarter': '2023.1Q', 'item': 21, 'kind': 'masked gold cell not loaded', 'text': 'latest comparative -5425.697542 equals the builder source value; master stays -5425.7; loading it needs a new ledger pin'}, {'code': 'KR0072', 'quarter': '2023.2Q', 'item': 23, 'kind': 'masked gold cell not loaded', 'text': 'latest comparative -0.209323 equals the builder source value; master stays -0.2; loading it needs a new ledger pin'}]

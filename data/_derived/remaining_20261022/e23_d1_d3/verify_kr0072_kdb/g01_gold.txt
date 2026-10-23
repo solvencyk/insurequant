@@ -1,0 +1,68 @@
+csm_gold_class: {
+ "KR0072|4|2023.1Q": {
+  "summary": "class A (gold == the original filing print -833.3; `was` -944.6); replaced by the latest comparative -867.71",
+  "cls": "A",
+  "gold": -833.3,
+  "was": -944.6,
+  "latest": -867.71
+ },
+ "KR0072|5|2023.1Q": {
+  "summary": "class A (gold == the original filing print -111.25; `was` None); replaced by the latest comparative -116.41",
+  "cls": "A",
+  "gold": -111.25,
+  "was": null,
+  "latest": -116.41
+ },
+ "KR0072|6|2023.1Q": {
+  "summary": "class A (gold == the original filing print 4727.25; `was` 4727.2); replaced by the latest comparative 5138.2",
+  "cls": "A",
+  "gold": 4727.25,
+  "was": 4727.2,
+  "latest": 5138.2
+ },
+ "KR0072|4|2023.2Q": {
+  "summary": "class A (gold == the original filing print -685.55; `was` -685.5); replaced by the latest comparative -663.6",
+  "cls": "A",
+  "gold": -685.55,
+  "was": -685.5,
+  "latest": -663.6
+ },
+ "KR0072|5|2023.2Q": {
+  "summary": "class A (gold == the original filing print -234.15; `was` -234.2); replaced by the latest comparative -245.09",
+  "cls": "A",
+  "gold": -234.15,
+  "was": -234.2,
+  "latest": -245.09
+ },
+ "KR0072|1|2023.4Q": {
+  "summary": "class B chain-forced: gold 5239.4 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 5695.9; the latest comparative = 5695.9); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector",
+  "cls": "B",
+  "gold": 5239.4,
+  "was": 5695.9,
+  "latest": 5695.9
+ },
+ "KR0072|4|2023.4Q": {
+  "summary": "class B chain-forced: gold -2103.5 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -2560.0; the latest comparative = -2560.0); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector",
+  "cls": "B",
+  "gold": -2103.5,
+  "was": -2560.0,
+  "latest": -2560.0
+ }
+}
+gold_replace: [[4, "2023.2Q", 24509.0, 23415.0], [7, "2023.2Q", -7462.006173, -18990.0], [4, "2023.3Q", 37266.0, 35250.0], [7, "2023.3Q", -41277.719629, -44935.275872]]
+csm_gold_replace: [[4, "2023.1Q", -867.71, -833.3], [5, "2023.1Q", -116.41, -111.25], [6, "2023.1Q", 5138.2, 4727.25], [4, "2023.2Q", -663.6, -685.55], [5, "2023.2Q", -245.09, -234.15]]
+csm_gold_remove: [[1, "2023.4Q", 5695.9, 5239.4], [4, "2023.4Q", -2560.0, -2103.5]]
+user_pl_cells {"원보험사코드": "KR0072", "항목번호": 4, "공시분기": "2023.2Q", "값": 23415.0, "was": 12290.0, "note": "inbox/parser/20260815T1400Z 조사 중 콜래터럴 발견(원 티켓은 2023.3Q만 지목, ratio 0.525 로 RED 밴드를 근소하게 벗어나 안 걸렸으나 동일 버그): extract_tier2_life_comprehensive 가 extract_tier2_life_old 결과를 무조건 우선 반환 -> _oll_layout2 가 note '36. 보험영업수익(비용) 및 재보험영업수익(비용)' 의 두 중복 추출본 중 헤더가 통째로 빈 배열([])로 깨진 사본을 선택 -> _oll_ytd() 가 3개월/누적 구분 불가로 3개월 컬럼을 읽음. raw 누적 컬럼 직접 재검증(CSM_waterfall 234.15억과 정확 일치)으로 override. 2026-08-17."}
+user_pl_cells {"원보험사코드": "KR0072", "항목번호": 4, "공시분기": "2023.3Q", "값": 35250.0, "was": 11835.0, "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP -- 티켓 원문 138.7억은 작성 시점 이후 데이터가 바뀐 stale 값, 현재 마스터 118.35억 기준으로 조사): extract_tier2_life_comprehensive 가 extract_tier2_life_old 결과를 무조건 우선 반환 -> _oll_layout2 가 헤더 빈 사본을 선택 -> _oll_ytd() 가 3개월 컬럼을 누적으로 오독. 당분기 파생값이 -455(음수, 누계 항목 불가능)로도 독립 증빙됨. 상세는 동일 회사 2023.2Q 항목 note 참조. raw 누적 컬럼 직접 재검증(CSM_waterfall 352.5억과 정확 일치)으로 override. 2026-08-17."}
+user_pl_cells {"원보험사코드": "KR0072", "항목번호": 7, "공시분기": "2023.2Q", "값": -18990.0, "was": -7865.0, "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260"}
+user_pl_cells {"원보험사코드": "KR0072", "항목번호": 7, "공시분기": "2023.3Q", "값": -44935.275872, "was": -21520.275872, "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260"}
+user_pl_cells {"원보험사코드": "KR0072", "항목번호": 25, "공시분기": "2024.4Q", "값": -649200.282063, "was": -650336.755305, "note": "2026-10-22 parser/ifrs17 (e20, ticket 20261022T1800Z STEP 1: 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2025_Q4 rcept 20260331004180 의 전기 2024.4Q 누적(12월) 열 = -649200.282063 백만원. 원문 data/dart/FY2025_Q4/raw/KR0072_케이디비생명보험_20260331004180/20260331004180.xml L5104. 단위 원(정확 인쇄). 현재 마스터값 -650336.755305 는 원 공시 FY2024_Q4 rcept 20250331002302(단위 원) 인쇄값(-650336.755305, 원문 L6235)과 일치. 변동 +1136.473242. 사유: 금융감독원 2025-12 질의회신(생명보험사 계약자지분조정 회계처리·일탈회계) 반영 회계정책 변경의 소급재작성 (제37기말 소급재작"}
+user_pl_cells {"원보험사코드": "KR0072", "항목번호": 26, "공시분기": "2024.4Q", "값": 316955.12304, "was": 315818.649798, "note": "2026-10-22 parser/ifrs17 (e20, ticket 20261022T1800Z STEP 1: 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2025_Q4 rcept 20260331004180 의 전기 2024.4Q 누적(12월) 열 = 316955.12304 백만원. 원문 data/dart/FY2025_Q4/raw/KR0072_케이디비생명보험_20260331004180/20260331004180.xml L5118. 단위 원(정확 인쇄). 현재 마스터값 315818.649798 는 원 공시 FY2024_Q4 rcept 20250331002302(단위 원) 인쇄값(315818.649798, 원문 L6273)과 일치. 변동 +1136.473242. 사유: 금융감독원 2025-12 질의회신(생명보험사 계약자지분조정 회계처리·일탈회계) 반영 회계정책 변경의 소급재작성 (제37기말 소급재작성 주)"}
+user_pl_cells {"원보험사코드": "KR0072", "항목번호": 31, "공시분기": "2024.4Q", "값": -628782.092845, "was": -629918.566087, "note": "2026-10-22 parser/ifrs17 (e20, ticket 20261022T1800Z STEP 1: 최신 비교열 채택, owner 결정 2026-10-22, 교보생명 선례와 동일): 별도(OFS) 기준 4-2 포괄손익계산서, FY2025_Q4 rcept 20260331004180 의 전기 2024.4Q 누적(12월) 열 = -628782.092845 백만원. 원문 data/dart/FY2025_Q4/raw/KR0072_케이디비생명보험_20260331004180/20260331004180.xml L5174. 단위 원(정확 인쇄). 현재 마스터값 -629918.566087 는 원 공시 FY2024_Q4 rcept 20250331002302(단위 원) 인쇄값(-629918.566087, 원문 L6463)과 일치. 변동 +1136.473242. 사유: 금융감독원 2025-12 질의회신(생명보험사 계약자지분조정 회계처리·일탈회계) 반영 회계정책 변경의 소급재작성 (제37기말 소급재작"}
+user_csm_cells {"원보험사코드": "KR0072", "항목번호": 4, "공시분기": "2023.1Q", "값": -833.3, "was": -944.6, "why": "raw 재확인(rcept 20230515002450, 1분기보고서). 2026-08-29 71st pass(commit 9a067dd)가 viz_build_csm_waterfall.py::extract_stages()의 null-흡수 버그(라벨매칭 실패 시 항목5가 None으로 남고 항목4 잔차식의 `... or 0`이 그걸 통째로 삼킴)를 고친 뒤, 현재 코드로 waterfall_for_dir()를 재실행(read-only)하면 원수 일반모형 CSM 측정요소표(combined-agn 블록)에서 항목4=-833.3, 항목5=-111.2, 항목6=4727.2(억원)를 독립적으로 재현 — gold 값과 반올림오차(≤0.05) 내 완전 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."}
+user_csm_cells {"원보험사코드": "KR0072", "항목번호": 4, "공시분기": "2023.2Q", "값": -685.55, "was": -685.5, "why": "raw 재확인(rcept 20230814003052, 반기보고서). 위 2023.1Q와 동일 근거 — 현재(수정후) waterfall_for_dir()가 combined-agn 블록에서 항목4=-685.5, 항목5=-234.2(억원)를 독립 재현, gold 값(-685.55/-234.15)과 반올림오차(≤0.05) 내 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."}
+user_csm_cells {"원보험사코드": "KR0072", "항목번호": 5, "공시분기": "2023.1Q", "값": -111.25, "was": null, "why": "raw 재확인(rcept 20230515002450, 1분기보고서). 2026-08-29 71st pass(commit 9a067dd)가 viz_build_csm_waterfall.py::extract_stages()의 null-흡수 버그(라벨매칭 실패 시 항목5가 None으로 남고 항목4 잔차식의 `... or 0`이 그걸 통째로 삼킴)를 고친 뒤, 현재 코드로 waterfall_for_dir()를 재실행(read-only)하면 원수 일반모형 CSM 측정요소표(combined-agn 블록)에서 항목4=-833.3, 항목5=-111.2, 항목6=4727.2(억원)를 독립적으로 재현 — gold 값과 반올림오차(≤0.05) 내 완전 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."}
+user_csm_cells {"원보험사코드": "KR0072", "항목번호": 5, "공시분기": "2023.2Q", "값": -234.15, "was": -234.2, "why": "raw 재확인(rcept 20230814003052, 반기보고서). 위 2023.1Q와 동일 근거 — 현재(수정후) waterfall_for_dir()가 combined-agn 블록에서 항목4=-685.5, 항목5=-234.2(억원)를 독립 재현, gold 값(-685.55/-234.15)과 반올림오차(≤0.05) 내 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."}
+user_csm_cells {"원보험사코드": "KR0072", "항목번호": 6, "공시분기": "2023.1Q", "값": 4727.25, "was": 4727.2, "why": "raw 재확인(rcept 20230515002450, 1분기보고서). 2026-08-29 71st pass(commit 9a067dd)가 viz_build_csm_waterfall.py::extract_stages()의 null-흡수 버그(라벨매칭 실패 시 항목5가 None으로 남고 항목4 잔차식의 `... or 0`이 그걸 통째로 삼킴)를 고친 뒤, 현재 코드로 waterfall_for_dir()를 재실행(read-only)하면 원수 일반모형 CSM 측정요소표(combined-agn 블록)에서 항목4=-833.3, 항목5=-111.2, 항목6=4727.2(억원)를 독립적으로 재현 — gold 값과 반올림오차(≤0.05) 내 완전 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."}
+user_csm_cells {"원보험사코드": "KR0072", "항목번호": 1, "공시분기": "2023.4Q", "값": 5239.4, "was": 5695.9, "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 5239.4); Q4 annual restated FY2022 close to 5695.9. keep close 5830.5"}
+user_csm_cells {"원보험사코드": "KR0072", "항목번호": 4, "공시분기": "2023.4Q", "값": -2103.5, "was": -2560.0, "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 5239.4); Q4 annual restated FY2022 close to 5695.9. keep close 5830.5"}

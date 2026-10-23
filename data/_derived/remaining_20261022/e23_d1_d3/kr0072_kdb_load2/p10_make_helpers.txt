@@ -1,0 +1,12 @@
+wrote e23_apply.py 51002
+wrote kr0072_diff_vs_backup.py 20655
+wrote summarize_changes.py 4221
+wrote c13_emitter_prestate.py 1908
+wrote c18_sim_vs_applied.py 760
+wrote c17_cmp_backup.py 760
+wrote b04_backup_check.py 2184
+wrote run_tests.sh 906
+wrote run_tests_final.sh 768
+copied gate_overlay.py
+copied compare_gates.py
+copied run_gates.sh

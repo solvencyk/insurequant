@@ -1,0 +1,51 @@
+== 0. new / replaced gold cells that would be MASKED (value == builder source within the census tolerance) -> dropped (ticket: no new mask cells / no new pins)
+   dropped ('KR0072', 16, '2023.1Q'): new 2346.167909 vs builder source 2346.17 -> masked (gold cell: False)
+   dropped ('KR0072', 21, '2023.1Q'): new -5425.697542 vs builder source -5425.7 -> masked (gold cell: False)
+   dropped ('KR0072', 23, '2023.2Q'): new -0.209323 vs builder source -0.2 -> masked (gold cell: False)
+== A. adopted cells whose value differs from the e20 candidate (and candidate cells I did not adopt)
+   KR0072 2023.1Q i4: mine 11641.0 vs candidate 11640.0 (diff +1.000000)
+   KR0072 2023.2Q i4: mine 24509.0 vs candidate 24510.0 (diff -1.000000)
+   KR0072 2023.2Q i7: mine -7462.006173 vs candidate -7463.006173000002 (diff +1.000000)
+   KR0072 2023.3Q i4: mine 37266.0 vs candidate 37270.0 (diff -4.000000)
+   KR0072 2023.3Q i7: mine -41277.719629 vs candidate -41281.719629 (diff +4.000000)
+   2023.4Q: candidate items not adopted [4, 7] | adopted but not in candidates []
+   adopted PL cells 65 (e20 candidates 70)
+== B. owner-gold cells in the adopted set
+   ('KR0072', 4, '2023.2Q'): gold 23415.0 | separate original print 23415.0 (백만원; lines [(40301, '23,415', '(3) 제공된 서비스의 보험계약마진')]) | latest 24509.0 -> class A
+   ('KR0072', 7, '2023.2Q'): gold -18990.0 is a derived plug (3-(4+5+6) of the master legs = -17294.0; live master -17294.0) -> class D
+   ('KR0072', 4, '2023.3Q'): gold 35250.0 | separate original print 35250.0 (백만원; lines [(46159, '35,250', '(3) 제공된 서비스의 보험계약마진')]) | latest 37266.0 -> class A
+   ('KR0072', 7, '2023.3Q'): gold -44935.275872 is a derived plug (3-(4+5+6) of the master legs = -52310.275872; live master -52310.275872) -> class D
+== C. single-quarter (값_당분기) seam analysis
+   KR0072 2023.2Q i16: seam -> set_dangi (D=3,003.173195, printed3m=3003.175286, live=None, )
+   KR0072 2023.2Q i21: seam -> set_dangi (D=-5,482.631160, printed3m=-5482.633618, live=-5482.3, )
+   KR0072 2023.3Q i17: seam -> set_dangi (D=-59,425.208458, printed3m=-58698.285464, live=None, )
+   KR0072 2023.3Q i18: seam -> set_dangi (D=61,583.836323, printed3m=62310.759317, live=None, )
+   KR0072 2023.3Q i20: seam -> set_dangi (D=-70,540.014790, printed3m=-69813.091796, live=-70046.190727, )
+   KR0072 2023.3Q i22: seam -> set_dangi (D=-76,151.627643, printed3m=-75424.704649, live=-75658.13474, )
+   KR0072 2023.3Q i24: seam -> set_dangi (D=-76,151.627643, printed3m=-75424.704649, live=-75657.925417, )
+   KR0072 2023.3Q i31: seam -> set_dangi (D=12,180.323774, printed3m=12907.246768, live=None, )
+   KR0072 2023.4Q i17: consistent_both_restated -> none (D=-4,709.664278, printed3m=None, live=-12333.557768, comparative -13718.605641 vs master -6025.166046)
+   KR0072 2023.4Q i18: consistent_both_restated -> none (D=166,300.907092, printed3m=None, live=166135.251524, comparative 416260.554977 vs master 416495.75665)
+   KR0072 2023.4Q i20: consistent_both_restated -> none (D=43,827.724014, printed3m=None, live=48277.997892, comparative 2992.537046 vs master -1388.190727)
+   KR0072 2023.4Q i22: consistent_both_restated -> none (D=37,476.785037, printed3m=None, live=41927.058915, comparative -13527.406967 vs master -17908.13474)
+   KR0072 2023.4Q i24: consistent_both_restated -> none (D=37,476.785037, printed3m=None, live=41927.058915, comparative -13527.197644 vs master -17907.925417)
+   KR0072 2023.4Q i31: consistent_both_restated -> none (D=-353,735.092182, printed3m=None, live=-356605.93781, comparative 257811.074417 vs master 260751.46615)
+   seam table: 64 touched single-quarter cells; by class: {'consistent': 26, 'consistent_both_restated': 6, 'derived_none': 2, 'lob_item_not_checked_directly': 12, 'q4_unchanged_q3_adopted': 10, 'seam': 8}
+== D. CSM vectors (latest comparative, separate basis)
+   KR0072 2023.1Q: exact=[5695.95, 384.11, 42.25, -867.71, -116.41, 5138.2] stored=[5695.95, 384.11, 42.25, -867.71, -116.41, 5138.2] (2dp=True) old=[5239.4, 387.3, 45.1, -833.3, -111.25, 4727.25] cells [1, 2, 3, 4, 5, 6] cand [1, 2, 3, 4, 5, 6] only_cand=[] only_mine=[] closure_resid=-0.01
+   KR0072 2023.2Q: exact=[5695.95, 1173.06, 83.04, -663.6, -245.09, 6043.35] stored=[5695.95, 1173.06, 83.04, -663.6, -245.09, 6043.35] (2dp=True) old=[5239.4, 1174.0, 90.0, -685.55, -234.15, 5583.7] cells [1, 2, 3, 4, 5, 6] cand [1, 2, 3, 4, 5, 6] only_cand=[] only_mine=[] closure_resid=0.01
+   KR0072 2023.3Q: exact=[5695.95, 2209.79, 133.98, -1830.22, -372.66, 5836.84] stored=[5695.9, 2209.8, 134.0, -1830.2, -372.7, 5836.8] (2dp=False) old=[5239.4, 2210.7, 146.1, -1912.9, -352.5, 5330.8] cells [1, 2, 3, 4, 5, 6] cand [1, 2, 3, 4, 5, 6] only_cand=[] only_mine=[] closure_resid=0.0
+   KR0072 2023.4Q: exact=[5695.95, 3023.1, 183.37, -2559.97, -511.98, 5830.47] stored=[5695.9, 3023.1, 183.4, -2560.0, -512.0, 5830.5] (2dp=False) old=[5239.4, 3023.1, 183.4, -2103.5, -512.0, 5830.5] cells [1, 4] cand [1, 4] only_cand=[] only_mine=[] closure_resid=-0.1
+   CSM gold ('KR0072', 4, '2023.1Q'): gold -833.3 -> class A (gold == the original filing print -833.3; `was` -944.6); replaced by the latest comparative -867.71
+   CSM gold ('KR0072', 5, '2023.1Q'): gold -111.25 -> class A (gold == the original filing print -111.25; `was` None); replaced by the latest comparative -116.41
+   CSM gold ('KR0072', 6, '2023.1Q'): gold 4727.25 -> class A (gold == the original filing print 4727.25; `was` 4727.2); replaced by the latest comparative 5138.2
+   CSM gold ('KR0072', 4, '2023.2Q'): gold -685.55 -> class A (gold == the original filing print -685.55; `was` -685.5); replaced by the latest comparative -663.6
+   CSM gold ('KR0072', 5, '2023.2Q'): gold -234.15 -> class A (gold == the original filing print -234.15; `was` -234.2); replaced by the latest comparative -245.09
+   CSM gold ('KR0072', 1, '2023.4Q'): gold 5239.4 -> class B chain-forced: gold 5239.4 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 5695.9; the latest comparative = 5695.9); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector
+   CSM gold ('KR0072', 4, '2023.4Q'): gold -2103.5 -> class B chain-forced: gold -2103.5 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -2560.0; the latest comparative = -2560.0); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector
+== E. APPLY CONTRACT: PL gold_new 61, gold_replace 4, CSM gold_new 13, gold_replace 7, null_dangi_add 0, null_dangi_remove 0, set_dangi_add 8, set_dangi_remove 0, held []
+   null_dangi_add: []
+   null_dangi_remove: []
+   set_dangi_add: [('KR0072', '2023.2Q', 16, 3003.175286), ('KR0072', '2023.2Q', 21, -5482.633618), ('KR0072', '2023.3Q', 17, -58698.285464), ('KR0072', '2023.3Q', 18, 62310.759317), ('KR0072', '2023.3Q', 20, -69813.091796), ('KR0072', '2023.3Q', 22, -75424.704649), ('KR0072', '2023.3Q', 24, -75424.704649), ('KR0072', '2023.3Q', 31, 12907.246768)]
+   set_dangi_remove: []
+PL cells 65 CSM cells 20 held []

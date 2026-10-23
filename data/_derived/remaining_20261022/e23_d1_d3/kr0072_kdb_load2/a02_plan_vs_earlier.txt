@@ -1,0 +1,3 @@
+differences after normalising the evidence-folder name and the time stamp: 0
+contract counts: {'gold_new': 61, 'gold_replace': 4, 'csm_gold_new': 13, 'csm_gold_replace': 5, 'null_dangi_add': 0, 'null_dangi_remove': 0, 'set_dangi_add': 8, 'set_dangi_remove': 0, 'held': 0, 'csm_gold_remove': 2}
+n_pl_cells 65 n_csm_cells 20

@@ -1,0 +1,37 @@
+{
+ "problems": [
+  {
+   "where": "2023.1Q CSM i1",
+   "problem": "table unit 백만원"
+  },
+  {
+   "where": "2023.1Q CSM i2",
+   "problem": "table unit 백만원"
+  },
+  {
+   "where": "2023.1Q CSM i3",
+   "problem": "table unit 백만원"
+  },
+  {
+   "where": "2023.1Q CSM i4",
+   "problem": "table unit 백만원"
+  },
+  {
+   "where": "2023.1Q CSM i5",
+   "problem": "table unit 백만원"
+  },
+  {
+   "where": "2023.1Q CSM i6",
+   "problem": "table unit 백만원"
+  }
+ ],
+ "res": {
+  "pl_cells": 74,
+  "pl_cells_ok": 74,
+  "csm_cells": 20,
+  "csm_cells_ok": 14,
+  "control_bad": 0
+ },
+ "mutate": "unit",
+ "ok": false
+}

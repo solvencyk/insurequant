@@ -1,0 +1,74 @@
+티켓 20261023T0900Z (D3 = 현대해상 KR0009 FY2023 2023.1Q~2023.4Q 채택, LOB 레그 = IR 팩트시트 · 시나리오 N6c_HD_FY2023_IRlegs, 2026-10-23) 증거 폴더 색인
+=====================================================================================================
+상태: 적재 완료 · 미커밋 · push 안 함. 서브에이전트·docling 안 씀. build_root_masters.main()·build_ifrs17_bs·xlsx·panel·public_exports·NB·TODO·changelog·티켓 파일·WFY_EXCEPTIONS·pl_bridge_baseline·pl_csm_amort_missing_ledger·gold_overlay_ledger·게이트 스크립트·핸들러 코드는 건드리지 않았다.
+파이썬은 항상 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, 스크립트 파일로, stdin /dev/null.
+이 회사는 체인의 네 번째였다(KB라이프 → 롯데 → ABL → KDB(보류, 전부 복구) → 현대해상): 적재 직전 라이브 파일 7개 = ABL(KR0070) 적재 직후 상태(kr0070_abl/apply_manifest_e23_abl.json 의 after_sha256 와 바이트 동일, a01_precheck.txt · b01_backup_preload.txt),
+나머지 10개 파일은 KDB 에이전트가 적재 전에 떠 둔 백업(backup_before_apply/kr0072_kdb/)과 바이트 동일. 작업 트리 vs git HEAD 는 KR0003 · KR0070 · KR0099 셀뿐이고 KR0009 는 한 칸도 안 다르다(b02_tree_vs_head.txt).
+
+1) 무엇을 적재했나 (적재 전 백업 대비 실측, kr0009_diff_vs_backup.txt = 59 PASS / ALL PASS)
+   PL_breakdown.json            값 57칸 (2023.1Q 23 · 2Q 23 · 4Q 11; 항목 1·2·4·13·14·15·16~32 등) + 값_당분기 78칸(57 + 2023.3Q 21 따라 움직임), 필드는 값·값_당분기만, 다른 회사·2023.3Q 값·2024 분기 0
+   CSM_waterfall.json           값 18칸 (2023.1Q·2Q 각 6, 2023.3Q 기초·가정조정 2, 2023.4Q 기초·가정조정·상각·기말 4) + 값_당분기 20칸(파생), 다른 회사 0
+   data/_gold/user_pl_cells.json   set 1322 -> 1379 (신규 57, 교체 0; IR 레그 6칸의 note 에 IR 계보), null_dangi 110 -> 121 (+11: 2023.4Q 항목 1·4·17·19·20·22·23·24·25·27·31) + 문서 키 _doc_e23_kr0009_20261023, set_dangi 불변
+   data/_gold/user_csm_cells.json  set 406 -> 417 (신규 14, 연쇄용 gold 제자리 교체 1: 2023.4Q 항목 4 = -7,480.6 -> -2,715.9, 연쇄용 gold 제거 3: 2023.3Q 항목 1(88,281.1)·4(-7,991.9), 2023.4Q 항목 1(88,281.1)), 문서 키 _doc_e23_kr0009_20261023
+   data/_gold/gold_overlay_ledger.json  불변 (소멸·교체한 마스크 칸 없음, 새 박제 0, 새 마스크 칸 0)
+   PL_breakdown_provenance.json     KR0009 2023.1Q·2Q·4Q 6블록 교체(샌드박스 emit_pl_provenance 사본 + IR 계보 source_files 항목: how=ir_factsheet_uw_income_prior_year_cumulative, 시트·셀·라벨 셀·종목 블록 셀·머리글 셀·인쇄값) + 병합 노트 키 merge_note_20261023_e23_kr0009_hd
+   CSM_waterfall_provenance.json    KR0009 csm_waterfall 2023.1Q·2Q owner_override 추가, 2023.3Q owner_override 해제(그 블록에 gold 가 더는 없다), 2023.4Q 유지 + 병합 노트 키 merge_note_20261023_e23_kr0009_hd_csm
+   tests/test_rule_coverage_manifest.py  GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1379, 22)} + _TAX22_LATEST_COMPARATIVE_ONLY 에 (현대해상, 2023.4Q) 추가(37칸, 주석 숫자 2곳)
+   tests/fixtures/master_tables_golden.json  SUMMARY 필드 3개만(pl_bridge 3773P(진짜1345·구성상2085)/skip 2639 -> 3783P(진짜1351·구성상2089)/skip 2629, qoq_warn 263Y -> 265Y, oci_vs_bs_aoci 26Y/103blank/10bsskip -> 28Y/101blank/11bsskip; d02_fixture_diff.txt)
+   tests/fixtures/builder_input_fingerprints.json  viz_ifrs17_panels 의 inputs_sha256 · input_bytes 한 줄만 (CSM_waterfall.json 이 그 빌더의 입력; viz 골든 2종 통과 확인 뒤 --update; 갱신 전 RED 1 -> 뒤 RED 0)
+   data/_derived/qoq_warn.json · pl_oci_vs_bs_aoci_warn.json  master_tables 골든 테스트의 부수 산출: 현대해상 행만 바뀜(qoq +2 신규·2 변경, oci +2 신규; d03_warn_files_diff.py)
+   미접촉: PL 골든 fixture(sha256_master 불변), data/dart/viz/*, scripts/*, src/*, xlsx, NB, WFY_EXCEPTIONS, 기준선·원장 파일 (final_state_sha256.txt)
+
+2) 판정과 근거 요약
+   - 계획 PL 58 -> 57: 2023.4Q 항목 16(기타사업비용) = owner gold 38,491.0 vs 최신 비교열 38,490.968273(L51752): 반올림 차이뿐 + 원장 박제(SAME_AT_1DP) 대상이라 제외(티켓 규칙). CSM 18 = 계획 18. 옛값 75/75 가 적재 직전 라이브와 일치.
+   - e20 후보와 다른 값: 원수 CSM상각(항목 4) 206,656.546 / 417,840.268 / 880,544.842 (후보 206,660.0 / 417,840.0 / 880,540.0 은 반올림 표기, 필링 표는 천원 단위), CSM 2023.4Q 항목 4 = -2,715.9 (후보 -2,716.0 은 합계에서 뺀 플러그; 필링 L75553 (271,590,455)천원 직접 인쇄).
+     항목 4 는 같은 필링의 CSM 롤포워드 행 5 와 0.001 백만원 안에서 일치(kr0009_verify.txt B절).
+   - 독립 재독: kr0009_verify.py (+ hd_lib.py; 표준 라이브러리만, IR 시트는 zipfile+XML; 계획기·e21_*·e23_* 임포트 0) -> kr0009_verify.txt / .json: PL 57/57, CSM 18/18, 문제 0. 변이 시험 6/6 검출(kr0009_verify_mutation.txt; 적재 뒤에는 KR0009_BASE=<백업 폴더>).
+     A 정의 대조(원 공시 FY2023 3분기·사업보고서 18항목이 라이브 마스터와 같음, 항목 16 만 0.032 반올림; 원 1분기·반기 옛 서식의 항목 4·5 정확히 같음) · B 후보(prior-year 누계 열, 날짜 머리글 + THEAD 경로) · B2 완전성(계획에 없는 Tier-1 25항목은 마스터와 같음)
+     · B3 CSM 전기 표 18/18 + 롤포워드 닫힘 + 4분기 기초 83,515.4 한 판 · C IR 레그 합 = DART 별도 보험손익(원 단위까지; 2023.1Q 246,045.277087 L28343, 2023.2Q 415,652.294609 L31372) · D 이음매(Tier-1 36 항목분기 최대차 0, 항목 4 의 3개월 표 2건, IR K 열 4건,
+       2023.4Q 11 항목은 9개월 비교열 = 라이브 3분기, 연간 비교열 != 원 연간) · E 계획 점검(옛값 = 라이브, 승인된 owner gold 만 건드림, 연쇄용 gold 4칸 = 분류 ⓑ).
+   - IR 사용의 전제: e03_dart_lob_result_search.py -> e03_dart_lob_result_search.txt: FY2024 1분기·반기 DART 보고서의 LOB 열(장기·자동차·일반) 표 9개·17개 중 `보험손익` 행이 있는 것은 영업의 현황 「보험종목별 수지 현황」 당기 표 1개뿐 (전년동기 LOB 보험손익은 DART 에 없다).
+   - 재재작성 증인: e01_fy2025_witness.py -> e01_fy2025_witness.txt: FY2025 사업보고서(rcept 20260312001448)의 제70기(FY2023) 열 = FY2024 사업보고서 전기 열 (Tier-1 18항목 전부 차이 0; 2023.4Q 값은 세 번째로 고쳐지지 않았다).
+   - IR 팩트시트(raw 는 gitignored, 값은 ir_legs_extract.json): FY2024 Q1 dd7e547e...xlsx / Q2 d33c3d38...xlsx 의 시트 '(3) UW Income', 전년동기 누계 열 L(머리글 L6 「23.1Q 누계」·「23.2Q 누계」), 행 라벨 「보 험 손 익」(일반 C11 · 장기 C26 · 자동차 C30), 합계 L31.
+   - CSM gold 3칸은 교체하지 않고 제거: 승인된 교체값(83,515.4 · -3,226.2 · 83,515.4)이 빌더 소스 값과 같아 gold 로 남기면 마스크 칸(박제 필요)이 된다(적용기 --check 가 잡는다). 선례 = 이 체인의 ABL, e21 KB라이프. 2023.4Q 항목 4 는 빌더 소스 -2,714.9 와 달라 제자리 교체.
+   - 2023.4Q 단일분기 공란 11칸 = 연간 재작성 비교열 vs 미재작성 9개월 비교열(owner 규칙 2026-10-22). 2023.3Q 단일분기는 처음으로 채워진다(빈 칸 5곳이 인쇄된 3개월 열과 같은 값으로).
+   - 범위 밖(싣지 않음): 2023.4Q 레그(IR Q4 시트 L26 248,926.412 · L30 201,237.589 · L11 76,425.619 가 가교를 정확히 닫지만 owner gold 13·14 와 빌더 리터럴 2 를 건드린다; 잔차 +98.12백만원은 게이트 허용 안) · 2023.3Q 레그 13·14(기존 baseline FAIL 의 원인)
+     · 항목 5·9·10 · 2023.4Q 항목 3·7 plug(잔차 +2.224백만원, 허용 안).
+
+3) 게이트 (gates_before/ = 적재 전, gates_sim/ = 적재 전 모의, gates_after/ = 적재 후; gates_compare_sim.txt · gates_compare_after.txt · gates_compare_after_vs_sim.txt)
+   master_tables SUMMARY: pl_bridge 3773P/18F/0NEW -> 3783P/18F/0NEW, qoq_warn 263Y -> 265Y, oci_vs_bs_aoci 26Y/103blank/10bsskip -> 28Y/101blank/11bsskip, tax22 최신 비교열 판 통과 36 -> 37, 나머지 필드 동일.
+   data_contract: RED 2 / YELLOW 168 같은 발견 집합 (MASTER_XLSX_DRIFT CSM워터폴 86 -> 124칸 · 손익분해PL 331 -> 466칸; 늘어난 38칸 = CSM 18+20, 135칸 = PL 57+78 와 정확히 같다)
+   csm_continuity flagged 1 · RED 0 불변 / csm_waterfall 41 pass 불변 / nb_csm 5/5 불변 / csm_coverage 기존 갭 1(카카오페이 2023.4Q) 불변
+   live_artifacts: RED 3 -> 5 = NB_VS_WATERFALL KR0009 2023.1Q · 2023.2Q 추가 (예상한 신호; publishing 이 NB 재빌드), YELLOW 25 불변
+   테스트: pytest_*_after1.txt (적재 직후), pytest_*_final.txt (fixture 갱신 뒤): gold_overlay 7 · identity 14 · identity_tautology 10 · master_tables_golden 2 (SUMMARY --update 뒤) · viz 골든 2종 · dividend 골든 · deploy_assets 12 모두 passed,
+           rule_coverage 103 passed + 1 failed (test_master_xlsx_clean_state_has_no_red = xlsx 동기화 RED 와 같은 원인). PL 골든 RUN_PL_GOLDEN=1 -> pytest_pl_golden_after1.txt = 1 passed (413초).
+           추가 테스트(run_tests_extra.sh -> pytest_*_extra.txt, 마스터·gold·출처표를 읽는 나머지 테스트): csm_continuity_exception 18 · pl_fs_note_lineage 12 · pl_reinsurer_disclosure_lineage 14 · pl_source_absent_exemption 24 · pl_source_absent_site_rolled_off 22 · prepush_scope 63 · push_gate_wiring 66(1 skipped) 모두 passed.
+           (run_tests*.sh 의 「rc=」는 pytest 줄의 종료코드이고 결과는 pytest_*.txt 마지막 줄로 읽는다. 지문: fingerprints_before_update.txt RED 1 -> fingerprints_after_update.txt RED 0.)
+
+4) 파일 지도
+   계획·판독: p01_make_plan_copy.py · p02_patch_plan.py (공유 e23_plan.py 사본 수정: hd 종류에서 IR 레그 항목 2 를 채택; 이전 에이전트가 만든 읽기 전용 프로브) -> e23_plan_hd.json (계획기 출력, 적용 계약 포함), e23_plan_hd_report.txt
+              p03_finalize_plan.py -> e23_plan_hd_final.json (계획기 출력 + IR 레그 note 의 IR 계보 + plan['ir_lineage'] + 연쇄용 CSM gold 4칸을 제거 3 / 교체 1 로 분리; 그 밖의 차이 0 을 단언)
+   독립 검증: kr0009_verify.py + hd_lib.py (+ kr0009_verify_values.json 독립 재독 값) -> kr0009_verify.txt / .json, 변이 시험 kr0009_verify_mutation.py -> kr0009_verify_mutation.txt,
+              백업(적재 전 마스터)에 대한 재실행 kr0009_verify_prebackup.txt (KR0009_BASE=백업 폴더; 적재 뒤에는 이렇게 돌려야 E절 「옛값 = 라이브」가 성립한다)
+   적재 도구: make_apply.py (KDB판 e23_apply.py 에서 현대해상판을 생성, 치환 전부 1회 일치 단언 + compile; IR 계보 add_ir_lineage 추가) -> e23_apply.py (--snapshot-drift | --check | --out-dir | --apply | --verify | --revert --apply),
+              apply_manifest_e23_hd.json (적재 전후 sha256), drift_before.json, e23_apply_report.txt, e23_apply_{snapshot,check,outdir,run,verify,verify_final}.log
+   차분: kr0009_diff_vs_backup.py -> kr0009_diff_vs_backup.txt (적재 후, ALL PASS 59) · kr0009_diff_vs_backup_sim.txt (적재 전 모의 출력 폴더 대상) ; 옛->새 전표: summarize_changes.py -> changes_old_new.txt ; 화면 효과: d01_screen_effects.py -> d01_screen_effects.txt
+   백업 검증: b01_backup_preload.py (적재 전 백업 17개 파일) -> ../backup_before_apply/kr0009_hyundai/ + SHA256_preload.txt · a01_precheck.py (사전 점검) · b02_tree_vs_head.py (작업 트리 vs HEAD) · d07_final_hashes.py -> final_state_sha256.txt
+   게이트: run_gates.sh <폴더> (gate_overlay.py 가 저장소 쓰기를 모두 이 폴더로 돌린다) -> gates_before/ gates_sim/ gates_after/, compare_gates.py -> gates_compare_*.txt
+   테스트: run_tests.sh <tag> [pl_golden], run_tests_final.sh <tag>
+   탐침(읽기 전용): a02_ledger_peek (원장 박제·빌더 소스·gold 상태) · a03_prov_peek · b01_show_plan_csm · b04_show_contract · b02_titles · c01~c10 (필링 구조·노트 표·IR 시트·원 CSM 표·드리프트 탐침) · d02_fixture_diff · d03_warn_files_diff · d04_dangi_list · d05_show_final · d06_ir_extract (-> ir_legs_extract.json)
+   위생: p28_bom_scan.py (BOM·UTF-8·구문 점검) · p29_recode_logs.py (콘솔 cp949 캡처를 UTF-8 로 재인코딩)
+   답변 초안(한국어): ../answers/kr0009_hyundai.md
+
+5) 재현 순서 (적재 전 상태 = 이 체인에서 ABL 직후의 마스터 · gold; 적재 뒤에는 e23_plan_hd_final.json 이 동결본)
+   1. a01_precheck.py ; kr0009_verify.py (문제 0 이어야 한다; 적재 뒤에는 KR0009_BASE=<백업 폴더>) -> kr0009_verify_mutation.py
+   2. b01_backup_preload.py ; run_gates.sh gates_before ; p01_make_plan_copy.py -> p02_patch_plan.py -> e23_plan.py hd -> p03_finalize_plan.py ; make_apply.py ; e23_apply.py --snapshot-drift ; --check ; --out-dir <임시폴더> ; kr0009_diff_vs_backup.py (KR0009_POST_ROOT=<임시폴더>) ;
+      run_gates.sh gates_sim <name>=<임시폴더 파일> ; --apply
+   3. e23_apply.py --verify ; kr0009_diff_vs_backup.py ; run_gates.sh gates_after ; compare_gates.py gates_before gates_after
+   4. pytest gold_overlay · identity · master_tables_golden(실패 -> tests/test_master_tables_golden.py --update) · viz 골든 2종 · scripts/validate_golden_input_fingerprints.py (RED 1 -> --update) · rule_coverage · PL 골든(RUN_PL_GOLDEN=1)
+
+6) 되돌리는 순서
+   a. e23_apply.py --revert --apply   (적재 직후 해시가 그대로일 때만 동작: 마스터 4 + gold 2 + 테스트 파일 복원)
+   b. ../backup_before_apply/kr0009_hyundai/ 의 4개 파일을 같은 상대 경로로 복사: tests/fixtures/master_tables_golden.json, tests/fixtures/builder_input_fingerprints.json, data/_derived/pl_oci_vs_bs_aoci_warn.json, data/_derived/qoq_warn.json
+      (작업 트리에 KB라이프·롯데·ABL 적재분이 있으므로 git checkout 으로 되돌리면 그쪽까지 지워진다 — 쓰지 말 것)
+   백업: ../backup_before_apply/kr0009_hyundai/ (적재 직전 17개 파일, 전부 ABL 직후 상태와 sha256 일치).

@@ -1,0 +1,46 @@
+..........................F............................................. [ 69%]
+F...............................                                         [100%]
+================================== FAILURES ===================================
+________________ test_pl_blind_items_are_declared_in_the_gate _________________
+
+    def test_pl_blind_items_are_declared_in_the_gate():
+        """게이트의 `PL_ITEMS_UNCHECKABLE_BY_EQUATION` 과 이 매니페스트가 어긋나지 않게 한다.
+    
+        게이트는 매 실행 그 목록을 인쇄하고, 이 테스트는 그것이 변이시험 실측과 같은지 본다.
+        \ub458\uc774 \uac08\ub9ac\uba74 **\uc778\uc1c4\ub418\ub294 \uc0ac\uc2e4\uc774 \uac70\uc9d3**\uc774 \ub41c\ub2e4 \u2014 \ubb38\uc11c\ub9cc \uace0\uce58\uace0 \ub8f0\uc740 \uc548 \uace0\uce5c \uc0c1\ud0dc."""
+        V = _vmt()
+        printed = set(V.PL_ITEMS_UNCHECKABLE_BY_EQUATION)
+        measured = set(PL_CONSTRUCTIVE_BLIND)
+>       assert printed == measured, (
+            f"게이트 인쇄 목록 {sorted(printed)} != 변이시험 선언 {sorted(measured)}. "
+            "\ud55c\ucabd\ub9cc \uace0\ucce4\ub2e4 \u2014 \ub458 \ub2e4 \uace0\uccd0\ub77c.")
+E       AssertionError: \uac8c\uc774\ud2b8 \uc778\uc1c4 \ubaa9\ub85d [5, 6, 9, 10, 11, 19] != \ubcc0\uc774\uc2dc\ud5d8 \uc120\uc5b8 [5, 6, 9, 10, 11, 19, 23]. \ud55c\ucabd\ub9cc \uace0\ucce4\ub2e4 \u2014 \ub458 \ub2e4 \uace0\uccd0\ub77c.
+E       assert {5, 6, 9, 10, 11, 19} == {5, 6, 9, 10, 11, 19, ...}
+E         
+E         Extra items in the right set:
+E         23
+E         Use -v to get more diff
+
+tests\test_zz_whatif_kr0072_manifest.py:814: AssertionError
+___________________ test_master_xlsx_clean_state_has_no_red ___________________
+
+_mx_live = (<module 'check_master_xlsx_drift' from 'C:\\Users\\sangwook.cho\\Desktop\\insurequant\\scripts\\check_master_xlsx_dri...', '손해보험', 5, '1. 보통주', ...], ['KR0001', '메리츠화재해상보험', '000060', '손해보험', 6, '2. 자본항목 중 보통주 이외의 자본증권', ...], ...]), ...})
+
+    def test_master_xlsx_clean_state_has_no_red(_mx_live):
+        """\uc9c0\uae08 \uc0c1\ud0dc\uc5d0\uc11c RED 0 \uc774\uc5b4\uc57c \ud55c\ub2e4 \u2014 \uc544\ub2c8\uba74 \uc2dc\ud2b8 \ub3d9\uae30\ud654\uac00 \ubc00\ub9b0 \uac83\uc774\ub2e4.
+    
+        2026-09-02 실측: 13개 시트 53,288행 대조, 드리프트 0. (그 직전까지 1219+33칸이
+        stale 이었고 어떤 게이트도 그것을 못 봤다.)"""
+        D, sheets, _t = _mx_live
+        findings, stat = D.scan(sheets=sheets)
+        red = [f"{f['rule']}|{f['sheet']}: {f['message'][:160]}"
+               for f in findings if f["severity"] == "RED"]
+>       assert not red, red
+E       AssertionError: ["MASTER_XLSX_DRIFT|CSM\uc6cc\ud130\ud3f4: \uac12\uc774 \ub2e4\ub978 \uc140 129\uac74 / 2358\ud589 \u2014 ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', '000400', '\uc190\ud574\ubcf4\ud5d8', 1, '\uae30\ucd08 CSM', '2023.4Q')|\uac12: \uc2dc..., None, '\uc190\ud574\ubcf4\ud5d8', 1, '\ubcf4\ud5d8\uc190\uc775', '2023.4Q')|\uac12: \uc2dc\ud2b8=468498.419718 vs \ub9c8\uc2a4\ud130=461540.038638 / ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', None, '\uc190\ud574\ubcf4\ud5d8', 1"]
+E       assert not ["MASTER_XLSX_DRIFT|CSM\uc6cc\ud130\ud3f4: \uac12\uc774 \ub2e4\ub978 \uc140 129\uac74 / 2358\ud589 \u2014 ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', '000400', '\uc190\ud574\ubcf4\ud5d8', 1, '\uae30\ucd08 CSM', '2023.4Q')|\uac12: \uc2dc..., None, '\uc190\ud574\ubcf4\ud5d8', 1, '\ubcf4\ud5d8\uc190\uc775', '2023.4Q')|\uac12: \uc2dc\ud2b8=468498.419718 vs \ub9c8\uc2a4\ud130=461540.038638 / ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', None, '\uc190\ud574\ubcf4\ud5d8', 1"]
+
+tests\test_zz_whatif_kr0072_manifest.py:1687: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_zz_whatif_kr0072_manifest.py::test_pl_blind_items_are_declared_in_the_gate
+FAILED tests/test_zz_whatif_kr0072_manifest.py::test_master_xlsx_clean_state_has_no_red
+2 failed, 102 passed in 236.54s (0:03:56)

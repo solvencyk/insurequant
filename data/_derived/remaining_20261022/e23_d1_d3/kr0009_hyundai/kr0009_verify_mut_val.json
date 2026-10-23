@@ -1,0 +1,85 @@
+{
+ "problems": [
+  {
+   "where": "B1 2023.2Q i20",
+   "problem": "value plan 672883.775936 != re-read 672882.7759359999; signed sum of the plan parts 672882.7759359999 != value 672883.775936"
+  },
+  {
+   "where": "B3 2023.1Q CSM i1",
+   "problem": "value plan 83515.5 != re-read 83515.4 (exact 83515.39177)"
+  },
+  {
+   "where": "B3 2023.1Q CSM i2",
+   "problem": "value plan 4572.900000000001 != re-read 4572.8 (exact 4572.79137)"
+  },
+  {
+   "where": "B3 2023.1Q CSM i3",
+   "problem": "value plan 614.9 != re-read 614.8 (exact 614.7671700000001)"
+  },
+  {
+   "where": "B3 2023.1Q CSM i4",
+   "problem": "value plan -2103.1 != re-read -2103.2 (exact -2103.23372)"
+  },
+  {
+   "where": "B3 2023.1Q CSM i5",
+   "problem": "value plan -2066.5 != re-read -2066.6 (exact -2066.56546)"
+  },
+  {
+   "where": "B3 2023.1Q CSM i6",
+   "problem": "value plan 84533.3 != re-read 84533.2 (exact 84533.15113)"
+  },
+  {
+   "where": "B3 2023.2Q CSM i1",
+   "problem": "value plan 83515.5 != re-read 83515.4 (exact 83515.39177)"
+  },
+  {
+   "where": "B3 2023.2Q CSM i2",
+   "problem": "value plan 8756.0 != re-read 8755.9 (exact 8755.88926)"
+  },
+  {
+   "where": "B3 2023.2Q CSM i3",
+   "problem": "value plan 1260.8 != re-read 1260.7 (exact 1260.65207)"
+  },
+  {
+   "where": "B3 2023.2Q CSM i4",
+   "problem": "value plan -3369.1 != re-read -3369.2 (exact -3369.18374)"
+  },
+  {
+   "where": "B3 2023.2Q CSM i5",
+   "problem": "value plan -4178.299999999999 != re-read -4178.4 (exact -4178.4026699999995)"
+  },
+  {
+   "where": "B3 2023.2Q CSM i6",
+   "problem": "value plan 85984.40000000001 != re-read 85984.3 (exact 85984.34668999999)"
+  },
+  {
+   "where": "B3 2023.3Q CSM i1",
+   "problem": "value plan 83515.5 != re-read 83515.4 (exact 83515.39177)"
+  },
+  {
+   "where": "B3 2023.3Q CSM i4",
+   "problem": "value plan -3226.1 != re-read -3226.2 (exact -3226.16581)"
+  },
+  {
+   "where": "B3 2023.4Q CSM i1",
+   "problem": "value plan 83515.5 != re-read 83515.4 (exact 83515.37263)"
+  },
+  {
+   "where": "B3 2023.4Q CSM i4",
+   "problem": "value plan -2715.8 != re-read -2715.9 (exact -2715.90455)"
+  },
+  {
+   "where": "B3 2023.4Q CSM i5",
+   "problem": "value plan -8805.3 != re-read -8805.4 (exact -8805.44841)"
+  },
+  {
+   "where": "B3 2023.4Q CSM i6",
+   "problem": "value plan 91422.8 != re-read 91422.7 (exact 91422.71141)"
+  }
+ ],
+ "mutate": "val",
+ "pl_cells": 57,
+ "pl_ok": 56,
+ "csm_cells": 18,
+ "csm_ok": 0
+}

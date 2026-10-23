@@ -1,0 +1,58 @@
+k03 vs HEAD  MODE=post  ROOT=C:/Users/sangwook.cho/Desktop/insurequant
+
+== 1. every company that differs from HEAD (cells with a different row)
+   code     name               | PL 값 | PL 당분기 | PL any | PL only_cur/head | CSM 값 | CSM 당분기 | CSM any | CSM only_cur/head
+   KR0003   롯데손해보험             |    18 |        12 |     18 | 0/0 |      5 |          4 |       5 | 0/0
+   KR0009   현대해상               |    57 |        78 |     78 | 0/0 |     18 |         20 |      21 | 0/0
+   KR0070   에이비엘생명보험           |    74 |        84 |     84 | 0/0 |     20 |         23 |      23 | 0/0
+   KR0099   KB라이프생명            |    60 |        83 |     83 | 0/0 |     15 |         19 |      19 | 0/0
+
+== 2. the four companies that stay loaded: 값 cells different from HEAD (owner-stated expectation)
+PASS  2 KR0099 KB라이프생명 PL 값 cells vs HEAD == 60 :: measured 60
+PASS  2 KR0099 KB라이프생명 CSM 값 cells vs HEAD == 15 :: measured 15
+PASS  2 KR0099 KB라이프생명 no cell added/removed vs HEAD, no field other than 값/값_당분기
+PASS  2 KR0003 롯데손해보험 PL 값 cells vs HEAD == 18 :: measured 18
+PASS  2 KR0003 롯데손해보험 CSM 값 cells vs HEAD == 5 :: measured 5
+PASS  2 KR0003 롯데손해보험 no cell added/removed vs HEAD, no field other than 값/값_당분기
+PASS  2 KR0070 에이비엘생명보험 PL 값 cells vs HEAD == 74 :: measured 74
+PASS  2 KR0070 에이비엘생명보험 CSM 값 cells vs HEAD == 20 :: measured 20
+PASS  2 KR0070 에이비엘생명보험 no cell added/removed vs HEAD, no field other than 값/값_당분기
+PASS  2 KR0009 현대해상 PL 값 cells vs HEAD == 57 :: measured 57
+PASS  2 KR0009 현대해상 CSM 값 cells vs HEAD == 18 :: measured 18
+PASS  2 KR0009 현대해상 no cell added/removed vs HEAD, no field other than 값/값_당분기
+
+== 3. KR0072 vs HEAD (masters)
+   KR0072 PL: 값 diff 0, 값_당분기 diff 0, any 0 ; CSM: 값 diff 0, 값_당분기 diff 0, any 0
+   KR0072 PL rows HEAD 448, current 448 ; CSM rows HEAD 84, current 84
+PASS  3 KR0072 PL_breakdown.json: zero changed cells vs HEAD (all fields) :: any 0 only_cur 0 only_head 0
+PASS  3 KR0072 CSM_waterfall.json: zero changed cells vs HEAD (all fields) :: any 0 only_cur 0 only_head 0
+PASS  3 KR0072 PL rows identical to HEAD as a list (order too)
+PASS  3 KR0072 CSM rows identical to HEAD as a list (order too)
+
+== 4. KR0072 gold / ledger / provenance vs HEAD
+   user_pl_cells.set                      HEAD   7  current   7  identical True
+PASS  4 KR0072 user_pl_cells.set identical to HEAD :: HEAD 7 current 7
+   user_pl_cells.null_dangi.cells         HEAD   3  current   3  identical True
+PASS  4 KR0072 user_pl_cells.null_dangi.cells identical to HEAD :: HEAD 3 current 3
+   user_pl_cells.set_dangi.cells          HEAD   0  current   0  identical True
+PASS  4 KR0072 user_pl_cells.set_dangi.cells identical to HEAD :: HEAD 0 current 0
+   user_csm_cells.set                     HEAD   7  current   7  identical True
+PASS  4 KR0072 user_csm_cells.set identical to HEAD :: HEAD 7 current 7
+   ledger.entries (keys with KR0072)      HEAD   3  current   3  identical True
+PASS  4 KR0072 ledger.entries (keys with KR0072) identical to HEAD :: HEAD 3 current 3
+   PL provenance blocks                   HEAD  28  current  28  identical True
+PASS  4 KR0072 PL provenance blocks identical to HEAD :: HEAD 28 current 28
+   CSM provenance blocks                  HEAD  13  current  13  identical True
+PASS  4 KR0072 CSM provenance blocks identical to HEAD :: HEAD 13 current 13
+   keys naming kr0072 in gold / provenance files: HEAD ['merge_note_20261011_A2_kr0072'] ; current ['merge_note_20261011_A2_kr0072']
+PASS  4 the set of kr0072-named doc / merge-note keys equals HEAD (the KDB-load keys are gone) :: HEAD ['merge_note_20261011_A2_kr0072'] ; current ['merge_note_20261011_A2_kr0072']
+PASS  4 none of the three KDB-load keys is present :: []
+
+== 5. other companies: restored files vs the post-load snapshot (everything except KR0072 identical)
+PASS  5 PL_breakdown.json non-KR0072 rows identical to snapshot (order too) :: 13353 rows
+PASS  5 CSM_waterfall.json non-KR0072 rows identical to snapshot (order too) :: 2274 rows
+PASS  5 user_pl_cells.set non-KR0072 identical to snapshot
+PASS  5 user_csm_cells.set non-KR0072 identical to snapshot
+
+== SUMMARY  MODE=post  checks 29  PASS 29  FAIL 0
+ALL PASS

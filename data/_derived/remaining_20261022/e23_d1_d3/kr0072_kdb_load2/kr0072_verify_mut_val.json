@@ -1,0 +1,21 @@
+{
+ "problems": [
+  {
+   "where": "2023.2Q i20",
+   "problem": "value plan 73533.551836 != re-read 73532.551836; sum of parts+operands 73532.551836 != cell 73533.551836"
+  },
+  {
+   "where": "2023.3Q CSM i6",
+   "problem": "stored plan 5836.900000000001 != re-read 5836.8 (exact 5836.84, two_dp False)"
+  }
+ ],
+ "res": {
+  "pl_cells": 65,
+  "pl_cells_ok": 64,
+  "csm_cells": 20,
+  "csm_cells_ok": 19,
+  "control_bad": 0
+ },
+ "mutate": "val",
+ "ok": false
+}

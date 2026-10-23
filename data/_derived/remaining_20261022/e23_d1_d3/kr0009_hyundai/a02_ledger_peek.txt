@@ -1,0 +1,60 @@
+ledger keys: ['_what', '_gate', '_reseed', '_basis', '_tolerance', '_measured_at', '_population', 'entries'] n entries 99
+PL|KR0009|2023.4Q|16 {"overlay": "PL", "verdict": "SAME_AT_1DP", "gold": 38491.0, "src": 38490.968273, "source_file": "data/dart/viz/pl_breakdown_master.json", "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."}
+PL|KR0009|2024.4Q|16 {"overlay": "PL", "verdict": "SAME_AT_1DP", "gold": 54759.3, "src": 54759.31115, "source_file": "data/dart/viz/pl_breakdown_master.json", "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."}
+PL|KR0009|2025.1Q|16 {"overlay": "PL", "verdict": "SAME_AT_1DP", "gold": 22973.4, "src": 22973.408819, "source_file": "data/dart/viz/pl_breakdown_master.json", "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."}
+PL|KR0009|2025.2Q|16 {"overlay": "PL", "verdict": "SAME_EXACT", "gold": 48243.0, "src": 48242.995428, "source_file": "data/dart/viz/pl_breakdown_master.json", "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED."}
+
+builder source PL KR0009 rows by quarter (value):
+2023.1Q 1:None 2:156041.0 3:None 4:216346.662 5:27234.914 6:None 7:None 8:None 9:-1271.31 10:-144.287 11:None 12:None 13:76348.0 14:26137.0 15:None 16:None 17:None 18:None 19:None 20:None 21:None 22:None 23:None 24:None 25:None 26:None 27:None 28:None 29:None 30:None 31:None 32:None
+2023.2Q 1:None 2:304478.0 3:None 4:441028.976 5:56908.344 6:None 7:None 8:None 9:-3168.333 10:-362.683 11:None 12:None 13:154127.0 14:40912.0 15:None 16:None 17:None 18:None 19:None 20:None 21:None 22:None 23:None 24:None 25:None 26:None 27:None 28:None 29:None 30:None 31:None 32:None
+2023.3Q 1:754479.376712 2:476139.3 3:None 4:640379.115 5:96159.497 6:None 7:None 8:None 9:-4169.695 10:-427.713 11:None 12:None 13:None 14:None 15:0.0 16:35264.198998 17:314655.377427 18:908973.439805 19:-594318.062378 20:1069134.754139 21:-22125.009367 22:1047009.744772 23:260654.437994 24:786355.306778 25:119978.352035 26:-363959.235007 27:472908.675976 28:6122.512712 29:1660.430399 30:437.890522 31:906333.658813 32:2808.077433
+2023.4Q 1:526490.675922 2:248827.5 3:None 4:880547.066 5:130628.669 6:None 7:None 8:None 9:-7689.161 10:-583.627 11:None 12:None 13:None 14:None 15:0.0 16:38490.968273 17:499877.274602 18:1283336.386575 19:-783459.111973 20:1026367.950524 21:-28698.156488 22:997669.794036 23:191948.13039 24:805721.663646 25:-496923.049652 26:1038658.945156 27:-1545241.943941 28:28504.772715 29:-280.327893 30:2886.25182 31:308798.613994 32:-21450.747509
+2024.1Q 1:532889.249964 2:443601.0 3:None 4:242893.306 5:34832.95 6:None 7:None 8:None 9:-3743.932 10:-113.797 11:None 12:None 13:42405.0 14:46883.0 15:0.0 16:12382.384911 17:108243.774879 18:319869.515831 19:-211625.740952 20:641133.024843 21:-9139.347623 22:631993.67722 23:154739.217493 24:477254.459727 25:-617878.87942 26:-414973.716384 27:-194834.102279 28:-13899.297104 29:615.641999 30:960.754017 31:-140624.419693 32:4251.840331
+<class 'list'> 2178
+
+builder source CSM KR0009:
+2023.1Q 1:88281.1 2:4946.7 3:653.8 4:-2509.5 5:-2163.5 6:89208.6
+2023.2Q 1:88281.1 2:9542.1 3:1339.0 4:-3391.1 5:-4410.3 6:91360.8
+2023.3Q 1:83515.4 2:13221.4 3:1929.8 4:-3226.2 5:-6403.8 6:89036.6
+2023.4Q 1:83515.4 2:16792.4 3:2636.3 4:-2714.9 5:-8805.5 6:91423.7
+2024.1Q 1:91423.7 2:4114.6 3:767.1 4:-1889.8 5:-2428.9 6:91986.6
+
+PL gold keys: ['_doc', 'set', 'null_dangi', 'set_dangi']
+2023.4Q 11 -15460.571360999998 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2024.4Q 11 26108.94744600002 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.1Q 11 7206.916803999951 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.2Q 11 16908.376677999993 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 12 -4379.140639 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2024.4Q 12 -8195.286886 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.1Q 12 -2231.38088 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.2Q 12 -1477.774299 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 13 201238.0 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 14 76426.0 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 3 276940.0 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2024.4Q 3 866141.1764889997 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.1Q 3 113623.89907600005 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.2Q 3 291278.695445 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 6 -190242.60050099998 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2024.4Q 6 -238471.80764499994 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.1Q 6 -110511.08101199986 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.2Q 6 -161649.0862980002 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 7 -543993.134499 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2024.4Q 7 20598.23213399967 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.1Q 7 -45149.08991200008 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.2Q 7 -90696.34750599976 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 8 -28112.5 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2024.4Q 8 -812.4994399999814 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.1Q 8 697.1009239999503 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2025.2Q 8 7158.304554999995 was None | owner xlsx fill (review-loop 2026-06-19/20)
+2023.4Q 16 38491.0 was 0.0 | inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15.
+2024.4Q 16 54759.3 was 0.0 | inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15.
+2025.1Q 16 22973.4 was 0.0 | inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15.
+2025.2Q 16 48243.0 was 0.0 | inbox/parser/20260815T1120Z (validation): _zero_other_expense 이 이 셀을 잘못된 휴리스틱으로 0으로 덮어씀(item1이 item16 없이 이미 닫힌다는 건 item16이 구조적으로 item1의 구성요소가 아니란 뜻이지 진짜 값이 0이란 증거가 아님) -- FY 누계가 4Q에서 정확히 0으로 떨어지는 회계적 불가능 패턴으로 발견. HEAD 값(이전 정상 추출버전)으로 복원 -- 2026-08-15.
+null_dangi {"_doc": "KR0073 2023.3Q item 15 (기타영업수익): the separate statement of the FY2024 Q3 report prints no 기타영업수익 row, so there is no printed 3-month value (the cumulative 0.0 is an assemble() default for 생보); the single quarter stays blank, as it was before commit 3e53aef8. Ticket inbox/parser/20261021T16
+set_dangi {"_doc": "KR0073 2023.3Q single quarter = the restated THREE-MONTH value printed in the FY2024 Q3 report (data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml, separate basis, prior-year 3-month column of the income statement / OCI and of the 보험수익 / 보험서비스비용 / 재보험 notes; the cell line is the 5th 
+
+CSM gold keys: ['_doc', 'exclude_companies', 'set', '_doc_e23_kr0070_20261023']
+2023.3Q 1 88281.1 was 83515.4 | {"why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-disclosed); Q3 source-restated to 83515.4. keep close 89036.6; agent Q1 interest is 1000x artifact so open-only"}
+2023.3Q 4 -7991.9 was -3226.2 | {"why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-disclosed); Q3 source-restated to 83515.4. keep close 89036.6; agent Q1 interest is 1000x artifact so open-only"}
+2023.4Q 1 88281.1 was 83515.4 | {"why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start; Q4 source-restated to 83515.4. keep close 91423.7"}
+2023.4Q 4 -7480.6 was -2714.9 | {"why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start; Q4 source-restated to 83515.4. keep close 91423.7"}

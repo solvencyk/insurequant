@@ -1,0 +1,63 @@
+== 2023.1Q closure_ok True cells 23
+  i 1 보험손익           old=None new=56633.0 d=None [fill] cand=56633.0 | L25492 56,633 | ops 
+  i 2 생명장기 손익        old=65577.0 new=66201.0 d=624.0 [changed] cand=66201.0 | L25526 182,886; L25577 114,539(abs) | ops 8=-2146.0(master HEAD)
+  i 3 원수손익(장기)       old=67723.0 new=68347.0 d=624.0 [changed] cand=68347.0 | L25526 182,886; L25577 114,539(abs) | ops 
+  i 4 원수 CSM상각       old=68345.0 new=68479.0 d=134.0 [changed] cand=68480.0 | L38391 68,479(abs) | ops 
+  i 7 기타 원수          old=-23449.0 new=-22959.0 d=490.0 [changed] cand=-22960.0 | L25526 182,886; L25577 114,539(abs) | ops 4=68479.0(plan),5=7750.0(master HEAD),6=15077.0(master HEAD)
+  i15 기타영업수익         old=None new=0.0 d=None [fill] cand=0.0 |  | ops 
+  i16 기타사업비용         old=9500.0 new=9568.0 d=68.0 [changed] cand=9568.0 | L25611 9,568 | ops 
+  i17 투자손익           old=None new=119675.0 d=None [fill] cand=119675.0 | L25628 583,923; L25914 (464,248) | ops 
+  i18 투자이익           old=None new=583923.0 d=None [fill] cand=583923.0 | L25628 583,923; L25914 (464,248); L25931 119,206; L25948 583,454 | ops 
+  i19 보험금융손익         old=None new=-464248.0 d=None [fill] cand=-464248.0 | L25931 119,206; L25948 583,454 | ops 
+  i20 영업이익           old=None new=176308.0 d=None [fill] cand=176308.0 | L25965 176,308 | ops 
+  i21 영업외손익          old=None new=-344.0 d=None [fill] cand=-344.0 | L25982 (344) | ops 
+  i22 세전이익           old=172200.0 new=175964.0 d=3764.0 [changed] cand=175964.0 | L26033 175,964 | ops 
+  i23 법인세            old=42400.0 new=43352.0 d=952.0 [changed] cand=43352.0 | L26050 43,352 | ops 
+  i24 당기순이익          old=129800.0 new=132612.0 d=2812.0 [changed] cand=132612.0 | L26067 132,612 | ops 
+  i25 기타포괄손익         old=None new=64067.0 d=None [fill] cand=64067.0 | L26084 64,067 | ops 
+  i26 FVOCI 채무증권     old=None new=570055.0 d=None [fill] cand=570055.0 | L26169 570,055 | ops 
+  i27 보험계약금융손익(OCI)  old=None new=-506711.0 d=None [fill] cand=-506711.0 | L26186 (506,711) | ops 
+  i28 위험회피 파생상품      old=None new=29.0 d=None [fill] cand=29.0 | L26220 29 | ops 
+  i29 FVOCI 지분증권     old=None new=1911.0 d=None [fill] cand=1911.0 | L26135 1,911 | ops 
+  i30 재보험금융손익(OCI)   old=None new=-1118.0 d=None [fill] cand=None | L26203 (1,118) | ops 
+  i31 총포괄손익          old=None new=196679.0 d=None [fill] cand=196679.0 | L26237 196,679 | ops 
+  i32 기타 포괄손익(미분류)   old=None new=-99.0 d=None [fill] cand=-1217.0 | L26084 64,067; L26169 570,055; L26186 (506,711); L26220 29; L26135 1,911; L26203 (1,118) | ops 
+== 2023.2Q closure_ok True cells 23
+  i 1 보험손익           old=None new=140176.0 d=None [fill] cand=140176.0 | L28573 140,176 | ops 
+  i 2 생명장기 손익        old=152021.0 new=156939.0 d=4918.0 [changed] cand=156939.0 | L28619 374,644; L28688 215,102(abs) | ops 8=-2603.0(master HEAD)
+  i 3 원수손익(장기)       old=154624.0 new=159542.0 d=4918.0 [changed] cand=159542.0 | L28619 374,644; L28688 215,102(abs) | ops 
+  i 4 원수 CSM상각       old=139938.0 new=140581.0 d=643.0 [changed] cand=140580.0 | L42521 140,581(abs) | ops 
+  i 7 기타 원수          old=-19050.0 new=-14775.0 d=4275.0 [changed] cand=-14774.0 | L28619 374,644; L28688 215,102(abs) | ops 4=140581.0(plan),5=15918.0(master HEAD),6=17818.0(master HEAD)
+  i15 기타영업수익         old=None new=0.0 d=None [fill] cand=0.0 |  | ops 
+  i16 기타사업비용         old=16800.0 new=16763.0 d=-37.0 [changed] cand=16763.0 | L28734 16,763 | ops 
+  i17 투자손익           old=None new=162557.0 d=None [fill] cand=162557.0 | L28757 162,557 | ops 
+  i18 투자이익           old=None new=859465.0 d=None [fill] cand=859465.0 | L28757 162,557; L28803 131,023; L28826 38; L29033 827,650; L29056 319 | ops 
+  i19 보험금융손익         old=None new=-696908.0 d=None [fill] cand=-696908.0 | L28803 131,023; L28826 38; L29033 827,650; L29056 319 | ops 
+  i20 영업이익           old=None new=302733.0 d=None [fill] cand=302733.0 | L29231 302,733 | ops 
+  i21 영업외손익          old=None new=-1002.0 d=None [fill] cand=-1002.0 | L29254 (1,002) | ops 
+  i22 세전이익           old=301500.0 new=301731.0 d=231.0 [changed] cand=301731.0 | L29323 301,731 | ops 
+  i23 법인세            old=66700.0 new=66693.0 d=-7.0 [changed] cand=66693.0 | L29346 66,693 | ops 
+  i24 당기순이익          old=234800.0 new=235038.0 d=238.0 [changed] cand=235038.0 | L29369 235,038 | ops 
+  i25 기타포괄손익         old=None new=115434.0 d=None [fill] cand=115434.0 | L29392 115,434 | ops 
+  i26 FVOCI 채무증권     old=None new=143966.0 d=None [fill] cand=143966.0 | L29507 143,966 | ops 
+  i27 보험계약금융손익(OCI)  old=None new=-30834.0 d=None [fill] cand=-30834.0 | L29530 (30,834) | ops 
+  i28 위험회피 파생상품      old=None new=62.0 d=None [fill] cand=62.0 | L29576 62 | ops 
+  i29 FVOCI 지분증권     old=None new=2607.0 d=None [fill] cand=2607.0 | L29461 2,607 | ops 
+  i30 재보험금융손익(OCI)   old=None new=-366.0 d=None [fill] cand=None | L29553 (366) | ops 
+  i31 총포괄손익          old=None new=350472.0 d=None [fill] cand=350472.0 | L29599 350,472 | ops 
+  i32 기타 포괄손익(미분류)   old=None new=-1.0 d=None [fill] cand=-367.0 | L29392 115,434; L29507 143,966; L29530 (30,834); L29576 62; L29461 2,607; L29553 (366) | ops 
+== 2023.3Q closure_ok True cells 14
+  i 1 보험손익           old=207078.0 new=215120.0 d=8042.0 [changed] cand=215120.0 | L24681 215,120 | ops 
+  i 2 생명장기 손익        old=231267.0 new=239310.0 d=8043.0 [changed] cand=239310.0 | L24727 567,421; L24796 325,390(abs) | ops 8=-2721.0(master HEAD)
+  i 3 원수손익(장기)       old=233988.0 new=242031.0 d=8043.0 [changed] cand=242031.0 | L24727 567,421; L24796 325,390(abs) | ops 
+  i 4 원수 CSM상각       old=213049.0 new=214229.0 d=1180.0 [changed] cand=214230.0 | L38495 214,229(abs) | ops 
+  i 7 기타 원수          old=-13830.0 new=-6967.0 d=6863.0 [changed] cand=-6968.0 | L24727 567,421; L24796 325,390(abs) | ops 4=214229.0(plan),5=24345.0(master HEAD),6=10424.0(master HEAD)
+  i17 투자손익           old=189878.0 new=180415.0 d=-9463.0 [changed] cand=180415.0 | L24865 180,415 | ops 
+  i19 보험금융손익         old=-764100.0 new=-773564.0 d=-9464.0 [changed] cand=-773564.0 | L24911 174,156; L24934 72; L25141 947,406; L25164 386 | ops 
+  i20 영업이익           old=396956.0 new=395535.0 d=-1421.0 [changed] cand=395535.0 | L25342 395,535 | ops 
+  i22 세전이익           old=396252.0 new=394831.0 d=-1421.0 [changed] cand=394831.0 | L25431 394,831 | ops 
+  i23 법인세            old=99378.0 new=98969.0 d=-409.0 [changed] cand=98969.0 | L25454 98,969 | ops 
+  i24 당기순이익          old=296874.0 new=295862.0 d=-1012.0 [changed] cand=295862.0 | L25477 295,862 | ops 
+  i25 기타포괄손익         old=290911.0 new=283175.0 d=-7736.0 [changed] cand=283175.0 | L25500 283,175 | ops 
+  i27 보험계약금융손익(OCI)  old=536004.0 new=528267.0 d=-7737.0 [changed] cand=528267.0 | L25638 528,267 | ops 
+  i31 총포괄손익          old=587785.0 new=579037.0 d=-8748.0 [changed] cand=579037.0 | L25707 579,037 | ops 

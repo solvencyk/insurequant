@@ -1,0 +1,64 @@
+== PL_breakdown: HEAD rows 13801  WORK rows 13801
+dups head 0 work 0
+added keys all companies: 0, removed: 0
+added by company: {}
+removed by company: {}
+changed rows by company: {'KR0003': 18, 'KR0070': 84, 'KR0099': 83}
+KR0070 changed field-cells: 158; by field {'값_당분기': 84, '값': 74}
+  2023.1Q {'값_당분기': 21, '값': 21}
+  2023.2Q {'값_당분기': 21, '값': 21}
+  2023.3Q {'값_당분기': 21, '값': 21}
+  2023.4Q {'값_당분기': 21, '값': 11}
+  by item: {1: 7, 2: 8, 3: 8, 4: 7, 8: 7, 16: 8, 17: 8, 18: 7, 19: 8, 20: 8, 21: 7, 22: 8, 23: 8, 24: 8, 25: 8, 26: 7, 27: 8, 28: 7, 30: 7, 31: 7, 32: 7}
+== CSM_waterfall: HEAD rows 2358  WORK rows 2358
+dups head 0 work 0
+added keys all companies: 0, removed: 0
+added by company: {}
+removed by company: {}
+changed rows by company: {'KR0003': 5, 'KR0070': 23, 'KR0099': 19}
+KR0070 changed field-cells: 43; by field {'값_당분기': 23, '값': 20}
+  2023.1Q {'값_당분기': 6, '값': 6}
+  2023.2Q {'값_당분기': 6, '값': 6}
+  2023.3Q {'값_당분기': 6, '값': 6}
+  2023.4Q {'값_당분기': 5, '값': 2}
+  by item: {1: 8, 2: 7, 3: 7, 4: 8, 5: 7, 6: 6}
+== PL_breakdown_provenance
+cells head 1046 work 1046
+added 0 removed 0
+changed cells by company: {'KR0003': 2, 'KR0070': 6, 'KR0099': 6}
+top-level meta differs: True
+  ABL ('KR0070', '2023.1Q', 'income_statement')
+    old {"company_code": "KR0070", "quarter": "2023.1Q", "item_block": "income_statement", "source_id": "DART", "source_file": "data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험", "source_files": [{"file": "data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험", "how": "raw_filing", "items": [1, 2, 3, 8, 15, 20, 21, 22, 23, 24]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [7]}, {"file": "data/disclosure/FY2023_Q1/raw/KR0070_에이비엘생명보험_amended.pdf", "how": "disclosure_summary_pl", "items": [16]}], "resolution": "raw_filing", "published_items": 12, "schema_items": 24, "owner_override": true}
+    new {"company_code": "KR0070", "quarter": "2023.1Q", "item_block": "income_statement", "source_id": "OWNER_GOLD", "source_file": "data/_gold/user_pl_cells.json", "source_files": [{"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [1, 2, 3, 7, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]}, {"file": "data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험", "how": "raw_filing_derived", "items": [15]}], "resolution": "owner_gold_overlay", "published_items": 22, "schema_items": 24, "owner_override": true}
+  ABL ('KR0070', '2023.2Q', 'income_statement')
+    old {"company_code": "KR0070", "quarter": "2023.2Q", "item_block": "income_statement", "source_id": "DART", "source_file": "data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험", "source_files": [{"file": "data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험", "how": "raw_filing", "items": [1, 2, 3, 8, 15, 20, 21, 22, 23, 24]}, {"file": "data/disclosure/FY2023_Q2/raw/KR0070_에이비엘생명보험_amended.pdf", "how": "disclosure_summary_pl", "items": [16]}], "resolution": "raw_filing", "published_items": 11, "schema_items": 24}
+    new {"company_code": "KR0070", "quarter": "2023.2Q", "item_block": "income_statement", "source_id": "OWNER_GOLD", "source_file": "data/_gold/user_pl_cells.json", "source_files": [{"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [1, 2, 3, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]}, {"file": "data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험", "how": "raw_filing_derived", "items": [15]}], "resolution": "owner_gold_overlay", "published_items": 21, "schema_items": 24, "owner_override": true}
+  ABL ('KR0070', '2023.2Q', 'contract_notes')
+    old {"company_code": "KR0070", "quarter": "2023.2Q", "item_block": "contract_notes", "source_id": "DART", "source_file": "data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험", "source_files": [{"file": "data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험", "how": "raw_filing", "items": [4, 5]}, {"file": null, "how": "life_lob_zero_builder_rule", "items": [13, 14]}], "resolution": "raw_filing", "published_items": 4, "schema_items": 8, "builder_derived_items": [13, 14]}
+    new {"company_code": "KR0070", "quarter": "2023.2Q", "item_block": "contract_notes", "source_id": "DART", "source_file": "data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험", "source_files": [{"file": "data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험", "how": "raw_filing", "items": [5]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [4]}, {"file": null, "how": "life_lob_zero_builder_rule", "items": [13, 14]}], "resolution": "raw_filing", "published_items": 4, "schema_items": 8, "builder_derived_items": [13, 14], "owner_override": true}
+  ABL ('KR0070', '2023.3Q', 'income_statement')
+    old {"company_code": "KR0070", "quarter": "2023.3Q", "item_block": "income_statement", "source_id": "DART", "source_file": "data/dart/_fs_api_cache/00148391_2023_11014_OFS.json", "source_files": [{"file": "data/dart/_fs_api_cache/00148391_2023_11014_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]}, {"file": "data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험", "how": "raw_filing_derived", "items": [2, 3, 8, 18]}, {"file": "data/disclosure/FY2023_Q3/raw/KR0070_에이비엘생명보험_amended.pdf", "how": "disclosure_summary_pl", "items": [16]}], "resolution": "fs_api_tier1", "published_items": 21, "schema_items": 24}
+    new {"company_code": "KR0070", "quarter": "2023.3Q", "item_block": "income_statement", "source_id": "OWNER_GOLD", "source_file": "data/_gold/user_pl_cells.json", "source_files": [{"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [1, 2, 3, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]}, {"file": "data/dart/_fs_api_cache/00148391_2023_11014_OFS.json", "how": "fs_api_tier1", "items": [15]}], "resolution": "owner_gold_overlay", "published_items": 21, "schema_items": 24, "owner_override": true}
+  ABL ('KR0070', '2023.3Q', 'contract_notes')
+    old {"company_code": "KR0070", "quarter": "2023.3Q", "item_block": "contract_notes", "source_id": "DART", "source_file": "data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험", "source_files": [{"file": "data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험", "how": "raw_filing", "items": [4, 5, 9, 10]}, {"file": null, "how": "life_lob_zero_builder_rule", "items": [13, 14]}], "resolution": "raw_filing", "published_items": 6, "schema_items": 8, "builder_derived_items": [13, 14]}
+    new {"company_code": "KR0070", "quarter": "2023.3Q", "item_block": "contract_notes", "source_id": "DART", "source_file": "data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험", "source_files": [{"file": "data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험", "how": "raw_filing", "items": [5, 9, 10]}, {"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [4]}, {"file": null, "how": "life_lob_zero_builder_rule", "items": [13, 14]}], "resolution": "raw_filing", "published_items": 6, "schema_items": 8, "builder_derived_items": [13, 14], "owner_override": true}
+  ABL ('KR0070', '2023.4Q', 'income_statement')
+    old {"company_code": "KR0070", "quarter": "2023.4Q", "item_block": "income_statement", "source_id": "DART", "source_file": "data/dart/_fs_api_cache/00148391_2023_11011_OFS.json", "source_files": [{"file": "data/dart/_fs_api_cache/00148391_2023_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]}, {"file": "data/dart/FY2023_Q4/raw/KR0070_에이비엘생명보험_20240329001518", "how": "raw_filing_derived", "items": [2, 3, 8, 18]}, {"file": "data/disclosure/FY2023_Q4/raw/KR0070_에이비엘생명보험_amended.pdf", "how": "disclosure_summary_pl", "items": [16]}], "resolution": "fs_api_tier1", "published_items": 21, "schema_items": 24}
+    new {"company_code": "KR0070", "quarter": "2023.4Q", "item_block": "income_statement", "source_id": "OWNER_GOLD", "source_file": "data/_gold/user_pl_cells.json", "source_files": [{"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [2, 3, 16, 17, 19, 20, 22, 23, 24, 25, 27]}, {"file": "data/dart/_fs_api_cache/00148391_2023_11011_OFS.json", "how": "fs_api_tier1", "items": [1, 15, 21, 26, 28, 30, 31, 32]}, {"file": "data/dart/FY2023_Q4/raw/KR0070_에이비엘생명보험_20240329001518", "how": "raw_filing_derived", "items": [8, 18]}], "resolution": "owner_gold_overlay", "published_items": 21, "schema_items": 24, "owner_override": true}
+== CSM_waterfall_provenance
+cells head 357 work 357
+added 0 removed 0
+changed cells by company: {'KR0003': 1, 'KR0070': 4, 'KR0099': 3}
+top-level meta differs: True
+  ABL ('KR0070', '2023.1Q', 'csm_waterfall')
+    old {"company_code": "KR0070", "quarter": "2023.1Q", "item_block": "csm_waterfall", "source_id": "DART"}
+    new {"company_code": "KR0070", "quarter": "2023.1Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+  ABL ('KR0070', '2023.2Q', 'csm_waterfall')
+    old {"company_code": "KR0070", "quarter": "2023.2Q", "item_block": "csm_waterfall", "source_id": "DART"}
+    new {"company_code": "KR0070", "quarter": "2023.2Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+  ABL ('KR0070', '2023.3Q', 'csm_waterfall')
+    old {"company_code": "KR0070", "quarter": "2023.3Q", "item_block": "csm_waterfall", "source_id": "DART"}
+    new {"company_code": "KR0070", "quarter": "2023.3Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+  ABL ('KR0070', '2023.4Q', 'csm_waterfall')
+    old {"company_code": "KR0070", "quarter": "2023.4Q", "item_block": "csm_waterfall", "source_id": "DART", "owner_override": true}
+    new {"company_code": "KR0070", "quarter": "2023.4Q", "item_block": "csm_waterfall", "source_id": "DART"}

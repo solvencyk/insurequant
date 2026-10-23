@@ -1,0 +1,138 @@
+k01 prove-KDB-only  CUR_ROOT=C:/Users/sangwook.cho/Desktop/insurequant  BACKUP=C:/Users/sangwook.cho/Desktop/insurequant/data/_derived/remaining_20261022/e23_d1_d3/backup_before_apply/kr0072_kdb_load2
+
+== A. byte hashes (backup vs current)
+   PL_breakdown.json                                    backup 5df3fe6660ae  current 2c2283f4420c  DIFFERENT
+   CSM_waterfall.json                                   backup eb86a95bd0b7  current b6e329d66da9  DIFFERENT
+   PL_breakdown_provenance.json                         backup 07f8d462ec93  current 21dc327b06ed  DIFFERENT
+   CSM_waterfall_provenance.json                        backup a3eabb649cef  current 5b8777d4fb7c  DIFFERENT
+   data/_gold/user_pl_cells.json                        backup a81180044bd7  current cd4ac5fbbb25  DIFFERENT
+   data/_gold/user_csm_cells.json                       backup cd11d341e864  current bf9e91b7cfcc  DIFFERENT
+   data/_gold/gold_overlay_ledger.json                  backup eb87ce0c88fc  current 84f1abdce350  DIFFERENT
+   tests/test_rule_coverage_manifest.py                 backup ace58adbb017  current b9d8b61a89d9  DIFFERENT
+   tests/fixtures/master_tables_golden.json             backup d323cb0ac1ef  current 02e87f229e21  DIFFERENT
+   tests/fixtures/builder_input_fingerprints.json       backup 5e525b02c53f  current 6bf0987788d4  DIFFERENT
+   data/_derived/qoq_warn.json                          backup 65d3eadc7309  current c6b519fc5a81  DIFFERENT
+   data/_derived/pl_oci_vs_bs_aoci_warn.json            backup 8121b3295b25  current 736fa73a9c85  DIFFERENT
+   tests/fixtures/pl_breakdown_golden.json              backup 58ec07d1b76a  current 58ec07d1b76a  equal
+   tests/fixtures/viz_ifrs17_panels_golden.json         backup 934ab86a35a5  current 934ab86a35a5  equal
+   tests/fixtures/viz_csm_waterfall_golden.json         backup 34ce6c69ebcb  current 34ce6c69ebcb  equal
+   data/dart/viz/csm_continuity_validation.json         backup e7df99bf255d  current e7df99bf255d  equal
+   NB_CSM_multiple.json                                 backup 906cf603853e  current 906cf603853e  equal
+   data/dart/viz/pl_breakdown_master.json               backup b7137dab7d50  current b7137dab7d50  equal
+   scripts/validate_master_tables.py                    backup 98276b37df18  current 98276b37df18  equal
+PASS  A unchanged file is byte-identical: tests/fixtures/pl_breakdown_golden.json
+PASS  A unchanged file is byte-identical: tests/fixtures/viz_ifrs17_panels_golden.json
+PASS  A unchanged file is byte-identical: tests/fixtures/viz_csm_waterfall_golden.json
+PASS  A unchanged file is byte-identical: data/dart/viz/csm_continuity_validation.json
+PASS  A unchanged file is byte-identical: NB_CSM_multiple.json
+PASS  A unchanged file is byte-identical: data/dart/viz/pl_breakdown_master.json
+PASS  A unchanged file is byte-identical: scripts/validate_master_tables.py
+
+== B. PL_breakdown.json (cell = code, item, quarter)
+   KDB display name = 케이디비생명보험
+PASS  B1 no duplicate cell keys :: dups old 0 new 0
+PASS  B2 row count unchanged (no rows added/removed) :: rows 13801 -> 13801, added 0 removed 0
+PASS  B3 every changed cell is KR0072 :: non-KDB touched: 0
+PASS  B4 only fields 값 / 값_당분기 changed :: fields changed: ['값', '값_당분기']
+PASS  B5 non-KDB rows identical and in the same order :: non-KDB rows 13353
+   KR0072 cells with 값 changed: 65  by quarter {'2023.1Q': 19, '2023.2Q': 24, '2023.3Q': 16, '2023.4Q': 6}
+   KR0072 cells with 값_당분기 changed: 81  by quarter {'2023.1Q': 19, '2023.2Q': 22, '2023.3Q': 24, '2023.4Q': 16}
+   KR0072 cells with 값 AND 값_당분기 changed: 63 ; only 값_당분기 (followed): 18
+PASS  B6 CLAIM loader: PL 값 65 (1Q 19, 2Q 24, 3Q 16, 4Q 6)
+PASS  B7 CLAIM loader: PL 값_당분기 81 (63 with 값 + 18 followed)
+PASS  B8 all changed KDB cells are FY2023 quarters :: quarters {'2023.1Q': 19, '2023.2Q': 24, '2023.3Q': 24, '2023.4Q': 16}
+PASS  B9 self-test: a mutated non-KDB cell is detected by the checker :: detected 1
+
+== C. CSM_waterfall.json (cell = code, item, quarter)
+PASS  C1 no duplicate cell keys
+PASS  C2 row count unchanged :: rows 2358 -> 2358
+PASS  C3 every changed cell is KR0072 :: non-KDB touched: 0
+PASS  C4 only fields 값 / 값_당분기 changed :: fields changed: ['값', '값_당분기']
+PASS  C5 non-KDB rows identical and in the same order :: non-KDB rows 2274
+   KR0072 cells with 값 changed: 20  by quarter {'2023.1Q': 6, '2023.2Q': 6, '2023.3Q': 6, '2023.4Q': 2}
+   KR0072 cells with 값_당분기 changed: 23  by quarter {'2023.1Q': 6, '2023.2Q': 6, '2023.3Q': 6, '2023.4Q': 5}
+PASS  C6 CLAIM loader: CSM 값 20 (1Q 6, 2Q 6, 3Q 6, 4Q 2)
+PASS  C7 CLAIM loader: CSM 값_당분기 23 :: measured 23
+PASS  C8 all changed KDB cells are FY2023 quarters :: quarters {'2023.1Q': 6, '2023.2Q': 6, '2023.3Q': 6, '2023.4Q': 5}
+
+== D. PL_breakdown_provenance.json (cells = company_code, quarter, item_block)
+   top-level: added ['merge_note_20261023_e23_kr0072_kdb']  removed []  changed ['cells']  order_same True
+PASS  D1 top level: only the KDB merge note was added, only `cells` changed
+PASS  D2 cells: nothing added/removed, count unchanged :: cells 1046 -> 1046
+PASS  D3 every changed cell block is KR0072 :: non-KDB touched 0
+PASS  D4 non-KDB cell blocks identical and in the same order :: non-KDB blocks 1018
+   KR0072 blocks changed: [('2023.1Q', 'contract_notes'), ('2023.1Q', 'income_statement'), ('2023.2Q', 'income_statement'), ('2023.3Q', 'income_statement'), ('2023.4Q', 'income_statement')]
+PASS  D5 CLAIM loader: 5 KR0072 blocks replaced (2023.1Q contract_notes + income_statement, 2023.2Q/3Q/4Q income_statement)
+
+== E. CSM_waterfall_provenance.json
+   top-level: added ['merge_note_20261023_e23_kr0072_kdb_csm']  removed []  changed ['cells']  order_same True
+PASS  E1 top level: only the KDB CSM merge note was added, only `cells` changed
+PASS  E2 cells: nothing added/removed, count unchanged :: cells 357 -> 357
+PASS  E3 every changed cell block is KR0072 :: non-KDB touched 0
+PASS  E4 non-KDB cell blocks identical and in the same order :: non-KDB blocks 344
+   changed block 2023.3Q csm_waterfall: {'owner_override': ('<absent>', True)}
+   changed block 2023.4Q csm_waterfall: {'owner_override': (True, '<absent>')}
+PASS  E5 CLAIM loader: 2023.3Q owner_override added, 2023.4Q cleared :: changed quarters ['2023.3Q', '2023.4Q']
+
+== F. data/_gold/user_pl_cells.json
+   top-level: added []  removed []  changed ['set', 'set_dangi']
+PASS  F1 top level: no key added/removed, only `set` and `set_dangi` changed
+PASS  F2 set: no duplicate cell keys
+PASS  F3 set: no entry removed :: removed 0
+PASS  F4 set: every added/changed entry is KR0072 :: non-KDB touched 0
+PASS  F5 set: non-KDB entries identical and in the same order :: non-KDB entries 1372
+PASS  F6 CLAIM loader: set 1379 -> 1440 (61 new + 4 replaced) :: 1379 -> 1440, added 61, changed 4
+PASS  F7 null_dangi identical (whole dict)
+   set_dangi top-level: added ['_doc_e23_kr0072_20261023'] removed [] changed ['cells']
+PASS  F8 set_dangi: only the KDB doc key added, only `cells` changed
+PASS  F9 set_dangi.cells: nothing removed/changed, only KR0072 entries added :: added 8 (all KR0072: True)
+PASS  F10 set_dangi.cells: non-KDB entries identical and in the same order
+PASS  F11 CLAIM loader: set_dangi 37 -> 45 (+8) :: 37 -> 45
+
+== G. data/_gold/user_csm_cells.json
+   top-level: added ['_doc_e23_kr0072_20261023']  removed []  changed ['set']
+PASS  G1 top level: only the KDB doc key added, only `set` changed
+PASS  G2 set: no duplicate cell keys
+PASS  G3 set: every added/changed/removed entry is KR0072 :: non-KDB touched 0
+PASS  G4 set: non-KDB entries identical and in the same order :: non-KDB entries 410
+PASS  G5 CLAIM loader: set 417 -> 428 (13 new, 5 replaced, 2 removed) :: 417 -> 428, added 13, changed 5, removed 2
+
+== H. data/_gold/gold_overlay_ledger.json
+   top-level: added []  removed []  changed ['entries']
+PASS  H1 top level: only `entries` changed
+   entries 99 -> 96 ; removed ['CSM|KR0072|2023.1Q|6', 'CSM|KR0072|2023.2Q|4', 'CSM|KR0072|2023.2Q|5'] ; added [] ; changed []
+PASS  H2 entries: exactly 3 removed, all KR0072 CSM pins; none added; none changed
+PASS  H3 entries: remaining order identical
+
+== I. tests/test_rule_coverage_manifest.py
+   removed lines: 1 ; added lines: 2
+   - GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1379, 22)}
+   + # 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 케이디비생명보험 KR0072 FY2023 2023.1Q-2023.4Q refreshed to the latest comparative; 4 PL + 5 CSM owner-gold cells replaced in place, 2 CSM chain-forced owner-gold cells removed because the approved value equals the builder source, ledger pins of the 3 r
+   + GOLD_OVERLAY_CENSUS = {"CSM": (428, 74), "PL": (1440, 22)}
+PASS  I1 removed lines are exactly the old GOLD_OVERLAY_CENSUS line
+PASS  I2 added lines are exactly the KDB comment line + the new GOLD_OVERLAY_CENSUS line
+
+== J. tests/fixtures/master_tables_golden.json
+PASS  J1 only `summary` changed
+   summary tokens changed:
+     pl_bridge:3783P(진짜1351·구성상2089·부분343)/18F/2629S/0NEW  ->  pl_bridge:3789P(진짜1356·구성상2090·부분343)/18F/2623S/0NEW
+     qoq_warn:265Y  ->  qoq_warn:266Y
+     oci_vs_bs_aoci:28Y/101blank/11bsskip  ->  oci_vs_bs_aoci:29Y/98blank/12bsskip
+PASS  J2 same token count; changed tokens are exactly pl_bridge, qoq_warn, oci_vs_bs_aoci
+
+== K. tests/fixtures/builder_input_fingerprints.json
+PASS  K1 only `specs` changed
+PASS  K2 only specs.viz_ifrs17_panels changed :: ['viz_ifrs17_panels']
+PASS  K3 within it only inputs_sha256 and input_bytes changed :: ['input_bytes', 'inputs_sha256']
+PASS  K4 input_bytes delta equals the CSM_waterfall.json size delta (it is an input of that builder) :: delta 14 vs 14
+
+== L. regenerated side effects (rows of the gate warn lists)
+   data/_derived/qoq_warn.json: rows 265 -> 266 ; rows gone 6 ; rows new 7 ; non-KDB rows touched 0
+PASS  L1 qoq_warn only 케이디비생명보험 rows differ
+PASS  L1 qoq_warn non-KDB rows identical and in the same order :: 243 rows
+   data/_derived/pl_oci_vs_bs_aoci_warn.json: rows 28 -> 29 ; rows gone 0 ; rows new 1 ; non-KDB rows touched 0
+PASS  L2 oci_vs_bs_aoci_warn only 케이디비생명보험 rows differ
+PASS  L2 oci_vs_bs_aoci_warn non-KDB rows identical and in the same order :: 28 rows
+
+== SUMMARY  checks 65  PASS 65  FAIL 0
+ALL PASS

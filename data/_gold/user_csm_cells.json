@@ -1031,51 +1031,11 @@
     },
     {
       "원보험사코드": "KR0009",
-      "항목번호": 1,
-      "공시분기": "2023.3Q",
-      "값": 88281.1,
-      "was": 83515.4,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-disclosed); Q3 source-restated to 83515.4. keep close 89036.6; agent Q1 interest is 1000x artifact so open-only"
-    },
-    {
-      "원보험사코드": "KR0009",
-      "항목번호": 4,
-      "공시분기": "2023.3Q",
-      "값": -7991.9,
-      "was": -3226.2,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-disclosed); Q3 source-restated to 83515.4. keep close 89036.6; agent Q1 interest is 1000x artifact so open-only"
-    },
-    {
-      "원보험사코드": "KR0009",
-      "항목번호": 1,
-      "공시분기": "2023.4Q",
-      "값": 88281.1,
-      "was": 83515.4,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start; Q4 source-restated to 83515.4. keep close 91423.7"
-    },
-    {
-      "원보험사코드": "KR0009",
       "항목번호": 4,
       "공시분기": "2023.4Q",
-      "값": -7480.6,
-      "was": -2714.9,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start; Q4 source-restated to 83515.4. keep close 91423.7"
-    },
-    {
-      "원보험사코드": "KR0070",
-      "항목번호": 1,
-      "공시분기": "2023.4Q",
-      "값": 7017.8,
-      "was": 7585.3,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4"
-    },
-    {
-      "원보험사코드": "KR0070",
-      "항목번호": 4,
-      "공시분기": "2023.4Q",
-      "값": -1148.8,
-      "was": -1716.3,
-      "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4"
+      "값": -2715.9,
+      "was": -7480.6,
+      "why": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv · 분류 ⓑ 연쇄: 원 인쇄값도 최신값도 아님): 이전 gold 값 -7480.6, 이전 was -2714.9, 이전 why 원문 「CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start; Q4 source-restated to 83515.4. keep close 91423.7」. 원 공시(FY2023 사업보고서 rcept 20240314001515) 별도 주석 CSM 롤포워드 당기 열 L69205 (271,489,285) 천원 = -2714.89285억원 (빌더 소스 값 -2714.9), 최신 공시(FY2024 사업보고서 rcept 20250313001346)의 전기 열은 L75553 (271,590,455) 천원 = -2715.90455억원(저장값 -2715.9)이라 교체값은 빌더 소스 값(-2714.9)과 달라 마스크 칸이 아니다(적재 후에도 gold 필요). 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml table@L75486 (pair L75228/L75486) unit 천원. 인쇄 셀: L75553 (271,590,455) -> -2715.90455 억원, 저장값 -2715.9. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
     },
     {
       "원보험사코드": "KR0072",
@@ -2943,6 +2903,424 @@
       "값": 97991.2,
       "was": 97991.1,
       "why": "2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml table@L68140 unit 백만원. 인쇄 셀: L68327 9,799,116 -> 97991.16 억원, 저장값 97991.2. 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 1,
+      "공시분기": "2023.1Q",
+      "값": 31327.6,
+      "was": 31201.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml table@L34183 unit 백만원. 인쇄 셀: L34230 3,132,761 -> 31327.61 억원, 저장값 31327.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 3,
+      "공시분기": "2023.1Q",
+      "값": 334.5,
+      "was": 342.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml table@L34183 unit 백만원. 인쇄 셀: L34326 33,449 -> 334.49 억원, 저장값 334.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 4,
+      "공시분기": "2023.1Q",
+      "값": -588.6,
+      "was": -568.7,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml table@L34183 unit 백만원. 인쇄 셀: L34246 (58,861) -> -588.61 억원, 저장값 -588.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 5,
+      "공시분기": "2023.1Q",
+      "값": -684.8,
+      "was": -683.4,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml table@L34183 unit 백만원. 인쇄 셀: L34278 (68,479) -> -684.79 억원, 저장값 -684.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 6,
+      "공시분기": "2023.1Q",
+      "값": 31613.5,
+      "was": 31516.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml table@L34183 unit 백만원. 인쇄 셀: L34430 3,161,352 -> 31613.52 억원, 저장값 31613.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 1,
+      "공시분기": "2023.2Q",
+      "값": 31327.6,
+      "was": 31201.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml table@L37997 unit 백만원. 인쇄 셀: L38044 3,132,762 -> 31327.62 억원, 저장값 31327.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 3,
+      "공시분기": "2023.2Q",
+      "값": 632.5,
+      "was": 645.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml table@L37997 unit 백만원. 인쇄 셀: L38140 63,246 -> 632.46 억원, 저장값 632.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": -1320.6,
+      "was": -1430.6,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml table@L37997 unit 백만원. 인쇄 셀: L38060 (132,064) -> -1320.64 억원, 저장값 -1320.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 5,
+      "공시분기": "2023.2Q",
+      "값": -1405.8,
+      "was": -1399.4,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml table@L37997 unit 백만원. 인쇄 셀: L38092 (140,582) -> -1405.82 억원, 저장값 -1405.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 6,
+      "공시분기": "2023.2Q",
+      "값": 32122.5,
+      "was": 31905.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml table@L37997 unit 백만원. 인쇄 셀: L38244 3,212,246 -> 32122.46 억원, 저장값 32122.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 1,
+      "공시분기": "2023.3Q",
+      "값": 31327.6,
+      "was": 31201.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml table@L34025 unit 백만원. 인쇄 셀: L34072 3,132,762 -> 31327.62 억원, 저장값 31327.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 3,
+      "공시분기": "2023.3Q",
+      "값": 963.1,
+      "was": 981.1,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml table@L34025 unit 백만원. 인쇄 셀: L34168 96,314 -> 963.14 억원, 저장값 963.1. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 4,
+      "공시분기": "2023.3Q",
+      "값": -2303.2,
+      "was": -2451.6,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml table@L34025 unit 백만원. 인쇄 셀: L34088 (230,322) -> -2303.22 억원, 저장값 -2303.2. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 5,
+      "공시분기": "2023.3Q",
+      "값": -2142.3,
+      "was": -2130.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml table@L34025 unit 백만원. 인쇄 셀: L34120 (214,229) -> -2142.29 억원, 저장값 -2142.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0099",
+      "항목번호": 6,
+      "공시분기": "2023.3Q",
+      "값": 32384.6,
+      "was": 32139.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D1 = 옵션 B: KB라이프 FY2023 2023.1Q~3Q 만 최신 비교열 채택, 2023.4Q·2024 불변, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml table@L34025 unit 백만원. 인쇄 셀: L34272 3,238,459 -> 32384.59 억원, 저장값 32384.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0099_kblife/e23_plan_kblife.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 1,
+      "공시분기": "2023.4Q",
+      "값": 16669.0,
+      "was": 16774.4,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L19837 layout (a) unit 백만원. 인쇄 셀: L19881 1,666,900 -> 16669.0 억원, 저장값 16669.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 3,
+      "공시분기": "2023.4Q",
+      "값": 777.0,
+      "was": 780.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L19837 layout (a) unit 백만원. 인쇄 셀: L20024 77,701 -> 777.01 억원, 저장값 777.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 4,
+      "공시분기": "2023.4Q",
+      "값": 2795.0,
+      "was": 2801.0,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L19837 layout (a) unit 백만원. 인쇄 셀: L19980 279,496 -> 2794.96 억원, 저장값 2795.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 5,
+      "공시분기": "2023.4Q",
+      "값": -1859.0,
+      "was": -1868.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L19837 layout (a) unit 백만원. 인쇄 셀: L19925 (185,905) -> -1859.05 억원, 저장값 -1859.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0003",
+      "항목번호": 6,
+      "공시분기": "2023.4Q",
+      "값": 23860.8,
+      "was": 23966.2,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D2: 롯데손해보험 KR0003 2023.4Q(FY2023 연말 블록) 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml table@L19837 layout (a) unit 백만원. 인쇄 셀: L20090 2,386,081 -> 23860.81 억원, 저장값 23860.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/e23_plan_lotte.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 1,
+      "공시분기": "2023.1Q",
+      "값": 7585.3,
+      "was": 7017.8,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37355 758,530 -> 7585.3 억원, 저장값 7585.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2023.1Q",
+      "값": 634.3,
+      "was": 604.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37403 63,426 -> 634.26 억원, 저장값 634.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2023.1Q",
+      "값": 62.4,
+      "was": 0.0,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37467 6,244 -> 62.44 억원, 저장값 62.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2023.1Q",
+      "값": -159.4,
+      "was": 154.8,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37387 (15,943) -> -159.43 억원, 저장값 -159.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 5,
+      "공시분기": "2023.1Q",
+      "값": -224.1,
+      "was": -226.6,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37419 (22,411) -> -224.11 억원, 저장값 -224.1. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 6,
+      "공시분기": "2023.1Q",
+      "값": 7898.5,
+      "was": 7550.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37546 789,846 -> 7898.46 억원, 저장값 7898.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 1,
+      "공시분기": "2023.2Q",
+      "값": 7585.3,
+      "was": 7017.8,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39008 758,530 -> 7585.3 억원, 저장값 7585.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2023.2Q",
+      "값": 1713.1,
+      "was": 1655.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39056 171,309 -> 1713.09 억원, 저장값 1713.1. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2023.2Q",
+      "값": 130.5,
+      "was": 128.4,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39120 13,052 -> 130.52 억원, 저장값 130.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": -295.0,
+      "was": 524.6,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39040 (29,501) -> -295.01 억원, 저장값 -295.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 5,
+      "공시분기": "2023.2Q",
+      "값": -467.9,
+      "was": -486.2,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39072 (46,789) -> -467.89 억원, 저장값 -467.9. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 6,
+      "공시분기": "2023.2Q",
+      "값": 8666.0,
+      "was": 8839.9,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39199 866,601 -> 8666.01 억원, 저장값 8666.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 1,
+      "공시분기": "2023.3Q",
+      "값": 7585.3,
+      "was": 7017.8,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38133 758,530 -> 7585.3 억원, 저장값 7585.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 2,
+      "공시분기": "2023.3Q",
+      "값": 2853.6,
+      "was": 2778.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38181 285,357 -> 2853.57 억원, 저장값 2853.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 3,
+      "공시분기": "2023.3Q",
+      "값": 208.3,
+      "was": 211.1,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38245 20,828 -> 208.28 억원, 저장값 208.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 4,
+      "공시분기": "2023.3Q",
+      "값": -1512.0,
+      "was": 475.6,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38165 (151,200) -> -1512.0 억원, 저장값 -1512.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 5,
+      "공시분기": "2023.3Q",
+      "값": -696.4,
+      "was": -751.8,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38197 (69,639) -> -696.39 억원, 저장값 -696.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0070",
+      "항목번호": 6,
+      "공시분기": "2023.3Q",
+      "값": 8438.8,
+      "was": 9731.2,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38317 843,876 -> 8438.76 억원, 저장값 8438.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 1,
+      "공시분기": "2023.1Q",
+      "값": 83515.4,
+      "was": 88281.1,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table@L44042 (pair L43785/L44042) unit 천원. 인쇄 셀: L44085 8,351,539,177 -> 83515.39177 억원, 저장값 83515.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 2,
+      "공시분기": "2023.1Q",
+      "값": 4572.8,
+      "was": 4946.7,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table@L44042 (pair L43785/L44042) unit 천원. 인쇄 셀: L44125 457,279,137 -> 4572.79137 억원, 저장값 4572.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 3,
+      "공시분기": "2023.1Q",
+      "값": 614.8,
+      "was": 653.8,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table@L44042 (pair L43785/L44042) unit 천원. 인쇄 셀: L44213 61,476,717 -> 614.76717 억원, 저장값 614.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 4,
+      "공시분기": "2023.1Q",
+      "값": -2103.2,
+      "was": -2509.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table@L44042 (pair L43785/L44042) unit 천원. 인쇄 셀: L44109 (210,323,372) -> -2103.23372 억원, 저장값 -2103.2. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 5,
+      "공시분기": "2023.1Q",
+      "값": -2066.6,
+      "was": -2163.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table@L44042 (pair L43785/L44042) unit 천원. 인쇄 셀: L44157 (206,656,546) -> -2066.56546 억원, 저장값 -2066.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 6,
+      "공시분기": "2023.1Q",
+      "값": 84533.2,
+      "was": 89208.6,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table@L44042 (pair L43785/L44042) unit 천원. 인쇄 셀: L44261 8,453,315,113 -> 84533.15113 억원, 저장값 84533.2. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 1,
+      "공시분기": "2023.2Q",
+      "값": 83515.4,
+      "was": 88281.1,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table@L47726 (pair L47465/L47726) unit 천원. 인쇄 셀: L47769 8,351,539,177 -> 83515.39177 억원, 저장값 83515.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 2,
+      "공시분기": "2023.2Q",
+      "값": 8755.9,
+      "was": 9542.1,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table@L47726 (pair L47465/L47726) unit 천원. 인쇄 셀: L47809 875,588,926 -> 8755.88926 억원, 저장값 8755.9. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 3,
+      "공시분기": "2023.2Q",
+      "값": 1260.7,
+      "was": 1339.0,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table@L47726 (pair L47465/L47726) unit 천원. 인쇄 셀: L47897 126,065,207 -> 1260.65207 억원, 저장값 1260.7. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 4,
+      "공시분기": "2023.2Q",
+      "값": -3369.2,
+      "was": -3391.1,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table@L47726 (pair L47465/L47726) unit 천원. 인쇄 셀: L47793 (336,918,374) -> -3369.18374 억원, 저장값 -3369.2. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 5,
+      "공시분기": "2023.2Q",
+      "값": -4178.4,
+      "was": -4410.3,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table@L47726 (pair L47465/L47726) unit 천원. 인쇄 셀: L47841 (417,840,267) -> -4178.40267 억원, 저장값 -4178.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 6,
+      "공시분기": "2023.2Q",
+      "값": 85984.3,
+      "was": 91360.8,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table@L47726 (pair L47465/L47726) unit 천원. 인쇄 셀: L47945 8,598,434,669 -> 85984.34669 억원, 저장값 85984.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 5,
+      "공시분기": "2023.4Q",
+      "값": -8805.4,
+      "was": -8805.5,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml table@L75486 (pair L75228/L75486) unit 천원. 인쇄 셀: L75601 (880,544,841) -> -8805.44841 억원, 저장값 -8805.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
+    },
+    {
+      "원보험사코드": "KR0009",
+      "항목번호": 6,
+      "공시분기": "2023.4Q",
+      "값": 91422.7,
+      "was": 91423.7,
+      "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB 레그 허용, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml table@L75486 (pair L75228/L75486) unit 천원. 인쇄 셀: L75705 9,142,271,141 -> 91422.71141 억원, 저장값 91422.7. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/e23_plan_hd.json"
     }
-  ]
+  ],
+  "_doc_e23_kr0070_20261023": "2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3, owner 2026-10-23 approval): chain-forced owner-gold entries REMOVED (not replaced) because the approved value equals the CSM builder source value (a replaced entry would be a masked gold cell that needs a ledger pin). Removed entries (code, item, quarter, gold value, was, why verbatim): KR0070 1 2023.4Q: gold 7017.8, was 7585.3, why 「CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4」 -> builder value 7585.3 || KR0070 4 2023.4Q: gold -1148.8, was -1716.3, why 「CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4」 -> builder value -1716.3",
+  "_doc_e23_kr0009_20261023": "2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3, owner 2026-10-23 approval): chain-forced owner-gold entries REMOVED (not replaced) because the approved value equals the CSM builder source value (a replaced entry would be a masked gold cell that needs a ledger pin). Removed entries (code, item, quarter, gold value, was, why verbatim): KR0009 1 2023.3Q: gold 88281.1, was 83515.4, why 「CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-disclosed); Q3 source-restated to 83515.4. keep close 89036.6; agent Q1 interest is 1000x artifact so open-only」 -> builder value 83515.4 || KR0009 4 2023.3Q: gold -7991.9, was -3226.2, why 「CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-disclosed); Q3 source-restated to 83515.4. keep close 89036.6; agent Q1 interest is 1000x artifact so open-only」 -> builder value -3226.2 || KR0009 1 2023.4Q: gold 88281.1, was 83515.4, why 「CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start; Q4 source-restated to 83515.4. keep close 91423.7」 -> builder value 83515.4"
 }

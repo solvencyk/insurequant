@@ -1,0 +1,14 @@
+ M CSM_waterfall.json
+ M CSM_waterfall_provenance.json
+ M data/_derived/capital_securities_classification_census_20261012/census_issue_quarter_test.csv
+ M data/_derived/capital_securities_classification_census_20261012/census_issue_quarter_test.txt
+ M data/_derived/pl_oci_vs_bs_aoci_warn.json
+ M data/_derived/qoq_warn.json
+ M data/_derived/remaining_20261022/e19_latest_comparative/apply/peek_gold.py
+ M data/_gold/user_csm_cells.json
+ M data/_gold/user_pl_cells.json
+ M PL_breakdown.json
+ M PL_breakdown_provenance.json
+ M tests/fixtures/builder_input_fingerprints.json
+ M tests/fixtures/master_tables_golden.json
+ M tests/test_rule_coverage_manifest.py

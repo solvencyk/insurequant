@@ -1,0 +1,60 @@
+티켓 20261023T0900Z (D1 = 옵션 B, KB라이프생명 KR0099 · 시나리오 N2_KBlife_B, 2026-10-23) 증거 폴더 색인
+=====================================================================================================
+상태: 적재 완료 · 미커밋 · push 안 함. 서브에이전트·docling 안 씀. build_root_masters.main()·build_ifrs17_bs·xlsx·panel·public_exports·NB·TODO·changelog·티켓 파일은 건드리지 않았다.
+파이썬은 항상 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, 스크립트 파일로, stdin /dev/null.
+이 회사는 체인의 첫 회사였다(라이브 마스터 = git HEAD d5077c7b 와 바이트 동일, 적재 전 git hash-object 로 확인).
+
+1) 무엇을 적재했나 (git HEAD 대비 실측, kr0099_diff_vs_head.txt = ALL PASS)
+   PL_breakdown.json            값 60칸 (2023.1Q 23 · 2023.2Q 23 · 2023.3Q 14; 새로 채움 30 + 값 변경 30) + 값_당분기 83칸(파생: 2023.1Q 23 · 2Q 23 · 3Q 23 · 4Q 14), 필드는 값·값_당분기만, 다른 회사 0
+   CSM_waterfall.json           값 15칸 (2023.1Q~3Q 각 5칸: 기초·이자부리·가정조정·상각·기말) + 값_당분기 19칸(파생: 5·5·5·4)
+   data/_gold/user_pl_cells.json   set 1171 -> 1231 (신규 60, 교체 0), null_dangi 98 · set_dangi 37 불변
+   data/_gold/user_csm_cells.json  set 370 -> 385 (신규 15, 교체 0)
+   data/_gold/gold_overlay_ledger.json  불변 (바이트 동일; 교체·소멸한 마스크 칸 없음, 새 박제 0)
+   PL_breakdown_provenance.json     KR0099 2023.1Q~3Q 의 income_statement · contract_notes 6블록 교체(샌드박스 emit_pl_provenance 사본; 블록 삽입 0) + 병합 노트 키 1개
+   CSM_waterfall_provenance.json    KR0099 2023.1Q~3Q csm_waterfall 3블록 owner_override + 병합 노트 키 1개
+   tests/test_rule_coverage_manifest.py  GOLD_OVERLAY_CENSUS = {"CSM": (385, 77), "PL": (1231, 22)} + _TAX22_LATEST_COMPARATIVE_ONLY 에 (KB라이프생명, 2023.3Q) 추가(34칸)
+   tests/fixtures/master_tables_golden.json  SUMMARY 두 필드만(pl_bridge 3755P(1333·2079·343)/18F/2657S -> 3767P(1341·2083·343)/18F/2645S, oci_vs_bs_aoci 108blank/8bsskip -> 105blank/9bsskip)
+   tests/fixtures/builder_input_fingerprints.json  viz_ifrs17_panels 의 inputs_sha256 · input_bytes(-1) 한 줄만 (CSM_waterfall.json 이 그 빌더의 입력)
+   data/_derived/pl_oci_vs_bs_aoci_warn.json  KB라이프 2023.4Q 한 건의 PL당분기·잔차(master_tables 골든 테스트가 쓰는 부수 산출)
+   미접촉: PL 골든 fixture(sha256_master 불변 = 빌더 소스·핸들러 안 바꿈), data/dart/viz/*, scripts/*, src/*, xlsx, NB, WFY_EXCEPTIONS, pl_bridge_baseline.json, pl_csm_amort_missing_ledger.json
+
+2) 판정과 근거 요약
+   - 후보 옛값 61/61 · CSM 15/15 가 HEAD 마스터와 일치(candidate_vs_plan.txt). 후보 61 -> 실제 60: 반올림 제외 3(2023.3Q 항목 16·18·29) + 항목 30 추가 2(2023.1Q·2Q).
+   - 항목 4·7: 후보는 CSM상각(억원 1자리) x 100 이라 +-1 어긋남 -> 원문 주석 합계 칸 값 사용(PL4 대 CSM5 0.01억 이내).
+   - 항목 32: 후보는 재보험금융손익(OCI)을 항목 32 에 합침(FS-API 태그 흡수) -> 원문에 별도 행이 있고 2023.3Q·4Q·2024.4Q 마스터가 항목 30 을 따로 두므로 30 / 32 로 분리(control_cur_vs_master.txt).
+   - 독립 재독: kr0099_verify.py (표준 라이브러리만; e21_* / e23_* / mlib / scripts 임포트 0) -> kr0099_verify.txt: PL 60/60, CSM 15/15, 문제 0. 변이 시험 7/7 검출(kr0099_verify_mutation.txt).
+   - 읽기 코드 결함 2건(사본 e23_read.py 에서만 수정): (a) e21 Stmt 가 빈 셀을 버려 영업외손익 '(362) 298 (704)' 행에서 전기 누계 자리에 전기 3개월 298 을 읽음(Stmt23 으로 빈 칸 포함 열 지정),
+     (b) FY2024 1Q 양식은 보험금융손익이 별도 구간이라 투자영업손익이 항목 17 이 아님(17 = 투자영업손익 + 보험금융손익, 영업이익 = 보험영업손익 + 17). 둘 다 계획 항등식 20 = 1 + 17 과 실행 오류로 드러났다.
+   - 대조 시험(control_cur_vs_master.txt, control_csm.txt): 같은 읽기 코드를 당기 열에 적용하면 FY2023 Q3 · FY2024 Q1~Q4 의 라이브 마스터 항목 전부(항목 30 / 32 분리 제외)와 CSM 2024.1Q~3Q 6항목이 재현된다.
+   - 단일분기: 2023.2Q·3Q 30칸 파생값 = 보고서 인쇄 전기 3개월 열(+-1). 2023.4Q 누계는 불변이고 단일분기만 빌더 파생으로 14 PL + 4 CSM 칸이 움직인다(changes_old_new.txt).
+   - 손으로 비워 둔 2023.3Q 단일분기 16·22·23·24 (빌더가 채우던 칸): 새 파생값(7,426 · 93,100 · 32,276 · 60,824)이 인쇄 전기 3개월(7,427 · 93,100 · 32,276 · 60,824)과 +-3 이내라 적용기 보호 장치를 +-3 으로 완화해 덮어씀(패치 patch_apply_guard.py).
+
+3) 게이트 (gates_before/ = 적재 전 HEAD, gates_after/ = 적재 후, gates_compare_after.txt)
+   master_tables SUMMARY: pl_bridge 3755P -> 3767P (18F · 0NEW 불변), oci_vs_bs_aoci 108blank/8bsskip -> 105blank/9bsskip, 나머지 불변
+   data_contract: RED 0 -> 2 (MASTER_XLSX_DRIFT CSM워터폴 · 손익분해PL = publishing 몫), YELLOW 168 불변(발견 집합 동일)
+   csm_continuity flagged 1 · RED 0 불변 / csm_waterfall 41 pass 불변 / nb_csm 5/5 불변 / csm_coverage 기존 RED 1(카카오페이 2023.4Q) 불변 / live_artifacts RED 0 · YELLOW 25 불변
+   테스트: pytest_*_after1.txt (적재 직후), pytest_*_final.txt (fixture 갱신 뒤). PL 골든 RUN_PL_GOLDEN=1 -> pytest_pl_golden_after1.txt = 1 passed (367초).
+   지문: fingerprints_before_update.txt (RED 1 = viz_ifrs17_panels INPUTS_MOVED) -> fingerprints_update.txt -> fingerprints_after_update.txt (RED 0).
+
+4) 파일 지도
+   계획·판독(앞선 에이전트의 e23_d1_d3/e23_plan.py · e23_read.py 사본 + 위 수정): e23_plan.py e23_read.py -> e23_plan_kblife.json (적용 계약 apply_contract 포함), e23_plan_kblife_report.txt
+   독립 검증: kr0099_verify.py -> kr0099_verify.txt / .json, 변이 시험 kr0099_verify_mutation.py -> kr0099_verify_mutation.txt
+   적재 도구: make_apply.py (e21_apply.py 에서 e23_apply.py 를 생성, 치환 전부 1회 일치 단언) -> e23_apply.py (--snapshot-drift | --check | --out-dir | --apply | --verify | --revert --apply),
+              patch_apply_guard.py (보호 장치 완화), apply_manifest_e23_kblife.json (적재 전후 sha256), drift_before.json, e23_apply_report.txt
+   HEAD 대비 독립 차분: kr0099_diff_vs_head.py -> kr0099_diff_vs_head.txt ; 후보 대 적재: candidate_vs_plan.py -> candidate_vs_plan.txt ; 옛->새 전표: summarize_changes.py -> changes_old_new.txt
+   백업 검증: backup_check.py -> backup_check.txt (백업 == git HEAD, sha256 == 매니페스트)
+   게이트: run_gates.sh <폴더> (gate_overlay.py 가 저장소 쓰기를 모두 이 폴더로 돌린다) -> gates_before/ gates_after/, compare_gates.py -> gates_compare_after.txt
+   테스트: run_tests.sh <tag> (PL 골든 포함), run_tests_final.sh <tag>
+   탐침(읽기 전용): dump_stmt23.py (+ dump_stmt_FY2024_Q1/Q2.txt), probe_pl4.py, probe_note56.py / probe_note56b.py, peek_*.py
+   답변 초안(한국어): ../answers/kr0099_kblife.md
+
+5) 재현 순서 (적재 전 상태 = git HEAD 의 마스터 · gold 에서만 계획서가 같게 나온다; 적재 뒤에는 e23_plan_kblife.json 이 동결본)
+   1. e23_plan.py kblife -> kr0099_verify.py (문제 0 이어야 한다)
+   2. run_gates.sh gates_before ; e23_apply.py --snapshot-drift ; --check ; --out-dir <임시폴더> ; --apply
+   3. e23_apply.py --verify ; kr0099_diff_vs_head.py ; backup_check.py ; run_gates.sh gates_after ; compare_gates.py gates_before gates_after
+   4. run_tests.sh after1 ; tests/test_master_tables_golden.py --update ; scripts/validate_golden_input_fingerprints.py --update ; run_tests_final.sh final
+
+6) 되돌리는 순서
+   a. e23_apply.py --revert --apply   (적재 직후 해시가 그대로일 때만 동작: 마스터 4 + gold 2 + 테스트 파일 복원)
+   b. git checkout -- tests/fixtures/master_tables_golden.json tests/fixtures/builder_input_fingerprints.json data/_derived/pl_oci_vs_bs_aoci_warn.json
+   백업: ../backup_before_apply/kr0099_kblife/ (적재 직전 7개 파일, 전부 git HEAD 와 일치).  커밋 전이면 git checkout -- <변경 파일> 로도 같은 상태가 된다.

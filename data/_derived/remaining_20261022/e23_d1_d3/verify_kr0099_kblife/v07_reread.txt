@@ -1,0 +1,123 @@
+== 2023.1Q from 2024.1Q IS table 205 line 25433 rows 47 header: ['', '제 36 기 1분기', '제 35 기 1분기'] ['3개월', '누적', '3개월', '누적']
+   LOB note tables after IS: [(327, 37925), (328, 38325)]
+   prior LOB table header: ['구분', '전분기']
+   CSM prior tables (after IS): [(297, 35819, ['구분', '전분기']), (299, 36042, ['구분', '전분기'])]
+   CSM(백만원): open 3132762.0 new 122482.0 int 33450.0 est -58861.0 amort -68479.0 close 3161354.0 residual(open+new+int+est+amort-close)= 0.0
+   CSM prior table 보험수익 row (issued contracts): ['보험수익', '119,584', '63,302', '182,886']
+== 2023.2Q from 2024.2Q IS table 227 line 28508 rows 48 header: ['', '제 36 기 반기', '제 35 기 반기'] ['3개월', '누적', '3개월', '누적']
+   item18 route check: (투자영업수익-금융수익)-(투자영업비용-금융비용) = 859465.0 vs 17-19 = 859465.0 | master LIVE 859465.0 | item17 printed 162557.0 master 162557.0
+   LOB note tables after IS: [(351, 41805), (352, 42420)]
+   prior LOB table header: ['구분', '전반기']
+   CSM prior tables (after IS): [(321, 39633, ['구분', '전반기']), (323, 39856, ['구분', '전반기'])]
+   CSM(백만원): open 3132762.0 new 288884.0 int 63247.0 est -132064.0 amort -140582.0 close 3212247.0 residual(open+new+int+est+amort-close)= 0.0
+   CSM prior table 보험수익 row (issued contracts): ['보험수익', '238,390', '136,255', '374,645']
+== 2023.3Q from 2024.3Q IS table 208 line 24616 rows 48 header: ['', '제 36 기 3분기', '제 35 기 3분기'] ['3개월', '누적', '3개월', '누적']
+   item18 route check: (투자영업수익-금융수익)-(투자영업비용-금융비용) = 953979.0 vs 17-19 = 953979.0 | master LIVE 953978.0 | item17 printed 180415.0 master 180415.0
+   LOB note tables after IS: [(332, 37782), (333, 38394)]
+   prior LOB table header: ['구분', '전분기']
+   CSM prior tables (after IS): [(302, 35658, ['구분', '전분기']), (304, 35878, ['구분', '전분기'])]
+   CSM(백만원): open 3132762.0 new 453934.0 int 96314.0 est -230322.0 amort -214229.0 close 3238459.0 residual(open+new+int+est+amort-close)= 0.0
+   CSM prior table 보험수익 row (issued contracts): ['보험수익', '356,509', '210,912', '567,421']
+
+=== PL cumulative: master LIVE vs own re-read (백만원). OK / ROUND1 (|diff|<=1) / DIFF ; CHG = value changed vs HEAD
+2023.1Q item 1 live=     56633.0 head=      None reread=     56633.0 diff=+0.0 OK CHG
+2023.1Q item 2 live=     66201.0 head=   65577.0 reread=     66201.0 diff=+0.0 OK CHG
+2023.1Q item 3 live=     68347.0 head=   67723.0 reread=     68347.0 diff=+0.0 OK CHG
+2023.1Q item 4 live=     68479.0 head=   68345.0 reread=     68479.0 diff=+0.0 OK CHG
+2023.1Q item 7 live=    -22959.0 head=  -23449.0 reread=    -22959.0 diff=+0.0 OK CHG
+2023.1Q item 9 live=     -1131.0 head=   -1131.0 reread=     -1130.0 diff=-1.0 ROUND1 unchg
+2023.1Q item11 live=      -614.0 head=    -614.0 reread=      -618.0 diff=+4.0 DIFF unchg
+2023.1Q item12 live=      -319.0 head=    -319.0 reread=      -316.0 diff=-3.0 DIFF unchg
+2023.1Q item15 live=         0.0 head=      None reread=         0.0 diff=+0.0 OK CHG
+2023.1Q item16 live=      9568.0 head=    9500.0 reread=      9568.0 diff=+0.0 OK CHG
+2023.1Q item17 live=    119675.0 head=      None reread=    119675.0 diff=+0.0 OK CHG
+2023.1Q item18 live=    583923.0 head=      None reread=    583923.0 diff=+0.0 OK CHG
+2023.1Q item19 live=   -464248.0 head=      None reread=   -464248.0 diff=+0.0 OK CHG
+2023.1Q item20 live=    176308.0 head=      None reread=    176308.0 diff=+0.0 OK CHG
+2023.1Q item21 live=      -344.0 head=      None reread=      -344.0 diff=+0.0 OK CHG
+2023.1Q item22 live=    175964.0 head=  172200.0 reread=    175964.0 diff=+0.0 OK CHG
+2023.1Q item23 live=     43352.0 head=   42400.0 reread=     43352.0 diff=+0.0 OK CHG
+2023.1Q item24 live=    132612.0 head=  129800.0 reread=    132612.0 diff=+0.0 OK CHG
+2023.1Q item25 live=     64067.0 head=      None reread=     64067.0 diff=+0.0 OK CHG
+2023.1Q item26 live=    570055.0 head=      None reread=    570055.0 diff=+0.0 OK CHG
+2023.1Q item27 live=   -506711.0 head=      None reread=   -506711.0 diff=+0.0 OK CHG
+2023.1Q item28 live=        29.0 head=      None reread=        29.0 diff=+0.0 OK CHG
+2023.1Q item29 live=      1911.0 head=      None reread=      1911.0 diff=+0.0 OK CHG
+2023.1Q item30 live=     -1118.0 head=      None reread=     -1118.0 diff=+0.0 OK CHG
+2023.1Q item31 live=    196679.0 head=      None reread=    196679.0 diff=+0.0 OK CHG
+2023.1Q item32 live=       -99.0 head=      None reread=       -99.0 diff=+0.0 OK CHG
+2023.2Q item 1 live=    140176.0 head=      None reread=    140176.0 diff=+0.0 OK CHG
+2023.2Q item 2 live=    156939.0 head=  152021.0 reread=    156939.0 diff=+0.0 OK CHG
+2023.2Q item 3 live=    159542.0 head=  154624.0 reread=    159542.0 diff=+0.0 OK CHG
+2023.2Q item 4 live=    140581.0 head=  139938.0 reread=    140581.0 diff=+0.0 OK CHG
+2023.2Q item 7 live=    -14775.0 head=  -19050.0 reread=    -14775.0 diff=+0.0 OK CHG
+2023.2Q item15 live=         0.0 head=      None reread=         0.0 diff=+0.0 OK CHG
+2023.2Q item16 live=     16763.0 head=   16800.0 reread=     16763.0 diff=+0.0 OK CHG
+2023.2Q item17 live=    162557.0 head=      None reread=    162557.0 diff=+0.0 OK CHG
+2023.2Q item18 live=    859465.0 head=      None reread=    859465.0 diff=+0.0 OK CHG
+2023.2Q item19 live=   -696908.0 head=      None reread=   -696908.0 diff=+0.0 OK CHG
+2023.2Q item20 live=    302733.0 head=      None reread=    302733.0 diff=+0.0 OK CHG
+2023.2Q item21 live=     -1002.0 head=      None reread=     -1002.0 diff=+0.0 OK CHG
+2023.2Q item22 live=    301731.0 head=  301500.0 reread=    301731.0 diff=+0.0 OK CHG
+2023.2Q item23 live=     66693.0 head=   66700.0 reread=     66693.0 diff=+0.0 OK CHG
+2023.2Q item24 live=    235038.0 head=  234800.0 reread=    235038.0 diff=+0.0 OK CHG
+2023.2Q item25 live=    115434.0 head=      None reread=    115434.0 diff=+0.0 OK CHG
+2023.2Q item26 live=    143966.0 head=      None reread=    143966.0 diff=+0.0 OK CHG
+2023.2Q item27 live=    -30834.0 head=      None reread=    -30834.0 diff=+0.0 OK CHG
+2023.2Q item28 live=        62.0 head=      None reread=        62.0 diff=+0.0 OK CHG
+2023.2Q item29 live=      2607.0 head=      None reread=      2607.0 diff=+0.0 OK CHG
+2023.2Q item30 live=      -366.0 head=      None reread=      -366.0 diff=+0.0 OK CHG
+2023.2Q item31 live=    350472.0 head=      None reread=    350472.0 diff=+0.0 OK CHG
+2023.2Q item32 live=        -1.0 head=      None reread=        -1.0 diff=+0.0 OK CHG
+2023.3Q item 1 live=    215120.0 head=  207078.0 reread=    215120.0 diff=+0.0 OK CHG
+2023.3Q item 2 live=    239310.0 head=  231267.0 reread=    239310.0 diff=+0.0 OK CHG
+2023.3Q item 3 live=    242031.0 head=  233988.0 reread=    242031.0 diff=+0.0 OK CHG
+2023.3Q item 4 live=    214229.0 head=  213049.0 reread=    214229.0 diff=+0.0 OK CHG
+2023.3Q item 7 live=     -6967.0 head=  -13830.0 reread=     -6967.0 diff=+0.0 OK CHG
+2023.3Q item16 live=     24189.0 head=   24189.0 reread=     24190.0 diff=-1.0 ROUND1 unchg
+2023.3Q item17 live=    180415.0 head=  189878.0 reread=    180415.0 diff=+0.0 OK CHG
+2023.3Q item18 live=    953978.0 head=  953978.0 reread=    953979.0 diff=-1.0 ROUND1 unchg
+2023.3Q item19 live=   -773564.0 head= -764100.0 reread=   -773564.0 diff=+0.0 OK CHG
+2023.3Q item20 live=    395535.0 head=  396956.0 reread=    395535.0 diff=+0.0 OK CHG
+2023.3Q item22 live=    394831.0 head=  396252.0 reread=    394831.0 diff=+0.0 OK CHG
+2023.3Q item23 live=     98969.0 head=   99378.0 reread=     98969.0 diff=+0.0 OK CHG
+2023.3Q item24 live=    295862.0 head=  296874.0 reread=    295862.0 diff=+0.0 OK CHG
+2023.3Q item25 live=    283175.0 head=  290911.0 reread=    283175.0 diff=+0.0 OK CHG
+2023.3Q item27 live=    528267.0 head=  536004.0 reread=    528267.0 diff=+0.0 OK CHG
+2023.3Q item29 live=      7330.0 head=    7330.0 reread=      7331.0 diff=-1.0 ROUND1 unchg
+2023.3Q item31 live=    579037.0 head=  587785.0 reread=    579037.0 diff=+0.0 OK CHG
+changed cumulative cells reread: 60 OK 60 ROUND1 0 DIFF 0
+unchanged cells: OK 30 | not-OK: [('2023.1Q', 9, -1131.0, -1130.0, -1.0, 'ROUND1'), ('2023.1Q', 11, -614.0, -618.0, 4.0, 'DIFF'), ('2023.1Q', 12, -319.0, -316.0, -3.0, 'DIFF'), ('2023.3Q', 16, 24189.0, 24190.0, -1.0, 'ROUND1'), ('2023.3Q', 18, 953978.0, 953979.0, -1.0, 'ROUND1'), ('2023.3Q', 29, 7330.0, 7331.0, -1.0, 'ROUND1')]
+
+=== PL single-quarter (값_당분기): master LIVE vs printed prior 3-month column and vs consecutive-cumulative difference
+2023.1Q item 9 dangi=-1131.0 cum=-1131.0 vs printed 3m -1130.0 (rounding -1.0)
+2023.1Q item11 dangi=-614.0 cum=-614.0 vs printed 3m -618.0 diff +4.0
+2023.1Q item12 dangi=-319.0 cum=-319.0 vs printed 3m -316.0 (rounding -3.0)
+2023.2Q item 9 dangi=-1117.0 cum=-2248.0 vs printed 3m -1118.0 (rounding +1.0)
+2023.2Q item11 dangi=-31.0 cum=-645.0 vs printed 3m -27.0 diff -4.0
+2023.2Q item12 dangi=766.0 cum=447.0 vs printed 3m 763.0 (rounding +3.0)
+2023.2Q item18 dangi=275542.0 cum=859465.0 vs printed 3m 275543.0 (rounding -1.0)
+2023.2Q item19 dangi=-232660.0 cum=-696908.0 vs printed 3m -232661.0 (rounding +1.0)
+2023.3Q item16 dangi=7426.0 cum=24189.0 vs printed 3m 7427.0 (rounding -1.0)
+2023.3Q item18 dangi=94513.0 cum=953978.0 vs printed 3m 94514.0 (rounding -1.0)
+2023.3Q item29 dangi=4723.0 cum=7330.0 vs printed 3m 4724.0 (rounding -1.0)
+
+=== CSM: master LIVE vs own re-read (억원 = 백만원/100, 1 dec)
+2023.1Q CSM1 live=31327.6 head=31201.3 reread=31327.6200->31327.6 OK CHG
+2023.1Q CSM2 live=1224.8 head=1224.8 reread=1224.8200->1224.8 OK unchg
+2023.1Q CSM3 live=334.5 head=342.3 reread=334.5000->334.5 OK CHG
+2023.1Q CSM4 live=-588.6 head=-568.7 reread=-588.6100->-588.6 OK CHG
+2023.1Q CSM5 live=-684.8 head=-683.4 reread=-684.7900->-684.8 OK CHG
+2023.1Q CSM6 live=31613.5 head=31516.3 reread=31613.5400->31613.5 OK CHG
+2023.2Q CSM1 live=31327.6 head=31201.3 reread=31327.6200->31327.6 OK CHG
+2023.2Q CSM2 live=2888.8 head=2888.8 reread=2888.8400->2888.8 OK unchg
+2023.2Q CSM3 live=632.5 head=645.3 reread=632.4700->632.5 OK CHG
+2023.2Q CSM4 live=-1320.6 head=-1430.6 reread=-1320.6400->-1320.6 OK CHG
+2023.2Q CSM5 live=-1405.8 head=-1399.4 reread=-1405.8200->-1405.8 OK CHG
+2023.2Q CSM6 live=32122.5 head=31905.5 reread=32122.4700->32122.5 OK CHG
+2023.3Q CSM1 live=31327.6 head=31201.3 reread=31327.6200->31327.6 OK CHG
+2023.3Q CSM2 live=4539.3 head=4539.3 reread=4539.3400->4539.3 OK unchg
+2023.3Q CSM3 live=963.1 head=981.1 reread=963.1400->963.1 OK CHG
+2023.3Q CSM4 live=-2303.2 head=-2451.6 reread=-2303.2200->-2303.2 OK CHG
+2023.3Q CSM5 live=-2142.3 head=-2130.5 reread=-2142.2900->-2142.3 OK CHG
+2023.3Q CSM6 live=32384.6 head=32139.5 reread=32384.5900->32384.6 OK CHG

@@ -42,6 +42,13 @@
     "residual_mn": 290151.814
   },
   {
+    "company": "현대해상",
+    "quarter": "2023.3Q",
+    "delta_bs_mn": 197415.817,
+    "pl_oci_dangi_mn": 29244.336,
+    "residual_mn": 168171.482
+  },
+  {
     "company": "DB손해보험",
     "quarter": "2023.3Q",
     "delta_bs_mn": 149606.256,
@@ -52,8 +59,8 @@
     "company": "KB라이프생명",
     "quarter": "2023.4Q",
     "delta_bs_mn": -336156.0,
-    "pl_oci_dangi_mn": -234124.0,
-    "residual_mn": -102032.0
+    "pl_oci_dangi_mn": -226388.0,
+    "residual_mn": -109768.0
   },
   {
     "company": "롯데손해보험",
@@ -61,13 +68,6 @@
     "delta_bs_mn": 64670.788,
     "pl_oci_dangi_mn": -32862.826,
     "residual_mn": 97533.614
-  },
-  {
-    "company": "에이비엘생명보험",
-    "quarter": "2023.4Q",
-    "delta_bs_mn": -119018.312,
-    "pl_oci_dangi_mn": -24600.353,
-    "residual_mn": -94417.959
   },
   {
     "company": "롯데손해보험",
@@ -98,6 +98,13 @@
     "residual_mn": -59067.055
   },
   {
+    "company": "현대해상",
+    "quarter": "2023.2Q",
+    "delta_bs_mn": 94986.912,
+    "pl_oci_dangi_mn": 152519.008,
+    "residual_mn": -57532.096
+  },
+  {
     "company": "NH농협손해보험",
     "quarter": "2024.4Q",
     "delta_bs_mn": -92274.845,
@@ -117,6 +124,13 @@
     "delta_bs_mn": -27284.0,
     "pl_oci_dangi_mn": -72885.0,
     "residual_mn": 45601.0
+  },
+  {
+    "company": "에이비엘생명보험",
+    "quarter": "2023.3Q",
+    "delta_bs_mn": 37219.0,
+    "pl_oci_dangi_mn": 80764.638,
+    "residual_mn": -43545.638
   },
   {
     "company": "삼성화재해상보험",

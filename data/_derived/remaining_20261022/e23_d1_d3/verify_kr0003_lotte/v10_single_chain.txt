@@ -1,0 +1,90 @@
+(a) 2023.3Q master vs FY2024_Q3 prior columns (own read, table L5069):
+  item 1 master 9M 454351.967156 raw 9M 454351.967156 | master 3M 386549.246872 raw 3M 386549.246872 -> True
+  item 17 master 9M -109448.993794 raw 9M -109448.993794 | master 3M -149850.584806 raw 3M -149850.584806 -> True
+  item 20 master 9M 344902.973362 raw 9M 344902.973362 | master 3M 236698.662066 raw 3M 236698.662066 -> True
+  item 21 master 9M -2307.494918 raw 9M -2307.494918 | master 3M -936.755347 raw 3M -936.755347 -> True
+  item 22 master 9M 342595.478444 raw 9M 342595.478444 | master 3M 235761.906719 raw 3M 235761.906719 -> True
+  item 23 master 9M 79716.997812 raw 9M 79716.997812 | master 3M 54207.047867 raw 3M 54207.047867 -> True
+  item 24 master 9M 262878.480632 raw 9M 262878.480632 | master 3M 181554.858852 raw 3M 181554.858852 -> True
+  item 25 master 9M -47724.142171 raw 9M -47724.142171 | master 3M -32862.826462 raw 3M -32862.826462 -> True
+  item 31 master 9M 215154.338461 raw 9M 215154.338461 | master 3M 148692.03239 raw 3M 148692.03239 -> True
+  mismatches: 0
+
+(b) 2023.4Q 값_당분기 vs (4Q cum - 3Q cum):
+  item 1 cum 461540.038638 (HEAD 468498.419718 ) single None (HEAD 14146.452562 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 2 cum 486250.0 (HEAD 493210.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 3 cum 570025.0 (HEAD 578755.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 4 cum 185905.0 (HEAD 186853.0 ) single None (HEAD 55230.0 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 5 cum 19517.0 (HEAD 19517.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 6 cum 51324.0 (HEAD 51324.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 7 cum 313279.0 (HEAD 321061.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 8 cum -83775.0 (HEAD -85545.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 9 cum -1973.0 (HEAD -1756.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 10 cum -737.0 (HEAD -737.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 11 cum -2914.0 (HEAD -2914.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 12 cum -78151.0 (HEAD -80138.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 13 cum -1029.0 (HEAD -1029.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 14 cum 8128.0 (HEAD 8128.0 ) single None (HEAD None ) blank (3Q cum blank => nothing to derive)
+  item 15 cum 0.0 (HEAD 0.0 ) single 0.0 (HEAD 0.0 ) populated, derived 0.0 -> OK
+  item 16 cum 31809.707926 (HEAD 31809.707926 ) single 9005.440027 (HEAD 9005.440027 ) populated, derived 9005.440027 -> OK
+  item 17 cum -86105.249856 (HEAD -72207.217142 ) single None (HEAD 37241.776652 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 18 cum 90258.423181 (HEAD 90258.423181 ) single 74585.546163 (HEAD 74585.546163 ) populated, derived 74585.546163 -> OK
+  item 19 cum -176363.673037 (HEAD -162465.640323 ) single None (HEAD -37343.769511 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 20 cum 375434.788782 (HEAD 396291.202576 ) single None (HEAD 51388.229214 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 21 cum -1952.079806 (HEAD -1952.079806 ) single 355.415112 (HEAD 355.415112 ) populated, derived 355.415112 -> OK
+  item 22 cum 373482.708976 (HEAD 394339.12277 ) single None (HEAD 51743.644326 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 23 cum 87902.382833 (HEAD 92703.196556 ) single None (HEAD 12986.198744 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 24 cum 285580.326143 (HEAD 301635.926214 ) single None (HEAD 38757.445582 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 25 cum -154441.34843 (HEAD -176169.223932 ) single None (HEAD -128445.081761 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 26 cum 255922.070529 (HEAD 244992.729544 ) single None (HEAD 299329.064947 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 27 cum -496420.065574 (HEAD -507218.600091 ) single None (HEAD -600799.981244 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 28 cum 81673.10191 (HEAD 81673.10191 ) single 168216.440387 (HEAD 168216.440387 ) populated, derived 168216.440387 -> OK
+  item 29 cum 2986.808968 (HEAD 2986.808968 ) single 2198.246979 (HEAD 2198.246979 ) populated, derived 2198.246979 -> OK
+  item 30 cum 4824.677407 (HEAD 4824.677407 ) single 4755.967782 (HEAD 4755.967782 ) populated, derived 4755.967782 -> OK
+  item 31 cum 131138.977713 (HEAD 125466.702282 ) single None (HEAD -89687.636179 ) blank (cum moved => mixed-vintage seam, blank correct)
+  item 32 cum -3427.94167 (HEAD -3427.94167 ) single -2144.820612 (HEAD -2144.820612 ) populated, derived -2144.820612 -> OK
+  ISSUES: []
+  PL cells changed outside 2023.4Q: []
+  CSM cells changed outside 2023.4Q: []
+
+(d) CSM chain (억원)  item: 1 기초,2 신계약,3 이자,4 조정,5 상각,6 기말
+ -- LIVE
+   2023.1Q cum [16774.38, 1553.18, 174.43, -174.28, -392.84, 17934.87] | cum rollforward gap 0.00 | single [16774.38, 1553.18, 174.43, -174.28, -392.84, 17934.87] | single rollforward gap 0.0
+   2023.2Q cum [16774.38, 2654.34, 358.76, -361.99, -807.85, 18617.64] | cum rollforward gap 0.00 | single [17934.87, 1101.16, 184.33, -187.71, -415.01, 18617.64] | single rollforward gap 0.0
+   2023.3Q cum [16774.4, 4092.1, 554.0, 1981.3, -1316.2, 22085.6] | cum rollforward gap 0.00 | single [18617.64, 1437.76, 195.24, 2343.29, -508.35, 22085.6] | single rollforward gap -0.02
+   2023.4Q cum [16669.0, 5478.9, 777.0, 2795.0, -1859.0, 23860.8] | cum rollforward gap 0.10 | single [22085.6, 1386.8, 223.0, 813.7, -542.8, 23860.8] | single rollforward gap 105.5
+   2024.1Q cum [23860.8, 1266.7, 241.6, -608.4, -568.3, 24192.5] | cum rollforward gap -0.10 | single [23860.8, 1266.7, 241.6, -608.4, -568.3, 24192.5] | single rollforward gap -0.1
+   2024.2Q cum [23860.8, 2532.0, 487.3, -1261.4, -1142.0, 24476.6] | cum rollforward gap 0.10 | single [24192.5, 1265.3, 245.7, -653.0, -573.7, 24476.6] | single rollforward gap 0.2
+   2024.3Q cum [23860.8, 3645.5, 735.5, -2130.4, -1710.5, 24400.9] | cum rollforward gap -0.00 | single [24476.6, 1113.5, 248.2, -869.0, -568.5, 24400.9] | single rollforward gap -0.1
+   2024.4Q cum [23860.8, 4852.5, 982.4, -4239.7, -2254.5, 23201.6] | cum rollforward gap -0.10 | single [24400.9, 1207.0, 246.9, -2109.3, -544.0, 23201.6] | single rollforward gap -0.1
+   2025.1Q cum [23201.6, 1098.5, 233.3, -1430.1, -522.8, 22580.5] | cum rollforward gap 0.00 | single [23201.6, 1098.5, 233.3, -1430.1, -522.8, 22580.5] | single rollforward gap 0.0
+   2025.2Q cum [23201.6, 2135.4, 460.1, -2074.6, -1045.5, 22676.9] | cum rollforward gap 0.10 | single [22580.5, 1036.9, 226.8, -644.5, -522.7, 22676.9] | single rollforward gap 0.1
+   2025.3Q cum [23201.6, 3147.3, 686.6, -2792.2, -1563.2, 22680.0] | cum rollforward gap 0.10 | single [22676.9, 1011.9, 226.5, -717.6, -517.7, 22680.0] | single rollforward gap 0.0
+   2025.4Q cum [23201.6, 4121.7, 911.6, -1346.8, -2139.4, 24748.6] | cum rollforward gap 0.10 | single [22680.0, 974.4, 225.0, 1445.4, -576.2, 24748.6] | single rollforward gap 0.0
+   2026.1Q cum [24748.6, 794.8, 241.5, -108.1, -586.9, 25089.9] | cum rollforward gap -0.00 | single [24748.6, 794.8, 241.5, -108.1, -586.9, 25089.9] | single rollforward gap -0.0
+   2026.2Q cum [24748.6, 1428.3, 485.3, -3141.2, -1089.9, 22431.2] | cum rollforward gap -0.10 | single [25089.9, 633.5, 243.8, -3033.1, -503.0, 22431.2] | single rollforward gap -0.1
+   opening drift within FY / boundary:
+    FY2023 openings Q1..Q4: [16774.38, 16774.38, 16774.4, 16669.0] max-min=105.40 rel=0.632%
+    FY2024 openings Q1..Q4: [23860.8, 23860.8, 23860.8, 23860.8] max-min=0.00 rel=0.000%
+    FY2023 4Q closing 23860.8 -> FY2024 1Q opening 23860.8 (diff 0.00)
+    3Q closing -> 4Q single opening: 22085.6 22085.6 ; 3Q 9M closing vs 4Q cum opening+flows: Q3 open 16774.4 Q4 open 16669.0
+ -- HEAD
+   2023.1Q cum [16774.38, 1553.18, 174.43, -174.28, -392.84, 17934.87] | cum rollforward gap 0.00 | single [16774.38, 1553.18, 174.43, -174.28, -392.84, 17934.87] | single rollforward gap 0.0
+   2023.2Q cum [16774.38, 2654.34, 358.76, -361.99, -807.85, 18617.64] | cum rollforward gap 0.00 | single [17934.87, 1101.16, 184.33, -187.71, -415.01, 18617.64] | single rollforward gap 0.0
+   2023.3Q cum [16774.4, 4092.1, 554.0, 1981.3, -1316.2, 22085.6] | cum rollforward gap 0.00 | single [18617.64, 1437.76, 195.24, 2343.29, -508.35, 22085.6] | single rollforward gap -0.02
+   2023.4Q cum [16774.4, 5478.9, 780.5, 2801.0, -1868.5, 23966.2] | cum rollforward gap 0.10 | single [22085.6, 1386.8, 226.5, 819.7, -552.3, 23966.2] | single rollforward gap 0.1
+   2024.1Q cum [23860.8, 1266.7, 241.6, -608.4, -568.3, 24192.5] | cum rollforward gap -0.10 | single [23860.8, 1266.7, 241.6, -608.4, -568.3, 24192.5] | single rollforward gap -0.1
+   2024.2Q cum [23860.8, 2532.0, 487.3, -1261.4, -1142.0, 24476.6] | cum rollforward gap 0.10 | single [24192.5, 1265.3, 245.7, -653.0, -573.7, 24476.6] | single rollforward gap 0.2
+   2024.3Q cum [23860.8, 3645.5, 735.5, -2130.4, -1710.5, 24400.9] | cum rollforward gap -0.00 | single [24476.6, 1113.5, 248.2, -869.0, -568.5, 24400.9] | single rollforward gap -0.1
+   2024.4Q cum [23860.8, 4852.5, 982.4, -4239.7, -2254.5, 23201.6] | cum rollforward gap -0.10 | single [24400.9, 1207.0, 246.9, -2109.3, -544.0, 23201.6] | single rollforward gap -0.1
+   2025.1Q cum [23201.6, 1098.5, 233.3, -1430.1, -522.8, 22580.5] | cum rollforward gap 0.00 | single [23201.6, 1098.5, 233.3, -1430.1, -522.8, 22580.5] | single rollforward gap 0.0
+   2025.2Q cum [23201.6, 2135.4, 460.1, -2074.6, -1045.5, 22676.9] | cum rollforward gap 0.10 | single [22580.5, 1036.9, 226.8, -644.5, -522.7, 22676.9] | single rollforward gap 0.1
+   2025.3Q cum [23201.6, 3147.3, 686.6, -2792.2, -1563.2, 22680.0] | cum rollforward gap 0.10 | single [22676.9, 1011.9, 226.5, -717.6, -517.7, 22680.0] | single rollforward gap 0.0
+   2025.4Q cum [23201.6, 4121.7, 911.6, -1346.8, -2139.4, 24748.6] | cum rollforward gap 0.10 | single [22680.0, 974.4, 225.0, 1445.4, -576.2, 24748.6] | single rollforward gap 0.0
+   2026.1Q cum [24748.6, 794.8, 241.5, -108.1, -586.9, 25089.9] | cum rollforward gap -0.00 | single [24748.6, 794.8, 241.5, -108.1, -586.9, 25089.9] | single rollforward gap -0.0
+   2026.2Q cum [24748.6, 1428.3, 485.3, -3141.2, -1089.9, 22431.2] | cum rollforward gap -0.10 | single [25089.9, 633.5, 243.8, -3033.1, -503.0, 22431.2] | single rollforward gap -0.1
+   opening drift within FY / boundary:
+    FY2023 openings Q1..Q4: [16774.38, 16774.38, 16774.4, 16774.4] max-min=0.02 rel=0.000%
+    FY2024 openings Q1..Q4: [23860.8, 23860.8, 23860.8, 23860.8] max-min=0.00 rel=0.000%
+    FY2023 4Q closing 23966.2 -> FY2024 1Q opening 23860.8 (diff -105.40)
+    3Q closing -> 4Q single opening: 22085.6 22085.6 ; 3Q 9M closing vs 4Q cum opening+flows: Q3 open 16774.4 Q4 open 16774.4

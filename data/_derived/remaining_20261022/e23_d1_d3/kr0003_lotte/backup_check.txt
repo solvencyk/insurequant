@@ -1,0 +1,12 @@
+data/_gold/user_pl_cells.json: backup sha256 == this manifest before_sha256 True; == KB라이프 manifest after_sha256 True
+PL_breakdown.json: backup sha256 == this manifest before_sha256 True; == KB라이프 manifest after_sha256 True
+PL_breakdown_provenance.json: backup sha256 == this manifest before_sha256 True; == KB라이프 manifest after_sha256 True
+data/_gold/user_csm_cells.json: backup sha256 == this manifest before_sha256 True; == KB라이프 manifest after_sha256 True
+CSM_waterfall.json: backup sha256 == this manifest before_sha256 True; == KB라이프 manifest after_sha256 True
+CSM_waterfall_provenance.json: backup sha256 == this manifest before_sha256 True; == KB라이프 manifest after_sha256 True
+tests/test_rule_coverage_manifest.py: backup sha256 == this manifest before_sha256 True; == KB라이프 manifest after_sha256 True
+extra/extra/data/_derived/pl_oci_vs_bs_aoci_warn.json: backup sha256 == preload list True
+extra/extra/data/_derived/qoq_warn.json: backup sha256 == preload list True
+extra/extra/tests/fixtures/builder_input_fingerprints.json: backup sha256 == preload list True
+extra/extra/tests/fixtures/master_tables_golden.json: backup sha256 == preload list True
+ALL OK

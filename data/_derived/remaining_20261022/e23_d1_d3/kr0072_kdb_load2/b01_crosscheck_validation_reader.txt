@@ -1,0 +1,2 @@
+parts checked 196 flagged 0
+distinct table/col 13

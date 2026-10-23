@@ -1,0 +1,22 @@
+== 1. apply files vs the Hyundai after_sha256
+  data/_gold/user_pl_cells.json: live == Hyundai after_sha256 : True
+  PL_breakdown.json: live == Hyundai after_sha256 : True
+  PL_breakdown_provenance.json: live == Hyundai after_sha256 : True
+  data/_gold/user_csm_cells.json: live == Hyundai after_sha256 : True
+  CSM_waterfall.json: live == Hyundai after_sha256 : True
+  CSM_waterfall_provenance.json: live == Hyundai after_sha256 : True
+== 2. gold-overlay ledger vs git HEAD
+  data/_gold/gold_overlay_ledger.json: == HEAD (line endings normalised, CRLF in working tree: True) : True
+== 3. validation cleanup copies
+  tests/test_rule_coverage_manifest.py: live == validation post copy : True ; live == pre copy : False
+  tests/fixtures/master_tables_golden.json: live == validation post copy : True ; live == pre copy : False
+  scripts/validate_master_tables.py: live == validation post copy : True ; live == pre copy : False
+  pre copy of the test file == Hyundai after_sha256 of the test file : True
+== 4. KR0072 cells of the live files vs git HEAD
+  PL_breakdown.json: KR0072 rows live 448 head 448 identical : True
+  CSM_waterfall.json: KR0072 rows live 84 head 84 identical : True
+  data/_gold/user_pl_cells.json: KR0072 gold set entries live 7 head 7 identical : True | null_dangi KR0072 cells live 3 head 3 identical : True | set_dangi KR0072 cells live 0 head 0 identical : True
+  data/_gold/user_csm_cells.json: KR0072 gold set entries live 7 head 7 identical : True
+  PL_breakdown_provenance.json: KR0072 blocks live 28 head 28 identical : True
+  CSM_waterfall_provenance.json: KR0072 blocks live 13 head 13 identical : True
+ALL OK

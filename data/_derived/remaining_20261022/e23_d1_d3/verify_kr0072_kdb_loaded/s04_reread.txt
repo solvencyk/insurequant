@@ -1,0 +1,191 @@
+== 2023.1Q : statement tables found at lines [4195, 24188] header [['', '제 37 기 1분기', '제 36 기 1분기'], ['3개월', '누적', '3개월', '누적']]
+   copies identical: False
+== 2023.2Q : statement tables found at lines [5522, 27548] header [['', '제 37 기 반기', '제 36 기 반기'], ['3개월', '누적', '3개월', '누적']]
+   copies identical: False
+== 2023.3Q : statement tables found at lines [3909] header [['', '제 37 기 3분기', '제 36 기 3분기'], ['3개월', '누적', '3개월', '누적']]
+   copies identical: True
+== 2023.4Q : statement tables found at lines [5362] header [['', '제 37 기', '제 36 기', '제 35 기'], ['보험손익', '99,413,141,954', '65,248,530,979', '92,366,558,274']]
+   copies identical: True
+2023.1Q FVOCI rows (cum,3m): [(371376.033894, 371376.033894), (5564.18644, 5564.18644)]
+2023.1Q derived inputs ins,insx,re_i,re_x (117588.022764, 117588.022764) (107654.084585, 107654.084585) (7540.888778, 7540.888778) (6830.245657, 6830.245657) | ff,rf,fc,rc (14104.70808, 14104.70808) (292.001794, 292.001794) (181665.556922, 181665.556922) (505.793627, 505.793627)
+2023.2Q FVOCI rows (cum,3m): [(106941.629211, -264434.404683), (6604.167588, 1039.981148)]
+2023.2Q derived inputs ins,insx,re_i,re_x (237662.98851, 120074.965746) (213444.994683, 105790.910098) (28559.376972, 21018.488194) (19602.078585, 12771.832928) | ff,rf,fc,rc (23661.064901, 9556.356821) (954.847023, 662.845229) (332151.083732, 150485.52681) (1434.944029, 929.150402)
+2023.3Q FVOCI rows (cum,3m): [(-142708.043542, -249649.672753), (6874.687033, 270.519445)]
+2023.3Q derived inputs ins,insx,re_i,re_x (360950.037897, 123287.049387) (352381.757526, 138936.762843) (47492.558085, 18933.181113) (30108.138733, 10506.060148) | ff,rf,fc,rc (33304.509051, 9643.44415) (1952.151959, 997.304936) (462651.36882, 130500.285088) (2584.452808, 1149.508779)
+2023.4Q FVOCI rows (cum,3m): [(721351.741715, None), (11589.35712, None)]
+2023.4Q derived inputs ins,insx,re_i,re_x (489950.708224, None) (422145.44353, None) (39088.588583, None) (28882.103473, None) | ff,rf,fc,rc (52317.583109, None) (2923.820361, None) (652591.402462, None) (3639.732996, None)
+2023.1Q CSM amort rows [(21235, ['(3) 제공된 서비스의 보험계약마진', '13,531', '11,641']), (40344, ['(3) 제공된 서비스의 보험계약마진', '13,531', '11,641'])]
+   copies identical: True
+2023.2Q CSM amort rows [(23632, ['(3) 제공된 서비스의 보험계약마진', '20,302', '33,833', '12,869', '24,509']), (44734, ['(3) 제공된 서비스의 보험계약마진', '20,302', '33,833', '12,869', '24,509'])]
+   copies identical: True
+2023.3Q CSM amort rows [(22459, ['(3) 제공된 서비스의 보험계약마진', '19,851', '53,684', '12,756', '37,266'])]
+   copies identical: True
+2023.4Q CSM amort rows [(33186, ['(3) 제공된 서비스의 보험계약마진', '71,048', '51,198'])]
+   copies identical: True
+
+=== PL cumulative: independent expectation vs LIVE master 값 (tol 0.0061 mn)
+2023.1Q 1 OK changed exp=8298.413391 master= 8298.413391 head= 7111.35
+2023.1Q 2 OK changed exp=10644.581300 master= 10644.5813 head= 9457.51
+2023.1Q 3 OK changed exp=9933.938179 master= 9933.938179 head= 8746.1
+2023.1Q 4 OK changed exp=11641.000000 master= 11641.0 head= 11125.0
+2023.1Q 8 OK changed exp=710.643121 master= 710.643121 head= 711.41
+2023.1Q 15 OK same exp=0.000000 master= 0.0 head= 0.0
+2023.1Q 16 OK same exp=2346.167909 master= 2346.17 head= 2346.17
+2023.1Q 17 OK changed exp=32877.150458 master= 32877.150458 head= 35986.75
+2023.1Q 18 OK changed exp=200651.791133 master= 200651.791133 head= 200709.54
+2023.1Q 19 OK changed exp=-167774.640675 master= -167774.640675 head= -164722.79
+2023.1Q 20 OK changed exp=41175.563849 master= 41175.563849 head= 43098.09
+2023.1Q 21 OK same exp=-5425.697542 master= -5425.7 head= -5425.7
+2023.1Q 22 OK changed exp=35749.866307 master= 35749.866307 head= 37672.4
+2023.1Q 23 OK same exp=-0.209323 master= -0.209323 head= -0.209323
+2023.1Q 24 OK changed exp=35750.075630 master= 35750.07563 head= 37672.61
+2023.1Q 25 OK changed exp=19314.399668 master= 19314.399668 head= None
+2023.1Q 26 OK changed exp=371376.033894 master= 371376.033894 head= None
+2023.1Q 27 OK changed exp=-357827.171410 master= -357827.17141 head= None
+2023.1Q 28 OK changed exp=1334.458429 master= 1334.458429 head= None
+2023.1Q 29 OK changed exp=5564.186440 master= 5564.18644 head= None
+2023.1Q 30 OK changed exp=-1073.514450 master= -1073.51445 head= None
+2023.1Q 31 OK changed exp=55064.475298 master= 55064.475298 head= None
+2023.1Q 32 OK changed exp=-59.593235 master= -59.593235 head= None
+2023.2Q 1 OK changed exp=27825.949019 master= 27825.949019 head= 22665.0
+2023.2Q 2 OK changed exp=33175.292214 master= 33175.292214 head= 22665.0
+2023.2Q 3 OK changed exp=24217.993827 master= 24217.993827 head= 13292.0
+2023.2Q 4 OK changed exp=24509.000000 master= 24509.0 head= 23415.0
+2023.2Q 8 OK changed exp=8957.298387 master= 8957.298387 head= 9373.0
+2023.2Q 15 OK changed exp=0.000000 master= 0.0 head= None
+2023.2Q 16 OK changed exp=5349.343195 master= 5349.343195 head= 5400.0
+2023.2Q 17 OK changed exp=45706.602817 master= 45706.602817 head= None
+2023.2Q 18 OK changed exp=354676.718654 master= 354676.718654 head= None
+2023.2Q 19 OK changed exp=-308970.115837 master= -308970.115837 head= -303458.0
+2023.2Q 20 OK changed exp=73532.551836 master= 73532.551836 head= 68658.0
+2023.2Q 21 OK changed exp=-10908.331160 master= -10908.33116 head= -10908.0
+2023.2Q 22 OK changed exp=62624.220676 master= 62624.220676 head= 57750.0
+2023.2Q 23 MISMATCH same exp=-0.209323 master= -0.2 head= -0.2
+2023.2Q 24 OK changed exp=62624.429999 master= 62624.429999 head= 57750.0
+2023.2Q 25 OK changed exp=183006.320644 master= 183006.320644 head= None
+2023.2Q 26 OK changed exp=106941.629211 master= 106941.629211 head= None
+2023.2Q 27 OK changed exp=70522.063628 master= 70522.063628 head= None
+2023.2Q 28 OK changed exp=1205.926925 master= 1205.926925 head= None
+2023.2Q 29 OK changed exp=6604.167588 master= 6604.167588 head= None
+2023.2Q 30 OK changed exp=-2251.456083 master= -2251.456083 head= None
+2023.2Q 31 OK changed exp=245630.750643 master= 245630.750643 head= None
+2023.2Q 32 OK changed exp=-16.010625 master= -16.010625 head= None
+2023.3Q 1 OK changed exp=16711.142687 master= 16711.142687 head= 4636.975319
+2023.3Q 2 OK changed exp=25952.699723 master= 25952.699723 head= 13878.532355
+2023.3Q 3 OK changed exp=8568.280371 master= 8568.280371 head= -4480.275872
+2023.3Q 4 OK changed exp=37266.000000 master= 37266.0 head= 35250.0
+2023.3Q 8 OK changed exp=17384.419352 master= 17384.419352 head= 18358.808227
+2023.3Q 15 OK same exp=0.000000 master= 0.0 head= 0.0
+2023.3Q 16 OK same exp=9241.557036 master= 9241.557036 head= 9241.557036
+2023.3Q 17 OK changed exp=-13718.605641 master= -13718.605641 head= -6025.166046
+2023.3Q 18 OK changed exp=416260.554977 master= 416260.554977 head= 416495.75665
+2023.3Q 19 OK changed exp=-429979.160618 master= -429979.160618 head= -422520.922696
+2023.3Q 20 OK changed exp=2992.537046 master= 2992.537046 head= -1388.190727
+2023.3Q 21 OK same exp=-16519.944013 master= -16519.944013 head= -16519.944013
+2023.3Q 22 OK changed exp=-13527.406967 master= -13527.406967 head= -17908.13474
+2023.3Q 23 OK same exp=-0.209323 master= -0.209323 head= -0.209323
+2023.3Q 24 OK changed exp=-13527.197644 master= -13527.197644 head= -17907.925417
+2023.3Q 25 OK changed exp=271338.272061 master= 271338.272061 head= 278659.391567
+2023.3Q 26 OK same exp=-142708.043542 master= -142708.043542 head= -142708.043542
+2023.3Q 27 OK changed exp=410202.722556 master= 410202.722556 head= 417523.842062
+2023.3Q 28 OK same exp=550.330481 master= 550.330481 head= 550.330481
+2023.3Q 29 OK same exp=6874.687033 master= 6874.687033 head= 6874.687033
+2023.3Q 30 OK same exp=-3587.572436 master= -3587.572436 head= -3587.572436
+2023.3Q 31 OK changed exp=257811.074417 master= 257811.074417 head= 260751.46615
+2023.3Q 32 OK same exp=6.147969 master= 6.147969 head= 6.147969
+2023.4Q 1 OK same exp=65248.530979 master= 65248.530979 head= 65248.530979
+2023.4Q 2 OK same exp=78011.749804 master= 78011.749804 head= 78011.749804
+2023.4Q 3 OK same exp=67805.264694 master= 67805.264694 head= 67805.264694
+2023.4Q 4 OK same exp=51198.000000 master= 51198.0 head= 51198.0
+2023.4Q 8 OK same exp=10206.485110 master= 10206.48511 head= 10206.48511
+2023.4Q 15 OK same exp=0.000000 master= 0.0 head= 0.0
+2023.4Q 16 OK same exp=12763.218825 master= 12763.218825 head= 12763.218825
+2023.4Q 17 OK changed exp=-18428.269919 master= -18428.269919 head= -18358.723814
+2023.4Q 18 OK changed exp=582561.462069 master= 582561.462069 head= 582631.008174
+2023.4Q 19 OK same exp=-600989.731988 master= -600989.731988 head= -600989.731988
+2023.4Q 20 OK changed exp=46820.261060 master= 46820.26106 head= 46889.807165
+2023.4Q 21 OK same exp=-22870.882990 master= -22870.88299 head= -22870.88299
+2023.4Q 22 OK changed exp=23949.378070 master= 23949.37807 head= 24018.924175
+2023.4Q 23 OK same exp=-0.209323 master= -0.209323 head= -0.209323
+2023.4Q 24 OK changed exp=23949.587393 master= 23949.587393 head= 24019.133498
+2023.4Q 25 OK same exp=-119873.605158 master= -119873.605158 head= -119873.605158
+2023.4Q 26 OK same exp=721351.741715 master= 721351.741715 head= 721351.741715
+2023.4Q 27 OK same exp=-851813.499295 master= -851813.499295 head= -851813.499295
+2023.4Q 28 OK same exp=-349.760634 master= -349.760634 head= -349.760634
+2023.4Q 29 OK same exp=11589.357120 master= 11589.35712 head= 11589.35712
+2023.4Q 30 OK same exp=-48.499287 master= -48.499287 head= -48.499287
+2023.4Q 31 OK changed exp=-95924.017765 master= -95924.017765 head= -95854.47166
+2023.4Q 32 OK same exp=-602.944777 master= -602.944777 head= -602.944777
+compared=92 mismatches=1 | changed-vs-HEAD cells among compared: 61, of which match own reread: 61
+changed PL cum cells total 65 not covered by own reread: [('2023.2Q', 7), ('2023.2Q', 12), ('2023.3Q', 7), ('2023.3Q', 12)]
+
+=== PL single-quarter: master 값_당분기 vs 3-month column printed in same later filing (interim quarters only)
+2023.1Q 1 3m_printed=8298.413391 master_dangi= 8298.413391 pin= None OK changed
+2023.1Q 2 3m_printed=10644.581300 master_dangi= 10644.5813 pin= None OK changed
+2023.1Q 3 3m_printed=9933.938179 master_dangi= 9933.938179 pin= None OK changed
+2023.1Q 8 3m_printed=710.643121 master_dangi= 710.643121 pin= None OK changed
+2023.1Q 15 3m_printed=0.000000 master_dangi= 0.0 pin= None OK same
+2023.1Q 16 3m_printed=2346.167909 master_dangi= 2346.17 pin= None OK same
+2023.1Q 17 3m_printed=32877.150458 master_dangi= 32877.150458 pin= None OK changed
+2023.1Q 18 3m_printed=200651.791133 master_dangi= 200651.791133 pin= None OK changed
+2023.1Q 19 3m_printed=-167774.640675 master_dangi= -167774.640675 pin= None OK changed
+2023.1Q 20 3m_printed=41175.563849 master_dangi= 41175.563849 pin= None OK changed
+2023.1Q 21 3m_printed=-5425.697542 master_dangi= -5425.7 pin= None OK same
+2023.1Q 22 3m_printed=35749.866307 master_dangi= 35749.866307 pin= None OK changed
+2023.1Q 23 3m_printed=-0.209323 master_dangi= -0.209323 pin= None OK same
+2023.1Q 24 3m_printed=35750.075630 master_dangi= 35750.07563 pin= None OK changed
+2023.1Q 25 3m_printed=19314.399668 master_dangi= 19314.399668 pin= None OK changed
+2023.1Q 26 3m_printed=371376.033894 master_dangi= 371376.033894 pin= None OK changed
+2023.1Q 27 3m_printed=-357827.171410 master_dangi= -357827.17141 pin= None OK changed
+2023.1Q 28 3m_printed=1334.458429 master_dangi= 1334.458429 pin= None OK changed
+2023.1Q 29 3m_printed=5564.186440 master_dangi= 5564.18644 pin= None OK changed
+2023.1Q 30 3m_printed=-1073.514450 master_dangi= -1073.51445 pin= None OK changed
+2023.1Q 31 3m_printed=55064.475298 master_dangi= 55064.475298 pin= None OK changed
+2023.1Q 32 3m_printed=-59.593235 master_dangi= -59.593235 pin= None OK changed
+2023.2Q 1 3m_printed=19527.535628 master_dangi= 19527.535628 pin= None OK changed
+2023.2Q 2 3m_printed=22530.710914 master_dangi= 22530.710914 pin= None OK changed
+2023.2Q 3 3m_printed=14284.055648 master_dangi= 14284.055648 pin= None OK changed
+2023.2Q 4 3m_printed=12869.000000 master_dangi= 12868.0 pin= None DIFF changed
+2023.2Q 8 3m_printed=8246.655266 master_dangi= 8246.655266 pin= None OK changed
+2023.2Q 15 3m_printed=0.000000 master_dangi= 0.0 pin= None OK changed
+2023.2Q 16 3m_printed=3003.175286 master_dangi= 3003.175286 pin= 3003.175286 OK changed
+2023.2Q 17 3m_printed=12829.452359 master_dangi= 12829.452359 pin= None OK changed
+2023.2Q 18 3m_printed=154024.927521 master_dangi= 154024.927521 pin= None OK changed
+2023.2Q 19 3m_printed=-141195.475162 master_dangi= -141195.475162 pin= None OK changed
+2023.2Q 20 3m_printed=32356.987987 master_dangi= 32356.987987 pin= None OK changed
+2023.2Q 21 3m_printed=-5482.633618 master_dangi= -5482.633618 pin= -5482.633618 OK changed
+2023.2Q 22 3m_printed=26874.354369 master_dangi= 26874.354369 pin= None OK changed
+2023.2Q 23 3m_printed=0.000000 master_dangi= 0.009323 pin= None DIFF same
+2023.2Q 24 3m_printed=26874.354369 master_dangi= 26874.354369 pin= None OK changed
+2023.2Q 25 3m_printed=163691.920976 master_dangi= 163691.920976 pin= None OK changed
+2023.2Q 26 3m_printed=-264434.404683 master_dangi= -264434.404683 pin= None OK changed
+2023.2Q 27 3m_printed=428349.235038 master_dangi= 428349.235038 pin= None OK changed
+2023.2Q 28 3m_printed=-128.531504 master_dangi= -128.531504 pin= None OK changed
+2023.2Q 29 3m_printed=1039.981148 master_dangi= 1039.981148 pin= None OK changed
+2023.2Q 30 3m_printed=-1177.941633 master_dangi= -1177.941633 pin= None OK changed
+2023.2Q 31 3m_printed=190566.275345 master_dangi= 190566.275345 pin= None OK changed
+2023.2Q 32 3m_printed=43.582610 master_dangi= 43.58261 pin= None OK changed
+2023.3Q 1 3m_printed=-11114.806332 master_dangi= -11114.806332 pin= None OK changed
+2023.3Q 2 3m_printed=-7222.592491 master_dangi= -7222.592491 pin= None OK changed
+2023.3Q 3 3m_printed=-15649.713456 master_dangi= -15649.713456 pin= None OK changed
+2023.3Q 4 3m_printed=12756.000000 master_dangi= 12757.0 pin= None DIFF changed
+2023.3Q 8 3m_printed=8427.120965 master_dangi= 8427.120965 pin= None OK changed
+2023.3Q 15 3m_printed=0.000000 master_dangi= 0.0 pin= None OK changed
+2023.3Q 16 3m_printed=3892.213841 master_dangi= 3892.213841 pin= None OK changed
+2023.3Q 17 3m_printed=-58698.285464 master_dangi= -58698.285464 pin= -58698.285464 OK changed
+2023.3Q 18 3m_printed=62310.759317 master_dangi= 62310.759317 pin= 62310.759317 OK changed
+2023.3Q 19 3m_printed=-121009.044781 master_dangi= -121009.044781 pin= None OK changed
+2023.3Q 20 3m_printed=-69813.091796 master_dangi= -69813.091796 pin= -69813.091796 OK changed
+2023.3Q 21 3m_printed=-5611.612853 master_dangi= -5611.612853 pin= None OK changed
+2023.3Q 22 3m_printed=-75424.704649 master_dangi= -75424.704649 pin= -75424.704649 OK changed
+2023.3Q 23 3m_printed=0.000000 master_dangi= -0.009323 pin= None DIFF same
+2023.3Q 24 3m_printed=-75424.704649 master_dangi= -75424.704649 pin= -75424.704649 OK changed
+2023.3Q 25 3m_printed=88331.951417 master_dangi= 88331.951417 pin= None OK changed
+2023.3Q 26 3m_printed=-249649.672753 master_dangi= -249649.672753 pin= None OK changed
+2023.3Q 27 3m_printed=339680.658928 master_dangi= 339680.658928 pin= None OK changed
+2023.3Q 28 3m_printed=-655.596444 master_dangi= -655.596444 pin= None OK changed
+2023.3Q 29 3m_printed=270.519445 master_dangi= 270.519445 pin= None OK changed
+2023.3Q 30 3m_printed=-1336.116353 master_dangi= -1336.116353 pin= None OK changed
+2023.3Q 31 3m_printed=12907.246768 master_dangi= 12907.246768 pin= 12907.246768 OK changed
+2023.3Q 32 3m_printed=22.158594 master_dangi= 22.158594 pin= None OK changed
+3m compared 68 diff 4

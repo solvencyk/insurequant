@@ -1,0 +1,717 @@
+{
+ "problems": [
+  {
+   "where": "2023.1Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.2Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.3Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.4Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.1Q i1",
+   "problem": "value plan 11177.777711 != re-read 15591.954456; part 보험손익 line 25572 != re-read L25564; part 보험손익 printed 11,177,777,711 != 15,591,954,456; part 보험손익 contribution 11177.777711 != sign*x 15591.954456"
+  },
+  {
+   "where": "2023.1Q i2",
+   "problem": "value plan 14701.765491 != re-read 19357.218570000005; part 보험수익 line 25618 != re-read L25610; part 보험수익 printed 152,742,218,946 != 180,798,949,760; part 보험수익 contribution 152742.218946 != sign*x 180798.94976; part 보험비용 line 25687 != re-read L25679; part 보험비용 printed 135,536,582,416 != 161,257,707,572; part 보험비용 contribution -135536.582416 != sign*|x| -161257.70757199998; part 재보험수익 line 25641 != re-read L25633; part 재보험수익 printed 10,951,944,288 != 13,442,581,026; part 재보험수익 contribution 10951.944288 != sign*x 13442.581026; part 재보험비용 line 25710 != re-read L25702; part 재보험비용 printed 13,455,815,327 != 13,626,604,644; part 재보험비용 contribution -13455.815327 != sign*|x| -13626.604644"
+  },
+  {
+   "where": "2023.1Q i3",
+   "problem": "value plan 17205.63653 != re-read 19541.242188000004; part 보험수익 line 25618 != re-read L25610; part 보험수익 printed 152,742,218,946 != 180,798,949,760; part 보험수익 contribution 152742.218946 != sign*x 180798.94976; part 보험비용 line 25687 != re-read L25679; part 보험비용 printed 135,536,582,416 != 161,257,707,572; part 보험비용 contribution -135536.582416 != sign*|x| -161257.70757199998"
+  },
+  {
+   "where": "2023.1Q i4",
+   "problem": "value plan 22411.0 != re-read 22447.0"
+  },
+  {
+   "where": "2023.1Q i8",
+   "problem": "value plan -2503.871039 != re-read -184.02361799999926; part 재보험수익 line 25641 != re-read L25633; part 재보험수익 printed 10,951,944,288 != 13,442,581,026; part 재보험수익 contribution 10951.944288 != sign*x 13442.581026; part 재보험비용 line 25710 != re-read L25702; part 재보험비용 printed 13,455,815,327 != 13,626,604,644; part 재보험비용 contribution -13455.815327 != sign*|x| -13626.604644"
+  },
+  {
+   "where": "2023.1Q i16",
+   "problem": "value plan 3523.98778 != re-read 3765.2641139999996; part 기타사업비용 line 25733 != re-read L25725; part 기타사업비용 printed 3,523,987,780 != 3,765,264,114; part 기타사업비용 contribution 3523.98778 != sign*x 3765.2641139999996"
+  },
+  {
+   "where": "2023.1Q i17",
+   "problem": "value plan 12268.965324 != re-read -5720.079812; part 투자손익 line 25756 != re-read L25748; part 투자손익 printed 12,268,965,324 != (5,720,079,812); part 투자손익 contribution 12268.965324 != sign*x -5720.079812"
+  },
+  {
+   "where": "2023.1Q i18",
+   "problem": "value plan 246664.821635 != re-read 200726.688867; part 투자손익 line 25756 != re-read L25748; part 투자손익 printed 12,268,965,324 != (5,720,079,812); part 투자손익 contribution 12268.965324 != sign*x -5720.079812; part 보험금융수익 line 25802 != re-read L25794; part 재보험금융수익 line 25825 != re-read L25817; part 보험금융비용 line 26101 != re-read L26093; part 보험금융비용 printed 233,593,504,258 != 205,606,231,528; part 보험금융비용 contribution 233593.504258 != sign*x 205606.231528; part 재보험금융비용 line 26124 != re-read L26116; part 재보험금융비용 printed 802,352,053 != 840,537,151; part 재보험금융비용 contribution 802.352053 != sign*x 840.537151"
+  },
+  {
+   "where": "2023.1Q i19",
+   "problem": "value plan -234395.856311 != re-read -206446.768679; part 보험금융수익 line 25802 != re-read L25794; part 재보험금융수익 line 25825 != re-read L25817; part 보험금융비용 line 26101 != re-read L26093; part 보험금융비용 printed 233,593,504,258 != 205,606,231,528; part 보험금융비용 contribution -233593.504258 != sign*x -205606.231528; part 재보험금융비용 line 26124 != re-read L26116; part 재보험금융비용 printed 802,352,053 != 840,537,151; part 재보험금융비용 contribution -802.352053 != sign*x -840.537151"
+  },
+  {
+   "where": "2023.1Q i20",
+   "problem": "value plan 23446.743035 != re-read 9871.874644; part 영업이익(손실) line 26400 != re-read L26392; part 영업이익(손실) printed 23,446,743,035 != 9,871,874,644; part 영업이익(손실) contribution 23446.743035 != sign*x 9871.874644"
+  },
+  {
+   "where": "2023.1Q i21",
+   "problem": "value plan -8533.969538 != re-read 373.65721199999996; part 영업외손익 line 26423 != re-read L26415; part 영업외손익 printed (8,533,969,538) != 373,657,212; part 영업외손익 contribution -8533.969538 != sign*x 373.65721199999996"
+  },
+  {
+   "where": "2023.1Q i22",
+   "problem": "value plan 14912.773497 != re-read 10245.531856; part 법인세차감전순이익 line 26492 != re-read L26484; part 법인세차감전순이익 printed 14,912,773,497 != 10,245,531,856; part 법인세차감전순이익 contribution 14912.773497 != sign*x 10245.531856"
+  },
+  {
+   "where": "2023.1Q i23",
+   "problem": "value plan 4301.267556 != re-read 2476.5594889999998; part 법인세비용(수익) line 26515 != re-read L26507; part 법인세비용(수익) printed 4,301,267,556 != 2,476,559,489; part 법인세비용(수익) contribution 4301.267556 != sign*x 2476.5594889999998"
+  },
+  {
+   "where": "2023.1Q i24",
+   "problem": "value plan 10611.505941 != re-read 7768.972366999999; part 당기순이익(손실) line 26584 != re-read L26576; part 당기순이익(손실) printed 10,611,505,941 != 7,768,972,367; part 당기순이익(손실) contribution 10611.505941 != sign*x 7768.972366999999"
+  },
+  {
+   "where": "2023.1Q i25",
+   "problem": "value plan 25272.694757 != re-read -217002.31146; part 기타포괄손익 line 26630 != re-read L26622; part 기타포괄손익 printed 25,272,694,757 != (217,002,311,460); part 기타포괄손익 contribution 25272.694757 != sign*x -217002.31146"
+  },
+  {
+   "where": "2023.1Q i26",
+   "problem": "value plan 328821.85025 != re-read -160603.295078; part 기타포괄손익-공정가치측정금융자산평가손익 line 26676 != re-read L26668; part 기타포괄손익-공정가치측정금융자산평가손익 printed 328,821,850,250 != (160,603,295,078); part 기타포괄손익-공정가치측정금융자산평가손익 contribution 328821.85025 != sign*x -160603.295078"
+  },
+  {
+   "where": "2023.1Q i27",
+   "problem": "value plan -306198.441686 != re-read -39883.505007; part 보험계약자산(부채)순금융손익 line 26745 != re-read L26737; part 보험계약자산(부채)순금융손익 printed (306,198,441,686) != (39,883,505,007); part 보험계약자산(부채)순금융손익 contribution -306198.441686 != sign*x -39883.505007"
+  },
+  {
+   "where": "2023.1Q i28",
+   "problem": "value plan 9302.23831 != re-read -15068.487896999999; part 현금흐름위험회피파생상품평가손익 line 26722 != re-read L26714; part 현금흐름위험회피파생상품평가손익 printed 9,302,238,310 != (15,068,487,897); part 현금흐름위험회피파생상품평가손익 contribution 9302.23831 != sign*x -15068.487896999999"
+  },
+  {
+   "where": "2023.1Q i30",
+   "problem": "value plan -6660.917782 != re-read -1396.902122; part 재보험계약자산(부채)순금융손익 line 26768 != re-read L26760; part 재보험계약자산(부채)순금융손익 printed (6,660,917,782) != (1,396,902,122); part 재보험계약자산(부채)순금융손익 contribution -6660.917782 != sign*x -1396.902122"
+  },
+  {
+   "where": "2023.1Q i31",
+   "problem": "value plan 35884.200698 != re-read -209233.339093; part 총포괄손익 line 26814 != re-read L26806; part 총포괄손익 printed 35,884,200,698 != (209,233,339,093); part 총포괄손익 contribution 35884.200698 != sign*x -209233.339093"
+  },
+  {
+   "where": "2023.1Q i32",
+   "problem": "value plan 7.965665 != re-read -50.121356; part 기타포괄손익 line 26630 != re-read L26622; part 기타포괄손익 printed 25,272,694,757 != (217,002,311,460); part 기타포괄손익 contribution 25272.694757 != sign*x -217002.31146; part 기타포괄손익-공정가치측정금융자산평가손익 line 26676 != re-read L26668; part 기타포괄손익-공정가치측정금융자산평가손익 printed 328,821,850,250 != (160,603,295,078); part 기타포괄손익-공정가치측정금융자산평가손익 contribution -328821.85025 != sign*x 160603.295078; part 보험계약자산(부채)순금융손익 line 26745 != re-read L26737; part 보험계약자산(부채)순금융손익 printed (306,198,441,686) != (39,883,505,007); part 보험계약자산(부채)순금융손익 contribution 306198.441686 != sign*x 39883.505007; part 현금흐름위험회피파생상품평가손익 line 26722 != re-read L26714; part 현금흐름위험회피파생상품평가손익 printed 9,302,238,310 != (15,068,487,897); part 현금흐름위험회피파생상품평가손익 contribution -9302.23831 != sign*x 15068.487896999999; part 재보험계약자산(부채)순금융손익 line 26768 != re-read L26760; part 재보험계약자산(부채)순금융손익 printed (6,660,917,782) != (1,396,902,122); part 재보험계약자산(부채)순금융손익 contribution 6660.917782 != sign*x 1396.902122"
+  },
+  {
+   "where": "2023.2Q i1",
+   "problem": "value plan 27404.89041 != re-read 26729.953569999998; part 보험손익 line 26852 != re-read L26844; part 보험손익 printed 27,404,890,410 != 26,729,953,570; part 보험손익 contribution 27404.89041 != sign*x 26729.953569999998"
+  },
+  {
+   "where": "2023.2Q i2",
+   "problem": "value plan 40776.446685 != re-read 39671.91714299999; part 보험수익 line 26898 != re-read L26890; part 보험수익 printed 316,615,477,377 != 347,851,517,959; part 보험수익 contribution 316615.477377 != sign*x 347851.51795899996; part 보험비용 line 26967 != re-read L26959; part 보험비용 printed 271,205,719,593 != 304,817,657,836; part 보험비용 contribution -271205.719593 != sign*|x| -304817.65783599997; part 재보험수익 line 26921 != re-read L26913; part 재보험수익 printed 22,476,837,250 != 23,838,787,469; part 재보험수익 contribution 22476.83725 != sign*x 23838.787469; part 재보험비용 line 26990 != re-read L26982; part 재보험비용 printed 27,110,148,349 != 27,200,730,449; part 재보험비용 contribution -27110.148349 != sign*|x| -27200.730449"
+  },
+  {
+   "where": "2023.2Q i3",
+   "problem": "value plan 45409.757784 != re-read 43033.86012299999; part 보험수익 line 26898 != re-read L26890; part 보험수익 printed 316,615,477,377 != 347,851,517,959; part 보험수익 contribution 316615.477377 != sign*x 347851.51795899996; part 보험비용 line 26967 != re-read L26959; part 보험비용 printed 271,205,719,593 != 304,817,657,836; part 보험비용 contribution -271205.719593 != sign*|x| -304817.65783599997"
+  },
+  {
+   "where": "2023.2Q i4",
+   "problem": "value plan 46789.0 != re-read 44994.0"
+  },
+  {
+   "where": "2023.2Q i8",
+   "problem": "value plan -4633.311099 != re-read -3361.94298; part 재보험수익 line 26921 != re-read L26913; part 재보험수익 printed 22,476,837,250 != 23,838,787,469; part 재보험수익 contribution 22476.83725 != sign*x 23838.787469; part 재보험비용 line 26990 != re-read L26982; part 재보험비용 printed 27,110,148,349 != 27,200,730,449; part 재보험비용 contribution -27110.148349 != sign*|x| -27200.730449"
+  },
+  {
+   "where": "2023.2Q i16",
+   "problem": "value plan 13371.556275 != re-read 12941.963572999999; part 기타사업비용 line 27013 != re-read L27005; part 기타사업비용 printed 13,371,556,275 != 12,941,963,573; part 기타사업비용 contribution 13371.556275 != sign*x 12941.963572999999"
+  },
+  {
+   "where": "2023.2Q i17",
+   "problem": "value plan 51170.86295 != re-read 32655.613464; part 투자손익 line 27036 != re-read L27028; part 투자손익 printed 51,170,862,950 != 32,655,613,464; part 투자손익 contribution 51170.86295 != sign*x 32655.613464"
+  },
+  {
+   "where": "2023.2Q i18",
+   "problem": "value plan 450057.809937 != re-read 422338.36441; part 투자손익 line 27036 != re-read L27028; part 투자손익 printed 51,170,862,950 != 32,655,613,464; part 투자손익 contribution 51170.86295 != sign*x 32655.613464; part 보험금융수익 line 27082 != re-read L27074; part 재보험금융수익 line 27105 != re-read L27097; part 보험금융비용 line 27381 != re-read L27373; part 보험금융비용 printed 397,262,264,587 != 388,045,180,290; part 보험금융비용 contribution 397262.264587 != sign*x 388045.18029; part 재보험금융비용 line 27404 != re-read L27396; part 재보험금융비용 printed 1,624,682,400 != 1,637,570,656; part 재보험금융비용 contribution 1624.6824 != sign*x 1637.5706559999999"
+  },
+  {
+   "where": "2023.2Q i19",
+   "problem": "value plan -398886.946987 != re-read -389682.750946; part 보험금융수익 line 27082 != re-read L27074; part 재보험금융수익 line 27105 != re-read L27097; part 보험금융비용 line 27381 != re-read L27373; part 보험금융비용 printed 397,262,264,587 != 388,045,180,290; part 보험금융비용 contribution -397262.264587 != sign*x -388045.18029; part 재보험금융비용 line 27404 != re-read L27396; part 재보험금융비용 printed 1,624,682,400 != 1,637,570,656; part 재보험금융비용 contribution -1624.6824 != sign*x -1637.5706559999999"
+  },
+  {
+   "where": "2023.2Q i20",
+   "problem": "value plan 78575.75336 != re-read 59385.567034; part 영업이익(손실) line 27680 != re-read L27672; part 영업이익(손실) printed 78,575,753,360 != 59,385,567,034; part 영업이익(손실) contribution 78575.75336 != sign*x 59385.567034"
+  },
+  {
+   "where": "2023.2Q i21",
+   "problem": "value plan -16024.829261 != re-read -3992.745848; part 영업외손익 line 27703 != re-read L27695; part 영업외손익 printed (16,024,829,261) != (3,992,745,848); part 영업외손익 contribution -16024.829261 != sign*x -3992.745848"
+  },
+  {
+   "where": "2023.2Q i22",
+   "problem": "value plan 62550.924099 != re-read 55392.821186; part 법인세차감전순이익 line 27772 != re-read L27764; part 법인세차감전순이익 printed 62,550,924,099 != 55,392,821,186; part 법인세차감전순이익 contribution 62550.924099 != sign*x 55392.821186"
+  },
+  {
+   "where": "2023.2Q i23",
+   "problem": "value plan 15286.0134 != re-read 12917.2658; part 법인세비용(수익) line 27795 != re-read L27787; part 법인세비용(수익) printed 15,286,013,400 != 12,917,265,800; part 법인세비용(수익) contribution 15286.0134 != sign*x 12917.2658"
+  },
+  {
+   "where": "2023.2Q i24",
+   "problem": "value plan 47264.910699 != re-read 42475.555386; part 당기순이익(손실) line 27864 != re-read L27856; part 당기순이익(손실) printed 47,264,910,699 != 42,475,555,386; part 당기순이익(손실) contribution 47264.910699 != sign*x 42475.555386"
+  },
+  {
+   "where": "2023.2Q i25",
+   "problem": "value plan 22339.669884 != re-read -399586.213789; part 기타포괄손익 line 27910 != re-read L27902; part 기타포괄손익 printed 22,339,669,884 != (399,586,213,789); part 기타포괄손익 contribution 22339.669884 != sign*x -399586.213789"
+  },
+  {
+   "where": "2023.2Q i26",
+   "problem": "value plan 109588.147278 != re-read -40977.666139; part 기타포괄손익-공정가치측정금융자산평가손익 line 27956 != re-read L27948; part 기타포괄손익-공정가치측정금융자산평가손익 printed 109,588,147,278 != (40,977,666,139); part 기타포괄손익-공정가치측정금융자산평가손익 contribution 109588.147278 != sign*x -40977.666139"
+  },
+  {
+   "where": "2023.2Q i27",
+   "problem": "value plan -80088.403465 != re-read -343006.068594; part 보험계약자산(부채)순금융손익 line 28025 != re-read L28017; part 보험계약자산(부채)순금융손익 printed (80,088,403,465) != (343,006,068,594); part 보험계약자산(부채)순금융손익 contribution -80088.403465 != sign*x -343006.068594"
+  },
+  {
+   "where": "2023.2Q i28",
+   "problem": "value plan -5441.478255 != re-read -7996.710053999999; part 현금흐름위험회피파생상품평가손익 line 28002 != re-read L27994; part 현금흐름위험회피파생상품평가손익 printed (5,441,478,255) != (7,996,710,054); part 현금흐름위험회피파생상품평가손익 contribution -5441.478255 != sign*x -7996.710053999999"
+  },
+  {
+   "where": "2023.2Q i30",
+   "problem": "value plan -1831.255691 != re-read -7532.721898999999; part 재보험계약자산(부채)순금융손익 line 28048 != re-read L28040; part 재보험계약자산(부채)순금융손익 printed (1,831,255,691) != (7,532,721,899); part 재보험계약자산(부채)순금융손익 contribution -1831.255691 != sign*x -7532.721898999999"
+  },
+  {
+   "where": "2023.2Q i31",
+   "problem": "value plan 69604.580583 != re-read -357110.658403; part 총포괄손익 line 28094 != re-read L28086; part 총포괄손익 printed 69,604,580,583 != (357,110,658,403); part 총포괄손익 contribution 69604.580583 != sign*x -357110.658403"
+  },
+  {
+   "where": "2023.2Q i32",
+   "problem": "value plan 112.660017 != re-read -73.04710299999999; part 기타포괄손익 line 27910 != re-read L27902; part 기타포괄손익 printed 22,339,669,884 != (399,586,213,789); part 기타포괄손익 contribution 22339.669884 != sign*x -399586.213789; part 기타포괄손익-공정가치측정금융자산평가손익 line 27956 != re-read L27948; part 기타포괄손익-공정가치측정금융자산평가손익 printed 109,588,147,278 != (40,977,666,139); part 기타포괄손익-공정가치측정금융자산평가손익 contribution -109588.147278 != sign*x 40977.666139; part 보험계약자산(부채)순금융손익 line 28025 != re-read L28017; part 보험계약자산(부채)순금융손익 printed (80,088,403,465) != (343,006,068,594); part 보험계약자산(부채)순금융손익 contribution 80088.403465 != sign*x 343006.068594; part 현금흐름위험회피파생상품평가손익 line 28002 != re-read L27994; part 현금흐름위험회피파생상품평가손익 printed (5,441,478,255) != (7,996,710,054); part 현금흐름위험회피파생상품평가손익 contribution 5441.478255 != sign*x 7996.710053999999; part 재보험계약자산(부채)순금융손익 line 28048 != re-read L28040; part 재보험계약자산(부채)순금융손익 printed (1,831,255,691) != (7,532,721,899); part 재보험계약자산(부채)순금융손익 contribution 1831.255691 != sign*x 7532.721898999999"
+  },
+  {
+   "where": "2023.3Q i1",
+   "problem": "value plan 42363.52959 != re-read 27317.039189; part 보험손익 line 26270 != re-read L26262; part 보험손익 printed 42,363,529,590 != 27,317,039,189; part 보험손익 contribution 42363.52959 != sign*x 27317.039189"
+  },
+  {
+   "where": "2023.3Q i2",
+   "problem": "value plan 59257.282376 != re-read 44199.91201000001; part 보험수익 line 26316 != re-read L26308; part 보험수익 printed 487,018,810,690 != 535,589,422,411; part 보험수익 contribution 487018.81069 != sign*x 535589.422411; part 보험비용 line 26385 != re-read L26377; part 보험비용 printed 421,079,819,604 != 486,239,432,547; part 보험비용 contribution -421079.819604 != sign*|x| -486239.432547; part 재보험수익 line 26339 != re-read L26331; part 재보험수익 printed 34,764,447,247 != 35,036,536,778; part 재보험수익 contribution 34764.447247 != sign*x 35036.536778; part 재보험비용 line 26408 != re-read L26400; part 재보험비용 printed 41,446,155,957 != 40,186,614,632; part 재보험비용 contribution -41446.155957 != sign*|x| -40186.614632"
+  },
+  {
+   "where": "2023.3Q i3",
+   "problem": "value plan 65938.991086 != re-read 49349.989864; part 보험수익 line 26316 != re-read L26308; part 보험수익 printed 487,018,810,690 != 535,589,422,411; part 보험수익 contribution 487018.81069 != sign*x 535589.422411; part 보험비용 line 26385 != re-read L26377; part 보험비용 printed 421,079,819,604 != 486,239,432,547; part 보험비용 contribution -421079.819604 != sign*|x| -486239.432547"
+  },
+  {
+   "where": "2023.3Q i4",
+   "problem": "value plan 69639.0 != re-read 66762.0"
+  },
+  {
+   "where": "2023.3Q i8",
+   "problem": "value plan -6681.70871 != re-read -5150.077853999996; part 재보험수익 line 26339 != re-read L26331; part 재보험수익 printed 34,764,447,247 != 35,036,536,778; part 재보험수익 contribution 34764.447247 != sign*x 35036.536778; part 재보험비용 line 26408 != re-read L26400; part 재보험비용 printed 41,446,155,957 != 40,186,614,632; part 재보험비용 contribution -41446.155957 != sign*|x| -40186.614632"
+  },
+  {
+   "where": "2023.3Q i16",
+   "problem": "value plan 16893.752786 != re-read 16882.872821; part 기타사업비용 line 26431 != re-read L26423; part 기타사업비용 printed 16,893,752,786 != 16,882,872,821; part 기타사업비용 contribution 16893.752786 != sign*x 16882.872821"
+  },
+  {
+   "where": "2023.3Q i17",
+   "problem": "value plan 33777.476556 != re-read 69166.34941499999; part 투자손익 line 26454 != re-read L26446; part 투자손익 printed 33,777,476,556 != 69,166,349,415; part 투자손익 contribution 33777.476556 != sign*x 69166.34941499999"
+  },
+  {
+   "where": "2023.3Q i18",
+   "problem": "value plan 536094.60946 != re-read 559444.899185; part 투자손익 line 26454 != re-read L26446; part 투자손익 printed 33,777,476,556 != 69,166,349,415; part 투자손익 contribution 33777.476556 != sign*x 69166.34941499999; part 보험금융수익 line 26500 != re-read L26492; part 재보험금융수익 line 26523 != re-read L26515; part 보험금융비용 line 26799 != re-read L26791; part 보험금융비용 printed 499,879,333,663 != 487,775,104,214; part 보험금융비용 contribution 499879.333663 != sign*x 487775.104214; part 재보험금융비용 line 26822 != re-read L26814; part 재보험금융비용 printed 2,437,799,241 != 2,503,445,556; part 재보험금융비용 contribution 2437.799241 != sign*x 2503.4455559999997"
+  },
+  {
+   "where": "2023.3Q i19",
+   "problem": "value plan -502317.132904 != re-read -490278.54977; part 보험금융수익 line 26500 != re-read L26492; part 재보험금융수익 line 26523 != re-read L26515; part 보험금융비용 line 26799 != re-read L26791; part 보험금융비용 printed 499,879,333,663 != 487,775,104,214; part 보험금융비용 contribution -499879.333663 != sign*x -487775.104214; part 재보험금융비용 line 26822 != re-read L26814; part 재보험금융비용 printed 2,437,799,241 != 2,503,445,556; part 재보험금융비용 contribution -2437.799241 != sign*x -2503.4455559999997"
+  },
+  {
+   "where": "2023.3Q i20",
+   "problem": "value plan 76141.006146 != re-read 96483.38860399999; part 영업이익(손실) line 27098 != re-read L27090; part 영업이익(손실) printed 76,141,006,146 != 96,483,388,604; part 영업이익(손실) contribution 76141.006146 != sign*x 96483.38860399999"
+  },
+  {
+   "where": "2023.3Q i21",
+   "problem": "value plan -24336.161594 != re-read -8313.522361; part 영업외손익 line 27121 != re-read L27113; part 영업외손익 printed (24,336,161,594) != (8,313,522,361); part 영업외손익 contribution -24336.161594 != sign*x -8313.522361"
+  },
+  {
+   "where": "2023.3Q i22",
+   "problem": "value plan 51804.844552 != re-read 88169.866243; part 법인세차감전순이익 line 27190 != re-read L27182; part 법인세차감전순이익 printed 51,804,844,552 != 88,169,866,243; part 법인세차감전순이익 contribution 51804.844552 != sign*x 88169.866243"
+  },
+  {
+   "where": "2023.3Q i23",
+   "problem": "value plan 12803.669025 != re-read 20489.078458; part 법인세비용(수익) line 27213 != re-read L27205; part 법인세비용(수익) printed 12,803,669,025 != 20,489,078,458; part 법인세비용(수익) contribution 12803.669025 != sign*x 20489.078458"
+  },
+  {
+   "where": "2023.3Q i24",
+   "problem": "value plan 39001.175527 != re-read 67680.787785; part 당기순이익(손실) line 27282 != re-read L27274; part 당기순이익(손실) printed 39,001,175,527 != 67,680,787,785; part 당기순이익(손실) contribution 39001.175527 != sign*x 67680.787785"
+  },
+  {
+   "where": "2023.3Q i25",
+   "problem": "value plan 103104.307885 != re-read -490073.854682; part 기타포괄손익 line 27328 != re-read L27320; part 기타포괄손익 printed 103,104,307,885 != (490,073,854,682); part 기타포괄손익 contribution 103104.307885 != sign*x -490073.854682"
+  },
+  {
+   "where": "2023.3Q i26",
+   "problem": "value plan -70737.941856 != re-read 230319.644989; part 기타포괄손익-공정가치측정금융자산평가손익 line 27374 != re-read L27366; part 기타포괄손익-공정가치측정금융자산평가손익 printed (70,737,941,856) != 230,319,644,989; part 기타포괄손익-공정가치측정금융자산평가손익 contribution -70737.941856 != sign*x 230319.644989"
+  },
+  {
+   "where": "2023.3Q i27",
+   "problem": "value plan 190484.951946 != re-read -718114.101947; part 보험계약자산(부채)순금융손익 line 27443 != re-read L27435; part 보험계약자산(부채)순금융손익 printed 190,484,951,946 != (718,114,101,947); part 보험계약자산(부채)순금융손익 contribution 190484.951946 != sign*x -718114.101947"
+  },
+  {
+   "where": "2023.3Q i28",
+   "problem": "value plan -18420.128391 != re-read 12877.779741; part 현금흐름위험회피파생상품평가손익 line 27420 != re-read L27412; part 현금흐름위험회피파생상품평가손익 printed (18,420,128,391) != 12,877,779,741; part 현금흐름위험회피파생상품평가손익 contribution -18420.128391 != sign*x 12877.779741"
+  },
+  {
+   "where": "2023.3Q i30",
+   "problem": "value plan 1723.519067 != re-read -15067.764594999999; part 재보험계약자산(부채)순금융손익 line 27466 != re-read L27458; part 재보험계약자산(부채)순금융손익 printed 1,723,519,067 != (15,067,764,595); part 재보험계약자산(부채)순금융손익 contribution 1723.519067 != sign*x -15067.764594999999"
+  },
+  {
+   "where": "2023.3Q i31",
+   "problem": "value plan 142105.483412 != re-read -422393.06689699995; part 총포괄손익 line 27512 != re-read L27504; part 총포괄손익 printed 142,105,483,412 != (422,393,066,897); part 총포괄손익 contribution 142105.483412 != sign*x -422393.06689699995"
+  },
+  {
+   "where": "2023.3Q i32",
+   "problem": "value plan 53.907119 != re-read -89.41287; part 기타포괄손익 line 27328 != re-read L27320; part 기타포괄손익 printed 103,104,307,885 != (490,073,854,682); part 기타포괄손익 contribution 103104.307885 != sign*x -490073.854682; part 기타포괄손익-공정가치측정금융자산평가손익 line 27374 != re-read L27366; part 기타포괄손익-공정가치측정금융자산평가손익 printed (70,737,941,856) != 230,319,644,989; part 기타포괄손익-공정가치측정금융자산평가손익 contribution 70737.941856 != sign*x -230319.644989; part 보험계약자산(부채)순금융손익 line 27443 != re-read L27435; part 보험계약자산(부채)순금융손익 printed 190,484,951,946 != (718,114,101,947); part 보험계약자산(부채)순금융손익 contribution -190484.951946 != sign*x 718114.101947; part 현금흐름위험회피파생상품평가손익 line 27420 != re-read L27412; part 현금흐름위험회피파생상품평가손익 printed (18,420,128,391) != 12,877,779,741; part 현금흐름위험회피파생상품평가손익 contribution 18420.128391 != sign*x -12877.779741; part 재보험계약자산(부채)순금융손익 line 27466 != re-read L27458; part 재보험계약자산(부채)순금융손익 printed 1,723,519,067 != (15,067,764,595); part 재보험계약자산(부채)순금융손익 contribution -1723.519067 != sign*x 15067.764594999999"
+  },
+  {
+   "where": "2023.4Q i2",
+   "problem": "value plan 64874.466059 != re-read 38841.459693999976; part 보험수익 line 35261 != re-read L35257; part 보험수익 printed 651,626,998,171 != 704,781,548,305; part 보험수익 contribution 651626.998171 != sign*x 704781.548305; part 보험비용 line 35318 != re-read L35314; part 보험비용 printed 578,559,785,259 != 660,279,463,059; part 보험비용 contribution -578559.785259 != sign*|x| -660279.463059; operand item 8 -8192.746853: live -8192.746853 / re-read -5660.625551999998"
+  },
+  {
+   "where": "2023.4Q i3",
+   "problem": "value plan 73067.212912 != re-read 44502.08524599997; part 보험수익 line 35261 != re-read L35257; part 보험수익 printed 651,626,998,171 != 704,781,548,305; part 보험수익 contribution 651626.998171 != sign*x 704781.548305; part 보험비용 line 35318 != re-read L35314; part 보험비용 printed 578,559,785,259 != 660,279,463,059; part 보험비용 contribution -578559.785259 != sign*|x| -660279.463059"
+  },
+  {
+   "where": "2023.4Q i16",
+   "problem": "value plan 26061.670663 != re-read 28864.927062; part 기타사업비용 line 35356 != re-read L35352; part 기타사업비용 printed 26,061,670,663 != 28,864,927,062; part 기타사업비용 contribution 26061.670663 != sign*x 28864.927062"
+  },
+  {
+   "where": "2023.4Q i17",
+   "problem": "value plan 107658.657107 != re-read 123468.811183; part 투자손익 line 35375 != re-read L35371; part 투자손익 printed 107,658,657,107 != 123,468,811,183; part 투자손익 contribution 107658.657107 != sign*x 123468.811183"
+  },
+  {
+   "where": "2023.4Q i19",
+   "problem": "value plan -718341.136169 != re-read -623426.547516; part 보험금융수익 line 35413 != re-read L35409; part 재보험금융수익 line 35432 != re-read L35428; part 보험금융비용 line 35679 != re-read L35675; part 보험금융비용 printed 715,088,953,539 != 620,027,034,813; part 보험금융비용 contribution -715088.953539 != sign*x -620027.034813; part 재보험금융비용 line 35698 != re-read L35694; part 재보험금융비용 printed 3,252,182,630 != 3,399,512,703; part 재보험금융비용 contribution -3252.18263 != sign*x -3399.512703"
+  },
+  {
+   "where": "2023.4Q i20",
+   "problem": "value plan 146471.452503 != re-read 133445.343815; part 영업이익(손실) line 35945 != re-read L35941; part 영업이익(손실) printed 146,471,452,503 != 133,445,343,815; part 영업이익(손실) contribution 146471.452503 != sign*x 133445.343815"
+  },
+  {
+   "where": "2023.4Q i22",
+   "problem": "value plan 117570.521606 != re-read 120730.88745699999; part 법인세차감전순이익 line 36021 != re-read L36017; part 법인세차감전순이익 printed 117,570,521,606 != 120,730,887,457; part 법인세차감전순이익 contribution 117570.521606 != sign*x 120730.88745699999"
+  },
+  {
+   "where": "2023.4Q i23",
+   "problem": "value plan 26376.215168 != re-read 15949.222973999998; part 법인세비용(수익) line 36040 != re-read L36036; part 법인세비용(수익) printed 26,376,215,168 != 15,949,222,974; part 법인세비용(수익) contribution 26376.215168 != sign*x 15949.222973999998"
+  },
+  {
+   "where": "2023.4Q i24",
+   "problem": "value plan 91194.306438 != re-read 104781.664483; part 당기순이익(손실) line 36097 != re-read L36093; part 당기순이익(손실) printed 91,194,306,438 != 104,781,664,483; part 당기순이익(손실) contribution 91194.306438 != sign*x 104781.664483"
+  },
+  {
+   "where": "2023.4Q i25",
+   "problem": "value plan 7198.361074 != re-read -507359.119783; part 기타포괄손익 line 36135 != re-read L36131; part 기타포괄손익 printed 7,198,361,074 != (507,359,119,783); part 기타포괄손익 contribution 7198.361074 != sign*x -507359.119783"
+  },
+  {
+   "where": "2023.4Q i27",
+   "problem": "value plan -591936.534943 != re-read -755016.9908029999; part 보험계약자산(부채)순금융손익 line 36211 != re-read L36207; part 보험계약자산(부채)순금융손익 printed (591,936,534,943) != (755,016,990,803); part 보험계약자산(부채)순금융손익 contribution -591936.534943 != sign*x -755016.9908029999"
+  },
+  {
+   "where": "2023.4Q i1",
+   "problem": "not in the plan but live 38812.795396 != re-read 9976.532632"
+  },
+  {
+   "where": "2023.4Q i4",
+   "problem": "not in the plan but live 92971.0 != re-read 88926.0"
+  },
+  {
+   "where": "2023.4Q i8",
+   "problem": "not in the plan but live -8192.746853 != re-read -5660.625551999998"
+  },
+  {
+   "where": "2023.4Q i18",
+   "problem": "not in the plan but live 825999.793276 != re-read 746895.358699"
+  },
+  {
+   "where": "2023.4Q i21",
+   "problem": "not in the plan but live -28900.930897 != re-read -12714.456358"
+  },
+  {
+   "where": "2023.4Q i26",
+   "problem": "not in the plan but live 585828.597415 != re-read 237228.331423"
+  },
+  {
+   "where": "2023.4Q i28",
+   "problem": "not in the plan but live 28333.545174 != re-read 25793.345536999997"
+  },
+  {
+   "where": "2023.4Q i30",
+   "problem": "not in the plan but live -14980.152342 != re-read -15615.663967999999"
+  },
+  {
+   "where": "2023.4Q i31",
+   "problem": "not in the plan but live 98392.667512 != re-read -402577.4553"
+  },
+  {
+   "where": "2023.4Q i32",
+   "problem": "not in the plan but live -47.09423 != re-read 251.858028"
+  },
+  {
+   "where": "2023.1Q i1",
+   "problem": "issuer 조정후 11,178 vs re-read 15591.954456"
+  },
+  {
+   "where": "2023.1Q i17",
+   "problem": "issuer 조정후 12,269 vs re-read -5720.079812"
+  },
+  {
+   "where": "2023.1Q i20",
+   "problem": "issuer 조정후 23,447 vs re-read 9871.874644"
+  },
+  {
+   "where": "2023.1Q i21",
+   "problem": "issuer 조정후 (8,534) vs re-read 373.65721199999996"
+  },
+  {
+   "where": "2023.1Q i22",
+   "problem": "issuer 조정후 14,913 vs re-read 10245.531856"
+  },
+  {
+   "where": "2023.1Q i23",
+   "problem": "issuer 조정후 4,301 vs re-read 2476.5594889999998"
+  },
+  {
+   "where": "2023.1Q i24",
+   "problem": "issuer 조정후 10,612 vs re-read 7768.972366999999"
+  },
+  {
+   "where": "2023.1Q i25",
+   "problem": "issuer 조정후 25,273 vs re-read -217002.31146"
+  },
+  {
+   "where": "2023.1Q i31",
+   "problem": "issuer 조정후 35,885 vs re-read -209233.339093"
+  },
+  {
+   "where": "2023.2Q i1",
+   "problem": "issuer 조정후 27,405 vs re-read 26729.953569999998"
+  },
+  {
+   "where": "2023.2Q i17",
+   "problem": "issuer 조정후 51,171 vs re-read 32655.613464"
+  },
+  {
+   "where": "2023.2Q i20",
+   "problem": "issuer 조정후 78,576 vs re-read 59385.567034"
+  },
+  {
+   "where": "2023.2Q i21",
+   "problem": "issuer 조정후 (16,025) vs re-read -3992.745848"
+  },
+  {
+   "where": "2023.2Q i22",
+   "problem": "issuer 조정후 62,551 vs re-read 55392.821186"
+  },
+  {
+   "where": "2023.2Q i23",
+   "problem": "issuer 조정후 15,286 vs re-read 12917.2658"
+  },
+  {
+   "where": "2023.2Q i24",
+   "problem": "issuer 조정후 47,265 vs re-read 42475.555386"
+  },
+  {
+   "where": "2023.2Q i25",
+   "problem": "issuer 조정후 22,340 vs re-read -399586.213789"
+  },
+  {
+   "where": "2023.2Q i31",
+   "problem": "issuer 조정후 69,605 vs re-read -357110.658403"
+  },
+  {
+   "where": "2023.3Q i1",
+   "problem": "issuer 조정후 42,364 vs re-read 27317.039189"
+  },
+  {
+   "where": "2023.3Q i17",
+   "problem": "issuer 조정후 33,777 vs re-read 69166.34941499999"
+  },
+  {
+   "where": "2023.3Q i20",
+   "problem": "issuer 조정후 76,141 vs re-read 96483.38860399999"
+  },
+  {
+   "where": "2023.3Q i21",
+   "problem": "issuer 조정후 (24,336) vs re-read -8313.522361"
+  },
+  {
+   "where": "2023.3Q i22",
+   "problem": "issuer 조정후 51,805 vs re-read 88169.866243"
+  },
+  {
+   "where": "2023.3Q i23",
+   "problem": "issuer 조정후 12,804 vs re-read 20489.078458"
+  },
+  {
+   "where": "2023.3Q i24",
+   "problem": "issuer 조정후 39,001 vs re-read 67680.787785"
+  },
+  {
+   "where": "2023.3Q i25",
+   "problem": "issuer 조정후 103,104 vs re-read -490073.854682"
+  },
+  {
+   "where": "2023.3Q i31",
+   "problem": "issuer 조정후 142,105 vs re-read -422393.06689699995"
+  },
+  {
+   "where": "2023.4Q i1",
+   "problem": "issuer 조정후 38,812 vs re-read 9976.532632"
+  },
+  {
+   "where": "2023.4Q i17",
+   "problem": "issuer 조정후 107,659 vs re-read 123468.811183"
+  },
+  {
+   "where": "2023.4Q i20",
+   "problem": "issuer 조정후 146,471 vs re-read 133445.343815"
+  },
+  {
+   "where": "2023.4Q i21",
+   "problem": "issuer 조정후 (28,901) vs re-read -12714.456358"
+  },
+  {
+   "where": "2023.4Q i22",
+   "problem": "issuer 조정후 117,570 vs re-read 120730.88745699999"
+  },
+  {
+   "where": "2023.4Q i23",
+   "problem": "issuer 조정후 26,376 vs re-read 15949.222973999998"
+  },
+  {
+   "where": "2023.4Q i24",
+   "problem": "issuer 조정후 91,194 vs re-read 104781.664483"
+  },
+  {
+   "where": "2023.4Q i25",
+   "problem": "issuer 조정후 7,198 vs re-read -507359.119783"
+  },
+  {
+   "where": "2023.4Q i31",
+   "problem": "issuer 조정후 98,392 vs re-read -402577.4553"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 1 변경후 38812.0 vs 9976.532632"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 17 변경후 107659.0 vs 123468.811183"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 20 변경후 146471.0 vs 133445.343815"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 21 변경후 -28901.0 vs -12714.456358"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 22 변경후 117570.0 vs 120730.88745699999"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 23 변경후 26376.0 vs 15949.222973999998"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 24 변경후 91194.0 vs 104781.664483"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 25 변경후 7198.0 vs -507359.119783"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "item 31 변경후 98392.0 vs -402577.4553"
+  },
+  {
+   "where": "2023.2Q i1 seam",
+   "problem": "derived single quarter 11137.999113999998 != printed 3-month 16227.112699 (diff -5089.113585000001)"
+  },
+  {
+   "where": "2023.2Q i2 seam",
+   "problem": "derived single quarter 20314.698572999987 != printed 3-month 26074.681193999997 (diff -5759.98262100001)"
+  },
+  {
+   "where": "2023.2Q i3 seam",
+   "problem": "derived single quarter 23492.617934999987 != printed 3-month 28204.121253999998 (diff -4711.50331900001)"
+  },
+  {
+   "where": "2023.2Q i8 seam",
+   "problem": "derived single quarter -3177.9193620000005 != printed 3-month -2129.440059999999 (diff -1048.4793020000016)"
+  },
+  {
+   "where": "2023.2Q i16 seam",
+   "problem": "derived single quarter 9176.699459 != printed 3-month 9847.568495 (diff -670.869036)"
+  },
+  {
+   "where": "2023.2Q i17 seam",
+   "problem": "derived single quarter 38375.693276 != printed 3-month 38901.897626 (diff -526.20435)"
+  },
+  {
+   "where": "2023.2Q i18 seam",
+   "problem": "derived single quarter 221611.675543 != printed 3-month 203392.98830199998 (diff 18218.687241000007)"
+  },
+  {
+   "where": "2023.2Q i19 seam",
+   "problem": "derived single quarter -183235.98226699998 != printed 3-month -164491.090676 (diff -18744.891590999992)"
+  },
+  {
+   "where": "2023.2Q i20 seam",
+   "problem": "derived single quarter 49513.69239 != printed 3-month 55129.010324999996 (diff -5615.317934999999)"
+  },
+  {
+   "where": "2023.2Q i21 seam",
+   "problem": "derived single quarter -4366.40306 != printed 3-month -7490.859723 (diff 3124.456663)"
+  },
+  {
+   "where": "2023.2Q i22 seam",
+   "problem": "derived single quarter 45147.28933 != printed 3-month 47638.150601999994 (diff -2490.8612719999946)"
+  },
+  {
+   "where": "2023.2Q i23 seam",
+   "problem": "derived single quarter 10440.706311 != printed 3-month 10984.745844 (diff -544.0395329999992)"
+  },
+  {
+   "where": "2023.2Q i24 seam",
+   "problem": "derived single quarter 34706.583019 != printed 3-month 36653.404758 (diff -1946.821738999999)"
+  },
+  {
+   "where": "2023.2Q i25 seam",
+   "problem": "derived single quarter -182583.902329 != printed 3-month -2933.024873 (diff -179650.87745600002)"
+  },
+  {
+   "where": "2023.2Q i26 seam",
+   "problem": "derived single quarter 119625.62893899999 != printed 3-month -219233.702972 (diff 338859.33191099996)"
+  },
+  {
+   "where": "2023.2Q i27 seam",
+   "problem": "derived single quarter -303122.563587 != printed 3-month 226110.038221 (diff -529232.601808)"
+  },
+  {
+   "where": "2023.2Q i28 seam",
+   "problem": "derived single quarter 7071.777843 != printed 3-month -14743.716564999999 (diff 21815.494408)"
+  },
+  {
+   "where": "2023.2Q i30 seam",
+   "problem": "derived single quarter -6135.819776999999 != printed 3-month 4829.662091 (diff -10965.481867999999)"
+  },
+  {
+   "where": "2023.2Q i31 seam",
+   "problem": "derived single quarter -147877.31931 != printed 3-month 33720.379885 (diff -181597.699195)"
+  },
+  {
+   "where": "2023.2Q i32 seam",
+   "problem": "derived single quarter -22.925746999999994 != printed 3-month 104.694352 (diff -127.62009899999998)"
+  },
+  {
+   "where": "2023.3Q i1 seam",
+   "problem": "derived single quarter 587.0856190000013 != printed 3-month 14958.63918 (diff -14371.553560999999)"
+  },
+  {
+   "where": "2023.3Q i2 seam",
+   "problem": "derived single quarter 4527.994867000016 != printed 3-month 18480.83569099998 (diff -13952.840823999963)"
+  },
+  {
+   "where": "2023.3Q i3 seam",
+   "problem": "derived single quarter 6316.129741000012 != printed 3-month 20529.23330199998 (diff -14213.103560999967)"
+  },
+  {
+   "where": "2023.3Q i8 seam",
+   "problem": "derived single quarter -1788.1348739999958 != printed 3-month -2048.3976110000003 (diff 260.26273700000456)"
+  },
+  {
+   "where": "2023.3Q i16 seam",
+   "problem": "derived single quarter 3940.9092480000018 != printed 3-month 3522.1965109999996 (diff 418.7127370000021)"
+  },
+  {
+   "where": "2023.3Q i17 seam",
+   "problem": "derived single quarter 36510.735950999995 != printed 3-month -17393.386394 (diff 53904.122344999996)"
+  },
+  {
+   "where": "2023.3Q i18 seam",
+   "problem": "derived single quarter 137106.534775 != printed 3-month 86036.799523 (diff 51069.73525200001)"
+  },
+  {
+   "where": "2023.3Q i19 seam",
+   "problem": "derived single quarter -100595.798824 != printed 3-month -103430.185917 (diff 2834.3870929999975)"
+  },
+  {
+   "where": "2023.3Q i20 seam",
+   "problem": "derived single quarter 37097.82156999999 != printed 3-month -2434.747214 (diff 39532.568783999996)"
+  },
+  {
+   "where": "2023.3Q i21 seam",
+   "problem": "derived single quarter -4320.776512999999 != printed 3-month -8311.332333 (diff 3990.5558200000014)"
+  },
+  {
+   "where": "2023.3Q i22 seam",
+   "problem": "derived single quarter 32777.045056999996 != printed 3-month -10746.079547 (diff 43523.124604)"
+  },
+  {
+   "where": "2023.3Q i23 seam",
+   "problem": "derived single quarter 7571.812658000001 != printed 3-month -2482.3443749999997 (diff 10054.157033)"
+  },
+  {
+   "where": "2023.3Q i24 seam",
+   "problem": "derived single quarter 25205.232398999993 != printed 3-month -8263.735171999999 (diff 33468.967570999994)"
+  },
+  {
+   "where": "2023.3Q i25 seam",
+   "problem": "derived single quarter -90487.640893 != printed 3-month 80764.638001 (diff -171252.278894)"
+  },
+  {
+   "where": "2023.3Q i26 seam",
+   "problem": "derived single quarter 271297.311128 != printed 3-month -180326.08913399998 (diff 451623.4002619999)"
+  },
+  {
+   "where": "2023.3Q i27 seam",
+   "problem": "derived single quarter -375108.033353 != printed 3-month 270573.35541099997 (diff -645681.388764)"
+  },
+  {
+   "where": "2023.3Q i28 seam",
+   "problem": "derived single quarter 20874.489795 != printed 3-month -12978.650136 (diff 33853.139931)"
+  },
+  {
+   "where": "2023.3Q i30 seam",
+   "problem": "derived single quarter -7535.0426959999995 != printed 3-month 3554.774758 (diff -11089.817454)"
+  },
+  {
+   "where": "2023.3Q i31 seam",
+   "problem": "derived single quarter -65282.408493999974 != printed 3-month 72500.902829 (diff -137783.31132299997)"
+  },
+  {
+   "where": "2023.3Q i32 seam",
+   "problem": "derived single quarter -16.365767000000005 != printed 3-month -58.752897999999995 (diff 42.38713099999999)"
+  },
+  {
+   "where": "2023.2Q PL4 seam",
+   "problem": "derived -1831.0"
+  },
+  {
+   "where": "2023.3Q PL4 seam",
+   "problem": "derived -1082.0"
+  },
+  {
+   "where": "A25",
+   "problem": "FY2025 annual third column differs from the FY2024 prior column"
+  }
+ ],
+ "res": {
+  "pl_cells": 74,
+  "pl_cells_ok": 0,
+  "csm_cells": 20,
+  "csm_cells_ok": 20,
+  "control_bad": 0
+ },
+ "mutate": "col",
+ "ok": false
+}

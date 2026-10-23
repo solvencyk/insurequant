@@ -1,0 +1,25 @@
+2023.1Q i1 '1. 기초 보험계약자산 및 부채'                    printed=5695.95 sim=5695.95 head=5239.4 OK  (changed vs head)
+2023.1Q i2 '(3) 최초 인식한 계약의 효과'                    printed=384.11 sim=384.11 head=387.3 OK  (changed vs head)
+2023.1Q i3 '6. 보험금융손익'                            printed=42.25 sim=42.25 head=45.1 OK  (changed vs head)
+2023.1Q i4 '(1) 보험계약마진을 조정하는 추정치의 변동분'            printed=-867.71 sim=-867.71 head=-833.3 OK  (changed vs head)
+2023.1Q i5 '(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계'   printed=-116.41 sim=-116.41 head=-111.25 OK  (changed vs head)
+2023.1Q i6 '9. 전분기말 보험계약자산 및 부채'                  printed=5138.20 sim=5138.2 head=4727.25 OK  (changed vs head)
+2023.2Q i1 '1. 기초 보험계약자산 및 부채'                    printed=5695.95 sim=5695.95 head=5239.4 OK  (changed vs head)
+2023.2Q i2 '(3) 최초 인식한 계약의 효과'                    printed=1173.06 sim=1173.06 head=1174.0 OK  (changed vs head)
+2023.2Q i3 '6. 보험금융손익'                            printed=83.04 sim=83.04 head=90.0 OK  (changed vs head)
+2023.2Q i4 '(1) 보험계약마진을 조정하는 추정치의 변동분'            printed=-663.60 sim=-663.6 head=-685.55 OK  (changed vs head)
+2023.2Q i5 '(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계'   printed=-245.09 sim=-245.09 head=-234.15 OK  (changed vs head)
+2023.2Q i6 '9. 전반기말 보험계약자산 및 부채(1+5+6+7+8)'       printed=6043.35 sim=6043.35 head=5583.7 OK  (changed vs head)
+2023.3Q i1 '1. 기초 보험계약자산 및 부채'                    printed=5695.95 sim=5695.9 head=5239.4 OK  (changed vs head)
+2023.3Q i2 '(3) 최초 인식한 계약의 효과'                    printed=2209.79 sim=2209.8 head=2210.7 OK  (changed vs head)
+2023.3Q i3 '6. 보험금융손익'                            printed=133.98 sim=134.0 head=146.1 OK  (changed vs head)
+2023.3Q i4 '(1) 보험계약마진을 조정하는 추정치의 변동분'            printed=-1830.22 sim=-1830.2 head=-1912.9 OK  (changed vs head)
+2023.3Q i5 '(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계'   printed=-372.66 sim=-372.7 head=-352.5 OK  (changed vs head)
+2023.3Q i6 '9. 전분기말 보험계약자산 및 부채 (1+5+6+7+8)'      printed=5836.84 sim=5836.8 head=5330.8 OK  (changed vs head)
+2023.4Q i1 '1. 기초 보험계약자산 및 부채'                    printed=5695.95 sim=5695.9 head=5239.4 OK  (changed vs head)
+2023.4Q i2 '(3) 최초 인식한 계약의 효과'                    printed=3023.10 sim=3023.1 head=3023.1 OK
+2023.4Q i3 '6. 보험금융손익'                            printed=183.37 sim=183.4 head=183.4 OK
+2023.4Q i4 '(1) 보험계약마진을 조정하는 추정치의 변동분'            printed=-2559.97 sim=-2560.0 head=-2103.5 OK  (changed vs head)
+2023.4Q i5 '(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계'   printed=-511.98 sim=-512.0 head=-512.0 OK
+2023.4Q i6 '9. 전기말 보험계약자산 및 부채(1+5+6+7+8)'        printed=5830.47 sim=5830.5 head=5830.5 OK
+ok=24 bad=0

@@ -1,0 +1,149 @@
+{
+ "problems": [
+  {
+   "where": "2023.1Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.2Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.3Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.4Q PL4",
+   "problem": "CSM amortisation differs between note (3), note (1) and the roll-forward"
+  },
+  {
+   "where": "2023.1Q CSM",
+   "problem": "plan table Ldata/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원 != re-read table L37071"
+  },
+  {
+   "where": "2023.1Q CSM i1",
+   "problem": "stored plan 7585.3 != re-read 8695.4 (exact 8695.43); exact plan 7585.3 != 8695.43; part L37355 758,530 != re-read L37098 869,543; part contribution 7585.3 != 8695.43"
+  },
+  {
+   "where": "2023.1Q CSM i2",
+   "problem": "stored plan 634.3 != re-read 866.6 (exact 866.58); exact plan 634.26 != 866.58; part L37403 63,426 != re-read L37146 86,658; part contribution 634.26 != 866.58"
+  },
+  {
+   "where": "2023.1Q CSM i3",
+   "problem": "stored plan 62.4 != re-read 80.2 (exact 80.22); exact plan 62.44 != 80.22; part L37467 6,244 != re-read L37210 8,022; part contribution 62.44 != 80.22"
+  },
+  {
+   "where": "2023.1Q CSM i4",
+   "problem": "stored plan -159.4 != re-read -475.3 (exact -475.33); exact plan -159.43 != -475.33; part L37387 (15,943) != re-read L37130 (47,533); part contribution -159.43 != -475.33"
+  },
+  {
+   "where": "2023.1Q CSM i5",
+   "problem": "stored plan -224.1 != re-read -224.5 (exact -224.47); exact plan -224.11 != -224.47; part L37419 (22,411) != re-read L37162 (22,447); part contribution -224.11 != -224.47"
+  },
+  {
+   "where": "2023.1Q CSM i6",
+   "problem": "stored plan 7898.5 != re-read 8942.4 (exact 8942.43); exact plan 7898.46 != 8942.43; part L37546 789,846 != re-read L37289 894,243; part contribution 7898.46 != 8942.43"
+  },
+  {
+   "where": "2023.2Q CSM",
+   "problem": "plan table Ldata/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원 != re-read table L38724"
+  },
+  {
+   "where": "2023.2Q CSM i1",
+   "problem": "stored plan 7585.3 != re-read 8695.4 (exact 8695.43); exact plan 7585.3 != 8695.43; part L39008 758,530 != re-read L38751 869,543; part contribution 7585.3 != 8695.43"
+  },
+  {
+   "where": "2023.2Q CSM i2",
+   "problem": "stored plan 1713.1 != re-read 1389.6 (exact 1389.57); exact plan 1713.09 != 1389.57; part L39056 171,309 != re-read L38799 138,957; part contribution 1713.09 != 1389.57"
+  },
+  {
+   "where": "2023.2Q CSM i3",
+   "problem": "stored plan 130.5 != re-read 164.8 (exact 164.85); exact plan 130.52 != 164.85; part L39120 13,052 != re-read L38863 16,485; part contribution 130.52 != 164.85"
+  },
+  {
+   "where": "2023.2Q CSM i4",
+   "problem": "stored plan -295.0 != re-read -615.8 (exact -615.78); exact plan -295.01 != -615.78; part L39040 (29,501) != re-read L38783 (61,578); part contribution -295.01 != -615.78"
+  },
+  {
+   "where": "2023.2Q CSM i5",
+   "problem": "stored plan -467.9 != re-read -449.9 (exact -449.94); exact plan -467.89 != -449.94; part L39072 (46,789) != re-read L38815 (44,994); part contribution -467.89 != -449.94"
+  },
+  {
+   "where": "2023.2Q CSM i6",
+   "problem": "stored plan 8666.0 != re-read 9184.1 (exact 9184.13); exact plan 8666.01 != 9184.13; part L39199 866,601 != re-read L38942 918,413; part contribution 8666.01 != 9184.13"
+  },
+  {
+   "where": "2023.3Q CSM",
+   "problem": "plan table Ldata/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원 != re-read table L37856"
+  },
+  {
+   "where": "2023.3Q CSM i1",
+   "problem": "stored plan 7585.3 != re-read 8695.4 (exact 8695.43); exact plan 7585.3 != 8695.43; part L38133 758,530 != re-read L37883 869,543; part contribution 7585.3 != 8695.43"
+  },
+  {
+   "where": "2023.3Q CSM i2",
+   "problem": "stored plan 2853.6 != re-read 1937.6 (exact 1937.6); exact plan 2853.57 != 1937.6; part L38181 285,357 != re-read L37931 193,760; part contribution 2853.57 != 1937.6"
+  },
+  {
+   "where": "2023.3Q CSM i3",
+   "problem": "stored plan 208.3 != re-read 248.2 (exact 248.21); exact plan 208.28 != 248.21; part L38245 20,828 != re-read L37995 24,821; part contribution 208.28 != 248.21"
+  },
+  {
+   "where": "2023.3Q CSM i4",
+   "problem": "stored plan -1512.0 != re-read -515.2 (exact -515.16); exact plan -1512.0 != -515.16; part L38165 (151,200) != re-read L37915 (51,516); part contribution -1512.0 != -515.16"
+  },
+  {
+   "where": "2023.3Q CSM i5",
+   "problem": "stored plan -696.4 != re-read -667.6 (exact -667.62); exact plan -696.39 != -667.62; part L38197 (69,639) != re-read L37947 (66,762); part contribution -696.39 != -667.62"
+  },
+  {
+   "where": "2023.3Q CSM i6",
+   "problem": "stored plan 8438.8 != re-read 9698.5 (exact 9698.46); exact plan 8438.76 != 9698.46; part L38317 843,876 != re-read L38067 969,846; part contribution 8438.76 != 9698.46"
+  },
+  {
+   "where": "2023.4Q CSM",
+   "problem": "plan table Ldata/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml table@L50524 unit 백만원 != re-read table L50274"
+  },
+  {
+   "where": "2023.4Q CSM i1",
+   "problem": "stored plan 7585.3 != re-read 8695.4 (exact 8695.43); exact plan 7585.3 != 8695.43; part L50551 758,530 != re-read L50301 869,543; part contribution 7585.3 != 8695.43"
+  },
+  {
+   "where": "2023.4Q CSM i4",
+   "problem": "stored plan -1716.3 != re-read -1231.4 (exact -1231.42); exact plan -1716.28 != -1231.42; part L50583 (171,628) != re-read L50333 (123,142); part contribution -1716.28 != -1231.42"
+  },
+  {
+   "where": "2023.4Q CSM i2",
+   "problem": "not in the plan but live 3475.9 != re-read 2458.4"
+  },
+  {
+   "where": "2023.4Q CSM i3",
+   "problem": "not in the plan but live 280.2 != re-read 341.4"
+  },
+  {
+   "where": "2023.4Q CSM i5",
+   "problem": "not in the plan but live -929.7 != re-read -889.3"
+  },
+  {
+   "where": "2023.4Q CSM i6",
+   "problem": "not in the plan but live 8695.4 != re-read 9374.6"
+  },
+  {
+   "where": "FY boundary",
+   "problem": "2023.4Q closing != 2024.1Q opening"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "CSM prior table differs from the main document"
+  }
+ ],
+ "res": {
+  "pl_cells": 74,
+  "pl_cells_ok": 74,
+  "csm_cells": 20,
+  "csm_cells_ok": 0,
+  "control_bad": 0
+ },
+ "mutate": "tbl",
+ "ok": false
+}

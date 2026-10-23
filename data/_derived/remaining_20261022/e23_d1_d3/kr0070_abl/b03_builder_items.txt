@@ -1,0 +1,75 @@
+== 2023.1Q
+  i 1 src=               17007.0 live=               17007.0 live_q=               17007.0
+  i 2 src=               17007.0 live=               17007.0 live_q=               17007.0
+  i 3 src=               21169.0 live=               21169.0 live_q=               21169.0
+  i 4 src=                3364.0 live=               22664.0 live_q=               22664.0
+  i 5 src=                 272.0 live=                 272.0 live_q=                 272.0
+  i 6 src=                  None live=                  None live_q=                  None
+  i 7 src=                  None live=               -1767.0 live_q=               -1767.0
+  i 8 src=               -4162.0 live=               -4162.0 live_q=               -4162.0
+  i 9 src=                  None live=                  None live_q=                  None
+  i10 src=                  None live=                  None live_q=                  None
+  i11 src=                  None live=                  None live_q=                  None
+  i12 src=                  None live=                  None live_q=                  None
+  i15 src=                   0.0 live=                   0.0 live_q=                   0.0
+  i16 src=                  None live=                3500.0 live_q=                3500.0
+== 2023.2Q
+  i 1 src=               37860.0 live=               37860.0 live_q=               20853.0
+  i 2 src=               37860.0 live=               37860.0 live_q=               20853.0
+  i 3 src=               44795.0 live=               44795.0 live_q=               23626.0
+  i 4 src=               48623.0 live=               48623.0 live_q=               25959.0
+  i 5 src=                6649.0 live=                6649.0 live_q=                6377.0
+  i 6 src=                  None live=                  None live_q=                  None
+  i 7 src=                  None live=                  None live_q=                  None
+  i 8 src=               -6935.0 live=               -6935.0 live_q=               -2773.0
+  i 9 src=                  None live=                  None live_q=                  None
+  i10 src=                  None live=                  None live_q=                  None
+  i11 src=                  None live=                  None live_q=                  None
+  i12 src=                  None live=                  None live_q=                  None
+  i15 src=                   0.0 live=                   0.0 live_q=                   0.0
+  i16 src=                  None live=               13400.0 live_q=                9900.0
+== 2023.3Q
+  i 1 src=               52509.0 live=               52509.0 live_q=               14649.0
+  i 2 src=               52509.0 live=               52509.0 live_q=               14649.0
+  i 3 src=               61965.0 live=               61965.0 live_q=               17170.0
+  i 4 src=               75180.0 live=               75180.0 live_q=               26557.0
+  i 5 src=               11071.0 live=               11071.0 live_q=                4422.0
+  i 6 src=                  None live=                  None live_q=                  None
+  i 7 src=                  None live=                  None live_q=                  None
+  i 8 src=               -9456.0 live=               -9456.0 live_q=               -2521.0
+  i 9 src=               -9586.0 live=               -9586.0 live_q=                  None
+  i10 src=                -474.0 live=                -474.0 live_q=                  None
+  i11 src=                  None live=                  None live_q=                  None
+  i12 src=                  None live=                  None live_q=                  None
+  i15 src=                   0.0 live=                   0.0 live_q=                   0.0
+  i16 src=                  None live=               16900.0 live_q=                3500.0
+== 2023.4Q
+  i 1 src=          38812.795396 live=          38812.795396 live_q=         -13696.204604
+  i 2 src=          38812.795396 live=          38812.795396 live_q=         -13696.204604
+  i 3 src=          47005.542249 live=          47005.542249 live_q=         -14959.457751
+  i 4 src=               92971.0 live=               92971.0 live_q=               17791.0
+  i 5 src=               16395.0 live=               16395.0 live_q=                5324.0
+  i 6 src=                  None live=                  None live_q=                  None
+  i 7 src=                  None live=                  None live_q=                  None
+  i 8 src=          -8192.746853 live=          -8192.746853 live_q=           1263.253147
+  i 9 src=               -9589.0 live=               -9589.0 live_q=                  -3.0
+  i10 src=                -728.0 live=                -728.0 live_q=                -254.0
+  i11 src=                  None live=                  None live_q=                  None
+  i12 src=                  None live=                  None live_q=                  None
+  i15 src=                   0.0 live=                   0.0 live_q=                   0.0
+  i16 src=                  None live=               26100.0 live_q=                  None
+== 2024.1Q
+  i 1 src=          15591.954456 live=          15591.954456 live_q=          15591.954456
+  i 2 src=           19357.21857 live=           19357.21857 live_q=           19357.21857
+  i 3 src=          19541.242188 live=          19541.242188 live_q=          19541.242188
+  i 4 src=                2313.0 live=               22447.0 live_q=               22447.0
+  i 5 src=                 196.0 live=                 196.0 live_q=                 196.0
+  i 6 src=                1341.0 live=                1341.0 live_q=                1341.0
+  i 7 src=          15691.242188 live=          -4442.757812 live_q=          -4442.757812
+  i 8 src=           -184.023618 live=           -184.023618 live_q=           -184.023618
+  i 9 src=                  None live=                  None live_q=                  None
+  i10 src=                  None live=                  None live_q=                  None
+  i11 src=                 719.0 live=                 719.0 live_q=                 719.0
+  i12 src=                  None live=                  None live_q=                  None
+  i15 src=                   0.0 live=                   0.0 live_q=                   0.0
+  i16 src=           3765.264114 live=           3765.264114 live_q=           3765.264114

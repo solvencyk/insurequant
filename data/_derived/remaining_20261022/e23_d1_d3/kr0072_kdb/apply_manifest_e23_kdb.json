@@ -1,0 +1,23 @@
+{
+  "before_sha256": {
+    "data/_gold/user_pl_cells.json": "b9789dced076d8f99f9ceffe37f0086ce4873b9bf70f0eebc83b9550c04d8910",
+    "PL_breakdown.json": "ac707d5f888266281f9d786c1ce9b2ec23ba94385d259e3bc9941fab34d95c48",
+    "PL_breakdown_provenance.json": "7ab5b2c1d9df1730202bb00f5b1e1f49cf738e351eea972f75e9460357377beb",
+    "data/_gold/user_csm_cells.json": "aab6be36c55f81a9685a520db6796b55880e8823eab4c139b552750915163b5e",
+    "CSM_waterfall.json": "fa5624a6cac0df7ae8522718bd377e004679bae8e92652c6f3d0f518d1041d68",
+    "CSM_waterfall_provenance.json": "f15eb88e2cf03e3dd8524deb38240e8e4f64d32fbb4a9b8e3e4335fd59158224",
+    "tests/test_rule_coverage_manifest.py": "f601151e158907c6f7bfa2780868dd023cfdb3100a3520d33a38bc6a6225a8a8",
+    "data/_gold/gold_overlay_ledger.json": "eb87ce0c88fc95c6bb3270e3e8e03bee76ed03252ce3fbc6ca9046530741e102"
+  },
+  "after_sha256": {
+    "data/_gold/user_pl_cells.json": "412ac2dd5e46e0f62a6a40c075469757183af2ee82fd45ca3c3659f3c01fcbb4",
+    "PL_breakdown.json": "0189fb814803b7aecd5424111fc626d823237a8d6ef89491b02217b97f595e8a",
+    "PL_breakdown_provenance.json": "fcd8d90ab449c4bbe8d8f33be620d1d3786a58f7a3a9ede14a5952a5d6375f4a",
+    "data/_gold/user_csm_cells.json": "fa8468c232fdfd538d455ceea228e59a8bb894ef3bf4b0c3801f5c9170a977d7",
+    "CSM_waterfall.json": "fd97e6677d37d90444503c09588d947ef817db1362503def841a28f956fd57d4",
+    "CSM_waterfall_provenance.json": "493e7161cee941b11628495b174a12af637c729112331fbdab997ffd73837831",
+    "tests/test_rule_coverage_manifest.py": "d8cd7bd4c2be7f885fc58837514ba7b202e393b07ddb98ab4ab26402393d62e0",
+    "data/_gold/gold_overlay_ledger.json": "84f1abdce350faeda551af572ac80eae7c9d6df0b220a2afb7f102f6fa4e5be7"
+  },
+  "applied_at": "2026-10-23T15:48:57"
+}

@@ -1,0 +1,54 @@
+  PL item  1: live      461540.038638  independent      461540.038638  OK
+  PL item  2: live           486250.0  independent      486250.000000  OK
+  PL item  3: live           570025.0  independent      570025.000000  OK
+  PL item  4: live           185905.0  independent      185905.000000  OK
+  PL item  5: live            19517.0  independent       19517.000000  OK
+  PL item  6: live            51324.0  independent       51324.000000  OK
+  PL item  7: live           313279.0  independent      313279.000000  OK
+  PL item  8: live           -83775.0  independent      -83775.000000  OK
+  PL item  9: live            -1973.0  independent       -1973.000000  OK
+  PL item 10: live             -737.0  independent        -737.000000  OK
+  PL item 11: live            -2914.0  independent       -2914.000000  OK
+  PL item 12: live           -78151.0  independent      -78151.000000  OK
+  PL item 13: live            -1029.0  independent       -1029.000000  OK
+  PL item 14: live             8128.0  independent        8128.000000  OK
+  PL item 16: live       31809.707926  independent       31809.707926  OK
+  PL item 17: live      -86105.249856  independent      -86105.249856  OK
+  PL item 18: live       90258.423181  independent       90258.423181  OK
+  PL item 19: live     -176363.673037  independent     -176363.673037  OK
+  PL item 20: live      375434.788782  independent      375434.788782  OK
+  PL item 21: live       -1952.079806  independent       -1952.079806  OK
+  PL item 22: live      373482.708976  independent      373482.708976  OK
+  PL item 23: live       87902.382833  independent       87902.382833  OK
+  PL item 24: live      285580.326143  independent      285580.326143  OK
+  PL item 25: live      -154441.34843  independent     -154441.348430  OK
+  PL item 26: live      255922.070529  independent      255922.070529  OK
+  PL item 27: live     -496420.065574  independent     -496420.065574  OK
+  PL item 28: live        81673.10191  independent       81673.101910  OK
+  PL item 29: live        2986.808968  independent        2986.808968  OK
+  PL item 30: live        4824.677407  independent        4824.677407  OK
+  PL item 31: live      131138.977713  independent      131138.977713  OK
+  PL item 32: live        -3427.94167  independent       -3427.941670  OK
+  CSM item 1: live 16669.0  independent stored 16669.0 (exact 16669.00)  OK
+  CSM item 2: live 5478.9  independent stored 5478.9 (exact 5478.89)  OK
+  CSM item 3: live 777.0  independent stored 777.0 (exact 777.01)  OK
+  CSM item 4: live 2795.0  independent stored 2795.0 (exact 2794.96)  OK
+  CSM item 5: live -1859.0  independent stored -1859.0 (exact -1859.05)  OK
+  CSM item 6: live 23860.8  independent stored 23860.8 (exact 23860.81)  OK
+  PL single quarter item  1: None (planned blank) OK
+  PL single quarter item  4: None (planned blank) OK
+  PL single quarter item 17: None (planned blank) OK
+  PL single quarter item 19: None (planned blank) OK
+  PL single quarter item 20: None (planned blank) OK
+  PL single quarter item 22: None (planned blank) OK
+  PL single quarter item 23: None (planned blank) OK
+  PL single quarter item 24: None (planned blank) OK
+  PL single quarter item 25: None (planned blank) OK
+  PL single quarter item 26: None (planned blank) OK
+  PL single quarter item 27: None (planned blank) OK
+  PL single quarter item 31: None (planned blank) OK
+  CSM single quarter item 3: 223.0  derived (4Q cumulative - 3Q cumulative) 223.0  OK
+  CSM single quarter item 4: 813.7  derived (4Q cumulative - 3Q cumulative) 813.7  OK
+  CSM single quarter item 5: -542.8  derived (4Q cumulative - 3Q cumulative) -542.8  OK
+  CSM single quarter item 6: 23860.8  derived (4Q cumulative - 3Q cumulative) 23860.8  OK
+RESULT: 53 comparisons, 0 differences []

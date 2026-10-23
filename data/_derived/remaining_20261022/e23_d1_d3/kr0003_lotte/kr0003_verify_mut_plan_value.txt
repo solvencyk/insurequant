@@ -1,0 +1,189 @@
+== KR0003 롯데손해보험 2023.4Q  independent re-read  (ticket 20261023T0900Z, scenario N7_Lotte_FY2023Q4)
+  source A24: data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml  sha256[:12]=304df2e65557  lines=51538
+  source A24AUD: data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732_00760.xml  sha256[:12]=3d05d171617f  lines=30633
+  source A23: data/dart/FY2023_Q4/raw/KR0003_롯데손해보험_20240321001822/20240321001822.xml  sha256[:12]=575e039c5c54  lines=51171
+  source A23AUD: data/dart/FY2023_Q4/raw/KR0003_롯데손해보험_20240321001822/20240321001822_00760.xml  sha256[:12]=2c5e21639f1f  lines=28703
+  source Q3: data/dart/FY2024_Q3/raw/KR0003_롯데손해보험/20241114002408.xml  sha256[:12]=70fdc0562aa2  lines=34416
+  source A25: data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml  sha256[:12]=117001faf1b5  lines=90291
+  base masters (C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\remaining_20261022\e23_d1_d3\backup_before_apply\kr0003_lotte) KR0003 PL+CSM rows differing from git HEAD: 0 (must be 0: nobody touched this company before the load)
+
+== A. CONTROL: ORIGINAL FY2023 annual report (rcept 20240321001822), current-year column (col 0) vs the LIVE master 2023.4Q
+  statement unit ('원', 6597), periods ['제 79 기 2023.01.01 부터 2023.12.31 까지', '제 78 기 2022.01.01 부터 2022.12.31 까지', '제 77 기 2021.01.01 부터 2021.12.31 까지']
+  item  1: reread      468498.419718  live master      468498.419718  OK
+  item 16: reread       31809.707926  live master       31809.707926  OK
+  item 17: reread      -72207.217142  live master      -72207.217142  OK
+  item 18: reread       90258.423181  live master       90258.423181  OK
+  item 19: reread     -162465.640323  live master     -162465.640323  OK
+  item 20: reread      396291.202576  live master      396291.202576  OK
+  item 21: reread       -1952.079806  live master       -1952.079806  OK
+  item 22: reread      394339.122770  live master       394339.12277  OK
+  item 23: reread       92703.196556  live master       92703.196556  OK
+  item 24: reread      301635.926214  live master      301635.926214  OK
+  item 25: reread     -176169.223932  live master     -176169.223932  OK
+  item 26: reread      244992.729544  live master      244992.729544  OK
+  item 27: reread     -507218.600091  live master     -507218.600091  OK
+  item 28: reread       81673.101910  live master        81673.10191  OK
+  item 29: reread        2986.808968  live master        2986.808968  OK
+  item 30: reread        4824.677407  live master        4824.677407  OK
+  item 31: reread      125466.702282  live master      125466.702282  OK
+  item 32: reread       -3427.941670  live master        -3427.94167  OK
+  identities (original report): 20=1+17=+0.000000, 22=20+21=-0.000000, 24=22-23=+0.000000, 31=24+25=+0.000000, 1=보험영업수익-보험영업비용=+0.000000, 17=투자영업수익-투자영업비용=+0.000000
+  LOB table (original) L26619-26863 caption '제79(당)기' title '5. 재무제표 주석' unit 백만원
+  item  2: reread       493210.0  live master       493210.0  OK   [3 + 8]
+  item  3: reread       578755.0  live master       578755.0  OK   [총 보험수익(장기) - 총 보험비용(장기)]
+  item  4: reread       186853.0  live master       186853.0  OK   [|보험계약마진 상각| (보험수익 구간, 장기)]
+  item  5: reread        19517.0  live master        19517.0  OK   [위험조정 변동 (보험수익 구간, 장기)]
+  item  6: reread        51324.0  live master        51324.0  OK   [예상보험금 및 예상기타보험서비스비용 - 발생보험금 및 기타서비스비용 (장기)]
+  item  8: reread       -85545.0  live master       -85545.0  OK   [총 재보험수익(장기) - 총 재보험비용(장기)]
+  item  9: reread        -1756.0  live master        -1756.0  OK   [-|보험계약마진 상각| (재보험비용 구간, 장기)]
+  item 10: reread         -737.0  live master         -737.0  OK   [위험조정 변동 (재보험비용 구간, 장기) as printed]
+  item 11: reread        -2914.0  live master        -2914.0  OK   [발생보험금 및 기타재보험수익 - 회수예상 보험금 및 기타보험서비스비용 (장기)]
+  item 13: reread        -1029.0  live master        -1029.0  OK   [(총보험수익-총보험비용)+(총재보험수익-총재보험비용) col 2]
+  item 14: reread         8128.0  live master         8128.0  OK   [(총보험수익-총보험비용)+(총재보험수익-총재보험비용) col 1]
+  item  7: derived       321061.0  live master       321061.0  OK   [3-(4+5+6)]
+  item 12: derived       -80138.0  live master       -80138.0  OK   [8-(9+10+11)]
+  LOB bridge (original) 2+13+14-16-1 = +0.8724 mn
+  CSM table (original) L21144-21423 caption '제79(당)기' header ['(단위: 백만원)', '보험계약마진(CSM)', '소계'] vec(억원) [16774.38, 5478.9, 780.47, 2801.02, -1868.53, 23966.24] closure 0.0
+  CSM item 1: reread 16774.38 (stored 16774.4)  live master 16774.4  OK
+  CSM item 2: reread 5478.90 (stored 5478.9)  live master 5478.9  OK
+  CSM item 3: reread 780.47 (stored 780.5)  live master 780.5  OK
+  CSM item 4: reread 2801.02 (stored 2801.0)  live master 2801.0  OK
+  CSM item 5: reread -1868.53 (stored -1868.5)  live master -1868.5  OK
+  CSM item 6: reread 23966.24 (stored 23966.2)  live master 23966.2  OK
+
+== B. CANDIDATE: FY2024 annual report (rcept 20250320001732), prior-year (FY2023) column  vs  plan e23_plan_lotte.json
+  statement unit ('원', 6491), periods ['제 80 기 2024.01.01 부터 2024.12.31 까지', '제 79 기 2023.01.01 부터 2023.12.31 까지', '제 78 기 2022.01.01 부터 2022.12.31 까지'], THEAD ''
+  identities (printed cells, FY2024 report prior column): 20=1+17=+0.000000, 22=20+21=+0.000000, 24=22-23=+0.000000, 31=24+25=+0.000000, 1=보험영업수익-보험영업비용=+0.000000, 17=투자영업수익-투자영업비용=+0.000000
+  LOB table L25326-25561 caption '제79(전)기' (line 25324) title '5. 재무제표 주석' unit 백만원
+  note total 합계 col: 총 보험수익 1645713 vs statement 보험수익 1645713.805967 (diff -0.806); 총 재보험비용 139464 vs statement 재보험비용 (diff -0.604)
+  LOB bridge 2+13+14-16-1 = -0.7466 mn   (planner reports -0.7466)
+  CSM roll-forward tables in section 5: [(19553, '제80(당)기', ['(단위: 백만원)', '보험계약마진(CSM)', '소 계']), (19837, '제79(전)기', ['(단위: 백만원)', '보험계약마진(CSM)', '소 계'])]
+  CSM table L19837-20116 caption '제79(전)기' header path ['(단위: 백만원)', '보험계약마진(CSM)', '소 계'] vec(억원) [16669.0, 5478.89, 777.01, 2794.96, -1859.05, 23860.81] printed-roll-forward closure +0 백만원
+  audit-report attachment CSM tables (전): [(10874, '제79(전)기', '')]
+  audit-report CSM vec(억원) [16669.0, 5478.89, 777.01, 2794.96, -1859.05, 23860.81] (table L10874)
+  main report vs audit-report attachment vector identical: True
+
+  cell-by-cell comparison with the plan (new value, physical line, printed text, sign, unit)
+  item  1: old    468498.419718  reread      461540.038638  delta   -6958.381080  changed
+  item  2: old         493210.0  reread      486250.000000  delta   -6960.000000  changed
+  item  3: old         578755.0  reread      570025.000000  delta   -8730.000000  changed
+  item  4: old         186853.0  reread      185905.000000  delta    -948.000000  changed
+  item  5: old          19517.0  reread       19517.000000  delta      +0.000000  equal
+  item  6: old          51324.0  reread       51323.000000  delta      -1.000000  rounding-only (LOB note prints truncated 백만원)
+  item  7: old         321061.0  reread      313279.000000  delta   -7782.000000  changed
+  item  8: old         -85545.0  reread      -83775.000000  delta   +1770.000000  changed
+  item  9: old          -1756.0  reread       -1973.000000  delta    -217.000000  changed
+  item 10: old           -737.0  reread        -737.000000  delta      +0.000000  equal
+  item 11: old          -2914.0  reread       -2914.000000  delta      +0.000000  equal
+  item 12: old         -80138.0  reread      -78151.000000  delta   +1987.000000  changed
+  item 13: old          -1029.0  reread       -1029.000000  delta      +0.000000  equal
+  item 14: old           8128.0  reread        8128.000000  delta      +0.000000  equal
+  item 16: old     31809.707926  reread       31809.707926  delta      +0.000000  equal
+  item 17: old    -72207.217142  reread      -86105.249856  delta  -13898.032714  changed
+  item 18: old     90258.423181  reread       90258.423181  delta      -0.000000  equal
+  item 19: old   -162465.640323  reread     -176363.673037  delta  -13898.032714  changed
+  item 20: old    396291.202576  reread      375434.788782  delta  -20856.413794  changed
+  item 21: old     -1952.079806  reread       -1952.079806  delta      +0.000000  equal
+  item 22: old     394339.12277  reread      373482.708976  delta  -20856.413794  changed
+  item 23: old     92703.196556  reread       87902.382833  delta   -4800.813723  changed
+  item 24: old    301635.926214  reread      285580.326143  delta  -16055.600071  changed
+  item 25: old   -176169.223932  reread     -154441.348430  delta  +21727.875502  changed
+  item 26: old    244992.729544  reread      255922.070529  delta  +10929.340985  changed
+  item 27: old   -507218.600091  reread     -496420.065574  delta  +10798.534517  changed
+  item 28: old      81673.10191  reread       81673.101910  delta      +0.000000  equal
+  item 29: old      2986.808968  reread        2986.808968  delta      +0.000000  equal
+  item 30: old      4824.677407  reread        4824.677407  delta      +0.000000  equal
+  item 31: old    125466.702282  reread      131138.977713  delta   +5672.275431  changed
+  item 32: old      -3427.94167  reread       -3427.941670  delta      -0.000000  equal
+  !! PROBLEM [B.value] item 24: independent reread 285580.326143 != plan new 285581.326143
+  PL cells planned 18; independently confirmed 17
+  plan dropped item 6: old 51324.0 new 51323.0 (rounding); my classification: rounding-only (LOB note prints truncated 백만원)
+  CSM item 1: old 16774.4  exact 16669.00 stored 16669.0  line 19881 printed 1,666,900 ('기초순보험계약부채')  planned new=16669.0  changed
+  CSM item 2: old 5478.9  exact 5478.89 stored 5478.9  line 19969 printed 547,889 ('최초 인식 계약')  planned -  equal(rounding)
+  CSM item 3: old 780.5  exact 777.01 stored 777.0  line 20024 printed 77,701 ('보험금융손익')  planned new=777.0  changed
+  CSM item 4: old 2801.0  exact 2794.96 stored 2795.0  line 19980 printed 279,496 ('보험계약마진을 조정하는 추정치의 변동')  planned new=2795.0  changed
+  CSM item 5: old -1868.5  exact -1859.05 stored -1859.0  line 19925 printed (185,905) ('보험계약마진 상각액')  planned new=-1859.0  changed
+  CSM item 6: old 23966.2  exact 23860.81 stored 23860.8  line 20090 printed 2,386,081 ('기말순보험계약부채')  planned new=23860.8  changed
+  CSM cells planned 5; independently confirmed 5
+  PL4 vs CSM5 pair: item 4 185905 백만원 vs |CSM 상각| 185905 백만원 -> diff +0.000
+  stored CSM vector [16669.0, 5478.9, 777.0, 2795.0, -1859.0, 23860.8]; 1-dp closure residual +0.10; tie note: -1859.05 -> round() -> -1859.0 (python float rounding, the repo convention)
+
+== C. merged vector identities (live master for the unchanged items + reread for the changed ones)
+  20-(1+17)                    +0.000000  OK
+  22-(20+21)                   +0.000000  OK
+  24-(22-23)                   +0.000000  OK
+  31-(24+25)                   +0.000000  OK
+  25-(26+27+28+29+30+32)       -0.000000  OK
+  17-(18+19)                   -0.000000  OK
+  3-(4+5+6+7)                  +0.000000  OK
+  8-(9+10+11+12)               +0.000000  OK
+  2-(3+8)                      +0.000000  OK
+  1-(2+13+14+15-16)            +0.746564  OK
+
+== D. SEAM evidence for the 2023.4Q single quarter (값_당분기 = 4Q cumulative - 3Q cumulative)
+  FY2024 Q3 report statement: unit ('원', 5063), periods ['제 80 기 3분기 2024.01.01 부터 2024.09.30 까지', '제 79 기 3분기 2023.01.01 부터 2023.09.30 까지']
+  item  1: 2023.3Q master      454351.967156  FY2024 Q3 report prior 9M column      454351.967156  EQUAL (unrestated 9M)   | derived single quarter after load = +7188.071482 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 17: 2023.3Q master     -109448.993794  FY2024 Q3 report prior 9M column     -109448.993794  EQUAL (unrestated 9M)   | derived single quarter after load = +23343.743938 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 19: 2023.3Q master     -125121.870812  FY2024 Q3 report prior 9M column     -125121.870812  EQUAL (unrestated 9M)   | derived single quarter after load = -51241.802225 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 20: 2023.3Q master      344902.973362  FY2024 Q3 report prior 9M column      344902.973362  EQUAL (unrestated 9M)   | derived single quarter after load = +30531.815420 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 22: 2023.3Q master      342595.478444  FY2024 Q3 report prior 9M column      342595.478444  EQUAL (unrestated 9M)   | derived single quarter after load = +30887.230532 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 23: 2023.3Q master       79716.997812  FY2024 Q3 report prior 9M column       79716.997812  EQUAL (unrestated 9M)   | derived single quarter after load = +8185.385021 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 24: 2023.3Q master      262878.480632  FY2024 Q3 report prior 9M column      262878.480632  EQUAL (unrestated 9M)   | derived single quarter after load = +22701.845511 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 25: 2023.3Q master      -47724.142171  FY2024 Q3 report prior 9M column      -47724.142171  EQUAL (unrestated 9M)   | derived single quarter after load = -106717.206259 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 26: 2023.3Q master      -54336.335403  FY2024 Q3 report prior 9M column      -54336.335403  EQUAL (unrestated 9M)   | derived single quarter after load = +310258.405932 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 27: 2023.3Q master       93581.381153  FY2024 Q3 report prior 9M column       93581.381153  EQUAL (unrestated 9M)   | derived single quarter after load = -590001.446727 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  item 31: 2023.3Q master      215154.338461  FY2024 Q3 report prior 9M column      215154.338461  EQUAL (unrestated 9M)   | derived single quarter after load = -84015.360748 (annual new - 9M master); printed prior 3M col = n/a for Q4
+  -> 11/11 Tier-1 9M comparatives equal the master (so the 4Q cumulative adopted from the annual comparative sits on another basis than the 9M cumulative)
+  FY2024 Q3 report CSM prior-9M table L15912 caption '제79(전)기 3분기': vec [16774.38, 4092.11, 554.02, 1981.32, -1316.23, 22085.6] vs master 2023.3Q [16774.4, 4092.1, 554.0, 1981.3, -1316.2, 22085.6]
+  -> 9M CSM comparative equals the master 2023.3Q vector: True
+  FY2025 annual statement unit ('백만원', 5913), periods ['제 81 기 2025.01.01 부터 2025.12.31 까지', '제 80 기 2024.01.01 부터 2024.12.31 까지', '제 79 기 2023.01.01 부터 2023.12.31 까지']; third column = FY2023 (백만원, printed rounded):
+    item  1: FY2025 report FY2023 col     461540.0  vs FY2024-report prior col    461540.038638  diff -0.0386 OK
+    item 17: FY2025 report FY2023 col     -86105.0  vs FY2024-report prior col    -86105.249856  diff +0.2499 OK
+    item 19: FY2025 report FY2023 col    -176364.0  vs FY2024-report prior col   -176363.673037  diff -0.3270 OK
+    item 20: FY2025 report FY2023 col     375435.0  vs FY2024-report prior col    375434.788782  diff +0.2112 OK
+    item 22: FY2025 report FY2023 col     373483.0  vs FY2024-report prior col    373482.708976  diff +0.2910 OK
+    item 23: FY2025 report FY2023 col      87903.0  vs FY2024-report prior col     87902.382833  diff +0.6172 OK
+    item 24: FY2025 report FY2023 col     285580.0  vs FY2024-report prior col    285580.326143  diff -0.3261 OK
+    item 25: FY2025 report FY2023 col    -154441.0  vs FY2024-report prior col   -154441.348430  diff +0.3484 OK
+    item 26: FY2025 report FY2023 col     255922.0  vs FY2024-report prior col    255922.070529  diff -0.0705 OK
+    item 27: FY2025 report FY2023 col    -496420.0  vs FY2024-report prior col   -496420.065574  diff +0.0656 OK
+    item 31: FY2025 report FY2023 col     131139.0  vs FY2024-report prior col    131138.977713  diff +0.0223 OK
+
+== F. issuer's OWN restatement table (FY2024 annual report, note 47 'effect on the statement of comprehensive income', 제79(전)기: 소급 전 / 재작성효과 / 소급 후, 백만원)
+  table L35590-35813; 23 rows with 3 numbers
+  item  1 보험손익                  : issuer 소급전    468,499 | 효과    -6,959 | 소급후    461,540   ||   master old    468,498.420 -> reread    461,540.039 (delta -6,958.381)  after-ok True before-ok True effect-ok True delta-ok True  [L35626]
+  item 17 투자손익                  : issuer 소급전    -72,207 | 효과   -13,898 | 소급후    -86,105   ||   master old    -72,207.217 -> reread    -86,105.250 (delta -13,898.033)  after-ok True before-ok True effect-ok True delta-ok True  [L35650]
+  item 20 영업이익                  : issuer 소급전    396,292 | 효과   -20,857 | 소급후    375,435   ||   master old    396,291.203 -> reread    375,434.789 (delta -20,856.414)  after-ok True before-ok True effect-ok True delta-ok True  [L35722]
+  item 22 법인세비용차감전순이익           : issuer 소급전    394,340 | 효과   -20,857 | 소급후    373,483   ||   master old    394,339.123 -> reread    373,482.709 (delta -20,856.414)  after-ok True before-ok True effect-ok True delta-ok True  [L35738]
+  item 23 법인세비용                 : issuer 소급전     92,703 | 효과    -4,800 | 소급후     87,903   ||   master old     92,703.197 -> reread     87,902.383 (delta -4,800.814)  after-ok True before-ok True effect-ok True delta-ok True  [L35746]
+  item 24 당기순이익                 : issuer 소급전    301,637 | 효과   -16,057 | 소급후    285,580   ||   master old    301,635.926 -> reread    285,580.326 (delta -16,055.600)  after-ok True before-ok True effect-ok True delta-ok True  [L35754]
+  item 25 기타포괄손익                : issuer 소급전   -176,169 | 효과   +21,728 | 소급후   -154,441   ||   master old   -176,169.224 -> reread   -154,441.348 (delta +21,727.876)  after-ok True before-ok True effect-ok True delta-ok True  [L35762]
+  item 26 기타포괄손익-공정가치측정채무증권평가손익 : issuer 소급전    244,993 | 효과   +10,929 | 소급후    255,922   ||   master old    244,992.730 -> reread    255,922.071 (delta +10,929.341)  after-ok True before-ok True effect-ok True delta-ok True  [L35770]
+  item 27 보험계약자산(부채)순금융손익       : issuer 소급전   -507,219 | 효과   +10,799 | 소급후   -496,420   ||   master old   -507,218.600 -> reread   -496,420.066 (delta +10,798.535)  after-ok True before-ok True effect-ok True delta-ok True  [L35778]
+  item 31 총포괄손익                 : issuer 소급전    125,468 | 효과    +5,671 | 소급후    131,139   ||   master old    125,466.702 -> reread    131,138.978 (delta +5,672.275)  after-ok True before-ok True effect-ok True delta-ok True  [L35802]
+  item 19 (보험금융수익+재보험금융수익-보험금융비용-재보험금융비용): issuer 소급전 -162,466 -> 소급후 -176,364; master old -162,465.640 -> reread -176,363.673
+  -> 10/10 Tier-1 items agree with the issuer's own 소급 전 / 소급 후 table (소급 전 = the old master value, 소급 후 = the value adopted here)
+
+== E. plan / apply-contract sanity
+  apply contract: PL gold_new 18, gold_replace 0; CSM gold_new 5, gold_replace 0; null_dangi_add 12, null_dangi_remove 0, set_dangi_add 0, held []
+  null_dangi_add items: [1, 4, 17, 19, 20, 22, 23, 24, 25, 26, 27, 31]
+  item  1: 3Q cumulative    454351.967156 -> single quarter derivable: True; planned null_dangi: True; live 당분기 14146.452562
+  item  2: 3Q cumulative             None -> single quarter derivable: False; planned null_dangi: False; live 당분기 None
+  item  3: 3Q cumulative             None -> single quarter derivable: False; planned null_dangi: False; live 당분기 None
+  item  4: 3Q cumulative         131623.0 -> single quarter derivable: True; planned null_dangi: True; live 당분기 55230.0
+  item  7: 3Q cumulative             None -> single quarter derivable: False; planned null_dangi: False; live 당분기 None
+  item  8: 3Q cumulative             None -> single quarter derivable: False; planned null_dangi: False; live 당분기 None
+  item  9: 3Q cumulative             None -> single quarter derivable: False; planned null_dangi: False; live 당분기 None
+  item 12: 3Q cumulative             None -> single quarter derivable: False; planned null_dangi: False; live 당분기 None
+  item 17: 3Q cumulative   -109448.993794 -> single quarter derivable: True; planned null_dangi: True; live 당분기 37241.776652
+  item 19: 3Q cumulative   -125121.870812 -> single quarter derivable: True; planned null_dangi: True; live 당분기 -37343.769511
+  item 20: 3Q cumulative    344902.973362 -> single quarter derivable: True; planned null_dangi: True; live 당분기 51388.229214
+  item 22: 3Q cumulative    342595.478444 -> single quarter derivable: True; planned null_dangi: True; live 당분기 51743.644326
+  item 23: 3Q cumulative     79716.997812 -> single quarter derivable: True; planned null_dangi: True; live 당분기 12986.198744
+  item 24: 3Q cumulative    262878.480632 -> single quarter derivable: True; planned null_dangi: True; live 당분기 38757.445582
+  item 25: 3Q cumulative    -47724.142171 -> single quarter derivable: True; planned null_dangi: True; live 당분기 -128445.081761
+  item 26: 3Q cumulative    -54336.335403 -> single quarter derivable: True; planned null_dangi: True; live 당분기 299329.064947
+  item 27: 3Q cumulative     93581.381153 -> single quarter derivable: True; planned null_dangi: True; live 당분기 -600799.981244
+  item 31: 3Q cumulative    215154.338461 -> single quarter derivable: True; planned null_dangi: True; live 당분기 -89687.636179
+
+RESULT: PL cells confirmed 17/18; CSM cells confirmed 5/5; control mismatches 0; problems 1

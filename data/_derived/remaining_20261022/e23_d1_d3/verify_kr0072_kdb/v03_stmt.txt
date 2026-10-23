@@ -1,0 +1,256 @@
+=== 2023.1Q rows=58 first4=[['', '제 37 기 1분기', '제 36 기 1분기'], ['3개월', '누적', '3개월', '누적']]
+  '보험손익'                                   item  1 printed_prior=8298.413391 sim=8298.413391 head=7111.35
+  '보험영업수익'                                 printed_prior=125128.911542
+  '보험수익'                                   printed_prior=117588.022764
+  '재보험수익'                                  printed_prior=7540.888778
+  '보험서비스비용'                                printed_prior=116830.498151
+  '보험비용'                                   printed_prior=107654.084585
+  '재보험비용'                                  printed_prior=6830.245657
+  '기타사업비용'                                 item 16 printed_prior=2346.167909 sim=2346.17 head=2346.17
+  '투자손익'                                   item 17 printed_prior=32877.150458 sim=32877.150458 head=35986.75
+  '투자영업수익'                                 printed_prior=366132.194119
+  '보험금융수익'                                 printed_prior=14104.708080
+  '재보험금융수익'                                printed_prior=292.001794
+  '이자수익'                                   printed_prior=89812.000221
+  '유효이자율법 적용 이자수익'                         printed_prior=86473.473390
+  '당기손익-공정가치로 측정하는 금융자산의 이자수익'             printed_prior=3338.526831
+  '배당금수익'                                  printed_prior=5425.881554
+  '수수료수익'                                  printed_prior=1242.403605
+  '당기손익-공정가치측정금융상품관련이익'                    printed_prior=95748.994567
+  '기타포괄손익-공정가치측정금융상품관련이익'                  printed_prior=27.829868
+  '파생상품관련수익'                               printed_prior=12686.551858
+  '외화거래이익'                                 printed_prior=106600.796150
+  '기타투자수익'                                 printed_prior=40191.026422
+  '투자영업비용'                                 printed_prior=333255.043661
+  '보험금융비용'                                 printed_prior=181665.556922
+  '재보험금융비용'                                printed_prior=505.793627
+  '금융부채의 이자비용'                             printed_prior=5690.610935
+  '당기손익-공정가치측정금융상품관련손실'                    printed_prior=41446.666753
+  '기타포괄손익-공정가치측정금융상품관련손실'                  printed_prior=446.242447
+  '신용손실충당금 전입액'                            printed_prior=-41.075902
+  '파생상품관련비용'                               printed_prior=95221.499350
+  '외화거래손실'                                 printed_prior=4900.179854
+  '재산관리비'                                  printed_prior=1125.574271
+  '기타투자비용'                                 printed_prior=2293.995404
+  '영업이익'                                   item 20 printed_prior=41175.563849 sim=41175.563849 head=43098.09
+  '영업외손익'                                  item 21 printed_prior=-5425.697542 sim=-5425.7 head=-5425.7
+  '영업외수익'                                  printed_prior=133.561532
+  '영업외비용'                                  printed_prior=5559.259074
+  '법인세차감전순이익'                              printed_prior=35749.866307
+  '법인세비용(수익)'                              item 23 printed_prior=-0.209323 sim=-0.209323 head=-0.209323
+  '당기순이익'                                  item 24 printed_prior=35750.075630 sim=35750.07563 head=37672.61
+  '당기기타포괄손익'                               printed_prior=19314.399668
+  '당기손익으로 재분류되는 세후기타포괄손익의 구성요소'            printed_prior=13772.644758
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=371376.033894
+  '기타포괄손익-공정가치측정 신용손실'                     printed_prior=-37.161705
+  '현금흐름위험회피파생상품평가손익'                       printed_prior=1334.458429
+  '보험계약자산(부채)순금융손익'                        printed_prior=-357827.171410
+  '재보험계약자산(부채)순금융손익'                       printed_prior=-1073.514450
+  '당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소'         printed_prior=5541.754910
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=5564.186440
+  '확정급여제도의재측정요소'                           printed_prior=-22.431530
+  '당기총포괄손익'                                printed_prior=55064.475298
+  '주당이익'                                   printed_prior=0.000000
+  '보통주기본주당이익 (단위 : 원)'                     printed_prior=0.001392
+  '계속영업기본주당이익-보통주 (단위 : 원)'                printed_prior=0.001392
+  '보통주희석주당이익 (단위 : 원)'                     printed_prior=0.001392
+  '계속영업희석주당이익 - 보통주 (단위 : 원)'              printed_prior=0.001392
+=== 2023.2Q rows=58 first4=[['', '제 37 기 반기', '제 36 기 반기'], ['3개월', '누적', '3개월', '누적']]
+  '보험손익'                                   item  1 printed_prior=27825.949019 sim=27825.949019 head=22665.0
+  '보험영업수익'                                 printed_prior=266222.365482
+  '보험수익'                                   printed_prior=237662.988510
+  '재보험수익'                                  printed_prior=28559.376972
+  '보험서비스비용'                                printed_prior=238396.416463
+  '보험비용'                                   printed_prior=213444.994683
+  '재보험비용'                                  printed_prior=19602.078585
+  '기타사업비용'                                 item 16 printed_prior=5349.343195 sim=5349.343195 head=5400.0
+  '투자손익'                                   item 17 printed_prior=45706.602817 sim=45706.602817 head=None
+  '투자영업수익'                                 printed_prior=570660.566365
+  '보험금융수익'                                 printed_prior=23661.064901
+  '재보험금융수익'                                printed_prior=954.847023
+  '이자수익'                                   printed_prior=183219.229177
+  '유효이자율법 적용 이자수익'                         printed_prior=176481.712781
+  '당기손익-공정가치로 측정하는 금융자산의 이자수익'             printed_prior=6737.516396
+  '배당금수익'                                  printed_prior=9975.361737
+  '수수료수익'                                  printed_prior=1662.289562
+  '당기손익-공정가치측정금융상품관련이익'                    printed_prior=116811.879942
+  '기타포괄손익-공정가치측정금융상품관련이익'                  printed_prior=30.132468
+  '파생상품관련수익'                               printed_prior=23921.942543
+  '외화거래이익'                                 printed_prior=128299.305576
+  '기타투자수익'                                 printed_prior=82124.513436
+  '투자영업비용'                                 printed_prior=524953.963548
+  '보험금융비용'                                 printed_prior=332151.083732
+  '재보험금융비용'                                printed_prior=1434.944029
+  '금융부채의 이자비용'                             printed_prior=11439.845450
+  '당기손익-공정가치측정금융상품관련손실'                    printed_prior=42828.025419
+  '기타포괄손익-공정가치측정금융상품관련손실'                  printed_prior=2093.010499
+  '신용손실충당금 전입액'                            printed_prior=-19.134043
+  '파생상품관련비용'                               printed_prior=110129.723253
+  '외화거래손실'                                 printed_prior=17827.090387
+  '재산관리비'                                  printed_prior=2343.395765
+  '기타투자비용'                                 printed_prior=4725.979057
+  '영업이익'                                   item 20 printed_prior=73532.551836 sim=73532.551836 head=68658.0
+  '영업외손익'                                  item 21 printed_prior=-10908.331160 sim=-10908.33116 head=-10908.0
+  '영업외수익'                                  printed_prior=1636.347644
+  '영업외비용'                                  printed_prior=12544.678804
+  '법인세차감전순이익(손실)'                          printed_prior=62624.220676
+  '법인세비용(수익)'                              item 23 printed_prior=-0.209323 sim=-0.2 head=-0.2
+  '당기순이익(손실)'                              item 24 printed_prior=62624.429999 sim=62624.429999 head=57750.0
+  '당기기타포괄손익'                               printed_prior=183006.320644
+  '당기손익으로 재분류되는 세후기타포괄손익의 구성요소'            printed_prior=176407.035454
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=106941.629211
+  '기타포괄손익-공정가치측정 신용손실(환입)'                 printed_prior=-11.128227
+  '현금흐름위험회피파생상품평가손익'                       printed_prior=1205.926925
+  '보험계약자산(부채)순금융손익'                        printed_prior=70522.063628
+  '재보험계약자산(부채)순금융손익'                       printed_prior=-2251.456083
+  '당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소'         printed_prior=6599.285190
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=6604.167588
+  '확정급여제도의재측정요소'                           printed_prior=-4.882398
+  '당기총포괄손익'                                printed_prior=245630.750643
+  '주당손익'                                   printed_prior=0.000000
+  '보통주기본주당손익 (단위 : 원)'                     printed_prior=0.002383
+  '계속영업기본주당손익 - 보통주 (단위 : 원)'              printed_prior=0.002383
+  '보통주희석주당손익 (단위 : 원)'                     printed_prior=0.002383
+  '계속영업희석주당손익 - 보통주 (단위 : 원)'              printed_prior=0.002383
+=== 2023.3Q rows=68 first4=[['', '제 37 기 3분기', '제 36 기 3분기'], ['3개월', '누적', '3개월', '누적']]
+  '보험손익'                                   item  1 printed_prior=16711.142687 sim=16711.142687 head=4636.975319
+  '보험영업수익'                                 printed_prior=408442.595982
+  '보험수익'                                   printed_prior=360950.037897
+  '재보험수익'                                  printed_prior=47492.558085
+  '보험서비스비용'                                printed_prior=391731.453295
+  '보험비용'                                   printed_prior=352381.757526
+  '재보험비용'                                  printed_prior=30108.138733
+  '기타사업비용'                                 item 16 printed_prior=9241.557036 sim=9241.557036 head=9241.557036
+  '투자손익'                                   item 17 printed_prior=-13718.605641 sim=-13718.605641 head=-6025.166046
+  '투자영업수익'                                 printed_prior=786515.641652
+  '보험금융수익'                                 printed_prior=33304.509051
+  '재보험금융수익'                                printed_prior=1952.151959
+  '이자수익'                                   printed_prior=286294.321842
+  '유효이자율법 적용 이자수익'                         printed_prior=276026.606236
+  '당기손익-공정가치로 측정하는 금융자산의 이자수익'             printed_prior=10267.715606
+  '배당금수익'                                  printed_prior=13995.000491
+  '수수료수익'                                  printed_prior=2196.117714
+  '당기손익-공정가치측정금융상품관련이익'                    printed_prior=116093.459706
+  '기타포괄손익-공정가치측정금융상품관련이익'                  printed_prior=30.132468
+  '파생상품관련수익'                               printed_prior=22685.471654
+  '외화거래이익'                                 printed_prior=192296.788282
+  '기타투자수익'                                 printed_prior=117667.688485
+  '투자영업비용'                                 printed_prior=800234.247293
+  '보험금융비용'                                 printed_prior=462651.368820
+  '재보험금융비용'                                printed_prior=2584.452808
+  '금융부채의 이자비용'                             printed_prior=18620.989145
+  '당기손익-공정가치측정금융상품관련손실'                    printed_prior=96177.287224
+  '기타포괄손익-공정가치측정금융상품관련손실'                  printed_prior=6842.648311
+  '신용손실충당금 전입액'                            printed_prior=122.641518
+  '파생상품관련비용'                               printed_prior=170968.011855
+  '외화거래손실'                                 printed_prior=28328.341199
+  '재산관리비'                                  printed_prior=3729.997985
+  '기타투자비용'                                 printed_prior=10208.508428
+  '영업이익'                                   item 20 printed_prior=2992.537046 sim=2992.537046 head=-1388.190727
+  '영업외손익'                                  item 21 printed_prior=-16519.944013 sim=-16519.944013 head=-16519.944013
+  '영업외수익'                                  printed_prior=1695.937765
+  '영업외비용'                                  printed_prior=18215.881778
+  '법인세차감전순이익(손실)'                          printed_prior=-13527.406967
+  '법인세수익'                                  printed_prior=-0.209323
+  '당기순이익(손실)'                              item 24 printed_prior=-13527.197644 sim=-13527.197644 head=-17907.925417
+  '당기기타포괄손익'                               printed_prior=271338.272061
+  '당기손익으로 재분류되는 세후기타포괄손익의 구성요소'            printed_prior=264446.604869
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=-142708.043542
+  '기타포괄손익-공정가치측정 신용손실(환입)'                 printed_prior=-10.832190
+  '현금흐름위험회피파생상품평가손익'                       printed_prior=550.330481
+  '보험계약자산(부채)순금융손익'                        printed_prior=410202.722556
+  '재보험계약자산(부채)순금융손익'                       printed_prior=-3587.572436
+  '당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소'         printed_prior=6891.667192
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=6874.687033
+  '확정급여제도의재측정요소'                           printed_prior=16.980159
+  '당기총포괄손익'                                printed_prior=257811.074417
+  '당기순이익(손실)의 귀속'                          printed_prior=0.000000
+  '지배기업의 소유주에게 귀속되는 당기순이익(손실)'             printed_prior=-13527.197644
+  '지배기업의 소유주에게 귀속될 계속영업손익'                 printed_prior=-13527.197644
+  '비지배지분에 귀속되는 당기순이익(손실)'                  printed_prior=0.000000
+  '비지배지분에 귀속될 계속영업이익(손실)'                  printed_prior=0.000000
+  '당기포괄손익의 귀속'                             printed_prior=0.000000
+  '지배기업의 소유주에게 귀속되는 총포괄손익'                 printed_prior=257811.074417
+  '지배기업의 소유주에게 귀속되는 계속영업포괄손익'              printed_prior=257811.074417
+  '비지배지분에 귀속되는 총포괄손익'                      printed_prior=0.000000
+  '비지배지분에 귀속되는 계속영업포괄손익'                   printed_prior=0.000000
+  '주당손익'                                   printed_prior=0.000000
+  '보통주기본주당손익 (단위 : 원)'                     printed_prior=-0.000994
+  '계속영업기본주당손익 - 보통주 (단위 : 원)'              printed_prior=-0.000994
+  '보통주희석주당손익 (단위 : 원)'                     printed_prior=-0.000994
+  '계속영업희석주당손익 - 보통주 (단위 : 원)'              printed_prior=-0.000994
+=== 2023.4Q rows=73 first4=[['', '제 37 기', '제 36 기', '제 35 기'], ['보험손익', '99,413,141,954', '65,248,530,979', '92,366,558,274']]
+  '보험손익'                                   item  1 printed_prior=65248.530979 sim=65248.530979 head=65248.530979
+  '보험영업수익'                                 printed_prior=529039.296807
+  '보험수익'                                   printed_prior=489950.708224
+  '재보험수익'                                  printed_prior=39088.588583
+  '보험서비스비용'                                printed_prior=463790.765828
+  '보험비용'                                   printed_prior=422145.443530
+  '재보험비용'                                  printed_prior=28882.103473
+  '기타사업비용'                                 item 16 printed_prior=12763.218825 sim=12763.218825 head=12763.218825
+  '투자손익'                                   item 17 printed_prior=-18428.269919 sim=-18428.269919 head=-18358.723814
+  '투자영업수익'                                 printed_prior=968232.972044
+  '보험금융수익'                                 printed_prior=52317.583109
+  '재보험금융수익'                                printed_prior=2923.820361
+  '이자수익'                                   printed_prior=386536.098626
+  '유효이자율법 적용 이자수익'                         printed_prior=372368.058674
+  '당기손익-공정가치로 측정하는 금융자산의 이자수익'             printed_prior=14168.039952
+  '배당금수익'                                  printed_prior=18106.583244
+  '수수료수익'                                  printed_prior=2713.386746
+  '당기손익-공정가치측정금융상품관련이익'                    printed_prior=186418.357921
+  '당기손익인식금융자산관련이익'                         printed_prior=0.000000
+  '기타포괄손익-공정가치측정금융상품관련이익'                  printed_prior=30.132468
+  '매도가능금융자산관련이익'                           printed_prior=0.000000
+  '파생상품관련수익'                               printed_prior=37974.121437
+  '외화거래이익'                                 printed_prior=120546.142554
+  '기타투자수익'                                 printed_prior=160666.745578
+  '투자영업비용'                                 printed_prior=986661.241963
+  '보험금융비용'                                 printed_prior=652591.402462
+  '재보험금융비용'                                printed_prior=3639.732996
+  '금융부채의 이자비용'                             printed_prior=24993.164346
+  '당기손익-공정가치측정금융상품관련손실'                    printed_prior=108369.893448
+  '당기손익인식금융자산관련손실'                         printed_prior=0.000000
+  '기타포괄손익-공정가치측정금융상품관련손실'                  printed_prior=8154.583219
+  '매도가능금융자산관련손실'                           printed_prior=0.000000
+  '신용손실충당금 전입액'                            printed_prior=189.272382
+  '파생상품관련비용'                               printed_prior=126560.106131
+  '외화거래손실'                                 printed_prior=43202.454891
+  '재산관리비'                                  printed_prior=5149.669664
+  '기타투자비용'                                 printed_prior=13810.962424
+  '영업이익'                                   item 20 printed_prior=46820.261060 sim=46820.26106 head=46889.807165
+  '영업외손익'                                  item 21 printed_prior=-22870.882990 sim=-22870.88299 head=-22870.88299
+  '영업외수익'                                  printed_prior=1751.269490
+  '영업외비용'                                  printed_prior=24622.152480
+  '법인세차감전순이익'                              printed_prior=23949.378070
+  '법인세수익'                                  printed_prior=-0.209323
+  '당기순이익'                                  item 24 printed_prior=23949.587393 sim=23949.587393 head=24019.133498
+  '당기기타포괄손익'                               printed_prior=-119873.605158
+  '당기손익으로 재분류되는 세후기타포괄손익의 구성요소'            printed_prior=-130879.169153
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=721351.741715
+  '기타포괄손익-공정가치측정 신용손실환입(전입)'               printed_prior=-19.151652
+  '매도가능금융자산평가손익'                           printed_prior=0.000000
+  '만기보유금융자산평가손익'                           printed_prior=0.000000
+  '현금흐름위험회피파생상품평가손익'                       printed_prior=-349.760634
+  '보험계약자산(부채)순금융손익'                        printed_prior=-851813.499295
+  '재보험계약자산(부채)순금융손익'                       printed_prior=-48.499287
+  '당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소'         printed_prior=11005.563995
+  '기타포괄손익-공정가치측정금융자산평가손익'                  printed_prior=11589.357120
+  '확정급여제도의재측정요소'                           printed_prior=-583.793125
+  '당기총포괄손익'                                printed_prior=-95924.017765
+  '당기순이익(손실)의 귀속'                          printed_prior=0.000000
+  '지배기업의 소유주에게 귀속되는 당기순이익'                 printed_prior=23949.587393
+  '지배기업의 소유주에게 귀속될 계속영업손익'                 printed_prior=23949.587393
+  '비지배지분에 귀속되는 당기순이익'                      printed_prior=0.000000
+  '비지배지분에 귀속될 계속영업이익'                      printed_prior=0.000000
+  '당기포괄손익의 귀속'                             printed_prior=0.000000
+  '지배기업의 소유주에게 귀속되는 총포괄손익'                 printed_prior=-95924.017765
+  '지배기업의 소유주에게 귀속되는 계속영업포괄손익'              printed_prior=-95924.017765
+  '비지배지분에 귀속되는 총포괄손익'                      printed_prior=0.000000
+  '비지배지분에 귀속되는 계속영업포괄손익'                   printed_prior=0.000000
+  '주당손익'                                   printed_prior=0.000000
+  '보통주기본주당손익 (단위 : 원)'                     printed_prior=0.000334
+  '계속영업기본주당손익 - 보통주 (단위 : 원)'              printed_prior=0.000334
+  '보통주희석주당손익 (단위 : 원)'                     printed_prior=0.000334
+  '계속영업희석주당손익 - 보통주 (단위 : 원)'              printed_prior=0.000334
+
+label-matched rows: match=26 mismatch=0

@@ -1,0 +1,55 @@
+티켓 20261023T0900Z (D3 = 케이디비생명보험 KR0072 FY2023 2023.1Q~2023.4Q 채택 · 시나리오 N5_KDB_FY2023, 2026-10-23) 증거 폴더 색인
+==============================================================================================================================
+상태: **보류(held) · 트리는 적재 전 상태 · 미커밋 · push 안 함.** 서브에이전트·docling 안 썼다. build_root_masters.main()·build_ifrs17_bs·xlsx·panel·public_exports·NB·TODO·changelog·티켓 파일·WFY_EXCEPTIONS·
+pl_bridge_baseline·pl_csm_amort_missing_ledger·게이트 스크립트·핸들러 코드는 건드리지 않았다. 파이썬은 항상 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, 스크립트 파일로, stdin /dev/null.
+체인의 네 번째 회사였다: 적재 직전 라이브 파일 7개 = ABL(KR0070) 적재 직후 상태(kr0070_abl/apply_manifest_e23_abl.json 의 after_sha256 와 바이트 동일, b02_precheck.txt).
+
+1) 왜 보류인가 (새 FAIL 1건; 상세는 ../answers/kr0072_kdb.md 와 proposed_manifest_item23.txt)
+   적재 직후 tests/test_rule_coverage_manifest.py::test_pl_constructive_coverage_matches_manifest[23] 가 실패한다(pytest_test_rule_coverage_manifest_after1.txt: 102 passed / 2 failed, 다른 하나는 예상한 xlsx 청결 시험).
+   PL 항목 23(법인세) 의 「좁은 커버리지」는 변이 시험이 법인세를 22-24 로 다시 계산해 정확히 0.0 이 되는 칸(PL_YTD_COLLAPSE_TO_ZERO)에 걸려 있었고, 새로 걸리는 칸은 KDB 2023.2Q(옛 override 22 = 24 = 57,750.0)였다.
+   최신 비교열은 22 = 62,624.220676, 24 = 62,624.429999 이므로 올바른 적재는 이 탐지를 지운다. 후보 칸 분석 c16_tax_collapse_candidates.txt(적재 전 5곳 -> 후 4곳).
+   적재 전(복구한) 트리에서 같은 시험은 통과한다: pytest_item23_after_revert.txt.  고치려면 validation 몫의 두 파일(매니페스트 + 게이트 선언)이 필요하다: proposed_manifest_item23.txt, 확인용 임시 사본 실행 pytest_whatif_manifest_item23_blind.txt
+   (102 passed / 2 failed = xlsx 청결 + 게이트 인쇄 목록 불일치 시험).  게이트 지시: 새 RED/FAIL 이면 그 회사를 통째로 되돌리고 보류 -> 되돌렸다.
+
+2) 복구 증거 (현재 트리 = 적재 전)
+   e23_apply_revert.log (e23_apply.py --revert --apply) · qoq_warn.json / pl_oci_vs_bs_aoci_warn.json 은 master_tables 골든 테스트가 덮어쓰므로 백업에서 손으로 복사했다.
+   c17_cmp_backup.txt = backup_before_apply/kr0072_kdb 17개 파일 sha256 == 라이브 17/17 (같음 17, 다름 0) · b02_precheck_after_revert.txt = 라이브 7개 == ABL manifest after_sha256 (ALL OK)
+   git_status_tracked_after_revert.txt = 추적 파일 변경 14개, git diff --stat 14 files +2348/-672 (세션 시작 때와 같음).  원인 확인용으로 한 번 더 적용했다가(what-if) 같은 방식으로 복구했다(e23_apply_whatif_*.log).
+   적재한 마스터의 사본은 저장소에 두지 않았다(--apply 가 결정적으로 다시 만든다; --out-dir 시뮬레이션 = 적용 결과와 바이트 동일: c18_sim_vs_applied.txt).
+
+3) 무엇을 확인했나 (복구 전 실제 적용으로 측정; 숫자는 ../answers/kr0072_kdb.md)
+   - 계획: e23_plan.py kdb (공유 계획기 사본; p01 치환 + p02 「같은 인쇄가 연결/별도에 두 번」 폴백) -> e23_plan_kdb.json / e23_plan_kdb_report.txt: PL 65칸(계획 70 중 마스크가 될 반올림 3칸 + 마스터와 같은 2칸 제외) + CSM 20칸 +
+     set_dangi 8칸.  p03_finalize_plan.py -> e23_plan_kdb_final.json: 교체 PL gold 4칸·CSM gold 5칸의 옛 note/why 를 원문 그대로 보존하고 연쇄용 CSM gold 2칸(2023.4Q 항목 1·4)은 교체 대신 제거(승인된 값 == 빌더 소스 값이라 교체하면 마스크 칸).
+   - 독립 재독: kdb_raw.py · kdb_stmt.py · kdb_notes.py · kr0072_verify.py (표준 라이브러리만; 계획기·e21_*·e23_* 임포트 0) -> kr0072_verify.txt / .json (ALL OK, PL 65/65, CSM 20/20, 문제 0), kr0072_verify_values.json (독립 재독 값),
+     kr0072_verify_prebackup.txt (KR0072_BASE=<백업 폴더>로 재실행: 적재 뒤에는 이렇게 돌려야 「옛값 = 라이브」가 성립한다), 변이 시험 kr0072_verify_mutation.py -> kr0072_verify_mutation.txt (5종 모두 검출).
+     A 대조(원 공시 FY2023 4건을 같은 정의로 읽어 라이브 마스터 재현; 2023.1Q·2Q 는 옛 서식 + 2023.2Q 재확인), B 후보(FY2024 4건 전기 누적 열), B2 완전성 + 마스크 시험, C 항등식, C2 연간 감사보고서 첨부 2건, D 이음매(3개월 열 인쇄값)·FY2025 제36기 열, E 계획 건전성·gold 분류.
+   - 적재 도구: make_apply.py (ABL판 kr0070_abl/e23_apply.py 에서 KDB판을 생성, 치환 전부 1회 일치 단언 + compile) -> e23_apply.py (--snapshot-drift | --check | --out-dir | --apply | --verify | --revert --apply).
+     KDB 특수 허용: LIVE_VS_BASE_OK (2023.2Q·3Q 항목 7·12, 2023.2Q 항목 16: 라이브 마스터 == 손으로 고친 값, 새 빌드는 안 만든다; 근거 c05_drift_evidence.txt) + 값 불변 단일분기의 파생 추종 허용(_follows_cumulatives).
+     산출: drift_before.json, apply_manifest_e23_kdb.json (적재 전후 sha256; 적용 후 복구된 실행의 기록이다), e23_apply_report.txt, e23_apply_{snapshot,check,outdir,run,verify}.log.
+     --verify 종료코드 2 = KR0072 2026.2Q 출처표 2블록이 적재 전부터 emitter 와 달라서이고 새로 어긋난 블록은 0이다(c13_emitter_prestate.txt: 적재 전 4블록 -> 후 2블록).
+   - 차분: kr0072_diff_vs_backup.py (적용 결과를 백업과 셀 단위로 독립 대조) -> kr0072_diff_vs_backup_sim.txt (적재 전 모의: ALL PASS) · kr0072_diff_vs_backup.txt (적용 직후: 66개 점검 ALL PASS);
+     summarize_changes.py -> changes_old_new.txt (옛 -> 새 전표 + 화면 표, 필링 줄 번호).
+   - 게이트: gate_overlay.py + run_gates.sh <폴더> (저장소 쓰기를 모두 이 폴더로 돌린다) -> gates_before/ (적재 전), gates_sim/ (적재 전 모의), gates_after/ (적재 직후);
+     compare_gates.py -> gates_compare_sim.txt · gates_compare_after.txt · gates_compare_after_vs_sim.txt (모의와 적재 직후가 같다).
+   - 테스트: run_tests.sh after1 -> pytest_*_after1.txt (PL 골든 pytest_pl_golden_after1.txt = 1 passed, 288초), 추가 pytest_test_{identity_tautology,dividend_golden,deploy_assets}_after1.txt, fingerprints_before_update.txt (viz_ifrs17_panels RED 1).
+   - 탐침(읽기 전용): a01_gold_state · a02_csm_gold_precision · b01_live_state · c01~c18 (명세/표 덤프, 계획 표, 원 공시 2023.1Q·2Q 구서식 표 덤프, 출처표 상태, 세금 후보 칸 등).
+   - 위생: p28_bom_scan.py (BOM·UTF-8·구문; 이 폴더 167개 파일 문제 0), p29_recode_logs.py (콘솔 cp949 캡처 5개를 UTF-8 로 재인코딩). 일회성 패치 스크립트 p11 · p13 · p15 는 문자열 안의 정규식 `\.` 때문에
+     컴파일 때 SyntaxWarning 만 낸다(이미 적용됐고 재현에는 불필요; c19_warn_scan.py).
+
+4) 2023.2Q 재확인 결과 (kr0072_verify.txt "A. CONTROL" 의 2023.2Q 블록 + "B"; 요약은 ../answers/kr0072_kdb.md)
+   라이브 옛 값은 원 공시 반기 누적 열(정수 손입력, 최대 0.34 차이; 예외 항목 16 = 경영공시 PDF 5,400, 항목 1 = 기타사업비용 미차감 정의); 새 값은 FY2024 반기보고서 전년 반기 누적 열(3개월 열 아님); 항목 15·17·18 은 새 서식으로 확정;
+   FY2024 3분기보고서가 내놓는 6개월 값이 반기보고서 6개월 값보다 726.923 낮다(항목 17·18·20·22·24·31) -> 2023.3Q 단일분기 6칸은 3개월 열 인쇄값으로 고정.
+
+5) 재현 순서 (적재 전 상태 = 이 체인에서 ABL 직후의 마스터 · gold; 지금의 트리가 그 상태다)
+   1. e23_plan.py kdb (p01 -> p02 후) -> p03_finalize_plan.py -> kr0072_verify.py (KR0072_PLAN=e23_plan_kdb_final.json) -> kr0072_verify_mutation.py
+   2. b02_precheck.py ; b03_backup_preload.py ; run_gates.sh gates_before ; make_apply.py ; e23_apply.py --snapshot-drift ; --check ; --out-dir <임시폴더> ; kr0072_diff_vs_backup.py (KR0072_POST_ROOT=<임시폴더>) ;
+      run_gates.sh gates_sim <name>=<임시폴더 파일> ... ; --apply
+   3. e23_apply.py --verify ; kr0072_diff_vs_backup.py ; b04_backup_check.py ; run_gates.sh gates_after ; compare_gates.py ; run_tests.sh after1
+
+6) 재개 절차 (validation 이 proposed_manifest_item23.txt 의 두 파일을 고친 뒤)
+   a. b02_precheck.py (체인 상태 확인; 다른 회사가 먼저 적재됐거나 gold 가 움직였으면 e23_plan.py kdb -> p02 -> p03 -> kr0072_verify.py 부터 다시, b03_backup_preload.py --force-record 로 새 백업)
+   b. e23_apply.py --check (errors: none) -> --apply -> --verify -> kr0072_diff_vs_backup.py -> run_gates.sh gates_after -> compare_gates.py gates_before gates_after
+   c. 테스트: run_tests.sh; master_tables_golden 은 예상 SUMMARY 필드(pl_bridge 3773P -> 3779P, qoq_warn 263 -> 264, oci_vs_bs_aoci 26Y/103blank/10bsskip -> 27Y/100blank/11bsskip)만 움직이니
+      tests/test_master_tables_golden.py --update, scripts/validate_golden_input_fingerprints.py --update (viz_ifrs17_panels 입력 지문 한 줄; 두 viz 골든 통과 확인 뒤)
+   d. 되돌리기: e23_apply.py --revert --apply (적재 직후 해시가 그대로일 때만 동작) + qoq_warn.json · pl_oci_vs_bs_aoci_warn.json 은 backup_before_apply/kr0072_kdb 에서 복사.
+   백업: ../backup_before_apply/kr0072_kdb/ (적재 직전 17개 파일, 전부 ABL 직후 상태와 sha256 일치: b04_backup_check.txt).

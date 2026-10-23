@@ -1,0 +1,275 @@
+keys ['generated', 'ticket', 'company', 'code', 'name', 'decision', 'scenario', 'buckets', 'csm_buckets', 'seams', 'findings', 'notes', '_log_pl', 'csm_gold_class', 'apply_contract', 'n_pl_cells', 'n_csm_cells']
+====================================================================================================
+2023.1Q life_note data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml unit 원 role prior fmt atoc
+  i 1 보험손익: old=17007.0 new=11177.777711 delta=-5829.222289 kind=sum formula='statement line' gold=False
+        part L25572 '보험손익' printed=11,177,777,711 sign=1 abs=False unit=원 contrib=11177.777711
+  i 2 생명장기 손익: old=17007.0 new=14701.765491 delta=-2305.234509 kind=derived formula='3 + 8' gold=False
+        part L25618 '보험수익' printed=152,742,218,946 sign=1 abs=False unit=원 contrib=152742.218946
+        part L25687 '보험비용' printed=135,536,582,416 sign=-1 abs=True unit=원 contrib=-135536.582416
+        part L25641 '재보험수익' printed=10,951,944,288 sign=1 abs=False unit=원 contrib=10951.944288
+        part L25710 '재보험비용' printed=13,455,815,327 sign=-1 abs=True unit=원 contrib=-13455.815327
+  i 3 원수손익(장기): old=21169.0 new=17205.63653 delta=-3963.36347 kind=sum formula='보험수익계열 - |보험비용계열| (장기/발행)' gold=False
+        part L25618 '보험수익' printed=152,742,218,946 sign=1 abs=False unit=원 contrib=152742.218946
+        part L25687 '보험비용' printed=135,536,582,416 sign=-1 abs=True unit=원 contrib=-135536.582416
+  i 4 원수 CSM상각: old=22664.0 new=22411.0 delta=-253.0 kind=sum formula='|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|' gold=True
+        part L41498 '보험계약마진상각 [전기/전분기 누적]' printed=22,411 sign=1 abs=True unit=백만원 contrib=22411.0
+  i 8 재보험손익(장기): old=-4162.0 new=-2503.871039 delta=1658.128961 kind=sum formula='재보험수익계열 - |재보험비용계열|' gold=False
+        part L25641 '재보험수익' printed=10,951,944,288 sign=1 abs=False unit=원 contrib=10951.944288
+        part L25710 '재보험비용' printed=13,455,815,327 sign=-1 abs=True unit=원 contrib=-13455.815327
+  i16 기타사업비용: old=3500.0 new=3523.98778 delta=23.98778 kind=sum formula='statement line' gold=False
+        part L25733 '기타사업비용' printed=3,523,987,780 sign=1 abs=False unit=원 contrib=3523.98778
+  i17 투자손익: old=None new=12268.965324 delta=None kind=sum formula='statement line' gold=False
+        part L25756 '투자손익' printed=12,268,965,324 sign=1 abs=False unit=원 contrib=12268.965324
+  i18 투자이익: old=None new=246664.821635 delta=None kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L25756 '투자손익' printed=12,268,965,324 sign=1 abs=False unit=원 contrib=12268.965324
+        part L25802 '보험금융수익' printed=0 sign=-1 abs=False unit=원 contrib=-0.0
+        part L25825 '재보험금융수익' printed=0 sign=-1 abs=False unit=원 contrib=-0.0
+        part L26101 '보험금융비용' printed=233,593,504,258 sign=1 abs=False unit=원 contrib=233593.504258
+        part L26124 '재보험금융비용' printed=802,352,053 sign=1 abs=False unit=원 contrib=802.352053
+  i19 보험금융손익: old=None new=-234395.856311 delta=None kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L25802 '보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L25825 '재보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L26101 '보험금융비용' printed=233,593,504,258 sign=-1 abs=False unit=원 contrib=-233593.504258
+        part L26124 '재보험금융비용' printed=802,352,053 sign=-1 abs=False unit=원 contrib=-802.352053
+  i20 영업이익: old=20299.0 new=23446.743035 delta=3147.743035 kind=sum formula='statement line' gold=False
+        part L26400 '영업이익(손실)' printed=23,446,743,035 sign=1 abs=False unit=원 contrib=23446.743035
+  i21 영업외손익: old=-8849.0 new=-8533.969538 delta=315.030462 kind=sum formula='statement line' gold=False
+        part L26423 '영업외손익' printed=(8,533,969,538) sign=1 abs=False unit=원 contrib=-8533.969538
+  i22 세전이익: old=11450.0 new=14912.773497 delta=3462.773497 kind=sum formula='statement line' gold=False
+        part L26492 '법인세차감전순이익' printed=14,912,773,497 sign=1 abs=False unit=원 contrib=14912.773497
+  i23 법인세: old=3721.0 new=4301.267556 delta=580.267556 kind=sum formula='statement line' gold=False
+        part L26515 '법인세비용(수익)' printed=4,301,267,556 sign=1 abs=False unit=원 contrib=4301.267556
+  i24 당기순이익: old=7729.0 new=10611.505941 delta=2882.505941 kind=sum formula='statement line' gold=False
+        part L26584 '당기순이익(손실)' printed=10,611,505,941 sign=1 abs=False unit=원 contrib=10611.505941
+  i25 기타포괄손익: old=None new=25272.694757 delta=None kind=sum formula='statement line' gold=False
+        part L26630 '기타포괄손익' printed=25,272,694,757 sign=1 abs=False unit=원 contrib=25272.694757
+  i26 FVOCI 채무증권: old=None new=328821.85025 delta=None kind=sum formula='statement line' gold=False
+        part L26676 '기타포괄손익-공정가치측정금융자산평가손익' printed=328,821,850,250 sign=1 abs=False unit=원 contrib=328821.85025
+  i27 보험계약금융손익(OCI): old=None new=-306198.441686 delta=None kind=sum formula='statement line' gold=False
+        part L26745 '보험계약자산(부채)순금융손익' printed=(306,198,441,686) sign=1 abs=False unit=원 contrib=-306198.441686
+  i28 위험회피 파생상품: old=None new=9302.23831 delta=None kind=sum formula='statement line' gold=False
+        part L26722 '현금흐름위험회피파생상품평가손익' printed=9,302,238,310 sign=1 abs=False unit=원 contrib=9302.23831
+  i30 재보험금융손익(OCI): old=None new=-6660.917782 delta=None kind=sum formula='statement line' gold=False
+        part L26768 '재보험계약자산(부채)순금융손익' printed=(6,660,917,782) sign=1 abs=False unit=원 contrib=-6660.917782
+  i31 총포괄손익: old=None new=35884.200698 delta=None kind=sum formula='statement line' gold=False
+        part L26814 '총포괄손익' printed=35,884,200,698 sign=1 abs=False unit=원 contrib=35884.200698
+  i32 기타 포괄손익(미분류): old=None new=7.965665 delta=None kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L26630 '기타포괄손익' printed=25,272,694,757 sign=1 abs=False unit=원 contrib=25272.694757
+        part L26676 '기타포괄손익-공정가치측정금융자산평가손익' printed=328,821,850,250 sign=-1 abs=False unit=원 contrib=-328821.85025
+        part L26745 '보험계약자산(부채)순금융손익' printed=(306,198,441,686) sign=-1 abs=False unit=원 contrib=306198.441686
+        part L26722 '현금흐름위험회피파생상품평가손익' printed=9,302,238,310 sign=-1 abs=False unit=원 contrib=-9302.23831
+        part L26768 '재보험계약자산(부채)순금융손익' printed=(6,660,917,782) sign=-1 abs=False unit=원 contrib=6660.917782
+====================================================================================================
+2023.2Q life_note data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml unit 원 role prior fmt atoc
+  i 1 보험손익: old=37860.0 new=27404.89041 delta=-10455.10959 kind=sum formula='statement line' gold=False
+        part L26852 '보험손익' printed=27,404,890,410 sign=1 abs=False unit=원 contrib=27404.89041
+  i 2 생명장기 손익: old=37860.0 new=40776.446685 delta=2916.446685 kind=derived formula='3 + 8' gold=False
+        part L26898 '보험수익' printed=316,615,477,377 sign=1 abs=False unit=원 contrib=316615.477377
+        part L26967 '보험비용' printed=271,205,719,593 sign=-1 abs=True unit=원 contrib=-271205.719593
+        part L26921 '재보험수익' printed=22,476,837,250 sign=1 abs=False unit=원 contrib=22476.83725
+        part L26990 '재보험비용' printed=27,110,148,349 sign=-1 abs=True unit=원 contrib=-27110.148349
+  i 3 원수손익(장기): old=44795.0 new=45409.757784 delta=614.757784 kind=sum formula='보험수익계열 - |보험비용계열| (장기/발행)' gold=False
+        part L26898 '보험수익' printed=316,615,477,377 sign=1 abs=False unit=원 contrib=316615.477377
+        part L26967 '보험비용' printed=271,205,719,593 sign=-1 abs=True unit=원 contrib=-271205.719593
+  i 4 원수 CSM상각: old=48623.0 new=46789.0 delta=-1834.0 kind=sum formula='|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|' gold=False
+        part L43180 '보험계약마진상각 [전기/전분기 누적]' printed=46,789 sign=1 abs=True unit=백만원 contrib=46789.0
+  i 8 재보험손익(장기): old=-6935.0 new=-4633.311099 delta=2301.688901 kind=sum formula='재보험수익계열 - |재보험비용계열|' gold=False
+        part L26921 '재보험수익' printed=22,476,837,250 sign=1 abs=False unit=원 contrib=22476.83725
+        part L26990 '재보험비용' printed=27,110,148,349 sign=-1 abs=True unit=원 contrib=-27110.148349
+  i16 기타사업비용: old=13400.0 new=13371.556275 delta=-28.443725 kind=sum formula='statement line' gold=False
+        part L27013 '기타사업비용' printed=13,371,556,275 sign=1 abs=False unit=원 contrib=13371.556275
+  i17 투자손익: old=None new=51170.86295 delta=None kind=sum formula='statement line' gold=False
+        part L27036 '투자손익' printed=51,170,862,950 sign=1 abs=False unit=원 contrib=51170.86295
+  i18 투자이익: old=None new=450057.809937 delta=None kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L27036 '투자손익' printed=51,170,862,950 sign=1 abs=False unit=원 contrib=51170.86295
+        part L27082 '보험금융수익' printed=0 sign=-1 abs=False unit=원 contrib=-0.0
+        part L27105 '재보험금융수익' printed=0 sign=-1 abs=False unit=원 contrib=-0.0
+        part L27381 '보험금융비용' printed=397,262,264,587 sign=1 abs=False unit=원 contrib=397262.264587
+        part L27404 '재보험금융비용' printed=1,624,682,400 sign=1 abs=False unit=원 contrib=1624.6824
+  i19 보험금융손익: old=None new=-398886.946987 delta=None kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L27082 '보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L27105 '재보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L27381 '보험금융비용' printed=397,262,264,587 sign=-1 abs=False unit=원 contrib=-397262.264587
+        part L27404 '재보험금융비용' printed=1,624,682,400 sign=-1 abs=False unit=원 contrib=-1624.6824
+  i20 영업이익: old=73535.0 new=78575.75336 delta=5040.75336 kind=sum formula='statement line' gold=False
+        part L27680 '영업이익(손실)' printed=78,575,753,360 sign=1 abs=False unit=원 contrib=78575.75336
+  i21 영업외손익: old=-16539.0 new=-16024.829261 delta=514.170739 kind=sum formula='statement line' gold=False
+        part L27703 '영업외손익' printed=(16,024,829,261) sign=1 abs=False unit=원 contrib=-16024.829261
+  i22 세전이익: old=56996.0 new=62550.924099 delta=5554.924099 kind=sum formula='statement line' gold=False
+        part L27772 '법인세차감전순이익' printed=62,550,924,099 sign=1 abs=False unit=원 contrib=62550.924099
+  i23 법인세: old=14222.0 new=15286.0134 delta=1064.0134 kind=sum formula='statement line' gold=False
+        part L27795 '법인세비용(수익)' printed=15,286,013,400 sign=1 abs=False unit=원 contrib=15286.0134
+  i24 당기순이익: old=42774.0 new=47264.910699 delta=4490.910699 kind=sum formula='statement line' gold=False
+        part L27864 '당기순이익(손실)' printed=47,264,910,699 sign=1 abs=False unit=원 contrib=47264.910699
+  i25 기타포괄손익: old=None new=22339.669884 delta=None kind=sum formula='statement line' gold=False
+        part L27910 '기타포괄손익' printed=22,339,669,884 sign=1 abs=False unit=원 contrib=22339.669884
+  i26 FVOCI 채무증권: old=None new=109588.147278 delta=None kind=sum formula='statement line' gold=False
+        part L27956 '기타포괄손익-공정가치측정금융자산평가손익' printed=109,588,147,278 sign=1 abs=False unit=원 contrib=109588.147278
+  i27 보험계약금융손익(OCI): old=None new=-80088.403465 delta=None kind=sum formula='statement line' gold=False
+        part L28025 '보험계약자산(부채)순금융손익' printed=(80,088,403,465) sign=1 abs=False unit=원 contrib=-80088.403465
+  i28 위험회피 파생상품: old=None new=-5441.478255 delta=None kind=sum formula='statement line' gold=False
+        part L28002 '현금흐름위험회피파생상품평가손익' printed=(5,441,478,255) sign=1 abs=False unit=원 contrib=-5441.478255
+  i30 재보험금융손익(OCI): old=None new=-1831.255691 delta=None kind=sum formula='statement line' gold=False
+        part L28048 '재보험계약자산(부채)순금융손익' printed=(1,831,255,691) sign=1 abs=False unit=원 contrib=-1831.255691
+  i31 총포괄손익: old=None new=69604.580583 delta=None kind=sum formula='statement line' gold=False
+        part L28094 '총포괄손익' printed=69,604,580,583 sign=1 abs=False unit=원 contrib=69604.580583
+  i32 기타 포괄손익(미분류): old=None new=112.660017 delta=None kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L27910 '기타포괄손익' printed=22,339,669,884 sign=1 abs=False unit=원 contrib=22339.669884
+        part L27956 '기타포괄손익-공정가치측정금융자산평가손익' printed=109,588,147,278 sign=-1 abs=False unit=원 contrib=-109588.147278
+        part L28025 '보험계약자산(부채)순금융손익' printed=(80,088,403,465) sign=-1 abs=False unit=원 contrib=80088.403465
+        part L28002 '현금흐름위험회피파생상품평가손익' printed=(5,441,478,255) sign=-1 abs=False unit=원 contrib=5441.478255
+        part L28048 '재보험계약자산(부채)순금융손익' printed=(1,831,255,691) sign=-1 abs=False unit=원 contrib=1831.255691
+====================================================================================================
+2023.3Q life_note data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml unit 원 role prior fmt atoc
+  i 1 보험손익: old=52509.0 new=42363.52959 delta=-10145.47041 kind=sum formula='statement line' gold=False
+        part L26270 '보험손익' printed=42,363,529,590 sign=1 abs=False unit=원 contrib=42363.52959
+  i 2 생명장기 손익: old=52509.0 new=59257.282376 delta=6748.282376 kind=derived formula='3 + 8' gold=False
+        part L26316 '보험수익' printed=487,018,810,690 sign=1 abs=False unit=원 contrib=487018.81069
+        part L26385 '보험비용' printed=421,079,819,604 sign=-1 abs=True unit=원 contrib=-421079.819604
+        part L26339 '재보험수익' printed=34,764,447,247 sign=1 abs=False unit=원 contrib=34764.447247
+        part L26408 '재보험비용' printed=41,446,155,957 sign=-1 abs=True unit=원 contrib=-41446.155957
+  i 3 원수손익(장기): old=61965.0 new=65938.991086 delta=3973.991086 kind=sum formula='보험수익계열 - |보험비용계열| (장기/발행)' gold=False
+        part L26316 '보험수익' printed=487,018,810,690 sign=1 abs=False unit=원 contrib=487018.81069
+        part L26385 '보험비용' printed=421,079,819,604 sign=-1 abs=True unit=원 contrib=-421079.819604
+  i 4 원수 CSM상각: old=75180.0 new=69639.0 delta=-5541.0 kind=sum formula='|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|' gold=False
+        part L42248 '보험계약마진상각 [전기/전분기 누적]' printed=69,639 sign=1 abs=True unit=백만원 contrib=69639.0
+  i 8 재보험손익(장기): old=-9456.0 new=-6681.70871 delta=2774.29129 kind=sum formula='재보험수익계열 - |재보험비용계열|' gold=False
+        part L26339 '재보험수익' printed=34,764,447,247 sign=1 abs=False unit=원 contrib=34764.447247
+        part L26408 '재보험비용' printed=41,446,155,957 sign=-1 abs=True unit=원 contrib=-41446.155957
+  i16 기타사업비용: old=16900.0 new=16893.752786 delta=-6.247214 kind=sum formula='statement line' gold=False
+        part L26431 '기타사업비용' printed=16,893,752,786 sign=1 abs=False unit=원 contrib=16893.752786
+  i17 투자손익: old=21584.0 new=33777.476556 delta=12193.476556 kind=sum formula='statement line' gold=False
+        part L26454 '투자손익' printed=33,777,476,556 sign=1 abs=False unit=원 contrib=33777.476556
+  i18 투자이익: old=520792.0 new=536094.60946 delta=15302.60946 kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L26454 '투자손익' printed=33,777,476,556 sign=1 abs=False unit=원 contrib=33777.476556
+        part L26500 '보험금융수익' printed=0 sign=-1 abs=False unit=원 contrib=-0.0
+        part L26523 '재보험금융수익' printed=0 sign=-1 abs=False unit=원 contrib=-0.0
+        part L26799 '보험금융비용' printed=499,879,333,663 sign=1 abs=False unit=원 contrib=499879.333663
+        part L26822 '재보험금융비용' printed=2,437,799,241 sign=1 abs=False unit=원 contrib=2437.799241
+  i19 보험금융손익: old=-499208.0 new=-502317.132904 delta=-3109.132904 kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L26500 '보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L26523 '재보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L26799 '보험금융비용' printed=499,879,333,663 sign=-1 abs=False unit=원 contrib=-499879.333663
+        part L26822 '재보험금융비용' printed=2,437,799,241 sign=-1 abs=False unit=원 contrib=-2437.799241
+  i20 영업이익: old=74093.0 new=76141.006146 delta=2048.006146 kind=sum formula='statement line' gold=False
+        part L27098 '영업이익(손실)' printed=76,141,006,146 sign=1 abs=False unit=원 contrib=76141.006146
+  i21 영업외손익: old=-23910.0 new=-24336.161594 delta=-426.161594 kind=sum formula='statement line' gold=False
+        part L27121 '영업외손익' printed=(24,336,161,594) sign=1 abs=False unit=원 contrib=-24336.161594
+  i22 세전이익: old=50183.0 new=51804.844552 delta=1621.844552 kind=sum formula='statement line' gold=False
+        part L27190 '법인세차감전순이익' printed=51,804,844,552 sign=1 abs=False unit=원 contrib=51804.844552
+  i23 법인세: old=12649.0 new=12803.669025 delta=154.669025 kind=sum formula='statement line' gold=False
+        part L27213 '법인세비용(수익)' printed=12,803,669,025 sign=1 abs=False unit=원 contrib=12803.669025
+  i24 당기순이익: old=37534.0 new=39001.175527 delta=1467.175527 kind=sum formula='statement line' gold=False
+        part L27282 '당기순이익(손실)' printed=39,001,175,527 sign=1 abs=False unit=원 contrib=39001.175527
+  i25 기타포괄손익: old=42558.0 new=103104.307885 delta=60546.307885 kind=sum formula='statement line' gold=False
+        part L27328 '기타포괄손익' printed=103,104,307,885 sign=1 abs=False unit=원 contrib=103104.307885
+  i26 FVOCI 채무증권: old=-70738.0 new=-70737.941856 delta=0.058144 kind=sum formula='statement line' gold=False
+        part L27374 '기타포괄손익-공정가치측정금융자산평가손익' printed=(70,737,941,856) sign=1 abs=False unit=원 contrib=-70737.941856
+  i27 보험계약금융손익(OCI): old=127776.0 new=190484.951946 delta=62708.951946 kind=sum formula='statement line' gold=False
+        part L27443 '보험계약자산(부채)순금융손익' printed=190,484,951,946 sign=1 abs=False unit=원 contrib=190484.951946
+  i28 위험회피 파생상품: old=-18420.0 new=-18420.128391 delta=-0.128391 kind=sum formula='statement line' gold=False
+        part L27420 '현금흐름위험회피파생상품평가손익' printed=(18,420,128,391) sign=1 abs=False unit=원 contrib=-18420.128391
+  i30 재보험금융손익(OCI): old=3886.0 new=1723.519067 delta=-2162.480933 kind=sum formula='statement line' gold=False
+        part L27466 '재보험계약자산(부채)순금융손익' printed=1,723,519,067 sign=1 abs=False unit=원 contrib=1723.519067
+  i31 총포괄손익: old=80092.0 new=142105.483412 delta=62013.483412 kind=sum formula='statement line' gold=False
+        part L27512 '총포괄손익' printed=142,105,483,412 sign=1 abs=False unit=원 contrib=142105.483412
+  i32 기타 포괄손익(미분류): old=54.0 new=53.907119 delta=-0.092881 kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L27328 '기타포괄손익' printed=103,104,307,885 sign=1 abs=False unit=원 contrib=103104.307885
+        part L27374 '기타포괄손익-공정가치측정금융자산평가손익' printed=(70,737,941,856) sign=-1 abs=False unit=원 contrib=70737.941856
+        part L27443 '보험계약자산(부채)순금융손익' printed=190,484,951,946 sign=-1 abs=False unit=원 contrib=-190484.951946
+        part L27420 '현금흐름위험회피파생상품평가손익' printed=(18,420,128,391) sign=-1 abs=False unit=원 contrib=18420.128391
+        part L27466 '재보험계약자산(부채)순금융손익' printed=1,723,519,067 sign=-1 abs=False unit=원 contrib=-1723.519067
+====================================================================================================
+2023.4Q life_note data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml unit 원 role prior fmt atoc
+  i 2 생명장기 손익: old=38812.795396 new=64874.466059 delta=26061.670663 kind=derived formula='3 + 8' gold=False
+        part L35261 '보험수익' printed=651,626,998,171 sign=1 abs=False unit=원 contrib=651626.998171
+        part L35318 '보험비용' printed=578,559,785,259 sign=-1 abs=True unit=원 contrib=-578559.785259
+        operand {'item': 8, 'sign': 1, 'value': -8192.746853, 'source': 'master HEAD'}
+  i 3 원수손익(장기): old=47005.542249 new=73067.212912 delta=26061.670663 kind=sum formula='보험수익계열 - |보험비용계열| (장기/발행)' gold=False
+        part L35261 '보험수익' printed=651,626,998,171 sign=1 abs=False unit=원 contrib=651626.998171
+        part L35318 '보험비용' printed=578,559,785,259 sign=-1 abs=True unit=원 contrib=-578559.785259
+  i16 기타사업비용: old=26100.0 new=26061.670663 delta=-38.329337 kind=sum formula='statement line' gold=False
+        part L35356 '기타사업비용' printed=26,061,670,663 sign=1 abs=False unit=원 contrib=26061.670663
+  i17 투자손익: old=93667.388555 new=107658.657107 delta=13991.268552 kind=sum formula='statement line' gold=False
+        part L35375 '투자손익' printed=107,658,657,107 sign=1 abs=False unit=원 contrib=107658.657107
+  i19 보험금융손익: old=-732332.404721 new=-718341.136169 delta=13991.268552 kind=sum formula='derived from statement lines (production definition)' gold=False
+        part L35413 '보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L35432 '재보험금융수익' printed=0 sign=1 abs=False unit=원 contrib=0.0
+        part L35679 '보험금융비용' printed=715,088,953,539 sign=-1 abs=False unit=원 contrib=-715088.953539
+        part L35698 '재보험금융비용' printed=3,252,182,630 sign=-1 abs=False unit=원 contrib=-3252.18263
+  i20 영업이익: old=132480.183951 new=146471.452503 delta=13991.268552 kind=sum formula='statement line' gold=False
+        part L35945 '영업이익(손실)' printed=146,471,452,503 sign=1 abs=False unit=원 contrib=146471.452503
+  i22 세전이익: old=103579.253054 new=117570.521606 delta=13991.268552 kind=sum formula='statement line' gold=False
+        part L36021 '법인세차감전순이익' printed=117,570,521,606 sign=1 abs=False unit=원 contrib=117570.521606
+  i23 법인세: old=23144.232133 new=26376.215168 delta=3231.983035 kind=sum formula='statement line' gold=False
+        part L36040 '법인세비용(수익)' printed=26,376,215,168 sign=1 abs=False unit=원 contrib=26376.215168
+  i24 당기순이익: old=80435.020921 new=91194.306438 delta=10759.285517 kind=sum formula='statement line' gold=False
+        part L36097 '당기순이익(손실)' printed=91,194,306,438 sign=1 abs=False unit=원 contrib=91194.306438
+  i25 기타포괄손익: old=17957.646591 new=7198.361074 delta=-10759.285517 kind=sum formula='statement line' gold=False
+        part L36135 '기타포괄손익' printed=7,198,361,074 sign=1 abs=False unit=원 contrib=7198.361074
+  i27 보험계약금융손익(OCI): old=-581177.249426 new=-591936.534943 delta=-10759.285517 kind=sum formula='statement line' gold=False
+        part L36211 '보험계약자산(부채)순금융손익' printed=(591,936,534,943) sign=1 abs=False unit=원 contrib=-591936.534943
+  dropped {'item': 4, 'old': 92971.0, 'new': 92971.0, 'cls': 'equal', 'reason': 'equal to the master', 'in_cand': True}
+====================================================================================================
+2023.1Q data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원 vec_exact [7585.3, 634.26, 62.44, -159.43, -224.11, 7898.46] vec [7585.3, 634.3, 62.4, -159.4, -224.1, 7898.5] old [7017.8, 604.3, 0.0, 154.8, -226.6, 7550.3] closure 0.0 group_row_amort -224.11
+  csm i1 기초 CSM: old=7017.8 new=7585.3 exact=7585.3 derived=None
+        part {'label': 'I. 기초 보험계약순부채', 'line': 37355, 'printed': '758,530', 'sign': 1, 'unit': '백만원', 'contribution_eok': 7585.3}
+  csm i2 신계약 CSM: old=604.3 new=634.3 exact=634.26 derived=None
+        part {'label': '(3) 해당 기간에 처음 인식한 계약의 효과', 'line': 37403, 'printed': '63,426', 'sign': 1, 'unit': '백만원', 'contribution_eok': 634.26}
+  csm i3 이자 부리: old=0.0 new=62.4 exact=62.44 derived=None
+        part {'label': 'VI. 보험금융비용', 'line': 37467, 'printed': '6,244', 'sign': 1, 'unit': '백만원', 'contribution_eok': 62.44}
+  csm i4 가정 및 경험 조정: old=154.8 new=-159.4 exact=-159.43 derived=None
+        part {'label': '(1) 보험계약마진을 조정하는 추정치의 변동분', 'line': 37387, 'printed': '(15,943)', 'sign': 1, 'unit': '백만원', 'contribution_eok': -159.43}
+  csm i5 CSM 상각: old=-226.6 new=-224.1 exact=-224.11 derived=None
+        part {'label': '(1) 서비스 제공으로 당기손익으로 인식된 보험계약마진', 'line': 37419, 'printed': '(22,411)', 'sign': 1, 'unit': '백만원', 'contribution_eok': -224.11}
+  csm i6 기말 CSM: old=7550.3 new=7898.5 exact=7898.46 derived=None
+        part {'label': 'X. 분기말 보험계약순부채(I+VII+VIII+ IX)', 'line': 37546, 'printed': '789,846', 'sign': 1, 'unit': '백만원', 'contribution_eok': 7898.46}
+2023.2Q data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원 vec_exact [7585.3, 1713.09, 130.52, -295.01, -467.89, 8666.01] vec [7585.3, 1713.1, 130.5, -295.0, -467.9, 8666.0] old [7017.8, 1655.3, 128.4, 524.6, -486.2, 8839.9] closure 0.0 group_row_amort -467.89
+  csm i1 기초 CSM: old=7017.8 new=7585.3 exact=7585.3 derived=None
+        part {'label': 'I. 기초 보험계약순부채', 'line': 39008, 'printed': '758,530', 'sign': 1, 'unit': '백만원', 'contribution_eok': 7585.3}
+  csm i2 신계약 CSM: old=1655.3 new=1713.1 exact=1713.09 derived=None
+        part {'label': '(3) 해당 기간에 처음 인식한 계약의 효과', 'line': 39056, 'printed': '171,309', 'sign': 1, 'unit': '백만원', 'contribution_eok': 1713.09}
+  csm i3 이자 부리: old=128.4 new=130.5 exact=130.52 derived=None
+        part {'label': 'VI. 보험금융비용', 'line': 39120, 'printed': '13,052', 'sign': 1, 'unit': '백만원', 'contribution_eok': 130.52}
+  csm i4 가정 및 경험 조정: old=524.6 new=-295.0 exact=-295.01 derived=None
+        part {'label': '(1) 보험계약마진을 조정하는 추정치의 변동분', 'line': 39040, 'printed': '(29,501)', 'sign': 1, 'unit': '백만원', 'contribution_eok': -295.01}
+  csm i5 CSM 상각: old=-486.2 new=-467.9 exact=-467.89 derived=None
+        part {'label': '(1) 서비스 제공으로 당기손익으로 인식된 보험계약마진', 'line': 39072, 'printed': '(46,789)', 'sign': 1, 'unit': '백만원', 'contribution_eok': -467.89}
+  csm i6 기말 CSM: old=8839.9 new=8666.0 exact=8666.01 derived=None
+        part {'label': 'X. 반기말 보험계약순부채(I+VII+VIII+ IX)', 'line': 39199, 'printed': '866,601', 'sign': 1, 'unit': '백만원', 'contribution_eok': 8666.01}
+2023.3Q data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원 vec_exact [7585.3, 2853.57, 208.28, -1512.0, -696.39, 8438.76] vec [7585.3, 2853.6, 208.3, -1512.0, -696.4, 8438.8] old [7017.8, 2778.5, 211.1, 475.6, -751.8, 9731.2] closure 0.0 group_row_amort -696.39
+  csm i1 기초 CSM: old=7017.8 new=7585.3 exact=7585.3 derived=None
+        part {'label': 'I. 기초 보험계약순부채', 'line': 38133, 'printed': '758,530', 'sign': 1, 'unit': '백만원', 'contribution_eok': 7585.3}
+  csm i2 신계약 CSM: old=2778.5 new=2853.6 exact=2853.57 derived=None
+        part {'label': '(3) 해당 기간에 처음 인식한 계약의 효과', 'line': 38181, 'printed': '285,357', 'sign': 1, 'unit': '백만원', 'contribution_eok': 2853.57}
+  csm i3 이자 부리: old=211.1 new=208.3 exact=208.28 derived=None
+        part {'label': 'VI. 보험금융비용', 'line': 38245, 'printed': '20,828', 'sign': 1, 'unit': '백만원', 'contribution_eok': 208.28}
+  csm i4 가정 및 경험 조정: old=475.6 new=-1512.0 exact=-1512.0 derived=None
+        part {'label': '(1) 보험계약마진을 조정하는 추정치의 변동분', 'line': 38165, 'printed': '(151,200)', 'sign': 1, 'unit': '백만원', 'contribution_eok': -1512.0}
+  csm i5 CSM 상각: old=-751.8 new=-696.4 exact=-696.39 derived=None
+        part {'label': '(1) 서비스 제공으로 당기손익으로 인식된 보험계약마진', 'line': 38197, 'printed': '(69,639)', 'sign': 1, 'unit': '백만원', 'contribution_eok': -696.39}
+  csm i6 기말 CSM: old=9731.2 new=8438.8 exact=8438.76 derived=None
+        part {'label': 'X. 분기말 보험계약순부채(I+VII+VIII+IX)', 'line': 38317, 'printed': '843,876', 'sign': 1, 'unit': '백만원', 'contribution_eok': 8438.76}
+2023.4Q data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml table@L50524 unit 백만원 vec_exact [7585.3, 3475.87, 280.25, -1716.28, -929.71, 8695.43] vec [7585.3, 3475.9, 280.2, -1716.3, -929.7, 8695.4] old [7017.8, 3475.9, 280.2, -1148.8, -929.7, 8695.4] closure 0.0 group_row_amort -929.71
+  csm i1 기초 CSM: old=7017.8 new=7585.3 exact=7585.3 derived=None
+        part {'label': 'I. 기초 보험계약순부채', 'line': 50551, 'printed': '758,530', 'sign': 1, 'unit': '백만원', 'contribution_eok': 7585.3}
+  csm i4 가정 및 경험 조정: old=-1148.8 new=-1716.3 exact=-1716.28 derived=None
+        part {'label': '(1) 보험계약마진을 조정하는 추정치의 변동분', 'line': 50583, 'printed': '(171,628)', 'sign': 1, 'unit': '백만원', 'contribution_eok': -1716.28}
+[
+ {
+  "code": "KR0070",
+  "item": 4,
+  "quarter": "2023.1Q",
+  "value": 22411.0,
+  "was": 22664.0,
+  "note": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv): 이전 gold 값 22664.0, 이전 was 3364.0, 이전 note 요약 「inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회…」(전문은 git HEAD 의 data/_gold/user_pl_cells.json). 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 22411.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L41498. 현재 마스터값(gold) 22664.0 는 원 공시 rcept 20230515002903(단위 백만원) 별도 기준 인쇄값(22664.0, 원문 L26968「해당 기간에 서비스의 이전으로 당기손익에 인식한 보험계약마진 금액」22,664)과 일치. 변동 -253.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json",
+  "old_entry": {
+   "원보험사코드": "KR0070",
+   "항목번호": 4,
+   "공시분기": "2023.1Q",
+   "값": 22664.0,
+   "was": 3364.0,
+   "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회수 관련 보험료 배분액은...' 표현이라 미매칭 -> extract_tier2_life_old 자기가드 통과 -> 제네릭 extract_tier2_life 로 폴백 -> _pick_life_table 이 '재보험수익' substring 을 '보험수익' 으로 오매칭해 출재(재보험) 레그를 원수로 잘못 뽑음. 진짜 원수 CSM상각은 별개 노트(전환방법별 CSM 변동표, '제공된 서비스 관련 당기손익 인식' 행, 합계열)에 있고 두 함수 모두 _is_rollforward() 로 그 노트를 건너뜀 -- raw 직접 재검증(합계열)으로 override, 코드 수정은 공용함수 blast-radius 커서 별건 후속. 2026-08-17."
+  }
+ }
+]

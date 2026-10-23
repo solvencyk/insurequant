@@ -1,0 +1,26 @@
+data/_gold/user_pl_cells.json: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+PL_breakdown.json: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+PL_breakdown_provenance.json: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+data/_gold/user_csm_cells.json: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+CSM_waterfall.json: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+CSM_waterfall_provenance.json: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+tests/test_rule_coverage_manifest.py: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+data/_gold/gold_overlay_ledger.json: backup == this manifest before_sha256 True; == ABL manifest after_sha256 True; == SHA256_preload True
+data/_gold/user_pl_cells.json: live == this manifest after_sha256 True
+PL_breakdown.json: live == this manifest after_sha256 True
+PL_breakdown_provenance.json: live == this manifest after_sha256 True
+data/_gold/user_csm_cells.json: live == this manifest after_sha256 True
+CSM_waterfall.json: live == this manifest after_sha256 True
+CSM_waterfall_provenance.json: live == this manifest after_sha256 True
+tests/test_rule_coverage_manifest.py: live == this manifest after_sha256 True
+data/_gold/gold_overlay_ledger.json: live == this manifest after_sha256 True
+(not written by the applier) NB_CSM_multiple.json: live == preload True
+(not written by the applier) data/_derived/pl_oci_vs_bs_aoci_warn.json: live == preload True
+(not written by the applier) data/_derived/qoq_warn.json: live == preload True
+(not written by the applier) data/dart/viz/pl_breakdown_master.json: live == preload True
+(not written by the applier) tests/fixtures/builder_input_fingerprints.json: live == preload True
+(not written by the applier) tests/fixtures/master_tables_golden.json: live == preload True
+(not written by the applier) tests/fixtures/pl_breakdown_golden.json: live == preload True
+(not written by the applier) tests/fixtures/viz_csm_waterfall_golden.json: live == preload True
+(not written by the applier) tests/fixtures/viz_ifrs17_panels_golden.json: live == preload True
+ALL OK

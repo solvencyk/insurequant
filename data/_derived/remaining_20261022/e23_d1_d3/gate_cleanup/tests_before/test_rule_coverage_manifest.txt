@@ -1,0 +1,24 @@
+........................................................................ [ 69%]
+F...............................                                         [100%]
+================================== FAILURES ===================================
+___________________ test_master_xlsx_clean_state_has_no_red ___________________
+
+_mx_live = (<module 'check_master_xlsx_drift' from 'C:\\Users\\sangwook.cho\\Desktop\\insurequant\\scripts\\check_master_xlsx_dri...', '손해보험', 5, '1. 보통주', ...], ['KR0001', '메리츠화재해상보험', '000060', '손해보험', 6, '2. 자본항목 중 보통주 이외의 자본증권', ...], ...]), ...})
+
+    def test_master_xlsx_clean_state_has_no_red(_mx_live):
+        """\uc9c0\uae08 \uc0c1\ud0dc\uc5d0\uc11c RED 0 \uc774\uc5b4\uc57c \ud55c\ub2e4 \u2014 \uc544\ub2c8\uba74 \uc2dc\ud2b8 \ub3d9\uae30\ud654\uac00 \ubc00\ub9b0 \uac83\uc774\ub2e4.
+    
+        2026-09-02 실측: 13개 시트 53,288행 대조, 드리프트 0. (그 직전까지 1219+33칸이
+        stale 이었고 어떤 게이트도 그것을 못 봤다.)"""
+        D, sheets, _t = _mx_live
+        findings, stat = D.scan(sheets=sheets)
+        red = [f"{f['rule']}|{f['sheet']}: {f['message'][:160]}"
+               for f in findings if f["severity"] == "RED"]
+>       assert not red, red
+E       AssertionError: ["MASTER_XLSX_DRIFT|CSM\uc6cc\ud130\ud3f4: \uac12\uc774 \ub2e4\ub978 \uc140 124\uac74 / 2358\ud589 \u2014 ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', '000400', '\uc190\ud574\ubcf4\ud5d8', 1, '\uae30\ucd08 CSM', '2023.4Q')|\uac12: \uc2dc..., None, '\uc190\ud574\ubcf4\ud5d8', 1, '\ubcf4\ud5d8\uc190\uc775', '2023.4Q')|\uac12: \uc2dc\ud2b8=468498.419718 vs \ub9c8\uc2a4\ud130=461540.038638 / ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', None, '\uc190\ud574\ubcf4\ud5d8', 1"]
+E       assert not ["MASTER_XLSX_DRIFT|CSM\uc6cc\ud130\ud3f4: \uac12\uc774 \ub2e4\ub978 \uc140 124\uac74 / 2358\ud589 \u2014 ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', '000400', '\uc190\ud574\ubcf4\ud5d8', 1, '\uae30\ucd08 CSM', '2023.4Q')|\uac12: \uc2dc..., None, '\uc190\ud574\ubcf4\ud5d8', 1, '\ubcf4\ud5d8\uc190\uc775', '2023.4Q')|\uac12: \uc2dc\ud2b8=468498.419718 vs \ub9c8\uc2a4\ud130=461540.038638 / ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', None, '\uc190\ud574\ubcf4\ud5d8', 1"]
+
+tests\test_rule_coverage_manifest.py:1692: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_rule_coverage_manifest.py::test_master_xlsx_clean_state_has_no_red
+1 failed, 103 passed in 159.64s (0:02:39)

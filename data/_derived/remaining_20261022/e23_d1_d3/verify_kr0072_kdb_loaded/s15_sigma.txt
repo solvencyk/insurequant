@@ -1,0 +1,49 @@
+== PL LIVE : sum of 4 single quarters minus annual cum (mn); only |diff|>0.01 listed
+   item 6 incomplete singles/annual [None, None, 1538.0, 2853.0] 2794.0
+   item 7 incomplete singles/annual [None, None, -33815.713456, 37928.984323] -3348.735306
+   item 9 incomplete singles/annual [None, None, -2039.0, -2403.0] -5152.0
+   item 10 incomplete singles/annual [None, None, -158.0, -162.0] -1819.0
+   item 11 incomplete singles/annual [None, None, 20.0, -2469.0] 7343.0
+   item 12 incomplete singles/annual [None, None, 10604.120965, -2143.934242] 9834.48511
+   item 17 sum=-17701.346925 annual=-18428.269919 diff=726.922994
+   item 18 sum=583288.385063 annual=582561.462069 diff=726.922994
+   item 20 sum=47547.184054 annual=46820.261060 diff=726.922994
+   item 22 sum=24676.301064 annual=23949.378070 diff=726.922994
+   item 24 sum=24676.510387 annual=23949.587393 diff=726.922994
+   item 31 sum=-95197.094771 annual=-95924.017765 diff=726.922994
+   (all other complete items: diff <= 0.01)
+== PL HEAD : sum of 4 single quarters minus annual cum (mn); only |diff|>0.01 listed
+   item 6 incomplete singles/annual [None, None, 1538.0, 2853.0] 2794.0
+   item 7 incomplete singles/annual [None, None, -35016.275872, 48961.540566] -3348.735306
+   item 9 incomplete singles/annual [None, None, -2039.0, -2403.0] -5152.0
+   item 10 incomplete singles/annual [None, None, -158.0, -162.0] -1819.0
+   item 11 incomplete singles/annual [None, None, 20.0, -2469.0] 7343.0
+   item 12 incomplete singles/annual [None, None, 11162.808227, -3118.323117] 9834.48511
+   item 15 incomplete singles/annual [0.0, None, None, 0.0] 0.0
+   item 16 incomplete singles/annual [2346.17, None, None, 3521.661789] 12763.218825
+   item 17 incomplete singles/annual [35986.75, None, None, -12333.557768] -18358.723814
+   item 18 incomplete singles/annual [200709.54, None, None, 166135.251524] 582631.008174
+   item 25 incomplete singles/annual [None, None, None, -398532.996725] -119873.605158
+   item 26 incomplete singles/annual [None, None, None, 864059.785257] 721351.741715
+   item 27 incomplete singles/annual [None, None, None, -1269337.341357] -851813.499295
+   item 28 incomplete singles/annual [None, None, None, -900.091115] -349.760634
+   item 29 incomplete singles/annual [None, None, None, 4714.670087] 11589.35712
+   item 30 incomplete singles/annual [None, None, None, 3539.073149] -48.499287
+   item 31 incomplete singles/annual [None, None, None, -356605.93781] -95854.47166
+   item 32 incomplete singles/annual [None, None, None, -609.092746] -602.944777
+   (all other complete items: diff <= 0.01)
+== CSM LIVE : sum of single-quarter flows (items 2..5) minus annual (억)
+   item 2 sum=3023.100 annual=3023.100 diff=0.000
+   item 3 sum=183.400 annual=183.400 diff=0.000
+   item 4 sum=-2560.000 annual=-2560.000 diff=0.000
+   item 5 sum=-512.000 annual=-512.000 diff=0.000
+== CSM HEAD : sum of single-quarter flows (items 2..5) minus annual (억)
+   item 2 sum=3023.100 annual=3023.100 diff=0.000
+   item 3 sum=183.400 annual=183.400 diff=0.000
+   item 4 sum=-2103.500 annual=-2103.500 diff=0.000
+   item 5 sum=-512.000 annual=-512.000 diff=0.000
+
+basis evidence (won): H1 report 투자손익 6M: 별도 45,706,602,817 ; 연결 44,979,679,823 ; diff 726922994
+Q3 report: 9M cum -13,718,605,641 minus 3m (-58,698,285,464) = implied 6M 44979679823 (== H1 연결 44,979,679,823 ?) True
+Q3 report: 9M NI -13,527,197,644 minus 3m (-75,424,704,649) = implied 6M NI 61897507005 (== H1 연결 NI 61,897,507,005 ?) True ; H1 별도 NI 62,624,429,999
+FY2023 annual: original filing 별도 NI 24,019,133,498 ; 연결 NI 23,949,587,393 ; diff 69546105 | 투자손익 별도 -18,358,723,814 ; 연결 -18,428,269,919 ; diff 69546105

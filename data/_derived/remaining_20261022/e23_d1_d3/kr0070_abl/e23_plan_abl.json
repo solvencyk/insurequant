@@ -1,0 +1,6724 @@
+{
+ "generated": "2026-10-23",
+ "ticket": "inbox/parser/20261023T0900Z__orchestrator__MULTI_2023.1Q-2023.4Q__latest_comparative_owner_decided_d1_d3.md",
+ "company": "abl",
+ "code": "KR0070",
+ "name": "에이비엘생명보험",
+ "decision": "D3 = ABL FY2023 진행 (연쇄용 CSM gold 교체 승인)",
+ "scenario": "N4_ABL_FY2023",
+ "buckets": [
+  {
+   "code": "KR0070",
+   "quarter": "2023.1Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0070",
+    "quarter": "2023.1Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q1",
+    "file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20240516002045"
+   },
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 1,
+     "item_name": "보험손익",
+     "old": 17007.0,
+     "new": 11177.777711,
+     "delta": -5829.222289,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험손익",
+       "line": 25572,
+       "printed": "11,177,777,711",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 11177.777711
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 11177.777711,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 2,
+     "item_name": "생명장기 손익",
+     "old": 17007.0,
+     "new": 14701.765491,
+     "delta": -2305.234509,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 25618,
+       "printed": "152,742,218,946",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 152742.218946
+      },
+      {
+       "label": "보험비용",
+       "line": 25687,
+       "printed": "135,536,582,416",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -135536.582416
+      },
+      {
+       "label": "재보험수익",
+       "line": 25641,
+       "printed": "10,951,944,288",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 10951.944288
+      },
+      {
+       "label": "재보험비용",
+       "line": 25710,
+       "printed": "13,455,815,327",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -13455.815327
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "3 + 8",
+     "kind": "derived",
+     "cand_new": 14701.765491000018,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 3,
+     "item_name": "원수손익(장기)",
+     "old": 21169.0,
+     "new": 17205.63653,
+     "delta": -3963.36347,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 25618,
+       "printed": "152,742,218,946",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 152742.218946
+      },
+      {
+       "label": "보험비용",
+       "line": 25687,
+       "printed": "135,536,582,416",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -135536.582416
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "보험수익계열 - |보험비용계열| (장기/발행)",
+     "kind": "sum",
+     "cand_new": 17205.636530000018,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 4,
+     "item_name": "원수 CSM상각",
+     "old": 22664.0,
+     "new": 22411.0,
+     "delta": -253.0,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약마진상각 [전기/전분기 누적]",
+       "line": 41498,
+       "printed": "22,411",
+       "sign": 1,
+       "abs": true,
+       "unit": "백만원",
+       "contribution_mn": 22411.0
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|",
+     "kind": "sum",
+     "cand_new": 22410.0,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": true,
+     "gold_class": "A",
+     "original_print": {
+      "value": 22664.0,
+      "file": "data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험/xml/20230515002903.xml",
+      "rcept": "20230515002903",
+      "lines": [
+       {
+        "label": "해당 기간에 서비스의 이전으로 당기손익에 인식한 보험계약마진 금액",
+        "line": 26968,
+        "printed": "22,664",
+        "sign": 1,
+        "abs": true,
+        "unit": "백만원",
+        "contribution_mn": 22664.0,
+        "unit_line": 26924
+       }
+      ],
+      "unit": "백만원"
+     },
+     "gold_source_print": {
+      "value": 22664.0,
+      "file": "data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험/xml/20230515002903.xml",
+      "rcept": "20230515002903",
+      "lines": [
+       {
+        "label": "해당 기간에 서비스의 이전으로 당기손익에 인식한 보험계약마진 금액",
+        "line": 26968,
+        "printed": "22,664",
+        "sign": 1,
+        "abs": true,
+        "unit": "백만원",
+        "contribution_mn": 22664.0,
+        "unit_line": 26924
+       }
+      ],
+      "unit": "백만원"
+     }
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 8,
+     "item_name": "재보험손익(장기)",
+     "old": -4162.0,
+     "new": -2503.871039,
+     "delta": 1658.128961,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 25641,
+       "printed": "10,951,944,288",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 10951.944288
+      },
+      {
+       "label": "재보험비용",
+       "line": 25710,
+       "printed": "13,455,815,327",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -13455.815327
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "재보험수익계열 - |재보험비용계열|",
+     "kind": "sum",
+     "cand_new": -2503.8710389999997,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 16,
+     "item_name": "기타사업비용",
+     "old": 3500.0,
+     "new": 3523.98778,
+     "delta": 23.98778,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타사업비용",
+       "line": 25733,
+       "printed": "3,523,987,780",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 3523.98778
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 3523.98778,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": null,
+     "new": 12268.965324,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 25756,
+       "printed": "12,268,965,324",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 12268.965324
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 12268.965324,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 18,
+     "item_name": "투자이익",
+     "old": null,
+     "new": 246664.821635,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 25756,
+       "printed": "12,268,965,324",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 12268.965324
+      },
+      {
+       "label": "보험금융수익",
+       "line": 25802,
+       "printed": "0",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -0.0
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 25825,
+       "printed": "0",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -0.0
+      },
+      {
+       "label": "보험금융비용",
+       "line": 26101,
+       "printed": "233,593,504,258",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 233593.504258
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 26124,
+       "printed": "802,352,053",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 802.352053
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 246664.821635,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 19,
+     "item_name": "보험금융손익",
+     "old": null,
+     "new": -234395.856311,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험금융수익",
+       "line": 25802,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 25825,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "보험금융비용",
+       "line": 26101,
+       "printed": "233,593,504,258",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -233593.504258
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 26124,
+       "printed": "802,352,053",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -802.352053
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -234395.856311,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": 20299.0,
+     "new": 23446.743035,
+     "delta": 3147.743035,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익(손실)",
+       "line": 26400,
+       "printed": "23,446,743,035",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 23446.743035
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 23446.743035,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 21,
+     "item_name": "영업외손익",
+     "old": -8849.0,
+     "new": -8533.969538,
+     "delta": 315.030462,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업외손익",
+       "line": 26423,
+       "printed": "(8,533,969,538)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -8533.969538
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -8533.969538,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": 11450.0,
+     "new": 14912.773497,
+     "delta": 3462.773497,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익",
+       "line": 26492,
+       "printed": "14,912,773,497",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 14912.773497
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 14912.773497,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 23,
+     "item_name": "법인세",
+     "old": 3721.0,
+     "new": 4301.267556,
+     "delta": 580.267556,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세비용(수익)",
+       "line": 26515,
+       "printed": "4,301,267,556",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 4301.267556
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 4301.267556,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": 7729.0,
+     "new": 10611.505941,
+     "delta": 2882.505941,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익(손실)",
+       "line": 26584,
+       "printed": "10,611,505,941",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 10611.505941
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 10611.505941,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": null,
+     "new": 25272.694757,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익",
+       "line": 26630,
+       "printed": "25,272,694,757",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 25272.694757
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 25272.694757,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 26,
+     "item_name": "FVOCI 채무증권",
+     "old": null,
+     "new": 328821.85025,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 26676,
+       "printed": "328,821,850,250",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 328821.85025
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 328821.85025,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": null,
+     "new": -306198.441686,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 26745,
+       "printed": "(306,198,441,686)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -306198.441686
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -306198.441686,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 28,
+     "item_name": "위험회피 파생상품",
+     "old": null,
+     "new": 9302.23831,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 26722,
+       "printed": "9,302,238,310",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 9302.23831
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 9302.23831,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": null,
+     "new": -6660.917782,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 26768,
+       "printed": "(6,660,917,782)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -6660.917782
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -6660.917782,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": null,
+     "new": 35884.200698,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "총포괄손익",
+       "line": 26814,
+       "printed": "35,884,200,698",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 35884.200698
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 35884.200698,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": null,
+     "new": 7.965665,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+     "xml_rcept": "20240516002045",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익",
+       "line": 26630,
+       "printed": "25,272,694,757",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 25272.694757
+      },
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 26676,
+       "printed": "328,821,850,250",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -328821.85025
+      },
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 26745,
+       "printed": "(306,198,441,686)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 306198.441686
+      },
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 26722,
+       "printed": "9,302,238,310",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -9302.23831
+      },
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 26768,
+       "printed": "(6,660,917,782)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 6660.917782
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 7.965665,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 23446.743035,
+     "rhs": 23446.743035,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": 14912.773497,
+     "rhs": 14912.773497,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 4301.267556,
+     "rhs": 4301.267556,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": 35884.200698,
+     "rhs": 35884.200698,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": 25272.694757,
+     "rhs": 25272.694757,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": 12268.965324,
+     "rhs": 12268.965324,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 11177.777711,
+     "rhs": 14701.765491,
+     "resid": 0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 14701.765491,
+     "rhs": 14701.765491,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30,
+    31,
+    32
+   ],
+   "only_cand": [],
+   "only_mine": []
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0070",
+    "quarter": "2023.2Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q2",
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20240814004092"
+   },
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 1,
+     "item_name": "보험손익",
+     "old": 37860.0,
+     "new": 27404.89041,
+     "delta": -10455.10959,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험손익",
+       "line": 26852,
+       "printed": "27,404,890,410",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 27404.89041
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 27404.89041,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 2,
+     "item_name": "생명장기 손익",
+     "old": 37860.0,
+     "new": 40776.446685,
+     "delta": 2916.446685,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 26898,
+       "printed": "316,615,477,377",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 316615.477377
+      },
+      {
+       "label": "보험비용",
+       "line": 26967,
+       "printed": "271,205,719,593",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -271205.719593
+      },
+      {
+       "label": "재보험수익",
+       "line": 26921,
+       "printed": "22,476,837,250",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 22476.83725
+      },
+      {
+       "label": "재보험비용",
+       "line": 26990,
+       "printed": "27,110,148,349",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -27110.148349
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "3 + 8",
+     "kind": "derived",
+     "cand_new": 40776.44668499996,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 3,
+     "item_name": "원수손익(장기)",
+     "old": 44795.0,
+     "new": 45409.757784,
+     "delta": 614.757784,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 26898,
+       "printed": "316,615,477,377",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 316615.477377
+      },
+      {
+       "label": "보험비용",
+       "line": 26967,
+       "printed": "271,205,719,593",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -271205.719593
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "보험수익계열 - |보험비용계열| (장기/발행)",
+     "kind": "sum",
+     "cand_new": 45409.75778399996,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 4,
+     "item_name": "원수 CSM상각",
+     "old": 48623.0,
+     "new": 46789.0,
+     "delta": -1834.0,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약마진상각 [전기/전분기 누적]",
+       "line": 43180,
+       "printed": "46,789",
+       "sign": 1,
+       "abs": true,
+       "unit": "백만원",
+       "contribution_mn": 46789.0
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|",
+     "kind": "sum",
+     "cand_new": 46790.0,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 8,
+     "item_name": "재보험손익(장기)",
+     "old": -6935.0,
+     "new": -4633.311099,
+     "delta": 2301.688901,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 26921,
+       "printed": "22,476,837,250",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 22476.83725
+      },
+      {
+       "label": "재보험비용",
+       "line": 26990,
+       "printed": "27,110,148,349",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -27110.148349
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "재보험수익계열 - |재보험비용계열|",
+     "kind": "sum",
+     "cand_new": -4633.311098999999,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 16,
+     "item_name": "기타사업비용",
+     "old": 13400.0,
+     "new": 13371.556275,
+     "delta": -28.443725,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타사업비용",
+       "line": 27013,
+       "printed": "13,371,556,275",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 13371.556275
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 13371.556275,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": null,
+     "new": 51170.86295,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 27036,
+       "printed": "51,170,862,950",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 51170.86295
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 51170.86295,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 18,
+     "item_name": "투자이익",
+     "old": null,
+     "new": 450057.809937,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 27036,
+       "printed": "51,170,862,950",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 51170.86295
+      },
+      {
+       "label": "보험금융수익",
+       "line": 27082,
+       "printed": "0",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -0.0
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 27105,
+       "printed": "0",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -0.0
+      },
+      {
+       "label": "보험금융비용",
+       "line": 27381,
+       "printed": "397,262,264,587",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 397262.264587
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 27404,
+       "printed": "1,624,682,400",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1624.6824
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 450057.809937,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 19,
+     "item_name": "보험금융손익",
+     "old": null,
+     "new": -398886.946987,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험금융수익",
+       "line": 27082,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 27105,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "보험금융비용",
+       "line": 27381,
+       "printed": "397,262,264,587",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -397262.264587
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 27404,
+       "printed": "1,624,682,400",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1624.6824
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -398886.946987,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": 73535.0,
+     "new": 78575.75336,
+     "delta": 5040.75336,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익(손실)",
+       "line": 27680,
+       "printed": "78,575,753,360",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 78575.75336
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 78575.75336,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 21,
+     "item_name": "영업외손익",
+     "old": -16539.0,
+     "new": -16024.829261,
+     "delta": 514.170739,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업외손익",
+       "line": 27703,
+       "printed": "(16,024,829,261)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -16024.829261
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -16024.829261,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": 56996.0,
+     "new": 62550.924099,
+     "delta": 5554.924099,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익",
+       "line": 27772,
+       "printed": "62,550,924,099",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 62550.924099
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 62550.924099,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 23,
+     "item_name": "법인세",
+     "old": 14222.0,
+     "new": 15286.0134,
+     "delta": 1064.0134,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세비용(수익)",
+       "line": 27795,
+       "printed": "15,286,013,400",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 15286.0134
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 15286.0134,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": 42774.0,
+     "new": 47264.910699,
+     "delta": 4490.910699,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익(손실)",
+       "line": 27864,
+       "printed": "47,264,910,699",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 47264.910699
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 47264.910699,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": null,
+     "new": 22339.669884,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익",
+       "line": 27910,
+       "printed": "22,339,669,884",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 22339.669884
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 22339.669884,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 26,
+     "item_name": "FVOCI 채무증권",
+     "old": null,
+     "new": 109588.147278,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 27956,
+       "printed": "109,588,147,278",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 109588.147278
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 109588.147278,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": null,
+     "new": -80088.403465,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 28025,
+       "printed": "(80,088,403,465)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -80088.403465
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -80088.403465,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 28,
+     "item_name": "위험회피 파생상품",
+     "old": null,
+     "new": -5441.478255,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 28002,
+       "printed": "(5,441,478,255)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -5441.478255
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -5441.478255,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": null,
+     "new": -1831.255691,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 28048,
+       "printed": "(1,831,255,691)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1831.255691
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -1831.255691,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": null,
+     "new": 69604.580583,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "총포괄손익",
+       "line": 28094,
+       "printed": "69,604,580,583",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 69604.580583
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 69604.580583,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": null,
+     "new": 112.660017,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+     "xml_rcept": "20240814004092",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익",
+       "line": 27910,
+       "printed": "22,339,669,884",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 22339.669884
+      },
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 27956,
+       "printed": "109,588,147,278",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -109588.147278
+      },
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 28025,
+       "printed": "(80,088,403,465)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 80088.403465
+      },
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 28002,
+       "printed": "(5,441,478,255)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 5441.478255
+      },
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 28048,
+       "printed": "(1,831,255,691)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1831.255691
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 112.660017,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 78575.75336,
+     "rhs": 78575.75336,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": 62550.924099,
+     "rhs": 62550.924099,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 15286.0134,
+     "rhs": 15286.0134,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": 69604.580583,
+     "rhs": 69604.580583,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": 22339.669884,
+     "rhs": 22339.669884,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": 51170.86295,
+     "rhs": 51170.86295,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 27404.89041,
+     "rhs": 40776.446685,
+     "resid": 0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 40776.446685,
+     "rhs": 40776.446685,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30,
+    31,
+    32
+   ],
+   "only_cand": [],
+   "only_mine": []
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0070",
+    "quarter": "2023.3Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q3",
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20241114002738"
+   },
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 1,
+     "item_name": "보험손익",
+     "old": 52509.0,
+     "new": 42363.52959,
+     "delta": -10145.47041,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험손익",
+       "line": 26270,
+       "printed": "42,363,529,590",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 42363.52959
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 42363.52959,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 2,
+     "item_name": "생명장기 손익",
+     "old": 52509.0,
+     "new": 59257.282376,
+     "delta": 6748.282376,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 26316,
+       "printed": "487,018,810,690",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 487018.81069
+      },
+      {
+       "label": "보험비용",
+       "line": 26385,
+       "printed": "421,079,819,604",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -421079.819604
+      },
+      {
+       "label": "재보험수익",
+       "line": 26339,
+       "printed": "34,764,447,247",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 34764.447247
+      },
+      {
+       "label": "재보험비용",
+       "line": 26408,
+       "printed": "41,446,155,957",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -41446.155957
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "3 + 8",
+     "kind": "derived",
+     "cand_new": 59257.28237599999,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 3,
+     "item_name": "원수손익(장기)",
+     "old": 61965.0,
+     "new": 65938.991086,
+     "delta": 3973.991086,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 26316,
+       "printed": "487,018,810,690",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 487018.81069
+      },
+      {
+       "label": "보험비용",
+       "line": 26385,
+       "printed": "421,079,819,604",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -421079.819604
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "보험수익계열 - |보험비용계열| (장기/발행)",
+     "kind": "sum",
+     "cand_new": 65938.991086,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 4,
+     "item_name": "원수 CSM상각",
+     "old": 75180.0,
+     "new": 69639.0,
+     "delta": -5541.0,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약마진상각 [전기/전분기 누적]",
+       "line": 42248,
+       "printed": "69,639",
+       "sign": 1,
+       "abs": true,
+       "unit": "백만원",
+       "contribution_mn": 69639.0
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|",
+     "kind": "sum",
+     "cand_new": 69640.0,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 8,
+     "item_name": "재보험손익(장기)",
+     "old": -9456.0,
+     "new": -6681.70871,
+     "delta": 2774.29129,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 26339,
+       "printed": "34,764,447,247",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 34764.447247
+      },
+      {
+       "label": "재보험비용",
+       "line": 26408,
+       "printed": "41,446,155,957",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -41446.155957
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "재보험수익계열 - |재보험비용계열|",
+     "kind": "sum",
+     "cand_new": -6681.708710000006,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 16,
+     "item_name": "기타사업비용",
+     "old": 16900.0,
+     "new": 16893.752786,
+     "delta": -6.247214,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타사업비용",
+       "line": 26431,
+       "printed": "16,893,752,786",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 16893.752786
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 16893.752786,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": 21584.0,
+     "new": 33777.476556,
+     "delta": 12193.476556,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 26454,
+       "printed": "33,777,476,556",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 33777.476556
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 33777.476556,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 18,
+     "item_name": "투자이익",
+     "old": 520792.0,
+     "new": 536094.60946,
+     "delta": 15302.60946,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 26454,
+       "printed": "33,777,476,556",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 33777.476556
+      },
+      {
+       "label": "보험금융수익",
+       "line": 26500,
+       "printed": "0",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -0.0
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 26523,
+       "printed": "0",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -0.0
+      },
+      {
+       "label": "보험금융비용",
+       "line": 26799,
+       "printed": "499,879,333,663",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 499879.333663
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 26822,
+       "printed": "2,437,799,241",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 2437.799241
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 536094.60946,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 19,
+     "item_name": "보험금융손익",
+     "old": -499208.0,
+     "new": -502317.132904,
+     "delta": -3109.132904,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험금융수익",
+       "line": 26500,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 26523,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "보험금융비용",
+       "line": 26799,
+       "printed": "499,879,333,663",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -499879.333663
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 26822,
+       "printed": "2,437,799,241",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -2437.799241
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -502317.132904,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": 74093.0,
+     "new": 76141.006146,
+     "delta": 2048.006146,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익(손실)",
+       "line": 27098,
+       "printed": "76,141,006,146",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 76141.006146
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 76141.006146,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 21,
+     "item_name": "영업외손익",
+     "old": -23910.0,
+     "new": -24336.161594,
+     "delta": -426.161594,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업외손익",
+       "line": 27121,
+       "printed": "(24,336,161,594)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -24336.161594
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -24336.161594,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": 50183.0,
+     "new": 51804.844552,
+     "delta": 1621.844552,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익",
+       "line": 27190,
+       "printed": "51,804,844,552",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 51804.844552
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 51804.844552,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 23,
+     "item_name": "법인세",
+     "old": 12649.0,
+     "new": 12803.669025,
+     "delta": 154.669025,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세비용(수익)",
+       "line": 27213,
+       "printed": "12,803,669,025",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 12803.669025
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 12803.669025,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": 37534.0,
+     "new": 39001.175527,
+     "delta": 1467.175527,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익(손실)",
+       "line": 27282,
+       "printed": "39,001,175,527",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 39001.175527
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 39001.175527,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": 42558.0,
+     "new": 103104.307885,
+     "delta": 60546.307885,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익",
+       "line": 27328,
+       "printed": "103,104,307,885",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 103104.307885
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 103104.307885,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 26,
+     "item_name": "FVOCI 채무증권",
+     "old": -70738.0,
+     "new": -70737.941856,
+     "delta": 0.058144,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 27374,
+       "printed": "(70,737,941,856)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -70737.941856
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -70737.941856,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": 127776.0,
+     "new": 190484.951946,
+     "delta": 62708.951946,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 27443,
+       "printed": "190,484,951,946",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 190484.951946
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 190484.951946,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 28,
+     "item_name": "위험회피 파생상품",
+     "old": -18420.0,
+     "new": -18420.128391,
+     "delta": -0.128391,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 27420,
+       "printed": "(18,420,128,391)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -18420.128391
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -18420.128391,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": 3886.0,
+     "new": 1723.519067,
+     "delta": -2162.480933,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 27466,
+       "printed": "1,723,519,067",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1723.519067
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 1723.519067,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": 80092.0,
+     "new": 142105.483412,
+     "delta": 62013.483412,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "총포괄손익",
+       "line": 27512,
+       "printed": "142,105,483,412",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 142105.483412
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 142105.483412,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": 54.0,
+     "new": 53.907119,
+     "delta": -0.092881,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+     "xml_rcept": "20241114002738",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익",
+       "line": 27328,
+       "printed": "103,104,307,885",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 103104.307885
+      },
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 27374,
+       "printed": "(70,737,941,856)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 70737.941856
+      },
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 27443,
+       "printed": "190,484,951,946",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -190484.951946
+      },
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 27420,
+       "printed": "(18,420,128,391)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 18420.128391
+      },
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 27466,
+       "printed": "1,723,519,067",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1723.519067
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 53.907119,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 76141.006146,
+     "rhs": 76141.006146,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": 51804.844552,
+     "rhs": 51804.844552,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 12803.669025,
+     "rhs": 12803.669025,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": 142105.483412,
+     "rhs": 142105.483412,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": 103104.307885,
+     "rhs": 103104.307885,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": 33777.476556,
+     "rhs": 33777.476556,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 42363.52959,
+     "rhs": 59257.282376,
+     "resid": -0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 59257.282376,
+     "rhs": 59257.282376,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    30,
+    31,
+    32
+   ],
+   "only_cand": [],
+   "only_mine": []
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0070",
+    "quarter": "2023.4Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q4",
+    "file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20250331001358"
+   },
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 2,
+     "item_name": "생명장기 손익",
+     "old": 38812.795396,
+     "new": 64874.466059,
+     "delta": 26061.670663,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 35261,
+       "printed": "651,626,998,171",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 651626.998171
+      },
+      {
+       "label": "보험비용",
+       "line": 35318,
+       "printed": "578,559,785,259",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -578559.785259
+      }
+     ],
+     "operands": [
+      {
+       "item": 8,
+       "sign": 1,
+       "value": -8192.746853,
+       "source": "master HEAD"
+      }
+     ],
+     "abs_of_sum": false,
+     "formula": "3 + 8",
+     "kind": "derived",
+     "cand_new": 64874.46605900001,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 3,
+     "item_name": "원수손익(장기)",
+     "old": 47005.542249,
+     "new": 73067.212912,
+     "delta": 26061.670663,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 35261,
+       "printed": "651,626,998,171",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 651626.998171
+      },
+      {
+       "label": "보험비용",
+       "line": 35318,
+       "printed": "578,559,785,259",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -578559.785259
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "보험수익계열 - |보험비용계열| (장기/발행)",
+     "kind": "sum",
+     "cand_new": 73067.21291200002,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 16,
+     "item_name": "기타사업비용",
+     "old": 26100.0,
+     "new": 26061.670663,
+     "delta": -38.329337,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타사업비용",
+       "line": 35356,
+       "printed": "26,061,670,663",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 26061.670663
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 26061.670663,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": 93667.388555,
+     "new": 107658.657107,
+     "delta": 13991.268552,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 35375,
+       "printed": "107,658,657,107",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 107658.657107
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 107658.657107,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 19,
+     "item_name": "보험금융손익",
+     "old": -732332.404721,
+     "new": -718341.136169,
+     "delta": 13991.268552,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험금융수익",
+       "line": 35413,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 35432,
+       "printed": "0",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 0.0
+      },
+      {
+       "label": "보험금융비용",
+       "line": 35679,
+       "printed": "715,088,953,539",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -715088.953539
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 35698,
+       "printed": "3,252,182,630",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -3252.18263
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -718341.136169,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": 132480.183951,
+     "new": 146471.452503,
+     "delta": 13991.268552,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익(손실)",
+       "line": 35945,
+       "printed": "146,471,452,503",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 146471.452503
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 146471.452503,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": 103579.253054,
+     "new": 117570.521606,
+     "delta": 13991.268552,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익",
+       "line": 36021,
+       "printed": "117,570,521,606",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 117570.521606
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 117570.521606,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 23,
+     "item_name": "법인세",
+     "old": 23144.232133,
+     "new": 26376.215168,
+     "delta": 3231.983035,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세비용(수익)",
+       "line": 36040,
+       "printed": "26,376,215,168",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 26376.215168
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 26376.215168,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": 80435.020921,
+     "new": 91194.306438,
+     "delta": 10759.285517,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익(손실)",
+       "line": 36097,
+       "printed": "91,194,306,438",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 91194.306438
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 91194.306438,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": 17957.646591,
+     "new": 7198.361074,
+     "delta": -10759.285517,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익",
+       "line": 36135,
+       "printed": "7,198,361,074",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 7198.361074
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 7198.361074,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": -581177.249426,
+     "new": -591936.534943,
+     "delta": -10759.285517,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+     "xml_rcept": "20250331001358",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 36211,
+       "printed": "(591,936,534,943)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -591936.534943
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -591936.534943,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [
+    {
+     "item": 4,
+     "old": 92971.0,
+     "new": 92971.0,
+     "cls": "equal",
+     "reason": "equal to the master",
+     "in_cand": true
+    }
+   ],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 146471.452503,
+     "rhs": 146471.452503,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": 117570.521606,
+     "rhs": 117570.521606,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 26376.215168,
+     "rhs": 26376.215168,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": 98392.667512,
+     "rhs": 98392.667512,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": 7198.361074,
+     "rhs": 7198.361074,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": 107658.657107,
+     "rhs": 107658.657107,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 38812.795396,
+     "rhs": 64874.466059,
+     "resid": 0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 64874.466059,
+     "rhs": 64874.466059,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    2,
+    3,
+    4,
+    16,
+    17,
+    19,
+    20,
+    22,
+    23,
+    24,
+    25,
+    27
+   ],
+   "only_cand": [
+    4
+   ],
+   "only_mine": []
+  }
+ ],
+ "csm_buckets": [
+  {
+   "code": "KR0070",
+   "quarter": "2023.1Q",
+   "file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원",
+   "two_dp": false,
+   "vec_exact": [
+    7585.3,
+    634.26,
+    62.44,
+    -159.43,
+    -224.11,
+    7898.46
+   ],
+   "vec": [
+    7585.3,
+    634.3,
+    62.4,
+    -159.4,
+    -224.1,
+    7898.5
+   ],
+   "old": [
+    7017.8,
+    604.3,
+    0.0,
+    154.8,
+    -226.6,
+    7550.3
+   ],
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 7017.8,
+     "new": 7585.3,
+     "delta": 567.5,
+     "exact": 7585.3,
+     "parts": [
+      {
+       "label": "I. 기초 보험계약순부채",
+       "line": 37355,
+       "printed": "758,530",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 7585.3
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원",
+     "cand_new": 7585.3,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 2,
+     "item_name": "신계약 CSM",
+     "old": 604.3,
+     "new": 634.3,
+     "delta": 30.0,
+     "exact": 634.26,
+     "parts": [
+      {
+       "label": "(3) 해당 기간에 처음 인식한 계약의 효과",
+       "line": 37403,
+       "printed": "63,426",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 634.26
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원",
+     "cand_new": 634.3,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 3,
+     "item_name": "이자 부리",
+     "old": 0.0,
+     "new": 62.4,
+     "delta": 62.4,
+     "exact": 62.44,
+     "parts": [
+      {
+       "label": "VI. 보험금융비용",
+       "line": 37467,
+       "printed": "6,244",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 62.44
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원",
+     "cand_new": 62.4,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": 154.8,
+     "new": -159.4,
+     "delta": -314.2,
+     "exact": -159.43,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 37387,
+       "printed": "(15,943)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -159.43
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원",
+     "cand_new": -159.4,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 5,
+     "item_name": "CSM 상각",
+     "old": -226.6,
+     "new": -224.1,
+     "delta": 2.5,
+     "exact": -224.11,
+     "parts": [
+      {
+       "label": "(1) 서비스 제공으로 당기손익으로 인식된 보험계약마진",
+       "line": 37419,
+       "printed": "(22,411)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -224.11
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원",
+     "cand_new": -224.1,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.1Q",
+     "item": 6,
+     "item_name": "기말 CSM",
+     "old": 7550.3,
+     "new": 7898.5,
+     "delta": 348.2,
+     "exact": 7898.46,
+     "parts": [
+      {
+       "label": "X. 분기말 보험계약순부채(I+VII+VIII+ IX)",
+       "line": 37546,
+       "printed": "789,846",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 7898.46
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원",
+     "cand_new": 7898.5,
+     "cand_equal": true,
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure_resid": 0.0,
+   "cand_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -224.11
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원",
+   "two_dp": false,
+   "vec_exact": [
+    7585.3,
+    1713.09,
+    130.52,
+    -295.01,
+    -467.89,
+    8666.01
+   ],
+   "vec": [
+    7585.3,
+    1713.1,
+    130.5,
+    -295.0,
+    -467.9,
+    8666.0
+   ],
+   "old": [
+    7017.8,
+    1655.3,
+    128.4,
+    524.6,
+    -486.2,
+    8839.9
+   ],
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 7017.8,
+     "new": 7585.3,
+     "delta": 567.5,
+     "exact": 7585.3,
+     "parts": [
+      {
+       "label": "I. 기초 보험계약순부채",
+       "line": 39008,
+       "printed": "758,530",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 7585.3
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원",
+     "cand_new": 7585.3,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 2,
+     "item_name": "신계약 CSM",
+     "old": 1655.3,
+     "new": 1713.1,
+     "delta": 57.8,
+     "exact": 1713.09,
+     "parts": [
+      {
+       "label": "(3) 해당 기간에 처음 인식한 계약의 효과",
+       "line": 39056,
+       "printed": "171,309",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 1713.09
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원",
+     "cand_new": 1713.1,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 3,
+     "item_name": "이자 부리",
+     "old": 128.4,
+     "new": 130.5,
+     "delta": 2.1,
+     "exact": 130.52,
+     "parts": [
+      {
+       "label": "VI. 보험금융비용",
+       "line": 39120,
+       "printed": "13,052",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 130.52
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원",
+     "cand_new": 130.5,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": 524.6,
+     "new": -295.0,
+     "delta": -819.6,
+     "exact": -295.01,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 39040,
+       "printed": "(29,501)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -295.01
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원",
+     "cand_new": -295.0,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 5,
+     "item_name": "CSM 상각",
+     "old": -486.2,
+     "new": -467.9,
+     "delta": 18.3,
+     "exact": -467.89,
+     "parts": [
+      {
+       "label": "(1) 서비스 제공으로 당기손익으로 인식된 보험계약마진",
+       "line": 39072,
+       "printed": "(46,789)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -467.89
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원",
+     "cand_new": -467.9,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.2Q",
+     "item": 6,
+     "item_name": "기말 CSM",
+     "old": 8839.9,
+     "new": 8666.0,
+     "delta": -173.9,
+     "exact": 8666.01,
+     "parts": [
+      {
+       "label": "X. 반기말 보험계약순부채(I+VII+VIII+ IX)",
+       "line": 39199,
+       "printed": "866,601",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 8666.01
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원",
+     "cand_new": 8666.0,
+     "cand_equal": true,
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure_resid": 0.0,
+   "cand_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -467.89
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원",
+   "two_dp": false,
+   "vec_exact": [
+    7585.3,
+    2853.57,
+    208.28,
+    -1512.0,
+    -696.39,
+    8438.76
+   ],
+   "vec": [
+    7585.3,
+    2853.6,
+    208.3,
+    -1512.0,
+    -696.4,
+    8438.8
+   ],
+   "old": [
+    7017.8,
+    2778.5,
+    211.1,
+    475.6,
+    -751.8,
+    9731.2
+   ],
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 7017.8,
+     "new": 7585.3,
+     "delta": 567.5,
+     "exact": 7585.3,
+     "parts": [
+      {
+       "label": "I. 기초 보험계약순부채",
+       "line": 38133,
+       "printed": "758,530",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 7585.3
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원",
+     "cand_new": 7585.3,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 2,
+     "item_name": "신계약 CSM",
+     "old": 2778.5,
+     "new": 2853.6,
+     "delta": 75.1,
+     "exact": 2853.57,
+     "parts": [
+      {
+       "label": "(3) 해당 기간에 처음 인식한 계약의 효과",
+       "line": 38181,
+       "printed": "285,357",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 2853.57
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원",
+     "cand_new": 2853.6,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 3,
+     "item_name": "이자 부리",
+     "old": 211.1,
+     "new": 208.3,
+     "delta": -2.8,
+     "exact": 208.28,
+     "parts": [
+      {
+       "label": "VI. 보험금융비용",
+       "line": 38245,
+       "printed": "20,828",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 208.28
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원",
+     "cand_new": 208.3,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": 475.6,
+     "new": -1512.0,
+     "delta": -1987.6,
+     "exact": -1512.0,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 38165,
+       "printed": "(151,200)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -1512.0
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원",
+     "cand_new": -1512.0,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 5,
+     "item_name": "CSM 상각",
+     "old": -751.8,
+     "new": -696.4,
+     "delta": 55.4,
+     "exact": -696.39,
+     "parts": [
+      {
+       "label": "(1) 서비스 제공으로 당기손익으로 인식된 보험계약마진",
+       "line": 38197,
+       "printed": "(69,639)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -696.39
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원",
+     "cand_new": -696.4,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.3Q",
+     "item": 6,
+     "item_name": "기말 CSM",
+     "old": 9731.2,
+     "new": 8438.8,
+     "delta": -1292.4,
+     "exact": 8438.76,
+     "parts": [
+      {
+       "label": "X. 분기말 보험계약순부채(I+VII+VIII+IX)",
+       "line": 38317,
+       "printed": "843,876",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 8438.76
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원",
+     "cand_new": 8438.8,
+     "cand_equal": true,
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure_resid": 0.0,
+   "cand_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -696.39
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml table@L50524 unit 백만원",
+   "two_dp": false,
+   "vec_exact": [
+    7585.3,
+    3475.87,
+    280.25,
+    -1716.28,
+    -929.71,
+    8695.43
+   ],
+   "vec": [
+    7585.3,
+    3475.9,
+    280.2,
+    -1716.3,
+    -929.7,
+    8695.4
+   ],
+   "old": [
+    7017.8,
+    3475.9,
+    280.2,
+    -1148.8,
+    -929.7,
+    8695.4
+   ],
+   "cells": [
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 7017.8,
+     "new": 7585.3,
+     "delta": 567.5,
+     "exact": 7585.3,
+     "parts": [
+      {
+       "label": "I. 기초 보험계약순부채",
+       "line": 50551,
+       "printed": "758,530",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 7585.3
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml table@L50524 unit 백만원",
+     "cand_new": 7585.3,
+     "cand_equal": true,
+     "gold_cell": true
+    },
+    {
+     "code": "KR0070",
+     "quarter": "2023.4Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": -1148.8,
+     "new": -1716.3,
+     "delta": -567.5,
+     "exact": -1716.28,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 50583,
+       "printed": "(171,628)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -1716.28
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml table@L50524 unit 백만원",
+     "cand_new": -1716.3,
+     "cand_equal": true,
+     "gold_cell": true
+    }
+   ],
+   "dropped": [],
+   "closure_resid": 0.0,
+   "cand_items": [
+    1,
+    4
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -929.71
+  }
+ ],
+ "seams": [
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 1,
+   "derived_after": 16227.112699,
+   "live_dangi": 20853.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 16227.112699,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험손익",
+      "line": 26848,
+      "printed": "16,227,112,699",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 16227.112699
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 2,
+   "derived_after": 26074.681194000004,
+   "live_dangi": 20853.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 3,
+   "derived_after": 28204.121254,
+   "live_dangi": 23626.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 4,
+   "derived_after": 24378.0,
+   "live_dangi": 25959.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 8,
+   "derived_after": -2129.4400599999994,
+   "live_dangi": -2773.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 16,
+   "derived_after": 9847.568495000001,
+   "live_dangi": 9900.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 9847.568495,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타사업비용",
+      "line": 27009,
+      "printed": "9,847,568,495",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 9847.568495
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 17,
+   "derived_after": 38901.897626000005,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 38901.897626,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 27032,
+      "printed": "38,901,897,626",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 38901.897626
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 18,
+   "derived_after": 203392.98830199998,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 203392.988302,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 27032,
+      "printed": "38,901,897,626",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 38901.897626
+     },
+     {
+      "label": "보험금융수익",
+      "line": 27078,
+      "printed": "0",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -0.0
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 27101,
+      "printed": "0",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -0.0
+     },
+     {
+      "label": "보험금융비용",
+      "line": 27377,
+      "printed": "163,668,760,329",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 163668.760329
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 27400,
+      "printed": "822,330,347",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 822.330347
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 19,
+   "derived_after": -164491.090676,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -164491.090676,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험금융수익",
+      "line": 27078,
+      "printed": "0",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 0.0
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 27101,
+      "printed": "0",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 0.0
+     },
+     {
+      "label": "보험금융비용",
+      "line": 27377,
+      "printed": "163,668,760,329",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -163668.760329
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 27400,
+      "printed": "822,330,347",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -822.330347
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 20,
+   "derived_after": 55129.010325,
+   "live_dangi": 53236.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 55129.010325,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업이익(손실)",
+      "line": 27676,
+      "printed": "55,129,010,325",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 55129.010325
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 21,
+   "derived_after": -7490.859723000001,
+   "live_dangi": -7690.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -7490.859723,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업외손익",
+      "line": 27699,
+      "printed": "(7,490,859,723)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -7490.859723
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 22,
+   "derived_after": 47638.150602,
+   "live_dangi": 45546.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 47638.150602,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세차감전순이익",
+      "line": 27768,
+      "printed": "47,638,150,602",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 47638.150602
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 23,
+   "derived_after": 10984.745844000001,
+   "live_dangi": 10501.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 10984.745844,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세비용(수익)",
+      "line": 27791,
+      "printed": "10,984,745,844",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 10984.745844
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 24,
+   "derived_after": 36653.404758000004,
+   "live_dangi": 35045.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 36653.404758,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기순이익(손실)",
+      "line": 27860,
+      "printed": "36,653,404,758",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 36653.404758
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 25,
+   "derived_after": -2933.024873000002,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -2933.024873,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익",
+      "line": 27906,
+      "printed": "(2,933,024,873)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -2933.024873
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 26,
+   "derived_after": -219233.702972,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -219233.702972,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 27952,
+      "printed": "(219,233,702,972)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -219233.702972
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 27,
+   "derived_after": 226110.038221,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 226110.038221,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 28021,
+      "printed": "226,110,038,221",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 226110.038221
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 28,
+   "derived_after": -14743.716565,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -14743.716565,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 27998,
+      "printed": "(14,743,716,565)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -14743.716565
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 30,
+   "derived_after": 4829.662091,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 4829.662091,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 28044,
+      "printed": "4,829,662,091",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 4829.662091
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 31,
+   "derived_after": 33720.379885,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 33720.379885,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "총포괄손익",
+      "line": 28090,
+      "printed": "33,720,379,885",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 33720.379885
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "item": 32,
+   "derived_after": 104.694352,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 104.694352,
+    "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익",
+      "line": 27906,
+      "printed": "(2,933,024,873)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -2933.024873
+     },
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 27952,
+      "printed": "(219,233,702,972)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 219233.702972
+     },
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 28021,
+      "printed": "226,110,038,221",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -226110.038221
+     },
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 27998,
+      "printed": "(14,743,716,565)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 14743.716565
+     },
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 28044,
+      "printed": "4,829,662,091",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -4829.662091
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 1,
+   "derived_after": 14958.639179999998,
+   "live_dangi": 14649.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 14958.63918,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험손익",
+      "line": 26266,
+      "printed": "14,958,639,180",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 14958.63918
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 2,
+   "derived_after": 18480.835691,
+   "live_dangi": 14649.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 3,
+   "derived_after": 20529.233301999993,
+   "live_dangi": 17170.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 4,
+   "derived_after": 22850.0,
+   "live_dangi": 26557.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 8,
+   "derived_after": -2048.3976110000003,
+   "live_dangi": -2521.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 16,
+   "derived_after": 3522.196511,
+   "live_dangi": 3500.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 3522.196511,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타사업비용",
+      "line": 26427,
+      "printed": "3,522,196,511",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 3522.196511
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 17,
+   "derived_after": -17393.386394,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -17393.386394,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 26450,
+      "printed": "(17,393,386,394)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -17393.386394
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 18,
+   "derived_after": 86036.79952299997,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 86036.799523,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 26450,
+      "printed": "(17,393,386,394)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -17393.386394
+     },
+     {
+      "label": "보험금융수익",
+      "line": 26496,
+      "printed": "0",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -0.0
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 26519,
+      "printed": "0",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -0.0
+     },
+     {
+      "label": "보험금융비용",
+      "line": 26795,
+      "printed": "102,617,069,076",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 102617.069076
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 26818,
+      "printed": "813,116,841",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 813.116841
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 19,
+   "derived_after": -103430.185917,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -103430.185917,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험금융수익",
+      "line": 26496,
+      "printed": "0",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 0.0
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 26519,
+      "printed": "0",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 0.0
+     },
+     {
+      "label": "보험금융비용",
+      "line": 26795,
+      "printed": "102,617,069,076",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -102617.069076
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 26818,
+      "printed": "813,116,841",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -813.116841
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 20,
+   "derived_after": -2434.7472140000027,
+   "live_dangi": 558.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -2434.747214,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업이익(손실)",
+      "line": 27094,
+      "printed": "(2,434,747,214)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -2434.747214
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 21,
+   "derived_after": -8311.332333,
+   "live_dangi": -7371.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -8311.332333,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업외손익",
+      "line": 27117,
+      "printed": "(8,311,332,333)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -8311.332333
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 22,
+   "derived_after": -10746.079547000001,
+   "live_dangi": -6813.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -10746.079547,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세차감전순이익",
+      "line": 27186,
+      "printed": "(10,746,079,547)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -10746.079547
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 23,
+   "derived_after": -2482.3443750000006,
+   "live_dangi": -1573.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -2482.344375,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세비용(수익)",
+      "line": 27209,
+      "printed": "(2,482,344,375)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -2482.344375
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 24,
+   "derived_after": -8263.735172,
+   "live_dangi": -5240.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -8263.735172,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기순이익(손실)",
+      "line": 27278,
+      "printed": "(8,263,735,172)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -8263.735172
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 25,
+   "derived_after": 80764.638001,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 80764.638001,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익",
+      "line": 27324,
+      "printed": "80,764,638,001",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 80764.638001
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 26,
+   "derived_after": -180326.089134,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -180326.089134,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 27370,
+      "printed": "(180,326,089,134)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -180326.089134
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 27,
+   "derived_after": 270573.35541099997,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 270573.355411,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 27439,
+      "printed": "270,573,355,411",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 270573.355411
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 28,
+   "derived_after": -12978.650135999998,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -12978.650136,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 27416,
+      "printed": "(12,978,650,136)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -12978.650136
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 30,
+   "derived_after": 3554.774758,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 3554.774758,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 27462,
+      "printed": "3,554,774,758",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 3554.774758
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 31,
+   "derived_after": 72500.902829,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 72500.902829,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "총포괄손익",
+      "line": 27508,
+      "printed": "72,500,902,829",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 72500.902829
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "item": 32,
+   "derived_after": -58.752897999999995,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -58.752898,
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익",
+      "line": 27324,
+      "printed": "80,764,638,001",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 80764.638001
+     },
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 27370,
+      "printed": "(180,326,089,134)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 180326.089134
+     },
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 27439,
+      "printed": "270,573,355,411",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -270573.355411
+     },
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 27416,
+      "printed": "(12,978,650,136)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 12978.650136
+     },
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 27462,
+      "printed": "3,554,774,758",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -3554.774758
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 1,
+   "derived_after": -3550.734193999997,
+   "live_dangi": -13696.204604,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    38812.795396,
+    38812.795396
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "derived_after": 5617.183682999996,
+   "live_dangi": -13696.204604,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": null,
+   "q3_adopted": true,
+   "q3_evidence": "LOB item: 9M cumulative adopted in this plan",
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "derived_after": 7128.221826000008,
+   "live_dangi": -14959.457751,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": null,
+   "q3_adopted": true,
+   "q3_evidence": "LOB item: 9M cumulative adopted in this plan",
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "derived_after": 23332.0,
+   "live_dangi": 17791.0,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 8,
+   "derived_after": -1511.0381430000007,
+   "live_dangi": 1263.253147,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 16,
+   "derived_after": 9167.917877,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 16893.752786 vs master 16900.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타사업비용",
+      "line": 26431,
+      "printed": "16,893,752,786",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 16893.752786
+     }
+    ],
+    "comparative": 16893.752786,
+    "master": 16900.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 17,
+   "derived_after": 73881.180551,
+   "live_dangi": 72083.388555,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 33777.476556 vs master 21584.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 26454,
+      "printed": "33,777,476,556",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 33777.476556
+     }
+    ],
+    "comparative": 33777.476556,
+    "master": 21584.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 18,
+   "derived_after": 289905.183816,
+   "live_dangi": 305207.793276,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    825999.793276,
+    825999.793276
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 19,
+   "derived_after": -216024.00326499995,
+   "live_dangi": -233124.404721,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative -502317.132904 vs master -499208.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험금융수익",
+      "line": 26500,
+      "printed": "0",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 0.0
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 26523,
+      "printed": "0",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 0.0
+     },
+     {
+      "label": "보험금융비용",
+      "line": 26799,
+      "printed": "499,879,333,663",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -499879.333663
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 26822,
+      "printed": "2,437,799,241",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -2437.799241
+     }
+    ],
+    "comparative": -502317.132904,
+    "master": -499208.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 20,
+   "derived_after": 70330.44635700001,
+   "live_dangi": 58387.183951,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 76141.006146 vs master 74093.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업이익(손실)",
+      "line": 27098,
+      "printed": "76,141,006,146",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 76141.006146
+     }
+    ],
+    "comparative": 76141.006146,
+    "master": 74093.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 21,
+   "derived_after": -4564.769302999997,
+   "live_dangi": -4990.930897,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    -28900.930897,
+    -28900.930897
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 22,
+   "derived_after": 65765.677054,
+   "live_dangi": 53396.253054,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 51804.844552 vs master 50183.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세차감전순이익",
+      "line": 27190,
+      "printed": "51,804,844,552",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 51804.844552
+     }
+    ],
+    "comparative": 51804.844552,
+    "master": 50183.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 23,
+   "derived_after": 13572.546143,
+   "live_dangi": 10495.232133,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 12803.669025 vs master 12649.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세비용(수익)",
+      "line": 27213,
+      "printed": "12,803,669,025",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 12803.669025
+     }
+    ],
+    "comparative": 12803.669025,
+    "master": 12649.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 24,
+   "derived_after": 52193.130911,
+   "live_dangi": 42901.020921,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 39001.175527 vs master 37534.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기순이익(손실)",
+      "line": 27282,
+      "printed": "39,001,175,527",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 39001.175527
+     }
+    ],
+    "comparative": 39001.175527,
+    "master": 37534.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 25,
+   "derived_after": -95905.946811,
+   "live_dangi": -24600.353409,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 103104.307885 vs master 42558.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익",
+      "line": 27328,
+      "printed": "103,104,307,885",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 103104.307885
+     }
+    ],
+    "comparative": 103104.307885,
+    "master": 42558.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 26,
+   "derived_after": 656566.539271,
+   "live_dangi": 656566.597415,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    585828.597415,
+    585828.597415
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 27,
+   "derived_after": -782421.4868889999,
+   "live_dangi": -708953.249426,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 190484.951946 vs master 127776.0",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 27443,
+      "printed": "190,484,951,946",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 190484.951946
+     }
+    ],
+    "comparative": 190484.951946,
+    "master": 127776.0
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 28,
+   "derived_after": 46753.673565,
+   "live_dangi": 46753.545174,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    28333.545174,
+    28333.545174
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 30,
+   "derived_after": -16703.671409,
+   "live_dangi": -18866.152342,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    -14980.152342,
+    -14980.152342
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "derived_after": -43712.8159,
+   "live_dangi": 18300.667512,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    98392.667512,
+    98392.667512
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "item": 32,
+   "derived_after": -101.001349,
+   "live_dangi": -101.09423,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    -47.09423,
+    -47.09423
+   ]
+  }
+ ],
+ "findings": [],
+ "notes": [],
+ "_log_pl": [
+  "== KR0070 2023.1Q life_note later data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml unit 원",
+  "   adopted 21: [1, 2, 3, 4, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]",
+  "   candidate items not adopted: []  | adopted but not in candidates: []",
+  "   closure: I1=+0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=-0.0000; I5=+0.0000; I6=+0.0000; I7=+0.0000",
+  "== KR0070 2023.2Q life_note later data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml unit 원",
+  "   adopted 21: [1, 2, 3, 4, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]",
+  "   candidate items not adopted: []  | adopted but not in candidates: []",
+  "   closure: I1=+0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=-0.0000; I5=+0.0000; I6=+0.0000; I7=+0.0000",
+  "== KR0070 2023.3Q life_note later data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml unit 원",
+  "   adopted 21: [1, 2, 3, 4, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]",
+  "   candidate items not adopted: []  | adopted but not in candidates: []",
+  "   closure: I1=+0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=+0.0000; I5=+0.0000; I6=-0.0000; I7=+0.0000",
+  "== KR0070 2023.4Q life_note later data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml unit 원",
+  "   adopted 11: [2, 3, 16, 17, 19, 20, 22, 23, 24, 25, 27]",
+  "   candidate items not adopted: [4]  | adopted but not in candidates: []",
+  "   dropped i4: old=92971.0 new=92971.0 cls=equal (equal to the master) in_cand=True",
+  "   closure: I1=+0.0000; I2=-0.0000; I2b=-0.0000; I3=+0.0000; I4=-0.0000; I5=+0.0000; I6=+0.0000; I7=+0.0000"
+ ],
+ "csm_gold_class": {
+  "KR0070|1|2023.4Q": {
+   "summary": "class B chain-forced: gold 7017.8 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 7585.3; the latest comparative = 7585.3); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector",
+   "cls": "B",
+   "gold": 7017.8,
+   "was": 7585.3,
+   "latest": 7585.3
+  },
+  "KR0070|4|2023.4Q": {
+   "summary": "class B chain-forced: gold -1148.8 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -1716.3; the latest comparative = -1716.3); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector",
+   "cls": "B",
+   "gold": -1148.8,
+   "was": -1716.3,
+   "latest": -1716.3
+  }
+ },
+ "apply_contract": {
+  "gold_new": [
+   {
+    "code": "KR0070",
+    "item": 1,
+    "quarter": "2023.1Q",
+    "value": 11177.777711,
+    "was": 17007.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 11177.777711 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25572. 변경 전 마스터값 17007.0. 변동 -5829.222289. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 2,
+    "quarter": "2023.1Q",
+    "value": 14701.765491,
+    "was": 17007.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 14701.765491 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25618 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 17007.0. 변동 -2305.234509. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 3,
+    "quarter": "2023.1Q",
+    "value": 17205.63653,
+    "was": 21169.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 17205.63653 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25618 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 21169.0. 변동 -3963.36347. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 8,
+    "quarter": "2023.1Q",
+    "value": -2503.871039,
+    "was": -4162.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -2503.871039 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25641 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -4162.0. 변동 1658.128961. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 16,
+    "quarter": "2023.1Q",
+    "value": 3523.98778,
+    "was": 3500.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 3523.98778 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25733. 변경 전 마스터값 3500.0. 변동 23.98778. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 17,
+    "quarter": "2023.1Q",
+    "value": 12268.965324,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 12268.965324 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25756. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 18,
+    "quarter": "2023.1Q",
+    "value": 246664.821635,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 246664.821635 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25756 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 19,
+    "quarter": "2023.1Q",
+    "value": -234395.856311,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -234395.856311 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L25802 외 합산 4줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 20,
+    "quarter": "2023.1Q",
+    "value": 23446.743035,
+    "was": 20299.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 23446.743035 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26400. 변경 전 마스터값 20299.0. 변동 3147.743035. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 21,
+    "quarter": "2023.1Q",
+    "value": -8533.969538,
+    "was": -8849.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -8533.969538 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26423. 변경 전 마스터값 -8849.0. 변동 315.030462. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 22,
+    "quarter": "2023.1Q",
+    "value": 14912.773497,
+    "was": 11450.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 14912.773497 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26492. 변경 전 마스터값 11450.0. 변동 3462.773497. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 23,
+    "quarter": "2023.1Q",
+    "value": 4301.267556,
+    "was": 3721.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 4301.267556 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26515. 변경 전 마스터값 3721.0. 변동 580.267556. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 24,
+    "quarter": "2023.1Q",
+    "value": 10611.505941,
+    "was": 7729.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 10611.505941 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26584. 변경 전 마스터값 7729.0. 변동 2882.505941. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 25,
+    "quarter": "2023.1Q",
+    "value": 25272.694757,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 25272.694757 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26630. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 26,
+    "quarter": "2023.1Q",
+    "value": 328821.85025,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 328821.85025 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26676. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 27,
+    "quarter": "2023.1Q",
+    "value": -306198.441686,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -306198.441686 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26745. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 28,
+    "quarter": "2023.1Q",
+    "value": 9302.23831,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 9302.23831 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26722. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 30,
+    "quarter": "2023.1Q",
+    "value": -6660.917782,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -6660.917782 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26768. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 31,
+    "quarter": "2023.1Q",
+    "value": 35884.200698,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 35884.200698 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26814. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 32,
+    "quarter": "2023.1Q",
+    "value": 7.965665,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 7.965665 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L26630 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 1,
+    "quarter": "2023.2Q",
+    "value": 27404.89041,
+    "was": 37860.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 27404.89041 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26852. 변경 전 마스터값 37860.0. 변동 -10455.10959. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 2,
+    "quarter": "2023.2Q",
+    "value": 40776.446685,
+    "was": 37860.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 40776.446685 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26898 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 37860.0. 변동 2916.446685. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 3,
+    "quarter": "2023.2Q",
+    "value": 45409.757784,
+    "was": 44795.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 45409.757784 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26898 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 44795.0. 변동 614.757784. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 4,
+    "quarter": "2023.2Q",
+    "value": 46789.0,
+    "was": 48623.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 46789.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L43180. 변경 전 마스터값 48623.0. 변동 -1834.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 8,
+    "quarter": "2023.2Q",
+    "value": -4633.311099,
+    "was": -6935.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -4633.311099 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L26921 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -6935.0. 변동 2301.688901. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 16,
+    "quarter": "2023.2Q",
+    "value": 13371.556275,
+    "was": 13400.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 13371.556275 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27013. 변경 전 마스터값 13400.0. 변동 -28.443725. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 17,
+    "quarter": "2023.2Q",
+    "value": 51170.86295,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 51170.86295 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27036. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 18,
+    "quarter": "2023.2Q",
+    "value": 450057.809937,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 450057.809937 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27036 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 19,
+    "quarter": "2023.2Q",
+    "value": -398886.946987,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -398886.946987 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27082 외 합산 4줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 20,
+    "quarter": "2023.2Q",
+    "value": 78575.75336,
+    "was": 73535.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 78575.75336 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27680. 변경 전 마스터값 73535.0. 변동 5040.75336. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 21,
+    "quarter": "2023.2Q",
+    "value": -16024.829261,
+    "was": -16539.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -16024.829261 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27703. 변경 전 마스터값 -16539.0. 변동 514.170739. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 22,
+    "quarter": "2023.2Q",
+    "value": 62550.924099,
+    "was": 56996.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 62550.924099 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27772. 변경 전 마스터값 56996.0. 변동 5554.924099. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 23,
+    "quarter": "2023.2Q",
+    "value": 15286.0134,
+    "was": 14222.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 15286.0134 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27795. 변경 전 마스터값 14222.0. 변동 1064.0134. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 24,
+    "quarter": "2023.2Q",
+    "value": 47264.910699,
+    "was": 42774.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 47264.910699 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27864. 변경 전 마스터값 42774.0. 변동 4490.910699. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 25,
+    "quarter": "2023.2Q",
+    "value": 22339.669884,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 22339.669884 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27910. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 26,
+    "quarter": "2023.2Q",
+    "value": 109588.147278,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 109588.147278 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27956. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 27,
+    "quarter": "2023.2Q",
+    "value": -80088.403465,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -80088.403465 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28025. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 28,
+    "quarter": "2023.2Q",
+    "value": -5441.478255,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -5441.478255 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28002. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 30,
+    "quarter": "2023.2Q",
+    "value": -1831.255691,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -1831.255691 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28048. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 31,
+    "quarter": "2023.2Q",
+    "value": 69604.580583,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 69604.580583 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L28094. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 32,
+    "quarter": "2023.2Q",
+    "value": 112.660017,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 112.660017 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml L27910 외 합산 5줄(증거 e23_plan_abl.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 1,
+    "quarter": "2023.3Q",
+    "value": 42363.52959,
+    "was": 52509.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 42363.52959 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26270. 변경 전 마스터값 52509.0. 변동 -10145.47041. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 2,
+    "quarter": "2023.3Q",
+    "value": 59257.282376,
+    "was": 52509.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 59257.282376 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26316 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 52509.0. 변동 6748.282376. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 3,
+    "quarter": "2023.3Q",
+    "value": 65938.991086,
+    "was": 61965.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 65938.991086 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26316 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 61965.0. 변동 3973.991086. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 4,
+    "quarter": "2023.3Q",
+    "value": 69639.0,
+    "was": 75180.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 69639.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L42248. 변경 전 마스터값 75180.0. 변동 -5541.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 8,
+    "quarter": "2023.3Q",
+    "value": -6681.70871,
+    "was": -9456.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -6681.70871 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26339 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -9456.0. 변동 2774.29129. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 16,
+    "quarter": "2023.3Q",
+    "value": 16893.752786,
+    "was": 16900.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 16893.752786 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26431. 변경 전 마스터값 16900.0. 변동 -6.247214. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 17,
+    "quarter": "2023.3Q",
+    "value": 33777.476556,
+    "was": 21584.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 33777.476556 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26454. 변경 전 마스터값 21584.0. 변동 12193.476556. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 18,
+    "quarter": "2023.3Q",
+    "value": 536094.60946,
+    "was": 520792.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 536094.60946 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26454 외 합산 5줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 520792.0. 변동 15302.60946. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 19,
+    "quarter": "2023.3Q",
+    "value": -502317.132904,
+    "was": -499208.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -502317.132904 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L26500 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -499208.0. 변동 -3109.132904. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 20,
+    "quarter": "2023.3Q",
+    "value": 76141.006146,
+    "was": 74093.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 76141.006146 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27098. 변경 전 마스터값 74093.0. 변동 2048.006146. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 21,
+    "quarter": "2023.3Q",
+    "value": -24336.161594,
+    "was": -23910.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -24336.161594 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27121. 변경 전 마스터값 -23910.0. 변동 -426.161594. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 22,
+    "quarter": "2023.3Q",
+    "value": 51804.844552,
+    "was": 50183.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 51804.844552 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27190. 변경 전 마스터값 50183.0. 변동 1621.844552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 23,
+    "quarter": "2023.3Q",
+    "value": 12803.669025,
+    "was": 12649.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 12803.669025 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27213. 변경 전 마스터값 12649.0. 변동 154.669025. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 24,
+    "quarter": "2023.3Q",
+    "value": 39001.175527,
+    "was": 37534.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 39001.175527 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27282. 변경 전 마스터값 37534.0. 변동 1467.175527. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 25,
+    "quarter": "2023.3Q",
+    "value": 103104.307885,
+    "was": 42558.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 103104.307885 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27328. 변경 전 마스터값 42558.0. 변동 60546.307885. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 26,
+    "quarter": "2023.3Q",
+    "value": -70737.941856,
+    "was": -70738.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -70737.941856 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27374. 변경 전 마스터값 -70738.0. 변동 0.058144. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 27,
+    "quarter": "2023.3Q",
+    "value": 190484.951946,
+    "was": 127776.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 190484.951946 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27443. 변경 전 마스터값 127776.0. 변동 62708.951946. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 28,
+    "quarter": "2023.3Q",
+    "value": -18420.128391,
+    "was": -18420.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -18420.128391 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27420. 변경 전 마스터값 -18420.0. 변동 -0.128391. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 30,
+    "quarter": "2023.3Q",
+    "value": 1723.519067,
+    "was": 3886.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 1723.519067 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27466. 변경 전 마스터값 3886.0. 변동 -2162.480933. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 31,
+    "quarter": "2023.3Q",
+    "value": 142105.483412,
+    "was": 80092.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 142105.483412 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27512. 변경 전 마스터값 80092.0. 변동 62013.483412. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 32,
+    "quarter": "2023.3Q",
+    "value": 53.907119,
+    "was": 54.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 53.907119 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml L27328 외 합산 5줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 54.0. 변동 -0.092881. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 2,
+    "quarter": "2023.4Q",
+    "value": 64874.466059,
+    "was": 38812.795396,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 64874.466059 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35261 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 38812.795396. 변동 26061.670663. 산식: 3 + 8. 피연산자: 8번=-8192.746853(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 3,
+    "quarter": "2023.4Q",
+    "value": 73067.212912,
+    "was": 47005.542249,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 73067.212912 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35261 외 합산 2줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 47005.542249. 변동 26061.670663. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 16,
+    "quarter": "2023.4Q",
+    "value": 26061.670663,
+    "was": 26100.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 26061.670663 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35356. 변경 전 마스터값 26100.0. 변동 -38.329337. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 17,
+    "quarter": "2023.4Q",
+    "value": 107658.657107,
+    "was": 93667.388555,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 107658.657107 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35375. 변경 전 마스터값 93667.388555. 변동 13991.268552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 19,
+    "quarter": "2023.4Q",
+    "value": -718341.136169,
+    "was": -732332.404721,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -718341.136169 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35413 외 합산 4줄(증거 e23_plan_abl.json parts). 변경 전 마스터값 -732332.404721. 변동 13991.268552. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 20,
+    "quarter": "2023.4Q",
+    "value": 146471.452503,
+    "was": 132480.183951,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 146471.452503 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L35945. 변경 전 마스터값 132480.183951. 변동 13991.268552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 22,
+    "quarter": "2023.4Q",
+    "value": 117570.521606,
+    "was": 103579.253054,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 117570.521606 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36021. 변경 전 마스터값 103579.253054. 변동 13991.268552. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 23,
+    "quarter": "2023.4Q",
+    "value": 26376.215168,
+    "was": 23144.232133,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 26376.215168 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36040. 변경 전 마스터값 23144.232133. 변동 3231.983035. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 24,
+    "quarter": "2023.4Q",
+    "value": 91194.306438,
+    "was": 80435.020921,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 91194.306438 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36097. 변경 전 마스터값 80435.020921. 변동 10759.285517. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 25,
+    "quarter": "2023.4Q",
+    "value": 7198.361074,
+    "was": 17957.646591,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 7198.361074 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36135. 변경 전 마스터값 17957.646591. 변동 -10759.285517. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 27,
+    "quarter": "2023.4Q",
+    "value": -591936.534943,
+    "was": -581177.249426,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -591936.534943 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml L36211. 변경 전 마스터값 -581177.249426. 변동 -10759.285517. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   }
+  ],
+  "gold_replace": [
+   {
+    "code": "KR0070",
+    "item": 4,
+    "quarter": "2023.1Q",
+    "value": 22411.0,
+    "was": 22664.0,
+    "note": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv): 이전 gold 값 22664.0, 이전 was 3364.0, 이전 note 요약 「inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회…」(전문은 git HEAD 의 data/_gold/user_pl_cells.json). 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 22411.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L41498. 현재 마스터값(gold) 22664.0 는 원 공시 rcept 20230515002903(단위 백만원) 별도 기준 인쇄값(22664.0, 원문 L26968「해당 기간에 서비스의 이전으로 당기손익에 인식한 보험계약마진 금액」22,664)과 일치. 변동 -253.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 4,
+     "공시분기": "2023.1Q",
+     "값": 22664.0,
+     "was": 3364.0,
+     "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회수 관련 보험료 배분액은...' 표현이라 미매칭 -> extract_tier2_life_old 자기가드 통과 -> 제네릭 extract_tier2_life 로 폴백 -> _pick_life_table 이 '재보험수익' substring 을 '보험수익' 으로 오매칭해 출재(재보험) 레그를 원수로 잘못 뽑음. 진짜 원수 CSM상각은 별개 노트(전환방법별 CSM 변동표, '제공된 서비스 관련 당기손익 인식' 행, 합계열)에 있고 두 함수 모두 _is_rollforward() 로 그 노트를 건너뜀 -- raw 직접 재검증(합계열)으로 override, 코드 수정은 공용함수 blast-radius 커서 별건 후속. 2026-08-17."
+    }
+   }
+  ],
+  "csm_gold_new": [
+   {
+    "code": "KR0070",
+    "item": 1,
+    "quarter": "2023.1Q",
+    "value": 7585.3,
+    "was": 7017.8,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37355 758,530 -> 7585.3 억원, 저장값 7585.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 2,
+    "quarter": "2023.1Q",
+    "value": 634.3,
+    "was": 604.3,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37403 63,426 -> 634.26 억원, 저장값 634.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 3,
+    "quarter": "2023.1Q",
+    "value": 62.4,
+    "was": 0.0,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37467 6,244 -> 62.44 억원, 저장값 62.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 4,
+    "quarter": "2023.1Q",
+    "value": -159.4,
+    "was": 154.8,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37387 (15,943) -> -159.43 억원, 저장값 -159.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2023.1Q",
+    "value": -224.1,
+    "was": -226.6,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37419 (22,411) -> -224.11 억원, 저장값 -224.1. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 6,
+    "quarter": "2023.1Q",
+    "value": 7898.5,
+    "was": 7550.3,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml table@L37328 unit 백만원. 인쇄 셀: L37546 789,846 -> 7898.46 억원, 저장값 7898.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 1,
+    "quarter": "2023.2Q",
+    "value": 7585.3,
+    "was": 7017.8,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39008 758,530 -> 7585.3 억원, 저장값 7585.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 2,
+    "quarter": "2023.2Q",
+    "value": 1713.1,
+    "was": 1655.3,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39056 171,309 -> 1713.09 억원, 저장값 1713.1. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 3,
+    "quarter": "2023.2Q",
+    "value": 130.5,
+    "was": 128.4,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39120 13,052 -> 130.52 억원, 저장값 130.5. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 4,
+    "quarter": "2023.2Q",
+    "value": -295.0,
+    "was": 524.6,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39040 (29,501) -> -295.01 억원, 저장값 -295.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2023.2Q",
+    "value": -467.9,
+    "was": -486.2,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39072 (46,789) -> -467.89 억원, 저장값 -467.9. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 6,
+    "quarter": "2023.2Q",
+    "value": 8666.0,
+    "was": 8839.9,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml table@L38981 unit 백만원. 인쇄 셀: L39199 866,601 -> 8666.01 억원, 저장값 8666.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 1,
+    "quarter": "2023.3Q",
+    "value": 7585.3,
+    "was": 7017.8,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38133 758,530 -> 7585.3 억원, 저장값 7585.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 2,
+    "quarter": "2023.3Q",
+    "value": 2853.6,
+    "was": 2778.5,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38181 285,357 -> 2853.57 억원, 저장값 2853.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 3,
+    "quarter": "2023.3Q",
+    "value": 208.3,
+    "was": 211.1,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38245 20,828 -> 208.28 억원, 저장값 208.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 4,
+    "quarter": "2023.3Q",
+    "value": -1512.0,
+    "was": 475.6,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38165 (151,200) -> -1512.0 억원, 저장값 -1512.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2023.3Q",
+    "value": -696.4,
+    "was": -751.8,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38197 (69,639) -> -696.39 억원, 저장값 -696.4. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 6,
+    "quarter": "2023.3Q",
+    "value": 8438.8,
+    "was": 9731.2,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml table@L38106 unit 백만원. 인쇄 셀: L38317 843,876 -> 8438.76 억원, 저장값 8438.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json"
+   }
+  ],
+  "csm_gold_replace": [
+   {
+    "code": "KR0070",
+    "item": 1,
+    "quarter": "2023.4Q",
+    "value": 7585.3,
+    "was": 7017.8,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold 7017.8 (이전 was 7585.3) 를 교체: class B chain-forced: gold 7017.8 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 7585.3; the latest comparative = 7585.3); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml table@L50524 unit 백만원. 인쇄 셀: L50551 758,530 -> 7585.3 억원, 저장값 7585.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 1,
+     "공시분기": "2023.4Q",
+     "값": 7017.8,
+     "was": 7585.3,
+     "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4"
+    }
+   },
+   {
+    "code": "KR0070",
+    "item": 4,
+    "quarter": "2023.4Q",
+    "value": -1716.3,
+    "was": -1148.8,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold -1148.8 (이전 was -1716.3) 를 교체: class B chain-forced: gold -1148.8 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -1716.3; the latest comparative = -1716.3); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml table@L50524 unit 백만원. 인쇄 셀: L50583 (171,628) -> -1716.28 억원, 저장값 -1716.3. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/e23_plan_abl.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 4,
+     "공시분기": "2023.4Q",
+     "값": -1148.8,
+     "was": -1716.3,
+     "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4"
+    }
+   }
+  ],
+  "null_dangi_add": [],
+  "null_dangi_remove": [],
+  "set_dangi_add": [],
+  "set_dangi_remove": [],
+  "held": []
+ },
+ "n_pl_cells": 74,
+ "n_csm_cells": 20
+}

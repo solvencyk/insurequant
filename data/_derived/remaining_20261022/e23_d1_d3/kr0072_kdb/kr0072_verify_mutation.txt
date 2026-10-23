@@ -1,0 +1,7 @@
+mutation (none = baseline): exit 0, problems 0 -> baseline clean
+mutation col: exit 1, problems 100 -> detected
+mutation line: exit 1, problems 2 -> detected
+mutation tbl: exit 1, problems 35 -> detected
+mutation val: exit 1, problems 2 -> detected
+mutation unit: exit 1, problems 6 -> detected
+ALL MUTATIONS DETECTED, baseline clean

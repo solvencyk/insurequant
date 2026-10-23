@@ -1,0 +1,8 @@
+data/_gold/user_pl_cells.json: live sha256 == post-apply manifest True
+PL_breakdown.json: live sha256 == post-apply manifest True
+PL_breakdown_provenance.json: live sha256 == post-apply manifest True
+data/_gold/user_csm_cells.json: live sha256 == post-apply manifest True
+CSM_waterfall.json: live sha256 == post-apply manifest True
+CSM_waterfall_provenance.json: live sha256 == post-apply manifest True
+tests/test_rule_coverage_manifest.py: live sha256 == post-apply manifest True
+REVERT POSSIBLE

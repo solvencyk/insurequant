@@ -1,0 +1,14 @@
+== data/_derived/qoq_warn.json type list top keys 265
+   rows 265 -> 266
+   added 1 removed 0 changed 6
+      + {"company": "케이디비생명보험", "quarter": "2024.2Q", "item": "이자부리", "delta_pct": 25.6, "threshold_pct": 20.0, "cur": 104.3, "ref": 83.0, "basis": "yoy", "sign_flip": false}
+      ~ {"company": "케이디비생명보험", "quarter": "2024.1Q", "item": "CSM상각", "delta_pct": -21.6, "threshold_pct": 10.0, "cur": -135.3, "ref": -111.2, "basis": "yoy" => {"company": "케이디비생명보험", "quarter": "2024.1Q", "item": "CSM상각", "delta_pct": -16.2, "threshold_pct": 10.0, "cur": -135.3, "ref": -116.4, "basis": "yoy"
+      ~ {"company": "케이디비생명보험", "quarter": "2024.1Q", "item": "신계약CSM", "delta_pct": 219.7, "threshold_pct": 30.0, "cur": 1238.1, "ref": 387.3, "basis": "yoy" => {"company": "케이디비생명보험", "quarter": "2024.1Q", "item": "신계약CSM", "delta_pct": 222.3, "threshold_pct": 30.0, "cur": 1238.1, "ref": 384.1, "basis": "yoy"
+      ~ {"company": "케이디비생명보험", "quarter": "2024.2Q", "item": "CSM상각", "delta_pct": -44.5, "threshold_pct": 10.0, "cur": -338.3, "ref": -234.2, "basis": "yoy" => {"company": "케이디비생명보험", "quarter": "2024.2Q", "item": "CSM상각", "delta_pct": -38.0, "threshold_pct": 10.0, "cur": -338.3, "ref": -245.1, "basis": "yoy"
+      ~ {"company": "케이디비생명보험", "quarter": "2024.2Q", "item": "신계약CSM", "delta_pct": 59.8, "threshold_pct": 30.0, "cur": 1876.5, "ref": 1174.0, "basis": "yoy" => {"company": "케이디비생명보험", "quarter": "2024.2Q", "item": "신계약CSM", "delta_pct": 60.0, "threshold_pct": 30.0, "cur": 1876.5, "ref": 1173.1, "basis": "yoy"
+      ~ {"company": "케이디비생명보험", "quarter": "2024.3Q", "item": "CSM상각", "delta_pct": -52.3, "threshold_pct": 10.0, "cur": -536.8, "ref": -352.5, "basis": "yoy" => {"company": "케이디비생명보험", "quarter": "2024.3Q", "item": "CSM상각", "delta_pct": -44.0, "threshold_pct": 10.0, "cur": -536.8, "ref": -372.7, "basis": "yoy"
+      ~ {"company": "케이디비생명보험", "quarter": "2024.3Q", "item": "이자부리", "delta_pct": 23.8, "threshold_pct": 20.0, "cur": 180.9, "ref": 146.1, "basis": "yoy", "s => {"company": "케이디비생명보험", "quarter": "2024.3Q", "item": "이자부리", "delta_pct": 35.0, "threshold_pct": 20.0, "cur": 180.9, "ref": 134.0, "basis": "yoy", "s
+== data/_derived/pl_oci_vs_bs_aoci_warn.json type list top keys 28
+   rows 28 -> 29
+   added 1 removed 0 changed 0
+      + {"company": "케이디비생명보험", "quarter": "2023.4Q", "delta_bs_mn": -490053.977, "pl_oci_dangi_mn": -391211.877, "residual_mn": -98842.099}

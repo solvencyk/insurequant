@@ -1,0 +1,253 @@
+KR0009 independent re-read | plan N6c_HD_FY2023_IRlegs | masters from C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\remaining_20261022\e23_d1_d3\backup_before_apply\kr0009_hyundai | mutation 'unit'
+
+== A. CONTROL: ORIGINAL FY2023 filings read with the same definitions vs the LIVE (pre-load) master
+  2023.3Q: data/dart/FY2023_Q3/raw/KR0009_현대해상/xml/20231114002737.xml unit 원 (L29410); 18 Tier-1 items re-read; items where the LIVE master != the original print: 18
+      i1: master 754479.376712 vs original print 754479376712.0 (diff -754478622232.623291)
+      i16: master 35264.198998 vs original print 35264198998.0 (diff -35264163733.801003)
+      i17: master 314655.377427 vs original print 314655377427.0 (diff -314655062771.622559)
+      i18: master 908973.439805 vs original print 908973439805.0 (diff -908972530831.560181)
+      i19: master -594318.062378 vs original print -594318062378.0 (diff +594317468059.937622)
+      i20: master 1069134.754139 vs original print 1069134754139.0 (diff -1069133685004.245850)
+      i21: master -22125.009367 vs original print -22125009367.0 (diff +22124987241.990631)
+      i22: master 1047009.744772 vs original print 1047009744772.0 (diff -1047008697762.255249)
+      i23: master 260654.437994 vs original print 260654437994.0 (diff -260654177339.562012)
+      i24: master 786355.306778 vs original print 786355306778.0 (diff -786354520422.693237)
+      i25: master 119978.352035 vs original print 119978352035.0 (diff -119978232056.647964)
+      i26: master -363959.235007 vs original print -363959235007.0 (diff +363958871047.765015)
+      i27: master 472908.675976 vs original print 472908675976.0 (diff -472908203067.324036)
+      i28: master 6122.512712 vs original print 6122512712.0 (diff -6122506589.487288)
+      i29: master 1660.430399 vs original print 1660430399.0 (diff -1660428738.569601)
+      i30: master 437.890522 vs original print 437890522.0 (diff -437890084.109478)
+      i31: master 906333.658813 vs original print 906333658813.0 (diff -906332752479.341187)
+      i32: master 2808.077433 vs original print 2808077433.0 (diff -2808074624.922567)
+  !! PROBLEM [A 2023.3Q] definitions do not reproduce the live master on items [1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+  2023.4Q: data/dart/FY2023_Q4/raw/KR0009_현대해상_20240314001515/xml/20240314001515.xml unit 원 (L46513); 18 Tier-1 items re-read; items where the LIVE master != the original print: 18
+      i1: master 526490.675922 vs original print 526490675922.0 (diff -526490149431.324097)
+      i16: master 38491.0 vs original print 38490968273.0 (diff -38490929782.000000, owner gold)
+      i17: master 499877.274602 vs original print 499877274602.0 (diff -499876774724.725403)
+      i18: master 1283336.386575 vs original print 1283336386575.0 (diff -1283335103238.613525)
+      i19: master -783459.111973 vs original print -783459111973.0 (diff +783458328513.888062)
+      i20: master 1026367.950524 vs original print 1026367950524.0 (diff -1026366924156.049438)
+      i21: master -28698.156488 vs original print -28698156488.0 (diff +28698127789.843513)
+      i22: master 997669.794036 vs original print 997669794036.0 (diff -997668796366.205933)
+      i23: master 191948.13039 vs original print 191948130390.0 (diff -191947938441.869598)
+      i24: master 805721.663646 vs original print 805721663646.0 (diff -805720857924.336304)
+      i25: master -496923.049652 vs original print -496923049652.0 (diff +496922552728.950378)
+      i26: master 1038658.945156 vs original print 1038658945156.0 (diff -1038657906497.054810)
+      i27: master -1545241.943941 vs original print -1545241943941.0 (diff +1545240398699.056152)
+      i28: master 28504.772715 vs original print 28504772715.0 (diff -28504744210.227283)
+      i29: master -280.327893 vs original print -280327893.0 (diff +280327612.672107)
+      i30: master 2886.25182 vs original print 2886251820.0 (diff -2886248933.748180)
+      i31: master 308798.613994 vs original print 308798613994.0 (diff -308798305195.385986)
+      i32: master -21450.747509 vs original print -21450747509.0 (diff +21450726058.252491)
+  !! PROBLEM [A 2023.4Q] definitions do not reproduce the live master on items [1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+  2023.1Q: ORIGINAL old-layout statement data/dart/FY2023_Q1/raw/KR0009_현대해상/xml/20230515002873.xml table L22315-L22995 unit 원
+      i22 법인세비용차감전순이익: original print 435,251,862,879 (L22827) = 435251.862879 | live master 435300.0 | diff +48.137 (within the 경영공시 억원 rounding)
+      i23 법인세비용: original print 101,660,916,629 (L22835) = 101660.916629 | live master 101700.0 | diff +39.083 (within the 경영공시 억원 rounding)
+      i24 (22 - 23 of the printed lines) = 333590.94625 | live master 333600.0 | diff +9.054 (within the 경영공시 억원 rounding)
+      i4 보험계약마진상각: original print 216,346,661,769 (L22386) = 216346.661769 | live master 216346.662 -> EXACT
+      i5 위험조정변동: original print 27,234,914,386 (L22378) = 27234.914386 | live master 27234.914 -> EXACT
+  2023.2Q: ORIGINAL old-layout statement data/dart/FY2023_Q2/raw/KR0009_현대해상/xml/20230814003156.xml table L26426-L27447 unit 원
+      i22 법인세비용차감전순이익: original print 764,980,815,109 (L27195) = 764980.815109 | live master 765000.0 | diff +19.185 (within the 경영공시 억원 rounding)
+      i23 법인세비용: original print 186,952,953,027 (L27207) = 186952.953027 | live master 187000.0 | diff +47.047 (within the 경영공시 억원 rounding)
+      i24 (22 - 23 of the printed lines) = 578027.862082 | live master 578000.0 | diff -27.862 (within the 경영공시 억원 rounding)
+      i4 보험계약마진상각: original print 441,028,975,514 (L26534) = 441028.975514 | live master 441028.976 -> EXACT
+      i5 위험조정변동: original print 56,908,343,757 (L26522) = 56908.343757 | live master 56908.344 -> EXACT
+
+== B. CANDIDATE: FY2024 filings, separate 4-2 statement, prior-year (2023) cumulative column, read with the production definitions
+  2023.1Q: data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml | unit 원 (line 28272) | column 4 header ['제 70 기 1분기', '누적'] | period header (L28265) 제 70 기 1분기 2023.01.01 부터 2023.03.31 까지 | no 기타영업수익 row: True
+  2023.2Q: data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml | unit 원 (line 31301) | column 4 header ['제 70 기 반기', '누적'] | period header (L31294) 제 70 기 반기 2023.01.01 부터 2023.06.30 까지 | no 기타영업수익 row: True
+  2023.3Q: data/dart/FY2024_Q3/raw/KR0009_현대해상/20241114003026.xml | unit 원 (line 29844) | column 4 header ['제 70 기 3분기', '누적'] | period header (L29837) 제 70 기 3분기 2023.01.01 부터 2023.09.30 까지 | no 기타영업수익 row: True
+  2023.4Q: data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml | unit 원 (line 51572) | column 2 header ['제 70 기'] | period header (L51558) 제 70 기 2023.01.01 부터 2023.12.31 까지 | no 기타영업수익 row: True
+  item 4 (원수 CSM상각, 장기 열, 백만원) per quarter and the CSM roll-forward row 5 (억원) of the same filing:
+    2023.1Q: note table L40274-40433 caption '(2) 전분기' (L40258) -> 206,656,546 (L40323) | CSM row 5 (206,656,546) (L44157) | AGREE (<= 0.001 mn)
+    2023.2Q: note table L43340-43499 caption '(3) 전반기 누적' (L43324) -> 417,840,268 (L43389) | CSM row 5 (417,840,267) (L47841) | DISAGREE
+  !! PROBLEM [B 2023.2Q PL4] CSM amortisation differs between the 보험수익 note and the CSM roll-forward
+    2023.3Q: note table L41479-41638 caption '(3) 전분기 누적' (L41463) -> 640,379,115 (L41528) | CSM row 5 (640,379,115) (L45966) | AGREE (<= 0.001 mn)
+    2023.4Q: note table L71172-71331 caption '(2) 전기' (L71156) -> 880,544,842 (L71221) | CSM row 5 (880,544,841) (L75601) | DISAGREE
+  !! PROBLEM [B 2023.4Q PL4] CSM amortisation differs between the 보험수익 note and the CSM roll-forward
+
+== B1. every planned PL cell: value, unit, sign, row label, physical line of each part (IR: sheet cell, label cell, header cell, printed value)
+  !! PROBLEM [B1 2023.1Q i1] value plan 246045.277087 != re-read 246045277087.0; part L28343: unit plan 원 != 백만원; part L28343: contribution plan 246045.277087 != 246045277087.0; signed sum of the plan parts 246045277087.0 != value 246045.277087
+  !! PROBLEM [B1 2023.1Q i4] value plan 206656.546 != re-read 206656546.0; unit plan 천원 != 백만원
+  !! PROBLEM [B1 2023.1Q i16] value plan 4050.924606 != re-read 4050924606.0; part L28504: unit plan 원 != 백만원; part L28504: contribution plan 4050.924606 != 4050924606.0; signed sum of the plan parts 4050924606.0 != value 4050.924606
+  !! PROBLEM [B1 2023.1Q i17] value plan 174950.85334 != re-read 174950853340.0; part L28527: unit plan 원 != 백만원; part L28527: contribution plan 174950.85334 != 174950853340.0; signed sum of the plan parts 174950853340.0 != value 174950.85334
+  !! PROBLEM [B1 2023.1Q i18] value plan 370703.670846 != re-read 370703670846.0; part L28527: unit plan 원 != 백만원; part L28527: contribution plan 174950.85334 != 174950853340.0; part L28573: unit plan 원 != 백만원; part L28573: contribution plan -19035.78917 != -19035789170.0; part L28596: unit plan 원 != 백만원; part L28596: contribution plan -29393.305891 != -29393305891.0; part L28964: unit plan 원 != 백만원; part L28964: contribution plan 224648.364739 != 224648364739.0; part L28987: unit plan 원 != 백만원; part L28987: contribution plan 19533.547828 != 19533547828.0; signed sum of the plan parts 370703670846.0 != value 370703.670846
+  !! PROBLEM [B1 2023.1Q i19] value plan -195752.817506 != re-read -195752817506.0; part L28573: unit plan 원 != 백만원; part L28573: contribution plan 19035.78917 != 19035789170.0; part L28596: unit plan 원 != 백만원; part L28596: contribution plan 29393.305891 != 29393305891.0; part L28964: unit plan 원 != 백만원; part L28964: contribution plan -224648.364739 != -224648364739.0; part L28987: unit plan 원 != 백만원; part L28987: contribution plan -19533.547828 != -19533547828.0; signed sum of the plan parts -195752817506.0 != value -195752.817506
+  !! PROBLEM [B1 2023.1Q i20] value plan 420996.130427 != re-read 420996130427.0; part L29263: unit plan 원 != 백만원; part L29263: contribution plan 420996.130427 != 420996130427.0; signed sum of the plan parts 420996130427.0 != value 420996.130427
+  !! PROBLEM [B1 2023.1Q i21] value plan -7850.136275 != re-read -7850136275.0; part L29286: unit plan 원 != 백만원; part L29286: contribution plan -7850.136275 != -7850136275.0; signed sum of the plan parts -7850136275.0 != value -7850.136275
+  !! PROBLEM [B1 2023.1Q i22] value plan 413145.994152 != re-read 413145994152.0; part L29378: unit plan 원 != 백만원; part L29378: contribution plan 413145.994152 != 413145994152.0; signed sum of the plan parts 413145994152.0 != value 413145.994152
+  !! PROBLEM [B1 2023.1Q i23] value plan 97844.31067 != re-read 97844310670.0; part L29401: unit plan 원 != 백만원; part L29401: contribution plan 97844.31067 != 97844310670.0; signed sum of the plan parts 97844310670.0 != value 97844.31067
+  !! PROBLEM [B1 2023.1Q i24] value plan 315301.683482 != re-read 315301683482.0; part L29424: unit plan 원 != 백만원; part L29424: contribution plan 315301.683482 != 315301683482.0; signed sum of the plan parts 315301683482.0 != value 315301.683482
+  !! PROBLEM [B1 2023.1Q i25] value plan -61784.991652 != re-read -61784991652.0; part L29516: unit plan 원 != 백만원; part L29516: contribution plan -61784.991652 != -61784991652.0; signed sum of the plan parts -61784991652.0 != value -61784.991652
+  !! PROBLEM [B1 2023.1Q i26] value plan 579877.893584 != re-read 579877893584.0; part L29562: unit plan 원 != 백만원; part L29562: contribution plan 579877.893584 != 579877893584.0; signed sum of the plan parts 579877893584.0 != value 579877.893584
+  !! PROBLEM [B1 2023.1Q i27] value plan -654376.896346 != re-read -654376896346.0; part L29654: unit plan 원 != 백만원; part L29654: contribution plan -654376.896346 != -654376896346.0; signed sum of the plan parts -654376896346.0 != value -654376.896346
+  !! PROBLEM [B1 2023.1Q i28] value plan 16689.535871 != re-read 16689535871.0; part L29631: unit plan 원 != 백만원; part L29631: contribution plan 16689.535871 != 16689535871.0; signed sum of the plan parts 16689535871.0 != value 16689.535871
+  !! PROBLEM [B1 2023.1Q i29] value plan 908.73772 != re-read 908737720.0; part L29769: unit plan 원 != 백만원; part L29769: contribution plan 908.73772 != 908737720.0; signed sum of the plan parts 908737720.0 != value 908.73772
+  !! PROBLEM [B1 2023.1Q i30] value plan 52.934994 != re-read 52934994.0; part L29677: unit plan 원 != 백만원; part L29677: contribution plan 52.934994 != 52934994.0; signed sum of the plan parts 52934994.0 != value 52.934994
+  !! PROBLEM [B1 2023.1Q i31] value plan 253516.69183 != re-read 253516691830.0; part L29838: unit plan 원 != 백만원; part L29838: contribution plan 253516.69183 != 253516691830.0; signed sum of the plan parts 253516691830.0 != value 253516.69183
+  !! PROBLEM [B1 2023.1Q i32] value plan -4937.197475 != re-read -4937197475.0; part L29516: unit plan 원 != 백만원; part L29516: contribution plan -61784.991652 != -61784991652.0; part L29562: unit plan 원 != 백만원; part L29562: contribution plan -579877.893584 != -579877893584.0; part L29654: unit plan 원 != 백만원; part L29654: contribution plan 654376.896346 != 654376896346.0; part L29631: unit plan 원 != 백만원; part L29631: contribution plan -16689.535871 != -16689535871.0; part L29769: unit plan 원 != 백만원; part L29769: contribution plan -908.73772 != -908737720.0; part L29677: unit plan 원 != 백만원; part L29677: contribution plan -52.934994 != -52934994.0; signed sum of the plan parts -4937197475.0 != value -4937.197475
+  !! PROBLEM [B1 2023.2Q i1] value plan 415652.294609 != re-read 415652294609.0; part L31372: unit plan 원 != 백만원; part L31372: contribution plan 415652.294609 != 415652294609.0; signed sum of the plan parts 415652294609.0 != value 415652.294609
+  !! PROBLEM [B1 2023.2Q i4] value plan 417840.268 != re-read 417840268.0; unit plan 천원 != 백만원
+  !! PROBLEM [B1 2023.2Q i16] value plan 8784.082441 != re-read 8784082441.0; part L31533: unit plan 원 != 백만원; part L31533: contribution plan 8784.082441 != 8784082441.0; signed sum of the plan parts 8784082441.0 != value 8784.082441
+  !! PROBLEM [B1 2023.2Q i17] value plan 257230.481327 != re-read 257230481327.0; part L31556: unit plan 원 != 백만원; part L31556: contribution plan 257230.481327 != 257230481327.0; signed sum of the plan parts 257230481327.0 != value 257230.481327
+  !! PROBLEM [B1 2023.2Q i18] value plan 647086.799503 != re-read 647086799503.0; part L31556: unit plan 원 != 백만원; part L31556: contribution plan 257230.481327 != 257230481327.0; part L31602: unit plan 원 != 백만원; part L31602: contribution plan -28861.17416 != -28861174160.0; part L31625: unit plan 원 != 백만원; part L31625: contribution plan -48467.178376 != -48467178376.0; part L31901: unit plan 원 != 백만원; part L31901: contribution plan 438039.473544 != 438039473544.0; part L31924: unit plan 원 != 백만원; part L31924: contribution plan 29145.197168 != 29145197168.0; signed sum of the plan parts 647086799503.0 != value 647086.799503
+  !! PROBLEM [B1 2023.2Q i19] value plan -389856.318176 != re-read -389856318176.0; part L31602: unit plan 원 != 백만원; part L31602: contribution plan 28861.17416 != 28861174160.0; part L31625: unit plan 원 != 백만원; part L31625: contribution plan 48467.178376 != 48467178376.0; part L31901: unit plan 원 != 백만원; part L31901: contribution plan -438039.473544 != -438039473544.0; part L31924: unit plan 원 != 백만원; part L31924: contribution plan -29145.197168 != -29145197168.0; signed sum of the plan parts -389856318176.0 != value -389856.318176
+  !! PROBLEM [B1 2023.2Q i20] value plan 672882.775936 != re-read 672882775936.0; part L32154: unit plan 원 != 백만원; part L32154: contribution plan 672882.775936 != 672882775936.0; signed sum of the plan parts 672882775936.0 != value 672882.775936
+  !! PROBLEM [B1 2023.2Q i21] value plan -15434.175576 != re-read -15434175576.0; part L32177: unit plan 원 != 백만원; part L32177: contribution plan -15434.175576 != -15434175576.0; signed sum of the plan parts -15434175576.0 != value -15434.175576
+  !! PROBLEM [B1 2023.2Q i22] value plan 657448.60036 != re-read 657448600360.0; part L32269: unit plan 원 != 백만원; part L32269: contribution plan 657448.60036 != 657448600360.0; signed sum of the plan parts 657448600360.0 != value 657448.60036
+  !! PROBLEM [B1 2023.2Q i23] value plan 160485.164598 != re-read 160485164598.0; part L32292: unit plan 원 != 백만원; part L32292: contribution plan 160485.164598 != 160485164598.0; signed sum of the plan parts 160485164598.0 != value 160485.164598
+  !! PROBLEM [B1 2023.2Q i24] value plan 496963.435762 != re-read 496963435762.0; part L32315: unit plan 원 != 백만원; part L32315: contribution plan 496963.435762 != 496963435762.0; signed sum of the plan parts 496963435762.0 != value 496963.435762
+  !! PROBLEM [B1 2023.2Q i25] value plan 90734.016334 != re-read 90734016334.0; part L32407: unit plan 원 != 백만원; part L32407: contribution plan 90734.016334 != 90734016334.0; signed sum of the plan parts 90734016334.0 != value 90734.016334
+  !! PROBLEM [B1 2023.2Q i26] value plan 196337.990577 != re-read 196337990577.0; part L32453: unit plan 원 != 백만원; part L32453: contribution plan 196337.990577 != 196337990577.0; signed sum of the plan parts 196337990577.0 != value 196337.990577
+  !! PROBLEM [B1 2023.2Q i27] value plan -121036.336179 != re-read -121036336179.0; part L32545: unit plan 원 != 백만원; part L32545: contribution plan -121036.336179 != -121036336179.0; signed sum of the plan parts -121036336179.0 != value -121036.336179
+  !! PROBLEM [B1 2023.2Q i28] value plan 17086.261152 != re-read 17086261152.0; part L32522: unit plan 원 != 백만원; part L32522: contribution plan 17086.261152 != 17086261152.0; signed sum of the plan parts 17086261152.0 != value 17086.261152
+  !! PROBLEM [B1 2023.2Q i29] value plan 145.872947 != re-read 145872947.0; part L32614: unit plan 원 != 백만원; part L32614: contribution plan 145.872947 != 145872947.0; signed sum of the plan parts 145872947.0 != value 145.872947
+  !! PROBLEM [B1 2023.2Q i30] value plan 1154.947018 != re-read 1154947018.0; part L32568: unit plan 원 != 백만원; part L32568: contribution plan 1154.947018 != 1154947018.0; signed sum of the plan parts 1154947018.0 != value 1154.947018
+  !! PROBLEM [B1 2023.2Q i31] value plan 587697.452096 != re-read 587697452096.0; part L32683: unit plan 원 != 백만원; part L32683: contribution plan 587697.452096 != 587697452096.0; signed sum of the plan parts 587697452096.0 != value 587697.452096
+  !! PROBLEM [B1 2023.2Q i32] value plan -2954.719181 != re-read -2954719181.0; part L32407: unit plan 원 != 백만원; part L32407: contribution plan 90734.016334 != 90734016334.0; part L32453: unit plan 원 != 백만원; part L32453: contribution plan -196337.990577 != -196337990577.0; part L32545: unit plan 원 != 백만원; part L32545: contribution plan 121036.336179 != 121036336179.0; part L32522: unit plan 원 != 백만원; part L32522: contribution plan -17086.261152 != -17086261152.0; part L32614: unit plan 원 != 백만원; part L32614: contribution plan -145.872947 != -145872947.0; part L32568: unit plan 원 != 백만원; part L32568: contribution plan -1154.947018 != -1154947018.0; signed sum of the plan parts -2954719181.0 != value -2954.719181
+  !! PROBLEM [B1 2023.4Q i1] value plan 526589.620124 != re-read 526589620124.0; part L51619: unit plan 원 != 백만원; part L51619: contribution plan 526589.620124 != 526589620124.0; signed sum of the plan parts 526589620124.0 != value 526589.620124
+  !! PROBLEM [B1 2023.4Q i4] value plan 880544.842 != re-read 880544842.0; unit plan 천원 != 백만원
+  !! PROBLEM [B1 2023.4Q i17] value plan 455046.121937 != re-read 455046121937.0; part L51771: unit plan 원 != 백만원; part L51771: contribution plan 455046.121937 != 455046121937.0; signed sum of the plan parts 455046121937.0 != value 455046.121937
+  !! PROBLEM [B1 2023.4Q i19] value plan -828290.264638 != re-read -828290264638.0; part L51809: unit plan 원 != 백만원; part L51809: contribution plan 57623.227782 != 57623227782.0; part L51828: unit plan 원 != 백만원; part L51828: contribution plan 105160.848812 != 105160848812.0; part L52132: unit plan 원 != 백만원; part L52132: contribution plan -915641.804466 != -915641804466.0; part L52151: unit plan 원 != 백만원; part L52151: contribution plan -75432.536766 != -75432536766.0; signed sum of the plan parts -828290264638.0 != value -828290.264638
+  !! PROBLEM [B1 2023.4Q i20] value plan 981635.742061 != re-read 981635742061.0; part L52379: unit plan 원 != 백만원; part L52379: contribution plan 981635.742061 != 981635742061.0; signed sum of the plan parts 981635742061.0 != value 981635.742061
+  !! PROBLEM [B1 2023.4Q i22] value plan 952937.585573 != re-read 952937585573.0; part L52474: unit plan 원 != 백만원; part L52474: contribution plan 952937.585573 != 952937585573.0; signed sum of the plan parts 952937585573.0 != value 952937.585573
+  !! PROBLEM [B1 2023.4Q i23] value plan 180599.569103 != re-read 180599569103.0; part L52493: unit plan 원 != 백만원; part L52493: contribution plan 180599.569103 != 180599569103.0; signed sum of the plan parts 180599569103.0 != value 180599.569103
+  !! PROBLEM [B1 2023.4Q i24] value plan 772338.01647 != re-read 772338016470.0; part L52512: unit plan 원 != 백만원; part L52512: contribution plan 772338.01647 != 772338016470.0; signed sum of the plan parts 772338016470.0 != value 772338.01647
+  !! PROBLEM [B1 2023.4Q i25] value plan -463577.530269 != re-read -463577530269.0; part L52588: unit plan 원 != 백만원; part L52588: contribution plan -463577.530269 != -463577530269.0; signed sum of the plan parts -463577530269.0 != value -463577.530269
+  !! PROBLEM [B1 2023.4Q i27] value plan -1511896.424558 != re-read -1511896424558.0; part L52702: unit plan 원 != 백만원; part L52702: contribution plan -1511896.424558 != -1511896424558.0; signed sum of the plan parts -1511896424558.0 != value -1511896.424558
+  !! PROBLEM [B1 2023.4Q i31] value plan 308760.486201 != re-read 308760486201.0; part L52854: unit plan 원 != 백만원; part L52854: contribution plan 308760.486201 != 308760486201.0; signed sum of the plan parts 308760486201.0 != value 308760.486201
+  planned PL cells 57, re-read OK 8
+
+== B2. completeness: every other Tier-1 item of the re-read vector equals the live master (or is a documented exclusion)
+  !! PROBLEM [B2 2023.3Q i1] item differs from the master by +754478622232.623291 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i16] item differs from the master by +35264163733.801003 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i17] item differs from the master by +314655062771.622559 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i18] item differs from the master by +908972530831.560181 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i19] item differs from the master by -594317468059.937622 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i20] item differs from the master by +1069133685004.245850 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i21] item differs from the master by -22124987241.990631 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i22] item differs from the master by +1047008697762.255249 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i23] item differs from the master by +260654177339.562012 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i24] item differs from the master by +786354520422.693237 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i25] item differs from the master by +119978232056.647964 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i26] item differs from the master by -363958871047.765015 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i27] item differs from the master by +472908203067.324036 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i28] item differs from the master by +6122506589.487288 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i29] item differs from the master by +1660428738.569601 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i30] item differs from the master by +437890084.109478 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i31] item differs from the master by +906332752479.341187 but is not in the plan
+  !! PROBLEM [B2 2023.3Q i32] item differs from the master by +2808074624.922567 but is not in the plan
+    2023.4Q i16: EXCLUDED (rounding-only) master 38491.0 vs re-read 38490968273.0 (diff -38490929782.000000); owner gold: True; ledger pin exists
+  !! PROBLEM [B2 2023.4Q i18] item differs from the master by +1283335103238.613525 but is not in the plan
+  !! PROBLEM [B2 2023.4Q i21] item differs from the master by -28698127789.843513 but is not in the plan
+  !! PROBLEM [B2 2023.4Q i26] item differs from the master by +1038657906497.054810 but is not in the plan
+  !! PROBLEM [B2 2023.4Q i28] item differs from the master by +28504744210.227283 but is not in the plan
+  !! PROBLEM [B2 2023.4Q i29] item differs from the master by -280327612.672107 but is not in the plan
+  !! PROBLEM [B2 2023.4Q i30] item differs from the master by +2886248933.748180 but is not in the plan
+  !! PROBLEM [B2 2023.4Q i32] item differs from the master by -21450726058.252491 but is not in the plan
+  Tier-1 items equal to the live master (not in the plan): 0
+
+== B3. every planned CSM cell: value (억원), unit, sign, row label, physical line; CSM roll-forward closure
+  2023.1Q: data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table L44042-44281 caption '나. 전분기' (L44026), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수 및 수재가. 당분기' | unit 백만원 | exact 억원 [83515391.77, 4572791.37, 614767.17, -2103233.72, -2066565.46, 84533151.13] | roll-forward residual +0.00000억
+  !! PROBLEM [B3 2023.1Q CSM i1] value plan 83515.4 != re-read 83515391.8 (exact 83515391.77); exact plan 83515.39177 != 83515391.77; unit plan 천원 != 백만원; contribution 83515.39177 sign 1
+  !! PROBLEM [B3 2023.1Q CSM i2] value plan 4572.8 != re-read 4572791.4 (exact 4572791.37); exact plan 4572.79137 != 4572791.37; unit plan 천원 != 백만원; contribution 4572.79137 sign 1
+  !! PROBLEM [B3 2023.1Q CSM i3] value plan 614.8 != re-read 614767.2 (exact 614767.17); exact plan 614.76717 != 614767.17; unit plan 천원 != 백만원; contribution 614.76717 sign 1
+  !! PROBLEM [B3 2023.1Q CSM i4] value plan -2103.2 != re-read -2103233.7 (exact -2103233.72); exact plan -2103.23372 != -2103233.72; unit plan 천원 != 백만원; contribution -2103.23372 sign 1
+  !! PROBLEM [B3 2023.1Q CSM i5] value plan -2066.6 != re-read -2066565.5 (exact -2066565.46); exact plan -2066.56546 != -2066565.46; unit plan 천원 != 백만원; contribution -2066.56546 sign 1
+  !! PROBLEM [B3 2023.1Q CSM i6] value plan 84533.2 != re-read 84533151.1 (exact 84533151.13); exact plan 84533.15113 != 84533151.13; unit plan 천원 != 백만원; contribution 84533.15113 sign 1
+  2023.2Q: data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table L47726-47965 caption '나. 전반기' (L47709), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수가. 당반기' | unit 백만원 | exact 억원 [83515391.77, 8755889.26, 1260652.07, -3369183.74, -4178402.67, 85984346.69] | roll-forward residual +0.00000억
+  !! PROBLEM [B3 2023.2Q CSM i1] value plan 83515.4 != re-read 83515391.8 (exact 83515391.77); exact plan 83515.39177 != 83515391.77; unit plan 천원 != 백만원; contribution 83515.39177 sign 1
+  !! PROBLEM [B3 2023.2Q CSM i2] value plan 8755.9 != re-read 8755889.3 (exact 8755889.26); exact plan 8755.88926 != 8755889.26; unit plan 천원 != 백만원; contribution 8755.88926 sign 1
+  !! PROBLEM [B3 2023.2Q CSM i3] value plan 1260.7 != re-read 1260652.1 (exact 1260652.07); exact plan 1260.65207 != 1260652.07; unit plan 천원 != 백만원; contribution 1260.65207 sign 1
+  !! PROBLEM [B3 2023.2Q CSM i4] value plan -3369.2 != re-read -3369183.7 (exact -3369183.74); exact plan -3369.18374 != -3369183.74; unit plan 천원 != 백만원; contribution -3369.18374 sign 1
+  !! PROBLEM [B3 2023.2Q CSM i5] value plan -4178.4 != re-read -4178402.7 (exact -4178402.67); exact plan -4178.40267 != -4178402.67; unit plan 천원 != 백만원; contribution -4178.40267 sign 1
+  !! PROBLEM [B3 2023.2Q CSM i6] value plan 85984.3 != re-read 85984346.7 (exact 85984346.69); exact plan 85984.34669 != 85984346.69; unit plan 천원 != 백만원; contribution 85984.34669 sign 1
+  2023.3Q: data/dart/FY2024_Q3/raw/KR0009_현대해상/20241114003026.xml table L45851-46090 caption '나. 전분기' (L45835), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수가. 당분기' | unit 백만원 | exact 억원 [83515391.77, 13221355.8, 1929835.32, -3226165.81, -6403791.15, 89036625.93] | roll-forward residual -0.00000억
+  !! PROBLEM [B3 2023.3Q CSM i1] value plan 83515.4 != re-read 83515391.8 (exact 83515391.77); exact plan 83515.39177 != 83515391.77; unit plan 천원 != 백만원; contribution 83515.39177 sign 1
+  !! PROBLEM [B3 2023.3Q CSM i4] value plan -3226.2 != re-read -3226165.8 (exact -3226165.81); exact plan -3226.16581 != -3226165.81; unit plan 천원 != 백만원; contribution -3226.16581 sign 1
+  !! PROBLEM [B3 2023.3Q i2] CSM item not in the plan differs from the live master: master 13221.4 vs re-read 13221355.8
+  !! PROBLEM [B3 2023.3Q i3] CSM item not in the plan differs from the live master: master 1929.8 vs re-read 1929835.3
+  !! PROBLEM [B3 2023.3Q i5] CSM item not in the plan differs from the live master: master -6403.8 vs re-read -6403791.2
+  !! PROBLEM [B3 2023.3Q i6] CSM item not in the plan differs from the live master: master 89036.6 vs re-read 89036625.9
+  2023.4Q: data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml table L75486-75725 caption '나. 전기' (L75470), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수 및 수재가. 당기' | unit 백만원 | exact 억원 [83515372.63, 16792368.85, 2636322.89, -2715904.55, -8805448.41, 91422711.41] | roll-forward residual +0.00000억
+  !! PROBLEM [B3 2023.4Q CSM i1] value plan 83515.4 != re-read 83515372.6 (exact 83515372.63); exact plan 83515.37263 != 83515372.63; unit plan 천원 != 백만원; contribution 83515.37263 sign 1
+  !! PROBLEM [B3 2023.4Q CSM i4] value plan -2715.9 != re-read -2715904.5 (exact -2715904.55); exact plan -2715.90455 != -2715904.55; unit plan 천원 != 백만원; contribution -2715.90455 sign 1
+  !! PROBLEM [B3 2023.4Q CSM i5] value plan -8805.4 != re-read -8805448.4 (exact -8805448.41); exact plan -8805.44841 != -8805448.41; unit plan 천원 != 백만원; contribution -8805.44841 sign 1
+  !! PROBLEM [B3 2023.4Q CSM i6] value plan 91422.7 != re-read 91422711.4 (exact 91422711.41); exact plan 91422.71141 != 91422711.41; unit plan 천원 != 백만원; contribution 91422.71141 sign 1
+  !! PROBLEM [B3 2023.4Q i2] CSM item not in the plan differs from the live master: master 16792.4 vs re-read 16792368.9
+  !! PROBLEM [B3 2023.4Q i3] CSM item not in the plan differs from the live master: master 2636.3 vs re-read 2636322.9
+  planned CSM cells 18, re-read OK 0
+  FY2023 quarterly CSM openings (latest comparative): [83515391.8, 83515391.8, 83515391.8, 83515372.6] -> NOT one vintage
+  !! PROBLEM [B3] CSM openings differ within FY2023: [83515391.8, 83515391.8, 83515391.8, 83515372.6]
+
+== C. identities from freshly read cells
+  2023.1Q: IR legs 장기 144794.37503400003 + 자동차 75575.31741899991 + 일반 25675.584634000013 = 246045.277087 | IR 합계 L31 246045.277087 | DART statement 보험손익 246045277087.000000 (L28343) -> diff -246045031041.722900391
+  !! PROBLEM [C 2023.1Q] IR legs do not add up to the DART separate-basis 보험손익
+  2023.2Q: IR legs 장기 224031.0477060001 + 자동차 148940.25471200002 + 일반 42680.99219100003 = 415652.294609 | IR 합계 L31 415652.294609 | DART statement 보험손익 415652294609.000000 (L31372) -> diff -415651878956.705383301
+  !! PROBLEM [C 2023.2Q] IR legs do not add up to the DART separate-basis 보험손익
+  2023.4Q (information, NOT loaded): FY2024 Q4 IR legs 장기 L26=248926.412180 자동차 L30=201237.588554 일반 L11=76425.619390 sum 526589.620124 == DART annual comparative 보험손익 526589620124.000000 (diff -526589093534.379882812); live master legs 2/13/14 = 248827.5 / 201238.0 / 76426.0 (sum 526491.500) -> bridge residual after the load +526589093632.5000 mn
+
+== D. SEAM evidence: derived single quarters vs printed 3-month columns
+  !! PROBLEM [D1 2023.3Q i1] derived single quarter -415651540129.623291 != printed 3-month 338827082103.000000 (diff -754478622232.623291)
+  !! PROBLEM [D1 2023.3Q i16] derived single quarter -8784047176.801003 != printed 3-month 26480116557.000000 (diff -35264163733.801003)
+  !! PROBLEM [D1 2023.3Q i17] derived single quarter -257230166671.622559 != printed 3-month 57424896100.000000 (diff -314655062771.622559)
+  !! PROBLEM [D1 2023.3Q i18] derived single quarter -647085890529.560181 != printed 3-month 261886640302.000000 (diff -908972530831.560181)
+  !! PROBLEM [D1 2023.3Q i19] derived single quarter 389855723857.937622 != printed 3-month -204461744202.000000 (diff +594317468059.937622)
+  !! PROBLEM [D1 2023.3Q i20] derived single quarter -672881706801.245850 != printed 3-month 396251978203.000000 (diff -1069133685004.245850)
+  !! PROBLEM [D1 2023.3Q i21] derived single quarter 15434153450.990633 != printed 3-month -6690833791.000000 (diff +22124987241.990631)
+  !! PROBLEM [D1 2023.3Q i22] derived single quarter -657447553350.255249 != printed 3-month 389561144412.000000 (diff -1047008697762.255249)
+  !! PROBLEM [D1 2023.3Q i23] derived single quarter -160484903943.562012 != printed 3-month 100169273396.000000 (diff -260654177339.562012)
+  !! PROBLEM [D1 2023.3Q i24] derived single quarter -496962649406.693237 != printed 3-month 289391871016.000000 (diff -786354520422.693237)
+  !! PROBLEM [D1 2023.3Q i25] derived single quarter -90733896355.647964 != printed 3-month 29244335701.000000 (diff -119978232056.647964)
+  !! PROBLEM [D1 2023.3Q i26] derived single quarter -196338354536.235016 != printed 3-month -560297225584.000000 (diff +363958871047.765015)
+  !! PROBLEM [D1 2023.3Q i27] derived single quarter 121036809087.675980 != printed 3-month 593945012155.000000 (diff -472908203067.324036)
+  !! PROBLEM [D1 2023.3Q i28] derived single quarter -17086255029.487288 != printed 3-month -10963748440.000000 (diff -6122506589.487288)
+  !! PROBLEM [D1 2023.3Q i29] derived single quarter -145871286.569601 != printed 3-month 1514557452.000000 (diff -1660428738.569601)
+  !! PROBLEM [D1 2023.3Q i30] derived single quarter -1154946580.109478 != printed 3-month -717056496.000000 (diff -437890084.109478)
+  !! PROBLEM [D1 2023.3Q i31] derived single quarter -587696545762.341187 != printed 3-month 318636206717.000000 (diff -906332752479.341187)
+  !! PROBLEM [D1 2023.3Q i32] derived single quarter 2954721989.077433 != printed 3-month 5762796614.000000 (diff -2808074624.922567)
+  D1 Tier-1 single quarters (2023.2Q: 2Q-1Q; 2023.3Q: 9M-1H) vs the printed prior-year 3-month column: 36 item-quarters checked, worst |diff| = 1069133685004.245849609 mn
+  D2 item 4 2023.2Q: derived 211183722.000000 | printed 3-month (note table L43517, caption '(4) 전반기 3개월') 211,183,722 (L43566) = 211183722.000000 -> diff +0.000000
+  D2 item 4 2023.3Q: derived -417199888.885000 | printed 3-month (note table L41656, caption '(4) 전분기 3개월') 222,538,847 (L41705) = 222538847.000000 -> diff -639738735.885000
+  !! PROBLEM [D2 2023.3Q] item 4 derived single -417199888.885 != printed 3-month 222538847.0
+  D3 IR 장기 2023.2Q: derived (L26 - previous sheet) 79236.672672 | printed 3-month K26 79236.672672 -> diff +0.000000000
+  D3 IR 자동차 2023.2Q: derived (L30 - previous sheet) 73364.937293 | printed 3-month K30 73364.937293 -> diff -0.000000000
+  D3 IR 일반 2023.2Q: derived (L11 - previous sheet) 17005.407557 | printed 3-month K11 17005.407557 -> diff +0.000000000
+  D3 IR 합계 2023.2Q: derived (L31 - previous sheet) 169607.017522 | printed 3-month K31 169607.017522 -> diff -0.000000000
+  D3 IR 장기 2023.3Q: live master item 2 = 476139.3 | IR Q3 sheet L26 (9M) = 476139.331659 (diff -0.031659, print rounding of the builder literal) | derived 3Q single from the new 2Q cumulative = 252108.252294 vs IR K26 = 252108.283953
+  D4 2023.4Q: for the 10 adopted Tier-1 items the single quarter would be (restated annual - 9M); the 9M comparative of the FY2024 Q3 report vs the live 3Q master and the annual comparative vs the ORIGINAL annual print:
+      i1: 9M comparative 754479376712.000000 vs live 3Q 754479.376712 -> DIFFERENT | annual comparative 526589620124.000000 vs original annual 526490675922.000000 -> restated
+  !! PROBLEM [D4 i1] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i17: 9M comparative 314655377427.000000 vs live 3Q 314655.377427 -> DIFFERENT | annual comparative 455046121937.000000 vs original annual 499877274602.000000 -> restated
+  !! PROBLEM [D4 i17] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i19: 9M comparative -594318062378.000000 vs live 3Q -594318.062378 -> DIFFERENT | annual comparative -828290264638.000000 vs original annual -783459111973.000000 -> restated
+  !! PROBLEM [D4 i19] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i20: 9M comparative 1069134754139.000000 vs live 3Q 1069134.754139 -> DIFFERENT | annual comparative 981635742061.000000 vs original annual 1026367950524.000000 -> restated
+  !! PROBLEM [D4 i20] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i22: 9M comparative 1047009744772.000000 vs live 3Q 1047009.744772 -> DIFFERENT | annual comparative 952937585573.000000 vs original annual 997669794036.000000 -> restated
+  !! PROBLEM [D4 i22] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i23: 9M comparative 260654437994.000000 vs live 3Q 260654.437994 -> DIFFERENT | annual comparative 180599569103.000000 vs original annual 191948130390.000000 -> restated
+  !! PROBLEM [D4 i23] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i24: 9M comparative 786355306778.000000 vs live 3Q 786355.306778 -> DIFFERENT | annual comparative 772338016470.000000 vs original annual 805721663646.000000 -> restated
+  !! PROBLEM [D4 i24] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i25: 9M comparative 119978352035.000000 vs live 3Q 119978.352035 -> DIFFERENT | annual comparative -463577530269.000000 vs original annual -496923049652.000000 -> restated
+  !! PROBLEM [D4 i25] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i27: 9M comparative 472908675976.000000 vs live 3Q 472908.675976 -> DIFFERENT | annual comparative -1511896424558.000000 vs original annual -1545241943941.000000 -> restated
+  !! PROBLEM [D4 i27] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i31: 9M comparative 906333658813.000000 vs live 3Q 906333.658813 -> DIFFERENT | annual comparative 308760486201.000000 vs original annual 308798613994.000000 -> restated
+  !! PROBLEM [D4 i31] the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item
+      i4: 9M note cumulative 640379115.000000 vs live 3Q 640379.115000 -> DIFFERENT | annual comparative 880544842.000000 vs live (original) annual 880547.066000
+  null_dangi_add in the plan: [1, 4, 17, 19, 20, 22, 23, 24, 25, 27, 31] (2023.4Q) -> matches the re-read premise
+  information: the FY2024 Q4 IR sheet prints the 2023.4Q 3-month 보험손익 합계 K31 = -227889.756588; restated annual - 9M = -227889756588.000000
+
+== E. plan sanity
+  old values: 57 PL + 18 CSM cells == the live master
+  contract: PL gold_new 57 gold_replace 0 | CSM gold_new 14 gold_replace 1 gold_remove 3 | null_dangi_add 11 set_dangi_add 0 held 0
+  CSM gold 2023.3Q i1: gold 88281.1 | was (builder/original print) 83515.4 | latest comparative 83515.4 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  CSM gold 2023.3Q i4: gold -7991.9 | was (builder/original print) -3226.2 | latest comparative -3226.2 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  CSM gold 2023.4Q i1: gold 88281.1 | was (builder/original print) 83515.4 | latest comparative 83515.4 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  CSM gold 2023.4Q i4: gold -7480.6 | was (builder/original print) -2714.9 | latest comparative -2715.9 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  excluded 2023.4Q item 16: live master/gold 38491.0 vs latest comparative 38490968273.000000 (printed (38,490,968,273) L51752) -> diff -38490929782.000000 mn, rounding only
+
+== RESULT: 134 PROBLEM(S)

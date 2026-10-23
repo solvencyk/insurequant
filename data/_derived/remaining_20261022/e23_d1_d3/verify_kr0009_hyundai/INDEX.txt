@@ -1,0 +1,9 @@
+verify_kr0009_hyundai (validation, 2026-10-23, read-only, tag cells-hyundai, KR0009 FY2023 only)
+vlib9.py/vmaster.py/vpl.py   stdlib DART xml table reader + master loaders (no scripts/ or src/ import)
+v01_diff.py/.txt/.tsv        cell diff vs HEAD (PL 135 field-cells = 57 value + 78 dangi; CSM 38 = 18 + 20; prov PL 6 / CSM 3)
+v04_pl_reread.py/.txt        PL statement prior-year column re-read (76 cells, 48 changed all confirmed; item 16 4Q 0.032 only); calibration 75/76 on FY2024 current column
+v07_csm_reread.py/.txt       CSM 48 cells (18 changed all confirmed), identity residual 0 on all 8 tables
+v08_all.py/.txt              item 4 from insurance-revenue note, dangi recompute (152 cells 0 mismatch), printed 3-month column seam (57 items 0 mismatch), orig-vs-restated 4Q (11 items)
+v09_ir.py/.txt               IR fact-sheet (3) UW Income cells L26/L30/L11 vs gold/provenance; legs sum = DART separate insurance result
+v05_gold.py/.txt             gold diff (PL +57; CSM +14 / -3 / 1 replaced); v11_headline.py/.txt headline effects, identities, gold-vs-master
+v10_orig_csm.txt             original FY2023_Q4 CSM roll-forward (opening 83,515.4 = original print)

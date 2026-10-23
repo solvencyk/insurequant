@@ -1,0 +1,61 @@
+.......................F................................................ [ 69%]
+F...............................                                         [100%]
+================================== FAILURES ===================================
+_____________ test_pl_constructive_coverage_matches_manifest[23] ______________
+
+_pl_baseline = ([{'값': 400988.560613, '값_당분기': 400988.560613, '공시분기': '2023.1Q', '생손보여부': '손해보험', ...}, {'값': 357082.0, '값_당분기': 3570...'2024.2Q'), ('AIG손해보험', '2024.3Q'), ('AIG손해보험', '2025.1Q'), ('AIG손해보험', '2025.2Q'), ('AIG손해보험', '2025.3Q'), ...}, ...})
+item = 23
+
+    @pytest.mark.parametrize(
+        "item", sorted(set(PL_CONSTRUCTIVE_BLIND) | set(PL_CONSTRUCTIVE_GUARDED)))
+    def test_pl_constructive_coverage_matches_manifest(_pl_baseline, item):
+        """상류 오추출(CONSTRUCTIVE)을 주입하고 차단성 룰이 알아채는지 대조한다.
+    
+        - **GUARDED 로 선언했는데 무방비** = 룰이 사라졌거나 약해졌다. 심각.
+        - **BLIND 로 선언했는데 잡힌다** = 커버리지가 늘었다. 좋은 일이니 매니페스트에서 지워라
+          (안 지우면 다시 없어질 때 이 테스트가 못 잡는다).
+        """
+        rows, wf, extra_lob, unknown_hyphen, base = _pl_baseline
+        mutated, n = _pl_mutate_constructive(rows, item)
+        assert n, f"item{item}({PL_ITEM_NAME[item]}) \uc140\uc744 \ud558\ub098\ub3c4 \ubabb \ucc3e\uc558\ub2e4 \u2014 \ud56d\ubaa9\uba85\uc774 \ubc14\ub00c\uc5c8\ub098"
+        after = _pl_blocking_signature(mutated, wf, extra_lob, unknown_hyphen)
+        new = {axis: sorted(after[axis] - base[axis]) for axis in base}
+        detected = any(new.values())
+    
+        if item in PL_CONSTRUCTIVE_BLIND:
+            assert not detected, (
+                f"item{item}({PL_ITEM_NAME[item]}) 이 이제 검사된다: "
+                f"{ {k: len(v) for k, v in new.items() if v} }\n"
+                "PL_CONSTRUCTIVE_BLIND \uc5d0\uc11c \uc9c0\uc6b0\uace0 PL_CONSTRUCTIVE_GUARDED \ub85c \uc62e\uaca8\ub77c \u2014 "
+                "안 옮기면 그 커버리지가 다시 사라질 때 아무도 모른다.")
+        else:
+>           assert detected, (
+                f"item{item}({PL_ITEM_NAME[item]}) \uc774 \ubb34\ubc29\ube44\ub2e4 \u2014 "
+                f"{PL_CONSTRUCTIVE_GUARDED[item]} 이 사라졌거나 약해졌다. "
+                f"주입 {n}셀, 크기 max(10,000백만, |v|x30%).")
+E           AssertionError: item23(\ubc95\uc778\uc138) \uc774 \ubb34\ubc29\ube44\ub2e4 \u2014 \ubc95\uc778\uc138 \u2014 **\uc881\uc740 \ucee4\ubc84\ub9ac\uc9c0**: assemble \uc774 22-24 \ub85c \ubb34\uc870\uac74 \ub36e\uc5b4\uc4f0\ub294 \uac74 \uc5ec\uc804\ud558\uc9c0\ub9cc, PL_YTD_COLLAPSE_TO_ZERO(\uac19\uc740 FY \uc778\uc811\ubd84\uae30, \uc9c1\uc804\uac12 non-zero -> \uc774\ubc88\uac12 \uc815\ud655\ud788 0.0) \uac00 '\ub36e\uc5b4\uc4f4 \uac12\uc774 \uc6b0\uc5f0\ud788 0.0' \uc778 \uacbd\uc6b0\ub9cc \uc7a1\ub294\ub2e4 \u2014 item23 \uc624\uc5fc \uc804\ubc18\uc744 \ubcf4\ub294 \ub8f0\uc774 \uc544\ub2c8\ub2e4. 2026-09-12(inbox/parser/20260901T1630Z) \uc2e4\uce21: KR0072(\ucf00\uc774\ub514\ube44\uc0dd\uba85) 2023.1Q \ub97c \uc2e0\uaddc\ub85c \ucc44\uc6b0\uc790(item23=-0.209323, \uc6d0\ubb38 \uc9c1\uc811\uac12) \uadf8 \uc804\uc5d4 \uc874\uc7ac\ud558\uc9c0 \uc54a\uc558\ub358 '\uc9c1\uc804\ubd84\uae30' \uac00 \uc0dd\uacbc\uace0, \ubcc0\uc774\uc2dc\ud5d8\uc774 2023.2Q(\uae30\uc874 override \uac12 -0.2)\ub97c 22-24 \ub85c \uc7ac\uacc4\uc0b0\ud558\uba74 \uc815\ud655\ud788 0.0 \uc774 \ub418\uc5b4 \uac78\ub838\ub2e4(\ub300\uc0c1 \ud68c\uc0ac-\ubd84\uae30\uac00 \ud55c \ubc88\ub3c4 \uc5c6\uc5c8\uc73c\uba74 \uc774 \ucd95\uc740 \uc5ec\uc804\ud788 BLIND \u2014 \ud68c\uc0ac\ubcc4 \uc778\uc811\ubd84\uae30 \uc874\uc7ac \uc5ec\ubd80\uc5d0 \uc88c\uc6b0\ub41c\ub2e4\ub294 \uc810\uc5d0\uc11c 22 \ubc88(2f, \uc804\ud56d \ubb34\uc870\uac74 \uc801\uc6a9)\uacfc \ub2e4\ub974\ub2e4). \uc774 \uc0ac\ub77c\uc84c\uac70\ub098 \uc57d\ud574\uc84c\ub2e4. \uc8fc\uc785 643\uc140, \ud06c\uae30 max(10,000\ubc31\ub9cc, |v|x30%).
+E           assert False
+
+tests\test_rule_coverage_manifest.py:805: AssertionError
+___________________ test_master_xlsx_clean_state_has_no_red ___________________
+
+_mx_live = (<module 'check_master_xlsx_drift' from 'C:\\Users\\sangwook.cho\\Desktop\\insurequant\\scripts\\check_master_xlsx_dri...', '손해보험', 5, '1. 보통주', ...], ['KR0001', '메리츠화재해상보험', '000060', '손해보험', 6, '2. 자본항목 중 보통주 이외의 자본증권', ...], ...]), ...})
+
+    def test_master_xlsx_clean_state_has_no_red(_mx_live):
+        """\uc9c0\uae08 \uc0c1\ud0dc\uc5d0\uc11c RED 0 \uc774\uc5b4\uc57c \ud55c\ub2e4 \u2014 \uc544\ub2c8\uba74 \uc2dc\ud2b8 \ub3d9\uae30\ud654\uac00 \ubc00\ub9b0 \uac83\uc774\ub2e4.
+    
+        2026-09-02 실측: 13개 시트 53,288행 대조, 드리프트 0. (그 직전까지 1219+33칸이
+        stale 이었고 어떤 게이트도 그것을 못 봤다.)"""
+        D, sheets, _t = _mx_live
+        findings, stat = D.scan(sheets=sheets)
+        red = [f"{f['rule']}|{f['sheet']}: {f['message'][:160]}"
+               for f in findings if f["severity"] == "RED"]
+>       assert not red, red
+E       AssertionError: ["MASTER_XLSX_DRIFT|CSM\uc6cc\ud130\ud3f4: \uac12\uc774 \ub2e4\ub978 \uc140 129\uac74 / 2358\ud589 \u2014 ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', '000400', '\uc190\ud574\ubcf4\ud5d8', 1, '\uae30\ucd08 CSM', '2023.4Q')|\uac12: \uc2dc..., None, '\uc190\ud574\ubcf4\ud5d8', 1, '\ubcf4\ud5d8\uc190\uc775', '2023.4Q')|\uac12: \uc2dc\ud2b8=468498.419718 vs \ub9c8\uc2a4\ud130=461540.038638 / ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', None, '\uc190\ud574\ubcf4\ud5d8', 1"]
+E       assert not ["MASTER_XLSX_DRIFT|CSM\uc6cc\ud130\ud3f4: \uac12\uc774 \ub2e4\ub978 \uc140 129\uac74 / 2358\ud589 \u2014 ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', '000400', '\uc190\ud574\ubcf4\ud5d8', 1, '\uae30\ucd08 CSM', '2023.4Q')|\uac12: \uc2dc..., None, '\uc190\ud574\ubcf4\ud5d8', 1, '\ubcf4\ud5d8\uc190\uc775', '2023.4Q')|\uac12: \uc2dc\ud2b8=468498.419718 vs \ub9c8\uc2a4\ud130=461540.038638 / ('KR0003', '\ub86f\ub370\uc190\ud574\ubcf4\ud5d8', None, '\uc190\ud574\ubcf4\ud5d8', 1"]
+
+tests\test_rule_coverage_manifest.py:1692: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_rule_coverage_manifest.py::test_pl_constructive_coverage_matches_manifest[23]
+FAILED tests/test_rule_coverage_manifest.py::test_master_xlsx_clean_state_has_no_red
+2 failed, 102 passed in 195.48s (0:03:15)

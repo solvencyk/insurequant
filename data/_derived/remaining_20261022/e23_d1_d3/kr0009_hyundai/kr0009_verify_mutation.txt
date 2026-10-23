@@ -1,0 +1,7 @@
+mutation col  : exit 1, 24 problem lines -> DETECTED
+mutation line : exit 1, 67 problem lines -> DETECTED
+mutation tbl  : exit 1, 4 problem lines -> DETECTED
+mutation val  : exit 1, 19 problem lines -> DETECTED
+mutation unit : exit 1, 134 problem lines -> DETECTED
+mutation ir   : exit 1, 12 problem lines -> DETECTED
+ALL MUTATIONS DETECTED

@@ -136,9 +136,9 @@
    "_evidence": "probe_20260829_trace_builder_reads.py scripts/viz_build_csm_waterfall.py (관측 47개 = *_measurement.json; 패턴은 넉넉히 extracted/*.json 전체)"
   },
   "viz_ifrs17_panels": {
-   "inputs_sha256": "5596d278f80b8baacd86236970cf450eb3f12f48a52458874a62ce9810d442da",
+   "inputs_sha256": "ad800b59a2b594d123dc4554ab6f766ebedf8a6a48e798e7f253fd36224f7795",
    "input_files": 769,
-   "input_bytes": 51368524,
+   "input_bytes": 51368530,
    "input_files_per_pattern": {
     "data/dart/extracted/*.json": 767,
     "CSM_waterfall.json": 1,

@@ -1,0 +1,413 @@
+KR0070 independent re-read | plan N4_ABL_FY2023 | masters from C:\Users\sangwook.cho\Desktop\insurequant | mutation 'col'
+input hashes: N1=7a34fd2bf6f5, N2=d0d5e45f7a6c, N3=9b40e0b3b811, N4=c796ea9287ad, N4AUD=28219aece49a, O1=932f88c75f10, O2=9e37c0fe60bc, O3=fcecf29ae2b0, O4=19af872b4cf2, O4AUD=6ec8c5387ae3, A25=8592edc70354
+
+== B. CANDIDATE: FY2024 filings, separate 4-2 statement, prior-year (2023) cumulative column, read with the production definitions
+  2023.1Q: data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml | unit 원 (line 25501) | column 2 header ['제 72 기 1분기', '누적'] | period header (L25487) 제 72 기 1분기 2024.01.01 부터 2024.03.31 까지
+  2023.2Q: data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml | unit 원 (line 26781) | column 2 header ['제 72 기 반기', '누적'] | period header (L26767) 제 72 기 반기 2024.01.01 부터 2024.06.30 까지
+  2023.3Q: data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml | unit 원 (line 26199) | column 2 header ['제 72 기 3분기', '누적'] | period header (L26185) 제 72 기 3분기 2024.01.01 부터 2024.09.30 까지
+  2023.4Q: data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml | unit 원 (line 35176) | column 1 header ['제 72 기'] | period header (L35155) 제 72 기 2024.01.01 부터 2024.12.31 까지
+  PL4 (CSM amortisation, 백만원) per quarter: note (3) prior | note (1) prior cumulative | CSM roll-forward row 5 (see below)
+    2023.1Q: note3 22,447 (L37624) | note1 22,411 (L41498, 2 numeric cells, last) | roll-forward row 5 (22,411) (L37419) -> DISAGREE
+  !! PROBLEM [2023.1Q PL4] CSM amortisation differs between note (3), note (1) and the roll-forward
+    2023.2Q: note3 44,994 (L39277) | note1 46,789 (L43180, 4 numeric cells, last) | roll-forward row 5 (46,789) (L39072) -> DISAGREE
+  !! PROBLEM [2023.2Q PL4] CSM amortisation differs between note (3), note (1) and the roll-forward
+    2023.3Q: note3 66,762 (L38395) | note1 69,639 (L42248, 4 numeric cells, last) | roll-forward row 5 (69,639) (L38197) -> DISAGREE
+  !! PROBLEM [2023.3Q PL4] CSM amortisation differs between note (3), note (1) and the roll-forward
+    2023.4Q: note3 88,926 (L51237) | note1 92,971 (L58282, 2 numeric cells, last) | roll-forward row 5 (92,971) (L50615) -> DISAGREE
+  !! PROBLEM [2023.4Q PL4] CSM amortisation differs between note (3), note (1) and the roll-forward
+
+== B1. every planned PL cell: value, unit, sign, row label, physical line of each part
+  !! PROBLEM [2023.1Q i1] value plan 11177.777711 != re-read 15591.954456; part 보험손익 line 25572 != re-read L25564; part 보험손익 printed 11,177,777,711 != 15,591,954,456; part 보험손익 contribution 11177.777711 != sign*x 15591.954456
+  !! PROBLEM [2023.1Q i2] value plan 14701.765491 != re-read 19357.218570000005; part 보험수익 line 25618 != re-read L25610; part 보험수익 printed 152,742,218,946 != 180,798,949,760; part 보험수익 contribution 152742.218946 != sign*x 180798.94976; part 보험비용 line 25687 != re-read L25679; part 보험비용 printed 135,536,582,416 != 161,257,707,572; part 보험비용 contribution -135536.582416 != sign*|x| -161257.70757199998; part 재보험수익 line 25641 != re-read L25633; part 재보험수익 printed 10,951,944,288 != 13,442,581,026; part 재보험수익 contribution 10951.944288 != sign*x 13442.581026; part 재보험비용 line 25710 != re-read L25702; part 재보험비용 printed 13,455,815,327 != 13,626,604,644; part 재보험비용 contribution -13455.815327 != sign*|x| -13626.604644
+  !! PROBLEM [2023.1Q i3] value plan 17205.63653 != re-read 19541.242188000004; part 보험수익 line 25618 != re-read L25610; part 보험수익 printed 152,742,218,946 != 180,798,949,760; part 보험수익 contribution 152742.218946 != sign*x 180798.94976; part 보험비용 line 25687 != re-read L25679; part 보험비용 printed 135,536,582,416 != 161,257,707,572; part 보험비용 contribution -135536.582416 != sign*|x| -161257.70757199998
+  !! PROBLEM [2023.1Q i4] value plan 22411.0 != re-read 22447.0
+  !! PROBLEM [2023.1Q i8] value plan -2503.871039 != re-read -184.02361799999926; part 재보험수익 line 25641 != re-read L25633; part 재보험수익 printed 10,951,944,288 != 13,442,581,026; part 재보험수익 contribution 10951.944288 != sign*x 13442.581026; part 재보험비용 line 25710 != re-read L25702; part 재보험비용 printed 13,455,815,327 != 13,626,604,644; part 재보험비용 contribution -13455.815327 != sign*|x| -13626.604644
+  !! PROBLEM [2023.1Q i16] value plan 3523.98778 != re-read 3765.2641139999996; part 기타사업비용 line 25733 != re-read L25725; part 기타사업비용 printed 3,523,987,780 != 3,765,264,114; part 기타사업비용 contribution 3523.98778 != sign*x 3765.2641139999996
+  !! PROBLEM [2023.1Q i17] value plan 12268.965324 != re-read -5720.079812; part 투자손익 line 25756 != re-read L25748; part 투자손익 printed 12,268,965,324 != (5,720,079,812); part 투자손익 contribution 12268.965324 != sign*x -5720.079812
+  !! PROBLEM [2023.1Q i18] value plan 246664.821635 != re-read 200726.688867; part 투자손익 line 25756 != re-read L25748; part 투자손익 printed 12,268,965,324 != (5,720,079,812); part 투자손익 contribution 12268.965324 != sign*x -5720.079812; part 보험금융수익 line 25802 != re-read L25794; part 재보험금융수익 line 25825 != re-read L25817; part 보험금융비용 line 26101 != re-read L26093; part 보험금융비용 printed 233,593,504,258 != 205,606,231,528; part 보험금융비용 contribution 233593.504258 != sign*x 205606.231528; part 재보험금융비용 line 26124 != re-read L26116; part 재보험금융비용 printed 802,352,053 != 840,537,151; part 재보험금융비용 contribution 802.352053 != sign*x 840.537151
+  !! PROBLEM [2023.1Q i19] value plan -234395.856311 != re-read -206446.768679; part 보험금융수익 line 25802 != re-read L25794; part 재보험금융수익 line 25825 != re-read L25817; part 보험금융비용 line 26101 != re-read L26093; part 보험금융비용 printed 233,593,504,258 != 205,606,231,528; part 보험금융비용 contribution -233593.504258 != sign*x -205606.231528; part 재보험금융비용 line 26124 != re-read L26116; part 재보험금융비용 printed 802,352,053 != 840,537,151; part 재보험금융비용 contribution -802.352053 != sign*x -840.537151
+  !! PROBLEM [2023.1Q i20] value plan 23446.743035 != re-read 9871.874644; part 영업이익(손실) line 26400 != re-read L26392; part 영업이익(손실) printed 23,446,743,035 != 9,871,874,644; part 영업이익(손실) contribution 23446.743035 != sign*x 9871.874644
+  !! PROBLEM [2023.1Q i21] value plan -8533.969538 != re-read 373.65721199999996; part 영업외손익 line 26423 != re-read L26415; part 영업외손익 printed (8,533,969,538) != 373,657,212; part 영업외손익 contribution -8533.969538 != sign*x 373.65721199999996
+  !! PROBLEM [2023.1Q i22] value plan 14912.773497 != re-read 10245.531856; part 법인세차감전순이익 line 26492 != re-read L26484; part 법인세차감전순이익 printed 14,912,773,497 != 10,245,531,856; part 법인세차감전순이익 contribution 14912.773497 != sign*x 10245.531856
+  !! PROBLEM [2023.1Q i23] value plan 4301.267556 != re-read 2476.5594889999998; part 법인세비용(수익) line 26515 != re-read L26507; part 법인세비용(수익) printed 4,301,267,556 != 2,476,559,489; part 법인세비용(수익) contribution 4301.267556 != sign*x 2476.5594889999998
+  !! PROBLEM [2023.1Q i24] value plan 10611.505941 != re-read 7768.972366999999; part 당기순이익(손실) line 26584 != re-read L26576; part 당기순이익(손실) printed 10,611,505,941 != 7,768,972,367; part 당기순이익(손실) contribution 10611.505941 != sign*x 7768.972366999999
+  !! PROBLEM [2023.1Q i25] value plan 25272.694757 != re-read -217002.31146; part 기타포괄손익 line 26630 != re-read L26622; part 기타포괄손익 printed 25,272,694,757 != (217,002,311,460); part 기타포괄손익 contribution 25272.694757 != sign*x -217002.31146
+  !! PROBLEM [2023.1Q i26] value plan 328821.85025 != re-read -160603.295078; part 기타포괄손익-공정가치측정금융자산평가손익 line 26676 != re-read L26668; part 기타포괄손익-공정가치측정금융자산평가손익 printed 328,821,850,250 != (160,603,295,078); part 기타포괄손익-공정가치측정금융자산평가손익 contribution 328821.85025 != sign*x -160603.295078
+  !! PROBLEM [2023.1Q i27] value plan -306198.441686 != re-read -39883.505007; part 보험계약자산(부채)순금융손익 line 26745 != re-read L26737; part 보험계약자산(부채)순금융손익 printed (306,198,441,686) != (39,883,505,007); part 보험계약자산(부채)순금융손익 contribution -306198.441686 != sign*x -39883.505007
+  !! PROBLEM [2023.1Q i28] value plan 9302.23831 != re-read -15068.487896999999; part 현금흐름위험회피파생상품평가손익 line 26722 != re-read L26714; part 현금흐름위험회피파생상품평가손익 printed 9,302,238,310 != (15,068,487,897); part 현금흐름위험회피파생상품평가손익 contribution 9302.23831 != sign*x -15068.487896999999
+  !! PROBLEM [2023.1Q i30] value plan -6660.917782 != re-read -1396.902122; part 재보험계약자산(부채)순금융손익 line 26768 != re-read L26760; part 재보험계약자산(부채)순금융손익 printed (6,660,917,782) != (1,396,902,122); part 재보험계약자산(부채)순금융손익 contribution -6660.917782 != sign*x -1396.902122
+  !! PROBLEM [2023.1Q i31] value plan 35884.200698 != re-read -209233.339093; part 총포괄손익 line 26814 != re-read L26806; part 총포괄손익 printed 35,884,200,698 != (209,233,339,093); part 총포괄손익 contribution 35884.200698 != sign*x -209233.339093
+  !! PROBLEM [2023.1Q i32] value plan 7.965665 != re-read -50.121356; part 기타포괄손익 line 26630 != re-read L26622; part 기타포괄손익 printed 25,272,694,757 != (217,002,311,460); part 기타포괄손익 contribution 25272.694757 != sign*x -217002.31146; part 기타포괄손익-공정가치측정금융자산평가손익 line 26676 != re-read L26668; part 기타포괄손익-공정가치측정금융자산평가손익 printed 328,821,850,250 != (160,603,295,078); part 기타포괄손익-공정가치측정금융자산평가손익 contribution -328821.85025 != sign*x 160603.295078; part 보험계약자산(부채)순금융손익 line 26745 != re-read L26737; part 보험계약자산(부채)순금융손익 printed (306,198,441,686) != (39,883,505,007); part 보험계약자산(부채)순금융손익 contribution 306198.441686 != sign*x 39883.505007; part 현금흐름위험회피파생상품평가손익 line 26722 != re-read L26714; part 현금흐름위험회피파생상품평가손익 printed 9,302,238,310 != (15,068,487,897); part 현금흐름위험회피파생상품평가손익 contribution -9302.23831 != sign*x 15068.487896999999; part 재보험계약자산(부채)순금융손익 line 26768 != re-read L26760; part 재보험계약자산(부채)순금융손익 printed (6,660,917,782) != (1,396,902,122); part 재보험계약자산(부채)순금융손익 contribution 6660.917782 != sign*x 1396.902122
+  !! PROBLEM [2023.2Q i1] value plan 27404.89041 != re-read 26729.953569999998; part 보험손익 line 26852 != re-read L26844; part 보험손익 printed 27,404,890,410 != 26,729,953,570; part 보험손익 contribution 27404.89041 != sign*x 26729.953569999998
+  !! PROBLEM [2023.2Q i2] value plan 40776.446685 != re-read 39671.91714299999; part 보험수익 line 26898 != re-read L26890; part 보험수익 printed 316,615,477,377 != 347,851,517,959; part 보험수익 contribution 316615.477377 != sign*x 347851.51795899996; part 보험비용 line 26967 != re-read L26959; part 보험비용 printed 271,205,719,593 != 304,817,657,836; part 보험비용 contribution -271205.719593 != sign*|x| -304817.65783599997; part 재보험수익 line 26921 != re-read L26913; part 재보험수익 printed 22,476,837,250 != 23,838,787,469; part 재보험수익 contribution 22476.83725 != sign*x 23838.787469; part 재보험비용 line 26990 != re-read L26982; part 재보험비용 printed 27,110,148,349 != 27,200,730,449; part 재보험비용 contribution -27110.148349 != sign*|x| -27200.730449
+  !! PROBLEM [2023.2Q i3] value plan 45409.757784 != re-read 43033.86012299999; part 보험수익 line 26898 != re-read L26890; part 보험수익 printed 316,615,477,377 != 347,851,517,959; part 보험수익 contribution 316615.477377 != sign*x 347851.51795899996; part 보험비용 line 26967 != re-read L26959; part 보험비용 printed 271,205,719,593 != 304,817,657,836; part 보험비용 contribution -271205.719593 != sign*|x| -304817.65783599997
+  !! PROBLEM [2023.2Q i4] value plan 46789.0 != re-read 44994.0
+  !! PROBLEM [2023.2Q i8] value plan -4633.311099 != re-read -3361.94298; part 재보험수익 line 26921 != re-read L26913; part 재보험수익 printed 22,476,837,250 != 23,838,787,469; part 재보험수익 contribution 22476.83725 != sign*x 23838.787469; part 재보험비용 line 26990 != re-read L26982; part 재보험비용 printed 27,110,148,349 != 27,200,730,449; part 재보험비용 contribution -27110.148349 != sign*|x| -27200.730449
+  !! PROBLEM [2023.2Q i16] value plan 13371.556275 != re-read 12941.963572999999; part 기타사업비용 line 27013 != re-read L27005; part 기타사업비용 printed 13,371,556,275 != 12,941,963,573; part 기타사업비용 contribution 13371.556275 != sign*x 12941.963572999999
+  !! PROBLEM [2023.2Q i17] value plan 51170.86295 != re-read 32655.613464; part 투자손익 line 27036 != re-read L27028; part 투자손익 printed 51,170,862,950 != 32,655,613,464; part 투자손익 contribution 51170.86295 != sign*x 32655.613464
+  !! PROBLEM [2023.2Q i18] value plan 450057.809937 != re-read 422338.36441; part 투자손익 line 27036 != re-read L27028; part 투자손익 printed 51,170,862,950 != 32,655,613,464; part 투자손익 contribution 51170.86295 != sign*x 32655.613464; part 보험금융수익 line 27082 != re-read L27074; part 재보험금융수익 line 27105 != re-read L27097; part 보험금융비용 line 27381 != re-read L27373; part 보험금융비용 printed 397,262,264,587 != 388,045,180,290; part 보험금융비용 contribution 397262.264587 != sign*x 388045.18029; part 재보험금융비용 line 27404 != re-read L27396; part 재보험금융비용 printed 1,624,682,400 != 1,637,570,656; part 재보험금융비용 contribution 1624.6824 != sign*x 1637.5706559999999
+  !! PROBLEM [2023.2Q i19] value plan -398886.946987 != re-read -389682.750946; part 보험금융수익 line 27082 != re-read L27074; part 재보험금융수익 line 27105 != re-read L27097; part 보험금융비용 line 27381 != re-read L27373; part 보험금융비용 printed 397,262,264,587 != 388,045,180,290; part 보험금융비용 contribution -397262.264587 != sign*x -388045.18029; part 재보험금융비용 line 27404 != re-read L27396; part 재보험금융비용 printed 1,624,682,400 != 1,637,570,656; part 재보험금융비용 contribution -1624.6824 != sign*x -1637.5706559999999
+  !! PROBLEM [2023.2Q i20] value plan 78575.75336 != re-read 59385.567034; part 영업이익(손실) line 27680 != re-read L27672; part 영업이익(손실) printed 78,575,753,360 != 59,385,567,034; part 영업이익(손실) contribution 78575.75336 != sign*x 59385.567034
+  !! PROBLEM [2023.2Q i21] value plan -16024.829261 != re-read -3992.745848; part 영업외손익 line 27703 != re-read L27695; part 영업외손익 printed (16,024,829,261) != (3,992,745,848); part 영업외손익 contribution -16024.829261 != sign*x -3992.745848
+  !! PROBLEM [2023.2Q i22] value plan 62550.924099 != re-read 55392.821186; part 법인세차감전순이익 line 27772 != re-read L27764; part 법인세차감전순이익 printed 62,550,924,099 != 55,392,821,186; part 법인세차감전순이익 contribution 62550.924099 != sign*x 55392.821186
+  !! PROBLEM [2023.2Q i23] value plan 15286.0134 != re-read 12917.2658; part 법인세비용(수익) line 27795 != re-read L27787; part 법인세비용(수익) printed 15,286,013,400 != 12,917,265,800; part 법인세비용(수익) contribution 15286.0134 != sign*x 12917.2658
+  !! PROBLEM [2023.2Q i24] value plan 47264.910699 != re-read 42475.555386; part 당기순이익(손실) line 27864 != re-read L27856; part 당기순이익(손실) printed 47,264,910,699 != 42,475,555,386; part 당기순이익(손실) contribution 47264.910699 != sign*x 42475.555386
+  !! PROBLEM [2023.2Q i25] value plan 22339.669884 != re-read -399586.213789; part 기타포괄손익 line 27910 != re-read L27902; part 기타포괄손익 printed 22,339,669,884 != (399,586,213,789); part 기타포괄손익 contribution 22339.669884 != sign*x -399586.213789
+  !! PROBLEM [2023.2Q i26] value plan 109588.147278 != re-read -40977.666139; part 기타포괄손익-공정가치측정금융자산평가손익 line 27956 != re-read L27948; part 기타포괄손익-공정가치측정금융자산평가손익 printed 109,588,147,278 != (40,977,666,139); part 기타포괄손익-공정가치측정금융자산평가손익 contribution 109588.147278 != sign*x -40977.666139
+  !! PROBLEM [2023.2Q i27] value plan -80088.403465 != re-read -343006.068594; part 보험계약자산(부채)순금융손익 line 28025 != re-read L28017; part 보험계약자산(부채)순금융손익 printed (80,088,403,465) != (343,006,068,594); part 보험계약자산(부채)순금융손익 contribution -80088.403465 != sign*x -343006.068594
+  !! PROBLEM [2023.2Q i28] value plan -5441.478255 != re-read -7996.710053999999; part 현금흐름위험회피파생상품평가손익 line 28002 != re-read L27994; part 현금흐름위험회피파생상품평가손익 printed (5,441,478,255) != (7,996,710,054); part 현금흐름위험회피파생상품평가손익 contribution -5441.478255 != sign*x -7996.710053999999
+  !! PROBLEM [2023.2Q i30] value plan -1831.255691 != re-read -7532.721898999999; part 재보험계약자산(부채)순금융손익 line 28048 != re-read L28040; part 재보험계약자산(부채)순금융손익 printed (1,831,255,691) != (7,532,721,899); part 재보험계약자산(부채)순금융손익 contribution -1831.255691 != sign*x -7532.721898999999
+  !! PROBLEM [2023.2Q i31] value plan 69604.580583 != re-read -357110.658403; part 총포괄손익 line 28094 != re-read L28086; part 총포괄손익 printed 69,604,580,583 != (357,110,658,403); part 총포괄손익 contribution 69604.580583 != sign*x -357110.658403
+  !! PROBLEM [2023.2Q i32] value plan 112.660017 != re-read -73.04710299999999; part 기타포괄손익 line 27910 != re-read L27902; part 기타포괄손익 printed 22,339,669,884 != (399,586,213,789); part 기타포괄손익 contribution 22339.669884 != sign*x -399586.213789; part 기타포괄손익-공정가치측정금융자산평가손익 line 27956 != re-read L27948; part 기타포괄손익-공정가치측정금융자산평가손익 printed 109,588,147,278 != (40,977,666,139); part 기타포괄손익-공정가치측정금융자산평가손익 contribution -109588.147278 != sign*x 40977.666139; part 보험계약자산(부채)순금융손익 line 28025 != re-read L28017; part 보험계약자산(부채)순금융손익 printed (80,088,403,465) != (343,006,068,594); part 보험계약자산(부채)순금융손익 contribution 80088.403465 != sign*x 343006.068594; part 현금흐름위험회피파생상품평가손익 line 28002 != re-read L27994; part 현금흐름위험회피파생상품평가손익 printed (5,441,478,255) != (7,996,710,054); part 현금흐름위험회피파생상품평가손익 contribution 5441.478255 != sign*x 7996.710053999999; part 재보험계약자산(부채)순금융손익 line 28048 != re-read L28040; part 재보험계약자산(부채)순금융손익 printed (1,831,255,691) != (7,532,721,899); part 재보험계약자산(부채)순금융손익 contribution 1831.255691 != sign*x 7532.721898999999
+  !! PROBLEM [2023.3Q i1] value plan 42363.52959 != re-read 27317.039189; part 보험손익 line 26270 != re-read L26262; part 보험손익 printed 42,363,529,590 != 27,317,039,189; part 보험손익 contribution 42363.52959 != sign*x 27317.039189
+  !! PROBLEM [2023.3Q i2] value plan 59257.282376 != re-read 44199.91201000001; part 보험수익 line 26316 != re-read L26308; part 보험수익 printed 487,018,810,690 != 535,589,422,411; part 보험수익 contribution 487018.81069 != sign*x 535589.422411; part 보험비용 line 26385 != re-read L26377; part 보험비용 printed 421,079,819,604 != 486,239,432,547; part 보험비용 contribution -421079.819604 != sign*|x| -486239.432547; part 재보험수익 line 26339 != re-read L26331; part 재보험수익 printed 34,764,447,247 != 35,036,536,778; part 재보험수익 contribution 34764.447247 != sign*x 35036.536778; part 재보험비용 line 26408 != re-read L26400; part 재보험비용 printed 41,446,155,957 != 40,186,614,632; part 재보험비용 contribution -41446.155957 != sign*|x| -40186.614632
+  !! PROBLEM [2023.3Q i3] value plan 65938.991086 != re-read 49349.989864; part 보험수익 line 26316 != re-read L26308; part 보험수익 printed 487,018,810,690 != 535,589,422,411; part 보험수익 contribution 487018.81069 != sign*x 535589.422411; part 보험비용 line 26385 != re-read L26377; part 보험비용 printed 421,079,819,604 != 486,239,432,547; part 보험비용 contribution -421079.819604 != sign*|x| -486239.432547
+  !! PROBLEM [2023.3Q i4] value plan 69639.0 != re-read 66762.0
+  !! PROBLEM [2023.3Q i8] value plan -6681.70871 != re-read -5150.077853999996; part 재보험수익 line 26339 != re-read L26331; part 재보험수익 printed 34,764,447,247 != 35,036,536,778; part 재보험수익 contribution 34764.447247 != sign*x 35036.536778; part 재보험비용 line 26408 != re-read L26400; part 재보험비용 printed 41,446,155,957 != 40,186,614,632; part 재보험비용 contribution -41446.155957 != sign*|x| -40186.614632
+  !! PROBLEM [2023.3Q i16] value plan 16893.752786 != re-read 16882.872821; part 기타사업비용 line 26431 != re-read L26423; part 기타사업비용 printed 16,893,752,786 != 16,882,872,821; part 기타사업비용 contribution 16893.752786 != sign*x 16882.872821
+  !! PROBLEM [2023.3Q i17] value plan 33777.476556 != re-read 69166.34941499999; part 투자손익 line 26454 != re-read L26446; part 투자손익 printed 33,777,476,556 != 69,166,349,415; part 투자손익 contribution 33777.476556 != sign*x 69166.34941499999
+  !! PROBLEM [2023.3Q i18] value plan 536094.60946 != re-read 559444.899185; part 투자손익 line 26454 != re-read L26446; part 투자손익 printed 33,777,476,556 != 69,166,349,415; part 투자손익 contribution 33777.476556 != sign*x 69166.34941499999; part 보험금융수익 line 26500 != re-read L26492; part 재보험금융수익 line 26523 != re-read L26515; part 보험금융비용 line 26799 != re-read L26791; part 보험금융비용 printed 499,879,333,663 != 487,775,104,214; part 보험금융비용 contribution 499879.333663 != sign*x 487775.104214; part 재보험금융비용 line 26822 != re-read L26814; part 재보험금융비용 printed 2,437,799,241 != 2,503,445,556; part 재보험금융비용 contribution 2437.799241 != sign*x 2503.4455559999997
+  !! PROBLEM [2023.3Q i19] value plan -502317.132904 != re-read -490278.54977; part 보험금융수익 line 26500 != re-read L26492; part 재보험금융수익 line 26523 != re-read L26515; part 보험금융비용 line 26799 != re-read L26791; part 보험금융비용 printed 499,879,333,663 != 487,775,104,214; part 보험금융비용 contribution -499879.333663 != sign*x -487775.104214; part 재보험금융비용 line 26822 != re-read L26814; part 재보험금융비용 printed 2,437,799,241 != 2,503,445,556; part 재보험금융비용 contribution -2437.799241 != sign*x -2503.4455559999997
+  !! PROBLEM [2023.3Q i20] value plan 76141.006146 != re-read 96483.38860399999; part 영업이익(손실) line 27098 != re-read L27090; part 영업이익(손실) printed 76,141,006,146 != 96,483,388,604; part 영업이익(손실) contribution 76141.006146 != sign*x 96483.38860399999
+  !! PROBLEM [2023.3Q i21] value plan -24336.161594 != re-read -8313.522361; part 영업외손익 line 27121 != re-read L27113; part 영업외손익 printed (24,336,161,594) != (8,313,522,361); part 영업외손익 contribution -24336.161594 != sign*x -8313.522361
+  !! PROBLEM [2023.3Q i22] value plan 51804.844552 != re-read 88169.866243; part 법인세차감전순이익 line 27190 != re-read L27182; part 법인세차감전순이익 printed 51,804,844,552 != 88,169,866,243; part 법인세차감전순이익 contribution 51804.844552 != sign*x 88169.866243
+  !! PROBLEM [2023.3Q i23] value plan 12803.669025 != re-read 20489.078458; part 법인세비용(수익) line 27213 != re-read L27205; part 법인세비용(수익) printed 12,803,669,025 != 20,489,078,458; part 법인세비용(수익) contribution 12803.669025 != sign*x 20489.078458
+  !! PROBLEM [2023.3Q i24] value plan 39001.175527 != re-read 67680.787785; part 당기순이익(손실) line 27282 != re-read L27274; part 당기순이익(손실) printed 39,001,175,527 != 67,680,787,785; part 당기순이익(손실) contribution 39001.175527 != sign*x 67680.787785
+  !! PROBLEM [2023.3Q i25] value plan 103104.307885 != re-read -490073.854682; part 기타포괄손익 line 27328 != re-read L27320; part 기타포괄손익 printed 103,104,307,885 != (490,073,854,682); part 기타포괄손익 contribution 103104.307885 != sign*x -490073.854682
+  !! PROBLEM [2023.3Q i26] value plan -70737.941856 != re-read 230319.644989; part 기타포괄손익-공정가치측정금융자산평가손익 line 27374 != re-read L27366; part 기타포괄손익-공정가치측정금융자산평가손익 printed (70,737,941,856) != 230,319,644,989; part 기타포괄손익-공정가치측정금융자산평가손익 contribution -70737.941856 != sign*x 230319.644989
+  !! PROBLEM [2023.3Q i27] value plan 190484.951946 != re-read -718114.101947; part 보험계약자산(부채)순금융손익 line 27443 != re-read L27435; part 보험계약자산(부채)순금융손익 printed 190,484,951,946 != (718,114,101,947); part 보험계약자산(부채)순금융손익 contribution 190484.951946 != sign*x -718114.101947
+  !! PROBLEM [2023.3Q i28] value plan -18420.128391 != re-read 12877.779741; part 현금흐름위험회피파생상품평가손익 line 27420 != re-read L27412; part 현금흐름위험회피파생상품평가손익 printed (18,420,128,391) != 12,877,779,741; part 현금흐름위험회피파생상품평가손익 contribution -18420.128391 != sign*x 12877.779741
+  !! PROBLEM [2023.3Q i30] value plan 1723.519067 != re-read -15067.764594999999; part 재보험계약자산(부채)순금융손익 line 27466 != re-read L27458; part 재보험계약자산(부채)순금융손익 printed 1,723,519,067 != (15,067,764,595); part 재보험계약자산(부채)순금융손익 contribution 1723.519067 != sign*x -15067.764594999999
+  !! PROBLEM [2023.3Q i31] value plan 142105.483412 != re-read -422393.06689699995; part 총포괄손익 line 27512 != re-read L27504; part 총포괄손익 printed 142,105,483,412 != (422,393,066,897); part 총포괄손익 contribution 142105.483412 != sign*x -422393.06689699995
+  !! PROBLEM [2023.3Q i32] value plan 53.907119 != re-read -89.41287; part 기타포괄손익 line 27328 != re-read L27320; part 기타포괄손익 printed 103,104,307,885 != (490,073,854,682); part 기타포괄손익 contribution 103104.307885 != sign*x -490073.854682; part 기타포괄손익-공정가치측정금융자산평가손익 line 27374 != re-read L27366; part 기타포괄손익-공정가치측정금융자산평가손익 printed (70,737,941,856) != 230,319,644,989; part 기타포괄손익-공정가치측정금융자산평가손익 contribution 70737.941856 != sign*x -230319.644989; part 보험계약자산(부채)순금융손익 line 27443 != re-read L27435; part 보험계약자산(부채)순금융손익 printed 190,484,951,946 != (718,114,101,947); part 보험계약자산(부채)순금융손익 contribution -190484.951946 != sign*x 718114.101947; part 현금흐름위험회피파생상품평가손익 line 27420 != re-read L27412; part 현금흐름위험회피파생상품평가손익 printed (18,420,128,391) != 12,877,779,741; part 현금흐름위험회피파생상품평가손익 contribution 18420.128391 != sign*x -12877.779741; part 재보험계약자산(부채)순금융손익 line 27466 != re-read L27458; part 재보험계약자산(부채)순금융손익 printed 1,723,519,067 != (15,067,764,595); part 재보험계약자산(부채)순금융손익 contribution -1723.519067 != sign*x 15067.764594999999
+  !! PROBLEM [2023.4Q i2] value plan 64874.466059 != re-read 38841.459693999976; part 보험수익 line 35261 != re-read L35257; part 보험수익 printed 651,626,998,171 != 704,781,548,305; part 보험수익 contribution 651626.998171 != sign*x 704781.548305; part 보험비용 line 35318 != re-read L35314; part 보험비용 printed 578,559,785,259 != 660,279,463,059; part 보험비용 contribution -578559.785259 != sign*|x| -660279.463059; operand item 8 -8192.746853: live -8192.746853 / re-read -5660.625551999998
+  !! PROBLEM [2023.4Q i3] value plan 73067.212912 != re-read 44502.08524599997; part 보험수익 line 35261 != re-read L35257; part 보험수익 printed 651,626,998,171 != 704,781,548,305; part 보험수익 contribution 651626.998171 != sign*x 704781.548305; part 보험비용 line 35318 != re-read L35314; part 보험비용 printed 578,559,785,259 != 660,279,463,059; part 보험비용 contribution -578559.785259 != sign*|x| -660279.463059
+  !! PROBLEM [2023.4Q i16] value plan 26061.670663 != re-read 28864.927062; part 기타사업비용 line 35356 != re-read L35352; part 기타사업비용 printed 26,061,670,663 != 28,864,927,062; part 기타사업비용 contribution 26061.670663 != sign*x 28864.927062
+  !! PROBLEM [2023.4Q i17] value plan 107658.657107 != re-read 123468.811183; part 투자손익 line 35375 != re-read L35371; part 투자손익 printed 107,658,657,107 != 123,468,811,183; part 투자손익 contribution 107658.657107 != sign*x 123468.811183
+  !! PROBLEM [2023.4Q i19] value plan -718341.136169 != re-read -623426.547516; part 보험금융수익 line 35413 != re-read L35409; part 재보험금융수익 line 35432 != re-read L35428; part 보험금융비용 line 35679 != re-read L35675; part 보험금융비용 printed 715,088,953,539 != 620,027,034,813; part 보험금융비용 contribution -715088.953539 != sign*x -620027.034813; part 재보험금융비용 line 35698 != re-read L35694; part 재보험금융비용 printed 3,252,182,630 != 3,399,512,703; part 재보험금융비용 contribution -3252.18263 != sign*x -3399.512703
+  !! PROBLEM [2023.4Q i20] value plan 146471.452503 != re-read 133445.343815; part 영업이익(손실) line 35945 != re-read L35941; part 영업이익(손실) printed 146,471,452,503 != 133,445,343,815; part 영업이익(손실) contribution 146471.452503 != sign*x 133445.343815
+  !! PROBLEM [2023.4Q i22] value plan 117570.521606 != re-read 120730.88745699999; part 법인세차감전순이익 line 36021 != re-read L36017; part 법인세차감전순이익 printed 117,570,521,606 != 120,730,887,457; part 법인세차감전순이익 contribution 117570.521606 != sign*x 120730.88745699999
+  !! PROBLEM [2023.4Q i23] value plan 26376.215168 != re-read 15949.222973999998; part 법인세비용(수익) line 36040 != re-read L36036; part 법인세비용(수익) printed 26,376,215,168 != 15,949,222,974; part 법인세비용(수익) contribution 26376.215168 != sign*x 15949.222973999998
+  !! PROBLEM [2023.4Q i24] value plan 91194.306438 != re-read 104781.664483; part 당기순이익(손실) line 36097 != re-read L36093; part 당기순이익(손실) printed 91,194,306,438 != 104,781,664,483; part 당기순이익(손실) contribution 91194.306438 != sign*x 104781.664483
+  !! PROBLEM [2023.4Q i25] value plan 7198.361074 != re-read -507359.119783; part 기타포괄손익 line 36135 != re-read L36131; part 기타포괄손익 printed 7,198,361,074 != (507,359,119,783); part 기타포괄손익 contribution 7198.361074 != sign*x -507359.119783
+  !! PROBLEM [2023.4Q i27] value plan -591936.534943 != re-read -755016.9908029999; part 보험계약자산(부채)순금융손익 line 36211 != re-read L36207; part 보험계약자산(부채)순금융손익 printed (591,936,534,943) != (755,016,990,803); part 보험계약자산(부채)순금융손익 contribution -591936.534943 != sign*x -755016.9908029999
+  planned PL cells 74, fully matching the independent re-read: 0
+
+== B2. completeness: items re-read from the filing but NOT in the plan (live master vs re-read)
+  2023.4Q i 1: live    38,812.795396 re-read     9,976.532632 diff -28836.262764 -> DIFFERENT
+  !! PROBLEM [2023.4Q i1] not in the plan but live 38812.795396 != re-read 9976.532632
+  2023.4Q i 4: live    92,971.000000 re-read    88,926.000000 diff -4045.000000 -> DIFFERENT
+  !! PROBLEM [2023.4Q i4] not in the plan but live 92971.0 != re-read 88926.0
+  2023.4Q i 8: live    -8,192.746853 re-read    -5,660.625552 diff +2532.121301 -> DIFFERENT
+  !! PROBLEM [2023.4Q i8] not in the plan but live -8192.746853 != re-read -5660.625551999998
+  2023.4Q i18: live   825,999.793276 re-read   746,895.358699 diff -79104.434577 -> DIFFERENT
+  !! PROBLEM [2023.4Q i18] not in the plan but live 825999.793276 != re-read 746895.358699
+  2023.4Q i21: live   -28,900.930897 re-read   -12,714.456358 diff +16186.474539 -> DIFFERENT
+  !! PROBLEM [2023.4Q i21] not in the plan but live -28900.930897 != re-read -12714.456358
+  2023.4Q i26: live   585,828.597415 re-read   237,228.331423 diff -348600.265992 -> DIFFERENT
+  !! PROBLEM [2023.4Q i26] not in the plan but live 585828.597415 != re-read 237228.331423
+  2023.4Q i28: live    28,333.545174 re-read    25,793.345537 diff -2540.199637 -> DIFFERENT
+  !! PROBLEM [2023.4Q i28] not in the plan but live 28333.545174 != re-read 25793.345536999997
+  2023.4Q i30: live   -14,980.152342 re-read   -15,615.663968 diff -635.511626 -> DIFFERENT
+  !! PROBLEM [2023.4Q i30] not in the plan but live -14980.152342 != re-read -15615.663967999999
+  2023.4Q i31: live    98,392.667512 re-read  -402,577.455300 diff -500970.122812 -> DIFFERENT
+  !! PROBLEM [2023.4Q i31] not in the plan but live 98392.667512 != re-read -402577.4553
+  2023.4Q i32: live       -47.094230 re-read       251.858028 diff +298.952258 -> DIFFERENT
+  !! PROBLEM [2023.4Q i32] not in the plan but live -47.09423 != re-read 251.858028
+
+== B3. the issuer's own restatement table (separate FS notes): 변경후 == planned new (rounded to 백만원), 변경전 vs the old vintage
+  2023.1Q: table L30335-30636
+     i 1 I. 보험손익                  조정전     17,007 (L30375) 조정후     11,178 (L30383) | re-read     15,591.954 | |조정후 - re-read| = 4413.954 -> FAIL
+  !! PROBLEM [2023.1Q i1] issuer 조정후 11,178 vs re-read 15591.954456
+     i17 II. 투자손익                 조정전      6,313 (L30406) 조정후     12,269 (L30414) | re-read     -5,720.080 | |조정후 - re-read| = 17989.080 -> FAIL
+  !! PROBLEM [2023.1Q i17] issuer 조정후 12,269 vs re-read -5720.079812
+     i20 III. 영업이익                조정전     23,320 (L30437) 조정후     23,447 (L30445) | re-read      9,871.875 | |조정후 - re-read| = 13575.125 -> FAIL
+  !! PROBLEM [2023.1Q i20] issuer 조정후 23,447 vs re-read 9871.874644
+     i21 IV. 영업외손익                조정전    (8,834) (L30467) 조정후    (8,534) (L30475) | re-read        373.657 | |조정후 - re-read| = 8907.657 -> FAIL
+  !! PROBLEM [2023.1Q i21] issuer 조정후 (8,534) vs re-read 373.65721199999996
+     i22 V. 법인세비용차감전순이익           조정전     14,486 (L30498) 조정후     14,913 (L30506) | re-read     10,245.532 | |조정후 - re-read| = 4667.468 -> FAIL
+  !! PROBLEM [2023.1Q i22] issuer 조정후 14,913 vs re-read 10245.531856
+     i23 VI. 법인세비용                조정전      4,423 (L30529) 조정후      4,301 (L30537) | re-read      2,476.559 | |조정후 - re-read| = 1824.441 -> FAIL
+  !! PROBLEM [2023.1Q i23] issuer 조정후 4,301 vs re-read 2476.5594889999998
+     i24 VII. 분기순이익               조정전     10,063 (L30560) 조정후     10,612 (L30568) | re-read      7,768.972 | |조정후 - re-read| = 2843.028 -> FAIL
+  !! PROBLEM [2023.1Q i24] issuer 조정후 10,612 vs re-read 7768.972366999999
+     i25 VIII. 기타포괄손익             조정전      9,550 (L30591) 조정후     25,273 (L30599) | re-read   -217,002.311 | |조정후 - re-read| = 242275.311 -> FAIL
+  !! PROBLEM [2023.1Q i25] issuer 조정후 25,273 vs re-read -217002.31146
+     i31 IX. 총포괄손익                조정전     19,613 (L30622) 조정후     35,885 (L30630) | re-read   -209,233.339 | |조정후 - re-read| = 245118.339 -> FAIL
+  !! PROBLEM [2023.1Q i31] issuer 조정후 35,885 vs re-read -209233.339093
+  2023.2Q: table L31963-32138
+     i 1 I. 보험손익                  조정전     37,860 (L31999) 조정후     27,405 (L32000) | re-read     26,729.954 | |조정후 - re-read| = 675.046 -> FAIL
+  !! PROBLEM [2023.2Q i1] issuer 조정후 27,405 vs re-read 26729.953569999998
+     i17 II. 투자손익                 조정전     38,465 (L32016) 조정후     51,171 (L32017) | re-read     32,655.613 | |조정후 - re-read| = 18515.387 -> FAIL
+  !! PROBLEM [2023.2Q i17] issuer 조정후 51,171 vs re-read 32655.613464
+     i20 III. 영업이익                조정전     76,325 (L32033) 조정후     78,576 (L32034) | re-read     59,385.567 | |조정후 - re-read| = 19190.433 -> FAIL
+  !! PROBLEM [2023.2Q i20] issuer 조정후 78,576 vs re-read 59385.567034
+     i21 IV. 영업외손익                조정전   (16,503) (L32049) 조정후   (16,025) (L32050) | re-read     -3,992.746 | |조정후 - re-read| = 12032.254 -> FAIL
+  !! PROBLEM [2023.2Q i21] issuer 조정후 (16,025) vs re-read -3992.745848
+     i22 V. 법인세비용차감전순이익           조정전     59,822 (L32066) 조정후     62,551 (L32067) | re-read     55,392.821 | |조정후 - re-read| = 7158.179 -> FAIL
+  !! PROBLEM [2023.2Q i22] issuer 조정후 62,551 vs re-read 55392.821186
+     i23 VI. 법인세비용                조정전     14,875 (L32083) 조정후     15,286 (L32084) | re-read     12,917.266 | |조정후 - re-read| = 2368.734 -> FAIL
+  !! PROBLEM [2023.2Q i23] issuer 조정후 15,286 vs re-read 12917.2658
+     i24 VII. 반기순이익               조정전     44,947 (L32100) 조정후     47,265 (L32101) | re-read     42,475.555 | |조정후 - re-read| = 4789.445 -> FAIL
+  !! PROBLEM [2023.2Q i24] issuer 조정후 47,265 vs re-read 42475.555386
+     i25 VIII. 기타포괄손익             조정전      5,339 (L32117) 조정후     22,340 (L32118) | re-read   -399,586.214 | |조정후 - re-read| = 421926.214 -> FAIL
+  !! PROBLEM [2023.2Q i25] issuer 조정후 22,340 vs re-read -399586.213789
+     i31 IX. 총포괄손익                조정전     50,286 (L32134) 조정후     69,605 (L32135) | re-read   -357,110.658 | |조정후 - re-read| = 426715.658 -> FAIL
+  !! PROBLEM [2023.2Q i31] issuer 조정후 69,605 vs re-read -357110.658403
+  2023.3Q: table L31236-31340
+     i 1 I. 보험손익                  조정전     52,509 (L31264) 조정후     42,364 (L31265) | re-read     27,317.039 | |조정후 - re-read| = 15046.961 -> FAIL
+  !! PROBLEM [2023.3Q i1] issuer 조정후 42,364 vs re-read 27317.039189
+     i17 II. 투자손익                 조정전     21,584 (L31273) 조정후     33,777 (L31274) | re-read     69,166.349 | |조정후 - re-read| = 35389.349 -> FAIL
+  !! PROBLEM [2023.3Q i17] issuer 조정후 33,777 vs re-read 69166.34941499999
+     i20 III. 영업이익                조정전     74,093 (L31282) 조정후     76,141 (L31283) | re-read     96,483.389 | |조정후 - re-read| = 20342.389 -> FAIL
+  !! PROBLEM [2023.3Q i20] issuer 조정후 76,141 vs re-read 96483.38860399999
+     i21 IV. 영업외손익                조정전   (23,910) (L31291) 조정후   (24,336) (L31292) | re-read     -8,313.522 | |조정후 - re-read| = 16022.478 -> FAIL
+  !! PROBLEM [2023.3Q i21] issuer 조정후 (24,336) vs re-read -8313.522361
+     i22 V. 법인세비용차감전순이익           조정전     50,183 (L31300) 조정후     51,805 (L31301) | re-read     88,169.866 | |조정후 - re-read| = 36364.866 -> FAIL
+  !! PROBLEM [2023.3Q i22] issuer 조정후 51,805 vs re-read 88169.866243
+     i23 VI. 법인세비용                조정전     12,649 (L31309) 조정후     12,804 (L31310) | re-read     20,489.078 | |조정후 - re-read| = 7685.078 -> FAIL
+  !! PROBLEM [2023.3Q i23] issuer 조정후 12,804 vs re-read 20489.078458
+     i24 VII. 분기순이익               조정전     37,534 (L31318) 조정후     39,001 (L31319) | re-read     67,680.788 | |조정후 - re-read| = 28679.788 -> FAIL
+  !! PROBLEM [2023.3Q i24] issuer 조정후 39,001 vs re-read 67680.787785
+     i25 VIII. 기타포괄손익             조정전     42,558 (L31327) 조정후    103,104 (L31328) | re-read   -490,073.855 | |조정후 - re-read| = 593177.855 -> FAIL
+  !! PROBLEM [2023.3Q i25] issuer 조정후 103,104 vs re-read -490073.854682
+     i31 IX. 총포괄손익                조정전     80,092 (L31336) 조정후    142,105 (L31337) | re-read   -422,393.067 | |조정후 - re-read| = 564498.067 -> FAIL
+  !! PROBLEM [2023.3Q i31] issuer 조정후 142,105 vs re-read -422393.06689699995
+  2023.4Q: table L39253-39326
+     i 1 I. 보험손익                  조정전     38,812 (L39274) 조정후     38,812 (L39275) | re-read      9,976.533 | |조정후 - re-read| = 28835.467 -> FAIL
+  !! PROBLEM [2023.4Q i1] issuer 조정후 38,812 vs re-read 9976.532632
+     i17 II. 투자손익                 조정전     93,668 (L39280) 조정후    107,659 (L39281) | re-read    123,468.811 | |조정후 - re-read| = 15809.811 -> FAIL
+  !! PROBLEM [2023.4Q i17] issuer 조정후 107,659 vs re-read 123468.811183
+     i20 III. 영업손익                조정전    132,480 (L39286) 조정후    146,471 (L39287) | re-read    133,445.344 | |조정후 - re-read| = 13025.656 -> FAIL
+  !! PROBLEM [2023.4Q i20] issuer 조정후 146,471 vs re-read 133445.343815
+     i21 IV. 영업외손익                조정전   (28,901) (L39292) 조정후   (28,901) (L39293) | re-read    -12,714.456 | |조정후 - re-read| = 16186.544 -> FAIL
+  !! PROBLEM [2023.4Q i21] issuer 조정후 (28,901) vs re-read -12714.456358
+     i22 V. 법인세비용차감전순손익           조정전    103,579 (L39298) 조정후    117,570 (L39299) | re-read    120,730.887 | |조정후 - re-read| = 3160.887 -> FAIL
+  !! PROBLEM [2023.4Q i22] issuer 조정후 117,570 vs re-read 120730.88745699999
+     i23 VI. 법인세비용                조정전     23,144 (L39304) 조정후     26,376 (L39305) | re-read     15,949.223 | |조정후 - re-read| = 10426.777 -> FAIL
+  !! PROBLEM [2023.4Q i23] issuer 조정후 26,376 vs re-read 15949.222973999998
+     i24 VII. 당기순손익               조정전     80,435 (L39310) 조정후     91,194 (L39311) | re-read    104,781.664 | |조정후 - re-read| = 13587.664 -> FAIL
+  !! PROBLEM [2023.4Q i24] issuer 조정후 91,194 vs re-read 104781.664483
+     i25 VIII. 기타포괄손익             조정전     17,957 (L39316) 조정후      7,198 (L39317) | re-read   -507,359.120 | |조정후 - re-read| = 514557.120 -> FAIL
+  !! PROBLEM [2023.4Q i25] issuer 조정후 7,198 vs re-read -507359.119783
+     i31 IX. 총포괄손익                조정전     98,392 (L39322) 조정후     98,392 (L39323) | re-read   -402,577.455 | |조정후 - re-read| = 500969.455 -> FAIL
+  !! PROBLEM [2023.4Q i31] issuer 조정후 98,392 vs re-read -402577.4553
+
+== B4. every planned CSM cell: stored value (억원, 1 decimal), exact 2-decimal value, label, line, printed
+  planned CSM cells 20, fully matching the independent re-read: 20
+  2023.4Q CSM i2: not in the plan, live 3475.9 vs re-read 3475.9 -> equal
+  2023.4Q CSM i3: not in the plan, live 280.2 vs re-read 280.2 -> equal
+  2023.4Q CSM i5: not in the plan, live -929.7 vs re-read -929.7 -> equal
+  2023.4Q CSM i6: not in the plan, live 8695.4 vs re-read 8695.4 -> equal
+
+  CSM roll-forward closure (printed, 백만원) and stored (억원 1 decimal):
+    2023.1Q: printed [758530.0, 63426.0, 6244.0, -15943.0, -22411.0, 789846.0] closure residual +0.0 백만원 | stored [7585.3, 634.3, 62.4, -159.4, -224.1, 7898.5] residual +0.00 억원
+    2023.2Q: printed [758530.0, 171309.0, 13052.0, -29501.0, -46789.0, 866601.0] closure residual +0.0 백만원 | stored [7585.3, 1713.1, 130.5, -295.0, -467.9, 8666.0] residual +0.00 억원
+    2023.3Q: printed [758530.0, 285357.0, 20828.0, -151200.0, -69639.0, 843876.0] closure residual +0.0 백만원 | stored [7585.3, 2853.6, 208.3, -1512.0, -696.4, 8438.8] residual +0.00 억원
+    2023.4Q: printed [758530.0, 347587.0, 28025.0, -171628.0, -92971.0, 869543.0] closure residual +0.0 백만원 | stored [7585.3, 3475.9, 280.2, -1716.3, -929.7, 8695.4] residual +0.00 억원
+    FY2023 opening per quarter: {'2023.1Q': 758530.0, '2023.2Q': 758530.0, '2023.3Q': 758530.0, '2023.4Q': 758530.0} -> ONE vintage
+    FY boundary: 2023.4Q closing 869,543 (L50735) == FY2024 Q1 opening 869,543 (L37098) -> EQUAL
+
+== C. statement identities from freshly read printed cells (백만원)
+  2023.1Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: -0.000000 OK
+  2023.1Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.1Q 세전이익 = 영업이익+영업외손익: +0.000000 OK
+  2023.1Q 당기순이익 = 세전-법인세: -0.000000 OK
+  2023.1Q 총포괄손익 = 당기순이익+기타포괄손익: +0.000000 OK
+  2023.1Q 기타포괄손익 = 5개 구성요소 합: +0.000000 OK
+  2023.1Q bridge item1 = item2 - item16 (+item15=0): residual +0.000000
+  2023.1Q 25 = 26+27+28+30+32: -0.000000
+  2023.2Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: +0.000000 OK
+  2023.2Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.2Q 세전이익 = 영업이익+영업외손익: +0.000000 OK
+  2023.2Q 당기순이익 = 세전-법인세: +0.000000 OK
+  2023.2Q 총포괄손익 = 당기순이익+기타포괄손익: +0.000000 OK
+  2023.2Q 기타포괄손익 = 5개 구성요소 합: +0.000000 OK
+  2023.2Q bridge item1 = item2 - item16 (+item15=0): residual -0.000000
+  2023.2Q 25 = 26+27+28+30+32: +0.000000
+  2023.3Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: +0.000000 OK
+  2023.3Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.3Q 세전이익 = 영업이익+영업외손익: +0.000000 OK
+  2023.3Q 당기순이익 = 세전-법인세: +0.000000 OK
+  2023.3Q 총포괄손익 = 당기순이익+기타포괄손익: +0.000000 OK
+  2023.3Q 기타포괄손익 = 5개 구성요소 합: +0.000000 OK
+  2023.3Q bridge item1 = item2 - item16 (+item15=0): residual +0.000000
+  2023.3Q 25 = 26+27+28+30+32: +0.000000
+  2023.4Q 보험손익 = 보험수익+재보험수익-보험비용-재보험비용-기타사업비용: +0.000000 OK
+  2023.4Q 영업이익 = 보험손익+투자손익: +0.000000 OK
+  2023.4Q 세전이익 = 영업이익+영업외손익: -0.000000 OK
+  2023.4Q 당기순이익 = 세전-법인세: +0.000000 OK
+  2023.4Q 총포괄손익 = 당기순이익+기타포괄손익: +0.000000 OK
+  2023.4Q 기타포괄손익 = 5개 구성요소 합: -0.000000 OK
+  2023.4Q bridge item1 = item2 - item16 (+item15=0): residual -0.000000
+  2023.4Q 25 = 26+27+28+30+32: +0.000000
+
+== C2. second source for the annual: audit report attachment 20250331001358_00760.xml (separate FS notes)
+  CSM prior table of the attachment (L14100): ['758,530', '347,587', '28,025', '(171,628)', '(92,971)', '869,543'] lines [14127, 14175, 14239, 14159, 14191, 14318] -> EQUAL to the main document
+  attachment 재작성 table i1: 변경전 38,812 변경후 38,812 (L2757) | main re-read 9,976.533 -> FAIL
+  !! PROBLEM [N4AUD] item 1 변경후 38812.0 vs 9976.532632
+  attachment 재작성 table i17: 변경전 93,668 변경후 107,659 (L2763) | main re-read 123,468.811 -> FAIL
+  !! PROBLEM [N4AUD] item 17 변경후 107659.0 vs 123468.811183
+  attachment 재작성 table i20: 변경전 132,480 변경후 146,471 (L2769) | main re-read 133,445.344 -> FAIL
+  !! PROBLEM [N4AUD] item 20 변경후 146471.0 vs 133445.343815
+  attachment 재작성 table i21: 변경전 -28,901 변경후 -28,901 (L2775) | main re-read -12,714.456 -> FAIL
+  !! PROBLEM [N4AUD] item 21 변경후 -28901.0 vs -12714.456358
+  attachment 재작성 table i22: 변경전 103,579 변경후 117,570 (L2781) | main re-read 120,730.887 -> FAIL
+  !! PROBLEM [N4AUD] item 22 변경후 117570.0 vs 120730.88745699999
+  attachment 재작성 table i23: 변경전 23,144 변경후 26,376 (L2787) | main re-read 15,949.223 -> FAIL
+  !! PROBLEM [N4AUD] item 23 변경후 26376.0 vs 15949.222973999998
+  attachment 재작성 table i24: 변경전 80,435 변경후 91,194 (L2793) | main re-read 104,781.664 -> FAIL
+  !! PROBLEM [N4AUD] item 24 변경후 91194.0 vs 104781.664483
+  attachment 재작성 table i25: 변경전 17,957 변경후 7,198 (L2799) | main re-read -507,359.120 -> FAIL
+  !! PROBLEM [N4AUD] item 25 변경후 7198.0 vs -507359.119783
+  attachment 재작성 table i31: 변경전 98,392 변경후 98,392 (L2805) | main re-read -402,577.455 -> FAIL
+  !! PROBLEM [N4AUD] item 31 변경후 98392.0 vs -402577.4553
+
+== D. SEAM evidence
+  D1 derived single quarter (cum - previous cum, both restated) vs printed 3-month column of the later filing (백만원):
+  !! PROBLEM [2023.2Q i1 seam] derived single quarter 11137.999113999998 != printed 3-month 16227.112699 (diff -5089.113585000001)
+  !! PROBLEM [2023.2Q i2 seam] derived single quarter 20314.698572999987 != printed 3-month 26074.681193999997 (diff -5759.98262100001)
+  !! PROBLEM [2023.2Q i3 seam] derived single quarter 23492.617934999987 != printed 3-month 28204.121253999998 (diff -4711.50331900001)
+  !! PROBLEM [2023.2Q i8 seam] derived single quarter -3177.9193620000005 != printed 3-month -2129.440059999999 (diff -1048.4793020000016)
+  !! PROBLEM [2023.2Q i16 seam] derived single quarter 9176.699459 != printed 3-month 9847.568495 (diff -670.869036)
+  !! PROBLEM [2023.2Q i17 seam] derived single quarter 38375.693276 != printed 3-month 38901.897626 (diff -526.20435)
+  !! PROBLEM [2023.2Q i18 seam] derived single quarter 221611.675543 != printed 3-month 203392.98830199998 (diff 18218.687241000007)
+  !! PROBLEM [2023.2Q i19 seam] derived single quarter -183235.98226699998 != printed 3-month -164491.090676 (diff -18744.891590999992)
+  !! PROBLEM [2023.2Q i20 seam] derived single quarter 49513.69239 != printed 3-month 55129.010324999996 (diff -5615.317934999999)
+  !! PROBLEM [2023.2Q i21 seam] derived single quarter -4366.40306 != printed 3-month -7490.859723 (diff 3124.456663)
+  !! PROBLEM [2023.2Q i22 seam] derived single quarter 45147.28933 != printed 3-month 47638.150601999994 (diff -2490.8612719999946)
+  !! PROBLEM [2023.2Q i23 seam] derived single quarter 10440.706311 != printed 3-month 10984.745844 (diff -544.0395329999992)
+  !! PROBLEM [2023.2Q i24 seam] derived single quarter 34706.583019 != printed 3-month 36653.404758 (diff -1946.821738999999)
+  !! PROBLEM [2023.2Q i25 seam] derived single quarter -182583.902329 != printed 3-month -2933.024873 (diff -179650.87745600002)
+  !! PROBLEM [2023.2Q i26 seam] derived single quarter 119625.62893899999 != printed 3-month -219233.702972 (diff 338859.33191099996)
+  !! PROBLEM [2023.2Q i27 seam] derived single quarter -303122.563587 != printed 3-month 226110.038221 (diff -529232.601808)
+  !! PROBLEM [2023.2Q i28 seam] derived single quarter 7071.777843 != printed 3-month -14743.716564999999 (diff 21815.494408)
+  !! PROBLEM [2023.2Q i30 seam] derived single quarter -6135.819776999999 != printed 3-month 4829.662091 (diff -10965.481867999999)
+  !! PROBLEM [2023.2Q i31 seam] derived single quarter -147877.31931 != printed 3-month 33720.379885 (diff -181597.699195)
+  !! PROBLEM [2023.2Q i32 seam] derived single quarter -22.925746999999994 != printed 3-month 104.694352 (diff -127.62009899999998)
+  !! PROBLEM [2023.3Q i1 seam] derived single quarter 587.0856190000013 != printed 3-month 14958.63918 (diff -14371.553560999999)
+  !! PROBLEM [2023.3Q i2 seam] derived single quarter 4527.994867000016 != printed 3-month 18480.83569099998 (diff -13952.840823999963)
+  !! PROBLEM [2023.3Q i3 seam] derived single quarter 6316.129741000012 != printed 3-month 20529.23330199998 (diff -14213.103560999967)
+  !! PROBLEM [2023.3Q i8 seam] derived single quarter -1788.1348739999958 != printed 3-month -2048.3976110000003 (diff 260.26273700000456)
+  !! PROBLEM [2023.3Q i16 seam] derived single quarter 3940.9092480000018 != printed 3-month 3522.1965109999996 (diff 418.7127370000021)
+  !! PROBLEM [2023.3Q i17 seam] derived single quarter 36510.735950999995 != printed 3-month -17393.386394 (diff 53904.122344999996)
+  !! PROBLEM [2023.3Q i18 seam] derived single quarter 137106.534775 != printed 3-month 86036.799523 (diff 51069.73525200001)
+  !! PROBLEM [2023.3Q i19 seam] derived single quarter -100595.798824 != printed 3-month -103430.185917 (diff 2834.3870929999975)
+  !! PROBLEM [2023.3Q i20 seam] derived single quarter 37097.82156999999 != printed 3-month -2434.747214 (diff 39532.568783999996)
+  !! PROBLEM [2023.3Q i21 seam] derived single quarter -4320.776512999999 != printed 3-month -8311.332333 (diff 3990.5558200000014)
+  !! PROBLEM [2023.3Q i22 seam] derived single quarter 32777.045056999996 != printed 3-month -10746.079547 (diff 43523.124604)
+  !! PROBLEM [2023.3Q i23 seam] derived single quarter 7571.812658000001 != printed 3-month -2482.3443749999997 (diff 10054.157033)
+  !! PROBLEM [2023.3Q i24 seam] derived single quarter 25205.232398999993 != printed 3-month -8263.735171999999 (diff 33468.967570999994)
+  !! PROBLEM [2023.3Q i25 seam] derived single quarter -90487.640893 != printed 3-month 80764.638001 (diff -171252.278894)
+  !! PROBLEM [2023.3Q i26 seam] derived single quarter 271297.311128 != printed 3-month -180326.08913399998 (diff 451623.4002619999)
+  !! PROBLEM [2023.3Q i27 seam] derived single quarter -375108.033353 != printed 3-month 270573.35541099997 (diff -645681.388764)
+  !! PROBLEM [2023.3Q i28 seam] derived single quarter 20874.489795 != printed 3-month -12978.650136 (diff 33853.139931)
+  !! PROBLEM [2023.3Q i30 seam] derived single quarter -7535.0426959999995 != printed 3-month 3554.774758 (diff -11089.817454)
+  !! PROBLEM [2023.3Q i31 seam] derived single quarter -65282.408493999974 != printed 3-month 72500.902829 (diff -137783.31132299997)
+  !! PROBLEM [2023.3Q i32 seam] derived single quarter -16.365767000000005 != printed 3-month -58.752897999999995 (diff 42.38713099999999)
+    40 item-quarters compared, worst |derived - printed 3m| = 645681.388764
+    PL4 2023.2Q: derived 22,547 vs printed prior 3개월 24,378 (L43179) diff -1831
+  !! PROBLEM [2023.2Q PL4 seam] derived -1831.0
+    PL4 2023.3Q: derived 21,768 vs printed prior 3개월 22,850 (L42247) diff -1082
+  !! PROBLEM [2023.3Q PL4 seam] derived -1082.0
+  D2 FY2025 annual report (rcept 20260331003080) third column (제71기 = FY2023) vs the FY2024 annual prior column:
+    worst |A25 - N4| over 20 items = 514557.480857 -> DIFFERENT
+  !! PROBLEM [A25] FY2025 annual third column differs from the FY2024 prior column
+
+== A. CONTROL: ORIGINAL FY2023 filings read with the same definitions vs the LIVE (pre-load) master
+  2023.3Q original data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험/xml/20231114002934.xml (unit 백만원) separate statement:
+     i 1: live    52,509.000000 original print    52,509.000000 diff +0.000000 -> reproduced
+     i 2: live    52,509.000000 original print    52,509.000000 diff +0.000000 -> reproduced
+     i 3: live    61,965.000000 original print    61,965.000000 diff +0.000000 -> reproduced
+     i 8: live    -9,456.000000 original print    -9,456.000000 diff +0.000000 -> reproduced
+     i17: live    21,584.000000 original print    21,584.000000 diff +0.000000 -> reproduced
+     i18: live   520,792.000000 original print   520,792.000000 diff +0.000000 -> reproduced
+     i19: live  -499,208.000000 original print  -499,208.000000 diff +0.000000 -> reproduced
+     i20: live    74,093.000000 original print    74,093.000000 diff +0.000000 -> reproduced
+     i21: live   -23,910.000000 original print   -23,910.000000 diff +0.000000 -> reproduced
+     i22: live    50,183.000000 original print    50,183.000000 diff +0.000000 -> reproduced
+     i23: live    12,649.000000 original print    12,649.000000 diff +0.000000 -> reproduced
+     i24: live    37,534.000000 original print    37,534.000000 diff +0.000000 -> reproduced
+     i25: live    42,558.000000 original print    42,558.000000 diff +0.000000 -> reproduced
+     i26: live   -70,738.000000 original print   -70,738.000000 diff +0.000000 -> reproduced
+     i27: live   127,776.000000 original print   127,776.000000 diff +0.000000 -> reproduced
+     i28: live   -18,420.000000 original print   -18,420.000000 diff +0.000000 -> reproduced
+     i30: live     3,886.000000 original print     3,886.000000 diff +0.000000 -> reproduced
+     i31: live    80,092.000000 original print    80,092.000000 diff +0.000000 -> reproduced
+     i32: live        54.000000 original print        54.000000 diff +0.000000 -> reproduced
+     i 4: live 75,180.0 original note (3) 75,180 (L34863) -> reproduced
+  2023.4Q original data/dart/FY2023_Q4/raw/KR0070_에이비엘생명보험_20240329001518/xml/20240329001518.xml (unit 원) separate statement:
+     i 1: live    38,812.795396 original print    38,812.795396 diff +0.000000 -> reproduced
+     i 2: live    38,812.795396 original print    38,812.795396 diff -0.000000 -> reproduced
+     i 3: live    47,005.542249 original print    47,005.542249 diff -0.000000 -> reproduced
+     i 8: live    -8,192.746853 original print    -8,192.746853 diff +0.000000 -> reproduced
+     i17: live    93,667.388555 original print    93,667.388555 diff +0.000000 -> reproduced
+     i18: live   825,999.793276 original print   825,999.793276 diff +0.000000 -> reproduced
+     i19: live  -732,332.404721 original print  -732,332.404721 diff +0.000000 -> reproduced
+     i20: live   132,480.183951 original print   132,480.183951 diff -0.000000 -> reproduced
+     i21: live   -28,900.930897 original print   -28,900.930897 diff +0.000000 -> reproduced
+     i22: live   103,579.253054 original print   103,579.253054 diff +0.000000 -> reproduced
+     i23: live    23,144.232133 original print    23,144.232133 diff -0.000000 -> reproduced
+     i24: live    80,435.020921 original print    80,435.020921 diff +0.000000 -> reproduced
+     i25: live    17,957.646591 original print    17,957.646591 diff +0.000000 -> reproduced
+     i26: live   585,828.597415 original print   585,828.597415 diff +0.000000 -> reproduced
+     i27: live  -581,177.249426 original print  -581,177.249426 diff +0.000000 -> reproduced
+     i28: live    28,333.545174 original print    28,333.545174 diff +0.000000 -> reproduced
+     i30: live   -14,980.152342 original print   -14,980.152342 diff +0.000000 -> reproduced
+     i31: live    98,392.667512 original print    98,392.667512 diff +0.000000 -> reproduced
+     i32: live       -47.094230 original print       -47.094230 diff +0.000000 -> reproduced
+     i 4: live 92,971.0 original note (3) 92,971 (L54257) -> reproduced
+  2023.1Q original data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험/xml/20230515002903.xml (unit 백만원): old-layout statement, separate (table L19465) vs consolidated (table L4442) vs the live master
+     i 1 보험서비스결과       : live     17,007 | separate    17,007 (L19489) | consolidated    17,007 (L4466) -> live equals separate/consolidated
+     i20 영업이익          : live     20,299 | separate    23,320 (L19713) | consolidated    20,299 (L4698) -> live equals consolidated
+     i21 영업외손익         : live     -8,849 | separate   (8,834) (L19721) | consolidated   (8,849) (L4706) -> live equals consolidated
+     i22 법인세비용차감전순이익   : live     11,450 | separate    14,486 (L19745) | consolidated    11,450 (L4730) -> live equals consolidated
+     i23 법인세비용         : live      3,721 | separate     4,423 (L19753) | consolidated     3,721 (L4738) -> live equals consolidated
+     i24 분기순이익         : live      7,729 | separate    10,063 (L19761) | consolidated     7,729 (L4746) -> live equals consolidated
+     i 3: live     21,169 | original statement lines     21,169 -> reproduced
+     i 8: live     -4,162 | original statement lines     -4,162 -> reproduced
+     i 4: live 22,664.0 original note (3) 22,664 (L26968) -> reproduced
+  2023.2Q original data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험/xml/20230814002908.xml (unit 백만원): old-layout statement, separate (table L21088) vs consolidated (table L4484) vs the live master
+     i 1 보험서비스결과       : live     37,860 | separate    37,860 (L21125) | consolidated    37,860 (L4521) -> live equals separate/consolidated
+     i20 영업이익          : live     73,535 | separate    76,325 (L21473) | consolidated    73,535 (L4881) -> live equals consolidated
+     i21 영업외손익         : live    -16,539 | separate  (16,503) (L21485) | consolidated  (16,539) (L4893) -> live equals consolidated
+     i22 법인세비용차감전순이익   : live     56,996 | separate    59,822 (L21521) | consolidated    56,996 (L4929) -> live equals consolidated
+     i23 법인세비용         : live     14,222 | separate    14,875 (L21533) | consolidated    14,222 (L4941) -> live equals consolidated
+     i24 반기순이익         : live     42,774 | separate    44,947 (L21545) | consolidated    42,774 (L4953) -> live equals consolidated
+     i 3: live     44,795 | original statement lines     44,795 -> reproduced
+     i 8: live     -6,935 | original statement lines     -6,935 -> reproduced
+     i 4: live 48,623.0 original note (3) 48,623 (L29529) -> reproduced
+  CSM original current-period tables (separate notes) vs the live (pre-load) CSM master (억원):
+     2023.1Q CSM i1: live   7,017.8 original print   7,017.8 -> reproduced 
+     2023.1Q CSM i2: live     604.3 original print     604.3 -> reproduced 
+     2023.1Q CSM i3: live       0.0 original print     blank -> reproduced printed blank (the original Q1 table leaves 보험금융비용 blank -> the master stores 0.0 there)
+     2023.1Q CSM i4: live     154.8 original print      94.5 -> reproduced live 154.8 = closing - (1+2+3+5) plug of the original Q1 (interest not printed separately)
+     2023.1Q CSM i5: live    -226.6 original print    -226.6 -> reproduced 
+     2023.1Q CSM i6: live   7,550.3 original print   7,550.3 -> reproduced 
+     2023.2Q CSM i1: live   7,017.8 original print   7,017.8 -> reproduced 
+     2023.2Q CSM i2: live   1,655.3 original print   1,655.3 -> reproduced 
+     2023.2Q CSM i3: live     128.4 original print     128.4 -> reproduced 
+     2023.2Q CSM i4: live     524.6 original print     524.6 -> reproduced 
+     2023.2Q CSM i5: live    -486.2 original print    -486.2 -> reproduced 
+     2023.2Q CSM i6: live   8,839.9 original print   8,839.9 -> reproduced 
+     2023.3Q CSM i1: live   7,017.8 original print   7,017.8 -> reproduced 
+     2023.3Q CSM i2: live   2,778.5 original print   2,778.5 -> reproduced 
+     2023.3Q CSM i3: live     211.1 original print     211.1 -> reproduced 
+     2023.3Q CSM i4: live     475.6 original print     475.6 -> reproduced 
+     2023.3Q CSM i5: live    -751.8 original print    -751.8 -> reproduced 
+     2023.3Q CSM i6: live   9,731.2 original print   9,731.2 -> reproduced 
+     2023.4Q CSM i1: live   7,017.8 original print   7,585.3 -> reproduced owner gold 7017.8 (builder value `was` 7585.3): original annual print 7585.3  [owner gold]
+     2023.4Q CSM i2: live   3,475.9 original print   3,475.9 -> reproduced 
+     2023.4Q CSM i3: live     280.2 original print     280.2 -> reproduced 
+     2023.4Q CSM i4: live  -1,148.8 original print  -1,716.3 -> reproduced owner gold -1148.8 (builder value `was` -1716.3): original annual print -1716.3  [owner gold]
+     2023.4Q CSM i5: live    -929.7 original print    -929.7 -> reproduced 
+     2023.4Q CSM i6: live   8,695.4 original print   8,695.4 -> reproduced 
+
+== E. plan sanity
+  contract: PL gold_new 73 gold_replace 1 | CSM gold_new 18 gold_replace 2 | null_dangi_add 0 set_dangi_add 0 held 0
+  old values == live master for all 74 PL and 20 CSM cells; replaced owner gold = [('2023.1Q', 4)] PL, [('2023.4Q', 1), ('2023.4Q', 4)] CSM (the approved list)
+  PL gold 2023.1Q i4: gold 22664.0 == original print 22,664 (L26968) of the separate notes of rcept 20230515002903 -> class A (original print), latest print 22,447 (L37624)
+  CSM gold 2023.4Q i1: gold 7017.8 | original annual print 7585.3 | latest comparative 7585.3 -> class B (chain-forced: neither the original annual print nor the latest comparative)
+  CSM gold 2023.4Q i4: gold -1148.8 | original annual print -1716.3 | latest comparative -1716.3 -> class B (chain-forced: neither the original annual print nor the latest comparative)
+
+RESULT: 176 PROBLEM(S) | PL cells 0/74 | CSM cells 20/20 | control problems 0

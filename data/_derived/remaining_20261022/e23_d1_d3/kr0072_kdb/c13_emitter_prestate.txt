@@ -1,0 +1,8 @@
+PRE-LOAD (backup): sidecar blocks 28, emitter blocks 28, differing 4: [('2023.2Q', 'income_statement'), ('2023.3Q', 'income_statement'), ('2026.2Q', 'contract_notes'), ('2026.2Q', 'income_statement')]
+     ('KR0072', '2023.2Q', 'income_statement') sidecar keys-diff: {'source_id': 'OWNER_GOLD', 'resolution': 'gold_cell_override', 'published_items': 13} | emitter: {'source_id': 'OWNER_GOLD', 'resolution': 'gold_cell_override', 'published_items': 13}
+     ('KR0072', '2023.3Q', 'income_statement') sidecar keys-diff: {'source_id': 'DART', 'resolution': 'fs_api_tier1', 'published_items': 24} | emitter: {'source_id': 'DART', 'resolution': 'fs_api_tier1', 'published_items': 24}
+     ('KR0072', '2026.2Q', 'contract_notes') sidecar keys-diff: {'source_id': 'DART', 'resolution': 'raw_filing', 'published_items': 6} | emitter: {'source_id': 'DART', 'resolution': 'raw_filing', 'published_items': 8}
+     ('KR0072', '2026.2Q', 'income_statement') sidecar keys-diff: {'source_id': 'DART', 'resolution': 'fs_api_tier1', 'published_items': 23} | emitter: {'source_id': 'DART', 'resolution': 'fs_api_tier1', 'published_items': 24}
+POST-LOAD (simulation = applied): sidecar blocks 28, emitter blocks 28, differing 2: [('2026.2Q', 'contract_notes'), ('2026.2Q', 'income_statement')]
+     ('KR0072', '2026.2Q', 'contract_notes') sidecar keys-diff: {'source_id': 'DART', 'resolution': 'raw_filing', 'published_items': 6} | emitter: {'source_id': 'DART', 'resolution': 'raw_filing', 'published_items': 8}
+     ('KR0072', '2026.2Q', 'income_statement') sidecar keys-diff: {'source_id': 'DART', 'resolution': 'fs_api_tier1', 'published_items': 23} | emitter: {'source_id': 'DART', 'resolution': 'fs_api_tier1', 'published_items': 24}

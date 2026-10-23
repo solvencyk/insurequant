@@ -1,0 +1,103 @@
+KR0009 independent re-read | plan N6c_HD_FY2023_IRlegs | masters from C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\remaining_20261022\e23_d1_d3\backup_before_apply\kr0009_hyundai | mutation 'val'
+
+== A. CONTROL: ORIGINAL FY2023 filings read with the same definitions vs the LIVE (pre-load) master
+  2023.3Q: data/dart/FY2023_Q3/raw/KR0009_현대해상/xml/20231114002737.xml unit 원 (L29410); 18 Tier-1 items re-read; items where the LIVE master != the original print: 0
+  2023.4Q: data/dart/FY2023_Q4/raw/KR0009_현대해상_20240314001515/xml/20240314001515.xml unit 원 (L46513); 18 Tier-1 items re-read; items where the LIVE master != the original print: 1
+      i16: master 38491.0 vs original print 38490.968273 (diff +0.031727, owner gold)
+  2023.1Q: ORIGINAL old-layout statement data/dart/FY2023_Q1/raw/KR0009_현대해상/xml/20230515002873.xml table L22315-L22995 unit 원
+      i22 법인세비용차감전순이익: original print 435,251,862,879 (L22827) = 435251.862879 | live master 435300.0 | diff +48.137 (within the 경영공시 억원 rounding)
+      i23 법인세비용: original print 101,660,916,629 (L22835) = 101660.916629 | live master 101700.0 | diff +39.083 (within the 경영공시 억원 rounding)
+      i24 (22 - 23 of the printed lines) = 333590.94625 | live master 333600.0 | diff +9.054 (within the 경영공시 억원 rounding)
+      i4 보험계약마진상각: original print 216,346,661,769 (L22386) = 216346.661769 | live master 216346.662 -> EXACT
+      i5 위험조정변동: original print 27,234,914,386 (L22378) = 27234.914386 | live master 27234.914 -> EXACT
+  2023.2Q: ORIGINAL old-layout statement data/dart/FY2023_Q2/raw/KR0009_현대해상/xml/20230814003156.xml table L26426-L27447 unit 원
+      i22 법인세비용차감전순이익: original print 764,980,815,109 (L27195) = 764980.815109 | live master 765000.0 | diff +19.185 (within the 경영공시 억원 rounding)
+      i23 법인세비용: original print 186,952,953,027 (L27207) = 186952.953027 | live master 187000.0 | diff +47.047 (within the 경영공시 억원 rounding)
+      i24 (22 - 23 of the printed lines) = 578027.862082 | live master 578000.0 | diff -27.862 (within the 경영공시 억원 rounding)
+      i4 보험계약마진상각: original print 441,028,975,514 (L26534) = 441028.975514 | live master 441028.976 -> EXACT
+      i5 위험조정변동: original print 56,908,343,757 (L26522) = 56908.343757 | live master 56908.344 -> EXACT
+
+== B. CANDIDATE: FY2024 filings, separate 4-2 statement, prior-year (2023) cumulative column, read with the production definitions
+  2023.1Q: data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml | unit 원 (line 28272) | column 4 header ['제 70 기 1분기', '누적'] | period header (L28265) 제 70 기 1분기 2023.01.01 부터 2023.03.31 까지 | no 기타영업수익 row: True
+  2023.2Q: data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml | unit 원 (line 31301) | column 4 header ['제 70 기 반기', '누적'] | period header (L31294) 제 70 기 반기 2023.01.01 부터 2023.06.30 까지 | no 기타영업수익 row: True
+  2023.3Q: data/dart/FY2024_Q3/raw/KR0009_현대해상/20241114003026.xml | unit 원 (line 29844) | column 4 header ['제 70 기 3분기', '누적'] | period header (L29837) 제 70 기 3분기 2023.01.01 부터 2023.09.30 까지 | no 기타영업수익 row: True
+  2023.4Q: data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml | unit 원 (line 51572) | column 2 header ['제 70 기'] | period header (L51558) 제 70 기 2023.01.01 부터 2023.12.31 까지 | no 기타영업수익 row: True
+  item 4 (원수 CSM상각, 장기 열, 백만원) per quarter and the CSM roll-forward row 5 (억원) of the same filing:
+    2023.1Q: note table L40274-40433 caption '(2) 전분기' (L40258) -> 206,656,546 (L40323) | CSM row 5 (206,656,546) (L44157) | AGREE (<= 0.001 mn)
+    2023.2Q: note table L43340-43499 caption '(3) 전반기 누적' (L43324) -> 417,840,268 (L43389) | CSM row 5 (417,840,267) (L47841) | AGREE (<= 0.001 mn)
+    2023.3Q: note table L41479-41638 caption '(3) 전분기 누적' (L41463) -> 640,379,115 (L41528) | CSM row 5 (640,379,115) (L45966) | AGREE (<= 0.001 mn)
+    2023.4Q: note table L71172-71331 caption '(2) 전기' (L71156) -> 880,544,842 (L71221) | CSM row 5 (880,544,841) (L75601) | AGREE (<= 0.001 mn)
+
+== B1. every planned PL cell: value, unit, sign, row label, physical line of each part (IR: sheet cell, label cell, header cell, printed value)
+  !! PROBLEM [B1 2023.2Q i20] value plan 672883.775936 != re-read 672882.7759359999; signed sum of the plan parts 672882.7759359999 != value 672883.775936
+  planned PL cells 57, re-read OK 56
+
+== B2. completeness: every other Tier-1 item of the re-read vector equals the live master (or is a documented exclusion)
+    2023.4Q i16: EXCLUDED (rounding-only) master 38491.0 vs re-read 38490.968273 (diff +0.031727); owner gold: True; ledger pin exists
+  Tier-1 items equal to the live master (not in the plan): 25
+
+== B3. every planned CSM cell: value (억원), unit, sign, row label, physical line; CSM roll-forward closure
+  2023.1Q: data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml table L44042-44281 caption '나. 전분기' (L44026), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수 및 수재가. 당분기' | unit 천원 | exact 억원 [83515.39177, 4572.79137, 614.76717, -2103.23372, -2066.56546, 84533.15113] | roll-forward residual +0.00000억
+  !! PROBLEM [B3 2023.1Q CSM i1] value plan 83515.5 != re-read 83515.4 (exact 83515.39177)
+  !! PROBLEM [B3 2023.1Q CSM i2] value plan 4572.900000000001 != re-read 4572.8 (exact 4572.79137)
+  !! PROBLEM [B3 2023.1Q CSM i3] value plan 614.9 != re-read 614.8 (exact 614.7671700000001)
+  !! PROBLEM [B3 2023.1Q CSM i4] value plan -2103.1 != re-read -2103.2 (exact -2103.23372)
+  !! PROBLEM [B3 2023.1Q CSM i5] value plan -2066.5 != re-read -2066.6 (exact -2066.56546)
+  !! PROBLEM [B3 2023.1Q CSM i6] value plan 84533.3 != re-read 84533.2 (exact 84533.15113)
+  2023.2Q: data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml table L47726-47965 caption '나. 전반기' (L47709), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수가. 당반기' | unit 천원 | exact 억원 [83515.39177, 8755.88926, 1260.65207, -3369.18374, -4178.40267, 85984.34669] | roll-forward residual +0.00000억
+  !! PROBLEM [B3 2023.2Q CSM i1] value plan 83515.5 != re-read 83515.4 (exact 83515.39177)
+  !! PROBLEM [B3 2023.2Q CSM i2] value plan 8756.0 != re-read 8755.9 (exact 8755.88926)
+  !! PROBLEM [B3 2023.2Q CSM i3] value plan 1260.8 != re-read 1260.7 (exact 1260.65207)
+  !! PROBLEM [B3 2023.2Q CSM i4] value plan -3369.1 != re-read -3369.2 (exact -3369.18374)
+  !! PROBLEM [B3 2023.2Q CSM i5] value plan -4178.299999999999 != re-read -4178.4 (exact -4178.4026699999995)
+  !! PROBLEM [B3 2023.2Q CSM i6] value plan 85984.40000000001 != re-read 85984.3 (exact 85984.34668999999)
+  2023.3Q: data/dart/FY2024_Q3/raw/KR0009_현대해상/20241114003026.xml table L45851-46090 caption '나. 전분기' (L45835), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수가. 당분기' | unit 천원 | exact 억원 [83515.39177, 13221.3558, 1929.83532, -3226.16581, -6403.79115, 89036.62593] | roll-forward residual -0.00000억
+  !! PROBLEM [B3 2023.3Q CSM i1] value plan 83515.5 != re-read 83515.4 (exact 83515.39177)
+  !! PROBLEM [B3 2023.3Q CSM i4] value plan -3226.1 != re-read -3226.2 (exact -3226.16581)
+  2023.4Q: data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml table L75486-75725 caption '나. 전기' (L75470), pair of '(2) 최선추정, 위험조정, 보험계약마진 변동에 대한 차이조정1) 장기원수 및 수재가. 당기' | unit 천원 | exact 억원 [83515.37263, 16792.36885, 2636.32289, -2715.90455, -8805.44841, 91422.71141] | roll-forward residual -0.00000억
+  !! PROBLEM [B3 2023.4Q CSM i1] value plan 83515.5 != re-read 83515.4 (exact 83515.37263)
+  !! PROBLEM [B3 2023.4Q CSM i4] value plan -2715.8 != re-read -2715.9 (exact -2715.90455)
+  !! PROBLEM [B3 2023.4Q CSM i5] value plan -8805.3 != re-read -8805.4 (exact -8805.44841)
+  !! PROBLEM [B3 2023.4Q CSM i6] value plan 91422.8 != re-read 91422.7 (exact 91422.71141)
+  planned CSM cells 18, re-read OK 0
+  FY2023 quarterly CSM openings (latest comparative): [83515.4, 83515.4, 83515.4, 83515.4] -> one vintage
+
+== C. identities from freshly read cells
+  2023.1Q: IR legs 장기 144794.37503400003 + 자동차 75575.31741899991 + 일반 25675.584634000013 = 246045.277087 | IR 합계 L31 246045.277087 | DART statement 보험손익 246045.277087 (L28343) -> diff -0.000000000
+  2023.2Q: IR legs 장기 224031.0477060001 + 자동차 148940.25471200002 + 일반 42680.99219100003 = 415652.294609 | IR 합계 L31 415652.294609 | DART statement 보험손익 415652.294609 (L31372) -> diff +0.000000000
+  2023.4Q (information, NOT loaded): FY2024 Q4 IR legs 장기 L26=248926.412180 자동차 L30=201237.588554 일반 L11=76425.619390 sum 526589.620124 == DART annual comparative 보험손익 526589.620124 (diff +0.000000000); live master legs 2/13/14 = 248827.5 / 201238.0 / 76426.0 (sum 526491.500) -> bridge residual after the load +98.1201 mn
+
+== D. SEAM evidence: derived single quarters vs printed 3-month columns
+  D1 Tier-1 single quarters (2023.2Q: 2Q-1Q; 2023.3Q: 9M-1H) vs the printed prior-year 3-month column: 36 item-quarters checked, worst |diff| = 0.000000000 mn
+  D2 item 4 2023.2Q: derived 211183.722000 | printed 3-month (note table L43517, caption '(4) 전반기 3개월') 211,183,722 (L43566) = 211183.722000 -> diff -0.000000
+  D2 item 4 2023.3Q: derived 222538.847000 | printed 3-month (note table L41656, caption '(4) 전분기 3개월') 222,538,847 (L41705) = 222538.847000 -> diff +0.000000
+  D3 IR 장기 2023.2Q: derived (L26 - previous sheet) 79236.672672 | printed 3-month K26 79236.672672 -> diff +0.000000000
+  D3 IR 자동차 2023.2Q: derived (L30 - previous sheet) 73364.937293 | printed 3-month K30 73364.937293 -> diff -0.000000000
+  D3 IR 일반 2023.2Q: derived (L11 - previous sheet) 17005.407557 | printed 3-month K11 17005.407557 -> diff +0.000000000
+  D3 IR 합계 2023.2Q: derived (L31 - previous sheet) 169607.017522 | printed 3-month K31 169607.017522 -> diff -0.000000000
+  D3 IR 장기 2023.3Q: live master item 2 = 476139.3 | IR Q3 sheet L26 (9M) = 476139.331659 (diff -0.031659, print rounding of the builder literal) | derived 3Q single from the new 2Q cumulative = 252108.252294 vs IR K26 = 252108.283953
+  D4 2023.4Q: for the 10 adopted Tier-1 items the single quarter would be (restated annual - 9M); the 9M comparative of the FY2024 Q3 report vs the live 3Q master and the annual comparative vs the ORIGINAL annual print:
+      i1: 9M comparative 754479.376712 vs live 3Q 754479.376712 -> equal | annual comparative 526589.620124 vs original annual 526490.675922 -> restated
+      i17: 9M comparative 314655.377427 vs live 3Q 314655.377427 -> equal | annual comparative 455046.121937 vs original annual 499877.274602 -> restated
+      i19: 9M comparative -594318.062378 vs live 3Q -594318.062378 -> equal | annual comparative -828290.264638 vs original annual -783459.111973 -> restated
+      i20: 9M comparative 1069134.754139 vs live 3Q 1069134.754139 -> equal | annual comparative 981635.742061 vs original annual 1026367.950524 -> restated
+      i22: 9M comparative 1047009.744772 vs live 3Q 1047009.744772 -> equal | annual comparative 952937.585573 vs original annual 997669.794036 -> restated
+      i23: 9M comparative 260654.437994 vs live 3Q 260654.437994 -> equal | annual comparative 180599.569103 vs original annual 191948.130390 -> restated
+      i24: 9M comparative 786355.306778 vs live 3Q 786355.306778 -> equal | annual comparative 772338.016470 vs original annual 805721.663646 -> restated
+      i25: 9M comparative 119978.352035 vs live 3Q 119978.352035 -> equal | annual comparative -463577.530269 vs original annual -496923.049652 -> restated
+      i27: 9M comparative 472908.675976 vs live 3Q 472908.675976 -> equal | annual comparative -1511896.424558 vs original annual -1545241.943941 -> restated
+      i31: 9M comparative 906333.658813 vs live 3Q 906333.658813 -> equal | annual comparative 308760.486201 vs original annual 308798.613994 -> restated
+      i4: 9M note cumulative 640379.115000 vs live 3Q 640379.115000 -> equal | annual comparative 880544.842000 vs live (original) annual 880547.066000
+  null_dangi_add in the plan: [1, 4, 17, 19, 20, 22, 23, 24, 25, 27, 31] (2023.4Q) -> matches the re-read premise
+  information: the FY2024 Q4 IR sheet prints the 2023.4Q 3-month 보험손익 합계 K31 = -227889.756588; restated annual - 9M = -227889.756588
+
+== E. plan sanity
+  old values: 57 PL + 18 CSM cells == the live master
+  contract: PL gold_new 57 gold_replace 0 | CSM gold_new 14 gold_replace 1 gold_remove 3 | null_dangi_add 11 set_dangi_add 0 held 0
+  CSM gold 2023.3Q i1: gold 88281.1 | was (builder/original print) 83515.4 | latest comparative 83515.4 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  CSM gold 2023.3Q i4: gold -7991.9 | was (builder/original print) -3226.2 | latest comparative -3226.2 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  CSM gold 2023.4Q i1: gold 88281.1 | was (builder/original print) 83515.4 | latest comparative 83515.4 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  CSM gold 2023.4Q i4: gold -7480.6 | was (builder/original print) -2714.9 | latest comparative -2715.9 -> the gold is neither the latest comparative nor the original print (class B, chain-forced: Q1-Q3 original opening 88281.1 kept)
+  excluded 2023.4Q item 16: live master/gold 38491.0 vs latest comparative 38490.968273 (printed (38,490,968,273) L51752) -> diff +0.031727 mn, rounding only
+
+== RESULT: 19 PROBLEM(S)

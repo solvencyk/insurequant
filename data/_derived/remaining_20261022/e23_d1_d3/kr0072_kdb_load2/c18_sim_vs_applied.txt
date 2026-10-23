@@ -1,0 +1,9 @@
+SAME data/_gold/user_pl_cells.json
+SAME PL_breakdown.json
+SAME PL_breakdown_provenance.json
+SAME data/_gold/user_csm_cells.json
+SAME CSM_waterfall.json
+SAME CSM_waterfall_provenance.json
+SAME tests/test_rule_coverage_manifest.py
+SAME data/_gold/gold_overlay_ledger.json
+sim == applied: True

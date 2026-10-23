@@ -1,0 +1,11 @@
+PRE-LOAD (backup = reverted tree): 5 cells where 22 == 24 (recomputed item 23 would be exactly 0.0) and the previous quarter's item 23 is non-zero:
+     ('KR0004', '2025.3Q', 7322.020577, 7322.020577, 8079.68111)
+     ('KR0072', '2023.2Q', 57750.0, 57750.0, -0.209323)
+     ('KR1102', '2023.2Q', 50800.0, 50800.0, -900.0)
+     ('KR1107', '2024.4Q', 4334.865096, 4334.865096, 500.0)
+     ('KR1107', '2025.4Q', -12066.580579, -12066.580579, 200.0)
+POST-LOAD (--out-dir simulation = the applied masters): 4 cells where 22 == 24 (recomputed item 23 would be exactly 0.0) and the previous quarter's item 23 is non-zero:
+     ('KR0004', '2025.3Q', 7322.020577, 7322.020577, 8079.68111)
+     ('KR1102', '2023.2Q', 50800.0, 50800.0, -900.0)
+     ('KR1107', '2024.4Q', 4334.865096, 4334.865096, 500.0)
+     ('KR1107', '2025.4Q', -12066.580579, -12066.580579, 200.0)

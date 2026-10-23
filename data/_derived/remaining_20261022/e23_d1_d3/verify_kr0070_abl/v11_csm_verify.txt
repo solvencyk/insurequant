@@ -1,0 +1,89 @@
+FY2024_Q1: 4 CSM tables
+   T20179-20282 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당분기와 전분기 중 보험계약의 보험수익 및 전환방법별 보험계약마진 변동 내역은 다음과 같습니다.1) 당분기'] | 기초 합계=869543.0 기말 합계=894243.0
+   T20300-20403 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전분기'] | 기초 합계=758530.0 기말 합계=789846.0
+   T39729-39832 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당분기와 전분기 중 보험계약의 보험수익 및 전환방법별 보험계약마진 변동 내역은 다음과 같습니다.1) 당분기'] | 기초 합계=869543.0 기말 합계=894243.0
+   T39850-39953 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전분기'] | 기초 합계=758530.0 기말 합계=789846.0
+FY2024_Q2: 4 CSM tables
+   T20791-20894 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당반기와 전반기 중 보험계약의 보험수익 및 전환방법별 보험계약마진 변동 내역은 다음과 같습니다.1) 당반기'] | 기초 합계=869543.0 기말 합계=None
+   T20912-21015 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전반기'] | 기초 합계=758530.0 기말 합계=None
+   T41382-41485 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당반기와 전반기 중 보험계약의 보험수익 및 전환방법별 보험계약마진 변동 내역은 다음과 같습니다.1) 당반기'] | 기초 합계=869543.0 기말 합계=None
+   T41503-41606 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전반기'] | 기초 합계=758530.0 기말 합계=None
+FY2024_Q3: 4 CSM tables
+   T20240-20343 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당분기와 전분기 중 보험계약의 보험수익 및 전환방법별 보험계약마진 변동 내역은 다음과 같습니다.1) 당분기'] | 기초 합계=869543.0 기말 합계=969845.0
+   T20361-20464 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전분기'] | 기초 합계=758530.0 기말 합계=843876.0
+   T40466-40569 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당분기와 전분기 중 보험계약의 보험수익 및 전환방법별 보험계약마진 변동 내역은 다음과 같습니다.1) 당분기'] | 기초 합계=869543.0 기말 합계=969845.0
+   T40587-40690 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전분기'] | 기초 합계=758530.0 기말 합계=843876.0
+FY2024_Q4: 4 CSM tables
+   T26651-26754 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당기와 전기 중 전환방법별 보험수익 및 보험계약마진 변동 내역은 다음과 같습니다.1) 당기'] | 기초 합계=869543.0 기말 합계=937462.0
+   T26772-26875 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전기'] | 기초 합계=758530.0 기말 합계=869543.0
+   T55819-55922 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '(2) 당기와 전기 중 전환방법별 보험수익 및 보험계약마진 변동 내역은 다음과 같습니다.1) 당기'] | 기초 합계=869543.0 기말 합계=937462.0
+   T55940-56043 hdr=['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계'] prev=['(단위: 백만원)', '2) 전기'] | 기초 합계=758530.0 기말 합계=869543.0
+
+2023.1Q table T20300-20403 (894,243) raw identity open+nb+int+adj+amort-close = 0.0 (백만원)
+   item 1 raw     758530 백만원 line 20331 -> expected    7585.3 | master    7585.3 | HEAD    7017.8 | OK (moved)
+   item 2 raw      63426 백만원 line 20371 -> expected     634.3 | master     634.3 | HEAD     604.3 | OK (moved)
+   item 3 raw       6244 백만원 line 20387 -> expected      62.4 | master      62.4 | HEAD       0.0 | OK (moved)
+   item 4 raw     -15943 백만원 line 20363 -> expected    -159.4 | master    -159.4 | HEAD     154.8 | OK (moved)
+   item 5 raw     -22411 백만원 line 20347 -> expected    -224.1 | master    -224.1 | HEAD    -226.6 | OK (moved)
+   item 6 raw     789846 백만원 line 20395 -> expected    7898.5 | master    7898.5 | HEAD    7550.3 | OK (moved)
+2023.2Q table T20912-21015 (918,413) raw identity open+nb+int+adj+amort-close = 0.0 (백만원)
+   item 1 raw     758530 백만원 line 20943 -> expected    7585.3 | master    7585.3 | HEAD    7017.8 | OK (moved)
+   item 2 raw     171309 백만원 line 20983 -> expected    1713.1 | master    1713.1 | HEAD    1655.3 | OK (moved)
+   item 3 raw      13052 백만원 line 20999 -> expected     130.5 | master     130.5 | HEAD     128.4 | OK (moved)
+   item 4 raw     -29501 백만원 line 20975 -> expected    -295.0 | master    -295.0 | HEAD     524.6 | OK (moved)
+   item 5 raw     -46789 백만원 line 20959 -> expected    -467.9 | master    -467.9 | HEAD    -486.2 | OK (moved)
+   item 6 raw     866601 백만원 line 21007 -> expected    8666.0 | master    8666.0 | HEAD    8839.9 | OK (moved)
+2023.3Q table T20361-20464 (969,845) raw identity open+nb+int+adj+amort-close = 0.0 (백만원)
+   item 1 raw     758530 백만원 line 20392 -> expected    7585.3 | master    7585.3 | HEAD    7017.8 | OK (moved)
+   item 2 raw     285358 백만원 line 20432 -> expected    2853.6 | master    2853.6 | HEAD    2778.5 | OK (moved)
+   item 3 raw      20828 백만원 line 20448 -> expected     208.3 | master     208.3 | HEAD     211.1 | OK (moved)
+   item 4 raw    -151201 백만원 line 20424 -> expected   -1512.0 | master   -1512.0 | HEAD     475.6 | OK (moved)
+   item 5 raw     -69639 백만원 line 20408 -> expected    -696.4 | master    -696.4 | HEAD    -751.8 | OK (moved)
+   item 6 raw     843876 백만원 line 20456 -> expected    8438.8 | master    8438.8 | HEAD    9731.2 | OK (moved)
+2023.4Q table T26772-26875 (937,462) raw identity open+nb+int+adj+amort-close = 0.0 (백만원)
+   item 1 raw     758530 백만원 line 26803 -> expected    7585.3 | master    7585.3 | HEAD    7017.8 | OK (moved)
+   item 2 raw     347587 백만원 line 26843 -> expected    3475.9 | master    3475.9 | HEAD    3475.9 | OK (unchanged)
+   item 3 raw      28025 백만원 line 26859 -> expected     280.3 | master     280.2 | HEAD     280.2 | MISMATCH (unchanged)
+   item 4 raw    -171628 백만원 line 26835 -> expected   -1716.3 | master   -1716.3 | HEAD   -1148.8 | OK (moved)
+   item 5 raw     -92971 백만원 line 26819 -> expected    -929.7 | master    -929.7 | HEAD    -929.7 | OK (unchanged)
+   item 6 raw     869543 백만원 line 26867 -> expected    8695.4 | master    8695.4 | HEAD    8695.4 | OK (unchanged)
+CSM cells checked 24, mismatch 1
+moved vs HEAD among them: 20 ; moved & ok 20
+
+== calibration: current tables vs master 2024.xQ
+   CAL DIFF 2024.2Q item 3 raw->164.9 master 164.8
+calibration ok 23 diff 1
+
+== CSM 값_당분기 recompute (Q1: =값; else flows diff, item1=prev close, item6=close)
+checked 84, mismatches 0 (tolerance 0.05 for 0.1-rounding)
+changed 값_당분기 vs HEAD: 23 by quarter {'2023.1Q': 6, '2023.2Q': 6, '2023.3Q': 6, '2023.4Q': 5}
+
+== opening/closing chain
+HEAD
+   FY2023 opening/closing: [('2023.1Q', 7017.8, 7550.3), ('2023.2Q', 7017.8, 8839.9), ('2023.3Q', 7017.8, 9731.2), ('2023.4Q', 7017.8, 8695.4)] | opening spread within FY: 0.0
+   FY2024 opening/closing: [('2024.1Q', 8695.4, 8942.4), ('2024.2Q', 8695.4, 9184.1), ('2024.3Q', 8695.4, 9698.5), ('2024.4Q', 8695.4, 9374.6)] | opening spread within FY: 0.0
+   FY2025 opening/closing: [('2025.1Q', 9374.6, 9070.8), ('2025.2Q', 9374.6, 9242.5), ('2025.3Q', 9374.6, 10130.5), ('2025.4Q', 9374.6, 9702.5)] | opening spread within FY: 0.0
+   boundary 2023.4Q close 8695.4 -> 2024.1Q open 8695.4 drift 0.0
+   boundary 2024.4Q close 9374.6 -> 2025.1Q open 9374.6 drift 0.0
+WORK
+   FY2023 opening/closing: [('2023.1Q', 7585.3, 7898.5), ('2023.2Q', 7585.3, 8666.0), ('2023.3Q', 7585.3, 8438.8), ('2023.4Q', 7585.3, 8695.4)] | opening spread within FY: 0.0
+   FY2024 opening/closing: [('2024.1Q', 8695.4, 8942.4), ('2024.2Q', 8695.4, 9184.1), ('2024.3Q', 8695.4, 9698.5), ('2024.4Q', 8695.4, 9374.6)] | opening spread within FY: 0.0
+   FY2025 opening/closing: [('2025.1Q', 9374.6, 9070.8), ('2025.2Q', 9374.6, 9242.5), ('2025.3Q', 9374.6, 10130.5), ('2025.4Q', 9374.6, 9702.5)] | opening spread within FY: 0.0
+   boundary 2023.4Q close 8695.4 -> 2024.1Q open 8695.4 drift 0.0
+   boundary 2024.4Q close 9374.6 -> 2025.1Q open 9374.6 drift 0.0
+
+== master identity per quarter (1+2+3+4+5-6)
+   2023.1Q 0.00
+   2023.2Q 0.00
+   2023.3Q 0.00
+   2023.4Q 0.00
+   2024.1Q 0.00
+   2024.2Q 0.00
+   2024.3Q -0.10
+   2024.4Q -0.10
+   2025.1Q -0.20
+   2025.2Q 0.00
+   2025.3Q -0.10
+   2025.4Q 0.00
+   2026.1Q 0.00
+   2026.2Q 0.00

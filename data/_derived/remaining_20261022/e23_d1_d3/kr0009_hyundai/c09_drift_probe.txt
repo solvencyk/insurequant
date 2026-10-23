@@ -1,0 +1,13 @@
+  pl 의도적 null (0-fill 억제): 50 cells — 폴백을 끈다
+  pl 기타사업비(item16)->null: 37 cells (보험손익 closes without -16, was silently 0)
+  pl overrides: 1322 set
+  pl 값_당분기 의도적 null (누계 유지): 110 cells
+  pl 값_당분기 공시 3개월 인쇄값 고정 (누계 유지): 37 cells
+('KR0009', 1, '2023.3Q') live 754479.376712 None | fresh build 754479.376712 254979.376712
+('KR0009', 16, '2023.3Q') live 35264.198998 None | fresh build 35264.198998 26464.198998
+('KR0009', 22, '2023.3Q') live 1047009.744772 None | fresh build 1047009.744772 282009.744772
+('KR0009', 23, '2023.3Q') live 260654.437994 None | fresh build 260654.437994 73654.437994
+('KR0009', 24, '2023.3Q') live 786355.306778 None | fresh build 786355.306778 208355.306778
+KR0009 PL drift cells: 5
+planned cells where live != fresh build 값:
+count 0 of 57

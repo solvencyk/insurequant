@@ -1,0 +1,13 @@
+cd4ac5fbbb256102995ff9831008ee165ea8e3d4b7ad6564fca13552a0e814dc *data/_gold/user_pl_cells.json | 1035531 bytes (pre-load 983969 bytes, sha a81180044bd7) | == manifest after_sha256: True
+2c2283f4420cc883accec6ea199b5c33876280227e32c77fce285d876677ee92 *PL_breakdown.json | 3943182 bytes (pre-load 3942632 bytes, sha 5df3fe6660ae) | == manifest after_sha256: True
+21dc327b06edfe9d1616f9ea4d87b90d039eb86c250e3149d4f4ecda2dfb1e0a *PL_breakdown_provenance.json | 785700 bytes (pre-load 784606 bytes, sha 07f8d462ec93) | == manifest after_sha256: True
+bf9e91b7cfcc0c17df1edb0bcfd34c0aac2f4022af068ab8bcf2b1ff24133212 *data/_gold/user_csm_cells.json | 298071 bytes (pre-load 285405 bytes, sha cd11d341e864) | == manifest after_sha256: True
+b6e329d66da95100fbab3b1de99449d67fda361f94d9dcaaec59658609c8b911 *CSM_waterfall.json | 697505 bytes (pre-load 697491 bytes, sha eb86a95bd0b7) | == manifest after_sha256: True
+5b8777d4fb7cfb51bf58c7b7de857c8fd5d320d888e9a0dc3b7ed88ea5d31206 *CSM_waterfall_provenance.json | 62371 bytes (pre-load 61718 bytes, sha a3eabb649cef) | == manifest after_sha256: True
+b9d8b61a89d9aa8a91ae42d334494d042c42604e6be81d4fccf4d71a12808bbe *tests/test_rule_coverage_manifest.py | 142624 bytes (pre-load 142173 bytes, sha ace58adbb017) | == manifest after_sha256: True
+84f1abdce350faeda551af572ac80eae7c9d6df0b220a2afb7f102f6fa4e5be7 *data/_gold/gold_overlay_ledger.json | 45231 bytes (pre-load 46590 bytes, sha eb87ce0c88fc) | == manifest after_sha256: True
+02e87f229e214218200ae5c9bc8c088ad0f92250454d628e75d7d518b97c44b7 *tests/fixtures/master_tables_golden.json | 661 bytes (pre-load 662 bytes, sha d323cb0ac1ef)
+6bf0987788d4c0cb04254bfed78c1e5bde1d5ff13f8122e5e89352390a847a2b *tests/fixtures/builder_input_fingerprints.json | 11659 bytes (pre-load 11659 bytes, sha 5e525b02c53f)
+c6b519fc5a818dff8dada59e0402f2b0f81bf43bb192932c8a96b767b555afa6 *data/_derived/qoq_warn.json | 64743 bytes (pre-load 64498 bytes, sha 65d3eadc7309)
+736fa73a9c852bfb8483f0597e91605c3956b1ef5192311780e4a75be0afd8dd *data/_derived/pl_oci_vs_bs_aoci_warn.json | 5037 bytes (pre-load 4854 bytes, sha 8121b3295b25)
+revert path valid: True

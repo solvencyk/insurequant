@@ -1,0 +1,268 @@
+6537	6497	Ⅰ.보험손익	461,540,038,638	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6556	6497	1.보험영업수익	1,626,337,994,363	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6575	6497	(1)보험수익 (주31)	1,645,713,805,967	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6594	6497	(2)재보험수익 (주31)	(19,375,811,604)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6613	6497	2.보험영업비용	1,164,797,955,725	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6632	6497	(1)보험비용 (주31)	993,523,643,711	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6651	6497	(2)재보험비용 (주31)	139,464,604,088	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6670	6497	(3)기타사업비용 (주35)	31,809,707,926	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6689	6497	Ⅱ.투자손익	(86,105,249,856)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6708	6497	1.투자영업수익	932,755,658,705	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6727	6497	(1)보험금융수익 (주33)	7,249,805,363	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6746	6497	(2)재보험금융수익 (주33)	12,109,094,235	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6765	6497	(3)이자수익	342,539,205,517	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6784	6497	유효이자율법 적용 이자수익 (주32,40)	298,421,742,352	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6803	6497	당기손익-공정가치측정금융자산 이자수익 (주32,40)	44,117,463,165	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6822	6497	(4)배당금수익 (주40)	3,693,988,464	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6841	6497	(5)당기손익-공정가치측정 금융자산관련 이익 (주34,40)	390,853,509,610	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6860	6497	(6)기타포괄손익-공정가치측정 금융자산관련 이익 (주34,40)	4,517,752	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6879	6497	(7)파생상품관련수익 (주34,40)	93,923,265,905	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6898	6497	(8)외화거래이익 (주40)	78,274,895,401	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6917	6497	(9)기타투자수익 (주36)	4,107,376,458	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6936	6497	2.투자영업비용	1,018,860,908,561	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6955	6497	(1)보험금융비용 (주33)	191,079,668,666	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6974	6497	(2)재보험금융비용 (주33)	4,642,903,969	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+6993	6497	(3)이자비용 (주32,40)	349,867,610,883	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7012	6497	(4)당기손익-공정가치측정 금융자산관련 손실 (주34,40)	201,372,262,407	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7031	6497	(5)기타포괄손익-공정가치측정 금융자산관련 손실 (주34,40)	16,293,258,604	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7050	6497	(6)상각후원가측정금융상품 처분손실 (주34,40)	794,129,600	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7069	6497	(7)신용손실충당금 전입액 (주6,7,8,10,25,40)	20,678,546,069	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7088	6497	(8)파생상품관련비용 (주34,40)	185,941,834,570	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7107	6497	(9)외화거래손실 (주40)	8,042,625,002	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7126	6497	(10)재산관리비 (주35)	7,735,933,114	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7145	6497	(11)기타투자비용 (주36)	32,412,135,677	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7164	6497	Ⅲ.영업이익(손실)	375,434,788,782	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7183	6497	Ⅳ.영업외손익	(1,952,079,806)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7202	6497	1.관계기업투자자산 평가손익 (주11)	(541,233,244)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7221	6497	2.영업외수익	5,390,266,024	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7240	6497	3.영업외비용	6,801,112,586	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7259	6497	Ⅴ.법인세비용차감전순이익(손실)	373,482,708,976	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7278	6497	Ⅵ.법인세비용 (주37)	87,902,382,833	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7297	6497	Ⅶ.당기순이익(손실)	285,580,326,143	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7316	6497	대손준비금 반영후 조정손익 (주29)	294,500,261,477	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7335	6497	비상위험준비금 반영후 조정손익 (주29)	311,707,107,868	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7354	6497	해약환급금준비금 반영후 조정손익 (주29)	(21,560,166,639)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7373	6497	Ⅷ.기타포괄손익 (주28)	(154,441,348,430)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7392	6497	1.당기손익으로 재분류되는 세후기타포괄손익의 구성요소	(153,835,642,589)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7411	6497	(1)기타포괄손익-공정가치측정 채무증권 평가손익	255,922,070,529	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7430	6497	(2)기타포괄손익-공정가치측정 채무증권 신용손실	164,573,139	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7449	6497	(3)위험회피목적 파생상품 평가손익	81,673,101,910	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7468	6497	(4)보험계약자산(부채) 순금융손익	(496,420,065,574)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7487	6497	(5)재보험계약자산(부채) 순금융손익	4,824,677,407	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7506	6497	2.당기손익으로 재분류되지 않는 세후기타포괄손익의 구성요소	(605,705,841)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7525	6497	(1)기타포괄손익-공정가치측정 지분증권 평가손익	2,986,808,968	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7544	6497	(2)자산재평가손익	202,607	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7563	6497	(3)확정급여제도의 재측정요소	(3,592,717,416)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7582	6497	Ⅸ.총포괄손익	131,138,977,713	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7611	6497	기본주당이익(손실) (단위 : 원) (주38)	914.0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+7630	6497	희석주당이익(손실) (단위 : 원) (주38)	914.0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8583	7692	2023.01.01 (Ⅰ.조정 전 전기초)	310,336,320,000	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8587	7692	2023.01.01 (Ⅰ.조정 전 전기초)	328,674,807,440	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8591	7692	2023.01.01 (Ⅰ.조정 전 전기초)	51,142,363,501	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8595	7692	2023.01.01 (Ⅰ.조정 전 전기초)	379,817,170,941	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8599	7692	2023.01.01 (Ⅰ.조정 전 전기초)	(991,270,194)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8603	7692	2023.01.01 (Ⅰ.조정 전 전기초)	45,370,260,000	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8607	7692	2023.01.01 (Ⅰ.조정 전 전기초)	840,108,507,349	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8611	7692	2023.01.01 (Ⅰ.조정 전 전기초)	228,390,364,292	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8615	7692	2023.01.01 (Ⅰ.조정 전 전기초)	1,803,031,352,388	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8626	7692	회계정책변경 등에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8630	7692	회계정책변경 등에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8634	7692	회계정책변경 등에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8638	7692	회계정책변경 등에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8642	7692	회계정책변경 등에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8646	7692	회계정책변경 등에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8650	7692	회계정책변경 등에 따른 증가(감소)	(469,962,922,572)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8654	7692	회계정책변경 등에 따른 증가(감소)	(159,554,567,303)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8658	7692	회계정책변경 등에 따른 증가(감소)	(629,517,489,875)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8669	7692	Ⅰ.조정 후 전기초	310,336,320,000	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8673	7692	Ⅰ.조정 후 전기초	328,674,807,440	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8677	7692	Ⅰ.조정 후 전기초	51,142,363,501	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8681	7692	Ⅰ.조정 후 전기초	379,817,170,941	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8685	7692	Ⅰ.조정 후 전기초	(991,270,194)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8689	7692	Ⅰ.조정 후 전기초	45,370,260,000	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8693	7692	Ⅰ.조정 후 전기초	370,145,584,777	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8697	7692	Ⅰ.조정 후 전기초	68,835,796,989	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8701	7692	Ⅰ.조정 후 전기초	1,173,513,862,513	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8744	7692	(1)당기순이익(손실)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8748	7692	(1)당기순이익(손실)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8752	7692	(1)당기순이익(손실)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8756	7692	(1)당기순이익(손실)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8760	7692	(1)당기순이익(손실)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8764	7692	(1)당기순이익(손실)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8768	7692	(1)당기순이익(손실)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8772	7692	(1)당기순이익(손실)	285,580,326,143	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8776	7692	(1)당기순이익(손실)	285,580,326,143	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8803	7692	보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8807	7692	보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8811	7692	보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8815	7692	보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8819	7692	보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8823	7692	보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8827	7692	보험계약자산(부채) 순금융손익	(496,420,065,574)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8831	7692	보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8835	7692	보험계약자산(부채) 순금융손익	(496,420,065,574)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8846	7692	재보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8850	7692	재보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8854	7692	재보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8858	7692	재보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8862	7692	재보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8866	7692	재보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8870	7692	재보험계약자산(부채) 순금융손익	4,824,677,407	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8874	7692	재보험계약자산(부채) 순금융손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8878	7692	재보험계약자산(부채) 순금융손익	4,824,677,407	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8905	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8909	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8913	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8917	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8921	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8925	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8929	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	259,073,452,636	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8933	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8937	7692	기타포괄손익-공정가치측정금융자산관련손익 총손익	259,073,452,636	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8948	7692	위험회피목적 파생상품 평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8952	7692	위험회피목적 파생상품 평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8956	7692	위험회피목적 파생상품 평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8960	7692	위험회피목적 파생상품 평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8964	7692	위험회피목적 파생상품 평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8968	7692	위험회피목적 파생상품 평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8972	7692	위험회피목적 파생상품 평가손익	81,673,101,910	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8976	7692	위험회피목적 파생상품 평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8980	7692	위험회피목적 파생상품 평가손익	81,673,101,910	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8991	7692	확정급여제도의 재측정요소	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8995	7692	확정급여제도의 재측정요소	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+8999	7692	확정급여제도의 재측정요소	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9003	7692	확정급여제도의 재측정요소	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9007	7692	확정급여제도의 재측정요소	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9011	7692	확정급여제도의 재측정요소	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9015	7692	확정급여제도의 재측정요소	(3,592,717,416)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9019	7692	확정급여제도의 재측정요소	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9023	7692	확정급여제도의 재측정요소	(3,592,717,416)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9034	7692	자산재평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9038	7692	자산재평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9042	7692	자산재평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9046	7692	자산재평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9050	7692	자산재평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9054	7692	자산재평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9058	7692	자산재평가손익	202,607	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9062	7692	자산재평가손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9066	7692	자산재평가손익	202,607	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9077	7692	총기타포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9081	7692	총기타포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9085	7692	총기타포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9089	7692	총기타포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9093	7692	총기타포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9097	7692	총기타포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9101	7692	총기타포괄손익	(154,441,348,430)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9105	7692	총기타포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9109	7692	총기타포괄손익	(154,441,348,430)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9120	7692	(3)총포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9124	7692	(3)총포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9128	7692	(3)총포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9132	7692	(3)총포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9136	7692	(3)총포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9140	7692	(3)총포괄손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9144	7692	(3)총포괄손익	(154,441,348,430)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9148	7692	(3)총포괄손익	285,580,326,143	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9152	7692	(3)총포괄손익	131,138,977,713	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9179	7692	(1)주식기준보상거래에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9183	7692	(1)주식기준보상거래에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9187	7692	(1)주식기준보상거래에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9191	7692	(1)주식기준보상거래에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9195	7692	(1)주식기준보상거래에 따른 증가(감소)	135,669,729	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9199	7692	(1)주식기준보상거래에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9203	7692	(1)주식기준보상거래에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9207	7692	(1)주식기준보상거래에 따른 증가(감소)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9211	7692	(1)주식기준보상거래에 따른 증가(감소)	135,669,729	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9222	7692	(2)신종자본증권배당	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9226	7692	(2)신종자본증권배당	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9230	7692	(2)신종자본증권배당	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9234	7692	(2)신종자본증권배당	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9238	7692	(2)신종자본증권배당	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9242	7692	(2)신종자본증권배당	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9246	7692	(2)신종자본증권배당	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9250	7692	(2)신종자본증권배당	(3,128,000,004)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9254	7692	(2)신종자본증권배당	(3,128,000,004)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9265	7692	(3)소유주와의 거래 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9269	7692	(3)소유주와의 거래 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9273	7692	(3)소유주와의 거래 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9277	7692	(3)소유주와의 거래 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9281	7692	(3)소유주와의 거래 합계	135,669,729	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9285	7692	(3)소유주와의 거래 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9289	7692	(3)소유주와의 거래 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9293	7692	(3)소유주와의 거래 합계	(3,128,000,004)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9297	7692	(3)소유주와의 거래 합계	(2,992,330,275)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9308	7692	3.자본 증가(감소) 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9312	7692	3.자본 증가(감소) 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9316	7692	3.자본 증가(감소) 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9320	7692	3.자본 증가(감소) 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9324	7692	3.자본 증가(감소) 합계	135,669,729	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9328	7692	3.자본 증가(감소) 합계	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9332	7692	3.자본 증가(감소) 합계	(154,441,348,430)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9336	7692	3.자본 증가(감소) 합계	282,452,326,139	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+9340	7692	3.자본 증가(감소) 합계	128,146,647,438	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10301	10251	Ⅰ.영업활동순현금흐름	2,126,461,143,953	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10320	10251	1.영업에서 창출된 현금흐름	1,908,519,086,396	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10339	10251	(1)당기순이익(손실)	285,580,326,143	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10358	10251	(2)당기순이익조정을 위한 가감 합계	(1,285,420,002,409)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10377	10251	법인세비용 조정	87,902,382,833	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10396	10251	배당수익에 대한 조정	(3,693,988,464)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10415	10251	이자수익에 대한 조정	(342,539,205,517)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10434	10251	이자비용에 대한 조정	349,867,610,883	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10453	10251	보험계약손익	(1,827,645,990,802)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10472	10251	재보험계약손익	199,678,580,564	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10491	10251	보험금융손익	176,363,673,037	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10510	10251	당기손익-공정가치측정금융자산 평가손익	15,528,014,048	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10529	10251	당기손익-공정가치측정금융자산 처분손익	(39,750,130,420)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10548	10251	기타포괄손익-공정가치측정금융자산 처분손익	16,288,740,852	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10567	10251	유형자산처분손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10586	10251	무형자산처분손익	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10605	10251	감가상각비와 상각비의 조정	40,288,493,687	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10624	10251	당기손익으로 인식된 손상차손(손상차손환입)의 조정	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10643	10251	파생상품거래손익	47,013,606,577	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10662	10251	파생상품평가손익	37,217,949,376	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10681	10251	신용손실충당금 전입액	20,678,546,069	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10700	10251	외화환산손익	(68,483,845,267)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10719	10251	관계기업투자자산 평가손익	541,233,244	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10738	10251	충당부채의 조정	(341,149,077)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10757	10251	퇴직급여 조정	5,349,793,752	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10776	10251	주식기준보상	135,669,729	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10795	10251	기타영업손익	180,012,487	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10814	10251	(3)영업활동으로 인한 자산 부채의 변동	2,908,358,762,662	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10833	10251	보험계약부채의 증가(감소)	1,032,791,425,613	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10852	10251	재보험계약자산의 감소(증가)	184,967,311,997	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10871	10251	상각후원가측정대출채권의 감소(증가)	464,271,100,140	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10890	10251	상각후원가측정기타금융자산의 감소(증가)	(2,169,651,698)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10909	10251	당기손익-공정가치측정금융자산의 감소(증가)	478,925,111,103	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10928	10251	기타자산의 감소(증가)	(899,623,964)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10947	10251	기타부채의 증가(감소)	(896,156,723)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10966	10251	기타금융부채의 증가(감소)	14,195,543,451	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+10985	10251	확정급여제도의 증가(감소)	(7,867,909,420)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11004	10251	예치금의 감소(증가)	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11023	10251	투자계약부채의 증가(감소)	745,041,612,163	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11042	10251	2.이자수익 수취	290,209,361,913	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11061	10251	3.이자비용 지급	(61,471,083,878)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11080	10251	4.배당금수취	3,693,988,464	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11099	10251	5.법인세환급(납부)	(14,490,208,942)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11128	10251	Ⅱ.투자활동순현금흐름	559,106,499,900	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11147	10251	유형자산의 취득	(21,054,489,701)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11166	10251	무형자산의 취득	(1,524,353,642)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11185	10251	무형자산의 처분	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11204	10251	관계기업투자자산의 취득	(4,055,000,000)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11223	10251	당기손익-공정가치측정금융자산의 취득	(259,337,252,297)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11242	10251	당기손익-공정가치측정금융자산의 처분	1,258,645,856,939	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11261	10251	기타포괄손익-공정가치측정금융자산의 취득	(2,013,473,535,631)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11280	10251	기타포괄손익-공정가치측정금융자산의 처분	1,628,579,872,669	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11299	10251	상각후원가측정금융자산의 취득	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11318	10251	상각후원가측정금융자산의 처분	10,000,000,000	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11337	10251	위험회피활동으로 인한 현금유출	(155,300,208,377)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11356	10251	위험회피활동으로 인한 현금유입	116,625,609,940	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11385	10251	Ⅲ.재무활동순현금흐름	(2,292,776,202,973)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11404	10251	리스부채의 지급	(13,959,722,969)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11423	10251	환매조건부채권매도의 감소	(2,365,000,000,000)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11442	10251	환매조건부채권매도의 증가	0	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11461	10251	후순위사채의 발행	149,311,520,000	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11480	10251	후순위사채의 상환	(60,000,000,000)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11499	10251	신종자본증권의 배당	(3,128,000,004)	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11518	10251	Ⅳ.환율변동효과 반영전 현금및현금성자산의 순증가(감소)	392,791,440,880	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11537	10251	현금및현금성자산에 대한 환율변동효과	1,991,513,541	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc
+11556	10251	Ⅴ.현금및현금성자산의순증가(감소)	394,782,954,421	PFY2023dFY_ifrs-full_ConsolidatedAndSeparateFinanc

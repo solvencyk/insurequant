@@ -1,0 +1,545 @@
+{
+ "problems": [
+  {
+   "where": "A 2023.3Q",
+   "problem": "definitions do not reproduce the live master on items [1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]"
+  },
+  {
+   "where": "A 2023.4Q",
+   "problem": "definitions do not reproduce the live master on items [1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]"
+  },
+  {
+   "where": "B 2023.2Q PL4",
+   "problem": "CSM amortisation differs between the 보험수익 note and the CSM roll-forward"
+  },
+  {
+   "where": "B 2023.4Q PL4",
+   "problem": "CSM amortisation differs between the 보험수익 note and the CSM roll-forward"
+  },
+  {
+   "where": "B1 2023.1Q i1",
+   "problem": "value plan 246045.277087 != re-read 246045277087.0; part L28343: unit plan 원 != 백만원; part L28343: contribution plan 246045.277087 != 246045277087.0; signed sum of the plan parts 246045277087.0 != value 246045.277087"
+  },
+  {
+   "where": "B1 2023.1Q i4",
+   "problem": "value plan 206656.546 != re-read 206656546.0; unit plan 천원 != 백만원"
+  },
+  {
+   "where": "B1 2023.1Q i16",
+   "problem": "value plan 4050.924606 != re-read 4050924606.0; part L28504: unit plan 원 != 백만원; part L28504: contribution plan 4050.924606 != 4050924606.0; signed sum of the plan parts 4050924606.0 != value 4050.924606"
+  },
+  {
+   "where": "B1 2023.1Q i17",
+   "problem": "value plan 174950.85334 != re-read 174950853340.0; part L28527: unit plan 원 != 백만원; part L28527: contribution plan 174950.85334 != 174950853340.0; signed sum of the plan parts 174950853340.0 != value 174950.85334"
+  },
+  {
+   "where": "B1 2023.1Q i18",
+   "problem": "value plan 370703.670846 != re-read 370703670846.0; part L28527: unit plan 원 != 백만원; part L28527: contribution plan 174950.85334 != 174950853340.0; part L28573: unit plan 원 != 백만원; part L28573: contribution plan -19035.78917 != -19035789170.0; part L28596: unit plan 원 != 백만원; part L28596: contribution plan -29393.305891 != -29393305891.0; part L28964: unit plan 원 != 백만원; part L28964: contribution plan 224648.364739 != 224648364739.0; part L28987: unit plan 원 != 백만원; part L28987: contribution plan 19533.547828 != 19533547828.0; signed sum of the plan parts 370703670846.0 != value 370703.670846"
+  },
+  {
+   "where": "B1 2023.1Q i19",
+   "problem": "value plan -195752.817506 != re-read -195752817506.0; part L28573: unit plan 원 != 백만원; part L28573: contribution plan 19035.78917 != 19035789170.0; part L28596: unit plan 원 != 백만원; part L28596: contribution plan 29393.305891 != 29393305891.0; part L28964: unit plan 원 != 백만원; part L28964: contribution plan -224648.364739 != -224648364739.0; part L28987: unit plan 원 != 백만원; part L28987: contribution plan -19533.547828 != -19533547828.0; signed sum of the plan parts -195752817506.0 != value -195752.817506"
+  },
+  {
+   "where": "B1 2023.1Q i20",
+   "problem": "value plan 420996.130427 != re-read 420996130427.0; part L29263: unit plan 원 != 백만원; part L29263: contribution plan 420996.130427 != 420996130427.0; signed sum of the plan parts 420996130427.0 != value 420996.130427"
+  },
+  {
+   "where": "B1 2023.1Q i21",
+   "problem": "value plan -7850.136275 != re-read -7850136275.0; part L29286: unit plan 원 != 백만원; part L29286: contribution plan -7850.136275 != -7850136275.0; signed sum of the plan parts -7850136275.0 != value -7850.136275"
+  },
+  {
+   "where": "B1 2023.1Q i22",
+   "problem": "value plan 413145.994152 != re-read 413145994152.0; part L29378: unit plan 원 != 백만원; part L29378: contribution plan 413145.994152 != 413145994152.0; signed sum of the plan parts 413145994152.0 != value 413145.994152"
+  },
+  {
+   "where": "B1 2023.1Q i23",
+   "problem": "value plan 97844.31067 != re-read 97844310670.0; part L29401: unit plan 원 != 백만원; part L29401: contribution plan 97844.31067 != 97844310670.0; signed sum of the plan parts 97844310670.0 != value 97844.31067"
+  },
+  {
+   "where": "B1 2023.1Q i24",
+   "problem": "value plan 315301.683482 != re-read 315301683482.0; part L29424: unit plan 원 != 백만원; part L29424: contribution plan 315301.683482 != 315301683482.0; signed sum of the plan parts 315301683482.0 != value 315301.683482"
+  },
+  {
+   "where": "B1 2023.1Q i25",
+   "problem": "value plan -61784.991652 != re-read -61784991652.0; part L29516: unit plan 원 != 백만원; part L29516: contribution plan -61784.991652 != -61784991652.0; signed sum of the plan parts -61784991652.0 != value -61784.991652"
+  },
+  {
+   "where": "B1 2023.1Q i26",
+   "problem": "value plan 579877.893584 != re-read 579877893584.0; part L29562: unit plan 원 != 백만원; part L29562: contribution plan 579877.893584 != 579877893584.0; signed sum of the plan parts 579877893584.0 != value 579877.893584"
+  },
+  {
+   "where": "B1 2023.1Q i27",
+   "problem": "value plan -654376.896346 != re-read -654376896346.0; part L29654: unit plan 원 != 백만원; part L29654: contribution plan -654376.896346 != -654376896346.0; signed sum of the plan parts -654376896346.0 != value -654376.896346"
+  },
+  {
+   "where": "B1 2023.1Q i28",
+   "problem": "value plan 16689.535871 != re-read 16689535871.0; part L29631: unit plan 원 != 백만원; part L29631: contribution plan 16689.535871 != 16689535871.0; signed sum of the plan parts 16689535871.0 != value 16689.535871"
+  },
+  {
+   "where": "B1 2023.1Q i29",
+   "problem": "value plan 908.73772 != re-read 908737720.0; part L29769: unit plan 원 != 백만원; part L29769: contribution plan 908.73772 != 908737720.0; signed sum of the plan parts 908737720.0 != value 908.73772"
+  },
+  {
+   "where": "B1 2023.1Q i30",
+   "problem": "value plan 52.934994 != re-read 52934994.0; part L29677: unit plan 원 != 백만원; part L29677: contribution plan 52.934994 != 52934994.0; signed sum of the plan parts 52934994.0 != value 52.934994"
+  },
+  {
+   "where": "B1 2023.1Q i31",
+   "problem": "value plan 253516.69183 != re-read 253516691830.0; part L29838: unit plan 원 != 백만원; part L29838: contribution plan 253516.69183 != 253516691830.0; signed sum of the plan parts 253516691830.0 != value 253516.69183"
+  },
+  {
+   "where": "B1 2023.1Q i32",
+   "problem": "value plan -4937.197475 != re-read -4937197475.0; part L29516: unit plan 원 != 백만원; part L29516: contribution plan -61784.991652 != -61784991652.0; part L29562: unit plan 원 != 백만원; part L29562: contribution plan -579877.893584 != -579877893584.0; part L29654: unit plan 원 != 백만원; part L29654: contribution plan 654376.896346 != 654376896346.0; part L29631: unit plan 원 != 백만원; part L29631: contribution plan -16689.535871 != -16689535871.0; part L29769: unit plan 원 != 백만원; part L29769: contribution plan -908.73772 != -908737720.0; part L29677: unit plan 원 != 백만원; part L29677: contribution plan -52.934994 != -52934994.0; signed sum of the plan parts -4937197475.0 != value -4937.197475"
+  },
+  {
+   "where": "B1 2023.2Q i1",
+   "problem": "value plan 415652.294609 != re-read 415652294609.0; part L31372: unit plan 원 != 백만원; part L31372: contribution plan 415652.294609 != 415652294609.0; signed sum of the plan parts 415652294609.0 != value 415652.294609"
+  },
+  {
+   "where": "B1 2023.2Q i4",
+   "problem": "value plan 417840.268 != re-read 417840268.0; unit plan 천원 != 백만원"
+  },
+  {
+   "where": "B1 2023.2Q i16",
+   "problem": "value plan 8784.082441 != re-read 8784082441.0; part L31533: unit plan 원 != 백만원; part L31533: contribution plan 8784.082441 != 8784082441.0; signed sum of the plan parts 8784082441.0 != value 8784.082441"
+  },
+  {
+   "where": "B1 2023.2Q i17",
+   "problem": "value plan 257230.481327 != re-read 257230481327.0; part L31556: unit plan 원 != 백만원; part L31556: contribution plan 257230.481327 != 257230481327.0; signed sum of the plan parts 257230481327.0 != value 257230.481327"
+  },
+  {
+   "where": "B1 2023.2Q i18",
+   "problem": "value plan 647086.799503 != re-read 647086799503.0; part L31556: unit plan 원 != 백만원; part L31556: contribution plan 257230.481327 != 257230481327.0; part L31602: unit plan 원 != 백만원; part L31602: contribution plan -28861.17416 != -28861174160.0; part L31625: unit plan 원 != 백만원; part L31625: contribution plan -48467.178376 != -48467178376.0; part L31901: unit plan 원 != 백만원; part L31901: contribution plan 438039.473544 != 438039473544.0; part L31924: unit plan 원 != 백만원; part L31924: contribution plan 29145.197168 != 29145197168.0; signed sum of the plan parts 647086799503.0 != value 647086.799503"
+  },
+  {
+   "where": "B1 2023.2Q i19",
+   "problem": "value plan -389856.318176 != re-read -389856318176.0; part L31602: unit plan 원 != 백만원; part L31602: contribution plan 28861.17416 != 28861174160.0; part L31625: unit plan 원 != 백만원; part L31625: contribution plan 48467.178376 != 48467178376.0; part L31901: unit plan 원 != 백만원; part L31901: contribution plan -438039.473544 != -438039473544.0; part L31924: unit plan 원 != 백만원; part L31924: contribution plan -29145.197168 != -29145197168.0; signed sum of the plan parts -389856318176.0 != value -389856.318176"
+  },
+  {
+   "where": "B1 2023.2Q i20",
+   "problem": "value plan 672882.775936 != re-read 672882775936.0; part L32154: unit plan 원 != 백만원; part L32154: contribution plan 672882.775936 != 672882775936.0; signed sum of the plan parts 672882775936.0 != value 672882.775936"
+  },
+  {
+   "where": "B1 2023.2Q i21",
+   "problem": "value plan -15434.175576 != re-read -15434175576.0; part L32177: unit plan 원 != 백만원; part L32177: contribution plan -15434.175576 != -15434175576.0; signed sum of the plan parts -15434175576.0 != value -15434.175576"
+  },
+  {
+   "where": "B1 2023.2Q i22",
+   "problem": "value plan 657448.60036 != re-read 657448600360.0; part L32269: unit plan 원 != 백만원; part L32269: contribution plan 657448.60036 != 657448600360.0; signed sum of the plan parts 657448600360.0 != value 657448.60036"
+  },
+  {
+   "where": "B1 2023.2Q i23",
+   "problem": "value plan 160485.164598 != re-read 160485164598.0; part L32292: unit plan 원 != 백만원; part L32292: contribution plan 160485.164598 != 160485164598.0; signed sum of the plan parts 160485164598.0 != value 160485.164598"
+  },
+  {
+   "where": "B1 2023.2Q i24",
+   "problem": "value plan 496963.435762 != re-read 496963435762.0; part L32315: unit plan 원 != 백만원; part L32315: contribution plan 496963.435762 != 496963435762.0; signed sum of the plan parts 496963435762.0 != value 496963.435762"
+  },
+  {
+   "where": "B1 2023.2Q i25",
+   "problem": "value plan 90734.016334 != re-read 90734016334.0; part L32407: unit plan 원 != 백만원; part L32407: contribution plan 90734.016334 != 90734016334.0; signed sum of the plan parts 90734016334.0 != value 90734.016334"
+  },
+  {
+   "where": "B1 2023.2Q i26",
+   "problem": "value plan 196337.990577 != re-read 196337990577.0; part L32453: unit plan 원 != 백만원; part L32453: contribution plan 196337.990577 != 196337990577.0; signed sum of the plan parts 196337990577.0 != value 196337.990577"
+  },
+  {
+   "where": "B1 2023.2Q i27",
+   "problem": "value plan -121036.336179 != re-read -121036336179.0; part L32545: unit plan 원 != 백만원; part L32545: contribution plan -121036.336179 != -121036336179.0; signed sum of the plan parts -121036336179.0 != value -121036.336179"
+  },
+  {
+   "where": "B1 2023.2Q i28",
+   "problem": "value plan 17086.261152 != re-read 17086261152.0; part L32522: unit plan 원 != 백만원; part L32522: contribution plan 17086.261152 != 17086261152.0; signed sum of the plan parts 17086261152.0 != value 17086.261152"
+  },
+  {
+   "where": "B1 2023.2Q i29",
+   "problem": "value plan 145.872947 != re-read 145872947.0; part L32614: unit plan 원 != 백만원; part L32614: contribution plan 145.872947 != 145872947.0; signed sum of the plan parts 145872947.0 != value 145.872947"
+  },
+  {
+   "where": "B1 2023.2Q i30",
+   "problem": "value plan 1154.947018 != re-read 1154947018.0; part L32568: unit plan 원 != 백만원; part L32568: contribution plan 1154.947018 != 1154947018.0; signed sum of the plan parts 1154947018.0 != value 1154.947018"
+  },
+  {
+   "where": "B1 2023.2Q i31",
+   "problem": "value plan 587697.452096 != re-read 587697452096.0; part L32683: unit plan 원 != 백만원; part L32683: contribution plan 587697.452096 != 587697452096.0; signed sum of the plan parts 587697452096.0 != value 587697.452096"
+  },
+  {
+   "where": "B1 2023.2Q i32",
+   "problem": "value plan -2954.719181 != re-read -2954719181.0; part L32407: unit plan 원 != 백만원; part L32407: contribution plan 90734.016334 != 90734016334.0; part L32453: unit plan 원 != 백만원; part L32453: contribution plan -196337.990577 != -196337990577.0; part L32545: unit plan 원 != 백만원; part L32545: contribution plan 121036.336179 != 121036336179.0; part L32522: unit plan 원 != 백만원; part L32522: contribution plan -17086.261152 != -17086261152.0; part L32614: unit plan 원 != 백만원; part L32614: contribution plan -145.872947 != -145872947.0; part L32568: unit plan 원 != 백만원; part L32568: contribution plan -1154.947018 != -1154947018.0; signed sum of the plan parts -2954719181.0 != value -2954.719181"
+  },
+  {
+   "where": "B1 2023.4Q i1",
+   "problem": "value plan 526589.620124 != re-read 526589620124.0; part L51619: unit plan 원 != 백만원; part L51619: contribution plan 526589.620124 != 526589620124.0; signed sum of the plan parts 526589620124.0 != value 526589.620124"
+  },
+  {
+   "where": "B1 2023.4Q i4",
+   "problem": "value plan 880544.842 != re-read 880544842.0; unit plan 천원 != 백만원"
+  },
+  {
+   "where": "B1 2023.4Q i17",
+   "problem": "value plan 455046.121937 != re-read 455046121937.0; part L51771: unit plan 원 != 백만원; part L51771: contribution plan 455046.121937 != 455046121937.0; signed sum of the plan parts 455046121937.0 != value 455046.121937"
+  },
+  {
+   "where": "B1 2023.4Q i19",
+   "problem": "value plan -828290.264638 != re-read -828290264638.0; part L51809: unit plan 원 != 백만원; part L51809: contribution plan 57623.227782 != 57623227782.0; part L51828: unit plan 원 != 백만원; part L51828: contribution plan 105160.848812 != 105160848812.0; part L52132: unit plan 원 != 백만원; part L52132: contribution plan -915641.804466 != -915641804466.0; part L52151: unit plan 원 != 백만원; part L52151: contribution plan -75432.536766 != -75432536766.0; signed sum of the plan parts -828290264638.0 != value -828290.264638"
+  },
+  {
+   "where": "B1 2023.4Q i20",
+   "problem": "value plan 981635.742061 != re-read 981635742061.0; part L52379: unit plan 원 != 백만원; part L52379: contribution plan 981635.742061 != 981635742061.0; signed sum of the plan parts 981635742061.0 != value 981635.742061"
+  },
+  {
+   "where": "B1 2023.4Q i22",
+   "problem": "value plan 952937.585573 != re-read 952937585573.0; part L52474: unit plan 원 != 백만원; part L52474: contribution plan 952937.585573 != 952937585573.0; signed sum of the plan parts 952937585573.0 != value 952937.585573"
+  },
+  {
+   "where": "B1 2023.4Q i23",
+   "problem": "value plan 180599.569103 != re-read 180599569103.0; part L52493: unit plan 원 != 백만원; part L52493: contribution plan 180599.569103 != 180599569103.0; signed sum of the plan parts 180599569103.0 != value 180599.569103"
+  },
+  {
+   "where": "B1 2023.4Q i24",
+   "problem": "value plan 772338.01647 != re-read 772338016470.0; part L52512: unit plan 원 != 백만원; part L52512: contribution plan 772338.01647 != 772338016470.0; signed sum of the plan parts 772338016470.0 != value 772338.01647"
+  },
+  {
+   "where": "B1 2023.4Q i25",
+   "problem": "value plan -463577.530269 != re-read -463577530269.0; part L52588: unit plan 원 != 백만원; part L52588: contribution plan -463577.530269 != -463577530269.0; signed sum of the plan parts -463577530269.0 != value -463577.530269"
+  },
+  {
+   "where": "B1 2023.4Q i27",
+   "problem": "value plan -1511896.424558 != re-read -1511896424558.0; part L52702: unit plan 원 != 백만원; part L52702: contribution plan -1511896.424558 != -1511896424558.0; signed sum of the plan parts -1511896424558.0 != value -1511896.424558"
+  },
+  {
+   "where": "B1 2023.4Q i31",
+   "problem": "value plan 308760.486201 != re-read 308760486201.0; part L52854: unit plan 원 != 백만원; part L52854: contribution plan 308760.486201 != 308760486201.0; signed sum of the plan parts 308760486201.0 != value 308760.486201"
+  },
+  {
+   "where": "B2 2023.3Q i1",
+   "problem": "item differs from the master by +754478622232.623291 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i16",
+   "problem": "item differs from the master by +35264163733.801003 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i17",
+   "problem": "item differs from the master by +314655062771.622559 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i18",
+   "problem": "item differs from the master by +908972530831.560181 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i19",
+   "problem": "item differs from the master by -594317468059.937622 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i20",
+   "problem": "item differs from the master by +1069133685004.245850 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i21",
+   "problem": "item differs from the master by -22124987241.990631 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i22",
+   "problem": "item differs from the master by +1047008697762.255249 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i23",
+   "problem": "item differs from the master by +260654177339.562012 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i24",
+   "problem": "item differs from the master by +786354520422.693237 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i25",
+   "problem": "item differs from the master by +119978232056.647964 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i26",
+   "problem": "item differs from the master by -363958871047.765015 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i27",
+   "problem": "item differs from the master by +472908203067.324036 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i28",
+   "problem": "item differs from the master by +6122506589.487288 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i29",
+   "problem": "item differs from the master by +1660428738.569601 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i30",
+   "problem": "item differs from the master by +437890084.109478 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i31",
+   "problem": "item differs from the master by +906332752479.341187 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.3Q i32",
+   "problem": "item differs from the master by +2808074624.922567 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.4Q i18",
+   "problem": "item differs from the master by +1283335103238.613525 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.4Q i21",
+   "problem": "item differs from the master by -28698127789.843513 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.4Q i26",
+   "problem": "item differs from the master by +1038657906497.054810 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.4Q i28",
+   "problem": "item differs from the master by +28504744210.227283 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.4Q i29",
+   "problem": "item differs from the master by -280327612.672107 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.4Q i30",
+   "problem": "item differs from the master by +2886248933.748180 but is not in the plan"
+  },
+  {
+   "where": "B2 2023.4Q i32",
+   "problem": "item differs from the master by -21450726058.252491 but is not in the plan"
+  },
+  {
+   "where": "B3 2023.1Q CSM i1",
+   "problem": "value plan 83515.4 != re-read 83515391.8 (exact 83515391.77); exact plan 83515.39177 != 83515391.77; unit plan 천원 != 백만원; contribution 83515.39177 sign 1"
+  },
+  {
+   "where": "B3 2023.1Q CSM i2",
+   "problem": "value plan 4572.8 != re-read 4572791.4 (exact 4572791.37); exact plan 4572.79137 != 4572791.37; unit plan 천원 != 백만원; contribution 4572.79137 sign 1"
+  },
+  {
+   "where": "B3 2023.1Q CSM i3",
+   "problem": "value plan 614.8 != re-read 614767.2 (exact 614767.17); exact plan 614.76717 != 614767.17; unit plan 천원 != 백만원; contribution 614.76717 sign 1"
+  },
+  {
+   "where": "B3 2023.1Q CSM i4",
+   "problem": "value plan -2103.2 != re-read -2103233.7 (exact -2103233.72); exact plan -2103.23372 != -2103233.72; unit plan 천원 != 백만원; contribution -2103.23372 sign 1"
+  },
+  {
+   "where": "B3 2023.1Q CSM i5",
+   "problem": "value plan -2066.6 != re-read -2066565.5 (exact -2066565.46); exact plan -2066.56546 != -2066565.46; unit plan 천원 != 백만원; contribution -2066.56546 sign 1"
+  },
+  {
+   "where": "B3 2023.1Q CSM i6",
+   "problem": "value plan 84533.2 != re-read 84533151.1 (exact 84533151.13); exact plan 84533.15113 != 84533151.13; unit plan 천원 != 백만원; contribution 84533.15113 sign 1"
+  },
+  {
+   "where": "B3 2023.2Q CSM i1",
+   "problem": "value plan 83515.4 != re-read 83515391.8 (exact 83515391.77); exact plan 83515.39177 != 83515391.77; unit plan 천원 != 백만원; contribution 83515.39177 sign 1"
+  },
+  {
+   "where": "B3 2023.2Q CSM i2",
+   "problem": "value plan 8755.9 != re-read 8755889.3 (exact 8755889.26); exact plan 8755.88926 != 8755889.26; unit plan 천원 != 백만원; contribution 8755.88926 sign 1"
+  },
+  {
+   "where": "B3 2023.2Q CSM i3",
+   "problem": "value plan 1260.7 != re-read 1260652.1 (exact 1260652.07); exact plan 1260.65207 != 1260652.07; unit plan 천원 != 백만원; contribution 1260.65207 sign 1"
+  },
+  {
+   "where": "B3 2023.2Q CSM i4",
+   "problem": "value plan -3369.2 != re-read -3369183.7 (exact -3369183.74); exact plan -3369.18374 != -3369183.74; unit plan 천원 != 백만원; contribution -3369.18374 sign 1"
+  },
+  {
+   "where": "B3 2023.2Q CSM i5",
+   "problem": "value plan -4178.4 != re-read -4178402.7 (exact -4178402.67); exact plan -4178.40267 != -4178402.67; unit plan 천원 != 백만원; contribution -4178.40267 sign 1"
+  },
+  {
+   "where": "B3 2023.2Q CSM i6",
+   "problem": "value plan 85984.3 != re-read 85984346.7 (exact 85984346.69); exact plan 85984.34669 != 85984346.69; unit plan 천원 != 백만원; contribution 85984.34669 sign 1"
+  },
+  {
+   "where": "B3 2023.3Q CSM i1",
+   "problem": "value plan 83515.4 != re-read 83515391.8 (exact 83515391.77); exact plan 83515.39177 != 83515391.77; unit plan 천원 != 백만원; contribution 83515.39177 sign 1"
+  },
+  {
+   "where": "B3 2023.3Q CSM i4",
+   "problem": "value plan -3226.2 != re-read -3226165.8 (exact -3226165.81); exact plan -3226.16581 != -3226165.81; unit plan 천원 != 백만원; contribution -3226.16581 sign 1"
+  },
+  {
+   "where": "B3 2023.3Q i2",
+   "problem": "CSM item not in the plan differs from the live master: master 13221.4 vs re-read 13221355.8"
+  },
+  {
+   "where": "B3 2023.3Q i3",
+   "problem": "CSM item not in the plan differs from the live master: master 1929.8 vs re-read 1929835.3"
+  },
+  {
+   "where": "B3 2023.3Q i5",
+   "problem": "CSM item not in the plan differs from the live master: master -6403.8 vs re-read -6403791.2"
+  },
+  {
+   "where": "B3 2023.3Q i6",
+   "problem": "CSM item not in the plan differs from the live master: master 89036.6 vs re-read 89036625.9"
+  },
+  {
+   "where": "B3 2023.4Q CSM i1",
+   "problem": "value plan 83515.4 != re-read 83515372.6 (exact 83515372.63); exact plan 83515.37263 != 83515372.63; unit plan 천원 != 백만원; contribution 83515.37263 sign 1"
+  },
+  {
+   "where": "B3 2023.4Q CSM i4",
+   "problem": "value plan -2715.9 != re-read -2715904.5 (exact -2715904.55); exact plan -2715.90455 != -2715904.55; unit plan 천원 != 백만원; contribution -2715.90455 sign 1"
+  },
+  {
+   "where": "B3 2023.4Q CSM i5",
+   "problem": "value plan -8805.4 != re-read -8805448.4 (exact -8805448.41); exact plan -8805.44841 != -8805448.41; unit plan 천원 != 백만원; contribution -8805.44841 sign 1"
+  },
+  {
+   "where": "B3 2023.4Q CSM i6",
+   "problem": "value plan 91422.7 != re-read 91422711.4 (exact 91422711.41); exact plan 91422.71141 != 91422711.41; unit plan 천원 != 백만원; contribution 91422.71141 sign 1"
+  },
+  {
+   "where": "B3 2023.4Q i2",
+   "problem": "CSM item not in the plan differs from the live master: master 16792.4 vs re-read 16792368.9"
+  },
+  {
+   "where": "B3 2023.4Q i3",
+   "problem": "CSM item not in the plan differs from the live master: master 2636.3 vs re-read 2636322.9"
+  },
+  {
+   "where": "B3",
+   "problem": "CSM openings differ within FY2023: [83515391.8, 83515391.8, 83515391.8, 83515372.6]"
+  },
+  {
+   "where": "C 2023.1Q",
+   "problem": "IR legs do not add up to the DART separate-basis 보험손익"
+  },
+  {
+   "where": "C 2023.2Q",
+   "problem": "IR legs do not add up to the DART separate-basis 보험손익"
+  },
+  {
+   "where": "D1 2023.3Q i1",
+   "problem": "derived single quarter -415651540129.623291 != printed 3-month 338827082103.000000 (diff -754478622232.623291)"
+  },
+  {
+   "where": "D1 2023.3Q i16",
+   "problem": "derived single quarter -8784047176.801003 != printed 3-month 26480116557.000000 (diff -35264163733.801003)"
+  },
+  {
+   "where": "D1 2023.3Q i17",
+   "problem": "derived single quarter -257230166671.622559 != printed 3-month 57424896100.000000 (diff -314655062771.622559)"
+  },
+  {
+   "where": "D1 2023.3Q i18",
+   "problem": "derived single quarter -647085890529.560181 != printed 3-month 261886640302.000000 (diff -908972530831.560181)"
+  },
+  {
+   "where": "D1 2023.3Q i19",
+   "problem": "derived single quarter 389855723857.937622 != printed 3-month -204461744202.000000 (diff +594317468059.937622)"
+  },
+  {
+   "where": "D1 2023.3Q i20",
+   "problem": "derived single quarter -672881706801.245850 != printed 3-month 396251978203.000000 (diff -1069133685004.245850)"
+  },
+  {
+   "where": "D1 2023.3Q i21",
+   "problem": "derived single quarter 15434153450.990633 != printed 3-month -6690833791.000000 (diff +22124987241.990631)"
+  },
+  {
+   "where": "D1 2023.3Q i22",
+   "problem": "derived single quarter -657447553350.255249 != printed 3-month 389561144412.000000 (diff -1047008697762.255249)"
+  },
+  {
+   "where": "D1 2023.3Q i23",
+   "problem": "derived single quarter -160484903943.562012 != printed 3-month 100169273396.000000 (diff -260654177339.562012)"
+  },
+  {
+   "where": "D1 2023.3Q i24",
+   "problem": "derived single quarter -496962649406.693237 != printed 3-month 289391871016.000000 (diff -786354520422.693237)"
+  },
+  {
+   "where": "D1 2023.3Q i25",
+   "problem": "derived single quarter -90733896355.647964 != printed 3-month 29244335701.000000 (diff -119978232056.647964)"
+  },
+  {
+   "where": "D1 2023.3Q i26",
+   "problem": "derived single quarter -196338354536.235016 != printed 3-month -560297225584.000000 (diff +363958871047.765015)"
+  },
+  {
+   "where": "D1 2023.3Q i27",
+   "problem": "derived single quarter 121036809087.675980 != printed 3-month 593945012155.000000 (diff -472908203067.324036)"
+  },
+  {
+   "where": "D1 2023.3Q i28",
+   "problem": "derived single quarter -17086255029.487288 != printed 3-month -10963748440.000000 (diff -6122506589.487288)"
+  },
+  {
+   "where": "D1 2023.3Q i29",
+   "problem": "derived single quarter -145871286.569601 != printed 3-month 1514557452.000000 (diff -1660428738.569601)"
+  },
+  {
+   "where": "D1 2023.3Q i30",
+   "problem": "derived single quarter -1154946580.109478 != printed 3-month -717056496.000000 (diff -437890084.109478)"
+  },
+  {
+   "where": "D1 2023.3Q i31",
+   "problem": "derived single quarter -587696545762.341187 != printed 3-month 318636206717.000000 (diff -906332752479.341187)"
+  },
+  {
+   "where": "D1 2023.3Q i32",
+   "problem": "derived single quarter 2954721989.077433 != printed 3-month 5762796614.000000 (diff -2808074624.922567)"
+  },
+  {
+   "where": "D2 2023.3Q",
+   "problem": "item 4 derived single -417199888.885 != printed 3-month 222538847.0"
+  },
+  {
+   "where": "D4 i1",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i17",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i19",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i20",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i22",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i23",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i24",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i25",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i27",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  },
+  {
+   "where": "D4 i31",
+   "problem": "the 'unrestated 9M / restated annual' premise of the null_dangi rule does not hold for this item"
+  }
+ ],
+ "mutate": "unit",
+ "pl_cells": 57,
+ "pl_ok": 8,
+ "csm_cells": 18,
+ "csm_ok": 0
+}

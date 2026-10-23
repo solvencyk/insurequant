@@ -1,0 +1,23 @@
+{
+  "before_sha256": {
+    "data/_gold/user_pl_cells.json": "a81180044bd77d0f7511af7d0b61e58e0fca088237d2a6ef37af7a5ea396b1ee",
+    "PL_breakdown.json": "5df3fe6660ae6bea6712fd420389bac888e5147ab74018abe30ceeb98f897923",
+    "PL_breakdown_provenance.json": "07f8d462ec93caed98fcbdc76e606704d4a544f60ee7762d653374f05b838830",
+    "data/_gold/user_csm_cells.json": "cd11d341e864d0b6562d18c2f961d396507c0f8d499982917130224d35361233",
+    "CSM_waterfall.json": "eb86a95bd0b7c5527d0e931085f311aacdb345b98c8c3d5f9ed1cf81bf24dc26",
+    "CSM_waterfall_provenance.json": "a3eabb649cef42ab7bf4b04728b88e0e51735780b09032cae4b64283b564a14a",
+    "tests/test_rule_coverage_manifest.py": "ace58adbb017a31e1428320a15fe0770c11fef19331e52e81d1a4c5f9c5174d2",
+    "data/_gold/gold_overlay_ledger.json": "eb87ce0c88fc95c6bb3270e3e8e03bee76ed03252ce3fbc6ca9046530741e102"
+  },
+  "after_sha256": {
+    "data/_gold/user_pl_cells.json": "cd4ac5fbbb256102995ff9831008ee165ea8e3d4b7ad6564fca13552a0e814dc",
+    "PL_breakdown.json": "2c2283f4420cc883accec6ea199b5c33876280227e32c77fce285d876677ee92",
+    "PL_breakdown_provenance.json": "21dc327b06edfe9d1616f9ea4d87b90d039eb86c250e3149d4f4ecda2dfb1e0a",
+    "data/_gold/user_csm_cells.json": "bf9e91b7cfcc0c17df1edb0bcfd34c0aac2f4022af068ab8bcf2b1ff24133212",
+    "CSM_waterfall.json": "b6e329d66da95100fbab3b1de99449d67fda361f94d9dcaaec59658609c8b911",
+    "CSM_waterfall_provenance.json": "5b8777d4fb7cfb51bf58c7b7de857c8fd5d320d888e9a0dc3b7ed88ea5d31206",
+    "tests/test_rule_coverage_manifest.py": "b9d8b61a89d9aa8a91ae42d334494d042c42604e6be81d4fccf4d71a12808bbe",
+    "data/_gold/gold_overlay_ledger.json": "84f1abdce350faeda551af572ac80eae7c9d6df0b220a2afb7f102f6fa4e5be7"
+  },
+  "applied_at": "2026-10-23T20:20:42"
+}

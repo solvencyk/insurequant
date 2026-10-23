@@ -1,0 +1,34 @@
+PL new KR0003 gold entries: 18 quarters ['2023.4Q']
+  item 1 gold 461540.038638 was 468498.419718 | live master==gold True | was==HEAD master True
+  item 2 gold 486250.0 was 493210.0 | live master==gold True | was==HEAD master True
+  item 3 gold 570025.0 was 578755.0 | live master==gold True | was==HEAD master True
+  item 4 gold 185905.0 was 186853.0 | live master==gold True | was==HEAD master True
+  item 7 gold 313279.0 was 321061.0 | live master==gold True | was==HEAD master True
+  item 8 gold -83775.0 was -85545.0 | live master==gold True | was==HEAD master True
+  item 9 gold -1973.0 was -1756.0 | live master==gold True | was==HEAD master True
+  item 12 gold -78151.0 was -80138.0 | live master==gold True | was==HEAD master True
+  item 17 gold -86105.249856 was -72207.217142 | live master==gold True | was==HEAD master True
+  item 19 gold -176363.673037 was -162465.640323 | live master==gold True | was==HEAD master True
+  item 20 gold 375434.788782 was 396291.202576 | live master==gold True | was==HEAD master True
+  item 22 gold 373482.708976 was 394339.12277 | live master==gold True | was==HEAD master True
+  item 23 gold 87902.382833 was 92703.196556 | live master==gold True | was==HEAD master True
+  item 24 gold 285580.326143 was 301635.926214 | live master==gold True | was==HEAD master True
+  item 25 gold -154441.34843 was -176169.223932 | live master==gold True | was==HEAD master True
+  item 26 gold 255922.070529 was 244992.729544 | live master==gold True | was==HEAD master True
+  item 27 gold -496420.065574 was -507218.600091 | live master==gold True | was==HEAD master True
+  item 31 gold 131138.977713 was 125466.702282 | live master==gold True | was==HEAD master True
+  changed/replaced KR0003 pre-existing gold entries: []
+  KR0003 gold entries whose value != live master: []
+CSM new KR0003 gold entries: 5 quarters ['2023.4Q']
+  item 1 gold 16669.0 was 16774.4 | live master==gold True | was==HEAD master True
+  item 3 gold 777.0 was 780.5 | live master==gold True | was==HEAD master True
+  item 4 gold 2795.0 was 2801.0 | live master==gold True | was==HEAD master True
+  item 5 gold -1859.0 was -1868.5 | live master==gold True | was==HEAD master True
+  item 6 gold 23860.8 was 23966.2 | live master==gold True | was==HEAD master True
+  changed/replaced KR0003 pre-existing gold entries: []
+  KR0003 gold entries whose value != live master: []
+null_dangi KR0003 cells: [('KR0003', '2023.4Q', 1), ('KR0003', '2023.4Q', 4), ('KR0003', '2023.4Q', 17), ('KR0003', '2023.4Q', 19), ('KR0003', '2023.4Q', 20), ('KR0003', '2023.4Q', 22), ('KR0003', '2023.4Q', 23), ('KR0003', '2023.4Q', 24), ('KR0003', '2023.4Q', 25), ('KR0003', '2023.4Q', 26), ('KR0003', '2023.4Q', 27), ('KR0003', '2023.4Q', 31)]
+2023.4Q blank-single with non-null cum (live): [('KR0003', '2023.4Q', 1), ('KR0003', '2023.4Q', 2), ('KR0003', '2023.4Q', 3), ('KR0003', '2023.4Q', 4), ('KR0003', '2023.4Q', 5), ('KR0003', '2023.4Q', 6), ('KR0003', '2023.4Q', 7), ('KR0003', '2023.4Q', 8), ('KR0003', '2023.4Q', 9), ('KR0003', '2023.4Q', 10), ('KR0003', '2023.4Q', 11), ('KR0003', '2023.4Q', 12), ('KR0003', '2023.4Q', 13), ('KR0003', '2023.4Q', 14), ('KR0003', '2023.4Q', 17), ('KR0003', '2023.4Q', 19), ('KR0003', '2023.4Q', 20), ('KR0003', '2023.4Q', 22), ('KR0003', '2023.4Q', 23), ('KR0003', '2023.4Q', 24), ('KR0003', '2023.4Q', 25), ('KR0003', '2023.4Q', 26), ('KR0003', '2023.4Q', 27), ('KR0003', '2023.4Q', 31)]
+blank now, populated in HEAD: [('KR0003', '2023.4Q', 1), ('KR0003', '2023.4Q', 4), ('KR0003', '2023.4Q', 17), ('KR0003', '2023.4Q', 19), ('KR0003', '2023.4Q', 20), ('KR0003', '2023.4Q', 22), ('KR0003', '2023.4Q', 23), ('KR0003', '2023.4Q', 24), ('KR0003', '2023.4Q', 25), ('KR0003', '2023.4Q', 26), ('KR0003', '2023.4Q', 27), ('KR0003', '2023.4Q', 31)] == null_dangi (excluding pre-existing 15?) True
+LIVE identities residual: {'3=4+5+6+7': 0.0, '2=3+8': 0.0, '8=9+10+11+12': 0.0, '17=18+19': 0.0, '20=1+17': 0.0, '22=20+21': 0.0, '24=22-23': -0.0, '25=26+27+28+29+30+32': 0.0, '31=24+25': 0.0, 'bridge 1=2+13+14+15-16': 0.746564}
+HEAD identities residual: {'3=4+5+6+7': 0.0, '2=3+8': 0.0, '8=9+10+11+12': 0.0, '17=18+19': 0.0, '20=1+17': 0.0, '22=20+21': 0.0, '24=22-23': -0.0, '25=26+27+28+29+30+32': -0.0, '31=24+25': 0.0, 'bridge 1=2+13+14+15-16': -0.872356}

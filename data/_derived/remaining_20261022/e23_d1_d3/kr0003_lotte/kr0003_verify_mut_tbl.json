@@ -1,0 +1,172 @@
+{
+ "control_nbad": 0,
+ "pl_confirmed": 11,
+ "pl_planned": [
+  1,
+  2,
+  3,
+  4,
+  7,
+  8,
+  9,
+  12,
+  17,
+  19,
+  20,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  31
+ ],
+ "csm_confirmed": 0,
+ "identities": {
+  "20-(1+17)": 0.0,
+  "22-(20+21)": 0.0,
+  "24-(22-23)": 0.0,
+  "31-(24+25)": 0.0,
+  "25-(26+27+28+29+30+32)": -2.9103830456733704e-11,
+  "17-(18+19)": -2.9103830456733704e-11,
+  "3-(4+5+6+7)": 7780.0,
+  "8-(9+10+11+12)": 5784.0,
+  "2-(3+8)": 0.0,
+  "1-(2+13+14+15-16)": 263268.746564
+ },
+ "seam_equal_items": 11,
+ "fy25_third_col_equal": true,
+ "issuer_restatement_agree": 10,
+ "null_dangi_items": [
+  1,
+  4,
+  17,
+  19,
+  20,
+  22,
+  23,
+  24,
+  25,
+  26,
+  27,
+  31
+ ],
+ "problems": [
+  {
+   "where": "B.lob",
+   "problem": "note totals do not match the statement prior column: 331503.19403300015, -3190.6040879999928"
+  },
+  {
+   "where": "B.cite",
+   "problem": "item 2: lines read [25171, 25219, 25259, 25315] != plan [25411, 25459, 25499, 25555]"
+  },
+  {
+   "where": "B.value",
+   "problem": "item 2: independent reread 222982.0 != plan new 486250.0"
+  },
+  {
+   "where": "B.cite",
+   "problem": "item 3: lines read [25171, 25219] != plan [25411, 25459]"
+  },
+  {
+   "where": "B.value",
+   "problem": "item 3: independent reread 239602.0 != plan new 570025.0"
+  },
+  {
+   "where": "B.cite",
+   "problem": "item 4: lines read [25147] != plan [25387]"
+  },
+  {
+   "where": "B.value",
+   "problem": "item 4: independent reread 225448.0 != plan new 185905.0"
+  },
+  {
+   "where": "B.value",
+   "problem": "item 7: independent reread -64467.0 != plan new 313279.0"
+  },
+  {
+   "where": "B.cite",
+   "problem": "item 8: lines read [25259, 25315] != plan [25499, 25555]"
+  },
+  {
+   "where": "B.value",
+   "problem": "item 8: independent reread -16620.0 != plan new -83775.0"
+  },
+  {
+   "where": "B.cite",
+   "problem": "item 9: lines read [25299] != plan [25539]"
+  },
+  {
+   "where": "B.value",
+   "problem": "item 9: independent reread -2989.0 != plan new -1973.0"
+  },
+  {
+   "where": "B.value",
+   "problem": "item 12: independent reread -15764.0 != plan new -78151.0"
+  },
+  {
+   "where": "B.drop",
+   "problem": "plan dropped item 6 but my classification is changed"
+  },
+  {
+   "where": "B.missing",
+   "problem": "item 5 classified changed by the independent read but not planned"
+  },
+  {
+   "where": "B.missing",
+   "problem": "item 6 classified changed by the independent read but not planned"
+  },
+  {
+   "where": "B.missing",
+   "problem": "item 10 classified changed by the independent read but not planned"
+  },
+  {
+   "where": "B.missing",
+   "problem": "item 11 classified changed by the independent read but not planned"
+  },
+  {
+   "where": "B.missing",
+   "problem": "item 13 classified changed by the independent read but not planned"
+  },
+  {
+   "where": "B.missing",
+   "problem": "item 14 classified changed by the independent read but not planned"
+  },
+  {
+   "where": "B.csm",
+   "problem": "item 1: plan 16669.0/16669.0/L19881/1,666,900 != reread 23860.8/23860.81/L19597/2,386,081"
+  },
+  {
+   "where": "B.csm",
+   "problem": "item 2: changed=True but planned=False"
+  },
+  {
+   "where": "B.csm",
+   "problem": "item 3: plan 777.0/777.01/L20024/77,701 != reread 982.4/982.43/L19740/98,243"
+  },
+  {
+   "where": "B.csm",
+   "problem": "item 4: plan 2795.0/2794.96/L19980/279,496 != reread -4239.7/-4239.71/L19696/(423,971)"
+  },
+  {
+   "where": "B.csm",
+   "problem": "item 5: plan -1859.0/-1859.05/L19925/(185,905) != reread -2254.5/-2254.48/L19641/(225,448)"
+  },
+  {
+   "where": "B.csm",
+   "problem": "item 6: plan 23860.8/23860.81/L20090/2,386,081 != reread 23201.6/23201.57/L19806/2,320,157"
+  },
+  {
+   "where": "C.ident",
+   "problem": "3-(4+5+6+7) = 7780.0"
+  },
+  {
+   "where": "C.ident",
+   "problem": "8-(9+10+11+12) = 5784.0"
+  },
+  {
+   "where": "C.ident",
+   "problem": "1-(2+13+14+15-16) = 263268.746564"
+  }
+ ]
+}

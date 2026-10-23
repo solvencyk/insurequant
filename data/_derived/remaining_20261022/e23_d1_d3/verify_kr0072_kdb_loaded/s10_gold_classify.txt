@@ -1,0 +1,50 @@
+approved KR0072 gold replacements (11): [('CSM', '2023.1Q', '4'), ('CSM', '2023.1Q', '5'), ('CSM', '2023.1Q', '6'), ('CSM', '2023.2Q', '4'), ('CSM', '2023.2Q', '5'), ('CSM', '2023.4Q', '1'), ('CSM', '2023.4Q', '4'), ('PL', '2023.2Q', '4'), ('PL', '2023.2Q', '7'), ('PL', '2023.3Q', '4'), ('PL', '2023.3Q', '7')]
+
+===== PL set sizes head/pre/live: 1171 1379 1440 | dup keys live 0
+entries changed pre-load -> live: 65 | of those not KR0072: []
+KR0072 gold HEAD->live: new 61 replaced 4 removed 0 unchanged 3
+  replaced (old -> new | HEAD was | HEAD note[:70]):
+     PL 2023.2Q 4 23415.0 -> 24509.0 | head was 12290.0 | live was 23415.0 | note: inbox/parser/20260815T1400Z 조사 중 콜래터럴 발견(원 티켓은 2023.3Q만 지목, ratio 0.525 로 RED 밴드를 근소하게 벗어나
+     PL 2023.2Q 7 -18990.0 -> -7462.006173 | head was -7865.0 | live was -18990.0 | note: inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (vali
+     PL 2023.3Q 4 35250.0 -> 37266.0 | head was 11835.0 | live was 35250.0 | note: inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP -- 티켓 원문 138.7억은 작성 시점 이후 
+     PL 2023.3Q 7 -44935.275872 -> -41277.719629 | head was -21520.275872 | live was -44935.275872 | note: inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (vali
+  removed:
+  approved set vs actual replaced+removed:
+    approved-but-not-touched: [] | touched-but-not-approved: []
+  new entries ( 61 ): by quarter {'2023.1Q': 19, '2023.2Q': 22, '2023.3Q': 14, '2023.4Q': 6} quarters outside FY2023: []
+  live KR0072 gold entries whose value != live master: []
+  live KR0072 gold entries outside FY2023 (pre-existing?): 3 unchanged vs HEAD: True
+set_dangi head/pre/live sizes 37 37 45
+   pre->live changes: [(('KR0072', '2023.2Q', 16), None, ['KR0072', '2023.2Q', 16, 3003.175286, 'data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml: L27770 [기타사업비용] 3,003,175,286 (prior-year 3-month column printed in the FY2024_Q2 report; the single quarter derived from the two cumulatives differs by -0.002091)']), (('KR0072', '2023.2Q', 21), None, ['KR0072', '2023.2Q', 21, -5482.633618, 'data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml: L28391 [영업외손익] (5,482,633,618) (prior-year 3-month column printed in the FY2024_Q2 report; the single quarter derived from the two cumulatives differs by +0.002458)']), (('KR0072', '2023.3Q', 17), None, ['KR0072', '2023.3Q', 17, -58698.285464, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4154 [투자손익] (58,698,285,464) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 18), None, ['KR0072', '2023.3Q', 18, 62310.759317, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4154 [투자손익] (58,698,285,464) || L4200 [보험금융수익] 9,643,444,150 || L4223 [재보험금융수익] 997,304,936 || L4499 [보험금융비용] 130,500,285,088 || L4522 [재보험금융비용] 1,149,508,779 (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 20), None, ['KR0072', '2023.3Q', 20, -69813.091796, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4729 [영업이익] (69,813,091,796) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 22), None, ['KR0072', '2023.3Q', 22, -75424.704649, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4821 [법인세차감전순이익(손실)] (75,424,704,649) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 24), None, ['KR0072', '2023.3Q', 24, -75424.704649, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4867 [당기순이익(손실)] (75,424,704,649) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 31), None, ['KR0072', '2023.3Q', 31, 12907.246768, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L5120 [당기총포괄손익] 12,907,246,768 (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)'])]
+   head->live KR0072 changes: [(('KR0072', '2023.2Q', 16), None, ['KR0072', '2023.2Q', 16, 3003.175286, 'data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml: L27770 [기타사업비용] 3,003,175,286 (prior-year 3-month column printed in the FY2024_Q2 report; the single quarter derived from the two cumulatives differs by -0.002091)']), (('KR0072', '2023.2Q', 21), None, ['KR0072', '2023.2Q', 21, -5482.633618, 'data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml: L28391 [영업외손익] (5,482,633,618) (prior-year 3-month column printed in the FY2024_Q2 report; the single quarter derived from the two cumulatives differs by +0.002458)']), (('KR0072', '2023.3Q', 17), None, ['KR0072', '2023.3Q', 17, -58698.285464, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4154 [투자손익] (58,698,285,464) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 18), None, ['KR0072', '2023.3Q', 18, 62310.759317, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4154 [투자손익] (58,698,285,464) || L4200 [보험금융수익] 9,643,444,150 || L4223 [재보험금융수익] 997,304,936 || L4499 [보험금융비용] 130,500,285,088 || L4522 [재보험금융비용] 1,149,508,779 (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 20), None, ['KR0072', '2023.3Q', 20, -69813.091796, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4729 [영업이익] (69,813,091,796) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 22), None, ['KR0072', '2023.3Q', 22, -75424.704649, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4821 [법인세차감전순이익(손실)] (75,424,704,649) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 24), None, ['KR0072', '2023.3Q', 24, -75424.704649, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4867 [당기순이익(손실)] (75,424,704,649) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)']), (('KR0072', '2023.3Q', 31), None, ['KR0072', '2023.3Q', 31, 12907.246768, 'data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L5120 [당기총포괄손익] 12,907,246,768 (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)'])]
+null_dangi head/pre/live sizes 98 121 121
+   pre->live changes: []
+   head->live KR0072 changes: []
+doc keys added vs pre: ['_doc_e23_kr0072_20261023'] [] []
+
+===== CSM set sizes head/pre/live: 370 417 428 | dup keys live 0
+entries changed pre-load -> live: 20 | of those not KR0072: []
+KR0072 gold HEAD->live: new 13 replaced 5 removed 2 unchanged 0
+  replaced (old -> new | HEAD was | HEAD note[:70]):
+     CSM 2023.1Q 4 -833.3 -> -867.71 | head was -944.6 | live was -833.3 | note: 
+     CSM 2023.1Q 5 -111.25 -> -116.41 | head was None | live was -111.25 | note: 
+     CSM 2023.1Q 6 4727.25 -> 5138.2 | head was 4727.2 | live was 4727.25 | note: 
+     CSM 2023.2Q 4 -685.55 -> -663.6 | head was -685.5 | live was -685.55 | note: 
+     CSM 2023.2Q 5 -234.15 -> -245.09 | head was -234.2 | live was -234.15 | note: 
+  removed:
+     CSM 2023.4Q 1 5239.4 | was 5695.9 | note: 
+     CSM 2023.4Q 4 -2103.5 | was -2560.0 | note: 
+  approved set vs actual replaced+removed:
+    approved-but-not-touched: [] | touched-but-not-approved: []
+  new entries ( 13 ): by quarter {'2023.1Q': 3, '2023.2Q': 4, '2023.3Q': 6} quarters outside FY2023: []
+  live KR0072 gold entries whose value != live master: []
+  live KR0072 gold entries outside FY2023 (pre-existing?): 0 unchanged vs HEAD: True
+doc keys added vs pre: ['_doc_e23_kr0072_20261023']
+   top-level key changed vs pre: _doc_e23_kr0072_20261023 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3, owner 2026-10-23 approval): chain-forced owner-gold entries REMOVED (not replaced) because the approved value equals the CSM builder source value (
+
+===== ledger keys ['_what', '_gate', '_reseed', '_basis', '_tolerance', '_measured_at', '_population', 'entries']
+ledger entries head/pre/live 109 109 106
+ledger pre->live removed: [('entries', 'CSM|KR0072|2023.1Q|6'), ('entries', 'CSM|KR0072|2023.2Q|4'), ('entries', 'CSM|KR0072|2023.2Q|5')] added: [] changed: []
+   removed entry ('entries', 'CSM|KR0072|2023.1Q|6') {"gold": 4727.25, "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED.", "overlay": "CSM", "source_file": "data/dart/viz/csm_waterfall_master_diag.json", "src": 4727.2, "verdict": "SAME_AT_1DP"}
+   removed entry ('entries', 'CSM|KR0072|2023.2Q|4') {"gold": -685.55, "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED.", "overlay": "CSM", "source_file": "data/dart/viz/csm_waterfall_master_diag.json", "src": -685.5, "verdict": "SAME_AT_1DP"}
+   removed entry ('entries', 'CSM|KR0072|2023.2Q|5') {"gold": -234.15, "note": "2026-08-30 최초 박제 (inbox/validation/20260830T0710Z). 이 칸들은 gold 를 지워도 화면이 안 바뀐다 — 즉 gold 가 빌더를 **가리고** 있다. 판정이 마스크를 벗으면 GOLD_OVERLAY_DRIFT RED.", "overlay": "CSM", "source_file": "data/dart/viz/csm_waterfall_master_diag.json", "src": -234.2, "verdict": "SAME_AT_1DP"}

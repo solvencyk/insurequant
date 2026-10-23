@@ -1,0 +1,153 @@
+{
+ "problems": [
+  {
+   "where": "2023.1Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.2Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.3Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.4Q PL4",
+   "problem": "CSM amortisation differs between the 구성내역 note and the roll-forward"
+  },
+  {
+   "where": "2023.1Q CSM",
+   "problem": "plan table data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원 != re-read table L36048"
+  },
+  {
+   "where": "2023.1Q CSM i1",
+   "problem": "stored plan 5695.95 != re-read 5830.47 (exact 5830.47, two_dp True); exact plan 5695.95 != 5830.47; part L36305 569,595 != re-read L36076 583,047; part contribution 5695.95 != 5830.47"
+  },
+  {
+   "where": "2023.1Q CSM i2",
+   "problem": "stored plan 384.11 != re-read 1238.09 (exact 1238.09, two_dp True); exact plan 384.11 != 1238.09; part L36353 38,411 != re-read L36124 123,809; part contribution 384.11 != 1238.09"
+  },
+  {
+   "where": "2023.1Q CSM i3",
+   "problem": "stored plan 42.25 != re-read 53.38 (exact 53.38, two_dp True); exact plan 42.25 != 53.38; part L36417 4,225 != re-read L36188 5,338; part contribution 42.25 != 53.38"
+  },
+  {
+   "where": "2023.1Q CSM i4",
+   "problem": "stored plan -867.71 != re-read -1132.34 (exact -1132.34, two_dp True); exact plan -867.71 != -1132.34; part L36337 (86,771) != re-read L36108 (113,234); part contribution -867.71 != -1132.34"
+  },
+  {
+   "where": "2023.1Q CSM i5",
+   "problem": "stored plan -116.41 != re-read -135.31 (exact -135.31, two_dp True); exact plan -116.41 != -135.31; part L36369 (11,641) != re-read L36140 (13,531); part contribution -116.41 != -135.31"
+  },
+  {
+   "where": "2023.1Q CSM i6",
+   "problem": "stored plan 5138.2 != re-read 5854.29 (exact 5854.29, two_dp True); exact plan 5138.2 != 5854.29; part L36481 513,820 != re-read L36252 585,429; label '9. 전분기말 보험계약자산 및 부채' != '9. 당분기말 보험계약자산 및 부채'; part contribution 5138.2 != 5854.29"
+  },
+  {
+   "where": "2023.2Q CSM",
+   "problem": "plan table data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원 != re-read table L40407"
+  },
+  {
+   "where": "2023.2Q CSM i1",
+   "problem": "stored plan 5695.95 != re-read 5830.47 (exact 5830.47, two_dp True); exact plan 5695.95 != 5830.47; part L40664 569,595 != re-read L40435 583,047; part contribution 5695.95 != 5830.47"
+  },
+  {
+   "where": "2023.2Q CSM i2",
+   "problem": "stored plan 1173.06 != re-read 1876.54 (exact 1876.54, two_dp True); exact plan 1173.06 != 1876.54; part L40712 117,306 != re-read L40483 187,654; part contribution 1173.06 != 1876.54"
+  },
+  {
+   "where": "2023.2Q CSM i3",
+   "problem": "stored plan 83.04 != re-read 104.26 (exact 104.26, two_dp True); exact plan 83.04 != 104.26; part L40776 8,304 != re-read L40547 10,426; part contribution 83.04 != 104.26"
+  },
+  {
+   "where": "2023.2Q CSM i4",
+   "problem": "stored plan -663.6 != re-read 1764.73 (exact 1764.73, two_dp True); exact plan -663.6 != 1764.73; part L40696 (66,360) != re-read L40467 176,473; part contribution -663.6 != 1764.73"
+  },
+  {
+   "where": "2023.2Q CSM i5",
+   "problem": "stored plan -245.09 != re-read -338.33 (exact -338.33, two_dp True); exact plan -245.09 != -338.33; part L40728 (24,509) != re-read L40499 (33,833); part contribution -245.09 != -338.33"
+  },
+  {
+   "where": "2023.2Q CSM i6",
+   "problem": "stored plan 6043.35 != re-read 9237.67 (exact 9237.67, two_dp True); exact plan 6043.35 != 9237.67; part L40840 604,335 != re-read L40611 923,767; label '9. 전반기말 보험계약자산 및 부채(1+5+6+7+8)' != '9. 당반기말 보험계약자산 및 부채(1+5+6+7+8)'; part contribution 6043.35 != 9237.67"
+  },
+  {
+   "where": "2023.3Q CSM",
+   "problem": "plan table data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원 != re-read table L18112"
+  },
+  {
+   "where": "2023.3Q CSM i1",
+   "problem": "stored plan 5695.9 != re-read 5830.5 (exact 5830.47, two_dp False); exact plan 5695.95 != 5830.47; part L18372 569,595 != re-read L18140 583,047; part contribution 5695.95 != 5830.47"
+  },
+  {
+   "where": "2023.3Q CSM i2",
+   "problem": "stored plan 2209.8 != re-read 2532.4 (exact 2532.37, two_dp False); exact plan 2209.79 != 2532.37; part L18420 220,979 != re-read L18188 253,237; part contribution 2209.79 != 2532.37"
+  },
+  {
+   "where": "2023.3Q CSM i3",
+   "problem": "stored plan 134.0 != re-read 180.9 (exact 180.89, two_dp False); exact plan 133.98 != 180.89; part L18487 13,398 != re-read L18252 18,089; part contribution 133.98 != 180.89"
+  },
+  {
+   "where": "2023.3Q CSM i4",
+   "problem": "stored plan -1830.2 != re-read 1130.4 (exact 1130.38, two_dp False); exact plan -1830.22 != 1130.38; part L18404 (183,022) != re-read L18172 113,038; part contribution -1830.22 != 1130.38"
+  },
+  {
+   "where": "2023.3Q CSM i5",
+   "problem": "stored plan -372.7 != re-read -536.8 (exact -536.84, two_dp False); exact plan -372.66 != -536.84; part L18436 (37,266) != re-read L18204 (53,684); part contribution -372.66 != -536.84"
+  },
+  {
+   "where": "2023.3Q CSM i6",
+   "problem": "stored plan 5836.8 != re-read 9137.3 (exact 9137.27, two_dp False); exact plan 5836.84 != 9137.27; part L18554 583,684 != re-read L18316 913,727; label '9. 전분기말 보험계약자산 및 부채 (1+5+6+7+8)' != '9. 당분기말 보험계약자산 및 부채(1+5+6+7+8)'; part contribution 5836.84 != 9137.27"
+  },
+  {
+   "where": "2023.4Q CSM",
+   "problem": "plan table data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml table@L26189 unit 백만원 != re-read table L25957"
+  },
+  {
+   "where": "2023.4Q CSM i1",
+   "problem": "stored plan 5695.9 != re-read 5830.5 (exact 5830.47, two_dp False); exact plan 5695.95 != 5830.47; part L26220 569,595 != re-read L25988 583,047; part contribution 5695.95 != 5830.47"
+  },
+  {
+   "where": "2023.4Q CSM i4",
+   "problem": "stored plan -2560.0 != re-read -8.6 (exact -8.59, two_dp False); exact plan -2559.97 != -8.59; part L26252 (255,997) != re-read L26020 (859); part contribution -2559.97 != -8.59"
+  },
+  {
+   "where": "2023.4Q CSM i2",
+   "problem": "not in the plan but live 3023.1 != re-read 3282.2"
+  },
+  {
+   "where": "2023.4Q CSM i3",
+   "problem": "not in the plan but live 183.4 != re-read 256.8"
+  },
+  {
+   "where": "2023.4Q CSM i5",
+   "problem": "not in the plan but live -512.0 != re-read -710.5"
+  },
+  {
+   "where": "2023.4Q CSM i6",
+   "problem": "not in the plan but live 5830.5 != re-read 8650.5"
+  },
+  {
+   "where": "FY boundary",
+   "problem": "2023.4Q closing != 2024.1Q opening"
+  },
+  {
+   "where": "N4AUD",
+   "problem": "CSM prior table differs from the main document"
+  },
+  {
+   "where": "O4AUD",
+   "problem": "original annual CSM current table differs from the FY2024 prior column"
+  }
+ ],
+ "res": {
+  "pl_cells": 65,
+  "pl_cells_ok": 65,
+  "csm_cells": 20,
+  "csm_cells_ok": 0,
+  "control_bad": 0
+ },
+ "mutate": "tbl",
+ "ok": false
+}

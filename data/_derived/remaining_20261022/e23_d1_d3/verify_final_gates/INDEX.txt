@@ -1,0 +1,11 @@
+final-gates (validation, 2026-10-23, read-only; repo files unchanged: md5 before/after identical, git status 20 tracked-modified same as start)
+gates/            live-tree gates via gate_overlay (repo writes dropped): master_tables data_contract csm_continuity csm_waterfall nb_csm csm_coverage live_artifacts
+gates_head/       master_tables + data_contract with HEAD masters/provenance/gold served (baseline for comparison)
+tests/            pytest outputs: rule_coverage_manifest(104 pass,1 fail=xlsx drift), gold_overlay(7), identity_tautology(10), identity_registry(14), master_tables_golden(2), viz_ifrs17_panels_golden(1), viz_csm_waterfall_golden(1), pl_breakdown_golden RUN_PL_GOLDEN=1 (1 pass)
+f01_audit.*       cell counts vs HEAD per company (+ f01_changed_cells.json)
+f02_singleq.*     recompute of 값_당분기 from consecutive cumulative cells, XOR (one-side-changed) pairs
+f03_csm_identity  CSM roll-forward identity, cumulative and single
+f04_headline.txt  headline moves in 억원
+f05_fsapi.txt     independent check vs DART FS-API prior-year columns (OFS)
+f07_screen.txt    screen impact; f08_boundary.txt FY boundary continuity
+ticket: inbox/parser/20261023T1215Z__validation__KR0099-KR0003__2023.4Q__single_quarter_vintage_seam_not_blanked.md

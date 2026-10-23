@@ -1,0 +1,17 @@
+== PL: KR0070 set entries HEAD 47 WORK 120; duplicate keys in WORK []
+   removed [] ; added 73 ; changed-in-place [('2023.1Q', 4)]
+   master 값 changed cells: 74
+   gold new/changed keys == master changed keys? only-gold [] ; only-master []
+   entry checks: 74 entries, issues 0
+   untouched KR0070 entries: 46
+   set-entry count by company changes (HEAD->WORK): {'KR0003': (117, 135), 'KR0099': (0, 60), 'KR0070': (47, 120)}
+== CSM: KR0070 set entries HEAD 14 WORK 30; duplicate keys in WORK []
+   removed [('2023.4Q', 1), ('2023.4Q', 4)] ; added 18 ; changed-in-place []
+   master 값 changed cells: 20
+   gold new/changed keys == master changed keys? only-gold [] ; only-master [('2023.4Q', 1), ('2023.4Q', 4)]
+   entry checks: 18 entries, issues 0
+   removed entry ('2023.4Q', 1) HEAD gold 값=7017.8 was=7585.3 ; master now 7585.3 ; HEAD master 7017.8
+   removed entry ('2023.4Q', 4) HEAD gold 값=-1148.8 was=-1716.3 ; master now -1716.3 ; HEAD master -1148.8
+   untouched KR0070 entries: 12
+   set-entry count by company changes (HEAD->WORK): {'KR0003': (27, 32), 'KR0099': (2, 17), 'KR0070': (14, 30)}
+HEAD PL provenance cells with source_id OWNER_GOLD: 87 (companies ['KR0001', 'KR0002', 'KR0003', 'KR0005', 'KR0008', 'KR0010', 'KR0029', 'KR0032', 'KR0051', 'KR0068', 'KR0072', 'KR0073', 'KR0074', 'KR0075', 'KR0079', 'KR0083', 'KR0087', 'KR0095', 'KR0104', 'KR0150', 'KR1010', 'KR1011'])

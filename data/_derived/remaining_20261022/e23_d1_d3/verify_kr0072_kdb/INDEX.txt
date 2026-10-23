@@ -1,0 +1,13 @@
+verify_kr0072_kdb (validation, 2026-10-23, read-only)
+FINDING: the working tree holds NO KDB (KR0072) load. d01_diff.txt: PL_breakdown 0 changed fields, CSM_waterfall 0, both provenance files identical, gold (user_pl/user_csm) KR0072 entries identical to HEAD. Changed companies in the tree: KR0003 KR0009 KR0070 KR0099 only.
+head/            HEAD copies used for the diff
+d01_diff.py/.txt per-company cell diff vs HEAD (rows 13801/2358, no add/remove)
+d03_other.py     provenance + gold KR0072 comparison
+d05_sim.py/.txt  in-memory simulation of the planned load: old values == HEAD (65 PL + 20 CSM), 81 single-quarter changes, identities, CSM chain
+v01_reread.py    own re-read of all 196 cited cell parts (PL 65 cells, 8 set_dangi seams, CSM 20) in the raw XML: printed text, label, unit, column header
+v02_titles.py    period/table titles for the 13 distinct tables
+v03_stmt.py      full statement census (prior cumulative column) vs simulated master
+v05_orig.py      original-vintage prints behind the replaced owner gold entries
+v06_single.py    simulated single-quarter vs printed 3-month column (29 rows)
+v07_csm_census.py full CSM census, 6 items x 4 quarters (24 rows)
+g01_gold.py      HEAD gold entries of KR0072 and the plan's replace/remove list

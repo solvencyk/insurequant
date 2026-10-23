@@ -1,0 +1,277 @@
+{
+ "problems": [
+  {
+   "where": "B1 2023.1Q i1",
+   "problem": "part line 28347 ('보험손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 246045.277087"
+  },
+  {
+   "where": "B1 2023.1Q i4",
+   "problem": "line plan 40323 != re-read 40327"
+  },
+  {
+   "where": "B1 2023.1Q i16",
+   "problem": "part line 28508 ('기타사업비용') is not a re-read cell; signed sum of the plan parts 0.0 != value 4050.924606"
+  },
+  {
+   "where": "B1 2023.1Q i17",
+   "problem": "part line 28531 ('투자손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 174950.85334"
+  },
+  {
+   "where": "B1 2023.1Q i18",
+   "problem": "part line 28531 ('투자손익') is not a re-read cell; part line 28577 ('보험금융수익') is not a re-read cell; part line 28600 ('재보험금융수익') is not a re-read cell; part line 28968 ('보험금융비용') is not a re-read cell; part line 28991 ('재보험금융비용') is not a re-read cell; signed sum of the plan parts 0.0 != value 370703.670846"
+  },
+  {
+   "where": "B1 2023.1Q i19",
+   "problem": "part line 28577 ('보험금융수익') is not a re-read cell; part line 28600 ('재보험금융수익') is not a re-read cell; part line 28968 ('보험금융비용') is not a re-read cell; part line 28991 ('재보험금융비용') is not a re-read cell; signed sum of the plan parts 0.0 != value -195752.817506"
+  },
+  {
+   "where": "B1 2023.1Q i20",
+   "problem": "part line 29267 ('영업이익(손실)') is not a re-read cell; signed sum of the plan parts 0.0 != value 420996.130427"
+  },
+  {
+   "where": "B1 2023.1Q i21",
+   "problem": "part line 29290 ('영업외손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -7850.136275"
+  },
+  {
+   "where": "B1 2023.1Q i22",
+   "problem": "part line 29382 ('법인세차감전순이익') is not a re-read cell; signed sum of the plan parts 0.0 != value 413145.994152"
+  },
+  {
+   "where": "B1 2023.1Q i23",
+   "problem": "part line 29405 ('법인세비용') is not a re-read cell; signed sum of the plan parts 0.0 != value 97844.31067"
+  },
+  {
+   "where": "B1 2023.1Q i24",
+   "problem": "part line 29428 ('당기순이익(손실)') is not a re-read cell; signed sum of the plan parts 0.0 != value 315301.683482"
+  },
+  {
+   "where": "B1 2023.1Q i25",
+   "problem": "part line 29520 ('기타포괄손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -61784.991652"
+  },
+  {
+   "where": "B1 2023.1Q i26",
+   "problem": "part line 29566 ('기타포괄손익-공정가치측정채무증권평가손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 579877.893584"
+  },
+  {
+   "where": "B1 2023.1Q i27",
+   "problem": "part line 29658 ('보험계약 순금융손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -654376.896346"
+  },
+  {
+   "where": "B1 2023.1Q i28",
+   "problem": "part line 29635 ('현금흐름위험회피파생상품평가손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 16689.535871"
+  },
+  {
+   "where": "B1 2023.1Q i29",
+   "problem": "part line 29773 ('기타포괄손익-공정가치측정지분증권관련손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 908.73772"
+  },
+  {
+   "where": "B1 2023.1Q i30",
+   "problem": "part line 29681 ('재보험계약 순금융손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 52.934994"
+  },
+  {
+   "where": "B1 2023.1Q i31",
+   "problem": "part line 29842 ('총포괄손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 253516.69183"
+  },
+  {
+   "where": "B1 2023.1Q i32",
+   "problem": "part line 29520 ('기타포괄손익') is not a re-read cell; part line 29566 ('기타포괄손익-공정가치측정채무증권평가손익') is not a re-read cell; part line 29658 ('보험계약 순금융손익') is not a re-read cell; part line 29635 ('현금흐름위험회피파생상품평가손익') is not a re-read cell; part line 29773 ('기타포괄손익-공정가치측정지분증권관련손익') is not a re-read cell; part line 29681 ('재보험계약 순금융손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -4937.197475"
+  },
+  {
+   "where": "B1 2023.2Q i1",
+   "problem": "part line 31376 ('보험손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 415652.294609"
+  },
+  {
+   "where": "B1 2023.2Q i4",
+   "problem": "line plan 43389 != re-read 43393"
+  },
+  {
+   "where": "B1 2023.2Q i16",
+   "problem": "part line 31537 ('기타사업비용') is not a re-read cell; signed sum of the plan parts 0.0 != value 8784.082441"
+  },
+  {
+   "where": "B1 2023.2Q i17",
+   "problem": "part line 31560 ('투자손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 257230.481327"
+  },
+  {
+   "where": "B1 2023.2Q i18",
+   "problem": "part line 31560 ('투자손익') is not a re-read cell; part line 31606 ('보험금융수익') is not a re-read cell; part line 31629 ('재보험금융수익') is not a re-read cell; part line 31905 ('보험금융비용') is not a re-read cell; part line 31928 ('재보험금융비용') is not a re-read cell; signed sum of the plan parts 0.0 != value 647086.799503"
+  },
+  {
+   "where": "B1 2023.2Q i19",
+   "problem": "part line 31606 ('보험금융수익') is not a re-read cell; part line 31629 ('재보험금융수익') is not a re-read cell; part line 31905 ('보험금융비용') is not a re-read cell; part line 31928 ('재보험금융비용') is not a re-read cell; signed sum of the plan parts 0.0 != value -389856.318176"
+  },
+  {
+   "where": "B1 2023.2Q i20",
+   "problem": "part line 32158 ('영업이익(손실)') is not a re-read cell; signed sum of the plan parts 0.0 != value 672882.775936"
+  },
+  {
+   "where": "B1 2023.2Q i21",
+   "problem": "part line 32181 ('영업외손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -15434.175576"
+  },
+  {
+   "where": "B1 2023.2Q i22",
+   "problem": "part line 32273 ('법인세차감전순이익') is not a re-read cell; signed sum of the plan parts 0.0 != value 657448.60036"
+  },
+  {
+   "where": "B1 2023.2Q i23",
+   "problem": "part line 32296 ('법인세비용') is not a re-read cell; signed sum of the plan parts 0.0 != value 160485.164598"
+  },
+  {
+   "where": "B1 2023.2Q i24",
+   "problem": "part line 32319 ('당기순이익(손실)') is not a re-read cell; signed sum of the plan parts 0.0 != value 496963.435762"
+  },
+  {
+   "where": "B1 2023.2Q i25",
+   "problem": "part line 32411 ('기타포괄손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 90734.016334"
+  },
+  {
+   "where": "B1 2023.2Q i26",
+   "problem": "part line 32457 ('기타포괄손익-공정가치측정채무증권평가손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 196337.990577"
+  },
+  {
+   "where": "B1 2023.2Q i27",
+   "problem": "part line 32549 ('보험계약 순금융손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -121036.336179"
+  },
+  {
+   "where": "B1 2023.2Q i28",
+   "problem": "part line 32526 ('현금흐름위험회피파생상품평가손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 17086.261152"
+  },
+  {
+   "where": "B1 2023.2Q i29",
+   "problem": "part line 32618 ('기타포괄손익-공정가치측정지분증권관련손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 145.872947"
+  },
+  {
+   "where": "B1 2023.2Q i30",
+   "problem": "part line 32572 ('재보험계약 순금융손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 1154.947018"
+  },
+  {
+   "where": "B1 2023.2Q i31",
+   "problem": "part line 32687 ('총포괄손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 587697.452096"
+  },
+  {
+   "where": "B1 2023.2Q i32",
+   "problem": "part line 32411 ('기타포괄손익') is not a re-read cell; part line 32457 ('기타포괄손익-공정가치측정채무증권평가손익') is not a re-read cell; part line 32549 ('보험계약 순금융손익') is not a re-read cell; part line 32526 ('현금흐름위험회피파생상품평가손익') is not a re-read cell; part line 32618 ('기타포괄손익-공정가치측정지분증권관련손익') is not a re-read cell; part line 32572 ('재보험계약 순금융손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -2954.719181"
+  },
+  {
+   "where": "B1 2023.4Q i1",
+   "problem": "part line 51623 ('보험손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 526589.620124"
+  },
+  {
+   "where": "B1 2023.4Q i4",
+   "problem": "line plan 71221 != re-read 71225"
+  },
+  {
+   "where": "B1 2023.4Q i17",
+   "problem": "part line 51775 ('투자손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 455046.121937"
+  },
+  {
+   "where": "B1 2023.4Q i19",
+   "problem": "part line 51813 ('보험금융수익') is not a re-read cell; part line 51832 ('재보험금융수익') is not a re-read cell; part line 52136 ('보험금융비용') is not a re-read cell; part line 52155 ('재보험금융비용') is not a re-read cell; signed sum of the plan parts 0.0 != value -828290.264638"
+  },
+  {
+   "where": "B1 2023.4Q i20",
+   "problem": "part line 52383 ('영업이익(손실)') is not a re-read cell; signed sum of the plan parts 0.0 != value 981635.742061"
+  },
+  {
+   "where": "B1 2023.4Q i22",
+   "problem": "part line 52478 ('법인세차감전순이익') is not a re-read cell; signed sum of the plan parts 0.0 != value 952937.585573"
+  },
+  {
+   "where": "B1 2023.4Q i23",
+   "problem": "part line 52497 ('법인세비용') is not a re-read cell; signed sum of the plan parts 0.0 != value 180599.569103"
+  },
+  {
+   "where": "B1 2023.4Q i24",
+   "problem": "part line 52516 ('당기순이익(손실)') is not a re-read cell; signed sum of the plan parts 0.0 != value 772338.01647"
+  },
+  {
+   "where": "B1 2023.4Q i25",
+   "problem": "part line 52592 ('기타포괄손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -463577.530269"
+  },
+  {
+   "where": "B1 2023.4Q i27",
+   "problem": "part line 52706 ('보험계약 순금융손익') is not a re-read cell; signed sum of the plan parts 0.0 != value -1511896.424558"
+  },
+  {
+   "where": "B1 2023.4Q i31",
+   "problem": "part line 52858 ('총포괄손익') is not a re-read cell; signed sum of the plan parts 0.0 != value 308760.486201"
+  },
+  {
+   "where": "B3 2023.1Q CSM i1",
+   "problem": "line plan 44085 != re-read 44089"
+  },
+  {
+   "where": "B3 2023.1Q CSM i2",
+   "problem": "line plan 44125 != re-read 44129"
+  },
+  {
+   "where": "B3 2023.1Q CSM i3",
+   "problem": "line plan 44213 != re-read 44217"
+  },
+  {
+   "where": "B3 2023.1Q CSM i4",
+   "problem": "line plan 44109 != re-read 44113"
+  },
+  {
+   "where": "B3 2023.1Q CSM i5",
+   "problem": "line plan 44157 != re-read 44161"
+  },
+  {
+   "where": "B3 2023.1Q CSM i6",
+   "problem": "line plan 44261 != re-read 44265"
+  },
+  {
+   "where": "B3 2023.2Q CSM i1",
+   "problem": "line plan 47769 != re-read 47773"
+  },
+  {
+   "where": "B3 2023.2Q CSM i2",
+   "problem": "line plan 47809 != re-read 47813"
+  },
+  {
+   "where": "B3 2023.2Q CSM i3",
+   "problem": "line plan 47897 != re-read 47901"
+  },
+  {
+   "where": "B3 2023.2Q CSM i4",
+   "problem": "line plan 47793 != re-read 47797"
+  },
+  {
+   "where": "B3 2023.2Q CSM i5",
+   "problem": "line plan 47841 != re-read 47845"
+  },
+  {
+   "where": "B3 2023.2Q CSM i6",
+   "problem": "line plan 47945 != re-read 47949"
+  },
+  {
+   "where": "B3 2023.3Q CSM i1",
+   "problem": "line plan 45894 != re-read 45898"
+  },
+  {
+   "where": "B3 2023.3Q CSM i4",
+   "problem": "line plan 45918 != re-read 45922"
+  },
+  {
+   "where": "B3 2023.4Q CSM i1",
+   "problem": "line plan 75529 != re-read 75533"
+  },
+  {
+   "where": "B3 2023.4Q CSM i4",
+   "problem": "line plan 75553 != re-read 75557"
+  },
+  {
+   "where": "B3 2023.4Q CSM i5",
+   "problem": "line plan 75601 != re-read 75605"
+  },
+  {
+   "where": "B3 2023.4Q CSM i6",
+   "problem": "line plan 75705 != re-read 75709"
+  }
+ ],
+ "mutate": "line",
+ "pl_cells": 57,
+ "pl_ok": 8,
+ "csm_cells": 18,
+ "csm_ok": 0
+}

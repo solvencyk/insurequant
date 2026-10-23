@@ -1,0 +1,29 @@
+== PL_breakdown.json: rows head 13801 live 13801; keys only in head 0 only in live 0
+   값 changed by company     : {'KR0003': 18, 'KR0009': 57, 'KR0070': 74, 'KR0072': 65, 'KR0099': 60} total 274
+   값_당분기 changed by company: {'KR0003': 12, 'KR0009': 78, 'KR0070': 84, 'KR0072': 81, 'KR0099': 83} total 338
+   other fields changed       : none
+   companies outside the five : none
+   quarters touched           : {'2023.1Q': 86, '2023.2Q': 91, '2023.3Q': 89, '2023.4Q': 80}
+== CSM_waterfall.json: rows head 2358 live 2358; keys only in head 0 only in live 0
+   값 changed by company     : {'KR0003': 5, 'KR0009': 18, 'KR0070': 20, 'KR0072': 20, 'KR0099': 15} total 78
+   값_당분기 changed by company: {'KR0003': 4, 'KR0009': 20, 'KR0070': 23, 'KR0072': 23, 'KR0099': 19} total 89
+   other fields changed       : none
+   companies outside the five : none
+   quarters touched           : {'2023.1Q': 23, '2023.2Q': 23, '2023.3Q': 22, '2023.4Q': 23}
+== KR0072 live PL: single-quarter sum minus annual cumulative (백만원)
+   item 17: sum -17701.346925 annual -18428.269919 diff 726.922994
+   item 18: sum 583288.385063 annual 582561.462069 diff 726.922994
+   item 20: sum 47547.184054 annual 46820.261060 diff 726.922994
+   item 22: sum 24676.301064 annual 23949.378070 diff 726.922994
+   item 24: sum 24676.510387 annual 23949.587393 diff 726.922994
+   item 31: sum -95197.094771 annual -95924.017765 diff 726.922994
+   item  1: sum 65248.530979 annual 65248.530979 diff 0.000000
+   item  2: sum 78011.749804 annual 78011.749804 diff 0.000000
+   item  3: sum 67805.264694 annual 67805.264694 diff 0.000000
+   item 17 2023.1Q: cum 32877.150458 single 32877.150458
+   item 17 2023.2Q: cum 45706.602817 single 12829.452359
+   item 17 2023.3Q: cum -13718.605641 single -58698.285464
+   item 17 2023.4Q: cum -18428.269919 single -4709.664278
+== gold PL top-level sizes : {'_doc': 905, 'set': 1440, 'null_dangi': 8, 'set_dangi': 6}
+== gold CSM top-level sizes: {'_doc': 223, 'exclude_companies': 2, 'set': 428, '_doc_e23_kr0070_20261023': 786, '_doc_e23_kr0009_20261023': 1088, '_doc_e23_kr0072_20261023': 812}
+== ledger top-level sizes  : {'_what': 264, '_gate': 63, '_reseed': 60, '_basis': 197, '_tolerance': 3, '_measured_at': 56, '_population': 2, 'entries': 96}

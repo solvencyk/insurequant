@@ -1,0 +1,53 @@
+== KR0009 2023.1Q hd later data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml unit 원
+   adopted 23: [1, 2, 4, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+   candidate items not adopted: []  | adopted but not in candidates: []
+   closure: I1=+0.0000; I2=+0.0000; I2b=-0.0000; I3=-0.0000; I4=+0.0000; I5=-0.0000; I6=+0.0000
+== KR0009 2023.2Q hd later data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml unit 원
+   adopted 23: [1, 2, 4, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+   candidate items not adopted: []  | adopted but not in candidates: []
+   closure: I1=+0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=+0.0000; I5=-0.0000; I6=+0.0000
+== KR0009 2023.3Q hd later data/dart/FY2024_Q3/raw/KR0009_현대해상/20241114003026.xml unit 원
+   adopted 0: []
+   candidate items not adopted: []  | adopted but not in candidates: []
+   closure: I1=+0.0000; I2=-0.0000; I2b=+0.0000; I3=+0.0000; I4=-0.0000; I5=+0.0000; I6=+278340.0767 FAIL
+== KR0009 2023.4Q hd later data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml unit 원
+   adopted 11: [1, 4, 17, 19, 20, 22, 23, 24, 25, 27, 31]
+   candidate items not adopted: [16]  | adopted but not in candidates: []
+   dropped i16: old=38491.0 new=38490.968273 cls=changed (rounding-only (38,491.0 gold vs 38,490.968273 printed): ticket rule, no new mask pin) in_cand=True
+   closure: I1=-0.0000; I2=+0.0000; I2b=+0.0000; I3=-0.0000; I4=+0.0000; I5=+0.0000; I6=+98.1201 FAIL; I7=+0.0000; I8=+2.2240 FAIL; I9=+0.0000
+
+== 0. new / replaced gold cells that would be MASKED (value == builder source within the census tolerance) -> dropped (ticket: no new mask cells / no new pins)
+== A. adopted cells whose value differs from the e20 candidate (and candidate cells I did not adopt)
+   KR0009 2023.1Q i4: mine 206656.546 vs candidate 206660.0 (diff -3.454000)
+   KR0009 2023.2Q i4: mine 417840.268 vs candidate 417840.0 (diff +0.268000)
+   KR0009 2023.4Q i4: mine 880544.842 vs candidate 880540.0 (diff +4.842000)
+   2023.4Q: candidate items not adopted [16] | adopted but not in candidates []
+   adopted PL cells 57 (e20 candidates 58)
+== B. owner-gold cells in the adopted set
+== C. single-quarter (값_당분기) seam analysis
+   KR0009 2023.4Q i1: seam_annual_vs_unrestated_9M -> null_dangi (D=-227,889.756588, printed3m=None, live=-227988.70079, comparative 754479.376712 vs master 754479.376712)
+   KR0009 2023.4Q i4: seam_annual_vs_unrestated_9M -> null_dangi (D=240,165.727000, printed3m=None, live=240167.951, LOB item: 9M cumulative unchanged)
+   KR0009 2023.4Q i17: seam_annual_vs_unrestated_9M -> null_dangi (D=140,390.744510, printed3m=None, live=185221.897175, comparative 314655.377427 vs master 314655.377427)
+   KR0009 2023.4Q i19: seam_annual_vs_unrestated_9M -> null_dangi (D=-233,972.202260, printed3m=None, live=-189141.049595, comparative -594318.062378 vs master -594318.062378)
+   KR0009 2023.4Q i20: seam_annual_vs_unrestated_9M -> null_dangi (D=-87,499.012078, printed3m=None, live=-42766.803615, comparative 1069134.754139 vs master 1069134.754139)
+   KR0009 2023.4Q i22: seam_annual_vs_unrestated_9M -> null_dangi (D=-94,072.159199, printed3m=None, live=-49339.950736, comparative 1047009.744772 vs master 1047009.744772)
+   KR0009 2023.4Q i23: seam_annual_vs_unrestated_9M -> null_dangi (D=-80,054.868891, printed3m=None, live=-68706.307604, comparative 260654.437994 vs master 260654.437994)
+   KR0009 2023.4Q i24: seam_annual_vs_unrestated_9M -> null_dangi (D=-14,017.290308, printed3m=None, live=19366.356868, comparative 786355.306778 vs master 786355.306778)
+   KR0009 2023.4Q i25: seam_annual_vs_unrestated_9M -> null_dangi (D=-583,555.882304, printed3m=None, live=-616901.401687, comparative 119978.352035 vs master 119978.352035)
+   KR0009 2023.4Q i27: seam_annual_vs_unrestated_9M -> null_dangi (D=-1,984,805.100534, printed3m=None, live=-2018150.619917, comparative 472908.675976 vs master 472908.675976)
+   KR0009 2023.4Q i31: seam_annual_vs_unrestated_9M -> null_dangi (D=-597,573.172612, printed3m=None, live=-597535.044819, comparative 906333.658813 vs master 906333.658813)
+   seam table: 57 touched single-quarter cells; by class: {'consistent': 36, 'derived_none': 2, 'lob_item_not_checked_directly': 8, 'seam_annual_vs_unrestated_9M': 11}
+== D. CSM vectors (latest comparative, separate basis)
+   KR0009 2023.1Q: exact=[83515.39177, 4572.79137, 614.76717, -2103.23372, -2066.56546, 84533.15113] stored=[83515.4, 4572.8, 614.8, -2103.2, -2066.6, 84533.2] (2dp=False) old=[88281.1, 4946.7, 653.8, -2509.5, -2163.5, 89208.6] cells [1, 2, 3, 4, 5, 6] cand [1, 2, 3, 4, 5, 6] only_cand=[] only_mine=[] closure_resid=0.0
+   KR0009 2023.2Q: exact=[83515.39177, 8755.88926, 1260.65207, -3369.18374, -4178.40267, 85984.34669] stored=[83515.4, 8755.9, 1260.7, -3369.2, -4178.4, 85984.3] (2dp=False) old=[88281.1, 9542.1, 1339.0, -3391.1, -4410.3, 91360.8] cells [1, 2, 3, 4, 5, 6] cand [1, 2, 3, 4, 5, 6] only_cand=[] only_mine=[] closure_resid=0.1
+   KR0009 2023.3Q: exact=[83515.39177, 13221.3558, 1929.83532, -3226.16581, -6403.79115, 89036.62593] stored=[83515.4, 13221.4, 1929.8, -3226.2, -6403.8, 89036.6] (2dp=False) old=[88281.1, 13221.4, 1929.8, -7991.9, -6403.8, 89036.6] cells [1, 4] cand [1, 4] only_cand=[] only_mine=[] closure_resid=-0.0
+   KR0009 2023.4Q: exact=[83515.37263, 16792.36885, 2636.32289, -2715.90455, -8805.44841, 91422.71141] stored=[83515.4, 16792.4, 2636.3, -2715.9, -8805.4, 91422.7] (2dp=False) old=[88281.1, 16792.4, 2636.3, -7480.6, -8805.5, 91423.7] cells [1, 4, 5, 6] cand [1, 4, 5, 6] only_cand=[] only_mine=[] closure_resid=0.1
+   CSM gold ('KR0009', 1, '2023.3Q'): gold 88281.1 -> class B chain-forced: gold 88281.1 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 83515.4; the latest comparative = 83515.4); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector
+   CSM gold ('KR0009', 4, '2023.3Q'): gold -7991.9 -> class B chain-forced: gold -7991.9 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -3226.2; the latest comparative = -3226.2); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector
+   CSM gold ('KR0009', 1, '2023.4Q'): gold 88281.1 -> class B chain-forced: gold 88281.1 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 83515.4; the latest comparative = 83515.4); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector
+   CSM gold ('KR0009', 4, '2023.4Q'): gold -7480.6 -> class B chain-forced: gold -7480.6 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -2714.9; the latest comparative = -2715.9); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector
+== E. APPLY CONTRACT: PL gold_new 57, gold_replace 0, CSM gold_new 14, gold_replace 4, null_dangi_add 11, null_dangi_remove 0, set_dangi_add 0, set_dangi_remove 0, held []
+   null_dangi_add: [['KR0009', '2023.4Q', 1], ['KR0009', '2023.4Q', 4], ['KR0009', '2023.4Q', 17], ['KR0009', '2023.4Q', 19], ['KR0009', '2023.4Q', 20], ['KR0009', '2023.4Q', 22], ['KR0009', '2023.4Q', 23], ['KR0009', '2023.4Q', 24], ['KR0009', '2023.4Q', 25], ['KR0009', '2023.4Q', 27], ['KR0009', '2023.4Q', 31]]
+   null_dangi_remove: []
+   set_dangi_add: []
+   set_dangi_remove: []

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\remaining_20261022\e23_d1_d3\q05_dump_stmt.py", line 11, in <module>
+    st = R.Stmt(code, fy)
+  File "C:\Users/sangwook.cho/Desktop/insurequant/data/_derived/remaining_20261022/e21_ready25\e21_read.py", line 64, in __init__
+    raise KeyError(f"{self.rel}: no '4-2. 포괄손익계산서' title/marker")
+KeyError: "data/dart/FY2023_Q2/raw/KR0072_케이디비생명보험/xml/20230814003052.xml: no '4-2. 포괄손익계산서' title/marker"

@@ -1,0 +1,10 @@
+== PL_breakdown rows old 13801 new 13801 dupkeys 0 0
+added 0 [] removed 0 []
+changed field-count by company {'KR0099': 143, 'KR0070': 158, 'KR0009': 135, 'KR0003': 30}
+KR0072 changed cells: 0
+per quarter/field {}
+== CSM_waterfall rows old 2358 new 2358 dupkeys 0 0
+added 0 [] removed 0 []
+changed field-count by company {'KR0099': 34, 'KR0009': 38, 'KR0070': 43, 'KR0003': 9}
+KR0072 changed cells: 0
+per quarter/field {}

@@ -1,0 +1,141 @@
+PL item names {1: '보험손익', 2: '생명장기 손익', 3: '생명장기 원수손익', 4: '원수 CSM상각', 5: '원수 위험조정 변동', 6: '원수 예실차', 7: '기타 생명장기 원수손익', 8: '생명장기 재보험손익', 9: '재보험 CSM상각', 10: '재보험 위험조정 변동', 11: '재보험 예실차', 12: '기타 생명장기 재보험손익', 13: '자동차손익', 14: '일반손익', 15: '기타영업수익', 16: '기타사업비용', 17: '투자손익', 18: '투자이익', 19: '보험금융손익', 20: '영업이익', 21: '영업외손익', 22: '세전이익', 23: '법인세', 24: '당기순이익', 25: '기타포괄손익', 26: 'FVOCI 채무증권 평가손익', 27: '보험계약금융손익(OCI)', 28: '위험회피 파생상품 평가손익', 29: 'FVOCI 지분증권 평가손익', 30: '재보험금융손익(OCI)', 31: '총포괄손익', 32: '기타 포괄손익(미분류)'}
+CSM item names {1: '기초 CSM', 2: '신계약 CSM', 3: '이자 부리', 4: '가정 및 경험 조정', 5: 'CSM 상각', 6: '기말 CSM'}
+
+=== CSM independent re-read
+2023.1Q CSM-table candidate L16922 9-row label='9. 당분기말 보험계약자산 및 부채'
+2023.1Q CSM-table candidate L17151 9-row label='9. 전분기말 보험계약자산 및 부채'
+2023.1Q CSM-table candidate L17380 9-row label='9. 당분기말 재보험계약자산 및 부채'
+2023.1Q CSM-table candidate L17609 9-row label='9. 전분기말 보험계약자산 및 부채'
+2023.1Q candidate L19042 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.1Q candidate L19141 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.1Q CSM-table candidate L36048 9-row label='9. 당분기말 보험계약자산 및 부채'
+2023.1Q CSM-table candidate L36277 9-row label='9. 전분기말 보험계약자산 및 부채'
+2023.1Q CSM-table candidate L36506 9-row label='9. 당분기말 재보험계약자산 및 부채'
+2023.1Q CSM-table candidate L36735 9-row label='9. 전분기말 보험계약자산 및 부채'
+2023.1Q candidate L38165 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.1Q candidate L38264 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.1Q prior-year tables (insurance, reinsurance, [copy2...]): [17151, 17609, 36277, 36735] insurance copy1==copy2: True
+2023.2Q CSM-table candidate L19315 9-row label='9. 당반기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q CSM-table candidate L19544 9-row label='9. 전반기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q CSM-table candidate L19773 9-row label='9. 당반기말 재보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q CSM-table candidate L20002 9-row label='9. 전반기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q candidate L21473 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.2Q candidate L21572 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.2Q CSM-table candidate L40407 9-row label='9. 당반기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q CSM-table candidate L40636 9-row label='9. 전반기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q CSM-table candidate L40865 9-row label='9. 당반기말 재보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q CSM-table candidate L41094 9-row label='9. 전반기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.2Q candidate L42566 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.2Q candidate L42665 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.2Q prior-year tables (insurance, reinsurance, [copy2...]): [19544, 20002, 40636, 41094] insurance copy1==copy2: True
+2023.3Q CSM-table candidate L18112 9-row label='9. 당분기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.3Q CSM-table candidate L18341 9-row label='9. 전분기말 보험계약자산 및 부채 (1+5+6+7+8)'
+2023.3Q CSM-table candidate L18579 9-row label='9. 당분기말 재보험계약자산 및 부채(1+5+6+7+8)'
+2023.3Q CSM-table candidate L18808 9-row label='9. 전분기말 재보험계약자산 및 부채 (1+5+6+7+8)'
+2023.3Q candidate L20299 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.3Q candidate L20398 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.3Q prior-year tables (insurance, reinsurance, [copy2...]): [18341, 18808] insurance copy1==copy2: single copy
+2023.4Q CSM-table candidate L25957 9-row label='9. 당기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.4Q CSM-table candidate L26189 9-row label='9. 전기말 보험계약자산 및 부채(1+5+6+7+8)'
+2023.4Q CSM-table candidate L26420 9-row label='9. 당기말 재보험계약자산 및 부채(1+5+6+7+8)'
+2023.4Q CSM-table candidate L26652 9-row label='9. 전기말 재보험계약자산 및 부채(1+5+6+7+8)'
+2023.4Q candidate L30830 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.4Q candidate L30932 has no 9. row; header=[['(단위:백만원)'], ['구분', '수정소급법 적용계약', '공정가치법 적용계약', '이외 모든계약', '합계']]
+2023.4Q prior-year tables (insurance, reinsurance, [copy2...]): [26189, 26652] insurance copy1==copy2: single copy
+CSM cum 2023.1Q 1 OK changed printed(억)=5695.9500 master= 5695.95 head= 5239.4 diff=0.0000
+CSM cum 2023.1Q 2 OK changed printed(억)=384.1100 master= 384.11 head= 387.3 diff=0.0000
+CSM cum 2023.1Q 3 OK changed printed(억)=42.2500 master= 42.25 head= 45.1 diff=0.0000
+CSM cum 2023.1Q 4 OK changed printed(억)=-867.7100 master= -867.71 head= -833.3 diff=0.0000
+CSM cum 2023.1Q 5 OK changed printed(억)=-116.4100 master= -116.41 head= -111.25 diff=0.0000
+CSM cum 2023.1Q 6 OK changed printed(억)=5138.2000 master= 5138.2 head= 4727.25 diff=0.0000
+CSM cum 2023.2Q 1 OK changed printed(억)=5695.9500 master= 5695.95 head= 5239.4 diff=0.0000
+CSM cum 2023.2Q 2 OK changed printed(억)=1173.0600 master= 1173.06 head= 1174.0 diff=0.0000
+CSM cum 2023.2Q 3 OK changed printed(억)=83.0400 master= 83.04 head= 90.0 diff=0.0000
+CSM cum 2023.2Q 4 OK changed printed(억)=-663.6000 master= -663.6 head= -685.55 diff=0.0000
+CSM cum 2023.2Q 5 OK changed printed(억)=-245.0900 master= -245.09 head= -234.15 diff=0.0000
+CSM cum 2023.2Q 6 OK changed printed(억)=6043.3500 master= 6043.35 head= 5583.7 diff=0.0000
+CSM cum 2023.3Q 1 OK changed printed(억)=5695.9500 master= 5695.9 head= 5239.4 diff=-0.0500
+CSM cum 2023.3Q 2 OK changed printed(억)=2209.7900 master= 2209.8 head= 2210.7 diff=0.0100
+CSM cum 2023.3Q 3 OK changed printed(억)=133.9800 master= 134.0 head= 146.1 diff=0.0200
+CSM cum 2023.3Q 4 OK changed printed(억)=-1830.2200 master= -1830.2 head= -1912.9 diff=0.0200
+CSM cum 2023.3Q 5 OK changed printed(억)=-372.6600 master= -372.7 head= -352.5 diff=-0.0400
+CSM cum 2023.3Q 6 OK changed printed(억)=5836.8400 master= 5836.8 head= 5330.8 diff=-0.0400
+CSM cum 2023.4Q 1 OK changed printed(억)=5695.9500 master= 5695.9 head= 5239.4 diff=-0.0500
+CSM cum 2023.4Q 2 OK same printed(억)=3023.1000 master= 3023.1 head= 3023.1 diff=0.0000
+CSM cum 2023.4Q 3 OK same printed(억)=183.3700 master= 183.4 head= 183.4 diff=0.0300
+CSM cum 2023.4Q 4 OK changed printed(억)=-2559.9700 master= -2560.0 head= -2103.5 diff=-0.0300
+CSM cum 2023.4Q 5 OK same printed(억)=-511.9800 master= -512.0 head= -512.0 diff=-0.0200
+CSM cum 2023.4Q 6 OK same printed(억)=5830.4700 master= 5830.5 head= 5830.5 diff=0.0300
+CSM cumulative compared 24, mismatches 0 | changed vs HEAD 20 of which equal own reread 20
+
+=== CSM single-quarter stored vs rule (opening = prior closing; flow = cum diff)
+   2023.1Q 1 stored 5695.95 rule 5695.9500 OK changed
+   2023.1Q 2 stored 384.11 rule 384.1100 OK changed
+   2023.1Q 3 stored 42.25 rule 42.2500 OK changed
+   2023.1Q 4 stored -867.71 rule -867.7100 OK changed
+   2023.1Q 5 stored -116.41 rule -116.4100 OK changed
+   2023.1Q 6 stored 5138.2 rule 5138.2000 OK changed
+   2023.2Q 1 stored 5138.2 rule 5138.2000 OK changed
+   2023.2Q 2 stored 788.95 rule 788.9500 OK changed
+   2023.2Q 3 stored 40.79 rule 40.7900 OK changed
+   2023.2Q 4 stored 204.11 rule 204.1100 OK changed
+   2023.2Q 5 stored -128.68 rule -128.6800 OK changed
+   2023.2Q 6 stored 6043.35 rule 6043.3500 OK changed
+   2023.3Q 1 stored 6043.35 rule 6043.3500 OK changed
+   2023.3Q 2 stored 1036.74 rule 1036.7400 OK changed
+   2023.3Q 3 stored 50.96 rule 50.9600 OK changed
+   2023.3Q 4 stored -1166.6 rule -1166.6000 OK changed
+   2023.3Q 5 stored -127.61 rule -127.6100 OK changed
+   2023.3Q 6 stored 5836.8 rule 5836.8000 OK changed
+   2023.4Q 1 stored 5836.8 rule 5836.8000 OK changed
+   2023.4Q 2 stored 813.3 rule 813.3000 OK changed
+   2023.4Q 3 stored 49.4 rule 49.4000 OK changed
+   2023.4Q 4 stored -729.8 rule -729.8000 OK changed
+   2023.4Q 5 stored -139.3 rule -139.3000 OK changed
+   2023.4Q 6 stored 5830.5 rule 5830.5000 OK same
+CSM single-quarter mismatches 0
+
+=== CSM closure (cumulative): open + new + interest + assumptions + amort - close
+   2023.1Q resid -0.010
+   2023.2Q resid 0.010
+   2023.3Q resid 0.000
+   2023.4Q resid -0.100
+=== CSM single-quarter closure
+   2023.1Q resid -0.010
+   2023.2Q resid 0.020
+   2023.3Q resid 0.040
+   2023.4Q resid -0.100
+=== opening drift: FY opening (item1 cum) per quarter; boundary to 2024.1Q
+  openings cum [5695.95, 5695.95, 5695.9, 5695.9] max-min 0.0500000000001819
+  printed opening (억) [5695.95, 5695.95, 5695.95, 5695.95]
+  2023.4Q close 5830.5 | 2024.1Q opening cum 5830.5 2024.1Q single opening 5830.5
+   2024.1Q [5830.5, 1238.1, 53.4, -1132.3, -135.3, 5854.3]
+   2024.2Q [5830.5, 1876.5, 104.3, 1764.7, -338.3, 9237.7]
+   2024.3Q [5830.5, 2532.4, 180.9, 1130.4, -536.8, 9137.3]
+   2024.4Q [5830.5, 3282.2, 256.8, -8.6, -710.5, 8650.5]
+  HEAD opening cum [5239.4, 5239.4, 5239.4, 5239.4] HEAD 2023.4Q close 5830.5
+  quarter-to-quarter: closing(q-1) vs single opening(q): [('2023.1Q', 5138.2, 5138.2), ('2023.2Q', 6043.35, 6043.35), ('2023.3Q', 5836.8, 5836.8)]
+
+=== PL 값_당분기 vs rule (pin / cum - prior cum) for all items, 4 quarters
+PL single-quarter cells checked 128 rule mismatches 0 changed vs HEAD 81
+--- PL identities cumulative (residual lhs-rhs, mn; |r|>0.02 flagged)
+   2023.1Q [('2=3+8', 0.0, ''), ('3=4+5+6+7', -5669.0618, 'miss2'), ('8=9+10+11+12', 710.6431, 'miss4'), ('1=2+13+14+15-16', 0.0021, ''), ('17=18+19', 0.0, ''), ('20=1+17', 0.0, ''), ('22=20+21', 0.0025, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', 0.0, '')]
+   2023.2Q [('2=3+8', 0.0, ''), ('3=4+5+6+7', 0.0, ''), ('8=9+10+11+12', 0.0, ''), ('1=2+13+14+15-16', 0.0, ''), ('17=18+19', -0.0, ''), ('20=1+17', 0.0, ''), ('22=20+21', 0.0, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', -0.0, '')]
+   2023.3Q [('2=3+8', 0.0, ''), ('3=4+5+6+7', 0.0, ''), ('8=9+10+11+12', 0.0, ''), ('1=2+13+14+15-16', 0.0, ''), ('17=18+19', 0.0, ''), ('20=1+17', 0.0, ''), ('22=20+21', 0.0, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', 0.0, '')]
+   2023.4Q [('2=3+8', 0.0, ''), ('3=4+5+6+7', 0.0, ''), ('8=9+10+11+12', 0.0, ''), ('1=2+13+14+15-16', 0.0, ''), ('17=18+19', -0.0, ''), ('20=1+17', -0.0, ''), ('22=20+21', 0.0, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', -0.0, '')]
+--- PL identities single-quarter (residual lhs-rhs, mn; |r|>0.02 flagged)
+   2023.1Q [('2=3+8', 0.0, ''), ('3=4+5+6+7', -5669.0618, 'miss2'), ('8=9+10+11+12', 710.6431, 'miss4'), ('1=2+13+14+15-16', 0.0021, ''), ('17=18+19', 0.0, ''), ('20=1+17', 0.0, ''), ('22=20+21', 0.0025, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', 0.0, '')]
+   2023.2Q [('2=3+8', 0.0, ''), ('3=4+5+6+7', -3389.9444, 'miss2'), ('8=9+10+11+12', 8246.6553, 'miss4'), ('1=2+13+14+15-16', 0.0, ''), ('17=18+19', -0.0, ''), ('20=1+17', 0.0, ''), ('22=20+21', 0.0, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', 0.0, '')]
+   2023.3Q [('2=3+8', -0.0, ''), ('3=4+5+6+7', -0.0, ''), ('8=9+10+11+12', 0.0, ''), ('1=2+13+14+15-16', 0.0, ''), ('17=18+19', 0.0, ''), ('20=1+17', 0.0, ''), ('22=20+21', -0.0, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', -0.0, '')]
+   2023.4Q [('2=3+8', 0.0, ''), ('3=4+5+6+7', 0.0, ''), ('8=9+10+11+12', -0.0, ''), ('1=2+13+14+15-16', 0.0, ''), ('17=18+19', -0.0, ''), ('20=1+17', -0.0, ''), ('22=20+21', 0.0, ''), ('31=24+25', 0.0, ''), ('25=26..30+32', 0.0, '')]
+item 23 tax: 22-24 vs 23 cum [('2023.1Q', -0.209323, -0.209323), ('2023.2Q', -0.209323, -0.2), ('2023.3Q', -0.209323, -0.209323), ('2023.4Q', -0.209323, -0.209323)]
+
+PL items 4..14 cum (mn)
+   2023.1Q {3: 9933.938179, 4: 11641.0, 5: 3962.0, 6: None, 7: None, 8: 710.643121, 9: None, 10: None, 11: None, 12: None, 13: 0.0, 14: 0.0}
+   HEAD 2023.1Q {3: 8746.1, 4: 11125.0, 5: 3962.0, 6: None, 7: None, 8: 711.41, 9: None, 10: None, 11: None, 12: None, 13: 0.0, 14: 0.0}
+   2023.2Q {3: 24217.993827, 4: 24509.0, 5: 8768.0, 6: -1597.0, 7: -7462.006173, 8: 8957.298387, 9: -710.0, 10: -1499.0, 11: 9792.0, 12: 1374.298387, 13: 0.0, 14: 0.0}
+   HEAD 2023.2Q {3: 13292.0, 4: 23415.0, 5: 8768.0, 6: -1597.0, 7: -17294.0, 8: 9373.0, 9: -710.0, 10: -1499.0, 11: 9792.0, 12: 1790.0, 13: 0.0, 14: 0.0}
+   2023.3Q {3: 8568.280371, 4: 37266.0, 5: 12639.0, 6: -59.0, 7: -41277.719629, 8: 17384.419352, 9: -2749.0, 10: -1657.0, 11: 9812.0, 12: 11978.419352, 13: 0.0, 14: 0.0}
+   HEAD 2023.3Q {3: -4480.275872, 4: 35250.0, 5: 12639.0, 6: -59.0, 7: -52310.275872, 8: 18358.808227, 9: -2749.0, 10: -1657.0, 11: 9812.0, 12: 12952.808227, 13: 0.0, 14: 0.0}
+   2023.4Q {3: 67805.264694, 4: 51198.0, 5: 17162.0, 6: 2794.0, 7: -3348.735306, 8: 10206.48511, 9: -5152.0, 10: -1819.0, 11: 7343.0, 12: 9834.48511, 13: 0.0, 14: 0.0}
+   HEAD 2023.4Q {3: 67805.264694, 4: 51198.0, 5: 17162.0, 6: 2794.0, 7: -3348.735306, 8: 10206.48511, 9: -5152.0, 10: -1819.0, 11: 7343.0, 12: 9834.48511, 13: 0.0, 14: 0.0}

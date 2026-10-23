@@ -1,0 +1,15 @@
+NEW candidates lines [19553, 19837] ; ORIG candidates [21144, 21428]
+NEW table used L19837 (marker before table = '<제79(전)기>' at L19835); ORIG table used L21144
+item | printed(백만원) NEW | 억 half-up | exact 억 | live | ok(<=0.051) | HEAD | ORIG printed | ORIG 억 | HEAD==ORIG | line
+1 | 1666900.0 | 16669.0 | 16669.0 | 16669.0 | True | 16774.4 | 1677438.0 | 16774.4 | True | L 19881
+2 | 547889.0 | 5478.9 | 5478.89 | 5478.9 | True | 5478.9 | 547890.0 | 5478.9 | True | L 19969
+3 | 77701.0 | 777.0 | 777.01 | 777.0 | True | 780.5 | 78047.0 | 780.5 | True | L 20024
+4 | 279496.0 | 2795.0 | 2794.96 | 2795.0 | True | 2801.0 | 280102.0 | 2801.0 | True | L 19980
+5 | -185905.0 | -1859.1 | -1859.05 | -1859.0 | True | -1868.5 | -186853.0 | -1868.5 | True | L 19925
+6 | 2386081.0 | 23860.8 | 23860.81 | 23860.8 | True | 23966.2 | 2396624.0 | 23966.2 | True | L 20090
+printed rollforward (NEW prior): 기초+신계약+이자+조정+상각-기말 = 0.0 백만원
+printed rollforward (ORIG current): 0.0
+AUDIT attachment candidates lines [10590, 10874]
+  audit table L10590: {1: 2386081.0, 2: 485252.0, 3: 98243.0, 4: -423971.0, 5: -225448.0, 6: 2320157.0} == NEW prior vector: False
+  audit table L10874: {1: 1666900.0, 2: 547889.0, 3: 77701.0, 4: 279496.0, 5: -185905.0, 6: 2386081.0} == NEW prior vector: True
+mismatches: []

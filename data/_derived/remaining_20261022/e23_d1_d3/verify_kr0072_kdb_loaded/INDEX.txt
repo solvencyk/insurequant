@@ -1,0 +1,20 @@
+verify_kr0072_kdb_loaded (validation, 2026-10-23, read-only; nothing committed, pushed or edited except the inbox ticket named below)
+Input: live tree after the KDB (KR0072) load; HEAD d5077c7b copies in head/; pre-load backup in ../backup_before_apply/kr0072_kdb_load2/.
+python: C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe <script file>, stdin /dev/null. xlib.py = own stdlib XML table reader.
+
+RESULT: values re-read OK (PL 65/65 cumulative, 8/8 seams, CSM 20/20), approved gold list exact (11/11, nothing else), exclusions correct.
+        DEFECT: 2023.3Q and 2023.4Q items 17,18,20,22,24,31 (12 cum cells + 12 single) are the CONSOLIDATED statement; 2023.1Q/2Q and the old master are SEPARATE.
+        Sum of the four single quarters exceeds the annual by +726.922994 mn (7.27 eok) on those six items. Ticket: inbox/parser/20261023T1320Z__validation__KR0072__2023.3Q-2023.4Q__kdb_consolidated_vs_separate_basis_mix.md
+
+s01_diff.py/.txt/.json      cell diff vs HEAD (KR0072 only) + other companies vs pre-load backup (0 diffs)
+s02_plan_peek.py/.txt       what the parser plan cites (read only to know the definitions; NOT used as the source of truth)
+s03_enum.py/.txt            table census of the four later filings (statement, CSM, CSM-amortisation note)
+s04_reread.py/.txt          own label-based re-read of the separate (4-2) statements + note table vs live master (cum and 3-month column)
+s05_copies.py/.txt          1Q/2Q files hold two statement copies: 2-2 consolidated and 4-2 separate; row diffs
+s06_basis.py/.txt           heading context of every statement table
+s07_csm_chain.py/.txt       CSM re-read (first prior-year table = insurance contracts), single-quarter rule, closure, FY boundary, opening drift; PL single-quarter rule (128 cells), PL identities
+s08_items56.py/.txt         items 5/6/9/10/11 (not loaded, open ticket 20261023T1255Z)
+s09_gold.py/.txt            raw gold diff (verbose); s10_gold_classify.py/.txt = compact classification vs the approved list
+s11_headline.py/.txt        headline effects in eok (cumulative and single quarter)
+s12_basis_q3q4.py/.txt, s13_basis_master.py/.txt, s14_orig_basis.py/.txt   basis evidence (consolidated vs separate) per filing and master
+s15_sigma.py/.txt           sum of single quarters vs annual, LIVE vs HEAD, plus the won-level basis arithmetic

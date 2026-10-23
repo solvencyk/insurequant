@@ -2,6 +2,14 @@
 
 ## 2026-10-23 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
+- **2026-10-22 18차: 7사 19버킷 PL 최신 비교열 적재(티켓 20261022T0900Z, owner 「그럼 걔네도 바꿔라」)** — 흥국화재 4 · NH농협손보 4 · 동양 4 · ABL 3 · 푸본현대 2 · DB생명 1 · 농협생명 1버킷의 Tier-1 PL 171칸(별도 기준, 후속 공시 전기 누계 열)을 gold 로 적재. 계획 172칸 전부 필링 XML 줄 번호로 독립 재독해 172/172 일치, 1칸(농협생명 2023.3Q 항목 32, 반올림 0.034 차이)은 「마스크된 gold 칸 = 등재부 박제 필요」라 제외했다.
+  이음매 단일분기: 3개월 열 인쇄값 `set_dangi` 20칸(흥국 4 · DB생명 4 · 푸본현대 2024.3Q 8 · 농협생명 4), 인쇄값 없는 `null_dangi` 17칸(NH농협손보·동양 2023.4Q). 실제 `build_pl()` 두 번 실행(옛 gold/새 gold) 차이 235칸만 셀 단위 반영: 값 171 + 값_당분기 215(그중 단일분기 파생 64). 계획서가 적은 단일분기 244개와 빌드 0건 불일치, git HEAD 대비 독립 diff 전부 통과(다른 회사·다른 필드 0).
+  게이트 전→후: 데이터계약 RED 0→1(xlsx `손익분해PL` 동기화 지연뿐) · master_tables SUMMARY 불변(골든 `--update` 불필요; OCI_VS_BS_AOCI 23건 집합만 교체, tax22 「최신 비교열로만 통과」 4→22) · 연속성/워터폴/NB 불변 · PL 골든·gold_overlay·identity 통과 · rule_coverage 103/104(실패 1 = xlsx 청결; tax22 테스트는 교보 4칸 고정이라 실측 22칸으로 확장 후 통과).
+  남은 것: publishing = xlsx `손익분해PL` 386셀·panel/public_exports 재생성 / 유지 32버킷(블록 불닫힘)·부속 53버킷은 이번 범위 밖 / 푸본현대 2024.3Q·4Q, DB생명 2023.1Q·2Q, 농협생명 2023.1Q·2Q 는 옛 판 그대로(owner gold 겹침 또는 승인 범위 밖). 커밋 안 함.
+  근거·재현 `data/_derived/remaining_20261022/e19_latest_comparative/apply/`(`INDEX.txt` · `e19_apply.py --verify`/`--revert --apply` · `e19_diff_vs_head.txt`) · `docs/changelog_parser_ifrs17.md` 18차.
+
+## 2026-10-23 밀린 Status (최신 3개 밖, 문서 정리로 이동)
+
 - **2026-10-22 17차: 교보생명 KR0073 2023.4Q 재무상태표·보험계약부채 블록을 재작성 전기말 열로 이동(오케스트레이터 지시, 9칸 한 묶음)** — `IFRS17_BS` 2023.4Q 항목 1·2·3·20·31 + 2024.4Q 항목 1(2026-10-12 부분 블록 완결) · ILP 2023.4Q 항목 10·14·15. FY2024·FY2025 사업보고서 별도 재무상태표 2023-12-31 열(두 필링 동일) 줄 번호 재독, 1=2+3 잔차 0, 이익잉여금 롤(5,920,420+632,201-51,250-74,245)=6,427,126=항목 31, 효과표 note 44-2 수정전=옛 마스터값.
   경로: `bs_manual_overrides.json` +6 → 저장소 `build_ifrs17_bs.py`(마스터는 HEAD 대비 정확히 6셀만 변동, 11,016행 불변) · ILP는 가드 적재(`scripts/apply_kr0073_bs_ilp_restated_20261022.py`: 오버레이·ILP 3셀·출처표 셀·사이드카 `ilp_restated_comparative.json` +1셀). BS 골든 `--update`(해시 8383552c→d585abe2)·입력 지문 `--update`(ifrs17_bs만 변동)·BS 골든 재실행 통과(506초).
   게이트 전→후: 데이터계약 RED 1→4(전부 xlsx 시트 `17BS` · `보험계약부채` 동기화 지연) · master_tables 출력 동일(PL_OCI_VS_BS_AOCI 불변: 항목 4 미접촉) · ILP 두 검증기 RED 0 불변 · 연속성/뷰 골든 2종/master_tables 골든 통과 · rule_coverage 실패 2건은 전과 동일(xlsx·public_exports 청결 상태).

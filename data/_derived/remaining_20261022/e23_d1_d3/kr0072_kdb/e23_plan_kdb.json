@@ -1,0 +1,6705 @@
+{
+ "generated": "2026-10-23",
+ "ticket": "inbox/parser/20261023T0900Z__orchestrator__MULTI_2023.1Q-2023.4Q__latest_comparative_owner_decided_d1_d3.md",
+ "company": "kdb",
+ "code": "KR0072",
+ "name": "케이디비생명보험",
+ "decision": "D3 = KDB생명 FY2023 진행 (연쇄용 CSM gold 교체 승인)",
+ "scenario": "N5_KDB_FY2023",
+ "buckets": [
+  {
+   "code": "KR0072",
+   "quarter": "2023.1Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0072",
+    "quarter": "2023.1Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q1",
+    "file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20240516000597"
+   },
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 1,
+     "item_name": "보험손익",
+     "old": 7111.35,
+     "new": 8298.413391,
+     "delta": 1187.063391,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험손익",
+       "line": 24253,
+       "printed": "8,298,413,391",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 8298.413391
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 8298.413391,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 2,
+     "item_name": "생명장기 손익",
+     "old": 9457.51,
+     "new": 10644.5813,
+     "delta": 1187.0713,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 24299,
+       "printed": "117,588,022,764",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 117588.022764
+      },
+      {
+       "label": "보험비용",
+       "line": 24368,
+       "printed": "107,654,084,585",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -107654.084585
+      },
+      {
+       "label": "재보험수익",
+       "line": 24322,
+       "printed": "7,540,888,778",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 7540.888778
+      },
+      {
+       "label": "재보험비용",
+       "line": 24391,
+       "printed": "6,830,245,657",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -6830.245657
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "3 + 8",
+     "kind": "derived",
+     "cand_new": 10644.581299999989,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 3,
+     "item_name": "원수손익(장기)",
+     "old": 8746.1,
+     "new": 9933.938179,
+     "delta": 1187.838179,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 24299,
+       "printed": "117,588,022,764",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 117588.022764
+      },
+      {
+       "label": "보험비용",
+       "line": 24368,
+       "printed": "107,654,084,585",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -107654.084585
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "보험수익계열 - |보험비용계열| (장기/발행)",
+     "kind": "sum",
+     "cand_new": 9933.93817899999,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 4,
+     "item_name": "원수 CSM상각",
+     "old": 11125.0,
+     "new": 11641.0,
+     "delta": 516.0,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "(3) 제공된 서비스의 보험계약마진 [전기/전분기 누적]",
+       "line": 40388,
+       "printed": "11,641",
+       "sign": 1,
+       "abs": true,
+       "unit": "백만원",
+       "contribution_mn": 11641.0
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|",
+     "kind": "sum",
+     "cand_new": 11640.0,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 8,
+     "item_name": "재보험손익(장기)",
+     "old": 711.41,
+     "new": 710.643121,
+     "delta": -0.766879,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 24322,
+       "printed": "7,540,888,778",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 7540.888778
+      },
+      {
+       "label": "재보험비용",
+       "line": 24391,
+       "printed": "6,830,245,657",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -6830.245657
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "재보험수익계열 - |재보험비용계열|",
+     "kind": "sum",
+     "cand_new": 710.6431209999992,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": 35986.75,
+     "new": 32877.150458,
+     "delta": -3109.599542,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 24437,
+       "printed": "32,877,150,458",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 32877.150458
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 32877.150458,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 18,
+     "item_name": "투자이익",
+     "old": 200709.54,
+     "new": 200651.791133,
+     "delta": -57.748867,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 24437,
+       "printed": "32,877,150,458",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 32877.150458
+      },
+      {
+       "label": "보험금융수익",
+       "line": 24483,
+       "printed": "14,104,708,080",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -14104.70808
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 24506,
+       "printed": "292,001,794",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -292.001794
+      },
+      {
+       "label": "보험금융비용",
+       "line": 24782,
+       "printed": "181,665,556,922",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 181665.556922
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 24805,
+       "printed": "505,793,627",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 505.793627
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 200651.791133,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 19,
+     "item_name": "보험금융손익",
+     "old": -164722.79,
+     "new": -167774.640675,
+     "delta": -3051.850675,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험금융수익",
+       "line": 24483,
+       "printed": "14,104,708,080",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 14104.70808
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 24506,
+       "printed": "292,001,794",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 292.001794
+      },
+      {
+       "label": "보험금융비용",
+       "line": 24782,
+       "printed": "181,665,556,922",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -181665.556922
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 24805,
+       "printed": "505,793,627",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -505.793627
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -167774.640675,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": 43098.09,
+     "new": 41175.563849,
+     "delta": -1922.526151,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익",
+       "line": 25012,
+       "printed": "41,175,563,849",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 41175.563849
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 41175.563849,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": 37672.4,
+     "new": 35749.866307,
+     "delta": -1922.533693,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익",
+       "line": 25104,
+       "printed": "35,749,866,307",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 35749.866307
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 35749.866307,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": 37672.61,
+     "new": 35750.07563,
+     "delta": -1922.53437,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익",
+       "line": 25150,
+       "printed": "35,750,075,630",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 35750.07563
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 35750.07563,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": null,
+     "new": 19314.399668,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기기타포괄손익",
+       "line": 25173,
+       "printed": "19,314,399,668",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 19314.399668
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 19314.399668,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 26,
+     "item_name": "FVOCI 채무증권",
+     "old": null,
+     "new": 371376.033894,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 25219,
+       "printed": "371,376,033,894",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 371376.033894
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 371376.033894,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": null,
+     "new": -357827.17141,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 25288,
+       "printed": "(357,827,171,410)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -357827.17141
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -357827.17141,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 28,
+     "item_name": "위험회피 파생상품",
+     "old": null,
+     "new": 1334.458429,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 25265,
+       "printed": "1,334,458,429",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1334.458429
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 1334.458429,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 29,
+     "item_name": "FVOCI 지분증권",
+     "old": null,
+     "new": 5564.18644,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 25357,
+       "printed": "5,564,186,440",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 5564.18644
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 5564.18644,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": null,
+     "new": -1073.51445,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 25311,
+       "printed": "(1,073,514,450)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1073.51445
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -1073.51445,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": null,
+     "new": 55064.475298,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기총포괄손익",
+       "line": 25403,
+       "printed": "55,064,475,298",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 55064.475298
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 55064.475298,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": null,
+     "new": -59.593235,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml",
+     "xml_rcept": "20240516000597",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기기타포괄손익",
+       "line": 25173,
+       "printed": "19,314,399,668",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 19314.399668
+      },
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 25219,
+       "printed": "371,376,033,894",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -371376.033894
+      },
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 25288,
+       "printed": "(357,827,171,410)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 357827.17141
+      },
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 25265,
+       "printed": "1,334,458,429",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1334.458429
+      },
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 25357,
+       "printed": "5,564,186,440",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -5564.18644
+      },
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 25311,
+       "printed": "(1,073,514,450)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1073.51445
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -59.593235,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [
+    {
+     "item": 16,
+     "old": 2346.17,
+     "new": 2346.167909,
+     "cls": "masked",
+     "reason": "would be a masked gold cell (== builder source); a new ledger pin is forbidden by the ticket",
+     "in_cand": true
+    },
+    {
+     "item": 21,
+     "old": -5425.7,
+     "new": -5425.697542,
+     "cls": "masked",
+     "reason": "would be a masked gold cell (== builder source); a new ledger pin is forbidden by the ticket",
+     "in_cand": true
+    }
+   ],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 41175.563849,
+     "rhs": 41175.563849,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": 35749.866307,
+     "rhs": 35749.866307,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 0.209323,
+     "rhs": 0.209323,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": 55064.475298,
+     "rhs": 55064.475298,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": 19314.399668,
+     "rhs": 19314.399668,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": 32877.150458,
+     "rhs": 32877.150458,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 8298.413391,
+     "rhs": 10644.5813,
+     "resid": 0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 10644.5813,
+     "rhs": 10644.5813,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    1,
+    2,
+    3,
+    4,
+    8,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32
+   ],
+   "only_cand": [],
+   "only_mine": []
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0072",
+    "quarter": "2023.2Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q2",
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20240814000801"
+   },
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 1,
+     "item_name": "보험손익",
+     "old": 22665.0,
+     "new": 27825.949019,
+     "delta": 5160.949019,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험손익",
+       "line": 27613,
+       "printed": "27,825,949,019",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 27825.949019
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 27825.949019,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 2,
+     "item_name": "생명장기 손익",
+     "old": 22665.0,
+     "new": 33175.292214,
+     "delta": 10510.292214,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 27659,
+       "printed": "237,662,988,510",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 237662.98851
+      },
+      {
+       "label": "보험비용",
+       "line": 27728,
+       "printed": "213,444,994,683",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -213444.994683
+      },
+      {
+       "label": "재보험수익",
+       "line": 27682,
+       "printed": "28,559,376,972",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 28559.376972
+      },
+      {
+       "label": "재보험비용",
+       "line": 27751,
+       "printed": "19,602,078,585",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -19602.078585
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "3 + 8",
+     "kind": "derived",
+     "cand_new": 33175.292214,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 3,
+     "item_name": "원수손익(장기)",
+     "old": 13292.0,
+     "new": 24217.993827,
+     "delta": 10925.993827,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 27659,
+       "printed": "237,662,988,510",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 237662.98851
+      },
+      {
+       "label": "보험비용",
+       "line": 27728,
+       "printed": "213,444,994,683",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -213444.994683
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "보험수익계열 - |보험비용계열| (장기/발행)",
+     "kind": "sum",
+     "cand_new": 24217.993827,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 4,
+     "item_name": "원수 CSM상각",
+     "old": 23415.0,
+     "new": 24509.0,
+     "delta": 1094.0,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "(3) 제공된 서비스의 보험계약마진 [전기/전분기 누적]",
+       "line": 44795,
+       "printed": "24,509",
+       "sign": 1,
+       "abs": true,
+       "unit": "백만원",
+       "contribution_mn": 24509.0
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|",
+     "kind": "sum",
+     "cand_new": 24510.0,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": true,
+     "gold_class": "A",
+     "original_print": {
+      "value": 23415.0,
+      "file": "data/dart/FY2023_Q2/raw/KR0072_케이디비생명보험/xml/20230814003052.xml",
+      "rcept": "20230814003052",
+      "lines": [
+       {
+        "label": "(3) 제공된 서비스의 보험계약마진",
+        "line": 40301,
+        "printed": "23,415",
+        "sign": 1,
+        "abs": true,
+        "unit": "백만원",
+        "contribution_mn": 23415.0,
+        "unit_line": 40258
+       }
+      ],
+      "unit": "백만원"
+     },
+     "gold_source_print": {
+      "value": 23415.0,
+      "file": "data/dart/FY2023_Q2/raw/KR0072_케이디비생명보험/xml/20230814003052.xml",
+      "rcept": "20230814003052",
+      "lines": [
+       {
+        "label": "(3) 제공된 서비스의 보험계약마진",
+        "line": 40301,
+        "printed": "23,415",
+        "sign": 1,
+        "abs": true,
+        "unit": "백만원",
+        "contribution_mn": 23415.0,
+        "unit_line": 40258
+       }
+      ],
+      "unit": "백만원"
+     }
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 7,
+     "item_name": "기타 원수",
+     "old": -17294.0,
+     "new": -7462.006173,
+     "delta": 9831.993827,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 27659,
+       "printed": "237,662,988,510",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 237662.98851
+      },
+      {
+       "label": "보험비용",
+       "line": 27728,
+       "printed": "213,444,994,683",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -213444.994683
+      }
+     ],
+     "operands": [
+      {
+       "item": 4,
+       "sign": -1,
+       "value": 24509.0,
+       "source": "plan"
+      },
+      {
+       "item": 5,
+       "sign": -1,
+       "value": 8768.0,
+       "source": "master HEAD"
+      },
+      {
+       "item": 6,
+       "sign": -1,
+       "value": -1597.0,
+       "source": "master HEAD"
+      }
+     ],
+     "abs_of_sum": false,
+     "formula": "3 - (4+5+6)",
+     "kind": "derived",
+     "cand_new": -7463.006173000002,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": true,
+     "gold_class": "D",
+     "gold_derived": {
+      "formula": "3 - (4 + 5 + 6)",
+      "master_legs": {
+       "3": 13292.0,
+       "4": 23415.0,
+       "5": 8768.0,
+       "6": -1597.0
+      },
+      "formula_value_from_master_legs": -17294.0,
+      "gold": -18990.0,
+      "master": -17294.0
+     }
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 8,
+     "item_name": "재보험손익(장기)",
+     "old": 9373.0,
+     "new": 8957.298387,
+     "delta": -415.701613,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 27682,
+       "printed": "28,559,376,972",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 28559.376972
+      },
+      {
+       "label": "재보험비용",
+       "line": 27751,
+       "printed": "19,602,078,585",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -19602.078585
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "재보험수익계열 - |재보험비용계열|",
+     "kind": "sum",
+     "cand_new": 8957.298386999999,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 12,
+     "item_name": "기타 재보험",
+     "old": 1790.0,
+     "new": 1374.298387,
+     "delta": -415.701613,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 27682,
+       "printed": "28,559,376,972",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 28559.376972
+      },
+      {
+       "label": "재보험비용",
+       "line": 27751,
+       "printed": "19,602,078,585",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -19602.078585
+      }
+     ],
+     "operands": [
+      {
+       "item": 9,
+       "sign": -1,
+       "value": -710.0,
+       "source": "master HEAD"
+      },
+      {
+       "item": 10,
+       "sign": -1,
+       "value": -1499.0,
+       "source": "master HEAD"
+      },
+      {
+       "item": 11,
+       "sign": -1,
+       "value": 9792.0,
+       "source": "master HEAD"
+      }
+     ],
+     "abs_of_sum": false,
+     "formula": "8 - (9+10+11)",
+     "kind": "derived",
+     "cand_new": 1374.298386999999,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 15,
+     "item_name": "기타영업수익",
+     "old": null,
+     "new": 0.0,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "no 기타영업수익 line in the insurance section of the statement -> builder default 0.0",
+     "kind": "sum",
+     "cand_new": 0.0,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 16,
+     "item_name": "기타사업비용",
+     "old": 5400.0,
+     "new": 5349.343195,
+     "delta": -50.656805,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타사업비용",
+       "line": 27774,
+       "printed": "5,349,343,195",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 5349.343195
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 5349.343195,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": null,
+     "new": 45706.602817,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 27797,
+       "printed": "45,706,602,817",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 45706.602817
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 45706.602817,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 18,
+     "item_name": "투자이익",
+     "old": null,
+     "new": 354676.718654,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 27797,
+       "printed": "45,706,602,817",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 45706.602817
+      },
+      {
+       "label": "보험금융수익",
+       "line": 27843,
+       "printed": "23,661,064,901",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -23661.064901
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 27866,
+       "printed": "954,847,023",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -954.847023
+      },
+      {
+       "label": "보험금융비용",
+       "line": 28142,
+       "printed": "332,151,083,732",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 332151.083732
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 28165,
+       "printed": "1,434,944,029",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1434.944029
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 354676.718654,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 19,
+     "item_name": "보험금융손익",
+     "old": -303458.0,
+     "new": -308970.115837,
+     "delta": -5512.115837,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험금융수익",
+       "line": 27843,
+       "printed": "23,661,064,901",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 23661.064901
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 27866,
+       "printed": "954,847,023",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 954.847023
+      },
+      {
+       "label": "보험금융비용",
+       "line": 28142,
+       "printed": "332,151,083,732",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -332151.083732
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 28165,
+       "printed": "1,434,944,029",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1434.944029
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -308970.115837,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": 68658.0,
+     "new": 73532.551836,
+     "delta": 4874.551836,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익",
+       "line": 28372,
+       "printed": "73,532,551,836",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 73532.551836
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 73532.551836,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 21,
+     "item_name": "영업외손익",
+     "old": -10908.0,
+     "new": -10908.33116,
+     "delta": -0.33116,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업외손익",
+       "line": 28395,
+       "printed": "(10,908,331,160)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -10908.33116
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -10908.33116,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": 57750.0,
+     "new": 62624.220676,
+     "delta": 4874.220676,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익(손실)",
+       "line": 28464,
+       "printed": "62,624,220,676",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 62624.220676
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 62624.220676,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": 57750.0,
+     "new": 62624.429999,
+     "delta": 4874.429999,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익(손실)",
+       "line": 28510,
+       "printed": "62,624,429,999",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 62624.429999
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 62624.429999,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": null,
+     "new": 183006.320644,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기기타포괄손익",
+       "line": 28533,
+       "printed": "183,006,320,644",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 183006.320644
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 183006.320644,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 26,
+     "item_name": "FVOCI 채무증권",
+     "old": null,
+     "new": 106941.629211,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 28579,
+       "printed": "106,941,629,211",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 106941.629211
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 106941.629211,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": null,
+     "new": 70522.063628,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 28648,
+       "printed": "70,522,063,628",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 70522.063628
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 70522.063628,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 28,
+     "item_name": "위험회피 파생상품",
+     "old": null,
+     "new": 1205.926925,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 28625,
+       "printed": "1,205,926,925",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1205.926925
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 1205.926925,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 29,
+     "item_name": "FVOCI 지분증권",
+     "old": null,
+     "new": 6604.167588,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 28717,
+       "printed": "6,604,167,588",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 6604.167588
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 6604.167588,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": null,
+     "new": -2251.456083,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 28671,
+       "printed": "(2,251,456,083)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -2251.456083
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -2251.456083,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": null,
+     "new": 245630.750643,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기총포괄손익",
+       "line": 28763,
+       "printed": "245,630,750,643",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 245630.750643
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 245630.750643,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": null,
+     "new": -16.010625,
+     "delta": null,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+     "xml_rcept": "20240814000801",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기기타포괄손익",
+       "line": 28533,
+       "printed": "183,006,320,644",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 183006.320644
+      },
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 28579,
+       "printed": "106,941,629,211",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -106941.629211
+      },
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 28648,
+       "printed": "70,522,063,628",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -70522.063628
+      },
+      {
+       "label": "현금흐름위험회피파생상품평가손익",
+       "line": 28625,
+       "printed": "1,205,926,925",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1205.926925
+      },
+      {
+       "label": "기타포괄손익-공정가치측정금융자산평가손익",
+       "line": 28717,
+       "printed": "6,604,167,588",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -6604.167588
+      },
+      {
+       "label": "재보험계약자산(부채)순금융손익",
+       "line": 28671,
+       "printed": "(2,251,456,083)",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 2251.456083
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -16.010625,
+     "cand_equal": true,
+     "cls": "fill",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [
+    {
+     "item": 23,
+     "old": -0.2,
+     "new": -0.209323,
+     "cls": "masked",
+     "reason": "would be a masked gold cell (== builder source); a new ledger pin is forbidden by the ticket",
+     "in_cand": true
+    }
+   ],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 73532.551836,
+     "rhs": 73532.551836,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": 62624.220676,
+     "rhs": 62624.220676,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 0.209323,
+     "rhs": 0.209323,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": 245630.750643,
+     "rhs": 245630.750643,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": 183006.320644,
+     "rhs": 183006.320644,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": 45706.602817,
+     "rhs": 45706.602817,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 27825.949019,
+     "rhs": 33175.292214,
+     "resid": 0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 33175.292214,
+     "rhs": 33175.292214,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I8 3 = 4+5+6+7",
+     "lhs": 24217.993827,
+     "rhs": 24217.993827,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I9 8 = 9+10+11+12",
+     "lhs": 8957.298387,
+     "rhs": 8957.298387,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    1,
+    2,
+    3,
+    4,
+    7,
+    8,
+    12,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32
+   ],
+   "only_cand": [],
+   "only_mine": []
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0072",
+    "quarter": "2023.3Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q3",
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20241114000809"
+   },
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 1,
+     "item_name": "보험손익",
+     "old": 4636.975319,
+     "new": 16711.142687,
+     "delta": 12074.167368,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험손익",
+       "line": 3974,
+       "printed": "16,711,142,687",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 16711.142687
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 16711.142687,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 2,
+     "item_name": "생명장기 손익",
+     "old": 13878.532355,
+     "new": 25952.699723,
+     "delta": 12074.167368,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 4020,
+       "printed": "360,950,037,897",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 360950.037897
+      },
+      {
+       "label": "보험비용",
+       "line": 4089,
+       "printed": "352,381,757,526",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -352381.757526
+      },
+      {
+       "label": "재보험수익",
+       "line": 4043,
+       "printed": "47,492,558,085",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 47492.558085
+      },
+      {
+       "label": "재보험비용",
+       "line": 4112,
+       "printed": "30,108,138,733",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -30108.138733
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "3 + 8",
+     "kind": "derived",
+     "cand_new": 25952.699722999998,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 3,
+     "item_name": "원수손익(장기)",
+     "old": -4480.275872,
+     "new": 8568.280371,
+     "delta": 13048.556243,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 4020,
+       "printed": "360,950,037,897",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 360950.037897
+      },
+      {
+       "label": "보험비용",
+       "line": 4089,
+       "printed": "352,381,757,526",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -352381.757526
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "보험수익계열 - |보험비용계열| (장기/발행)",
+     "kind": "sum",
+     "cand_new": 8568.280371,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 4,
+     "item_name": "원수 CSM상각",
+     "old": 35250.0,
+     "new": 37266.0,
+     "delta": 2016.0,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "(3) 제공된 서비스의 보험계약마진 [전기/전분기 누적]",
+       "line": 22520,
+       "printed": "37,266",
+       "sign": 1,
+       "abs": true,
+       "unit": "백만원",
+       "contribution_mn": 37266.0
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "|CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|",
+     "kind": "sum",
+     "cand_new": 37270.0,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": true,
+     "gold_class": "A",
+     "original_print": {
+      "value": 35250.0,
+      "file": "data/dart/FY2023_Q3/raw/KR0072_케이디비생명보험/xml/20231114002983.xml",
+      "rcept": "20231114002983",
+      "lines": [
+       {
+        "label": "(3) 제공된 서비스의 보험계약마진",
+        "line": 46159,
+        "printed": "35,250",
+        "sign": 1,
+        "abs": true,
+        "unit": "백만원",
+        "contribution_mn": 35250.0,
+        "unit_line": 46116
+       }
+      ],
+      "unit": "백만원"
+     },
+     "gold_source_print": {
+      "value": 35250.0,
+      "file": "data/dart/FY2023_Q3/raw/KR0072_케이디비생명보험/xml/20231114002983.xml",
+      "rcept": "20231114002983",
+      "lines": [
+       {
+        "label": "(3) 제공된 서비스의 보험계약마진",
+        "line": 46159,
+        "printed": "35,250",
+        "sign": 1,
+        "abs": true,
+        "unit": "백만원",
+        "contribution_mn": 35250.0,
+        "unit_line": 46116
+       }
+      ],
+      "unit": "백만원"
+     }
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 7,
+     "item_name": "기타 원수",
+     "old": -52310.275872,
+     "new": -41277.719629,
+     "delta": 11032.556243,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험수익",
+       "line": 4020,
+       "printed": "360,950,037,897",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 360950.037897
+      },
+      {
+       "label": "보험비용",
+       "line": 4089,
+       "printed": "352,381,757,526",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -352381.757526
+      }
+     ],
+     "operands": [
+      {
+       "item": 4,
+       "sign": -1,
+       "value": 37266.0,
+       "source": "plan"
+      },
+      {
+       "item": 5,
+       "sign": -1,
+       "value": 12639.0,
+       "source": "master HEAD"
+      },
+      {
+       "item": 6,
+       "sign": -1,
+       "value": -59.0,
+       "source": "master HEAD"
+      }
+     ],
+     "abs_of_sum": false,
+     "formula": "3 - (4+5+6)",
+     "kind": "derived",
+     "cand_new": -41281.719629,
+     "cand_equal": false,
+     "cls": "changed",
+     "gold_cell": true,
+     "gold_class": "D",
+     "gold_derived": {
+      "formula": "3 - (4 + 5 + 6)",
+      "master_legs": {
+       "3": -4480.275872,
+       "4": 35250.0,
+       "5": 12639.0,
+       "6": -59.0
+      },
+      "formula_value_from_master_legs": -52310.275872,
+      "gold": -44935.275872,
+      "master": -52310.275872
+     }
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 8,
+     "item_name": "재보험손익(장기)",
+     "old": 18358.808227,
+     "new": 17384.419352,
+     "delta": -974.388875,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 4043,
+       "printed": "47,492,558,085",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 47492.558085
+      },
+      {
+       "label": "재보험비용",
+       "line": 4112,
+       "printed": "30,108,138,733",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -30108.138733
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "재보험수익계열 - |재보험비용계열|",
+     "kind": "sum",
+     "cand_new": 17384.419351999997,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 12,
+     "item_name": "기타 재보험",
+     "old": 12952.808227,
+     "new": 11978.419352,
+     "delta": -974.388875,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "재보험수익",
+       "line": 4043,
+       "printed": "47,492,558,085",
+       "sign": 1,
+       "abs": false,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": 47492.558085
+      },
+      {
+       "label": "재보험비용",
+       "line": 4112,
+       "printed": "30,108,138,733",
+       "sign": -1,
+       "abs": true,
+       "col": null,
+       "unit": "원",
+       "contribution_mn": -30108.138733
+      }
+     ],
+     "operands": [
+      {
+       "item": 9,
+       "sign": -1,
+       "value": -2749.0,
+       "source": "master HEAD"
+      },
+      {
+       "item": 10,
+       "sign": -1,
+       "value": -1657.0,
+       "source": "master HEAD"
+      },
+      {
+       "item": 11,
+       "sign": -1,
+       "value": 9812.0,
+       "source": "master HEAD"
+      }
+     ],
+     "abs_of_sum": false,
+     "formula": "8 - (9+10+11)",
+     "kind": "derived",
+     "cand_new": 11978.419351999997,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": -6025.166046,
+     "new": -13718.605641,
+     "delta": -7693.439595,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 4158,
+       "printed": "(13,718,605,641)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -13718.605641
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -13718.605641,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 18,
+     "item_name": "투자이익",
+     "old": 416495.75665,
+     "new": 416260.554977,
+     "delta": -235.201673,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 4158,
+       "printed": "(13,718,605,641)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -13718.605641
+      },
+      {
+       "label": "보험금융수익",
+       "line": 4204,
+       "printed": "33,304,509,051",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -33304.509051
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 4227,
+       "printed": "1,952,151,959",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -1952.151959
+      },
+      {
+       "label": "보험금융비용",
+       "line": 4503,
+       "printed": "462,651,368,820",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 462651.36882
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 4526,
+       "printed": "2,584,452,808",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 2584.452808
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 416260.55497700005,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 19,
+     "item_name": "보험금융손익",
+     "old": -422520.922696,
+     "new": -429979.160618,
+     "delta": -7458.237922,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험금융수익",
+       "line": 4204,
+       "printed": "33,304,509,051",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 33304.509051
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 4227,
+       "printed": "1,952,151,959",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 1952.151959
+      },
+      {
+       "label": "보험금융비용",
+       "line": 4503,
+       "printed": "462,651,368,820",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -462651.36882
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 4526,
+       "printed": "2,584,452,808",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -2584.452808
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": -429979.160618,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": -1388.190727,
+     "new": 2992.537046,
+     "delta": 4380.727773,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익",
+       "line": 4733,
+       "printed": "2,992,537,046",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 2992.537046
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 2992.537046,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": -17908.13474,
+     "new": -13527.406967,
+     "delta": 4380.727773,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익(손실)",
+       "line": 4825,
+       "printed": "(13,527,406,967)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -13527.406967
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -13527.406967,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": -17907.925417,
+     "new": -13527.197644,
+     "delta": 4380.727773,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익(손실)",
+       "line": 4871,
+       "printed": "(13,527,197,644)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -13527.197644
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -13527.197644,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": 278659.391567,
+     "new": 271338.272061,
+     "delta": -7321.119506,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기기타포괄손익",
+       "line": 4894,
+       "printed": "271,338,272,061",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 271338.272061
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 271338.272061,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": 417523.842062,
+     "new": 410202.722556,
+     "delta": -7321.119506,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "보험계약자산(부채)순금융손익",
+       "line": 5009,
+       "printed": "410,202,722,556",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 410202.722556
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 410202.722556,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": 260751.46615,
+     "new": 257811.074417,
+     "delta": -2940.391733,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+     "xml_rcept": "20241114000809",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기총포괄손익",
+       "line": 5124,
+       "printed": "257,811,074,417",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 257811.074417
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 257811.074417,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 2992.537046,
+     "rhs": 2992.537046,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": -13527.406967,
+     "rhs": -13527.406967,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 0.209323,
+     "rhs": 0.209323,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": 257811.074417,
+     "rhs": 257811.074417,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": 271338.272061,
+     "rhs": 271338.272061,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": -13718.605641,
+     "rhs": -13718.605641,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 16711.142687,
+     "rhs": 25952.699723,
+     "resid": 0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 25952.699723,
+     "rhs": 25952.699723,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I8 3 = 4+5+6+7",
+     "lhs": 8568.280371,
+     "rhs": 8568.280371,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I9 8 = 9+10+11+12",
+     "lhs": 17384.419352,
+     "rhs": 17384.419352,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    1,
+    2,
+    3,
+    4,
+    7,
+    8,
+    12,
+    17,
+    18,
+    19,
+    20,
+    22,
+    24,
+    25,
+    27,
+    31
+   ],
+   "only_cand": [],
+   "only_mine": []
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "kind": "life_note",
+   "meta": {
+    "code": "KR0072",
+    "quarter": "2023.4Q",
+    "kind": "life_note",
+    "later_fy": "FY2024_Q4",
+    "file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml",
+    "unit": "원",
+    "fmt": "atoc",
+    "role": "prior",
+    "rcept": "20250331002302"
+   },
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 17,
+     "item_name": "투자손익",
+     "old": -18358.723814,
+     "new": -18428.269919,
+     "delta": -69.546105,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml",
+     "xml_rcept": "20250331002302",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 5555,
+       "printed": "(18,428,269,919)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -18428.269919
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -18428.269919,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 18,
+     "item_name": "투자이익",
+     "old": 582631.008174,
+     "new": 582561.462069,
+     "delta": -69.546105,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml",
+     "xml_rcept": "20250331002302",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "투자손익",
+       "line": 5555,
+       "printed": "(18,428,269,919)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -18428.269919
+      },
+      {
+       "label": "보험금융수익",
+       "line": 5593,
+       "printed": "52,317,583,109",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -52317.583109
+      },
+      {
+       "label": "재보험금융수익",
+       "line": 5612,
+       "printed": "2,923,820,361",
+       "sign": -1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -2923.820361
+      },
+      {
+       "label": "보험금융비용",
+       "line": 5878,
+       "printed": "652,591,402,462",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 652591.402462
+      },
+      {
+       "label": "재보험금융비용",
+       "line": 5897,
+       "printed": "3,639,732,996",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 3639.732996
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "derived from statement lines (production definition)",
+     "kind": "sum",
+     "cand_new": 582561.462069,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 20,
+     "item_name": "영업이익",
+     "old": 46889.807165,
+     "new": 46820.26106,
+     "delta": -69.546105,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml",
+     "xml_rcept": "20250331002302",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "영업이익",
+       "line": 6106,
+       "printed": "46,820,261,060",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 46820.26106
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 46820.26106,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 22,
+     "item_name": "세전이익",
+     "old": 24018.924175,
+     "new": 23949.37807,
+     "delta": -69.546105,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml",
+     "xml_rcept": "20250331002302",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "법인세차감전순이익",
+       "line": 6182,
+       "printed": "23,949,378,070",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 23949.37807
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 23949.37807,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 24,
+     "item_name": "당기순이익",
+     "old": 24019.133498,
+     "new": 23949.587393,
+     "delta": -69.546105,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml",
+     "xml_rcept": "20250331002302",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기순이익",
+       "line": 6220,
+       "printed": "23,949,587,393",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": 23949.587393
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": 23949.587393,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": -95854.47166,
+     "new": -95924.017765,
+     "delta": -69.546105,
+     "unit": "백만원",
+     "xml_file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml",
+     "xml_rcept": "20250331002302",
+     "source_unit": "원",
+     "parts": [
+      {
+       "label": "당기총포괄손익",
+       "line": 6467,
+       "printed": "(95,924,017,765)",
+       "sign": 1,
+       "abs": false,
+       "unit": "원",
+       "contribution_mn": -95924.017765
+      }
+     ],
+     "operands": [],
+     "abs_of_sum": false,
+     "formula": "statement line",
+     "kind": "sum",
+     "cand_new": -95924.017765,
+     "cand_equal": true,
+     "cls": "changed",
+     "gold_cell": false
+    }
+   ],
+   "dropped": [
+    {
+     "item": 4,
+     "old": 51198.0,
+     "new": 51198.0,
+     "cls": "equal",
+     "reason": "equal to the master",
+     "in_cand": true
+    }
+   ],
+   "closure": [
+    {
+     "name": "I1 20 = 1 + 17",
+     "lhs": 46820.26106,
+     "rhs": 46820.26106,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2 22 = 20 + 21",
+     "lhs": 23949.37807,
+     "rhs": 23949.37807,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I2b |22-24| = |23|",
+     "lhs": 0.209323,
+     "rhs": 0.209323,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I3 31 = 24 + 25",
+     "lhs": -95924.017765,
+     "rhs": -95924.017765,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I4 25 = sum of the OCI parts the master carries",
+     "lhs": -119873.605158,
+     "rhs": -119873.605158,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I5 17 = 18 + 19",
+     "lhs": -18428.269919,
+     "rhs": -18428.269919,
+     "resid": -0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I6 LOB bridge 1 = 2+13+14 (+15-16)",
+     "lhs": 65248.530979,
+     "rhs": 78011.749804,
+     "resid": 0.0,
+     "tol": 0.5,
+     "ok": true
+    },
+    {
+     "name": "I7 2 = 3 + 8",
+     "lhs": 78011.749804,
+     "rhs": 78011.749804,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I8 3 = 4+5+6+7",
+     "lhs": 67805.264694,
+     "rhs": 67805.264694,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    },
+    {
+     "name": "I9 8 = 9+10+11+12",
+     "lhs": 10206.48511,
+     "rhs": 10206.48511,
+     "resid": 0.0,
+     "tol": 0.002,
+     "ok": true
+    }
+   ],
+   "closure_ok": true,
+   "cset": [
+    4,
+    7,
+    17,
+    18,
+    20,
+    22,
+    24,
+    31
+   ],
+   "only_cand": [
+    4,
+    7
+   ],
+   "only_mine": []
+  }
+ ],
+ "csm_buckets": [
+  {
+   "code": "KR0072",
+   "quarter": "2023.1Q",
+   "file": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원",
+   "two_dp": true,
+   "vec_exact": [
+    5695.95,
+    384.11,
+    42.25,
+    -867.71,
+    -116.41,
+    5138.2
+   ],
+   "vec": [
+    5695.95,
+    384.11,
+    42.25,
+    -867.71,
+    -116.41,
+    5138.2
+   ],
+   "old": [
+    5239.4,
+    387.3,
+    45.1,
+    -833.3,
+    -111.25,
+    4727.25
+   ],
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 5239.4,
+     "new": 5695.95,
+     "delta": 456.55,
+     "exact": 5695.95,
+     "parts": [
+      {
+       "label": "1. 기초 보험계약자산 및 부채",
+       "line": 36305,
+       "printed": "569,595",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 5695.95
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원",
+     "cand_new": 5695.9,
+     "cand_equal": false,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 2,
+     "item_name": "신계약 CSM",
+     "old": 387.3,
+     "new": 384.11,
+     "delta": -3.19,
+     "exact": 384.11,
+     "parts": [
+      {
+       "label": "(3) 최초 인식한 계약의 효과",
+       "line": 36353,
+       "printed": "38,411",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 384.11
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원",
+     "cand_new": 384.1,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 3,
+     "item_name": "이자 부리",
+     "old": 45.1,
+     "new": 42.25,
+     "delta": -2.85,
+     "exact": 42.25,
+     "parts": [
+      {
+       "label": "6. 보험금융손익",
+       "line": 36417,
+       "printed": "4,225",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 42.25
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원",
+     "cand_new": 42.2,
+     "cand_equal": false,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": -833.3,
+     "new": -867.71,
+     "delta": -34.41,
+     "exact": -867.71,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 36337,
+       "printed": "(86,771)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -867.71
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원",
+     "cand_new": -867.7,
+     "cand_equal": true,
+     "gold_cell": true
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 5,
+     "item_name": "CSM 상각",
+     "old": -111.25,
+     "new": -116.41,
+     "delta": -5.16,
+     "exact": -116.41,
+     "parts": [
+      {
+       "label": "(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진",
+       "line": 36369,
+       "printed": "(11,641)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -116.41
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원",
+     "cand_new": -116.4,
+     "cand_equal": true,
+     "gold_cell": true
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.1Q",
+     "item": 6,
+     "item_name": "기말 CSM",
+     "old": 4727.25,
+     "new": 5138.2,
+     "delta": 410.95,
+     "exact": 5138.2,
+     "parts": [
+      {
+       "label": "9. 전분기말 보험계약자산 및 부채",
+       "line": 36481,
+       "printed": "513,820",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 5138.2
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원",
+     "cand_new": 5138.2,
+     "cand_equal": true,
+     "gold_cell": true
+    }
+   ],
+   "dropped": [],
+   "closure_resid": -0.01,
+   "cand_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -116.41
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원",
+   "two_dp": true,
+   "vec_exact": [
+    5695.95,
+    1173.06,
+    83.04,
+    -663.6,
+    -245.09,
+    6043.35
+   ],
+   "vec": [
+    5695.95,
+    1173.06,
+    83.04,
+    -663.6,
+    -245.09,
+    6043.35
+   ],
+   "old": [
+    5239.4,
+    1174.0,
+    90.0,
+    -685.55,
+    -234.15,
+    5583.7
+   ],
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 5239.4,
+     "new": 5695.95,
+     "delta": 456.55,
+     "exact": 5695.95,
+     "parts": [
+      {
+       "label": "1. 기초 보험계약자산 및 부채",
+       "line": 40664,
+       "printed": "569,595",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 5695.95
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원",
+     "cand_new": 5695.9,
+     "cand_equal": false,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 2,
+     "item_name": "신계약 CSM",
+     "old": 1174.0,
+     "new": 1173.06,
+     "delta": -0.94,
+     "exact": 1173.06,
+     "parts": [
+      {
+       "label": "(3) 최초 인식한 계약의 효과",
+       "line": 40712,
+       "printed": "117,306",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 1173.06
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원",
+     "cand_new": 1173.1,
+     "cand_equal": false,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 3,
+     "item_name": "이자 부리",
+     "old": 90.0,
+     "new": 83.04,
+     "delta": -6.96,
+     "exact": 83.04,
+     "parts": [
+      {
+       "label": "6. 보험금융손익",
+       "line": 40776,
+       "printed": "8,304",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 83.04
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원",
+     "cand_new": 83.0,
+     "cand_equal": false,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": -685.55,
+     "new": -663.6,
+     "delta": 21.95,
+     "exact": -663.6,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 40696,
+       "printed": "(66,360)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -663.6
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원",
+     "cand_new": -663.6,
+     "cand_equal": true,
+     "gold_cell": true
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 5,
+     "item_name": "CSM 상각",
+     "old": -234.15,
+     "new": -245.09,
+     "delta": -10.94,
+     "exact": -245.09,
+     "parts": [
+      {
+       "label": "(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진",
+       "line": 40728,
+       "printed": "(24,509)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -245.09
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원",
+     "cand_new": -245.1,
+     "cand_equal": true,
+     "gold_cell": true
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.2Q",
+     "item": 6,
+     "item_name": "기말 CSM",
+     "old": 5583.7,
+     "new": 6043.35,
+     "delta": 459.65,
+     "exact": 6043.35,
+     "parts": [
+      {
+       "label": "9. 전반기말 보험계약자산 및 부채(1+5+6+7+8)",
+       "line": 40840,
+       "printed": "604,335",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 6043.35
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원",
+     "cand_new": 6043.4,
+     "cand_equal": false,
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure_resid": 0.01,
+   "cand_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -245.09
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원",
+   "two_dp": false,
+   "vec_exact": [
+    5695.95,
+    2209.79,
+    133.98,
+    -1830.22,
+    -372.66,
+    5836.84
+   ],
+   "vec": [
+    5695.9,
+    2209.8,
+    134.0,
+    -1830.2,
+    -372.7,
+    5836.8
+   ],
+   "old": [
+    5239.4,
+    2210.7,
+    146.1,
+    -1912.9,
+    -352.5,
+    5330.8
+   ],
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 5239.4,
+     "new": 5695.9,
+     "delta": 456.5,
+     "exact": 5695.95,
+     "parts": [
+      {
+       "label": "1. 기초 보험계약자산 및 부채",
+       "line": 18372,
+       "printed": "569,595",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 5695.95
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원",
+     "cand_new": 5695.9,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 2,
+     "item_name": "신계약 CSM",
+     "old": 2210.7,
+     "new": 2209.8,
+     "delta": -0.9,
+     "exact": 2209.79,
+     "parts": [
+      {
+       "label": "(3) 최초 인식한 계약의 효과",
+       "line": 18420,
+       "printed": "220,979",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 2209.79
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원",
+     "cand_new": 2209.8,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 3,
+     "item_name": "이자 부리",
+     "old": 146.1,
+     "new": 134.0,
+     "delta": -12.1,
+     "exact": 133.98,
+     "parts": [
+      {
+       "label": "6. 보험금융손익",
+       "line": 18487,
+       "printed": "13,398",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 133.98
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원",
+     "cand_new": 134.0,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": -1912.9,
+     "new": -1830.2,
+     "delta": 82.7,
+     "exact": -1830.22,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 18404,
+       "printed": "(183,022)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -1830.22
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원",
+     "cand_new": -1830.2,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 5,
+     "item_name": "CSM 상각",
+     "old": -352.5,
+     "new": -372.7,
+     "delta": -20.2,
+     "exact": -372.66,
+     "parts": [
+      {
+       "label": "(1) 서비스 이전을 반영하기 위해 당기손익으로 인식한 보험계약마진",
+       "line": 18436,
+       "printed": "(37,266)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -372.66
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원",
+     "cand_new": -372.7,
+     "cand_equal": true,
+     "gold_cell": false
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.3Q",
+     "item": 6,
+     "item_name": "기말 CSM",
+     "old": 5330.8,
+     "new": 5836.8,
+     "delta": 506.0,
+     "exact": 5836.84,
+     "parts": [
+      {
+       "label": "9. 전분기말 보험계약자산 및 부채 (1+5+6+7+8)",
+       "line": 18554,
+       "printed": "583,684",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 5836.84
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원",
+     "cand_new": 5836.8,
+     "cand_equal": true,
+     "gold_cell": false
+    }
+   ],
+   "dropped": [],
+   "closure_resid": 0.0,
+   "cand_items": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -372.66
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "file": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml table@L26189 unit 백만원",
+   "two_dp": false,
+   "vec_exact": [
+    5695.95,
+    3023.1,
+    183.37,
+    -2559.97,
+    -511.98,
+    5830.47
+   ],
+   "vec": [
+    5695.9,
+    3023.1,
+    183.4,
+    -2560.0,
+    -512.0,
+    5830.5
+   ],
+   "old": [
+    5239.4,
+    3023.1,
+    183.4,
+    -2103.5,
+    -512.0,
+    5830.5
+   ],
+   "cells": [
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 1,
+     "item_name": "기초 CSM",
+     "old": 5239.4,
+     "new": 5695.9,
+     "delta": 456.5,
+     "exact": 5695.95,
+     "parts": [
+      {
+       "label": "1. 기초 보험계약자산 및 부채",
+       "line": 26220,
+       "printed": "569,595",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": 5695.95
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml table@L26189 unit 백만원",
+     "cand_new": 5695.9,
+     "cand_equal": true,
+     "gold_cell": true
+    },
+    {
+     "code": "KR0072",
+     "quarter": "2023.4Q",
+     "item": 4,
+     "item_name": "가정 및 경험 조정",
+     "old": -2103.5,
+     "new": -2560.0,
+     "delta": -456.5,
+     "exact": -2559.97,
+     "parts": [
+      {
+       "label": "(1) 보험계약마진을 조정하는 추정치의 변동분",
+       "line": 26252,
+       "printed": "(255,997)",
+       "sign": 1,
+       "unit": "백만원",
+       "contribution_eok": -2559.97
+      }
+     ],
+     "derived": null,
+     "src": "data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml table@L26189 unit 백만원",
+     "cand_new": -2560.0,
+     "cand_equal": true,
+     "gold_cell": true
+    }
+   ],
+   "dropped": [],
+   "closure_resid": -0.1,
+   "cand_items": [
+    1,
+    4
+   ],
+   "only_cand": [],
+   "only_mine": [],
+   "group_row_amort": -511.98
+  }
+ ],
+ "seams": [
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 1,
+   "derived_after": 19527.535627999998,
+   "live_dangi": 15553.65,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 19527.535628,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험손익",
+      "line": 27609,
+      "printed": "19,527,535,628",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 19527.535628
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 2,
+   "derived_after": 22530.710914000003,
+   "live_dangi": 13207.49,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 3,
+   "derived_after": 14284.055647999998,
+   "live_dangi": 4545.9,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 4,
+   "derived_after": 12868.0,
+   "live_dangi": 12290.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 7,
+   "derived_after": null,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": false,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "derived_none",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 8,
+   "derived_after": 8246.655266000002,
+   "live_dangi": 8661.59,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 12,
+   "derived_after": null,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": false,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "derived_none",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 15,
+   "derived_after": 0.0,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": false,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 16,
+   "derived_after": 3003.1731950000003,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": false,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 3003.175286,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타사업비용",
+      "line": 27770,
+      "printed": "3,003,175,286",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 3003.175286
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.002091,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 17,
+   "derived_after": 12829.452359000003,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 12829.452359,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 27793,
+      "printed": "12,829,452,359",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 12829.452359
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 18,
+   "derived_after": 154024.92752100003,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 154024.927521,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 27793,
+      "printed": "12,829,452,359",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 12829.452359
+     },
+     {
+      "label": "보험금융수익",
+      "line": 27839,
+      "printed": "9,556,356,821",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -9556.356821
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 27862,
+      "printed": "662,845,229",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -662.845229
+     },
+     {
+      "label": "보험금융비용",
+      "line": 28138,
+      "printed": "150,485,526,810",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 150485.52681
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 28161,
+      "printed": "929,150,402",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 929.150402
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 19,
+   "derived_after": -141195.47516200002,
+   "live_dangi": -138735.21,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -141195.475162,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험금융수익",
+      "line": 27839,
+      "printed": "9,556,356,821",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 9556.356821
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 27862,
+      "printed": "662,845,229",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 662.845229
+     },
+     {
+      "label": "보험금융비용",
+      "line": 28138,
+      "printed": "150,485,526,810",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -150485.52681
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 28161,
+      "printed": "929,150,402",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -929.150402
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 20,
+   "derived_after": 32356.987987,
+   "live_dangi": 25559.91,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 32356.987987,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업이익",
+      "line": 28368,
+      "printed": "32,356,987,987",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 32356.987987
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 21,
+   "derived_after": -5482.63116,
+   "live_dangi": -5482.3,
+   "cur_adopted": true,
+   "prev_adopted": false,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -5482.633618,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업외손익",
+      "line": 28391,
+      "printed": "(5,482,633,618)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -5482.633618
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.002458,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 22,
+   "derived_after": 26874.354369,
+   "live_dangi": 20077.6,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 26874.354369,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세차감전순이익(손실)",
+      "line": 28460,
+      "printed": "26,874,354,369",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 26874.354369
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 24,
+   "derived_after": 26874.354369,
+   "live_dangi": 20077.39,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 26874.354369,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기순이익(손실)",
+      "line": 28506,
+      "printed": "26,874,354,369",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 26874.354369
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 25,
+   "derived_after": 163691.920976,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 163691.920976,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기기타포괄손익",
+      "line": 28529,
+      "printed": "163,691,920,976",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 163691.920976
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 26,
+   "derived_after": -264434.404683,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -264434.404683,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 28575,
+      "printed": "(264,434,404,683)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -264434.404683
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 27,
+   "derived_after": 428349.23503800004,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 428349.235038,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 28644,
+      "printed": "428,349,235,038",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 428349.235038
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 28,
+   "derived_after": -128.53150400000004,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -128.531504,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 28621,
+      "printed": "(128,531,504)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -128.531504
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 29,
+   "derived_after": 1039.9811479999998,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 1039.981148,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 28713,
+      "printed": "1,039,981,148",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 1039.981148
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 30,
+   "derived_after": -1177.9416330000001,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -1177.941633,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 28667,
+      "printed": "(1,177,941,633)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -1177.941633
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 31,
+   "derived_after": 190566.275345,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 190566.275345,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기총포괄손익",
+      "line": 28759,
+      "printed": "190,566,275,345",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 190566.275345
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 32,
+   "derived_after": 43.58261,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 43.58261,
+    "file": "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기기타포괄손익",
+      "line": 28529,
+      "printed": "163,691,920,976",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 163691.920976
+     },
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 28575,
+      "printed": "(264,434,404,683)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 264434.404683
+     },
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 28644,
+      "printed": "428,349,235,038",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -428349.235038
+     },
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 28621,
+      "printed": "(128,531,504)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 128.531504
+     },
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 28713,
+      "printed": "1,039,981,148",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -1039.981148
+     },
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 28667,
+      "printed": "(1,177,941,633)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 1177.941633
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 1,
+   "derived_after": -11114.806332,
+   "live_dangi": -18028.024681,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -11114.806332,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험손익",
+      "line": 3970,
+      "printed": "(11,114,806,332)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -11114.806332
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 2,
+   "derived_after": -7222.592490999999,
+   "live_dangi": -8786.467645,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 3,
+   "derived_after": -15649.713455999998,
+   "live_dangi": -17772.275872,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 4,
+   "derived_after": 12757.0,
+   "live_dangi": 11835.0,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 7,
+   "derived_after": -33815.713456,
+   "live_dangi": -35016.275872,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 8,
+   "derived_after": 8427.120965,
+   "live_dangi": 8985.808227,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 12,
+   "derived_after": 10604.120965,
+   "live_dangi": 11162.808227,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 15,
+   "derived_after": 0.0,
+   "live_dangi": null,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "lob_item_not_checked_directly",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 16,
+   "derived_after": 3892.213841,
+   "live_dangi": null,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 3892.213841,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타사업비용",
+      "line": 4131,
+      "printed": "3,892,213,841",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 3892.213841
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 17,
+   "derived_after": -59425.208458,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -58698.285464,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 4154,
+      "printed": "(58,698,285,464)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -58698.285464
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -726.922994,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 18,
+   "derived_after": 61583.83632299997,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 62310.759317,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 4154,
+      "printed": "(58,698,285,464)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -58698.285464
+     },
+     {
+      "label": "보험금융수익",
+      "line": 4200,
+      "printed": "9,643,444,150",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -9643.44415
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 4223,
+      "printed": "997,304,936",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -997.304936
+     },
+     {
+      "label": "보험금융비용",
+      "line": 4499,
+      "printed": "130,500,285,088",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 130500.285088
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 4522,
+      "printed": "1,149,508,779",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 1149.508779
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -726.922994,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 19,
+   "derived_after": -121009.044781,
+   "live_dangi": -119062.922696,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -121009.044781,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험금융수익",
+      "line": 4200,
+      "printed": "9,643,444,150",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 9643.44415
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 4223,
+      "printed": "997,304,936",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 997.304936
+     },
+     {
+      "label": "보험금융비용",
+      "line": 4499,
+      "printed": "130,500,285,088",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -130500.285088
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 4522,
+      "printed": "1,149,508,779",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -1149.508779
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 20,
+   "derived_after": -70540.01479,
+   "live_dangi": -70046.190727,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -69813.091796,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업이익",
+      "line": 4729,
+      "printed": "(69,813,091,796)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -69813.091796
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -726.922994,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 21,
+   "derived_after": -5611.6128530000005,
+   "live_dangi": -5611.944013,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -5611.612853,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업외손익",
+      "line": 4752,
+      "printed": "(5,611,612,853)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -5611.612853
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 22,
+   "derived_after": -76151.627643,
+   "live_dangi": -75658.13474,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -75424.704649,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세차감전순이익(손실)",
+      "line": 4821,
+      "printed": "(75,424,704,649)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -75424.704649
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -726.922994,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 24,
+   "derived_after": -76151.627643,
+   "live_dangi": -75657.925417,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -75424.704649,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기순이익(손실)",
+      "line": 4867,
+      "printed": "(75,424,704,649)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -75424.704649
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -726.922994,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 25,
+   "derived_after": 88331.951417,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 88331.951417,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기기타포괄손익",
+      "line": 4890,
+      "printed": "88,331,951,417",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 88331.951417
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 26,
+   "derived_after": -249649.672753,
+   "live_dangi": null,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -249649.672753,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 4936,
+      "printed": "(249,649,672,753)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -249649.672753
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 27,
+   "derived_after": 339680.658928,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 339680.658928,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 5005,
+      "printed": "339,680,658,928",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 339680.658928
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 28,
+   "derived_after": -655.596444,
+   "live_dangi": null,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -655.596444,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 4982,
+      "printed": "(655,596,444)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -655.596444
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 29,
+   "derived_after": 270.5194449999999,
+   "live_dangi": null,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 270.519445,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 5074,
+      "printed": "270,519,445",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 270.519445
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 30,
+   "derived_after": -1336.116353,
+   "live_dangi": null,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": -1336.116353,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 5028,
+      "printed": "(1,336,116,353)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -1336.116353
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 31,
+   "derived_after": 12180.32377399999,
+   "live_dangi": null,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 12907.246768,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기총포괄손익",
+      "line": 5120,
+      "printed": "12,907,246,768",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 12907.246768
+     }
+    ]
+   },
+   "diff_vs_printed_3m": -726.922994,
+   "cls": "seam",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.3Q",
+   "item": 32,
+   "derived_after": 22.158594,
+   "live_dangi": null,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "printed_3m": {
+    "value": 22.158594,
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기기타포괄손익",
+      "line": 4890,
+      "printed": "88,331,951,417",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 88331.951417
+     },
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 4936,
+      "printed": "(249,649,672,753)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 249649.672753
+     },
+     {
+      "label": "보험계약자산(부채)순금융손익",
+      "line": 5005,
+      "printed": "339,680,658,928",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -339680.658928
+     },
+     {
+      "label": "현금흐름위험회피파생상품평가손익",
+      "line": 4982,
+      "printed": "(655,596,444)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 655.596444
+     },
+     {
+      "label": "기타포괄손익-공정가치측정금융자산평가손익",
+      "line": 5074,
+      "printed": "270,519,445",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -270.519445
+     },
+     {
+      "label": "재보험계약자산(부채)순금융손익",
+      "line": 5028,
+      "printed": "(1,336,116,353)",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 1336.116353
+     }
+    ]
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 1,
+   "derived_after": 48537.388292,
+   "live_dangi": 60611.55566,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    65248.530979,
+    65248.530979
+   ]
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 2,
+   "derived_after": 52059.05008100001,
+   "live_dangi": 64133.217449,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 3,
+   "derived_after": 59236.984323,
+   "live_dangi": 72285.540566,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 4,
+   "derived_after": 13932.0,
+   "live_dangi": 15948.0,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 7,
+   "derived_after": 37928.984323,
+   "live_dangi": 48961.540566,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 8,
+   "derived_after": -7177.934242000001,
+   "live_dangi": -8152.323117,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 12,
+   "derived_after": -2143.934242000001,
+   "live_dangi": -3118.323117,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 17,
+   "derived_after": -4709.664277999998,
+   "live_dangi": -12333.557768,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative -13718.605641 vs master -6025.166046",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 4158,
+      "printed": "(13,718,605,641)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -13718.605641
+     }
+    ],
+    "comparative": -13718.605641,
+    "master": -6025.166046
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 18,
+   "derived_after": 166300.907092,
+   "live_dangi": 166135.251524,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 416260.554977 vs master 416495.75665",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "투자손익",
+      "line": 4158,
+      "printed": "(13,718,605,641)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -13718.605641
+     },
+     {
+      "label": "보험금융수익",
+      "line": 4204,
+      "printed": "33,304,509,051",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -33304.509051
+     },
+     {
+      "label": "재보험금융수익",
+      "line": 4227,
+      "printed": "1,952,151,959",
+      "sign": -1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -1952.151959
+     },
+     {
+      "label": "보험금융비용",
+      "line": 4503,
+      "printed": "462,651,368,820",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 462651.36882
+     },
+     {
+      "label": "재보험금융비용",
+      "line": 4526,
+      "printed": "2,584,452,808",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 2584.452808
+     }
+    ],
+    "comparative": 416260.554977,
+    "master": 416495.75665
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 19,
+   "derived_after": -171010.57136999996,
+   "live_dangi": -178468.809292,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    -600989.731988,
+    -600989.731988
+   ]
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 20,
+   "derived_after": 43827.724014,
+   "live_dangi": 48277.997892,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 2992.537046 vs master -1388.190727",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "영업이익",
+      "line": 4733,
+      "printed": "2,992,537,046",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 2992.537046
+     }
+    ],
+    "comparative": 2992.537046,
+    "master": -1388.190727
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 22,
+   "derived_after": 37476.785037,
+   "live_dangi": 41927.058915,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative -13527.406967 vs master -17908.13474",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "법인세차감전순이익(손실)",
+      "line": 4825,
+      "printed": "(13,527,406,967)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -13527.406967
+     }
+    ],
+    "comparative": -13527.406967,
+    "master": -17908.13474
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 24,
+   "derived_after": 37476.785037,
+   "live_dangi": 41927.058915,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative -13527.197644 vs master -17907.925417",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기순이익(손실)",
+      "line": 4871,
+      "printed": "(13,527,197,644)",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": -13527.197644
+     }
+    ],
+    "comparative": -13527.197644,
+    "master": -17907.925417
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 25,
+   "derived_after": -391211.877219,
+   "live_dangi": -398532.996725,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    -119873.605158,
+    -119873.605158
+   ]
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 27,
+   "derived_after": -1262016.221851,
+   "live_dangi": -1269337.341357,
+   "cur_adopted": false,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "cls": "q4_unchanged_q3_adopted",
+   "proposal": "none",
+   "q4_comp_vs_master": [
+    -851813.499295,
+    -851813.499295
+   ]
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.4Q",
+   "item": 31,
+   "derived_after": -353735.092182,
+   "live_dangi": -356605.93781,
+   "cur_adopted": true,
+   "prev_adopted": true,
+   "existing_null": false,
+   "existing_set": false,
+   "q3_restated": true,
+   "q3_adopted": true,
+   "q3_evidence": "comparative 257811.074417 vs master 260751.46615",
+   "q3_comparative": {
+    "file": "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml",
+    "unit": "원",
+    "parts": [
+     {
+      "label": "당기총포괄손익",
+      "line": 5124,
+      "printed": "257,811,074,417",
+      "sign": 1,
+      "abs": false,
+      "unit": "원",
+      "contribution_mn": 257811.074417
+     }
+    ],
+    "comparative": 257811.074417,
+    "master": 260751.46615
+   },
+   "cls": "consistent_both_restated",
+   "proposal": "none"
+  }
+ ],
+ "findings": [
+  {
+   "code": "KR0072",
+   "quarter": "2023.1Q",
+   "item": 16,
+   "kind": "masked gold cell not loaded",
+   "text": "latest comparative 2346.167909 equals the builder source value; master stays 2346.17; loading it needs a new ledger pin"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.1Q",
+   "item": 21,
+   "kind": "masked gold cell not loaded",
+   "text": "latest comparative -5425.697542 equals the builder source value; master stays -5425.7; loading it needs a new ledger pin"
+  },
+  {
+   "code": "KR0072",
+   "quarter": "2023.2Q",
+   "item": 23,
+   "kind": "masked gold cell not loaded",
+   "text": "latest comparative -0.209323 equals the builder source value; master stays -0.2; loading it needs a new ledger pin"
+  }
+ ],
+ "notes": [],
+ "_log_pl": [
+  "== KR0072 2023.1Q life_note later data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml unit 원",
+  "   adopted 21: [1, 2, 3, 4, 8, 16, 17, 18, 19, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32]",
+  "   candidate items not adopted: []  | adopted but not in candidates: []",
+  "   closure: I1=+0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=+0.0000; I5=+0.0000; I6=+0.0000; I7=+0.0000",
+  "== KR0072 2023.2Q life_note later data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml unit 원",
+  "   adopted 25: [1, 2, 3, 4, 7, 8, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]",
+  "   candidate items not adopted: []  | adopted but not in candidates: []",
+  "   closure: I1=+0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=-0.0000; I5=-0.0000; I6=+0.0000; I7=+0.0000; I8=+0.0000; I9=+0.0000",
+  "== KR0072 2023.3Q life_note later data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml unit 원",
+  "   adopted 16: [1, 2, 3, 4, 7, 8, 12, 17, 18, 19, 20, 22, 24, 25, 27, 31]",
+  "   candidate items not adopted: []  | adopted but not in candidates: []",
+  "   closure: I1=+0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=+0.0000; I5=+0.0000; I6=+0.0000; I7=+0.0000; I8=+0.0000; I9=+0.0000",
+  "== KR0072 2023.4Q life_note later data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml unit 원",
+  "   adopted 6: [17, 18, 20, 22, 24, 31]",
+  "   candidate items not adopted: [4, 7]  | adopted but not in candidates: []",
+  "   dropped i4: old=51198.0 new=51198.0 cls=equal (equal to the master) in_cand=True",
+  "   closure: I1=-0.0000; I2=+0.0000; I2b=+0.0000; I3=+0.0000; I4=-0.0000; I5=-0.0000; I6=+0.0000; I7=+0.0000; I8=+0.0000; I9=+0.0000"
+ ],
+ "csm_gold_class": {
+  "KR0072|4|2023.1Q": {
+   "summary": "class A (gold == the original filing print -833.3; `was` -944.6); replaced by the latest comparative -867.71",
+   "cls": "A",
+   "gold": -833.3,
+   "was": -944.6,
+   "latest": -867.71
+  },
+  "KR0072|5|2023.1Q": {
+   "summary": "class A (gold == the original filing print -111.25; `was` None); replaced by the latest comparative -116.41",
+   "cls": "A",
+   "gold": -111.25,
+   "was": null,
+   "latest": -116.41
+  },
+  "KR0072|6|2023.1Q": {
+   "summary": "class A (gold == the original filing print 4727.25; `was` 4727.2); replaced by the latest comparative 5138.2",
+   "cls": "A",
+   "gold": 4727.25,
+   "was": 4727.2,
+   "latest": 5138.2
+  },
+  "KR0072|4|2023.2Q": {
+   "summary": "class A (gold == the original filing print -685.55; `was` -685.5); replaced by the latest comparative -663.6",
+   "cls": "A",
+   "gold": -685.55,
+   "was": -685.5,
+   "latest": -663.6
+  },
+  "KR0072|5|2023.2Q": {
+   "summary": "class A (gold == the original filing print -234.15; `was` -234.2); replaced by the latest comparative -245.09",
+   "cls": "A",
+   "gold": -234.15,
+   "was": -234.2,
+   "latest": -245.09
+  },
+  "KR0072|1|2023.4Q": {
+   "summary": "class B chain-forced: gold 5239.4 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 5695.9; the latest comparative = 5695.9); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector",
+   "cls": "B",
+   "gold": 5239.4,
+   "was": 5695.9,
+   "latest": 5695.9
+  },
+  "KR0072|4|2023.4Q": {
+   "summary": "class B chain-forced: gold -2103.5 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -2560.0; the latest comparative = -2560.0); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector",
+   "cls": "B",
+   "gold": -2103.5,
+   "was": -2560.0,
+   "latest": -2560.0
+  }
+ },
+ "apply_contract": {
+  "gold_new": [
+   {
+    "code": "KR0072",
+    "item": 1,
+    "quarter": "2023.1Q",
+    "value": 8298.413391,
+    "was": 7111.35,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 8298.413391 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L24253. 변경 전 마스터값 7111.35. 변동 1187.063391. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 2,
+    "quarter": "2023.1Q",
+    "value": 10644.5813,
+    "was": 9457.51,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 10644.5813 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L24299 외 합산 4줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 9457.51. 변동 1187.0713. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 3,
+    "quarter": "2023.1Q",
+    "value": 9933.938179,
+    "was": 8746.1,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 9933.938179 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L24299 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 8746.1. 변동 1187.838179. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 4,
+    "quarter": "2023.1Q",
+    "value": 11641.0,
+    "was": 11125.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 11641.0 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L40388. 변경 전 마스터값 11125.0. 변동 516.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 8,
+    "quarter": "2023.1Q",
+    "value": 710.643121,
+    "was": 711.41,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 710.643121 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L24322 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 711.41. 변동 -0.766879. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 17,
+    "quarter": "2023.1Q",
+    "value": 32877.150458,
+    "was": 35986.75,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 32877.150458 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L24437. 변경 전 마스터값 35986.75. 변동 -3109.599542. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 18,
+    "quarter": "2023.1Q",
+    "value": 200651.791133,
+    "was": 200709.54,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 200651.791133 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L24437 외 합산 5줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 200709.54. 변동 -57.748867. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 19,
+    "quarter": "2023.1Q",
+    "value": -167774.640675,
+    "was": -164722.79,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -167774.640675 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L24483 외 합산 4줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 -164722.79. 변동 -3051.850675. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 20,
+    "quarter": "2023.1Q",
+    "value": 41175.563849,
+    "was": 43098.09,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 41175.563849 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25012. 변경 전 마스터값 43098.09. 변동 -1922.526151. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 22,
+    "quarter": "2023.1Q",
+    "value": 35749.866307,
+    "was": 37672.4,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 35749.866307 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25104. 변경 전 마스터값 37672.4. 변동 -1922.533693. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 24,
+    "quarter": "2023.1Q",
+    "value": 35750.07563,
+    "was": 37672.61,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 35750.07563 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25150. 변경 전 마스터값 37672.61. 변동 -1922.53437. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 25,
+    "quarter": "2023.1Q",
+    "value": 19314.399668,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 19314.399668 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25173. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 26,
+    "quarter": "2023.1Q",
+    "value": 371376.033894,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 371376.033894 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25219. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 27,
+    "quarter": "2023.1Q",
+    "value": -357827.17141,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -357827.17141 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25288. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 28,
+    "quarter": "2023.1Q",
+    "value": 1334.458429,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 1334.458429 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25265. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 29,
+    "quarter": "2023.1Q",
+    "value": 5564.18644,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 5564.18644 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25357. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 30,
+    "quarter": "2023.1Q",
+    "value": -1073.51445,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -1073.51445 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25311. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 31,
+    "quarter": "2023.1Q",
+    "value": 55064.475298,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 55064.475298 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25403. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 32,
+    "quarter": "2023.1Q",
+    "value": -59.593235,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → -59.593235 백만원. 원문 data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml L25173 외 합산 6줄(증거 e23_plan_kdb.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 1,
+    "quarter": "2023.2Q",
+    "value": 27825.949019,
+    "was": 22665.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 27825.949019 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27613. 변경 전 마스터값 22665.0. 변동 5160.949019. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 2,
+    "quarter": "2023.2Q",
+    "value": 33175.292214,
+    "was": 22665.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 33175.292214 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27659 외 합산 4줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 22665.0. 변동 10510.292214. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 3,
+    "quarter": "2023.2Q",
+    "value": 24217.993827,
+    "was": 13292.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 24217.993827 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27659 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 13292.0. 변동 10925.993827. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 8,
+    "quarter": "2023.2Q",
+    "value": 8957.298387,
+    "was": 9373.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 8957.298387 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27682 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 9373.0. 변동 -415.701613. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 12,
+    "quarter": "2023.2Q",
+    "value": 1374.298387,
+    "was": 1790.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 1374.298387 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27682 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 1790.0. 변동 -415.701613. 산식: 8 - (9+10+11). 피연산자: 9번=-710.0(master HEAD), 10번=-1499.0(master HEAD), 11번=9792.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 15,
+    "quarter": "2023.2Q",
+    "value": 0.0,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 0.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml 마스터 피연산자만. 변동 신규. 산식: no 기타영업수익 line in the insurance section of the statement -> builder default 0.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 16,
+    "quarter": "2023.2Q",
+    "value": 5349.343195,
+    "was": 5400.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 5349.343195 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27774. 변경 전 마스터값 5400.0. 변동 -50.656805. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 17,
+    "quarter": "2023.2Q",
+    "value": 45706.602817,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 45706.602817 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27797. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 18,
+    "quarter": "2023.2Q",
+    "value": 354676.718654,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 354676.718654 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27797 외 합산 5줄(증거 e23_plan_kdb.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 19,
+    "quarter": "2023.2Q",
+    "value": -308970.115837,
+    "was": -303458.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -308970.115837 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27843 외 합산 4줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 -303458.0. 변동 -5512.115837. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 20,
+    "quarter": "2023.2Q",
+    "value": 73532.551836,
+    "was": 68658.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 73532.551836 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28372. 변경 전 마스터값 68658.0. 변동 4874.551836. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 21,
+    "quarter": "2023.2Q",
+    "value": -10908.33116,
+    "was": -10908.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -10908.33116 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28395. 변경 전 마스터값 -10908.0. 변동 -0.33116. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 22,
+    "quarter": "2023.2Q",
+    "value": 62624.220676,
+    "was": 57750.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 62624.220676 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28464. 변경 전 마스터값 57750.0. 변동 4874.220676. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 24,
+    "quarter": "2023.2Q",
+    "value": 62624.429999,
+    "was": 57750.0,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 62624.429999 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28510. 변경 전 마스터값 57750.0. 변동 4874.429999. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 25,
+    "quarter": "2023.2Q",
+    "value": 183006.320644,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 183006.320644 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28533. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 26,
+    "quarter": "2023.2Q",
+    "value": 106941.629211,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 106941.629211 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28579. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 27,
+    "quarter": "2023.2Q",
+    "value": 70522.063628,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 70522.063628 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28648. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 28,
+    "quarter": "2023.2Q",
+    "value": 1205.926925,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 1205.926925 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28625. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 29,
+    "quarter": "2023.2Q",
+    "value": 6604.167588,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 6604.167588 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28717. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 30,
+    "quarter": "2023.2Q",
+    "value": -2251.456083,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -2251.456083 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28671. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 31,
+    "quarter": "2023.2Q",
+    "value": 245630.750643,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 245630.750643 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28763. 변동 신규. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 32,
+    "quarter": "2023.2Q",
+    "value": -16.010625,
+    "was": null,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -16.010625 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L28533 외 합산 6줄(증거 e23_plan_kdb.json parts). 변동 신규. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 1,
+    "quarter": "2023.3Q",
+    "value": 16711.142687,
+    "was": 4636.975319,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 16711.142687 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L3974. 변경 전 마스터값 4636.975319. 변동 12074.167368. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 2,
+    "quarter": "2023.3Q",
+    "value": 25952.699723,
+    "was": 13878.532355,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 25952.699723 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4020 외 합산 4줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 13878.532355. 변동 12074.167368. 산식: 3 + 8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 3,
+    "quarter": "2023.3Q",
+    "value": 8568.280371,
+    "was": -4480.275872,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 8568.280371 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4020 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 -4480.275872. 변동 13048.556243. 산식: 보험수익계열 - |보험비용계열| (장기/발행). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 8,
+    "quarter": "2023.3Q",
+    "value": 17384.419352,
+    "was": 18358.808227,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 17384.419352 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4043 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 18358.808227. 변동 -974.388875. 산식: 재보험수익계열 - |재보험비용계열|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 12,
+    "quarter": "2023.3Q",
+    "value": 11978.419352,
+    "was": 12952.808227,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 11978.419352 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4043 외 합산 2줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 12952.808227. 변동 -974.388875. 산식: 8 - (9+10+11). 피연산자: 9번=-2749.0(master HEAD), 10번=-1657.0(master HEAD), 11번=9812.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 17,
+    "quarter": "2023.3Q",
+    "value": -13718.605641,
+    "was": -6025.166046,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -13718.605641 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4158. 변경 전 마스터값 -6025.166046. 변동 -7693.439595. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 18,
+    "quarter": "2023.3Q",
+    "value": 416260.554977,
+    "was": 416495.75665,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 416260.554977 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4158 외 합산 5줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 416495.75665. 변동 -235.201673. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 19,
+    "quarter": "2023.3Q",
+    "value": -429979.160618,
+    "was": -422520.922696,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -429979.160618 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4204 외 합산 4줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 -422520.922696. 변동 -7458.237922. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 20,
+    "quarter": "2023.3Q",
+    "value": 2992.537046,
+    "was": -1388.190727,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 2992.537046 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4733. 변경 전 마스터값 -1388.190727. 변동 4380.727773. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 22,
+    "quarter": "2023.3Q",
+    "value": -13527.406967,
+    "was": -17908.13474,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -13527.406967 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4825. 변경 전 마스터값 -17908.13474. 변동 4380.727773. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 24,
+    "quarter": "2023.3Q",
+    "value": -13527.197644,
+    "was": -17907.925417,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -13527.197644 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4871. 변경 전 마스터값 -17907.925417. 변동 4380.727773. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 25,
+    "quarter": "2023.3Q",
+    "value": 271338.272061,
+    "was": 278659.391567,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 271338.272061 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4894. 변경 전 마스터값 278659.391567. 변동 -7321.119506. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 27,
+    "quarter": "2023.3Q",
+    "value": 410202.722556,
+    "was": 417523.842062,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 410202.722556 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L5009. 변경 전 마스터값 417523.842062. 변동 -7321.119506. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 31,
+    "quarter": "2023.3Q",
+    "value": 257811.074417,
+    "was": 260751.46615,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 257811.074417 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L5124. 변경 전 마스터값 260751.46615. 변동 -2940.391733. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 17,
+    "quarter": "2023.4Q",
+    "value": -18428.269919,
+    "was": -18358.723814,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -18428.269919 백만원. 원문 data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml L5555. 변경 전 마스터값 -18358.723814. 변동 -69.546105. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 18,
+    "quarter": "2023.4Q",
+    "value": 582561.462069,
+    "was": 582631.008174,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 582561.462069 백만원. 원문 data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml L5555 외 합산 5줄(증거 e23_plan_kdb.json parts). 변경 전 마스터값 582631.008174. 변동 -69.546105. 산식: derived from statement lines (production definition). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 20,
+    "quarter": "2023.4Q",
+    "value": 46820.26106,
+    "was": 46889.807165,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 46820.26106 백만원. 원문 data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml L6106. 변경 전 마스터값 46889.807165. 변동 -69.546105. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 22,
+    "quarter": "2023.4Q",
+    "value": 23949.37807,
+    "was": 24018.924175,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 23949.37807 백만원. 원문 data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml L6182. 변경 전 마스터값 24018.924175. 변동 -69.546105. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 24,
+    "quarter": "2023.4Q",
+    "value": 23949.587393,
+    "was": 24019.133498,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → 23949.587393 백만원. 원문 data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml L6220. 변경 전 마스터값 24019.133498. 변동 -69.546105. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 31,
+    "quarter": "2023.4Q",
+    "value": -95924.017765,
+    "was": -95854.47166,
+    "note": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 2023.4Q 누적(12월) 열 → -95924.017765 백만원. 원문 data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml L6467. 변경 전 마스터값 -95854.47166. 변동 -69.546105. 산식: statement line. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   }
+  ],
+  "gold_replace": [
+   {
+    "code": "KR0072",
+    "item": 4,
+    "quarter": "2023.2Q",
+    "value": 24509.0,
+    "was": 23415.0,
+    "note": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv): 이전 gold 값 23415.0, 이전 was 12290.0, 이전 note 요약 「inbox/parser/20260815T1400Z 조사 중 콜래터럴 발견(원 티켓은 2023.3Q만 지목, ratio 0.525 로 RED 밴드를 근소하게 벗어나 안 걸렸으나 동일 버그): extract_tier2_life_comprehensive 가…」(전문은 git HEAD 의 data/_gold/user_pl_cells.json). 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → 24509.0 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L44795. 현재 마스터값(gold) 23415.0 는 원 공시 rcept 20230814003052(단위 백만원) 별도 기준 인쇄값(23415.0, 원문 L40301「(3) 제공된 서비스의 보험계약마진」23,415)과 일치. 변동 1094.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 4,
+     "공시분기": "2023.2Q",
+     "값": 23415.0,
+     "was": 12290.0,
+     "note": "inbox/parser/20260815T1400Z 조사 중 콜래터럴 발견(원 티켓은 2023.3Q만 지목, ratio 0.525 로 RED 밴드를 근소하게 벗어나 안 걸렸으나 동일 버그): extract_tier2_life_comprehensive 가 extract_tier2_life_old 결과를 무조건 우선 반환 -> _oll_layout2 가 note '36. 보험영업수익(비용) 및 재보험영업수익(비용)' 의 두 중복 추출본 중 헤더가 통째로 빈 배열([])로 깨진 사본을 선택 -> _oll_ytd() 가 3개월/누적 구분 불가로 3개월 컬럼을 읽음. raw 누적 컬럼 직접 재검증(CSM_waterfall 234.15억과 정확 일치)으로 override. 2026-08-17."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 7,
+    "quarter": "2023.2Q",
+    "value": -7462.006173,
+    "was": -18990.0,
+    "note": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv): 이전 gold 값 -18990.0, 이전 was -7865.0, 이전 note 요약 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CS…」(전문은 git HEAD 의 data/_gold/user_pl_cells.json). 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전기 2023.2Q 누적(6월) 열 → -7462.006173 백만원. 원문 data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml L27659 외 합산 2줄(증거 e23_plan_kdb.json parts). 현재 gold -18990.0 는 파생 plug(3-(4+5+6)) 이고 마스터 피연산자 기준 식 값은 -17294.0 (라이브 마스터 -17294.0). 변동 9831.993827. 산식: 3 - (4+5+6). 피연산자: 4번=24509.0(plan), 5번=8768.0(master HEAD), 6번=-1597.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 7,
+     "공시분기": "2023.2Q",
+     "값": -18990.0,
+     "was": -7865.0,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 4,
+    "quarter": "2023.3Q",
+    "value": 37266.0,
+    "was": 35250.0,
+    "note": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv): 이전 gold 값 35250.0, 이전 was 11835.0, 이전 note 요약 「inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP -- 티켓 원문 138.7억은 작성 시점 이후 데이터가 바뀐 stale 값, 현재 마스터 118.35억 기준으로 조사): extract_…」(전문은 git HEAD 의 data/_gold/user_pl_cells.json). 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → 37266.0 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L22520. 현재 마스터값(gold) 35250.0 는 원 공시 rcept 20231114002983(단위 백만원) 별도 기준 인쇄값(35250.0, 원문 L46159「(3) 제공된 서비스의 보험계약마진」35,250)과 일치. 변동 2016.0. 산식: |CSM amortisation printed in the 보험수익 note, prior-period cumulative (합계)|. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 4,
+     "공시분기": "2023.3Q",
+     "값": 35250.0,
+     "was": 11835.0,
+     "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP -- 티켓 원문 138.7억은 작성 시점 이후 데이터가 바뀐 stale 값, 현재 마스터 118.35억 기준으로 조사): extract_tier2_life_comprehensive 가 extract_tier2_life_old 결과를 무조건 우선 반환 -> _oll_layout2 가 헤더 빈 사본을 선택 -> _oll_ytd() 가 3개월 컬럼을 누적으로 오독. 당분기 파생값이 -455(음수, 누계 항목 불가능)로도 독립 증빙됨. 상세는 동일 회사 2023.2Q 항목 note 참조. raw 누적 컬럼 직접 재검증(CSM_waterfall 352.5억과 정확 일치)으로 override. 2026-08-17."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 7,
+    "quarter": "2023.3Q",
+    "value": -41277.719629,
+    "was": -44935.275872,
+    "note": "owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv): 이전 gold 값 -44935.275872, 이전 was -21520.275872, 이전 note 요약 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CS…」(전문은 git HEAD 의 data/_gold/user_pl_cells.json). 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전기 2023.3Q 누적(9월) 열 → -41277.719629 백만원. 원문 data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml L4020 외 합산 2줄(증거 e23_plan_kdb.json parts). 현재 gold -44935.275872 는 파생 plug(3-(4+5+6)) 이고 마스터 피연산자 기준 식 값은 -52310.275872 (라이브 마스터 -52310.275872). 변동 11032.556243. 산식: 3 - (4+5+6). 피연산자: 4번=37266.0(plan), 5번=12639.0(master HEAD), 6번=-59.0(master HEAD). 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 7,
+     "공시분기": "2023.3Q",
+     "값": -44935.275872,
+     "was": -21520.275872,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    }
+   }
+  ],
+  "csm_gold_new": [
+   {
+    "code": "KR0072",
+    "item": 1,
+    "quarter": "2023.1Q",
+    "value": 5695.95,
+    "was": 5239.4,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원. 인쇄 셀: L36305 569,595 -> 5695.95 억원, 저장값 5695.95. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 2,
+    "quarter": "2023.1Q",
+    "value": 384.11,
+    "was": 387.3,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원. 인쇄 셀: L36353 38,411 -> 384.11 억원, 저장값 384.11. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 3,
+    "quarter": "2023.1Q",
+    "value": 42.25,
+    "was": 45.1,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원. 인쇄 셀: L36417 4,225 -> 42.25 억원, 저장값 42.25. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 1,
+    "quarter": "2023.2Q",
+    "value": 5695.95,
+    "was": 5239.4,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원. 인쇄 셀: L40664 569,595 -> 5695.95 억원, 저장값 5695.95. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 2,
+    "quarter": "2023.2Q",
+    "value": 1173.06,
+    "was": 1174.0,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원. 인쇄 셀: L40712 117,306 -> 1173.06 억원, 저장값 1173.06. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 3,
+    "quarter": "2023.2Q",
+    "value": 83.04,
+    "was": 90.0,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원. 인쇄 셀: L40776 8,304 -> 83.04 억원, 저장값 83.04. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 6,
+    "quarter": "2023.2Q",
+    "value": 6043.35,
+    "was": 5583.7,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원. 인쇄 셀: L40840 604,335 -> 6043.35 억원, 저장값 6043.35. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 1,
+    "quarter": "2023.3Q",
+    "value": 5695.9,
+    "was": 5239.4,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원. 인쇄 셀: L18372 569,595 -> 5695.95 억원, 저장값 5695.9. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 2,
+    "quarter": "2023.3Q",
+    "value": 2209.8,
+    "was": 2210.7,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원. 인쇄 셀: L18420 220,979 -> 2209.79 억원, 저장값 2209.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 3,
+    "quarter": "2023.3Q",
+    "value": 134.0,
+    "was": 146.1,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원. 인쇄 셀: L18487 13,398 -> 133.98 억원, 저장값 134.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 4,
+    "quarter": "2023.3Q",
+    "value": -1830.2,
+    "was": -1912.9,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원. 인쇄 셀: L18404 (183,022) -> -1830.22 억원, 저장값 -1830.2. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 5,
+    "quarter": "2023.3Q",
+    "value": -372.7,
+    "was": -352.5,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원. 인쇄 셀: L18436 (37,266) -> -372.66 억원, 저장값 -372.7. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   },
+   {
+    "code": "KR0072",
+    "item": 6,
+    "quarter": "2023.3Q",
+    "value": 5836.8,
+    "was": 5330.8,
+    "why": "2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml table@L18341 unit 백만원. 인쇄 셀: L18554 583,684 -> 5836.84 억원, 저장값 5836.8. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json"
+   }
+  ],
+  "csm_gold_replace": [
+   {
+    "code": "KR0072",
+    "item": 4,
+    "quarter": "2023.1Q",
+    "value": -867.71,
+    "was": -833.3,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold -833.3 (이전 was -944.6) 를 교체: class A (gold == the original filing print -833.3; `was` -944.6); replaced by the latest comparative -867.71 | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원. 인쇄 셀: L36337 (86,771) -> -867.71 억원, 저장값 -867.71. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 4,
+     "공시분기": "2023.1Q",
+     "값": -833.3,
+     "was": -944.6,
+     "why": "raw 재확인(rcept 20230515002450, 1분기보고서). 2026-08-29 71st pass(commit 9a067dd)가 viz_build_csm_waterfall.py::extract_stages()의 null-흡수 버그(라벨매칭 실패 시 항목5가 None으로 남고 항목4 잔차식의 `... or 0`이 그걸 통째로 삼킴)를 고친 뒤, 현재 코드로 waterfall_for_dir()를 재실행(read-only)하면 원수 일반모형 CSM 측정요소표(combined-agn 블록)에서 항목4=-833.3, 항목5=-111.2, 항목6=4727.2(억원)를 독립적으로 재현 — gold 값과 반올림오차(≤0.05) 내 완전 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 5,
+    "quarter": "2023.1Q",
+    "value": -116.41,
+    "was": -111.25,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold -111.25 (이전 was None) 를 교체: class A (gold == the original filing print -111.25; `was` None); replaced by the latest comparative -116.41 | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원. 인쇄 셀: L36369 (11,641) -> -116.41 억원, 저장값 -116.41. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 5,
+     "공시분기": "2023.1Q",
+     "값": -111.25,
+     "was": null,
+     "why": "raw 재확인(rcept 20230515002450, 1분기보고서). 2026-08-29 71st pass(commit 9a067dd)가 viz_build_csm_waterfall.py::extract_stages()의 null-흡수 버그(라벨매칭 실패 시 항목5가 None으로 남고 항목4 잔차식의 `... or 0`이 그걸 통째로 삼킴)를 고친 뒤, 현재 코드로 waterfall_for_dir()를 재실행(read-only)하면 원수 일반모형 CSM 측정요소표(combined-agn 블록)에서 항목4=-833.3, 항목5=-111.2, 항목6=4727.2(억원)를 독립적으로 재현 — gold 값과 반올림오차(≤0.05) 내 완전 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 6,
+    "quarter": "2023.1Q",
+    "value": 5138.2,
+    "was": 4727.25,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold 4727.25 (이전 was 4727.2) 를 교체: class A (gold == the original filing print 4727.25; `was` 4727.2); replaced by the latest comparative 5138.2 | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q1/raw/KR0072_케이디비생명보험/20240516000597.xml table@L36277 unit 백만원. 인쇄 셀: L36481 513,820 -> 5138.2 억원, 저장값 5138.2. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 6,
+     "공시분기": "2023.1Q",
+     "값": 4727.25,
+     "was": 4727.2,
+     "why": "raw 재확인(rcept 20230515002450, 1분기보고서). 2026-08-29 71st pass(commit 9a067dd)가 viz_build_csm_waterfall.py::extract_stages()의 null-흡수 버그(라벨매칭 실패 시 항목5가 None으로 남고 항목4 잔차식의 `... or 0`이 그걸 통째로 삼킴)를 고친 뒤, 현재 코드로 waterfall_for_dir()를 재실행(read-only)하면 원수 일반모형 CSM 측정요소표(combined-agn 블록)에서 항목4=-833.3, 항목5=-111.2, 항목6=4727.2(억원)를 독립적으로 재현 — gold 값과 반올림오차(≤0.05) 내 완전 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 4,
+    "quarter": "2023.2Q",
+    "value": -663.6,
+    "was": -685.55,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold -685.55 (이전 was -685.5) 를 교체: class A (gold == the original filing print -685.55; `was` -685.5); replaced by the latest comparative -663.6 | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원. 인쇄 셀: L40696 (66,360) -> -663.6 억원, 저장값 -663.6. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 4,
+     "공시분기": "2023.2Q",
+     "값": -685.55,
+     "was": -685.5,
+     "why": "raw 재확인(rcept 20230814003052, 반기보고서). 위 2023.1Q와 동일 근거 — 현재(수정후) waterfall_for_dir()가 combined-agn 블록에서 항목4=-685.5, 항목5=-234.2(억원)를 독립 재현, gold 값(-685.55/-234.15)과 반올림오차(≤0.05) 내 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 5,
+    "quarter": "2023.2Q",
+    "value": -245.09,
+    "was": -234.15,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold -234.15 (이전 was -234.2) 를 교체: class A (gold == the original filing print -234.15; `was` -234.2); replaced by the latest comparative -245.09 | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml table@L40636 unit 백만원. 인쇄 셀: L40728 (24,509) -> -245.09 억원, 저장값 -245.09. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 5,
+     "공시분기": "2023.2Q",
+     "값": -234.15,
+     "was": -234.2,
+     "why": "raw 재확인(rcept 20230814003052, 반기보고서). 위 2023.1Q와 동일 근거 — 현재(수정후) waterfall_for_dir()가 combined-agn 블록에서 항목4=-685.5, 항목5=-234.2(억원)를 독립 재현, gold 값(-685.55/-234.15)과 반올림오차(≤0.05) 내 일치. 재현: scripts/_probes/probe_20260830_waterfall_recompute.py."
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 1,
+    "quarter": "2023.4Q",
+    "value": 5695.9,
+    "was": 5239.4,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold 5239.4 (이전 was 5695.9) 를 교체: class B chain-forced: gold 5239.4 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = 5695.9; the latest comparative = 5695.9); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml table@L26189 unit 백만원. 인쇄 셀: L26220 569,595 -> 5695.95 억원, 저장값 5695.9. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 1,
+     "공시분기": "2023.4Q",
+     "값": 5239.4,
+     "was": 5695.9,
+     "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 5239.4); Q4 annual restated FY2022 close to 5695.9. keep close 5830.5"
+    }
+   },
+   {
+    "code": "KR0072",
+    "item": 4,
+    "quarter": "2023.4Q",
+    "value": -2560.0,
+    "was": -2103.5,
+    "why": "owner 2026-10-23 승인, 연쇄용 gold 교체: 이전 gold -2103.5 (이전 was -2560.0) 를 교체: class B chain-forced: gold -2103.5 is neither the original annual print nor the latest comparative (the original annual print / builder value `was` = -2560.0; the latest comparative = -2560.0); its note says: Q1-Q3 openings kept at the original value, Q4 forced to the same opening with item 4 as plug to keep the closing -> obsolete once Q1-Q3 move to the latest vector | 2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 케이디비생명 KR0072 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2026-10-23): 최신 공시의 전기 열(별도 기준, 발행 보험계약 CSM) data/dart/FY2024_Q4/raw/KR0072_케이디비생명보험_20250331002302/20250331002302.xml table@L26189 unit 백만원. 인쇄 셀: L26252 (255,997) -> -2559.97 억원, 저장값 -2560.0. 증거 data/_derived/remaining_20261022/e23_d1_d3/kr0072_kdb/e23_plan_kdb.json",
+    "old_entry": {
+     "원보험사코드": "KR0072",
+     "항목번호": 4,
+     "공시분기": "2023.4Q",
+     "값": -2103.5,
+     "was": -2560.0,
+     "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 5239.4); Q4 annual restated FY2022 close to 5695.9. keep close 5830.5"
+    }
+   }
+  ],
+  "null_dangi_add": [],
+  "null_dangi_remove": [],
+  "set_dangi_add": [
+   [
+    "KR0072",
+    "2023.2Q",
+    16,
+    3003.175286,
+    "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml: L27770 [기타사업비용] 3,003,175,286 (prior-year 3-month column printed in the FY2024_Q2 report; the single quarter derived from the two cumulatives differs by -0.002091)"
+   ],
+   [
+    "KR0072",
+    "2023.2Q",
+    21,
+    -5482.633618,
+    "data/dart/FY2024_Q2/raw/KR0072_케이디비생명보험/20240814000801.xml: L28391 [영업외손익] (5,482,633,618) (prior-year 3-month column printed in the FY2024_Q2 report; the single quarter derived from the two cumulatives differs by +0.002458)"
+   ],
+   [
+    "KR0072",
+    "2023.3Q",
+    17,
+    -58698.285464,
+    "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4154 [투자손익] (58,698,285,464) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)"
+   ],
+   [
+    "KR0072",
+    "2023.3Q",
+    18,
+    62310.759317,
+    "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4154 [투자손익] (58,698,285,464) || L4200 [보험금융수익] 9,643,444,150 || L4223 [재보험금융수익] 997,304,936 || L4499 [보험금융비용] 130,500,285,088 || L4522 [재보험금융비용] 1,149,508,779 (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)"
+   ],
+   [
+    "KR0072",
+    "2023.3Q",
+    20,
+    -69813.091796,
+    "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4729 [영업이익] (69,813,091,796) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)"
+   ],
+   [
+    "KR0072",
+    "2023.3Q",
+    22,
+    -75424.704649,
+    "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4821 [법인세차감전순이익(손실)] (75,424,704,649) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)"
+   ],
+   [
+    "KR0072",
+    "2023.3Q",
+    24,
+    -75424.704649,
+    "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L4867 [당기순이익(손실)] (75,424,704,649) (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)"
+   ],
+   [
+    "KR0072",
+    "2023.3Q",
+    31,
+    12907.246768,
+    "data/dart/FY2024_Q3/raw/KR0072_케이디비생명보험/20241114000809.xml: L5120 [당기총포괄손익] 12,907,246,768 (prior-year 3-month column printed in the FY2024_Q3 report; the single quarter derived from the two cumulatives differs by -726.922994)"
+   ]
+  ],
+  "set_dangi_remove": [],
+  "held": []
+ },
+ "n_pl_cells": 65,
+ "n_csm_cells": 20
+}

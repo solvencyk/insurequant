@@ -1,0 +1,41 @@
+== units: 백만원. columns: c=FY2023 Q3 original 9M | a=FY2024 Q3 prior-year 9M | b=FY2023 annual current (= master 2023.4Q cum) | d=FY2024 annual prior col (2nd restatement)
+== master columns: HEADq3 (old 3Q cum) / LIVEq3 (new 3Q cum) / q4 (HEAD=LIVE)
+item   c(orig9M)  a(24Q3pri)   b(annual) d(24ann pri) |     HEADq3     LIVEq3         q4 | chk c=HEADq3 a=LIVEq3 b=q4 | a-c    d-b
+   1      207078      215120      236601       249794 |     207078     215120     236601 | ok ok ok (q4 head==live True) |    8042   13193
+   2      231267      239310      268641       281835 |     231267     239310     268641 | ok ok ok (q4 head==live True) |    8043   13194
+   3      233988      242031      271908       285102 |     233988     242031     271908 | ok ok ok (q4 head==live True) |    8043   13194
+  17      189878      180415      119185        76008 |     189878     180415     119185 | ok ok ok (q4 head==live True) |   -9463  -43177
+  19     -764100     -773564    -1227267     -1270444 |    -764100    -773564   -1227267 | ok ok ok (q4 head==live True) |   -9464  -43177
+  20      396956      395535      355786       325802 |     396956     395535     355786 | ok ok ok (q4 head==live True) |   -1421  -29984
+  22      396252      394831      350018       320035 |     396252     394831     350018 | ok ok ok (q4 head==live True) |   -1421  -29983
+  23       99378       98969       91507        83632 |      99378      98969      91507 | ok ok ok (q4 head==live True) |    -409   -7875
+  24      296874      295862      258511       236403 |     296874     295862     258511 | ok ok ok (q4 head==live True) |   -1012  -22108
+  25      290911      283175       56787       126232 |     290911     283175      56787 | ok ok ok (q4 head==live True) |   -7736   69445
+  27      536004      528267    -1059866      -990226 |     536004     528267   -1059866 | ok ok ok (q4 head==live True) |   -7737   69640
+  31      587785      579037      315298       362635 |     587785     579037     315298 | ok ok ok (q4 head==live True) |   -8748   47337
+   4 (note-derived; master only) HEADq3=213049.0 LIVEq3=214229.0 q4=283905.0
+   7 (note-derived; master only) HEADq3=-13830.0 LIVEq3=-6967.0 q4=-28564.0
+
+== DART-printed restatement bridge in the FY2023 annual report itself (note 'accounting-policy change, retrospective', separate statements, 2023-09-30 summary P&L, 백만원)
+   before(A) -> after(B): 보험영업손익 207,078->215,121 | 보험금융손익 -764,100->-773,564 | 영업이익 396,956->395,535 | 세전 396,252->394,831 | 법인세 99,378->98,969 | 순이익 296,874->295,862
+   B column == FY2024 Q3 prior-year 9M column (a) within 1 (rounding): True
+   A column == FY2023 Q3 original 9M column (c): True
+
+== 4Q single quarter = annual(b) - 9M, in 억원 (백만원/100)
+item   READ-NEW (loaded: b-a)   READ-OLD (HEAD: b-c)  gap(new-old) |  ticket claim: d-a
+   1                    214.8                  295.2         -80.4 |              346.7
+   2                    293.3                  373.7         -80.4 |              425.2
+   3                    298.8                  379.2         -80.4 |              430.7
+  17                   -612.3                 -706.9          94.6 |            -1044.1
+  19                  -4537.0                -4631.7          94.6 |            -4968.8
+  20                   -397.5                 -411.7          14.2 |             -697.3
+  22                   -448.1                 -462.3          14.2 |             -748.0
+  23                    -74.6                  -78.7           4.1 |             -153.4
+  24                   -373.5                 -383.6          10.1 |             -594.6
+  25                  -2263.9                -2341.2          77.4 |            -1569.4
+  27                 -15881.3               -15958.7          77.4 |           -15184.9
+  31                  -2637.4                -2724.9          87.5 |            -2164.0
+   4                    696.8                  708.6         -11.8 |                n/a
+   7                   -216.0                 -147.3         -68.6 |                n/a
+
+stored 값_당분기 2023.4Q LIVE (백만원): {1: 21481.0, 2: 29331.0, 3: 29877.0, 4: 69676.0, 7: -21597.0, 17: -61230.0, 19: -453703.0, 20: -39749.0, 22: -44813.0, 23: -7462.0, 24: -37351.0, 25: -226388.0, 27: -1588133.0, 31: -263739.0}

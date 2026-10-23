@@ -1,0 +1,72 @@
+== consistent: 26 cells
+   2023.2Q i 1: derived_after 19527.535627999998 live_dangi 15553.65 proposal none printed3m 19527.535628 diff_vs_printed_3m -0.0
+   2023.2Q i17: derived_after 12829.452359000003 live_dangi None proposal none printed3m 12829.452359 diff_vs_printed_3m 0.0
+   2023.2Q i18: derived_after 154024.92752100003 live_dangi None proposal none printed3m 154024.927521 diff_vs_printed_3m 0.0
+   2023.2Q i19: derived_after -141195.47516200002 live_dangi -138735.21 proposal none printed3m -141195.475162 diff_vs_printed_3m -0.0
+   2023.2Q i20: derived_after 32356.987987 live_dangi 25559.91 proposal none printed3m 32356.987987 diff_vs_printed_3m 0.0
+   2023.2Q i22: derived_after 26874.354369 live_dangi 20077.6 proposal none printed3m 26874.354369 diff_vs_printed_3m 0.0
+   2023.2Q i24: derived_after 26874.354369 live_dangi 20077.39 proposal none printed3m 26874.354369 diff_vs_printed_3m 0.0
+   2023.2Q i25: derived_after 163691.920976 live_dangi None proposal none printed3m 163691.920976 diff_vs_printed_3m 0.0
+   2023.2Q i26: derived_after -264434.404683 live_dangi None proposal none printed3m -264434.404683 diff_vs_printed_3m 0.0
+   2023.2Q i27: derived_after 428349.23503800004 live_dangi None proposal none printed3m 428349.235038 diff_vs_printed_3m 0.0
+   2023.2Q i28: derived_after -128.53150400000004 live_dangi None proposal none printed3m -128.531504 diff_vs_printed_3m -0.0
+   2023.2Q i29: derived_after 1039.9811479999998 live_dangi None proposal none printed3m 1039.981148 diff_vs_printed_3m -0.0
+   2023.2Q i30: derived_after -1177.9416330000001 live_dangi None proposal none printed3m -1177.941633 diff_vs_printed_3m -0.0
+   2023.2Q i31: derived_after 190566.275345 live_dangi None proposal none printed3m 190566.275345 diff_vs_printed_3m 0.0
+   2023.2Q i32: derived_after 43.58261 live_dangi None proposal none printed3m 43.58261 diff_vs_printed_3m 0.0
+   2023.3Q i 1: derived_after -11114.806332 live_dangi -18028.024681 proposal none printed3m -11114.806332 diff_vs_printed_3m 0.0
+   2023.3Q i16: derived_after 3892.213841 live_dangi None proposal none printed3m 3892.213841 diff_vs_printed_3m 0.0
+   2023.3Q i19: derived_after -121009.044781 live_dangi -119062.922696 proposal none printed3m -121009.044781 diff_vs_printed_3m 0.0
+   2023.3Q i21: derived_after -5611.6128530000005 live_dangi -5611.944013 proposal none printed3m -5611.612853 diff_vs_printed_3m -0.0
+   2023.3Q i25: derived_after 88331.951417 live_dangi None proposal none printed3m 88331.951417 diff_vs_printed_3m 0.0
+   2023.3Q i26: derived_after -249649.672753 live_dangi None proposal none printed3m -249649.672753 diff_vs_printed_3m 0.0
+   2023.3Q i27: derived_after 339680.658928 live_dangi None proposal none printed3m 339680.658928 diff_vs_printed_3m 0.0
+   2023.3Q i28: derived_after -655.596444 live_dangi None proposal none printed3m -655.596444 diff_vs_printed_3m 0.0
+   2023.3Q i29: derived_after 270.5194449999999 live_dangi None proposal none printed3m 270.519445 diff_vs_printed_3m -0.0
+   2023.3Q i30: derived_after -1336.116353 live_dangi None proposal none printed3m -1336.116353 diff_vs_printed_3m 0.0
+   2023.3Q i32: derived_after 22.158594 live_dangi None proposal none printed3m 22.158594 diff_vs_printed_3m 0.0
+== consistent_both_restated: 6 cells
+   2023.4Q i17: derived_after -4709.664277999998 live_dangi -12333.557768 proposal none | cur_adopted True prev_adopted True q3_restated True q3_evidence comparative -13718.605641 vs master -6025.166046 q4_comp_vs_master None
+   2023.4Q i18: derived_after 166300.907092 live_dangi 166135.251524 proposal none | cur_adopted True prev_adopted True q3_restated True q3_evidence comparative 416260.554977 vs master 416495.75665 q4_comp_vs_master None
+   2023.4Q i20: derived_after 43827.724014 live_dangi 48277.997892 proposal none | cur_adopted True prev_adopted True q3_restated True q3_evidence comparative 2992.537046 vs master -1388.190727 q4_comp_vs_master None
+   2023.4Q i22: derived_after 37476.785037 live_dangi 41927.058915 proposal none | cur_adopted True prev_adopted True q3_restated True q3_evidence comparative -13527.406967 vs master -17908.13474 q4_comp_vs_master None
+   2023.4Q i24: derived_after 37476.785037 live_dangi 41927.058915 proposal none | cur_adopted True prev_adopted True q3_restated True q3_evidence comparative -13527.197644 vs master -17907.925417 q4_comp_vs_master None
+   2023.4Q i31: derived_after -353735.092182 live_dangi -356605.93781 proposal none | cur_adopted True prev_adopted True q3_restated True q3_evidence comparative 257811.074417 vs master 260751.46615 q4_comp_vs_master None
+== derived_none: 2 cells
+   2023.2Q i 7: derived_after None live_dangi None proposal none
+   2023.2Q i12: derived_after None live_dangi None proposal none
+== lob_item_not_checked_directly: 12 cells
+   2023.2Q i 2: derived_after 22530.710914000003 live_dangi 13207.49 proposal none
+   2023.2Q i 3: derived_after 14284.055647999998 live_dangi 4545.9 proposal none
+   2023.2Q i 4: derived_after 12868.0 live_dangi 12290.0 proposal none
+   2023.2Q i 8: derived_after 8246.655266000002 live_dangi 8661.59 proposal none
+   2023.2Q i15: derived_after 0.0 live_dangi None proposal none
+   2023.3Q i 2: derived_after -7222.592490999999 live_dangi -8786.467645 proposal none
+   2023.3Q i 3: derived_after -15649.713455999998 live_dangi -17772.275872 proposal none
+   2023.3Q i 4: derived_after 12757.0 live_dangi 11835.0 proposal none
+   2023.3Q i 7: derived_after -33815.713456 live_dangi -35016.275872 proposal none
+   2023.3Q i 8: derived_after 8427.120965 live_dangi 8985.808227 proposal none
+   2023.3Q i12: derived_after 10604.120965 live_dangi 11162.808227 proposal none
+   2023.3Q i15: derived_after 0.0 live_dangi None proposal none
+== q4_unchanged_q3_adopted: 10 cells
+   2023.4Q i 1: derived_after 48537.388292 live_dangi 60611.55566 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master [65248.530979, 65248.530979]
+   2023.4Q i 2: derived_after 52059.05008100001 live_dangi 64133.217449 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master None
+   2023.4Q i 3: derived_after 59236.984323 live_dangi 72285.540566 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master None
+   2023.4Q i 4: derived_after 13932.0 live_dangi 15948.0 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master None
+   2023.4Q i 7: derived_after 37928.984323 live_dangi 48961.540566 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master None
+   2023.4Q i 8: derived_after -7177.934242000001 live_dangi -8152.323117 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master None
+   2023.4Q i12: derived_after -2143.934242000001 live_dangi -3118.323117 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master None
+   2023.4Q i19: derived_after -171010.57136999996 live_dangi -178468.809292 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master [-600989.731988, -600989.731988]
+   2023.4Q i25: derived_after -391211.877219 live_dangi -398532.996725 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master [-119873.605158, -119873.605158]
+   2023.4Q i27: derived_after -1262016.221851 live_dangi -1269337.341357 proposal none | cur_adopted False prev_adopted True q3_restated None q3_evidence None q4_comp_vs_master [-851813.499295, -851813.499295]
+== seam: 8 cells
+   2023.2Q i16: derived_after 3003.1731950000003 live_dangi None proposal set_dangi printed3m 3003.175286 diff_vs_printed_3m -0.002091
+   2023.2Q i21: derived_after -5482.63116 live_dangi -5482.3 proposal set_dangi printed3m -5482.633618 diff_vs_printed_3m 0.002458
+   2023.3Q i17: derived_after -59425.208458 live_dangi None proposal set_dangi printed3m -58698.285464 diff_vs_printed_3m -726.922994
+   2023.3Q i18: derived_after 61583.83632299997 live_dangi None proposal set_dangi printed3m 62310.759317 diff_vs_printed_3m -726.922994
+   2023.3Q i20: derived_after -70540.01479 live_dangi -70046.190727 proposal set_dangi printed3m -69813.091796 diff_vs_printed_3m -726.922994
+   2023.3Q i22: derived_after -76151.627643 live_dangi -75658.13474 proposal set_dangi printed3m -75424.704649 diff_vs_printed_3m -726.922994
+   2023.3Q i24: derived_after -76151.627643 live_dangi -75657.925417 proposal set_dangi printed3m -75424.704649 diff_vs_printed_3m -726.922994
+   2023.3Q i31: derived_after 12180.32377399999 live_dangi None proposal set_dangi printed3m 12907.246768 diff_vs_printed_3m -726.922994
+null_dangi_add: [] | null_dangi_remove: []
+set_dangi_add: 8 | set_dangi_remove: []

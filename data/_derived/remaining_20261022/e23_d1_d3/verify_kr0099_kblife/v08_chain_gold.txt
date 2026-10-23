@@ -1,0 +1,66 @@
+=== (5a) PL single-quarter recompute: value_dangi == cum - previous cum of same FY (Q1 = cum), all 32 items, 8 quarters, LIVE
+   cells checked 256, mismatches 0
+   dangi cells changed vs HEAD: 83 {'2023.1Q': 23, '2023.2Q': 23, '2023.3Q': 23, '2023.4Q': 14}
+   changed dangi cells not explained by a changed cum (own or previous quarter): []
+   cum-changed 값 cells: 60 by q {'2023.1Q': 23, '2023.2Q': 23, '2023.3Q': 14}
+   changed outside 2023.1Q-4Q: []
+
+=== (5b) CSM single-quarter recompute and chain
+   CSM single-quarter mismatches (tol 0.05 eok for 1dp rounding): 0
+   CSM cum identity open+new+int+adj+amort = close (eok), LIVE vs HEAD
+   2023.1Q LIVE: 31327.6 + 1224.8 + 334.5 + -588.6 + -684.8 = 31613.5 vs close 31613.5  resid -0.00
+   2023.1Q HEAD: 31201.3 + 1224.8 + 342.3 + -568.7 + -683.4 = 31516.3 vs close 31516.3  resid +0.00
+   2023.2Q LIVE: 31327.6 + 2888.8 + 632.5 + -1320.6 + -1405.8 = 32122.5 vs close 32122.5  resid +0.00
+   2023.2Q HEAD: 31201.3 + 2888.8 + 645.3 + -1430.6 + -1399.4 = 31905.4 vs close 31905.5  resid -0.10
+   2023.3Q LIVE: 31327.6 + 4539.3 + 963.1 + -2303.2 + -2142.3 = 32384.5 vs close 32384.6  resid -0.10
+   2023.3Q HEAD: 31201.3 + 4539.3 + 981.1 + -2451.6 + -2130.5 = 32139.6 vs close 32139.5  resid +0.10
+   2023.4Q LIVE: 31327.6 + 6346.7 + 1197.6 + -5856.4 + -2839.1 = 30176.4 vs close 30176.4  resid -0.00
+   2023.4Q HEAD: 31327.6 + 6346.7 + 1197.6 + -5856.4 + -2839.1 = 30176.4 vs close 30176.4  resid -0.00
+   2024.1Q LIVE: 30176.4 + 1313.6 + 349.8 + -239.2 + -714.3 = 30886.3 vs close 30886.4  resid -0.10
+   2024.1Q HEAD: 30176.4 + 1313.6 + 349.8 + -239.2 + -714.3 = 30886.3 vs close 30886.4  resid -0.10
+   2024.2Q LIVE: 30176.4 + 2273.9 + 681.3 + -249.8 + -1435.8 = 31446.0 vs close 31446.0  resid +0.00
+   2024.2Q HEAD: 30176.4 + 2273.9 + 681.3 + -249.8 + -1435.8 = 31446.0 vs close 31446.0  resid +0.00
+   2024.3Q LIVE: 30176.4 + 3729.8 + 898.7 + -990.8 + -2161.5 = 31652.6 vs close 31652.7  resid -0.10
+   2024.3Q HEAD: 30176.4 + 3729.8 + 898.7 + -990.8 + -2161.5 = 31652.6 vs close 31652.7  resid -0.10
+   2024.4Q LIVE: 30176.4 + 5013.0 + 1230.7 + -3384.2 + -2930.8 = 30105.1 vs close 30105.1  resid +0.00
+   2024.4Q HEAD: 30176.4 + 5013.0 + 1230.7 + -3384.2 + -2930.8 = 30105.1 vs close 30105.1  resid +0.00
+   Opening drift within FY2023 (cum opening of each quarter): {'2023.1Q': 31327.6, '2023.2Q': 31327.6, '2023.3Q': 31327.6, '2023.4Q': 31327.6} HEAD: {'2023.1Q': 31201.3, '2023.2Q': 31201.3, '2023.3Q': 31201.3, '2023.4Q': 31327.6}
+   Opening drift within FY2024: {'2024.1Q': 30176.4, '2024.2Q': 30176.4, '2024.3Q': 30176.4, '2024.4Q': 30176.4}
+   FY2023 -> FY2024 boundary: 2023.4Q close 30176.4 vs 2024.1Q open 30176.4 diff 0.0 | HEAD 30176.4 30176.4
+   quarter-to-quarter closing -> next single-quarter opening (dangi) is checked above; 2024 Q-to-Q:  [('2024.1Q', 30886.4, '2024.2Q', 30886.4), ('2024.2Q', 31446.0, '2024.3Q', 31446.0), ('2024.3Q', 31652.7, '2024.4Q', 31652.7)]
+
+=== (5c) PL block identities per quarter (LIVE vs HEAD), residual in 백만원 (None = leg missing)
+   2023.1Q LIVE: 1 = 2 + 15 - 16:+0 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+0 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:+0 | 31 = 24 + 25:+0
+   2023.1Q HEAD: 1 = 2 + 15 - 16:None | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:None | 20 = 1 + 17:None | 22 = 20 + 21:None | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:None | 31 = 24 + 25:None
+   2023.2Q LIVE: 1 = 2 + 15 - 16:+0 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+0 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:+0 | 31 = 24 + 25:+0
+   2023.2Q HEAD: 1 = 2 + 15 - 16:None | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:None | 20 = 1 + 17:None | 22 = 20 + 21:None | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:None | 31 = 24 + 25:None
+   2023.3Q LIVE: 1 = 2 + 15 - 16:-1 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+1 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:+1 | 31 = 24 + 25:+0
+   2023.3Q HEAD: 1 = 2 + 15 - 16:+0 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+0 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:+0 | 31 = 24 + 25:+0
+   2023.4Q LIVE: 1 = 2 + 15 - 16:+0 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+0 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:+0 | 31 = 24 + 25:+0
+   2023.4Q HEAD: 1 = 2 + 15 - 16:+0 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+0 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:+0 | 31 = 24 + 25:+0
+   2024.1Q LIVE: 1 = 2 + 15 - 16:+0 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+0 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:None | 31 = 24 + 25:+0
+   2024.1Q HEAD: 1 = 2 + 15 - 16:+0 | 2 = 3 + 8:+0 | 3 = 4+5+6+7:+0 | 8 = 9+10+11+12:+0 | 17 = 18 + 19:+0 | 20 = 1 + 17:+0 | 22 = 20 + 21:+0 | 24 = 22 - 23:+0 | 25 = 26+27+28+29+30+32:None | 31 = 24 + 25:+0
+
+   PL vs CSM cross: PL item4 (CSM amort, 백만원) vs CSM item5 (억원)
+   2023.1Q: PL4=68479.0 CSM5=-684.8 PL4/100+CSM5=-0.01 eok
+   2023.2Q: PL4=140581.0 CSM5=-1405.8 PL4/100+CSM5=+0.01 eok
+   2023.3Q: PL4=214229.0 CSM5=-2142.3 PL4/100+CSM5=-0.01 eok
+   2023.4Q: PL4=283905.0 CSM5=-2839.1 PL4/100+CSM5=-0.05 eok
+   2024.1Q: PL4=71431.0 CSM5=-714.3 PL4/100+CSM5=+0.01 eok
+   2024.2Q: PL4=143582.0 CSM5=-1435.8 PL4/100+CSM5=+0.02 eok
+   2024.3Q: PL4=216151.0 CSM5=-2161.5 PL4/100+CSM5=+0.01 eok
+   2024.4Q: PL4=293081.0 CSM5=-2930.8 PL4/100+CSM5=+0.01 eok
+
+=== (3) Owner gold: KR0099
+PL gold KR0099: HEAD 0 LIVE 60 added 60 removed 0 changed 0
+CSM gold KR0099: HEAD 2 LIVE 17 added 15 removed 0 changed 0
+CSM gold KR0099 HEAD entries (kept, unchanged): [(('KR0099', 1, '2024.4Q'), 30176.4, 31798.3), (('KR0099', 4, '2024.4Q'), -3384.2, -5006.1)]
+new gold entries vs master value / was vs HEAD master mismatches: 0
+all new PL gold entries (key, old master -> new): was==None (blank filled): 30 | value changed: 30
+   classification of replaced OWNER gold entries: HEAD had 0 PL gold and 2 CSM gold (2024.4Q) entries for KR0099; none was replaced/removed => class (original-vintage / wrong-basis / chain-forced) replaced count = 0
+gold_cells_replaced.csv scenarios involving KR0099: {('N1_KBlife_A', 'KR0099'): 2}
+   rows with KR0099 and scenario N2*/B: []
+PL gold other-company changes (not my scope): {'KR0003': 18, 'KR0070': 73} removed [] changed [('KR0070', 4, '2023.1Q')]
+CSM gold other-company changes (not my scope): {'KR0003': 5, 'KR0070': 18} removed [('KR0070', 1, '2023.4Q'), ('KR0070', 4, '2023.4Q')] changed []
+PL null_dangi contains KR0099 in HEAD: False in LIVE: False
+PL set_dangi contains KR0099 in HEAD: False in LIVE: False

@@ -1,0 +1,39 @@
+PL gold _doc: Owner manual xlsx fills (review-loop). Applied by build_root_masters.build_pl() AFTER _zero_other_expense, BEFORE 값_당분기 recompute. set: upsert 값 by (code,item,quarter). Owner already synced these to root; this file makes them survive master rebuilds. estimate=true (현대해상 생명장기 leg): provenance/designer 음영. null_dangi.cells: [code, quarter, item] whose derived single-quarter 값_당분기 is forced to null while 값 (연누계) is kept -- for single quarters whose two cumulatives come from different disclosure vintages (a blank cell beats a wrong cell; build_root_masters._pl_null_dangi_keys). set_dangi.cells: [code, quarter, item, value, source] -- the single-quarter 값_당분기 is forced to the THREE-MONTH value printed in the filing (kept: 값 YTD), for single quarters whose two cumulatives come from different disclosure vintages (build_root_masters._pl_set_dangi_values; a key in null_dangi and set_dangi is refused).
+
+{
+ "원보험사코드": "KR0070",
+ "항목번호": 4,
+ "공시분기": "2023.1Q",
+ "값": 22664.0,
+ "was": 3364.0,
+ "note": "inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 의 caption 게이트가 '보험수익' 리터럴만 받는데 이 분기는 '...잔여보장요소 및 현금흐름 회수 관련 보험료 배분액은...' 표현이라 미매칭 -> extract_tier2_life_old 자기가드 통과 -> 제네릭 extract_tier2_life 로 폴백 -> _pick_life_table 이 '재보험수익' substring 을 '보험수익' 으로 오매칭해 출재(재보험) 레그를 원수로 잘못 뽑음. 진짜 원수 CSM상각은 별개 노트(전환방법별 CSM 변동표, '제공된 서비스 관련 당기손익 인식' 행, 합계열)에 있고 두 함수 모두 _is_rollforward() 로 그 노트를 건너뜀 -- raw 직접 재검증(합계열)으로 override, 코드 수정은 공용함수 blast-radius 커서 별건 후속. 2026-08-17."
+}
+{
+ "원보험사코드": "KR0070",
+ "항목번호": 7,
+ "공시분기": "2023.1Q",
+ "값": -1767.0,
+ "was": 17533.0,
+ "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음."
+}
+
+{
+ "원보험사코드": "KR0070",
+ "항목번호": 1,
+ "공시분기": "2023.4Q",
+ "값": 7017.8,
+ "was": 7585.3,
+ "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4"
+}
+{
+ "원보험사코드": "KR0070",
+ "항목번호": 4,
+ "공시분기": "2023.4Q",
+ "값": -1148.8,
+ "was": -1716.3,
+ "why": "CSM continuity fix 2026-06-16 (owner-verified + workflow): FY2023 year-start (Q1-Q3 agree 7017.8); Q4 annual restated to 7585.3. keep close 8695.4"
+}
+CSM gold keys sample: ['_doc', 'exclude_companies', 'set']
+null_dangi keys: ['_doc', '_doc_e19_20261022', '_doc_e20_20261022', '_doc_e21_20261023', '_doc_e23_kr0003_20261023', '_doc_oci_20261022', 'cells']
+set_dangi keys: ['_doc', '_doc_e19_20261022', '_doc_e20_20261022', '_doc_e21_20261023', 'cells']
+set_dangi sample: [['KR0073', '2023.3Q', 1, 89281.796027, 'data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml:L36675 [보험손익] 89,281,796,027원'], ['KR0073', '2023.3Q', 2, 98046.234456, 'data/dart/FY2024_Q3/raw/KR0073_교보생명보험/20241114003039.xml (derived: = item3 + item8)']]

@@ -1,0 +1,48 @@
+PL gold: set 1322 -> 1383 (+61, 4 replaced in place); null_dangi cells 110 -> 110; set_dangi cells 37 -> 45
+CSM gold: set 406 -> 417 (13 new, 5 replaced in place, 2 removed)
+PL master: 값 changed 65, 값_당분기 changed 81 (dangi-only 18); delta cells 83
+  dangi changed per company: {'KR0072': 81}
+CSM master: 값 changed 20, 값_당분기 changed 23
+pre-existing live blanks overwritten by a derivation that equals the printed 3-month column: [(('KR0072', 7, '2023.2Q'), -17294.0, -7462.006173, 'documented live-vs-baseline drift (hand-fixed live cell): live -17294.0, baseline -18990.0, new = plan value'), (('KR0072', 12, '2023.2Q'), 1790.0, 1374.298387, 'documented live-vs-baseline drift (hand-fixed live cell): live 1790.0, baseline 3984.0, new = plan value'), (('KR0072', 16, '2023.2Q'), 5400.0, 5349.343195, 'documented live-vs-baseline drift (hand-fixed live cell): live 5400.0, baseline None, new = plan value'), (('KR0072', 7, '2023.3Q'), -52310.275872, -41277.719629, 'documented live-vs-baseline drift (hand-fixed live cell): live -52310.275872, baseline -44935.275872, new = plan value'), (('KR0072', 12, '2023.3Q'), 12952.808227, 11978.419352, 'documented live-vs-baseline drift (hand-fixed live cell): live 12952.808227, baseline 20566.808227, new = plan value'), (('KR0072', 7, '2023.4Q'), 48961.540566, 37928.984323, 'single quarter only: live single = live cumulative - live previous cumulative, new single = same cumulative - new previous cumulative'), (('KR0072', 12, '2023.4Q'), -3118.323117, -2143.934242, 'single quarter only: live single = live cumulative - live previous cumulative, new single = same cumulative - new previous cumulative')]
+PL provenance: 5 blocks replaced/inserted (live sidecar != emitter(live) on 2 of them; inserted []) + merge note
+CSM provenance: owner_override flagged on 1 blocks: [('KR0072', '2023.3Q')]; owner_override cleared (last gold entry removed) on [('KR0072', '2023.4Q')]
+census PL (gold cells, masked): (1322, 22) -> (1383, 22); CSM: (406, 77) -> (417, 74); ledger pins dropped: ['CSM|KR0072|2023.1Q|6', 'CSM|KR0072|2023.2Q|4', 'CSM|KR0072|2023.2Q|5']
+tax22 branch-off failing buckets: 36 -> 36; new: []
+identity residuals before -> after per adopted bucket (백만원); worst |after| = 0.0093
+  KR0072 2023.1Q: 20-(1+17): -0.010 -> +0.000; 22-(20+21): +0.010 -> +0.002; |22-24|-|23|: +0.001 -> +0.000; 31-(24+25): - -> +0.000; 25-(26+27+28+29+30+32): - -> +0.000; 17-(18+19): +0.000 -> +0.000
+  KR0072 2023.2Q: 20-(1+17): - -> +0.000; 22-(20+21): +0.000 -> +0.000; |22-24|-|23|: +0.200 -> +0.009; 31-(24+25): - -> +0.000; 25-(26+27+28+29+30+32): - -> -0.000; 17-(18+19): - -> -0.000
+  KR0072 2023.3Q: 20-(1+17): +0.000 -> +0.000; 22-(20+21): +0.000 -> +0.000; |22-24|-|23|: +0.000 -> +0.000; 31-(24+25): -0.000 -> +0.000; 25-(26+27+28+29+30+32): +0.000 -> +0.000; 17-(18+19): +0.000 -> +0.000
+  KR0072 2023.4Q: 20-(1+17): -0.000 -> -0.000; 22-(20+21): +0.000 -> +0.000; |22-24|-|23|: +0.000 -> +0.000; 31-(24+25): +0.000 -> +0.000; 25-(26+27+28+29+30+32): -0.000 -> -0.000; 17-(18+19): +0.000 -> -0.000
+PL adopted buckets, 억원 (1억 = 100백만). 누계(값) before -> after | 단일분기(값_당분기) before -> after
+  케이디비생명보험 KR0072 2023.1Q 보험손익  : 누계        71.11 ->        82.98 | 단일분기        71.11 ->        82.98
+  케이디비생명보험 KR0072 2023.1Q 투자손익  : 누계       359.87 ->       328.77 | 단일분기       359.87 ->       328.77
+  케이디비생명보험 KR0072 2023.1Q 당기순이익 : 누계       376.73 ->       357.50 | 단일분기       376.73 ->       357.50
+  케이디비생명보험 KR0072 2023.1Q 기타포괄손익: 누계        blank ->       193.14 | 단일분기        blank ->       193.14
+  케이디비생명보험 KR0072 2023.1Q 총포괄손익 : 누계        blank ->       550.64 | 단일분기        blank ->       550.64
+  케이디비생명보험 KR0072 2023.2Q 보험손익  : 누계       226.65 ->       278.26 | 단일분기       155.54 ->       195.28
+  케이디비생명보험 KR0072 2023.2Q 투자손익  : 누계        blank ->       457.07 | 단일분기        blank ->       128.29
+  케이디비생명보험 KR0072 2023.2Q 당기순이익 : 누계       577.50 ->       626.24 | 단일분기       200.77 ->       268.74
+  케이디비생명보험 KR0072 2023.2Q 기타포괄손익: 누계        blank ->     1,830.06 | 단일분기        blank ->     1,636.92
+  케이디비생명보험 KR0072 2023.2Q 총포괄손익 : 누계        blank ->     2,456.31 | 단일분기        blank ->     1,905.66
+  케이디비생명보험 KR0072 2023.3Q 보험손익  : 누계        46.37 ->       167.11 | 단일분기      -180.28 ->      -111.15
+  케이디비생명보험 KR0072 2023.3Q 투자손익  : 누계       -60.25 ->      -137.19 | 단일분기        blank ->      -586.98
+  케이디비생명보험 KR0072 2023.3Q 당기순이익 : 누계      -179.08 ->      -135.27 | 단일분기      -756.58 ->      -754.25
+  케이디비생명보험 KR0072 2023.3Q 기타포괄손익: 누계     2,786.59 ->     2,713.38 | 단일분기        blank ->       883.32
+  케이디비생명보험 KR0072 2023.3Q 총포괄손익 : 누계     2,607.51 ->     2,578.11 | 단일분기        blank ->       129.07
+  케이디비생명보험 KR0072 2023.4Q 보험손익  : 누계       652.49 ->       652.49 | 단일분기       606.12 ->       485.37
+  케이디비생명보험 KR0072 2023.4Q 투자손익  : 누계      -183.59 ->      -184.28 | 단일분기      -123.34 ->       -47.10
+  케이디비생명보험 KR0072 2023.4Q 당기순이익 : 누계       240.19 ->       239.50 | 단일분기       419.27 ->       374.77
+  케이디비생명보험 KR0072 2023.4Q 기타포괄손익: 누계    -1,198.74 ->    -1,198.74 | 단일분기    -3,985.33 ->    -3,912.12
+  케이디비생명보험 KR0072 2023.4Q 총포괄손익 : 누계      -958.54 ->      -959.24 | 단일분기    -3,566.06 ->    -3,537.35
+CSM 기말(항목 6) / 상각(항목 5), 억원: before -> after
+  케이디비생명보험 KR0072 2023.1Q 기말 CSM: 4,727.25 -> 5,138.20 (+410.95)
+  케이디비생명보험 KR0072 2023.1Q CSM 상각: -111.25 -> -116.41 (-5.16)
+  케이디비생명보험 KR0072 2023.1Q 기초 CSM: 5,239.40 -> 5,695.95 (+456.55)
+  케이디비생명보험 KR0072 2023.2Q 기말 CSM: 5,583.70 -> 6,043.35 (+459.65)
+  케이디비생명보험 KR0072 2023.2Q CSM 상각: -234.15 -> -245.09 (-10.94)
+  케이디비생명보험 KR0072 2023.2Q 기초 CSM: 5,239.40 -> 5,695.95 (+456.55)
+  케이디비생명보험 KR0072 2023.3Q 기말 CSM: 5,330.80 -> 5,836.80 (+506.00)
+  케이디비생명보험 KR0072 2023.3Q CSM 상각: -352.50 -> -372.70 (-20.20)
+  케이디비생명보험 KR0072 2023.3Q 기초 CSM: 5,239.40 -> 5,695.90 (+456.50)
+  케이디비생명보험 KR0072 2023.4Q 기초 CSM: 5,239.40 -> 5,695.90 (+456.50)
+errors: none
