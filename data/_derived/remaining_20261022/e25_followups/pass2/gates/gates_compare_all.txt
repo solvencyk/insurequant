@@ -1,0 +1,46 @@
+==========================================================================================
+## master_tables
+  head(before): [gate_overlay] master_tables exit=2 lines=380 served_reads={} dropped_writes=['data\\_derived\\pl_oci_vs_bs_aoci_warn.json', 'data\\_derived\\qoq_warn.json'] -> master_tables.txt
+  head(after) : [gate_overlay] master_tables exit=2 lines=380 served_reads={} dropped_writes=['data\\_derived\\pl_oci_vs_bs_aoci_warn.json', 'data\\_derived\\qoq_warn.json'] -> master_tables.txt
+  summary lines differ:
+    - B: 4. QOQ_DELTA_WARN (시계열 급변, YELLOW)  flagged=265 (2024+, net-quarterly)
+    - B: 5. SENSITIVITY_UNIT_SANITY (max|csm_delta| / 그 회사 자신의 기말 CSM)  RED=0 YELLOW=0
+    - B: 6. PL_OCI_VS_BS_AOCI (PL 항목25 당분기 vs BS 항목4 QoQ delta, 백만원, YELLOW)  flagged=28 (비교한 262건 중 tol 이내 234건 | 비교 못 함: 단일분기 공란 101건 + BS 결측 11건)
+    - B: SUMMARY  coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3787P(진짜1351·구성상2093·부분343)/18F/2625S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:388P/1PIN/0F/4S | qoq_warn:265Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:28Y/101blank/11bsskip
+    + A: 4. QOQ_DELTA_WARN (시계열 급변, YELLOW)  flagged=265 (2024+, net-quarterly)
+    + A: 5. SENSITIVITY_UNIT_SANITY (max|csm_delta| / 그 회사 자신의 기말 CSM)  RED=0 YELLOW=0
+    + A: 6. PL_OCI_VS_BS_AOCI (PL 항목25 당분기 vs BS 항목4 QoQ delta, 백만원, YELLOW)  flagged=28 (비교한 264건 중 tol 이내 236건 | 비교 못 함: 단일분기 공란 97건 + BS 결측 13건)
+    + A: SUMMARY  coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3800P(진짜1357·구성상2100·부분343)/18F/2612S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:388P/1PIN/0F/4S | qoq_warn:265Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:28Y/97blank/13bsskip
+==========================================================================================
+## data_contract
+  head(before): [gate_overlay] data_contract exit=2 lines=381 served_reads={} dropped_writes=[] -> data_contract.txt
+  head(after) : [gate_overlay] data_contract exit=2 lines=381 served_reads={} dropped_writes=[] -> data_contract.txt
+  summary lines identical: SUMMARY  RED=2  YELLOW=168  provisional=False
+  parsed findings: before RED=2 YELLOW=168 | after RED=2 YELLOW=168
+==========================================================================================
+## csm_continuity
+  head(before): [gate_overlay] csm_continuity exit=0 lines=3 served_reads={} dropped_writes=['data\\dart\\viz\\csm_continuity_validation.json'] -> csm_continuity.txt
+  head(after) : [gate_overlay] csm_continuity exit=0 lines=3 served_reads={} dropped_writes=['data\\dart\\viz\\csm_continuity_validation.json'] -> csm_continuity.txt
+  summary lines identical: [csm_continuity] companies=44 flagged=1 red=0
+==========================================================================================
+## csm_waterfall
+  head(before): [gate_overlay] csm_waterfall exit=0 lines=8 served_reads={} dropped_writes=['data\\dart\\viz\\csm_waterfall_validation.json'] -> csm_waterfall.txt
+  head(after) : [gate_overlay] csm_waterfall exit=0 lines=8 served_reads={} dropped_writes=['data\\dart\\viz\\csm_waterfall_validation.json'] -> csm_waterfall.txt
+  summary lines identical: pass=41 fail=0 nb_fail=0 in_scope=41 excluded_pre_ifrs17=6 total=47
+==========================================================================================
+## nb_csm
+  head(before): [gate_overlay] nb_csm exit=0 lines=3 served_reads={} dropped_writes=['data\\_derived\\nb_csm_validation.json'] -> nb_csm.txt
+  head(after) : [gate_overlay] nb_csm exit=0 lines=3 served_reads={} dropped_writes=['data\\_derived\\nb_csm_validation.json'] -> nb_csm.txt
+  summary lines identical: tested=5 pass=5 fail=0 fallback_pass=1
+==========================================================================================
+## csm_coverage
+  head(before): [gate_overlay] csm_coverage exit=1 lines=6 served_reads={} dropped_writes=[] -> csm_coverage.txt
+  head(after) : [gate_overlay] csm_coverage exit=1 lines=6 served_reads={} dropped_writes=[] -> csm_coverage.txt
+  summary lines identical: CSM COVERAGE GAPS PRESENT
+==========================================================================================
+## live_artifacts
+  head(before): [gate_overlay] live_artifacts exit=2 lines=64 served_reads={} dropped_writes=[] -> live_artifacts.txt
+  head(after) : [gate_overlay] live_artifacts exit=2 lines=64 served_reads={} dropped_writes=[] -> live_artifacts.txt
+  summary lines identical: SUMMARY live_artifacts  RED=2  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=27
+    removed: 값이 다른 셀 66건 — ('KB손해보험', None, '손해보험', '2025.2Q', 16, '기타사업비용')|값: 공개=33300.0 vs 마스터=None / ('에이비엘생명보험', None, '생명보험', '2023.2Q', 7, '기타 생명장기 원수손익')|값: 공개=None vs 마스터=4357.757784 / ('에이비엘생명보험', None, '생명보험', '2023.2Q', 7, '기타 생명장기 원수손익')|값_당분기: 공개=None vs 마스터=5686.121254. 마스터가 커밋됐는데 스냅샷 재생성이 밀렸다: py
+    ADDED  : 값이 다른 셀 66건 — ('농협생명보험', None, '생명보험', '2024.1Q', 17, '투자손익')|값: 공개=2519.581216 vs 마스터=2516.671864 / ('농협생명보험', None, '생명보험', '2024.1Q', 17, '투자손익')|값_당분기: 공개=2519.581216 vs 마스터=2516.671864 / ('에이비엘생명보험', None, '생명보험', '2023.3Q', 5, '원수 위험조정 변동')|값: 공개=11071.0 vs 마스터=11921.0. 마스터가 커밋됐는데 스냅샷 재생성이 밀렸다

@@ -1,0 +1,100 @@
+{
+ "cells": [
+  {
+   "company": "KR0079",
+   "quarter": "2023.4Q",
+   "item": "4",
+   "master": 197764.0,
+   "latest": 197764.0,
+   "filing": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
+   "line": "70320,70569,70818,71067,71316",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 5 product tables of the prior section (last numeric cell); current sections reproduce master 2024.4Q = 197691.0"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2023.4Q",
+   "item": "5",
+   "master": 46004.0,
+   "latest": 46004.0,
+   "filing": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
+   "line": "70309,70558,70807,71056,71305",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 5 product tables of the prior section (last numeric cell); current sections reproduce master 2024.4Q = 43275.0"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2023.4Q",
+   "item": "9",
+   "master": -2202.0,
+   "latest": -2202.0,
+   "filing": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
+   "line": "71542,71752",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 2 product tables of the prior section (last numeric cell); current sections reproduce master 2024.4Q = -4674.0"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2023.4Q",
+   "item": "10",
+   "master": -817.0,
+   "latest": -817.0,
+   "filing": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
+   "line": "71532,71742",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 2 product tables of the prior section (last numeric cell); current sections reproduce master 2024.4Q = -442.0"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.1Q",
+   "item": "4",
+   "master": 50759.0,
+   "latest": 50759.0,
+   "filing": "data/dart/FY2025_Q1/raw/KR0079_미래에셋생명/20250515001717.xml",
+   "line": "48906,49156,49406,49657,49907",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 5 product tables of the prior section (last numeric cell); current sections reproduce master 2025.1Q = 48373.0"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.1Q",
+   "item": "5",
+   "master": 11243.0,
+   "latest": 11243.0,
+   "filing": "data/dart/FY2025_Q1/raw/KR0079_미래에셋생명/20250515001717.xml",
+   "line": "48895,49145,49395,49646,49896",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 5 product tables of the prior section (last numeric cell); current sections reproduce master 2025.1Q = 10961.0"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.1Q",
+   "item": "9",
+   "master": -755.0,
+   "latest": -755.0,
+   "filing": "data/dart/FY2025_Q1/raw/KR0079_미래에셋생명/20250515001717.xml",
+   "line": "50135,50345",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 2 product tables of the prior section (last numeric cell); current sections reproduce master 2025.1Q = -1846.0"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.1Q",
+   "item": "10",
+   "master": -206.0,
+   "latest": -206.0,
+   "filing": "data/dart/FY2025_Q1/raw/KR0079_미래에셋생명/20250515001717.xml",
+   "line": "50125,50335",
+   "source": "custom_kr0079",
+   "confidence": "high",
+   "note": "sum over 2 product tables of the prior section (last numeric cell); current sections reproduce master 2025.1Q = -491.0"
+  }
+ ]
+}

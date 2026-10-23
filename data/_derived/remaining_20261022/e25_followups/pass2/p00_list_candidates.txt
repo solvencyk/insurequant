@@ -1,0 +1,254 @@
+=== round 1 (mismatches.csv) ===
+rows 185
+KR0009 2023.1Q PL  item    10 master     -144.287 latest     -129.717 diff      14.57 VINTAGE_NOTE           high   moved=Y | dart/FY2024_Q1/raw/KR0009_현대해상 (table@L40274) | 40379
+KR0009 2023.1Q PL  item     5 master    27234.914 latest    32896.783 diff   5661.869 VINTAGE_NOTE           high   moved=Y | dart/FY2024_Q1/raw/KR0009_현대해상 (table@L40274) | 40315
+KR0009 2023.1Q PL  item     9 master     -1271.31 latest     -939.137 diff    332.173 VINTAGE_NOTE           high   moved=Y | dart/FY2024_Q1/raw/KR0009_현대해상 (table@L40274) | 40387
+KR0009 2023.2Q PL  item    10 master     -362.683 latest     -276.452 diff     86.231 VINTAGE_NOTE           high   moved=Y | dart/FY2024_Q2/raw/KR0009_현대해상 (table@L43340) | 43445
+KR0009 2023.2Q PL  item     5 master    56908.344 latest    64451.403 diff   7543.059 VINTAGE_NOTE           high   moved=Y | dart/FY2024_Q2/raw/KR0009_현대해상 (table@L43340) | 43381
+KR0009 2023.2Q PL  item     9 master    -3168.333 latest    -2539.609 diff    628.724 VINTAGE_NOTE           high   moved=Y | dart/FY2024_Q2/raw/KR0009_현대해상 (table@L43340) | 43453
+KR0032 2023.1Q PL  item    19 master     -56596.0 latest   -56595.452 diff      0.548 ROUNDING_PM1           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 6831
+KR0032 2023.1Q PL  item    20 master     109496.0 latest   109496.351 diff      0.351 ROUNDING_PM1           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7308
+KR0032 2023.1Q PL  item    21 master      -5871.0 latest    -5871.589 diff     -0.589 ROUNDING_PM1           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7331
+KR0032 2023.1Q PL  item    22 master     103625.0 latest   103624.762 diff     -0.238 ROUNDING_PM1           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7377
+KR0032 2023.1Q PL  item    23 master      24680.0 latest    24679.474 diff     -0.526 ROUNDING_PM1           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7400
+KR0032 2023.1Q PL  item    24 master      78945.0 latest    78945.288 diff      0.288 ROUNDING_PM1           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7423
+KR0032 2023.1Q PL  item    25 master              latest      946.363 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7515
+KR0032 2023.1Q PL  item    26 master              latest   107043.619 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7630
+KR0032 2023.1Q PL  item    27 master              latest   -134270.12 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7676
+KR0032 2023.1Q PL  item    28 master              latest    13702.511 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7653
+KR0032 2023.1Q PL  item    29 master              latest      2628.46 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7584
+KR0032 2023.1Q PL  item    30 master              latest    11867.955 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7699
+KR0032 2023.1Q PL  item    31 master              latest    79891.651 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7722
+KR0032 2023.1Q PL  item    32 master              latest      -26.062 diff            MASTER_BLANK           high   moved=Y | 024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml | 7515
+KR0068 2023.1Q PL  item     5 master      33614.0 latest      27971.0 diff    -5643.0 VINTAGE_NOTE           medium moved=Y | /FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml | 77315
+KR0068 2023.2Q PL  item     5 master      63986.0 latest      63751.0 diff     -235.0 VINTAGE_NOTE           medium moved=Y | /FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml | 77967
+KR0068 2024.4Q PL  item     1 master 506304.846307 latest     506305.0 diff      0.154 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130556
+KR0068 2024.4Q PL  item    16 master 146018.146266 latest     146018.0 diff     -0.146 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130605
+KR0068 2024.4Q PL  item    17 master 76154.032935 latest      76154.0 diff     -0.033 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130612
+KR0068 2024.4Q PL  item    18 master 3116613.456727 latest    3116613.0 diff     -0.457 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130612
+KR0068 2024.4Q PL  item    19 master -3040459.423792 latest   -3040459.0 diff      0.424 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130626
+KR0068 2024.4Q PL  item     2 master 652322.992573 latest     652323.0 diff      0.007 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130570
+KR0068 2024.4Q PL  item    20 master 582458.879242 latest     582459.0 diff      0.121 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130766
+KR0068 2024.4Q PL  item    21 master 322462.496064 latest     322462.0 diff     -0.496 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130773
+KR0068 2024.4Q PL  item    22 master 904921.375306 latest     904921.0 diff     -0.375 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130794
+KR0068 2024.4Q PL  item    23 master 184351.646137 latest     184351.0 diff     -0.646 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130801
+KR0068 2024.4Q PL  item    24 master 720569.729169 latest     720570.0 diff      0.271 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130808
+KR0068 2024.4Q PL  item    27 master -3616207.462667 latest   -3616207.0 diff      0.463 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130864
+KR0068 2024.4Q PL  item    28 master 201106.887433 latest     201107.0 diff      0.113 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130878
+KR0068 2024.4Q PL  item     3 master 661482.732928 latest     661483.0 diff      0.267 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130570
+KR0068 2024.4Q PL  item    30 master  -903.541964 latest       -904.0 diff     -0.458 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130871
+KR0068 2024.4Q PL  item     8 master -9159.740355 latest      -9160.0 diff      -0.26 ROUNDING_PM1           high   moved=Y | KR0068_한화생명_20260316001304/20260316001304.xml | 130577
+KR0068 2025.2Q PL  item    15 master          0.0 latest      55941.0 diff    55941.0 UNVERIFIED_ITEM15_PRESENCE low    moved=Y | /FY2026_Q2/raw/KR0068_한화생명/20260813001536.xml | 100686
+KR0070 2024.1Q PL  item    10 master              latest       -196.0 diff            KNOWN_ABL              low    moved=Y | 025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml | 43140
+KR0070 2024.1Q PL  item     9 master              latest      -2249.0 diff            KNOWN_ABL              medium moved=Y | 025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml | 43146
+KR0070 2024.2Q PL  item    10 master              latest       -373.0 diff            KNOWN_ABL              low    moved=Y | 025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml | 47010
+KR0070 2024.2Q PL  item     9 master              latest      -4436.0 diff            KNOWN_ABL              medium moved=Y | 025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml | 47018
+KR0070 2024.3Q PL  item    10 master              latest       -583.0 diff            KNOWN_ABL              low    moved=Y | 025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml | 37453
+KR0070 2024.3Q PL  item     9 master              latest      -6746.0 diff            KNOWN_ABL              medium moved=Y | 025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml | 37461
+KR0070 2024.4Q PL  item    10 master       -785.0 latest       -793.0 diff       -8.0 KNOWN_ABL              low    moved=Y | 70_에이비엘생명보험_20260331003080/20260331003080.xml | 65873
+KR0070 2025.1Q PL  item    10 master       -203.0 latest       -206.0 diff       -3.0 VINTAGE_NOTE_SMALL     low    moved=Y | 026_Q1/raw/KR0070_에이비엘생명보험/20260529000613.xml | 43235
+KR0070 2025.2Q PL  item    15 master          0.0 latest    65571.845 diff  65571.845 UNVERIFIED_ITEM15_PRESENCE low    moved=Y | 026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 23720
+KR0082 2023.1Q PL  item    25 master              latest   -77080.379 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24260
+KR0082 2023.1Q PL  item    26 master              latest   166014.417 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24306
+KR0082 2023.1Q PL  item    27 master              latest   -259505.24 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24375
+KR0082 2023.1Q PL  item    28 master              latest     9916.595 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24352
+KR0082 2023.1Q PL  item    29 master              latest    10653.068 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24444
+KR0082 2023.1Q PL  item    30 master              latest    -4150.598 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24398
+KR0082 2023.1Q PL  item    31 master              latest   -13455.126 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24490
+KR0082 2023.1Q PL  item    32 master              latest       -8.621 diff            MASTER_BLANK           high   moved=Y | Y2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 24260
+KR0082 2023.2Q PL  item    25 master              latest    -3455.475 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25551
+KR0082 2023.2Q PL  item    26 master              latest    46879.428 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25597
+KR0082 2023.2Q PL  item    27 master              latest   -65159.249 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25666
+KR0082 2023.2Q PL  item    28 master              latest     8618.163 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25643
+KR0082 2023.2Q PL  item    29 master              latest     8617.413 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25735
+KR0082 2023.2Q PL  item    30 master              latest    -1823.905 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25689
+KR0082 2023.2Q PL  item    31 master              latest   107819.356 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25781
+KR0082 2023.2Q PL  item    32 master              latest     -587.324 diff            MASTER_BLANK           high   moved=Y | Y2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml | 25551
+KR0087 2024.3Q PL  item     1 master 233396.828581 latest     233397.0 diff      0.171 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37641
+KR0087 2024.3Q PL  item    16 master 24563.532808 latest      24563.0 diff     -0.533 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37697
+KR0087 2024.3Q PL  item    18 master 825311.443363 latest     825311.0 diff     -0.443 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37705
+KR0087 2024.3Q PL  item    21 master -3477.501991 latest      -3477.0 diff      0.502 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37905
+KR0087 2024.3Q PL  item    26 master  239572.8118 latest     239573.0 diff      0.188 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37961
+KR0087 2024.3Q PL  item    28 master 55026.055222 latest      55026.0 diff     -0.055 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37969
+KR0087 2024.3Q PL  item    29 master 13656.287394 latest      13656.0 diff     -0.287 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 38001
+KR0087 2024.3Q PL  item    30 master 23763.904025 latest      23764.0 diff      0.096 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37985
+KR0087 2024.3Q PL  item    31 master -745544.993407 latest    -745545.0 diff     -0.007 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 38025
+KR0087 2024.3Q PL  item    32 master -3911.885517 latest      -3912.0 diff     -0.114 ROUNDING_PM1           high   moved=Y | 025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37945
+KR0087 2024.4Q PL  item     1 master 274408.160826 latest     274408.0 diff     -0.161 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74718
+KR0087 2024.4Q PL  item    10 master       1559.0 latest      -1124.0 diff    -2683.0 VINTAGE_NOTE_AND_SIGN  medium moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 122195
+KR0087 2024.4Q PL  item    16 master 34032.214382 latest      34032.0 diff     -0.214 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74767
+KR0087 2024.4Q PL  item    17 master 104644.860142 latest     104645.0 diff       0.14 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74774
+KR0087 2024.4Q PL  item    18 master 1051209.958634 latest    1051210.0 diff      0.041 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74774
+KR0087 2024.4Q PL  item    19 master -946565.098492 latest    -946565.0 diff      0.098 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74788
+KR0087 2024.4Q PL  item    20 master 379053.020968 latest     379053.0 diff     -0.021 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74949
+KR0087 2024.4Q PL  item    21 master  2919.941667 latest       2920.0 diff      0.058 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74956
+KR0087 2024.4Q PL  item    22 master 381972.962635 latest     381973.0 diff      0.037 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74970
+KR0087 2024.4Q PL  item    23 master 71814.932737 latest      71815.0 diff      0.067 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74977
+KR0087 2024.4Q PL  item    24 master 310158.029898 latest     310158.0 diff      -0.03 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 74984
+KR0087 2024.4Q PL  item    27 master -1442630.160241 latest   -1442630.0 diff       0.16 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 75019
+KR0087 2024.4Q PL  item    28 master 62766.693835 latest      62767.0 diff      0.306 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 75012
+KR0087 2024.4Q PL  item    29 master 19261.177985 latest      19261.0 diff     -0.178 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 75040
+KR0087 2024.4Q PL  item    30 master 33296.961351 latest      33297.0 diff      0.039 ROUNDING_PM1           high   moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 75026
+KR0087 2024.4Q PL  item     4 master     259987.0 latest     246751.0 diff   -13236.0 VINTAGE_NOTE           medium moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 121698
+KR0087 2024.4Q PL  item     5 master      47227.0 latest      43633.0 diff    -3594.0 VINTAGE_NOTE           medium moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 121693
+KR0087 2024.4Q PL  item     9 master      -1711.0 latest      -2193.0 diff     -482.0 VINTAGE_NOTE           medium moved=Y | KR0087_동양생명_20260313001227/20260313001227.xml | 122200
+KR0087 2025.1Q PL  item     1 master  4071.067425 latest       4071.0 diff     -0.067 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46152
+KR0087 2025.1Q PL  item    16 master  8133.558408 latest       8134.0 diff      0.442 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46208
+KR0087 2025.1Q PL  item    17 master 55389.596159 latest      55390.0 diff      0.404 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46216
+KR0087 2025.1Q PL  item    18 master 322315.575353 latest     322315.0 diff     -0.575 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46216
+KR0087 2025.1Q PL  item    19 master -266925.979194 latest    -266925.0 diff      0.979 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46232
+KR0087 2025.1Q PL  item    20 master 59460.663584 latest      59461.0 diff      0.336 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46408
+KR0087 2025.1Q PL  item    21 master -5026.845763 latest      -5027.0 diff     -0.154 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46416
+KR0087 2025.1Q PL  item    22 master 54433.817821 latest      54434.0 diff      0.182 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46432
+KR0087 2025.1Q PL  item    23 master  7693.991231 latest       7694.0 diff      0.009 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46440
+KR0087 2025.1Q PL  item    24 master  46739.82659 latest      46740.0 diff      0.173 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46448
+KR0087 2025.1Q PL  item    27 master -748859.145437 latest    -748859.0 diff      0.145 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46488
+KR0087 2025.1Q PL  item    28 master 41351.162062 latest      41351.0 diff     -0.162 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46480
+KR0087 2025.1Q PL  item    29 master  2856.877887 latest       2857.0 diff      0.122 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46512
+KR0087 2025.1Q PL  item    30 master   11127.2174 latest      11127.0 diff     -0.217 ROUNDING_PM1           high   moved=Y | /FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46496
+KR0087 2025.2Q PL  item     1 master 70419.566477 latest      70419.0 diff     -0.566 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41069
+KR0087 2025.2Q PL  item    16 master 16599.731334 latest      16600.0 diff      0.269 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41118
+KR0087 2025.2Q PL  item    17 master  34568.13757 latest      34568.0 diff     -0.138 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41125
+KR0087 2025.2Q PL  item    18 master 668719.711043 latest     668720.0 diff      0.289 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41125
+KR0087 2025.2Q PL  item    19 master -634151.573473 latest    -634152.0 diff     -0.427 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41139
+KR0087 2025.2Q PL  item    20 master 104987.704047 latest     104987.0 diff     -0.704 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41293
+KR0087 2025.2Q PL  item    21 master -3945.728152 latest      -3945.0 diff      0.728 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41300
+KR0087 2025.2Q PL  item    22 master 101041.975895 latest     101042.0 diff      0.024 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41314
+KR0087 2025.2Q PL  item    23 master 14269.673744 latest      14270.0 diff      0.326 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41321
+KR0087 2025.2Q PL  item    24 master 86772.302151 latest      86772.0 diff     -0.302 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41328
+KR0087 2025.2Q PL  item    27 master -452244.678748 latest    -452245.0 diff     -0.321 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41363
+KR0087 2025.2Q PL  item    28 master -2125.207227 latest      -2125.0 diff      0.207 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41356
+KR0087 2025.2Q PL  item    29 master  1924.523782 latest       1925.0 diff      0.476 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41384
+KR0087 2025.2Q PL  item    30 master   3722.41572 latest       3722.0 diff     -0.416 ROUNDING_PM1           high   moved=Y | /FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41370
+KR0099 2024.1Q CSM item     1 master    3017640.0 latest    3179826.0 diff   162186.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250515001983.xml table@L37587 unit 백만원 | 
+KR0099 2024.1Q CSM item     3 master      34980.0 latest      31919.0 diff    -3061.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250515001983.xml table@L37587 unit 백만원 | 
+KR0099 2024.1Q CSM item     4 master     -23920.0 latest     -30312.0 diff    -6392.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250515001983.xml table@L37587 unit 백만원 | 
+KR0099 2024.1Q CSM item     5 master     -71430.0 latest     -74241.0 diff    -2811.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250515001983.xml table@L37587 unit 백만원 | 
+KR0099 2024.1Q CSM item     6 master    3088640.0 latest    3238551.0 diff   149911.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250515001983.xml table@L37587 unit 백만원 | 
+KR0099 2024.2Q CSM item     1 master    3017640.0 latest    3179826.0 diff   162186.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250814004162.xml table@L41496 unit 백만원 | 
+KR0099 2024.2Q CSM item     3 master      68130.0 latest      62088.0 diff    -6042.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250814004162.xml table@L41496 unit 백만원 | 
+KR0099 2024.2Q CSM item     4 master     -24980.0 latest     -79717.0 diff   -54737.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250814004162.xml table@L41496 unit 백만원 | 
+KR0099 2024.2Q CSM item     5 master    -143580.0 latest    -148231.0 diff    -4651.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250814004162.xml table@L41496 unit 백만원 | 
+KR0099 2024.2Q CSM item     6 master    3144600.0 latest    3241352.0 diff    96752.0 VINTAGE_CSM            high   moved=Y | 생명보험/20250814004162.xml table@L41496 unit 백만원 | 
+
+=== round 2 (mismatches_part2.csv) ===
+rows 125
+KR0005 2024.3Q item    16 master      18000.0 latest      18005.0 diff        5.0 OTHER_COARSE_ROUNDING              high   | t/FY2025_Q3/raw/KR0005_흥국화재/xml/20251114002501.xml | 3436 | stmt:b01
+KR0005 2024.3Q item     9 master      11571.0 latest      11570.0 diff       -1.0 ROUNDING_PM1                       medium | t/FY2025_Q3/raw/KR0005_흥국화재/xml/20251114002501.xml | 30337 | note:n10
+KR0009 2023.4Q item    16 master      38491.0 latest    38490.968 diff     -0.032 ROUNDING_PM1                       high   | /raw/KR0009_현대해상_20250313001346/20250313001346.xml | 51752 | stmt:b01
+KR0068 2023.1Q item    11 master      14347.0 latest      13795.0 diff     -552.0 VINTAGE_NOTE                       high   | /dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml | 79458,79548 | note:n10
+KR0068 2023.1Q item     6 master     -60739.0 latest     -27534.0 diff    33205.0 VINTAGE_NOTE                       high   | /dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml | 79248,79358 | note:n10
+KR0068 2023.1Q item     9 master      -2497.0 latest      -3901.0 diff    -1404.0 VINTAGE_NOTE                       high   | /dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml | 79568 | note:n10
+KR0068 2023.2Q item    11 master      23426.0 latest      22557.0 diff     -869.0 VINTAGE_NOTE                       high   | /dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml | 80798,80963 | note:n10
+KR0068 2023.2Q item     6 master     -28753.0 latest     -17321.0 diff    11432.0 VINTAGE_NOTE                       high   | /dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml | 80409,80613 | note:n10
+KR0068 2023.2Q item     9 master      -6239.0 latest      -8654.0 diff    -2415.0 VINTAGE_NOTE                       high   | /dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml | 81001 | note:n10
+KR0068 2023.3Q item     6 master     -20395.0 latest      -9356.0 diff    11039.0 VINTAGE_NOTE                       high   | /dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml | 70119,70295 | note:n10
+KR0068 2023.3Q item     7 master   -59981.872 latest   -71020.872 diff   -11039.0 VINTAGE_DERIVED                    medium | derived from the latest legs of this sweep | - | derived:7 = 3 - (4+5+6)
+KR0068 2023.4Q item     5 master     117663.0 latest     117748.0 diff       85.0 VINTAGE_NOTE                       high   | /raw/KR0068_한화생명_20250312000939/20250312000939.xml | 101784 | note:n10
+KR0068 2023.4Q item     6 master     -39299.0 latest     -24518.0 diff    14781.0 VINTAGE_NOTE                       high   | /raw/KR0068_한화생명_20250312000939/20250312000939.xml | 101774,101884 | note:n10
+KR0068 2023.4Q item     7 master  -171661.427 latest  -186527.427 diff   -14866.0 VINTAGE_DERIVED                    medium | derived from the latest legs of this sweep | - | derived:7 = 3 - (4+5+6)
+KR0070 2024.1Q item     5 master        196.0 latest       3275.0 diff     3079.0 WRONG_LEG                          low    | t/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml | 42928 | note:n01
+KR0070 2024.2Q item     5 master        369.0 latest       6556.0 diff     6187.0 WRONG_LEG                          low    | t/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml | 46732 | note:n01
+KR0070 2024.3Q item     5 master        578.0 latest       9661.0 diff     9083.0 WRONG_LEG                          low    | t/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml | 37175 | note:n01
+KR0070 2024.4Q item     5 master      12282.0 latest      13655.0 diff     1373.0 VINTAGE_NOTE                       low    | /KR0070_에이비엘생명보험_20260331003080/20260331003080.xml | 65673 | note:n01
+KR0070 2024.4Q item  CSM1 master     869540.0 latest     869543.0 diff        3.0 ROUNDING_PM1                       high   | /KR0070_에이비엘생명보험_20260331003080/20260331003080.xml | 55054,55304,55554,55804 | csm:c01
+KR0070 2024.4Q item  CSM2 master     245840.0 latest     245843.0 diff        3.0 ROUNDING_PM1                       high   | /KR0070_에이비엘생명보험_20260331003080/20260331003080.xml | 55102,55352,55602,55852 | csm:c01
+KR0070 2024.4Q item  CSM3 master      34140.0 latest      34144.0 diff        4.0 ROUNDING_PM1                       high   | /KR0070_에이비엘생명보험_20260331003080/20260331003080.xml | 55166,55416,55666,55916 | csm:c01
+KR0070 2024.4Q item  CSM4 master    -123140.0 latest    -123142.0 diff       -2.0 ROUNDING_PM1                       high   | /KR0070_에이비엘생명보험_20260331003080/20260331003080.xml | 55086,55336,55586,55836 | csm:c01
+KR0070 2024.4Q item  CSM5 master     -88930.0 latest     -88926.0 diff        4.0 ROUNDING_PM1                       high   | /KR0070_에이비엘생명보험_20260331003080/20260331003080.xml | 55118,55368,55618,55868 | csm:c01
+KR0070 2024.4Q item  CSM6 master     937460.0 latest     937462.0 diff        2.0 ROUNDING_PM1                       high   | /KR0070_에이비엘생명보험_20260331003080/20260331003080.xml | 55238,55488,55738,55988 | csm:c01
+KR0070 2025.1Q item     5 master       3059.0 latest       2592.0 diff     -467.0 VINTAGE_NOTE                       low    | 2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml | 43023 | note:n01
+KR0070 2025.1Q item  CSM1 master     937460.0 latest     937462.0 diff        2.0 ROUNDING_PM1                       high   | 2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml | 36776,37033,37290,37547 | csm:c01
+KR0070 2025.1Q item  CSM2 master      55290.0 latest      55291.0 diff        1.0 ROUNDING_PM1                       high   | 2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml | 36824,37081,37338,37595 | csm:c01
+KR0070 2025.1Q item  CSM3 master       8500.0 latest       8505.0 diff        5.0 ROUNDING_PM1                       high   | 2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml | 36888,37145,37402,37659 | csm:c01
+KR0070 2025.1Q item  CSM4 master     -74100.0 latest     -74094.0 diff        6.0 ROUNDING_PM1                       high   | 2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml | 36808,37065,37322,37579 | csm:c01
+KR0070 2025.1Q item  CSM5 master     -20090.0 latest     -20087.0 diff        3.0 ROUNDING_PM1                       high   | 2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml | 36840,37097,37354,37611 | csm:c01
+KR0070 2025.1Q item  CSM6 master     907080.0 latest     907077.0 diff       -3.0 ROUNDING_PM1                       high   | 2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml | 36963,37220,37477,37734 | csm:c01
+KR0070 2025.2Q item     5 master       6034.0 latest       4605.0 diff    -1429.0 VINTAGE_NOTE                       low    | t/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 38192 | note:n01
+KR0070 2025.2Q item  CSM1 master     937460.0 latest     937462.0 diff        2.0 ROUNDING_PM1                       high   | t/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 32902,33119,33336,33553 | csm:c01
+KR0070 2025.2Q item  CSM2 master     118220.0 latest     118225.0 diff        5.0 ROUNDING_PM1                       high   | t/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 32944,33161,33378,33595 | csm:c01
+KR0070 2025.2Q item  CSM3 master      16570.0 latest      16566.0 diff       -4.0 ROUNDING_PM1                       high   | t/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 33000,33217,33434,33651 | csm:c01
+KR0070 2025.2Q item  CSM4 master    -107920.0 latest    -107923.0 diff       -3.0 ROUNDING_PM1                       high   | t/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 32930,33147,33364,33581 | csm:c01
+KR0070 2025.2Q item  CSM5 master     -40080.0 latest     -40079.0 diff        1.0 ROUNDING_PM1                       high   | t/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 32958,33175,33392,33609 | csm:c01
+KR0070 2025.2Q item  CSM6 master     924250.0 latest     924251.0 diff        1.0 ROUNDING_PM1                       high   | t/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml | 33064,33281,33498,33715 | csm:c01
+KR0079 2024.2Q item     5 master      21971.0 latest    18163.393 diff  -3807.607 VINTAGE_NOTE                       low    | FY2025_Q2/raw/KR0079_미래에셋생명/xml/20250814003532.xml | cells of row at tr L92893 (first cell L92900), table@L92008 | note:custom_kr0079b
+KR0079 2024.3Q item     5 master      32632.0 latest    27028.878 diff  -5603.122 VINTAGE_NOTE                       low    | FY2025_Q3/raw/KR0079_미래에셋생명/xml/20251114002791.xml | cells of row at tr L50063 (first cell L50065), table@L49706 | note:custom_kr0079b
+KR0079 2024.4Q item     4 master     197691.0 latest   197690.924 diff     -0.076 ROUNDING_PM1                       high   | aw/KR0079_미래에셋생명_20260318001664/20260318001664.xml | cells of row at tr L82086 (first cell L82089), table@L81759 | note:custom_kr0079b
+KR0082 2023.1Q item    11 master       3400.0 latest       3399.0 diff       -1.0 ROUNDING_PM1                       high   | art/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml | 37255,37322 | note:custom_kr0082
+KR0082 2023.1Q item    12 master     -554.108 latest     -553.108 diff        1.0 ROUNDING_PM1                       medium | derived from the latest legs of this sweep | - | derived:12 = 8 - (9+10+11)
+KR0082 2023.3Q item    11 master       6108.0 latest       6109.0 diff        1.0 ROUNDING_PM1                       high   | art/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml | 40046,40132 | note:custom_kr0082
+KR0082 2023.3Q item    12 master    -2702.821 latest    -2703.821 diff       -1.0 ROUNDING_PM1                       medium | derived from the latest legs of this sweep | - | derived:12 = 8 - (9+10+11)
+KR0087 2024.2Q item     5 master      11829.0 latest      23356.0 diff    11527.0 OTHER_MASTER_HOLDS_3M              high   | t/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml | 155014 | note:n10
+KR0087 2024.3Q item     5 master      11840.0 latest      35196.0 diff    23356.0 OTHER_MASTER_HOLDS_3M              high   | t/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 63344 | note:n10
+KR0087 2024.3Q item     8 master     3848.738 latest       3848.0 diff     -0.738 ROUNDING_PM1                       high   | t/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml | 37665,37689 | stmt:stmt_life_is
+KR0087 2024.4Q item     8 master     5757.726 latest       5757.0 diff     -0.726 ROUNDING_PM1                       high   | /raw/KR0087_동양생명_20260313001227/20260313001227.xml | 74739,74760 | stmt:stmt_life_is
+KR0087 2025.1Q item    10 master        295.0 latest       -294.0 diff     -589.0 SIGN                               high   | /dart/FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 80821 | note:n10
+KR0087 2025.1Q item     4 master      62318.0 latest      62317.0 diff       -1.0 ROUNDING_PM1                       high   | /dart/FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 80334 | note:n10
+KR0087 2025.1Q item     5 master      11135.0 latest      11136.0 diff        1.0 ROUNDING_PM1                       high   | /dart/FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 80329 | note:n10
+KR0087 2025.1Q item     8 master    10632.222 latest      10633.0 diff      0.778 ROUNDING_PM1                       high   | /dart/FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 46176,46200 | stmt:stmt_life_is
+KR0087 2025.1Q item     9 master        461.0 latest       -460.0 diff     -921.0 SIGN                               high   | /dart/FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml | 80826 | note:n10
+KR0087 2025.2Q item     8 master     9765.017 latest       9765.0 diff     -0.017 ROUNDING_PM1                       high   | /dart/FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml | 41090,41111 | stmt:stmt_life_is
+KR0099 2023.3Q item    16 master      24189.0 latest      24190.0 diff        1.0 ROUNDING_PM1                       high   | 24_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml | 24842 | stmt:b01
+KR0099 2023.3Q item    18 master     953978.0 latest     953979.0 diff        1.0 ROUNDING_PM1                       high   | 24_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml | 24865,24911,24934,25141,25164 | stmt:b01
+KR0099 2023.3Q item    21 master       -704.0 latest        298.0 diff            UNREADABLE_LAYOUT                  none   | 24_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml | 25358 | stmt:b01
+KR0099 2023.3Q item    29 master       7330.0 latest       7331.0 diff        1.0 ROUNDING_PM1                       high   | 24_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml | 25569 | stmt:b01
+KR0099 2023.4Q item     1 master     236601.0 latest     249794.0 diff    13193.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 34636 | stmt:b01
+KR0099 2023.4Q item    16 master      32040.0 latest      32041.0 diff        1.0 ROUNDING_PM1                       high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 34769 | stmt:b01
+KR0099 2023.4Q item    17 master     119185.0 latest      76008.0 diff   -43177.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 34788 | stmt:b01
+KR0099 2023.4Q item    19 master   -1227267.0 latest   -1270444.0 diff   -43177.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 34826,34845,35036,35055 | stmt:b01
+KR0099 2023.4Q item     2 master     268641.0 latest     281835.0 diff    13194.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 34674,34731,34693,34750 | stmt:b01
+KR0099 2023.4Q item    20 master     355786.0 latest     325802.0 diff   -29984.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35224 | stmt:b01
+KR0099 2023.4Q item    21 master      -5768.0 latest      -5767.0 diff        1.0 ROUNDING_PM1                       high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35243 | stmt:b01
+KR0099 2023.4Q item    22 master     350018.0 latest     320035.0 diff   -29983.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35300 | stmt:b01
+KR0099 2023.4Q item    23 master      91507.0 latest      83632.0 diff    -7875.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35319 | stmt:b01
+KR0099 2023.4Q item    24 master     258511.0 latest     236403.0 diff   -22108.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35338 | stmt:b01
+KR0099 2023.4Q item    25 master      56787.0 latest     126232.0 diff    69445.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35357 | stmt:b01
+KR0099 2023.4Q item    27 master   -1059866.0 latest    -990226.0 diff    69640.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35491 | stmt:b01
+KR0099 2023.4Q item     3 master     271908.0 latest     285102.0 diff    13194.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 34674,34731 | stmt:b01
+KR0099 2023.4Q item    30 master      -2169.0 latest      -2364.0 diff     -195.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35510 | stmt:b01
+KR0099 2023.4Q item    31 master     315298.0 latest     362635.0 diff    47337.0 VINTAGE_STATEMENT                  high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 35548 | stmt:b01
+KR0099 2023.4Q item     4 master     283905.0 latest     300213.0 diff    16308.0 VINTAGE_NOTE                       high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 55708 | note:n10
+KR0099 2023.4Q item     7 master     -28564.0 latest     -31678.0 diff    -3114.0 VINTAGE_DERIVED                    medium | derived from the latest legs of this sweep | - | derived:7 = 3 - (4+5+6)
+KR0099 2023.4Q item  CSM1 master    3132760.0 latest    3359570.0 diff   226810.0 VINTAGE_CSM                        high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | cell L50565 '3,359,570' (tr L50561) | csm:c01
+KR0099 2023.4Q item  CSM2 master     634670.0 latest     634668.0 diff       -2.0 ROUNDING_PM1                       high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | 50593 | csm:c01
+KR0099 2023.4Q item  CSM3 master     119760.0 latest     107180.0 diff   -12580.0 VINTAGE_CSM                        high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | cell L50661 '107,180' (tr L50657) | csm:c01
+KR0099 2023.4Q item  CSM4 master    -585640.0 latest    -621380.0 diff   -35740.0 VINTAGE_CSM                        high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | cell L50581 '(621,380)' (tr L50577) | csm:c01
+KR0099 2023.4Q item  CSM5 master    -283910.0 latest    -300213.0 diff   -16303.0 VINTAGE_CSM                        high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | cell L50613 '(300,213)' (tr L50609) | csm:c01
+KR0099 2023.4Q item  CSM6 master    3017640.0 latest    3179825.0 diff   162185.0 VINTAGE_CSM                        high   | 9_케이비라이프생명보험_20250314000905/xml/20250314000905.xml | cell L50765 '3,179,825' (tr L50761) | csm:c01
+KR0099 2024.1Q item     1 master      80418.0 latest      82810.0 diff     2392.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 26679 | stmt:b01
+KR0099 2024.1Q item    17 master      63343.0 latest      48560.0 diff   -14783.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 26815 | stmt:b01
+KR0099 2024.1Q item    19 master    -293212.0 latest    -307995.0 diff   -14783.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 26849,26866,27019,27036 | stmt:b01
+KR0099 2024.1Q item     2 master      84497.0 latest      86889.0 diff     2392.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 26713,26764,26730,26781 | stmt:b01
+KR0099 2024.1Q item    20 master     143761.0 latest     131370.0 diff   -12391.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27169 | stmt:b01
+KR0099 2024.1Q item    22 master     144153.0 latest     131762.0 diff   -12391.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27237 | stmt:b01
+KR0099 2024.1Q item    23 master      38796.0 latest      35525.0 diff    -3271.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27254 | stmt:b01
+KR0099 2024.1Q item    24 master     105357.0 latest      96237.0 diff    -9120.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27271 | stmt:b01
+KR0099 2024.1Q item    25 master    -466143.0 latest    -447994.0 diff    18149.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27288 | stmt:b01
+KR0099 2024.1Q item    27 master     -77068.0 latest     -58904.0 diff    18164.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27390 | stmt:b01
+KR0099 2024.1Q item     3 master      86465.0 latest      88857.0 diff     2392.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 26713,26764 | stmt:b01
+KR0099 2024.1Q item    31 master    -360786.0 latest    -351757.0 diff     9029.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27441 | stmt:b01
+KR0099 2024.1Q item    32 master       -274.0 latest        134.0 diff      408.0 VINTAGE_STATEMENT                  high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 27288,27373,27390,27424,27339,27407 | stmt:b01
+KR0099 2024.1Q item     4 master      71431.0 latest      74241.0 diff     2810.0 VINTAGE_NOTE                       high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 42929 | note:n10
+KR0099 2024.1Q item     6 master      17790.0 latest      17789.0 diff       -1.0 ROUNDING_PM1                       high   | FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml | 42909,43007 | note:n10
+KR0099 2024.1Q item     7 master     -11375.0 latest     -11792.0 diff     -417.0 VINTAGE_DERIVED                    medium | derived from the latest legs of this sweep | - | derived:7 = 3 - (4+5+6)
+KR0099 2024.2Q item     1 master     159757.0 latest     163793.0 diff     4036.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 29818 | stmt:b01
+KR0099 2024.2Q item    17 master     126713.0 latest      98885.0 diff   -27828.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30002 | stmt:b01
+KR0099 2024.2Q item    19 master    -680137.0 latest    -707965.0 diff   -27828.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30048,30071,30278,30301 | stmt:b01
+KR0099 2024.2Q item     2 master     167973.0 latest     172009.0 diff     4036.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 29864,29933,29887,29956 | stmt:b01
+KR0099 2024.2Q item    20 master     286470.0 latest     262678.0 diff   -23792.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30476 | stmt:b01
+KR0099 2024.2Q item    21 master       -362.0 latest       -363.0 diff       -1.0 ROUNDING_PM1                       high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30499 | stmt:b01
+KR0099 2024.2Q item    22 master     286108.0 latest     262315.0 diff   -23793.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30568 | stmt:b01
+KR0099 2024.2Q item    23 master      74113.0 latest      67832.0 diff    -6281.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30591 | stmt:b01
+KR0099 2024.2Q item    24 master     211995.0 latest     194483.0 diff   -17512.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30614 | stmt:b01
+KR0099 2024.2Q item    25 master    -862281.0 latest    -796611.0 diff    65670.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30637 | stmt:b01
+KR0099 2024.2Q item    27 master    -699580.0 latest    -633830.0 diff    65750.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30775 | stmt:b01
+KR0099 2024.2Q item     3 master     169227.0 latest     173263.0 diff     4036.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 29864,29933 | stmt:b01
+KR0099 2024.2Q item    31 master    -650286.0 latest    -602128.0 diff    48158.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30844 | stmt:b01
+KR0099 2024.2Q item    32 master      -1357.0 latest        175.0 diff     1532.0 VINTAGE_STATEMENT                  high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 30637,30752,30775,30821,30706,30798 | stmt:b01
+KR0099 2024.2Q item     4 master     143582.0 latest     148231.0 diff     4649.0 VINTAGE_NOTE                       high   | FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml | 47124 | note:n10
+KR0099 2024.2Q item     7 master     -24765.0 latest     -25378.0 diff     -613.0 VINTAGE_DERIVED                    medium | derived from the latest legs of this sweep | - | derived:7 = 3 - (4+5+6)
+KR0099 2024.3Q item  CSM1 master    3017640.0 latest    3179826.0 diff   162186.0 VINTAGE_CSM(extra, not in denomina high   | FY2025_Q3/raw/KR0099_케이비라이프생명보험/20251114001600.xml | cell L36900 '3,179,826' | csm:c03_extra
+KR0099 2024.3Q item  CSM3 master      89870.0 latest      80910.0 diff    -8960.0 VINTAGE_CSM(extra, not in denomina high   | FY2025_Q3/raw/KR0099_케이비라이프생명보험/20251114001600.xml | cell L36996 '80,910' | csm:c03_extra
+KR0099 2024.3Q item  CSM4 master     -99080.0 latest    -266956.0 diff  -167876.0 VINTAGE_CSM(extra, not in denomina high   | FY2025_Q3/raw/KR0099_케이비라이프생명보험/20251114001600.xml | cell L36916 '(266,956)' | csm:c03_extra
+KR0099 2024.3Q item  CSM5 master    -216150.0 latest    -220490.0 diff    -4340.0 VINTAGE_CSM(extra, not in denomina high   | FY2025_Q3/raw/KR0099_케이비라이프생명보험/20251114001600.xml | cell L36948 '(220,490)' | csm:c03_extra
+KR0099 2024.3Q item  CSM6 master    3165270.0 latest    3146268.0 diff   -19002.0 VINTAGE_CSM(extra, not in denomina high   | FY2025_Q3/raw/KR0099_케이비라이프생명보험/20251114001600.xml | cell L37100 '3,146,268' | csm:c03_extra

@@ -1,0 +1,64 @@
+{
+ "cells": [
+  {
+   "company": "KR0079",
+   "quarter": "2024.2Q",
+   "item": "4",
+   "master": 100696.379902,
+   "latest": 100696.379902,
+   "filing": "data/dart/FY2025_Q2/raw/KR0079_미래에셋생명/xml/20250814003532.xml",
+   "line": "cells of row at tr L92782 (first cell L92793), table@L92008",
+   "source": "custom_kr0079b",
+   "confidence": "high",
+   "note": "sum of all 25 columns of the row; current table@L89911 reproduces master 2025.2Q = 99207.397518"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.2Q",
+   "item": "5",
+   "master": 21971.0,
+   "latest": 18163.393318,
+   "filing": "data/dart/FY2025_Q2/raw/KR0079_미래에셋생명/xml/20250814003532.xml",
+   "line": "cells of row at tr L92893 (first cell L92900), table@L92008",
+   "source": "custom_kr0079b",
+   "confidence": "low",
+   "note": "sum of all 25 columns of the row; current table@L89911 reproduces master 2025.2Q = 18416.51587; LOW: the same one-row RA definition fails calibration for 2025.4Q (reader 37,616 vs master 43,953), so a second RA row may exist"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.3Q",
+   "item": "4",
+   "master": 148712.819524,
+   "latest": 148712.819524,
+   "filing": "data/dart/FY2025_Q3/raw/KR0079_미래에셋생명/xml/20251114002791.xml",
+   "line": "cells of row at tr L50033 (first cell L50036), table@L49706",
+   "source": "custom_kr0079b",
+   "confidence": "high",
+   "note": "sum of all 25 columns of the row; current table@L48938 reproduces master 2025.3Q = 153120.516457"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.3Q",
+   "item": "5",
+   "master": 32632.0,
+   "latest": 27028.877764,
+   "filing": "data/dart/FY2025_Q3/raw/KR0079_미래에셋생명/xml/20251114002791.xml",
+   "line": "cells of row at tr L50063 (first cell L50065), table@L49706",
+   "source": "custom_kr0079b",
+   "confidence": "low",
+   "note": "sum of all 25 columns of the row; current table@L48938 reproduces master 2025.3Q = 27703.562474; LOW: the same one-row RA definition fails calibration for 2025.4Q (reader 37,616 vs master 43,953), so a second RA row may exist"
+  },
+  {
+   "company": "KR0079",
+   "quarter": "2024.4Q",
+   "item": "4",
+   "master": 197691.0,
+   "latest": 197690.923954,
+   "filing": "data/dart/FY2025_Q4/raw/KR0079_미래에셋생명_20260318001664/20260318001664.xml",
+   "line": "cells of row at tr L82086 (first cell L82089), table@L81759",
+   "source": "custom_kr0079b",
+   "confidence": "high",
+   "note": "sum of all 25 columns of the row; current table@L80991 reproduces master 2025.4Q = 205831.0"
+  }
+ ]
+}

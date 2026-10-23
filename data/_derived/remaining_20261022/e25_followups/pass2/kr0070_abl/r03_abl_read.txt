@@ -1,0 +1,82 @@
+##### 2023.1Q <- FY2024_Q1 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml (rev@L41440 cost@L41598, 2 numeric cols, prior cum = col 1)
+  items (note, prior cum): 4=22411@L41498 5=3593@L41492 6=-7470 9=-2313@L41710 10=-146@L41704 11=874
+  master:               4=22411.0 5=3593.0 6=-7470.0 9=-2313.0 10=-146.0 11=None | 3=17205.63653 7=-1328.36347 8=-2503.871039 12=None
+  subtotals (sum rows vs printed): 보험수익: 152742 vs 152742 (9) OK; 재보험수익: 10952 vs 10952 (6) OK; 보험서비스비용: 135537 vs 135537 (9) OK; 재보험비용: 13456 vs 13456 (6) OK
+  3: master 17205.637 vs note (보험수익 소계-보험서비스비용 소계) 17205; 8: master -2503.871 vs note -2504
+  derived 7 = -1328.363  vs other-rows sum -1329 (diff +0.637) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = -918.871 vs other-rows sum -919 (diff +0.129) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  roll-forward (prior table): ins_csm_release=-22411@L37419; ins_ra_release=-3594@L37426; rein_csm_release=-2313@L38770; rein_ra_release=-146@L38777
+##### 2023.2Q <- FY2024_Q2 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml (rev@L43099 cost@L43306, 4 numeric cols, prior cum = col 3)
+  items (note, prior cum): 4=46789@L43180 5=7449@L43172 6=-13186 9=-4652@L43459 10=-345@L43451 11=1793
+  master:               4=46789.0 5=7449.0 6=-13186.0 9=-4652.0 10=-345.0 11=None | 3=45409.757784 7=4357.757784 8=-4633.311099 12=None
+  subtotals (sum rows vs printed): 보험수익: 316615 vs 316615 (9) OK; 재보험수익: 22477 vs 22477 (6) OK; 보험서비스비용: 271205 vs 271205 (9) OK; 재보험비용: 27110 vs 27110 (6) OK
+  3: master 45409.758 vs note (보험수익 소계-보험서비스비용 소계) 45410; 8: master -4633.311 vs note -4633
+  derived 7 = 4357.758  vs other-rows sum 4358 (diff -0.242) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = -1429.311 vs other-rows sum -1429 (diff -0.311) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  roll-forward (prior table): ins_csm_release=-46789@L39072; ins_ra_release=-7449@L39079; rein_csm_release=-4652@L40423; rein_ra_release=-345@L40430
+  printed prior 3M: 5=3856@L43171 9=2339 10=199 4=24378
+##### 2023.3Q <- FY2024_Q3 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml (rev@L42167 cost@L42374, 4 numeric cols, prior cum = col 3)
+  items (note, prior cum): 4=69639@L42248 5=11921@L42240 6=-18428 9=-7155@L42527 10=-533@L42519 11=3129
+  master:               4=69639.0 5=11921.0 6=-18428.0 9=-7155.0 10=-533.0 11=None | 3=65938.991086 7=2806.991086 8=-6681.70871 12=None
+  subtotals (sum rows vs printed): 보험수익: 487019 vs 487019 (9) OK; 재보험수익: 34764 vs 34764 (6) OK; 보험서비스비용: 421080 vs 421080 (9) OK; 재보험비용: 41446 vs 41446 (6) OK
+  3: master 65938.991 vs note (보험수익 소계-보험서비스비용 소계) 65939; 8: master -6681.709 vs note -6682
+  derived 7 = 2806.991  vs other-rows sum 2807 (diff -0.009) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = -2122.709 vs other-rows sum -2123 (diff +0.291) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  roll-forward (prior table): ins_csm_release=-69639@L38197; ins_ra_release=-11921@L38204; rein_csm_release=-7155@L39517; rein_ra_release=-533@L39524
+  printed prior 3M: 5=4472@L42239 9=2503 10=188 4=22850
+##### 2023.4Q <- FY2024_Q4 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml (rev@L58224 cost@L58376, 2 numeric cols, prior cum = col 1)
+  items (note, prior cum): 4=92971@L58282 5=16883@L58276 6=-19665 9=-9589@L58482 10=-733@L58476 11=2993
+  master:               4=92971.0 5=16883.0 6=-19665.0 9=-9589.0 10=-733.0 11=None | 3=73067.212912 7=-17121.787088 8=-8192.746853 12=None
+  subtotals (sum rows vs printed): 보험수익: 651627 vs 651627 (9) OK; 재보험수익: 46587 vs 46587 (5) OK; 보험서비스비용: 578560 vs 578560 (9) OK; 재보험비용: 54779 vs 54779 (5) OK
+  3: master 73067.213 vs note (보험수익 소계-보험서비스비용 소계) 73067; 8: master -8192.747 vs note -8192
+  derived 7 = -17121.787  vs other-rows sum -17122 (diff +0.213) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = -863.747 vs other-rows sum -863 (diff -0.747) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  roll-forward (prior table): ins_csm_release=-92971@L50615; ins_ra_release=-16883@L50622; rein_csm_release=-9589@L54697; rein_ra_release=-733@L54704
+##### 2024.1Q <- FY2025_Q1 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml (rev@L42876 cost@L43034, 2 numeric cols, prior cum = col 1)
+  items (note, prior cum): 4=22447@L42934 5=3275@L42928 6=1341 9=-2249@L43146 10=-196@L43140 11=719
+  master:               4=22447.0 5=196.0 6=1341.0 9=None 10=None 11=719.0 | 3=19541.242188 7=-4442.757812 8=-184.023618 12=None
+  subtotals (sum rows vs printed): 보험수익: 180799 vs 180799 (9) OK; 재보험수익: 13443 vs 13443 (6) OK; 보험서비스비용: 161258 vs 161258 (9) OK; 재보험비용: 13627 vs 13627 (6) OK
+  3: master 19541.242 vs note (보험수익 소계-보험서비스비용 소계) 19541; 8: master -184.024 vs note -184
+  derived 7 = -7521.758  vs other-rows sum -7522 (diff +0.242) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = 1541.976 vs other-rows sum 1542 (diff -0.024) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  roll-forward (prior table): ins_csm_release=-22447@L37654; ins_ra_release=-3275@L37661; rein_csm_release=-2249@L39463; rein_ra_release=-196@L39470
+##### 2024.2Q <- FY2025_Q2 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml (rev@L46659 cost@L46865, 4 numeric cols, prior cum = col 3)
+  items (note, prior cum): 4=44994@L46740 5=6556@L46732 6=1273 9=-4436@L47018 10=-373@L47010 11=338
+  master:               4=44994.0 5=369.0 6=1273.0 9=None 10=None 11=338.0 | 3=43033.860123 7=-3602.139877 8=-3361.94298 12=None
+  subtotals (sum rows vs printed): 보험수익: 347852 vs 347852 (9) OK; 재보험수익: 23839 vs 23839 (6) OK; 보험서비스비용: 304818 vs 304818 (9) OK; 재보험비용: 27201 vs 27201 (6) OK
+  3: master 43033.860 vs note (보험수익 소계-보험서비스비용 소계) 43034; 8: master -3361.943 vs note -3362
+  derived 7 = -9789.140  vs other-rows sum -9789 (diff -0.140) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = 1109.057 vs other-rows sum 1109 (diff +0.057) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  roll-forward (prior table): ins_csm_release=-44994@L41432; ins_ra_release=-6556@L41439; rein_csm_release=-4437@L43260; rein_ra_release=-372@L43267
+  printed prior 3M: 5=3281@L46731 9=2187 10=177 4=22547
+##### 2024.3Q <- FY2025_Q3 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml (rev@L37102 cost@L37308, 4 numeric cols, prior cum = col 3)
+  items (note, prior cum): 4=66762@L37183 5=9661@L37175 6=3703 9=-6746@L37461 10=-583@L37453 11=-829
+  master:               4=66762.0 5=578.0 6=3703.0 9=None 10=None 11=-829.0 | 3=49349.989864 7=-21693.010136 8=-5150.077854 12=None
+  subtotals (sum rows vs printed): 보험수익: 535589 vs 535589 (9) OK; 재보험수익: 35037 vs 35037 (6) OK; 보험서비스비용: 486239 vs 486239 (9) OK; 재보험비용: 40187 vs 40187 (6) OK
+  3: master 49349.990 vs note (보험수익 소계-보험서비스비용 소계) 49350; 8: master -5150.078 vs note -5150
+  derived 7 = -30776.010  vs other-rows sum -30776 (diff -0.010) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = 3007.922 vs other-rows sum 3008 (diff -0.078) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  roll-forward (prior table): ins_csm_release=-66762@L31874; ins_ra_release=-9661@L31881; rein_csm_release=-6746@L33702; rein_ra_release=-583@L33709
+  printed prior 3M: 5=3105@L37174 9=2309 10=210 4=21768
+##### 2024.4Q <- FY2025_Q4 data/dart/FY2025_Q4/raw/KR0070_에이비엘생명보험_20260331003080/20260331003080.xml (rev@L65621 cost@L65773, 2 numeric cols, prior cum = col 1)
+  items (note, prior cum): 4=88926@L65679 5=13655@L65673 6=586 9=-9215@L65879 10=-793@L65873 11=-1328
+  master:               4=88926.0 5=12282.0 6=586.0 9=-9215.0 10=-785.0 11=-1328.0 | 3=44502.085246 7=-57291.914754 8=-5660.625552 12=5667.374448
+  subtotals (sum rows vs printed): 보험수익: 704782 vs 704782 (9) OK; 재보험수익: 47656 vs 47656 (5) OK; 보험서비스비용: 660279 vs 660279 (9) OK; 재보험비용: 53317 vs 53317 (5) OK
+  3: master 44502.085 vs note (보험수익 소계-보험서비스비용 소계) 44503; 8: master -5660.626 vs note -5661
+  derived 7 = -58664.915  vs other-rows sum -58664 (diff -0.915) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = 5675.374 vs other-rows sum 5675 (diff +0.374) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+##### 2025.1Q <- FY2026_Q1 data/dart/FY2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml (rev@L42971 cost@L43129, 2 numeric cols, prior cum = col 1)
+  items (note, prior cum): 4=20087@L43029 5=2592@L43023 6=-3591 9=-3283@L43241 10=-206@L43235 11=170
+  master:               4=20087.0 5=3059.0 6=-3591.0 9=-3283.0 10=-203.0 11=170.0 | 3=17198.631771 7=-2356.3682289999997 8=-3938.482328 12=-622.482328
+  subtotals (sum rows vs printed): 보험수익: 178314 vs 178314 (9) OK; 재보험수익: 11010 vs 11010 (6) OK; 보험서비스비용: 161115 vs 161115 (9) OK; 재보험비용: 14949 vs 14949 (6) OK
+  3: master 17198.632 vs note (보험수익 소계-보험서비스비용 소계) 17199; 8: master -3938.482 vs note -3939
+  derived 7 = -1889.368  vs other-rows sum -1889 (diff -0.368) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = -619.482 vs other-rows sum -620 (diff +0.518) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+##### 2025.2Q <- FY2026_Q2 data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml (rev@L38130 cost@L38306, 4 numeric cols, prior cum = col 3)
+  items (note, prior cum): 4=40080@L38199 5=4605@L38192 6=-9198 9=-6541@L38438 10=-1227@L38431 11=1003
+  master:               4=40080.0 5=6034.0 6=-9198.0 9=-6541.0 10=-1223.0 11=1003.0 | 3=30430.53048 7=-6485.469520000001 8=-6833.997003 12=-72.997003
+  subtotals (sum rows vs printed): 보험수익: 351838 vs 351838 (9) OK; 재보험수익: 23817 vs 23817 (6) OK; 보험서비스비용: 321408 vs 321408 (9) OK; 재보험비용: 30651 vs 30651 (6) OK
+  3: master 30430.530 vs note (보험수익 소계-보험서비스비용 소계) 30430; 8: master -6833.997 vs note -6834
+  derived 7 = -5056.470  vs other-rows sum -5057 (diff +0.530) | rows rev ['보험취득현금흐름상각', '손실요소배분액', '기타보험수익'] cost ['손실부담계약관련비용', '발생사고요소조정', '보험취득현금흐름상각', '손실요소배분액', '기타보험서비스비용']
+  derived 12 = -68.997 vs other-rows sum -69 (diff +0.003) | rows re_rev ['손실회수요소관련수익', '발생사고요소조정', '손실회수요소배분액', '기타재보험수익'] re_cost ['손실회수요소배분액', '기타재보험비용']
+  printed prior 3M: 5=2013@L38191 9=3258 10=1021 4=19993

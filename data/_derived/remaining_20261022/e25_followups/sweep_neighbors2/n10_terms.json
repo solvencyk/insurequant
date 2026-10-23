@@ -1,0 +1,4837 @@
+{
+ "KR0003|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0003_롯데손해보험/20241114002408.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 131623.0
+   }
+  },
+  "err": null,
+  "blocks": 16
+ },
+ "KR0003|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 185905.0,
+    "cites": [
+     {
+      "line": 25387,
+      "printed": "185,905",
+      "tr": 25385,
+      "label": "보험계약마진상각",
+      "table": 25326,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L25086 -> table@L25326 col 0",
+    "cur_val": 225448.0,
+    "master": 185905.0,
+    "master_cur": 225448.0,
+    "ncand": 2,
+    "raw_prior": [
+     185905.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 19517.0,
+    "cites": [
+     {
+      "line": 25379,
+      "printed": "19,517",
+      "tr": 25377,
+      "label": "위험조정변동",
+      "table": 25326,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L25086 -> table@L25326 col 0",
+    "cur_val": 27297.0,
+    "master": 19517.0,
+    "master_cur": 27297.0,
+    "ncand": 2,
+    "raw_prior": [
+     19517.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 51324.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -1973.0,
+    "cites": [
+     {
+      "line": 25539,
+      "printed": "1,973",
+      "tr": 25537,
+      "label": "보험계약마진상각",
+      "table": 25326,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L25086 -> table@L25326 col 0",
+    "cur_val": -2989.0,
+    "master": -1973.0,
+    "master_cur": -2989.0,
+    "ncand": 2,
+    "raw_prior": [
+     1973.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -737.0,
+    "cites": [
+     {
+      "line": 25531,
+      "printed": "(737)",
+      "tr": 25529,
+      "label": "위험조정변동",
+      "table": 25326,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L25086 -> table@L25326 col 0",
+    "cur_val": -1060.0,
+    "master": -737.0,
+    "master_cur": -1060.0,
+    "ncand": 2,
+    "raw_prior": [
+     -737.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": -2914.0,
+    "cites": [
+     {
+      "line": 25475,
+      "printed": "37,165",
+      "tr": 25473,
+      "label": "발생보험금및기타재보험수익",
+      "table": 25326,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     },
+     {
+      "line": 25523,
+      "printed": "40,079",
+      "tr": 25521,
+      "label": "회수예상보험금및기타보험서비스비용",
+      "table": 25326,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L25086 -> table@L25326 col 0 ; TWIN table@L25086 -> table@L25326 col 0",
+    "cur_val": 1073.0,
+    "master": -2914.0,
+    "master_cur": 1073.0,
+    "ncand": 1,
+    "raw_prior": [
+     37165.0,
+     40079.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 16
+ },
+ "KR0003|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 225448.0,
+    "cites": [
+     {
+      "line": 40960,
+      "printed": "225,448",
+      "tr": 40958,
+      "label": "보험계약마진상각",
+      "table": 40878,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L40742 -> table@L40878 col 0",
+    "cur_val": 213943.0,
+    "master": 225448.0,
+    "master_cur": 213943.0,
+    "ncand": 2,
+    "raw_prior": [
+     225448.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 27297.0,
+    "cites": [
+     {
+      "line": 40952,
+      "printed": "27,297",
+      "tr": 40950,
+      "label": "위험조정변동",
+      "table": 40878,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L40742 -> table@L40878 col 0",
+    "cur_val": 31666.0,
+    "master": 27297.0,
+    "master_cur": 31666.0,
+    "ncand": 2,
+    "raw_prior": [
+     27297.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 2865.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -2989.0,
+    "cites": [
+     {
+      "line": 42116,
+      "printed": "2,989",
+      "tr": 42114,
+      "label": "보험계약마진상각",
+      "table": 42034,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L41906 -> table@L42034 col 0",
+    "cur_val": -2265.0,
+    "master": -2989.0,
+    "master_cur": -2265.0,
+    "ncand": 2,
+    "raw_prior": [
+     2989.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -1060.0,
+    "cites": [
+     {
+      "line": 42108,
+      "printed": "1,060",
+      "tr": 42106,
+      "label": "위험조정변동",
+      "table": 42034,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L41906 -> table@L42034 col 0",
+    "cur_val": -2035.0,
+    "master": -1060.0,
+    "master_cur": -2035.0,
+    "ncand": 2,
+    "raw_prior": [
+     1060.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": 1073.0,
+    "cites": [
+     {
+      "line": 41840,
+      "printed": "48,827",
+      "tr": 41837,
+      "label": "재보험수익발생보험금및기타재보험수익",
+      "table": 41786,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     },
+     {
+      "line": 42100,
+      "printed": "47,754",
+      "tr": 42097,
+      "label": "재보험비용회수예상보험금및기타보험서비스비용",
+      "table": 42034,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L41670 -> table@L41786 col 0 ; TWIN table@L41906 -> table@L42034 col 0",
+    "cur_val": 502.0,
+    "master": 1073.0,
+    "master_cur": 502.0,
+    "ncand": 1,
+    "raw_prior": [
+     48827.0,
+     47754.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 24
+ },
+ "KR0005|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 155579.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 21143.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 110026.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 7666.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 757.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -47.0
+   }
+  },
+  "err": null,
+  "blocks": 14
+ },
+ "KR0005|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 210807.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 30661.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 127166.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 11459.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 683.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 2804.0
+   }
+  },
+  "err": null,
+  "blocks": 14
+ },
+ "KR0005|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 57613.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 7564.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 37194.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3900.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -367.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -6406.0
+   }
+  },
+  "err": null,
+  "blocks": 14
+ },
+ "KR0005|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 114554.0,
+    "cites": [
+     {
+      "line": 53993,
+      "printed": "114,554",
+      "tr": 53982,
+      "label": "보험수익,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 53141,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L52049 -> table@L53141 col 1",
+    "cur_val": 115093.0,
+    "master": 114554.0,
+    "master_cur": 115093.0,
+    "ncand": 2,
+    "raw_prior": [
+     114554.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 15370.0,
+    "cites": [
+     {
+      "line": 53922,
+      "printed": "15,370",
+      "tr": 53911,
+      "label": "보험수익,비금융위험에대한위험조정의변동분",
+      "table": 53141,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L52049 -> table@L53141 col 1",
+    "cur_val": 19825.0,
+    "master": 15370.0,
+    "master_cur": 19825.0,
+    "ncand": 2,
+    "raw_prior": [
+     15370.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 62785.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -7798.0,
+    "cites": [
+     {
+      "line": 59532,
+      "printed": "(7,798)",
+      "tr": 59521,
+      "label": "재보험비용,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 58923,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L58074 -> table@L58923 col 1",
+    "cur_val": -11592.0,
+    "master": 7798.0,
+    "master_cur": 11592.0,
+    "ncand": 2,
+    "raw_prior": [
+     -7798.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -751.0,
+    "cites": [
+     {
+      "line": 59461,
+      "printed": "751",
+      "tr": 59450,
+      "label": "재보험비용,비금융위험에대한위험조정의변동분",
+      "table": 58923,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L58074 -> table@L58923 col 1",
+    "cur_val": -1001.0,
+    "master": -751.0,
+    "master_cur": -1001.0,
+    "ncand": 2,
+    "raw_prior": [
+     751.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -6865.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0005|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0005_흥국화재/xml/20251114002501.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 170314.0,
+    "cites": [
+     {
+      "line": 28103,
+      "printed": "170,314",
+      "tr": 28100,
+      "label": "보험수익,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 27778,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L27364 -> table@L27778 col 1",
+    "cur_val": 175546.0,
+    "master": 170314.0,
+    "master_cur": 175546.0,
+    "ncand": 2,
+    "raw_prior": [
+     170314.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 23625.0,
+    "cites": [
+     {
+      "line": 28083,
+      "printed": "23,625",
+      "tr": 28080,
+      "label": "보험수익,비금융위험에대한위험조정의변동분",
+      "table": 27778,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L27364 -> table@L27778 col 1",
+    "cur_val": 31549.0,
+    "master": 23625.0,
+    "master_cur": 31549.0,
+    "ncand": 2,
+    "raw_prior": [
+     23625.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 82856.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -11570.0,
+    "cites": [
+     {
+      "line": 30337,
+      "printed": "(11,570)",
+      "tr": 30334,
+      "label": "재보험비용,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 30081,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L29736 -> table@L30081 col 1",
+    "cur_val": -8421.0,
+    "master": 11571.0,
+    "master_cur": 8421.0,
+    "ncand": 2,
+    "raw_prior": [
+     -11570.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -1146.0,
+    "cites": [
+     {
+      "line": 30317,
+      "printed": "1,146",
+      "tr": 30314,
+      "label": "재보험비용,비금융위험에대한위험조정의변동분",
+      "table": 30081,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 16
+     }
+    ],
+    "how": "TWIN table@L29736 -> table@L30081 col 1",
+    "cur_val": -1667.0,
+    "master": -1146.0,
+    "master_cur": -1667.0,
+    "ncand": 2,
+    "raw_prior": [
+     1146.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -7371.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0009|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -190242.60050099998
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -15460.571360999998
+   }
+  },
+  "err": null,
+  "blocks": 14
+ },
+ "KR0032|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 1017.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1357.0
+   }
+  },
+  "err": null,
+  "blocks": 19
+ },
+ "KR0032|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -16644.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -4746.0
+   }
+  },
+  "err": null,
+  "blocks": 19
+ },
+ "KR0032|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3820.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -2824.0
+   }
+  },
+  "err": null,
+  "blocks": 19
+ },
+ "KR0032|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 9014.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -8075.0
+   }
+  },
+  "err": null,
+  "blocks": 19
+ },
+ "KR0032|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 17399.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -15013.0
+   }
+  },
+  "err": null,
+  "blocks": 19
+ },
+ "KR0032|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0032_NH농협손해보험_20260331004099/20260331004099.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 14135.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -18388.0
+   }
+  },
+  "err": null,
+  "blocks": 19
+ },
+ "KR0068|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 225103.0,
+    "cites": [
+     {
+      "line": 79268,
+      "printed": "225,103",
+      "tr": 79261,
+      "label": "3)서비스제공에따른보험계약마진의변동",
+      "table": 79194,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L78753 -> table@L79194 col 5",
+    "cur_val": 220304.0,
+    "master": 225103.0,
+    "master_cur": 220304.0,
+    "ncand": 1,
+    "raw_prior": [
+     225103.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": -27534.0,
+    "cites": [
+     {
+      "line": 79248,
+      "printed": "706,113",
+      "tr": 79241,
+      "label": "1)예상보험금및예상보험서비스비용",
+      "table": 79194,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     },
+     {
+      "line": 79358,
+      "printed": "733,647",
+      "tr": 79351,
+      "label": "1)실제보험금및실제보험서비스비용",
+      "table": 79194,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L78753 -> table@L79194 col 5 ; TWIN table@L78753 -> table@L79194 col 5",
+    "cur_val": -17431.0,
+    "master": -60739.0,
+    "master_cur": -17431.0,
+    "ncand": 1,
+    "raw_prior": [
+     706113.0,
+     733647.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -3901.0,
+    "cites": [
+     {
+      "line": 79568,
+      "printed": "3,901",
+      "tr": 79561,
+      "label": "3)제공받은서비스의재보험계약마진",
+      "table": 79194,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L78753 -> table@L79194 col 5",
+    "cur_val": -5274.0,
+    "master": -2497.0,
+    "master_cur": -5274.0,
+    "ncand": 1,
+    "raw_prior": [
+     3901.0
+    ]
+   },
+   "10": {
+    "status": "NOPRIOR",
+    "why": "calibrated (table@L78753 col 5) but no prior half/twin",
+    "master": -165.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 13795.0,
+    "cites": [
+     {
+      "line": 79458,
+      "printed": "58,900",
+      "tr": 79451,
+      "label": "1)발생재보험금및재보험서비스비용회수액",
+      "table": 79194,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     },
+     {
+      "line": 79548,
+      "printed": "45,105",
+      "tr": 79541,
+      "label": "1)회수예상보험금및보험서비스비용",
+      "table": 79194,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L78753 -> table@L79194 col 5 ; TWIN table@L78753 -> table@L79194 col 5",
+    "cur_val": 16009.0,
+    "master": 14347.0,
+    "master_cur": 16009.0,
+    "ncand": 1,
+    "raw_prior": [
+     58900.0,
+     45105.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0068|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 451415.0,
+    "cites": [
+     {
+      "line": 80447,
+      "printed": "451,415",
+      "tr": 80431,
+      "label": "3)서비스제공에따른보험계약마진의변동",
+      "table": 80309,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L79502 -> table@L80309 col 11",
+    "cur_val": 435755.0,
+    "master": 451415.0,
+    "master_cur": 435755.0,
+    "ncand": 1,
+    "raw_prior": [
+     451415.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": -17321.0,
+    "cites": [
+     {
+      "line": 80409,
+      "printed": "1,437,946",
+      "tr": 80393,
+      "label": "1)예상보험금및예상보험서비스비용",
+      "table": 80309,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 80613,
+      "printed": "1,455,267",
+      "tr": 80597,
+      "label": "1)실제보험금및실제보험서비스비용",
+      "table": 80309,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L79502 -> table@L80309 col 11 ; TWIN table@L79502 -> table@L80309 col 11",
+    "cur_val": 6040.0,
+    "master": -28753.0,
+    "master_cur": 6040.0,
+    "ncand": 1,
+    "raw_prior": [
+     1437946.0,
+     1455267.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -8654.0,
+    "cites": [
+     {
+      "line": 81001,
+      "printed": "8,654",
+      "tr": 80985,
+      "label": "3)제공받은서비스의재보험계약마진",
+      "table": 80309,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L79502 -> table@L80309 col 11",
+    "cur_val": -10449.0,
+    "master": -6239.0,
+    "master_cur": -10449.0,
+    "ncand": 1,
+    "raw_prior": [
+     8654.0
+    ]
+   },
+   "10": {
+    "status": "NOPRIOR",
+    "why": "calibrated (table@L79502 col 11) but no prior half/twin",
+    "master": -343.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 22557.0,
+    "cites": [
+     {
+      "line": 80798,
+      "printed": "113,521",
+      "tr": 80782,
+      "label": "1)발생재보험금및재보험서비스비용회수액",
+      "table": 80309,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 80963,
+      "printed": "90,964",
+      "tr": 80947,
+      "label": "1)회수예상보험금및보험서비스비용",
+      "table": 80309,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L79502 -> table@L80309 col 11 ; TWIN table@L79502 -> table@L80309 col 11",
+    "cur_val": 17529.0,
+    "master": 23426.0,
+    "master_cur": 17529.0,
+    "ncand": 1,
+    "raw_prior": [
+     113521.0,
+     90964.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0068|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 668342.0,
+    "cites": [
+     {
+      "line": 70151,
+      "printed": "668,342",
+      "tr": 70138,
+      "label": "3)서비스제공에따른보험계약마진의변동",
+      "table": 70026,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L69334 -> table@L70026 col 11",
+    "cur_val": 647227.0,
+    "master": 668342.0,
+    "master_cur": 647227.0,
+    "ncand": 1,
+    "raw_prior": [
+     668342.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 92337.0,
+    "cites": [
+     {
+      "line": 70135,
+      "printed": "92,337",
+      "tr": 70122,
+      "label": "2)위험해제에따른위험조정의변동",
+      "table": 70026,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L69334 -> table@L70026 col 11",
+    "cur_val": 100957.0,
+    "master": 92337.0,
+    "master_cur": 100957.0,
+    "ncand": 1,
+    "raw_prior": [
+     92337.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": -9356.0,
+    "cites": [
+     {
+      "line": 70119,
+      "printed": "2,179,937",
+      "tr": 70106,
+      "label": "1)예상보험금및예상보험서비스비용",
+      "table": 70026,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 70295,
+      "printed": "2,189,293",
+      "tr": 70282,
+      "label": "1)실제보험금및실제보험서비스비용",
+      "table": 70026,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L69334 -> table@L70026 col 11 ; TWIN table@L69334 -> table@L70026 col 11",
+    "cur_val": 3595.0,
+    "master": -20395.0,
+    "master_cur": 3595.0,
+    "ncand": 1,
+    "raw_prior": [
+     2179937.0,
+     2189293.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -15116.0,
+    "cites": [
+     {
+      "line": 70615,
+      "printed": "15,116",
+      "tr": 70602,
+      "label": "3)제공받은서비스의재보험계약마진",
+      "table": 70026,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L69334 -> table@L70026 col 11",
+    "cur_val": -15915.0,
+    "master": -15116.0,
+    "master_cur": -15915.0,
+    "ncand": 1,
+    "raw_prior": [
+     15116.0
+    ]
+   },
+   "10": {
+    "status": "NOPRIOR",
+    "why": "calibrated (table@L69334 col 11) but no prior half/twin",
+    "master": -616.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 29734.0,
+    "cites": [
+     {
+      "line": 70439,
+      "printed": "167,400",
+      "tr": 70426,
+      "label": "1)발생재보험금및재보험서비스비용회수액",
+      "table": 70026,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 70583,
+      "printed": "137,666",
+      "tr": 70570,
+      "label": "1)회수예상보험금및보험서비스비용",
+      "table": 70026,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L69334 -> table@L70026 col 11 ; TWIN table@L69334 -> table@L70026 col 11",
+    "cur_val": 22504.0,
+    "master": 29734.0,
+    "master_cur": 22504.0,
+    "ncand": 1,
+    "raw_prior": [
+     167400.0,
+     137666.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0068|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0068_한화생명_20250312000939/20250312000939.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 887710.0,
+    "cites": [
+     {
+      "line": 101794,
+      "printed": "887,710",
+      "tr": 101787,
+      "label": "3)서비스제공에따른보험계약마진의변동",
+      "table": 101720,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L101479 -> table@L101720 col 5",
+    "cur_val": 851918.0,
+    "master": 887710.0,
+    "master_cur": 851918.0,
+    "ncand": 1,
+    "raw_prior": [
+     887710.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 117748.0,
+    "cites": [
+     {
+      "line": 101784,
+      "printed": "117,748",
+      "tr": 101777,
+      "label": "2)위험해제에따른위험조정의변동",
+      "table": 101720,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L101479 -> table@L101720 col 5",
+    "cur_val": 138133.0,
+    "master": 117663.0,
+    "master_cur": 138133.0,
+    "ncand": 1,
+    "raw_prior": [
+     117748.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": -24518.0,
+    "cites": [
+     {
+      "line": 101774,
+      "printed": "2,920,694",
+      "tr": 101767,
+      "label": "1)예상보험금및예상보험서비스비용",
+      "table": 101720,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     },
+     {
+      "line": 101884,
+      "printed": "2,945,212",
+      "tr": 101877,
+      "label": "1)실제보험금및실제보험서비스비용",
+      "table": 101720,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L101479 -> table@L101720 col 5 ; TWIN table@L101479 -> table@L101720 col 5",
+    "cur_val": -51261.0,
+    "master": -39299.0,
+    "master_cur": -51261.0,
+    "ncand": 1,
+    "raw_prior": [
+     2920694.0,
+     2945212.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -4755.0,
+    "cites": [
+     {
+      "line": 109884,
+      "printed": "4,755",
+      "tr": 109879,
+      "label": "3)제공받은서비스의재보험계약마진",
+      "table": 109748,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L109561 -> table@L109748 col 3",
+    "cur_val": -22462.0,
+    "master": -4755.0,
+    "master_cur": -22462.0,
+    "ncand": 1,
+    "raw_prior": [
+     4755.0
+    ]
+   },
+   "10": {
+    "status": "NOPRIOR",
+    "why": "calibrated (table@L109561 col 3) but no prior half/twin",
+    "master": -785.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 34761.0,
+    "cites": [
+     {
+      "line": 109792,
+      "printed": "219,541",
+      "tr": 109787,
+      "label": "1)발생재보험금및재보험서비스비용회수액",
+      "table": 109748,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 109868,
+      "printed": "184,780",
+      "tr": 109863,
+      "label": "1)회수예상보험금및보험서비스비용",
+      "table": 109748,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L109561 -> table@L109748 col 3 ; TWIN table@L109561 -> table@L109748 col 3",
+    "cur_val": 28224.0,
+    "master": 34761.0,
+    "master_cur": 28224.0,
+    "ncand": 1,
+    "raw_prior": [
+     219541.0,
+     184780.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0068|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0068_한화생명_20260316001304/20260316001304.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 851918.0,
+    "cites": [
+     {
+      "line": 164578,
+      "printed": "(851,918)",
+      "tr": 164576,
+      "label": "서비스이전을반영하기위해당기손익으로인식한보험계약마진금액에따른증가분(감소분),보험계약마진",
+      "table": 164539,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L164434 -> table@L164539 col 0",
+    "cur_val": 787290.0,
+    "master": 851918.0,
+    "master_cur": 787290.0,
+    "ncand": 2,
+    "raw_prior": [
+     -851918.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 138133.0,
+    "cites": [
+     {
+      "line": 175997,
+      "printed": "138,133",
+      "tr": 175990,
+      "label": "보험수익,비금융위험에대한위험조정의변동분",
+      "table": 175884,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L175650 -> table@L175884 col 5",
+    "cur_val": 155559.0,
+    "master": 138133.0,
+    "master_cur": 155559.0,
+    "ncand": 1,
+    "raw_prior": [
+     138133.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -51261.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -22462.0,
+    "cites": [
+     {
+      "line": 177257,
+      "printed": "22,462",
+      "tr": 177252,
+      "label": "재보험비용,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 177170,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L177020 -> table@L177170 col 3",
+    "cur_val": -31505.0,
+    "master": -22462.0,
+    "master_cur": -31505.0,
+    "ncand": 1,
+    "raw_prior": [
+     22462.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -961.0,
+    "cites": [
+     {
+      "line": 177245,
+      "printed": "961",
+      "tr": 177240,
+      "label": "재보험비용,비금융위험에대한위험조정의변동분",
+      "table": 177170,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L177020 -> table@L177170 col 3",
+    "cur_val": -1125.0,
+    "master": -961.0,
+    "master_cur": -1125.0,
+    "ncand": 1,
+    "raw_prior": [
+     961.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 28224.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0068|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0068_한화생명/xml/20260529001672.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 198639.0,
+    "cites": [
+     {
+      "line": 125868,
+      "printed": "(198,639)",
+      "tr": 125866,
+      "label": "서비스이전을반영하기위해당기손익으로인식한보험계약마진금액에따른증가분(감소분),보험계약마진",
+      "table": 125829,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L125724 -> table@L125829 col 0",
+    "cur_val": 191440.0,
+    "master": 198639.0,
+    "master_cur": 191441.0,
+    "ncand": 2,
+    "raw_prior": [
+     -198639.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 38878.0,
+    "cites": [
+     {
+      "line": 127949,
+      "printed": "38,878",
+      "tr": 127942,
+      "label": "보험수익,비금융위험에대한위험조정의변동분",
+      "table": 127836,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L127602 -> table@L127836 col 5",
+    "cur_val": 44340.0,
+    "master": 38878.0,
+    "master_cur": 44340.0,
+    "ncand": 1,
+    "raw_prior": [
+     38878.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -70022.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -7087.0,
+    "cites": [
+     {
+      "line": 129259,
+      "printed": "7,087",
+      "tr": 129254,
+      "label": "재보험비용,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 129172,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L129010 -> table@L129172 col 3",
+    "cur_val": -9275.0,
+    "master": -7087.0,
+    "master_cur": -9275.0,
+    "ncand": 1,
+    "raw_prior": [
+     7087.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -272.0,
+    "cites": [
+     {
+      "line": 129247,
+      "printed": "272",
+      "tr": 129242,
+      "label": "재보험비용,비금융위험에대한위험조정의변동분",
+      "table": 129172,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L129010 -> table@L129172 col 3",
+    "cur_val": -306.0,
+    "master": -272.0,
+    "master_cur": -306.0,
+    "ncand": 1,
+    "raw_prior": [
+     272.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 9889.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0068|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0068_한화생명/20260813001536.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 394479.0,
+    "cites": [
+     {
+      "line": 132403,
+      "printed": "(394,479)",
+      "tr": 132401,
+      "label": "서비스이전을반영하기위해당기손익으로인식한보험계약마진금액에따른증가분(감소분),보험계약마진",
+      "table": 132364,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L132259 -> table@L132364 col 0",
+    "cur_val": 373025.0,
+    "master": 394479.0,
+    "master_cur": 373026.0,
+    "ncand": 2,
+    "raw_prior": [
+     -394479.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 76066.0,
+    "cites": [
+     {
+      "line": 134692,
+      "printed": "76,066",
+      "tr": 134679,
+      "label": "보험수익,비금융위험에대한위험조정의변동분",
+      "table": 134508,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L134137 -> table@L134508 col 11",
+    "cur_val": 92069.0,
+    "master": 76066.0,
+    "master_cur": 92069.0,
+    "ncand": 1,
+    "raw_prior": [
+     76066.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -123351.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -14304.0,
+    "cites": [
+     {
+      "line": 136548,
+      "printed": "14,304",
+      "tr": 136539,
+      "label": "재보험비용,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 136413,
+      "unit": "백만원",
+      "col": 7,
+      "ncol": 8
+     }
+    ],
+    "how": "TWIN table@L136195 -> table@L136413 col 7",
+    "cur_val": -18245.0,
+    "master": -14304.0,
+    "master_cur": -18245.0,
+    "ncand": 1,
+    "raw_prior": [
+     14304.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -559.0,
+    "cites": [
+     {
+      "line": 136528,
+      "printed": "559",
+      "tr": 136519,
+      "label": "재보험비용,비금융위험에대한위험조정의변동분",
+      "table": 136413,
+      "unit": "백만원",
+      "col": 7,
+      "ncol": 8
+     }
+    ],
+    "how": "TWIN table@L136195 -> table@L136413 col 7",
+    "cur_val": -581.0,
+    "master": -559.0,
+    "master_cur": -581.0,
+    "ncand": 1,
+    "raw_prior": [
+     559.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 15031.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0069|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0069_삼성생명/xml/20260515002696.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 361079.0,
+    "cites": [
+     {
+      "line": 96180,
+      "printed": "361,079",
+      "tr": 96178,
+      "label": "제공된서비스의보험계약마진",
+      "table": 96143,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L96061 -> table@L96143 col 0",
+    "cur_val": 367401.0,
+    "master": 361079.0,
+    "master_cur": 367401.0,
+    "ncand": 1,
+    "raw_prior": [
+     361079.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 85207.0,
+    "cites": [
+     {
+      "line": 96175,
+      "printed": "85,207",
+      "tr": 96173,
+      "label": "위험해제로인한비금융위험에대한위험조정의변동",
+      "table": 96143,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L96061 -> table@L96143 col 0",
+    "cur_val": 87202.0,
+    "master": 85207.0,
+    "master_cur": 87202.0,
+    "ncand": 1,
+    "raw_prior": [
+     85207.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": -408.0,
+    "cites": [
+     {
+      "line": 96170,
+      "printed": "1,672,810",
+      "tr": 96167,
+      "label": "일반보험서비스수익예상발생보험금및보험서비스비용",
+      "table": 96143,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     },
+     {
+      "line": 96347,
+      "printed": "1,673,218",
+      "tr": 96344,
+      "label": "일반보험서비스비용실제발생보험금및보험서비스비용",
+      "table": 96320,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L96061 -> table@L96143 col 0 ; TWIN table@L96243 -> table@L96320 col 0",
+    "cur_val": -72069.0,
+    "master": -408.0,
+    "master_cur": -72069.0,
+    "ncand": 1,
+    "raw_prior": [
+     1672810.0,
+     1673218.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -17210.0,
+    "cites": [
+     {
+      "line": 96728,
+      "printed": "(17,210)",
+      "tr": 96726,
+      "label": "제공된서비스의보험계약마진",
+      "table": 96691,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L96609 -> table@L96691 col 0",
+    "cur_val": -16303.0,
+    "master": -17210.0,
+    "master_cur": -16303.0,
+    "ncand": 1,
+    "raw_prior": [
+     -17210.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -3026.0,
+    "cites": [
+     {
+      "line": 96723,
+      "printed": "(3,026)",
+      "tr": 96721,
+      "label": "위험해제로인한비금융위험에대한위험조정의변동",
+      "table": 96691,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L96609 -> table@L96691 col 0",
+    "cur_val": -2510.0,
+    "master": -3026.0,
+    "master_cur": -2510.0,
+    "ncand": 1,
+    "raw_prior": [
+     -3026.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1956.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0069|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0069_삼성생명/20260814003263.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 743661.0,
+    "cites": [
+     {
+      "line": 84667,
+      "printed": "743,661",
+      "tr": 84664,
+      "label": "제공된서비스의보험계약마진",
+      "table": 84622,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L84541 -> table@L84622 col 1",
+    "cur_val": 733660.0,
+    "master": 743661.0,
+    "master_cur": 733660.0,
+    "ncand": 1,
+    "raw_prior": [
+     743661.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 169050.0,
+    "cites": [
+     {
+      "line": 84662,
+      "printed": "169,050",
+      "tr": 84659,
+      "label": "위험해제로인한비금융위험에대한위험조정의변동",
+      "table": 84622,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L84541 -> table@L84622 col 1",
+    "cur_val": 175234.0,
+    "master": 169050.0,
+    "master_cur": 175234.0,
+    "ncand": 1,
+    "raw_prior": [
+     169050.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": 51489.0,
+    "cites": [
+     {
+      "line": 84657,
+      "printed": "3,332,987",
+      "tr": 84653,
+      "label": "일반보험서비스수익예상발생보험금및보험서비스비용",
+      "table": 84622,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 84827,
+      "printed": "3,281,498",
+      "tr": 84823,
+      "label": "일반보험서비스비용실제발생보험금및보험서비스비용",
+      "table": 84792,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L84541 -> table@L84622 col 1 ; TWIN table@L84716 -> table@L84792 col 1",
+    "cur_val": -94305.0,
+    "master": 51489.0,
+    "master_cur": -94305.0,
+    "ncand": 1,
+    "raw_prior": [
+     3332987.0,
+     3281498.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -32746.0,
+    "cites": [
+     {
+      "line": 85188,
+      "printed": "32,746",
+      "tr": 85185,
+      "label": "제공된서비스의보험계약마진",
+      "table": 85143,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L85062 -> table@L85143 col 1",
+    "cur_val": -26903.0,
+    "master": -32746.0,
+    "master_cur": -26903.0,
+    "ncand": 1,
+    "raw_prior": [
+     32746.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -5551.0,
+    "cites": [
+     {
+      "line": 85183,
+      "printed": "5,551",
+      "tr": 85180,
+      "label": "위험해제로인한비금융위험에대한위험조정의변동",
+      "table": 85143,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L85062 -> table@L85143 col 1",
+    "cur_val": -3361.0,
+    "master": -5551.0,
+    "master_cur": -3361.0,
+    "ncand": 1,
+    "raw_prior": [
+     5551.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 831.0
+   }
+  },
+  "err": null,
+  "blocks": 24
+ },
+ "KR0070|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3593.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -7470.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0070|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 7449.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -13186.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0070|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 11921.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -18428.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0070|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 16883.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -19665.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0070|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 196.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 1341.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 719.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0070|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 369.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 1273.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 338.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0070|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 578.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3703.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -829.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0070|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0070_에이비엘생명보험_20260331003080/20260331003080.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 12282.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 586.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1328.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0070|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml",
+  "items": {
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3059.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -3591.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 170.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0070|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 40080.0,
+    "cites": [
+     {
+      "line": 38199,
+      "printed": "40,080",
+      "tr": 38194,
+      "label": "보험계약마진상각",
+      "table": 38130,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L38130)",
+    "cur_val": 47138.0,
+    "master": 40080.0,
+    "master_cur": 47138.0,
+    "ncand": 1,
+    "raw_prior": [
+     40080.0
+    ]
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 6034.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -9198.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -6541.0,
+    "cites": [
+     {
+      "line": 38438,
+      "printed": "6,541",
+      "tr": 38433,
+      "label": "보험계약마진상각",
+      "table": 38306,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L38306)",
+    "cur_val": -6875.0,
+    "master": -6541.0,
+    "master_cur": -6876.0,
+    "ncand": 1,
+    "raw_prior": [
+     6541.0
+    ]
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1223.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 1003.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0071|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0071_흥국생명보험/xml/20260529002156.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -17436.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "master at quarter+4 missing",
+    "master": 657.0
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0071|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0071_흥국생명보험/20260814003688.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 112745.0,
+    "cites": [
+     {
+      "line": 30659,
+      "printed": "112,745",
+      "tr": 30654,
+      "label": "제공된서비스의보험계약마진",
+      "table": 30611,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L30611)",
+    "cur_val": 109578.0,
+    "master": 112745.0,
+    "master_cur": 109578.0,
+    "ncand": 1,
+    "raw_prior": [
+     112745.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 8778.0,
+    "cites": [
+     {
+      "line": 30652,
+      "printed": "8,778",
+      "tr": 30647,
+      "label": "위험해제로인한위험조정의변동",
+      "table": 30611,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L30611)",
+    "cur_val": 12653.0,
+    "master": 8778.0,
+    "master_cur": 12653.0,
+    "ncand": 1,
+    "raw_prior": [
+     8778.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -39054.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -4031.0,
+    "cites": [
+     {
+      "line": 30792,
+      "printed": "4,031",
+      "tr": 30787,
+      "label": "제공받은서비스의재보험계약마진",
+      "table": 30611,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L30611)",
+    "cur_val": -780.0,
+    "master": -4031.0,
+    "master_cur": -780.0,
+    "ncand": 1,
+    "raw_prior": [
+     4031.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -176.0,
+    "cites": [
+     {
+      "line": 30785,
+      "printed": "176",
+      "tr": 30780,
+      "label": "위험해제로인한위험조정의변동",
+      "table": 30611,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L30611)",
+    "cur_val": -565.0,
+    "master": -176.0,
+    "master_cur": -565.0,
+    "ncand": 1,
+    "raw_prior": [
+     176.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": 4199.0,
+    "cites": [
+     {
+      "line": 30743,
+      "printed": "46,913",
+      "tr": 30738,
+      "label": "회수가능보험금및보험서비스비용",
+      "table": 30611,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 30778,
+      "printed": "42,714",
+      "tr": 30773,
+      "label": "회수예상보험금및보험서비스비용",
+      "table": 30611,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L30611) ; POS col 1->3 of 4 (table@L30611)",
+    "cur_val": -8735.0,
+    "master": 4199.0,
+    "master_cur": -8735.0,
+    "ncand": 1,
+    "raw_prior": [
+     46913.0,
+     42714.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0072|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0072_케이디비생명보험_20260331004180/20260331004180.xml",
+  "items": {
+   "6": {
+    "status": "NOPRIOR",
+    "why": "calibrated (table@L32016 col 0) but no prior half/twin",
+    "master": 18566.0
+   },
+   "9": {
+    "status": "NOPRIOR",
+    "why": "calibrated (table@L32121 col 0) but no prior half/twin",
+    "master": -290.0
+   },
+   "10": {
+    "status": "NOPRIOR",
+    "why": "calibrated (table@L32121 col 0) but no prior half/twin",
+    "master": -1186.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -4218.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0079|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 197764.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 46004.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -2202.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -817.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "master at quarter+4 is 0/blank-zero: cannot calibrate a column",
+    "master": 0.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0079|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0079_미래에셋생명/20250515001717.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 50759.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 11243.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -755.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -206.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "master at quarter+4 is 0/blank-zero: cannot calibrate a column",
+    "master": 0.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0079|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0079_미래에셋생명/xml/20250814003532.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 100696.379902
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 21971.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1486.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -47.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "master at quarter+4 is 0/blank-zero: cannot calibrate a column",
+    "master": 0.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0079|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0079_미래에셋생명/xml/20251114002791.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 148712.819524
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 32632.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -2321.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -292.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "master at quarter+4 is 0/blank-zero: cannot calibrate a column",
+    "master": 0.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0079|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0079_미래에셋생명_20260318001664/20260318001664.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 197691.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 43275.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -4674.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -442.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "master at quarter+4 is 0/blank-zero: cannot calibrate a column",
+    "master": 0.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0082|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -19999.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1205.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -39.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3400.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0082|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -32074.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -2378.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -155.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 4676.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0082|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -43560.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -3507.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -201.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 6108.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0082|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0082_DB생명보험_20250328002241/20250328002241.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -57750.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -4220.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -148.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 7582.0
+   }
+  },
+  "err": null,
+  "blocks": 4
+ },
+ "KR0083|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml",
+  "items": {
+   "6": {
+    "status": "OK",
+    "val": -493.0,
+    "cites": [
+     {
+      "line": 37414,
+      "printed": "24,753",
+      "tr": 37411,
+      "label": "예상발생보험금",
+      "table": 37386,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 37474,
+      "printed": "25,246",
+      "tr": 37471,
+      "label": "실제발생보험금",
+      "table": 37386,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L37386) ; POS col 0->1 of 2 (table@L37386)",
+    "cur_val": -1657.0,
+    "master": -493.0,
+    "master_cur": -1657.0,
+    "ncand": 1,
+    "raw_prior": [
+     24753.0,
+     25246.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 165.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0083|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml",
+  "items": {
+   "6": {
+    "status": "OK",
+    "val": -587.0,
+    "cites": [
+     {
+      "line": 39314,
+      "printed": "49,681",
+      "tr": 39309,
+      "label": "예상발생보험금",
+      "table": 39277,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 39390,
+      "printed": "50,268",
+      "tr": 39385,
+      "label": "실제발생보험금",
+      "table": 39277,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L39277) ; POS col 1->3 of 4 (table@L39277)",
+    "cur_val": -2767.0,
+    "master": -587.0,
+    "master_cur": -2767.0,
+    "ncand": 1,
+    "raw_prior": [
+     49681.0,
+     50268.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 296.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0083|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml",
+  "items": {
+   "6": {
+    "status": "OK",
+    "val": 1382.0,
+    "cites": [
+     {
+      "line": 33601,
+      "printed": "75,568",
+      "tr": 33596,
+      "label": "예상발생보험금",
+      "table": 33564,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 33677,
+      "printed": "74,186",
+      "tr": 33672,
+      "label": "실제발생보험금",
+      "table": 33564,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L33564) ; POS col 1->3 of 4 (table@L33564)",
+    "cur_val": -5710.0,
+    "master": 1382.0,
+    "master_cur": -5710.0,
+    "ncand": 1,
+    "raw_prior": [
+     75568.0,
+     74186.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 199.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0083|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0083_푸본현대생명보험_20260331002089/20260331002089.xml",
+  "items": {
+   "6": {
+    "status": "OK",
+    "val": 1594.0,
+    "cites": [
+     {
+      "line": 54582,
+      "printed": "101,578",
+      "tr": 54579,
+      "label": "예상발생보험금",
+      "table": 54556,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 54640,
+      "printed": "99,984",
+      "tr": 54637,
+      "label": "실제발생보험금",
+      "table": 54556,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L54556) ; POS col 0->1 of 2 (table@L54556)",
+    "cur_val": -5928.0,
+    "master": 1594.0,
+    "master_cur": -5928.0,
+    "ncand": 1,
+    "raw_prior": [
+     101578.0,
+     99984.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 1617.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0087|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 17036.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -2185.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 1400.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1306.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0087|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml",
+  "items": {
+   "6": {
+    "status": "OK",
+    "val": 831.0,
+    "cites": [
+     {
+      "line": 39295,
+      "printed": "136,816",
+      "tr": 39292,
+      "label": "가.예상발생보험금",
+      "table": 39257,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 39337,
+      "printed": "135,985",
+      "tr": 39334,
+      "label": "가.실제발생보험금",
+      "table": 39257,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L39257) ; POS col 0->1 of 2 (table@L39257)",
+    "cur_val": -11385.0,
+    "master": 831.0,
+    "master_cur": -11385.0,
+    "ncand": 1,
+    "raw_prior": [
+     136816.0,
+     135985.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3805.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0087|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 129439.0,
+    "cites": [
+     {
+      "line": 155029,
+      "printed": "129,439",
+      "tr": 155018,
+      "label": "제공된서비스의보험계약마진",
+      "table": 154909,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L154717 -> table@L154909 col 1",
+    "cur_val": 126064.0,
+    "master": 129439.0,
+    "master_cur": 126064.0,
+    "ncand": 1,
+    "raw_prior": [
+     129439.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 23356.0,
+    "cites": [
+     {
+      "line": 155014,
+      "printed": "23,356",
+      "tr": 155003,
+      "label": "위험조정변동",
+      "table": 154909,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L154717 -> table@L154909 col 1",
+    "cur_val": 22144.0,
+    "master": 11829.0,
+    "master_cur": 22144.0,
+    "ncand": 1,
+    "raw_prior": [
+     23356.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 11278.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 523.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0087|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 196194.0,
+    "cites": [
+     {
+      "line": 63350,
+      "printed": "196,194",
+      "tr": 63347,
+      "label": "보험수익,서비스의이전으로당기손익에인식한보험계약마진",
+      "table": 63300,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L63197 -> table@L63300 col 1",
+    "cur_val": 189861.0,
+    "master": 196194.0,
+    "master_cur": 189861.0,
+    "ncand": 1,
+    "raw_prior": [
+     196194.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 35196.0,
+    "cites": [
+     {
+      "line": 63344,
+      "printed": "35,196",
+      "tr": 63341,
+      "label": "보험수익,비금융위험에대한위험조정의변동분",
+      "table": 63300,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L63197 -> table@L63300 col 1",
+    "cur_val": 32903.0,
+    "master": 11840.0,
+    "master_cur": 32903.0,
+    "ncand": 1,
+    "raw_prior": [
+     35196.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 5098.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "master at quarter+4 missing",
+    "master": -479.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0087|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0087_동양생명_20260313001227/20260313001227.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 20691.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 5758.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0087|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 62317.0,
+    "cites": [
+     {
+      "line": 80334,
+      "printed": "62,317",
+      "tr": 80332,
+      "label": "보험계약마진상각",
+      "table": 80297,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L80215 -> table@L80297 col 0",
+    "cur_val": 62114.0,
+    "master": 62318.0,
+    "master_cur": 62114.0,
+    "ncand": 1,
+    "raw_prior": [
+     62317.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 11136.0,
+    "cites": [
+     {
+      "line": 80329,
+      "printed": "11,136",
+      "tr": 80327,
+      "label": "비금융위험위험조정변동",
+      "table": 80297,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L80215 -> table@L80297 col 0",
+    "cur_val": 10273.0,
+    "master": 11135.0,
+    "master_cur": 10273.0,
+    "ncand": 1,
+    "raw_prior": [
+     11136.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -11385.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -460.0,
+    "cites": [
+     {
+      "line": 80826,
+      "printed": "460",
+      "tr": 80824,
+      "label": "보험계약마진상각",
+      "table": 80789,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L80717 -> table@L80789 col 0",
+    "cur_val": -806.0,
+    "master": 461.0,
+    "master_cur": -806.0,
+    "ncand": 1,
+    "raw_prior": [
+     460.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -294.0,
+    "cites": [
+     {
+      "line": 80821,
+      "printed": "294",
+      "tr": 80819,
+      "label": "비금융위험위험조정변동",
+      "table": 80789,
+      "unit": "백만원",
+      "col": 0,
+      "ncol": 1
+     }
+    ],
+    "how": "TWIN table@L80717 -> table@L80789 col 0",
+    "cur_val": -335.0,
+    "master": 295.0,
+    "master_cur": -335.0,
+    "ncand": 1,
+    "raw_prior": [
+     294.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 3361.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0087|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 126064.0,
+    "cites": [
+     {
+      "line": 33907,
+      "printed": "126,064",
+      "tr": 33904,
+      "label": "보험계약마진상각",
+      "table": 33862,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L33781 -> table@L33862 col 1",
+    "cur_val": 125511.0,
+    "master": 126064.0,
+    "master_cur": 125511.0,
+    "ncand": 2,
+    "raw_prior": [
+     126064.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 22144.0,
+    "cites": [
+     {
+      "line": 33902,
+      "printed": "22,144",
+      "tr": 33899,
+      "label": "비금융위험위험조정변동",
+      "table": 33862,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L33781 -> table@L33862 col 1",
+    "cur_val": 20259.0,
+    "master": 22144.0,
+    "master_cur": 20259.0,
+    "ncand": 2,
+    "raw_prior": [
+     22144.0
+    ]
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -10877.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -878.0,
+    "cites": [
+     {
+      "line": 34362,
+      "printed": "878",
+      "tr": 34359,
+      "label": "보험계약마진상각",
+      "table": 34317,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L34246 -> table@L34317 col 1",
+    "cur_val": -1468.0,
+    "master": -878.0,
+    "master_cur": -1468.0,
+    "ncand": 2,
+    "raw_prior": [
+     878.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -565.0,
+    "cites": [
+     {
+      "line": 34357,
+      "printed": "565",
+      "tr": 34354,
+      "label": "비금융위험위험조정변동",
+      "table": 34317,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "TWIN table@L34246 -> table@L34317 col 1",
+    "cur_val": -627.0,
+    "master": -565.0,
+    "master_cur": -627.0,
+    "ncand": 2,
+    "raw_prior": [
+     565.0
+    ]
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 7026.0
+   }
+  },
+  "err": null,
+  "blocks": 24
+ },
+ "KR0094|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml",
+  "items": {
+   "4": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 364712.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 88072.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 58241.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -14039.0
+   },
+   "10": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -3182.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 30270.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0099|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 68479.0,
+    "cites": [
+     {
+      "line": 38391,
+      "printed": "68,479",
+      "tr": 38384,
+      "label": "서비스제공에따른보험계약마진의변동",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L37925 -> table@L38325 col 5",
+    "cur_val": 71431.0,
+    "master": 68479.0,
+    "master_cur": 71431.0,
+    "ncand": 1,
+    "raw_prior": [
+     68479.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 7750.0,
+    "cites": [
+     {
+      "line": 38381,
+      "printed": "7,750",
+      "tr": 38374,
+      "label": "위험해제에따른위험조정의변동(보험수익)",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L37925 -> table@L38325 col 5",
+    "cur_val": 8619.0,
+    "master": 7750.0,
+    "master_cur": 8619.0,
+    "ncand": 1,
+    "raw_prior": [
+     7750.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": 15077.0,
+    "cites": [
+     {
+      "line": 38371,
+      "printed": "101,484",
+      "tr": 38364,
+      "label": "예상보험금및예상보험서비스비용",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     },
+     {
+      "line": 38472,
+      "printed": "(86,407)",
+      "tr": 38465,
+      "label": "실제보험금및실제보험서비스비용",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L37925 -> table@L38325 col 5 ; TWIN table@L37925 -> table@L38325 col 5",
+    "cur_val": 17790.0,
+    "master": 15077.0,
+    "master_cur": 17790.0,
+    "ncand": 1,
+    "raw_prior": [
+     101484.0,
+     -86407.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -1130.0,
+    "cites": [
+     {
+      "line": 38658,
+      "printed": "(1,130)",
+      "tr": 38651,
+      "label": "제공받은서비스의재보험계약마진",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L37925 -> table@L38325 col 5",
+    "cur_val": -395.0,
+    "master": -1130.0,
+    "master_cur": -395.0,
+    "ncand": 1,
+    "raw_prior": [
+     -1130.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -82.0,
+    "cites": [
+     {
+      "line": 38648,
+      "printed": "(82)",
+      "tr": 38641,
+      "label": "위험해제로인한위험조정의변동(31)(37)",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L37925 -> table@L38325 col 3",
+    "cur_val": -74.0,
+    "master": -82.0,
+    "master_cur": -74.0,
+    "ncand": 1,
+    "raw_prior": [
+     -82.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": -618.0,
+    "cites": [
+     {
+      "line": 38560,
+      "printed": "478",
+      "tr": 38553,
+      "label": "발생재보험금및재보험서비스비용회수액",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     },
+     {
+      "line": 38638,
+      "printed": "(1,096)",
+      "tr": 38631,
+      "label": "회수예상보험금및보험서비스비용",
+      "table": 38325,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L37925 -> table@L38325 col 5 ; TWIN table@L37925 -> table@L38325 col 5",
+    "cur_val": -339.0,
+    "master": -618.0,
+    "master_cur": -339.0,
+    "ncand": 1,
+    "raw_prior": [
+     478.0,
+     -1096.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 140581.0,
+    "cites": [
+     {
+      "line": 42521,
+      "printed": "140,581",
+      "tr": 42508,
+      "label": "서비스제공에따른보험계약마진의변동",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L41805 -> table@L42420 col 11",
+    "cur_val": 143582.0,
+    "master": 140581.0,
+    "master_cur": 143582.0,
+    "ncand": 1,
+    "raw_prior": [
+     140581.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 15918.0,
+    "cites": [
+     {
+      "line": 42505,
+      "printed": "15,918",
+      "tr": 42492,
+      "label": "위험해제에따른위험조정의변동(보험수익)",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L41805 -> table@L42420 col 11",
+    "cur_val": 17171.0,
+    "master": 15918.0,
+    "master_cur": 17171.0,
+    "ncand": 1,
+    "raw_prior": [
+     15918.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": 17818.0,
+    "cites": [
+     {
+      "line": 42489,
+      "printed": "203,565",
+      "tr": 42476,
+      "label": "예상보험금및예상보험서비스비용",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 42644,
+      "printed": "(185,747)",
+      "tr": 42631,
+      "label": "실제보험금및실제보험서비스비용",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L41805 -> table@L42420 col 11 ; TWIN table@L41805 -> table@L42420 col 11",
+    "cur_val": 33239.0,
+    "master": 17818.0,
+    "master_cur": 33239.0,
+    "ncand": 1,
+    "raw_prior": [
+     203565.0,
+     -185747.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -2248.0,
+    "cites": [
+     {
+      "line": 42932,
+      "printed": "(2,248)",
+      "tr": 42919,
+      "label": "제공받은서비스의재보험계약마진",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L41805 -> table@L42420 col 11",
+    "cur_val": -1460.0,
+    "master": -2248.0,
+    "master_cur": -1460.0,
+    "ncand": 1,
+    "raw_prior": [
+     -2248.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -157.0,
+    "cites": [
+     {
+      "line": 42916,
+      "printed": "(157)",
+      "tr": 42903,
+      "label": "위험해제로인한위험조정의변동(28)(36)",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 9,
+      "ncol": 10
+     }
+    ],
+    "how": "TWIN table@L41805 -> table@L42420 col 9",
+    "cur_val": -146.0,
+    "master": -157.0,
+    "master_cur": -146.0,
+    "ncand": 1,
+    "raw_prior": [
+     -157.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": -645.0,
+    "cites": [
+     {
+      "line": 42780,
+      "printed": "1,610",
+      "tr": 42767,
+      "label": "발생재보험금및재보험서비스비용회수액",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 42900,
+      "printed": "(2,255)",
+      "tr": 42887,
+      "label": "회수예상보험금및보험서비스비용",
+      "table": 42420,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L41805 -> table@L42420 col 11 ; TWIN table@L41805 -> table@L42420 col 11",
+    "cur_val": 1142.0,
+    "master": -645.0,
+    "master_cur": 1142.0,
+    "ncand": 1,
+    "raw_prior": [
+     1610.0,
+     -2255.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 214229.0,
+    "cites": [
+     {
+      "line": 38495,
+      "printed": "214,229",
+      "tr": 38482,
+      "label": "서비스제공에따른보험계약마진의변동",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L37782 -> table@L38394 col 11",
+    "cur_val": 216151.0,
+    "master": 214229.0,
+    "master_cur": 216151.0,
+    "ncand": 1,
+    "raw_prior": [
+     214229.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 24345.0,
+    "cites": [
+     {
+      "line": 38479,
+      "printed": "24,345",
+      "tr": 38466,
+      "label": "위험해제에따른위험조정의변동(보험수익)",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L37782 -> table@L38394 col 11",
+    "cur_val": 25995.0,
+    "master": 24345.0,
+    "master_cur": 25995.0,
+    "ncand": 1,
+    "raw_prior": [
+     24345.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": 10424.0,
+    "cites": [
+     {
+      "line": 38463,
+      "printed": "306,758",
+      "tr": 38450,
+      "label": "예상보험금및예상보험서비스비용",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 38615,
+      "printed": "(296,334)",
+      "tr": 38602,
+      "label": "실제보험금및실제보험서비스비용",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L37782 -> table@L38394 col 11 ; TWIN table@L37782 -> table@L38394 col 11",
+    "cur_val": 30115.0,
+    "master": 10424.0,
+    "master_cur": 30115.0,
+    "ncand": 1,
+    "raw_prior": [
+     306758.0,
+     -296334.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -3604.0,
+    "cites": [
+     {
+      "line": 38903,
+      "printed": "(3,604)",
+      "tr": 38890,
+      "label": "제공받은서비스의재보험계약마진",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L37782 -> table@L38394 col 11",
+    "cur_val": -2559.0,
+    "master": -3604.0,
+    "master_cur": -2559.0,
+    "ncand": 1,
+    "raw_prior": [
+     -3604.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -220.0,
+    "cites": [
+     {
+      "line": 38887,
+      "printed": "(220)",
+      "tr": 38874,
+      "label": "위험해제로인한위험조정의변동(30)(22)",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 9,
+      "ncol": 10
+     }
+    ],
+    "how": "TWIN table@L37782 -> table@L38394 col 9",
+    "cur_val": -215.0,
+    "master": -220.0,
+    "master_cur": -215.0,
+    "ncand": 1,
+    "raw_prior": [
+     -220.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": -256.0,
+    "cites": [
+     {
+      "line": 38751,
+      "printed": "3,021",
+      "tr": 38738,
+      "label": "발생재보험금및재보험서비스비용회수액",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 38871,
+      "printed": "(3,277)",
+      "tr": 38858,
+      "label": "회수예상보험금및보험서비스비용",
+      "table": 38394,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L37782 -> table@L38394 col 11 ; TWIN table@L37782 -> table@L38394 col 11",
+    "cur_val": 1409.0,
+    "master": -256.0,
+    "master_cur": 1409.0,
+    "ncand": 1,
+    "raw_prior": [
+     3021.0,
+     -3277.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 300213.0,
+    "cites": [
+     {
+      "line": 55708,
+      "printed": "300,213",
+      "tr": 55695,
+      "label": "서비스제공에따른보험계약마진의변동",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "POS col 5->11 of 12 (table@L55611)",
+    "cur_val": 293081.0,
+    "master": 283905.0,
+    "master_cur": 293081.0,
+    "ncand": 1,
+    "raw_prior": [
+     300213.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 32276.0,
+    "cites": [
+     {
+      "line": 55692,
+      "printed": "32,276",
+      "tr": 55679,
+      "label": "위험해제에따른위험조정의변동(보험수익)",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "POS col 5->11 of 12 (table@L55611)",
+    "cur_val": 34846.0,
+    "master": 32276.0,
+    "master_cur": 34846.0,
+    "ncand": 1,
+    "raw_prior": [
+     32276.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": -15709.0,
+    "cites": [
+     {
+      "line": 55676,
+      "printed": "410,380",
+      "tr": 55663,
+      "label": "예상보험금및예상보험서비스비용",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 55828,
+      "printed": "(426,089)",
+      "tr": 55815,
+      "label": "실제보험금및실제보험서비스비용",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "POS col 5->11 of 12 (table@L55611) ; POS col 5->11 of 12 (table@L55611)",
+    "cur_val": 14248.0,
+    "master": -15709.0,
+    "master_cur": 14248.0,
+    "ncand": 1,
+    "raw_prior": [
+     410380.0,
+     -426089.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -6003.0,
+    "cites": [
+     {
+      "line": 56148,
+      "printed": "(6,003)",
+      "tr": 56135,
+      "label": "제공받은서비스의재보험계약마진",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "POS col 5->11 of 12 (table@L55611)",
+    "cur_val": -3439.0,
+    "master": -6003.0,
+    "master_cur": -3439.0,
+    "ncand": 1,
+    "raw_prior": [
+     -6003.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -285.0,
+    "cites": [
+     {
+      "line": 56132,
+      "printed": "(285)",
+      "tr": 56119,
+      "label": "위험해제로인한위험조정의변동",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "POS col 5->11 of 12 (table@L55611)",
+    "cur_val": -284.0,
+    "master": -285.0,
+    "master_cur": -284.0,
+    "ncand": 2,
+    "raw_prior": [
+     -285.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": 79.0,
+    "cites": [
+     {
+      "line": 55980,
+      "printed": "4,429",
+      "tr": 55967,
+      "label": "발생재보험금및재보험서비스비용회수액",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 56116,
+      "printed": "(4,350)",
+      "tr": 56103,
+      "label": "회수예상보험금및보험서비스비용",
+      "table": 55611,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "POS col 5->11 of 12 (table@L55611) ; POS col 5->11 of 12 (table@L55611)",
+    "cur_val": 2909.0,
+    "master": 79.0,
+    "master_cur": 2909.0,
+    "ncand": 1,
+    "raw_prior": [
+     4429.0,
+     -4350.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0099|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 74241.0,
+    "cites": [
+     {
+      "line": 42929,
+      "printed": "74,241",
+      "tr": 42922,
+      "label": "서비스제공에따른보험계약마진의변동",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L42430 -> table@L42863 col 5",
+    "cur_val": 72371.0,
+    "master": 71431.0,
+    "master_cur": 72371.0,
+    "ncand": 1,
+    "raw_prior": [
+     74241.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 8619.0,
+    "cites": [
+     {
+      "line": 42919,
+      "printed": "8,619",
+      "tr": 42912,
+      "label": "위험해제에따른위험조정의변동(보험수익)",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L42430 -> table@L42863 col 5",
+    "cur_val": 9330.0,
+    "master": 8619.0,
+    "master_cur": 9330.0,
+    "ncand": 1,
+    "raw_prior": [
+     8619.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": 17789.0,
+    "cites": [
+     {
+      "line": 42909,
+      "printed": "107,613",
+      "tr": 42902,
+      "label": "예상보험금및예상보험서비스비용",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     },
+     {
+      "line": 43007,
+      "printed": "(89,824)",
+      "tr": 43000,
+      "label": "실제보험금및실제보험서비스비용",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L42430 -> table@L42863 col 5 ; TWIN table@L42430 -> table@L42863 col 5",
+    "cur_val": 20876.0,
+    "master": 17790.0,
+    "master_cur": 20876.0,
+    "ncand": 1,
+    "raw_prior": [
+     107613.0,
+     -89824.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -395.0,
+    "cites": [
+     {
+      "line": 43213,
+      "printed": "(395)",
+      "tr": 43206,
+      "label": "제공받은서비스의재보험계약마진",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L42430 -> table@L42863 col 5",
+    "cur_val": -1602.0,
+    "master": -395.0,
+    "master_cur": -1602.0,
+    "ncand": 1,
+    "raw_prior": [
+     -395.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -74.0,
+    "cites": [
+     {
+      "line": 43203,
+      "printed": "(74)",
+      "tr": 43196,
+      "label": "위험해제로인한위험조정의변동(42)(22)",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "TWIN table@L42430 -> table@L42863 col 3",
+    "cur_val": -128.0,
+    "master": -74.0,
+    "master_cur": -128.0,
+    "ncand": 1,
+    "raw_prior": [
+     -74.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": -339.0,
+    "cites": [
+     {
+      "line": 43105,
+      "printed": "723",
+      "tr": 43098,
+      "label": "발생재보험금및재보험서비스비용회수액",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     },
+     {
+      "line": 43193,
+      "printed": "(1,062)",
+      "tr": 43186,
+      "label": "회수예상보험금및보험서비스비용",
+      "table": 42863,
+      "unit": "백만원",
+      "col": 5,
+      "ncol": 6
+     }
+    ],
+    "how": "TWIN table@L42430 -> table@L42863 col 5 ; TWIN table@L42430 -> table@L42863 col 5",
+    "cur_val": -281.0,
+    "master": -339.0,
+    "master_cur": -281.0,
+    "ncand": 1,
+    "raw_prior": [
+     723.0,
+     -1062.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 148231.0,
+    "cites": [
+     {
+      "line": 47124,
+      "printed": "148,231",
+      "tr": 47111,
+      "label": "서비스제공에따른보험계약마진의변동",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L46363 -> table@L47023 col 11",
+    "cur_val": 144975.0,
+    "master": 143582.0,
+    "master_cur": 144975.0,
+    "ncand": 1,
+    "raw_prior": [
+     148231.0
+    ]
+   },
+   "5": {
+    "status": "OK",
+    "val": 17171.0,
+    "cites": [
+     {
+      "line": 47108,
+      "printed": "17,171",
+      "tr": 47095,
+      "label": "위험해제에따른위험조정의변동(보험수익)",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L46363 -> table@L47023 col 11",
+    "cur_val": 18023.0,
+    "master": 17171.0,
+    "master_cur": 18023.0,
+    "ncand": 1,
+    "raw_prior": [
+     17171.0
+    ]
+   },
+   "6": {
+    "status": "OK",
+    "val": 33239.0,
+    "cites": [
+     {
+      "line": 47092,
+      "printed": "215,546",
+      "tr": 47079,
+      "label": "예상보험금및예상보험서비스비용",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 47244,
+      "printed": "(182,307)",
+      "tr": 47231,
+      "label": "실제보험금및실제보험서비스비용",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L46363 -> table@L47023 col 11 ; TWIN table@L46363 -> table@L47023 col 11",
+    "cur_val": 19411.0,
+    "master": 33239.0,
+    "master_cur": 19411.0,
+    "ncand": 1,
+    "raw_prior": [
+     215546.0,
+     -182307.0
+    ]
+   },
+   "9": {
+    "status": "OK",
+    "val": -1460.0,
+    "cites": [
+     {
+      "line": 47564,
+      "printed": "(1,460)",
+      "tr": 47551,
+      "label": "제공받은서비스의재보험계약마진",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L46363 -> table@L47023 col 11",
+    "cur_val": -3184.0,
+    "master": -1460.0,
+    "master_cur": -3184.0,
+    "ncand": 1,
+    "raw_prior": [
+     -1460.0
+    ]
+   },
+   "10": {
+    "status": "OK",
+    "val": -146.0,
+    "cites": [
+     {
+      "line": 47548,
+      "printed": "(146)",
+      "tr": 47535,
+      "label": "위험해제로인한위험조정의변동(40)(22)",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 9,
+      "ncol": 10
+     }
+    ],
+    "how": "TWIN table@L46363 -> table@L47023 col 9",
+    "cur_val": -260.0,
+    "master": -146.0,
+    "master_cur": -260.0,
+    "ncand": 1,
+    "raw_prior": [
+     -146.0
+    ]
+   },
+   "11": {
+    "status": "OK",
+    "val": 1142.0,
+    "cites": [
+     {
+      "line": 47396,
+      "printed": "3,255",
+      "tr": 47383,
+      "label": "발생재보험금및재보험서비스비용회수액",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     },
+     {
+      "line": 47532,
+      "printed": "(2,113)",
+      "tr": 47519,
+      "label": "회수예상보험금및보험서비스비용",
+      "table": 47023,
+      "unit": "백만원",
+      "col": 11,
+      "ncol": 12
+     }
+    ],
+    "how": "TWIN table@L46363 -> table@L47023 col 11 ; TWIN table@L46363 -> table@L47023 col 11",
+    "cur_val": -305.0,
+    "master": 1142.0,
+    "master_cur": -305.0,
+    "ncand": 1,
+    "raw_prior": [
+     3255.0,
+     -2113.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0104|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0104_농협생명보험/20240514001371.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -5726.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 738.0,
+    "cites": [
+     {
+      "line": 19532,
+      "printed": "4,195",
+      "tr": 19528,
+      "label": "재보험수익발생재보험금",
+      "table": 19465,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 19618,
+      "printed": "3,457",
+      "tr": 19614,
+      "label": "재보험비용회수예상보험금",
+      "table": 19465,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L19465) ; POS col 0->1 of 2 (table@L19465)",
+    "cur_val": 2076.0,
+    "master": 738.0,
+    "master_cur": 2076.0,
+    "ncand": 1,
+    "raw_prior": [
+     4195.0,
+     3457.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0104_농협생명보험/20240814002115.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -1374.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -1262.0,
+    "cites": [
+     {
+      "line": 20356,
+      "printed": "7,270",
+      "tr": 20350,
+      "label": "재보험수익발생재보험금",
+      "table": 20264,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 20470,
+      "printed": "8,532",
+      "tr": 20464,
+      "label": "재보험비용회수예상보험금",
+      "table": 20264,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L20264) ; POS col 1->3 of 4 (table@L20264)",
+    "cur_val": 3533.0,
+    "master": -1262.0,
+    "master_cur": 3533.0,
+    "ncand": 1,
+    "raw_prior": [
+     7270.0,
+     8532.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -3426.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -2718.0,
+    "cites": [
+     {
+      "line": 20309,
+      "printed": "11,210",
+      "tr": 20303,
+      "label": "재보험수익발생재보험금",
+      "table": 20217,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 20415,
+      "printed": "13,928",
+      "tr": 20409,
+      "label": "재보험비용회수예상보험금",
+      "table": 20217,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L20217) ; POS col 1->3 of 4 (table@L20217)",
+    "cur_val": 3663.0,
+    "master": -2718.0,
+    "master_cur": 3663.0,
+    "ncand": 1,
+    "raw_prior": [
+     11210.0,
+     13928.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0104_농협생명보험_20250331003065/20250331003065.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": -18229.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -3850.0,
+    "cites": [
+     {
+      "line": 28415,
+      "printed": "15,471",
+      "tr": 28411,
+      "label": "재보험수익발생재보험금",
+      "table": 28348,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 28495,
+      "printed": "19,321",
+      "tr": 28491,
+      "label": "재보험비용회수예상보험금",
+      "table": 28348,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L28348) ; POS col 0->1 of 2 (table@L28348)",
+    "cur_val": 3867.0,
+    "master": -3850.0,
+    "master_cur": 3867.0,
+    "ncand": 1,
+    "raw_prior": [
+     15471.0,
+     19321.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0104|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0104_농협생명보험/20250515001350.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 37056.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 2076.0,
+    "cites": [
+     {
+      "line": 17973,
+      "printed": "2,875",
+      "tr": 17969,
+      "label": "재보험수익발생재보험금",
+      "table": 17906,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 18053,
+      "printed": "799",
+      "tr": 18049,
+      "label": "재보험비용회수예상보험금",
+      "table": 17906,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L17906) ; POS col 0->1 of 2 (table@L17906)",
+    "cur_val": -281.0,
+    "master": 2076.0,
+    "master_cur": -281.0,
+    "ncand": 1,
+    "raw_prior": [
+     2875.0,
+     799.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0104_농협생명보험/20250814002779.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 84784.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 3533.0,
+    "cites": [
+     {
+      "line": 19691,
+      "printed": "5,744",
+      "tr": 19685,
+      "label": "재보험수익발생재보험금",
+      "table": 19599,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 19797,
+      "printed": "2,211",
+      "tr": 19791,
+      "label": "재보험비용회수예상보험금",
+      "table": 19599,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L19599) ; POS col 1->3 of 4 (table@L19599)",
+    "cur_val": -1381.0,
+    "master": 3533.0,
+    "master_cur": -1381.0,
+    "ncand": 1,
+    "raw_prior": [
+     5744.0,
+     2211.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0104_농협생명보험/20251114000905.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 117025.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 3663.0,
+    "cites": [
+     {
+      "line": 15550,
+      "printed": "9,411",
+      "tr": 15544,
+      "label": "재보험수익발생재보험금",
+      "table": 15458,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 15656,
+      "printed": "5,748",
+      "tr": 15650,
+      "label": "재보험비용회수예상보험금",
+      "table": 15458,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L15458) ; POS col 1->3 of 4 (table@L15458)",
+    "cur_val": 90.0,
+    "master": 3663.0,
+    "master_cur": 90.0,
+    "ncand": 1,
+    "raw_prior": [
+     9411.0,
+     5748.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0104_농협생명보험_20260331002277/20260331002277.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 143445.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 3867.0,
+    "cites": [
+     {
+      "line": 24972,
+      "printed": "13,469",
+      "tr": 24968,
+      "label": "재보험수익발생재보험금",
+      "table": 24905,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 25052,
+      "printed": "9,602",
+      "tr": 25048,
+      "label": "재보험비용회수예상보험금",
+      "table": 24905,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L24905) ; POS col 0->1 of 2 (table@L24905)",
+    "cur_val": 534.0,
+    "master": 3867.0,
+    "master_cur": 534.0,
+    "ncand": 1,
+    "raw_prior": [
+     13469.0,
+     9602.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0104|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0104_농협생명보험/xml/20260601001440.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 17363.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -281.0,
+    "cites": [
+     {
+      "line": 17079,
+      "printed": "2,925",
+      "tr": 17075,
+      "label": "재보험수익발생재보험금",
+      "table": 17012,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     },
+     {
+      "line": 17159,
+      "printed": "3,206",
+      "tr": 17155,
+      "label": "재보험비용회수예상보험금",
+      "table": 17012,
+      "unit": "백만원",
+      "col": 1,
+      "ncol": 2
+     }
+    ],
+    "how": "POS col 0->1 of 2 (table@L17012) ; POS col 0->1 of 2 (table@L17012)",
+    "cur_val": 805.0,
+    "master": -281.0,
+    "master_cur": 805.0,
+    "ncand": 1,
+    "raw_prior": [
+     2925.0,
+     3206.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0104|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0104_농협생명보험/20260814003072.xml",
+  "items": {
+   "6": {
+    "status": "UNCAL",
+    "why": "no occurrence/column reproduces the master at quarter+4",
+    "master": 44454.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -1381.0,
+    "cites": [
+     {
+      "line": 18407,
+      "printed": "5,761",
+      "tr": 18401,
+      "label": "재보험수익발생재보험금",
+      "table": 18315,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     },
+     {
+      "line": 18513,
+      "printed": "7,142",
+      "tr": 18507,
+      "label": "재보험비용회수예상보험금",
+      "table": 18315,
+      "unit": "백만원",
+      "col": 3,
+      "ncol": 4
+     }
+    ],
+    "how": "POS col 1->3 of 4 (table@L18315) ; POS col 1->3 of 4 (table@L18315)",
+    "cur_val": 1278.0,
+    "master": -1381.0,
+    "master_cur": 1278.0,
+    "ncand": 1,
+    "raw_prior": [
+     5761.0,
+     7142.0
+    ]
+   }
+  },
+  "err": null,
+  "blocks": 9
+ }
+}

@@ -1,0 +1,4893 @@
+{
+ "KR0003|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0003_롯데손해보험/20241114002408.xml",
+  "items": {
+   "4": {
+    "status": "OK",
+    "val": 131623.0,
+    "raw": [
+     131623.0
+    ],
+    "cells": [
+     [
+      21059,
+      "131,623"
+     ]
+    ],
+    "tr": [
+     21056
+    ],
+    "how": "TWIN block@L20608 -> block@L20966 col 1",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "5",
+     "11",
+     "10"
+    ],
+    "cur_val": 171871.0,
+    "cur_cells": [
+     [
+      20701,
+      "171,871"
+     ]
+    ],
+    "prior_hdr": "(단위:백만원)구분장기일반자동차합계3개월누적3개월누적3개월누적3개월누적보험수익일반모형적용보험수익351,7321,003,391----351,732",
+    "prior_cap": "25.보험손익및재보험손익당분기와전분기중보험손익및재보험손익의상세내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 131623.0,
+    "master_cur": 171048.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0003|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0003_롯데손해보험_20250320001732/20250320001732.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -737.0,
+    "raw": [
+     -737.0
+    ],
+    "cells": [
+     [
+      25531,
+      "(737)"
+     ]
+    ],
+    "tr": [
+     25529
+    ],
+    "how": "TWIN block@L25086 -> block@L25326 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": -1060.0,
+    "cur_cells": [
+     [
+      25291,
+      "1,060"
+     ]
+    ],
+    "prior_hdr": "(단위:백만원)구분장기일반자동차합계보험수익일반모형적용보험수익1,363,933--1,363,933예상보험금및예상기타보험서비스비용948,427--9",
+    "prior_cap": "31.보험손익및재보험손익당기와전기중보험손익및재보험손익의구성내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -737.0,
+    "master_cur": -1060.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -2914.0,
+    "raw": [
+     37165.0,
+     40079.0
+    ],
+    "cells": [
+     [
+      25475,
+      "37,165"
+     ],
+     [
+      25523,
+      "40,079"
+     ]
+    ],
+    "tr": [
+     25473,
+     25521
+    ],
+    "how": "TWIN block@L25086 -> block@L25326 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": 1073.0,
+    "cur_cells": [
+     [
+      25235,
+      "48,827"
+     ],
+     [
+      25283,
+      "47,754"
+     ]
+    ],
+    "prior_hdr": "(단위:백만원)구분장기일반자동차합계보험수익일반모형적용보험수익1,363,933--1,363,933예상보험금및예상기타보험서비스비용948,427--9",
+    "prior_cap": "31.보험손익및재보험손익당기와전기중보험손익및재보험손익의구성내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -2914.0,
+    "master_cur": 1073.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 185905.0,
+    "raw": [
+     185905.0
+    ],
+    "cells": [
+     [
+      25387,
+      "185,905"
+     ]
+    ],
+    "tr": [
+     25385
+    ],
+    "how": "TWIN block@L25086 -> block@L25326 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": 225448.0,
+    "cur_cells": [
+     [
+      25147,
+      "225,448"
+     ]
+    ],
+    "prior_hdr": "(단위:백만원)구분장기일반자동차합계보험수익일반모형적용보험수익1,363,933--1,363,933예상보험금및예상기타보험서비스비용948,427--9",
+    "prior_cap": "31.보험손익및재보험손익당기와전기중보험손익및재보험손익의구성내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 185905.0,
+    "master_cur": 225448.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 19517.0,
+    "raw": [
+     19517.0
+    ],
+    "cells": [
+     [
+      25379,
+      "19,517"
+     ]
+    ],
+    "tr": [
+     25377
+    ],
+    "how": "TWIN block@L25086 -> block@L25326 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": 27297.0,
+    "cur_cells": [
+     [
+      25139,
+      "27,297"
+     ]
+    ],
+    "prior_hdr": "(단위:백만원)구분장기일반자동차합계보험수익일반모형적용보험수익1,363,933--1,363,933예상보험금및예상기타보험서비스비용948,427--9",
+    "prior_cap": "31.보험손익및재보험손익당기와전기중보험손익및재보험손익의구성내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 19517.0,
+    "master_cur": 27297.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 51324.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -1973.0,
+    "raw": [
+     1973.0
+    ],
+    "cells": [
+     [
+      25539,
+      "1,973"
+     ]
+    ],
+    "tr": [
+     25537
+    ],
+    "how": "TWIN block@L25086 -> block@L25326 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": -2989.0,
+    "cur_cells": [
+     [
+      25299,
+      "2,989"
+     ]
+    ],
+    "prior_hdr": "(단위:백만원)구분장기일반자동차합계보험수익일반모형적용보험수익1,363,933--1,363,933예상보험금및예상기타보험서비스비용948,427--9",
+    "prior_cap": "31.보험손익및재보험손익당기와전기중보험손익및재보험손익의구성내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -1973.0,
+    "master_cur": -2989.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0003|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0003_롯데손해보험_20260319001293/20260319001293.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -1060.0,
+    "raw": [
+     1060.0
+    ],
+    "cells": [
+     [
+      42108,
+      "1,060"
+     ]
+    ],
+    "tr": [
+     42106
+    ],
+    "how": "TWIN block@L41906 -> block@L42034 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "10",
+     "9"
+    ],
+    "cur_val": -2035.0,
+    "cur_cells": [
+     [
+      41980,
+      "2,035"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분보유재보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약계약의유형계약의유형합계장기일반자동차",
+    "prior_cap": "(3)당기와전기중관계기업의요약재무정보는다음과같습니다.",
+    "unit": "백만원",
+    "master": -1060.0,
+    "master_cur": -2035.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 1073.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 225448.0,
+    "raw": [
+     225448.0
+    ],
+    "cells": [
+     [
+      40960,
+      "225,448"
+     ]
+    ],
+    "tr": [
+     40958
+    ],
+    "how": "TWIN block@L40742 -> block@L40878 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5"
+    ],
+    "cur_val": 213943.0,
+    "cur_cells": [
+     [
+      40824,
+      "213,943"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약계약의유형계약의유형합계장기일반자동차",
+    "prior_cap": "(3)당기와전기중관계기업의요약재무정보는다음과같습니다.",
+    "unit": "백만원",
+    "master": 225448.0,
+    "master_cur": 213943.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 27297.0,
+    "raw": [
+     27297.0
+    ],
+    "cells": [
+     [
+      40952,
+      "27,297"
+     ]
+    ],
+    "tr": [
+     40950
+    ],
+    "how": "TWIN block@L40742 -> block@L40878 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5"
+    ],
+    "cur_val": 31666.0,
+    "cur_cells": [
+     [
+      40816,
+      "31,666"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약계약의유형계약의유형합계장기일반자동차",
+    "prior_cap": "(3)당기와전기중관계기업의요약재무정보는다음과같습니다.",
+    "unit": "백만원",
+    "master": 27297.0,
+    "master_cur": 31666.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 2865.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -2989.0,
+    "raw": [
+     2989.0
+    ],
+    "cells": [
+     [
+      42116,
+      "2,989"
+     ]
+    ],
+    "tr": [
+     42114
+    ],
+    "how": "TWIN block@L41906 -> block@L42034 col 0",
+    "cal": "SELF",
+    "cal_items": [
+     "10",
+     "9"
+    ],
+    "cur_val": -2265.0,
+    "cur_cells": [
+     [
+      41988,
+      "(2,265)"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분보유재보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약계약의유형계약의유형합계장기일반자동차",
+    "prior_cap": "(3)당기와전기중관계기업의요약재무정보는다음과같습니다.",
+    "unit": "백만원",
+    "master": -2989.0,
+    "master_cur": -2265.0
+   }
+  },
+  "err": null,
+  "blocks": 24
+ },
+ "KR0005|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 757.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -47.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 155579.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 21143.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 110026.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 7666.0
+   }
+  },
+  "err": null,
+  "blocks": 14
+ },
+ "KR0005|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 683.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 2804.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 210807.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 30661.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 127166.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 11459.0
+   }
+  },
+  "err": null,
+  "blocks": 14
+ },
+ "KR0005|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -367.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -6406.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 57613.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 7564.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 37194.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 3900.0
+   }
+  },
+  "err": null,
+  "blocks": 14
+ },
+ "KR0005|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -751.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -6865.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 114554.0,
+    "raw": [
+     114554.0
+    ],
+    "cells": [
+     [
+      53993,
+      "114,554"
+     ]
+    ],
+    "tr": [
+     53982
+    ],
+    "how": "TWIN block@L52049 -> block@L53141 col 1",
+    "cal": "SELF",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 115093.0,
+    "cur_cells": [
+     [
+      52901,
+      "115,093"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "-해당사항없음",
+    "unit": "백만원",
+    "master": 114554.0,
+    "master_cur": 115093.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 15370.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 62785.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -7798.0,
+    "raw": [
+     -7798.0
+    ],
+    "cells": [
+     [
+      59532,
+      "(7,798)"
+     ]
+    ],
+    "tr": [
+     59521
+    ],
+    "how": "TWIN block@L58074 -> block@L58923 col 1",
+    "cal": "SELF",
+    "cal_items": [
+     "9"
+    ],
+    "cur_val": -11592.0,
+    "cur_cells": [
+     [
+      58683,
+      "(11,592)"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분보유재보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "-해당사항없음",
+    "unit": "백만원",
+    "master": 7798.0,
+    "master_cur": 11592.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0005|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0005_흥국화재/xml/20251114002501.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1146.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -7371.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 170314.0,
+    "raw": [
+     170314.0
+    ],
+    "cells": [
+     [
+      28103,
+      "170,314"
+     ]
+    ],
+    "tr": [
+     28100
+    ],
+    "how": "TWIN block@L27364 -> block@L27778 col 1",
+    "cal": "SELF",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 175546.0,
+    "cur_cells": [
+     [
+      27689,
+      "175,546"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "-해당사항없음",
+    "unit": "백만원",
+    "master": 170314.0,
+    "master_cur": 175546.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 23625.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 82856.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -11570.0,
+    "raw": [
+     -11570.0
+    ],
+    "cells": [
+     [
+      30337,
+      "(11,570)"
+     ]
+    ],
+    "tr": [
+     30334
+    ],
+    "how": "TWIN block@L29736 -> block@L30081 col 1",
+    "cal": "SELF",
+    "cal_items": [
+     "9"
+    ],
+    "cur_val": -8421.0,
+    "cur_cells": [
+     [
+      29992,
+      "(8,421)"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분보유재보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "-해당사항없음",
+    "unit": "백만원",
+    "master": 11571.0,
+    "master_cur": 8421.0
+   }
+  },
+  "err": null,
+  "blocks": 12
+ },
+ "KR0009|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -15460.571360999998
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -190242.60050099998
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0032|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1357.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 1017.0
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0032|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0032_NH농협손해보험_20250331003247/20250331003247.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -4746.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -16644.0
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0032|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0032_NH농협손해보험/20250515001078.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -2824.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 3820.0
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0032|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0032_NH농협손해보험/20250814001701.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -8075.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 9014.0
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0032|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0032_NH농협손해보험/20251114001790.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -15013.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 17399.0
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0032|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0032_NH농협손해보험_20260331004099/20260331004099.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -18388.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 14135.0
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0068|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -165.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 14347.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 225103.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -60739.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -2497.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0068|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -343.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 23426.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 451415.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -28753.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -6239.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0068|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -616.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 29734.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 668342.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 92337.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -20395.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -15116.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0068|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0068_한화생명_20250312000939/20250312000939.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -785.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 34761.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 887710.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 117663.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -39299.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -4755.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0068|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0068_한화생명_20260316001304/20260316001304.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -961.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 28224.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 851918.0,
+    "raw": [
+     851918.0
+    ],
+    "cells": [
+     [
+      176013,
+      "851,918"
+     ]
+    ],
+    "tr": [
+     176006
+    ],
+    "how": "TWIN block@L175650 -> block@L175884 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 787290.0,
+    "cur_cells": [
+     [
+      175779,
+      "787,290"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "(*)시장가격이존재하지않는전환우선주190,000백만원은제외되었습니다.",
+    "unit": "백만원",
+    "master": 851918.0,
+    "master_cur": 787290.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 138133.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -51261.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -22462.0,
+    "raw": [
+     22462.0
+    ],
+    "cells": [
+     [
+      177257,
+      "22,462"
+     ]
+    ],
+    "tr": [
+     177252
+    ],
+    "how": "TWIN block@L177020 -> block@L177170 col 3",
+    "cal": "SELF",
+    "cal_items": [
+     "9"
+    ],
+    "cur_val": -31505.0,
+    "cur_cells": [
+     [
+      177107,
+      "31,505"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분보유재보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "(*)시장가격이존재하지않는전환우선주190,000백만원은제외되었습니다.",
+    "unit": "백만원",
+    "master": -22462.0,
+    "master_cur": -31505.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0068|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0068_한화생명/xml/20260529001672.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -272.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 9889.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 198639.0,
+    "raw": [
+     198639.0
+    ],
+    "cells": [
+     [
+      127965,
+      "198,639"
+     ]
+    ],
+    "tr": [
+     127958
+    ],
+    "how": "TWIN block@L127602 -> block@L127836 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 191441.0,
+    "cur_cells": [
+     [
+      127731,
+      "191,441"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "(*)시장가격이존재하지않는전환우선주190,000백만원은제외되었습니다.",
+    "unit": "백만원",
+    "master": 198639.0,
+    "master_cur": 191441.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 38878.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -70022.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -7087.0,
+    "raw": [
+     7087.0
+    ],
+    "cells": [
+     [
+      129259,
+      "7,087"
+     ]
+    ],
+    "tr": [
+     129254
+    ],
+    "how": "TWIN block@L129010 -> block@L129172 col 3",
+    "cal": "SELF",
+    "cal_items": [
+     "9"
+    ],
+    "cur_val": -9275.0,
+    "cur_cells": [
+     [
+      129097,
+      "9,275"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분보유재보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약의유형계약의유형합계계약의유형계약의유형합계",
+    "prior_cap": "(*)시장가격이존재하지않는전환우선주190,000백만원은제외되었습니다.",
+    "unit": "백만원",
+    "master": -7087.0,
+    "master_cur": -9275.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0068|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0068_한화생명/20260813001536.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -559.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 15031.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 394479.0,
+    "raw": [
+     394479.0
+    ],
+    "cells": [
+     [
+      134720,
+      "394,479"
+     ]
+    ],
+    "tr": [
+     134707
+    ],
+    "how": "TWIN block@L134137 -> block@L134508 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 373026.0,
+    "cur_cells": [
+     [
+      134349,
+      "373,026"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약유형계약유형합계계약유형계약유형합계사망보험",
+    "prior_cap": "(*)시장가격이존재하지않는전환우선주190,000백만원은제외되었습니다.",
+    "unit": "백만원",
+    "master": 394479.0,
+    "master_cur": 373026.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 76066.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -123351.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -14304.0,
+    "raw": [
+     14304.0
+    ],
+    "cells": [
+     [
+      136548,
+      "14,304"
+     ]
+    ],
+    "tr": [
+     136539
+    ],
+    "how": "TWIN block@L136195 -> block@L136413 col 7",
+    "cal": "SELF",
+    "cal_items": [
+     "9"
+    ],
+    "cur_val": -18245.0,
+    "cur_cells": [
+     [
+      136330,
+      "18,245"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분보유재보험계약보험계약보험료배분접근법을적용한보험계약외의보험계약보험료배분접근법을적용한보험계약계약유형계약유형합계계약유형계약유형합계사망보험",
+    "prior_cap": "(*)시장가격이존재하지않는전환우선주190,000백만원은제외되었습니다.",
+    "unit": "백만원",
+    "master": -14304.0,
+    "master_cur": -18245.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0069|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0069_삼성생명/xml/20260515002696.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -3026.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1956.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 361079.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 85207.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -408.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -17210.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0069|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0069_삼성생명/20260814003263.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -5551.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 831.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 743661.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 169050.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 51489.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -32746.0
+   }
+  },
+  "err": null,
+  "blocks": 20
+ },
+ "KR0070|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml",
+  "items": {
+   "5": {
+    "status": "OK",
+    "val": 3593.0,
+    "raw": [
+     3593.0
+    ],
+    "cells": [
+     [
+      41492,
+      "3,593"
+     ]
+    ],
+    "tr": [
+     41489
+    ],
+    "how": "POS block@L41440 col 0->1 of 2",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 3275.0,
+    "cur_cells": [
+     [
+      41491,
+      "3,275"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기보험수익예상보험금88,42886,459예상손해조사비1,3381,738예상계약유지비22,76117,220예상투자관리비2,7652,9",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 3593.0,
+    "master_cur": 196.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -7470.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml",
+  "items": {
+   "5": {
+    "status": "OK",
+    "val": 7449.0,
+    "raw": [
+     7449.0
+    ],
+    "cells": [
+     [
+      43172,
+      "7,449"
+     ]
+    ],
+    "tr": [
+     43167
+    ],
+    "how": "POS block@L43099 col 1->3 of 4",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 6556.0,
+    "cur_cells": [
+     [
+      43170,
+      "6,556"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금89,148177,57687,011173,470예상손해조사비1,3442,6821,7333,471",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 7449.0,
+    "master_cur": 369.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -13186.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml",
+  "items": {
+   "5": {
+    "status": "OK",
+    "val": 11921.0,
+    "raw": [
+     11921.0
+    ],
+    "cells": [
+     [
+      42240,
+      "11,921"
+     ]
+    ],
+    "tr": [
+     42235
+    ],
+    "how": "POS block@L42167 col 1->3 of 4",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 9661.0,
+    "cur_cells": [
+     [
+      42238,
+      "9,661"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기3개월누적3개월누적보험수익예상보험금91,201268,77788,687262,157예상손해조사비1,3544,0361,7345,205",
+    "prior_cap": "(1)당분기와전분기중보험영업수익은다음과같습니다.",
+    "unit": "백만원",
+    "master": 11921.0,
+    "master_cur": 578.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -18428.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml",
+  "items": {
+   "5": {
+    "status": "OK",
+    "val": 16883.0,
+    "raw": [
+     16883.0
+    ],
+    "cells": [
+     [
+      58276,
+      "16,883"
+     ]
+    ],
+    "tr": [
+     58273
+    ],
+    "how": "POS block@L58224 col 0->1 of 2",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 13655.0,
+    "cur_cells": [
+     [
+      58275,
+      "13,655"
+     ]
+    ],
+    "prior_hdr": "구분당기전기보험수익예상보험금359,217351,176예상손해조사비5,8546,546예상계약유지비85,67674,077예상투자관리비11,33211",
+    "prior_cap": "27.보험영업수익과보험영업비용(1)당기와전기중보험영업수익은다음과같습니다.",
+    "unit": "백만원",
+    "master": 16883.0,
+    "master_cur": 12282.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -19665.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 719.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 3275.0,
+    "raw": [
+     3275.0
+    ],
+    "cells": [
+     [
+      42928,
+      "3,275"
+     ]
+    ],
+    "tr": [
+     42925
+    ],
+    "how": "POS block@L42876 col 0->1 of 2",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 2592.0,
+    "cur_cells": [
+     [
+      42927,
+      "2,592"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기보험수익예상보험금93,35388,428예상손해조사비1,8671,338예상계약유지비22,30422,761예상투자관리비2,9662,7",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 196.0,
+    "master_cur": 3059.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 1341.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 338.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 6556.0,
+    "raw": [
+     6556.0
+    ],
+    "cells": [
+     [
+      46732,
+      "6,556"
+     ]
+    ],
+    "tr": [
+     46727
+    ],
+    "how": "POS block@L46659 col 1->3 of 4",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 4605.0,
+    "cur_cells": [
+     [
+      46730,
+      "4,605"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금96,164189,51789,148177,576예상손해조사비1,9183,7861,3442,682",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 369.0,
+    "master_cur": 6034.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 1273.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -829.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 9661.0,
+    "raw": [
+     9661.0
+    ],
+    "cells": [
+     [
+      37175,
+      "9,661"
+     ]
+    ],
+    "tr": [
+     37170
+    ],
+    "how": "POS block@L37102 col 1->3 of 4",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 7271.0,
+    "cur_cells": [
+     [
+      37173,
+      "7,271"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기3개월누적3개월누적보험수익예상보험금103,685293,20291,201268,777예상손해조사비1,9515,7371,3544,03",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 578.0,
+    "master_cur": 8826.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 3703.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0070_에이비엘생명보험_20260331003080/20260331003080.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1328.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 13655.0,
+    "raw": [
+     13655.0
+    ],
+    "cells": [
+     [
+      65673,
+      "13,655"
+     ]
+    ],
+    "tr": [
+     65670
+    ],
+    "how": "POS block@L65621 col 0->1 of 2",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 9587.0,
+    "cur_cells": [
+     [
+      65672,
+      "9,587"
+     ]
+    ],
+    "prior_hdr": "구분당기전기보험수익예상보험금395,923359,217예상손해조사비7,7175,854예상계약유지비90,73385,676예상투자관리비12,14311",
+    "prior_cap": "27.보험영업수익과보험영업비용(1)당기와전기중보험영업수익은다음과같습니다.",
+    "unit": "백만원",
+    "master": 12282.0,
+    "master_cur": 8346.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 586.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 170.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 2592.0,
+    "raw": [
+     2592.0
+    ],
+    "cells": [
+     [
+      43023,
+      "2,592"
+     ]
+    ],
+    "tr": [
+     43020
+    ],
+    "how": "POS block@L42971 col 0->1 of 2",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 2248.0,
+    "cur_cells": [
+     [
+      43022,
+      "2,248"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기보험수익예상보험금107,47593,353예상손해조사비1,9661,867예상계약유지비22,51422,304예상투자관리비3,2072,",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 3059.0,
+    "master_cur": 1953.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -3591.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0070|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml",
+  "items": {
+   "10": {
+    "status": "NOPRIOR",
+    "why": "calibrated current block@L38306 col 1 but no twin/prior half found",
+    "master": -1223.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 1003.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 40080.0,
+    "raw": [
+     40080.0
+    ],
+    "cells": [
+     [
+      38199,
+      "40,080"
+     ]
+    ],
+    "tr": [
+     38194
+    ],
+    "how": "POS block@L38130 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 47138.0,
+    "cur_cells": [
+     [
+      38197,
+      "47,138"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금109,188216,66496,164189,517예상손해조사비1,9873,9521,9183,78",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 40080.0,
+    "master_cur": 47138.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 4605.0,
+    "raw": [
+     4605.0
+    ],
+    "cells": [
+     [
+      38192,
+      "4,605"
+     ]
+    ],
+    "tr": [
+     38187
+    ],
+    "how": "POS block@L38130 col 1->3 of 4",
+    "cal": "COLUMN_FROM_OTHER_ITEMS",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 4081.0,
+    "cur_cells": [
+     [
+      38190,
+      "4,081"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금109,188216,66496,164189,517예상손해조사비1,9873,9521,9183,78",
+    "prior_cap": "(2)이익준비금당사는자본금의50%에달할때까지매결산기에금전에의한이익배당액의10%이상을이익준비금으로적립하도록규정되어있습니다.동이익준비금은현금으로배당",
+    "unit": "백만원",
+    "master": 6034.0,
+    "master_cur": 3770.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -9198.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -6541.0,
+    "raw": [
+     6541.0
+    ],
+    "cells": [
+     [
+      38438,
+      "6,541"
+     ]
+    ],
+    "tr": [
+     38433
+    ],
+    "how": "POS block@L38306 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "9"
+    ],
+    "cur_val": -6875.0,
+    "cur_cells": [
+     [
+      38436,
+      "6,875"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험서비스비용발생보험금110,519211,677101,422199,750발생손해조사비2,3754,5471,872",
+    "prior_cap": "(2)당반기와전반기중보험영업비용은다음과같습니다.",
+    "unit": "백만원",
+    "master": -6541.0,
+    "master_cur": -6876.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0071|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0071_흥국생명보험/xml/20260529002156.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 657.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -17436.0
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0071|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0071_흥국생명보험/20260814003688.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -176.0,
+    "raw": [
+     176.0
+    ],
+    "cells": [
+     [
+      30785,
+      "176"
+     ]
+    ],
+    "tr": [
+     30780
+    ],
+    "how": "POS block@L30611 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": -565.0,
+    "cur_cells": [
+     [
+      30783,
+      "565"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및보험서비스비용187,439365,933150,344295,664위험해제로인한위험조정의변동6,9",
+    "prior_cap": "(7)당반기와전반기의보험서비스결과의상세내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -176.0,
+    "master_cur": -565.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 4199.0,
+    "raw": [
+     46913.0,
+     42714.0
+    ],
+    "cells": [
+     [
+      30743,
+      "46,913"
+     ],
+     [
+      30778,
+      "42,714"
+     ]
+    ],
+    "tr": [
+     30738,
+     30773
+    ],
+    "how": "POS block@L30611 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": -8735.0,
+    "cur_cells": [
+     [
+      30741,
+      "40,202"
+     ],
+     [
+      30776,
+      "48,937"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및보험서비스비용187,439365,933150,344295,664위험해제로인한위험조정의변동6,9",
+    "prior_cap": "(7)당반기와전반기의보험서비스결과의상세내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 4199.0,
+    "master_cur": -8735.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 112745.0,
+    "raw": [
+     112745.0
+    ],
+    "cells": [
+     [
+      30659,
+      "112,745"
+     ]
+    ],
+    "tr": [
+     30654
+    ],
+    "how": "POS block@L30611 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": 109578.0,
+    "cur_cells": [
+     [
+      30657,
+      "109,578"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및보험서비스비용187,439365,933150,344295,664위험해제로인한위험조정의변동6,9",
+    "prior_cap": "(7)당반기와전반기의보험서비스결과의상세내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 112745.0,
+    "master_cur": 109578.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 8778.0,
+    "raw": [
+     8778.0
+    ],
+    "cells": [
+     [
+      30652,
+      "8,778"
+     ]
+    ],
+    "tr": [
+     30647
+    ],
+    "how": "POS block@L30611 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": 12653.0,
+    "cur_cells": [
+     [
+      30650,
+      "12,653"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및보험서비스비용187,439365,933150,344295,664위험해제로인한위험조정의변동6,9",
+    "prior_cap": "(7)당반기와전반기의보험서비스결과의상세내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 8778.0,
+    "master_cur": 12653.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -39054.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -4031.0,
+    "raw": [
+     4031.0
+    ],
+    "cells": [
+     [
+      30792,
+      "4,031"
+     ]
+    ],
+    "tr": [
+     30787
+    ],
+    "how": "POS block@L30611 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "9"
+    ],
+    "cur_val": -780.0,
+    "cur_cells": [
+     [
+      30790,
+      "780"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및보험서비스비용187,439365,933150,344295,664위험해제로인한위험조정의변동6,9",
+    "prior_cap": "(7)당반기와전반기의보험서비스결과의상세내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -4031.0,
+    "master_cur": -780.0
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0072|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0072_케이디비생명보험_20260331004180/20260331004180.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1186.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -4218.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 18566.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -290.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0079|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0079_미래에셋생명_20250318001228/20250318001228.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -817.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 0.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 197764.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 46004.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -2202.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0079|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0079_미래에셋생명/20250515001717.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -206.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 0.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 50759.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 11243.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -755.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0079|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0079_미래에셋생명/xml/20250814003532.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -47.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 0.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 100696.379902
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 21971.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1486.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0079|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0079_미래에셋생명/xml/20251114002791.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -292.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 0.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 148712.819524
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 32632.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -2321.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0079|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0079_미래에셋생명_20260318001664/20260318001664.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -442.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 0.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 197691.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 43275.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -4674.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0082|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -39.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 3400.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -19999.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1205.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0082|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -155.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 4676.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -32074.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -2378.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0082|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0082_DB생명보험/20241114001831.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -201.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 6108.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -43560.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -3507.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0082|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0082_DB생명보험_20250328002241/20250328002241.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -148.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 7582.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -57750.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -4220.0
+   }
+  },
+  "err": null,
+  "blocks": 0
+ },
+ "KR0083|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0083_푸본현대생명보험/20250515002207.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 165.0
+   },
+   "6": {
+    "status": "OK",
+    "val": -493.0,
+    "raw": [
+     24753.0,
+     25246.0
+    ],
+    "cells": [
+     [
+      37414,
+      "24,753"
+     ],
+     [
+      37474,
+      "25,246"
+     ]
+    ],
+    "tr": [
+     37411,
+     37471
+    ],
+    "how": "POS block@L37386 col 0->1 of 2",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "6"
+    ],
+    "cur_val": -1657.0,
+    "cur_cells": [
+     [
+      37413,
+      "24,997"
+     ],
+     [
+      37473,
+      "26,654"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기보험수익예상발생보험금24,99724,753예상손해조사비795586예상계약유지비13,17713,212예상투자관리비4,8784,736",
+    "prior_cap": "당분기와전분기중보험수익및보험서비스비용의구성내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -493.0,
+    "master_cur": -1657.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0083|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0083_푸본현대생명보험/20250814001834.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 296.0
+   },
+   "6": {
+    "status": "OK",
+    "val": -587.0,
+    "raw": [
+     49681.0,
+     50268.0
+    ],
+    "cells": [
+     [
+      39314,
+      "49,681"
+     ],
+     [
+      39390,
+      "50,268"
+     ]
+    ],
+    "tr": [
+     39309,
+     39385
+    ],
+    "how": "POS block@L39277 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "6"
+    ],
+    "cur_val": -2767.0,
+    "cur_cells": [
+     [
+      39312,
+      "50,302"
+     ],
+     [
+      39388,
+      "53,069"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상발생보험금25,30550,30224,92749,681예상손해조사비8101,6055871,173예상계약",
+    "prior_cap": "당반기와전반기중보험수익및보험비용의구성내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -587.0,
+    "master_cur": -2767.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0083|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0083_푸본현대생명보험/20251114001046.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 199.0
+   },
+   "6": {
+    "status": "OK",
+    "val": 1382.0,
+    "raw": [
+     75568.0,
+     74186.0
+    ],
+    "cells": [
+     [
+      33601,
+      "75,568"
+     ],
+     [
+      33677,
+      "74,186"
+     ]
+    ],
+    "tr": [
+     33596,
+     33672
+    ],
+    "how": "POS block@L33564 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "6"
+    ],
+    "cur_val": -5710.0,
+    "cur_cells": [
+     [
+      33599,
+      "76,904"
+     ],
+     [
+      33675,
+      "82,614"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기3개월누적3개월누적보험수익예상발생보험금26,60276,90425,88875,568예상손해조사비8202,4255871,760예상계약",
+    "prior_cap": "당분기와전분기중보험수익및보험비용의구성내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 1382.0,
+    "master_cur": -5710.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0083|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0083_푸본현대생명보험_20260331002089/20260331002089.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 1617.0
+   },
+   "6": {
+    "status": "OK",
+    "val": 1594.0,
+    "raw": [
+     101578.0,
+     99984.0
+    ],
+    "cells": [
+     [
+      54582,
+      "101,578"
+     ],
+     [
+      54640,
+      "99,984"
+     ]
+    ],
+    "tr": [
+     54579,
+     54637
+    ],
+    "how": "POS block@L54556 col 0->1 of 2",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "6"
+    ],
+    "cur_val": -5928.0,
+    "cur_cells": [
+     [
+      54581,
+      "103,489"
+     ],
+     [
+      54639,
+      "109,417"
+     ]
+    ],
+    "prior_hdr": "구분당기전기보험수익예상발생보험금103,489101,578예상손해조사비3,2502,347예상계약유지비56,38950,843예상투자관리비19,619",
+    "prior_cap": "당기와전기중보험수익및보험비용의구성내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 1594.0,
+    "master_cur": -5928.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0087|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0087_동양생명_20250319000486/20250319000486.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 1400.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1306.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 17036.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -2185.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0087|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 3805.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 831.0
+   }
+  },
+  "err": null,
+  "blocks": 5
+ },
+ "KR0087|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 523.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 129439.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 11829.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 11278.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0087|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -479.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 196194.0,
+    "raw": [
+     196194.0
+    ],
+    "cells": [
+     [
+      63350,
+      "196,194"
+     ]
+    ],
+    "tr": [
+     63347
+    ],
+    "how": "TWIN block@L63197 -> block@L63300 col 1",
+    "cal": "SELF",
+    "cal_items": [
+     "4"
+    ],
+    "cur_val": 189861.0,
+    "cur_cells": [
+     [
+      63247,
+      "189,861"
+     ]
+    ],
+    "prior_hdr": "보험계약의세분발행한보험계약3개월누적보험수익,예상보험금(기초예상측정치)142,451419,401보험수익,예상기타보험서비스비용(기초예상측정치)49,",
+    "prior_cap": "(*)전분기중종속기업투자자산의지분율변동으로실질적인지배력을상실하여관계기업투자자산으로재분류되었습니다.",
+    "unit": "백만원",
+    "master": 196194.0,
+    "master_cur": 189861.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 11840.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 5098.0
+   }
+  },
+  "err": null,
+  "blocks": 6
+ },
+ "KR0087|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0087_동양생명_20260313001227/20260313001227.xml",
+  "items": {
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 5758.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 20691.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0087|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0087_동양생명/20260529002292.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 295.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 3361.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 62318.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 11135.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -11385.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 461.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0087|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0087_동양생명/20260814003397.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -565.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 7026.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 126064.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 22144.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -10877.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -878.0
+   }
+  },
+  "err": null,
+  "blocks": 16
+ },
+ "KR0094|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0094_신한라이프생명보험/20260814001090.xml",
+  "items": {
+   "10": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -3182.0
+   },
+   "11": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 30270.0
+   },
+   "4": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 364712.0
+   },
+   "5": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 88072.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 58241.0
+   },
+   "9": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -14039.0
+   }
+  },
+  "err": null,
+  "blocks": 10
+ },
+ "KR0099|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -82.0,
+    "raw": [
+     -82.0
+    ],
+    "cells": [
+     [
+      38648,
+      "(82)"
+     ]
+    ],
+    "tr": [
+     38641
+    ],
+    "how": "TWIN_LOOSE block@L37925 -> block@L38325 col 3",
+    "cal": "SELF",
+    "cal_items": [
+     "10"
+    ],
+    "cur_val": -74.0,
+    "cur_cells": [
+     [
+      38248,
+      "(74)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용62,4758,0849,51521,410-101,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -82.0,
+    "master_cur": -74.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -618.0,
+    "raw": [
+     478.0,
+     -1096.0
+    ],
+    "cells": [
+     [
+      38560,
+      "478"
+     ],
+     [
+      38638,
+      "(1,096)"
+     ]
+    ],
+    "tr": [
+     38553,
+     38631
+    ],
+    "how": "TWIN_LOOSE block@L37925 -> block@L38325 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -339.0,
+    "cur_cells": [
+     [
+      38160,
+      "723"
+     ],
+     [
+      38238,
+      "(1,062)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용62,4758,0849,51521,410-101,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -618.0,
+    "master_cur": -339.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 68479.0,
+    "raw": [
+     68479.0
+    ],
+    "cells": [
+     [
+      38391,
+      "68,479"
+     ]
+    ],
+    "tr": [
+     38384
+    ],
+    "how": "TWIN_LOOSE block@L37925 -> block@L38325 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 71431.0,
+    "cur_cells": [
+     [
+      37991,
+      "71,431"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용62,4758,0849,51521,410-101,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 68479.0,
+    "master_cur": 71431.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 7750.0,
+    "raw": [
+     7750.0
+    ],
+    "cells": [
+     [
+      38381,
+      "7,750"
+     ]
+    ],
+    "tr": [
+     38374
+    ],
+    "how": "TWIN_LOOSE block@L37925 -> block@L38325 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 8619.0,
+    "cur_cells": [
+     [
+      37981,
+      "8,619"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용62,4758,0849,51521,410-101,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 7750.0,
+    "master_cur": 8619.0
+   },
+   "6": {
+    "status": "OK",
+    "val": 15077.0,
+    "raw": [
+     101484.0,
+     -86407.0
+    ],
+    "cells": [
+     [
+      38371,
+      "101,484"
+     ],
+     [
+      38472,
+      "(86,407)"
+     ]
+    ],
+    "tr": [
+     38364,
+     38465
+    ],
+    "how": "TWIN_LOOSE block@L37925 -> block@L38325 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 17790.0,
+    "cur_cells": [
+     [
+      37971,
+      "107,613"
+     ],
+     [
+      38072,
+      "(89,823)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용62,4758,0849,51521,410-101,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 15077.0,
+    "master_cur": 17790.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -1130.0,
+    "raw": [
+     -1130.0
+    ],
+    "cells": [
+     [
+      38658,
+      "(1,130)"
+     ]
+    ],
+    "tr": [
+     38651
+    ],
+    "how": "TWIN_LOOSE block@L37925 -> block@L38325 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -395.0,
+    "cur_cells": [
+     [
+      38258,
+      "(395)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용62,4758,0849,51521,410-101,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -1130.0,
+    "master_cur": -395.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -157.0,
+    "raw": [
+     -157.0
+    ],
+    "cells": [
+     [
+      42916,
+      "(157)"
+     ]
+    ],
+    "tr": [
+     42903
+    ],
+    "how": "TWIN_LOOSE block@L41805 -> block@L42420 col 9",
+    "cal": "SELF",
+    "cal_items": [
+     "10"
+    ],
+    "cur_val": -146.0,
+    "cur_cells": [
+     [
+      42301,
+      "(146)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용63,4868,2",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -157.0,
+    "master_cur": -146.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -645.0,
+    "raw": [
+     1610.0,
+     -2255.0
+    ],
+    "cells": [
+     [
+      42780,
+      "1,610"
+     ],
+     [
+      42900,
+      "(2,255)"
+     ]
+    ],
+    "tr": [
+     42767,
+     42887
+    ],
+    "how": "TWIN_LOOSE block@L41805 -> block@L42420 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 1142.0,
+    "cur_cells": [
+     [
+      42165,
+      "3,255"
+     ],
+     [
+      42285,
+      "(2,113)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용63,4868,2",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -645.0,
+    "master_cur": 1142.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 140581.0,
+    "raw": [
+     140581.0
+    ],
+    "cells": [
+     [
+      42521,
+      "140,581"
+     ]
+    ],
+    "tr": [
+     42508
+    ],
+    "how": "TWIN_LOOSE block@L41805 -> block@L42420 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 143582.0,
+    "cur_cells": [
+     [
+      41906,
+      "143,582"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용63,4868,2",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 140581.0,
+    "master_cur": 143582.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 15918.0,
+    "raw": [
+     15918.0
+    ],
+    "cells": [
+     [
+      42505,
+      "15,918"
+     ]
+    ],
+    "tr": [
+     42492
+    ],
+    "how": "TWIN_LOOSE block@L41805 -> block@L42420 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 17171.0,
+    "cur_cells": [
+     [
+      41890,
+      "17,171"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용63,4868,2",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 15918.0,
+    "master_cur": 17171.0
+   },
+   "6": {
+    "status": "OK",
+    "val": 17818.0,
+    "raw": [
+     203565.0,
+     -185747.0
+    ],
+    "cells": [
+     [
+      42489,
+      "203,565"
+     ],
+     [
+      42644,
+      "(185,747)"
+     ]
+    ],
+    "tr": [
+     42476,
+     42631
+    ],
+    "how": "TWIN_LOOSE block@L41805 -> block@L42420 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 33239.0,
+    "cur_cells": [
+     [
+      41874,
+      "215,546"
+     ],
+     [
+      42029,
+      "(182,307)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용63,4868,2",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 17818.0,
+    "master_cur": 33239.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -2248.0,
+    "raw": [
+     -2248.0
+    ],
+    "cells": [
+     [
+      42932,
+      "(2,248)"
+     ]
+    ],
+    "tr": [
+     42919
+    ],
+    "how": "TWIN_LOOSE block@L41805 -> block@L42420 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -1460.0,
+    "cur_cells": [
+     [
+      42317,
+      "(1,460)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용63,4868,2",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -2248.0,
+    "master_cur": -1460.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -220.0,
+    "raw": [
+     -220.0
+    ],
+    "cells": [
+     [
+      38887,
+      "(220)"
+     ]
+    ],
+    "tr": [
+     38874
+    ],
+    "how": "TWIN_LOOSE block@L37782 -> block@L38394 col 9",
+    "cal": "SELF",
+    "cal_items": [
+     "10"
+    ],
+    "cur_val": -215.0,
+    "cur_cells": [
+     [
+      38275,
+      "(215)"
+     ]
+    ],
+    "prior_hdr": "구분전분기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용64,7098,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -220.0,
+    "master_cur": -215.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -256.0,
+    "raw": [
+     3021.0,
+     -3277.0
+    ],
+    "cells": [
+     [
+      38751,
+      "3,021"
+     ],
+     [
+      38871,
+      "(3,277)"
+     ]
+    ],
+    "tr": [
+     38738,
+     38858
+    ],
+    "how": "TWIN_LOOSE block@L37782 -> block@L38394 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 1409.0,
+    "cur_cells": [
+     [
+      38139,
+      "4,573"
+     ],
+     [
+      38259,
+      "(3,164)"
+     ]
+    ],
+    "prior_hdr": "구분전분기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용64,7098,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -256.0,
+    "master_cur": 1409.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 214229.0,
+    "raw": [
+     214229.0
+    ],
+    "cells": [
+     [
+      38495,
+      "214,229"
+     ]
+    ],
+    "tr": [
+     38482
+    ],
+    "how": "TWIN_LOOSE block@L37782 -> block@L38394 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 216151.0,
+    "cur_cells": [
+     [
+      37883,
+      "216,151"
+     ]
+    ],
+    "prior_hdr": "구분전분기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용64,7098,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 214229.0,
+    "master_cur": 216151.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 24345.0,
+    "raw": [
+     24345.0
+    ],
+    "cells": [
+     [
+      38479,
+      "24,345"
+     ]
+    ],
+    "tr": [
+     38466
+    ],
+    "how": "TWIN_LOOSE block@L37782 -> block@L38394 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 25995.0,
+    "cur_cells": [
+     [
+      37867,
+      "25,995"
+     ]
+    ],
+    "prior_hdr": "구분전분기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용64,7098,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 24345.0,
+    "master_cur": 25995.0
+   },
+   "6": {
+    "status": "OK",
+    "val": 10424.0,
+    "raw": [
+     306758.0,
+     -296334.0
+    ],
+    "cells": [
+     [
+      38463,
+      "306,758"
+     ],
+     [
+      38615,
+      "(296,334)"
+     ]
+    ],
+    "tr": [
+     38450,
+     38602
+    ],
+    "how": "TWIN_LOOSE block@L37782 -> block@L38394 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 30115.0,
+    "cur_cells": [
+     [
+      37851,
+      "325,587"
+     ],
+     [
+      38003,
+      "(295,472)"
+     ]
+    ],
+    "prior_hdr": "구분전분기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용64,7098,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 10424.0,
+    "master_cur": 30115.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -3604.0,
+    "raw": [
+     -3604.0
+    ],
+    "cells": [
+     [
+      38903,
+      "(3,604)"
+     ]
+    ],
+    "tr": [
+     38890
+    ],
+    "how": "TWIN_LOOSE block@L37782 -> block@L38394 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -2559.0,
+    "cur_cells": [
+     [
+      38291,
+      "(2,559)"
+     ]
+    ],
+    "prior_hdr": "구분전분기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용64,7098,4",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -3604.0,
+    "master_cur": -2559.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -285.0,
+    "raw": [
+     -285.0
+    ],
+    "cells": [
+     [
+      56132,
+      "(285)"
+     ]
+    ],
+    "tr": [
+     56119
+    ],
+    "how": "POS block@L55611 col 5->11 of 12",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "6",
+     "9"
+    ],
+    "cur_val": -284.0,
+    "cur_cells": [
+     [
+      56126,
+      "(284)"
+     ]
+    ],
+    "prior_hdr": "구분당기전기사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용266,58635,552",
+    "prior_cap": "(2)당기및전기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -285.0,
+    "master_cur": -284.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 79.0,
+    "raw": [
+     4429.0,
+     -4350.0
+    ],
+    "cells": [
+     [
+      55980,
+      "4,429"
+     ],
+     [
+      56116,
+      "(4,350)"
+     ]
+    ],
+    "tr": [
+     55967,
+     56103
+    ],
+    "how": "POS block@L55611 col 5->11 of 12",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "6",
+     "9"
+    ],
+    "cur_val": 2909.0,
+    "cur_cells": [
+     [
+      55974,
+      "32,694"
+     ],
+     [
+      56110,
+      "(29,785)"
+     ]
+    ],
+    "prior_hdr": "구분당기전기사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용266,58635,552",
+    "prior_cap": "(2)당기및전기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 79.0,
+    "master_cur": 2909.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 300213.0,
+    "raw": [
+     300213.0
+    ],
+    "cells": [
+     [
+      55708,
+      "300,213"
+     ]
+    ],
+    "tr": [
+     55695
+    ],
+    "how": "POS block@L55611 col 5->11 of 12",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "6",
+     "9"
+    ],
+    "cur_val": 293081.0,
+    "cur_cells": [
+     [
+      55702,
+      "293,081"
+     ]
+    ],
+    "prior_hdr": "구분당기전기사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용266,58635,552",
+    "prior_cap": "(2)당기및전기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 283905.0,
+    "master_cur": 293081.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 32276.0,
+    "raw": [
+     32276.0
+    ],
+    "cells": [
+     [
+      55692,
+      "32,276"
+     ]
+    ],
+    "tr": [
+     55679
+    ],
+    "how": "POS block@L55611 col 5->11 of 12",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "6",
+     "9"
+    ],
+    "cur_val": 34846.0,
+    "cur_cells": [
+     [
+      55686,
+      "34,846"
+     ]
+    ],
+    "prior_hdr": "구분당기전기사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용266,58635,552",
+    "prior_cap": "(2)당기및전기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": 32276.0,
+    "master_cur": 34846.0
+   },
+   "6": {
+    "status": "OK",
+    "val": -15709.0,
+    "raw": [
+     410380.0,
+     -426089.0
+    ],
+    "cells": [
+     [
+      55676,
+      "410,380"
+     ],
+     [
+      55828,
+      "(426,089)"
+     ]
+    ],
+    "tr": [
+     55663,
+     55815
+    ],
+    "how": "POS block@L55611 col 5->11 of 12",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "6",
+     "9"
+    ],
+    "cur_val": 14248.0,
+    "cur_cells": [
+     [
+      55670,
+      "439,059"
+     ],
+     [
+      55822,
+      "(424,811)"
+     ]
+    ],
+    "prior_hdr": "구분당기전기사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용266,58635,552",
+    "prior_cap": "(2)당기및전기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -15709.0,
+    "master_cur": 14248.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -6003.0,
+    "raw": [
+     -6003.0
+    ],
+    "cells": [
+     [
+      56148,
+      "(6,003)"
+     ]
+    ],
+    "tr": [
+     56135
+    ],
+    "how": "POS block@L55611 col 5->11 of 12",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "10",
+     "6",
+     "9"
+    ],
+    "cur_val": -3439.0,
+    "cur_cells": [
+     [
+      56142,
+      "(3,439)"
+     ]
+    ],
+    "prior_hdr": "구분당기전기사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용266,58635,552",
+    "prior_cap": "(2)당기및전기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다(단위:백만원).",
+    "unit": "백만원",
+    "master": -6003.0,
+    "master_cur": -3439.0
+   }
+  },
+  "err": null,
+  "blocks": 1
+ },
+ "KR0099|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -74.0,
+    "raw": [
+     -74.0
+    ],
+    "cells": [
+     [
+      43203,
+      "(74)"
+     ]
+    ],
+    "tr": [
+     43196
+    ],
+    "how": "TWIN_LOOSE block@L42430 -> block@L42863 col 3",
+    "cal": "SELF",
+    "cal_items": [
+     "10"
+    ],
+    "cur_val": -128.0,
+    "cur_cells": [
+     [
+      42770,
+      "(128)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,1008,75310,09122,669-107,",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -74.0,
+    "master_cur": -128.0
+   },
+   "11": {
+    "status": "OK",
+    "val": -339.0,
+    "raw": [
+     723.0,
+     -1062.0
+    ],
+    "cells": [
+     [
+      43105,
+      "723"
+     ],
+     [
+      43193,
+      "(1,062)"
+     ]
+    ],
+    "tr": [
+     43098,
+     43186
+    ],
+    "how": "TWIN_LOOSE block@L42430 -> block@L42863 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -281.0,
+    "cur_cells": [
+     [
+      42672,
+      "1,265"
+     ],
+     [
+      42760,
+      "(1,546)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,1008,75310,09122,669-107,",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -339.0,
+    "master_cur": -281.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 74241.0,
+    "raw": [
+     74241.0
+    ],
+    "cells": [
+     [
+      42929,
+      "74,241"
+     ]
+    ],
+    "tr": [
+     42922
+    ],
+    "how": "TWIN_LOOSE block@L42430 -> block@L42863 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 72371.0,
+    "cur_cells": [
+     [
+      42496,
+      "72,371"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,1008,75310,09122,669-107,",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 71431.0,
+    "master_cur": 72371.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 8619.0,
+    "raw": [
+     8619.0
+    ],
+    "cells": [
+     [
+      42919,
+      "8,619"
+     ]
+    ],
+    "tr": [
+     42912
+    ],
+    "how": "TWIN_LOOSE block@L42430 -> block@L42863 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 9330.0,
+    "cur_cells": [
+     [
+      42486,
+      "9,330"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,1008,75310,09122,669-107,",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 8619.0,
+    "master_cur": 9330.0
+   },
+   "6": {
+    "status": "OK",
+    "val": 17789.0,
+    "raw": [
+     107613.0,
+     -89824.0
+    ],
+    "cells": [
+     [
+      42909,
+      "107,613"
+     ],
+     [
+      43007,
+      "(89,824)"
+     ]
+    ],
+    "tr": [
+     42902,
+     43000
+    ],
+    "how": "TWIN_LOOSE block@L42430 -> block@L42863 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 20876.0,
+    "cur_cells": [
+     [
+      42476,
+      "112,023"
+     ],
+     [
+      42574,
+      "(91,147)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,1008,75310,09122,669-107,",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 17790.0,
+    "master_cur": 20876.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -395.0,
+    "raw": [
+     -395.0
+    ],
+    "cells": [
+     [
+      43213,
+      "(395)"
+     ]
+    ],
+    "tr": [
+     43206
+    ],
+    "how": "TWIN_LOOSE block@L42430 -> block@L42863 col 5",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -1602.0,
+    "cur_cells": [
+     [
+      42780,
+      "(1,602)"
+     ]
+    ],
+    "prior_hdr": "구분전분기사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,1008,75310,09122,669-107,",
+    "prior_cap": "(2)당분기및전분기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -395.0,
+    "master_cur": -1602.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0099|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml",
+  "items": {
+   "10": {
+    "status": "OK",
+    "val": -146.0,
+    "raw": [
+     -146.0
+    ],
+    "cells": [
+     [
+      47548,
+      "(146)"
+     ]
+    ],
+    "tr": [
+     47535
+    ],
+    "how": "TWIN_LOOSE block@L46363 -> block@L47023 col 9",
+    "cal": "SELF",
+    "cal_items": [
+     "10"
+    ],
+    "cur_val": -260.0,
+    "cur_cells": [
+     [
+      46888,
+      "(260)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,3658,7",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -146.0,
+    "master_cur": -260.0
+   },
+   "11": {
+    "status": "OK",
+    "val": 1142.0,
+    "raw": [
+     3255.0,
+     -2113.0
+    ],
+    "cells": [
+     [
+      47396,
+      "3,255"
+     ],
+     [
+      47532,
+      "(2,113)"
+     ]
+    ],
+    "tr": [
+     47383,
+     47519
+    ],
+    "how": "TWIN_LOOSE block@L46363 -> block@L47023 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -305.0,
+    "cur_cells": [
+     [
+      46736,
+      "2,613"
+     ],
+     [
+      46872,
+      "(2,918)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,3658,7",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 1142.0,
+    "master_cur": -305.0
+   },
+   "4": {
+    "status": "OK",
+    "val": 148231.0,
+    "raw": [
+     148231.0
+    ],
+    "cells": [
+     [
+      47124,
+      "148,231"
+     ]
+    ],
+    "tr": [
+     47111
+    ],
+    "how": "TWIN_LOOSE block@L46363 -> block@L47023 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 144975.0,
+    "cur_cells": [
+     [
+      46464,
+      "144,975"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,3658,7",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 143582.0,
+    "master_cur": 144975.0
+   },
+   "5": {
+    "status": "OK",
+    "val": 17171.0,
+    "raw": [
+     17171.0
+    ],
+    "cells": [
+     [
+      47108,
+      "17,171"
+     ]
+    ],
+    "tr": [
+     47095
+    ],
+    "how": "TWIN_LOOSE block@L46363 -> block@L47023 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 18023.0,
+    "cur_cells": [
+     [
+      46448,
+      "18,023"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,3658,7",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 17171.0,
+    "master_cur": 18023.0
+   },
+   "6": {
+    "status": "OK",
+    "val": 33239.0,
+    "raw": [
+     215546.0,
+     -182307.0
+    ],
+    "cells": [
+     [
+      47092,
+      "215,546"
+     ],
+     [
+      47244,
+      "(182,307)"
+     ]
+    ],
+    "tr": [
+     47079,
+     47231
+    ],
+    "how": "TWIN_LOOSE block@L46363 -> block@L47023 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": 19411.0,
+    "cur_cells": [
+     [
+      46432,
+      "220,995"
+     ],
+     [
+      46584,
+      "(201,584)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,3658,7",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 33239.0,
+    "master_cur": 19411.0
+   },
+   "9": {
+    "status": "OK",
+    "val": -1460.0,
+    "raw": [
+     -1460.0
+    ],
+    "cells": [
+     [
+      47564,
+      "(1,460)"
+     ]
+    ],
+    "tr": [
+     47551
+    ],
+    "how": "TWIN_LOOSE block@L46363 -> block@L47023 col 11",
+    "cal": "SELF",
+    "cal_items": [
+     "4",
+     "5",
+     "11",
+     "6",
+     "9"
+    ],
+    "cur_val": -3184.0,
+    "cur_cells": [
+     [
+      46904,
+      "(3,184)"
+     ]
+    ],
+    "prior_hdr": "구분전반기3개월누적사망건강연금저축변액복합합계사망건강연금저축변액복합합계보험수익보험료배분접근법미적용계약:예상보험금및예상보험서비스비용66,3658,7",
+    "prior_cap": "(2)당반기및전반기중기타사업비용을제외한보험영업수익및보험영업비용의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -1460.0,
+    "master_cur": -3184.0
+   }
+  },
+  "err": null,
+  "blocks": 2
+ },
+ "KR0104|2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0104_농협생명보험/20240514001371.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": 738.0,
+    "raw": [
+     4195.0,
+     3457.0
+    ],
+    "cells": [
+     [
+      19532,
+      "4,195"
+     ],
+     [
+      19618,
+      "3,457"
+     ]
+    ],
+    "tr": [
+     19528,
+     19614
+    ],
+    "how": "POS block@L19465 col 0->1 of 2",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 2076.0,
+    "cur_cells": [
+     [
+      19531,
+      "2,875"
+     ],
+     [
+      19617,
+      "799"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기보험수익예상보험금및기타보험서비스비용240,197231,958위험조정변동12,34718,577보험계약마진상각106,87797,959",
+    "prior_cap": "24.보험계약관련손익의내역(1)당분기및전분기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 738.0,
+    "master_cur": 2076.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -5726.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0104_농협생명보험/20240814002115.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": -1262.0,
+    "raw": [
+     7270.0,
+     8532.0
+    ],
+    "cells": [
+     [
+      20356,
+      "7,270"
+     ],
+     [
+      20470,
+      "8,532"
+     ]
+    ],
+    "tr": [
+     20350,
+     20464
+    ],
+    "how": "POS block@L20264 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 3533.0,
+    "cur_cells": [
+     [
+      20354,
+      "5,744"
+     ],
+     [
+      20468,
+      "2,211"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및기타보험서비스비용234,758474,955228,524460,482위험조정변동10,63322,",
+    "prior_cap": "25.보험계약관련손익의내역(1)당반기및전반기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -1262.0,
+    "master_cur": 3533.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -1374.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0104_농협생명보험/20241114000851.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": -2718.0,
+    "raw": [
+     11210.0,
+     13928.0
+    ],
+    "cells": [
+     [
+      20309,
+      "11,210"
+     ],
+     [
+      20415,
+      "13,928"
+     ]
+    ],
+    "tr": [
+     20303,
+     20409
+    ],
+    "how": "POS block@L20217 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 3663.0,
+    "cur_cells": [
+     [
+      20307,
+      "9,411"
+     ],
+     [
+      20413,
+      "5,748"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기3개월누적3개월누적보험수익예상보험금및기타보험서비스비용236,933711,888229,233689,714위험조정변동13,31036,",
+    "prior_cap": "25.보험계약관련손익의내역(1)당분기및전분기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -2718.0,
+    "master_cur": 3663.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -3426.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2023.4Q": {
+  "file": "data/dart/FY2024_Q4/raw/KR0104_농협생명보험_20250331003065/20250331003065.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": -3850.0,
+    "raw": [
+     15471.0,
+     19321.0
+    ],
+    "cells": [
+     [
+      28415,
+      "15,471"
+     ],
+     [
+      28495,
+      "19,321"
+     ]
+    ],
+    "tr": [
+     28411,
+     28491
+    ],
+    "how": "POS block@L28348 col 0->1 of 2",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 3867.0,
+    "cur_cells": [
+     [
+      28414,
+      "13,469"
+     ],
+     [
+      28494,
+      "9,602"
+     ]
+    ],
+    "prior_hdr": "구분당기전기보험수익예상보험금및기타보험서비스비용945,600915,559위험조정변동48,32146,102보험계약마진상각420,176398,346보",
+    "prior_cap": "25.보험계약관련손익의내역(1)당기및전기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -3850.0,
+    "master_cur": 3867.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": -18229.0
+   }
+  },
+  "err": null,
+  "blocks": 8
+ },
+ "KR0104|2024.1Q": {
+  "file": "data/dart/FY2025_Q1/raw/KR0104_농협생명보험/20250515001350.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": 2076.0,
+    "raw": [
+     2875.0,
+     799.0
+    ],
+    "cells": [
+     [
+      17973,
+      "2,875"
+     ],
+     [
+      18053,
+      "799"
+     ]
+    ],
+    "tr": [
+     17969,
+     18049
+    ],
+    "how": "POS block@L17906 col 0->1 of 2",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": -281.0,
+    "cur_cells": [
+     [
+      17972,
+      "2,925"
+     ],
+     [
+      18052,
+      "3,206"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기보험수익예상보험금및기타보험서비스비용246,838240,197위험조정변동10,93712,347보험계약마진상각102,582106,87",
+    "prior_cap": "25.보험계약관련손익의내역(1)당분기및전분기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 2076.0,
+    "master_cur": -281.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 37056.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2024.2Q": {
+  "file": "data/dart/FY2025_Q2/raw/KR0104_농협생명보험/20250814002779.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": 3533.0,
+    "raw": [
+     5744.0,
+     2211.0
+    ],
+    "cells": [
+     [
+      19691,
+      "5,744"
+     ],
+     [
+      19797,
+      "2,211"
+     ]
+    ],
+    "tr": [
+     19685,
+     19791
+    ],
+    "how": "POS block@L19599 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": -1381.0,
+    "cur_cells": [
+     [
+      19689,
+      "5,761"
+     ],
+     [
+      19795,
+      "7,142"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및기타보험서비스비용241,250488,088234,758474,955위험조정변동10,93721,",
+    "prior_cap": "25.보험계약관련손익의내역(1)당반기및전반기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 3533.0,
+    "master_cur": -1381.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 84784.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2024.3Q": {
+  "file": "data/dart/FY2025_Q3/raw/KR0104_농협생명보험/20251114000905.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": 3663.0,
+    "raw": [
+     9411.0,
+     5748.0
+    ],
+    "cells": [
+     [
+      15550,
+      "9,411"
+     ],
+     [
+      15656,
+      "5,748"
+     ]
+    ],
+    "tr": [
+     15544,
+     15650
+    ],
+    "how": "POS block@L15458 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 90.0,
+    "cur_cells": [
+     [
+      15548,
+      "9,637"
+     ],
+     [
+      15654,
+      "9,547"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기3개월누적3개월누적보험수익예상보험금및기타보험서비스비용243,448731,536236,933711,888위험조정변동10,45332,",
+    "prior_cap": "25.보험계약관련손익의내역(1)당분기및전분기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 3663.0,
+    "master_cur": 90.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 117025.0
+   }
+  },
+  "err": null,
+  "blocks": 7
+ },
+ "KR0104|2024.4Q": {
+  "file": "data/dart/FY2025_Q4/raw/KR0104_농협생명보험_20260331002277/20260331002277.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": 3867.0,
+    "raw": [
+     13469.0,
+     9602.0
+    ],
+    "cells": [
+     [
+      24972,
+      "13,469"
+     ],
+     [
+      25052,
+      "9,602"
+     ]
+    ],
+    "tr": [
+     24968,
+     25048
+    ],
+    "how": "POS block@L24905 col 0->1 of 2",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 534.0,
+    "cur_cells": [
+     [
+      24971,
+      "14,279"
+     ],
+     [
+      25051,
+      "13,745"
+     ]
+    ],
+    "prior_hdr": "구분당기전기보험수익예상보험금및기타보험서비스비용974,151945,600위험조정변동42,62348,321보험계약마진상각401,662420,176보",
+    "prior_cap": "24.보험계약관련손익의내역(1)당기및전기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": 3867.0,
+    "master_cur": 534.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 143445.0
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0104|2025.1Q": {
+  "file": "data/dart/FY2026_Q1/raw/KR0104_농협생명보험/xml/20260601001440.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": -281.0,
+    "raw": [
+     2925.0,
+     3206.0
+    ],
+    "cells": [
+     [
+      17079,
+      "2,925"
+     ],
+     [
+      17159,
+      "3,206"
+     ]
+    ],
+    "tr": [
+     17075,
+     17155
+    ],
+    "how": "POS block@L17012 col 0->1 of 2",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 805.0,
+    "cur_cells": [
+     [
+      17078,
+      "3,560"
+     ],
+     [
+      17158,
+      "2,755"
+     ]
+    ],
+    "prior_hdr": "구분당분기전분기보험수익예상보험금및기타보험서비스비용254,604246,838위험조정변동10,09410,937보험계약마진상각99,322102,582",
+    "prior_cap": "24.보험계약관련손익의내역(1)당분기및전분기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -281.0,
+    "master_cur": 805.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 17363.0
+   }
+  },
+  "err": null,
+  "blocks": 9
+ },
+ "KR0104|2025.2Q": {
+  "file": "data/dart/FY2026_Q2/raw/KR0104_농협생명보험/20260814003072.xml",
+  "items": {
+   "11": {
+    "status": "OK",
+    "val": -1381.0,
+    "raw": [
+     5761.0,
+     7142.0
+    ],
+    "cells": [
+     [
+      18407,
+      "5,761"
+     ],
+     [
+      18513,
+      "7,142"
+     ]
+    ],
+    "tr": [
+     18401,
+     18507
+    ],
+    "how": "POS block@L18315 col 1->3 of 4",
+    "cal": "SELF",
+    "cal_items": [
+     "11"
+    ],
+    "cur_val": 1278.0,
+    "cur_cells": [
+     [
+      18405,
+      "6,761"
+     ],
+     [
+      18511,
+      "5,483"
+     ]
+    ],
+    "prior_hdr": "구분당반기전반기3개월누적3개월누적보험수익예상보험금및기타보험서비스비용250,869505,473241,250488,088위험조정변동10,39320,",
+    "prior_cap": "24.보험계약관련손익의내역(1)당반기및전반기중보험손익의내역은다음과같습니다.",
+    "unit": "백만원",
+    "master": -1381.0,
+    "master_cur": 1278.0
+   },
+   "6": {
+    "status": "UNCAL",
+    "why": "no block/column reproduces the master at quarter+4 for this or a neighbouring item",
+    "master": 44454.0
+   }
+  },
+  "err": null,
+  "blocks": 9
+ }
+}

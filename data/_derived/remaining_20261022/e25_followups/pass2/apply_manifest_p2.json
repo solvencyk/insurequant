@@ -1,0 +1,16 @@
+{
+  "before_sha256": {
+    "data/_gold/user_pl_cells.json": "1c90a68d9aa77c2223632159377cb12df0fdd3052ec1cbd66583027f423eeb18",
+    "PL_breakdown.json": "94ed1bb3d74eca148584b10757cb2895a124a21d87c87e90c2c4c5c50d80ff5f",
+    "PL_breakdown_provenance.json": "fb9a0468ca8d8376fef361a81ace0ce2a01644e8baff48f12249024bf3530f63",
+    "tests/test_rule_coverage_manifest.py": "a7450f2575dee160ab18110cc8df75f3948928fd672b5acfe1cfe48ac8778718"
+  },
+  "after_sha256": {
+    "data/_gold/user_pl_cells.json": "8619fc04f57e712fda8efdb1c6c5e9b70af4073ae71d86391ab7445f255156e0",
+    "PL_breakdown.json": "9ea0ea45a6b898c6a9d5fc15f2f1f18664641d9d78ed591d4eb82c4532ddd6ff",
+    "PL_breakdown_provenance.json": "b3eab3a021c051749e3f1df1c24ae777c0abc934c3af0a63a7c9a382214d1adf",
+    "tests/test_rule_coverage_manifest.py": "cd98c398b9962df64363c467cecd2095f19b0310a8cff34089795343edba7911"
+  },
+  "applied_at": "2026-10-24T05:14:42",
+  "note_prov_repair": "2026-10-24: KR0009 2023.1Q/2023.2Q contract_notes ir_factsheet lineage entry re-inserted verbatim from backup_before_apply (fix_prov_ir_factsheet.py); after_sha256 of the sidecar updated"
+}

@@ -5457,23 +5457,17 @@
    "company_code": "KR0009",
    "quarter": "2023.1Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2023_Q1/raw/KR0009_현대해상",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
-    {
-     "file": "data/dart/FY2023_Q1/raw/KR0009_현대해상",
-     "how": "raw_filing",
-     "items": [
-      5,
-      9,
-      10
-     ]
-    },
     {
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
       4,
+      5,
+      9,
+      10,
       13,
       14
      ]
@@ -5509,7 +5503,7 @@
      "role": "LOB leg of 보험손익 read from the IR factsheet (owner 2026-10-23 D3: allowed because the later DART filings print no quarterly LOB breakdown); the three legs add up to the DART separate-basis 보험손익"
     }
    ],
-   "resolution": "raw_filing",
+   "resolution": "owner_gold_overlay",
    "published_items": 6,
    "schema_items": 8,
    "owner_override": true
@@ -5582,23 +5576,17 @@
    "company_code": "KR0009",
    "quarter": "2023.2Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2023_Q2/raw/KR0009_현대해상",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
-    {
-     "file": "data/dart/FY2023_Q2/raw/KR0009_현대해상",
-     "how": "raw_filing",
-     "items": [
-      5,
-      9,
-      10
-     ]
-    },
     {
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
       4,
+      5,
+      9,
+      10,
       13,
       14
      ]
@@ -5634,7 +5622,7 @@
      "role": "LOB leg of 보험손익 read from the IR factsheet (owner 2026-10-23 D3: allowed because the later DART filings print no quarterly LOB breakdown); the three legs add up to the DART separate-basis 보험손익"
     }
    ],
-   "resolution": "raw_filing",
+   "resolution": "owner_gold_overlay",
    "published_items": 6,
    "schema_items": 8,
    "owner_override": true
@@ -8940,8 +8928,26 @@
    "quarter": "2023.1Q",
    "item_block": "income_statement",
    "source_id": "OWNER_GOLD",
-   "source_file": "scripts/build_pl_breakdown.py",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      1,
+      16,
+      17,
+      18,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
     {
      "file": "scripts/build_pl_breakdown.py",
      "how": "gold_cell_override",
@@ -8959,20 +8965,10 @@
       23,
       24
      ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      1,
-      16,
-      17,
-      18
-     ]
     }
    ],
-   "resolution": "gold_cell_override",
-   "published_items": 16,
+   "resolution": "owner_gold_overlay",
+   "published_items": 24,
    "schema_items": 24,
    "owner_override": true
   },
@@ -10498,25 +10494,19 @@
    "company_code": "KR0068",
    "quarter": "2023.1Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2023_Q1/raw/KR0068_한화생명",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
     {
-     "file": "data/dart/FY2023_Q1/raw/KR0068_한화생명",
-     "how": "raw_filing",
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
      "items": [
+      4,
       5,
       6,
       9,
       10,
       11
-     ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      4
      ]
     },
     {
@@ -10528,7 +10518,7 @@
      ]
     }
    ],
-   "resolution": "raw_filing",
+   "resolution": "owner_gold_overlay",
    "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
@@ -10590,25 +10580,19 @@
    "company_code": "KR0068",
    "quarter": "2023.2Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2023_Q2/raw/KR0068_한화생명",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
     {
-     "file": "data/dart/FY2023_Q2/raw/KR0068_한화생명",
-     "how": "raw_filing",
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
      "items": [
+      4,
       5,
       6,
       9,
       10,
       11
-     ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      4
      ]
     },
     {
@@ -10620,7 +10604,7 @@
      ]
     }
    ],
-   "resolution": "raw_filing",
+   "resolution": "owner_gold_overlay",
    "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
@@ -10666,16 +10650,23 @@
      "items": [
       2,
       3,
-      7,
       8,
       12,
       18
+     ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7
      ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0068",
@@ -10690,10 +10681,16 @@
      "items": [
       4,
       5,
-      6,
       9,
       10,
       11
+     ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      6
      ]
     },
     {
@@ -10711,7 +10708,8 @@
    "builder_derived_items": [
     13,
     14
-   ]
+   ],
+   "owner_override": true
   },
   {
    "company_code": "KR0068",
@@ -10750,16 +10748,23 @@
      "items": [
       2,
       3,
-      7,
       8,
       12,
       18
+     ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7
      ]
     }
    ],
    "resolution": "fs_api_tier1",
    "published_items": 24,
-   "schema_items": 24
+   "schema_items": 24,
+   "owner_override": true
   },
   {
    "company_code": "KR0068",
@@ -10773,11 +10778,17 @@
      "how": "raw_filing",
      "items": [
       4,
-      5,
-      6,
       9,
       10,
       11
+     ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      5,
+      6
      ]
     },
     {
@@ -10795,7 +10806,8 @@
    "builder_derived_items": [
     13,
     14
-   ]
+   ],
+   "owner_override": true
   },
   {
    "company_code": "KR0068",
@@ -12812,6 +12824,7 @@
       3,
       7,
       8,
+      12,
       16,
       17,
       18,
@@ -12839,7 +12852,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 22,
+   "published_items": 23,
    "schema_items": 24,
    "owner_override": true
   },
@@ -12858,7 +12871,8 @@
       5,
       6,
       9,
-      10
+      10,
+      11
      ]
     },
     {
@@ -12871,7 +12885,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 7,
+   "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
     13,
@@ -12895,6 +12909,7 @@
       3,
       7,
       8,
+      12,
       16,
       17,
       18,
@@ -12922,7 +12937,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 22,
+   "published_items": 23,
    "schema_items": 24,
    "owner_override": true
   },
@@ -12941,7 +12956,8 @@
       5,
       6,
       9,
-      10
+      10,
+      11
      ]
     },
     {
@@ -12954,7 +12970,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 7,
+   "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
     13,
@@ -12978,6 +12994,7 @@
       3,
       7,
       8,
+      12,
       16,
       17,
       18,
@@ -13005,7 +13022,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 22,
+   "published_items": 23,
    "schema_items": 24,
    "owner_override": true
   },
@@ -13024,7 +13041,8 @@
       5,
       6,
       9,
-      10
+      10,
+      11
      ]
     },
     {
@@ -13037,7 +13055,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 7,
+   "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
     13,
@@ -13059,6 +13077,7 @@
       2,
       3,
       7,
+      12,
       16,
       17,
       19,
@@ -13094,7 +13113,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 22,
+   "published_items": 23,
    "schema_items": 24,
    "owner_override": true
   },
@@ -13111,7 +13130,8 @@
      "items": [
       5,
       6,
-      10
+      10,
+      11
      ]
     },
     {
@@ -13132,7 +13152,7 @@
     }
    ],
    "resolution": "owner_gold_overlay",
-   "published_items": 7,
+   "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
     13,
@@ -13144,9 +13164,25 @@
    "company_code": "KR0070",
    "quarter": "2024.1Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": "data/dart/_fs_api_cache/00148391_2024_11013_OFS.json",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7,
+      12,
+      17,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      27
+     ]
+    },
     {
      "file": "data/dart/_fs_api_cache/00148391_2024_11013_OFS.json",
      "how": "fs_api_tier1",
@@ -13163,21 +13199,6 @@
      ]
     },
     {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      7,
-      17,
-      19,
-      20,
-      22,
-      23,
-      24,
-      25,
-      27
-     ]
-    },
-    {
      "file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험",
      "how": "raw_filing_derived",
      "items": [
@@ -13188,8 +13209,8 @@
      ]
     }
    ],
-   "resolution": "fs_api_tier1",
-   "published_items": 22,
+   "resolution": "owner_gold_overlay",
+   "published_items": 23,
    "schema_items": 24,
    "owner_override": true
   },
@@ -13197,23 +13218,25 @@
    "company_code": "KR0070",
    "quarter": "2024.1Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
-    {
-     "file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험",
-     "how": "raw_filing",
-     "items": [
-      5,
-      6,
-      11
-     ]
-    },
     {
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      4
+      4,
+      5,
+      9,
+      10
+     ]
+    },
+    {
+     "file": "data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험",
+     "how": "raw_filing",
+     "items": [
+      6,
+      11
      ]
     },
     {
@@ -13225,8 +13248,8 @@
      ]
     }
    ],
-   "resolution": "raw_filing",
-   "published_items": 6,
+   "resolution": "owner_gold_overlay",
+   "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
     13,
@@ -13238,9 +13261,25 @@
    "company_code": "KR0070",
    "quarter": "2024.2Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": "data/dart/_fs_api_cache/00148391_2024_11012_OFS.json",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7,
+      12,
+      17,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      27
+     ]
+    },
     {
      "file": "data/dart/_fs_api_cache/00148391_2024_11012_OFS.json",
      "how": "fs_api_tier1",
@@ -13257,21 +13296,6 @@
      ]
     },
     {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      7,
-      17,
-      19,
-      20,
-      22,
-      23,
-      24,
-      25,
-      27
-     ]
-    },
-    {
      "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험",
      "how": "raw_filing_derived",
      "items": [
@@ -13282,8 +13306,8 @@
      ]
     }
    ],
-   "resolution": "fs_api_tier1",
-   "published_items": 22,
+   "resolution": "owner_gold_overlay",
+   "published_items": 23,
    "schema_items": 24,
    "owner_override": true
   },
@@ -13291,23 +13315,25 @@
    "company_code": "KR0070",
    "quarter": "2024.2Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
-    {
-     "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험",
-     "how": "raw_filing",
-     "items": [
-      5,
-      6,
-      11
-     ]
-    },
     {
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      4
+      4,
+      5,
+      9,
+      10
+     ]
+    },
+    {
+     "file": "data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험",
+     "how": "raw_filing",
+     "items": [
+      6,
+      11
      ]
     },
     {
@@ -13319,8 +13345,8 @@
      ]
     }
    ],
-   "resolution": "raw_filing",
-   "published_items": 6,
+   "resolution": "owner_gold_overlay",
+   "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
     13,
@@ -13332,9 +13358,25 @@
    "company_code": "KR0070",
    "quarter": "2024.3Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": "data/dart/_fs_api_cache/00148391_2024_11014_OFS.json",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7,
+      12,
+      17,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      27
+     ]
+    },
     {
      "file": "data/dart/_fs_api_cache/00148391_2024_11014_OFS.json",
      "how": "fs_api_tier1",
@@ -13351,21 +13393,6 @@
      ]
     },
     {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      7,
-      17,
-      19,
-      20,
-      22,
-      23,
-      24,
-      25,
-      27
-     ]
-    },
-    {
      "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험",
      "how": "raw_filing_derived",
      "items": [
@@ -13376,8 +13403,8 @@
      ]
     }
    ],
-   "resolution": "fs_api_tier1",
-   "published_items": 22,
+   "resolution": "owner_gold_overlay",
+   "published_items": 23,
    "schema_items": 24,
    "owner_override": true
   },
@@ -13385,23 +13412,25 @@
    "company_code": "KR0070",
    "quarter": "2024.3Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
-    {
-     "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험",
-     "how": "raw_filing",
-     "items": [
-      5,
-      6,
-      11
-     ]
-    },
     {
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      4
+      4,
+      5,
+      9,
+      10
+     ]
+    },
+    {
+     "file": "data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험",
+     "how": "raw_filing",
+     "items": [
+      6,
+      11
      ]
     },
     {
@@ -13413,8 +13442,8 @@
      ]
     }
    ],
-   "resolution": "raw_filing",
-   "published_items": 6,
+   "resolution": "owner_gold_overlay",
+   "published_items": 8,
    "schema_items": 8,
    "builder_derived_items": [
     13,
@@ -13450,24 +13479,24 @@
      ]
     },
     {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7,
+      12,
+      25,
+      26,
+      31
+     ]
+    },
+    {
      "file": "data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358",
      "how": "raw_filing_derived",
      "items": [
       2,
       3,
-      7,
       8,
-      12,
       18
-     ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      25,
-      26,
-      31
      ]
     }
    ],
@@ -13488,11 +13517,17 @@
      "how": "raw_filing",
      "items": [
       4,
-      5,
       6,
       9,
-      10,
       11
+     ]
+    },
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      5,
+      10
      ]
     },
     {
@@ -13510,7 +13545,8 @@
    "builder_derived_items": [
     13,
     14
-   ]
+   ],
+   "owner_override": true
   },
   {
    "company_code": "KR0070",
@@ -13540,24 +13576,24 @@
      ]
     },
     {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7,
+      12,
+      25,
+      26,
+      31
+     ]
+    },
+    {
      "file": "data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험",
      "how": "raw_filing_derived",
      "items": [
       2,
       3,
       8,
-      12,
       18
-     ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      7,
-      25,
-      26,
-      31
      ]
     }
    ],
@@ -13577,10 +13613,8 @@
      "file": "data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험",
      "how": "raw_filing",
      "items": [
-      5,
       6,
       9,
-      10,
       11
      ]
     },
@@ -13588,7 +13622,9 @@
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      4
+      4,
+      5,
+      10
      ]
     },
     {
@@ -13637,24 +13673,24 @@
      ]
     },
     {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      7,
+      12,
+      25,
+      26,
+      31
+     ]
+    },
+    {
      "file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험",
      "how": "raw_filing_derived",
      "items": [
       2,
       3,
       8,
-      12,
       18
-     ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      7,
-      25,
-      26,
-      31
      ]
     }
    ],
@@ -13674,10 +13710,8 @@
      "file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험",
      "how": "raw_filing",
      "items": [
-      5,
       6,
       9,
-      10,
       11
      ]
     },
@@ -13685,7 +13719,9 @@
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      4
+      4,
+      5,
+      10
      ]
     },
     {
@@ -19671,9 +19707,28 @@
    "company_code": "KR0082",
    "quarter": "2023.1Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2023_Q1/raw/KR0082_DB생명보험",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      1,
+      16,
+      17,
+      18,
+      19,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
     {
      "file": "data/dart/FY2023_Q1/raw/KR0082_DB생명보험",
      "how": "raw_filing",
@@ -19690,21 +19745,10 @@
       23,
       24
      ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      1,
-      16,
-      17,
-      18,
-      19
-     ]
     }
    ],
-   "resolution": "raw_filing",
-   "published_items": 16,
+   "resolution": "owner_gold_overlay",
+   "published_items": 24,
    "schema_items": 24,
    "owner_override": true
   },
@@ -19748,9 +19792,28 @@
    "company_code": "KR0082",
    "quarter": "2023.2Q",
    "item_block": "income_statement",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2023_Q2/raw/KR0082_DB생명보험",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
+    {
+     "file": "data/_gold/user_pl_cells.json",
+     "how": "owner_gold_overlay",
+     "items": [
+      1,
+      16,
+      17,
+      18,
+      19,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32
+     ]
+    },
     {
      "file": "data/dart/FY2023_Q2/raw/KR0082_DB생명보험",
      "how": "raw_filing",
@@ -19767,21 +19830,10 @@
       23,
       24
      ]
-    },
-    {
-     "file": "data/_gold/user_pl_cells.json",
-     "how": "owner_gold_overlay",
-     "items": [
-      1,
-      16,
-      17,
-      18,
-      19
-     ]
     }
    ],
-   "resolution": "raw_filing",
-   "published_items": 16,
+   "resolution": "owner_gold_overlay",
+   "published_items": 24,
    "schema_items": 24,
    "owner_override": true
   },
@@ -22469,23 +22521,23 @@
    "company_code": "KR0087",
    "quarter": "2024.2Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2024_Q2/raw/KR0087_동양생명",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
-    {
-     "file": "data/dart/FY2024_Q2/raw/KR0087_동양생명",
-     "how": "raw_filing",
-     "items": [
-      5,
-      6,
-      11
-     ]
-    },
     {
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      4
+      4,
+      5,
+      6
+     ]
+    },
+    {
+     "file": "data/dart/FY2024_Q2/raw/KR0087_동양생명",
+     "how": "raw_filing",
+     "items": [
+      11
      ]
     },
     {
@@ -22497,7 +22549,7 @@
      ]
     }
    ],
-   "resolution": "raw_filing",
+   "resolution": "owner_gold_overlay",
    "published_items": 6,
    "schema_items": 8,
    "builder_derived_items": [
@@ -22564,23 +22616,23 @@
    "company_code": "KR0087",
    "quarter": "2024.3Q",
    "item_block": "contract_notes",
-   "source_id": "DART",
-   "source_file": "data/dart/FY2024_Q3/raw/KR0087_동양생명",
+   "source_id": "OWNER_GOLD",
+   "source_file": "data/_gold/user_pl_cells.json",
    "source_files": [
-    {
-     "file": "data/dart/FY2024_Q3/raw/KR0087_동양생명",
-     "how": "raw_filing",
-     "items": [
-      5,
-      6,
-      11
-     ]
-    },
     {
      "file": "data/_gold/user_pl_cells.json",
      "how": "owner_gold_overlay",
      "items": [
-      4
+      4,
+      5,
+      6
+     ]
+    },
+    {
+     "file": "data/dart/FY2024_Q3/raw/KR0087_동양생명",
+     "how": "raw_filing",
+     "items": [
+      11
      ]
     },
     {
@@ -22592,7 +22644,7 @@
      ]
     }
    ],
-   "resolution": "raw_filing",
+   "resolution": "owner_gold_overlay",
    "published_items": 6,
    "schema_items": 8,
    "builder_derived_items": [
@@ -38220,5 +38272,6 @@
  "merge_note_20261023_e23_kr0003_lotte": "ticket 20261023T0900Z (parser/ifrs17, owner decision D2 of 2026-10-23): PL cells of 롯데손해보험 KR0003 2023.4Q refreshed to the latest comparative (separate basis, FY2023 comparative column of the FY2024 annual report rcept 20250320001732) via data/_gold/user_pl_cells.json (18 new set cells, no owner-gold cell replaced; 12 null_dangi pins for the single quarter). Blocks that changed or appeared are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e23_d1_d3/kr0003_lotte/",
  "merge_note_20261023_e23_kr0070_abl": "ticket 20261023T0900Z (parser/ifrs17, owner decision D3 of 2026-10-23): PL cells of 에이비엘생명보험 KR0070 FY2023 2023.1Q-2023.4Q refreshed to the latest comparative (separate basis, prior-year cumulative column of the FY2024 Q1/H1/Q3/annual reports rcept 20240516002045 / 20240814004092 / 20241114002738 / 20250331001358) via data/_gold/user_pl_cells.json (73 new set cells + 1 owner-gold cell replaced in place: 2023.1Q item 4; no single-quarter pins). Blocks that changed or appeared are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/",
  "merge_note_20261023_e23_kr0009_hd": "ticket 20261023T0900Z (parser/ifrs17, owner decision D3 of 2026-10-23): PL cells of 현대해상 KR0009 FY2023 2023.1Q / 2023.2Q / 2023.4Q refreshed to the latest comparative (separate basis, prior-year cumulative column of the FY2024 Q1 / H1 / annual reports rcept 20240516002153 / 20240814004187 / 20250313001346) via data/_gold/user_pl_cells.json (57 new set cells, no owner PL gold replaced; 2023.1Q / 2023.2Q items 2 / 13 / 14 = LOB insurance results of the IR factsheet '(3) UW Income' (owner D3 2026-10-23 allowed the IR factsheet as the leg source because the later DART filings print no quarterly LOB breakdown): the IR lineage (file, sheet, cells) is listed in the source_files entries with how=ir_factsheet_uw_income_prior_year_cumulative; 11 null_dangi single-quarter cells = 2023.4Q items whose annual comparative is restated while the 9M comparative is not). Blocks that changed or appeared are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters plus the IR lineage entries. Evidence data/_derived/remaining_20261022/e23_d1_d3/kr0009_hyundai/",
- "merge_note_20261024_e25_followups": "tickets 20261023T1130Z (KB라이프 KR0099 2023.1Q items 9/11/12), 20261023T1210Z (ABL KR0070 FY2023 items 5/6/7/9/10), 20261023T0600Z (농협생명 KR0104 2024.1Q/2Q items 17/18/20/21), 20261024T0100Z (KB손해보험 KR0010 item 16 2024.4Q/2025.2Q hand-loaded 경영공시 요약 PL values removed): PL cells refreshed to the latest comparative (separate basis, prior-period cumulative column of the FY2024 Q1/H1/Q3/annual reports of KB라이프 / ABL and the FY2025 Q1/H1 reports of 농협생명) via data/_gold/user_pl_cells.json (29 new set cells + 1 owner-gold cell replaced in place: ABL 2023.1Q item 7; no single-quarter pins, no ledger pins). Blocks that changed are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e25_followups/"
+ "merge_note_20261024_e25_followups": "tickets 20261023T1130Z (KB라이프 KR0099 2023.1Q items 9/11/12), 20261023T1210Z (ABL KR0070 FY2023 items 5/6/7/9/10), 20261023T0600Z (농협생명 KR0104 2024.1Q/2Q items 17/18/20/21), 20261024T0100Z (KB손해보험 KR0010 item 16 2024.4Q/2025.2Q hand-loaded 경영공시 요약 PL values removed): PL cells refreshed to the latest comparative (separate basis, prior-period cumulative column of the FY2024 Q1/H1/Q3/annual reports of KB라이프 / ABL and the FY2025 Q1/H1 reports of 농협생명) via data/_gold/user_pl_cells.json (29 new set cells + 1 owner-gold cell replaced in place: ABL 2023.1Q item 7; no single-quarter pins, no ledger pins). Blocks that changed are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e25_followups/",
+ "merge_note_20261024_pass2_neighbor_stale_cells": "ticket 20261024T0300Z (neighbor stale cells sweep pass 2; ABL KR0070 2023.1Q-2025.2Q items 5/7/9/10/11/12, 동양 KR0087 2024.2Q/3Q items 5/6/7, 현대해상 KR0009 2023.1Q/2Q items 5/9/10, 한화생명 KR0068 2023.1Q-4Q items 5/6/7/9/10/11/12, NH농협손보 KR0032 2023.1Q + DB생명 KR0082 2023.1Q/2Q OCI items 25-32): PL cells refreshed to the latest comparative (separate basis, prior-period cumulative column of the next fiscal year's same-quarter filing) via data/_gold/user_pl_cells.json (79 new set cells + 11 stale static derived-gold cells replaced in place; null_dangi +2, set_dangi +3 single-quarter seam cells; no ledger pins). Blocks that changed are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. Evidence data/_derived/remaining_20261022/e25_followups/pass2/"
 }

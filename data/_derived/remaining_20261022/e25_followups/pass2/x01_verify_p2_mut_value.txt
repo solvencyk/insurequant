@@ -1,0 +1,71 @@
+== ABL
+  ABL 2023.1Q: 5=3594 9=-2313 10=-146 11=874 | 7=-1329.363 (other rows -1329) 12=-918.871 (other rows -919)
+  ABL 2023.2Q: 5=7450 9=-4652 10=-345 11=1793 | 7=4356.758 (other rows 4358) 12=-1429.311 (other rows -1429)
+  ABL 2023.3Q: 5=11922 9=-7155 10=-533 11=3129 | 7=2805.991 (other rows 2807) 12=-2122.709 (other rows -2123)
+  ABL 2023.4Q: 5=16884 9=-9589 10=-733 11=2993 | 7=-17122.787 (other rows -17122) 12=-863.747 (other rows -863)
+  ABL 2024.1Q: 5=3276 9=-2249 10=-196 11=719 | 7=-7522.758 (other rows -7522) 12=1541.976 (other rows 1542)
+  ABL 2024.2Q: 5=6557 9=-4436 10=-373 11=338 | 7=-9790.140 (other rows -9789) 12=1109.057 (other rows 1109)
+  ABL 2024.3Q: 5=9662 9=-6746 10=-583 11=-829 | 7=-30777.010 (other rows -30776) 12=3007.922 (other rows 3008)
+  ABL 2024.4Q: 5=13656 9=-9215 10=-793 11=-1328 | 7=-58665.915 (other rows -58664) 12=5675.374 (other rows 5675)
+  ABL 2025.1Q: 5=2593 9=-3283 10=-206 11=170 | 7=-1890.368 (other rows -1889) 12=-619.482 (other rows -620)
+  ABL 2025.2Q: 5=4606 9=-6541 10=-1227 11=1003 | 7=-5057.470 (other rows -5057) 12=-68.997 (other rows -69)
+== 동양
+  동양 2024.2Q: 5=23357 6=12109 7=-16029.662495 (other rows -16029); revenue rows 583373=583373; cost rows 434498=434497
+  동양 2024.3Q: 5=35197 6=17206 7=5514.623446 (other rows 5516); revenue rows 883738=883738; cost rows 629626=629626
+== 현대해상
+  현대해상 2023.1Q: 5=32897.783 9=-939.137 10=-129.717; rows sum 1,671,574,741=1,671,574,741, 9,169,669=9,169,669 (천원)
+  현대해상 2023.2Q: 5=64452.403 9=-2539.609 10=-276.452; rows sum 3,373,922,007=3,373,922,007, 14,690,354=14,690,354 (천원)
+  현대해상 2023.3Q: 5=96160.497 9=-4169.695 10=-427.713; rows sum 5,111,769,135=5,111,769,135, 21,057,760=21,057,759 (천원)
+  현대해상 2023.4Q: 5=130629.669 9=-7689.161 10=-583.627; rows sum 6,925,308,673=6,925,308,673, 30,518,360=30,518,360 (천원)
+== 한화생명
+  한화생명 2023.1Q: 5=33859 6=-27534 9=-3901 10=-188 11=13795 | 7=-18829.136 (other rows -18828)
+  한화생명 2023.2Q: 5=64835 6=-17321 9=-8654 10=-402 11=22557 | 7=-15483.345 (other rows -15482)
+  한화생명 2023.3Q: 5=92338 6=-9356 9=-15116 10=-616 11=29734 | 7=-71021.872 (other rows -71020)
+  한화생명 2023.4Q: 5=117749 6=-24518 | 7=-186528.427 (other rows -186531)
+== OCI
+  OCI KR0032|2023.1Q: 25=946.363096 31=79891.651381 leaf sum 946.363096; master 24 78945.0 vs printed 78945.288285
+  OCI KR0032|2023.2Q: held (not planned) - skipped
+  OCI KR0082|2023.1Q: 25=-77080.378732 31=-13455.126122 leaf sum -77080.378732; master 24 63625.25261 vs printed 63625.252610
+  OCI KR0082|2023.2Q: 25=-3455.474658 31=107819.356337 leaf sum -3455.474658; master 24 111274.830995 vs printed 111274.830995
+== plan
+  plan: 79 new + 11 replaced gold cells, null_dangi +2, set_dangi +3
+
+checks passed: 1642; problems: 38
+  PROBLEM: ABL 2023.1Q item 5: no planned cell and master 3593.0 != re-read 3594.0
+  PROBLEM: ABL 2023.2Q item 5: no planned cell and master 7449.0 != re-read 7450.0
+  PROBLEM: ABL 2023.3Q item 5: no planned cell and master 11921.0 != re-read 11922.0
+  PROBLEM: ABL 2023.4Q item 5: no planned cell and master 16883.0 != re-read 16884.0
+  PROBLEM: ABL 2024.1Q item 5: planned 3275.0 != re-read 3276.0
+  PROBLEM: ABL 2024.1Q item 7: planned -7521.757812 != derived -7522.757812
+  PROBLEM: ABL 2024.2Q item 5: planned 6556.0 != re-read 6557.0
+  PROBLEM: ABL 2024.2Q item 7: planned -9789.139877 != derived -9790.139877000001
+  PROBLEM: ABL 2024.3Q item 5: planned 9661.0 != re-read 9662.0
+  PROBLEM: ABL 2024.3Q item 7: planned -30776.010136 != derived -30777.010135999997
+  PROBLEM: ABL 2024.4Q item 5: planned 13655.0 != re-read 13656.0
+  PROBLEM: ABL 2024.4Q item 7: planned -58664.914754 != derived -58665.914754
+  PROBLEM: ABL 2024.4Q: derived 7 -58665.914754 vs other rows -58664.0
+  PROBLEM: ABL 2025.1Q item 5: planned 2592.0 != re-read 2593.0
+  PROBLEM: ABL 2025.1Q item 7: planned -1889.368229 != derived -1890.3682289999997
+  PROBLEM: ABL 2025.2Q item 5: planned 4605.0 != re-read 4606.0
+  PROBLEM: ABL 2025.2Q item 7: planned -5056.46952 != derived -5057.469519999999
+  PROBLEM: 동양 2024.2Q item 5: planned 23356.0 != re-read 23357.0
+  PROBLEM: 동양 2024.2Q item 7: planned -16028.662495 != derived -16029.662494999997
+  PROBLEM: 동양 2024.3Q item 5: planned 35196.0 != re-read 35197.0
+  PROBLEM: 동양 2024.3Q item 7: planned 5515.623446 != derived 5514.623446000012
+  PROBLEM: 현대해상 2023.1Q item 5: planned 32896.783 != re-read 32897.783
+  PROBLEM: 현대해상 2023.2Q item 5: planned 64451.403 != re-read 64452.403
+  PROBLEM: 현대해상 2023.2Q item 5: single 31555.619999999995 vs printed 3M 31554.62
+  PROBLEM: 현대해상 2023.3Q item 5: not planned and master 96159.497 != re-read 96160.497
+  PROBLEM: 현대해상 2023.3Q item 5: single 31709.094000000005 vs printed 3M 31708.094
+  PROBLEM: 현대해상 2023.4Q item 5: not planned and master 130628.669 != re-read 130629.669
+  PROBLEM: 한화생명 2023.1Q item 5: planned 33858.0 != re-read 33859.0
+  PROBLEM: 한화생명 2023.1Q item 7: planned -18828.13605 != derived -18829.13605
+  PROBLEM: 한화생명 2023.2Q item 5: planned 64834.0 != re-read 64835.0
+  PROBLEM: 한화생명 2023.2Q item 7: planned -15482.344572 != derived -15483.344571999973
+  PROBLEM: 한화생명 2023.3Q item 5: no planned cell and master 92337.0 != re-read 92338.0
+  PROBLEM: 한화생명 2023.3Q item 7: planned -71020.872079 != derived -71021.872079
+  PROBLEM: 한화생명 2023.4Q item 5: planned 117748.0 != re-read 117749.0
+  PROBLEM: 한화생명 2023.4Q item 7: planned -186527.426905 != derived -186528.426905
+  PROBLEM: OCI KR0032|2023.1Q item 26: planned 107043.618556 != re-read 107044.618556
+  PROBLEM: OCI KR0082|2023.1Q item 26: planned 166014.417062 != re-read 166015.417062
+  PROBLEM: OCI KR0082|2023.2Q item 26: planned 46879.427544 != re-read 46880.427544

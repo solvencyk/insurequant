@@ -1,0 +1,2215 @@
+{
+ "generated": "2026-10-24",
+ "ticket": "20261024T0300Z",
+ "scenario": "PASS2_NEIGHBOR_STALE_CELLS",
+ "buckets": [
+  {
+   "code": "KR0009",
+   "quarter": "2023.1Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 27234.914,
+     "new": 32896.783,
+     "delta": 5661.869
+    },
+    {
+     "item": 9,
+     "item_name": "재보험 CSM상각",
+     "old": -1271.31,
+     "new": -939.137,
+     "delta": 332.173
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": -144.287,
+     "new": -129.717,
+     "delta": 14.57
+    }
+   ]
+  },
+  {
+   "code": "KR0009",
+   "quarter": "2023.2Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 56908.344,
+     "new": 64451.403,
+     "delta": 7543.059
+    },
+    {
+     "item": 9,
+     "item_name": "재보험 CSM상각",
+     "old": -3168.333,
+     "new": -2539.609,
+     "delta": 628.724
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": -362.683,
+     "new": -276.452,
+     "delta": 86.231
+    }
+   ]
+  },
+  {
+   "code": "KR0032",
+   "quarter": "2023.1Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": null,
+     "new": 946.363096,
+     "delta": null
+    },
+    {
+     "item": 26,
+     "item_name": "FVOCI 채무증권 평가손익",
+     "old": null,
+     "new": 107043.618556,
+     "delta": null
+    },
+    {
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": null,
+     "new": -134270.119529,
+     "delta": null
+    },
+    {
+     "item": 28,
+     "item_name": "위험회피 파생상품 평가손익",
+     "old": null,
+     "new": 13702.510768,
+     "delta": null
+    },
+    {
+     "item": 29,
+     "item_name": "FVOCI 지분증권 평가손익",
+     "old": null,
+     "new": 2628.459715,
+     "delta": null
+    },
+    {
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": null,
+     "new": 11867.955382,
+     "delta": null
+    },
+    {
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": null,
+     "new": 79891.651381,
+     "delta": null
+    },
+    {
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": null,
+     "new": -26.061796,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.1Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 33614.0,
+     "new": 33858.0,
+     "delta": 244.0
+    },
+    {
+     "item": 6,
+     "item_name": "원수 예실차",
+     "old": -60739.0,
+     "new": -27534.0,
+     "delta": 33205.0
+    },
+    {
+     "item": 9,
+     "item_name": "재보험 CSM상각",
+     "old": -2497.0,
+     "new": -3901.0,
+     "delta": -1404.0
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": -165.0,
+     "new": -188.0,
+     "delta": -23.0
+    },
+    {
+     "item": 11,
+     "item_name": "재보험 예실차",
+     "old": 14347.0,
+     "new": 13795.0,
+     "delta": -552.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": 14620.86395,
+     "new": -18828.13605,
+     "delta": -33449.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": -9734.336072,
+     "new": -7755.336072,
+     "delta": 1979.0
+    }
+   ]
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.2Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 63986.0,
+     "new": 64834.0,
+     "delta": 848.0
+    },
+    {
+     "item": 6,
+     "item_name": "원수 예실차",
+     "old": -28753.0,
+     "new": -17321.0,
+     "delta": 11432.0
+    },
+    {
+     "item": 9,
+     "item_name": "재보험 CSM상각",
+     "old": -6239.0,
+     "new": -8654.0,
+     "delta": -2415.0
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": -343.0,
+     "new": -402.0,
+     "delta": -59.0
+    },
+    {
+     "item": 11,
+     "item_name": "재보험 예실차",
+     "old": 23426.0,
+     "new": 22557.0,
+     "delta": -869.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -3202.344572,
+     "new": -15482.344572,
+     "delta": -12280.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": -18490.733181,
+     "new": -15147.733181,
+     "delta": 3343.0
+    }
+   ]
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.3Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 6,
+     "item_name": "원수 예실차",
+     "old": -20395.0,
+     "new": -9356.0,
+     "delta": 11039.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -59981.872079,
+     "new": -71020.872079,
+     "delta": -11039.0
+    }
+   ]
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.4Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 117663.0,
+     "new": 117748.0,
+     "delta": 85.0
+    },
+    {
+     "item": 6,
+     "item_name": "원수 예실차",
+     "old": -39299.0,
+     "new": -24518.0,
+     "delta": 14781.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -171661.426905,
+     "new": -186527.426905,
+     "delta": -14866.0
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.1Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 11,
+     "item_name": "재보험 예실차",
+     "old": null,
+     "new": 874.0,
+     "delta": null
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": null,
+     "new": -918.871039,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.2Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 11,
+     "item_name": "재보험 예실차",
+     "old": null,
+     "new": 1793.0,
+     "delta": null
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": null,
+     "new": -1429.311099,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.3Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 11,
+     "item_name": "재보험 예실차",
+     "old": null,
+     "new": 3129.0,
+     "delta": null
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": null,
+     "new": -2122.70871,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2023.4Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 11,
+     "item_name": "재보험 예실차",
+     "old": null,
+     "new": 2993.0,
+     "delta": null
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": null,
+     "new": -863.746853,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.1Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 196.0,
+     "new": 3275.0,
+     "delta": 3079.0
+    },
+    {
+     "item": 9,
+     "item_name": "재보험 CSM상각",
+     "old": null,
+     "new": -2249.0,
+     "delta": null
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": null,
+     "new": -196.0,
+     "delta": null
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -4442.757812,
+     "new": -7521.757812,
+     "delta": -3079.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": null,
+     "new": 1541.976382,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.2Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 369.0,
+     "new": 6556.0,
+     "delta": 6187.0
+    },
+    {
+     "item": 9,
+     "item_name": "재보험 CSM상각",
+     "old": null,
+     "new": -4436.0,
+     "delta": null
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": null,
+     "new": -373.0,
+     "delta": null
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -3602.139877,
+     "new": -9789.139877,
+     "delta": -6187.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": null,
+     "new": 1109.05702,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.3Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 578.0,
+     "new": 9661.0,
+     "delta": 9083.0
+    },
+    {
+     "item": 9,
+     "item_name": "재보험 CSM상각",
+     "old": null,
+     "new": -6746.0,
+     "delta": null
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": null,
+     "new": -583.0,
+     "delta": null
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -21693.010136,
+     "new": -30776.010136,
+     "delta": -9083.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": null,
+     "new": 3007.922146,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.4Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 12282.0,
+     "new": 13655.0,
+     "delta": 1373.0
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": -785.0,
+     "new": -793.0,
+     "delta": -8.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -57291.914754,
+     "new": -58664.914754,
+     "delta": -1373.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": 5667.374448,
+     "new": 5675.374448,
+     "delta": 8.0
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2025.1Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 3059.0,
+     "new": 2592.0,
+     "delta": -467.0
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": -203.0,
+     "new": -206.0,
+     "delta": -3.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -2356.3682289999997,
+     "new": -1889.368229,
+     "delta": 467.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": -622.482328,
+     "new": -619.482328,
+     "delta": 3.0
+    }
+   ]
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2025.2Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 6034.0,
+     "new": 4605.0,
+     "delta": -1429.0
+    },
+    {
+     "item": 10,
+     "item_name": "재보험 위험조정 변동",
+     "old": -1223.0,
+     "new": -1227.0,
+     "delta": -4.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -6485.469520000001,
+     "new": -5056.46952,
+     "delta": 1429.0
+    },
+    {
+     "item": 12,
+     "item_name": "기타 생명장기 재보험손익",
+     "old": -72.997003,
+     "new": -68.997003,
+     "delta": 4.0
+    }
+   ]
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.1Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": null,
+     "new": -77080.378732,
+     "delta": null
+    },
+    {
+     "item": 26,
+     "item_name": "FVOCI 채무증권 평가손익",
+     "old": null,
+     "new": 166014.417062,
+     "delta": null
+    },
+    {
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": null,
+     "new": -259505.239678,
+     "delta": null
+    },
+    {
+     "item": 28,
+     "item_name": "위험회피 파생상품 평가손익",
+     "old": null,
+     "new": 9916.594671,
+     "delta": null
+    },
+    {
+     "item": 29,
+     "item_name": "FVOCI 지분증권 평가손익",
+     "old": null,
+     "new": 10653.068255,
+     "delta": null
+    },
+    {
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": null,
+     "new": -4150.597549,
+     "delta": null
+    },
+    {
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": null,
+     "new": -13455.126122,
+     "delta": null
+    },
+    {
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": null,
+     "new": -8.621493,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 25,
+     "item_name": "기타포괄손익",
+     "old": null,
+     "new": -3455.474658,
+     "delta": null
+    },
+    {
+     "item": 26,
+     "item_name": "FVOCI 채무증권 평가손익",
+     "old": null,
+     "new": 46879.427544,
+     "delta": null
+    },
+    {
+     "item": 27,
+     "item_name": "보험계약금융손익(OCI)",
+     "old": null,
+     "new": -65159.24936,
+     "delta": null
+    },
+    {
+     "item": 28,
+     "item_name": "위험회피 파생상품 평가손익",
+     "old": null,
+     "new": 8618.162702,
+     "delta": null
+    },
+    {
+     "item": 29,
+     "item_name": "FVOCI 지분증권 평가손익",
+     "old": null,
+     "new": 8617.413282,
+     "delta": null
+    },
+    {
+     "item": 30,
+     "item_name": "재보험금융손익(OCI)",
+     "old": null,
+     "new": -1823.904606,
+     "delta": null
+    },
+    {
+     "item": 31,
+     "item_name": "총포괄손익",
+     "old": null,
+     "new": 107819.356337,
+     "delta": null
+    },
+    {
+     "item": 32,
+     "item_name": "기타 포괄손익(미분류)",
+     "old": null,
+     "new": -587.32422,
+     "delta": null
+    }
+   ]
+  },
+  {
+   "code": "KR0087",
+   "quarter": "2024.2Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 11829.0,
+     "new": 23356.0,
+     "delta": 11527.0
+    },
+    {
+     "item": 6,
+     "item_name": "원수 예실차",
+     "old": 11278.0,
+     "new": 12109.0,
+     "delta": 831.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": -3670.662495,
+     "new": -16028.662495,
+     "delta": -12358.0
+    }
+   ]
+  },
+  {
+   "code": "KR0087",
+   "quarter": "2024.3Q",
+   "kind": "pass2_neighbor",
+   "cells": [
+    {
+     "item": 5,
+     "item_name": "원수 위험조정 변동",
+     "old": 11840.0,
+     "new": 35196.0,
+     "delta": 23356.0
+    },
+    {
+     "item": 6,
+     "item_name": "원수 예실차",
+     "old": 5098.0,
+     "new": 17206.0,
+     "delta": 12108.0
+    },
+    {
+     "item": 7,
+     "item_name": "기타 생명장기 원수손익",
+     "old": 40979.623446,
+     "new": 5515.623446,
+     "delta": -35464.0
+    }
+   ]
+  }
+ ],
+ "csm_buckets": [],
+ "seams": [
+  {
+   "code": "KR0070",
+   "quarter": "2024.2Q",
+   "item": 5,
+   "derived_after": 3281.0,
+   "printed_3m": {
+    "value": 3281.0,
+    "file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml",
+    "line": 46731,
+    "printed": "3,281"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.2Q",
+   "item": 10,
+   "derived_after": -177.0,
+   "printed_3m": {
+    "value": -177.0,
+    "file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml",
+    "line": 47009,
+    "printed": "177"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.2Q",
+   "item": 9,
+   "derived_after": -2187.0,
+   "printed_3m": {
+    "value": -2187.0,
+    "file": "data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml",
+    "line": 47017,
+    "printed": "2,187"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.3Q",
+   "item": 5,
+   "derived_after": 3105.0,
+   "printed_3m": {
+    "value": 3105.0,
+    "file": "data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml",
+    "line": 37174,
+    "printed": "3,105"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.3Q",
+   "item": 10,
+   "derived_after": -210.0,
+   "printed_3m": {
+    "value": -210.0,
+    "file": "data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml",
+    "line": 37452,
+    "printed": "210"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2024.3Q",
+   "item": 9,
+   "derived_after": -2310.0,
+   "printed_3m": {
+    "value": -2309.0,
+    "file": "data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml",
+    "line": 37460,
+    "printed": "2,309"
+   },
+   "diff_vs_printed_3m": -1.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2025.2Q",
+   "item": 5,
+   "derived_after": 2013.0,
+   "printed_3m": {
+    "value": 2013.0,
+    "file": "data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml",
+    "line": 38191,
+    "printed": "2,013"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2025.2Q",
+   "item": 10,
+   "derived_after": -1021.0,
+   "printed_3m": {
+    "value": -1021.0,
+    "file": "data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml",
+    "line": 38430,
+    "printed": "1,021"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0070",
+   "quarter": "2025.2Q",
+   "item": 9,
+   "derived_after": -3258.0,
+   "printed_3m": {
+    "value": -3258.0,
+    "file": "data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml",
+    "line": 38437,
+    "printed": "3,258"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0087",
+   "quarter": "2024.2Q",
+   "item": 5,
+   "derived_after": 11829.0,
+   "printed_3m": {
+    "value": 11829.0,
+    "file": "data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml",
+    "line": 155010,
+    "printed": "11,829"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0087",
+   "quarter": "2024.2Q",
+   "item": 6,
+   "derived_after": 11278.0,
+   "printed_3m": {
+    "value": 11278.0,
+    "file": "data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml",
+    "line": 154980,
+    "printed": "140,134 - 128,856"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0087",
+   "quarter": "2024.3Q",
+   "item": 5,
+   "derived_after": 11840.0,
+   "printed_3m": {
+    "value": 11840.0,
+    "file": "data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml",
+    "line": 63343,
+    "printed": "11,840"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0087",
+   "quarter": "2024.3Q",
+   "item": 6,
+   "derived_after": 5097.0,
+   "printed_3m": {
+    "value": 5097.0,
+    "file": "data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml",
+    "line": 63331,
+    "printed": "142,451 - 137,354"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0009",
+   "quarter": "2023.2Q",
+   "item": 5,
+   "derived_after": 31554.62,
+   "printed_3m": {
+    "value": 31554.62,
+    "file": "data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml",
+    "line": 43558,
+    "printed": "31,554,620"
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0009",
+   "quarter": "2023.2Q",
+   "item": 9,
+   "derived_after": -1600.472,
+   "printed_3m": {
+    "value": -1600.472,
+    "file": "data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml",
+    "line": 43630,
+    "printed": "1,600,472"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0009",
+   "quarter": "2023.2Q",
+   "item": 10,
+   "derived_after": -146.735,
+   "printed_3m": {
+    "value": -146.735,
+    "file": "data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml",
+    "line": 43622,
+    "printed": "146,735"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.2Q",
+   "item": 5,
+   "derived_after": 30976.0,
+   "printed_3m": {
+    "value": 30951.0,
+    "file": "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml",
+    "line": 80427,
+    "printed": "30,951"
+   },
+   "diff_vs_printed_3m": 25.0,
+   "cls": "mismatch",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.2Q",
+   "item": 6,
+   "derived_after": 10213.0,
+   "printed_3m": {
+    "value": 5793.0,
+    "file": "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml",
+    "line": 80408,
+    "printed": "727,413"
+   },
+   "diff_vs_printed_3m": 4420.0,
+   "cls": "mismatch",
+   "proposal": "set_dangi"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.2Q",
+   "item": 9,
+   "derived_after": -4753.0,
+   "printed_3m": {
+    "value": -4753.0,
+    "file": "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml",
+    "line": 81000,
+    "printed": "4,753"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.2Q",
+   "item": 10,
+   "derived_after": -214.0,
+   "printed_3m": {
+    "value": -214.0,
+    "file": "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml",
+    "line": 80981,
+    "printed": "214"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.2Q",
+   "item": 11,
+   "derived_after": 8762.0,
+   "printed_3m": {
+    "value": 8762.0,
+    "file": "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml",
+    "line": 80797,
+    "printed": "54,622"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.3Q",
+   "item": 5,
+   "derived_after": 27503.0,
+   "printed_3m": {
+    "value": 27503.0,
+    "file": "data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml",
+    "line": 70134,
+    "printed": "27,503"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.3Q",
+   "item": 6,
+   "derived_after": 7965.0,
+   "printed_3m": {
+    "value": 7966.0,
+    "file": "data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml",
+    "line": 70118,
+    "printed": "741,992"
+   },
+   "diff_vs_printed_3m": -1.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.3Q",
+   "item": 9,
+   "derived_after": -6462.0,
+   "printed_3m": {
+    "value": -6463.0,
+    "file": "data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml",
+    "line": 70614,
+    "printed": "6,463"
+   },
+   "diff_vs_printed_3m": 1.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.3Q",
+   "item": 10,
+   "derived_after": -214.0,
+   "printed_3m": {
+    "value": -214.0,
+    "file": "data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml",
+    "line": 70598,
+    "printed": "214"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0068",
+   "quarter": "2023.3Q",
+   "item": 11,
+   "derived_after": 7177.0,
+   "printed_3m": {
+    "value": 7177.0,
+    "file": "data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml",
+    "line": 70438,
+    "printed": "53,879"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 25,
+   "derived_after": 73624.904074,
+   "printed_3m": {
+    "value": 73624.904074,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 26,
+   "derived_after": -119134.989518,
+   "printed_3m": {
+    "value": -119134.989518,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 27,
+   "derived_after": 194345.990318,
+   "printed_3m": {
+    "value": 194345.990318,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 28,
+   "derived_after": -1298.431969,
+   "printed_3m": {
+    "value": -1298.431969,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 29,
+   "derived_after": -2035.654973,
+   "printed_3m": {
+    "value": -2035.654973,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": -0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 30,
+   "derived_after": 2326.692943,
+   "printed_3m": {
+    "value": 2326.692943,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 31,
+   "derived_after": 121274.482459,
+   "printed_3m": {
+    "value": 121274.482459,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  },
+  {
+   "code": "KR0082",
+   "quarter": "2023.2Q",
+   "item": 32,
+   "derived_after": -578.702727,
+   "printed_3m": {
+    "value": -578.702727,
+    "file": "data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml",
+    "line": null,
+    "printed": "prior 3-month column"
+   },
+   "diff_vs_printed_3m": 0.0,
+   "cls": "consistent",
+   "proposal": "none"
+  }
+ ],
+ "not_loaded": [
+  {
+   "code": "KR0070",
+   "cells": "2025.3Q..2026.2Q items 5 / 10 (and derived 7 / 12)",
+   "reason": "same wrong-leg defect as 2024.4Q-2025.2Q item 5 (master 8,826 / 8,346 / 1,953 / 3,770 are the 구성내역 (4) 표의 위험조정 변동분(*) 열, note table prints 7,271 / 9,587 / 2,248 / 4,081) but the quarters are outside the ticket period 2023.1Q-2025.2Q; reported, not loaded. The 2025.3Q single quarter of items 5 and 7 is blanked (null_dangi) because 2025.2Q now carries the latest note leg while 2025.3Q still carries the old one"
+  },
+  {
+   "code": "KR0070",
+   "cells": "2025.2Q item 15 / 2024.1Q-3Q item 9 original 3-month",
+   "reason": "item 15 (UNVERIFIED_ITEM15_PRESENCE) is not in the ticket list and was not read; rounding-only CSM differences (CSM1..6 ±1..6 백만원) not loaded (rounding-only cells are never loaded, e21/e25 precedent)"
+  },
+  {
+   "code": "KR0087",
+   "cells": "2024.4Q items 4 / 5 / 9 / 10",
+   "reason": "sweep false positive: the 'latest' values 246,751 / 43,633 / 2,193 / 1,124 are the 2025 current-period table of the FY2025 annual report (L121693 / L121698 / L122195 / L122200); the 2024 prior-period table prints RA 47,227 (L121775), CSM 259,986 (L121780), 재보험 RA 1,559 (L122267), CSM (1,710) (L122272) = master within rounding (259,987 vs 259,986; -1,711 vs -1,710). Items 9 / 10 are owner xlsx-fill gold (review-loop 2026-06-19/20)"
+  },
+  {
+   "code": "KR0087",
+   "cells": "2025.1Q items 9 / 10",
+   "reason": "owner xlsx-fill gold (+461 / +295, review-loop 2026-06-19/20); the FY2026_Q1 prior-period 재보험비용 table prints 460 / 294 (L80826 / L80821, expense magnitudes; production definition 9 = -|CSM|, 10 = -|RA| gives -460 / -294); the original FY2025_Q1 filing has no such table (its 재보험 roll-forward prints (461) / (295), L36125 / L36132). Gold is neither the original print nor the latest comparative with the series sign convention -> gold_other, left for the owner. Derived item 12 (owner gold, 2025.1Q) therefore also untouched"
+  },
+  {
+   "code": "KR0087",
+   "cells": "2024.2Q / 2024.3Q items 9 / 10 / 11 / 12",
+   "reason": "blank (9, 10, 12) or 3-month-total (11 = 523 / -479 = the 3-month 재보험계약의 보험서비스결과) in the master; not in the ticket list; readable from the FY2025 H1 / Q3 재보험 분석 tables only with a new reader; reported"
+  },
+  {
+   "code": "KR0079",
+   "cells": "2024.2Q / 2024.3Q item 5",
+   "reason": "sweep read the 현행서비스 위험조정 변동분 roll-forward row (18,163.393 / 27,028.878); the production definition (보험수익 구성 RA row, summed over the product tables) is 21,971 / 32,632 in the master and the latest comparative's same row prints 21,970.390 (FY2025_Q2 L99538 + 14 product cells) / 32,631.176 (FY2025_Q3 L52932..) -> rounding-only, not loaded"
+  },
+  {
+   "code": "KR0005",
+   "cells": "2024.3Q item 16 (and 2024.4Q item 16)",
+   "reason": "printed 18,005 (FY2024_Q3 L3981, FY2025_Q3 L3436; 3-month 6,759) and 27,686 (FY2024_Q4 L5634, FY2025_Q4 L4749) vs master 18,000 / 27,600 (hand-loaded legacy rounding). The builder source already holds 18,005 / 27,686, so a gold cell would equal the source (SAME_EXACT = masked) and need a NEW ledger pin; a fresh build_pl() writes blank for both (zero_other_expense) -> not loaded (pin not allowed)"
+  },
+  {
+   "code": "KR0005",
+   "cells": "2024.3Q item 9",
+   "reason": "11,571 vs 11,570: rounding-only"
+  },
+  {
+   "code": "KR0009",
+   "cells": "2023.4Q item 16",
+   "reason": "38,491 vs 38,490.968: rounding-only"
+  },
+  {
+   "code": "KR0032",
+   "cells": "2023.2Q OCI items 25-32 (not in the ticket list) and 2023.1Q items 19-24 (rounding)",
+   "reason": "2023.2Q latest vector is readable (25 = 20,012.597, 31 = 161,280.165) but the master item 24 = 141,300.0 is a coarse legacy value (printed 141,267.568) so 31 - (24+25) would open by 32.4 백만원; 1Q items 19-24 differ from the printed values by < 1 (rounding-only), not loaded; the 1Q OCI block closes with the master item 24 within 0.288"
+  },
+  {
+   "code": "KR0099",
+   "cells": "2024.1Q-3Q CSM waterfall (latest comparative vector)",
+   "reason": "chain does not close without a new exemption: latest 2024 vector opens at 31,798.26억 (FY2025_Q1 L37618 3,179,826 mn) = the FY2024 annual's 2023.4Q closing 3,179,825, but the master 2023.4Q closing stays 30,176.4억 (owner D1 option B) and 2024.4Q is owner-verified gold with opening 30,176.4 -> FY-boundary 1,621.86억 (5.4%) and within-FY opening spread 5.4% vs tolerance max(0.5%, 2억): CSM_CONT / WFY RED, an exemption or pin would be needed -> not loaded"
+  },
+  {
+   "code": "KDB KR0072",
+   "cells": "all",
+   "reason": "held by owner decision (2026-10-23), untouched"
+  }
+ ],
+ "apply_contract": {
+  "gold_new": [
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2024.1Q",
+    "value": 3275.0,
+    "was": 196.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q1 의 전분기(2024.1Q) 열 → 3275 백만원. 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L42928 (보험수익 구간 위험조정변동 3,275; 같은 파일의 측정요소 롤포워드 RA 해제 (3,275) 와 ±1 이내). 변경 전 마스터값 196.0. 변동 3079.0. 산식: 보험수익 구간 위험조정변동 [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 9,
+    "quarter": "2024.1Q",
+    "value": -2249.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q1 의 전분기(2024.1Q) 열 → -2249 백만원. 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L43146 (재보험비용 구간 보험계약마진상각 2,249; 재보험 롤포워드 CSM 해제 (2,249) 와 ±1 이내). 변경 전 마스터값 None(공란). 산식: -|재보험비용 구간 보험계약마진상각| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 10,
+    "quarter": "2024.1Q",
+    "value": -196.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q1 의 전분기(2024.1Q) 열 → -196 백만원. 원문 data/dart/FY2025_Q1/raw/KR0070_에이비엘생명보험/20250515002435.xml L43140 (재보험비용 구간 위험조정변동 196; 재보험 롤포워드 RA 해제 (196) 와 ±1 이내). 변경 전 마스터값 None. 산식: -|재보험비용 구간 위험조정변동| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2024.1Q",
+    "value": 1541.976382,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q1 의 전분기(2024.1Q) 열 → 항목들로 유도 → 1541.976382 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-184.023618(마스터), 9번=-2249.0, 10번=-196.0(위 줄), 11번=719.0(노트: 발생재보험금+발생손해조사비-예상재보험금-예상손해조사비, 마스터와 같음). 같은 표의 나머지 재보험 행(손실회수요소관련수익·발생사고요소조정·손실회수요소배분액·기타재보험수익 - 손실회수요소배분액·기타재보험비용)의 합 1542 과 -0.024 차이(반올림). 변경 전 마스터값 None. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2024.2Q",
+    "value": 6556.0,
+    "was": 369.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q2 의 전반기 누적 열 → 6556 백만원. 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L46732 (보험수익 구간 위험조정변동 6,556; 같은 파일의 측정요소 롤포워드 RA 해제 (6,556) 와 ±1 이내). 변경 전 마스터값 369.0. 변동 6187.0. 산식: 보험수익 구간 위험조정변동 [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 9,
+    "quarter": "2024.2Q",
+    "value": -4436.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q2 의 전반기 누적 열 → -4436 백만원. 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L47018 (재보험비용 구간 보험계약마진상각 4,436; 재보험 롤포워드 CSM 해제 (4,437) 와 ±1 이내). 변경 전 마스터값 None(공란). 산식: -|재보험비용 구간 보험계약마진상각| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 10,
+    "quarter": "2024.2Q",
+    "value": -373.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q2 의 전반기 누적 열 → -373 백만원. 원문 data/dart/FY2025_Q2/raw/KR0070_에이비엘생명보험/20250814004404.xml L47010 (재보험비용 구간 위험조정변동 373; 재보험 롤포워드 RA 해제 (372) 와 ±1 이내). 변경 전 마스터값 None. 산식: -|재보험비용 구간 위험조정변동| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2024.2Q",
+    "value": 1109.05702,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q2 의 전반기 누적 열 → 항목들로 유도 → 1109.05702 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-3361.94298(마스터), 9번=-4436.0, 10번=-373.0(위 줄), 11번=338.0(노트: 발생재보험금+발생손해조사비-예상재보험금-예상손해조사비, 마스터와 같음). 같은 표의 나머지 재보험 행(손실회수요소관련수익·발생사고요소조정·손실회수요소배분액·기타재보험수익 - 손실회수요소배분액·기타재보험비용)의 합 1109 과 +0.057 차이(반올림). 변경 전 마스터값 None. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2024.3Q",
+    "value": 9661.0,
+    "was": 578.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q3 의 전분기 누적 열 → 9661 백만원. 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L37175 (보험수익 구간 위험조정변동 9,661; 같은 파일의 측정요소 롤포워드 RA 해제 (9,661) 와 ±1 이내). 변경 전 마스터값 578.0. 변동 9083.0. 산식: 보험수익 구간 위험조정변동 [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 9,
+    "quarter": "2024.3Q",
+    "value": -6746.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q3 의 전분기 누적 열 → -6746 백만원. 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L37461 (재보험비용 구간 보험계약마진상각 6,746; 재보험 롤포워드 CSM 해제 (6,746) 와 ±1 이내). 변경 전 마스터값 None(공란). 산식: -|재보험비용 구간 보험계약마진상각| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 10,
+    "quarter": "2024.3Q",
+    "value": -583.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q3 의 전분기 누적 열 → -583 백만원. 원문 data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml L37453 (재보험비용 구간 위험조정변동 583; 재보험 롤포워드 RA 해제 (583) 와 ±1 이내). 변경 전 마스터값 None. 산식: -|재보험비용 구간 위험조정변동| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2024.3Q",
+    "value": 3007.922146,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q3 의 전분기 누적 열 → 항목들로 유도 → 3007.922146 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-5150.077854(마스터), 9번=-6746.0, 10번=-583.0(위 줄), 11번=-829.0(노트: 발생재보험금+발생손해조사비-예상재보험금-예상손해조사비, 마스터와 같음). 같은 표의 나머지 재보험 행(손실회수요소관련수익·발생사고요소조정·손실회수요소배분액·기타재보험수익 - 손실회수요소배분액·기타재보험비용)의 합 3008 과 -0.078 차이(반올림). 변경 전 마스터값 None. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2024.4Q",
+    "value": 13655.0,
+    "was": 12282.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q4 의 전기(2024) 열 → 13655 백만원. 원문 data/dart/FY2025_Q4/raw/KR0070_에이비엘생명보험_20260331003080/20260331003080.xml L65673 (보험수익 구간 위험조정변동 13,655; 같은 파일의 측정요소 롤포워드 RA 해제 ? 와 ±1 이내). 변경 전 마스터값 12282.0. 변동 1373.0. 산식: 보험수익 구간 위험조정변동 [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 10,
+    "quarter": "2024.4Q",
+    "value": -793.0,
+    "was": -785.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q4 의 전기(2024) 열 → -793 백만원. 원문 data/dart/FY2025_Q4/raw/KR0070_에이비엘생명보험_20260331003080/20260331003080.xml L65873 (재보험비용 구간 위험조정변동 793; 재보험 롤포워드 RA 해제 ? 와 ±1 이내). 변경 전 마스터값 -785.0. 산식: -|재보험비용 구간 위험조정변동| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 7,
+    "quarter": "2024.4Q",
+    "value": -58664.914754,
+    "was": -57291.914754,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q4 의 전기(2024) 열 → 항목들로 유도 → -58664.914754 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=44502.085246(마스터), 4번=88926.0(마스터·gold), 5번=13655.0(위 줄), 6번=586.0(노트: 예상4종-발생4종, 마스터와 같음). 같은 표의 나머지 행(보험취득현금흐름상각·손실요소배분액·기타보험수익 - 손실부담계약관련비용·발생사고요소조정·보험취득현금흐름상각·손실요소배분액·기타보험서비스비용)의 합 -58664 과 -0.915 차이(반올림). 변경 전 마스터값 -57291.914754. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2024.4Q",
+    "value": 5675.374448,
+    "was": 5667.374448,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q4 의 전기(2024) 열 → 항목들로 유도 → 5675.374448 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-5660.625552(마스터), 9번=-9215.0, 10번=-793.0(위 줄), 11번=-1328.0(노트: 발생재보험금+발생손해조사비-예상재보험금-예상손해조사비, 마스터와 같음). 같은 표의 나머지 재보험 행(손실회수요소관련수익·발생사고요소조정·손실회수요소배분액·기타재보험수익 - 손실회수요소배분액·기타재보험비용)의 합 5675 과 +0.374 차이(반올림). 변경 전 마스터값 5667.374448. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2025.1Q",
+    "value": 2592.0,
+    "was": 3059.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q1 의 전분기(2025.1Q) 열 → 2592 백만원. 원문 data/dart/FY2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml L43023 (보험수익 구간 위험조정변동 2,592; 같은 파일의 측정요소 롤포워드 RA 해제 ? 와 ±1 이내). 변경 전 마스터값 3059.0. 변동 -467.0. 산식: 보험수익 구간 위험조정변동 [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 10,
+    "quarter": "2025.1Q",
+    "value": -206.0,
+    "was": -203.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q1 의 전분기(2025.1Q) 열 → -206 백만원. 원문 data/dart/FY2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml L43235 (재보험비용 구간 위험조정변동 206; 재보험 롤포워드 RA 해제 ? 와 ±1 이내). 변경 전 마스터값 -203.0. 산식: -|재보험비용 구간 위험조정변동| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2025.1Q",
+    "value": -619.482328,
+    "was": -622.482328,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q1 의 전분기(2025.1Q) 열 → 항목들로 유도 → -619.482328 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-3938.482328(마스터), 9번=-3283.0, 10번=-206.0(위 줄), 11번=170.0(노트: 발생재보험금+발생손해조사비-예상재보험금-예상손해조사비, 마스터와 같음). 같은 표의 나머지 재보험 행(손실회수요소관련수익·발생사고요소조정·손실회수요소배분액·기타재보험수익 - 손실회수요소배분액·기타재보험비용)의 합 -620 과 +0.518 차이(반올림). 변경 전 마스터값 -622.482328. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 5,
+    "quarter": "2025.2Q",
+    "value": 4605.0,
+    "was": 6034.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q2 의 전반기 누적 열 → 4605 백만원. 원문 data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L38192 (보험수익 구간 위험조정변동 4,605; 같은 파일의 측정요소 롤포워드 RA 해제 ? 와 ±1 이내). 변경 전 마스터값 6034.0. 변동 -1429.0. 산식: 보험수익 구간 위험조정변동 [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 10,
+    "quarter": "2025.2Q",
+    "value": -1227.0,
+    "was": -1223.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q2 의 전반기 누적 열 → -1227 백만원. 원문 data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml L38431 (재보험비용 구간 위험조정변동 1,227; 재보험 롤포워드 RA 해제 ? 와 ±1 이내). 변경 전 마스터값 -1223.0. 산식: -|재보험비용 구간 위험조정변동| [최신 비교열 누적]. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2025.2Q",
+    "value": -68.997003,
+    "was": -72.997003,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q2 의 전반기 누적 열 → 항목들로 유도 → -68.997003 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-6833.997003(마스터), 9번=-6541.0, 10번=-1227.0(위 줄), 11번=1003.0(노트: 발생재보험금+발생손해조사비-예상재보험금-예상손해조사비, 마스터와 같음). 같은 표의 나머지 재보험 행(손실회수요소관련수익·발생사고요소조정·손실회수요소배분액·기타재보험수익 - 손실회수요소배분액·기타재보험비용)의 합 -69 과 +0.003 차이(반올림). 변경 전 마스터값 -72.997003. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 11,
+    "quarter": "2023.1Q",
+    "value": 874.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 874 백만원. 원문 data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml 발생재보험금·발생손해조사비 [('11,065', 'L41534'), ('-', 'L41540')] - 예상재보험금·예상손해조사비 [('10,191', 'L41692'), ('-', 'L41698')]. 변경 전 마스터값 None(공란). 산식: (발생재보험금+발생손해조사비 [재보험수익 구간]) - (예상재보험금+예상손해조사비 [재보험비용 구간]). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2023.1Q",
+    "value": -918.871039,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q1 의 전기 2023.1Q 누적(3월) 열 → 항목들로 유도 → -918.871039 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-2503.871039(마스터), 9번=-2313.0(마스터·앞선 적재), 10번=-146.0(마스터·앞선 적재), 11번=874.0(위 줄). 같은 표의 나머지 재보험 행의 합 -919 과 +0.129 차이(반올림). 변경 전 마스터값 None(공란). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 11,
+    "quarter": "2023.2Q",
+    "value": 1793.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전반기 누적 열 → 1793 백만원. 원문 data/dart/FY2024_Q2/raw/KR0070_에이비엘생명보험/20240814004092.xml 발생재보험금·발생손해조사비 [('22,097', 'L43228'), ('-', 'L43236')] - 예상재보험금·예상손해조사비 [('20,304', 'L43435'), ('-', 'L43443')]. 변경 전 마스터값 None(공란). 산식: (발생재보험금+발생손해조사비 [재보험수익 구간]) - (예상재보험금+예상손해조사비 [재보험비용 구간]). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2023.2Q",
+    "value": -1429.311099,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q2 의 전반기 누적 열 → 항목들로 유도 → -1429.311099 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-4633.311099(마스터), 9번=-4652.0(마스터·앞선 적재), 10번=-345.0(마스터·앞선 적재), 11번=1793.0(위 줄). 같은 표의 나머지 재보험 행의 합 -1429 과 -0.311 차이(반올림). 변경 전 마스터값 None(공란). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 11,
+    "quarter": "2023.3Q",
+    "value": 3129.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전분기 누적 열 → 3129 백만원. 원문 data/dart/FY2024_Q3/raw/KR0070_에이비엘생명보험/20241114002738.xml 발생재보험금·발생손해조사비 [('33,593', 'L42296'), ('-', 'L42304')] - 예상재보험금·예상손해조사비 [('30,464', 'L42503'), ('-', 'L42511')]. 변경 전 마스터값 None(공란). 산식: (발생재보험금+발생손해조사비 [재보험수익 구간]) - (예상재보험금+예상손해조사비 [재보험비용 구간]). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2023.3Q",
+    "value": -2122.70871,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q3 의 전분기 누적 열 → 항목들로 유도 → -2122.70871 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-6681.70871(마스터), 9번=-7155.0(마스터·앞선 적재), 10번=-533.0(마스터·앞선 적재), 11번=3129.0(위 줄). 같은 표의 나머지 재보험 행의 합 -2123 과 +0.291 차이(반올림). 변경 전 마스터값 None(공란). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 11,
+    "quarter": "2023.4Q",
+    "value": 2993.0,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 열 → 2993 백만원. 원문 data/dart/FY2024_Q4/raw/KR0070_에이비엘생명보험_20250331001358/20250331001358.xml 발생재보험금·발생손해조사비 [('43,881', 'L58318')] - 예상재보험금·예상손해조사비 [('40,888', 'L58470')]. 변경 전 마스터값 None(공란). 산식: (발생재보험금+발생손해조사비 [재보험수익 구간]) - (예상재보험금+예상손해조사비 [재보험비용 구간]). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0070",
+    "item": 12,
+    "quarter": "2023.4Q",
+    "value": -863.746853,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2024_Q4 의 전기 열 → 항목들로 유도 → -863.746853 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-8192.746853(마스터), 9번=-9589.0(마스터·앞선 적재), 10번=-733.0(마스터·앞선 적재), 11번=2993.0(위 줄). 같은 표의 나머지 재보험 행의 합 -863 과 -0.747 차이(반올림). 변경 전 마스터값 None(공란). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json"
+   },
+   {
+    "code": "KR0087",
+    "item": 5,
+    "quarter": "2024.2Q",
+    "value": 23356.0,
+    "was": 11829.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 2: 동양생명 2024.2Q·3Q 항목 5 는 3개월 열(11,829 / 11,840)이 누계 자리에 들어 있었다 — 같은 표의 예상 발생보험금 대 실제 발생보험금(항목 6)도 3개월 열이고 잔차 항목 7 이 둘에 매달려 있다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, 후속 공시의 전기·전반기·전분기 비교표 누적(누적) 열 → 23356 백만원 (FY2025_Q2 반기보고서 전반기 표). 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml L155014 (위험조정 변동 누적 23,356; 3개월 열 11,829 L155010 가 마스터에 들어 있던 값). 변경 전 마스터값 11829.0. 변동 11527.0. 단일분기(누계 차분) = 인쇄 3개월 열. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0087_dongyang/r01_dy_read.json"
+   },
+   {
+    "code": "KR0087",
+    "item": 6,
+    "quarter": "2024.2Q",
+    "value": 12109.0,
+    "was": 11278.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 2: 동양생명 2024.2Q·3Q 항목 5 는 3개월 열(11,829 / 11,840)이 누계 자리에 들어 있었다 — 같은 표의 예상 발생보험금 대 실제 발생보험금(항목 6)도 3개월 열이고 잔차 항목 7 이 둘에 매달려 있다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, 후속 공시의 전기·전반기·전분기 비교표 누적(누적) 열 → 12109 백만원. 원문 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml 예상 발생보험금 누적 276,950 L154984 - 실제 발생보험금 누적 264,841 L155390. 변경 전 마스터값 11278.0(3개월 열 140,134 - 128,856 = 11278). 변동 831.0. 산식: |예상 발생보험금| - |실제 발생보험금| (2024.1Q 마스터 831 = 136,816 - 135,985 와 같은 정의). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0087_dongyang/r01_dy_read.json"
+   },
+   {
+    "code": "KR0087",
+    "item": 5,
+    "quarter": "2024.3Q",
+    "value": 35196.0,
+    "was": 11840.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 2: 동양생명 2024.2Q·3Q 항목 5 는 3개월 열(11,829 / 11,840)이 누계 자리에 들어 있었다 — 같은 표의 예상 발생보험금 대 실제 발생보험금(항목 6)도 3개월 열이고 잔차 항목 7 이 둘에 매달려 있다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, 후속 공시의 전기·전반기·전분기 비교표 누적(누적) 열 → 35196 백만원 (FY2025_Q3 분기보고서 전분기 표). 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml L63344 (위험조정 변동 누적 35,196; 3개월 열 11,840 L63343 가 마스터에 들어 있던 값). 변경 전 마스터값 11840.0. 변동 23356.0. 단일분기(누계 차분) = 인쇄 3개월 열. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0087_dongyang/r01_dy_read.json"
+   },
+   {
+    "code": "KR0087",
+    "item": 6,
+    "quarter": "2024.3Q",
+    "value": 17206.0,
+    "was": 5098.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 2: 동양생명 2024.2Q·3Q 항목 5 는 3개월 열(11,829 / 11,840)이 누계 자리에 들어 있었다 — 같은 표의 예상 발생보험금 대 실제 발생보험금(항목 6)도 3개월 열이고 잔차 항목 7 이 둘에 매달려 있다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, 후속 공시의 전기·전반기·전분기 비교표 누적(누적) 열 → 17206 백만원. 원문 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml 예상 발생보험금 누적 419,401 L63332 - 실제 발생보험금 누적 402,195 L63548. 변경 전 마스터값 5098.0(3개월 열 142,451 - 137,354 = 5097). 변동 12108.0. 산식: |예상 발생보험금| - |실제 발생보험금| (2024.1Q 마스터 831 = 136,816 - 135,985 와 같은 정의). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0087_dongyang/r01_dy_read.json"
+   },
+   {
+    "code": "KR0009",
+    "item": 5,
+    "quarter": "2023.1Q",
+    "value": 32896.783,
+    "was": 27234.914,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 3: 현대해상 2023.1Q·2Q 항목 5·9·10 을 최신 비교열로 — 후속 공시가 같은 분기를 재작성했다(3Q·4Q 는 그대로); 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 LOB 노트(천원, 장기 열), FY2024_Q1 의 (2) 전분기 표 → 32896.783 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L40315 (보험수익 구간 위험조정변동 장기 열 32,896,783 천원 = 32896.783 백만원). 변경 전 마스터값 27234.914. 변동 5661.869. 산식: |…|보험수익 구간 위험조정변동. 검산: 장기 열 행 합 = 인쇄 합계 (보험수익 1,671,574,741 = 1,671,574,741, 재보험 9,169,669 = 9,169,669 천원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0009_hyundai/r01_hd_read.json"
+   },
+   {
+    "code": "KR0009",
+    "item": 9,
+    "quarter": "2023.1Q",
+    "value": -939.137,
+    "was": -1271.31,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 3: 현대해상 2023.1Q·2Q 항목 5·9·10 을 최신 비교열로 — 후속 공시가 같은 분기를 재작성했다(3Q·4Q 는 그대로); 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 LOB 노트(천원, 장기 열), FY2024_Q1 의 (2) 전분기 표 → -939.137 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L40387 (재보험서비스비용 구간 보험계약마진상각 장기 열 939,137 천원 = 939.137 백만원). 변경 전 마스터값 -1271.31. 변동 332.173. 산식: -|…|재보험서비스비용 구간 보험계약마진상각. 검산: 장기 열 행 합 = 인쇄 합계 (보험수익 1,671,574,741 = 1,671,574,741, 재보험 9,169,669 = 9,169,669 천원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0009_hyundai/r01_hd_read.json"
+   },
+   {
+    "code": "KR0009",
+    "item": 10,
+    "quarter": "2023.1Q",
+    "value": -129.717,
+    "was": -144.287,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 3: 현대해상 2023.1Q·2Q 항목 5·9·10 을 최신 비교열로 — 후속 공시가 같은 분기를 재작성했다(3Q·4Q 는 그대로); 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 LOB 노트(천원, 장기 열), FY2024_Q1 의 (2) 전분기 표 → -129.717 백만원. 원문 data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml L40379 (재보험서비스비용 구간 위험조정변동 장기 열 129,717 천원 = 129.717 백만원). 변경 전 마스터값 -144.287. 변동 14.57. 산식: -|…|재보험서비스비용 구간 위험조정변동. 검산: 장기 열 행 합 = 인쇄 합계 (보험수익 1,671,574,741 = 1,671,574,741, 재보험 9,169,669 = 9,169,669 천원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0009_hyundai/r01_hd_read.json"
+   },
+   {
+    "code": "KR0009",
+    "item": 5,
+    "quarter": "2023.2Q",
+    "value": 64451.403,
+    "was": 56908.344,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 3: 현대해상 2023.1Q·2Q 항목 5·9·10 을 최신 비교열로 — 후속 공시가 같은 분기를 재작성했다(3Q·4Q 는 그대로); 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 LOB 노트(천원, 장기 열), FY2024_Q2 의 (3) 전반기 누적 표 → 64451.403 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L43381 (보험수익 구간 위험조정변동 장기 열 64,451,403 천원 = 64451.403 백만원). 변경 전 마스터값 56908.344. 변동 7543.059. 산식: |…|보험수익 구간 위험조정변동. 검산: 장기 열 행 합 = 인쇄 합계 (보험수익 3,373,922,007 = 3,373,922,007, 재보험 14,690,354 = 14,690,354 천원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0009_hyundai/r01_hd_read.json"
+   },
+   {
+    "code": "KR0009",
+    "item": 9,
+    "quarter": "2023.2Q",
+    "value": -2539.609,
+    "was": -3168.333,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 3: 현대해상 2023.1Q·2Q 항목 5·9·10 을 최신 비교열로 — 후속 공시가 같은 분기를 재작성했다(3Q·4Q 는 그대로); 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 LOB 노트(천원, 장기 열), FY2024_Q2 의 (3) 전반기 누적 표 → -2539.609 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L43453 (재보험서비스비용 구간 보험계약마진상각 장기 열 2,539,609 천원 = 2539.609 백만원). 변경 전 마스터값 -3168.333. 변동 628.724. 산식: -|…|재보험서비스비용 구간 보험계약마진상각. 검산: 장기 열 행 합 = 인쇄 합계 (보험수익 3,373,922,007 = 3,373,922,007, 재보험 14,690,354 = 14,690,354 천원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0009_hyundai/r01_hd_read.json"
+   },
+   {
+    "code": "KR0009",
+    "item": 10,
+    "quarter": "2023.2Q",
+    "value": -276.452,
+    "was": -362.683,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 3: 현대해상 2023.1Q·2Q 항목 5·9·10 을 최신 비교열로 — 후속 공시가 같은 분기를 재작성했다(3Q·4Q 는 그대로); 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 LOB 노트(천원, 장기 열), FY2024_Q2 의 (3) 전반기 누적 표 → -276.452 백만원. 원문 data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml L43445 (재보험서비스비용 구간 위험조정변동 장기 열 276,452 천원 = 276.452 백만원). 변경 전 마스터값 -362.683. 변동 86.231. 산식: -|…|재보험서비스비용 구간 위험조정변동. 검산: 장기 열 행 합 = 인쇄 합계 (보험수익 3,373,922,007 = 3,373,922,007, 재보험 14,690,354 = 14,690,354 천원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0009_hyundai/r01_hd_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 5,
+    "quarter": "2023.1Q",
+    "value": 33858.0,
+    "was": 33614.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q1 의 2) 전분기 표 → 33858 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml 위험해제에 따른 위험조정의 변동 합계 33,858 L79258. 변경 전 마스터값 33614.0. 변동 244.0. 산식: |위험해제에 따른 위험조정의 변동|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 6,
+    "quarter": "2023.1Q",
+    "value": -27534.0,
+    "was": -60739.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q1 의 2) 전분기 표 → -27534 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml 예상보험금 및 예상보험서비스 비용 합계 706,113 L79248 - 실제보험금 및 실제보험서비스비용 합계 733,647 L79358. 변경 전 마스터값 -60739.0. 변동 33205.0. 산식: |예상보험금 및 예상보험서비스 비용| - |실제보험금 및 실제보험서비스비용|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 9,
+    "quarter": "2023.1Q",
+    "value": -3901.0,
+    "was": -2497.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q1 의 2) 전분기 표 → -3901 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml 제공받은 서비스의 재보험계약마진 합계 3,901 L79568. 변경 전 마스터값 -2497.0. 변동 -1404.0. 산식: -|제공받은 서비스의 재보험계약마진|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 10,
+    "quarter": "2023.1Q",
+    "value": -188.0,
+    "was": -165.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q1 의 2) 전분기 표 → -188 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml 위험해제로 인한 위험조정의 변동(재보험비용) 합계 188 L79558. 변경 전 마스터값 -165.0. 변동 -23.0. 산식: -|위험해제로 인한 위험조정의 변동 (재보험비용)|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 11,
+    "quarter": "2023.1Q",
+    "value": 13795.0,
+    "was": 14347.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q1 의 2) 전분기 표 → 13795 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml 발생 재보험금 및 재보험서비스비용 회수액 합계 58,900 L79458 - 회수예상 보험금 및 보험서비스비용 합계 45,105 L79548. 변경 전 마스터값 14347.0. 변동 -552.0. 산식: |발생 재보험금 및 재보험서비스비용 회수액| - |회수예상 보험금 및 보험서비스비용|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 5,
+    "quarter": "2023.2Q",
+    "value": 64834.0,
+    "was": 63986.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q2 의 2) 전반기 표 → 64834 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml 위험해제에 따른 위험조정의 변동 합계 64,834 L80428. 변경 전 마스터값 63986.0. 변동 848.0. 산식: |위험해제에 따른 위험조정의 변동|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 6,
+    "quarter": "2023.2Q",
+    "value": -17321.0,
+    "was": -28753.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q2 의 2) 전반기 표 → -17321 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml 예상보험금 및 예상보험서비스 비용 합계 1,437,946 L80409 - 실제보험금 및 실제보험서비스비용 합계 1,455,267 L80613. 변경 전 마스터값 -28753.0. 변동 11432.0. 산식: |예상보험금 및 예상보험서비스 비용| - |실제보험금 및 실제보험서비스비용|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 9,
+    "quarter": "2023.2Q",
+    "value": -8654.0,
+    "was": -6239.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q2 의 2) 전반기 표 → -8654 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml 제공받은 서비스의 재보험계약마진 합계 8,654 L81001. 변경 전 마스터값 -6239.0. 변동 -2415.0. 산식: -|제공받은 서비스의 재보험계약마진|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 10,
+    "quarter": "2023.2Q",
+    "value": -402.0,
+    "was": -343.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q2 의 2) 전반기 표 → -402 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml 위험해제로 인한 위험조정의 변동(재보험비용) 합계 402 L80982. 변경 전 마스터값 -343.0. 변동 -59.0. 산식: -|위험해제로 인한 위험조정의 변동 (재보험비용)|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 11,
+    "quarter": "2023.2Q",
+    "value": 22557.0,
+    "was": 23426.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q2 의 2) 전반기 표 → 22557 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml 발생 재보험금 및 재보험서비스비용 회수액 합계 113,521 L80798 - 회수예상 보험금 및 보험서비스비용 합계 90,964 L80963. 변경 전 마스터값 23426.0. 변동 -869.0. 산식: |발생 재보험금 및 재보험서비스비용 회수액| - |회수예상 보험금 및 보험서비스비용|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 6,
+    "quarter": "2023.3Q",
+    "value": -9356.0,
+    "was": -20395.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q3 의 2) 전분기 표 → -9356 백만원. 원문 data/dart/FY2024_Q3/raw/KR0068_한화생명/20241113000407.xml 예상보험금 및 예상보험서비스 비용 합계 2,179,937 L70119 - 실제보험금 및 실제보험서비스비용 합계 2,189,293 L70295. 변경 전 마스터값 -20395.0. 변동 11039.0. 산식: |예상보험금 및 예상보험서비스 비용| - |실제보험금 및 실제보험서비스비용|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 7,
+    "quarter": "2023.3Q",
+    "value": -71020.872079,
+    "was": -59981.872079,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q3 의 2) 전분기 표 → 항목들로 유도 → -71020.872079 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=680302.127921(마스터·gold), 4번=668342.0(마스터·gold), 5번=92337.0, 6번=-9356.0(노트). 같은 표의 나머지 행의 합 -71020 과 -0.872 차이(반올림·3번의 재무제표 정밀도). 변경 전 마스터값 -59981.872079. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 5,
+    "quarter": "2023.4Q",
+    "value": 117748.0,
+    "was": 117663.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q4 의 2) 전기 표 → 117748 백만원. 원문 data/dart/FY2024_Q4/raw/KR0068_한화생명_20250312000939/20250312000939.xml 위험해제에 따른 위험조정의 변동 합계 117,748 L101784. 변경 전 마스터값 117663.0. 변동 85.0. 산식: |위험해제에 따른 위험조정의 변동|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 6,
+    "quarter": "2023.4Q",
+    "value": -24518.0,
+    "was": -39299.0,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q4 의 2) 전기 표 → -24518 백만원. 원문 data/dart/FY2024_Q4/raw/KR0068_한화생명_20250312000939/20250312000939.xml 예상보험금 및 예상보험서비스 비용 합계 2,920,694 L101774 - 실제보험금 및 실제보험서비스비용 합계 2,945,212 L101884. 변경 전 마스터값 -39299.0. 변동 14781.0. 산식: |예상보험금 및 예상보험서비스 비용| - |실제보험금 및 실제보험서비스비용|. 검산: 구간 행 합 = 소계, 소계+보험료배분접근법 = 총계(모두 일치). 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0068",
+    "item": 7,
+    "quarter": "2023.4Q",
+    "value": -186527.426905,
+    "was": -171661.426905,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q4 의 2) 전기 표 → 항목들로 유도 → -186527.426905 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=794412.573095(마스터·gold), 4번=887710.0(마스터·gold), 5번=117748.0, 6번=-24518.0(노트). 같은 표의 나머지 행의 합 -186531 과 +3.573 차이(반올림·3번의 재무제표 정밀도). 변경 전 마스터값 -171661.426905. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 25,
+    "quarter": "2023.1Q",
+    "value": 946.363096,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 946.363096 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 기타포괄손익 946,363,096 L7515. 변경 전 마스터값 None(공란). 산식: 기타포괄손익 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 26,
+    "quarter": "2023.1Q",
+    "value": 107043.618556,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 107043.618556 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 기타포괄손익-공정가치측정금융자산관련손익 107,043,618,556 L7630. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 27,
+    "quarter": "2023.1Q",
+    "value": -134270.119529,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → -134270.119529 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 보험금융순손익 (134,270,119,529) L7676. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 28,
+    "quarter": "2023.1Q",
+    "value": 13702.510768,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 13702.510768 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 현금흐름위험회피파생상품평가손익 13,702,510,768 L7653. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 29,
+    "quarter": "2023.1Q",
+    "value": 2628.459715,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 2628.459715 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 기타포괄손익-공정가치측정유가증권평가손익 2,628,459,715 L7584. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 30,
+    "quarter": "2023.1Q",
+    "value": 11867.955382,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 11867.955382 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 재보험금융순손익 11,867,955,382 L7699. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 31,
+    "quarter": "2023.1Q",
+    "value": 79891.651381,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 79891.651381 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 총포괄손익 79,891,651,381 L7722. 변경 전 마스터값 None(공란). 산식: 총포괄손익 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0032",
+    "item": 32,
+    "quarter": "2023.1Q",
+    "value": -26.061796,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, NH농협손해보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → -26.061796 백만원. 원문 data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml 확정급여제도의 재측정요소 (26,061,796) L7561. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열] — 26~30 슬롯에 안 잡히는 말단 행 전부(기대신용손실·확정급여 재측정요소 등). 검산: 25 = 26+27+28+29+30+32 (잔차 -0.000000), 31 = 24+25 (인쇄 78,945,288,285 + 946,363,096 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 25,
+    "quarter": "2023.1Q",
+    "value": -77080.378732,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → -77080.378732 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 기타포괄손익 (77,080,378,732) L24260. 변경 전 마스터값 None(공란). 산식: 기타포괄손익 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 26,
+    "quarter": "2023.1Q",
+    "value": 166014.417062,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 166014.417062 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 기타포괄손익-공정가치측정채무증권평가손익 166,014,417,062 L24306. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 27,
+    "quarter": "2023.1Q",
+    "value": -259505.239678,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → -259505.239678 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 보험계약자산(부채)순금융손익 (259,505,239,678) L24375. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 28,
+    "quarter": "2023.1Q",
+    "value": 9916.594671,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 9916.594671 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 위험회피목적파생상품평가손익 9,916,594,671 L24352. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 29,
+    "quarter": "2023.1Q",
+    "value": 10653.068255,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → 10653.068255 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 기타포괄손익-공정가치측정지분증권평가손익 10,653,068,255 L24444. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 30,
+    "quarter": "2023.1Q",
+    "value": -4150.597549,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → -4150.597549 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 재보험계약자산(부채)순금융손익 (4,150,597,549) L24398. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 31,
+    "quarter": "2023.1Q",
+    "value": -13455.126122,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → -13455.126122 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 총포괄손익 (13,455,126,122) L24490. 변경 전 마스터값 None(공란). 산식: 총포괄손익 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 32,
+    "quarter": "2023.1Q",
+    "value": -8.621493,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.1Q ← FY2024_Q1 별도 포괄손익계산서(원) 전기 누적 열 → -8.621493 백만원. 원문 data/dart/FY2024_Q1/raw/KR0082_DB생명보험/20240514000901.xml 기타포괄손익-공정가치측정금융자산 기대신용손실 (16,485,964) L24329 + 확정급여부채의 재측정요소 7,864,471 L24467. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열] — 26~30 슬롯에 안 잡히는 말단 행 전부(기대신용손실·확정급여 재측정요소 등). 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 63,625,252,610 + (77,080,378,732) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 25,
+    "quarter": "2023.2Q",
+    "value": -3455.474658,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → -3455.474658 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 기타포괄손익 (3,455,474,658) L25551. 변경 전 마스터값 None(공란). 산식: 기타포괄손익 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 26,
+    "quarter": "2023.2Q",
+    "value": 46879.427544,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → 46879.427544 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 기타포괄손익-공정가치측정채무증권평가손익 46,879,427,544 L25597. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 27,
+    "quarter": "2023.2Q",
+    "value": -65159.24936,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → -65159.249360 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 보험계약자산(부채)순금융손익 (65,159,249,360) L25666. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 28,
+    "quarter": "2023.2Q",
+    "value": 8618.162702,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → 8618.162702 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 위험회피목적파생상품평가손익 8,618,162,702 L25643. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 29,
+    "quarter": "2023.2Q",
+    "value": 8617.413282,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → 8617.413282 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 기타포괄손익-공정가치측정지분증권평가손익 8,617,413,282 L25735. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 30,
+    "quarter": "2023.2Q",
+    "value": -1823.904606,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → -1823.904606 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 재보험계약자산(부채)순금융손익 (1,823,904,606) L25689. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 31,
+    "quarter": "2023.2Q",
+    "value": 107819.356337,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → 107819.356337 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 총포괄손익 107,819,356,337 L25781. 변경 전 마스터값 None(공란). 산식: 총포괄손익 [전기 누적 열]. 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   },
+   {
+    "code": "KR0082",
+    "item": 32,
+    "quarter": "2023.2Q",
+    "value": -587.32422,
+    "was": null,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 6: 마스터가 공란이던 OCI 항목 25~32 를 후속 공시 별도 포괄손익계산서의 전기 누적 열 인쇄값으로 채운다 — 원 공시에서는 하위 항목을 못 뽑았고 최신 비교열이 유일한 원천이다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, DB생명보험 2023.2Q ← FY2024_Q2 별도 포괄손익계산서(원) 전기 누적 열 → -587.324220 백만원. 원문 data/dart/FY2024_Q2/raw/KR0082_DB생명보험/20240814000663.xml 기타포괄손익-공정가치측정금융자산 기대신용손실 (173,750,888) L25620 + 확정급여부채의 재측정요소 (413,573,332) L25758. 변경 전 마스터값 None(공란). 산식: e21 분류 규칙(classify_leaf)으로 모은 OCI 말단 행의 합 [전기 누적 열] — 26~30 슬롯에 안 잡히는 말단 행 전부(기대신용손실·확정급여 재측정요소 등). 검산: 25 = 26+27+28+29+30+32 (잔차 0.000000), 31 = 24+25 (인쇄 111,274,830,995 + (3,455,474,658) 원, 잔차 0 원). 증거 data/_derived/remaining_20261022/e25_followups/pass2/oci_read.json"
+   }
+  ],
+  "gold_replace": [
+   {
+    "code": "KR0070",
+    "item": 7,
+    "quarter": "2024.1Q",
+    "value": -7521.757812,
+    "was": -4442.757812,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -4442.757812, 이전 was 17032.242188, 이전 note 원문 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 1341 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -3101.76 - 1341 = -4442.76.」. 항목 5 가 196.0 → 3275 로 최신 비교열 값으로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q1 의 전분기(2024.1Q) 열 → 항목들로 유도 → -7521.757812 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=19541.242188(마스터), 4번=22447.0(마스터·gold), 5번=3275.0(위 줄), 6번=1341.0(노트: 예상4종-발생4종, 마스터와 같음). 같은 표의 나머지 행(보험취득현금흐름상각·손실요소배분액·기타보험수익 - 손실부담계약관련비용·발생사고요소조정·보험취득현금흐름상각·손실요소배분액·기타보험서비스비용)의 합 -7522 과 +0.242 차이(반올림). 변경 전 마스터값 -4442.757812. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 7,
+     "공시분기": "2024.1Q",
+     "값": -4442.757812,
+     "was": 17032.242188,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 1341 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -3101.76 - 1341 = -4442.76."
+    }
+   },
+   {
+    "code": "KR0070",
+    "item": 7,
+    "quarter": "2024.2Q",
+    "value": -9789.139877,
+    "was": -3602.139877,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -3602.139877, 이전 was 38012.860123, 이전 note 원문 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 1273 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -2329.14 - 1273 = -3602.14.」. 항목 5 가 369.0 → 6556 로 최신 비교열 값으로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q2 의 전반기 누적 열 → 항목들로 유도 → -9789.139877 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=43033.860123(마스터), 4번=44994.0(마스터·gold), 5번=6556.0(위 줄), 6번=1273.0(노트: 예상4종-발생4종, 마스터와 같음). 같은 표의 나머지 행(보험취득현금흐름상각·손실요소배분액·기타보험수익 - 손실부담계약관련비용·발생사고요소조정·보험취득현금흐름상각·손실요소배분액·기타보험서비스비용)의 합 -9789 과 -0.140 차이(반올림). 변경 전 마스터값 -3602.139877. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 7,
+     "공시분기": "2024.2Q",
+     "값": -3602.139877,
+     "was": 38012.860123,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 1273 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -2329.14 - 1273 = -3602.14."
+    }
+   },
+   {
+    "code": "KR0070",
+    "item": 7,
+    "quarter": "2024.3Q",
+    "value": -30776.010136,
+    "was": -21693.010136,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -21693.010136, 이전 was 41616.989864, 이전 note 원문 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 3703 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -17990 - 3703 = -21693.」. 항목 5 가 578.0 → 9661 로 최신 비교열 값으로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2025_Q3 의 전분기 누적 열 → 항목들로 유도 → -30776.010136 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=49349.989864(마스터), 4번=66762.0(마스터·gold), 5번=9661.0(위 줄), 6번=3703.0(노트: 예상4종-발생4종, 마스터와 같음). 같은 표의 나머지 행(보험취득현금흐름상각·손실요소배분액·기타보험수익 - 손실부담계약관련비용·발생사고요소조정·보험취득현금흐름상각·손실요소배분액·기타보험서비스비용)의 합 -30776 과 -0.010 차이(반올림). 변경 전 마스터값 -21693.010136. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 7,
+     "공시분기": "2024.3Q",
+     "값": -21693.010136,
+     "was": 41616.989864,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE copied_cell/basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw 확정된 값(전환방법별 CSM 변동표 '1) 당분기'절 '제공된 서비스 관련 당기손익 인식' 합계열)인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다. item3/5/6 은 그대로 두고 item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_abl_item7_fix.py). item4 값 자체는 변경 없음. | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now 3703 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -17990 - 3703 = -21693."
+    }
+   },
+   {
+    "code": "KR0070",
+    "item": 7,
+    "quarter": "2025.1Q",
+    "value": -1889.368229,
+    "was": -2356.368229,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -2356.3682289999997, 이전 was -8307.368229, 이전 note 원문 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py). | FOLLOW-UP 2026-08-29 (inbox/parser/20260829T1100Z, KR0070 2024Q4/2025Q1 예실차): this override assumed item6=0 (still suppressed as of the 2026-08-28 fix pass). item6 is now -3591 (note26-derived, note37 prose-verified once 발생사고요소조정/기타사업비용 outside-4-item-boundary rows are added back) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -5947.37 - -3591 = -2356.37.」. 항목 5 가 3059.0 → 2592 로 최신 비교열 값으로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q1 의 전분기(2025.1Q) 열 → 항목들로 유도 → -1889.368229 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=17198.631771(마스터), 4번=20087.0(마스터·gold), 5번=2592.0(위 줄), 6번=-3591.0(노트: 예상4종-발생4종, 마스터와 같음). 같은 표의 나머지 행(보험취득현금흐름상각·손실요소배분액·기타보험수익 - 손실부담계약관련비용·발생사고요소조정·보험취득현금흐름상각·손실요소배분액·기타보험서비스비용)의 합 -1889 과 -0.368 차이(반올림). 변경 전 마스터값 -2356.3682289999997. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 7,
+     "공시분기": "2025.1Q",
+     "값": -2356.3682289999997,
+     "was": -8307.368229,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py). | FOLLOW-UP 2026-08-29 (inbox/parser/20260829T1100Z, KR0070 2024Q4/2025Q1 예실차): this override assumed item6=0 (still suppressed as of the 2026-08-28 fix pass). item6 is now -3591 (note26-derived, note37 prose-verified once 발생사고요소조정/기타사업비용 outside-4-item-boundary rows are added back) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -5947.37 - -3591 = -2356.37."
+    }
+   },
+   {
+    "code": "KR0070",
+    "item": 7,
+    "quarter": "2025.2Q",
+    "value": -5056.46952,
+    "was": -6485.46952,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -6485.469520000001, 이전 was -20597.46952, 이전 note 원문 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py). | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now -9198 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -15683.5 - -9198 = -6485.47.」. 항목 5 가 6034.0 → 4605 로 최신 비교열 값으로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 1: ABL 노트 항목을 최신 비교열로 — 2024.1Q-2025.2Q 항목 5 는 재보험 위험조정(또는 구성내역 표의 다른 열)을 잘못 집은 값, 항목 9·10 공란, 2023 항목 11·12 미적재; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 life_note 경로, FY2026_Q2 의 전반기 누적 열 → 항목들로 유도 → -5056.46952 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=30430.53048(마스터), 4번=40080.0(마스터·gold), 5번=4605.0(위 줄), 6번=-9198.0(노트: 예상4종-발생4종, 마스터와 같음). 같은 표의 나머지 행(보험취득현금흐름상각·손실요소배분액·기타보험수익 - 손실부담계약관련비용·발생사고요소조정·보험취득현금흐름상각·손실요소배분액·기타보험서비스비용)의 합 -5057 과 +0.530 차이(반올림). 변경 전 마스터값 -6485.469520000001. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0070_abl/r03_abl_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0070",
+     "항목번호": 7,
+     "공시분기": "2025.2Q",
+     "값": -6485.469520000001,
+     "was": -20597.46952,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리면서 item7(residual=item3-(4+5+6))도 같이 재계산 — 안 그러면 2024 분기에서 발견된 것과 같은 '옛 item4 기준 stale plug' 결함을 2025 에도 새로 심게 된다. 잔차 0 확인(probe_20260825_compute_abl_item7_fix.py). | FOLLOW-UP 2026-08-28 (inbox/parser/20260828T2100Z, KR0070 예실차 both legs): this override assumed item6=0 (the only value it had at creation time). item6 is now -9198 (note26 보험영업수익과보험영업비용-derived, note37 prose-verified) -- subtracted out of the residual so item3=item4(override)+item5+item6+item7 still closes: -15683.5 - -9198 = -6485.47."
+    }
+   },
+   {
+    "code": "KR0087",
+    "item": 7,
+    "quarter": "2024.2Q",
+    "value": -16028.662495,
+    "was": -3670.662495,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -3670.662495, 이전 was 60525.337505, 이전 note 원문 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음.」. 항목 5 11829.0 → 23356, 항목 6 11278.0 → 12109 로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 2: 동양생명 2024.2Q·3Q 항목 5 는 3개월 열(11,829 / 11,840)이 누계 자리에 들어 있었다 — 같은 표의 예상 발생보험금 대 실제 발생보험금(항목 6)도 3개월 열이고 잔차 항목 7 이 둘에 매달려 있다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, 후속 공시의 전기·전반기·전분기 비교표 누적(누적) 열 → 항목들로 유도 → -16028.662495 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=148875.337505(마스터), 4번=129439.0(마스터·gold, 표의 제공된 서비스의 보험계약마진 누적과 같다), 5번=23356.0, 6번=12109.0(위 줄). 같은 두 표의 나머지 행의 합 -16029 과 +0.338 차이(반올림). 보험수익 행 합 583373 = 인쇄 합계 583373. 변경 전 마스터값 -3670.662495. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0087_dongyang/r01_dy_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0087",
+     "항목번호": 7,
+     "공시분기": "2024.2Q",
+     "값": -3670.662495,
+     "was": 60525.337505,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    }
+   },
+   {
+    "code": "KR0087",
+    "item": 7,
+    "quarter": "2024.3Q",
+    "value": 5515.623446,
+    "was": 40979.623446,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 40979.623446, 이전 was 170417.623446, 이전 note 원문 「inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음.」. 항목 5 11840.0 → 35196, 항목 6 5098.0 → 17206 로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 2: 동양생명 2024.2Q·3Q 항목 5 는 3개월 열(11,829 / 11,840)이 누계 자리에 들어 있었다 — 같은 표의 예상 발생보험금 대 실제 발생보험금(항목 6)도 3개월 열이고 잔차 항목 7 이 둘에 매달려 있다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준, 후속 공시의 전기·전반기·전분기 비교표 누적(누적) 열 → 항목들로 유도 → 5515.623446 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=254111.623446(마스터), 4번=196194.0(마스터·gold, 표의 제공된 서비스의 보험계약마진 누적과 같다), 5번=35196.0, 6번=17206.0(위 줄). 같은 두 표의 나머지 행의 합 5516 과 -0.377 차이(반올림). 보험수익 행 합 883738 = 인쇄 합계 883738. 변경 전 마스터값 40979.623446. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0087_dongyang/r01_dy_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0087",
+     "항목번호": 7,
+     "공시분기": "2024.3Q",
+     "값": 40979.623446,
+     "was": 170417.623446,
+     "note": "inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE basis_mix_csm_amort): item4(원수CSM상각)는 2026-08-17 override 로 이미 raw+CSM_waterfall 교차검증으로 확정된 값인데, 그 override 가 item7(설계식 residual = item3-(4+5+6), build_pl_breakdown.py assemble() 147-149행)을 재계산하지 않아 옛 item4 기준 plug 로 남아 PL_BRIDGE 등식이 깨져 있었다(에이비엘생명 KR0070 에서 발견한 것과 동일 메커니즘 — 해당 티켓의 fix_20260825_abl_item7_and_2025_item4.py 참조). item3/5/6 은 변경 없음, item7 만 새 item4 기준으로 재계산(잔차 0 확인, probe_20260825_compute_dy_kdb_item7_fix.py). item4 값 자체는 변경 없음."
+    }
+   },
+   {
+    "code": "KR0068",
+    "item": 7,
+    "quarter": "2023.1Q",
+    "value": -18828.13605,
+    "was": 14620.86395,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 14620.86395, 이전 was None, 이전 note 원문 「2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q1 rcept 20240514000837 의 전기 2023.1Q 누적(3월) 열 → 14620.86395 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml L66179 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변동 신규. 산식: 3 - (4+5+6). 피연산자: 4번=225103.0(plan), 5번=33614.0(master HEAD), 6번=-60739.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json」. 항목 5 33614.0 → 33858, 항목 6 -60739.0 → -27534 로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q1 의 2) 전분기 표 → 항목들로 유도 → -18828.13605 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=212598.86395(마스터·gold), 4번=225103.0(마스터·gold), 5번=33858.0, 6번=-27534.0(노트). 같은 표의 나머지 행의 합 -18828 과 -0.136 차이(반올림·3번의 재무제표 정밀도). 변경 전 마스터값 14620.86395. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0068",
+     "항목번호": 7,
+     "공시분기": "2023.1Q",
+     "값": 14620.86395,
+     "was": null,
+     "note": "2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q1 rcept 20240514000837 의 전기 2023.1Q 누적(3월) 열 → 14620.86395 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml L66179 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변동 신규. 산식: 3 - (4+5+6). 피연산자: 4번=225103.0(plan), 5번=33614.0(master HEAD), 6번=-60739.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json"
+    }
+   },
+   {
+    "code": "KR0068",
+    "item": 12,
+    "quarter": "2023.1Q",
+    "value": -7755.336072,
+    "was": -9734.336072,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 12 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -9734.336072, 이전 was -7142.465303, 이전 note 원문 「2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q1 rcept 20240514000837 의 전기 2023.1Q 누적(3월) 열 → -9734.336072 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml L66202 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변경 전 마스터값 -7142.465303. 변동 -2591.870769. 산식: 8 - (9+10+11). 피연산자: 9번=-2497.0(master HEAD), 10번=-165.0(master HEAD), 11번=14347.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json」. 재보험 항목 9/10/11 이 최신 비교열 값으로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q1 의 2) 전분기 표 → 항목들로 유도 → -7755.336072 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=1950.663928(마스터·gold), 9번=-3901.0, 10번=-188.0, 11번=13795.0(위 줄). 같은 표의 나머지 재보험 행의 합 -7755 과 -0.336 차이(반올림). 변경 전 마스터값 -9734.336072. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0068",
+     "항목번호": 12,
+     "공시분기": "2023.1Q",
+     "값": -9734.336072,
+     "was": -7142.465303,
+     "note": "2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q1 rcept 20240514000837 의 전기 2023.1Q 누적(3월) 열 → -9734.336072 백만원. 원문 data/dart/FY2024_Q1/raw/KR0068_한화생명/20240514000837.xml L66202 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변경 전 마스터값 -7142.465303. 변동 -2591.870769. 산식: 8 - (9+10+11). 피연산자: 9번=-2497.0(master HEAD), 10번=-165.0(master HEAD), 11번=14347.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json"
+    }
+   },
+   {
+    "code": "KR0068",
+    "item": 7,
+    "quarter": "2023.2Q",
+    "value": -15482.344572,
+    "was": -3202.344572,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 7 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -3202.344572, 이전 was None, 이전 note 원문 「2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q2 rcept 20240813000860 의 전기 2023.2Q 누적(6월) 열 → -3202.344572 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml L66565 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변동 신규. 산식: 3 - (4+5+6). 피연산자: 4번=451415.0(plan), 5번=63986.0(master HEAD), 6번=-28753.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json」. 항목 5 63986.0 → 64834, 항목 6 -28753.0 → -17321 로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q2 의 2) 전반기 표 → 항목들로 유도 → -15482.344572 백만원. 산식: 3 - (4+5+6). 피연산자: 3번=483445.655428(마스터·gold), 4번=451415.0(마스터·gold), 5번=64834.0, 6번=-17321.0(노트). 같은 표의 나머지 행의 합 -15482 과 -0.345 차이(반올림·3번의 재무제표 정밀도). 변경 전 마스터값 -3202.344572. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0068",
+     "항목번호": 7,
+     "공시분기": "2023.2Q",
+     "값": -3202.344572,
+     "was": null,
+     "note": "2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q2 rcept 20240813000860 의 전기 2023.2Q 누적(6월) 열 → -3202.344572 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml L66565 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변동 신규. 산식: 3 - (4+5+6). 피연산자: 4번=451415.0(plan), 5번=63986.0(master HEAD), 6번=-28753.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json"
+    }
+   },
+   {
+    "code": "KR0068",
+    "item": 12,
+    "quarter": "2023.2Q",
+    "value": -15147.733181,
+    "was": -18490.733181,
+    "note": "2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z): 정적 파생 gold(항목 12 = 잔차)가 낡아 제자리 교체 — 이전 gold 값 -18490.733181, 이전 was -18596.30905, 이전 note 원문 「2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q2 rcept 20240813000860 의 전기 2023.2Q 누적(6월) 열 → -18490.733181 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml L66588 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변경 전 마스터값 -18596.30905. 변동 105.575869. 산식: 8 - (9+10+11). 피연산자: 9번=-6239.0(master HEAD), 10번=-343.0(master HEAD), 11번=23426.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json」. 재보험 항목 9/10/11 이 최신 비교열 값으로 바뀌어 잔차가 달라진다. 2026-10-24 parser/ifrs17 (pass2, ticket 20261024T0300Z 항목 4: 한화생명 FY2023 LOB 노트 항목(5·6·9·10·11)을 최신 비교열로 — 2026-10-23 적재(READY-25)가 항목 3·4·8 만 옮기고 노트 항목은 옛 판으로 남겼다; 박제·잔차 끼움·게이트 예외 없음): 별도(OFS) 기준 보험손익내역 노트(백만원), 합계 열 누적, FY2024_Q2 의 2) 전반기 표 → 항목들로 유도 → -15147.733181 백만원. 산식: 8 - (9+10+11). 피연산자: 8번=-1646.733181(마스터·gold), 9번=-8654.0, 10번=-402.0, 11번=22557.0(위 줄). 같은 표의 나머지 재보험 행의 합 -15149 과 +1.267 차이(반올림). 변경 전 마스터값 -18490.733181. 증거 data/_derived/remaining_20261022/e25_followups/pass2/kr0068_hanwha/r02_hw_read.json",
+    "old_entry": {
+     "원보험사코드": "KR0068",
+     "항목번호": 12,
+     "공시분기": "2023.2Q",
+     "값": -18490.733181,
+     "was": -18596.30905,
+     "note": "2026-10-23 parser/ifrs17 (e21, ticket 20261023T0300Z READY-25: 최신 비교열 채택, owner 결정 2026-10-12·2026-10-22): 별도(OFS) 기준 4-2 포괄손익계산서(보험수익·재보험수익·보험서비스비용·재보험비용) + 노트, FY2024_Q2 rcept 20240813000860 의 전기 2023.2Q 누적(6월) 열 → -18490.733181 백만원. 원문 data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml L66588 외 합산 2줄(증거 e21_plan.json parts). 단위 원. 변경 전 마스터값 -18596.30905. 변동 105.575869. 산식: 8 - (9+10+11). 피연산자: 9번=-6239.0(master HEAD), 10번=-343.0(master HEAD), 11번=23426.0(master HEAD). 증거 data/_derived/remaining_20261022/e21_ready25/e21_plan.json"
+    }
+   }
+  ],
+  "csm_gold_new": [],
+  "csm_gold_replace": [],
+  "csm_gold_remove": [],
+  "null_dangi_add": [
+   [
+    "KR0070",
+    "2025.3Q",
+    5
+   ],
+   [
+    "KR0070",
+    "2025.3Q",
+    7
+   ]
+  ],
+  "null_dangi_remove": [],
+  "set_dangi_add": [
+   [
+    "KR0068",
+    "2023.2Q",
+    5,
+    30951.0,
+    "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml L80427 (위험해제에 따른 위험조정의 변동 합계 3개월 30,951; 2) 전반기 표) — 후속 공시의 1분기 비교열(FY2024_Q1: 33,858)과 반기 보고서가 암시하는 1분기가 달라 누계 차분(30,976)이 인쇄 3개월과 어긋난다"
+   ],
+   [
+    "KR0068",
+    "2023.2Q",
+    6,
+    5793.0,
+    "data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml L80408 예상보험금 합계 3개월 727,413 - L80612 실제보험금 합계 3개월 721,620 (2) 전반기 표) — 누계 차분(10,213)이 인쇄 3개월(5,793)과 어긋난다(FY2024_Q2 가 자기 1분기 비교열을 다시 재작성)"
+   ],
+   [
+    "KR0068",
+    "2023.2Q",
+    7,
+    7790.791478,
+    "유도값: 3 단일분기(270846.791478) - 4 단일분기(226312.0) - 5 인쇄 3개월(30951.0) - 6 인쇄 3개월(5793.0); 같은 표 나머지 행의 3개월 합 7791 과 ±1 이내 (data/dart/FY2024_Q2/raw/KR0068_한화생명/20240813000860.xml 2) 전반기 표)"
+   ]
+  ],
+  "set_dangi_remove": [],
+  "held": [],
+  "drift_fix": []
+ }
+}

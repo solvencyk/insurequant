@@ -1,0 +1,12 @@
+##### 2024.2Q <- FY2025_Q2 data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml rev@L154909 cost@L155315 (prior-period tables, separate, 백만원)
+  5 = 23,356 (RA 누적 23,356@L155014, 3M 11,829@L155010)   4 = 129,439 (CSM 129,439@L155029)
+  6 = 12,109 = 예상 276,950@L154984 - 실제 264,841@L155390  (3M: 140,134 - 128,856 = 11,278)
+  master: 4=129439.0 5=11829.0 6=11278.0 | 3=148875.337505 7=-3670.662495
+  closure: revenue rows 583,373 vs printed total 583,373 ; cost rows 434,498 vs printed total 434,497
+  derived 7 = -16,028.662495 vs other rows -16,029 (diff +0.338); 3M other rows = 282
+##### 2024.3Q <- FY2025_Q3 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml rev@L63300 cost@L63516 (prior-period tables, separate, 백만원)
+  5 = 35,196 (RA 누적 35,196@L63344, 3M 11,840@L63343)   4 = 196,194 (CSM 196,194@L63350)
+  6 = 17,206 = 예상 419,401@L63332 - 실제 402,195@L63548  (3M: 142,451 - 137,354 = 5,097)
+  master: 4=196194.0 5=11840.0 6=5098.0 | 3=254111.623446 7=40979.623446
+  closure: revenue rows 883,738 vs printed total 883,738 ; cost rows 629,626 vs printed total 629,626
+  derived 7 = 5,515.623446 vs other rows 5,516 (diff -0.377); 3M other rows = 21,544

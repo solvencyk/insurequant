@@ -1,0 +1,52 @@
+티켓 20261024T0300Z (이웃 옛 판 칸 점검 2차: ABL · 동양 · 현대해상 · 한화생명 · OCI 공란 · KB라이프 연쇄 판정) 증거 폴더 색인
+=====================================================================================================
+상태: 적재 완료 · 미커밋 · push 안 함. 서브에이전트·docling 안 씀. build_root_masters.main()·build_ifrs17_bs·xlsx 동기화·panel·public_exports·NB·원장(박제)·핸들러·CSM 파일은 건드리지 않았다.
+파이썬은 항상 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, 스크립트 파일로, stdin /dev/null (실수로 `python3 -` 표준입력 호출 1회 -> 멈춤 -> PID 23752 만 taskkill).
+정책: 최신 비교열 · 별도(OFS) · 블록이 닫힐 때만 이동 · 새 박제 0 · 잔차 끼움 0 · 게이트 예외 0 · owner 손입력 gold 는 건드리지 않음 · 낡은 정적 파생 gold(항목 7·12)는 제자리 교체.
+
+1) 무엇을 바꿨나 (적재 전 백업 대비 실측: x02_diff_applied.txt = ALL PASS)
+   PL_breakdown.json                값 90칸 + 값_당분기 114칸 (행 13,801 불변; 필드는 값·값_당분기만)
+   data/_gold/user_pl_cells.json    set 1408 -> 1487 (신규 79 + 제자리 교체 11), null_dangi 121 -> 123 (ABL 2025.3Q 항목 5·7), set_dangi 37 -> 40 (한화생명 2023.2Q 항목 5·6·7)
+   PL_breakdown_provenance.json     33블록 교체(샌드박스 emit_pl_provenance 사본) + 병합 노트 키 1개 + 현대해상 2023.1Q·2Q contract_notes 의 손으로 쓴 IR 팩트시트 계보 항목 2개 원문 복원(fix_prov_ir_factsheet.py)
+   tests/test_rule_coverage_manifest.py  GOLD_OVERLAY_CENSUS PL (1408, 22) -> (1487, 22) + 주석
+   tests/fixtures/master_tables_golden.json  SUMMARY 한 줄 (pl_bridge 3787P/2625S -> 3800P/2612S, oci_vs_bs_aoci 101blank/11bsskip -> 97blank/13bsskip) `--update`
+   변경 안 한 것(백업과 바이트 동일): gold_overlay_ledger.json · user_csm_cells.json · CSM_waterfall.json · CSM_waterfall_provenance.json · pl_bridge_baseline.json · builder_input_fingerprints.json · pl_breakdown_golden.json ·
+   data/dart/viz/* 6종 · data/_derived/{qoq_warn,pl_oci_vs_bs_aoci_warn,pl_breakdown_coverage,pl_intentional_nulls,pl_oci_item32_provenance}.json · scripts/build_root_masters.py
+
+2) 판정과 근거 요약 (칸 단위는 answer_ticket.md / 티켓 `## 답변`)
+   - ABL: 노트 표(보험영업수익·보험영업비용) 소계 = 행 합 40/40, 롤포워드 대조 ±1, 파생 7·12 = 같은 표 나머지 행 합 ±1 이내, 단일분기 = 인쇄 3개월(2024.3Q 항목 9 만 ±1).
+   - 동양: 항목 5·6 이 누계 자리에 3개월 열; 2024.4Q·2025.1Q 는 점검 오탐 또는 owner 손입력 gold 라 보류.
+   - 현대해상: 장기 열 행 합 = 인쇄 합계 정확, 단일분기 = 인쇄 3개월 천원 단위까지 일치.
+   - 한화생명: 2023.2Q 단일분기가 인쇄 3개월과 어긋나(FY2024 반기보고서가 1분기 비교열을 재작성) set_dangi 3칸.
+   - OCI: 실제 공란, 25 = 26+27+28+29+30+32 · 31 = 24+25 원 단위 정확.
+   - KB라이프: 연쇄 안 닫힘 (모의 RED 2 -> 8).
+
+3) 게이트·테스트 (gates/gates_before = 적재 전, gates/gates_after = 적재 후; gates/gates_compare_all.txt)
+   master_tables SUMMARY: pl_bridge 3787P/18F/2625S/0NEW -> 3800P/18F/2612S/0NEW, oci_vs_bs_aoci 28Y/101blank/11bsskip -> 28Y/97blank/13bsskip, 그 밖의 필드 전부 동일 (18 FAIL 목록 줄 단위 동일)
+   data_contract: RED 2 -> 2 (MASTER_XLSX_DRIFT 손익분해PL 270 + CSM워터폴 3 = 22차 잔여 69 + 이번 204 = 바뀐 값 90 + 단일분기 114), YELLOW 168 동일, 다른 새 발견 0
+   csm_continuity flagged 1 · RED 0 / csm_waterfall 41 pass / nb_csm 5/5 / csm_coverage 기존 갭 / live_artifacts RED 2 · YELLOW 25 — 전부 불변
+   테스트(gates/tests_t1/): rule_coverage 104 passed + 2 failed (xlsx 드리프트 · public_exports 드리프트[적재 전에도 실패 = gates_before/live_artifacts.txt RED 2]) · gold_overlay 10 · identity 14 · tautology 10 ·
+     master_tables_golden (1 failed -> `--update` 한 줄 -> 2 passed) · viz 골든 2종 · dividend 골든 · deploy_assets 12 · push_gate_wiring 66 · golden_input_fingerprint 23 · validate_golden_input_fingerprints RED 0 ·
+     PL 골든 RUN_PL_GOLDEN=1 1 passed (181초; fixture 불변) · 빌더 in-place 출력 sha 전후 동일 (INPLACE_OUTPUTS_UNCHANGED)
+
+4) 파일 지도
+   공통: p00_list_candidates.py/.txt (점검 후보 목록) · p2lib.py (읽기 도우미) · d01_dump.py · d02_find.py (표 덤프) · s01~s13 (읽기 전용 탐침: 라이브 상태 · 출처 · 마스크 검사 · 드리프트 · 이음매 표)
+         p01_build_plan.py -> p2_plan.json (적용 계약; gold_new 79 · gold_replace 11 · null_dangi_add 2 · set_dangi_add 3 · seams 34 · not_loaded 11)
+         x01_verify_p2.py (독립 재독 1,680 검산 문제 0; 변이 line/value/column = 394/38/559 검출; 결과 x01_verify_p2*.txt)
+         make_apply_p2.py -> p2_apply.py (e25_apply.py 에서 치환 1회 일치 단언으로 생성): --snapshot-drift | --check | --out-dir | --apply | --verify | --revert --apply ; apply_manifest_p2.json · drift_before.json · p2_apply_report.txt · p2_apply_{snapshot,check,run,verify}.log
+         b01_backup_preload.py -> backup_before_apply/ + SHA256_preload.txt (28개 파일, 사본 == 원본 확인) · x02_diff_files_p2.py (make_x02.py 로 생성) -> x02_diff_applied.txt (백업 대비 적재 후: ALL PASS)
+         fix_prov_ir_factsheet.py (현대해상 계보 항목 복원) · fill_ticket.py (티켓 답변 삽입) · answer_ticket.md (답변 원문)
+   회사별: kr0070_abl/ (r01_abl_dump*.txt 표 덤프 · r03_abl_read.py/.txt/.json) · kr0087_dongyang/ (r01_dy_read.py/.txt/.json · 2025 연간 표 덤프) · kr0009_hyundai/ (r01_hd_read.py/.json · r02_hd_captions.py) ·
+          kr0068_hanwha/ (r01_hw_captions.txt · r02_hw_read.py/.txt/.json) · kr0079_mirae/ (r01_mirae_ra.py · r02_mirae_era2_rows.py/.txt) · oci_read.py/.txt/.json (KR0032·KR0082) ·
+          kr0099_kblife/ (c01_chain_sim.py/.txt 연쇄 모의 · csm_candidate_latest_2024.json 모의 입력 · t01_FY2025_Q1_37587.txt 최신 벡터 표)
+   게이트/테스트: gates/run_gates.sh + gate_overlay.py (저장소 쓰기를 전부 폴더 안으로 돌림) · gates/run_tests_p2.sh · gates/compare_gates_e25.py · gates/gates_chain_sim_*.txt (KB라이프 모의 게이트)
+
+5) 재현 순서 (적재 전 = git HEAD fc41f505 의 마스터 · gold)
+   1. 읽기 스크립트 5종(kr0070_abl/r03, kr0087_dongyang/r01, kr0009_hyundai/r01, kr0068_hanwha/r02, oci_read) -> p01_build_plan.py -> x01_verify_p2.py (문제 0)
+   2. b01_backup_preload.py ; make_apply_p2.py ; p2_apply.py --snapshot-drift ; --check ; --apply ; fix_prov_ir_factsheet.py ; x02_diff_files_p2.py backup_before_apply <repo> x02_diff_applied.txt
+   3. gates/run_gates.sh <폴더> ; gates/compare_gates_e25.py <전> <후> ; scripts/check_master_xlsx_drift.py
+   4. gates/run_tests_p2.sh <tag> --with-pl-golden ; 실패한 골든은 그 도구의 --update 로만 (tests/test_master_tables_golden.py --update)
+
+6) 되돌리는 순서
+   backup_before_apply/ 의 사본을 같은 상대 경로로 복사: PL_breakdown.json · PL_breakdown_provenance.json · data/_gold/user_pl_cells.json · tests/test_rule_coverage_manifest.py · tests/fixtures/master_tables_golden.json
+   (p2_apply.py --revert --apply 는 앞 4개를 되돌린다; 골든 fixture 는 백업에서 따로 복사. git checkout 으로 되돌리지 말 것 — 작업트리에 다른 미커밋 변경이 있다.)

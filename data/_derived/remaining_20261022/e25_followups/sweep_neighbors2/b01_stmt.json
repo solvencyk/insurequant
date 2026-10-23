@@ -1,0 +1,4014 @@
+{
+ "KR0005|2023.3Q": {
+  "items": {
+   "1": {
+    "val": 277123.0,
+    "line": [
+     3828
+    ],
+    "printed": [
+     "277,123"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": -63150.0,
+    "line": [
+     4012
+    ],
+    "printed": [
+     "(63,150)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 213973.0,
+    "line": [
+     4564
+    ],
+    "printed": [
+     "213,973"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 213003.0,
+    "line": [
+     4610
+    ],
+    "printed": [
+     "213,003"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 165256.0,
+    "line": [
+     4656
+    ],
+    "printed": [
+     "165,256"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 13225.0,
+    "line": [
+     3989
+    ],
+    "printed": [
+     "13,225"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 47747.0,
+    "line": [
+     4633
+    ],
+    "printed": [
+     "47,747"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -189519.0,
+    "line": [
+     4748
+    ],
+    "printed": [
+     "(189,519)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -24263.0,
+    "line": [
+     4978
+    ],
+    "printed": [
+     "(24,263)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -259949.0,
+    "line": [
+     4058,
+     4081,
+     4357,
+     4380
+    ],
+    "printed": [
+     "26",
+     "0",
+     "257,141",
+     "2,834"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 196799.0,
+    "line": [
+     4012,
+     4058,
+     4081,
+     4357,
+     4380
+    ],
+    "printed": [
+     "(63,150)",
+     "26",
+     "0",
+     "257,141",
+     "2,834"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -970.0,
+    "line": [
+     4587
+    ],
+    "printed": [
+     "(970)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": -80901.0,
+    "line": [
+     4863
+    ],
+    "printed": [
+     "(80,901)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": 30103.0,
+    "line": [
+     4932
+    ],
+    "printed": [
+     "30,103"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": -135740.0,
+    "line": [
+     4909
+    ],
+    "printed": [
+     "(135,740)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true,
+    "ambiguous": false
+   },
+   "30": {
+    "val": -3117.0,
+    "line": [
+     4955
+    ],
+    "printed": [
+     "(3,117)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": 136.0,
+    "line": [
+     4748,
+     4863,
+     4932,
+     4909,
+     4955
+    ],
+    "printed": [
+     "(189,519)",
+     "(80,901)",
+     "30,103",
+     "(135,740)",
+     "(3,117)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2024_Q3/raw/KR0005_흥국화재/20241114002739.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0005|2023.4Q": {
+  "items": {
+   "1": {
+    "val": 308412.0,
+    "line": [
+     5505
+    ],
+    "printed": [
+     "308,412"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 72613.0,
+    "line": [
+     5657
+    ],
+    "printed": [
+     "72,613"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 381025.0,
+    "line": [
+     6208
+    ],
+    "printed": [
+     "381,025"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 380386.0,
+    "line": [
+     6246
+    ],
+    "printed": [
+     "380,386"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 295540.0,
+    "line": [
+     6284
+    ],
+    "printed": [
+     "295,540"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 18758.0,
+    "line": [
+     5638
+    ],
+    "printed": [
+     "18,758"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 84846.0,
+    "line": [
+     6265
+    ],
+    "printed": [
+     "84,846"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -371946.0,
+    "line": [
+     6360
+    ],
+    "printed": [
+     "(371,946)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -76406.0,
+    "line": [
+     6588
+    ],
+    "printed": [
+     "(76,406)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -345849.0,
+    "line": [
+     5695,
+     5714,
+     5999,
+     6018
+    ],
+    "printed": [
+     "26",
+     "0",
+     "342,477",
+     "3,398"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 418462.0,
+    "line": [
+     5657,
+     5695,
+     5714,
+     5999,
+     6018
+    ],
+    "printed": [
+     "72,613",
+     "26",
+     "0",
+     "342,477",
+     "3,398"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -639.0,
+    "line": [
+     6227
+    ],
+    "printed": [
+     "(639)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 431462.0,
+    "line": [
+     6455
+    ],
+    "printed": [
+     "431,462"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -888760.0,
+    "line": [
+     6550
+    ],
+    "printed": [
+     "(888,760)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 71810.0,
+    "line": [
+     6531
+    ],
+    "printed": [
+     "71,810"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 14360.0,
+    "line": [
+     6569
+    ],
+    "printed": [
+     "14,360"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -818.0,
+    "line": [
+     6360,
+     6455,
+     6550,
+     6531,
+     6569
+    ],
+    "printed": [
+     "(371,946)",
+     "431,462",
+     "(888,760)",
+     "71,810",
+     "14,360"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2024_Q4/raw/KR0005_흥국화재_20250320001444/20250320001444.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0005|2024.1Q": {
+  "items": {
+   "1": {
+    "val": 139937.0,
+    "line": [
+     3877
+    ],
+    "printed": [
+     "139,937"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": -78401.0,
+    "line": [
+     4061
+    ],
+    "printed": [
+     "(78,401)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 61536.0,
+    "line": [
+     4613
+    ],
+    "printed": [
+     "61,536"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 61191.0,
+    "line": [
+     4659
+    ],
+    "printed": [
+     "61,191"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 39212.0,
+    "line": [
+     4705
+    ],
+    "printed": [
+     "39,212"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 5112.0,
+    "line": [
+     4038
+    ],
+    "printed": [
+     "5,112"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 21979.0,
+    "line": [
+     4682
+    ],
+    "printed": [
+     "21,979"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -300515.0,
+    "line": [
+     4797
+    ],
+    "printed": [
+     "(300,515)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -261303.0,
+    "line": [
+     5027
+    ],
+    "printed": [
+     "(261,303)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -80739.0,
+    "line": [
+     4107,
+     4130,
+     4406,
+     4429
+    ],
+    "printed": [
+     "0",
+     "5,172",
+     "85,911",
+     "0"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 2338.0,
+    "line": [
+     4061,
+     4107,
+     4130,
+     4406,
+     4429
+    ],
+    "printed": [
+     "(78,401)",
+     "0",
+     "5,172",
+     "85,911",
+     "0"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -345.0,
+    "line": [
+     4636
+    ],
+    "printed": [
+     "(345)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": -131799.0,
+    "line": [
+     4912
+    ],
+    "printed": [
+     "(131,799)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -90836.0,
+    "line": [
+     4981
+    ],
+    "printed": [
+     "(90,836)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": -80960.0,
+    "line": [
+     4958
+    ],
+    "printed": [
+     "(80,960)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 3280.0,
+    "line": [
+     5004
+    ],
+    "printed": [
+     "3,280"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -200.0,
+    "line": [
+     4797,
+     4912,
+     4981,
+     4958,
+     5004
+    ],
+    "printed": [
+     "(300,515)",
+     "(131,799)",
+     "(90,836)",
+     "(80,960)",
+     "3,280"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2025_Q1/raw/KR0005_흥국화재/20250515002476.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0005|2024.2Q": {
+  "items": {
+   "1": {
+    "val": 182019.0,
+    "line": [
+     4648
+    ],
+    "printed": [
+     "182,019"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": -62135.0,
+    "line": [
+     4832
+    ],
+    "printed": [
+     "(62,135)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 119884.0,
+    "line": [
+     5351
+    ],
+    "printed": [
+     "119,884"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 119015.0,
+    "line": [
+     5397
+    ],
+    "printed": [
+     "119,015"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 87407.0,
+    "line": [
+     5443
+    ],
+    "printed": [
+     "87,407"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 11246.0,
+    "line": [
+     4809
+    ],
+    "printed": [
+     "11,246"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 31608.0,
+    "line": [
+     5420
+    ],
+    "printed": [
+     "31,608"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -553328.0,
+    "line": [
+     5535
+    ],
+    "printed": [
+     "(553,328)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -465921.0,
+    "line": [
+     5753
+    ],
+    "printed": [
+     "(465,921)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -165321.0,
+    "line": [
+     4872,
+     4889,
+     5162,
+     5169
+    ],
+    "printed": [
+     "0",
+     "5,244",
+     "170,565",
+     "(blank cell)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 103186.0,
+    "line": [
+     4832,
+     4872,
+     4889,
+     5162,
+     5169
+    ],
+    "printed": [
+     "(62,135)",
+     "0",
+     "5,244",
+     "170,565",
+     "(blank cell)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -869.0,
+    "line": [
+     5374
+    ],
+    "printed": [
+     "(869)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": -87646.0,
+    "line": [
+     5638
+    ],
+    "printed": [
+     "(87,646)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -432328.0,
+    "line": [
+     5707
+    ],
+    "printed": [
+     "(432,328)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": -43819.0,
+    "line": [
+     5684
+    ],
+    "printed": [
+     "(43,819)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 10619.0,
+    "line": [
+     5730
+    ],
+    "printed": [
+     "10,619"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -154.0,
+    "line": [
+     5535,
+     5638,
+     5707,
+     5684,
+     5730
+    ],
+    "printed": [
+     "(553,328)",
+     "(87,646)",
+     "(432,328)",
+     "(43,819)",
+     "10,619"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2025_Q2/raw/KR0005_흥국화재/xml/20250814003425.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 1,
+  "calib": "6/6",
+  "blank_cells_cur": 2
+ },
+ "KR0005|2024.3Q": {
+  "items": {
+   "1": {
+    "val": 227590.0,
+    "line": [
+     3380
+    ],
+    "printed": [
+     "227,590"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 34117.0,
+    "line": [
+     3444
+    ],
+    "printed": [
+     "34,117"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 261707.0,
+    "line": [
+     3636
+    ],
+    "printed": [
+     "261,707"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 260572.0,
+    "line": [
+     3652
+    ],
+    "printed": [
+     "260,572"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 197835.0,
+    "line": [
+     3668
+    ],
+    "printed": [
+     "197,835"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 18005.0,
+    "line": [
+     3436
+    ],
+    "printed": [
+     "18,005"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 62737.0,
+    "line": [
+     3660
+    ],
+    "printed": [
+     "62,737"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -626213.0,
+    "line": [
+     3700
+    ],
+    "printed": [
+     "(626,213)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -428378.0,
+    "line": [
+     3780
+    ],
+    "printed": [
+     "(428,378)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -252020.0,
+    "line": [
+     3456,
+     3468,
+     3564,
+     3568
+    ],
+    "printed": [
+     "(blank cell)",
+     "5,377",
+     "257,397",
+     "(blank cell)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 286137.0,
+    "line": [
+     3444,
+     3456,
+     3468,
+     3564,
+     3568
+    ],
+    "printed": [
+     "34,117",
+     "(blank cell)",
+     "5,377",
+     "257,397",
+     "(blank cell)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -1135.0,
+    "line": [
+     3644
+    ],
+    "printed": [
+     "(1,135)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 181380.0,
+    "line": [
+     3740
+    ],
+    "printed": [
+     "181,380"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -889849.0,
+    "line": [
+     3764
+    ],
+    "printed": [
+     "(889,849)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 61370.0,
+    "line": [
+     3756
+    ],
+    "printed": [
+     "61,370"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 21158.0,
+    "line": [
+     3772
+    ],
+    "printed": [
+     "21,158"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -272.0,
+    "line": [
+     3700,
+     3740,
+     3764,
+     3756,
+     3772
+    ],
+    "printed": [
+     "(626,213)",
+     "181,380",
+     "(889,849)",
+     "61,370",
+     "21,158"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2025_Q3/raw/KR0005_흥국화재/xml/20251114002501.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 2,
+  "calib": "6/6",
+  "blank_cells_cur": 2
+ },
+ "KR0009|2023.1Q": {
+  "items": {
+   "1": {
+    "val": 246045.277087,
+    "line": [
+     28343
+    ],
+    "printed": [
+     "246,045,277,087"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 174950.85334,
+    "line": [
+     28527
+    ],
+    "printed": [
+     "174,950,853,340"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 420996.130427,
+    "line": [
+     29263
+    ],
+    "printed": [
+     "420,996,130,427"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 413145.994152,
+    "line": [
+     29378
+    ],
+    "printed": [
+     "413,145,994,152"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 315301.683482,
+    "line": [
+     29424
+    ],
+    "printed": [
+     "315,301,683,482"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 4050.924606,
+    "line": [
+     28504
+    ],
+    "printed": [
+     "(4,050,924,606)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 97844.31067,
+    "line": [
+     29401
+    ],
+    "printed": [
+     "(97,844,310,670)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -61784.991652,
+    "line": [
+     29516
+    ],
+    "printed": [
+     "(61,784,991,652)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 253516.69183,
+    "line": [
+     29838
+    ],
+    "printed": [
+     "253,516,691,830"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -195752.81750600002,
+    "line": [
+     28573,
+     28596,
+     28964,
+     28987
+    ],
+    "printed": [
+     "19,035,789,170",
+     "29,393,305,891",
+     "(224,648,364,739)",
+     "(19,533,547,828)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 370703.670846,
+    "line": [
+     28527,
+     28573,
+     28596,
+     28964,
+     28987
+    ],
+    "printed": [
+     "174,950,853,340",
+     "19,035,789,170",
+     "29,393,305,891",
+     "(224,648,364,739)",
+     "(19,533,547,828)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -7850.136275,
+    "line": [
+     29286
+    ],
+    "printed": [
+     "(7,850,136,275)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 579877.893584,
+    "line": [
+     29562
+    ],
+    "printed": [
+     "579,877,893,584"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -654376.896346,
+    "line": [
+     29654
+    ],
+    "printed": [
+     "(654,376,896,346)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 16689.535871,
+    "line": [
+     29631
+    ],
+    "printed": [
+     "16,689,535,871"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 908.73772,
+    "line": [
+     29769
+    ],
+    "printed": [
+     "908,737,720"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 52.934994,
+    "line": [
+     29677
+    ],
+    "printed": [
+     "52,934,994"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -4937.197474999921,
+    "line": [
+     29516,
+     29562,
+     29654,
+     29631,
+     29769,
+     29677
+    ],
+    "printed": [
+     "(61,784,991,652)",
+     "579,877,893,584",
+     "(654,376,896,346)",
+     "16,689,535,871",
+     "908,737,720",
+     "52,934,994"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2024_Q1/raw/KR0009_현대해상/20240516002153.xml",
+  "err": null,
+  "unit": "원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0009|2023.2Q": {
+  "items": {
+   "1": {
+    "val": 415652.294609,
+    "line": [
+     31372
+    ],
+    "printed": [
+     "415,652,294,609"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 257230.481327,
+    "line": [
+     31556
+    ],
+    "printed": [
+     "257,230,481,327"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 672882.775936,
+    "line": [
+     32154
+    ],
+    "printed": [
+     "672,882,775,936"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 657448.60036,
+    "line": [
+     32269
+    ],
+    "printed": [
+     "657,448,600,360"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 496963.435762,
+    "line": [
+     32315
+    ],
+    "printed": [
+     "496,963,435,762"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 8784.082441,
+    "line": [
+     31533
+    ],
+    "printed": [
+     "(8,784,082,441)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 160485.164598,
+    "line": [
+     32292
+    ],
+    "printed": [
+     "(160,485,164,598)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": 90734.016334,
+    "line": [
+     32407
+    ],
+    "printed": [
+     "90,734,016,334"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 587697.452096,
+    "line": [
+     32683
+    ],
+    "printed": [
+     "587,697,452,096"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -389856.318176,
+    "line": [
+     31602,
+     31625,
+     31901,
+     31924
+    ],
+    "printed": [
+     "28,861,174,160",
+     "48,467,178,376",
+     "(438,039,473,544)",
+     "(29,145,197,168)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 647086.799503,
+    "line": [
+     31556,
+     31602,
+     31625,
+     31901,
+     31924
+    ],
+    "printed": [
+     "257,230,481,327",
+     "28,861,174,160",
+     "48,467,178,376",
+     "(438,039,473,544)",
+     "(29,145,197,168)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -15434.175576,
+    "line": [
+     32177
+    ],
+    "printed": [
+     "(15,434,175,576)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 196337.990577,
+    "line": [
+     32453
+    ],
+    "printed": [
+     "196,337,990,577"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -121036.336179,
+    "line": [
+     32545
+    ],
+    "printed": [
+     "(121,036,336,179)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 17086.261152,
+    "line": [
+     32522
+    ],
+    "printed": [
+     "17,086,261,152"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 145.872947,
+    "line": [
+     32614
+    ],
+    "printed": [
+     "145,872,947"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 1154.947018,
+    "line": [
+     32568
+    ],
+    "printed": [
+     "1,154,947,018"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -2954.7191809999786,
+    "line": [
+     32407,
+     32453,
+     32545,
+     32522,
+     32614,
+     32568
+    ],
+    "printed": [
+     "90,734,016,334",
+     "196,337,990,577",
+     "(121,036,336,179)",
+     "17,086,261,152",
+     "145,872,947",
+     "1,154,947,018"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2024_Q2/raw/KR0009_현대해상/20240814004187.xml",
+  "err": null,
+  "unit": "원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0009|2023.3Q": {
+  "items": {
+   "1": {
+    "val": 754479.376712,
+    "line": [
+     29915
+    ],
+    "printed": [
+     "754,479,376,712"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 314655.377427,
+    "line": [
+     30099
+    ],
+    "printed": [
+     "314,655,377,427"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 1069134.754139,
+    "line": [
+     30685
+    ],
+    "printed": [
+     "1,069,134,754,139"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 1047009.744772,
+    "line": [
+     30800
+    ],
+    "printed": [
+     "1,047,009,744,772"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 786355.306778,
+    "line": [
+     30846
+    ],
+    "printed": [
+     "786,355,306,778"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 35264.198998,
+    "line": [
+     30076
+    ],
+    "printed": [
+     "(35,264,198,998)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 260654.437994,
+    "line": [
+     30823
+    ],
+    "printed": [
+     "(260,654,437,994)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": 119978.352035,
+    "line": [
+     30938
+    ],
+    "printed": [
+     "119,978,352,035"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 906333.658813,
+    "line": [
+     31214
+    ],
+    "printed": [
+     "906,333,658,813"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -594318.062378,
+    "line": [
+     30145,
+     30168,
+     30441,
+     30464
+    ],
+    "printed": [
+     "40,522,238,632",
+     "93,341,626,450",
+     "(662,185,116,138)",
+     "(65,996,811,322)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 908973.4398050001,
+    "line": [
+     30099,
+     30145,
+     30168,
+     30441,
+     30464
+    ],
+    "printed": [
+     "314,655,377,427",
+     "40,522,238,632",
+     "93,341,626,450",
+     "(662,185,116,138)",
+     "(65,996,811,322)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -22125.009367,
+    "line": [
+     30708
+    ],
+    "printed": [
+     "(22,125,009,367)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": -363959.235007,
+    "line": [
+     30984
+    ],
+    "printed": [
+     "(363,959,235,007)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": 472908.675976,
+    "line": [
+     31076
+    ],
+    "printed": [
+     "472,908,675,976"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 6122.512712,
+    "line": [
+     31053
+    ],
+    "printed": [
+     "6,122,512,712"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 1660.430399,
+    "line": [
+     31145
+    ],
+    "printed": [
+     "1,660,430,399"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 437.890522,
+    "line": [
+     31099
+    ],
+    "printed": [
+     "437,890,522"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": 2808.077432999955,
+    "line": [
+     30938,
+     30984,
+     31076,
+     31053,
+     31145,
+     31099
+    ],
+    "printed": [
+     "119,978,352,035",
+     "(363,959,235,007)",
+     "472,908,675,976",
+     "6,122,512,712",
+     "1,660,430,399",
+     "437,890,522"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2024_Q3/raw/KR0009_현대해상/20241114003026.xml",
+  "err": null,
+  "unit": "원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0009|2023.4Q": {
+  "items": {
+   "1": {
+    "val": 526589.620124,
+    "line": [
+     51619
+    ],
+    "printed": [
+     "526,589,620,124"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 455046.121937,
+    "line": [
+     51771
+    ],
+    "printed": [
+     "455,046,121,937"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 981635.742061,
+    "line": [
+     52379
+    ],
+    "printed": [
+     "981,635,742,061"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 952937.585573,
+    "line": [
+     52474
+    ],
+    "printed": [
+     "952,937,585,573"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 772338.01647,
+    "line": [
+     52512
+    ],
+    "printed": [
+     "772,338,016,470"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 38490.968273,
+    "line": [
+     51752
+    ],
+    "printed": [
+     "(38,490,968,273)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 180599.569103,
+    "line": [
+     52493
+    ],
+    "printed": [
+     "(180,599,569,103)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -463577.530269,
+    "line": [
+     52588
+    ],
+    "printed": [
+     "(463,577,530,269)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 308760.486201,
+    "line": [
+     52854
+    ],
+    "printed": [
+     "308,760,486,201"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -828290.2646379999,
+    "line": [
+     51809,
+     51828,
+     52132,
+     52151
+    ],
+    "printed": [
+     "57,623,227,782",
+     "105,160,848,812",
+     "(915,641,804,466)",
+     "(75,432,536,766)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 1283336.386575,
+    "line": [
+     51771,
+     51809,
+     51828,
+     52132,
+     52151
+    ],
+    "printed": [
+     "455,046,121,937",
+     "57,623,227,782",
+     "105,160,848,812",
+     "(915,641,804,466)",
+     "(75,432,536,766)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -28698.156488,
+    "line": [
+     52398
+    ],
+    "printed": [
+     "(28,698,156,488)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 1038658.945156,
+    "line": [
+     52626
+    ],
+    "printed": [
+     "1,038,658,945,156"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -1511896.424558,
+    "line": [
+     52702
+    ],
+    "printed": [
+     "(1,511,896,424,558)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 28504.772715,
+    "line": [
+     52683
+    ],
+    "printed": [
+     "28,504,772,715"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": -280.327893,
+    "line": [
+     52797
+    ],
+    "printed": [
+     "(280,327,893)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 2886.25182,
+    "line": [
+     52721
+    ],
+    "printed": [
+     "2,886,251,820"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -21450.747509000008,
+    "line": [
+     52588,
+     52626,
+     52702,
+     52683,
+     52797,
+     52721
+    ],
+    "printed": [
+     "(463,577,530,269)",
+     "1,038,658,945,156",
+     "(1,511,896,424,558)",
+     "28,504,772,715",
+     "(280,327,893)",
+     "2,886,251,820"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2024_Q4/raw/KR0009_현대해상_20250313001346/20250313001346.xml",
+  "err": null,
+  "unit": "원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0032|2024.4Q": {
+  "items": {
+   "1": {
+    "val": 82923.568979,
+    "line": [
+     5757
+    ],
+    "printed": [
+     "82,923,568,979"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 85487.301757,
+    "line": [
+     5813
+    ],
+    "printed": [
+     "85,487,301,757"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 168410.870736,
+    "line": [
+     5974
+    ],
+    "printed": [
+     "168,410,870,736"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 140898.176304,
+    "line": [
+     5995
+    ],
+    "printed": [
+     "140,898,176,304"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 103574.264629,
+    "line": [
+     6009
+    ],
+    "printed": [
+     "103,574,264,629"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 92407.557272,
+    "line": [
+     5806
+    ],
+    "printed": [
+     "92,407,557,272"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 37323.911675,
+    "line": [
+     6002
+    ],
+    "printed": [
+     "37,323,911,675"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -467943.073852,
+    "line": [
+     6037
+    ],
+    "printed": [
+     "(467,943,073,852)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -364368.809223,
+    "line": [
+     6100
+    ],
+    "printed": [
+     "(364,368,809,223)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -273388.954858,
+    "line": [
+     5827,
+     5834,
+     5904,
+     5911
+    ],
+    "printed": [
+     "50,147,534,739",
+     "16,604,489,614",
+     "334,126,324,354",
+     "6,014,654,857"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 358876.25661499996,
+    "line": [
+     5813,
+     5827,
+     5834,
+     5904,
+     5911
+    ],
+    "printed": [
+     "85,487,301,757",
+     "50,147,534,739",
+     "16,604,489,614",
+     "334,126,324,354",
+     "6,014,654,857"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -27512.694432,
+    "line": [
+     5981,
+     5988
+    ],
+    "printed": [
+     "786,655,929",
+     "28,299,350,361"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 61911.390853,
+    "line": [
+     6072
+    ],
+    "printed": [
+     "61,911,390,853"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -617025.76883,
+    "line": [
+     6086
+    ],
+    "printed": [
+     "(617,025,768,830)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 48336.614518,
+    "line": [
+     6079
+    ],
+    "printed": [
+     "48,336,614,518"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 6163.086664,
+    "line": [
+     6058
+    ],
+    "printed": [
+     "6,163,086,664"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 38203.838163,
+    "line": [
+     6093
+    ],
+    "printed": [
+     "38,203,838,163"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -5532.235220000031,
+    "line": [
+     6037,
+     6072,
+     6086,
+     6079,
+     6058,
+     6093
+    ],
+    "printed": [
+     "(467,943,073,852)",
+     "61,911,390,853",
+     "(617,025,768,830)",
+     "48,336,614,518",
+     "6,163,086,664",
+     "38,203,838,163"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   }
+  },
+  "file": "data/dart/FY2025_Q4/raw/KR0032_NH농협손해보험_20260331004099/20260331004099.xml",
+  "err": null,
+  "unit": "원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0099|2023.1Q": {
+  "items": {
+   "1": {
+    "val": 56633.0,
+    "line": [
+     25492
+    ],
+    "printed": [
+     "56,633"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 583923.0,
+    "line": [
+     25628
+    ],
+    "printed": [
+     "583,923"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 176308.0,
+    "line": [
+     25965
+    ],
+    "printed": [
+     "176,308"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 175964.0,
+    "line": [
+     26033
+    ],
+    "printed": [
+     "175,964"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 132612.0,
+    "line": [
+     26067
+    ],
+    "printed": [
+     "132,612"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 9568.0,
+    "line": [
+     25611
+    ],
+    "printed": [
+     "9,568"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 43352.0,
+    "line": [
+     26050
+    ],
+    "printed": [
+     "43,352"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": 64067.0,
+    "line": [
+     26084
+    ],
+    "printed": [
+     "64,067"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 196679.0,
+    "line": [
+     26237
+    ],
+    "printed": [
+     "196,679"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -464248.0,
+    "line": [
+     25931,
+     25948
+    ],
+    "printed": [
+     "119,206",
+     "583,454"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 1048171.0,
+    "line": [
+     25628,
+     25931,
+     25948
+    ],
+    "printed": [
+     "583,923",
+     "119,206",
+     "583,454"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -344.0,
+    "line": [
+     25982
+    ],
+    "printed": [
+     "(344)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 570055.0,
+    "line": [
+     26169
+    ],
+    "printed": [
+     "570,055"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -506711.0,
+    "line": [
+     26186
+    ],
+    "printed": [
+     "(506,711)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 29.0,
+    "line": [
+     26220
+    ],
+    "printed": [
+     "29"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 1911.0,
+    "line": [
+     26135
+    ],
+    "printed": [
+     "1,911"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": -1118.0,
+    "line": [
+     26203
+    ],
+    "printed": [
+     "(1,118)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -99.0,
+    "line": [
+     26084,
+     26169,
+     26186,
+     26220,
+     26135,
+     26203
+    ],
+    "printed": [
+     "64,067",
+     "570,055",
+     "(506,711)",
+     "29",
+     "1,911",
+     "(1,118)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   },
+   "2": {
+    "val": 66201.0,
+    "line": [
+     25526,
+     25577,
+     25543,
+     25594
+    ],
+    "printed": [
+     "182,886",
+     "114,539",
+     "116",
+     "2,262"
+    ],
+    "absent": false
+   },
+   "3": {
+    "val": 68347.0,
+    "line": [
+     25526,
+     25577
+    ],
+    "printed": [
+     "182,886",
+     "114,539"
+    ],
+    "absent": false
+   },
+   "8": {
+    "val": -2146.0,
+    "line": [
+     25543,
+     25594
+    ],
+    "printed": [
+     "116",
+     "2,262"
+    ],
+    "absent": false
+   }
+  },
+  "file": "data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "5/6",
+  "blank_cells_cur": 0
+ },
+ "KR0099|2023.2Q": {
+  "items": {
+   "1": {
+    "val": 140176.0,
+    "line": [
+     28573
+    ],
+    "printed": [
+     "140,176"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 162557.0,
+    "line": [
+     28757
+    ],
+    "printed": [
+     "162,557"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 302733.0,
+    "line": [
+     29231
+    ],
+    "printed": [
+     "302,733"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 301731.0,
+    "line": [
+     29323
+    ],
+    "printed": [
+     "301,731"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 235038.0,
+    "line": [
+     29369
+    ],
+    "printed": [
+     "235,038"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 16763.0,
+    "line": [
+     28734
+    ],
+    "printed": [
+     "16,763"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 66693.0,
+    "line": [
+     29346
+    ],
+    "printed": [
+     "66,693"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": 115434.0,
+    "line": [
+     29392
+    ],
+    "printed": [
+     "115,434"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 350472.0,
+    "line": [
+     29599
+    ],
+    "printed": [
+     "350,472"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -696908.0,
+    "line": [
+     28803,
+     28826,
+     29033,
+     29056
+    ],
+    "printed": [
+     "131,023",
+     "38",
+     "827,650",
+     "319"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 859465.0,
+    "line": [
+     28757,
+     28803,
+     28826,
+     29033,
+     29056
+    ],
+    "printed": [
+     "162,557",
+     "131,023",
+     "38",
+     "827,650",
+     "319"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -1002.0,
+    "line": [
+     29254
+    ],
+    "printed": [
+     "(1,002)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 143966.0,
+    "line": [
+     29507
+    ],
+    "printed": [
+     "143,966"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -30834.0,
+    "line": [
+     29530
+    ],
+    "printed": [
+     "(30,834)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 62.0,
+    "line": [
+     29576
+    ],
+    "printed": [
+     "62"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 2607.0,
+    "line": [
+     29461
+    ],
+    "printed": [
+     "2,607"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": -366.0,
+    "line": [
+     29553
+    ],
+    "printed": [
+     "(366)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -1.0,
+    "line": [
+     29392,
+     29507,
+     29530,
+     29576,
+     29461,
+     29553
+    ],
+    "printed": [
+     "115,434",
+     "143,966",
+     "(30,834)",
+     "62",
+     "2,607",
+     "(366)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   },
+   "2": {
+    "val": 156939.0,
+    "line": [
+     28619,
+     28688,
+     28642,
+     28711
+    ],
+    "printed": [
+     "374,644",
+     "215,102",
+     "1,952",
+     "4,555"
+    ],
+    "absent": false
+   },
+   "3": {
+    "val": 159542.0,
+    "line": [
+     28619,
+     28688
+    ],
+    "printed": [
+     "374,644",
+     "215,102"
+    ],
+    "absent": false
+   },
+   "8": {
+    "val": -2603.0,
+    "line": [
+     28642,
+     28711
+    ],
+    "printed": [
+     "1,952",
+     "4,555"
+    ],
+    "absent": false
+   }
+  },
+  "file": "data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0099|2023.3Q": {
+  "items": {
+   "1": {
+    "val": 215120.0,
+    "line": [
+     24681
+    ],
+    "printed": [
+     "215,120"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 180415.0,
+    "line": [
+     24865
+    ],
+    "printed": [
+     "180,415"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 395535.0,
+    "line": [
+     25342
+    ],
+    "printed": [
+     "395,535"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 394831.0,
+    "line": [
+     25431
+    ],
+    "printed": [
+     "394,831"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 295862.0,
+    "line": [
+     25477
+    ],
+    "printed": [
+     "295,862"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 24190.0,
+    "line": [
+     24842
+    ],
+    "printed": [
+     "24,190"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 98969.0,
+    "line": [
+     25454
+    ],
+    "printed": [
+     "98,969"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": 283175.0,
+    "line": [
+     25500
+    ],
+    "printed": [
+     "283,175"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 579037.0,
+    "line": [
+     25707
+    ],
+    "printed": [
+     "579,037"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -773564.0,
+    "line": [
+     24911,
+     24934,
+     25141,
+     25164
+    ],
+    "printed": [
+     "174,156",
+     "72",
+     "947,406",
+     "386"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 953979.0,
+    "line": [
+     24865,
+     24911,
+     24934,
+     25141,
+     25164
+    ],
+    "printed": [
+     "180,415",
+     "174,156",
+     "72",
+     "947,406",
+     "386"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": 298.0,
+    "line": [
+     25358
+    ],
+    "printed": [
+     "298"
+    ],
+    "absent": false,
+    "ambiguous": true
+   },
+   "26": {
+    "val": -252817.0,
+    "line": [
+     25615
+    ],
+    "printed": [
+     "(252,817)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": 528267.0,
+    "line": [
+     25638
+    ],
+    "printed": [
+     "528,267"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 95.0,
+    "line": [
+     25684
+    ],
+    "printed": [
+     "95"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 7331.0,
+    "line": [
+     25569
+    ],
+    "printed": [
+     "7,331"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": 427.0,
+    "line": [
+     25661
+    ],
+    "printed": [
+     "427"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": -128.0,
+    "line": [
+     25500,
+     25615,
+     25638,
+     25684,
+     25569,
+     25661
+    ],
+    "printed": [
+     "283,175",
+     "(252,817)",
+     "528,267",
+     "95",
+     "7,331",
+     "427"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   },
+   "2": {
+    "val": 239310.0,
+    "line": [
+     24727,
+     24796,
+     24750,
+     24819
+    ],
+    "printed": [
+     "567,421",
+     "325,390",
+     "4,043",
+     "6,764"
+    ],
+    "absent": false
+   },
+   "3": {
+    "val": 242031.0,
+    "line": [
+     24727,
+     24796
+    ],
+    "printed": [
+     "567,421",
+     "325,390"
+    ],
+    "absent": false
+   },
+   "8": {
+    "val": -2721.0,
+    "line": [
+     24750,
+     24819
+    ],
+    "printed": [
+     "4,043",
+     "6,764"
+    ],
+    "absent": false
+   }
+  },
+  "file": "data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0099|2023.4Q": {
+  "items": {
+   "1": {
+    "val": 249794.0,
+    "line": [
+     34636
+    ],
+    "printed": [
+     "249,794"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 76008.0,
+    "line": [
+     34788
+    ],
+    "printed": [
+     "76,008"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 325802.0,
+    "line": [
+     35224
+    ],
+    "printed": [
+     "325,802"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 320035.0,
+    "line": [
+     35300
+    ],
+    "printed": [
+     "320,035"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 236403.0,
+    "line": [
+     35338
+    ],
+    "printed": [
+     "236,403"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 32041.0,
+    "line": [
+     34769
+    ],
+    "printed": [
+     "32,041"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 83632.0,
+    "line": [
+     35319
+    ],
+    "printed": [
+     "83,632"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": 126232.0,
+    "line": [
+     35357
+    ],
+    "printed": [
+     "126,232"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": 362635.0,
+    "line": [
+     35548
+    ],
+    "printed": [
+     "362,635"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -1270444.0,
+    "line": [
+     34826,
+     34845,
+     35036,
+     35055
+    ],
+    "printed": [
+     "5,582",
+     "112",
+     "1,275,667",
+     "471"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 1346452.0,
+    "line": [
+     34788,
+     34826,
+     34845,
+     35036,
+     35055
+    ],
+    "printed": [
+     "76,008",
+     "5,582",
+     "112",
+     "1,275,667",
+     "471"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -5767.0,
+    "line": [
+     35243
+    ],
+    "printed": [
+     "(5,767)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": 1107691.0,
+    "line": [
+     35449
+    ],
+    "printed": [
+     "1,107,691"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -990226.0,
+    "line": [
+     35491
+    ],
+    "printed": [
+     "(990,226)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 128.0,
+    "line": [
+     35529
+    ],
+    "printed": [
+     "128"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 8996.0,
+    "line": [
+     35414
+    ],
+    "printed": [
+     "8,996"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": -2364.0,
+    "line": [
+     35510
+    ],
+    "printed": [
+     "(2,364)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": 2007.0,
+    "line": [
+     35357,
+     35449,
+     35491,
+     35529,
+     35414,
+     35510
+    ],
+    "printed": [
+     "126,232",
+     "1,107,691",
+     "(990,226)",
+     "128",
+     "8,996",
+     "(2,364)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   },
+   "2": {
+    "val": 281835.0,
+    "line": [
+     34674,
+     34731,
+     34693,
+     34750
+    ],
+    "printed": [
+     "775,194",
+     "490,092",
+     "6,284",
+     "9,551"
+    ],
+    "absent": false
+   },
+   "3": {
+    "val": 285102.0,
+    "line": [
+     34674,
+     34731
+    ],
+    "printed": [
+     "775,194",
+     "490,092"
+    ],
+    "absent": false
+   },
+   "8": {
+    "val": -3267.0,
+    "line": [
+     34693,
+     34750
+    ],
+    "printed": [
+     "6,284",
+     "9,551"
+    ],
+    "absent": false
+   }
+  },
+  "file": "data/dart/FY2024_Q4/raw/KR0099_케이비라이프생명보험_20250314000905/xml/20250314000905.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 4,
+  "calib": "6/6",
+  "blank_cells_cur": 4
+ },
+ "KR0099|2024.1Q": {
+  "items": {
+   "1": {
+    "val": 82810.0,
+    "line": [
+     26679
+    ],
+    "printed": [
+     "82,810"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 48560.0,
+    "line": [
+     26815
+    ],
+    "printed": [
+     "48,560"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 131370.0,
+    "line": [
+     27169
+    ],
+    "printed": [
+     "131,370"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 131762.0,
+    "line": [
+     27237
+    ],
+    "printed": [
+     "131,762"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 96237.0,
+    "line": [
+     27271
+    ],
+    "printed": [
+     "96,237"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 4079.0,
+    "line": [
+     26798
+    ],
+    "printed": [
+     "4,079"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 35525.0,
+    "line": [
+     27254
+    ],
+    "printed": [
+     "35,525"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -447994.0,
+    "line": [
+     27288
+    ],
+    "printed": [
+     "(447,994)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -351757.0,
+    "line": [
+     27441
+    ],
+    "printed": [
+     "(351,757)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -307995.0,
+    "line": [
+     26849,
+     26866,
+     27019,
+     27036
+    ],
+    "printed": [
+     "808",
+     "28",
+     "308,687",
+     "144"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 356555.0,
+    "line": [
+     26815,
+     26849,
+     26866,
+     27019,
+     27036
+    ],
+    "printed": [
+     "48,560",
+     "808",
+     "28",
+     "308,687",
+     "144"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": 392.0,
+    "line": [
+     27186
+    ],
+    "printed": [
+     "392"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": -390187.0,
+    "line": [
+     27373
+    ],
+    "printed": [
+     "(390,187)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -58904.0,
+    "line": [
+     27390
+    ],
+    "printed": [
+     "(58,904)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 33.0,
+    "line": [
+     27424
+    ],
+    "printed": [
+     "33"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 1353.0,
+    "line": [
+     27339
+    ],
+    "printed": [
+     "1,353"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": -423.0,
+    "line": [
+     27407
+    ],
+    "printed": [
+     "(423)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": 134.0,
+    "line": [
+     27288,
+     27373,
+     27390,
+     27424,
+     27339,
+     27407
+    ],
+    "printed": [
+     "(447,994)",
+     "(390,187)",
+     "(58,904)",
+     "33",
+     "1,353",
+     "(423)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   },
+   "2": {
+    "val": 86889.0,
+    "line": [
+     26713,
+     26764,
+     26730,
+     26781
+    ],
+    "printed": [
+     "204,988",
+     "116,131",
+     "(568)",
+     "1,400"
+    ],
+    "absent": false
+   },
+   "3": {
+    "val": 88857.0,
+    "line": [
+     26713,
+     26764
+    ],
+    "printed": [
+     "204,988",
+     "116,131"
+    ],
+    "absent": false
+   },
+   "8": {
+    "val": -1968.0,
+    "line": [
+     26730,
+     26781
+    ],
+    "printed": [
+     "(568)",
+     "1,400"
+    ],
+    "absent": false
+   }
+  },
+  "file": "data/dart/FY2025_Q1/raw/KR0099_케이비라이프생명보험/20250515001983.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ },
+ "KR0099|2024.2Q": {
+  "items": {
+   "1": {
+    "val": 163793.0,
+    "line": [
+     29818
+    ],
+    "printed": [
+     "163,793"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "17": {
+    "val": 98885.0,
+    "line": [
+     30002
+    ],
+    "printed": [
+     "98,885"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "20": {
+    "val": 262678.0,
+    "line": [
+     30476
+    ],
+    "printed": [
+     "262,678"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "22": {
+    "val": 262315.0,
+    "line": [
+     30568
+    ],
+    "printed": [
+     "262,315"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "24": {
+    "val": 194483.0,
+    "line": [
+     30614
+    ],
+    "printed": [
+     "194,483"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "16": {
+    "val": 8216.0,
+    "line": [
+     29979
+    ],
+    "printed": [
+     "8,216"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "23": {
+    "val": 67832.0,
+    "line": [
+     30591
+    ],
+    "printed": [
+     "67,832"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "25": {
+    "val": -796611.0,
+    "line": [
+     30637
+    ],
+    "printed": [
+     "(796,611)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "31": {
+    "val": -602128.0,
+    "line": [
+     30844
+    ],
+    "printed": [
+     "(602,128)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "19": {
+    "val": -707965.0,
+    "line": [
+     30048,
+     30071,
+     30278,
+     30301
+    ],
+    "printed": [
+     "783",
+     "54",
+     "708,519",
+     "283"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "18": {
+    "val": 806850.0,
+    "line": [
+     30002,
+     30048,
+     30071,
+     30278,
+     30301
+    ],
+    "printed": [
+     "98,885",
+     "783",
+     "54",
+     "708,519",
+     "283"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "21": {
+    "val": -363.0,
+    "line": [
+     30499
+    ],
+    "printed": [
+     "(363)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "26": {
+    "val": -164345.0,
+    "line": [
+     30752
+    ],
+    "printed": [
+     "(164,345)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "27": {
+    "val": -633830.0,
+    "line": [
+     30775
+    ],
+    "printed": [
+     "(633,830)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "28": {
+    "val": 66.0,
+    "line": [
+     30821
+    ],
+    "printed": [
+     "66"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "29": {
+    "val": 2935.0,
+    "line": [
+     30706
+    ],
+    "printed": [
+     "2,935"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "30": {
+    "val": -1612.0,
+    "line": [
+     30798
+    ],
+    "printed": [
+     "(1,612)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "32": {
+    "val": 175.0,
+    "line": [
+     30637,
+     30752,
+     30775,
+     30821,
+     30706,
+     30798
+    ],
+    "printed": [
+     "(796,611)",
+     "(164,345)",
+     "(633,830)",
+     "66",
+     "2,935",
+     "(1,612)"
+    ],
+    "absent": false,
+    "ambiguous": false
+   },
+   "15": {
+    "val": 0.0,
+    "line": [],
+    "printed": [],
+    "absent": true
+   },
+   "2": {
+    "val": 172009.0,
+    "line": [
+     29864,
+     29933,
+     29887,
+     29956
+    ],
+    "printed": [
+     "410,703",
+     "237,440",
+     "2,248",
+     "3,502"
+    ],
+    "absent": false
+   },
+   "3": {
+    "val": 173263.0,
+    "line": [
+     29864,
+     29933
+    ],
+    "printed": [
+     "410,703",
+     "237,440"
+    ],
+    "absent": false
+   },
+   "8": {
+    "val": -1254.0,
+    "line": [
+     29887,
+     29956
+    ],
+    "printed": [
+     "2,248",
+     "3,502"
+    ],
+    "absent": false
+   }
+  },
+  "file": "data/dart/FY2025_Q2/raw/KR0099_케이비라이프생명보험/20250814004162.xml",
+  "err": null,
+  "unit": "백만원",
+  "blank_cells": 0,
+  "calib": "6/6",
+  "blank_cells_cur": 0
+ }
+}

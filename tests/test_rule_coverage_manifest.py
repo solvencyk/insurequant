@@ -907,7 +907,8 @@ GOLD_OVERLAY_RULES = {
 # 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 현대해상 KR0009 FY2023 2023.1Q / 2023.2Q / 2023.4Q refreshed to the latest comparative (LOB legs from the IR factsheet); 57 PL cells added, 1 CSM chain-forced owner-gold cell replaced in place, 3 CSM chain-forced owner-gold cells removed because the approved value equals the builder source, no ledger pin touched): CSM gold 406->417 cells, masked 77->77; PL gold 1322->1379 cells, masked 22->22 (no new pins).
 # 2026-10-24 tickets 20261023T1130Z / 20261023T1210Z / 20261023T0600Z / 20261024T0100Z (parser/ifrs17 follow-ups: KB라이프 2023.1Q items 9/11/12, ABL FY2023 items 5/6/7/9/10, 농협생명 2024.1Q/2Q items 17/18/20/21 refreshed to the latest comparative; 1 PL owner-gold cell replaced in place (ABL 2023.1Q item 7); KB손해보험 item 16 hand-loaded values removed): CSM gold 417->417 cells, masked 77->77; PL gold 1379->1408 cells, masked 22->22 (no new pins).
 # 2026-10-24 ticket 20261023T1215Z 건 2 (parser/ifrs17): CSM gold 파일에 `null_dangi` 섹션(롯데손해보험 2023.4Q 항목 3·4·5 단일분기 빈칸 3칸)이 생겼다. `set` 센서스는 안 움직인다: CSM gold 417->417 cells, masked 77->77 (no new pins). 섹션 칸 수는 CSM_NULL_DANGI_CELLS 에 따로 선언한다.
-GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1408, 22)}
+# 2026-10-24 ticket 20261024T0300Z (parser/ifrs17 neighbor stale cells sweep pass 2: ABL / 동양 / 현대해상 / 한화생명 note items refreshed to the latest comparative, stale static derived gold (items 7 / 12) recomputed in place, NH농협손보 + DB생명 OCI blanks filled): CSM gold 417->417 cells, masked 77->77; PL gold 1408->1487 cells, masked 22->22 (no new pins).
+GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1487, 22)}
 
 
 def _gate():

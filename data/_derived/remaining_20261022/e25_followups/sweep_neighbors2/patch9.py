@@ -1,0 +1,6 @@
+s = open("x02_kr0082.py", encoding="utf-8").read()
+s = s.replace('''    for role, col in (("cur", 0), ("prior", 1)):''', '''    n_cols = len(split_row(tb["rev"][1][1])[1])
+    cols = (("cur", 0), ("prior", 1)) if n_cols == 2 else (("cur", 1), ("prior", 3))
+    print(q, "numeric columns per row", n_cols)
+    for role, col in cols:''')
+open("x02_kr0082.py", "w", encoding="utf-8").write(s)

@@ -1,0 +1,111 @@
+KR0070 에이비엘생명보험 quarters ['2023.1Q', '2023.2Q', '2023.3Q', '2023.4Q', '2024.1Q', '2024.2Q', '2024.3Q', '2024.4Q', '2025.1Q', '2025.2Q']
+--- item 3 생명장기 원수손익
+   2023.1Q: 값          17205.63653 당분기          17205.63653  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.2Q: 값         45409.757784 당분기         28204.121254  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.3Q: 값         65938.991086 당분기         20529.233302  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.4Q: 값         73067.212912 당분기          7128.221826  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2024.1Q: 값         19541.242188 당분기         19541.242188  
+   2024.2Q: 값         43033.860123 당분기         23492.617935  
+   2024.3Q: 값         49349.989864 당분기          6316.129741  
+   2024.4Q: 값         44502.085246 당분기         -4847.904618  
+   2025.1Q: 값         17198.631771 당분기         17198.631771  
+   2025.2Q: 값          30430.53048 당분기         13231.898709  
+--- item 4 원수 CSM상각
+   2023.1Q: 값              22411.0 당분기              22411.0  GOLD  | gold note: 'owner 2026-10-23 승인, 연쇄용 gold 교체(D3 결정표 · gold_cells_replaced.csv · 분류 ⓐ 원 인쇄값): 이전 gold 값 22664.0, 이전 was 336'
+   2023.2Q: 값              46789.0 당분기              24378.0  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.3Q: 값              69639.0 당분기              22850.0  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.4Q: 값              92971.0 당분기              23332.0  
+   2024.1Q: 값              22447.0 당분기              22447.0  GOLD  | gold note: 'inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 캡션 게이트 미매칭 -> 제네릭 extract_'
+   2024.2Q: 값              44994.0 당분기              22547.0  GOLD  | gold note: 'inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 캡션 게이트 미매칭 -> 제네릭 extract_'
+   2024.3Q: 값              66762.0 당분기              21768.0  GOLD  | gold note: 'inbox/parser/20260815T1400Z (validation, PL_CSM_AMORT_SCALE_GAP): extract_tier2_abl 캡션 게이트 미매칭 -> 제네릭 extract_'
+   2024.4Q: 값              88926.0 당분기              22164.0  
+   2025.1Q: 값              20087.0 당분기              20087.0  GOLD  | gold note: 'inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE co'
+   2025.2Q: 값              40080.0 당분기              19993.0  GOLD  | gold note: 'inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE co'
+--- item 5 원수 위험조정 변동
+   2023.1Q: 값               3593.0 당분기               3593.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.2Q: 값               7449.0 당분기               3856.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.3Q: 값              11921.0 당분기               4472.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.4Q: 값              16883.0 당분기               4962.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2024.1Q: 값                196.0 당분기                196.0  
+   2024.2Q: 값                369.0 당분기                173.0  
+   2024.3Q: 값                578.0 당분기                209.0  
+   2024.4Q: 값              12282.0 당분기              11704.0  
+   2025.1Q: 값               3059.0 당분기               3059.0  
+   2025.2Q: 값               6034.0 당분기               2975.0  
+--- item 6 원수 예실차
+   2023.1Q: 값              -7470.0 당분기              -7470.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.2Q: 값             -13186.0 당분기              -5716.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.3Q: 값             -18428.0 당분기              -5242.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.4Q: 값             -19665.0 당분기              -1237.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2024.1Q: 값               1341.0 당분기               1341.0  
+   2024.2Q: 값               1273.0 당분기                -68.0  
+   2024.3Q: 값               3703.0 당분기               2430.0  
+   2024.4Q: 값                586.0 당분기              -3117.0  
+   2025.1Q: 값              -3591.0 당분기              -3591.0  
+   2025.2Q: 값              -9198.0 당분기              -5607.0  
+--- item 7 기타 생명장기 원수손익
+   2023.1Q: 값          -1328.36347 당분기          -1328.36347  GOLD  | gold note: 'owner 2026-10-24 지시 범위(티켓 20261023T1210Z (3) 항목 7 gold 재검산 → 낡았으면 제거): 이전 gold 값 -1767.0, 이전 was 17533.0, 이전 n'
+   2023.2Q: 값          4357.757784 당분기          5686.121254  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.3Q: 값          2806.991086 당분기         -1550.766698  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.4Q: 값        -17121.787088 당분기        -19928.778174  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2024.1Q: 값         -4442.757812 당분기         -4442.757812  GOLD  | gold note: 'inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE co'
+   2024.2Q: 값         -3602.139877 당분기           840.617935  GOLD  | gold note: 'inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE co'
+   2024.3Q: 값        -21693.010136 당분기        -18090.870259  GOLD  | gold note: 'inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md (validation, PL_BRIDGE co'
+   2024.4Q: 값        -57291.914754 당분기        -35598.904618  
+   2025.1Q: 값  -2356.3682289999997 당분기  -2356.3682289999997  GOLD  | gold note: 'inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리'
+   2025.2Q: 값   -6485.469520000001 당분기         -4129.101291  GOLD  | gold note: 'inbox/parser/20260825T1120Z__validation__MULTI__pl_bridge_deployed_master_defects.md: 같은 분기 item4 를 raw 값으로 내리'
+--- item 8 생명장기 재보험손익
+   2023.1Q: 값         -2503.871039 당분기         -2503.871039  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.2Q: 값         -4633.311099 당분기          -2129.44006  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.3Q: 값          -6681.70871 당분기         -2048.397611  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 에이비엘생명 KR0070 FY2023 2023.1Q~4Q 최신 비교열 채택, owner 결정 2'
+   2023.4Q: 값         -8192.746853 당분기         -1511.038143  
+   2024.1Q: 값          -184.023618 당분기          -184.023618  
+   2024.2Q: 값          -3361.94298 당분기         -3177.919362  
+   2024.3Q: 값         -5150.077854 당분기         -1788.134874  
+   2024.4Q: 값         -5660.625552 당분기          -510.547698  
+   2025.1Q: 값         -3938.482328 당분기         -3938.482328  
+   2025.2Q: 값         -6833.997003 당분기         -2895.514675  
+--- item 9 재보험 CSM상각
+   2023.1Q: 값              -2313.0 당분기              -2313.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.2Q: 값              -4652.0 당분기              -2339.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.3Q: 값              -7155.0 당분기              -2503.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.4Q: 값              -9589.0 당분기              -2434.0  
+   2024.1Q: 값                 None 당분기                 None  
+   2024.2Q: 값                 None 당분기                 None  
+   2024.3Q: 값                 None 당분기                 None  
+   2024.4Q: 값              -9215.0 당분기                 None  
+   2025.1Q: 값              -3283.0 당분기              -3283.0  
+   2025.2Q: 값              -6541.0 당분기              -3258.0  
+--- item 10 재보험 위험조정 변동
+   2023.1Q: 값               -146.0 당분기               -146.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.2Q: 값               -345.0 당분기               -199.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.3Q: 값               -533.0 당분기               -188.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2023.4Q: 값               -733.0 당분기               -200.0  GOLD  | gold note: '2026-10-24 parser/ifrs17 (e25, ticket 20261023T1210Z: ABL FY2023 항목 5/6/7/9/10 을 최신 비교열로 갱신 — 같은 판의 항목 3·4 와 맞'
+   2024.1Q: 값                 None 당분기                 None  
+   2024.2Q: 값                 None 당분기                 None  
+   2024.3Q: 값                 None 당분기                 None  
+   2024.4Q: 값               -785.0 당분기                 None  
+   2025.1Q: 값               -203.0 당분기               -203.0  
+   2025.2Q: 값              -1223.0 당분기              -1020.0  
+--- item 11 재보험 예실차
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값                 None 당분기                 None  
+   2024.1Q: 값                719.0 당분기                719.0  
+   2024.2Q: 값                338.0 당분기               -381.0  
+   2024.3Q: 값               -829.0 당분기              -1167.0  
+   2024.4Q: 값              -1328.0 당분기               -499.0  
+   2025.1Q: 값                170.0 당분기                170.0  
+   2025.2Q: 값               1003.0 당분기                833.0  
+--- item 12 기타 생명장기 재보험손익
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값                 None 당분기                 None  
+   2024.1Q: 값                 None 당분기                 None  
+   2024.2Q: 값                 None 당분기                 None  
+   2024.3Q: 값                 None 당분기                 None  
+   2024.4Q: 값          5667.374448 당분기                 None  
+   2025.1Q: 값          -622.482328 당분기          -622.482328  
+   2025.2Q: 값           -72.997003 당분기           549.485325  

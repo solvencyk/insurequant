@@ -1,0 +1,13 @@
+264 A 2025.3Q (FY2026 3Q filing does not exist)
+      {'KR0068': 38, 'KR0069': 38, 'KR0070': 37, 'KR0071': 38, 'KR0087': 37, 'KR0094': 38, 'KR0104': 38}
+118 B life items 13/14 = 0 by construction (master==0 verified, not source-read)
+      {'KR0068': 14, 'KR0069': 4, 'KR0070': 20, 'KR0071': 4, 'KR0072': 2, 'KR0079': 10, 'KR0082': 8, 'KR0083': 8, 'KR0087': 14, 'KR0094': 2, 'KR0099': 12, 'KR0104': 20}
+438 C CSM roll-forward of companies outside the brief (reader not written)
+      {'KR0001': 18, 'KR0003': 48, 'KR0005': 30, 'KR0010': 54, 'KR0032': 36, 'KR0068': 42, 'KR0069': 12, 'KR0071': 12, 'KR0079': 30, 'KR0082': 24, 'KR0083': 24, 'KR0087': 42, 'KR0094': 6, 'KR0104': 60}
+1 D statement item not readable
+      {'KR0099': 1}
+121 E note item: layout without a calibrated reader
+      {'KR0003': 2, 'KR0005': 22, 'KR0009': 2, 'KR0032': 12, 'KR0068': 10, 'KR0069': 2, 'KR0070': 17, 'KR0071': 3, 'KR0072': 4, 'KR0079': 12, 'KR0083': 4, 'KR0087': 15, 'KR0094': 6, 'KR0104': 10}
+288 F derived/LOB item (2,3,7,8,12,13,14) needing LOB notes or unread legs
+      {'KR0001': 9, 'KR0003': 29, 'KR0005': 35, 'KR0009': 14, 'KR0010': 27, 'KR0032': 30, 'KR0068': 18, 'KR0069': 8, 'KR0070': 13, 'KR0071': 7, 'KR0072': 5, 'KR0079': 5, 'KR0082': 12, 'KR0083': 8, 'KR0087': 25, 'KR0094': 2, 'KR0104': 41}
+total unchecked 1230

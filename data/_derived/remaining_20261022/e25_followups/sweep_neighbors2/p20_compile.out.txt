@@ -1,0 +1,103 @@
+structural life 13/14 cells 132 non-zero in master: []
+structural (not counted): 132
+uncovered cells (first sweep) 1665 | now compared 435 | still unchecked 1230
+of the unchecked: 2025.3Q (no later filing) 264 | other 966
+coverage overall: 2473/3703 = 66.8%   excluding 2025.3Q from denominator: 2473/3439 = 71.9%
+per company: uncovered / now compared / of which unreadable 2025.3Q
+  KR0001 [27, 0, 0]
+  KR0003 [90, 11, 0]
+  KR0005 [131, 44, 0]
+  KR0009 [32, 16, 0]
+  KR0010 [81, 0, 0]
+  KR0032 [97, 19, 0]
+  KR0068 [154, 32, 38]
+  KR0069 [76, 12, 38]
+  KR0070 [117, 30, 37]
+  KR0071 [72, 8, 38]
+  KR0072 [17, 6, 0]
+  KR0079 [70, 13, 0]
+  KR0082 [68, 24, 0]
+  KR0083 [48, 4, 0]
+  KR0087 [153, 20, 37]
+  KR0094 [57, 3, 38]
+  KR0099 [196, 183, 0]
+  KR0104 [179, 10, 38]
+rows 125 non-rounding 80
+  KR0005 {'OTHER_COARSE_ROUNDING': 1}
+  KR0068 {'VINTAGE_NOTE': 9, 'VINTAGE_DERIVED': 2}
+  KR0070 {'WRONG_LEG': 3, 'VINTAGE_NOTE': 3}
+  KR0079 {'VINTAGE_NOTE': 2}
+  KR0087 {'OTHER_MASTER_HOLDS_3M': 2, 'SIGN': 2}
+  KR0099 {'VINTAGE_CSM': 5, 'VINTAGE_CSM(extra, not in denominator)': 5, 'VINTAGE_STATEMENT': 39, 'VINTAGE_NOTE': 3, 'VINTAGE_DERIVED': 3, 'UNREADABLE_LAYOUT': 1}
+top15 by |diff|
+  KR0099 2023.4Q CSM1 3132760.0 3359570.0 226810.0 VINTAGE_CSM high
+  KR0099 2024.3Q CSM4 -99080.0 -266956.0 -167876.0 VINTAGE_CSM(extra, not in denominator) high
+  KR0099 2024.3Q CSM1 3017640.0 3179826.0 162186.0 VINTAGE_CSM(extra, not in denominator) high
+  KR0099 2023.4Q CSM6 3017640.0 3179825.0 162185.0 VINTAGE_CSM high
+  KR0099 2023.4Q 27 -1059866.0 -990226.0 69640.0 VINTAGE_STATEMENT high
+  KR0099 2023.4Q 25 56787.0 126232.0 69445.0 VINTAGE_STATEMENT high
+  KR0099 2024.2Q 27 -699580.0 -633830.0 65750.0 VINTAGE_STATEMENT high
+  KR0099 2024.2Q 25 -862281.0 -796611.0 65670.0 VINTAGE_STATEMENT high
+  KR0099 2024.2Q 31 -650286.0 -602128.0 48158.0 VINTAGE_STATEMENT high
+  KR0099 2023.4Q 31 315298.0 362635.0 47337.0 VINTAGE_STATEMENT high
+  KR0099 2023.4Q 17 119185.0 76008.0 -43177.0 VINTAGE_STATEMENT high
+  KR0099 2023.4Q 19 -1227267.0 -1270444.0 -43177.0 VINTAGE_STATEMENT high
+  KR0099 2023.4Q CSM4 -585640.0 -621380.0 -35740.0 VINTAGE_CSM high
+  KR0068 2023.1Q 6 -60739.0 -27534.0 33205.0 VINTAGE_NOTE high
+  KR0099 2023.4Q 20 355786.0 325802.0 -29984.0 VINTAGE_STATEMENT high
+unchecked by (company, kind):
+   ('KR0001', 'CSM') 18
+   ('KR0001', 'derived/LOB(2,3,7,8,12,13,14)') 9
+   ('KR0003', 'CSM') 48
+   ('KR0003', 'derived/LOB(2,3,7,8,12,13,14)') 29
+   ('KR0003', 'note') 2
+   ('KR0005', 'CSM') 30
+   ('KR0005', 'derived/LOB(2,3,7,8,12,13,14)') 35
+   ('KR0005', 'note') 22
+   ('KR0009', 'derived/LOB(2,3,7,8,12,13,14)') 14
+   ('KR0009', 'note') 2
+   ('KR0010', 'CSM') 54
+   ('KR0010', 'derived/LOB(2,3,7,8,12,13,14)') 27
+   ('KR0032', 'CSM') 36
+   ('KR0032', 'derived/LOB(2,3,7,8,12,13,14)') 30
+   ('KR0032', 'note') 12
+   ('KR0068', 'CSM') 48
+   ('KR0068', 'derived/LOB(2,3,7,8,12,13,14)') 39
+   ('KR0068', 'note') 16
+   ('KR0068', 'stmt') 19
+   ('KR0069', 'CSM') 18
+   ('KR0069', 'derived/LOB(2,3,7,8,12,13,14)') 19
+   ('KR0069', 'note') 8
+   ('KR0069', 'stmt') 19
+   ('KR0070', 'CSM') 6
+   ('KR0070', 'derived/LOB(2,3,7,8,12,13,14)') 40
+   ('KR0070', 'note') 23
+   ('KR0070', 'stmt') 18
+   ('KR0071', 'CSM') 18
+   ('KR0071', 'derived/LOB(2,3,7,8,12,13,14)') 18
+   ('KR0071', 'note') 9
+   ('KR0071', 'stmt') 19
+   ('KR0072', 'derived/LOB(2,3,7,8,12,13,14)') 7
+   ('KR0072', 'note') 4
+   ('KR0079', 'CSM') 30
+   ('KR0079', 'derived/LOB(2,3,7,8,12,13,14)') 15
+   ('KR0079', 'note') 12
+   ('KR0082', 'CSM') 24
+   ('KR0082', 'derived/LOB(2,3,7,8,12,13,14)') 20
+   ('KR0083', 'CSM') 24
+   ('KR0083', 'derived/LOB(2,3,7,8,12,13,14)') 16
+   ('KR0083', 'note') 4
+   ('KR0087', 'CSM') 48
+   ('KR0087', 'derived/LOB(2,3,7,8,12,13,14)') 46
+   ('KR0087', 'note') 20
+   ('KR0087', 'stmt') 19
+   ('KR0094', 'CSM') 12
+   ('KR0094', 'derived/LOB(2,3,7,8,12,13,14)') 11
+   ('KR0094', 'note') 12
+   ('KR0094', 'stmt') 19
+   ('KR0099', 'derived/LOB(2,3,7,8,12,13,14)') 12
+   ('KR0099', 'stmt') 1
+   ('KR0104', 'CSM') 66
+   ('KR0104', 'derived/LOB(2,3,7,8,12,13,14)') 68
+   ('KR0104', 'note') 16
+   ('KR0104', 'stmt') 19

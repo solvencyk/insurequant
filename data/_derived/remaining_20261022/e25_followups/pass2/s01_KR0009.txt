@@ -1,0 +1,51 @@
+KR0009 현대해상 quarters ['2023.1Q', '2023.2Q', '2023.3Q', '2023.4Q']
+--- item 3 생명장기 원수손익
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값             276940.0 당분기                 None  GOLD  | gold note: 'owner xlsx fill (review-loop 2026-06-19/20)'
+--- item 4 원수 CSM상각
+   2023.1Q: 값           206656.546 당분기           206656.546  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB '
+   2023.2Q: 값           417840.268 당분기           211183.722  GOLD  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB '
+   2023.3Q: 값           640379.115 당분기           222538.847  
+   2023.4Q: 값           880544.842 당분기                 None  GOLD null_dangi  | gold note: '2026-10-23 parser/ifrs17 (e23, ticket 20261023T0900Z D3: 현대해상 KR0009 FY2023 2023.1Q~4Q 최신 비교열 채택, IR 팩트시트 LOB '
+--- item 5 원수 위험조정 변동
+   2023.1Q: 값            27234.914 당분기            27234.914  
+   2023.2Q: 값            56908.344 당분기             29673.43  
+   2023.3Q: 값            96159.497 당분기            39251.153  
+   2023.4Q: 값           130628.669 당분기            34469.172  
+--- item 6 원수 예실차
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값  -190242.60050099998 당분기                 None  GOLD  | gold note: 'owner xlsx fill (review-loop 2026-06-19/20)'
+--- item 7 기타 생명장기 원수손익
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값       -543993.134499 당분기                 None  GOLD  | gold note: 'owner xlsx fill (review-loop 2026-06-19/20)'
+--- item 8 생명장기 재보험손익
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값             -28112.5 당분기                 None  GOLD  | gold note: 'owner xlsx fill (review-loop 2026-06-19/20)'
+--- item 9 재보험 CSM상각
+   2023.1Q: 값             -1271.31 당분기             -1271.31  
+   2023.2Q: 값            -3168.333 당분기            -1897.023  
+   2023.3Q: 값            -4169.695 당분기            -1001.362  
+   2023.4Q: 값            -7689.161 당분기            -3519.466  
+--- item 10 재보험 위험조정 변동
+   2023.1Q: 값             -144.287 당분기             -144.287  
+   2023.2Q: 값             -362.683 당분기             -218.396  
+   2023.3Q: 값             -427.713 당분기               -65.03  
+   2023.4Q: 값             -583.627 당분기             -155.914  
+--- item 11 재보험 예실차
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값  -15460.571360999998 당분기                 None  GOLD  | gold note: 'owner xlsx fill (review-loop 2026-06-19/20)'
+--- item 12 기타 생명장기 재보험손익
+   2023.1Q: 값                 None 당분기                 None  
+   2023.2Q: 값                 None 당분기                 None  
+   2023.3Q: 값                 None 당분기                 None  
+   2023.4Q: 값         -4379.140639 당분기                 None  GOLD  | gold note: 'owner xlsx fill (review-loop 2026-06-19/20)'
