@@ -1,0 +1,1 @@
+verify CSM: a fresh build_csm() from the LIVE gold reproduces the live master on every row: drift 0 -> OK; 3 null_dangi cells blank with 값 kept -> OK

@@ -905,7 +905,9 @@ GOLD_OVERLAY_RULES = {
 # 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D2: 롯데손해보험 KR0003 2023.4Q refreshed to the latest comparative; no owner-gold cell replaced): CSM gold 385->390 cells, masked 77->77; PL gold 1231->1249 cells, masked 22->22 (no new pins).
 # 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 에이비엘생명보험 KR0070 FY2023 2023.1Q-2023.4Q refreshed to the latest comparative; 1 PL owner-gold cell replaced in place, 2 CSM chain-forced owner-gold cells removed because the approved value equals the builder source): CSM gold 390->406 cells, masked 77->77; PL gold 1249->1322 cells, masked 22->22 (no new pins).
 # 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 현대해상 KR0009 FY2023 2023.1Q / 2023.2Q / 2023.4Q refreshed to the latest comparative (LOB legs from the IR factsheet); 57 PL cells added, 1 CSM chain-forced owner-gold cell replaced in place, 3 CSM chain-forced owner-gold cells removed because the approved value equals the builder source, no ledger pin touched): CSM gold 406->417 cells, masked 77->77; PL gold 1322->1379 cells, masked 22->22 (no new pins).
-GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1379, 22)}
+# 2026-10-24 tickets 20261023T1130Z / 20261023T1210Z / 20261023T0600Z / 20261024T0100Z (parser/ifrs17 follow-ups: KB라이프 2023.1Q items 9/11/12, ABL FY2023 items 5/6/7/9/10, 농협생명 2024.1Q/2Q items 17/18/20/21 refreshed to the latest comparative; 1 PL owner-gold cell replaced in place (ABL 2023.1Q item 7); KB손해보험 item 16 hand-loaded values removed): CSM gold 417->417 cells, masked 77->77; PL gold 1379->1408 cells, masked 22->22 (no new pins).
+# 2026-10-24 ticket 20261023T1215Z 건 2 (parser/ifrs17): CSM gold 파일에 `null_dangi` 섹션(롯데손해보험 2023.4Q 항목 3·4·5 단일분기 빈칸 3칸)이 생겼다. `set` 센서스는 안 움직인다: CSM gold 417->417 cells, masked 77->77 (no new pins). 섹션 칸 수는 CSM_NULL_DANGI_CELLS 에 따로 선언한다.
+GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1408, 22)}
 
 
 def _gate():
@@ -2281,6 +2283,60 @@ def test_wfy_exception_lotte_fy2023_is_read_and_enforced():
     within = [f for f in C.check_company(by_co[code], names[code])
               if f.get("fy") == int(_WFY_LOTTE[1]) and f["rule"].startswith("WITHIN_FY")]
     assert not [f for f in within if f["severity"] == "RED"], within
+
+
+# 2026-10-24 ticket 20261023T1215Z 건 2: CSM 에도 PL 과 같은 칸 단위 단일분기 빈칸 장치(`null_dangi`, build_root_masters._csm_null_dangi_keys)를 두고
+# 롯데손해보험 2023.4Q 항목 3(이자 부리) · 4(가정 및 경험 조정) · 5(CSM 상각)의 단일분기를 비웠다(4Q 누계 = 최신 비교열, 3Q 누계 = 옛 판 -> 차분이 두 판을 섞는다).
+# 항목 2(신계약)는 연간 값이 두 판에서 같아 섞이지 않고, 항목 1·6 은 저량이라 차분이 아니다. gold `set` 의 센서스(GOLD_OVERLAY_CENSUS)는 이 섹션을 세지 않으므로 별도 선언을 둔다.
+CSM_NULL_DANGI_CELLS = [("KR0003", "2023.4Q", 3), ("KR0003", "2023.4Q", 4), ("KR0003", "2023.4Q", 5)]
+
+
+def _csm_build_with_gold(tmp_path, monkeypatch, gold_obj, name):
+    """REAL build_csm() against a candidate gold and a temp copy of the live master (builder source = live diag file); the repo is untouched."""
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import build_root_masters as brm
+    d = tmp_path / name
+    d.mkdir()
+    gp, mp = d / "user_csm_cells.json", d / "CSM_waterfall.json"
+    gp.write_text(json.dumps(gold_obj, ensure_ascii=False, indent=2), encoding="utf-8")
+    mp.write_bytes((ROOT / "CSM_waterfall.json").read_bytes())
+    monkeypatch.setattr(brm, "CSM_OVR", gp)
+    monkeypatch.setattr(brm, "CSM_OUT", mp)
+    brm.build_csm()
+    return {(r["원보험사코드"], r["공시분기"], r["항목번호"]): r for r in json.loads(mp.read_text(encoding="utf-8"))}
+
+
+def test_csm_null_dangi_is_declared_read_and_enforced(tmp_path, monkeypatch):
+    gold = json.loads((ROOT / "data" / "_gold" / "user_csm_cells.json").read_text(encoding="utf-8"))
+    live = {(r["원보험사코드"], r["공시분기"], r["항목번호"]): r for r in json.loads((ROOT / "CSM_waterfall.json").read_text(encoding="utf-8"))}
+    declared = [tuple(c) for c in gold["null_dangi"]["cells"]]
+    # 선언 = 센서스: 파일의 칸 목록이 이 테스트의 선언과 같다(늘리면 여기도 고치게 한다).
+    assert declared == CSM_NULL_DANGI_CELLS, declared
+    assert len(gold["set"]) == GOLD_OVERLAY_CENSUS["CSM"][0], "null_dangi 는 gold `set` 센서스에 들어가지 않는다 — set 칸 수가 움직였으면 GOLD_OVERLAY_CENSUS 를 같이 고친다"
+    # (a) 커밋된 마스터: 칸은 값(누계)을 가진 채 단일분기만 비어 있다.
+    for k in declared:
+        assert live[k]["값"] is not None and live[k]["값_당분기"] is None, (k, live[k])
+    # (b) 빌더가 이 등재를 읽는다: 등재를 빼고 같은 빌드를 돌리면 정확히 이 칸들만 숫자 단일분기로 되살아난다 = 등재가 효력이 있다.
+    #     되살아나지 않으면 등재가 죽은 것이다(두 누계가 한 판으로 통일됐다) -> 철거하라.
+    with_entry = _csm_build_with_gold(tmp_path, monkeypatch, gold, "with")
+    gold_without = copy.deepcopy(gold)
+    del gold_without["null_dangi"]
+    without = _csm_build_with_gold(tmp_path, monkeypatch, gold_without, "without")
+    moved = sorted(k for k in with_entry if (with_entry[k]["값"], with_entry[k]["값_당분기"]) != (without[k]["값"], without[k]["값_당분기"]))
+    assert moved == sorted(declared), f"등재가 움직이는 칸 {moved} != 선언 {sorted(declared)}"
+    for k in declared:
+        assert with_entry[k]["값_당분기"] is None, k
+        assert isinstance(without[k]["값_당분기"], (int, float)), f"등재를 빼면 {k} 의 단일분기가 살아나야 한다 — 죽은 등재는 철거 대상"
+        assert with_entry[k]["값"] == without[k]["값"] == live[k]["값"], f"누계 값은 등재와 무관하게 마스터와 같다: {k}"
+        assert with_entry[k]["값_당분기"] == live[k]["값_당분기"], f"새로 빌드한 칸이 커밋된 마스터와 같다: {k}"
+    # (c) 안 섞인 이웃은 건드리지 않는다: 신계약(항목 2)·기초(1)·기말(6) 단일분기는 등재와 무관하게 숫자다.
+    for it in (1, 2, 6):
+        assert isinstance(with_entry[("KR0003", "2023.4Q", it)]["값_당분기"], (int, float)), it
+    # (d) 이 섹션과 겹치는 set_dangi(읽는 쪽이 없다)는 조용히 무시되지 않고 빌드가 거부한다.
+    bad = copy.deepcopy(gold)
+    bad["set_dangi"] = {"cells": [["KR0003", "2023.4Q", 3, 223.0, "mutation"]]}
+    with pytest.raises(ValueError):
+        _csm_build_with_gold(tmp_path, monkeypatch, bad, "bad")
 
 
 def test_tax22_prior_tier1_reads_annual_and_quarterly_prior_columns():

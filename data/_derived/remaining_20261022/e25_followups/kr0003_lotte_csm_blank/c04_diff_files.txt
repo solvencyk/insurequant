@@ -1,0 +1,10 @@
+PASS  CSM_waterfall.json: same 2358 rows in the same order
+PASS  CSM_waterfall.json: no field other than 값_당분기 changed ([])
+PASS  CSM_waterfall.json: 값_당분기 changed on exactly the three planned cells: [(('KR0003', 3, '2023.4Q'), 223.0, None), (('KR0003', 4, '2023.4Q'), 813.7, None), (('KR0003', 5, '2023.4Q'), -542.8, None)]
+PASS  CSM_waterfall.json: numeric -> None on each
+PASS  user_csm_cells.json: old keys in the same order ['_doc', 'exclude_companies', 'set', '_doc_e23_kr0070_20261023', '_doc_e23_kr0009_20261023']
+PASS  user_csm_cells.json: every old key's content identical (set, exclude_companies, _doc_e23_*)
+PASS  user_csm_cells.json: the top-level _doc only gained the appended null_dangi sentence
+PASS  user_csm_cells.json: null_dangi.cells = the three planned cells
+PASS  user_csm_cells.json: set unchanged (417)
+RESULT: ALL PASS

@@ -1,0 +1,9 @@
+CSM gold: top-level keys ['_doc', 'exclude_companies', 'set', '_doc_e23_kr0070_20261023', '_doc_e23_kr0009_20261023'] -> ['_doc', 'exclude_companies', 'set', 'null_dangi', '_doc_e23_kr0070_20261023', '_doc_e23_kr0009_20261023']; set 417 -> 417 (unchanged)
+CSM master: cells changed 3: KR0003 2023.4Q item 3: 값 777.0 kept, 값_당분기 223.0 -> None; KR0003 2023.4Q item 4: 값 2795.0 kept, 값_당분기 813.7 -> None; KR0003 2023.4Q item 5: 값 -1859.0 kept, 값_당분기 -542.8 -> None
+  KR0003 2023.4Q item 1: 값 16669.0 | 값_당분기 22085.6 -> 22085.6
+  KR0003 2023.4Q item 2: 값 5478.9 | 값_당분기 1386.8 -> 1386.8
+  KR0003 2023.4Q item 3: 값 777.0 | 값_당분기 223.0 -> None
+  KR0003 2023.4Q item 4: 값 2795.0 | 값_당분기 813.7 -> None
+  KR0003 2023.4Q item 5: 값 -1859.0 | 값_당분기 -542.8 -> None
+  KR0003 2023.4Q item 6: 값 23860.8 | 값_당분기 23860.8 -> 23860.8
+errors: none

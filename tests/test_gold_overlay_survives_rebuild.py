@@ -189,3 +189,76 @@ def test_pl_null_dangi_and_set_dangi_overlap_is_refused(tmp_path, monkeypatch):
     monkeypatch.setattr(brm, "PL_OVR", ovr)
     with pytest.raises(ValueError):
         brm.build_pl()
+
+
+# ---- 2026-10-24 ticket 20261023T1215Z part 2: the CSM twin of the PL `null_dangi` (build_root_masters._csm_null_dangi_keys) ----
+def _csm_flow_rows():
+    """KR9999 CSM cumulative rows 2023.1Q-2023.4Q: items 2 / 3 are flows, items 1 / 6 are stock cells (기초 / 기말)."""
+    def row(item, q, v):
+        return {"원보험사코드": "KR9999", "원수사명": "테스트생명", "티커": None, "생손보여부": "생명보험", "항목번호": item,
+                "항목명": f"항목{item}", "공시분기": q, "값": v}
+    cum2 = {"2023.1Q": 10, "2023.2Q": 25, "2023.3Q": 40, "2023.4Q": 60}
+    cum3 = {"2023.1Q": 2, "2023.2Q": 3, "2023.3Q": 5, "2023.4Q": 8}
+    close = {"2023.1Q": 112, "2023.2Q": 128, "2023.3Q": 145, "2023.4Q": 168}
+    rows = []
+    for q in cum2:
+        rows += [row(1, q, 100), row(2, q, cum2[q]), row(3, q, cum3[q]), row(6, q, close[q])]
+    return rows
+
+
+def _csm_setup(tmp_path, monkeypatch, gold):
+    src = tmp_path / "csm_waterfall_master_diag.json"
+    out = tmp_path / "CSM_waterfall.json"
+    ovr = tmp_path / "user_csm_cells.json"
+    _write(src, _csm_flow_rows())
+    _write(ovr, gold)
+    monkeypatch.setattr(brm, "CSM_SRC", src)
+    monkeypatch.setattr(brm, "CSM_OUT", out)
+    monkeypatch.setattr(brm, "CSM_OVR", ovr)
+    return out
+
+
+def test_csm_null_dangi_blanks_only_the_listed_single_quarter(tmp_path, monkeypatch):
+    """gold `null_dangi.cells` forces 값_당분기 -> None for exactly the listed (code, quarter, item) cells of the CSM master; the cumulative 값 stays, the neighbours (same item other quarter,
+    other item same quarter, the stock cells) keep their derived single quarter, and the blank survives a second rebuild."""
+    out = _csm_setup(tmp_path, monkeypatch, {"set": [], "null_dangi": {"cells": [["KR9999", "2023.4Q", 3]]}})
+
+    def check():
+        rows = {(r["항목번호"], r["공시분기"]): r for r in json.loads(out.read_text(encoding="utf-8"))}
+        assert rows[(3, "2023.4Q")]["값"] == 8, "the cumulative 값 must stay"
+        assert rows[(3, "2023.4Q")]["값_당분기"] is None, "listed cell must be blank"
+        assert rows[(3, "2023.3Q")]["값_당분기"] == 2, "same item, other quarter must keep its derived value"
+        assert rows[(2, "2023.4Q")]["값_당분기"] == 20, "other flow item, same quarter must keep its derived value"
+        assert rows[(1, "2023.4Q")]["값_당분기"] == 145, "stock cell 기초 = previous 기말, untouched"
+        assert rows[(6, "2023.4Q")]["값_당분기"] == 168, "stock cell 기말, untouched"
+
+    brm.build_csm()
+    check()
+    brm.build_csm()          # second rebuild: the committed master is read back by _additive_merge; the blank must hold
+    check()
+
+
+def test_csm_without_null_dangi_key_is_unchanged(tmp_path, monkeypatch):
+    """no `null_dangi` key (every CSM gold file before 2026-10-24) -> old behaviour: every derivable single quarter is filled."""
+    out = _csm_setup(tmp_path, monkeypatch, {"set": []})
+    brm.build_csm()
+    rows = {(r["항목번호"], r["공시분기"]): r["값_당분기"] for r in json.loads(out.read_text(encoding="utf-8"))}
+    assert rows[(3, "2023.4Q")] == 3 and rows[(2, "2023.4Q")] == 20 and rows[(3, "2023.1Q")] == 2
+
+
+def test_csm_null_dangi_refuses_bad_entries(tmp_path, monkeypatch):
+    """malformed cell, duplicate cell, a cell that is no row of the master, and any `set_dangi` section (CSM has no reader for it, so it would be ignored silently; a cell in both
+    null_dangi and set_dangi is a contradiction) -> the build refuses instead of dropping the entry."""
+    import pytest
+
+    bad_golds = {
+        "malformed": {"set": [], "null_dangi": {"cells": [["KR9999", "2023.4Q"]]}},
+        "duplicate": {"set": [], "null_dangi": {"cells": [["KR9999", "2023.4Q", 3], ["KR9999", "2023.4Q", 3]]}},
+        "no such row": {"set": [], "null_dangi": {"cells": [["KR9999", "2023.4Q", 5]]}},
+        "set_dangi overlap": {"set": [], "set_dangi": {"cells": [["KR9999", "2023.4Q", 3, 9.5, "test"]]}, "null_dangi": {"cells": [["KR9999", "2023.4Q", 3]]}},
+        "set_dangi alone": {"set": [], "set_dangi": {"cells": [["KR9999", "2023.4Q", 2, 9.5, "test"]]}},
+    }
+    for name, gold in bad_golds.items():
+        _csm_setup(tmp_path, monkeypatch, gold)
+        with pytest.raises(ValueError):
+            brm.build_csm()

@@ -1,0 +1,141 @@
+{
+ "2023.1Q": {
+  "file": "data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml",
+  "table": 38325,
+  "unit": "백만원",
+  "n_numeric": 6,
+  "cum": {
+   "item9": -1130.0,
+   "item10": -82.0,
+   "item11": -618.0,
+   "item12": -316.0,
+   "item8_live": -2146.0
+  },
+  "cites": {
+   "re_csm": {
+    "label": "제공받은서비스의재보험계약마진",
+    "cell_line": 38658,
+    "printed": "(1,130)",
+    "value": -1130.0
+   },
+   "re_ra": {
+    "label": "위험해제로인한위험조정의변동",
+    "cell_line": 38648,
+    "printed": "(82)",
+    "value": -82.0
+   },
+   "re_exp": {
+    "label": "회수예상보험금및보험서비스비용",
+    "cell_line": 38638,
+    "printed": "(1,096)",
+    "value": -1096.0
+   },
+   "re_act": {
+    "label": "발생재보험금및재보험서비스비용회수액",
+    "cell_line": 38560,
+    "printed": "478",
+    "value": 478.0
+   }
+  }
+ },
+ "2023.2Q": {
+  "file": "data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml",
+  "table": 42420,
+  "unit": "백만원",
+  "n_numeric": 12,
+  "cum": {
+   "item9": -2248.0,
+   "item10": -157.0,
+   "item11": -645.0,
+   "item12": 447.0,
+   "item8_live": -2603.0
+  },
+  "cites": {
+   "re_csm": {
+    "label": "제공받은서비스의재보험계약마진",
+    "cell_line": 42932,
+    "printed": "(2,248)",
+    "value": -2248.0
+   },
+   "re_ra": {
+    "label": "위험해제로인한위험조정의변동",
+    "cell_line": 42916,
+    "printed": "(157)",
+    "value": -157.0
+   },
+   "re_exp": {
+    "label": "회수예상보험금및보험서비스비용",
+    "cell_line": 42900,
+    "printed": "(2,255)",
+    "value": -2255.0
+   },
+   "re_act": {
+    "label": "발생재보험금및재보험서비스비용회수액",
+    "cell_line": 42780,
+    "printed": "1,610",
+    "value": 1610.0
+   }
+  },
+  "printed_3m": {
+   "item9": -1118.0,
+   "item10": -75.0,
+   "item11": -27.0,
+   "lines": {
+    "re_csm": 42926,
+    "re_ra": 42910,
+    "re_exp": 42894,
+    "re_act": 42774
+   }
+  }
+ },
+ "2023.3Q": {
+  "file": "data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml",
+  "table": 38394,
+  "unit": "백만원",
+  "n_numeric": 12,
+  "cum": {
+   "item9": -3604.0,
+   "item10": -220.0,
+   "item11": -256.0,
+   "item12": 1359.0,
+   "item8_live": -2721.0
+  },
+  "cites": {
+   "re_csm": {
+    "label": "제공받은서비스의재보험계약마진",
+    "cell_line": 38903,
+    "printed": "(3,604)",
+    "value": -3604.0
+   },
+   "re_ra": {
+    "label": "위험해제로인한위험조정의변동",
+    "cell_line": 38887,
+    "printed": "(220)",
+    "value": -220.0
+   },
+   "re_exp": {
+    "label": "회수예상보험금및보험서비스비용",
+    "cell_line": 38871,
+    "printed": "(3,277)",
+    "value": -3277.0
+   },
+   "re_act": {
+    "label": "발생재보험금및재보험서비스비용회수액",
+    "cell_line": 38751,
+    "printed": "3,021",
+    "value": 3021.0
+   }
+  },
+  "printed_3m": {
+   "item9": -1356.0,
+   "item10": -63.0,
+   "item11": 389.0,
+   "lines": {
+    "re_csm": 38897,
+    "re_ra": 38881,
+    "re_exp": 38865,
+    "re_act": 38745
+   }
+  }
+ }
+}

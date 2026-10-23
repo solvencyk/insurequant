@@ -1,5 +1,13 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-24 밀린 Status (최신 3개 밖, 문서 정리로 이동)
+
+- **2026-10-22 19차: 18차 보류분 + 부속 닫히는 버킷 — 11사 21버킷 PL 최신 비교열 적재, owner gold 9칸 교체(티켓 20261022T1800Z 단계 1, owner 「쭉 진행」)** — DB생명 2023.1Q·2Q · 푸본현대 2024.3Q · 동양 2024.4Q~2025.2Q · NH농협손보 2023.1Q · 농협생명 2024.4Q~2025.2Q · 삼성생명·ABL·흥국생명 2025.1Q·2Q · 신한라이프 2025.2Q · 한화생명 2024.4Q~2025.2Q · KDB생명 2024.4Q(OCI만)의 Tier-1 84칸(별도, 후속 공시 전기 누계 열)을 gold 로 적재했다. 84칸 전부 필링 줄 번호로 독립 재독 84/84(값·헤더 단위·부호·행 라벨·열 위치), FS-API 2차 근거 차이 0, 보류 0.
+  gold 규칙: 겹친 owner gold 9칸(DB생명 8 + 푸본현대 항목 27)은 전부 gold = 원 공시 인쇄값임을 줄 번호로 확인해 최신 비교열로 교체(옛 값은 was·note), 마스크였던 4칸의 등재부 박제는 load-bearing 이 돼 제거(새 박제 0). 이음매: null_dangi +50(2024.4Q 연간 비교열·2025.3Q) · set_dangi +3(신한라이프 2025.2Q, 차이 −184) · 값이 같아진 낡은 set_dangi 12 제거. 제외: KDB생명 2024.4Q 항목 17·18(기타영업손익 표시 분리로 영업이익 = 보험손익 + 투자손익 이 58.543 깨짐), 반올림만 다른 61항목.
+  게이트 전→후: 데이터계약 RED 0→1(MASTER_XLSX_DRIFT 손익분해PL 194셀 = 동기화 지연뿐) · master_tables SUMMARY oci_vs_bs_aoci 23→21Y 한 필드(골든 `--update`; 동양·농협생명 2024.4Q 단일분기 공란) · 연속성/워터폴/NB/live_artifacts 불변 · PL 골든·gold_overlay·identity·지문 통과 · rule_coverage 103/104(실패 1 = 같은 xlsx RED).
+  남은 것: publishing = xlsx 194셀·panel·public_exports / 푸본현대 2024.4Q 단일분기 8칸 공란(2024.4Q 누계를 단계 2에서 채택하면 복원) / 단계 2(안 닫히는 22·CSM-only 10 등, 별 에이전트 계획서) / 2025.3Q 26칸 공란(FY2026 3분기 보고서 제출 뒤). 커밋 안 함.
+  근거·재현 `data/_derived/remaining_20261022/e20_held_and_remaining/apply/`(`INDEX.txt` · `e20_apply.py --verify`/`--revert --apply` · `e20_diff_vs_head.txt`) · `docs/changelog_parser_ifrs17.md` 19차.
+
 ## 2026-10-23 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
 - **2026-10-22 18차: 7사 19버킷 PL 최신 비교열 적재(티켓 20261022T0900Z, owner 「그럼 걔네도 바꿔라」)** — 흥국화재 4 · NH농협손보 4 · 동양 4 · ABL 3 · 푸본현대 2 · DB생명 1 · 농협생명 1버킷의 Tier-1 PL 171칸(별도 기준, 후속 공시 전기 누계 열)을 gold 로 적재. 계획 172칸 전부 필링 XML 줄 번호로 독립 재독해 172/172 일치, 1칸(농협생명 2023.3Q 항목 32, 반올림 0.034 차이)은 「마스크된 gold 칸 = 등재부 박제 필요」라 제외했다.

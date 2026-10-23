@@ -1,0 +1,28 @@
+##### 2023.1Q <- FY2024_Q1 data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml table@L38325 unit 백만원 numeric cells/row 6
+    re_csm  제공받은서비스의재보험계약마진: cum 합계    -1130 (printed '(1,130)' @L38658)
+    re_ra   위험해제로인한위험조정의변동: cum 합계      -82 (printed '(82)' @L38648)
+    re_act  발생재보험금및재보험서비스비용회수액: cum 합계      478 (printed '478' @L38560)
+    re_exp  회수예상보험금및보험서비스비용: cum 합계    -1096 (printed '(1,096)' @L38638)
+    -> item 9 -1130 (live -1131.0) | item 10 -82 (live -82.0) | item 11 -618 (live -614.0) | item 12 = 8 - (9+10+11) = -2146 - (-1830) = -316 (live -319.0)
+##### 2023.2Q <- FY2024_Q2 data/dart/FY2024_Q2/raw/KR0099_케이비라이프생명보험/xml/20240814002882.xml table@L42420 unit 백만원 numeric cells/row 12
+    re_csm  제공받은서비스의재보험계약마진: cum 합계    -2248 (printed '(2,248)' @L42932) | 3m 합계 -1118 (@L42926)
+    re_ra   위험해제로인한위험조정의변동: cum 합계     -157 (printed '(157)' @L42916) | 3m 합계 -75 (@L42910)
+    re_act  발생재보험금및재보험서비스비용회수액: cum 합계     1610 (printed '1,610' @L42780) | 3m 합계 1132 (@L42774)
+    re_exp  회수예상보험금및보험서비스비용: cum 합계    -2255 (printed '(2,255)' @L42900) | 3m 합계 -1159 (@L42894)
+    -> item 9 -2248 (live -2248.0) | item 10 -157 (live -157.0) | item 11 -645 (live -645.0) | item 12 = 8 - (9+10+11) = -2603 - (-3050) = 447 (live 447.0)
+    printed prior 3-month: item 9 -1118 | item 10 -75 | item 11 -27
+##### 2023.3Q <- FY2024_Q3 data/dart/FY2024_Q3/raw/KR0099_케이비라이프생명보험/xml/20241114001333.xml table@L38394 unit 백만원 numeric cells/row 12
+    re_csm  제공받은서비스의재보험계약마진: cum 합계    -3604 (printed '(3,604)' @L38903) | 3m 합계 -1356 (@L38897)
+    re_ra   위험해제로인한위험조정의변동: cum 합계     -220 (printed '(220)' @L38887) | 3m 합계 -63 (@L38881)
+    re_act  발생재보험금및재보험서비스비용회수액: cum 합계     3021 (printed '3,021' @L38751) | 3m 합계 1411 (@L38745)
+    re_exp  회수예상보험금및보험서비스비용: cum 합계    -3277 (printed '(3,277)' @L38871) | 3m 합계 -1022 (@L38865)
+    -> item 9 -3604 (live -3604.0) | item 10 -220 (live -220.0) | item 11 -256 (live -256.0) | item 12 = 8 - (9+10+11) = -2721 - (-4080) = 1359 (live 1359.0)
+    printed prior 3-month: item 9 -1356 | item 10 -63 | item 11 389
+
+##### seam: derived single quarter from the restated comparatives vs printed prior 3-month column
+  2023.2Q item9: derived   -1118 (= -2248 - -1130) vs printed   -1118 diff +0
+  2023.2Q item10: derived     -75 (= -157 - -82) vs printed     -75 diff +0
+  2023.2Q item11: derived     -27 (= -645 - -618) vs printed     -27 diff +0
+  2023.3Q item9: derived   -1356 (= -3604 - -2248) vs printed   -1356 diff +0
+  2023.3Q item10: derived     -63 (= -220 - -157) vs printed     -63 diff +0
+  2023.3Q item11: derived     389 (= -256 - -645) vs printed     389 diff +0

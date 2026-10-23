@@ -1,0 +1,85 @@
+== A KB라이프
+  KB라이프: 9=-1130 10=-82 11=-618 12=-316
+== B 농협생명
+  농협생명 2024.1Q: 17=2516.671864 18=364054.909616 20=139102.649792 21=-40249.054771
+  농협생명 2024.2Q: 17=12887.973129 18=754225.733023 20=294416.327389 21=-80310.314947
+== C ABL
+  ABL 2023.1Q: 4=22447 5=3275 6=1341 7=-9857.363470 (note rows -7522) 9=-2249 10=-196 | roll-forward CSM -22411/-2313 RA -3594/-146
+  ABL 2023.2Q: 4=22547 5=3281 6=-68 7=19649.757784 (note rows -2267) 9=-2187 10=-177 | roll-forward CSM -46789/-4652 RA -7449/-345
+  ABL 2023.3Q: 4=21768 5=3105 6=2430 7=38635.991086 (note rows -20987) 9=-2309 10=-210 | roll-forward CSM -69639/-7155 RA -11921/-533
+  ABL 2023.4Q: 4=88926 5=13655 6=586 7=-30099.787088 (note rows -58664) 9=-9215 10=-793 | roll-forward CSM -92971/-9589 RA -16883/-733
+== D KB손보
+  KB손보: raw statement series 284,474 / 380,949 / 91,927 / 190,741 / 283,832 / 388,289 re-read; live hand-loaded 60,900 / 33,300 are neither (PDF 요약 PL 기타사업비용 row, different concept)
+== E plan vs live
+
+checks passed: 157  problems: 70  mutation: column
+  PROBLEM: ABL 2023.1Q item 4 live 22411.0 != re-read 22447.0
+  PROBLEM: ABL 2023.1Q item 5: re-read 3275.0 != planned 3593.0
+  PROBLEM: ABL 2023.1Q item 6: re-read 1341.0 != planned -7470.0
+  PROBLEM: ABL 2023.1Q item 9: re-read -2249.0 != planned -2313.0
+  PROBLEM: ABL 2023.1Q item 10: re-read -196.0 != planned -146.0
+  PROBLEM: ABL 2023.1Q item 5: cited line 41491 label '위험조정변동' value 3275.0
+  PROBLEM: ABL 2023.1Q item 9: cited line 41709 label '보험계약마진상각' value 2249.0
+  PROBLEM: ABL 2023.1Q item 10: cited line 41703 label '위험조정변동' value 196.0
+  PROBLEM: ABL 2023.1Q item 7: planned -1328.36347 != 3-(4+5+6) -9857.36347
+  PROBLEM: ABL 2023.1Q item 7: planned -1328.36347 vs sum of the other note rows -7522.0 (|diff| > 1)
+  PROBLEM: ABL 2023.1Q: item 3 17205.63653 != 보험수익 소계 - 보험서비스비용 소계 19541.0
+  PROBLEM: ABL 2023.1Q: roll-forward ins_csm_release L37419 -22411.0 != note 22447.0
+  PROBLEM: ABL 2023.1Q: roll-forward rein_csm_release L38770 -2313.0 != note 2249.0
+  PROBLEM: ABL 2023.1Q: roll-forward ins_ra_release L37426 -3594.0 vs note 3275.0
+  PROBLEM: ABL 2023.1Q: roll-forward rein_ra_release L38777 -146.0 vs note 196.0
+  PROBLEM: ABL 2023.2Q item 4 live 46789.0 != re-read 22547.0
+  PROBLEM: ABL 2023.2Q item 5: re-read 3281.0 != planned 7449.0
+  PROBLEM: ABL 2023.2Q item 6: re-read -68.0 != planned -13186.0
+  PROBLEM: ABL 2023.2Q item 9: re-read -2187.0 != planned -4652.0
+  PROBLEM: ABL 2023.2Q item 10: re-read -177.0 != planned -345.0
+  PROBLEM: ABL 2023.2Q item 5: cited line 43169 label '위험조정변동' value 3281.0
+  PROBLEM: ABL 2023.2Q item 9: cited line 43456 label '보험계약마진상각' value 2187.0
+  PROBLEM: ABL 2023.2Q item 10: cited line 43448 label '위험조정변동' value 177.0
+  PROBLEM: ABL 2023.2Q item 7: planned 4357.757784 != 3-(4+5+6) 19649.757784
+  PROBLEM: ABL 2023.2Q item 7: planned 4357.757784 vs sum of the other note rows -2267.0 (|diff| > 1)
+  PROBLEM: ABL 2023.2Q: item 3 45409.757784 != 보험수익 소계 - 보험서비스비용 소계 23493.0
+  PROBLEM: ABL 2023.2Q: roll-forward ins_csm_release L39072 -46789.0 != note 22547.0
+  PROBLEM: ABL 2023.2Q: roll-forward rein_csm_release L40423 -4652.0 != note 2187.0
+  PROBLEM: ABL 2023.2Q: roll-forward ins_ra_release L39079 -7449.0 vs note 3281.0
+  PROBLEM: ABL 2023.2Q: roll-forward rein_ra_release L40430 -345.0 vs note 177.0
+  PROBLEM: ABL 2023.2Q item 4: derived single quarter 100.0 != printed 3-month 24378.0
+  PROBLEM: ABL 2023.2Q item 5: derived single quarter 6.0 != printed 3-month 3856.0
+  PROBLEM: ABL 2023.2Q item 6: derived single quarter -1409.0 != printed 3-month -5716.0
+  PROBLEM: ABL 2023.2Q item 9: derived single quarter 62.0 != printed 3-month -2339.0
+  PROBLEM: ABL 2023.2Q item 10: derived single quarter 19.0 != printed 3-month -199.0
+  PROBLEM: ABL 2023.3Q item 4 live 69639.0 != re-read 21768.0
+  PROBLEM: ABL 2023.3Q item 5: re-read 3105.0 != planned 11921.0
+  PROBLEM: ABL 2023.3Q item 6: re-read 2430.0 != planned -18428.0
+  PROBLEM: ABL 2023.3Q item 9: re-read -2309.0 != planned -7155.0
+  PROBLEM: ABL 2023.3Q item 10: re-read -210.0 != planned -533.0
+  PROBLEM: ABL 2023.3Q item 5: cited line 42237 label '위험조정변동' value 3105.0
+  PROBLEM: ABL 2023.3Q item 9: cited line 42524 label '보험계약마진상각' value 2309.0
+  PROBLEM: ABL 2023.3Q item 10: cited line 42516 label '위험조정변동' value 210.0
+  PROBLEM: ABL 2023.3Q item 7: planned 2806.991086 != 3-(4+5+6) 38635.991085999995
+  PROBLEM: ABL 2023.3Q item 7: planned 2806.991086 vs sum of the other note rows -20987.0 (|diff| > 1)
+  PROBLEM: ABL 2023.3Q: item 3 65938.991086 != 보험수익 소계 - 보험서비스비용 소계 6316.0
+  PROBLEM: ABL 2023.3Q: roll-forward ins_csm_release L38197 -69639.0 != note 21768.0
+  PROBLEM: ABL 2023.3Q: roll-forward rein_csm_release L39517 -7155.0 != note 2309.0
+  PROBLEM: ABL 2023.3Q: roll-forward ins_ra_release L38204 -11921.0 vs note 3105.0
+  PROBLEM: ABL 2023.3Q: roll-forward rein_ra_release L39524 -533.0 vs note 210.0
+  PROBLEM: ABL 2023.3Q item 4: derived single quarter -779.0 != printed 3-month 22850.0
+  PROBLEM: ABL 2023.3Q item 5: derived single quarter -176.0 != printed 3-month 4472.0
+  PROBLEM: ABL 2023.3Q item 6: derived single quarter 2498.0 != printed 3-month -5242.0
+  PROBLEM: ABL 2023.3Q item 9: derived single quarter -122.0 != printed 3-month -2503.0
+  PROBLEM: ABL 2023.3Q item 10: derived single quarter -33.0 != printed 3-month -188.0
+  PROBLEM: ABL 2023.4Q item 4 live 92971.0 != re-read 88926.0
+  PROBLEM: ABL 2023.4Q item 5: re-read 13655.0 != planned 16883.0
+  PROBLEM: ABL 2023.4Q item 6: re-read 586.0 != planned -19665.0
+  PROBLEM: ABL 2023.4Q item 9 (unchanged cell) live -9589.0 != re-read -9215.0
+  PROBLEM: ABL 2023.4Q item 10: re-read -793.0 != planned -733.0
+  PROBLEM: ABL 2023.4Q item 5: cited line 58275 label '위험조정변동' value 13655.0
+  PROBLEM: ABL 2023.4Q item 9: cited line 58481 label '보험계약마진상각' value 9215.0
+  PROBLEM: ABL 2023.4Q item 10: cited line 58475 label '위험조정변동' value 793.0
+  PROBLEM: ABL 2023.4Q item 7: planned -17121.787088 != 3-(4+5+6) -30099.787087999997
+  PROBLEM: ABL 2023.4Q item 7: planned -17121.787088 vs sum of the other note rows -58664.0 (|diff| > 1)
+  PROBLEM: ABL 2023.4Q: item 3 73067.212912 != 보험수익 소계 - 보험서비스비용 소계 44503.0
+  PROBLEM: ABL 2023.4Q: roll-forward ins_csm_release L50615 -92971.0 != note 88926.0
+  PROBLEM: ABL 2023.4Q: roll-forward rein_csm_release L54697 -9589.0 != note 9215.0
+  PROBLEM: ABL 2023.4Q: roll-forward ins_ra_release L50622 -16883.0 vs note 13655.0
+  PROBLEM: ABL 2023.4Q: roll-forward rein_ra_release L54704 -733.0 vs note 793.0

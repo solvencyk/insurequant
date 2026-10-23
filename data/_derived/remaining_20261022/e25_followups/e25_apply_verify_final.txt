@@ -1,0 +1,6 @@
+verify PL: drift-fix cells [('KR0010', 16, '2024.4Q'), ('KR0010', 16, '2025.2Q')] equal a fresh build -> OK
+verify PL: planned 값 cells equal to a fresh build (30) -> OK; planned single-quarter cells equal the plan (0) -> OK; equal to a fresh build -> OK
+verify PL: drift now 477 vs snapshot 479; new drift 0 -> OK; drift cells that the apply fixed 2
+verify PL: non-target-company drift now 477 (must equal the snapshot's 477)
+verify CSM: planned 값 cells equal to a fresh build (0) -> OK; drift now 0 vs snapshot 0; new drift 0 -> OK
+verify PL provenance: emitter reproduces 112/112 target-company blocks (sidecar has 112)

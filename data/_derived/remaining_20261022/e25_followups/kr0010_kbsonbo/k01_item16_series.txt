@@ -1,0 +1,26 @@
+##### FY2023_Q1: cannot read statement: KeyError: "data/dart/FY2023_Q1/raw/KR0010_KB손해보험/20230515001575.xml: no '4-2. 포괄손익계산서' title/marker"
+##### FY2023_Q2: cannot read statement: KeyError: "data/dart/FY2023_Q2/raw/KR0010_KB손해보험/20230814001763.xml: no '4-2. 포괄손익계산서' title/marker"
+##### FY2023_Q3 data/dart/FY2023_Q3/raw/KR0010_KB손해보험/20231114002834.xml fmt=atoc unit=백만원 title_line=28960
+   row L29210 '기타사업비용' oci=False: cur/cum=282,385@L29218 | cur/3m=93,318@L29214 | prior/cum=276,729@L29226 | prior/3m=92,840@L29222
+##### FY2023_Q4 data/dart/FY2023_Q4/raw/KR0010_KB손해보험_20240312000746/20240312000746.xml fmt=atoc unit=백만원 title_line=44430
+   row L44738 '(3)기타사업비용' oci=False: cur/cum=390,033@L44742 | cur/3m=n/a | prior/cum=380,861@L44746 | prior/3m=n/a
+##### FY2024_Q1 data/dart/FY2024_Q1/raw/KR0010_KB손해보험/20240516001008.xml fmt=atoc unit=백만원 title_line=25693
+   row L25943 '(3)기타사업비용' oci=False: cur/cum=93,892@L25951 | cur/3m=93,892@L25947 | prior/cum=91,710@L25959 | prior/3m=91,710@L25955
+##### FY2024_Q2 data/dart/FY2024_Q2/raw/KR0010_KB손해보험/20240814002750.xml fmt=atoc unit=백만원 title_line=28771
+   row L29021 '(3)기타사업비용' oci=False: cur/cum=192,135@L29029 | cur/3m=98,243@L29025 | prior/cum=189,068@L29037 | prior/3m=97,357@L29033
+##### FY2024_Q3 data/dart/FY2024_Q3/raw/KR0010_KB손해보험/20241114002445.xml fmt=atoc unit=백만원 title_line=27036
+   row L27286 '(3)기타사업비용' oci=False: cur/cum=284,474@L27294 | cur/3m=92,338@L27290 | prior/cum=282,385@L27302 | prior/3m=93,318@L27298
+##### FY2024_Q4 data/dart/FY2024_Q4/raw/KR0010_KB손해보험_20250314001697/20250314001697.xml fmt=atoc unit=백만원 title_line=45128
+   row L45341 '기타사업비용' oci=False: cur/cum=380,949@L45345 | cur/3m=n/a | prior/cum=390,033@L45349 | prior/3m=n/a
+##### FY2025_Q1 data/dart/FY2025_Q1/raw/KR0010_KB손해보험/20250515001437.xml fmt=atoc unit=백만원 title_line=26246
+   row L26496 '기타사업비용' oci=False: cur/cum=91,927@L26504 | cur/3m=91,927@L26500 | prior/cum=93,892@L26512 | prior/3m=93,892@L26508
+##### FY2025_Q2 data/dart/FY2025_Q2/raw/KR0010_KB손해보험/20250814003072.xml fmt=atoc unit=백만원 title_line=29330
+   row L29580 '기타사업비용' oci=False: cur/cum=190,741@L29588 | cur/3m=98,814@L29584 | prior/cum=192,136@L29596 | prior/3m=98,244@L29592
+##### FY2025_Q3 data/dart/FY2025_Q3/raw/KR0010_KB손해보험/20251114001554.xml fmt=atoc unit=백만원 title_line=25321
+   row L25434 '기타사업비용' oci=False: cur/cum=283,832@L25436 | cur/3m=93,091@L25435 | prior/cum=284,474@L25438 | prior/3m=92,338@L25437
+##### FY2025_Q4 data/dart/FY2025_Q4/raw/KR0010_KB손해보험_20260313001064/20260313001064.xml fmt=atoc unit=백만원 title_line=44776
+   row L44879 '기타사업비용' oci=False: cur/cum=388,289@L44880 | cur/3m=n/a | prior/cum=380,949@L44881 | prior/3m=n/a
+##### FY2026_Q1 data/dart/FY2026_Q1/raw/KR0010_KB손해보험/20260529001431.xml fmt=atoc unit=백만원 title_line=24865
+   row L24978 '기타사업비용' oci=False: cur/cum=97,277@L24980 | cur/3m=97,277@L24979 | prior/cum=91,927@L24982 | prior/3m=91,927@L24981
+##### FY2026_Q2 data/dart/FY2026_Q2/raw/KR0010_KB손해보험/20260814002234.xml fmt=atoc unit=백만원 title_line=27592
+   row L27705 '기타사업비용' oci=False: cur/cum=199,561@L27707 | cur/3m=102,284@L27706 | prior/cum=190,741@L27709 | prior/3m=98,814@L27708

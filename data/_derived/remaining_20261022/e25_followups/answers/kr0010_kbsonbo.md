@@ -1,0 +1,34 @@
+**2026-10-24 parser/ifrs17 답변 (티켓 20261024T0100Z, KB손해보험 KR0010 항목 16 기타사업비용)** — 원인 규명 + 잘못된 2칸 제거 완료(미커밋·미푸시). 원문 값이 있는 6칸의 복원은 새 박제 6건이 필요해 **싣지 않았다(결정 필요, 아래)**. 증거 `data/_derived/remaining_20261022/e25_followups/kr0010_kbsonbo/`(`k01_item16_series.txt` · `k02_granularity_cands.py` · `k03_round1_item16_lead.txt`).
+
+**(1) 원인 — 오추출도 단위도 아니다. 서로 다른 두 사건이다.**
+- 2024.4Q 60,900 · 2025.2Q 33,300 은 **2026-10-11 경영공시 세부 백필 1차 적재**(`data/_derived/bspl_granularity_20261011/load_manifest_pl.json`, `pl_candidates/KR0010.json` 후보 12·13)가 경영공시 PDF **요약 포괄손익계산서의 「기타사업비용」 행**(억원, 반올림 ±0.5억; FY2024 4Q p25 · FY2025 2Q p5)을 넣은 값이다. 같은 행은 다른 분기에도 있지만 값이 DART 별도 포괄손익계산서 행의 약 1/5 이다(요약 PL 16,900 · 37,100 · 53,700 · 74,600 · 28,300 대 당시 마스터(DART 별도 행) 92,565 · 190,719 · 282,385 · 390,033 · 192,135: 2023.1Q · 2Q · 3Q · 4Q · 2024.2Q) — **다른 개념의 행**이다. 로더는 마스터가 비어 있던 칸에만 썼고(그 분기는 DART 값이 있어 `EXISTS_DIFF` 로 건너뜀), KB손보 2024.4Q·2025.2Q 가 비어 있던 이유가 아래 두 번째 사건이다.
+- 나머지 분기가 빈칸인 이유: `build_root_masters._zero_other_expense` 가 「보험손익이 기타사업비용 없이도 ΣLOB 로 닫히면 항목 16 을 null」로 만든다(KB손보는 매 분기 닫힌다). 그 설계의 처방은 「원문 확인 뒤 owner gold 로 복원」이고, KB손보 항목 16 gold 는 2023.1Q~2024.2Q · 2026.1Q·2Q 에만 있고, 그중 2023.3Q~2024.2Q · 2026.1Q·2Q 6칸은 빌더 소스와 같은 마스크 칸이라 박제돼 있다. 2024.3Q~2025.4Q 는 gold 가 없어 빈칸이다. 그래서 누계가 93,892 → 192,135 → 빈칸 → **60,900**(불가능) 로 보인 것이다.
+
+**(2) 원문 재독 (DART 별도 포괄손익계산서 「기타사업비용」 행, 백만원, `k01_item16_series.txt` · 독립 재독 `x01_verify_e25.py` KB손보 절)**
+
+| 분기 | 당기 열 (줄) | 후속 공시 전기 열 | 마스터 전 → 후 |
+|---|---|---|---|
+| 2024.1Q | 93,892 (FY2024 1Q L25951) | 93,892 (FY2025 1Q L26512) | 93,892 → 불변(gold) |
+| 2024.2Q | 192,135 (FY2024 반기 L29029) | 192,136 (FY2025 반기 L29596, 반올림 1) | 192,135 → 불변(gold) |
+| 2024.3Q | **284,474** (FY2024 3Q L27294) | 284,474 (FY2025 3Q L25438) | 빈칸 → 빈칸 |
+| 2024.4Q | **380,949** (FY2024 연간 L45345) | 380,949 (FY2025 연간 L44881) | **60,900 → 빈칸** |
+| 2025.1Q | **91,927** (FY2025 1Q L26504) | 91,927 (FY2026 1Q L24982) | 빈칸 → 빈칸 |
+| 2025.2Q | **190,741** (FY2025 반기 L29588) | 190,741 (FY2026 반기 L27709) | **33,300 → 빈칸** |
+| 2025.3Q | **283,832** (FY2025 3Q L25436) | 아직 없음(FY2026 3Q 미제출) | 빈칸 → 빈칸 |
+| 2025.4Q | **388,289** (FY2025 연간 L44880) | - | 빈칸 → 빈칸 |
+
+(2026.1Q 97,277 · 2026.2Q 199,561 은 이미 gold.) 이전 세션 메모의 「2024.4Q 전기 열 380,949」가 맞다. 누계는 분기마다 단조 증가한다(93,892 → 192,135 → 284,474 → 380,949, 91,927 → 190,741 → 283,832 → 388,289).
+
+**(3) 처리**: 잘못된 손입력 2칸(60,900 · 33,300)을 **빈칸으로 되돌렸다**(셀 단위, 값 = 새로 빌드한 `build_pl()` 의 값 = null; gold 칸이 아니어서 다음 재빌드가 어차피 되돌릴 칸이었다 — 적재 전 「라이브 대 새 빌드 드리프트」 479칸에 이 2칸이 들어 있었고 적재 후 477칸). 출처표: 두 블록의 `disclosure_summary_pl` 항목 16 줄이 사라지고 published_items 24 → 23. 단일분기는 원래 빈칸이라 불변.
+
+**싣지 않은 6칸(2024.3Q · 2024.4Q · 2025.1Q · 2025.2Q · 2025.3Q · 2025.4Q: 위 표의 굵은 값)과 이유**: 값이 빌더 소스(`data/dart/viz/pl_breakdown_master.json`: 284,474 · 380,949 · 91,927 · 190,741 · 283,832 · 388,289)와 똑같다. gold 로 실으면 센서스가 마스크 칸으로 세어 **새 박제 6건**(`gold_overlay_ledger.json`)이 필요하고, 이번 지시는 새 박제를 금지한다(앞선 READY-25 가 2024.3Q 한 칸을 같은 이유로 제외했다). 「틀린 값을 싣느니 빈 칸」 원칙에 맞춰 빈칸으로 둔다. **결정 요청(owner/오케스트레이터)**: ⓐ 선례(KB손보 항목 16 박제 6건, 2026-08-30 validation T0710Z)와 같은 방식으로 6칸 + 박제 6건을 승인하면 위 값 그대로 한 번에 적재할 수 있다(원문 줄 번호는 `k01_item16_series.txt`) ⓑ 또는 `_zero_other_expense` 가 이 회사의 항목 16 을 지우지 않게 하는 빌더 변경(PL 골든·전 회사 영향이라 별건).
+
+**(4) PL 브릿지 영향**: 없음. 보험손익(dual) 검산은 후보 {ΣLOB, ΣLOB + 15 − 16} 중 잔차가 작은 쪽을 쓰고 KB손보는 ΣLOB(2 + 13 + 14)가 항목 1 과 정확히 닫힌다(예: 2024.4Q 995,933 + 8,721 − 26,655 = 977,999 = 항목 1). 항목 16 이 60,900 이든 빈칸이든 통과이고 적용 전후 KB손보 행의 결과는 같다(master_tables 18F/0NEW 불변). 항목 16 을 채우면 후보가 하나 늘 뿐 ΣLOB 후보가 이기므로 이것도 같다.
+
+**(5) 같은 로더의 다른 칸**: 1차 적재가 쓴 항목 16 128칸 중 DART 빌더 소스 값이 있는 비교 가능한 칸은 KB손보 2칸(위) + KR0005 2칸 + KR0072 1칸이다. 뒤 3칸은 빌더 소스와 0.03~0.95% 차이(억원 반올림)로 같은 개념이다. 나머지 123칸은 빌더 소스가 비어 비교할 수 없다(`k03_round1_item16_lead.txt`). 같은 개념 불일치는 KB손보뿐이다.
+
+**남은 것**: publishing = xlsx `손익분해PL` 동기화(KB손보 몫 2칸), 위 결정. 되돌리기: `e25_followups/backup_before_apply/` 의 사본을 같은 상대 경로로 복사한다(INDEX.txt 6절; `e25_apply.py --revert` 는 작업 5 가 같은 시험 파일을 바꿔 ABORT 한다).
+
+**게이트·테스트(티켓 4건 + 작업 5 합산, 적재 전 → 후; `gates/gates_compare_all.txt` · `gates/tests_final/`)**: master_tables SUMMARY 는 pl_bridge 3783P(진짜 1351 · 구성상 2089 · 부분 343)/18F/2629S/0NEW → 3787P(1351 · 2093 · 343)/18F/2625S/0NEW 한 필드뿐이다(ABL 항목 6 이 채워져 `3 = 4+5+6+7` 4버킷이 검사받기 시작; 기존 18 FAIL 목록 동일, 새 실패 0, pl_bridge_baseline 무변경). data_contract 는 RED 0 → 2 = MASTER_XLSX_DRIFT `손익분해PL` 66칸 · `CSM워터폴` 3칸으로 바뀐 칸 수와 정확히 같고(publishing 이 xlsx 동기화) YELLOW 168 은 동일하다. 연속성 flagged 1/RED 0 · 워터폴 41 pass · nb_csm 5/5 · live_artifacts RED 0 불변. 테스트: master_tables 골든은 SUMMARY 한 줄만 `--update`(사유 = 위 pl_bridge 한 필드), 입력 지문은 viz_ifrs17_panels 한 줄만 `--update`(CSM_waterfall.json 51,368,530 → 51,368,526 바이트; viz 골든 산출은 그대로 통과), PL 골든 1 passed(276초), 규칙 커버리지 105 passed + 1 failed(`test_master_xlsx_clean_state_has_no_red`, 위 xlsx 드리프트와 같은 원인), gold_overlay 10 · identity 14 · tautology 10 · viz 골든 2종 · dividend · deploy_assets 12 · push_gate_wiring 66 통과.
+
+**변경 파일(4건 공통 1회 적재 + 작업 5)**: `PL_breakdown.json` · `PL_breakdown_provenance.json` · `data/_gold/user_pl_cells.json` · `CSM_waterfall.json` · `data/_gold/user_csm_cells.json` · `scripts/build_root_masters.py` · `tests/test_rule_coverage_manifest.py` · `tests/test_gold_overlay_survives_rebuild.py` · `tests/fixtures/master_tables_golden.json` · `tests/fixtures/builder_input_fingerprints.json`. 원장(`gold_overlay_ledger.json`) 박제 변경 0, 제거한 박제 0.

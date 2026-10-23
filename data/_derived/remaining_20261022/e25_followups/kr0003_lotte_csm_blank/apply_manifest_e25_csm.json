@@ -1,0 +1,12 @@
+{
+  "before_sha256": {
+    "data/_gold/user_csm_cells.json": "cd11d341e864d0b6562d18c2f961d396507c0f8d499982917130224d35361233",
+    "CSM_waterfall.json": "eb86a95bd0b7c5527d0e931085f311aacdb345b98c8c3d5f9ed1cf81bf24dc26"
+  },
+  "after_sha256": {
+    "data/_gold/user_csm_cells.json": "e02c2b073e6d69823968aed3efb594fdc08dff1fb00c016c3261554b23963e03",
+    "CSM_waterfall.json": "de54d9160c993ddaad1799d53c251b2b87b2517091d8d1f28b6460f1c8665632"
+  },
+  "applied_at": "2026-10-24T01:54:29",
+  "note": "after_sha256 of the gold file updated by c06_doc_note.py (only the top-level _doc string was extended)"
+}

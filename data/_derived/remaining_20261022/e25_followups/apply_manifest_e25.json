@@ -1,0 +1,15 @@
+{
+  "before_sha256": {
+    "data/_gold/user_pl_cells.json": "a81180044bd77d0f7511af7d0b61e58e0fca088237d2a6ef37af7a5ea396b1ee",
+    "PL_breakdown.json": "5df3fe6660ae6bea6712fd420389bac888e5147ab74018abe30ceeb98f897923",
+    "PL_breakdown_provenance.json": "07f8d462ec93caed98fcbdc76e606704d4a544f60ee7762d653374f05b838830",
+    "tests/test_rule_coverage_manifest.py": "c154e65e779ffef4e3b70e8115cea8664ee57d71b0b5d62819b0a37c1f6facfe"
+  },
+  "after_sha256": {
+    "data/_gold/user_pl_cells.json": "1c90a68d9aa77c2223632159377cb12df0fdd3052ec1cbd66583027f423eeb18",
+    "PL_breakdown.json": "94ed1bb3d74eca148584b10757cb2895a124a21d87c87e90c2c4c5c50d80ff5f",
+    "PL_breakdown_provenance.json": "fb9a0468ca8d8376fef361a81ace0ce2a01644e8baff48f12249024bf3530f63",
+    "tests/test_rule_coverage_manifest.py": "8eaaa66183a8502c9e6bf33600187b82c32943a1e11b7d183f5b3fe21726b11b"
+  },
+  "applied_at": "2026-10-24T01:35:05"
+}

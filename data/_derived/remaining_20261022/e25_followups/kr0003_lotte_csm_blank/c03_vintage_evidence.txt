@@ -1,0 +1,26 @@
+(a) FY2024 Q3 report, prior-year 9-month CSM table (L15912, 장기, 백만원, CSM 소계 column) -> 억원
+    기초순보험계약부채                 1,677,438 @L15956 ->  16774.38
+    최초인식계약                      409,211 @L16044 ->   4092.11
+    보험금융손익                       55,402 @L16099 ->    554.02
+    보험계약마진을조정하는추정치의변동           198,132 @L16055 ->   1981.32
+    보험계약마진상각액                 (131,623) @L16000 ->  -1316.23
+    기말순보험계약부채                 2,208,560 @L16165 ->  22085.60
+    roll-forward: 16774.38 + 4092.11 + 554.02 + 1981.32 + (-1316.23) = 22085.60 vs closing 22085.60
+
+(b)/(c) 2023.4Q cumulative CSM vector: pre-D2 (original annual print) vs restated annual comparative (D2 load, FY2024 annual report prior-period table)
+    item 1 기초       original   16774.4 -> live (restated)   16669.0  CHANGED   plan-old 16774.4
+    item 2 신계약      original    5478.9 -> live (restated)    5478.9  same   plan-old None
+    item 3 이자 부리    original     780.5 -> live (restated)     777.0  CHANGED   plan-old 780.5
+    item 4 가정 및 경험 조정 original    2801.0 -> live (restated)    2795.0  CHANGED   plan-old 2801.0
+    item 5 CSM 상각   original   -1868.5 -> live (restated)   -1859.0  CHANGED   plan-old -1868.5
+    item 6 기말       original   23966.2 -> live (restated)   23860.8  CHANGED   plan-old 23966.2
+    live 2023.3Q cumulative (original vintage; equals the raw vector of (a) to 0.05): [16774.4, 4092.1, 554.0, 1981.3, -1316.2, 22085.6]
+
+(d) single quarter 2023.4Q = cumulative 4Q - cumulative 3Q (flows); opening = 3Q closing; closing = 4Q closing
+    item 2 신계약     : single quarter with the original annual   1386.8 | with the restated annual   1386.8 | shift +0.0  -> not mixed (annual identical in both vintages)
+    item 3 이자 부리   : single quarter with the original annual    226.5 | with the restated annual    223.0 | shift -3.5  -> MIXED
+    item 4 가정 및 경험 조정: single quarter with the original annual    819.7 | with the restated annual    813.7 | shift -6.0  -> MIXED
+    item 5 CSM 상각  : single quarter with the original annual   -552.3 | with the restated annual   -542.8 | shift +9.5  -> MIXED
+    roll-forward residual (opening 22085.6 + flows - closing): original annual +0.1 | restated annual +105.5
+    live 값_당분기 now: {1: 22085.6, 2: 1386.8, 3: 223.0, 4: 813.7, 5: -542.8, 6: 23860.8}
+    stock cells: item 1 single = 3Q closing as filed; item 6 single = restated annual closing (not differences of cumulatives)

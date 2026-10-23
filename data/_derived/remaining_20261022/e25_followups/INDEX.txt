@@ -1,0 +1,64 @@
+티켓 4건 + 작업 5 (parser/ifrs17, 2026-10-24) 증거 폴더 색인
+=====================================================================================================
+티켓: 20261023T1130Z (KB라이프 KR0099 2023.1Q 항목 9·11·12) · 20261023T1210Z (ABL KR0070 FY2023 항목 5·6·7·9·10) · 20261023T0600Z (농협생명 KR0104 2024.1Q·2Q 항목 17·20·21)
+      · 20261024T0100Z (KB손해보험 KR0010 항목 16) · 20261023T1215Z 건 2 (작업 5: CSM 단일분기 빈칸 장치 + 롯데손해보험 KR0003 2023.4Q 항목 3·4·5)
+상태: 적재 완료 · 미커밋 · push 안 함. 서브에이전트·docling 안 씀. build_root_masters.main()·build_ifrs17_bs·xlsx 동기화·panel·public_exports·NB·WFY_EXCEPTIONS·pl_bridge_baseline·원장(박제)·핸들러는 건드리지 않았다.
+파이썬은 항상 C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe, 스크립트 파일로, stdin /dev/null.
+정책(전 티켓 공통): 최신 비교열 · 별도(OFS) · 블록이 닫힐 때만 이동 · 새 박제 0 · 잔차 끼움 0 · 게이트 예외 0 · owner 확정(gold) 칸과 겹치면 근거와 함께 표기.
+
+1) 무엇을 바꿨나 (적재 전 백업 대비 실측: x02_diff_applied.txt · kr0003_lotte_csm_blank/c04_diff_files.txt = ALL PASS)
+   PL_breakdown.json            값 32칸 (KB라이프 3 · 농협생명 8 · ABL 19 · KB손해보험 2[손입력 제거 → 빈칸]) + 값_당분기 34칸(파생, 이 중 값이 안 바뀐 칸 8: 농협생명 2024.3Q 4 · KB라이프 2023.2Q 3 · ABL 2023.4Q 항목 9 1), 필드는 값·값_당분기만, 행 수 13,801 불변
+   data/_gold/user_pl_cells.json   set 1379 -> 1408 (신규 29 + 제자리 교체 1: ABL 2023.1Q 항목 7), null_dangi · set_dangi 불변
+   PL_breakdown_provenance.json KR0010 · KR0070 · KR0099 · KR0104 의 13블록 교체(샌드박스 emit_pl_provenance 사본, 블록 삽입 0) + 병합 노트 키 1개
+   CSM_waterfall.json           값_당분기 3칸 숫자 -> None (KR0003 2023.4Q 항목 3·4·5; 값 불변)
+   data/_gold/user_csm_cells.json  최상위 `null_dangi` 섹션 신설(칸 3) + 최상위 `_doc` 에 한 문장 추가; set 417 불변
+   scripts/build_root_masters.py   `_csm_null_dangi_keys()` 신설 + build_csm() 에서 읽음 (PL `null_dangi` 의 CSM 쌍둥이; 31줄 추가, 다른 동작 불변 — 라이브 gold 로 새 빌드 == 라이브 마스터 전 행)
+   tests/test_rule_coverage_manifest.py  GOLD_OVERLAY_CENSUS PL (1379, 22) -> (1408, 22) + 주석 2줄 + `CSM_NULL_DANGI_CELLS` 선언 + `test_csm_null_dangi_is_declared_read_and_enforced` 신설
+   tests/test_gold_overlay_survives_rebuild.py  CSM null_dangi 빌더 시험 3개 신설
+   tests/fixtures/master_tables_golden.json  SUMMARY 한 줄(pl_bridge 3783P/구성상 2089/2629S -> 3787P/2093/2625S) `--update`
+   tests/fixtures/builder_input_fingerprints.json  viz_ifrs17_panels 의 inputs_sha256 · input_bytes(51368530 -> 51368526) 한 줄 `--update`
+   변경 안 한 것(백업과 바이트 동일): gold_overlay_ledger.json · pl_bridge_baseline.json · CSM_waterfall_provenance.json · pl_breakdown_golden.json · data/_derived/qoq_warn.json · pl_oci_vs_bs_aoci_warn.json · data/dart/viz/*
+
+2) 판정과 근거 요약
+   - KB라이프: 인용 줄 4개 독립 재독, 8 = 9+10+11+12 닫힘(-2,146), 2Q·3Q 파생 단일분기 = 인쇄 3개월 열(차이 0). 단일분기 2023.2Q = -1,118 / -27 / 763.
+   - 농협생명: 20 = 1+17 · 22 = 20+21 · 17 = 18+19 정확히 닫힘. 항목 18 은 티켓에 없었지만 17 = 18+19 를 지키려고 함께 옮김. 2024.3Q 단일분기 17/20/21 = FY2025 3Q 보고서 전기 3개월 열(소수 6자리 일치).
+   - ABL: 구간 소계 = 행 합, 보험·재보험 롤포워드 대조(CSM 8/8 일치, RA 7/8 일치 + 1칸 ±1), 항목 7 = 나머지 행 합 ±1, 2Q·3Q 단일분기 = 인쇄 3개월 열 10/10 차이 0, 대조 시험(당기 열 -> 라이브 2024 항목 6·11 8/8, 항목 4 4/4).
+     2023.1Q 항목 5 = 272 는 재보험 표 값의 오추출 -> 3,593. 항목 7 gold(-1,767) 낡음 -> 제자리 교체(-1,328.36347).
+   - KB손해보험: 항목 16 의 60,900 · 33,300 은 경영공시 요약 PL 행(다른 개념)을 2026-10-11 1차 적재가 손입력한 값 -> 빈칸으로 되돌림. 원문 값 6칸은 마스크 칸이라 새 박제 6건이 필요해 싣지 않음(결정 요청).
+   - 롯데손해보험 CSM: 연간 누계(최신 비교열)와 3Q 누계(옛 판)를 뺀 단일분기 흐름 3·4·5 가 섞임(이동 -3.5 / -6.0 / +9.5), 항목 2(연간 값 두 판 동일)·항목 1·6(저량)은 안 섞여 안 비움.
+
+3) 게이트·테스트 (gates/gates_before = 적재 전, gates/gates_after_1_4 = 티켓 1~4 적재 후, gates/gates_after_all = 작업 5 포함 최종; gates/gates_compare_1_4.txt · gates_compare_all.txt)
+   master_tables SUMMARY: pl_bridge 3783P/18F/2629S/0NEW -> 3787P/18F/2625S/0NEW (진짜 1351 불변 · 구성상 2089 -> 2093), 그 밖의 필드 전부 동일 (기존 18 FAIL 목록 동일)
+   data_contract: RED 0 -> 2 = MASTER_XLSX_DRIFT 손익분해PL 66칸 + CSM워터폴 3칸 (= 바뀐 칸 수와 정확히 같다, gates/check_master_xlsx_drift_after_all.txt), YELLOW 168 동일, 다른 새 발견 0
+   csm_continuity flagged 1 · RED 0 / csm_waterfall 41 pass / nb_csm 5/5 / csm_coverage 기존 갭 1(카카오페이) / live_artifacts RED 0 · YELLOW 25 — 전부 불변
+   테스트(gates/tests_final/, PL 골든만 gates/tests_all1/): rule_coverage 105 passed + 1 failed(test_master_xlsx_clean_state_has_no_red = xlsx 드리프트 RED 와 같은 원인) · gold_overlay 10 · identity 14 · tautology 10 · master_tables_golden 2 (SUMMARY --update 뒤)
+     · viz 골든 2종 · dividend 골든 · deploy_assets 12 · push_gate_wiring 66 · golden_input_fingerprint 23 · scripts/validate_golden_input_fingerprints.py RED 1 -> 0 (--update 뒤) · PL 골든 RUN_PL_GOLDEN=1 1 passed (276초; fixture 불변)
+   빌더 입력/산출 in-place 파일 sha 전후 동일 (INPLACE_OUTPUTS_UNCHANGED).
+
+4) 파일 지도
+   공통: p01_build_plan.py -> e25_plan.json (적용 계약; 티켓 4건) · x01_verify_e25.py (독립 재독 227 checks, 변이 3종 line/value/column 검출; 적재 뒤에는 E25_BASE=backup_before_apply 로 재현 — x01_verify_e25_rerun_on_backup.txt 가 적재 전 실행과 동일)
+         make_apply_e25.py -> e25_apply.py (ABL e23_apply.py 에서 치환 1회 일치 단언으로 생성; e25_apply_vs_e23abl.diff) : --snapshot-drift | --check | --out-dir | --apply | --verify | --revert --apply ; apply_manifest_e25.json · drift_before.json · e25_apply_report.txt · e25_apply_{snapshot,check,outdir,run,verify}.log
+         x02_diff_files.py -> x02_diff_sim.txt (적재 전 모의) · x02_diff_applied.txt (적재 후, 백업 대비) ; b01_backup_preload.py -> backup_before_apply/ + SHA256_preload.txt (30개 파일, 사본 바이트 동일 확인)
+         s01~s07 (읽기 전용 탐침: 셀 보기 · 출처표 · 32항목 벡터 · 원장 · 드리프트 · gold 노트 · gold 개수), t01_dump_table.py (XML 표 덤프)
+   게이트/테스트: gates/run_gates.sh + gate_overlay.py (저장소 쓰기를 전부 폴더 안으로 돌림) · gates/run_tests_e25.sh · gates/compare_gates_e25.py
+   kr0099_kblife/   k01_read_kblife.py/.txt/.json
+   kr0070_abl/      a01_read_abl_fy2023.py/.txt/.json · a02_control_current_cols.py/.txt · x01_verify_e25.txt (사본: gold note 가 이 경로를 가리킨다)
+   kr0104_nhlife/   n01_read_vs_master.py/.txt/.json
+   kr0010_kbsonbo/  k01_item16_series.py/.txt (원문 시계열) · k02_granularity_cands.py (손입력 출처) · k03_round1_item16_lead.py/.txt (같은 로더의 다른 128칸 점검)
+   kr0003_lotte_csm_blank/  c01_show_csm.py · c02_apply_csm.py (--check/--out-dir/--apply/--verify/--revert --apply; apply_manifest_e25_csm.json) · c03_vintage_evidence.py/.txt · c04_diff_files.py/.txt
+                            c05_test_mutation.py/.txt (새 시험의 민감도) · c06_doc_note.py (gold `_doc` 한 문장)
+   answers/         티켓별 답변 원문 (티켓 파일 `## 답변` 에 같은 내용)
+
+5) 재현 순서 (적재 전 상태 = git HEAD 77bcc10d 의 마스터 · gold 에서만 계획서가 같게 나온다)
+   1. p01_build_plan.py (읽기 스크립트 4종 k01/a01/n01 이 먼저 돌아 있어야 함) -> x01_verify_e25.py (문제 0)
+   2. b01_backup_preload.py ; e25_apply.py --snapshot-drift ; --check ; --out-dir <임시> ; x02_diff_files.py <repo> <임시> ; --apply ; --verify ; x02_diff_files.py backup_before_apply <repo>
+   3. gates/run_gates.sh <폴더> ; gates/compare_gates_e25.py ; scripts/check_master_xlsx_drift.py
+   4. 작업 5: kr0003_lotte_csm_blank/c02_apply_csm.py --check -> --apply -> --verify ; c04_diff_files.py ; (선택) c06_doc_note.py
+   5. gates/run_tests_e25.sh <tag> [--with-pl-golden] ; 실패한 골든은 각자의 --update 도구로만 (tests/test_master_tables_golden.py --update, scripts/validate_golden_input_fingerprints.py --update)
+
+6) 되돌리는 순서
+   a. kr0003_lotte_csm_blank/c02_apply_csm.py --revert --apply   (CSM_waterfall.json · user_csm_cells.json; 적재 직후 해시가 그대로일 때만 동작 — c06 이후 해시는 매니페스트에 갱신돼 있다)
+   b. e25_apply.py --revert --apply 는 이제 ABORT 한다: 적재 직후 해시 조건이 깨졌다(tests/test_rule_coverage_manifest.py 에 작업 5 시험이 더해졌다). 안전한 방법 = backup_before_apply/ 의 사본을 같은 상대 경로로 복사:
+      PL_breakdown.json · PL_breakdown_provenance.json · data/_gold/user_pl_cells.json (티켓 1~4 적재분)
+   c. 코드·시험·fixture 는 같은 방법으로 복사: scripts/build_root_masters.py · tests/test_gold_overlay_survives_rebuild.py · tests/test_rule_coverage_manifest.py · tests/fixtures/master_tables_golden.json · tests/fixtures/builder_input_fingerprints.json
+   백업: backup_before_apply/ (적재 직전 30개 파일, SHA256_preload.txt 로 사본 == 원본 확인; 이후 git checkout 으로 되돌리지 말 것 — 작업트리에 다른 미커밋 변경이 있을 수 있다).

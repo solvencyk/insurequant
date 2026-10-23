@@ -1,0 +1,14 @@
+== A KB라이프
+   EXCEPTION RuntimeError data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L38660: cell not found in its TR ([38652, 38653, 38654, 38655, 38656, 38657, 38658, 38662, 38663, 38664, 38665, 38666, 38667, 38668])
+== B 농협생명
+   EXCEPTION RuntimeError data/dart/FY2025_Q1/raw/KR0104_농협생명보험/20250515001350.xml L4213: cell not found in its TR ([4195, 4199, 4203, 4207, 4211])
+== C ABL
+   EXCEPTION RuntimeError data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L41494: cell not found in its TR ([41490, 41491, 41492, 41496, 41497, 41498])
+== D KB손보
+  KB손보: raw statement series 284,474 / 380,949 / 91,927 / 190,741 / 283,832 / 388,289 re-read; live hand-loaded 60,900 / 33,300 are neither (PDF 요약 PL 기타사업비용 row, different concept)
+== E plan vs live
+
+checks passed: 83  problems: 3  mutation: line
+  PROBLEM: A KB라이프: EXCEPTION RuntimeError: data/dart/FY2024_Q1/raw/KR0099_케이비라이프생명보험/xml/20240516001445.xml L38660: cell not found in its TR ([38652, 38653, 38654, 38655, 38656, 38657, 38658, 38662, 38663, 38664, 38665, 38666, 38667, 38668])
+  PROBLEM: B 농협생명: EXCEPTION RuntimeError: data/dart/FY2025_Q1/raw/KR0104_농협생명보험/20250515001350.xml L4213: cell not found in its TR ([4195, 4199, 4203, 4207, 4211])
+  PROBLEM: C ABL: EXCEPTION RuntimeError: data/dart/FY2024_Q1/raw/KR0070_에이비엘생명보험/20240516002045.xml L41494: cell not found in its TR ([41490, 41491, 41492, 41496, 41497, 41498])

@@ -1,0 +1,5 @@
+baseline (unmutated builder)                            -> PASS (test did not fail)
+M1 builder ignores null_dangi (empty set)               -> FAIL as expected: AssertionError: 등재가 움직이는 칸 [] != 선언 [('KR0003', '2023.4Q', 3), ('KR0003', '2023.4Q', 4), ('KR0003', '2023.4Q', 5)]
+M2 builder reads the wrong item (item 2 instead)        -> FAIL as expected: AssertionError: 등재가 움직이는 칸 [] != 선언 [('KR0003', '2023.4Q', 3), ('KR0003', '2023.4Q', 4), ('KR0003', '2023.4Q', 5)]
+M3 builder silently ignores set_dangi                   -> FAIL as expected: Failed: DID NOT RAISE <class 'ValueError'>
+RESULT: OK (baseline passes, all mutations detected)

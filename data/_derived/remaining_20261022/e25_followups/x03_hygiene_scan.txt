@@ -1,0 +1,2 @@
+scanned 207 files; problems 1
+  docs\todo_archive_parser_ifrs17.md: U+FFFD

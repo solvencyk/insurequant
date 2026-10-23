@@ -266,10 +266,39 @@ def _apply_csm_overrides(rows):
     return rows
 
 
+def _csm_null_dangi_keys(path):
+    """(코드, 분기, 항목번호) 집합 — CSM gold 파일(CSM_OVR)의 `null_dangi.cells` = [코드, 분기, 항목번호]. PL 의 `_pl_null_dangi_keys` 와 같은 장치다:
+    이 칸은 값(연누계)을 그대로 두고 값_당분기만 None 으로 만든다. 두 누계가 서로 다른 공시 판(예: 최신 비교열로 옮긴 연간 + 옛 판 그대로인 3분기)이라
+    차분이 틀린 값이 되는 단일분기용이다 — 빈 칸이 틀린 값보다 낫다(owner 2026-10-22). 파일이나 키가 없으면 빈 집합(구 동작 그대로).
+    파싱 오류·형식 오류·중복은 삼키지 않는다(조용히 풀리면 틀린 값이 되살아난다). CSM 에는 PL 의 `set_dangi`(공시 3개월 인쇄값 고정)에 해당하는 장치가 없다:
+    같은 파일에 `set_dangi.cells` 가 하나라도 있으면 읽는 쪽이 없어 조용히 무시되므로 거부한다(같은 칸이 null_dangi 와 set_dangi 에 겹치는 경우를 포함한다)."""
+    if not path.exists():
+        return set()
+    doc = json.loads(path.read_text(encoding="utf-8"))
+    keys = set()
+    for c in (doc.get("null_dangi") or {}).get("cells", []):
+        if not (isinstance(c, (list, tuple)) and len(c) == 3):
+            raise ValueError(f"CSM null_dangi 칸 형식이 [코드, 분기, 항목번호] 가 아니다: {c!r}")
+        k = (c[0], c[1], int(c[2]))
+        if k in keys:
+            raise ValueError(f"CSM null_dangi 에 같은 칸이 두 번 있다: {k}")
+        keys.add(k)
+    sd = (doc.get("set_dangi") or {}).get("cells", [])
+    if sd:
+        both = sorted(keys & {(c[0], c[1], int(c[2])) for c in sd})
+        raise ValueError(f"CSM gold 의 set_dangi 는 구현돼 있지 않아 거부한다 (null_dangi 와 겹치는 칸: {both[:3]})")
+    return keys
+
+
 def build_csm():
     rows = json.loads(CSM_SRC.read_text(encoding="utf-8"))
     rows = _additive_merge(rows, CSM_OUT)
     rows = _apply_csm_overrides(rows)
+    null_dangi = _csm_null_dangi_keys(CSM_OVR)
+    print(f"  csm 값_당분기 의도적 null (누계 유지): {len(null_dangi)} cells")
+    stale = sorted(null_dangi - {(r["원보험사코드"], r["공시분기"], r["항목번호"]) for r in rows})
+    if stale:
+        raise ValueError(f"CSM null_dangi 에 마스터에 없는 칸이 있다: {stale[:3]}")
     # Unit-error guard: drop a (company, quarter) whose ANY stage exceeds the absolute cap
     # (e.g. AIG손해 2025.4Q is ~1000× — a filing-unit misread).  Null its stages, don't ship.
     bad_cq = set()
@@ -297,6 +326,8 @@ def build_csm():
             dangi = v if p is None else ytd[(code, CSM_CLOSE)].get(p)
         else:                                         # 유량: 신계약/이자/조정/상각
             dangi = _flow_dangi(ytd[(code, item)], q)
+        if (code, q, item) in null_dangi:
+            dangi = None                              # 두 누계의 공시 판이 달라 차분이 틀린 단일분기 — 값(누계)은 유지
         nr = {k: r[k] for k in r if k != "값_당분기"}
         nr["항목명"] = CSM_ITEM_NM.get(item, r.get("항목명"))   # canonical name (drop "등")
         nr["값"] = v

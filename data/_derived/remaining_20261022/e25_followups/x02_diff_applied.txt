@@ -1,0 +1,103 @@
+PASS  PL_breakdown.json: same 13801 rows in the same order
+PASS  PL_breakdown.json: no field other than 값 / 값_당분기 changed (0 found)
+PASS  PL_breakdown.json: 값 changed on exactly the 32 planned cells (found 32; extra [] missing [])
+PASS  PL_breakdown.json: every 값_당분기 change is explained by the same cell or the previous quarter's cumulative (34 changes; unexplained [])
+  changed cells per company: {'KR0010': 2, 'KR0070': 20, 'KR0099': 6, 'KR0104': 12}
+PASS  PL_breakdown.json: every changed 값_당분기 equals cumulative - previous cumulative of the NEW master ([])
+  --- 값 changes (old -> new):
+     KR0010 2024.4Q item 16: 60900.0 -> None
+     KR0010 2025.2Q item 16: 33300.0 -> None
+     KR0070 2023.1Q item  5: 272.0 -> 3593.0
+     KR0070 2023.1Q item  6: None -> -7470.0
+     KR0070 2023.1Q item  7: -1767.0 -> -1328.36347
+     KR0070 2023.1Q item  9: None -> -2313.0
+     KR0070 2023.1Q item 10: None -> -146.0
+     KR0070 2023.2Q item  5: 6649.0 -> 7449.0
+     KR0070 2023.2Q item  6: None -> -13186.0
+     KR0070 2023.2Q item  7: None -> 4357.757784
+     KR0070 2023.2Q item  9: None -> -4652.0
+     KR0070 2023.2Q item 10: None -> -345.0
+     KR0070 2023.3Q item  5: 11071.0 -> 11921.0
+     KR0070 2023.3Q item  6: None -> -18428.0
+     KR0070 2023.3Q item  7: None -> 2806.991086
+     KR0070 2023.3Q item  9: -9586.0 -> -7155.0
+     KR0070 2023.3Q item 10: -474.0 -> -533.0
+     KR0070 2023.4Q item  5: 16395.0 -> 16883.0
+     KR0070 2023.4Q item  6: None -> -19665.0
+     KR0070 2023.4Q item  7: None -> -17121.787088
+     KR0070 2023.4Q item 10: -728.0 -> -733.0
+     KR0099 2023.1Q item  9: -1131.0 -> -1130.0
+     KR0099 2023.1Q item 11: -614.0 -> -618.0
+     KR0099 2023.1Q item 12: -319.0 -> -316.0
+     KR0104 2024.1Q item 17: 2519.581216 -> 2516.671864
+     KR0104 2024.1Q item 18: 364057.818968 -> 364054.909616
+     KR0104 2024.1Q item 20: 139105.559144 -> 139102.649792
+     KR0104 2024.1Q item 21: -40251.964123 -> -40249.054771
+     KR0104 2024.2Q item 17: 12890.882481 -> 12887.973129
+     KR0104 2024.2Q item 18: 754228.642375 -> 754225.733023
+     KR0104 2024.2Q item 20: 294419.236741 -> 294416.327389
+     KR0104 2024.2Q item 21: -80313.224299 -> -80310.314947
+  --- 값_당분기 changes (old -> new), only where 값 did not change itself:
+     KR0070 2023.4Q item  9: -3.0 -> -2434.0
+     KR0099 2023.2Q item  9: -1117.0 -> -1118.0
+     KR0099 2023.2Q item 11: -31.0 -> -27.0
+     KR0099 2023.2Q item 12: 766.0 -> 763.0
+     KR0104 2024.3Q item 17: 16005.167581 -> 16008.076933
+     KR0104 2024.3Q item 18: 381764.393724 -> 381767.303076
+     KR0104 2024.3Q item 20: 151144.22818 -> 151147.137532
+     KR0104 2024.3Q item 21: -42670.666417 -> -42673.575769
+PASS  user_pl_cells.json: same top-level keys
+PASS  user_pl_cells.json: '_doc' identical
+PASS  user_pl_cells.json: 'null_dangi' identical
+PASS  user_pl_cells.json: 'set_dangi' identical
+PASS  user_pl_cells.json: set 1379 -> 1408 (+29)
+PASS  user_pl_cells.json: the new entries are appended in plan order
+PASS  user_pl_cells.json: every old entry unchanged except the planned in-place replacement(s)
+PASS  user_pl_cells.json: 29 new entries carry the planned 값 / was / note
+PASS  provenance: exactly one new top-level key ['merge_note_20261024_e25_followups']
+PASS  provenance: all old top-level keys unchanged
+PASS  provenance: same 1046 blocks in the same order (no insertion)
+PASS  provenance: changed blocks belong to the planned companies only (['KR0010', 'KR0070', 'KR0099', 'KR0104'])
+  provenance blocks changed: 13
+     ('KR0010', '2024.4Q', 'income_statement'): published_items 24 -> 23 | source_file data/dart/_fs_api_cache/00120216_2024_11011_OFS.json -> data/dart/_fs_api_cache/00120216_2024_11011_OFS.json | owner_override None -> None
+         disclosure_summary_pl  data/disclosure/FY2024_Q4/raw/KR0010_KB손해보험.pdf: [16] -> None
+     ('KR0010', '2025.2Q', 'income_statement'): published_items 24 -> 23 | source_file data/dart/_fs_api_cache/00120216_2025_11012_OFS.json -> data/dart/_fs_api_cache/00120216_2025_11012_OFS.json | owner_override None -> None
+         disclosure_summary_pl  data/disclosure/FY2025_Q2/raw/KR0010_KB손해보험.pdf: [16] -> None
+     ('KR0070', '2023.1Q', 'contract_notes'): published_items 4 -> 7 | source_file data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험 -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [4] -> [4, 5, 6, 9, 10]
+         raw_filing             data/dart/FY2023_Q1/raw/KR0070_에이비엘생명보험: [5] -> None
+     ('KR0070', '2023.2Q', 'contract_notes'): published_items 4 -> 7 | source_file data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험 -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [4] -> [4, 5, 6, 9, 10]
+         raw_filing             data/dart/FY2023_Q2/raw/KR0070_에이비엘생명보험: [5] -> None
+     ('KR0070', '2023.2Q', 'income_statement'): published_items 21 -> 22 | source_file data/_gold/user_pl_cells.json -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [1, 2, 3, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32] -> [1, 2, 3, 7, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]
+     ('KR0070', '2023.3Q', 'contract_notes'): published_items 6 -> 7 | source_file data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험 -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [4] -> [4, 5, 6, 9, 10]
+         raw_filing             data/dart/FY2023_Q3/raw/KR0070_에이비엘생명보험: [5, 9, 10] -> None
+     ('KR0070', '2023.3Q', 'income_statement'): published_items 21 -> 22 | source_file data/_gold/user_pl_cells.json -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [1, 2, 3, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32] -> [1, 2, 3, 7, 8, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 30, 31, 32]
+     ('KR0070', '2023.4Q', 'contract_notes'): published_items 6 -> 7 | source_file data/dart/FY2023_Q4/raw/KR0070_에이비엘생명보험_20240329001518 -> data/_gold/user_pl_cells.json | owner_override None -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: None -> [5, 6, 10]
+         raw_filing             art/FY2023_Q4/raw/KR0070_에이비엘생명보험_20240329001518: [4, 5, 9, 10] -> [4, 9]
+     ('KR0070', '2023.4Q', 'income_statement'): published_items 21 -> 22 | source_file data/_gold/user_pl_cells.json -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [2, 3, 16, 17, 19, 20, 22, 23, 24, 25, 27] -> [2, 3, 7, 16, 17, 19, 20, 22, 23, 24, 25, 27]
+     ('KR0099', '2023.1Q', 'contract_notes'): published_items 8 -> 8 | source_file data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험 -> data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험 | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [4] -> [4, 9, 11]
+         raw_filing             data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험: [5, 6, 9, 10, 11] -> [5, 6, 10]
+     ('KR0099', '2023.1Q', 'income_statement'): published_items 24 -> 24 | source_file data/_gold/user_pl_cells.json -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [1, 2, 3, 7, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32] -> [1, 2, 3, 7, 12, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+         raw_filing_derived     data/dart/FY2023_Q1/raw/KR0099_케이비라이프생명보험: [8, 12] -> [8]
+     ('KR0104', '2024.1Q', 'income_statement'): published_items 24 -> 24 | source_file data/dart/_fs_api_cache/00909349_2024_11013_OFS.json -> data/dart/_fs_api_cache/00909349_2024_11013_OFS.json | owner_override None -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: None -> [17, 18, 20, 21]
+         raw_filing             data/dart/FY2024_Q1/raw/KR0104_농협생명보험: [2, 3, 7, 8, 12, 16, 18] -> [2, 3, 7, 8, 12, 16]
+         fs_api_tier1           /dart/_fs_api_cache/00909349_2024_11013_OFS.json: [1, 15, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32] -> [1, 15, 19, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+     ('KR0104', '2024.2Q', 'income_statement'): published_items 24 -> 24 | source_file data/dart/_fs_api_cache/00909349_2024_11012_OFS.json -> data/dart/_fs_api_cache/00909349_2024_11012_OFS.json | owner_override None -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: None -> [17, 18, 20, 21]
+         raw_filing_derived     data/dart/FY2024_Q2/raw/KR0104_농협생명보험: [2, 3, 7, 8, 12, 18] -> [2, 3, 7, 8, 12]
+         fs_api_tier1           /dart/_fs_api_cache/00909349_2024_11012_OFS.json: [1, 15, 16, 17, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32] -> [1, 15, 16, 19, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+PASS  test file: 3 changed lines, only the census declaration + comment
+     -GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1379, 22)}
+     +# 2026-10-24 tickets 20261023T1130Z / 20261023T1210Z / 20261023T0600Z / 20261024T0100Z (parser/ifrs17 follow-ups: KB라이프 2023.1Q items 9/11/12, ABL FY2023 items 5/6/7/9/10, 농협생명 2024.1Q/2Q items 17/18/20/21 refreshed to the latest comparative; 1 PL owner-gold 
+     +GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1408, 22)}
+
+RESULT: ALL PASS

@@ -1,0 +1,79 @@
+# -*- coding: utf-8 -*-
+"""Copy every file this batch may change (tasks 1-5) into backup_before_apply/<repo-relative path> BEFORE the first write and prove the copies are byte-identical (sha256 of source == sha256 of copy
+== sha256 recorded in git HEAD where the file is tracked and unmodified).  Writes backup_before_apply/SHA256_preload.txt.  Idempotent only while nothing was written yet: refuses to overwrite an
+existing backup with different bytes (a second run after the apply would otherwise destroy the pre-apply copy)."""
+import hashlib
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+sys.stdout.reconfigure(encoding="utf-8")
+ROOT = Path("C:/Users/sangwook.cho/Desktop/insurequant")
+BK = ROOT / "data/_derived/remaining_20261022/e25_followups/backup_before_apply"
+FILES = """PL_breakdown.json
+PL_breakdown_provenance.json
+CSM_waterfall.json
+CSM_waterfall_provenance.json
+data/_gold/user_pl_cells.json
+data/_gold/user_csm_cells.json
+data/_gold/gold_overlay_ledger.json
+data/_gold/pl_bridge_baseline.json
+scripts/build_root_masters.py
+tests/test_rule_coverage_manifest.py
+tests/test_gold_overlay_survives_rebuild.py
+tests/fixtures/master_tables_golden.json
+tests/fixtures/builder_input_fingerprints.json
+tests/fixtures/pl_breakdown_golden.json
+data/_derived/qoq_warn.json
+data/_derived/pl_oci_vs_bs_aoci_warn.json
+data/_derived/pl_breakdown_coverage.json
+data/dart/viz/csm_waterfall.json
+data/dart/viz/csm_amort_schedule.json
+data/dart/viz/insurance_pl_breakdown.json
+data/dart/viz/bs_snapshot.json
+data/dart/viz/sensitivity_heatmap.json
+data/dart/viz/pl_breakdown_master.json
+TODO_parser_ifrs17.md
+docs/changelog_parser_ifrs17.md
+inbox/parser/20261023T1130Z__validation__KR0099__2023.1Q__kblife_reinsurance_subitems_9_11_12_stale.md
+inbox/parser/20261023T1210Z__validation__KR0070__2023.1Q-2023.4Q__abl_items_5_9_10_old_vintage_and_wrong_leg.md
+inbox/parser/20261023T0600Z__validation__KR0104__2024.1Q-2024.3Q__nh_life_17_20_21_vintage_gap.md
+inbox/parser/20261024T0100Z__orchestrator__KR0010__2024.4Q-2025.4Q__kbsonbo_item16_cumulative_impossible.md
+inbox/parser/20261023T1215Z__validation__KR0099-KR0003__2023.4Q__single_quarter_vintage_seam_not_blanked.md""".split("\n")
+
+
+def sha(p: Path) -> str:
+    return hashlib.sha256(p.read_bytes()).hexdigest()
+
+
+def git_head_sha(rel: str):
+    r = subprocess.run(["git", "-C", str(ROOT), "show", f"HEAD:{rel}"], capture_output=True, stdin=subprocess.DEVNULL)
+    return hashlib.sha256(r.stdout).hexdigest() if r.returncode == 0 else None
+
+
+out, bad = [], []
+for rel in FILES:
+    src, dst = ROOT / rel, BK / rel
+    if not src.exists():
+        out.append(f"MISSING-SOURCE {rel}")
+        bad.append(rel)
+        continue
+    h = sha(src)
+    if dst.exists():
+        if sha(dst) != h:
+            out.append(f"EXISTS-DIFFERENT {rel} (backup {sha(dst)[:12]} vs source {h[:12]}): refusing to overwrite the pre-apply copy")
+            bad.append(rel)
+            continue
+    else:
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, dst)
+    h2 = sha(dst)
+    head = git_head_sha(rel)
+    out.append(f"{'OK ' if h == h2 else 'BAD'} {h2}  {'HEAD-EQUAL' if head == h else ('HEAD-DIFFERS' if head else 'UNTRACKED')}  {rel}")
+    if h != h2:
+        bad.append(rel)
+(BK / "SHA256_preload.txt").write_text("\n".join(out) + "\n", encoding="utf-8", newline="\n")
+print("\n".join(out))
+print("PROBLEMS:", bad if bad else "none")
+sys.exit(1 if bad else 0)

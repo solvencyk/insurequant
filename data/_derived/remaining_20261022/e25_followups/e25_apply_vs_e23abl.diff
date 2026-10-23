@@ -1,0 +1,142 @@
+3,4c3,5
+< """Cell-level applier (parser/ifrs17, ticket 20261023T0900Z, D3: 에이비엘생명보험 KR0070 FY2023 2023.1Q-2023.4Q at the latest comparative).  Derived from the Lotte variant (kr0003_lotte/e23_apply.py) <- e21_apply.py (audited in the READY-25 load).
+< Input = e23_plan_abl_final.json (apply_contract) produced by e23_plan.py (abl) and re-read independently by kr0070_verify.py.
+---
+> """Cell-level applier (parser/ifrs17, tickets 20261023T1130Z KB라이프 / 20261023T1210Z ABL / 20261023T0600Z 농협생명 / 20261024T0100Z KB손해보험, 2026-10-24).  Derived from the ABL applier
+> (kr0070_abl/e23_apply.py <- Lotte variant <- e21_apply.py, audited in the READY-25 / D1-D3 loads); see make_apply_e25.py for the exact substitutions.
+> Input = e25_plan.json (apply_contract) produced by p01_build_plan.py and re-read independently by x01_verify_e25.py.
+6,7c7,8
+< Writes (only these, each guarded + backed up to the session scratchpad; the git HEAD copies are the second backup):
+<   data/_gold/user_pl_cells.json            replaced set entries (값/was/note), +new set entries, +/- null_dangi, +/- set_dangi cells
+---
+> Writes (only these, each guarded + backed up under backup_before_apply/; the git HEAD copies are the second backup):
+>   data/_gold/user_pl_cells.json            +new set entries, 1 replaced set entry (ABL 2023.1Q item 7)
+9,14c10,13
+<   PL_breakdown_provenance.json             blocks whose emitter output changes / appears (sandbox copy of scripts/emit_pl_provenance.py; never imported) + one merge note key
+<   data/_gold/user_csm_cells.json           replaced + new CSM gold entries
+<   CSM_waterfall.json                       ONLY the cells where a REAL build_csm() run with the new gold differs from the run with the live gold (cell level)
+<   CSM_waterfall_provenance.json            owner_override flag of every (company, quarter) csm_waterfall block that now carries gold + one merge note key
+<   data/_gold/gold_overlay_ledger.json      pins of replaced / vanished masked gold cells (REMOVED, never added)
+<   tests/test_rule_coverage_manifest.py     GOLD_OVERLAY_CENSUS (PL + CSM tuples) and _TAX22_LATEST_COMPARATIVE_ONLY
+---
+>                                            + the drift_fix cells (hand-loaded live value -> the value a fresh build writes)
+>   PL_breakdown_provenance.json             blocks whose emitter output changes (sandbox copy of scripts/emit_pl_provenance.py; never imported) + one merge note key
+>   tests/test_rule_coverage_manifest.py     GOLD_OVERLAY_CENSUS (PL tuple)
+>   (gold_overlay_ledger.json only if a pinned cell vanishes: none planned)  No CSM file is written.
+17c16
+<   --check            read-only plan + post-condition checks (+ identity residuals, headline table -> e23_apply_report.txt)
+---
+>   --check            read-only plan + post-condition checks (+ identity residuals, headline table -> e25_apply_report.txt)
+20,21c19,20
+<   --verify           read-only: a fresh build from the LIVE gold == the LIVE masters; no new drift; planned cells equal
+<   --revert --apply   restore the scratchpad backups (only while the live files still carry the post-apply hashes)
+---
+>   --verify           read-only: a fresh build from the LIVE gold == the LIVE masters except the snapshot drift; planned cells equal
+>   --revert --apply   restore the backups (only while the live files still carry the post-apply hashes)
+40,42c39,41
+< EV = ROOT / "data" / "_derived" / "remaining_20261022" / "e23_d1_d3" / "kr0070_abl"
+< BACKUP = ROOT / "data" / "_derived" / "remaining_20261022" / "e23_d1_d3" / "backup_before_apply" / "kr0070_abl"
+< TMP = Path("C:/Users/sangwook.cho/AppData/Local/Temp/claude/C--Users-sangwook-cho-Desktop-insurequant/429689e1-5ae3-4467-ae2a-745748238c8b/scratchpad/e23_kr0070_tmp")
+---
+> EV = ROOT / "data" / "_derived" / "remaining_20261022" / "e25_followups"
+> BACKUP = ROOT / "data" / "_derived" / "remaining_20261022" / "e25_followups" / "backup_before_apply"
+> TMP = Path("C:/Users/sangwook.cho/AppData/Local/Temp/claude/C--Users-sangwook-cho-Desktop-insurequant/429689e1-5ae3-4467-ae2a-745748238c8b/scratchpad/e25_tmp")
+67c66
+< PLAN = json.loads((EV / "e23_plan_abl_final.json").read_text(encoding="utf-8"))
+---
+> PLAN = json.loads((EV / "e25_plan.json").read_text(encoding="utf-8"))
+74,83c73,81
+< STALE_NONE_OK = {("KR0070", 16, "2023.4Q")}
+< MERGE_NOTE_KEY = "merge_note_20261023_e23_kr0070_abl"
+< MERGE_NOTE = ("ticket 20261023T0900Z (parser/ifrs17, owner decision D3 of 2026-10-23): PL cells of 에이비엘생명보험 KR0070 FY2023 2023.1Q-2023.4Q refreshed to the latest comparative (separate basis, prior-year "
+<               "cumulative column of the FY2024 Q1/H1/Q3/annual reports rcept 20240516002045 / 20240814004092 / 20241114002738 / 20250331001358) via data/_gold/user_pl_cells.json (73 new set cells + 1 owner-gold "
+<               "cell replaced in place: 2023.1Q item 4; no single-quarter pins). Blocks that changed or appeared are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. "
+<               "Evidence data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/")
+< CSM_NOTE_KEY = "merge_note_20261023_e23_kr0070_abl_csm"
+< CSM_NOTE = ("ticket 20261023T0900Z (D3): CSM cells of 에이비엘생명보험 KR0070 FY2023 2023.1Q-2023.4Q set to the latest-filing (FY2024 quarterly/annual prior-period roll-forward, separate basis, issued-contract CSM, "
+<             "opening 7,585.3 in all four quarters) vector via data/_gold/user_csm_cells.json (18 new + 2 chain-forced owner-gold entries replaced in place: 2023.4Q items 1 and 4; owner_override flagged on these "
+<             "blocks). Evidence data/_derived/remaining_20261022/e23_d1_d3/kr0070_abl/")
+---
+> STALE_NONE_OK = set()
+> MERGE_NOTE_KEY = "merge_note_20261024_e25_followups"
+> MERGE_NOTE = ("tickets 20261023T1130Z (KB라이프 KR0099 2023.1Q items 9/11/12), 20261023T1210Z (ABL KR0070 FY2023 items 5/6/7/9/10), 20261023T0600Z (농협생명 KR0104 2024.1Q/2Q items 17/18/20/21), "
+>               "20261024T0100Z (KB손해보험 KR0010 item 16 2024.4Q/2025.2Q hand-loaded 경영공시 요약 PL values removed): PL cells refreshed to the latest comparative (separate basis, prior-period cumulative column of the "
+>               "FY2024 Q1/H1/Q3/annual reports of KB라이프 / ABL and the FY2025 Q1/H1 reports of 농협생명) via data/_gold/user_pl_cells.json (29 new set cells + 1 owner-gold cell replaced in place: ABL 2023.1Q item 7; "
+>               "no single-quarter pins, no ledger pins). Blocks that changed are the output of scripts/emit_pl_provenance.py (sandbox copy) for the post-apply masters. "
+>               "Evidence data/_derived/remaining_20261022/e25_followups/")
+> CSM_NOTE_KEY = None
+> CSM_NOTE = None
+166a165,171
+>     for e in C.get("drift_fix", []):
+>         k = (e["code"], e["item"], e["quarter"])
+>         r = cur.get(k)
+>         if r is None or not same(r.get("값"), e["live_value"]):
+>             bad.append(("drift_fix: live value != plan", k, e["live_value"], None if r is None else r.get("값")))
+>         if k in gold_by:
+>             bad.append(("drift_fix: the cell has a gold entry", k))
+339a345,346
+>     if not (C["csm_gold_new"] or C["csm_gold_replace"] or C["csm_gold_remove"]):
+>         return copy.deepcopy(live_cprov), [], []          # no CSM cell in this batch: the CSM sidecar stays byte-identical
+401c408,409
+<     comment = ("# 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 에이비엘생명보험 KR0070 FY2023 2023.1Q-2023.4Q refreshed to the latest comparative; 1 PL owner-gold cell replaced in place, 2 CSM chain-forced owner-gold cells removed because the approved value equals the builder source): "
+---
+>     comment = ("# 2026-10-24 tickets 20261023T1130Z / 20261023T1210Z / 20261023T0600Z / 20261024T0100Z (parser/ifrs17 follow-ups: KB라이프 2023.1Q items 9/11/12, ABL FY2023 items 5/6/7/9/10, 농협생명 2024.1Q/2Q items 17/18/20/21 refreshed to the latest comparative; "
+>                "1 PL owner-gold cell replaced in place (ABL 2023.1Q item 7); KB손해보험 item 16 hand-loaded values removed): "
+406,425c414
+<         # buckets that pass the tax identity only through the latest-comparative branch changed -> regenerate the set literal and its comments
+<         a = s.index("_TAX22_LATEST_COMPARATIVE_ONLY = set(_TAX22_KYOBO_RESTATED) | {")
+<         b = s.index("\n\n\ndef _tax22_set_tax")
+<         by = {}
+<         for co, q in sorted(tax_off_new - set(kyobo)):
+<             by.setdefault(co, []).append(q)
+<         pieces = [("(\"%s\", \"%s\")" % (co, qs[0])) if len(qs) == 1 else ("(\"%s\", q) for q in (%s)" % (co, ", ".join('"%s"' % q for q in sorted(qs)))) for co, qs in sorted(by.items())]
+<         nl_ = chr(10)
+<         body = "_TAX22_LATEST_COMPARATIVE_ONLY = set(_TAX22_KYOBO_RESTATED) | {" + nl_ + "    " + ("} | {" + nl_ + "    ").join(pieces) + "}"
+<         s = s[:a] + body + s[b:]
+<         n_new = len(tax_off_new)
+<         old_c = re.search(r"^# 2026-10-23 ticket 20261023T0900Z: 롯데손해보험 2023.4Q .*\n", s, re.M)
+<         if old_c is None:
+<             raise SystemExit("ABORT: the TAX22 comment of the Lotte load (ticket 20261023T0900Z) was not found")
+<         s = s[:old_c.end()] + "# 2026-10-23 ticket 20261023T0900Z: 에이비엘생명보험 FY2023 2023.1Q-2023.4Q 최신 비교열 적재(D3)로 최신 비교열 판 버킷이 늘었다 -> 총 %d칸(실측).\n" % n_new + s[old_c.end():]
+<         pat = re.compile(r"(    # \(a\) 분기를 빼면 최신 비교열로만 통과하는 )\d+(칸\(교보 4 \+ 다른 )\d+(사 )\d+(\)이 RED 로 돌아온다 = 이 분기가 실제로 읽힌다)")
+<         if not pat.search(s):
+<             raise SystemExit("ABORT: the TAX22 (a) comment was not found")
+<         n_co = len({co for co, _q in tax_off_new} - {"교보생명보험"})
+<         s = pat.sub(lambda mm: f"{mm.group(1)}{n_new}{mm.group(2)}{n_co}{mm.group(3)}{n_new - len(kyobo)}{mm.group(4)}", s)
+---
+>         raise SystemExit("ABORT: the TAX22 latest-comparative-only bucket set moved in this batch (not expected: items 22/23/24 are untouched); regenerate _TAX22_LATEST_COMPARATIVE_ONLY by hand")
+436a426,427
+>     ("3-(4+5+6+7)", lambda v: _d(v, 3, (4, 5, 6, 7))),
+>     ("8-(9+10+11+12)", lambda v: _d(v, 8, (9, 10, 11, 12))),
+501a493,506
+>     # drift_fix: hand-loaded live cells (not gold) -> the value a fresh build writes; guarded against the fresh build itself
+>     fix_keys = {(e["code"], e["item"], e["quarter"]): e for e in C.get("drift_fix", [])}
+>     base_by_fix = {rkey(r): r for r in base_rows}
+>     for k, e in fix_keys.items():
+>         if k in {(x["code"], x["item"], x["quarter"]) for x in C["gold_new"] + C["gold_replace"]}:
+>             errs.append(f"drift_fix {k} is also a planned gold cell")
+>         if not same(base_by_fix[k]["값"], e["fresh_value"]):
+>             errs.append(f"drift_fix {k}: fresh build value {base_by_fix[k]['값']} != plan {e['fresh_value']}")
+>         if base_by_fix[k].get("값_당분기") != next(r for r in live["PL"].obj if rkey(r) == k).get("값_당분기"):
+>             errs.append(f"drift_fix {k}: fresh 값_당분기 != live 값_당분기")
+>         if k in delta:
+>             errs.append(f"drift_fix {k} is inside the gold delta")
+>     if fix_keys:
+>         new_rows = [dict(r, **{"값": base_by_fix[rkey(r)]["값"], "값_당분기": base_by_fix[rkey(r)].get("값_당분기")}) if rkey(r) in fix_keys else r for r in new_rows]
+690,691c695
+<             F["PROV"]: ak.JsonFile._dump(P["new_prov"], *L["PROV"].fmt), F["CGOLD"]: ak.JsonFile._dump(P["new_cgold"], *L["CGOLD"].fmt),
+<             F["CSM"]: ak.JsonFile._dump(P["new_csm"], *L["CSM"].fmt), F["CPROV"]: ak.JsonFile._dump(P["new_cprov"], *L["CPROV"].fmt), TEST_REL: P["new_test"]}
+---
+>             F["PROV"]: ak.JsonFile._dump(P["new_prov"], *L["PROV"].fmt), TEST_REL: P["new_test"]}
+731a736,738
+>     fixk = [(e["code"], e["item"], e["quarter"]) for e in C.get("drift_fix", [])]
+>     ok1b = ok1b and all(by[k]["값"] == bs[k]["값"] and by[k]["값_당분기"] == bs[k]["값_당분기"] for k in fixk)
+>     print(f"verify PL: drift-fix cells {fixk} equal a fresh build -> {'OK' if all(by[k]['값'] == bs[k]['값'] for k in fixk) else 'FAIL'}")
+773c780
+<     manifest_path = EV / "apply_manifest_e23_abl.json"
+---
+>     manifest_path = EV / "apply_manifest_e25.json"
+792c799
+<     (EV / "e23_apply_report.txt").write_text(txt + "\n", encoding="utf-8", newline="\n")
+---
+>     (EV / "e25_apply_report.txt").write_text(txt + "\n", encoding="utf-8", newline="\n")
