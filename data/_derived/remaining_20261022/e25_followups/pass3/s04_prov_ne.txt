@@ -1,0 +1,35 @@
+  pl 의도적 null (0-fill 억제): 50 cells — 폴백을 끈다
+  pl 기타사업비(item16)->null: 37 cells (보험손익 closes without -16, was silently 0)
+  pl overrides: 1487 set
+  pl 값_당분기 의도적 null (누계 유지): 123 cells
+  pl 값_당분기 공시 3개월 인쇄값 고정 (누계 유지): 40 cells
+  pl 의도적 null (0-fill 억제): 50 cells — 폴백을 끈다
+  pl 기타사업비(item16)->null: 37 cells (보험손익 closes without -16, was silently 0)
+  pl overrides: 1523 set
+  pl 값_당분기 의도적 null (누계 유지): 124 cells
+  pl 값_당분기 공시 3개월 인쇄값 고정 (누계 유지): 40 cells
+  csm overrides: 417 set, 0 added, 2 companies excluded
+  csm 값_당분기 의도적 null (누계 유지): 3 cells
+  csm overrides: 417 set, 0 added, 2 companies excluded
+  csm 값_당분기 의도적 null (누계 유지): 3 cells
+targets: [('KR0032', '2023.1Q', 'income_statement'), ('KR0032', '2023.2Q', 'income_statement'), ('KR0070', '2025.3Q', 'contract_notes'), ('KR0070', '2025.3Q', 'income_statement'), ('KR0070', '2025.4Q', 'contract_notes'), ('KR0070', '2025.4Q', 'income_statement'), ('KR0070', '2026.1Q', 'contract_notes'), ('KR0070', '2026.1Q', 'income_statement'), ('KR0070', '2026.2Q', 'contract_notes'), ('KR0070', '2026.2Q', 'income_statement'), ('KR0087', '2024.2Q', 'contract_notes'), ('KR0087', '2024.2Q', 'income_statement')]
+live sidecar != emitter(live) on: [('KR0032', '2023.2Q', 'income_statement')]
+BLOCK ('KR0032', '2023.2Q', 'income_statement')
+  field owner_override
+    live: null
+    new : true
+  field published_items
+    live: 7
+    new : 15
+  field resolution
+    live: "raw_filing_derived"
+    new : "owner_gold_overlay"
+  field source_file
+    live: "data/dart/FY2023_Q2/raw/KR0032_NH농협손해보험"
+    new : "data/_gold/user_pl_cells.json"
+  field source_files
+    live: [{"file": "data/dart/FY2023_Q2/raw/KR0032_NH농협손해보험", "how": "raw_filing_derived", "items": [2, 3, 8]}, {"file": "data/disclosure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf", "how": "disclosure_summary_pl", "items": [16, 22, 23, 24]}]
+    new : [{"file": "data/_gold/user_pl_cells.json", "how": "owner_gold_overlay", "items": [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]}, {"file": "data/dart/FY2023_Q2/raw/KR0032_NH농협손해보험", "how": "raw_filing_derived", "items": [2, 3, 8, 16]}]
+  field source_id
+    live: "DART"
+    new : "OWNER_GOLD"

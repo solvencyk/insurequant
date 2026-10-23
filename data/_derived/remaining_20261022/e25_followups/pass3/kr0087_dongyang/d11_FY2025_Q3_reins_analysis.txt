@@ -1,0 +1,4 @@
+##### KR0087 FY2025_Q3 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml separate notes start L38841; 49 tables mentioning 재보험
+--- table@L63779-63797 unit=백만원 rows=2
+   R 63788 재보험비용 분석 공시@63789
+   R 63792 당분기@63793 | (단위 : 백만원)@63794

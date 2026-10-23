@@ -1,0 +1,48 @@
+top keys HEAD ['_doc', 'set', 'null_dangi', 'set_dangi'] WT ['_doc', 'set', 'null_dangi', 'set_dangi']
+set sample {'원보험사코드': 'KR0009', '항목번호': 11, '공시분기': '2023.4Q', '값': -15460.571360999998, 'was': None, 'note': 'owner xlsx fill (review-loop 2026-06-19/20)', 'estimate': True}
+set sizes 1487 1523 unique 1487 1523
+new 36 gone 0 changed 1
+ CHG ('KR0070', '7', '2025.3Q') -11985.492374000001 -> -10430.492374
+ NEW KR0032 20 2023.1Q 109496.350509 was 109496.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 21 2023.1Q -5871.58859 was -5871.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 22 2023.1Q 103624.761919 was 103625.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 22 2023.2Q 179898.855707 was 179900.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 23 2023.1Q 24679.473634 was 24680.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 23 2023.2Q 38631.2877 was 38600.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 24 2023.1Q 78945.288285 was 78945.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 24 2023.2Q 141267.568007 was 141300.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 25 2023.2Q 20012.596881 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 26 2023.2Q 48991.210301 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 27 2023.2Q -9328.698015 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 28 2023.2Q -26936.188637 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 29 2023.2Q 2405.373888 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 30 2023.2Q 4898.771236 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 31 2023.2Q 161280.164888 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0032 32 2023.2Q -17.871892 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 10 2025.3Q -1467.0 was -1462.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 10 2025.4Q -1691.0 was -1685.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 10 2026.1Q -292.0 was -287.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 10 2026.2Q -194.0 was -185.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 12 2025.3Q 847.77936 was 842.77936 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 12 2025.4Q 124987.482848 was 124981.482848 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 12 2026.1Q 605.490028 was 600.490028 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 12 2026.2Q 29527.618818 was 29519.618818 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 5 2025.3Q 7271.0 was 8826.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 5 2025.4Q 9587.0 was 8346.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 5 2026.1Q 2248.0 was 1953.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 5 2026.2Q 4081.0 was 3770.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 7 2025.4Q -255114.709914 was -253873.709914 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 7 2026.1Q -7665.737662 was -7370.737662 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 7 2026.2Q -99398.569943 was -99087.569943 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0070 9 2026.2Q -6875.0 was -6876.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0087 10 2024.2Q -824.0 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0087 11 2024.2Q 14273.0 was 523.0 estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0087 12 2024.2Q -6593.382027 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+ NEW KR0087 9 2024.2Q -2528.0 was None estimate None keys ['note', 'was', '값', '공시분기', '원보험사코드', '항목번호'] NOTEHAS_pin True
+null_dangi HEAD keys ['_doc', 'cells', '_doc_oci_20261022', '_doc_e19_20261022', '_doc_e20_20261022', '_doc_e21_20261023', '_doc_e23_kr0003_20261023', '_doc_e23_kr0009_20261023']
+null_dangi WT keys ['_doc', 'cells', '_doc_oci_20261022', '_doc_e19_20261022', '_doc_e20_20261022', '_doc_e21_20261023', '_doc_e23_kr0003_20261023', '_doc_e23_kr0009_20261023', '_doc_p3_20261024']
+ND cells type list HEAD len 123 WT len 124
+   added ['["KR0087", "2024.2Q", 11]', '["KR0087", "2024.3Q", 11]']
+   removed ['["KR0070", "2025.3Q", 5]']
+ND _doc_p3_20261024 type str HEAD len None WT len 981
+set_dangi equal True

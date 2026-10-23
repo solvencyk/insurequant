@@ -1,0 +1,53 @@
+##### 2023.1Q data/dart/FY2024_Q1/raw/KR0032_NH농협손해보험/20240514001436.xml table L6536 numeric cols 4
+   printed identities (cum, 백만원 resid): 22-23-24=-0.000000; 20+21-22=0.000000; 24+25-31=0.000000; 25-leaves=-0.000000
+   item20 cum printed  109496.350509 master 109496.350509  OK | 3M printed  109496.350509 master_single 109496.350509  OK
+   item21 cum printed   -5871.588590 master -5871.58859  OK | 3M printed   -5871.588590 master_single -5871.58859  OK
+   item22 cum printed  103624.761919 master 103624.761919  OK | 3M printed  103624.761919 master_single 103624.761919  OK
+   item23 cum printed   24679.473634 master 24679.473634  OK | 3M printed   24679.473634 master_single 24679.473634  OK
+   item24 cum printed   78945.288285 master 78945.288285  OK | 3M printed   78945.288285 master_single 78945.288285  OK
+   item25 cum printed     946.363096 master 946.363096  OK | 3M printed     946.363096 master_single 946.363096  OK
+   item26 cum printed  107043.618556 master 107043.618556  OK | 3M printed  107043.618556 master_single 107043.618556  OK
+   item27 cum printed -134270.119529 master -134270.119529  OK | 3M printed -134270.119529 master_single -134270.119529  OK
+   item28 cum printed   13702.510768 master 13702.510768  OK | 3M printed   13702.510768 master_single 13702.510768  OK
+   item29 cum printed    2628.459715 master 2628.459715  OK | 3M printed    2628.459715 master_single 2628.459715  OK
+   item30 cum printed   11867.955382 master 11867.955382  OK | 3M printed   11867.955382 master_single 11867.955382  OK
+   item31 cum printed   79891.651381 master 79891.651381  OK | 3M printed   79891.651381 master_single 79891.651381  OK
+   item32 cum printed     -26.061796 master -26.061796  OK | 3M printed     -26.061796 master_single -26.061796  OK
+   MASTER identities: 22-23-24=-0.000000; 20+21-22=0.000000; 24+25-31=0.000000; 25-leaves=-0.000000
+
+##### 2023.2Q data/dart/FY2024_Q2/raw/KR0032_NH농협손해보험/20240814001448.xml table L6428 numeric cols 4
+   printed identities (cum, 백만원 resid): 22-23-24=0.000000; 20+21-22=0.000000; 24+25-31=0.000000; 25-leaves=0.000000
+   item20 cum printed  191809.856780 master None  DIFF | 3M printed   82313.506271 master_single None  NULL
+   item21 cum printed  -11911.001073 master None  DIFF | 3M printed   -6039.412483 master_single None  NULL
+   item22 cum printed  179898.855707 master 179898.855707  OK | 3M printed   76274.093788 master_single 76274.093788  OK
+   item23 cum printed   38631.287700 master 38631.2877  OK | 3M printed   13951.814066 master_single 13951.814066  OK
+   item24 cum printed  141267.568007 master 141267.568007  OK | 3M printed   62322.279722 master_single 62322.279722  OK
+   item25 cum printed   20012.596881 master 20012.596881  OK | 3M printed   19066.233785 master_single 19066.233785  OK
+   item26 cum printed   48991.210301 master 48991.210301  OK | 3M printed  -58052.408255 master_single -58052.408255  OK
+   item27 cum printed   -9328.698015 master -9328.698015  OK | 3M printed  124941.421514 master_single 124941.421514  OK
+   item28 cum printed  -26936.188637 master -26936.188637  OK | 3M printed  -40638.699405 master_single -40638.699405  OK
+   item29 cum printed    2405.373888 master 2405.373888  OK | 3M printed    -223.085827 master_single -223.085827  OK
+   item30 cum printed    4898.771236 master 4898.771236  OK | 3M printed   -6969.184146 master_single -6969.184146  OK
+   item31 cum printed  161280.164888 master 161280.164888  OK | 3M printed   81388.513507 master_single 81388.513507  OK
+   item32 cum printed     -17.871892 master -17.871892  OK | 3M printed       8.189904 master_single 8.189904  OK
+   MASTER has blanks: ['20', '21']
+
+##### 2023.3Q data/dart/FY2024_Q3/raw/KR0032_NH농협손해보험/20241114001354.xml table L6433 numeric cols 4
+   printed identities (cum, 백만원 resid): 22-23-24=-0.000000; 20+21-22=0.000000; 24+25-31=0.000000; 25-leaves=-0.000000
+   item20 cum printed  144651.586949 master 144651.586949  OK | 3M printed  -47158.269831 master_single None  NULL
+   item21 cum printed  -18126.412726 master -18126.412726  OK | 3M printed   -6215.411653 master_single None  NULL
+   item22 cum printed  126525.174223 master 126525.174223  OK | 3M printed  -53373.681484 master_single -53373.681484  OK
+   item23 cum printed   31486.717874 master 31486.717874  OK | 3M printed   -7144.569826 master_single -7144.569826  OK
+   item24 cum printed   95038.456349 master 95038.456349  OK | 3M printed  -46229.111658 master_single -46229.111658  OK
+   item25 cum printed   42130.996145 master 42130.996145  OK | 3M printed   22118.399264 master_single 22118.399264  OK
+   item26 cum printed  -24632.831625 master -24632.831625  OK | 3M printed  -73624.041926 master_single -73624.041926  OK
+   item27 cum printed  141581.087425 master 141581.087425  OK | 3M printed  150909.785440 master_single 150909.78544  OK
+   item28 cum printed  -61213.945292 master -61213.945292  OK | 3M printed  -34277.756655 master_single -34277.756655  OK
+   item29 cum printed    2656.281516 master 2656.281516  OK | 3M printed     250.907628 master_single 250.907628  OK
+   item30 cum printed  -16214.650478 master -16214.650478  OK | 3M printed  -21113.421714 master_single -21113.421714  OK
+   item31 cum printed  137169.452494 master 137169.452494  OK | 3M printed  -24110.712394 master_single -24110.712394  OK
+   item32 cum printed     -44.945401 master -44.945401  OK | 3M printed     -27.073509 master_single -27.073509  OK
+   MASTER identities: 22-23-24=-0.000000; 20+21-22=0.000000; 24+25-31=0.000000; 25-leaves=-0.000000
+
+##### 2023.2Q@own: statement table not found/parsed (found_tab=None, got=[])
+FAIL count (non-own): 6

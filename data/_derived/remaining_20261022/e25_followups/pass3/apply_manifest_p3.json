@@ -1,0 +1,16 @@
+{
+  "before_sha256": {
+    "data/_gold/user_pl_cells.json": "8619fc04f57e712fda8efdb1c6c5e9b70af4073ae71d86391ab7445f255156e0",
+    "PL_breakdown.json": "9ea0ea45a6b898c6a9d5fc15f2f1f18664641d9d78ed591d4eb82c4532ddd6ff",
+    "PL_breakdown_provenance.json": "b3eab3a021c051749e3f1df1c24ae777c0abc934c3af0a63a7c9a382214d1adf",
+    "tests/test_rule_coverage_manifest.py": "cd98c398b9962df64363c467cecd2095f19b0310a8cff34089795343edba7911"
+  },
+  "after_sha256": {
+    "data/_gold/user_pl_cells.json": "05b811e3fb2a0fe0c0b7f9f54972c689fbbb10469a8bef7db910295e758f27e0",
+    "PL_breakdown.json": "7cb7e0fb4c91b9ac5f58205d55733b74c56ef602bcdcbccbdb1cd8ddec15e74a",
+    "PL_breakdown_provenance.json": "3ce4700ab53476d41b9392de136880f23d677c0aeb22851928b4ea569cfc9a61",
+    "tests/test_rule_coverage_manifest.py": "0157cbb26b9102651435d78267b152a45df0446fc67498cbc4848159ec01ae61"
+  },
+  "applied_at": "2026-10-24T07:00:08",
+  "note_prov_repair": "2026-10-24: KR0032 2023.2Q income_statement lineage: disclosure_summary_pl entry re-inserted from backup_before_apply with items [16] only, raw_filing_derived items [2, 3, 8] (fix_prov_nh_2q.py); after_sha256 of the sidecar updated"
+}

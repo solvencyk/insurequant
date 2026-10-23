@@ -1,0 +1,40 @@
+동양 file C:/Users/sangwook.cho/Desktop/insurequant/data/dart/FY2025_Q2/raw\KR0087_동양생명\xml\20250814002600.xml
+counts csm=4 ra=4 exp=4 act=4
+current pair (cum): csm -878.0 ra -565.0 exp -11748.0 act -18774.0 ; prior pair: csm 2528.0 ra -824.0 exp -11797.0 act -26070.0
+OK  sanity 2025.2Q item9 = -|csm cur|                    raw=-878.0 master=-878.0
+OK  sanity 2025.2Q item10 = -|ra cur|                    raw=-565.0 master=-565.0
+OK  sanity 2025.2Q item11 = |act|-|exp| cur              raw=7026.0 master=7026.0
+OK  2024.2Q item9 = -|csm prior|                         raw=-2528.0 master=-2528.0
+OK  2024.2Q item10 = -|ra prior|                         raw=-824.0 master=-824.0
+OK  2024.2Q item11 = |act|-|exp| prior                   raw=14273.0 master=14273.0
+OK  2024.2Q item12 = 8-(9+10+11)                         raw=-6593.382027 master=-6593.382027
+NH file C:/Users/sangwook.cho/Desktop/insurequant/data/dart/FY2024_Q1/raw\KR0032_NH농협손해보험\20240514001436.xml
+2023.1Q statement table@L6536
+OK  2023.1Q item20 prior cum                             raw=109496.350509 master=109496.350509
+OK  2023.1Q item21 prior cum                             raw=-5871.588589999999 master=-5871.58859
+OK  2023.1Q item22 prior cum                             raw=103624.761919 master=103624.761919
+OK  2023.1Q item23 prior cum                             raw=24679.473634 master=24679.473634
+OK  2023.1Q item24 prior cum                             raw=78945.288285 master=78945.288285
+OK  2023.1Q item25 prior cum                             raw=946.363096 master=946.363096
+OK  2023.1Q item31 prior cum                             raw=79891.651381 master=79891.651381
+NH file C:/Users/sangwook.cho/Desktop/insurequant/data/dart/FY2024_Q2/raw\KR0032_NH농협손해보험\20240814001448.xml
+2023.2Q statement table@L6428
+OK  2023.2Q item22 prior cum                             raw=179898.855707 master=179898.855707
+OK  2023.2Q item23 prior cum                             raw=38631.2877 master=38631.2877
+OK  2023.2Q item24 prior cum                             raw=141267.568007 master=141267.568007
+OK  2023.2Q item25 prior cum                             raw=20012.596881 master=20012.596881
+OK  2023.2Q item31 prior cum                             raw=161280.164888 master=161280.164888
+OK  2023.2Q item26 prior cum                             raw=48991.210301 master=48991.210301
+OK  2023.2Q item28 prior cum                             raw=-26936.188637 master=-26936.188637
+OK  2023.2Q item27 prior cum                             raw=-9328.698015 master=-9328.698015
+OK  2023.2Q item30 prior cum                             raw=4898.771236 master=4898.771236
+OK  2023.2Q item29 prior cum                             raw=2405.373888 master=2405.373888
+OK  2023.2Q item32 prior cum (확정급여제도의 재측정요소)             raw=-17.871892 master=-17.871892
+NH file C:/Users/sangwook.cho/Desktop/insurequant/data/dart/FY2024_Q3/raw\KR0032_NH농협손해보험\20241114001354.xml
+2023.3Q statement table@L6433
+OK  2023.3Q item22 prior cum                             raw=126525.174223 master=126525.174223
+OK  2023.3Q item23 prior cum                             raw=31486.717874 master=31486.717874
+OK  2023.3Q item24 prior cum                             raw=95038.456349 master=95038.456349
+OK  2023.3Q item25 prior cum                             raw=42130.996145 master=42130.996145
+OK  2023.3Q item31 prior cum                             raw=137169.452494 master=137169.452494
+TOTAL 30 bad 0

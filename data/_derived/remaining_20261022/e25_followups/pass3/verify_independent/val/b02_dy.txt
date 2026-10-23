@@ -1,0 +1,16 @@
+==== CURRENT 2025.2Q
+ [cum] rev rows sum -23163.0 vs total 23163.0 (rows inverted: True); cost rows sum -13398.0 vs total 13398.0 (inverted: True)
+     item11 = 7026.0  (signed 7026.0); CSM printed row -878.0; RA printed row -565.0; item12(other rows rev-other minus cost-other) = 4182.0
+ [3M] rev rows sum -4165.0 vs total 4165.0 (rows inverted: True); cost rows sum -5031.0 vs total 5031.0 (inverted: True)
+     item11 = 2639.0  (signed 2639.0); CSM printed row -418.0; RA printed row -270.0; item12(other rows rev-other minus cost-other) = -2817.0
+  master 2025.2Q {'8': (9765.017303, -867.204477), '9': (-878.0, -1339.0), '10': (-565.0, -860.0), '11': (7026.0, 3665.0), '12': (4182.0, -2333.22178)}
+   candidate as-printed row (9=csm,10=ra): 9=-878.0 10=-565.0 11=7026.0 -> 12 = 8-9-10-11 = 4182.017303  vs other-rows 4182.0  diff +0.017
+   candidate -|v|: 9=-878.0 10=-565.0 11=7026.0 -> 12 = 8-9-10-11 = 4182.017303  vs other-rows 4182.0  diff +0.017
+==== PRIOR 2024.2Q
+ [cum] rev rows sum -30485.0 vs total 30485.0 (rows inverted: True); cost rows sum -26159.0 vs total 26159.0 (inverted: True)
+     item11 = 14273.0  (signed 14273.0); CSM printed row 2528.0; RA printed row -824.0; item12(other rows rev-other minus cost-other) = -11651.0
+ [3M] rev rows sum -15009.0 vs total 15009.0 (rows inverted: True); cost rows sum -14486.0 vs total 14486.0 (inverted: True)
+     item11 = 6847.0  (signed 6847.0); CSM printed row 593.0; RA printed row -399.0; item12(other rows rev-other minus cost-other) = -6518.0
+  master 2024.2Q {'8': (4327.617973, 523.140307), '9': (-2528.0, None), '10': (-824.0, None), '11': (14273.0, None), '12': (-6593.382027, None)}
+   candidate as-printed row (9=csm,10=ra): 9=2528.0 10=-824.0 11=14273.0 -> 12 = 8-9-10-11 = -11649.382027  vs other-rows -11651.0  diff +1.618
+   candidate -|v|: 9=-2528.0 10=-824.0 11=14273.0 -> 12 = 8-9-10-11 = -6593.382027  vs other-rows -11651.0  diff +5057.618

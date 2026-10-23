@@ -1,0 +1,91 @@
+##### 2025.3Q data/dart/FY2025_Q3/raw/KR0070_에이비엘생명보험/20251114002593.xml rev tables [17872, 37102] cost tables [18078, 37308]
+   dup table pair L37102,L37308 same as first: True
+   missing labels so far (treated 0): []
+   sub-checks (cum): rev rows=544520.0 printed=544520.0; rrev rows=35231.0 printed=35231.0; cost rows=498671.0 printed=498671.0; rcost rows=44582.0 printed=44582.0
+   item 4 cum: printed        61207  master 61207.0  OK
+   item 5 cum: printed         7271  master 7271.0  OK
+   item 6 cum: printed       -12199  master -12199.0  OK
+   item 9 cum: printed        -9836  master -9836.0  OK
+   item10 cum: printed        -1467  master -1467.0  OK
+   item11 cum: printed         1104  master 1104.0  OK
+   item3 master 45848.508 vs printed subtotals 45849 (diff -0.492); item8 master -9351.221 vs -9351 (diff -0.221)
+   identity 3=4+5+6+7 resid -0.000000; 8=9+10+11+12 resid +0.000000
+   item7 master -10430.492 vs other-rows -10430 diff -0.492 OK; item12 master 847.779 vs other-rows 848 diff -0.221 OK
+   item 4 single: printed3M      21127.0  master_single 21127.0  diff 0.0  OK
+   item 5 single: printed3M       2666.0  master_single 2666.0  diff 0.0  OK
+   item 6 single: printed3M      -3003.0  master_single -3001.0  diff 2.0  FAIL
+   item 9 single: printed3M      -3295.0  master_single -3295.0  diff 0.0  OK
+   item10 single: printed3M       -240.0  master_single -240.0  diff 0.0  OK
+   item11 single: printed3M        101.0  master_single 101.0  diff 0.0  OK
+   item 7 single: printed3M      -5372.0  master_single None  diff None  NULL
+   item12 single: printed3M        917.0  master_single 916.776363  diff -0.22  OK
+
+##### 2025.4Q data/dart/FY2025_Q4/raw/KR0070_에이비엘생명보험_20260331003080/20260331003080.xml rev tables [32137, 65621] cost tables [32289, 65773]
+   dup table pair L65621,L65773 same as first: True
+   missing labels so far (treated 0): ['발생손해조사비', '예상손해조사비']
+   sub-checks (cum): rev rows=730348.0 printed=730348.0; rrev rows=169308.0 printed=169308.0; cost rows=904173.0 printed=904173.0; rcost rows=58484.0 printed=58484.0
+   item 4 cum: printed        82804  master 82804.0  OK
+   item 5 cum: printed         9587  master 9587.0  OK
+   item 6 cum: printed       -11101  master -11101.0  OK
+   item 9 cum: printed       -12874  master -12874.0  OK
+   item10 cum: printed        -1691  master -1691.0  OK
+   item11 cum: printed          401  master 401.0  OK
+   item3 master -173824.710 vs printed subtotals -173825 (diff +0.290); item8 master 110823.483 vs 110824 (diff -0.517)
+   identity 3=4+5+6+7 resid +0.000000; 8=9+10+11+12 resid +0.000000
+   item7 master -255114.710 vs other-rows -255115 diff +0.290 OK; item12 master 124987.483 vs other-rows 124988 diff -0.517 OK
+
+##### 2026.1Q data/dart/FY2026_Q1/raw/KR0070_에이비엘생명보험/xml/20260529000613.xml rev tables [21310, 42971] cost tables [21468, 43129]
+   dup table pair L42971,L43129 same as first: True
+   missing labels so far (treated 0): ['발생손해조사비', '예상손해조사비']
+   sub-checks (cum): rev rows=203318.0 printed=203318.0; rrev rows=9609.0 printed=9609.0; cost rows=176952.0 printed=176952.0; rcost rows=13334.0 printed=13334.0
+   item 4 cum: printed        23674  master 23674.0  OK
+   item 5 cum: printed         2248  master 2248.0  OK
+   item 6 cum: printed         8110  master 8110.0  OK
+   item 9 cum: printed        -3072  master -3072.0  OK
+   item10 cum: printed         -292  master -292.0  OK
+   item11 cum: printed         -966  master -966.0  OK
+   item3 master 26366.262 vs printed subtotals 26366 (diff +0.262); item8 master -3724.510 vs -3725 (diff +0.490)
+   identity 3=4+5+6+7 resid +0.000000; 8=9+10+11+12 resid +0.000000
+   item7 master -7665.738 vs other-rows -7666 diff +0.262 OK; item12 master 605.490 vs other-rows 605 diff +0.490 OK
+   NEIGHBOR prior-year col vs master 2025.1Q:
+      item 4 prior cum printed      20087 master 20087.0 OK
+      item 5 prior cum printed       2592 master 2592.0 OK
+      item 6 prior cum printed      -3591 master -3591.0 OK
+      item 9 prior cum printed      -3283 master -3283.0 OK
+      item10 prior cum printed       -206 master -206.0 OK
+      item11 prior cum printed        170 master 170.0 OK
+      item 7 prior other-rows -1889 master -1889.368229 diff -0.37
+      item12 prior other-rows -620 master -619.482328 diff 0.52
+
+##### 2026.2Q data/dart/FY2026_Q2/raw/KR0070_에이비엘생명보험/20260814003770.xml rev tables [18784, 38130] cost tables [18960, 38306]
+   dup table pair L38130,L38306 same as first: True
+   missing labels so far (treated 0): ['발생손해조사비', '예상손해조사비']
+   sub-checks (cum): rev rows=391852.0 printed=391852.0; rrev rows=48641.0 printed=48641.0; cost rows=434790.0 printed=434790.0; rcost rows=27462.0 printed=27462.0
+   item 4 cum: printed        47138  master 47138.0  OK
+   item 5 cum: printed         4081  master 4081.0  OK
+   item 6 cum: printed         5241  master 5241.0  OK
+   item 9 cum: printed        -6875  master -6875.0  OK
+   item10 cum: printed         -194  master -194.0  OK
+   item11 cum: printed        -1280  master -1280.0  OK
+   item3 master -42938.570 vs printed subtotals -42938 (diff -0.570); item8 master 21178.619 vs 21179 (diff -0.381)
+   identity 3=4+5+6+7 resid -0.000000; 8=9+10+11+12 resid +0.000000
+   item7 master -99398.570 vs other-rows -99398 diff -0.570 OK; item12 master 29527.619 vs other-rows 29528 diff -0.381 OK
+   item 4 single: printed3M      23464.0  master_single 23464.0  diff 0.0  OK
+   item 5 single: printed3M       1833.0  master_single 1833.0  diff 0.0  OK
+   item 6 single: printed3M      -2870.0  master_single -2869.0  diff 1.0  OK
+   item 9 single: printed3M      -3803.0  master_single -3803.0  diff 0.0  OK
+   item10 single: printed3M         99.0  master_single 98.0  diff -1.0  OK
+   item11 single: printed3M       -314.0  master_single -314.0  diff 0.0  OK
+   item 7 single: printed3M     -91732.0  master_single -91732.832281  diff -0.83  OK
+   item12 single: printed3M      28922.0  master_single 28922.12879  diff 0.13  OK
+   NEIGHBOR prior-year col vs master 2025.2Q:
+      item 4 prior cum printed      40080 master 40080.0 OK
+      item 5 prior cum printed       4605 master 4605.0 OK
+      item 6 prior cum printed      -9198 master -9198.0 OK
+      item 9 prior cum printed      -6541 master -6541.0 OK
+      item10 prior cum printed      -1227 master -1227.0 OK
+      item11 prior cum printed       1003 master 1003.0 OK
+      item 7 prior other-rows -5057 master -5056.46952 diff 0.53
+      item12 prior other-rows -69 master -68.997003 diff 0.0
+
+TOTAL FAIL count: 1

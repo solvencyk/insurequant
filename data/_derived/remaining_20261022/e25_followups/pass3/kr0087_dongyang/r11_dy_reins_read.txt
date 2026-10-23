@@ -1,0 +1,36 @@
+##### current pair <- data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml rev@L155770 cost@L156101
+   rev_total   재보험자에게서회수한금액에서생기는수익                                        3M     4,165@L155822  cum    23,163@L155826
+   act         재보험자에게서회수한금액에서생기는수익재보험수익,발생한보험금                            3M   (5,388)@L155841  cum  (18,774)@L155845
+   act_survey  재보험수익,발생한손해조사비                                             3M         0@L155856  cum         0@L155860
+   rev_future  재보험수익,미래서비스와관련된변동분에관련된금액                                   3M       603@L155871  cum   (5,530)@L155875
+   rev_past    재보험수익,과거서비스와관련된금액                                          3M       620@L155886  cum     1,141@L155890
+   cost_total  재보험자에게지급된보험료배분액에서생기는비용                                     3M     5,031@L156153  cum    13,398@L156157
+   exp         재보험자에게지급된보험료배분액에서생기는비용재보험비용,예상보험금(기초예상측정치)                 3M   (2,749)@L156172  cum  (11,748)@L156176
+   exp_other   재보험비용,예상기타보험서비스비용(기초예상측정치)                                 3M         0@L156187  cum         0@L156191
+   ra          재보험비용,비금융위험에대한위험조정의변동분                                     3M     (270)@L156202  cum     (565)@L156206
+   csm         재보험비용,서비스의이전으로당기손익에인식한보험계약마진                               3M     (418)@L156217  cum     (878)@L156221
+   other       재보험비용,그밖의금액                                                3M   (1,594)@L156232  cum     (207)@L156236
+   items (cum): 9 = -|CSM| = -878; 10 = -|RA| = -565; 11 = |act| - |exp| = 7,026   | 3M: -418 / -270 / 2,639
+   closure: revenue components -23,163 (= - printed total 23,163); cost components -13,398 (= - printed total 13,398); note result 9,765
+##### prior pair <- data/dart/FY2025_Q2/raw/KR0087_동양생명/xml/20250814002600.xml rev@L155932 cost@L156278
+   rev_total   재보험자에게서회수한금액에서생기는수익                                        3M    15,009@L155984  cum    30,485@L155988
+   act         재보험자에게서회수한금액에서생기는수익재보험수익,발생한보험금                            3M  (12,012)@L156003  cum  (26,070)@L156007
+   act_survey  재보험수익,발생한손해조사비                                             3M         0@L156018  cum         0@L156022
+   rev_future  재보험수익,미래서비스와관련된변동분에관련된금액                                   3M   (1,353)@L156033  cum   (1,596)@L156037
+   rev_past    재보험수익,과거서비스와관련된금액                                          3M   (1,644)@L156048  cum   (2,819)@L156052
+   cost_total  재보험자에게지급된보험료배분액에서생기는비용                                     3M    14,486@L156330  cum    26,159@L156334
+   exp         재보험자에게지급된보험료배분액에서생기는비용재보험비용,예상보험금(기초예상측정치)                 3M   (5,165)@L156349  cum  (11,797)@L156353
+   exp_other   재보험비용,예상기타보험서비스비용(기초예상측정치)                                 3M         0@L156364  cum         0@L156368
+   ra          재보험비용,비금융위험에대한위험조정의변동분                                     3M     (399)@L156379  cum     (824)@L156383
+   csm         재보험비용,서비스의이전으로당기손익에인식한보험계약마진                               3M       593@L156394  cum     2,528@L156398
+   other       재보험비용,그밖의금액                                                3M   (9,515)@L156409  cum  (16,066)@L156413
+   items (cum): 9 = -|CSM| = -2,528; 10 = -|RA| = -824; 11 = |act| - |exp| = 14,273   | 3M: -593 / -399 / 6,847
+   closure: revenue components -30,485 (= - printed total 30,485); cost components -26,159 (= - printed total 26,159); note result 4,326
+SANITY current pair vs live master 2025.2Q: master 9/10/11 = -878.0/-565.0/7026.0; tables -878/-565/7,026 -> OK
+2024.2Q cumulative vector (production sign convention 9 = -|CSM|, 10 = -|RA|):
+   8 (live master) = 4327.617973; 9 = -2,528; 10 = -824; 11 = 14,273; 12 = 8 - (9+10+11) = -6593.382027; identity 8 - (9+10+11+12) = 0.000000
+   master now: 8=4327.617973 9=None 10=None 11=523.0 12=None
+   printed CSM sign: +2,528 (a CREDIT in the 재보험비용 table: components print the contribution sign); with the printed sign 9 = +2,528, 10 = -824 and 12 = -11649.382027
+   other rows (미래·과거 서비스 + 그 밖의 금액 + 예상 기타, contribution sign) = -11,651 vs 12 (printed-sign convention) -11649.382 -> diff +1.618
+   note result 4,326 (재보험수익 30,485 - 재보험비용 26,159) vs master 8 4327.618: +1.618 (the original FY2024_Q2 prints 재보험비용 26,158: note result 4,327)
+FY2025_Q3 probe (data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml): 6 small [3개월, 누적] reinsurance tables; row labels: ['3개월', '발행한보험계약', '보유재보험계약', '보험계약의세분', '보험서비스결과', '재보험비용', '재보험수익']

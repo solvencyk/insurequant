@@ -1,0 +1,21 @@
+OK  2025.3Q item4  cum raw=61207.0 master=61207.0 (old=61207.0) | filing 2025.3Q line 17948 | single raw3m=21127.0 master=21127.0 ok
+OK  2025.3Q item5  cum raw=7271.0 master=7271.0 (old=8826.0) | filing 2025.3Q line 17940 | single raw3m=2666.0 master=2666.0 ok
+OK  2025.3Q item9  cum raw=-9836.0 master=-9836.0 (old=-9836.0) | filing 2025.3Q line 18226 | single raw3m=-3295.0 master=-3295.0 ok
+OK  2025.3Q item10 cum raw=-1467.0 master=-1467.0 (old=-1462.0) | filing 2025.3Q line 18218 | single raw3m=-240.0 master=-240.0 ok
+OK  2025.3Q item11 cum raw=1104.0 master=1104.0 (old=1104.0) | filing 2025.3Q line 17996 | single raw3m=101.0 master=101.0 ok
+OK  2025.4Q item4  cum raw=82804.0 master=82804.0 (old=82804.0) | filing 2025.4Q line 32192 | 
+OK  2025.4Q item5  cum raw=9587.0 master=9587.0 (old=8346.0) | filing 2025.4Q line 32186 | 
+OK  2025.4Q item9  cum raw=-12874.0 master=-12874.0 (old=-12874.0) | filing 2025.4Q line 32392 | 
+OK  2025.4Q item10 cum raw=-1691.0 master=-1691.0 (old=-1685.0) | filing 2025.4Q line 32386 | 
+OK  2025.4Q item11 cum raw=401.0 master=401.0 (old=401.0) | filing 2025.4Q line 32228 | 
+OK  2026.1Q item4  cum raw=23674.0 master=23674.0 (old=23674.0) | filing 2026.1Q line 21365 | 
+OK  2026.1Q item5  cum raw=2248.0 master=2248.0 (old=1953.0) | filing 2026.1Q line 21359 | 
+OK  2026.1Q item9  cum raw=-3072.0 master=-3072.0 (old=-3072.0) | filing 2026.1Q line 21577 | 
+OK  2026.1Q item10 cum raw=-292.0 master=-292.0 (old=-287.0) | filing 2026.1Q line 21571 | 
+OK  2026.1Q item11 cum raw=-966.0 master=-966.0 (old=-966.0) | filing 2026.1Q line 21401 | 
+OK  2026.2Q item4  cum raw=47138.0 master=47138.0 (old=47138.0) | filing 2026.2Q line 18848 | single raw3m=23464.0 master=23464.0 ok
+OK  2026.2Q item5  cum raw=4081.0 master=4081.0 (old=3770.0) | filing 2026.2Q line 18841 | single raw3m=1833.0 master=1833.0 ok
+OK  2026.2Q item9  cum raw=-6875.0 master=-6875.0 (old=-6876.0) | filing 2026.2Q line 19087 | single raw3m=-3803.0 master=-3803.0 ok
+OK  2026.2Q item10 cum raw=-194.0 master=-194.0 (old=-185.0) | filing 2026.2Q line 19080 | single raw3m=99.0 master=98.0 ok
+OK  2026.2Q item11 cum raw=-1280.0 master=-1280.0 (old=-1280.0) | filing 2026.2Q line 18890 | single raw3m=-314.0 master=-314.0 ok
+TOTAL 20 ok 20 bad 0

@@ -1,0 +1,11 @@
+derived ('KR0070', '2025.3Q', '7') gold -10430.492374 formula -10430.492374 OK
+derived ('KR0070', '2025.3Q', '12') gold 847.77936 formula 847.77936 OK
+derived ('KR0070', '2025.4Q', '7') gold -255114.709914 formula -255114.709914 OK
+derived ('KR0070', '2025.4Q', '12') gold 124987.482848 formula 124987.482848 OK
+derived ('KR0070', '2026.1Q', '7') gold -7665.737662 formula -7665.737662 OK
+derived ('KR0070', '2026.1Q', '12') gold 605.490028 formula 605.490028 OK
+derived ('KR0070', '2026.2Q', '7') gold -99398.569943 formula -99398.569943 OK
+derived ('KR0070', '2026.2Q', '12') gold 29527.618818 formula 29527.618818 OK
+new/changed gold cells checked 37 mismatches 0
+whole gold set disagreeing with master: 3 [('KR0087', '2025.3Q', 11, None, None), ('KR0072', '2023.2Q', 7, -18990.0, -17294.0), ('KR0072', '2023.3Q', 7, -44935.275872, -52310.275872)]
+null_dangi count 124

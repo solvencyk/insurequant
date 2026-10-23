@@ -2,6 +2,14 @@
 
 ## 2026-10-24 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
+- **2026-10-23 21차: owner 결정 D1~D3 4사 적재, PL 209칸 + CSM 58칸 최신 비교열(KB라이프 2023.1Q~3Q · 롯데 2023.4Q · ABL · 현대해상 FY2023), owner gold 7칸 교체·제거; KDB생명은 owner 결정으로 보류(HEAD 유지)(티켓 20261023T0900Z, 열림)** — 칸마다 필링 줄 번호 독립 재독 문제 0, 회사별 게이트 새 RED/FAIL 0, 롯데 WFY 면제는 validation 이 등재했다.
+  gold: 교체·제거 7 = ABL 3(PL 교체 1 · CSM 제거 2) · 현대해상 4(CSM 제거 3 · 교체 1); 제거 5칸은 승인 교체값이 빌더 소스 값과 같아서(남기면 마스크 칸). 현대해상 IR 팩트시트 레그 6칸은 계보와 함께 gold. 이음매 `null_dangi` +23(롯데 12 · 현대해상 11), 새 박제 0, 원장 99줄 불변. 단일분기 파생 변경 PL 257 + CSM 66칸.
+  게이트 HEAD→적재 후: 데이터계약 RED 0→2(xlsx 드리프트 CSM워터폴 124 · 손익분해PL 466 = 바뀐 칸 수) · live_artifacts RED 0→5(NB_VS_WATERFALL ABL 3 · 현대해상 2) · pl_bridge 3755P→3783P/18F/0NEW · 연속성 flagged 1/RED 0 · 골든·gold_overlay·identity 통과 · rule_coverage 104/105(실패 1 = xlsx RED, `[23]` 통과).
+  **KDB 보류(owner 2026-10-23)**: 2023.3Q·4Q 의 17·18·20·22·24·31(누계 12 + 단일분기 12칸)이 연결 값이라(단일분기 합 = 연간 + 7.27억, validation 티켓 `20261023T1320Z`) 적재를 바이트 그대로 되돌렸다(KDB 변경 칸 0). validation 의 항목 23 선언도 원복됐고 롯데 WFY 등재는 유지. A 별도 복원 / B 연결 통일 / C 비움은 재적재 때 택일하고 항목 23 BLIND 재선언을 같은 커밋에 묶는다.
+  남은 것: 롯데 CSM 4Q 단일분기 +105.5억(CSM 빈칸 장치 없음, `1215Z` 건 2; 건 1 KB라이프 4Q 14칸은 결함 아님 판정) · 옛 판 하위항목 `1130Z` KB라이프 · `1210Z` ABL(2023.1Q 항목 5 = 272 오추출 포함) · `1255Z` KDB(보류) · 큰 이동 사유 확인 · 현대해상 레그 가교 +98.12백만원 / publishing = xlsx 2시트 · NB_CSM_multiple · panel · public_exports. 커밋 안 함. 근거·재현 `data/_derived/remaining_20261022/e23_d1_d3/` · changelog 21차.
+
+## 2026-10-24 밀린 Status (최신 3개 밖, 문서 정리로 이동)
+
 - **2026-10-23 20차: READY-25 적재 — 9사 25버킷 PL 440칸 + 4사 12버킷 CSM 55칸 최신 비교열, owner gold PL 7 + CSM 2칸 교체, KB라이프 `abs()` 결함 수정(티켓 20261023T0300Z, owner 「쭉 진행」)** — 농협생명 2023.1Q·2Q · 푸본현대·ABL 2024.4Q · 미래에셋 2023.4Q~2024.3Q · KB손보 2023.1Q~2024.3Q · KB라이프 2024.1Q · 롯데 2023.1Q~2024.3Q · 메리츠 2023.1Q·2Q · 한화생명 2023.1Q~3Q. 후보 PL 471 중 31칸은 안 실음(반올림·마스터와 같음 30 + 마스크가 돼 박제가 필요한 KB손보 2024.3Q 항목 16 1). 필링 줄 번호 독립 재독(`e21_verify.py`) 문제 0.
   gold 규칙: 교체 PL 7 = ⓐ 3(롯데 2023.2Q 항목 19 · 한화생명 2023.1Q 항목 20 · 2023.2Q 항목 21) + 해석 확장 4(KB손보·메리츠 2023.1Q·2Q 항목 16: gold 가 연결 기준 원 인쇄값 → 별도 값, `A_basis`); CSM 롯데 2023.1Q 항목 4·6 은 원 공시에 CSM 표가 없어 같은 전기 표의 다른 줄이던 gold 를 최신 기말순보험계약부채로 교체(`class C`; 되돌림 `e21_apply.py --revert`). ⓑ 0. null_dangi +30 −8(푸본현대 2024.4Q 8칸 복원) · set_dangi +1 −4 · 박제 −3 · 새 박제 0. `extract_tier2_kblife` `abs(jrr)`→`jrr`: 바뀐 셀이 2024.1Q 항목 2·8·12 3칸뿐이라 PL 골든 `--update`(`sha256_master`만), 그 3칸 gold 는 마스크가 돼 제거.
   게이트 전→후: 데이터계약 RED 0→2(MASTER_XLSX_DRIFT 손익분해PL·CSM워터폴, 예상) · live_artifacts RED 0→4(NB_VS_WATERFALL 메리츠·한화생명 2023.1Q·2Q, 예상) · master_tables SUMMARY pl_bridge 3697P/23F→3755P/18F/0NEW · csm_amort 387P/5S→388P/4S · qoq 262→263Y · oci_vs_bs_aoci 21→26Y(골든 `--update`) · 연속성 flagged 2→1 · 워터폴/NB 불변 · PL 골든·gold_overlay 7·identity 14·viz 골든 2종 통과 · 지문 `--update` 뒤 RED 0 · rule_coverage 103/104(실패 1 = xlsx RED).

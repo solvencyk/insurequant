@@ -1,0 +1,78 @@
+gold_new 36 gold_replace 1 null_dangi_add 2 null_dangi_remove 1 set_dangi_add 0 buckets 7 seams 40
+  KR0070 2025.3Q item  5: 8826.0 -> 7271.0
+  KR0070 2025.3Q item 10: -1462.0 -> -1467.0
+  KR0070 2025.3Q item 12: 842.77936 -> 847.77936
+  KR0070 2025.4Q item  5: 8346.0 -> 9587.0
+  KR0070 2025.4Q item 10: -1685.0 -> -1691.0
+  KR0070 2025.4Q item  7: -253873.709914 -> -255114.709914
+  KR0070 2025.4Q item 12: 124981.482848 -> 124987.482848
+  KR0070 2026.1Q item  5: 1953.0 -> 2248.0
+  KR0070 2026.1Q item 10: -287.0 -> -292.0
+  KR0070 2026.1Q item  7: -7370.737662 -> -7665.737662
+  KR0070 2026.1Q item 12: 600.490028 -> 605.490028
+  KR0070 2026.2Q item  5: 3770.0 -> 4081.0
+  KR0070 2026.2Q item 10: -185.0 -> -194.0
+  KR0070 2026.2Q item  9: -6876.0 -> -6875.0
+  KR0070 2026.2Q item  7: -99087.569943 -> -99398.569943
+  KR0070 2026.2Q item 12: 29519.618818 -> 29527.618818
+  KR0087 2024.2Q item  9: None -> -2528.0
+  KR0087 2024.2Q item 10: None -> -824.0
+  KR0087 2024.2Q item 11: 523.0 -> 14273.0
+  KR0087 2024.2Q item 12: None -> -6593.382027
+  KR0032 2023.1Q item 20: 109496.0 -> 109496.350509
+  KR0032 2023.1Q item 21: -5871.0 -> -5871.58859
+  KR0032 2023.1Q item 22: 103625.0 -> 103624.761919
+  KR0032 2023.1Q item 23: 24680.0 -> 24679.473634
+  KR0032 2023.1Q item 24: 78945.0 -> 78945.288285
+  KR0032 2023.2Q item 22: 179900.0 -> 179898.855707
+  KR0032 2023.2Q item 23: 38600.0 -> 38631.2877
+  KR0032 2023.2Q item 24: 141300.0 -> 141267.568007
+  KR0032 2023.2Q item 25: None -> 20012.596881
+  KR0032 2023.2Q item 26: None -> 48991.210301
+  KR0032 2023.2Q item 27: None -> -9328.698015
+  KR0032 2023.2Q item 28: None -> -26936.188637
+  KR0032 2023.2Q item 29: None -> 2405.373888
+  KR0032 2023.2Q item 30: None -> 4898.771236
+  KR0032 2023.2Q item 31: None -> 161280.164888
+  KR0032 2023.2Q item 32: None -> -17.871892
+  KR0070 2025.3Q item  7: -11985.492374 -> -10430.492374  [REPLACE]
+  seam KR0070 2025.3Q item  4: derived 21127.0 vs printed 3M 21127.0 diff 0.0 -> consistent
+  seam KR0070 2025.3Q item  5: derived 2666.0 vs printed 3M 2666.0 diff 0.0 -> consistent
+  seam KR0070 2025.3Q item  9: derived -3295.0 vs printed 3M -3295.0 diff 0.0 -> consistent
+  seam KR0070 2025.3Q item 10: derived -240.0 vs printed 3M -240.0 diff 0.0 -> consistent
+  seam KR0070 2025.3Q item  6: derived -3001.0 vs printed 3M -3003.0 diff 2.0 -> mismatch
+  seam KR0070 2025.3Q item 11: derived 101.0 vs printed 3M 101.0 diff 0.0 -> consistent
+  seam KR0070 2025.3Q item  7: derived -5374.022854 vs printed 3M -5372.022854 diff -2.0 -> mismatch (vs other rows 3M -2.022854)
+  seam KR0070 2025.3Q item 12: derived 916.776363 vs printed 3M 916.776363 diff -0.0 -> consistent (vs other rows 3M -0.223637)
+  seam KR0070 2026.2Q item  4: derived 23464.0 vs printed 3M 23464.0 diff 0.0 -> consistent
+  seam KR0070 2026.2Q item  5: derived 1833.0 vs printed 3M 1833.0 diff 0.0 -> consistent
+  seam KR0070 2026.2Q item  9: derived -3803.0 vs printed 3M -3803.0 diff 0.0 -> consistent
+  seam KR0070 2026.2Q item 10: derived 98.0 vs printed 3M 99.0 diff -1.0 -> consistent
+  seam KR0070 2026.2Q item  6: derived -2869.0 vs printed 3M -2870.0 diff 1.0 -> consistent
+  seam KR0070 2026.2Q item 11: derived -314.0 vs printed 3M -314.0 diff 0.0 -> consistent
+  seam KR0070 2026.2Q item  7: derived -91732.832281 vs printed 3M -91731.832281 diff -1.0 -> consistent (vs other rows 3M -0.832281)
+  seam KR0070 2026.2Q item 12: derived 28922.12879 vs printed 3M 28921.12879 diff 1.0 -> consistent (vs other rows 3M 0.12879)
+  seam KR0087 2024.2Q item  9: derived None vs printed 3M -593.0 diff None -> no_q1_detail
+  seam KR0087 2024.2Q item 10: derived None vs printed 3M -399.0 diff None -> no_q1_detail
+  seam KR0032 2023.2Q item 22: derived 76274.093788 vs printed 3M 76274.093788 diff 0.0 -> consistent
+  seam KR0032 2023.2Q item 23: derived 13951.814066 vs printed 3M 13951.814066 diff -0.0 -> consistent
+  seam KR0032 2023.2Q item 24: derived 62322.279722 vs printed 3M 62322.279722 diff -0.0 -> consistent
+  seam KR0032 2023.2Q item 25: derived 19066.233785 vs printed 3M 19066.233785 diff 0.0 -> consistent
+  seam KR0032 2023.2Q item 26: derived -58052.408255 vs printed 3M -58052.408255 diff 0.0 -> consistent
+  seam KR0032 2023.2Q item 27: derived 124941.421514 vs printed 3M 124941.421514 diff -0.0 -> consistent
+  seam KR0032 2023.2Q item 28: derived -40638.699405 vs printed 3M -40638.699405 diff 0.0 -> consistent
+  seam KR0032 2023.2Q item 29: derived -223.085827 vs printed 3M -223.085827 diff 0.0 -> consistent
+  seam KR0032 2023.2Q item 30: derived -6969.184146 vs printed 3M -6969.184146 diff -0.0 -> consistent
+  seam KR0032 2023.2Q item 31: derived 81388.513507 vs printed 3M 81388.513507 diff 0.0 -> consistent
+  seam KR0032 2023.2Q item 32: derived 8.189904 vs printed 3M 8.189904 diff 0.0 -> consistent
+  seam KR0032 2023.3Q item 22: derived -53373.681484 vs printed 3M -53373.681484 diff -0.0 -> consistent
+  seam KR0032 2023.3Q item 23: derived -7144.569826 vs printed 3M -7144.569826 diff 0.0 -> consistent
+  seam KR0032 2023.3Q item 24: derived -46229.111658 vs printed 3M -46229.111658 diff 0.0 -> consistent
+  seam KR0032 2023.3Q item 25: derived 22118.399264 vs printed 3M 22118.399264 diff -0.0 -> consistent
+  seam KR0032 2023.3Q item 26: derived -73624.041926 vs printed 3M -73624.041926 diff 0.0 -> consistent
+  seam KR0032 2023.3Q item 27: derived 150909.78544 vs printed 3M 150909.78544 diff 0.0 -> consistent
+  seam KR0032 2023.3Q item 28: derived -34277.756655 vs printed 3M -34277.756655 diff 0.0 -> consistent
+  seam KR0032 2023.3Q item 29: derived 250.907628 vs printed 3M 250.907628 diff -0.0 -> consistent
+  seam KR0032 2023.3Q item 30: derived -21113.421714 vs printed 3M -21113.421714 diff 0.0 -> consistent
+  seam KR0032 2023.3Q item 31: derived -24110.712394 vs printed 3M -24110.712394 diff -0.0 -> consistent
+  seam KR0032 2023.3Q item 32: derived -27.073509 vs printed 3M -27.073509 diff 0.0 -> consistent
