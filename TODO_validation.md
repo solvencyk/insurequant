@@ -1,18 +1,20 @@
 # Insurequant Validation TODO (Stage 3)
 
-> 갱신 2026-10-23 (32차 죽은 등재 철거 + OCI 대 BS AOCI 공란 계수 수정 · 31차 교보 KR0073 CSM·PL 재작성 기준 적재 `3e53aef8` 독립 검수 + tax22_src 룰 최신 비교열 판 인정 + 골든 정리) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
+> 갱신 2026-10-23 (33차 롯데 FY2023 WFY 면제 등재 + 4사 최종 트리 게이트(KDB 보류, item23 GUARDED 유지) · 32차 죽은 등재 철거 + OCI 대 BS AOCI 공란 계수 수정 · 31차 교보 KR0073 CSM·PL 재작성 기준 적재 `3e53aef8` 독립 검수 + tax22_src 룰 최신 비교열 판 인정 + 골든 정리) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
 > 2026-10-07 정리 전 전문(V1~V19 블록 포함)은 `docs/todo_archive_validation.md` 맨 위에 있다.
 
 ## Status (최신 3개)
 
+- **2026-10-23 (33차) 롯데손보 FY2023 WFY 면제 등재(owner D2) + 4사 최종 트리 게이트 (티켓 `20261023T0900Z`, HEAD `d5077c7b`, 미커밋)** — `WFY_EXCEPTIONS` 에 (롯데손해보험, 2023) 추가(16,774.4 대 16,669.0, 0.632%) · 읽기 변이시험 신설 · 골든 wfy 1->0. KDB생명은 owner 결정(10-23)으로 보류(HEAD 값 유지)라 KDB 적재용 item23 BLIND 선언은 되돌렸다 = item23 은 HEAD 그대로 GUARDED.
+  최종 4사 트리(값 변경 PL 60/18/74/57 · CSM 15/5/20/18, KDB·그 밖 0): master_tables SUMMARY = fixture(갱신 불필요) · data_contract RED 2(xlsx 드리프트)/YELLOW 168 · 연속성 red 0 · live_artifacts RED 5(NB_VS_WATERFALL ABL 3·현대 2) · rule_coverage 104 통과/1 실패(xlsx) · PL 골든 통과.
+  보류 선행조건(KDB 재적재): 별도·연결 기준 결정(`inbox/parser/20261023T1320Z`) + 그 적재 커밋에 item23 BLIND 재선언(`gate_cleanup/s01_sim_item23.txt`).
+  남은 것: publishing xlsx 동기화·NB 재빌드. 증거 `data/_derived/remaining_20261022/e23_d1_d3/gate_four_final/`.
 - **2026-10-23 (32차) 최신 비교열 적재 뒤 죽은 등재 7줄 철거 + `PL_OCI_VS_BS_AOCI` 공란 계수 결함 수정 (티켓 `20261023T0030Z`, 대상 HEAD `62ba44ed`, 미커밋)** — 철거(삭제만): `pl_bridge_baseline` 5줄(게이트 `FIXED?`) · `pl_csm_amort_missing_ledger` 롯데 2023.1Q(`..._LEDGER_INERT`) · `WFY_EXCEPTIONS` 한화생명·메리츠 FY2023(적재 전엔 필요, 지금은 두 소비처 모두 안 걸림, 변이 probe). 전후: master_tables SUMMARY 불변·stale 5->0, data_contract RED 0·YELLOW 169->168, 연속성 불변.
   결함: 공란(`값_당분기` None) 칸이 「tol 이내」에 섞였다(현재 340 중 108이 공란). 정정 후 비교 258(통과 232·flag 26)·공란 108·BS 결측 8(전부 2023.1Q). 전 버킷 시뮬: flag 집합 불변, 공란 때문에 YELLOW 에서 사라진 행 4(NH농협손해 2023.4Q·농협생명 2024.4Q·동양 2024.4Q·KB손해 2023.4Q). SUMMARY `oci_vs_bs_aoci:26Y/108blank/8bsskip` + 합성 입력 시험 신설(변이 확인) + 골든 `--update`(이 필드만 이동).
   남은 것(owner): `WFY_EXCEPTIONS` 의 KB라이프 FY2024·교보 FY2024·에이비엘 FY2023·KDB생명 FY2023·현대해상 FY2023 5줄은 적재 전에도 이미 안 걸렸다(철거는 owner 등재 변경). 공란 108칸(4Q 55) 중 누계 차로 재구성되는 17칸 중 6칸은 tol 초과(그림자, 게이트 입력 아님). 증거 `data/_derived/remaining_20261022/e22_gate_cleanup/`.
 - **2026-10-22 (31차) 교보생명 KR0073 CSM·PL 「재작성 기준」 적재(`3e53aef8`) 독립 검수 + `tax22_src` 룰 수정 + 골든 정리 (대상 커밋 `3e53aef8`, 후속 `eea3f61c`)** — 원문 자체 재독(`vreader.py`, parser 코드 미사용): PL 항목 1·4·17·19·20·22·23·24·25·31 x 2023.1Q~2024.2Q 60/60 · CSM 항목 1~6 x 7분기 일치(0건 불일치), CSM 상각 대 PL 항목 4 짝 6/6 정확히 닫힘, 2024.3Q·4Q 누계 불변, 교보 밖 변경 0(마스터 · 출처표 · 골드 · 장부 전수 대조).
   룰: `tax22_src` 가 같은 분기 원공시 판 **또는** 다음 해 같은 기간 캐시 전기 열(`_tax22_prior_tier1`, 빌더와 같은 `_parse`) 중 하나와 맞으면 통과. 전 643버킷 시뮬: 닫힘 4(교보 2023.3Q~2024.2Q) · 깨짐 0 · 주입 탐지 282/282 불변, 변이시험 2종 신설(분기 제거 시 교보 4칸 RED 복귀). 게이트: tax22_src 278P/4F -> 282P/0F · 데이터계약 RED 0 · 골든 `master_tables`(pl_bridge · csm_amort_identity · qoq_warn 3필드, 교보 행만 원인 입증) + 입력지문 `viz_ifrs17_panels` 갱신.
   발견: **2023.3Q 단일분기(값_당분기) 재작성 기준 이음매** = parser 티켓 `20261021T1655Z`(PL 항목 24 마스터 83,882 대 공시 3개월 열 8,175 · CSM 단일분기 항등식 +960.03억; 판정: 누계 방식에선 불가피하나 값을 싣는 것은 비추천, 선택지 A·B·C 제시). 남은 것: 그 티켓 · 단일분기 항등식 룰 설계(아래 열린 일).
-- **2026-10-13 (30차) IFRS17 「최신 비교열」 적용 249칸 독립 검수 + 골든 정리 (티켓 `20261012T2230Z`, 커밋 `b8c37fff` 대상)** — 원문(DART XML·경영공시 PDF)을 자체 코드로 재독: 249/249 일치(BS 65 · CSM 27 · PL 157, 3개월→누적 14칸은 누적 열 인쇄값 일치·한화손보 2칸은 PDF 두 판 일치), 마스터 변경 = 정확히 249칸, 골드 오버레이 +157/+27/+65 가 계획과 1:1(기존 owner 칸 변경 0), 예외 해제 10줄 모두 산수로 닫힘. 후속 `99c7ead7`(NB 12칸 · 콤보 8잎 · 비교 패널 전 잎 658×12 재계산) 일치.
-  게이트: 데이터계약 RED 0 · `validate_master_tables --no-build` exit 2(기지 23건, 직전 29) · 연속성·ILP·NB·워터폴·xlsx 드리프트 0 · 골든 갱신 3종(master_tables SUMMARY · 17BS sha(빌더 산출 = 커밋 마스터 바이트) · 입력지문 2종). 발견: parser 티켓 `20261012T1820Z`(푸본현대 1Q 항목 18·19 · 흥국화재 1Q 항목 19 · 삼성화재 2024.1Q 항목 13·14 · 삼성생명 BS 2024.4Q/2025.1Q 기준 단절). 경영공시 PDF 미결정 116칸도 재독 116/116 일치.
 
 ## 열린 일
 

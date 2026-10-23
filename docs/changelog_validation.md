@@ -1,11 +1,28 @@
 # Validation Changelog (Stage 3)
 
-> Last updated: 2026-10-23 (32차 죽은 등재 7줄 철거 + OCI 대 BS AOCI 공란 계수 수정 · 31차 교보 KR0073 재작성 기준 적재 독립 검수 + tax22_src 룰 수정 + 골든 정리 · 30차 IFRS17 최신 비교열 적용 249칸 독립 검수 + 29차 소진율·전망 재측정 + 콜일 규칙 정정 확인 + 28차 K-ICS 최신 공시 직전 컬럼 적용 독립 검수) · Stage 3/5 — validation
+> Last updated: 2026-10-23 (33차 롯데 FY2023 WFY 면제 등재 + 4사 최종 트리 게이트(KDB 보류, item23 GUARDED 유지) · 32차 죽은 등재 7줄 철거 + OCI 대 BS AOCI 공란 계수 수정 · 31차 교보 KR0073 재작성 기준 적재 독립 검수 + tax22_src 룰 수정 + 골든 정리 · 30차 IFRS17 최신 비교열 적용 249칸 독립 검수 + 29차 소진율·전망 재측정 + 콜일 규칙 정정 확인 + 28차 K-ICS 최신 공시 직전 컬럼 적용 독립 검수) · Stage 3/5 — validation
 > Prompt: docs/agents/claude-agent-validation.md · Authoritative rules: docs/agents/kics-json-validation-rules.md
 
 Validation-only history. Cross-stage changes also keep a 1-line cross-reference in [`docs/claude-changelog.md`](claude-changelog.md).
 
 > 보관: 이전 달 항목은 `docs/changelog_archive/validation/` 에 월별로 무수정 보관한다(관리 `scripts/doc_rotate.py changelog`, 현행 = 최신 항목 달과 그 전 달).
+
+## 2026-10-23 (33차) -- 롯데손해보험 FY2023 WFY 면제 등재(owner D2) + 4사 최종 트리 게이트 (KDB 보류로 item23 선언 원복) (HEAD `d5077c7b` 작업트리, 티켓 `20261023T0900Z`, 증거 `data/_derived/remaining_20261022/e23_d1_d3/gate_cleanup/` · `gate_four_final/`)
+
+- **최종 상태(이 항목 아래 단락보다 우선)**: owner 가 2026-10-23 케이디비생명(KR0072)을 이 묶음에서 빼고 HEAD 값을 유지하기로 했다(2023.3Q·4Q 항목 17·18·20·22·24·31 이 연결 기준인데 별도로 적재됐다, `inbox/parser/20261023T1320Z`). parser 가 KDB 를 백업 바이트로 되돌린 뒤 아래 item23 BLIND 선언(KDB 적재 전용)을 되돌렸다: `PL_ITEMS_UNCHECKABLE_BY_EQUATION` 에서 23 삭제(HEAD 주석 블록 복원) · `PL_CONSTRUCTIVE_BLIND[23]` 삭제 · `PL_CONSTRUCTIVE_GUARDED[23]` HEAD 문구로 복원 · `claude-agent-validation.md` 1줄 원복. 두 선언은 HEAD 와 같고, 편집 전 사본(`gate_cleanup/pre_copies/`) 대비 차이는 롯데 WFY 등재 6줄과 변이시험뿐이다. 롯데 등재·시험은 유지.
+  최종 4사 트리 게이트(`gate_four_final/run_gates.sh`, 저장소 쓰기를 버리는 gate_overlay): master_tables exit 2, SUMMARY 가 fixture 와 동일(`pl_bridge:3783P/18F/2629S/0NEW` · `0wfy` · WFYEX 롯데 FY2023) -> fixture `--update` 안 함. KDB 복원 직후 출력 대비 차이는 NOEQ item23 인쇄 1줄 삭제뿐. data_contract RED 2(MASTER_XLSX_DRIFT CSM워터폴·손익분해PL)/YELLOW 168 · csm_continuity flagged 1(교보 EXCEPTED)/red 0 · csm_waterfall fail 0 · nb_csm fail 0 · live_artifacts RED 5(NB_VS_WATERFALL KR0070 2023.1Q~3Q · KR0009 2023.1Q·2Q). check_csm_coverage RED 1(카카오페이 KR1098 2023.4Q)은 10-22 기준 실행에도 있던 기존 신호.
+  시험: rule_coverage 104 통과/1 실패(`test_master_xlsx_clean_state_has_no_red`, xlsx 동기화 지연) · `[23]` 통과 · gold_overlay 7 · identity_registry 14 · identity_tautology 10 · master_tables_golden 2 · viz 골든 2종 · deploy_assets 12 · push_gate_wiring 66+1skip · golden_input_fingerprint 23 + `validate_golden_input_fingerprints.py` RED 0 · `RUN_PL_GOLDEN=1` PL 골든 1 통과. 제자리 덮어쓰기 산출 9개 sha 전후 동일, `git diff` sha 전후 동일.
+  칸 대조(`gate_four_final/a01_cell_audit.py`, HEAD 대비): PL 값 KB라이프 60·롯데 18·ABL 74·현대해상 57·KDB 0·그 밖 0(합 209), CSM 15·5·20·18·0(합 58), 행 추가·삭제 0, 비값 필드 변경 0.
+  **보류 선행조건**: KDB 재적재는 별도·연결 기준 결정과 그 적재 커밋 안의 item23 BLIND 재선언(아래 시뮬 근거)이 한 묶음이다.
+- **범위(아래는 KDB 적재 전제로 한 1차 작업 기록)**: 마스터·골드·기준선·장부·다른 WFY 줄은 안 건드렸다. 바꾼 것: `scripts/validate_master_tables.py`(WFY 1줄 + `PL_ITEMS_UNCHECKABLE_BY_EQUATION` 23, 후자는 위에서 원복) · `tests/test_rule_coverage_manifest.py`(23 GUARDED->BLIND, 원복 + WFY 변이시험 1개) · `tests/fixtures/master_tables_golden.json`(`--update`) · `docs/agents/claude-agent-validation.md` 1줄(원복). 커밋·push 없음.
+- **WFY 등재**: (롯데손해보험, 2023). FY2023 기초 CSM 1Q~3Q 16,774.4 대 4Q 16,669.0(차 105.4억, 4Q 대비 0.632%) -- 4Q 만 FY2024 사업보고서 전기 열(L19881 1,666,900 백만원 = 감사보고서 첨부 L10874)로 적재돼 생긴 소급재작성 차이(독립 재독 `verify_kr0003_lotte/v10_single_chain.txt`·`v11_csm_reread.txt`). 소비처 둘: master_tables WFY(0.5%/2억) 는 WFY -> WFYEX, `validate_csm_continuity`(평균 대비 1%)는 원래 안 걸려 출력 불변. 같은 집합 객체를 import 하는 것도 시험으로 고정.
+- **변이시험** `test_wfy_exception_lotte_fy2023_is_read_and_enforced`: 등재를 빼면 master_tables WFY 에 롯데 FY2023 이 돌아와야 하고(안 돌아오면 등재가 죽은 것 -> 철거), 연속성 게이트는 등재 유무와 무관하게 RED 0.
+- **item23 시뮬(편집 전, `s01_sim_item23.py`, 시험 자신의 CONSTRUCTIVE 변이 + 차단성 지문을 import; 적재 후 상태는 KDB 계획 PL 65·CSM 20칸을 메모리에만 적용, data_contract 에도 같은 워터폴 공급)**: 643버킷 중 변이가 값을 움직이는 칸은 master23 != round(22-24,6) 인 override 27칸(적재 후 26)뿐이고, 그중 어떤 룰이든 새로 잡는 칸은 케이디비 2023.2Q 1칸(`PL_YTD_COLLAPSE_TO_ZERO`, override 22 = 24 = 57,750.0 정수 손입력)뿐이었다. 적재 후 0칸. 다른 14항목의 판정은 전후 동일(적재로 KDB 칸 탐지가 늘기만 함: 17·20 +1, 24 +2, 25 +4).
+  그래서 버킷 단위 예외 같은 좁은 장치로 보존할 「실제 커버리지」가 없다 -- 룰(`PL_YTD_COLLAPSE_TO_ZERO`)은 그대로 두고 선언만 BLIND 로 되돌렸다(2026-09-12 이전 상태, 문서 `claude-agent-validation.md` 의 "5·6·9·10·11·19·23" 문구와도 다시 일치). 다른 회사의 탐지 손실 0.
+- **전후 게이트**: master_tables exit 2 -> 2, SUMMARY 는 `plausibility ... 1wfy -> 0wfy` 만 이동(본문 diff = WFY->WFYEX 1줄 + NOEQ item23 인쇄 1줄). data_contract RED 2(xlsx 드리프트 CSM워터폴·손익분해PL)/YELLOW 168, 정렬 후 동일. csm_continuity flagged 1(교보 EXCEPTED)/red 0 동일. 부작용 파일 qoq_warn·pl_oci_vs_bs_aoci_warn·csm_continuity_validation md5 불변.
+- **전후 시험**(편집 전 판은 `s02_swap_pre_post.py` 로 그 자리에 되돌려 실행, 편집 전 게이트 스크립트 = HEAD 바이트 일치): master_tables_golden 2/2 -> 2/2 · identity_tautology 10 -> 10 · identity_registry 14 -> 14 · deploy_assets 12 -> 12 · push_gate_wiring 66+1skip -> 동일 · rule_coverage 103 통과/1 실패(xlsx) -> 104 통과/2 실패(xlsx + `[23]`).
+  `[23]` 실패는 「BLIND 로 선언했는데 지금 트리에서 잡힌다」 방향이다: KDB 가 아직 옛 값이라 그 한 칸이 살아 있기 때문이고, 적재 후 상태 시뮬에서는 OK(`s01_sim_items_23_after_edit.txt`). 따라서 parser KDB 재적재와 이 변경은 같은 커밋으로 묶어야 하고, KDB 를 계속 보류하면 item23 두 줄(매니페스트·게이트 목록)만 되돌린다.
+- **골든 이동 원인 증명**: 편집 전 fixture(parser 적재 반영판)가 편집 전 게이트 출력과 일치(시험 통과)했고, `--update` 후 이동은 wfy 필드 하나뿐.
 
 ## 2026-10-23 (32차) -- 최신 비교열 적재 뒤 죽은 등재 7줄 철거 + `PL_OCI_VS_BS_AOCI` 「공란 칸을 비교가능으로 센다」 계수 결함 수정 (대상 HEAD `62ba44ed`, 티켓 `20261023T0030Z`, 증거 `data/_derived/remaining_20261022/e22_gate_cleanup/`)
 

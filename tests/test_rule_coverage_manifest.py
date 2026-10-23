@@ -901,7 +901,11 @@ GOLD_OVERLAY_RULES = {
 # 2026-10-22 ticket 20261022T1800Z (parser/ifrs17, STEP 1: 21 held/remaining buckets of 11 companies refreshed to the latest comparative; 9 owner-gold cells replaced in place): PL gold 666->741 cells, masked 29->25 (no new pins).
 # 2026-10-23 ticket 20261023T0300Z (parser/ifrs17, READY-25: 25 PL buckets of 9 companies + 12 CSM buckets refreshed to the latest comparative; 7 PL + 2 CSM owner-gold cells replaced in place): CSM gold 317->370 cells, masked 77->77; PL gold 741->1174 cells, masked 25->22 (no new pins).
 # 2026-10-23 ticket 20261023T0300Z (KB라이프 extract_tier2_kblife abs() fix): the builder source now carries KR0099 2024.1Q items 2/8/12, so their 3 gold cells are removed (masked gold would need new pins): PL gold 1174->1171 cells, masked 22->22.
-GOLD_OVERLAY_CENSUS = {"CSM": (370, 77), "PL": (1171, 22)}
+# 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D1 = option B: KB라이프생명 KR0099 FY2023 2023.1Q-2023.3Q refreshed to the latest comparative; no owner-gold cell replaced): CSM gold 370->385 cells, masked 77->77; PL gold 1171->1231 cells, masked 22->22 (no new pins).
+# 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D2: 롯데손해보험 KR0003 2023.4Q refreshed to the latest comparative; no owner-gold cell replaced): CSM gold 385->390 cells, masked 77->77; PL gold 1231->1249 cells, masked 22->22 (no new pins).
+# 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 에이비엘생명보험 KR0070 FY2023 2023.1Q-2023.4Q refreshed to the latest comparative; 1 PL owner-gold cell replaced in place, 2 CSM chain-forced owner-gold cells removed because the approved value equals the builder source): CSM gold 390->406 cells, masked 77->77; PL gold 1249->1322 cells, masked 22->22 (no new pins).
+# 2026-10-23 ticket 20261023T0900Z (parser/ifrs17, D3: 현대해상 KR0009 FY2023 2023.1Q / 2023.2Q / 2023.4Q refreshed to the latest comparative (LOB legs from the IR factsheet); 57 PL cells added, 1 CSM chain-forced owner-gold cell replaced in place, 3 CSM chain-forced owner-gold cells removed because the approved value equals the builder source, no ledger pin touched): CSM gold 406->417 cells, masked 77->77; PL gold 1322->1379 cells, masked 22->22 (no new pins).
+GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1379, 22)}
 
 
 def _gate():
@@ -2179,15 +2183,21 @@ _TAX22_KYOBO_RESTATED = [("교보생명보험", q) for q in ("2023.3Q", "2023.4Q
 # 2026-10-22 ticket 20261022T0900Z: 다른 6사 18버킷도 최신 비교열로 갱신됐다(DB생명은 세금 불변). 분기를 빼면 이 22칸이 FAIL 로 돌아온다(실측).
 # 2026-10-22 ticket 20261022T1800Z: 푸본현대생명 2024.3Q 도 최신 비교열로 갱신(세금 불변이 아니다) -> 총 23칸(실측).
 # 2026-10-23 ticket 20261023T0300Z: READY-25 적재(농협생명·KB손보·롯데·메리츠·한화생명 등)로 최신 비교열 판 버킷이 늘었다 -> 총 33칸(실측).
+# 2026-10-23 ticket 20261023T0900Z: KB라이프생명 FY2023 2023.1Q-3Q 최신 비교열 적재(D1-B)로 최신 비교열 판 버킷이 늘었다 -> 총 34칸(실측).
+# 2026-10-23 ticket 20261023T0900Z: 롯데손해보험 2023.4Q 최신 비교열 적재(D2)로 최신 비교열 판 버킷이 늘었다 -> 총 35칸(실측).
+# 2026-10-23 ticket 20261023T0900Z: 에이비엘생명보험 FY2023 2023.1Q-2023.4Q 최신 비교열 적재(D3)로 최신 비교열 판 버킷이 늘었다 -> 총 36칸(실측).
+# 2026-10-23 ticket 20261023T0900Z: 현대해상 FY2023 2023.1Q-2023.4Q 최신 비교열 적재(D3)로 최신 비교열 판 버킷이 늘었다 -> 총 37칸(실측).
 _TAX22_LATEST_COMPARATIVE_ONLY = set(_TAX22_KYOBO_RESTATED) | {
+    ("KB라이프생명", "2023.3Q")} | {
     ("KB손해보험", q) for q in ("2023.4Q", "2024.1Q")} | {
     ("NH농협손해보험", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {
     ("농협생명보험", "2023.3Q")} | {
     ("동양생명", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {
-    ("롯데손해보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q")} | {
+    ("롯데손해보험", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {
     ("미래에셋생명보험", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {
-    ("에이비엘생명보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q")} | {
+    ("에이비엘생명보험", q) for q in ("2023.4Q", "2024.1Q", "2024.2Q", "2024.3Q")} | {
     ("푸본현대생명보험", q) for q in ("2024.1Q", "2024.2Q", "2024.3Q", "2024.4Q")} | {
+    ("현대해상", "2023.4Q")} | {
     ("흥국화재", q) for q in ("2023.3Q", "2023.4Q", "2024.1Q", "2024.2Q")}
 
 
@@ -2212,7 +2222,7 @@ def test_tax22_latest_comparative_vintage_branch_is_read_and_enforced():
     rows = _pl_rows()
     p0, fails0, _s0 = V._check_tax22_crosscheck(rows, quiet=True)
     assert not fails0, f"라이브 마스터에 tax22 FAIL: {fails0[:3]}"
-    # (a) 분기를 빼면 최신 비교열로만 통과하는 33칸(교보 4 + 다른 9사 29)이 RED 로 돌아온다 = 이 분기가 실제로 읽힌다
+    # (a) 분기를 빼면 최신 비교열로만 통과하는 37칸(교보 4 + 다른 11사 33)이 RED 로 돌아온다 = 이 분기가 실제로 읽힌다
     orig = V._tax22_prior_tier1
     try:
         V._tax22_prior_tier1 = lambda *a, **k: None
@@ -2235,6 +2245,42 @@ def test_tax22_latest_comparative_vintage_branch_is_read_and_enforced():
         # (d) 최신 비교열 판 값은 통과 (= 현 마스터)
         m = _tax22_set_tax(copy.deepcopy(rows), co, q, prior)
         assert (co, q) not in _tax22_fail_keys(V, m), (co, q, prior)
+
+
+# 2026-10-23 owner 결정(D2): 롯데손해보험 FY2023 은 FY2024 사업보고서의 소급재작성이라 WFY 면제로 등재했다.
+# 등재는 읽는 쪽이 있어야 효력이 있다 — 두 소비처를 같이 본다.
+_WFY_LOTTE = ("롯데손해보험", "2023")
+
+
+def test_wfy_exception_lotte_fy2023_is_read_and_enforced():
+    import contextlib
+    import io
+
+    V = _vmt()
+    import validate_csm_continuity as C
+    wf = V.load_long(V.WF_PATH)
+
+    def wfy_keys():
+        with contextlib.redirect_stdout(io.StringIO()):
+            _d, _s, _c, wfy, _z = V._check_plausibility(wf)
+        return {(co, fy) for co, fy, _m in wfy}
+
+    assert _WFY_LOTTE in V.WFY_EXCEPTIONS
+    assert C.WFY_EXCEPTIONS is V.WFY_EXCEPTIONS      # 정본 한 곳(import), 사본이 아니다
+    assert _WFY_LOTTE not in wfy_keys()
+    # (a) 등재를 빼면 master_tables WFY 가 다시 걸린다 = 이 등재가 실제로 읽힌다.
+    #     안 걸리면 등재가 죽은 것이다(데이터가 한 판으로 통일됐다) -> 철거하라.
+    V.WFY_EXCEPTIONS.discard(_WFY_LOTTE)
+    try:
+        assert _WFY_LOTTE in wfy_keys(), "롯데 FY2023 WFY 면제가 죽었다 — 철거 대상"
+    finally:
+        V.WFY_EXCEPTIONS.add(_WFY_LOTTE)
+    # (b) validate_csm_continuity(1%)는 등재 유무와 무관하게 이 FY 를 RED 로 세지 않는다(0.632% < 1%).
+    by_co, names = C.load()
+    code = next(c for c, n in names.items() if n == _WFY_LOTTE[0])
+    within = [f for f in C.check_company(by_co[code], names[code])
+              if f.get("fy") == int(_WFY_LOTTE[1]) and f["rule"].startswith("WITHIN_FY")]
+    assert not [f for f in within if f["severity"] == "RED"], within
 
 
 def test_tax22_prior_tier1_reads_annual_and_quarterly_prior_columns():
