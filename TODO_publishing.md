@@ -1,9 +1,14 @@
 # Insurequant Publishing TODO (Stage 4)
 
-> 갱신 2026-10-23 · 프롬프트 `docs/agents/claude-agent-publishing.md` · 이력 `docs/changelog_publishing.md`
+> 갱신 2026-10-24 · 프롬프트 `docs/agents/claude-agent-publishing.md` · 이력 `docs/changelog_publishing.md`
 > 2026-10-07 정리 전 전문은 `docs/todo_archive_publishing.md` 맨 위에 있다. publishing 은 마스터 JSON 만 쓰고 HTML 은 designer 몫이다.
 
 ## Status (최신 3개)
+
+- **2026-10-24 parser `fc41f505`·`a20976cf`·`fb3960f9`·`f25ed8b8`(이웃 낡은 셀 4차례: KB라이프·ABL·농협생명·KB손보·동양·현대해상·한화생명·NH농협손보·DB생명 PL, 롯데 CSM 2023.4Q 항 3·4·5 단분기 비움) 파생 산출물 재생성(커밋 전)** — xlsx 2시트만 cherry-pick: `CSM워터폴` 3셀(롯데 2023.4Q 값_당분기 3 -> 빈칸) · `손익분해PL` 389셀(ABL 144 · NH농협손보 85 · 한화생명 43 · DB생명 40 · 동양 35 · 농협생명 16 · 현대 15 · KB라이프 9 · KB손보 2), 나머지 17시트 값 동일(백업 `insurequant_master_tables.xlsx.bak_20261024_e25`).
+  NB_CSM_multiple.json 0셀(신계약 CSM 항목 2 불변) · `panel_csm_combo.json` 불변 · `panel_compare.json` 2값뿐(NH농협손보 2023.2Q 보험손익 None -> 1,133 · 투자손익 None -> 785억, 최신 분기 아님).
+  `check_master_xlsx_drift` RED 2 -> 0 · `validate_live_artifacts` RED 2(PUBLIC_EXPORT_DRIFT 손익분해PL·CSM워터폴만, 커밋 뒤 `export_public_sheets.py`) · `validate_data_contract` RED=0 · YELLOW 168 · 지문 RED=0 · 골든 3종 · deploy_assets 12 · push_gate_wiring 66 · `test_rule_coverage_manifest` 105 통과 + 1 실패(같은 PUBLIC_EXPORT_DRIFT).
+  화면 노출: compare.html 0값 · index.html 0값 · IFRS17.html 3번 패널(PL 브리지)만 44셀 = ABL 40 · 한화생명 3(2023.4Q) · KB손보 1(2024.4Q 기타사업비용 60,900 -> 빈칸), 1% 넘는 이동 24셀(ABL 2025.4Q 원수 위험조정 단분기 -480 -> 2,316 등). CSM 워터폴·NB·콤보 0값. 증빙 `data/_derived/remaining_20261022/e25_publishing_parser4/`.
 
 - **2026-10-23 parser `b1187788`+`90be97e7`(최신 비교열 4사 KR0099 KR0003 KR0070 KR0009 · PL 209 + CSM 58셀, 단분기 포함 마스터 PL 466 · CSM 124셀) 파생 산출물 재생성 · 배포 완료(push `cf67ce7e`·`e59e1709`, main `7e00a62a`, 라이브 9파일 바이트 일치 · build_id `cf67ce7e` 확인, 콘솔 오류 0)** — xlsx 3시트만 cherry-pick: `CSM워터폴` 124셀(KR0003 9 · KR0009 38 · KR0070 43 · KR0099 34) · `손익분해PL` 466셀(30 · 135 · 158 · 143) · `신계약CSM배수` 24셀(KR0009 10 · KR0070 14), 나머지 16시트 값 동일(백업 `insurequant_master_tables.xlsx.bak_20261023_four_d1d3`).
   NB_CSM_multiple.json 24셀만 셀 단위(가드)로 갱신: ABL 2023.1Q~4Q · 현대해상 2023.1Q~3Q, KB라이프·롯데손보는 신계약 CSM(항목 2)이 안 바뀌어 0셀. `panel_compare.json` 사별 52값(기말 CSM 10 · 배수 5 · 신계약CSM 5 · 보험손익 10 · 투자손익 11 · 당기순이익 11, 큰 이동 현대해상 기말 CSM 2023.2Q 91,361 -> 85,984억 · 2023.1Q 89,209 -> 84,533억, ABL 2023.3Q 9,731 -> 8,439억), `panel_csm_combo.json` 7값(신계약 CSM, 메타 불변).
@@ -14,11 +19,6 @@
   `panel_compare.json` 사별 91값 + 손보 ROE 중앙값 1(기말 CSM 11 · 보험손익 20 · 투자손익 22 · 당기순이익 22 · ROE 8 · 신계약CSM 4 · 배수 4, 큰 이동 한화생명 신계약CSM 2023.2Q 13,592 -> 11,643억, 메리츠 기말 CSM 2023.2Q 100,684 -> 97,015억), `panel_csm_combo.json` 20값(신계약 CSM 6 + 대조 메타 `csm_mismatch` 4 -> 3). 공개본 `손익분해PL` 1,045 · `CSM워터폴` 132 · manifest build_id `afea4342`.
   `check_master_xlsx_drift` RED 2 -> 0 · `validate_live_artifacts` RED 6 -> 0(NB_VS_WATERFALL 4 + PUBLIC_EXPORT_DRIFT 2) · `validate_data_contract` RED=0 · YELLOW 169 불변 · `validate_master_tables --no-build` 요약이 parser 골든과 동일 · 골든 3종 · `test_rule_coverage_manifest` 104 · deploy_assets 12 · push_gate_wiring 66.
   화면 노출: compare.html 0값 · CSM 워터폴/NB/콤보 0값 · IFRS17.html 3번 패널(PL 연도모드 4Q) 39셀만(KB손보 2023.4Q 15 · 미래에셋 2023.4Q 11 · 푸본현대 2024.4Q 10 · ABL 2024.4Q 3). 공개본은 NB 마스터 커밋 뒤 `export_public_sheets.py` 재실행으로 신계약CSM배수 20셀 + build_id `0d10810a` 반영(`62ba44ed`). 증빙 `data/_derived/remaining_20261022/e21_ready25/p5_resync/`.
-
-- **2026-10-23 parser `5419a817`(최신 비교열 21버킷 · 11사 KR0032 KR0068 KR0069 KR0070 KR0071 KR0072 KR0082 KR0083 KR0087 KR0094 KR0104 · 값 84 + 값_당분기 110셀) 파생 산출물 재생성 · 배포 완료(push `2d14e4e5`, main `72999c88` 에 위 항목과 함께)** — xlsx `손익분해PL` 1시트만 cherry-pick 194셀(전부 11사, 13801행 불변), 나머지 18시트 값 동일(수식·피벗·차트 거부 없음, 백업 `insurequant_master_tables.xlsx.bak_20261023_pl_e20`).
-  `panel_compare.json` 9값뿐(보험손익 3 · 투자손익 4 · 당기순이익 1 · ROE 1 = NH농협손보 2023.1Q · DB생명 2023.1Q/2Q · 푸본현대 2024.3Q), 중앙값·메타 불변. `panel_csm_combo.json` 은 `--check` 만(불변). 공개본 `손익분해PL` 194셀(11사) + manifest build_id `5419a817`.
-  `check_master_xlsx_drift` RED 1 -> 0 · `validate_data_contract` RED=0 · YELLOW 169 불변 · `validate_master_tables --no-build` 요약은 직전과 같고 `oci_vs_bs_aoci` 23Y -> 21Y 만 달라짐(parser 쪽 실측과 동일) · 골든 3종 · `test_rule_coverage_manifest` 104 · live_artifacts RED=0.
-  2023.1Q/2Q 바뀐 값은 화면에 안 나온다(compare.html 은 최신 분기만 · IFRS17.html 표는 4Q+최신 / 최근 5분기 창). 남은 것: 재커밋 뒤 `export_public_sheets.py` 로 build_id 재생성. 증빙 `data/_derived/remaining_20261022/e20_held_and_remaining/p4_resync/`.
 
 ## 열린 일
 

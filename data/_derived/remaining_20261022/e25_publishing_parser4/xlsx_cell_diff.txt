@@ -1,0 +1,20 @@
+sheets equal: True 19
+요약: identical
+17BS: identical
+K-ICS공시: identical
+유지율: identical
+손해율: identical
+CSM워터폴: changed cells=3 codes={'KR0003': 3} quarters={'2023.4Q': 3}
+CSM상각: identical
+신계약CSM배수: identical
+손익분해PL: changed cells=389 codes={'KR0009': 15, 'KR0010': 2, 'KR0032': 85, 'KR0068': 43, 'KR0070': 144, 'KR0082': 40, 'KR0087': 35, 'KR0099': 9, 'KR0104': 16} quarters={'2023.1Q': 84, '2023.2Q': 91, '2023.3Q': 53, '2023.4Q': 19, '2024.1Q': 24, '2024.2Q': 27, '2024.3Q': 26, '2024.4Q': 14, '2025.1Q': 8, '2025.2Q': 9, '2025.3Q': 8, '2025.4Q': 8, '2026.1Q': 8, '2026.2Q': 10}
+배당: identical
+기본자본소진율: identical
+보완자본소진율: identical
+자본비율전망: identical
+가정민감도: identical
+금리민감도: identical
+자본성증권발행현황: identical
+금리듀레이션갭: identical
+보험계약부채: identical
+보험금예실차비율: identical

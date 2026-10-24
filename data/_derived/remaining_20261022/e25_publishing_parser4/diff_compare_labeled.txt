@@ -1,0 +1,6 @@
+ins_profit   KR0032 NH농협손해보험 2023.2Q: None -> 1133
+inv_profit   KR0032 NH농협손해보험 2023.2Q: None -> 785
+changed values: 2
+meta identical
+companies identical
+loss_curve identical
