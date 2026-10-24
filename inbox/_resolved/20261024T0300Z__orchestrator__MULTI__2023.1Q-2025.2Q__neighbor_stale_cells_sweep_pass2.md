@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261024T0300Z
-status: answered
+status: resolved
 route: reparse
 lane: ifrs17
 company: MULTI (KR0070 KR0009 KR0087 KR0068 KR0079 KR0005 KR0032 KR0082 KR0099)
