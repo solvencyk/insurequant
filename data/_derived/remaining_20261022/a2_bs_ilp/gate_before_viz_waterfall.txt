@@ -1,3 +1,0 @@
-.                                                                        [100%]
-1 passed in 3.60s
-exit 0  secs 8

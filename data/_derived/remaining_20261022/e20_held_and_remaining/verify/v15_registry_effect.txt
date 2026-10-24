@@ -1,4 +1,0 @@
-null_dangi cells 76; master 값_당분기 not null: []
-set_dangi cells 40; master != registry value: []
-keys in both null_dangi and set_dangi (refused by builder): set()
-gold set entries 741; master 값 != gold 값: 2 [('KR0072', '2023.2Q', 7, -18990.0, -17294.0), ('KR0072', '2023.3Q', 7, -44935.275872, -52310.275872)]

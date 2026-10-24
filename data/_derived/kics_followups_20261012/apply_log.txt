@@ -1,8 +1,0 @@
-live master sha 4ce39b259814 | rows 29992 | round-trip identical: True
-live master == git HEAD before the change: True (list equality incl. order)
-planned: edits=4 cells, inserts=16 rows
-verified vs HEAD: all 29992 HEAD rows present, same relative order, changed cells == planned 4 edit cells exactly, new keys == planned 16 inserts exactly (no deletions, no other cells)
-rows of all companies outside ['KR0049', 'KR1107']: identical to HEAD (list equality incl. order): True
-new master bytes sha 3b377532fab9 | rows 30008
-backup: C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\kics_followups_20261012\backup\kics_disclosure_before_4ce39b259814.json
-APPLIED ['pacific_tfi_zero', 'axa_2024_3q_latest']: edits=4 inserts=16 rows_total=30008 sha=3b377532fab9906d1d14803381383fa2c1dd0325cf962a71525e4ecf4b31fb7f

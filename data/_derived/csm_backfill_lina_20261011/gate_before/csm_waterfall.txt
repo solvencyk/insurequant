@@ -1,8 +1,0 @@
-Wrote C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\csm_backfill_lina_20261011\gate_before\csm_waterfall_validation.json
-  pass=41 fail=0 nb_fail=0 in_scope=41 excluded_pre_ifrs17=6 total=47
-  EXCLUDED (pre-IFRS17, FY2022): 라이나생명보험 20230414000060
-  EXCLUDED (pre-IFRS17, FY2022): 메트라이프생명보험 20230407003159
-  EXCLUDED (pre-IFRS17, FY2022): 아이비케이연금보험 20230407000580
-  EXCLUDED (pre-IFRS17, FY2022): 에이아이에이생명보험 20230410002773
-  EXCLUDED (pre-IFRS17, FY2022): 처브라이프생명보험 20230412002541
-  EXCLUDED (pre-IFRS17, FY2022): 하나생명보험 20230331001232

@@ -1,9 +1,0 @@
-compare.html (14-quarter trend, all quarters): changed 값 cells  PL items 1/17/24 (보험손익/투자손익/당기순이익 연누계, ROE 분자): {'KR0003': 3, 'KR0009': 9, 'KR0070': 11, 'KR0072': 11, 'KR0099': 9}
-compare.html: changed CSM 기말(item 6) cells: {'KR0003': 1, 'KR0009': 3, 'KR0070': 3, 'KR0072': 3, 'KR0099': 3} ; changed NB CSM (item 2, feeds nb_csm/nb_multiple after resync): {'KR0009': 2, 'KR0070': 3, 'KR0072': 3}
-IFRS17.html Panel1 year-mode (latest 2026.2Q + year-ends 2025/2024/2023) -> 2023.4Q bucket + opening bar visible. Changed 2023.4Q CSM cells:
-   KR0099 none
-   KR0003 [(1, 16774.4, 16669.0), (3, 780.5, 777.0), (4, 2801.0, 2795.0), (5, -1868.5, -1859.0), (6, 23966.2, 23860.8)]
-   KR0070 [(1, 7017.8, 7585.3), (4, -1148.8, -1716.3)]
-   KR0009 [(1, 88281.1, 83515.4), (4, -7480.6, -2715.9), (5, -8805.5, -8805.4), (6, 91423.7, 91422.7)]
-   KR0072 [(1, 5239.4, 5695.9), (4, -2103.5, -2560.0)]
-IFRS17.html Panel1 quarter-mode (last 5 quarters 2025.2Q-2026.2Q), Panel3 (latest only, 2026.2Q): changed cells in window = 0 (all changes are 2023.x)

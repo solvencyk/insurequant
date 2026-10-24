@@ -1,4 +1,0 @@
-recomputed est_unreliable (12): ['KR0001', 'KR0002', 'KR0003', 'KR0011', 'KR0029', 'KR0049', 'KR0050', 'KR0074', 'KR0079', 'KR0095', 'KR1098', 'KR1101']
-panel meta est_unreliable (12): ['KR0001', 'KR0002', 'KR0003', 'KR0011', 'KR0029', 'KR0049', 'KR0050', 'KR0074', 'KR0079', 'KR0095', 'KR1098', 'KR1101']
-equal: True
-KR0099 max dev = 0.0007459088342822717

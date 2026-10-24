@@ -1,8 +1,0 @@
-rows HEAD=47 new=47 · same codes=True · same order=True · templates==root: True
-differing leaf fields: 109 · outside `confidence`: 0
-confidence.level changes: 5
-  KR0051.confidence.level: low -> high
-  KR0068.confidence.level: low -> high
-  KR0079.confidence.level: low -> high
-  KR0083.confidence.level: low -> high
-  KR1011.confidence.level: low -> high

@@ -1,8 +1,0 @@
-HEAD-diff CSM_waterfall.json
-          WT-modified-vs-HEAD NB_CSM_multiple.json
-HEAD-diff PL_breakdown.json
-          WT-modified-vs-HEAD data/compare/panel_compare.json
-          WT-modified-vs-HEAD data/csm_combo/panel_csm_combo.json
-          WT-modified-vs-HEAD jp-f9027362/jesr_detail.json
-          WT-modified-vs-HEAD jp-f9027362/jesr_esr.json
-total differing: 7

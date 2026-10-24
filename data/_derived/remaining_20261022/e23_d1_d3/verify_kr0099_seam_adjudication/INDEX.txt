@@ -1,7 +1,0 @@
-KR0099 seam adjudication (validation, 2026-10-23, read-only on repo files; only this folder written)
-VERDICT: not_a_defect. 2023.1Q-3Q (new, FY2024 interim prior columns) and 2023.4Q (FY2023 annual current) are ONE vintage (policy-change-B basis).
-s01_dump_is.py/.txt   IS tables (separate, 4-2) of FY2023 Q3, FY2023 annual, FY2024 Q3, FY2024 annual
-s02_grep_restate.*    restatement wording hits per filing
-s03_vfa_note.*        notes: FY2023 annual retroactively restates past periods (VFA first applied at year end, accounting-policy change); FY2024 annual restates again (note 45/46, insurance-finance systematic allocation; 당기순이익 258,511 -> 236,403)
-s04_note_restated_9m.* FY2023 annual separate note: 2023-09-30 summary P&L before(A)/after(B): B == FY2024 Q3 prior-year 9M column; A == FY2023 Q3 original 9M column
-s05_compare.py/.txt   12 PL items: c(orig 9M)=HEAD 3Q, a(FY2024Q3 prior 9M)=LIVE 3Q, b(annual)=4Q (HEAD==LIVE); 4Q single on each reading; d(FY2024 annual prior) = the ticket's comparison column (2nd restatement, excluded by option B)

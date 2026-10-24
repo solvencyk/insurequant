@@ -1,4 +1,0 @@
-FY2024_Q1 consolidated-copy T20300 section (8082, '3. 연결재무제표 주석') ; separate-copy T39850 section (28399, '5. 재무제표 주석') ; rows identical: True
-FY2024_Q2 consolidated-copy T20912 section (8535, '3. 연결재무제표 주석') ; separate-copy T41503 section (29784, '5. 재무제표 주석') ; rows identical: True
-FY2024_Q3 consolidated-copy T20361 section (8220, '3. 연결재무제표 주석') ; separate-copy T40587 section (29202, '5. 재무제표 주석') ; rows identical: True
-FY2024_Q4 consolidated-copy T26772 section (9012, '3. 연결재무제표 주석') ; separate-copy T55940 section (38821, '5. 재무제표 주석') ; rows identical: True

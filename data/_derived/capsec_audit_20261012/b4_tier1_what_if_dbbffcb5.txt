@@ -1,9 +1,0 @@
-PIN rev=dbbffcb5 registry=1eb96b5cb635
-KR0011 DB손해보험 | 제3·4·5회 -> 보완자본형 (X 검정 쪽, 집계 잔차 113 대 2,973) | displayed 151.6% (mine 151.6%: legacy 0.0 / new 151.6) -> alternative 75.0% (legacy 0.0 / new 75.0)  [-76.6%p]
-KR0011 DB손해보험 | 제2~5회 -> 보완자본형 (제2회 사모 1,200억도 보완자본형이면) | displayed 151.6% (mine 151.6%: legacy 0.0 / new 151.6) -> alternative 64.6% (legacy 0.0 / new 64.6)  [-87.1%p]
-KR1000 코리안리 | 제5·6회 -> 기본자본형 (발행사가 기본자본으로 처리한 경우) | displayed 94.0% (mine 94.0%: legacy 94.0 / new 0.0) -> alternative 205.1% (legacy 94.0 / new 205.1)  [+111.1%p]
-KR1000 코리안리 | 제6회만 -> 기본자본형 | displayed 94.0% (mine 94.0%: legacy 94.0 / new 0.0) -> alternative 98.1% (legacy 94.0 / new 98.1)  [+4.1%p]
-KR0104 농협생명 | 제5회 -> 기본자본형 | displayed 48.5% (mine 48.5%: legacy 48.5 / new 0.0) -> alternative 72.7% (legacy 48.5 / new 72.7)  [+24.2%p]
-KR0083 푸본현대 | 2023-02 600억 -> 기본자본형 | displayed 17.3% (mine 17.3%: legacy 17.3 / new 3.2) -> alternative 42.1% (legacy 17.3 / new 42.1)  [+24.8%p]
-KR0097 하나생명 | 제1회 -> 보완자본형 (이전 분류) | displayed 238.2% (mine 238.2%: legacy 0.0 / new 238.2) -> alternative 0.0% (legacy 0.0 / new 0.0)  [-238.1%p]
-KR0073 교보 | 2024-11 -> 보완자본형 (이전 분류) | displayed 70.1% (mine 70.1%: legacy 70.1 / new 56.8) -> alternative 70.1% (legacy 70.1 / new 0.0)  [+0.0%p]

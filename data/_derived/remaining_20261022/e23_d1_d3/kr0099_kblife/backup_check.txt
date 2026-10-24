@@ -1,8 +1,0 @@
-data/_gold/user_pl_cells.json: backup == git HEAD (newline-normalised) True; sha256 == manifest before_sha256 True
-PL_breakdown.json: backup == git HEAD (newline-normalised) True; sha256 == manifest before_sha256 True
-PL_breakdown_provenance.json: backup == git HEAD (newline-normalised) True; sha256 == manifest before_sha256 True
-data/_gold/user_csm_cells.json: backup == git HEAD (newline-normalised) True; sha256 == manifest before_sha256 True
-CSM_waterfall.json: backup == git HEAD (newline-normalised) True; sha256 == manifest before_sha256 True
-CSM_waterfall_provenance.json: backup == git HEAD (newline-normalised) True; sha256 == manifest before_sha256 True
-tests/test_rule_coverage_manifest.py: backup == git HEAD (newline-normalised) True; sha256 == manifest before_sha256 True
-ALL OK

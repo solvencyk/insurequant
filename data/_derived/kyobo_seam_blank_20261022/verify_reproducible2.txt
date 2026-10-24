@@ -1,9 +1,0 @@
-  pl 의도적 null (0-fill 억제): 50 cells — 폴백을 끈다
-  pl 기타사업비(item16)->null: 37 cells (보험손익 closes without -16, was silently 0)
-  pl overrides: 482 set
-  pl 값_당분기 의도적 null (누계 유지): 1 cells
-  pl 값_당분기 공시 3개월 인쇄값 고정 (누계 유지): 29 cells
-verify: KR0073 rows 448; fresh real build_pl() (live builder + live gold) differs from live in 0 KR0073 cells -> OK
-verify: non-KR0073 drift now 495 vs snapshot 495 -> OK (identical set)
-verify: live KR0073 vs expectation (SET/NULL from seam_3m_plan.json, everything else == git HEAD, 값 == HEAD): 0 deviations -> OK
-verify: cells that differ from git HEAD (값_당분기 only): 17; quarters ['2023.3Q']; items [1, 2, 3, 4, 5, 6, 7, 11, 12, 15, 17, 19, 20, 22, 23, 24, 31]

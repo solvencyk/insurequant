@@ -1,3 +1,0 @@
-.                                                                        [100%]
-1 passed in 2.41s
-test_viz_ifrs17_panels_golden exit 0 secs 11

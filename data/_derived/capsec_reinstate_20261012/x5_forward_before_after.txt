@@ -1,5 +1,0 @@
-rows 230 | total-capital-path diffs (capital, scr, ratio, cumulative deductions, remaining by type): 0 []
-row-level fields that vanished: ['baseline_basis_flag', 'baseline_basis_note']
-projection-level fields that vanished: ['basic_capital_by_type_eok', 'basic_ratio_by_type_pct'] ; new: []
-row-level fields whose value changed (other than vanished): [('KR0001', 'hybrid_classification'), ('KR0002', 'hybrid_classification'), ('KR0003', 'hybrid_classification'), ('KR0005', 'hybrid_classification'), ('KR0011', 'hybrid_classification'), ('KR0032', 'hybrid_classification'), ('KR0050', 'hybrid_classification'), ('KR0068', 'hybrid_classification'), ('KR0071', 'hybrid_classification'), ('KR0072', 'hybrid_classification'), ('KR0073', 'outstanding_hybrid_by_type_eok'), ('KR0073', 'hybrid_classification')]
-companies whose basic path / hybrid_tier1 / overflow changed: []

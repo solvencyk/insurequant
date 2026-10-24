@@ -1,7 +1,0 @@
-KR0070 (ABL Life) latest-comparative plan, 2026-10-22, parser/ifrs17, READ-ONLY (no master, gold, provenance or doc written).
-plan_KR0070.json      the contract for the apply step: buckets[], cells[] (24), seam_cells[] (0), neighbour_effects[] (8), auto_follow_cells[] (24), verification{}, apply_contract{gold_set_cells,...}
-KR0070_plan.py        builder (own XML reader KR0070_xml.py); KR0070_plan_report.txt = readable report; KR0070_plan_run.log
-KR0070_line_verify.py/.txt   independent line-level re-read: 33 line checks, 0 problems
-KR0070_stmt_dump.txt  every row of the separate 4-2 statement of FY2023_Q4..FY2025_Q4 filings with column contexts and value lines
-KR0070_d5_view.txt, KR0070_census_dump.txt, KR0070_master_dump.txt, KR0070_csm_dump.txt   census / master facts used
-Reproduce: python KR0070_plan.py ; python KR0070_line_verify.py ; python KR0070_check_plan.py   (python = C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe)

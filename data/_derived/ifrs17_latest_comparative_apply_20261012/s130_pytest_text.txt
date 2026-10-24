@@ -1,1 +1,0 @@
-전체 `pytest tests`(8분짜리 `test_ifrs17_bs_golden` 제외, 712초): 2,007개 중 1,999 통과 · 7 skip · 1 실패(= `test_master_tables_golden`, 위 SUMMARY 이동 한 건뿐).

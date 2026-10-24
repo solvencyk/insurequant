@@ -1,9 +1,0 @@
-### data_contract: exit A=2 B=2
-A SUMMARY: SUMMARY RED=5 YELLOW=147 provisional=False
-B SUMMARY: SUMMARY RED=6 YELLOW=147 provisional=False
-RED lines: A 5 | B 6 | only in A 0 | only in B 1 | same RED line but message changed 0
-  only B: ('master_tables.xlsx', 'MASTER_XLSX_DRIFT', '- CSM워터폴')  값이 다른 셀 15건 / 2340행 — ('KR0074', '라이나생명보험', 'X', '생명보험', 1, '기초 CSM', '2023.4Q')|값_당분기: 시트=None vs 마스터='35381.22909' / ('KR0074', '라이나생명보험', 'X', '생명보
-### master_tables: exit A=2 B=2
-A SUMMARY: SUMMARY coverage_hole:0CSM/2PL | closing:390P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3456P(진짜1177·구성상1944·부분335)/29F/2945S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:1ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:380P/5PIN/0F/5S | qoq_warn:262Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:14Y
-B SUMMARY: SUMMARY coverage_hole:0CSM/2PL | closing:390P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3456P(진짜1177·구성상1944·부분335)/29F/2945S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:1ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:380P/5PIN/0F/5S | qoq_warn:262Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:14Y
-master_tables output differences A->B: 0 lines

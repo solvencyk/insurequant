@@ -1,5 +1,0 @@
-SQ_CSM_ROLL n=333 pass=328 fail=5
-   passing |gap| max=1.000억 at ('KR0009', '2024.4Q'); p99=0.200; count>0.5억: 1
-   failing |gap| min=105.30억 (0.454% of close) at ('KR0003', '2024.4Q')
-   top passing gaps: KR0082 2024.3Q 0.20, KR0082 2024.2Q 0.20, KR0072 2024.4Q 0.20, KR0073 2024.4Q 0.20, KR0104 2023.2Q 0.20, KR0009 2024.4Q 1.00
-SQ_AMORT n=327  fail@tol(single)=2 [(('KR0073', '2023.3Q'), -1017.39), (('KR0083', '2026.2Q'), 0.15)]  fail@tol(q)+tol(q-1)=1 [(('KR0073', '2023.3Q'), -1017.39)]

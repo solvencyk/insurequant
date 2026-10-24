@@ -1,8 +1,0 @@
-KR0003 2023.1Q diff=19.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=NEITHER scope=EXCL 한도초과=0 (※ branch=NEITHER 라 한도초과를 0 으로 뒀다 — 3_tier2_composition 가 별도로 RED/SKIP)
-KR0075 2024.3Q diff=15.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=NEITHER scope=INCL 한도초과=0 (※ branch=NEITHER 라 한도초과를 0 으로 뒀다 — 3_tier2_composition 가 별도로 RED/SKIP)
-KR0075 2024.4Q diff=87.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=NEITHER scope=INCL 한도초과=0 (※ branch=NEITHER 라 한도초과를 0 으로 뒀다 — 3_tier2_composition 가 별도로 RED/SKIP)
-KR1000 2024.4Q diff=-1090.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=CAPPED scope=EXCL 한도초과=0
-KR0029 2025.3Q diff=-58.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=CAPPED scope=EXCL 한도초과=0
-KR1105 2026.2Q diff=5499.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=CAPPED scope=EXCL 한도초과=0 (근사치 5499 를 item12=0 로 클램프 — 한도초과액은 불인정항목의 구성요소라 그보다 클 수 없다)
-KR1105 2026.1Q diff=5769.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=CAPPED scope=EXCL 한도초과=0 (근사치 5769 를 item12=0 로 클램프 — 한도초과액은 불인정항목의 구성요소라 그보다 클 수 없다)
-KR1105 2025.1Q diff=6309.0 detail=item2 == item4 − (item12 − 한도초과) − item13 [값] branch=CAPPED scope=EXCL 한도초과=0 (근사치 6309 를 item12=0 로 클램프 — 한도초과액은 불인정항목의 구성요소라 그보다 클 수 없다)

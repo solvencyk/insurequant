@@ -1,6 +1,0 @@
-item25: rows/null_dangi/null_cum old=(374, 110, 86) new=(374, 122, 86)
-item26: rows/null_dangi/null_cum old=(374, 121, 98) new=(374, 132, 98)
-item31: rows/null_dangi/null_cum old=(374, 109, 86) new=(374, 120, 86)
-item17: rows/null_dangi/null_cum old=(476, 106, 27) new=(476, 107, 27)
-item24: rows/null_dangi/null_cum old=(643, 77, 0) new=(643, 78, 0)
-item25 pl_dangi dict size 374; None entries 122 (these are counted into the gate's "비교가능 N건은 tol 이내")

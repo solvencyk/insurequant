@@ -1,3 +1,0 @@
-손익분해PL changed rows by company {'교보생명보험': 19} quarters {'2023.3Q': 19} columns {'값_당분기': 19} cells 19
-manifest diff: build_id eea3f61c -> 5f818b59
-manifest diff: generated_at_utc 2026-10-21T16:38:58Z -> 2026-10-21T18:03:58Z

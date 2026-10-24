@@ -1,8 +1,0 @@
-cells with an expense line: 273  master item 19 computed from a printed-negative expense line: 7
-한화손해보험 2023.4Q master=4283.0 sign-normalised=-4037.0 (eok)
-한화손해보험 2024.1Q master=1083.2 sign-normalised=-1024.2 (eok)
-한화손해보험 2024.2Q master=2245.6 sign-normalised=-1988.3 (eok)
-한화손해보험 2024.3Q master=3314.8 sign-normalised=-2996.4 (eok)
-한화손해보험 2024.4Q master=4495.1 sign-normalised=-3996.6 (eok)
-흥국화재 2025.3Q master=-2612.0 sign-normalised=-2615.4 (eok)
-삼성생명보험 2023.3Q master=80099.1 sign-normalised=-59649.1 (eok)

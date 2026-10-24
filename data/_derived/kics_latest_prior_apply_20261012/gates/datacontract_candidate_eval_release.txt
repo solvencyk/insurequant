@@ -1,2 +1,0 @@
-live: 110 findings (RED 1) | candidate: 109 findings (RED 0) | new 0 (RED 0) | gone 1 (10s)
-  GONE: ["census", "RED", "KICS_2_tier1_bridge", "롯데손해보험", "2025.1Q", "K-ICS rule 2_tier1_bridge: item2 == item4 − (item12 − 한도초과) − item13 [값] branch=CAPPED scope=EXCL 한도초과=0 (expected=-3553.0 actual=-2348.0 diff=1205.0)"]

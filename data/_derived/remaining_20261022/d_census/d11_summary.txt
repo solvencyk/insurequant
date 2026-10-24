@@ -1,6 +1,0 @@
-rows 104; A51 51
-A51 disposition: Counter({'STAY': 32, 'OWNER_DECISION': 19})
-A51 closes: Counter({'YES': 20, 'NO': 19, 'N/A (nothing to adopt)': 9, 'UNVERIFIED': 3})
-A51 cause: Counter({'restatement': 42, 'master_extraction_error': 5, 'api_sign_presentation': 3, 'already_adopted': 1})
-A51 (disposition, screen): Counter({('STAY', 'material'): 23, ('OWNER_DECISION', 'material'): 17, ('STAY', 'none'): 9, ('OWNER_DECISION', 'small'): 2})
-ADDL: Counter({('ADDL_SIBLING', 'STAY'): 22, ('ADDL_OCI_ONLY', 'OWNER_DECISION'): 11, ('ADDL_CSM_ONLY', 'STAY'): 10, ('ADDL_OCI_ONLY', 'SAFE_NOW'): 6, ('ADDL_OCI_ONLY', 'STAY'): 3, ('ADDL_SIBLING', 'SAFE_NOW'): 1})

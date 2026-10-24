@@ -1,8 +1,0 @@
-updated tests/fixtures/builder_input_fingerprints.json
-  ifrs17_bs: inputs 2258개/3577.0MB · code 18개 · outputs 1개
-  pl_breakdown: inputs 1587개/2013.1MB · code 14개 · outputs 2개
-  viz_csm_waterfall: inputs 767개/50.7MB · code 1개 · outputs 1개
-  viz_ifrs17_panels: inputs 769개/51.4MB · code 1개 · outputs 4개
-  dividend: inputs 626개/11.2MB · code 1개 · outputs 1개
-  post_transition: inputs 654개/42.6MB · code 2개 · outputs 0개
-rc=0

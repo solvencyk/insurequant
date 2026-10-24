@@ -1,7 +1,0 @@
-[loss_ratio] companies=44 quarters=['2023.4Q', '2024.4Q', '2025.4Q'] bytes=206,065
-[loss_ratio] non-standard column sets: 3 (company,quarter)
-[loss_ratio] (company,quarter,segment) without a total row: 0 []
-[loss_ratio] leaf rows 2302 -> all-dash rows dropped 1463; group (구분/상품구분) rows computed 566; rows shipped 1514
-[loss_ratio] ratio vs expected/risk-premium recon outside tolerance: 0 cells (info)
-[persistency] companies=37 quarters=['2023.2Q', '2023.4Q', '2024.2Q', '2024.4Q', '2025.2Q', '2025.4Q', '2026.2Q'] bytes=423,498
-[persistency] rate-only rows ignored inside amount-based bundles: 52; rows with target>0 but no retained amount excluded from sums: 10

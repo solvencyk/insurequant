@@ -1,8 +1,0 @@
-== CSM_waterfall.json: changed cells by (field, shown_in_IFRS17_table): {('값', False): 55, ('값_당분기', False): 77}
-== PL_breakdown.json: changed cells by (field, shown_in_IFRS17_table): {('값', False): 401, ('값_당분기', False): 605, ('값', True): 39}
-   shown: KR0010 KB손해보험 2023.4Q: 15 cells
-   shown: KR0070 에이비엘생명보험 2024.4Q: 3 cells
-   shown: KR0079 미래에셋생명보험 2023.4Q: 11 cells
-   shown: KR0083 푸본현대생명보험 2024.4Q: 10 cells
-== NB_CSM_multiple.json: changed cells by (field, shown_in_IFRS17_table): {('신계약CSM_당분기', False): 6, ('신계약CSM_연누계', False): 4, ('신계약CSM배수_당분기', False): 6, ('신계약CSM배수_연누계', False): 4}
-== panel_compare.json: changed company values 91, shown on compare.html (= last non-null for that metric): 0

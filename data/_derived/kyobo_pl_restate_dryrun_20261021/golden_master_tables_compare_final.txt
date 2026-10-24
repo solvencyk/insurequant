@@ -1,9 +1,0 @@
-fixture exit_code: 2
-fixture == baseline(before ticket) summary: True
-fixture == post-E5 summary: False
-fixture == final summary: False
-fields moved (fixture -> final):
-    pl_bridge:3676P(진짜1291·구성상2050·부분335)/23F/2731S/0NEW -> pl_bridge:3696P(진짜1299·구성상2060·부분337)/23F/2711S/0NEW
-    tax22_src:282P/0F/361S -> tax22_src:278P/4F/361S
-    csm_amort_identity:386P/2PIN/0F/5S -> csm_amort_identity:387P/1PIN/0F/5S
-    qoq_warn:266Y -> qoq_warn:262Y

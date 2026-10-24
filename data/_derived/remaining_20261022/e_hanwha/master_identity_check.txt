@@ -1,8 +1,0 @@
-2025.3Q {'open': 91091.4, 'new': 14898.1, 'int': 2662.6, 'est': -12153.3, 'amort': -5904.8, 'close': 90594.0} identity resid 0.0
-  master {'open': 91091.4, 'new': 14898.1, 'int': 2662.5, 'est': -12153.3, 'amort': -5904.8, 'close': 90594.0}
-2025.4Q {'open': 182182.8, 'new': 20662.6, 'int': 3577.7, 'est': -20322.2, 'amort': -7872.9, 'close': 87136.5} identity resid 91091.4
-  master {'open': 91091.4, 'new': 20662.6, 'int': 3577.7, 'est': -20322.2, 'amort': -7872.9, 'close': 87136.5}
-2026.1Q {'open': 87136.5, 'new': 6109.3, 'int': 885.4, 'est': -3007.5, 'amort': -1914.4, 'close': 89209.4} identity resid 0.0
-  master {'open': 87136.5, 'new': 6109.3, 'int': 885.4, 'est': -3007.5, 'amort': -1914.4, 'close': 89209.4}
-2026.2Q {'open': 87136.5, 'new': 13001.1, 'int': 1804.4, 'est': -8927.2, 'amort': -3730.2, 'close': 89284.6} identity resid -0.0
-  master {'open': 87136.5, 'new': 13001.1, 'int': 1804.5, 'est': -8927.2, 'amort': -3730.2, 'close': 89284.6}

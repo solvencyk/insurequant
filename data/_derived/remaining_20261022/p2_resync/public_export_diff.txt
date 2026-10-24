@@ -1,5 +1,0 @@
-손익분해PL rows 13801 changed rows by company {'교보생명보험': 18} quarters {'2024.4Q': 4, '2025.1Q': 4, '2025.2Q': 5, '2025.3Q': 5} columns {'값': 13, '값_당분기': 18} cells 31
-17BS rows 11016 changed rows by company {'교보생명보험': 6} quarters {'2023.4Q': 5, '2024.4Q': 1} columns {'값': 6} cells 6
-보험계약부채 rows 6343 changed rows by company {'교보생명보험': 4} quarters {'2023.4Q': 4} columns {'기준표시': 4, '비고': 4, '값': 3} cells 11
-manifest diff: build_id 5f818b59 -> 9dfd28f9
-manifest diff: generated_at_utc 2026-10-21T18:03:58Z -> 2026-10-22T04:24:06Z

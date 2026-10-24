@@ -1,7 +1,0 @@
-KR0104 2023.4Q item 24 dangi head=45930.724834 cur=882.990769 (eok head=459.3 cur=8.8)
-KR0104 2023.4Q item 17 dangi head=17866.657834 cur=-40712.097876 (eok head=178.7 cur=-407.1)
-KR0005 2023.4Q item 24 dangi head=134335.0 cur=130284.0 (eok head=1343.3 cur=1302.8)
-KR0032 2023.4Q item 24 dangi head=50306.281146 cur=None (eok head=503.1 cur=None)
-KR0032 2023.4Q item 25 dangi head=-95408.149205 cur=None (eok head=-954.1 cur=None)
-KR0087 2023.4Q item 24 dangi head=78252.556175 cur=None (eok head=782.5 cur=None)
-KR0087 2023.4Q item 25 dangi head=-396681.294858 cur=None (eok head=-3966.8 cur=None)

@@ -1,6 +1,0 @@
-wrote data\dart\viz\pl_breakdown_master.json (12122 rows, 374 company-quarters)
-Tier-1 source: FS-API=282  HTML-fallback=44
-intentional nulls (0-fill suppressed): 50 cells -> data\_derived\pl_intentional_nulls.json
-item32 provenance: 267 company-quarters -> data\_derived\pl_oci_item32_provenance.json
-
---- stderr ---

@@ -1,3 +1,0 @@
-손익분해PL rows 13801 changed rows by company {'흥국화재': 56, 'NH농협손해보험': 40, '에이비엘생명보험': 32, 'DB생명보험': 8, '푸본현대생명보험': 24, '동양생명': 41, '농협생명보험': 34} quarters {'2023.3Q': 32, '2023.4Q': 50, '2024.1Q': 43, '2024.2Q': 43, '2024.3Q': 43, '2024.4Q': 24} columns {'값': 171, '값_당분기': 215} cells 386
-manifest diff: build_id 9dfd28f9 -> acdb2fe9
-manifest diff: generated_at_utc 2026-10-22T04:24:06Z -> 2026-10-22T11:20:10Z

@@ -1,4 +1,0 @@
-기본자본소진율: rows before=470 after=470 header_same=True · changes by column: {'비고': 188, '값': 54}
-보완자본소진율: rows before=658 after=658 header_same=True · changes by column: {'값': 47, '비고': 141}
-자본비율전망: rows before=2530 after=2530 header_same=True · changes by column: {'_diagnostics': 605, '비고': 275}
-total changed cells (incl. 비고/_diagnostics): 1310

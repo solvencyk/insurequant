@@ -1,7 +1,0 @@
-mutation col        : exit 1  PROBLEM lines 58  crashed False  -> DETECTED
-mutation tbl        : exit 1  PROBLEM lines 29  crashed False  -> DETECTED
-mutation plan_line  : exit 1  PROBLEM lines 1  crashed False  -> DETECTED
-mutation plan_value : exit 1  PROBLEM lines 1  crashed False  -> DETECTED
-mutation plan_csm   : exit 1  PROBLEM lines 1  crashed False  -> DETECTED
-mutation plan_unit  : exit 1  PROBLEM lines 1  crashed False  -> DETECTED
-ALL MUTATIONS DETECTED

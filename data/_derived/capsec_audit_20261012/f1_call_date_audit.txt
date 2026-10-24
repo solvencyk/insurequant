@@ -1,3 +1,0 @@
-bonds with outstanding > 0 whose call date is not issue + 5y (+-3 days): 2
-  KR0011 DB손해보험 hybrid       issue 2025-09-01 call 2030-09-25 (expected 2030-09-01, +24 days) src=disclosed out=7470.0 | 제1회 신종자본증권 (공모)
-  KR0011 DB손해보험 hybrid       issue 2025-09-25 call 2030-09-01 (expected 2030-09-25, -24 days) src=disclosed out=1200.0 | 제2회 신종자본증권 (사모)

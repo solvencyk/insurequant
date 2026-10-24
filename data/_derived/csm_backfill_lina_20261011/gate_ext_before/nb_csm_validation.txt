@@ -1,3 +1,0 @@
-Wrote C:\Users\sangwook.cho\Desktop\insurequant\data\_derived\csm_backfill_lina_20261011\gate_ext_before\nb_csm_validation.json
-  tested=5 pass=5 fail=0 fallback_pass=1
-  FALLBACK 현대해상: prem=2025.1H (prefer=FY2024) - aligned-period row(s) failed, suspect upstream data integrity

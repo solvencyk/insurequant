@@ -1,3 +1,0 @@
-viz_ifrs17_panels: inputs 769 files, 1.0s; stored inputs_sha256 82237fff5967 actual 8a763c6474bd
-RED lines: 1
-  RED [viz_ifrs17_panels] INPUTS_MOVED — 빌더 입력이 바뀌었는데 골든 fixture 는 그대로다. 마스터가 낡았을 수 있다 (파일 769→769개, 51368484→51368493 bytes). → 전체 골든을 돌려서 산출이 정말 안 움직였는지 확인한 뒤, 움직였으면 골든을 --update 하고, 그다음 `python scripts/validate_golden_input_fingerprints.py --update`

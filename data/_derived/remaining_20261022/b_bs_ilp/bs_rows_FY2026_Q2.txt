@@ -1,1 +1,0 @@
-file=data/dart/FY2026_Q2/raw/KR0073_교보생명보험/20260814004024.xml sep_fs_title=None sep_notes_title=None

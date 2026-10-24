@@ -1,2 +1,0 @@
-updated C:\Users\sangwook.cho\Desktop\insurequant\tests\fixtures\master_tables_golden.json: exit=2
-  SUMMARY coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/1wfy/0zamort | pl_bridge:3773P(진짜1345·구성상2085·부분343)/18F/2639S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:388P/1PIN/0F/4S | qoq_warn:263Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:26Y/103blank/10bsskip

@@ -1,8 +1,0 @@
-KR0082 (DB Life) latest-comparative plan for bucket 2023.3Q, 2026-10-22, parser/ifrs17, READ-ONLY (no master, gold, provenance or doc written).
-plan_KR0082.json       contract for the apply step: buckets[] (2023.3Q adopt; 2023.1Q/2Q info, not approved), cells[] (4: items 1,16,17,18), seam_cells[] (4, all set_dangi from the printed 3-month column, 0 null_dangi),
-                       auto_follow_cells[] (4, 2023.4Q single quarter moves by itself), neighbour_effects[] (8 unchanged), verification{}, apply_contract{gold_set_cells, gold_set_notes, set_dangi_cells, null_dangi_cells, do_not_touch, census_note}
-KR0082_plan.py         builder (own XML reader KR0082_xml.py, no scripts/ or src/ imports); KR0082_plan_report.txt readable report
-KR0082_line_verify.py/.txt  independent line-level re-read (own parser, column proven by cell position because these filings carry no ACONTEXT): 47 line checks, 0 problems
-KR0082_stmt_dump.txt   every row of the separate 4-2 statement of FY2023_Q3..FY2024_Q4 filings; KR0082_titles.txt statement locations
-KR0082_d5_view.txt, KR0082_census_dump.txt, KR0082_master_dump.txt, KR0082_csm_dump.txt, KR0082_peek_gold.txt  census / master / gold facts used; KR0082_peek_plan.py/.txt quick view of plan_KR0082.json
-Reproduce: python KR0082_plan.py ; python KR0082_line_verify.py   (python = C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe)

@@ -1,3 +1,0 @@
-lines before 612 after 612
-only in before: ['R2_CENSUS KR1102 2026.1Q: no row in master, not documented']
-only in after : ['R4_NA_VS_MISSING KR1102 2026.1Q: item1-8 present but item9 (해지율 예외모형 사용여부) not resolved -- 2-5 section located but N/A-vs-used undetermined, or 2-5 header not found within lookahead window']

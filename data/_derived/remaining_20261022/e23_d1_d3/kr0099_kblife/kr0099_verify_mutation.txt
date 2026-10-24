@@ -1,8 +1,0 @@
-mutation 0 [stmt 2023.3Q i22 line-4 (prior 3m column)]: verifier exit 1 -> DETECTED; first problem: L25427: printed '394,831' != raw '93,100'
-mutation 1 [stmt 2023.2Q i24 line-8 (current cum column)]: verifier exit 1 -> DETECTED; first problem: L29361: printed '235,038' != raw '211,995'
-mutation 2 [pl4 2023.2Q line-6 (3-month 합계 column)]: verifier exit 1 -> DETECTED; first problem: PL4 L42515: header path ['전반기', '3개월', '합계'] is not [prior period, (누적), 합계]
-mutation 3 [csm 2023.1Q item 5 line-1 (위험조정 column)]: verifier exit 1 -> DETECTED; first problem: CSM L34276: header path ['전분기', '미래 현금흐름의 현재가치 추정치'] is not [prior period, 보험계약마진]
-mutation 4 [value 2023.1Q i17 +1]: verifier exit 1 -> DETECTED; first problem: recomputed 119675.0 != plan 119676.0
-mutation 5 [item 3 2023.1Q rev line of the total row]: verifier exit 1 -> DETECTED; first problem: L25504: printed '182,886' != raw '201,596'
-mutation 6 [old != HEAD (2023.3Q i22 old +5)]: verifier exit 1 -> DETECTED; first problem: old 396257.0 != HEAD master 396252.0
-mutations missed: 0

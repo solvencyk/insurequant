@@ -1,6 +1,0 @@
-public PL changed cells: 386 | master changed cells: 386 | equal: True
-public PL columns: ['원수사명', '티커', '생손보여부', '항목번호', '항목명', '공시분기', '값', '값_당분기']
-manifest line count HEAD/WORK: 89 89
-manifest differing lines: [('"generated_at_utc": "2026-10-22T04:24:06Z",', '"generated_at_utc": "2026-10-22T11:20:10Z",'), ('"build_id": "9dfd28f9",', '"build_id": "acdb2fe9",')]
-HEAD manifest has CRLF: False | WORK has CRLF: True
-git status public_exports:  M public_exports/manifest.json |  M "public_exports/\354\206\220\354\235\265\353\266\204\355\225\264PL.json" | 

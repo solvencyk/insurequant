@@ -1,8 +1,0 @@
-BOM: False
-ast ok, bytes 18998
-data/dart/viz/bs_manual_overrides.json valid json, BOM: False
-data/_derived/ilp_restated_comparative.json valid json, BOM: False
-insurance_liability_portfolio_provenance.json valid json, BOM: False
-tests/fixtures/ifrs17_bs_golden.json valid json, BOM: False
-tests/fixtures/builder_input_fingerprints.json valid json, BOM: False
-KR0073 override keys: []

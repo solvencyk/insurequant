@@ -1,9 +1,0 @@
-e19 independent verification (validation stage, read-only). Verdict PASS. No repo file other than this folder was written (sha256 of root/_derived/viz/_gold json before == after).
-v1_diff.py/txt    cell-level diff vs git HEAD: 13801 rows both, 0 added/removed, order same; 235 rows changed = 171 value + 215 single-quarter fields; only 7 companies, items 1,16-32; gold: 495->666 (+171 set, 0 existing modified), null_dangi +17, set_dangi +20; provenance: 19 income_statement blocks + 1 merge note.
-vrd.py vstmt.py   own DART XML table reader (separate 4-2 statement, prior cumulative column, unit-aware)
-v4_check.py/txt   all 19 buckets: 170/171 changed values equal later-filing prior cumulative column; the 171st plus KR0104 item 26 hand-read from the statement lines (26 = -102,609,145,045; 29 = 2,251,740,457). Unchanged cells equal later filing too, except KR0087 2024.3Q rounding (<=0.5) and KR0104 item 32 (held, 0.034).
-v5_dangi.py/txt   20/20 set_dangi equal the later filing prior 3-month print; 17 null_dangi cells are null in master
-v6_goldcheck      171/171 changed values are new gold entries (was == HEAD master, value == master); existing gold values untouched; 1 existing-gold key (KR0083 2024.3Q item 27) has a changed single-quarter field (set_dangi)
-v8_ident          identities, NI/OCI deltas, single-quarter recompute (215/215 changed cells, 53/53 random 25 percent)
-v7_seam, v9_q4    neighbour/seam census (KR0087/KR0070 2024.4Q annual comparative differs from master in 25/26/31(32): outside the 19 buckets)
-g_*.txt t_*.txt   gate outputs and pytest outputs

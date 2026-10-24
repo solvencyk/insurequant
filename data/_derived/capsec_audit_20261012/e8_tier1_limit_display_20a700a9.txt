@@ -1,3 +1,0 @@
-PIN rev=20a700a9 tier1=a5ee7d2b744a
-binding_leg counts: {None: 33, 'legacy_15': 9, 'basic_10': 5}
-companies printing Y = 15% x SCR with item 53 = 0 (no grandfathered hybrid): 0 of 47  (the percentage is 0.0 for all of them, only the printed Y differs from the 10% rule)

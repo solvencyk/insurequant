@@ -1,3 +1,0 @@
-.                                                                        [100%]
-1 passed in 3.39s
-test_master_tables_golden exit 0 secs 10

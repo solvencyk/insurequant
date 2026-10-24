@@ -1,7 +1,0 @@
-DB손해보험 KR0011  quiet-quarter changes of X: 2023.3Q +433, 2023.4Q -258, 2024.1Q +1003, 2024.2Q +360, 2024.3Q -1963, 2024.4Q +954, 2025.1Q +660, 2025.4Q +72
-robust sigma (1.4826 MAD) = 653 ; plain stdev = 894
-[2025.3Q] A(item6 change)=8650.0 dX=+1347.7 | H1 (tier1-type, cap 9783.3, pool 0.0->8650.0) expected +0.0 residual +1347.7 (2.1 sigma) | H2 (tier2-type) expected +8650.0 residual -7302.3 (11.2 sigma)
-[2026.1Q] A(item6 change)=4413.0 dX=+4834.3 | H1 (tier1-type, cap 9866.6, pool 8650.0->13063.0) expected +3196.4 residual +1637.9 (2.5 sigma) | H2 (tier2-type) expected +4413.0 residual +421.3 (0.6 sigma)
-[2026.2Q] A(item6 change)=4389.0 dX=+4080.6 | H1 (tier1-type, cap 11509.9, pool 13063.0->17452.0) expected +2745.7 residual +1334.9 (2.0 sigma) | H2 (tier2-type) expected +4389.0 residual -308.4 (0.5 sigma)
-[2026.1Q+2026.2Q aggregate] dX=+8914.9 | H1 expected +5942.1 residual +2972.8 (3.2 sigma_agg) | H2 expected +8802.0 residual +112.9 (0.1 sigma_agg)
-implied overflow if 'other' stayed at its 2025.4Q level (3215.2): 2026.1Q 4834.3 (H1 model 3196.4, H2 model 4413.0); 2026.2Q 8914.9 (H1 model 5942.1, H2 model 8802.0)

@@ -1,8 +1,0 @@
-== tests/fixtures/master_tables_golden.json: 1 differing leaf(s)
-   /summary: SUMMARY fields changed:
-      pl_bridge:3773P(진짜1345·구성상2085·부분343)/18F/2639S/0NEW   ->   pl_bridge:3783P(진짜1351·구성상2089·부분343)/18F/2629S/0NEW
-      qoq_warn:263Y   ->   qoq_warn:265Y
-      oci_vs_bs_aoci:26Y/103blank/10bsskip   ->   oci_vs_bs_aoci:28Y/101blank/11bsskip
-== tests/fixtures/builder_input_fingerprints.json: 2 differing leaf(s)
-   /specs/viz_ifrs17_panels/input_bytes: '51368531' -> '51368530'
-   /specs/viz_ifrs17_panels/inputs_sha256: 'd4f260ea966a11e0774c455e281856cae26ed7b9db7f93e0b2f84433bd07ebd7' -> 'ad800b59a2b594d123dc4554ab6f766ebedf8a6a48e798e7f253fd36224f7795'

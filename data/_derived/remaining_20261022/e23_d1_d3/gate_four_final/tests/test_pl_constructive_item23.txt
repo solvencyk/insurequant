@@ -1,2 +1,0 @@
-PASSED tests/test_rule_coverage_manifest.py::test_pl_constructive_coverage_matches_manifest[23]
-15 passed in 26.40s

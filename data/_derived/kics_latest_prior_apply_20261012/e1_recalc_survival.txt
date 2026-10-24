@@ -1,8 +1,0 @@
-candidate built, cells 65
-recalc stats live: {'item3_added': 0, 'item3_updated': 0, 'item4_reconciled': 0, 'item8_zeroed': 0, 'item10_zeroed': 0, 'item18_added': 0, 'item18_zeroed': 0, 'item22_zeroed': 1, 'item22_added': 0, 'item27_updated': 139, 'item27_added': 0, 'item28_updated': 55, 'item28_added': 0, 'item28_post_updated': 69}
-recalc stats cand: {'item3_added': 0, 'item3_updated': 0, 'item4_reconciled': 0, 'item8_zeroed': 0, 'item10_zeroed': 0, 'item18_added': 0, 'item18_zeroed': 0, 'item22_zeroed': 1, 'item22_added': 0, 'item27_updated': 139, 'item27_added': 0, 'item28_updated': 55, 'item28_added': 0, 'item28_post_updated': 69}
-cells recalc moves on live master: 175 | on candidate: 175
-cells recalc moves ONLY on the candidate (would revert / alter ticket cells): 0
-recalc moves inside the 16 touched buckets (candidate): 0
-planned cells NOT surviving recalc: 0
-KR0070 2024.3Q item22 after recalc, starting from 1: 0 (post 1 )

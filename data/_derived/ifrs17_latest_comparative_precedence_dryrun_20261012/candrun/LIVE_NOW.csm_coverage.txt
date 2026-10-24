@@ -1,6 +1,0 @@
-CSM COMPLETENESS  companies=44  quarters=13
-  legitimate-absence (no raw filed): 202 cells
-  RED (raw exists, cell MISSING = parser gap): 1
-    RED  KR1098  카카오페이손해보험  2023.4Q
-
-CSM COVERAGE GAPS PRESENT

@@ -1,7 +1,0 @@
-  pl 의도적 null (0-fill 억제): 50 cells — 폴백을 끈다
-  pl 기타사업비(item16)->null: 37 cells (보험손익 closes without -16, was silently 0)
-  pl overrides: 482 set
-  pl 값_당분기 의도적 null (누계 유지): 28 cells
-verify: KR0073 rows 448; fresh real build_pl() (live builder + live gold) differs from live in 0 KR0073 cells -> OK
-verify: non-KR0073 drift now 495 vs snapshot 495 -> OK (identical set)
-verify: vs git HEAD the live KR0073 PL differs in 28 cells (all inside the 28 targets: True); cumulative 값 diffs 0; all 28 targets blank: True -> OK

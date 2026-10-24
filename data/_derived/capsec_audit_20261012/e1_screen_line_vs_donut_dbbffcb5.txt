@@ -1,2 +1,0 @@
-PIN rev=dbbffcb5 tier1=80f2e1696cbd tier2=378131037f67
-number line vs donut: tier1 inconsistent 0 / 47 ; tier2 inconsistent 0 / 47 (tolerance 0.6%p)

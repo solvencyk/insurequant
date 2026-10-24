@@ -1,3 +1,0 @@
-removed==added keys: True ; n=19 ; equals the 19 buckets income_statement: True
-top-level keys differing outside cells: ['merge_note_20261022_e19_latest_comparative']
-generated_at head=20260920T0000Z cur=20260920T0000Z

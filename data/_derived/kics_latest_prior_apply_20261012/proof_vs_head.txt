@@ -1,6 +1,0 @@
-live sha fcad5cce2ca1 rows 30011 | HEAD rows 30011 | canonical bytes (CRLF, indent 2, no BOM): True
-(1) all 30011 HEAD keys present, same relative order, no new keys: True
-(2) cells changed vs HEAD: 65 == planned 65 exactly (old -> new equal to the plan)
-(3) rows of all companies outside ['KR0003', 'KR0004', 'KR0009', 'KR0032', 'KR0049', 'KR0050', 'KR0069', 'KR0071', 'KR0072', 'KR0080', 'KR0095', 'KR0099']: identical to HEAD (list equality incl. order)
-   cells by kind: {'primary': 33, 'post_mirror': 22, 'derived_ratio': 10} | blocks: 16
-(4) git diff --numstat kics_disclosure.json: 65	65	kics_disclosure.json

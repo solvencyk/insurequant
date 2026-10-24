@@ -1,5 +1,0 @@
-disk == rebuilt: True
-KR0099 14 rows; quarters ['2023.1Q', '2023.2Q', '2023.3Q'] ... NB CSM 연누계 non-null: 14 multiple non-null: 14
-KR0003 14 rows; quarters ['2023.1Q', '2023.2Q', '2023.3Q'] ... NB CSM 연누계 non-null: 14 multiple non-null: 14
-KR0070 14 rows; quarters ['2023.1Q', '2023.2Q', '2023.3Q'] ... NB CSM 연누계 non-null: 14 multiple non-null: 14
-KR0009 14 rows; quarters ['2023.1Q', '2023.2Q', '2023.3Q'] ... NB CSM 연누계 non-null: 14 multiple non-null: 14
