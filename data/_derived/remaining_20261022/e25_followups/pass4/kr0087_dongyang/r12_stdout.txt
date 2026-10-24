@@ -1,0 +1,28 @@
+##### FY2025_Q1 data/dart/FY2025_Q1/raw/KR0087_동양생명/20250515001025.xml  separate-basis notes start at L26384; tables with the CSM-release row: [(35995, 36353), (36357, 36718)]
+   [current] table@L35995-36353 preceding='9,336 | 순자산(부채) (K = A + G + J) | (23,215) | 7,958 | 19,305 | 4,048 | (6) 당분기와 전분기 중 당사 재보험계약의 측정요소별 변동내역은 다음과 같습니다.'
+      CSM-release row R36117: -@36120 | -@36121 | (1,247)@36122 | 2,125@36123 | (1,339)@36124 | (461)@36125 | (461)@36126   -> TOTAL (461)@L36126
+      RA-release  row R36129: -@36131 | (295)@36132 | -@36133 | -@36134 | -@36135 | -@36136 | (295)@36137   -> TOTAL (295)@L36137
+      opening row R36038 first 5 numbers: [404947.0, 13731.0, 59459.0, -57622.0, 28611.0]
+      check: CSM columns (수정소급+공정가치+그 밖) -461 vs 소계 -461 vs 합계 -461; RA row columns sum -295 vs total -295
+   [prior] table@L36357-36718 preceding='순자산(부채) (K = A + G + J) | 458,331 | 18,361 | 43,240 | (107,657) | 49,376 | (15,041) | 461,651'
+      CSM-release row R36479: -@36482 | -@36483 | (46)@36484 | 2,126@36485 | (144)@36486 | 1,936@36487 | 1,936@36488   -> TOTAL 1,936@L36488
+      RA-release  row R36491: -@36493 | (425)@36494 | -@36495 | -@36496 | -@36497 | -@36498 | (425)@36499   -> TOTAL (425)@L36499
+      opening row R36400 first 5 numbers: [76215.0, 23030.0, -452.0, -89800.0, 3340.0]
+      check: CSM columns (수정소급+공정가치+그 밖) 1,936 vs 소계 1,936 vs 합계 1,936; RA row columns sum -425 vs total -425
+##### FY2025_Q3 data/dart/FY2025_Q3/raw/KR0087_동양생명/xml/20251114002594.xml  separate-basis notes start at L38841; tables with the CSM-release row: [(54585, 54982), (55014, 55411)]
+   [current] table@L54585-54982 preceding='재보험계약부채(자산)의 보험계약 구성요소별 변동분에 대한 차이조정 공시 | 당분기 | (단위 : 백만원)'
+      CSM-release row R54779: 0@54782 | 0@54783 | 3,556@54784 | (6,438)@54785 | 4,283@54786 | 1,401@54787   -> TOTAL 1,401@L54787
+      RA-release  row R54790: 0@54792 | 841@54793 | 0@54794 | 0@54795 | 0@54796 | 841@54797   -> TOTAL 841@L54797
+      opening row R54666 first 5 numbers: [404948.0, 13731.0, 59459.0, -57622.0, 28611.0]
+      check: CSM columns (수정소급+공정가치+그 밖) 1,401 vs 합계 1,401; RA row columns sum 841 vs total 841
+   [prior] table@L55014-55411 preceding='전분기 | (단위 : 백만원)'
+      CSM-release row R55208: 0@55211 | 0@55212 | 1,594@55213 | (6,270)@55214 | 1,596@55215 | (3,079)@55216   -> TOTAL (3,079)@L55216
+      RA-release  row R55219: 0@55221 | 1,180@55222 | 0@55223 | 0@55224 | 0@55225 | 1,180@55226   -> TOTAL 1,180@L55226
+      opening row R55095 first 5 numbers: [76215.0, 23030.0, -452.0, -89800.0, 3340.0]
+      check: CSM columns (수정소급+공정가치+그 밖) -3,080 vs 합계 -3,079; RA row columns sum 1,180 vs total 1,180
+
+opening-balance fingerprint equal in the 1Q-prior and 3Q-prior tables: [76215.0, 23030.0, -452.0, -89800.0, 3340.0]  (same 2024-01-01 opening => the 3Q-prior table is the 9-month cumulative of 2024)
+2024.1Q: item 9 = -|1,936@L36488| = -1,936; item 10 = -|(425)@L36499| = -425   | live master 9=None 10=None 11=3805.0 12=None 8=3804.477666
+2024.3Q: item 9 = -|(3,079)@L55216| = -3,079; item 10 = -|1,180@L55226| = -1,180   | live master 9=None 10=None 11=-479.0 12=None 8=3848.737943
+current period 2025.1Q: CSM total (461)@L36126, RA total (295)@L36137  | live master 9=461.0 10=295.0 (gold=owner)  -> -|CSM|=-461 -|RA|=-295
+current period 2025.3Q: CSM total 1,401@L54787, RA total 841@L54797  | live master 9=-1401.0 10=-841.0 (gold=none)  -> -|CSM|=-1,401 -|RA|=-841

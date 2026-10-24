@@ -1,0 +1,93 @@
+NH file data/dart/FY2024_Q1/raw\KR0032_NH농협손해보험\20240514001436.xml statement table@L6536  (columns: cur 3M, cur cum, prior 3M, prior cum)
+NH file data/dart/FY2024_Q2/raw\KR0032_NH농협손해보험\20240814001448.xml statement table@L6428  (columns: cur 3M, cur cum, prior 3M, prior cum)
+NH file data/dart/FY2024_Q3/raw\KR0032_NH농협손해보험\20241114001354.xml statement table@L6433  (columns: cur 3M, cur cum, prior 3M, prior cum)
+OK  NH 2023.2Q item 1 prior cum                                    raw=113301.721794 master=113301.721794
+OK  NH 2023.2Q item 16 prior cum                                   raw=40748.545805 master=40748.545805
+OK  NH 2023.2Q item 17 prior cum                                   raw=78508.134986 master=78508.134986
+OK  NH 2023.2Q item 18 prior cum                                   raw=193067.163749 master=193067.163749
+OK  NH 2023.2Q item 19 prior cum                                   raw=-114559.028763 master=-114559.028763
+OK  NH 2023.2Q item 20 prior cum                                   raw=191809.85678 master=191809.85678
+OK  NH 2023.2Q item 21 prior cum                                   raw=-11911.001073 master=-11911.001073
+OK  NH 2023.1Q item 1 prior cum (compare: unchanged but 19)        raw=55130.707378 master=55130.707378
+OK  NH 2023.1Q item 16 prior cum (compare: unchanged but 19)       raw=20951.967361 master=20951.967361
+OK  NH 2023.1Q item 17 prior cum (compare: unchanged but 19)       raw=54365.643131 master=54365.643131
+OK  NH 2023.1Q item 18 prior cum (compare: unchanged but 19)       raw=110961.09562 master=110961.09562
+OK  NH 2023.1Q item 19 prior cum (compare: unchanged but 19)       raw=-56595.452489 master=-56595.452489
+OK  NH 2023.1Q item 20 prior cum (compare: unchanged but 19)       raw=109496.350509 master=109496.350509
+OK  NH 2023.1Q item 21 prior cum (compare: unchanged but 19)       raw=-5871.58859 master=-5871.58859
+OK  NH 2023.3Q item 1 prior cum (compare: already latest)          raw=63966.11964 master=63966.11964
+OK  NH 2023.3Q item 16 prior cum (compare: already latest)         raw=79739.314294 master=79739.314294
+OK  NH 2023.3Q item 17 prior cum (compare: already latest)         raw=80685.467309 master=80685.467309
+OK  NH 2023.3Q item 18 prior cum (compare: already latest)         raw=257079.264315 master=257079.264315
+OK  NH 2023.3Q item 19 prior cum (compare: already latest)         raw=-176393.797006 master=-176393.797006
+OK  NH 2023.3Q item 20 prior cum (compare: already latest)         raw=144651.586949 master=144651.586949
+OK  NH 2023.3Q item 21 prior cum (compare: already latest)         raw=-18126.412726 master=-18126.412726
+OK  NH 2023.2Q item 1 single quarter (master 값_당분기) vs printed prior 3M raw=58171.014416 master=58171.014416
+OK  NH 2023.2Q item 16 single quarter (master 값_당분기) vs printed prior 3M raw=19796.578444 master=19796.578444
+OK  NH 2023.2Q item 17 single quarter (master 값_당분기) vs printed prior 3M raw=24142.491855 master=24142.491855
+OK  NH 2023.2Q item 18 single quarter (master 값_당분기) vs printed prior 3M raw=82106.068129 master=82106.068129
+OK  NH 2023.2Q item 19 single quarter (master 값_당분기) vs printed prior 3M raw=-57963.576274 master=-57963.576274
+OK  NH 2023.2Q item 20 single quarter (master 값_당분기) vs printed prior 3M raw=82313.506271 master=82313.506271
+OK  NH 2023.2Q item 21 single quarter (master 값_당분기) vs printed prior 3M raw=-6039.412483 master=-6039.412483
+OK  NH 2023.3Q item 1 single quarter (master 값_당분기) vs printed prior 3M raw=-49335.602154 master=-49335.602154
+OK  NH 2023.3Q item 16 single quarter (master 값_당분기) vs printed prior 3M raw=38990.768489 master=38990.768489
+OK  NH 2023.3Q item 17 single quarter (master 값_당분기) vs printed prior 3M raw=2177.332323 master=2177.332323
+OK  NH 2023.3Q item 18 single quarter (master 값_당분기) vs printed prior 3M raw=64012.100566 master=64012.100566
+OK  NH 2023.3Q item 19 single quarter (master 값_당분기) vs printed prior 3M raw=-61834.768243 master=-61834.768243
+OK  NH 2023.3Q item 20 single quarter (master 값_당분기) vs printed prior 3M raw=-47158.269831 master=-47158.269831
+OK  NH 2023.3Q item 21 single quarter (master 값_당분기) vs printed prior 3M raw=-6215.411653 master=-6215.411653
+OK  NH 2023.1Q item 19 single quarter (= cumulative)               raw=-56595.452489 master=-56595.452489
+OK  NH FY2024_Q2 statement rows named 기타영업수익 (expected 0)          raw=0.0 master=0.0
+OK  NH 2023.2Q item 15 = 0.0 (structural zero, same as every other NH quarter) raw=0.0 master=0.0
+OK  NH 2023.1Q 보험손익 bridge adj form 2 + 15 - 16 - 1 (|.| <= 2 백만원) raw=0.0 master=0.32526099999813596
+OK  NH 2023.2Q 보험손익 bridge adj form 2 + 15 - 16 - 1 (|.| <= 2 백만원) raw=0.0 master=-1.2675989999988815
+OK  NH 2023.3Q 보험손익 bridge adj form 2 + 15 - 16 - 1 (|.| <= 2 백만원) raw=0.0 master=0.5660660000066855
+OK  NH 2023.3Q item 15 single quarter = 0 - 0                      raw=0.0 master=0.0
+OK  NH 2023.1Q master identity 1 + 17 - 20                         raw=0.0 master=0.0
+OK  NH 2023.1Q master identity 17 - (18 + 19)                      raw=0.0 master=7.275957614183426e-12
+OK  NH 2023.1Q master identity 20 + 21 - 22                        raw=0.0 master=0.0
+OK  NH 2023.2Q master identity 1 + 17 - 20                         raw=0.0 master=0.0
+OK  NH 2023.2Q master identity 17 - (18 + 19)                      raw=0.0 master=0.0
+OK  NH 2023.2Q master identity 20 + 21 - 22                        raw=0.0 master=0.0
+OK  NH 2023.3Q master identity 1 + 17 - 20                         raw=0.0 master=0.0
+OK  NH 2023.3Q master identity 17 - (18 + 19)                      raw=0.0 master=0.0
+OK  NH 2023.3Q master identity 20 + 21 - 22                        raw=0.0 master=0.0
+동양 2025.1Q file data/dart/FY2025_Q1/raw\KR0087_동양생명\20250515001025.xml: rollforward tables with the CSM-release row at lines [17822, 18184, 35995, 36357]
+   cons_cur   table@L17822 CSM total -461.0  RA total -295.0
+   cons_prior table@L18184 CSM total 1936.0  RA total -425.0
+   sep_cur    table@L35995 CSM total -461.0  RA total -295.0
+   sep_prior  table@L36357 CSM total 1936.0  RA total -425.0
+OK  동양 2025.1Q separate = consolidated (CSM total prior)           raw=1936.0 master=1936.0
+OK  동양 2025.1Q separate = consolidated (RA total prior)            raw=-425.0 master=-425.0
+동양 2025.3Q file data/dart/FY2025_Q3/raw\KR0087_동양생명\xml\20251114002594.xml: rollforward tables with the CSM-release row at lines [21474, 21903, 54585, 55014]
+   cons_cur   table@L21474 CSM total 1401.0  RA total 841.0
+   cons_prior table@L21903 CSM total -3079.0  RA total 1180.0
+   sep_cur    table@L54585 CSM total 1401.0  RA total 841.0
+   sep_prior  table@L55014 CSM total -3079.0  RA total 1180.0
+OK  동양 2025.3Q separate = consolidated (CSM total prior)           raw=-3079.0 master=-3079.0
+OK  동양 2025.3Q separate = consolidated (RA total prior)            raw=1180.0 master=1180.0
+OK  동양 2024.1Q item 9  = -|CSM total| (FY2025_Q1 separate prior)   raw=-1936.0 master=-1936.0
+OK  동양 2024.1Q item 10 = -|RA total|  (FY2025_Q1 separate prior)   raw=-425.0 master=-425.0
+OK  동양 2024.3Q item 9  = -|CSM total| (FY2025_Q3 separate prior)   raw=-3079.0 master=-3079.0
+OK  동양 2024.3Q item 10 = -|RA total|  (FY2025_Q3 separate prior)   raw=-1180.0 master=-1180.0
+OK  동양 2025.3Q item 9  = -|CSM total| (definition check, current table) raw=-1401.0 master=-1401.0
+OK  동양 2025.3Q item 10 = -|RA total|  (definition check, current table) raw=-841.0 master=-841.0
+OK  동양 2024.1Q item 11 blank (no expected/actual claims rows in the filing) raw=None master=None
+OK  동양 2024.1Q item 12 blank                                       raw=None master=None
+OK  동양 2024.3Q item 11 blank (no expected/actual claims rows in the filing) raw=None master=None
+OK  동양 2024.3Q item 12 blank                                       raw=None master=None
+동양 FY2025_Q1 '재보험계약의 보험서비스결과' rows (physical line, numbers [당분기, 전분기]): [(21179, [10633.0, 3805.0]), (39376, [10633.0, 3805.0])]
+OK  동양 old 2024.1Q item 11 3,805 == prior-period 재보험계약의 보험서비스결과 (|diff to item 8| <= 1) raw=3805.0 master=3804.477666
+OK  동양 2024.2Q item 9 single = cum2Q - cum1Q (printed 3M 593 -> -593, rounding 1) raw=-593.0 master=-592.0
+OK  동양 2024.2Q item 10 single = cum2Q - cum1Q (printed 3M (399))   raw=-399.0 master=-399.0
+OK  동양 2024.3Q item 9 single = cum3Q - cum2Q                       raw=-551.0 master=-551.0
+OK  동양 2024.3Q item 10 single = cum3Q - cum2Q                      raw=-356.0 master=-356.0
+OK  동양 2024.4Q item 9 single blank (seam)                          raw=None master=None
+OK  동양 2024.4Q item 10 single blank (seam)                         raw=None master=None
+OK  동양 2024.4Q owner-gold cumulatives untouched: item 9 -1,711     raw=-1711.0 master=-1711.0
+OK  동양 2024.4Q owner-gold cumulatives untouched: item 10 +1,559    raw=1559.0 master=1559.0
+OK  동양 2024.4Q item 12 owner-gold untouched 151.725926             raw=151.725926 master=151.72592600000007
+OK  동양 2025.1Q item 9 owner-gold untouched 461                     raw=461.0 master=461.0
+OK  동양 2025.1Q item 10 owner-gold untouched 295                    raw=295.0 master=295.0
+OK  동양 2025.1Q item 12 owner-gold untouched 6515.22178             raw=6515.22178 master=6515.22178
+TOTAL 78 bad 0

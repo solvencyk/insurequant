@@ -1,0 +1,20 @@
+PL gold: set 1523 -> 1537 (+14, 0 replaced in place); null_dangi cells 124 -> 125; set_dangi cells 40 -> 40
+CSM gold: set 417 -> 417 (0 new, 0 replaced in place, 0 removed)
+PL master: 값 changed 14, 값_당분기 changed 23 (dangi-only 10); delta cells 24
+  dangi changed per company: {'KR0032': 15, 'KR0087': 8}
+CSM master: 값 changed 0, 값_당분기 changed 0
+pre-existing live blanks overwritten by a derivation that equals the printed 3-month column: [(('KR0032', 16, '2023.3Q'), None, 38990.768489, 38990.768489)]
+PL provenance: 4 blocks replaced/inserted (live sidecar != emitter(live) on 1 of them; inserted []) + merge note
+CSM provenance: owner_override flagged on 0 blocks: []; owner_override cleared (last gold entry removed) on []
+census PL (gold cells, masked): (1523, 22) -> (1537, 22); CSM: (417, 77) -> (417, 77); ledger pins dropped: []
+tax22 branch-off failing buckets: 37 -> 37; new: []
+identity residuals before -> after per adopted bucket (백만원); worst |after| = 0.5020
+  KR0032 2023.1Q: 20-(1+17): +0.000 -> +0.000; 22-(20+21): +0.000 -> +0.000; |22-24|-|23|: +0.000 -> +0.000; 31-(24+25): +0.000 -> +0.000; 25-(26+27+28+29+30+32): -0.000 -> -0.000; 17-(18+19): +0.548 -> +0.000; 3-(4+5+6+7): +0.000 -> +0.000; 8-(9+10+11+12): +0.000 -> +0.000
+  KR0032 2023.2Q: 20-(1+17): - -> +0.000; 22-(20+21): - -> +0.000; |22-24|-|23|: +0.000 -> +0.000; 31-(24+25): +0.000 -> +0.000; 25-(26+27+28+29+30+32): +0.000 -> +0.000; 17-(18+19): - -> +0.000; 3-(4+5+6+7): - -> -; 8-(9+10+11+12): - -> -
+  KR0087 2024.1Q: 20-(1+17): +0.000 -> +0.000; 22-(20+21): +0.000 -> +0.000; |22-24|-|23|: +0.000 -> +0.000; 31-(24+25): +0.000 -> +0.000; 25-(26+27+28+29+30+32): +0.000 -> +0.000; 17-(18+19): -0.000 -> -0.000; 3-(4+5+6+7): +0.000 -> +0.000; 8-(9+10+11+12): - -> -
+  KR0087 2024.3Q: 20-(1+17): +0.171 -> +0.171; 22-(20+21): +0.502 -> +0.502; |22-24|-|23|: +0.000 -> +0.000; 31-(24+25): +0.007 -> +0.007; 25-(26+27+28+29+30+32): -0.173 -> -0.173; 17-(18+19): -0.443 -> -0.443; 3-(4+5+6+7): +0.000 -> +0.000; 8-(9+10+11+12): - -> -
+PL adopted buckets, 억원 (1억 = 100백만). 누계(값) before -> after | 단일분기(값_당분기) before -> after
+  NH농협손해보험 KR0032 2023.2Q 보험손익  : 누계        blank ->     1,133.02 | 단일분기        blank ->       581.71
+  NH농협손해보험 KR0032 2023.2Q 투자손익  : 누계        blank ->       785.08 | 단일분기        blank ->       241.42
+CSM 기말(항목 6) / 상각(항목 5), 억원: before -> after
+errors: none

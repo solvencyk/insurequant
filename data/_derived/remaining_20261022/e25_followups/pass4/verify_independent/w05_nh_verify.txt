@@ -1,0 +1,148 @@
+## 2023.1Q \KR0032_NH농협손해보험\20240514001436.xml table@6536
+  item15 label '기타영업수익' present in table: False
+  OK      item 1 값         raw=55130.707378 master=55130.707378
+  OK      item 1 값_당분기     raw=55130.707378 master=55130.707378
+  OK      item16 값         raw=20951.967361 master=20951.967361
+  OK      item16 값_당분기     raw=20951.967361 master=20951.967361
+  OK      item17 값         raw=54365.643131 master=54365.643131
+  OK      item17 값_당분기     raw=54365.643131 master=54365.643131
+  OK      item18 값         raw=110961.095620 master=110961.09562
+  OK      item18 값_당분기     raw=110961.095620 master=110961.09562
+  OK  CHG item19 값         raw=-56595.452489 master=-56595.452489
+  OK  CHG item19 값_당분기     raw=-56595.452489 master=-56595.452489
+  OK      item20 값         raw=109496.350509 master=109496.350509
+  OK      item20 값_당분기     raw=109496.350509 master=109496.350509
+  OK      item21 값         raw=-5871.588590 master=-5871.58859
+  OK      item21 값_당분기     raw=-5871.588590 master=-5871.58859
+  OK      item22 값         raw=103624.761919 master=103624.761919
+  OK      item22 값_당분기     raw=103624.761919 master=103624.761919
+  OK      item23 값         raw=24679.473634 master=24679.473634
+  OK      item23 값_당분기     raw=24679.473634 master=24679.473634
+  OK      item24 값         raw=78945.288285 master=78945.288285
+  OK      item24 값_당분기     raw=78945.288285 master=78945.288285
+  OK      item25 값         raw=946.363096 master=946.363096
+  OK      item25 값_당분기     raw=946.363096 master=946.363096
+  OK      item26 값         raw=107043.618556 master=107043.618556
+  OK      item26 값_당분기     raw=107043.618556 master=107043.618556
+  OK      item27 값         raw=-134270.119529 master=-134270.119529
+  OK      item27 값_당분기     raw=-134270.119529 master=-134270.119529
+  OK      item28 값         raw=13702.510768 master=13702.510768
+  OK      item28 값_당분기     raw=13702.510768 master=13702.510768
+  OK      item29 값         raw=2628.459715 master=2628.459715
+  OK      item29 값_당분기     raw=2628.459715 master=2628.459715
+  OK      item30 값         raw=11867.955382 master=11867.955382
+  OK      item30 값_당분기     raw=11867.955382 master=11867.955382
+  OK      item31 값         raw=79891.651381 master=79891.651381
+  OK      item31 값_당분기     raw=79891.651381 master=79891.651381
+  OK      item32 값         raw=-26.061796 master=-26.061796
+  OK      item32 값_당분기     raw=-26.061796 master=-26.061796
+## 2023.2Q \KR0032_NH농협손해보험\20240814001448.xml table@6428
+  item15 label '기타영업수익' present in table: False
+  OK  CHG item 1 값         raw=113301.721794 master=113301.721794
+  OK  CHG item 1 값_당분기     raw=58171.014416 master=58171.014416
+  OK  CHG item16 값         raw=40748.545805 master=40748.545805
+  OK  CHG item16 값_당분기     raw=19796.578444 master=19796.578444
+  OK  CHG item17 값         raw=78508.134986 master=78508.134986
+  OK  CHG item17 값_당분기     raw=24142.491855 master=24142.491855
+  OK  CHG item18 값         raw=193067.163749 master=193067.163749
+  OK  CHG item18 값_당분기     raw=82106.068129 master=82106.068129
+  OK  CHG item19 값         raw=-114559.028763 master=-114559.028763
+  OK  CHG item19 값_당분기     raw=-57963.576274 master=-57963.576274
+  OK  CHG item20 값         raw=191809.856780 master=191809.85678
+  OK  CHG item20 값_당분기     raw=82313.506271 master=82313.506271
+  OK  CHG item21 값         raw=-11911.001073 master=-11911.001073
+  OK  CHG item21 값_당분기     raw=-6039.412483 master=-6039.412483
+  OK      item22 값         raw=179898.855707 master=179898.855707
+  OK      item22 값_당분기     raw=76274.093788 master=76274.093788
+  OK      item23 값         raw=38631.287700 master=38631.2877
+  OK      item23 값_당분기     raw=13951.814066 master=13951.814066
+  OK      item24 값         raw=141267.568007 master=141267.568007
+  OK      item24 값_당분기     raw=62322.279722 master=62322.279722
+  OK      item25 값         raw=20012.596881 master=20012.596881
+  OK      item25 값_당분기     raw=19066.233785 master=19066.233785
+  OK      item26 값         raw=48991.210301 master=48991.210301
+  OK      item26 값_당분기     raw=-58052.408255 master=-58052.408255
+  OK      item27 값         raw=-9328.698015 master=-9328.698015
+  OK      item27 값_당분기     raw=124941.421514 master=124941.421514
+  OK      item28 값         raw=-26936.188637 master=-26936.188637
+  OK      item28 값_당분기     raw=-40638.699405 master=-40638.699405
+  OK      item29 값         raw=2405.373888 master=2405.373888
+  OK      item29 값_당분기     raw=-223.085827 master=-223.085827
+  OK      item30 값         raw=4898.771236 master=4898.771236
+  OK      item30 값_당분기     raw=-6969.184146 master=-6969.184146
+  OK      item31 값         raw=161280.164888 master=161280.164888
+  OK      item31 값_당분기     raw=81388.513507 master=81388.513507
+  OK      item32 값         raw=-17.871892 master=-17.871892
+  OK      item32 값_당분기     raw=8.189904 master=8.189904
+## 2023.3Q \KR0032_NH농협손해보험\20241114001354.xml table@6433
+  item15 label '기타영업수익' present in table: False
+  OK      item 1 값         raw=63966.119640 master=63966.11964
+  OK  CHG item 1 값_당분기     raw=-49335.602154 master=-49335.602154
+  OK      item16 값         raw=79739.314294 master=79739.314294
+  OK  CHG item16 값_당분기     raw=38990.768489 master=38990.768489
+  OK      item17 값         raw=80685.467309 master=80685.467309
+  OK  CHG item17 값_당분기     raw=2177.332323 master=2177.332323
+  OK      item18 값         raw=257079.264315 master=257079.264315
+  OK  CHG item18 값_당분기     raw=64012.100566 master=64012.100566
+  OK      item19 값         raw=-176393.797006 master=-176393.797006
+  OK  CHG item19 값_당분기     raw=-61834.768243 master=-61834.768243
+  OK      item20 값         raw=144651.586949 master=144651.586949
+  OK  CHG item20 값_당분기     raw=-47158.269831 master=-47158.269831
+  OK      item21 값         raw=-18126.412726 master=-18126.412726
+  OK  CHG item21 값_당분기     raw=-6215.411653 master=-6215.411653
+  OK      item22 값         raw=126525.174223 master=126525.174223
+  OK      item22 값_당분기     raw=-53373.681484 master=-53373.681484
+  OK      item23 값         raw=31486.717874 master=31486.717874
+  OK      item23 값_당분기     raw=-7144.569826 master=-7144.569826
+  OK      item24 값         raw=95038.456349 master=95038.456349
+  OK      item24 값_당분기     raw=-46229.111658 master=-46229.111658
+  OK      item25 값         raw=42130.996145 master=42130.996145
+  OK      item25 값_당분기     raw=22118.399264 master=22118.399264
+  OK      item26 값         raw=-24632.831625 master=-24632.831625
+  OK      item26 값_당분기     raw=-73624.041926 master=-73624.041926
+  OK      item27 값         raw=141581.087425 master=141581.087425
+  OK      item27 값_당분기     raw=150909.785440 master=150909.78544
+  OK      item28 값         raw=-61213.945292 master=-61213.945292
+  OK      item28 값_당분기     raw=-34277.756655 master=-34277.756655
+  OK      item29 값         raw=2656.281516 master=2656.281516
+  OK      item29 값_당분기     raw=250.907628 master=250.907628
+  OK      item30 값         raw=-16214.650478 master=-16214.650478
+  OK      item30 값_당분기     raw=-21113.421714 master=-21113.421714
+  OK      item31 값         raw=137169.452494 master=137169.452494
+  OK      item31 값_당분기     raw=-24110.712394 master=-24110.712394
+  OK      item32 값         raw=-44.945401 master=-44.945401
+  OK      item32 값_당분기     raw=-27.073509 master=-27.073509
+IDN OK  2023.1Q 값 1+17=20        lhs=109496.350509 rhs=109496.350509 diff=0.000000
+IDN OK  2023.1Q 값 17=18+19       lhs=54365.643131 rhs=54365.643131 diff=0.000000
+IDN OK  2023.1Q 값 20+21=22       lhs=103624.761919 rhs=103624.761919 diff=0.000000
+IDN OK  2023.1Q 값 22-23=24       lhs=78945.288285 rhs=78945.288285 diff=-0.000000
+IDN OK  2023.1Q 값 24+25=31       lhs=79891.651381 rhs=79891.651381 diff=0.000000
+IDN OK  2023.1Q 값_당분기 1+17=20        lhs=109496.350509 rhs=109496.350509 diff=0.000000
+IDN OK  2023.1Q 값_당분기 17=18+19       lhs=54365.643131 rhs=54365.643131 diff=0.000000
+IDN OK  2023.1Q 값_당분기 20+21=22       lhs=103624.761919 rhs=103624.761919 diff=0.000000
+IDN OK  2023.1Q 값_당분기 22-23=24       lhs=78945.288285 rhs=78945.288285 diff=-0.000000
+IDN OK  2023.1Q 값_당분기 24+25=31       lhs=79891.651381 rhs=79891.651381 diff=0.000000
+BRIDGE 2023.1Q cum: 2+13+14+15-16 = 55131.032639 vs item1 55130.707378 resid -0.325
+IDN OK  2023.2Q 값 1+17=20        lhs=191809.856780 rhs=191809.856780 diff=0.000000
+IDN OK  2023.2Q 값 17=18+19       lhs=78508.134986 rhs=78508.134986 diff=0.000000
+IDN OK  2023.2Q 값 20+21=22       lhs=179898.855707 rhs=179898.855707 diff=0.000000
+IDN OK  2023.2Q 값 22-23=24       lhs=141267.568007 rhs=141267.568007 diff=0.000000
+IDN OK  2023.2Q 값 24+25=31       lhs=161280.164888 rhs=161280.164888 diff=0.000000
+IDN OK  2023.2Q 값_당분기 1+17=20        lhs=82313.506271 rhs=82313.506271 diff=-0.000000
+IDN OK  2023.2Q 값_당분기 17=18+19       lhs=24142.491855 rhs=24142.491855 diff=-0.000000
+IDN OK  2023.2Q 값_당분기 20+21=22       lhs=76274.093788 rhs=76274.093788 diff=0.000000
+IDN OK  2023.2Q 값_당분기 22-23=24       lhs=62322.279722 rhs=62322.279722 diff=0.000000
+IDN OK  2023.2Q 값_당분기 24+25=31       lhs=81388.513507 rhs=81388.513507 diff=0.000000
+BRIDGE 2023.2Q cum: 2+13+14+15-16 = 113300.454195 vs item1 113301.721794 resid 1.268
+IDN OK  2023.3Q 값 1+17=20        lhs=144651.586949 rhs=144651.586949 diff=0.000000
+IDN OK  2023.3Q 값 17=18+19       lhs=80685.467309 rhs=80685.467309 diff=0.000000
+IDN OK  2023.3Q 값 20+21=22       lhs=126525.174223 rhs=126525.174223 diff=0.000000
+IDN OK  2023.3Q 값 22-23=24       lhs=95038.456349 rhs=95038.456349 diff=-0.000000
+IDN OK  2023.3Q 값 24+25=31       lhs=137169.452494 rhs=137169.452494 diff=0.000000
+IDN OK  2023.3Q 값_당분기 1+17=20        lhs=-47158.269831 rhs=-47158.269831 diff=0.000000
+IDN OK  2023.3Q 값_당분기 17=18+19       lhs=2177.332323 rhs=2177.332323 diff=-0.000000
+IDN OK  2023.3Q 값_당분기 20+21=22       lhs=-53373.681484 rhs=-53373.681484 diff=0.000000
+IDN OK  2023.3Q 값_당분기 22-23=24       lhs=-46229.111658 rhs=-46229.111658 diff=0.000000
+IDN OK  2023.3Q 값_당분기 24+25=31       lhs=-24110.712394 rhs=-24110.712394 diff=-0.000000
+BRIDGE 2023.3Q cum: 2+13+14+15-16 = 63966.685706 vs item1 63966.119640 resid -0.566
+TOTAL checks 138 BAD 0

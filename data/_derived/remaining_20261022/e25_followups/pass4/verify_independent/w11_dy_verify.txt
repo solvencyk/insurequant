@@ -1,0 +1,36 @@
+## FY2025_Q1 sep@26384 reinsurance rollforward tables(after sep marker): [35469, 35732, 35995, 36357, 36889]
+   table 35469 opening-total=449126.0
+   table 35732 opening-total=12334.0
+   table 35995 opening-total=449126.0
+   table 36357 opening-total=12333.0
+   table 36889 opening-total=None
+   prior-year (opening 12,333/12,334) tables: [36357]
+   t36357 CSM row L36479 printed total=1936.0 | RA row L36491 printed total=-425.0
+OK  2024.1Q item9 (CSM)                      |raw|=1936.0 master=-1936.0
+OK  2024.1Q item10 (RA)                      |raw|=425.0 master=-425.0
+## FY2025_Q2 sep@92934 reinsurance rollforward tables(after sep marker): [129780, 131751, 133854, 136022]
+   table 129780 opening-total=None
+   table 131751 opening-total=None
+   table 133854 opening-total=None
+   table 136022 opening-total=None
+   prior-year (opening 12,333/12,334) tables: []
+## FY2025_Q3 sep@38841 reinsurance rollforward tables(after sep marker): [53571, 54069, 54585, 55014]
+   table 53571 opening-total=449127.0
+   table 54069 opening-total=0.0
+   table 54585 opening-total=449127.0
+   table 55014 opening-total=12334.0
+   prior-year (opening 12,333/12,334) tables: [55014]
+   t55014 CSM row L55208 printed total=-3079.0 | RA row L55219 printed total=1180.0
+OK  2024.3Q item9 (CSM)                      |raw|=3079.0 master=-3079.0
+OK  2024.3Q item10 (RA)                      |raw|=1180.0 master=-1180.0
+## singles / structure
+OK  2024.2Q item9 single=-592.0 cum-diff=-592.0
+OK  2024.2Q item10 single=-399.0 cum-diff=-399.0
+OK  2024.3Q item9 single=-551.0 cum-diff=-551.0
+OK  2024.3Q item10 single=-356.0 cum-diff=-356.0
+2024.1Q item11 val/dangi=None/None item12 val/dangi=None/None
+   3=4+5+6+7: 60243.280248 vs 60243.280247999995 ; 2=3+8: 64047.757914 vs 64047.757914 ; 8=9+10+11+12: 3804.477666 vs sum(9,10)=-2361.0 (11,12 blank)
+2024.3Q item11 val/dangi=None/None item12 val/dangi=None/None
+   3=4+5+6+7: 254111.623446 vs 254111.623446 ; 2=3+8: 257960.361389 vs 257960.36138900003 ; 8=9+10+11+12: 3848.737943 vs sum(9,10)=-4259.0 (11,12 blank)
+4Q 9/10 cum -1711.0 1559.0; 4Q item11=5758.0 item8=5757.725926 diff=0.27407399999992776
+BAD total 0

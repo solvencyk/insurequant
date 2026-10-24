@@ -1,0 +1,7 @@
+drift cells before 349 after 389 added 40 resolved 0
+changed master fields 40
+sample key (('KR0087', '동양생명', None, '생명보험', 10, '재보험 위험조정 변동', '2024.1Q'), '값')
+key columns ['원보험사코드', '원수사명', '티커', '생손보여부', '항목번호', '항목명', '공시분기']
+added drift == changed fields? True | only in added: [] | only in changed: []
+resolved cells: []
+changed fields whose sheet value already equals the new master: []

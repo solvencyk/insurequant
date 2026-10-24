@@ -1,0 +1,32 @@
+===== 00908155_2023_11011_OFS.json: status 000, accounts 173, accounts named 기타영업수익 (the id dart_OtherOperatingIncomeInvestment is 기타투자수익, a different line): 0
+    CIS dart_InvestmentIncomeExpenses | 투자손익 | thstrm 98273181594 | frmtrm_add None | frmtrm 54869826997
+    CIS ifrs-full_InsuranceServiceResult | 보험손익 | thstrm 117305354631 | frmtrm_add None | frmtrm 241184241223
+    CIS dart_OtherOperatingExpenseInsurance | 기타사업비용 | thstrm 108374546045 | frmtrm_add None | frmtrm 86644555246
+    CIS ifrs-full_ProfitLossFromOperatingActivities | 영업이익 | thstrm 215578536225 | frmtrm_add None | frmtrm 296054068220
+===== 00908155_2023_11012_OFS.json: status 013 (no data)
+===== 00908155_2023_11013_OFS.json: status 013 (no data)
+===== 00908155_2023_11014_OFS.json: status 000, accounts 162, accounts named 기타영업수익 (the id dart_OtherOperatingIncomeInvestment is 기타투자수익, a different line): 0
+    CIS dart_InvestmentIncomeExpenses | 투자손익 | thstrm 2177332323 | frmtrm_add 45170721431 | frmtrm None
+    CIS ifrs-full_InsuranceServiceResult | 보험손익 | thstrm -49335602154 | frmtrm_add 173552082317 | frmtrm None
+    CIS dart_OtherOperatingExpenseInsurance | 기타사업비용 | thstrm 38990768489 | frmtrm_add 63227809600 | frmtrm None
+    CIS ifrs-full_ProfitLossFromOperatingActivities | 영업이익 | thstrm -47158269831 | frmtrm_add 218722803748 | frmtrm None
+===== 00908155_2024_11011_OFS.json: status 000, accounts 218, accounts named 기타영업수익 (the id dart_OtherOperatingIncomeInvestment is 기타투자수익, a different line): 0
+    CIS dart_InvestmentIncomeExpenses | 투자손익 | thstrm 85487301757 | frmtrm_add None | frmtrm 56554861367
+    CIS ifrs-full_InsuranceServiceResult | 보험손익 | thstrm 82923568979 | frmtrm_add None | frmtrm 117305354631
+    CIS dart_OtherOperatingExpenseInsurance | 기타사업비용 | thstrm 92407557272 | frmtrm_add None | frmtrm 108374546045
+    CIS ifrs-full_ProfitLossFromOperatingActivities | 영업이익 | thstrm 168410870736 | frmtrm_add None | frmtrm 173860215998
+===== 00908155_2024_11012_OFS.json: status 000, accounts 143, accounts named 기타영업수익 (the id dart_OtherOperatingIncomeInvestment is 기타투자수익, a different line): 0
+    CIS dart_InvestmentIncomeExpenses | 투자손익 | thstrm 29585842465 | frmtrm_add 78508134986 | frmtrm None
+    CIS ifrs-full_InsuranceServiceResult | 보험손익 | thstrm 60590426284 | frmtrm_add 113301721794 | frmtrm None
+    CIS dart_OtherOperatingExpenseInsurance | 기타사업비용 | thstrm 22794751840 | frmtrm_add 40748545805 | frmtrm None
+    CIS ifrs-full_ProfitLossFromOperatingActivities | 영업이익 | thstrm 90176268749 | frmtrm_add 191809856780 | frmtrm None
+===== 00908155_2024_11013_OFS.json: status 000, accounts 141, accounts named 기타영업수익 (the id dart_OtherOperatingIncomeInvestment is 기타투자수익, a different line): 0
+    CIS dart_InvestmentIncomeExpenses | 투자손익 | thstrm 22440106317 | frmtrm_add 54365643131 | frmtrm None
+    CIS ifrs-full_InsuranceServiceResult | 보험손익 | thstrm 61589783908 | frmtrm_add 55130707378 | frmtrm None
+    CIS dart_OtherOperatingExpenseInsurance | 기타사업비용 | thstrm 21464973009 | frmtrm_add 20951967361 | frmtrm None
+    CIS ifrs-full_ProfitLossFromOperatingActivities | 영업이익 | thstrm 84029890225 | frmtrm_add 109496350509 | frmtrm None
+===== 00908155_2024_11014_OFS.json: status 000, accounts 144, accounts named 기타영업수익 (the id dart_OtherOperatingIncomeInvestment is 기타투자수익, a different line): 0
+    CIS dart_InvestmentIncomeExpenses | 투자손익 | thstrm 38906076857 | frmtrm_add 80685467309 | frmtrm None
+    CIS ifrs-full_InsuranceServiceResult | 보험손익 | thstrm 9838914217 | frmtrm_add 63966119640 | frmtrm None
+    CIS dart_OtherOperatingExpenseInsurance | 기타사업비용 | thstrm 24405376895 | frmtrm_add 79739314294 | frmtrm None
+    CIS ifrs-full_ProfitLossFromOperatingActivities | 영업이익 | thstrm 48744991074 | frmtrm_add 144651586949 | frmtrm None

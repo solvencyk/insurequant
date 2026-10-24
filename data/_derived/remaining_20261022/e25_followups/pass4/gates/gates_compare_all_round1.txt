@@ -1,0 +1,50 @@
+==========================================================================================
+## master_tables
+  head(before): [gate_overlay] master_tables exit=2 lines=380 served_reads={} dropped_writes=['data\\_derived\\pl_oci_vs_bs_aoci_warn.json', 'data\\_derived\\qoq_warn.json'] -> master_tables.txt
+  head(after) : [gate_overlay] master_tables exit=2 lines=382 served_reads={} dropped_writes=['data\\_derived\\pl_oci_vs_bs_aoci_warn.json', 'data\\_derived\\qoq_warn.json'] -> master_tables.txt
+  summary lines differ:
+    - B: 4. QOQ_DELTA_WARN (시계열 급변, YELLOW)  flagged=265 (2024+, net-quarterly)
+    - B: 5. SENSITIVITY_UNIT_SANITY (max|csm_delta| / 그 회사 자신의 기말 CSM)  RED=0 YELLOW=0
+    - B: 6. PL_OCI_VS_BS_AOCI (PL 항목25 당분기 vs BS 항목4 QoQ delta, 백만원, YELLOW)  flagged=28 (비교한 266건 중 tol 이내 238건 | 비교 못 함: 단일분기 공란 95건 + BS 결측 13건)
+    - B: SUMMARY  coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3803P(진짜1359·구성상2101·부분343)/18F/2609S/0NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:388P/1PIN/0F/4S | qoq_warn:265Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:28Y/95blank/13bsskip
+    + A: 4. QOQ_DELTA_WARN (시계열 급변, YELLOW)  flagged=265 (2024+, net-quarterly)
+    + A: 5. SENSITIVITY_UNIT_SANITY (max|csm_delta| / 그 회사 자신의 기말 CSM)  RED=0 YELLOW=0
+    + A: 6. PL_OCI_VS_BS_AOCI (PL 항목25 당분기 vs BS 항목4 QoQ delta, 백만원, YELLOW)  flagged=28 (비교한 266건 중 tol 이내 238건 | 비교 못 함: 단일분기 공란 95건 + BS 결측 13건)
+    + A: SUMMARY  coverage_hole:0CSM/0PL | closing:393P/0F/0S | plausibility:0dup/1spike/1cont/0wfy/0zamort | pl_bridge:3806P(진짜1360·구성상2103·부분343)/19F/2605S/1NEW | tax22_src:282P/0F/361S | zero_legs:9 | src_na(DISCLOSURE):269legcov/195zleg | pl_src_absent:3ok/0red | impossible0:0 | lob_na:23NA/0BAD | csm_amort_identity:388P/1PIN/0F/4S | qoq_warn:265Y | sens:0R/0Y/26dir | oci_vs_bs_aoci:28Y/95blank/13bsskip
+    removed: NOLHS NH농협손해보험       2023.2Q  보험손익=None
+    ADDED  : FAIL NH농협손해보험       2023.2Q  [보험손익(leg-coverage)]  lhs=113301.7 diff=+40747.3
+    ADDED  : LEGRED NH농협손해보험       2023.2Q  lhs=113301.7 diff=+40747.3  0-fill=자동차손익+일반손익
+    ADDED  : NEW-FAIL  NH농협손해보험|2023.2Q|보험손익(leg-coverage)   <- 등재부에 없다. 진짜 회귀인지 확인하고 고치거나 등재하라
+==========================================================================================
+## data_contract
+  head(before): [gate_overlay] data_contract exit=2 lines=381 served_reads={} dropped_writes=[] -> data_contract.txt
+  head(after) : [gate_overlay] data_contract exit=2 lines=381 served_reads={} dropped_writes=[] -> data_contract.txt
+  summary lines identical: SUMMARY  RED=2  YELLOW=168  provisional=False
+  parsed findings: before RED=2 YELLOW=168 | after RED=2 YELLOW=168
+==========================================================================================
+## csm_continuity
+  head(before): [gate_overlay] csm_continuity exit=0 lines=3 served_reads={} dropped_writes=['data\\dart\\viz\\csm_continuity_validation.json'] -> csm_continuity.txt
+  head(after) : [gate_overlay] csm_continuity exit=0 lines=3 served_reads={} dropped_writes=['data\\dart\\viz\\csm_continuity_validation.json'] -> csm_continuity.txt
+  summary lines identical: [csm_continuity] companies=44 flagged=1 red=0
+==========================================================================================
+## csm_waterfall
+  head(before): [gate_overlay] csm_waterfall exit=0 lines=8 served_reads={} dropped_writes=['data\\dart\\viz\\csm_waterfall_validation.json'] -> csm_waterfall.txt
+  head(after) : [gate_overlay] csm_waterfall exit=0 lines=8 served_reads={} dropped_writes=['data\\dart\\viz\\csm_waterfall_validation.json'] -> csm_waterfall.txt
+  summary lines identical: pass=41 fail=0 nb_fail=0 in_scope=41 excluded_pre_ifrs17=6 total=47
+==========================================================================================
+## nb_csm
+  head(before): [gate_overlay] nb_csm exit=0 lines=3 served_reads={} dropped_writes=['data\\_derived\\nb_csm_validation.json'] -> nb_csm.txt
+  head(after) : [gate_overlay] nb_csm exit=0 lines=3 served_reads={} dropped_writes=['data\\_derived\\nb_csm_validation.json'] -> nb_csm.txt
+  summary lines identical: tested=5 pass=5 fail=0 fallback_pass=1
+==========================================================================================
+## csm_coverage
+  head(before): [gate_overlay] csm_coverage exit=1 lines=6 served_reads={} dropped_writes=[] -> csm_coverage.txt
+  head(after) : [gate_overlay] csm_coverage exit=1 lines=6 served_reads={} dropped_writes=[] -> csm_coverage.txt
+  summary lines identical: CSM COVERAGE GAPS PRESENT
+==========================================================================================
+## live_artifacts
+  head(before): [gate_overlay] live_artifacts exit=2 lines=64 served_reads={} dropped_writes=[] -> live_artifacts.txt
+  head(after) : [gate_overlay] live_artifacts exit=2 lines=64 served_reads={} dropped_writes=[] -> live_artifacts.txt
+  summary lines identical: SUMMARY live_artifacts  RED=2  YELLOW(baselined)=25  STALE_BASELINE=0  총 발견=27
+    removed: 값이 다른 셀 349건 — ('에이비엘생명보험', None, '생명보험', '2024.2Q', 12, '기타 생명장기 재보험손익')|값: 공개=None vs 마스터=1109.05702 / ('에이비엘생명보험', None, '생명보험', '2024.2Q', 12, '기타 생명장기 재보험손익')|값_당분기: 공개=None vs 마스터=-432.919362 / ('한화생명', None, '생명보험', '2023.3Q', 10, '재보험 위험조정 변동')|값_당분기: 공개=-273.0 vs 마스터=-214.0. 마스터가 커밋됐는데 스냅샷 
+    ADDED  : 값이 다른 셀 349건 — ('NH농협손해보험', None, '손해보험', '2023.1Q', 26, 'FVOCI 채무증권 평가손익')|값: 공개=None vs 마스터=107043.618556 / ('NH농협손해보험', None, '손해보험', '2023.1Q', 26, 'FVOCI 채무증권 평가손익')|값_당분기: 공개=None vs 마스터=107043.618556 / ('에이비엘생명보험', None, '생명보험', '2024.4Q', 5, '원수 위험조정 변동')|값: 공개=12282.0 vs 마스터=13655.0. 마스터가 커

@@ -1,0 +1,69 @@
+PASS  PL_breakdown.json: same 13801 rows in the same order
+PASS  PL_breakdown.json: no field other than 값 / 값_당분기 changed (0 found)
+PASS  PL_breakdown.json: 값 changed on exactly the 15 planned cells (found 15; extra [] missing [])
+PASS  PL_breakdown.json: every 값_당분기 change is explained by the same cell or the previous quarter's cumulative (25 changes; unexplained [])
+  changed cells per company: {'KR0032': 17, 'KR0087': 9}
+PASS  PL_breakdown.json: every changed 값_당분기 equals cumulative - previous cumulative of the NEW master, except the planned seam cells (set_dangi 0 = printed 3M, null_dangi 2 = blank) ([])
+PASS  seam null_dangi ('KR0087', 10, '2024.4Q'): master 값_당분기 is blank
+PASS  seam null_dangi ('KR0087', 9, '2024.4Q'): master 값_당분기 is blank
+  --- 값 changes (old -> new):
+     KR0032 2023.1Q item 19: -56596.0 -> -56595.452489
+     KR0032 2023.2Q item  1: None -> 113301.721794
+     KR0032 2023.2Q item 15: None -> 0.0
+     KR0032 2023.2Q item 16: 41900.0 -> 40748.545805
+     KR0032 2023.2Q item 17: None -> 78508.134986
+     KR0032 2023.2Q item 18: None -> 193067.163749
+     KR0032 2023.2Q item 19: None -> -114559.028763
+     KR0032 2023.2Q item 20: None -> 191809.85678
+     KR0032 2023.2Q item 21: None -> -11911.001073
+     KR0087 2024.1Q item  9: None -> -1936.0
+     KR0087 2024.1Q item 10: None -> -425.0
+     KR0087 2024.1Q item 11: 3805.0 -> None
+     KR0087 2024.3Q item  9: None -> -3079.0
+     KR0087 2024.3Q item 10: None -> -1180.0
+     KR0087 2024.3Q item 11: -479.0 -> None
+  --- 값_당분기 changes (old -> new), only where 값 did not change itself:
+     KR0032 2023.3Q item  1: None -> -49335.602154
+     KR0032 2023.3Q item 15: None -> 0.0
+     KR0032 2023.3Q item 16: None -> 38990.768489
+     KR0032 2023.3Q item 17: None -> 2177.332323
+     KR0032 2023.3Q item 18: None -> 64012.100566
+     KR0032 2023.3Q item 19: None -> -61834.768243
+     KR0032 2023.3Q item 20: None -> -47158.269831
+     KR0032 2023.3Q item 21: None -> -6215.411653
+     KR0087 2024.2Q item  9: None -> -592.0
+     KR0087 2024.2Q item 10: None -> -399.0
+     KR0087 2024.4Q item 11: 6237.0 -> None
+PASS  user_pl_cells.json: same top-level keys
+PASS  user_pl_cells.json: '_doc' identical
+PASS  user_pl_cells.json: 'null_dangi' non-cell keys identical except the new ['_doc_p4_20261024']
+PASS  user_pl_cells.json: 'null_dangi' cells = old 124 - 1 removed + 2 appended in plan order
+PASS  user_pl_cells.json: 'set_dangi' non-cell keys identical
+PASS  user_pl_cells.json: 'set_dangi' cells = old 40 - 0 removed + 0 appended in plan order
+PASS  user_pl_cells.json: set 1523 -> 1538 (+15)
+PASS  user_pl_cells.json: the new entries are appended in plan order
+PASS  user_pl_cells.json: every old entry unchanged except the 0 planned in-place replacement(s) and the 2 planned note-only append(s) (value untouched)
+PASS  user_pl_cells.json: 15 new entries carry the planned 값 / was / note
+PASS  provenance: exactly one new top-level key ['merge_note_20261024_pass4_complete_blocks']
+PASS  provenance: all old top-level keys unchanged
+PASS  provenance: same 1046 blocks in the same order (no insertion)
+PASS  provenance: changed blocks belong to the planned companies only (['KR0032', 'KR0087'])
+  provenance blocks changed: 4
+     ('KR0032', '2023.1Q', 'income_statement'): published_items 24 -> 24 | source_file data/_gold/user_pl_cells.json -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [1, 16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32] -> [1, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+         gold_cell_override     scripts/build_pl_breakdown.py: [2, 3, 7, 8, 12, 15, 19] -> [2, 3, 7, 8, 12, 15]
+     ('KR0032', '2023.2Q', 'income_statement'): published_items 15 -> 22 | source_file data/_gold/user_pl_cells.json -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32] -> [1, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32]
+         disclosure_summary_pl  losure/FY2023_Q2/raw/KR0032_NH농협손해보험_amended.pdf: [16] -> None
+     ('KR0087', '2024.1Q', 'contract_notes'): published_items 6 -> 7 | source_file data/dart/FY2024_Q1/raw/KR0087_동양생명 -> data/dart/FY2024_Q1/raw/KR0087_동양생명 | owner_override None -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: None -> [9, 10]
+         raw_filing             data/dart/FY2024_Q1/raw/KR0087_동양생명: [4, 5, 6, 11] -> [4, 5, 6]
+     ('KR0087', '2024.3Q', 'contract_notes'): published_items 6 -> 7 | source_file data/_gold/user_pl_cells.json -> data/_gold/user_pl_cells.json | owner_override True -> True
+         owner_gold_overlay     data/_gold/user_pl_cells.json: [4, 5, 6] -> [4, 5, 6, 9, 10]
+         raw_filing             data/dart/FY2024_Q3/raw/KR0087_동양생명: [11] -> None
+PASS  test file: 3 changed lines, only the census declaration + comment
+     -GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1523, 22)}
+     +# 2026-10-24 ticket 20261024T1000Z (parser/ifrs17 complete the blocks: 동양 2024.1Q/2024.3Q reinsurance items 9-11, NH농협손보 2023.1Q/2Q statement items 1/15-21): CSM gold 417->417 cells, masked 77->77; PL gold 1523->1538 cells, masked 22->22 (no new pins).
+     +GOLD_OVERLAY_CENSUS = {"CSM": (417, 77), "PL": (1538, 22)}
+
+RESULT: ALL PASS
