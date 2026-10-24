@@ -3,6 +3,7 @@
 > 갱신 2026-10-24 · 근거: 지난 3번의 3분기(2023·2024·2025)와 2026.1Q 를 데이터셋별로 실측했다(7개 영역 조사 + 비평 1회; 비평이 사실과 다르다고 확인한 서술은 아래에서 고쳐 적었다).
 > 실행 순서는 `docs/flows/kics_quarterly_round.md`(2Q 용, 3Q 는 라벨·스크립트 이름만 바꿔 쓴다) · 달력의 날짜는 모두 2026년이다.
 > **owner 가 부르기 전에는 수집을 시작하지 않는다.** §8 의 「지금 해도 되는 준비」도 owner 승인 뒤에 한다. 이 문서는 계획이며 지금 아무것도 실행하지 않았다.
+> **owner 결정 확정(2026-10-24, 다시 묻지 않는다):** ① DART 소스 묶음을 먼저 푸시하고 경영공시 묶음을 그다음에 푸시한다(§1-1). ② KIDI 는 늦게 올라오므로 기다리지 않는다(NB 배수는 KIDI 도착 뒤 3차 소배포). 각 단계의 main 배포는 그때 owner 구두 GO 로 한다.
 
 ## 1. 요약
 
@@ -10,8 +11,20 @@
 - **소스는 세 갈래이고 도착 시각이 다르다.** DART 분기보고서 24사(11/13~11/16) · 정기경영공시 PDF 47사(마감 11/30 월요일, 조기 게시 11/26~) · 보험개발원 월납 202609(12월 초 이후 추정, 지연 가능).
 - **회사마다 갈리는 것은 회사 집단이 아니라 「경과조치를 적용하는가」다.** 하위위험액(29-35)은 신규 보험위험 경과조치 적용사 20사가 의무(측정상 100% 공시), 시장위험 분해(36-40)는 주식·금리 경과조치 적용사 12사가 의무다. 그 밖에 자율로 인쇄하는 회사가 분기마다 바뀐다.
 - **당기순이익은 47사 전부를 뽑는다.** 정본은 `PL_breakdown` 항목 24다. DART 24사는 분기보고서, 나머지 15사와 재보사 8곳은 경영공시 PDF §2-1 요약 포괄손익계산서(누계)에서 가져온다.
-- **푸시는 한 번에 한다.** 분기 지평(게이트가 도는 분기 목록)이 5개 마스터(`PL_breakdown`·`CSM_waterfall`·`IFRS17_BS`·`kics_disclosure`·`dividend`)의 최댓값에서 자동 파생되므로, 하나에만 2026.3Q 행이 있어도 모든 게이트가 그 분기를 순회해 HOLE·MISSING_FILER_CELL RED 가 수십 건 난다. 2026.3Q 행은 전부 같은 작업트리에서 완성해 한 번에 커밋·푸시한다.
+- **푸시는 소스별로 세 번에 나눈다**(owner 2026-10-24, §1-1). 그런데 분기 지평(게이트가 도는 분기 목록)이 5개 마스터(`PL_breakdown`·`CSM_waterfall`·`IFRS17_BS`·`kics_disclosure`·`dividend`)의 최댓값에서 자동 파생되므로, 1차 푸시에서 PL·CSM·BS·배당이 2026.3Q 를 담는 순간 아직 소스가 없는 칸(경영공시 15사·재보사 8곳 등)이 전부 hole RED 로 읽힌다. 그래서 1차 푸시 전에 validation 이 「대기 선언」(칸 단위·매 실행 재검산·2차 푸시에서 만료)을 설계해야 한다 — 티켓 `inbox/validation/20261024T0658Z…`. 선언 없이 푸시하지 않고, 지평 규칙을 완화하지 않는다.
 - **사용자 사전 가설 확인:** 금리민감도는 「반기마다」가 아니라 「2024.4Q 이후 2Q·4Q 에만」(마스터 행: 2024.4Q·2025.2Q·2025.4Q·2026.2Q), 손해율 가정(표 A·B)은 반기도 아닌 「결산(4Q)에만」이 정확하다. 둘 다 3Q 제외가 맞다.
+
+### 1-1. 푸시 분할 (owner 2026-10-24)
+
+| 단계 | 들어가는 것 | 목표 시점 |
+|---|---|---|
+| **1차: DART 묶음** | PL 24사 전 항목 · CSM 워터폴 23사 · IFRS17_BS 24사 · dividend 24사 · 3Q 보고서의 전기 열로 고치는 **기존 분기 칸**(구 Wave A: 2025.3Q `null_dangi` 31칸·교보·푸본현대·전년동기 대조) | DART 접수(11/16) → 11/17 수집 → 11/19~20 FS-API·배당 refresh → **11/24 전후** |
+| **2차: 경영공시 묶음** | K-ICS 전부(+판정 사이드카) · PL·BS 의 경영공시 15사 + 재보사 8곳 · 라이나 CSM·상각 · ILP 전부 · 자본증권 3종(발행·소진율·전망) · asset_quality·management_indicators · xlsx 시트·public_exports·패널 · 디자이너 라벨 | 11/30 마감 → **12/2~12/3** |
+| **3차: KIDI** | NB 배수 분모와 `NB_TARGET_Q` | 보험개발원 202609 도착 뒤 별도 소배포 |
+
+- ILP·자본증권은 DART 에서 오는 조각이 있어도 2차에 한꺼번에 넣는다(한 행·한 소진율을 두 번에 나눠 쓰지 않는다. 소진율 3종은 K-ICS 최신 분기와 같은 분기여야 게이트를 통과한다).
+- 1차 푸시에는 NB 분모가 없어 `NB_CENSUS_MISSING` 이 CSM 3Q 칸 수만큼 난다 → 2Q 선례대로 건별 baseline YELLOW 등재(owner 결정 확정으로 본다).
+- 1차 푸시의 main 배포는 owner GO 때 정한다. 배포하면 라이브에서 일부 회사만 3Q 인 상태가 되므로 designer 가 5개 페이지의 「전사 최신 분기」 처리(버블맵 ÷2 리터럴·IFRS17 3분기 누계 라벨·compare)를 먼저 확인한다. 이 확인은 아직 하지 않았다.
 
 ## 2. 달력
 
@@ -22,13 +35,14 @@
 | 11/13(금) | 한화손보·한화생명이 하루 먼저 내는 편(2023~2025 매번). DART 1차 재스카우트 |
 | 11/16(월) | **법정기한.** 분기말+45일 = 11/14(토)라 다음 영업일. 22사가 몰릴 것으로 본다(2024.1Q 는 휴일 5/15 대신 5/16 에 18사 선례). 팝업은 「11월 13일」로 적혀 있어 문구 확인 필요(§9 C8) |
 | 11/17 | DART 본문 수집(2Q 때 `document.xml` 이 24시간 넘게 014 → 막히면 `fetch_dart_viewer_fallback.py`). 11/19~20 FS-API·배당 `--refresh` |
+| **11/24 전후** | **1차 푸시(DART 묶음, §1-1).** 대기 선언(validation 티켓)이 먼저 끝나 있어야 한다. main 배포는 owner GO |
 | 11/17~ | 게시 목록 census 주 1회, 11/24 부터 매일. 서울보증은 목록에 2026 3분기가 보이는 즉시 매일 |
 | 11/26~28 | 경영공시 조기 게시(2025.3Q 는 46칸 중 37칸이 11/26~28) |
 | **11/30(월)** | **마감.** 2Q(8/31 월)처럼 하루에 몰린다. census 10시·15시·19시 3회. 생보협회 일괄 zip 은 2Q 에 마감일 18:44 에 올라왔으므로 19시 이후에 본다 |
 | 12/1(화) | 낙오사 1회 확인 · docling 변환과 K-ICS 채움 · 스캔본 렌더 판독 병렬 |
-| 12/2(수) | validation RED=0 → publishing(이상치 스캔·xlsx 시트 sync·public_exports·전체 게이트 약 11분) |
+| 12/2(수) | validation RED=0(대기 선언이 비워져 있어야 함) → publishing(이상치 스캔·xlsx 시트 sync·public_exports·전체 게이트 약 11분) = **2차 푸시** |
 | 12/2~12/3 | **배포 목표**(팝업 약속 「업로드 후 2~3일」). owner 구두 GO 뒤 `android_push_and_deploy.sh --from-origin` |
-| 12/3 전후 | 보험개발원 202609 추정(202606 은 월말 후 약 64일, 9/2 반영) → 별도 소배포로 NB 배수(`NB_TARGET_Q`)를 올린다 |
+| 12/3 이후 | 보험개발원 202609 도착 시점은 미정(202606 은 월말 후 약 64일 ≈ 12/3 추정이나 늦을 수 있다) → 도착하면 **3차 소배포**로 NB 배수(`NB_TARGET_Q`)를 올린다. 기다리지 않는다 |
 | 12/14~12/28 | 신판 재확인: sha256 으로 정정판 대조(KDB 2025.3Q·교보 2024.3Q·2025.3Q 전례), KB손보 텍스트판 교체 확인 |
 | 12/31 | 안내 팝업 소등 |
 
@@ -48,7 +62,7 @@
 | PL 항목 2-15·18·19·25-32(LOB·CSM상각·위험조정·예실차·OCI) | **DART 24사만** | 분기보고서 | 경영공시 15사·재보사는 3Q 뿐 아니라 4Q 에도 이 항목이 없다(§2-1 표에 줄 없음). 서울보증·NH농협손보·코리안리·미래에셋의 구조 공백은 정상 |
 | IFRS17_BS 1-4·30·31 및 세부 | 전사 47. DART 24사 = FS-API OFS(별도), 15사·재보사 = 경영공시 8-1·요약 BS | | 목표 47/47. 정의가 다른 보류 칸(BNP 10·11·13·20·24, 악사 10·13·20·21·24)은 이번에도 보류. 재보사 세부 항목은 원천 부재 |
 | CSM_waterfall 항목 1-6 | DART 분기 제출 23사 + 라이나(PDF 주석) = **24행** | 분기보고서 주석 / 라이나는 경영공시 PDF | 3Q 에 널 0(세 해 모두). 값은 9개월 누계, `값_당분기` 는 `build_csm()` 한 함수로 차분. 연 1회 공시 13사·재보사 7사·서울보증·신한이지는 3Q 행이 없는 것이 정상 |
-| NB_CSM_multiple | 24행(코리안리 배수 null) | 분자 = 워터폴 항목 2, 분모 = KIDI 월납 초회 | 분자는 11월에 올리고 분모(202609)는 늦게 온다 → §9 A4 |
+| NB_CSM_multiple | 24행(코리안리 배수 null) | 분자 = 워터폴 항목 2, 분모 = KIDI 월납 초회 | 분자는 1차 푸시(CSM)와 함께 생기고 분모(202609)는 늦게 온다 → 3차 소배포. 그 사이 `NB_CENSUS_MISSING` 은 건별 baseline YELLOW(§1-1) |
 | insurance_liability_portfolio 항목 1-9 | 전사 | 경영공시 4-6-2 | 처브(BS 상세 쪽 소실)·서울보증(4-6-2 인쇄 여부)·하노버(PDF 유무)를 먼저 확인 |
 | insurance_liability_portfolio 항목 10-15 | DART 23사 + 라이나 | 분기보고서 주석 / 라이나 PDF | 연 1회 공시사의 10-15 는 4Q 전용 — 공란이 정상이다 |
 | dividend | DART 24사(손보 9·생보 13·서울보증·코리안리) | `fetch_dart_alotmatter.py --refresh 2026 11014` | 현금배당액은 3Q 에 대부분 0, 중간배당(메리츠화재·KB손보 전례)과 순이익 누계 확보가 목적. 나머지 23사는 DART 배당 공시 자체가 없다 |
@@ -113,13 +127,14 @@
 - 자본증권: `fetch_capital_securities_dart.py`(FILINGS 가 3개사 rcept 하드코딩 → 확장) → `build_capital_securities_fy2026h1.py` 의 3Q판(RAW_DIR·출력명 고정) → `wire_capital_securities_to_utilization.py --quarter 2026.3Q` → `apply_disclosure_utilization.py` → `build_capital_securities_timeline.py` → `forward_capital_simulation.py --baseline-quarter 2026.3Q` → `add_reinsurers_to_capsec_panels.py --apply`(빌더가 재보사 8레코드를 지운다; 이 스크립트의 `QUARTER`·`AS_OF` 리터럴 2개도 바꾼다) → `emit_capsec_provenance.py`. 기본 인자가 낡은 스크립트가 많으니 전부 명시한다.
 
 **parser-ifrs17**
-- Wave A(기존 분기 수정, 11/17~11/25 별도 푸시): 3Q 보고서의 전기 열로 `null_dangi` 2025.3Q 31칸(8사: 한화생명·삼성생명·ABL·흥국생명·교보·동양·신한라이프·농협생명)을 해제/고정하고, 교보 PL·CSM 2025.3Q 재갱신과 푸본현대 2025.3Q 26칸을 처리한다. 24사 전년동기 6항목을 칸 단위로 대조해 어긋나면 최신 비교열로 올린다(재작성 전례: 교보·KB라이프·ABL·롯데·푸본현대·미래에셋을 먼저). **2026.3Q 행은 섞지 않는다.**
-- Wave B(2026.3Q 신규 행, 12/2 단일 푸시): CSM(`build_csm()` 만; `build_root_masters.main()` 금지) · PL(DART 24사 FS-API/XML, 15사 + 재보사 §2-1) · IFRS17_BS(`build_ifrs17_bs.py`) · ILP(`load_ilp_*.py`; 항목 15 == IFRS17_BS 항목 20 검산) · NB 분자 · dividend(`build_dividend.py` 는 refresh 뒤).
+- **1차 푸시(DART 묶음, 11/24 전후):** (a) 기존 분기 칸: 3Q 보고서의 전기 열로 `null_dangi` 2025.3Q 31칸(8사: 한화생명·삼성생명·ABL·흥국생명·교보·동양·신한라이프·농협생명)을 해제/고정하고, 교보 PL·CSM 2025.3Q 재갱신과 푸본현대 2025.3Q 26칸을 처리한다. 24사 전년동기 6항목을 칸 단위로 대조해 어긋나면 최신 비교열로 올린다(재작성 전례: 교보·KB라이프·ABL·롯데·푸본현대·미래에셋을 먼저). (b) 2026.3Q 신규 행: CSM(DART 23사, `build_csm()` 만; `build_root_masters.main()` 금지) · PL(DART 24사 FS-API/XML) · IFRS17_BS(24사, `build_ifrs17_bs.py`) · dividend(`build_dividend.py` 는 refresh 뒤). 대기 선언(validation 티켓)이 끝난 뒤에만 푸시한다. 라이나(PDF)·15사·재보사는 이 푸시에 넣지 않는다.
+- **2차 푸시(경영공시 묶음, 12/2):** PL·BS 의 경영공시 15사 + 재보사 §2-1 · 라이나 CSM·상각 · ILP 전부(`load_ilp_*.py`; 항목 15 == IFRS17_BS 항목 20 검산) · NB 분자(1차에 이미 CSM 이 있으므로 분자 갱신분만) · 대기 선언을 모두 비운다.
 - 적재 직후 점검: 2026.3Q 기초 누계 == 2026.2Q 기초 누계, 3Q 당분기 기초 == 2Q 기말, 6개월 누계가 재작성된 회사는 `null_dangi` 에 등재해 그 단일분기를 비운다. 누계가 줄거나 부호가 뒤집힌 순이익 칸은 필링의 3개월 열과 대조한다(지난 3Q 에 11건 있었고 전부 원문 확인 전).
 - 분기마다 사람 손이 필요한 gold 칸을 먼저 점검: KB손보 항목 16(`_zero_other_expense` 가 매 분기 0 으로 덮음), ABL 항목 5·10·7·12, 흥국화재 CSM 3-7.
 - 경영공시 PL 백필 도구가 삭제됐다(§7). 복구 또는 새 병합기 1회 작성.
 
 **validation**
+- **선행 과제(1차 푸시 전):** 「대기 선언」 설계(티켓 `20261024T0658Z`; 새 게이트 룰 설계라 Opus 대상). 먼저 1차 푸시 상태를 모의로 만들어 어떤 게이트가 무엇을 RED 로 내는지 측정하고(추정: PL·BS `MASTER_HOLE` 약 22~23사, CSM 라이나 1사, `NB_CENSUS_MISSING` 24건), 칸 단위·매 실행 재검산(raw 가 아직 없을 때만 인정)·2차 푸시에서 만료하는 선언을 만든다. 지평 규칙은 완화하지 않는다.
 - 기준선 먼저(11/6): 전체 게이트 1회 — data_contract RED=0·YELLOW 168, K-ICS blocking 0 기록.
 - 3Q 에 요구하지 않는 것(RS5·듀레이션갭·36_irr)이 RED 로 안 나오는지 확인. 새 게이트는 만들지 않는다(§9 D6 제외).
 - 적재 후: `validate_kics_disclosure.py`·`validate_data_contract.py`·`validate_master_tables.py --no-build`·`validate_golden_input_fingerprints.py` · 훅에 안 걸린 4종(`validate_asset_quality`·`validate_management_indicators`·`validate_insurance_liability_portfolio`·`validate_insurance_liability_lic`)을 손으로 돌려 RED 확인. `validate_disclosure_freshness` 는 `FY2026_Q3` 폴더가 비면 GREEN 0건으로 통과하므로 **GREEN 47건인지 개수까지** 본다.
@@ -128,11 +143,12 @@
 - 골든은 RED=0 확인 뒤에만 `--update`(RED 가 박제된다). 박제 숫자 갱신은 해당 데이터 커밋과 같은 커밋에서: `tests/test_rule_coverage_manifest.py` 의 `GOLD_OVERLAY_CENSUS`·`KICS_RESTATEMENT_CENSUS`·`CENSUS_SOURCE_ABSENT_CENSUS`·xlsx 시트 수.
 
 **publishing**
-- 순서: 마스터 커밋 → 바뀐 시트만 `sync_master_xlsx_sheet.py "<시트>" --dry-run` 후 실행(K-ICS공시·17BS·CSM워터폴·손익분해PL·배당·신계약CSM배수·기본/보완자본소진율·자본성증권발행현황·자본비율전망·보험계약부채) → `check_master_xlsx_drift.py` → `export_public_sheets.py`(커밋된 HEAD 를 읽는다) → 재커밋 → 패널 재빌드(`viz_build_compare_panel.py` 는 모든 마스터가 3Q 로 채워진 뒤 한 번).
+- 순서(두 번의 푸시마다 반복; 1차에는 17BS·CSM워터폴·손익분해PL·배당·신계약CSM배수 시트만, 2차에 나머지): 마스터 커밋 → 바뀐 시트만 `sync_master_xlsx_sheet.py "<시트>" --dry-run` 후 실행(K-ICS공시·17BS·CSM워터폴·손익분해PL·배당·신계약CSM배수·기본/보완자본소진율·자본성증권발행현황·자본비율전망·보험계약부채) → `check_master_xlsx_drift.py` → `export_public_sheets.py`(커밋된 HEAD 를 읽는다) → 재커밋 → 패널 재빌드(`viz_build_compare_panel.py` 는 모든 마스터가 3Q 로 채워진 뒤 한 번).
 - 첫 푸시 전 `scan_generic_anomalies.py`(+skeptic) 1회. provenance 사이드카(`emit_kics_provenance.py`·`emit_ifrs17_provenance.py`·`emit_pl_provenance.py`·`emit_ilp_includes_lic.py`·`emit_capsec_provenance.py`)의 재발행 대상을 `validate_data_contract.py` 의 `MISSING_PROVENANCE` 검사 범위를 읽어 확정한다(PL 의 경영공시 23사 셀은 계보 `DISCLOSURE` 를 같이 발행하지 않으면 DART 용 엄격 그리드로 떨어져 HOLE RED).
 - 모든 커밋은 `git add -A` 금지·파일 명시, 커밋 전 `branch --show-current`·`diff --cached --stat`(루트 미추적 개인 문서·연락망 보호).
 
 **designer**
+- **1차 푸시를 배포하기 전:** 일부 회사만 3Q 인 라이브 상태에서 5개 페이지의 「전사 최신 분기」 처리(버블맵 스케일·IFRS17 3분기 누계 라벨·공시보고서·compare)를 렌더로 확인한다(`viz_build_compare_panel.py` 의 `LAST_Q` 는 K-ICS 마지막 분기라 1차에는 2Q 로 남는다는 점도 확인). 아직 측정하지 않았다.
 - `index.html` 버블맵의 연 1회 공시사 추정 스케일: 전사 최신이 3Q(9개월 누계)가 되면 12개월 값을 ÷2 가 아니라 ×0.75 로 맞춰야 한다. 리터럴이 L199·L1178·L1313·L1362 네 곳이고 분기 번호(qn/4)에서 배율을 파생하도록 고친다(2Q 에서 같은 리터럴이 오표시된 전례 2026-09-02). 고친 뒤 `÷2` 를 파일 전체에서 grep.
 - `report-widget.js` `QUARTERS` 에 2026.3Q 추가(12/2 묶음) · `index.html` `NB_TARGET_Q` 는 NB 에 2026.3Q 행이 생길 때까지 2026.2Q 유지(회사별 이월 폴백이 추정 표시) · `theme.js` `NOTICE` 문구 · `viz_build_csm_combo_panel.py` 의 `PENDING_NAMES`(하나생명 2026.2Q) 해소 여부.
 - `tests/regression_*.py` 3종과 `scripts/check_report_widget_internal.py` 의 2026.1Q 단언을 최신 분기 파생으로 바꾼다. `sitemap.xml` `lastmod` 는 이미 낡았으니 실제로 바뀐 페이지만 배포일로 갱신한다.
@@ -179,11 +195,11 @@
 
 ## 9. owner 결정 대기
 
-**A. 3Q 푸시를 막는 것(11/25 전에)**
+**A. 3Q 푸시를 막는 것(1차 푸시 11/24 전후 이전에). A2·A4 는 2026-10-24 owner 결정으로 확정**
 1. 서울보증 K-ICS 3Q 적재 전에 빈 분기 8칸을 (a) 「사이트 철거」 원천부재로 등재(종류 신설 + raw 박제 근거 원장 필요; `tests/test_rule_coverage_manifest.py` 의 `CENSUS_SOURCE_ABSENT_CENSUS` 도 같이) 할지 (b) 정규 공시사 규칙을 바꿀지. 권고 (a) — 문턱을 건드리면 다른 회사의 검사가 약해진다.
-2. 2026.3Q 행을 모든 마스터와 함께 한 번에 커밋·푸시하는 원칙(DART 선행 푸시는 2025.3Q 이하 기존 분기 수정으로 한정). 권고 승인.
+2. **[확정] DART 묶음 먼저, 경영공시 묶음 그다음**(§1-1). 이전 권고(한 번에 푸시)는 폐기. 대신 validation 이 「대기 선언」을 설계한다(티켓 `20261024T0658Z`).
 3. 하노버 2026.3Q 가 11/30 까지 안 올라오면: 기다릴지, 면제 등재(owner 전용)를 요청할지. 권고: 12/1 에 목록 스냅샷을 근거로 면제 요청, 기다리지 않는다.
-4. NB 배수: KIDI 202609 대기 중 (a) CSM 푸시 보류 (b) 2Q 처럼 `NB_CENSUS_MISSING` 건별 YELLOW 등재 후 푸시(`NB_TARGET_Q` 는 2026.2Q 유지) (c) IR 배수로 선채움. 권고 (b).
+4. **[확정]** NB 배수: KIDI 는 늦게 올라오므로 기다리지 않는다 = (b) 2Q 처럼 `NB_CENSUS_MISSING` 건별 YELLOW 등재 후 푸시, `NB_TARGET_Q` 는 2026.2Q 유지, 202609 도착 뒤 3차 소배포.
 5. 자본증권 3종: 분자 기준일이 직전 분기인 채 분모만 2026.3Q 로 올리는 것(YELLOW 표시) 허용 여부. 권고 허용 + 라벨 정직 표시.
 
 **B. 수집 범위**

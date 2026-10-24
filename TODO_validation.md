@@ -1,6 +1,6 @@
 # Insurequant Validation TODO (Stage 3)
 
-> 갱신 2026-10-23 (33차 롯데 FY2023 WFY 면제 등재 + 4사 최종 트리 게이트(KDB 보류, item23 GUARDED 유지) · 32차 죽은 등재 철거 + OCI 대 BS AOCI 공란 계수 수정 · 31차 교보 KR0073 CSM·PL 재작성 기준 적재 `3e53aef8` 독립 검수 + tax22_src 룰 최신 비교열 판 인정 + 골든 정리) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
+> 갱신 2026-10-24 (2026.3Q 대기 선언 설계 티켓 접수 · 33차 롯데 FY2023 WFY 면제 등재 + 4사 최종 트리 게이트(KDB 보류, item23 GUARDED 유지) · 32차 죽은 등재 철거 + OCI 대 BS AOCI 공란 계수 수정 · 31차 교보 KR0073 CSM·PL 재작성 기준 적재 `3e53aef8` 독립 검수 + tax22_src 룰 최신 비교열 판 인정 + 골든 정리) · 프롬프트 `docs/agents/claude-agent-validation.md` · 이력 `docs/changelog_validation.md`
 > 2026-10-07 정리 전 전문(V1~V19 블록 포함)은 `docs/todo_archive_validation.md` 맨 위에 있다.
 
 ## Status (최신 3개)
@@ -18,6 +18,7 @@
 
 ## 열린 일
 
+- [ ] **2026.3Q 2단계 푸시용 「대기 선언」 설계(owner 2026-10-24 결정, 티켓 `inbox/validation/20261024T0658Z…`, 1차 푸시 11/24 전후 전까지)** — DART 묶음을 먼저 푸시하면 분기 지평이 2026.3Q 로 늘어 경영공시 소스 칸이 hole RED 로 읽힌다. 순서: ① 모의 1차 상태로 RED 목록 측정 ② 칸 단위·매 실행 재검산(raw 미존재 확인)·2차 푸시에서 만료하는 선언 설계(새 게이트 룰 → Opus, 변이시험·매니페스트 등재). 지평 파생 규칙 완화 금지. 계획 `docs/flows/round_2026_3Q_plan.md` §1-1.
 - [ ] **단일분기(값_당분기) 항등식 룰 설계 범위(룰 없음 -> 등재 금지, 설계만)** — 현재 어떤 게이트도 `기초_분기 + 신계약 + 이자 + 가정 + 상각 = 기말_분기`(값_당분기 기준)를 안 본다. 전 회사 333 버킷 실측 5건 어긋남(교보 2023.3Q +960.03 · 메리츠화재 2023.3Q +4,007.3 · 한화생명 2023.3Q −950.1 · KB라이프 2023.4Q −126.4 · 롯데손보 2024.4Q +105.3; `data/_derived/kyobo_validation_20261022/census_quarterly_closure.py`). 전부 3Q/4Q 에서 재작성 기준과 이전 분기 기준이 섞인 유형으로 보이나 회사별 원인은 미확인. 룰을 만들면 이 5건의 처리(수정 vs owner 등재)가 먼저 결정돼야 RED=0 이 된다. PL 쪽은 3개월 열 인쇄값 대조가 원문 필요라 전 회사 룰이 못 된다(교보만 `v_quarterly_3m.py` 로 실측).
   **2026-10-22 설계 측정 결과(룰 코드는 아직 안 건드림, `data/_derived/remaining_20261022/c_singleq/`)**: 룰 4개 초안(`SQ_CSM_ROLL` · `SQ_*_DERIV` · `SQ_PL_EQS` · `SQ_AMORT`; `validate_master_tables.py` 5절, 허용오차는 기존 식 재사용, 예외는 칸별 장부 `single_quarter_ledger.json`) 을 전 버킷 시뮬레이션하면 지금 켤 경우 RED 94(CSM 5 · PL 식 3 · 상각 1 · `null_dangi` 미등재 85버킷 430칸). 가장 작은 실패 105.3억 대 통과 최대 1.0억이라 임계는 넓다. 순서: ① parser 가 메리츠·한화생명·KB라이프·롯데손보 CSM·PL 을 같은 판으로 갱신(원문에서 닫힘 확인) ② KDB생명 2023.2Q · 현대해상 2025.3Q 재확인 ③ 430칸 `null_dangi` 등재 ④ 교보 2023.3Q +960.03억은 owner 결정(장부 핀 또는 공란, 공란은 `build_csm` 에 경로가 없음) ⑤ 그다음 룰 구현 + 골든 `--update`(새 SUMMARY 필드만 움직임, NEW=0 증명).
 - [ ] **tax22_src 가 못 보는 잔여(참고)** — 교보 외 17사 51버킷에서 FS-API 다음 해 전기 열이 마스터(원공시 판)와 다르다(`sim_other_vintage_buckets.txt`). 2026-10-22 판정표(`remaining_20261022/d_census/`): 즉시 안전 0 · owner 결정 19 · 유지 32. 방침이 정해지면 그 19버킷이 다음 후보.

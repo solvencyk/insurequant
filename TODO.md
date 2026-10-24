@@ -54,10 +54,11 @@
 - [ ] **IFRS17 섹션 3 콤보 후속 잔여(2026-10-24 정리)** — 추출기 공통 결함 7개(원 ⑦; 2026-10-11 ILP 라운드 3 에서 일부 보강했으나 남은 것이 무엇인지는 이번 정리에서 확인하지 못함, 런로그 `data/disclosure/_meta/ilp_backfill_pre2025_runlog.md` §11~§16). 나머지 ①~⑥·⑧ 은 적재·결정으로 끝났다(`docs/todo_archive_root.md` 맨 위).
 - [ ] **PC 부하 실측(owner 2026-10-10, 틈날 때)** — docling 변환 1건의 최대 메모리·소요를 에이전트가 쉬는 시간에 재서 보고. 현재 RAM 15.5GB(증설 불가)·8코어, owner 희망 RAM 32GB·12코어(즉시 교체 아님). 한도: 동시 에이전트는 그때 메모리·CPU 여유를 보고 정함(보통 4개 이내) · docling ≤2.
 - [ ] **2026.3Q 라운드(계획 작성 2026-10-24, 아직 시작 전)** — 계획·달력·수집 매트릭스·단계별 할 일·owner 결정 대기는 `docs/flows/round_2026_3Q_plan.md`. DART 분기보고서 11/13~11/16 · 정기경영공시 마감 11/30(월) · 배포 목표 12/2~12/3.
-  절차 `docs/flows/kics_quarterly_round.md`(라벨·스크립트를 3Q 로 바꿔 쓴다). owner 가 부르기 전에는 시작하지 않는다. 2026.3Q 행은 모든 마스터를 같은 작업트리에서 완성해 한 번에 푸시한다(분기 지평 RED).
-  먼저 owner 결정이 필요한 것: 서울보증 K-ICS census 뒤집힘 · 하노버 미게시 시 면제 · NB 배수 KIDI 대기 방식 · 자본증권 분자 기준일(문서 §9 A).
+  절차 `docs/flows/kics_quarterly_round.md`(라벨·스크립트를 3Q 로 바꿔 쓴다). owner 가 부르기 전에는 시작하지 않는다.
+  **owner 결정(2026-10-24):** DART 묶음(PL 24사·CSM 23사·BS 24사·배당 + 기존 분기 칸) 1차 푸시 → 경영공시 묶음 2차 푸시 → KIDI 는 기다리지 않고 도착 뒤 3차 소배포. 1차 전에 validation 의 「대기 선언」 설계가 필요하다(티켓 `inbox/validation/20261024T0658Z…`; 지평이 늘어 경영공시 소스 칸이 hole RED 로 읽힘).
+  아직 owner 결정이 필요한 것: 서울보증 K-ICS census 뒤집힘 · 하노버 미게시 시 면제 · 자본증권 분자 기준일(문서 §9 A).
 - [ ] **J-ESR 10월 말 재census**(기한 2026-10-31 직후) → `lane/jp` 브랜치 워크트리 `../iq_jp` 의 `TODO_jp.md`. 이 브랜치에는 jp 파일이 없다(`CLAUDE.md` §1).
-- [ ] **inbox 열린 티켓** — 건수는 `status_report.py --fast` 로 센다(2026-10-24 정리 뒤 9건: parser 7 · validation 1 · publishing 1). parser 7건 = KDB 보류 2건(`20261023T1255Z` · `1320Z`) + 일부 처리된 3건(PL 부모 결측 · item4/12/13 미러 오염 · 금리민감도 phase) + 아직 손대지 않은 2건(지표 컬럼 밀림 `20261007T1001Z` · `1300Z`). publishing `20260923T1130Z`(자본증권 후속) · validation `20261019T0200Z`(손해율 잎 합 대 총계)도 열려 있다. 이날 BS/PL 공란 채움 3건 · IFRS17 적용 독립검수 후속 · a11y 는 잔여를 `TODO_parser_ifrs17.md` · `TODO_designer.md` 로 옮기고 종결했다. 남은 일은 각 티켓 맨 아래.
+- [ ] **inbox 열린 티켓** — 건수는 `status_report.py --fast` 로 센다(2026-10-24 정리 뒤 9건 + 3Q 대기 선언 설계 티켓 `20261024T0658Z` = 10건: parser 7 · validation 2 · publishing 1). parser 7건 = KDB 보류 2건(`20261023T1255Z` · `1320Z`) + 일부 처리된 3건(PL 부모 결측 · item4/12/13 미러 오염 · 금리민감도 phase) + 아직 손대지 않은 2건(지표 컬럼 밀림 `20261007T1001Z` · `1300Z`). publishing `20260923T1130Z`(자본증권 후속) · validation `20261019T0200Z`(손해율 잎 합 대 총계)도 열려 있다. 이날 BS/PL 공란 채움 3건 · IFRS17 적용 독립검수 후속 · a11y 는 잔여를 `TODO_parser_ifrs17.md` · `TODO_designer.md` 로 옮기고 종결했다. 남은 일은 각 티켓 맨 아래.
 - [ ] **KR0004 2025.4Q 비교 단절 주의** — 같은 계열(예별 = 구 MG)이지만 2025-09-03 계약이전으로 DART 와 경영공시 규모가 52배 다르다. → `TODO_parser_ifrs17.md`.
 
 ## 보류 (재개 조건이 오면 연다)
