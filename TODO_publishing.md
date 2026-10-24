@@ -5,7 +5,7 @@
 
 ## Status (최신 3개)
 
-- **2026-10-24 parser `fc41f505`·`a20976cf`·`fb3960f9`·`f25ed8b8`(이웃 낡은 셀 4차례: KB라이프·ABL·농협생명·KB손보·동양·현대해상·한화생명·NH농협손보·DB생명 PL, 롯데 CSM 2023.4Q 항 3·4·5 단분기 비움) 파생 산출물 재생성(커밋 74a9353f·d58d0852, branch push 완료·게이트 통과, main 배포는 owner GO 대기)** — xlsx 2시트만 cherry-pick: `CSM워터폴` 3셀(롯데 2023.4Q 값_당분기 3 -> 빈칸) · `손익분해PL` 389셀(ABL 144 · NH농협손보 85 · 한화생명 43 · DB생명 40 · 동양 35 · 농협생명 16 · 현대 15 · KB라이프 9 · KB손보 2), 나머지 17시트 값 동일(백업 `insurequant_master_tables.xlsx.bak_20261024_e25`).
+- **2026-10-24 parser `fc41f505`·`a20976cf`·`fb3960f9`·`f25ed8b8`(이웃 낡은 셀 4차례: KB라이프·ABL·농협생명·KB손보·동양·현대해상·한화생명·NH농협손보·DB생명 PL, 롯데 CSM 2023.4Q 항 3·4·5 단분기 비움) 파생 산출물 재생성(커밋 74a9353f·d58d0852, branch push 완료·게이트 통과, 배포 완료: main 8eb01df, 라이브 6파일 바이트 일치·build_id 74a9353f·콘솔 오류 0)** — xlsx 2시트만 cherry-pick: `CSM워터폴` 3셀(롯데 2023.4Q 값_당분기 3 -> 빈칸) · `손익분해PL` 389셀(ABL 144 · NH농협손보 85 · 한화생명 43 · DB생명 40 · 동양 35 · 농협생명 16 · 현대 15 · KB라이프 9 · KB손보 2), 나머지 17시트 값 동일(백업 `insurequant_master_tables.xlsx.bak_20261024_e25`).
   NB_CSM_multiple.json 0셀(신계약 CSM 항목 2 불변) · `panel_csm_combo.json` 불변 · `panel_compare.json` 2값뿐(NH농협손보 2023.2Q 보험손익 None -> 1,133 · 투자손익 None -> 785억, 최신 분기 아님).
   `check_master_xlsx_drift` RED 2 -> 0 · `validate_live_artifacts` RED 2(PUBLIC_EXPORT_DRIFT 손익분해PL·CSM워터폴만, 커밋 뒤 `export_public_sheets.py`) · `validate_data_contract` RED=0 · YELLOW 168 · 지문 RED=0 · 골든 3종 · deploy_assets 12 · push_gate_wiring 66 · `test_rule_coverage_manifest` 105 통과 + 1 실패(같은 PUBLIC_EXPORT_DRIFT).
   화면 노출: compare.html 0값 · index.html 0값 · IFRS17.html 3번 패널(PL 브리지)만 44셀 = ABL 40 · 한화생명 3(2023.4Q) · KB손보 1(2024.4Q 기타사업비용 60,900 -> 빈칸), 1% 넘는 이동 24셀(ABL 2025.4Q 원수 위험조정 단분기 -480 -> 2,316 등). CSM 워터폴·NB·콤보 0값. 증빙 `data/_derived/remaining_20261022/e25_publishing_parser4/`.
