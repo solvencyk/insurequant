@@ -60,13 +60,13 @@ HTML structure / styling / responsive design is **not** publishing's job — tha
 > C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe <scratchpad>/derive_fetches.py
 > ```
 
-**2026-10-07 도출 결과 (live `main` 과 일치 확인):**
+**2026-10-24 재도출 결과 (작업 브랜치 HTML 기준; 2026-10-07 에는 live `main` 과 일치를 확인했다):**
 
 | Page | Fetches |
 |---|---|
-| `index.html` | `kics_disclosure.json` · `CSM_waterfall.json` · `NB_CSM_multiple.json` · `data/company_segment.json` (업권 3분류 코드->구분 매핑, 손으로 관리하는 정적 파일 · 배포 필수) |
+| `index.html` | `kics_disclosure.json` · `CSM_waterfall.json` · `NB_CSM_multiple.json` · `data/company_segment.json` (업권 3분류 코드->구분 매핑, 손으로 관리하는 정적 파일 · 배포 필수) · `data/csm_combo/panel_csm_combo.json` (업계 총 기말 CSM, `scripts/viz_build_csm_combo_panel.py`) |
 | `K-ICS.html` | `kics_disclosure.json` · `kics_rate_sensitivity.json` · `kics_duration_gap.json` · `kics_tier1_utilization.json` · `kics_tier2_utilization.json` · `kics_forward_capital.json` · `kics_capital_securities_timeline.json`(2026-10-12 신설, 발행 내역 누적 막대) |
-| `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `kics_disclosure.json` · `IFRS17_BS.json` · `data/dart/viz/csm_waterfall.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` · `data/loss_ratio/panel_loss_ratio.json` · `data/persistency/panel_persistency.json` · `data/csm_combo/panel_csm_combo.json`(섹션 3 콤보, `scripts/viz_build_csm_combo_panel.py`) |
+| `IFRS17.html` | `CSM_waterfall.json` · `PL_breakdown.json` · `NB_CSM_multiple.json` · `kics_disclosure.json` · `IFRS17_BS.json` · `data/dart/viz/csm_waterfall.json` · `csm_amort_schedule.json` · `insurance_pl_breakdown.json` · `sensitivity_heatmap.json` · `data/ir/nb_csm_ratio.json` · `data/loss_ratio/panel_loss_ratio.json` · `data/persistency/panel_persistency.json` · `data/csm_combo/panel_csm_combo.json`(섹션 3 콤보, `scripts/viz_build_csm_combo_panel.py`) · `data/compare/panel_compare.json`(`cmp` 보조 읽기) |
 | `공시보고서.html` | `dividend.json` · `kics_disclosure.json` |
 | `compare.html` | `data/compare/panel_compare.json` (마스터 7종에서 `scripts/viz_build_compare_panel.py` 가 만든다 · `--check` 로 재현 검사) |
 
@@ -143,7 +143,7 @@ The HTML pages fetch these directly — **데이터를 HTML 에 인라인하지 
 
 **#0 must pass first. Any RED = BLOCKED. No documented-exception bypass.**
 
-0. **Push gate** — `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py`(훅과 같은 것). ① data-contract hard gate · ①b K-ICS rule gate · ①c 도메인 게이트 ·
+0. **Push gate** — `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/prepush_check.py`(훅과 같은 것). ① data-contract hard gate · ①b K-ICS rule gate · ①c 도메인 게이트(7종) · ①d DART raw 유실 검사 · ①e 골든 입력지문 · ①f 배포 JS 런타임 ·
    ③ inbox hygiene · ④ 오프라인 테스트(골든 + 매니페스트). **exit 2 = push BLOCKED.** 범위 판정은 `CLAUDE.md` §5.
    **Never quote a gate verdict you did not run** — 돌려서 verdict 를 라운드 보고서에 붙인다. 기술적 gate-clear 는 push 허가가 아니다(owner GO 별도).
 
@@ -240,5 +240,9 @@ appears, tell designer the path and the schema delta. See [claude-agent-designer
 - **A "hanging" push** with no upload progress is almost always waiting for auth (login popup behind the terminal), not transferring data.
 
 ## 12. jp 레인 산출물
+
+> **2026-10-22 owner: jp 레인은 이 브랜치에 없다.** 아래가 가리키는 `J-ESR/`·`jp/`·`TODO_jp.md`·`docs/domains/claude-agent-jp.md` 는 브랜치 `lane/jp`(워크트리 `../iq_jp`)에만 있다.
+> jp 는 거기서만 작업·커밋하고, jp 배포는 `bash scripts/android_push_and_deploy.sh --from-origin --branch lane/jp --only jp/` 로만 한다(`--only` 없이는 스크립트가 거부 — `CLAUDE.md` §1).
+> 이 절은 publishing 이 알아야 할 배포 계약만 남긴다.
 
 `J-ESR/build_jesr_page_json.py` 가 `J-ESR/jesr_master.json` + 배포용 `jp/jesr_esr.json`(바이트 동일) 을 만든다(self-check 내장). 라이브 반영 시 `jp/index.html`·`jp/jesr_esr.json`·상세 3페이지(`jp/jesr.html`·`jp/jgaap.html`·`jp/disclosure.html` + `jp/jp.css`·`jp/jesr_app.js`·`jp/jesr_detail.json`)·`jp/terms.html`·`jp/report-widget.ja.js` 를 배포 keep-list(`android_push_and_deploy.sh` NEW_FILES) 에 넣고 `tests/test_deploy_assets.py` 로 확인한다. 배포 경로는 `jp-f9027362/`(비공개 프리뷰, `TODO_jp.md`). xlsx 시트는 만들지 않는다(owner 결정 전까지). 도메인 지식은 `docs/domains/claude-agent-jp.md`.

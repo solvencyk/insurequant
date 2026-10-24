@@ -42,13 +42,13 @@ If a master JSON adds a new field, publishing tells designer (`manual_html_edit`
 
 | Page | Purpose | Main data (fetch) |
 |---|---|---|
-| `index.html` | Market map (treemap on desktop, vertical list on mobile, 3 segments 생명·손해·재보험/보증) + IFRS17 quadrant + bubble | `kics_disclosure.json`, `CSM_waterfall.json`, `NB_CSM_multiple.json`, `data/company_segment.json` (코드->업권 매핑, 마스터 셀 안 건드림) — **버블 데이터는 이 페이지에 인라인**(별도 `csm_bubble.json` 을 fetch 하지 않음) |
+| `index.html` | Market map (treemap on desktop, vertical list on mobile, 3 segments 생명·손해·재보험/보증) + IFRS17 quadrant + bubble | `kics_disclosure.json`, `CSM_waterfall.json`, `NB_CSM_multiple.json`, `data/company_segment.json` (코드->업권 매핑, 마스터 셀 안 건드림), `data/csm_combo/panel_csm_combo.json` (업계 총 기말 CSM) — 버블은 별도 `csm_bubble.json` 을 fetch 하지 않고 위 마스터 JSON 으로 클라이언트에서 계산한다 |
 | `K-ICS.html` | Per-insurer K-ICS detail + sub-items + 자본성증권 소진율 도넛(`#donut-section-panel`: 기본자본 자본증권·보완자본, 2026-10-12 복원) + 자본성증권 발행현황(`#sec-capsec`: 시점별 누적 막대 + 신종자본증권·후순위채 큼직한 셀 2개, 도넛과 전망 사이) + 금리 민감도(지급여력 ±bp 차트·표) + 자산·부채 듀레이션(`#sec-dur`: 듀레이션 카드 3장 + 시나리오별 금리부 자산·부채 표, 자체 분기 선택) + 자본비율 Forward Outlook(`#sec-forward`, 맨 아래, 2026-10-12 복원) | `kics_disclosure.json`, `kics_rate_sensitivity.json`, `kics_duration_gap.json`, `kics_tier1_utilization.json`·`kics_tier2_utilization.json`(도넛), `kics_forward_capital.json`(전망), `kics_capital_securities_timeline.json`(누적 막대·큼직한 셀 2개 클라이언트 계산; publishing 티켓 `20261012T1210Z`) |
-| `IFRS17.html` | 7-panel IFRS17 dashboard (1=재무상태표 T계정, 2-7=CSM 이동·시계열·상각·손익·NB·민감도) + 섹션 8=손해율 가정 · 9=보험금 예실차비율(묶음 막대 + 표, 같은 `panel_loss_ratio.json` 의 최상위 `ae` 블록, 없으면 섹션 숨김) · 10=판매채널별 유지율(접이식 트리 표, 마스터 `손해율`·`유지율` 시트의 파생 패널 JSON 2개, 빌더 `scripts/viz_build_persistency_lossratio_panels.py`) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `kics_disclosure.json`, `IFRS17_BS.json`, `data/dart/viz/csm_waterfall.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json`, `data/loss_ratio/panel_loss_ratio.json`, `data/persistency/panel_persistency.json`, `data/csm_combo/panel_csm_combo.json`(섹션 3 콤보 차트·표) |
+| `IFRS17.html` | 7-panel IFRS17 dashboard (1=재무상태표 T계정, 2-7=CSM 이동·시계열·상각·손익·NB·민감도) + 섹션 8=손해율 가정 · 9=보험금 예실차비율(묶음 막대 + 표, 같은 `panel_loss_ratio.json` 의 최상위 `ae` 블록, 없으면 섹션 숨김) · 10=판매채널별 유지율(접이식 트리 표, 마스터 `손해율`·`유지율` 시트의 파생 패널 JSON 2개, 빌더 `scripts/viz_build_persistency_lossratio_panels.py`) | `CSM_waterfall.json`, `PL_breakdown.json`, `NB_CSM_multiple.json`, `kics_disclosure.json`, `IFRS17_BS.json`, `data/dart/viz/csm_waterfall.json`, `csm_amort_schedule.json`, `insurance_pl_breakdown.json`, `sensitivity_heatmap.json`, `data/ir/nb_csm_ratio.json`, `data/loss_ratio/panel_loss_ratio.json`, `data/persistency/panel_persistency.json`, `data/csm_combo/panel_csm_combo.json`(섹션 3 콤보 차트·표), `data/compare/panel_compare.json`(`cmp` 보조 읽기) |
 | `공시보고서.html` | 배당현황 — 회사별 배당지표 | `dividend.json`, `kics_disclosure.json` |
 | `compare.html` | 사별 비교 — 회사 1~4곳의 최신 공시 값을 지표별 막대로 비교(생보는 생보끼리·손보는 손보끼리, 같은 유형 업계 중앙값, 검색창 추천, 유지율 13·25·37·61회차는 한 차트) | `data/compare/panel_compare.json` |
 
-> 이 열은 HTML 에서 **기계 도출**한다(2026-10-07 재도출). 페이지의 fetch 를 바꾸면 **이 표와 `claude-agent-publishing.md` §1 을 같이 고쳐라**
+> 이 열은 HTML 에서 **기계 도출**한다(2026-10-24 재도출). 페이지의 fetch 를 바꾸면 **이 표와 `claude-agent-publishing.md` §1 을 같이 고쳐라**
 > (거기에 재도출 명령이 있다). 둘 다 배포 keep-list 의 근거이고 `tests/test_deploy_assets.py` 가 대조한다.
 
 Local preview: `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m http.server 8000` from repo root. 이 PC 의 프리뷰 창은 `window` scroll 이벤트를 안 뿜는다 — 스크롤 연동은 합성 `scroll` 이벤트로 검증하고 그 한계를 보고에 적는다.
@@ -161,6 +161,8 @@ The `frontend-design` skill (or any redesign) must treat these four as fixed con
 5. Root `TODO.md` for cross-stage items
 
 ## 12. jp 레인 페이지 (`/jp/`)
+
+> **2026-10-22 owner: jp 레인은 이 브랜치에 없다.** 아래가 가리키는 `jp/*`·`docs/domains/claude-agent-jp.md` 는 브랜치 `lane/jp`(워크트리 `../iq_jp`)에만 있다. 이 브랜치에서 jp 파일을 만들거나 고치지 않는다(`tests/test_jp_lane_absent.py` 가 push 를 막는다 — `CLAUDE.md` §1). 아래는 lane/jp 에서 작업할 때의 디자인 규칙이다.
 
 일본 ESR 페이지 `jp/index.html` 은 이 프롬프트의 디자인 시스템(§5)·CSP·SRI·`../common.css` 를 그대로 쓰되 `<html lang="ja">`, hreflang(ko↔ja, x-default=ko), 언어 전환 링크가 있다. 데이터는 `jp/jesr_esr.json`(publishing 산출, 읽기 전용) 만 fetch.
 **회사별 상세는 3페이지(2026-09-13 owner, 한국 K-ICS/IFRS17/기타공시 대응)**: `jp/jesr.html`(자본: ESR 헤드라인·適格資本/所要資本 표·感応度·旧基準SMR), `jp/jgaap.html`(회계: 損益 2블록 흐름·워터폴·収益性·種目別·基礎利益·準備金, 貸借対照表), `jp/disclosure.html`(기타공시: 再保険 의존도·その他). 셋은 `jp/jp.css`(스킨) + `jp/jesr_app.js`(공용 스크립트, `<body data-page>` 로 분기, 컨테이너 없는 render 는 byId 가드로 스킵) 를 공유하고 `?company=` 를 탭 링크에 동기화한다. 데이터는 `jp/jesr_detail.json` 하나. 所要資本 워터폴은 폐지(owner: 분산효과 △만 보여주는 그래프). 새 패널을 붙일 때는 페이지 HTML 에 섹션만 두고 render 함수는 `jesr_app.js` 에 가드와 함께 넣는다. 도메인 지식은 `docs/domains/claude-agent-jp.md`. 발주는 `inbox/designer/` 에 `track: J-ESR` 로 온다. 보고문에 일본어 문자 금지(회사명은 영문). 배포 경로는 비공개 프리뷰 `jp-f9027362/`.

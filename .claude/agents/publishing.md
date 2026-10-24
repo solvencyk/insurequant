@@ -90,7 +90,7 @@ owner에게 요구하는 것은 세 가지뿐이다 — 로그인·인증 승인
 - **xlsx를 openpyxl로 직접 열어 저장하지 마라.** `sync_master_xlsx_sheet.py`로만 고친다 — 현재 워크북에 수식은 0개이고(2026-10-14 실측) 스크립트가 수식을 만나면 실행을 거부하며
   사후에 전 시트 값을 대조한다(수식이 생기면 `MASTER_XLSX_FORMULA_PRESENT` RED). 읽기는 `data_only=True, read_only=True`.
   스크립트는 백업을 만들지 않으므로 시트마다 시작 전 `cp insurequant_master_tables.xlsx insurequant_master_tables.xlsx.bak_<날짜>_<태그>`를 직접 뜨고 rollback은 그 파일로 한다
-  (`*.bak_*`는 .gitignore라 루트에 26개 약 147MB가 쌓였다 — 정리 시점은 owner 결정).
+  (`*.bak_*`는 .gitignore라 루트에 쌓인다 — 2026-10-24 실측 7개 약 41MB(옛 26개 147MB는 정리됨), 정리 시점은 owner 결정).
 - **마스터를 바꿨으면 `scripts/export_public_sheets.py`를 재실행하고 그 결과를 커밋해라.**
   안 하면 `PUBLIC_EXPORT_DRIFT`로 push가 막힌다. 이 스크립트는 `git show HEAD:`로 마스터를
   읽으므로 **커밋이 선행돼야** 한다.

@@ -16,7 +16,7 @@
 | 폴더 | 내용 |
 |---|---|
 | `agents/` | stage 프롬프트, 문서 스타일, 검증 룰 |
-| `domains/` | 도메인 설계 참고(K-ICS·IFRS17·jp). 충돌 시 코드와 스킬이 우선 |
+| `domains/` | 도메인 설계 참고(K-ICS·IFRS17, 그리고 `csm-pl-basis-methodology.md`). jp 도메인 문서는 브랜치 `lane/jp` 에만 있다. 충돌 시 코드와 스킬이 우선 |
 | `flows/` | 흐름도 |
 | `parser/` | parser 레인 조사 메모 |
 | `postmortems/` | 사고 사후 분석 |
@@ -41,3 +41,4 @@
 | `pl_breakdown_coverage.md` · `pl_selfcheck_matrix.md` · `csm_status_matrix.md` · `csm_coverage_goldmap.md` | 스크립트(`scripts/_pl_coverage_map.py`·`_pl_selfcheck.py`·`_csm_status_matrix.py`·`_csm_goldmap.py`)가 쓰는 현황표. 손으로 고치지 않는다 |
 | `LESSONS_2026-06-07.md` · `archived_metrics.md` | 과거 교훈·폐기 지표 기록(`postmortems/` 와 `roadmap.md` 가 인용) |
 | `og-image.src.html` | og:image 원본(`launch_runbook.md` 참조) |
+| `business_assessment_20261018.md` · `loss_ratio_comparable_unit_20261019.md` | 기자 reach out 결과 평가(2026-10-18) · 손해율 가정 비교 최소 포트폴리오 단위 실측(2026-10-19). 일회성 분석 기록이다 |

@@ -82,7 +82,7 @@
 
 구현:
 
-- `scripts/validate_kics_disclosure.py` — rules 1, 2, 4-8, 8_post, 8_life on root `kics_disclosure.json`; reports under `artifacts/kics_validation/`
+- `scripts/validate_kics_disclosure.py` — 룰 전체(1-10 · 7_post · 8_post · 8_life · 19_market · 36_irr · 보완자본 한도/TFI 축 등, 목록은 `kics-json-validation-rules.md`)를 root `kics_disclosure.json` 에 건다; reports under `artifacts/kics_validation/`
 
 확장 권장:
 
@@ -124,7 +124,7 @@ status=skipped + sha256 불변)이며, 이것이 현재 유일한 멱등성 게�
 
 - **K-ICS disclosure JSON:** [`kics-json-validation-rules.md`](../agents/kics-json-validation-rules.md) — run `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe scripts/validate_kics_disclosure.py`; gate RED=0
 - 비율 재계산: `solvency_amount / required_capital * 100 ≈ solvency_ratio` (허용 오차 1.0)
-- 룰 R1~R8 · 8_life · 19_market: `src/solvency/validation/kics_json_rules.py`
+- 룰 전체(1-10 · 8_life · 19_market · 36_irr 등): `src/solvency/validation/kics_json_rules.py` (정본)
 
 ### 7-4) 통과 기준
 

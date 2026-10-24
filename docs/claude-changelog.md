@@ -1,6 +1,6 @@
 # Cross-stage Changelog
 
-> Last updated: 2026-10-19 · Stage: cross-stage
+> Last updated: 2026-10-24 · Stage: cross-stage
 > Index: CLAUDE.md (5-stage) · Stage histories: docs/changelog_<stage>.md
 
 Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴더 정리). Stage-specific history lives in `docs/changelog_<stage>.md`. See `CLAUDE.md` for the 5-stage index.
@@ -8,6 +8,11 @@ Cross-stage entries only (gathering / pushing / refactor / cross-stage viz / 폴
 Convention: latest few entries detailed; older compressed to 1-liners (git log has commit-level detail after first push 2026-05-25).
 
 ---
+
+- **2026-10-24 임시 파일·스크립트·낡은 문서 정리(owner 「문서 충돌·outdated 싸그리 정리, 임시파일·임시스크립트 전부 삭제」; 오케스트레이터 + 읽기·정정 에이전트 3개)**: ① 삭제: `scripts/_probes` 1,580개(분기 라운드가 부르는 5개와 README 만 남김), 날짜가 붙은 일회성 스크립트 277개(`fix_2026MMDD_*`·`bspl_apply_*`·`bspl_followup_*`·`bspl_granularity*`·`reinsurer_resweep_*`·`*_2026MMDD` 적재기), `data/_derived` 끝난 증거 폴더·`_probe_*` 4,890개(추적), 추적되지 않던 백업(루트 xlsx `.bak_*` 7개, `artifacts/pytest_tmp` 1.76GB, `_derived` 백업 폴더) 약 3GB. 코드·테스트·골든·HTML 이 읽는 파일, `*_parts` 입력, `_patch*_2026q2_KR*` 입력, 코드가 근거로 인용한 증거, 결정 대기 중인 KDB 재적재 증거는 남겼다. 지운 파일은 `git log --diff-filter=D -- <경로>` 로 삭제 커밋을 찾고 `git show <커밋>^:<경로>` 로 되살린다(추적되지 않던 백업은 복구 불가). ② 문서: 규칙 문서(`CLAUDE.md` §4·§5, 에이전트 프롬프트, 룰 카탈로그의 허용오차·룰 ID, 배포 절차, jp 레인 안내, 페이지별 fetch 표)와 `TODO*.md`(낡은 「미커밋」·「GO 대기」, 끝난 항목은 아카이브로 무수정 이동)를 실제 코드·게이트·측정에 맞췄다. 방치 티켓 12건을 하나씩 재측정해 5건(`20261008T1427Z` · `20261009T0330Z` · `20261009T0700Z` · `20261012T1820Z` · `20261019T1400Z`)을 종결하고 남은 일은 `TODO_parser_ifrs17.md` · `TODO_designer.md` 로 옮겼다(나머지 7건은 부분 처리 또는 미처리라 열어 둠). 개인 문서(pptx·docx·xlsx·연락망·`scratch_ppt`)는 건드리지 않았다.
+
+- **2026-10-22~24 orchestrator 최신 비교열 적재·배포 4회전(owner 구두 GO 뒤 이 PC 격리 sparse 클론에서 main 배포, 작업 브랜치 push 마다 풀 훅 gate-clear)**: ① 10-22 교보생명 KR0073 CSM·PL 한 기준 적재(`3e53aef8`) + 2023.3Q 단일분기(`5f818b59`) → main `1a73d4c2`, OCI 13칸·BS/ILP 9칸(`e01f1395`·`59e6e459`) → main `66af419c`, 7사 19버킷 최신 비교열(`acdb2fe9`) → main `80ba3c1d`. ② 10-23 11사 21버킷(`5419a817`) + READY-25 9사(`afea4342`) → main `72999c88`; owner 결정 D1~D3 4사(KB라이프·롯데·ABL·현대해상 FY2023, `b1187788`·`90be97e7`) → main `7e00a62a`, KDB생명은 연결 기준 혼합이라 보류. ③ 10-24 이웃 옛 판 칸 점검 1~4차(`fc41f505`·`a20976cf`·`fb3960f9`·`f25ed8b8`) → main `8eb01df`(라이브 6파일 바이트 일치, build_id `74a9353f`). ④ 10-22 jp 레인을 이 브랜치에서 분리(`da2c8572`, 브랜치 `lane/jp`·워크트리 `../iq_jp`)하고 배포 스크립트에 `--only <prefix>` 를 추가(`2fa7a046`).
+  단계별 수치·게이트는 `docs/changelog_parser_ifrs17.md` 14~25차 · `docs/changelog_publishing.md` 2026-10-22~24 · `docs/changelog_validation.md` 31~33차. owner 결정 대기 5건은 `TODO.md`. 같은 날 TODO·archive 문서 정리(낡은 Status · 끝난 항목 이동, 각 `docs/todo_archive_*.md` 맨 위 「문서 정리로 이동」 절).
 
 - **2026-10-19 밤 접근성 2차(owner 「일본은 보류하고 접근성 C8~C17 진행」; 에이전트 2개 · 약 1시간, 구현 35분 + 검증 25분 상자; push `7fc4971f`, main 배포 `3a91a4ea` 완료·라이브 4파일 바이트 일치)**: C8 · C9 · C10 · C11 · C12 · C13 · C14 · C15 · C17 구현. C16 은 WCAG 목표 결정 대기, 일본 오류 제보 위젯 제외는 보류. 구현은 `docs/changelog_designer.md` 2026-10-19 (밤 2) 항목. 전날의 8시간 교훈대로 워크플로우 없이 구현 1 + 좁은 검증 1로 끝냄.
 

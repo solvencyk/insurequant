@@ -39,7 +39,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 ## 절대 금지 (전부 이 저장소의 실제 사고 이력)
 
 - **`scripts/` · `src/` · `*.html` · `*.md` · 마스터 JSON을 건드리지 마라.** 명시적으로
-  지시받은 경우가 아니면 네 쓰기 범위는 `data/` 아래뿐이다.
+  지시받은 경우가 아니면 네 쓰기 범위는 `data/` 아래뿐이다. 상시 예외는 새 분기용 수집 스크립트 복제본(`scripts/download_disclosure_<period>_*.py`·`download_ir_<period>.py`, `docs/agents/claude-agent-downloader.md` Workflow 2단계)과 Step 7 수집 현황 보고서뿐이다.
 - **아무것도 지우지 않는다.** 폐기 대상은 `data/_archive/<UTC스탬프>/<원래상대경로>`로 옮긴다.
 - **PDF→MD 변환은 parser 소관이다**(`run_harness.py --stage parse`). 변환 갭을 downloader
   티켓으로 만들지 마라.

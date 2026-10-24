@@ -1,5 +1,15 @@
 # TODO archive — `TODO_designer.md` (Status 이력, 읽기 지연)
 
+## 2026-10-24 문서 정리로 이동한 끝난 항목 (TODO_designer.md, 무수정)
+
+> 이동 사유: 「publishing 이 배포 전에 해야 할 일」은 2026-10-13 main `970259b8` 배포로 전부 끝났다고 스스로 적혀 있다. 「사별 비교 손해율 curve 선 색」은 owner 2026-10-19 에 하지 않기로 결정해(a11y C7) TODO_designer.md `## 결정` 과 루트 TODO.md 정책 표 11 로 옮겼다.
+
+## publishing 이 배포 전에 해야 할 일
+
+- 2026-10-13 main `970259b8` 배포로 전부 끝났다(`data/company_segment.json`·`data/csm_combo/panel_csm_combo.json`·`data/compare/panel_compare.json`·`kics_duration_gap.json` 이 origin/main 에 있음, ILP 시트는 `public_exports/보험계약부채.json` 로 공개됨). 전문은 `docs/todo_archive_designer.md` 맨 위.
+
+- [ ] **사별 비교 손해율 curve 선 색(owner 확인)**: 키컬러 없는 회사의 파스텔 선(틸 `#4fb0a5`·살몬 `#ee8f72`·블루 `#7b9fe6`·머스터드 `#cdb04a`)은 흰 배경에서 2.1~2.6:1(비텍스트 3:1 미달, 어두운 배경은 6.8:1 이상). owner 지시가 「파스텔」이라 그대로 뒀고, 키컬러 선만 대비 3:1 이 되게 같은 색상에서 밝기를 옮긴다(KB 노랑→`#b88700`). 값 표의 색 견본이 선과 같은 색이라 색만으로 구분하진 않는다. 농협생명은 맵에 `NH농협생명` 으로만 있어 compare 가 `'NH'+약칭` 별칭으로 찾는다(IFRS17 은 별칭 없음). **owner 2026-10-19: a11y 감사 C7 로도 올라왔으나 하지 않기로 결정(값 표에 수치가 같이 표시됨).**
+
 - **2026-10-18 손해율 가정 구분 선택기 · 2026 3분기 안내 팝업 완료(compare.html · IFRS17.html · theme.js · 빌더 · 점검 스크립트, 커밋·미배포; owner TODO 일괄 처리)** — 선택기: 합계 · Non-Par · Indirect-Par · Direct-Par(공시 이름 그대로, 기본 합계라 기존 숫자 불변), `panel_compare.json` 153KB 로 재생성; 팝업: `theme.js` `NOTICE`, 5페이지 1회, 분석 호출 없음.
   독립 검증: 곡선 최대 0.05pp(마스터 재계산), 합계 선택 시 HEAD 와 동일, 1280/375/다크 위반 0 · 콘솔 0, 팝업 428건 위반 0. 남은 것: IFRS17 현재가치 구분 소계 이중 반올림(publishing 티켓 `20261018T0700Z`) · 팝업 제목 · 숨김일(12-31) · 범위 owner 확인 · 배포 때 HTML 2개 + `panel_compare.json` + `theme.js` 한 묶음.
 

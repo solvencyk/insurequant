@@ -108,16 +108,18 @@ After changing a master JSON, sync only the changed sheet of `insurequant_master
 ## PL breakdown is a package now (2026-07-22) — read this before editing a handler
 
 `scripts/build_pl_breakdown.py` was 4,885 lines / 129 top-level functions. It is now a
-layered package and the entry script keeps only discover/assemble/main (567 lines):
+layered package and the entry script keeps only discover/assemble/main:
 
 ```
 scripts/pl_breakdown/
-  common.py      34L   _norm / _label / _row_nums / _quarter_from_path / _quarter_sort_key
-  tier1.py      355L   포괄손익계산서 (income statement) extraction
-  tier2.py      475L   generic 계약유형별 / 재보험 note extraction
-  companies.py 3438L   per-company handlers + SONBO_HANDLERS / LIFE_HANDLERS dispatch
-scripts/build_pl_breakdown.py  567L   discover_filings / assemble / _fs_tier1 / main
+  common.py     207L   _norm / _label / _row_nums / _quarter_from_path / _quarter_sort_key
+  tier1.py      389L   포괄손익계산서 (income statement) extraction
+  tier2.py      636L   generic 계약유형별 / 재보험 note extraction
+  companies.py 5163L   per-company handlers + SONBO_HANDLERS / LIFE_HANDLERS dispatch
+scripts/build_pl_breakdown.py  935L   discover_filings / assemble / _fs_tier1 / main
 ```
+
+(줄 수는 2026-10-24 실측. 2026-07-22 분리 직후에는 34 / 355 / 475 / 3438 / 567 줄이었다 — 이후 회사별 핸들러와 assemble 이 늘었다.)
 
 **Where your edit goes:**
 
@@ -164,12 +166,12 @@ KR0073 다중 breakdown 선택). 2026-07-22 사후보정 꼬리 182줄을 `_appl
 
 고쳤으면 **`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_post_transition_golden.py`** 필수(오프라인·~4초):
 전 md_inbox 분기에 대해 순수 코어를 돌려 **쓰게 될 모든 `(회사,분기,항목)→(전,후,소스)`
-6,114셀**을 해시로 고정한다(마스터는 안 건드림). 값이 의도적으로 바뀌면 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
+7,166셀**(556 회사·분기, 2026-10-24 실측; 처음 고정할 때는 6,114셀)을 해시로 고정한다(마스터는 안 건드림). 값이 의도적으로 바뀌면 `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 tests/test_post_transition_golden.py --update` + 커밋에 이유 기록.
 
 ### DART FS API 캐시 — 정정공시 대응 (2026-07-22)
 
-`data/dart/_fs_api_cache/`(668파일, 커밋됨)는 PL 빌더 Tier-1 소스이자 PL 골든이 오프라인으로
+`data/dart/_fs_api_cache/`(1,040파일, 커밋됨 — 2026-10-24 실측)는 PL 빌더 Tier-1 소스이자 PL 골든이 오프라인으로
 도는 근거다. **owner 결정: 계속 커밋한다**(정정공시 드물고, git-purge 브랜치라 유일 사본일 수
 있음). 단 함정 하나 — `_fetch_raw`는 캐시가 있으면 **영원히** 그걸 쓴다(만료 없음). DART
 **정정공시(amended filing)**가 뜨면 stale 캐시가 마스터에 계속 반영된다.

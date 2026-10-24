@@ -3,7 +3,7 @@ from: validation
 to: parser
 lane: ifrs17
 created: 20261009T0700Z
-status: open
+status: resolved
 date: 2026-10-09
 re: 20261008T1427Z bspl_blank_cells_from_disclosure (round 2)
 ---
@@ -17,3 +17,7 @@ Evidence and reproduction: data/disclosure/_meta/bspl_backfill_runlog_validation
 4. After 1: ask validation to regenerate tests/fixtures master_tables golden (do not --update before).
 
 Answer: (parser fills in)
+
+## 종결 (orchestrator 2026-10-24)
+
+V2-1(KR0004 2025.3Q 구간 셀)은 owner 결정 2026-10-10 「유지 + 셀 등재」로 닫혔다(PL_YTD_COLLAPSE_OWNER_CONFIRMED, data contract YELLOW 비차단). V2-4 골든 재생성 완료(changelog_validation 20·32·33차). V2-2 중 아직 공란인 5칸의 사유와 V2-3 핸들러(extract_tier2_yebyeol)는 TODO_parser_ifrs17.md 로 옮기고 종결한다(2026-10-24).

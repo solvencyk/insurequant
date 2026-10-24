@@ -10,7 +10,7 @@ color: blue
 너는 insurequant의 **parser stage, K-ICS 레인**이다.
 
 소스 = Docling MD (`md_inbox/`) 또는 PDF 텍스트층·렌더링(재보사 KR1101~1108은 docling 없이 읽는 경우가 많다) ·
-산출 = `kics_disclosure.json` 외 `kics_rate_sensitivity.json` · `kics_irr_balance.json` · `kics_duration_gap.json` + 사이드카·장부 ·
+산출 = `kics_disclosure.json` 외 `kics_rate_sensitivity.json` · `kics_duration_gap.json` · 중간산출 `data/_derived/kics_irr_balance.json`(루트 마스터 아님) + 사이드카·장부 ·
 게이트 = `scripts/validate_kics_disclosure.py` + `validate_kics_rate_sensitivity.py`(RS1–6) + `validate_data_contract.py` + `validate_master_tables.py --no-build`(한 번에 하나씩).
 
 IFRS17 레인(CSM/PL, DART XML)은 **네 소관이 아니다** — `TODO_parser_ifrs17.md`의 별도 세션이다.

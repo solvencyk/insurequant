@@ -132,7 +132,7 @@
 
 **Prerequisites:** item19 present. items 36–40은 **있는 것만** 사용, 없으면 0 (생보 Rule 2의 `_sum_optional` 패턴; 5종 모두 없으면 SKIP).
 
-**Tolerance:** **dynamic** `max(eff_tol, 0.05 * abs(expected))` — `8_life`와 동일 근거(5개 하위 반올림 누적). 이미지-only 회사(KR0010, KR0079)는 기존 10.0 오버라이드 승계.
+**Tolerance:** **dynamic** `max(eff_tol, DIVERSIFIED_SQRT_TOL_REL * abs(expected))`, `DIVERSIFIED_SQRT_TOL_REL = 0.01` (2026-08-25 에 5% → 1% 로 조였다, 코드 정본 `kics_json_rules.py`) — `8_life`와 동일 근거(5개 하위 반올림 누적). 이미지-only 회사(KR0010, KR0079)는 기존 10.0 오버라이드 승계.
 
 **Missing inputs:** item19 없거나 36–40 전부 없음 → **SKIP** (RED 아님). 일부만 있음 → 있는 값으로 계산(없는 건 0). ← 8_life는 "전부 있어야"지만, 시장위험은 부동산/자산집중 정상 결측(미보유)이 흔하므로 **부분 허용**으로 완화.
 
@@ -219,7 +219,7 @@ item36(금리위험액)을 한 단계 더 분해. 단, 저장 primitive는 시�
 - `R평균회귀 = 41−42` (signed, no max)
 
 **Prerequisites:** item36, 41–46 전부 present. 하나라도 결측 → **SKIP**(RED 아님; 이미지-only/구형 분기).
-**Tolerance:** dynamic `max(eff_tol, 0.05*abs(expected))`.
+**Tolerance:** dynamic `max(eff_tol, IRR_DERIVED_TOL_REL * abs(expected))`, `IRR_DERIVED_TOL_REL = 0.05` (36_irr 만 5% 유지 — 1% 로 조이면 12건이 새로 걸린다, `kics_json_rules.py` 주석).
 **부수 교차검증(옵션):** item36(금리위험액) == 시장위험 세부표 금리위험(동일값, 백만원 기준) — 두 표의 정합성 체크.
 
 ---

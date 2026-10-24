@@ -25,7 +25,7 @@ rollback 상세는 그 문서에 있다. 이 파일은 트리거 조건과 절�
 4. **공유 워킹트리 확인**: `git branch --show-current` + `git status` — 다른 스테이지의 미커밋 변경이
    보이면 hold.
 5. **격리 워크트리로 main에 cherry-push**: 같은 폴더에서 `git checkout main`으로 바꿔치기하지 않는다
-   (다른 세션과 충돌 위험). `git worktree add` 사용.
+   (다른 세션과 충돌 위험). 수동이면 `git worktree add`, 현행 경로(아래 6단계 `android_push_and_deploy.sh`)는 스크립트가 임시 워크트리로 같은 격리를 한다.
 6. **owner GO**: `git push origin main` 직전, 올라갈 파일 전체 목록 + 이유 + 게이트 결과를 제시하고
    명시적 승인을 받는다. 로컬 add/commit/checkout은 승인 없이 진행(계약상 "기계적 작업").
    main 반영 실행 경로는 CLAUDE.md §11·`publishing.md`가 정본이다 — owner 구두 GO 뒤 오케스트레이터가 이 PC 에서 직접 `scripts/android_push_and_deploy.sh --from-origin --branch <작업브랜치>`를 돌리므로 작업 브랜치를 먼저 push해 둔다. git live push 가 막히면 직접 2번 시도하고, 그래도 안 되면 owner 에게 폰 Termux 명령과 배치파일을 제시한다(CLAUDE.md §11).

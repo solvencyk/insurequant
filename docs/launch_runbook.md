@@ -86,6 +86,14 @@ grep 으로는 **절대 도출되지 않지만** `main` 에 항상 있어야 하
 
 ## 3. 격리 워크트리 cherry-push 절차
 
+> **현행 실행 경로 (owner 2026-10-19, `CLAUDE.md` §11):** 아래 수동 절차의 기계 부분(2~6단계)은 `scripts/android_push_and_deploy.sh` 가 한다.
+> 작업 브랜치를 먼저 origin 에 push → owner 구두 GO → 오케스트레이터가 이 PC 의 **격리 sparse 클론**에서(공유 워킹트리에서는 돌리지 않는다: 시작의 `checkout -B` 가 브랜치를 되감는다)
+> `bash scripts/android_push_and_deploy.sh --from-origin --branch <작업브랜치>` 를 실행한다. 스크립트는 origin/main 과 브랜치가 다른 keep-list 파일을 임시 워크트리로
+> `git checkout <브랜치> -- <path>` 로 가져와 blob 해시를 대조하고 **확인 프롬프트 없이** `git push origin main` 한다(그래서 §4 승인이 선행돼야 한다).
+> main 에 아직 없는 신규 배포 파일은 스크립트의 `NEW_FILES` 에 등재해야 올라가고, `--only <경로접두>` 로 범위를 한정할 수 있으며 `lane/jp` 는 `--only` 없이는 거부된다.
+> git push 가 인터넷 환경으로 막히면 직접 2번 시도하고, 그래도 안 되면 owner 에게 폰 Termux 명령(저장소 클론 **안에서** 실행)과 배치파일을 제시한다.
+> 아래 수동 절차는 스크립트를 쓸 수 없을 때의 대체 경로이자 스크립트가 하는 일의 설명이다.
+
 ```bash
 # 0) 작업 브랜치에서 in-progress 작업을 먼저 커밋으로 파킹 (stash 금지 — §7 참조)
 git add <changed-files>            # git add -A 금지, 명시적 파일 목록
@@ -176,8 +184,8 @@ git push origin main                 # ← GO 필요
 공식 `xlsx` skill 대신 다른 경로로 손을 댔을 때 발생.
 
 1. **`.bak` 파일이 있으면 그걸로 복원**: 최근 스크립트(`wire_capital_securities_to_utilization.py` 류)는
-   덮어쓰기 전에 `shutil.copy2(f, f + ".bak")`으로 백업을 남긴다 — 대상 파일의 `.bak` 존재 여부 확인 후
-   `.bak`을 원본 이름으로 복사.
+   덮어쓰기 전에 `shutil.copy2(f, f + ".bak")`으로 백업을 남긴다. 단 `scripts/sync_master_xlsx_sheet.py` 는 백업을 만들지 않으므로 시트마다
+   시작 전 `insurequant_master_tables.xlsx.bak_<날짜>_<태그>` 를 손으로 뜬다(`.claude/agents/publishing.md`) — 루트의 `*.bak_*` 존재 여부 확인 후 원본 이름으로 복사.
 2. **`.bak`이 없으면 Excel에서 직접 재오픈** — Excel이 열 때 수식을 재계산하므로 캐시가 복구된다. 그 후
    "다른 이름으로 저장" 대신 **같은 파일에 저장**(경로 유지).
 3. 위 두 방법이 다 안 되면 git 에 커밋된 `insurequant_master_tables.xlsx`로 복원한 뒤 바뀐 시트만

@@ -40,13 +40,13 @@ TODO·changelog 를 읽어서 답하지 말 것. TODO 는 의도, `status_report
 ## 4. 실행 환경
 
 - python 은 **항상 풀패스** `C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe` (슬래시 `/`). 맨 `python` 은 스토어 3.13 이라 `docling` 이 없다. 서브에이전트 프롬프트에도 명시.
-- 멀티라인 `python -c` 금지(서브에이전트 영구 행). 스크립트 파일로 쓴다. 파일 I/O 는 `encoding` 명시.
+- 멀티라인 `python -c`·`python -`(표준입력)·heredoc 금지(서브에이전트와 메인 세션 모두 영구 행 — 2026-10-10~13 실측 12회 이상, 2026-10-24 재현). 스크립트 파일로 쓴다. 파일 I/O 는 `encoding` 명시.
 - 문서·`.py` 전부 **UTF-8, BOM 없음**. 한글이 깨지는 환경이면 영어로 쓴다. 중국어처럼 보이는 깨진 한글을 남기지 말 것. 쓴 뒤 첫 줄 read-back.
 
 ## 5. push 게이트 (훅으로 강제)
 
 새 클론·워크트리는 먼저 `git config core.hooksPath .githooks` (설정은 클론마다 로컬; `git config --get core.hooksPath` 로 확인).
-훅 = `scripts/prepush_check.py`(약 11분): ① data-contract 하드게이트 ①b K-ICS 룰 게이트(`validate_kics_disclosure.py`) ①c 도메인 게이트 ③ inbox 위생(`check_inbox_hygiene.py`)
+훅 = `scripts/prepush_check.py`(약 11분): ① data-contract 하드게이트 ①b K-ICS 룰 게이트(`validate_kics_disclosure.py`) ①c 도메인 게이트 ①d DART raw 유실 검사 ①e 골든 입력지문 ①f 배포 JS 런타임 ③ inbox 위생(`check_inbox_hygiene.py`)
 ④ 오프라인 테스트(골든 + `test_rule_coverage_manifest.py` + `test_identity_tautology.py`). `main` 처럼 `scripts/` 없는 slim 트리는 경고만.
 **"문서에 mandatory 라고 썼다" ≠ 강제.** 새 게이트는 `prepush_check.py` 에 호출을 넣었는지 그 자리에서 확인. `git push --no-verify` 를 썼으면 커밋에 남긴다.
 `test_rule_coverage_manifest.py` 는 룰↔항목 커버리지를 변이시험으로 대조한다 — 룰 추가·개명·삭제 시 매니페스트를 같이 고친다.

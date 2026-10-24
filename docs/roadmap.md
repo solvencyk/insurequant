@@ -1,6 +1,6 @@
 # insurequant 중장기 로드맵 (Mid/Long-term Roadmap)
 
-Last updated: 2026-05-26
+Last updated: 2026-05-26 (§1A 상태 열의 자본성증권·손해율·유지율 3행만 2026-10-24 에 갱신)
 Source: 다른 세션의 VC 사업성 밸리데이션 + 공시지표 리서치 + 글로벌 피벗 전략 종합.
 상세 사업성 분석은 wiki `notes/research/insurequant 사업성 검증.md` + `insurequant 공시지표 연구.md` 참조.
 
@@ -47,12 +47,12 @@ near-term task는 TODO.md, 변경 이력은 docs/claude-changelog.md.
 | **당기순이익 시계열 + projection** | DART 주석 13Q | 부분 (historical done) | ML/DL projection은 Phase 1C |
 | RoE / RoA | DART / IR | todo | |
 | 합산비율 (일반보험 수익성) | DART / KOSIS / 협회 | todo | 일반보험 부문 WTP 파악 — 만성적자사엔 무리한 재보험비용 요구 불가 |
-| 자본성증권 발행·만기·콜 캘린더 | FSC data.go.kr | done | F5 forward sim 연계 |
+| 자본성증권 발행·만기·콜 캘린더 | DART per-bond (`data/bonds/`; FSC data.go.kr 소스는 2026-08-03 폐지) | done | F5 forward sim 연계 |
 | 재보험 활용 현황 (출재/수재) | DART 주석 | done (IFRS17 A4) | |
 | BS 스냅샷 (자산/부채/자본) | DART | done (panel 6) | |
 | 민감도 (할인율/금리 ΔCSM) | DART / K-ICS | done (panel 7) | |
-| 손해율 (trend only) | KOSIS (F7) | todo | ⚠️ 공시-실무 괴리 — 재보험 손해분담금이 수수료↔보험금차감 혼입되어 재보험손해율 과소계상 가능. **trend는 보여주되 "신뢰 불가" 명시** |
-| 채널별 불완전판매비율 / 설계사정착률 / 민원 / 부지급률 | 손보협회 (F8) | todo | GA 역선택 인과체인 |
+| 손해율 (trend only) | 경영공시 PDF 추출(라이브: IFRS17.html 섹션 8·9, 2026-10) · KOSIS (F7)는 todo | 부분 | ⚠️ 공시-실무 괴리 — 재보험 손해분담금이 수수료↔보험금차감 혼입되어 재보험손해율 과소계상 가능. **trend는 보여주되 "신뢰 불가" 명시** |
+| 채널별 불완전판매비율 / 설계사정착률 / 민원 / 부지급률 | 손보협회 (F8) · 판매채널별 유지율(13·25·37·61회차)은 경영공시 7-6 표 | 부분 (유지율은 라이브: IFRS17.html 섹션 10, 2026-10) | GA 역선택 인과체인. 불완전판매비율·민원·부지급률은 todo |
 
 ### 1A-2. 재보험 영업 관점 우선 추가지표 (2026-05-28 사용자 우선순위)
 

@@ -2,6 +2,9 @@
 
 > Ordered by [inbox/designer/20260721T0233Z](../inbox/_resolved/20260721T0233Z__owner__MULTI__adopt_a11y_audit_baseline.md) (`ui-ux-pro-max` external skill reviewed and passed on — see §4). Scope: baseline definition + audit + owner-review queue for the 4 deployed pages (`index.html`, `K-ICS.html`, `IFRS17.html`, `공시보고서.html`). **Owner-review queue sign-off received same day (2026-07-21) — all color/contrast items fixed, see §2b.** **Since 2026-10-19 the scope is all 6 deployed pages (`index`, `K-ICS`, `IFRS17`, `공시보고서`, `compare`, `privacy`): `compare.html` and `privacy.html` were first audited on that date, see §5.**
 
+> **2026-10-24 현행 주석:** §1~§4 는 2026-07-21 시점(4페이지) 감사 기록이다. 그 뒤 달라진 것 — 감사 범위는 6페이지(`compare.html`·`privacy.html` 추가, §5), 6페이지 전부 `common.css` 를 링크한다,
+> 토큰 값은 2026-09-20 팔레트 B 로 교체됐다(예: `--muted` 는 `#6a737a` 가 아니라 `#63666b`; `--control-border` 신설). 현행 토큰은 `common.css :root` 가 정본이고, 아래 표의 `#6a737a` 등은 교체 전 값이다.
+
 ## 1. Target level
 
 **WCAG 2.1 AA**, scoped to what actually applies to a data-dashboard site (no audio/video, no complex forms beyond `<select>`/`<input>`):

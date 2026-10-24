@@ -5,11 +5,11 @@
 
 ## Status (최신 3개)
 
-- **2026-10-23 (33차) 롯데손보 FY2023 WFY 면제 등재(owner D2) + 4사 최종 트리 게이트 (티켓 `20261023T0900Z`, HEAD `d5077c7b`, 미커밋)** — `WFY_EXCEPTIONS` 에 (롯데손해보험, 2023) 추가(16,774.4 대 16,669.0, 0.632%) · 읽기 변이시험 신설 · 골든 wfy 1->0. KDB생명은 owner 결정(10-23)으로 보류(HEAD 값 유지)라 KDB 적재용 item23 BLIND 선언은 되돌렸다 = item23 은 HEAD 그대로 GUARDED.
+- **2026-10-23 (33차) 롯데손보 FY2023 WFY 면제 등재(owner D2) + 4사 최종 트리 게이트 (티켓 `20261023T0900Z`, HEAD `d5077c7b`, 커밋 `90be97e7`)** — `WFY_EXCEPTIONS` 에 (롯데손해보험, 2023) 추가(16,774.4 대 16,669.0, 0.632%) · 읽기 변이시험 신설 · 골든 wfy 1->0. KDB생명은 owner 결정(10-23)으로 보류(HEAD 값 유지)라 KDB 적재용 item23 BLIND 선언은 되돌렸다 = item23 은 HEAD 그대로 GUARDED.
   최종 4사 트리(값 변경 PL 60/18/74/57 · CSM 15/5/20/18, KDB·그 밖 0): master_tables SUMMARY = fixture(갱신 불필요) · data_contract RED 2(xlsx 드리프트)/YELLOW 168 · 연속성 red 0 · live_artifacts RED 5(NB_VS_WATERFALL ABL 3·현대 2) · rule_coverage 104 통과/1 실패(xlsx) · PL 골든 통과.
   보류 선행조건(KDB 재적재): 별도·연결 기준 결정(`inbox/parser/20261023T1320Z`) + 그 적재 커밋에 item23 BLIND 재선언(`gate_cleanup/s01_sim_item23.txt`).
-  남은 것: publishing xlsx 동기화·NB 재빌드. 증거 `data/_derived/remaining_20261022/e23_d1_d3/gate_four_final/`.
-- **2026-10-23 (32차) 최신 비교열 적재 뒤 죽은 등재 7줄 철거 + `PL_OCI_VS_BS_AOCI` 공란 계수 결함 수정 (티켓 `20261023T0030Z`, 대상 HEAD `62ba44ed`, 미커밋)** — 철거(삭제만): `pl_bridge_baseline` 5줄(게이트 `FIXED?`) · `pl_csm_amort_missing_ledger` 롯데 2023.1Q(`..._LEDGER_INERT`) · `WFY_EXCEPTIONS` 한화생명·메리츠 FY2023(적재 전엔 필요, 지금은 두 소비처 모두 안 걸림, 변이 probe). 전후: master_tables SUMMARY 불변·stale 5->0, data_contract RED 0·YELLOW 169->168, 연속성 불변.
+  남은 것: 없음(publishing xlsx 동기화·NB 재빌드는 `cf67ce7e` 로 끝나 main `7e00a62a` 배포). 증거 `data/_derived/remaining_20261022/e23_d1_d3/gate_four_final/`.
+- **2026-10-23 (32차) 최신 비교열 적재 뒤 죽은 등재 7줄 철거 + `PL_OCI_VS_BS_AOCI` 공란 계수 결함 수정 (티켓 `20261023T0030Z`, 대상 HEAD `62ba44ed`, 커밋 `d8899bd9`)** — 철거(삭제만): `pl_bridge_baseline` 5줄(게이트 `FIXED?`) · `pl_csm_amort_missing_ledger` 롯데 2023.1Q(`..._LEDGER_INERT`) · `WFY_EXCEPTIONS` 한화생명·메리츠 FY2023(적재 전엔 필요, 지금은 두 소비처 모두 안 걸림, 변이 probe). 전후: master_tables SUMMARY 불변·stale 5->0, data_contract RED 0·YELLOW 169->168, 연속성 불변.
   결함: 공란(`값_당분기` None) 칸이 「tol 이내」에 섞였다(현재 340 중 108이 공란). 정정 후 비교 258(통과 232·flag 26)·공란 108·BS 결측 8(전부 2023.1Q). 전 버킷 시뮬: flag 집합 불변, 공란 때문에 YELLOW 에서 사라진 행 4(NH농협손해 2023.4Q·농협생명 2024.4Q·동양 2024.4Q·KB손해 2023.4Q). SUMMARY `oci_vs_bs_aoci:26Y/108blank/8bsskip` + 합성 입력 시험 신설(변이 확인) + 골든 `--update`(이 필드만 이동).
   남은 것(owner): `WFY_EXCEPTIONS` 의 KB라이프 FY2024·교보 FY2024·에이비엘 FY2023·KDB생명 FY2023·현대해상 FY2023 5줄은 적재 전에도 이미 안 걸렸다(철거는 owner 등재 변경). 공란 108칸(4Q 55) 중 누계 차로 재구성되는 17칸 중 6칸은 tol 초과(그림자, 게이트 입력 아님). 증거 `data/_derived/remaining_20261022/e22_gate_cleanup/`.
 - **2026-10-22 (31차) 교보생명 KR0073 CSM·PL 「재작성 기준」 적재(`3e53aef8`) 독립 검수 + `tax22_src` 룰 수정 + 골든 정리 (대상 커밋 `3e53aef8`, 후속 `eea3f61c`)** — 원문 자체 재독(`vreader.py`, parser 코드 미사용): PL 항목 1·4·17·19·20·22·23·24·25·31 x 2023.1Q~2024.2Q 60/60 · CSM 항목 1~6 x 7분기 일치(0건 불일치), CSM 상각 대 PL 항목 4 짝 6/6 정확히 닫힘, 2024.3Q·4Q 누계 불변, 교보 밖 변경 0(마스터 · 출처표 · 골드 · 장부 전수 대조).
@@ -27,8 +27,6 @@
 - [ ] **최종 라운드 후속(22차)** — 소유자 결정 15건(런로그 Step 5) · 법정준비금 `run_components`(R-RSV-4/12) 데이터계약 배선(현재 단독 RED 10, parser-ifrs17 선행) ·
   CSM 워터폴 대 ILP CSM 잔액 교차 게이트 `CSM_WATERFALL_VS_ILP_CSM_STOCK`(제안만 -- owner 는 기준 차이 등재를 승인했으나 **룰이 없어 등재할 줄이 0**; 새 룰 설계가 선행, 287칸 중 6칸+롯데 군집, `data/_derived/validation_registrations_20261012/csm_wf_vs_ilp_basis_diff_cells.md`) · 연속성 게이트 밴드 0.5%가 숨기는 롯데 2023.4Q −105억.
 - [ ] **`CSM_WATERFALL_VS_ILP_CSM_STOCK` 룰 설계 범위(설계 선행, Opus 몫)** — 입력: `CSM_waterfall.json` 기말 CSM(항목 6) 대 `insurance_liability_portfolio.json` 항목 3+6(억원), 공유 (회사,분기) 287칸. 허용오차 후보 `max(1억, 0.5%)`(262칸 1억 이내·281칸 통과·6칸 초과). 예외 형태: 재작성 칸(`ilp_restated_comparative.json`·워터폴 재작성 기록)은 기준 명시 YELLOW, 계약이전(예별 2025.4Q)은 칸 박제, 값 박제(AIG R3 `R3_PINNED_EXEMPTIONS` 형태)와 INERT/DRIFT RED 포함. 롯데손해 2023.4Q~2024.3Q 군집·2024.3Q 잔차 −23 은 설명 안 되므로 등재로 덮지 말고 칸별 분류. 칸 목록 `data/_derived/validation_registrations_20261012/csm_wf_vs_ilp_basis_diff_cells.md`.
-- [ ] **재보사 push 차단 최종 확인** — 단계 10 에서 훅의 게이트를 하나씩 다 쟀다(전부 exit 0, 런로그 `data/disclosure/_meta/reinsurer_runlog_KR1101-1108_12.md` §5). 남은 것은 오케스트레이터의
-  `prepush_check.py --full` 1회 실측. 교훈: 단계 종결 전 도메인 게이트까지 훅 전체를 잰다(단계 8 은 데이터계약만 재서 3·4 를 놓쳤다).
 - [ ] **기존 키 집합 등재부를 박제 장치로 옮길지** — `RS1_EXCEPTIONS`(예별 2024.4Q)·`RS2_EXCEPTIONS`·`RS5_EXCEPTIONS`(17)는 근거 재확인 없이 영원히 빠진다.
   단계 10 장치(`rs_pinned_exemptions`)로 옮기면 매 실행 재검산된다. 등재 변경이라 owner 결정 사항(이번 범위 밖, 손대지 않음).
 

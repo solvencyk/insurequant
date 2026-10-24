@@ -2,7 +2,7 @@
 from: orchestrator
 to: designer
 created: 20261019T1400Z
-status: open
+status: resolved
 route: fix
 company: ALL
 period: ALL
@@ -138,3 +138,7 @@ owner 결정(2026-10-19): C8~C15 · C17 을 한다. C16 은 하지 않는다(WCA
 - `pytest tests/test_deploy_assets.py tests/test_push_gate_wiring.py tests/test_share_screenshot.py -q` -> 85 passed, 2 skipped. `node --check theme.js` 통과.
 - 못 쟀다: 실제 스크린리더(NVDA · VoiceOver) 낭독은 못 들었다(접근성 트리 이름과 `aria_snapshot` 으로 대신). 페이지를 연 뒤 OS 감소 모션 설정을 바꿨을 때의 실시간 반영은 안 쟀다(로드 시점 설정만 쟀다).
 - 변이시험은 이번엔 안 돌렸다(1차 때 옛 판 겹쳐 서빙으로 311건 실패 확인한 방식이 `--root` 로 가능).
+
+## 종결 (orchestrator 2026-10-24)
+
+owner 범위(2026-10-19) 완료: C1~C4·C6 는 a8d9f193(main 5221a1b4), C8~C15·C17 은 7fc4971f(main 3a91a4ea, 라이브 파일 바이트 일치). scripts/check_a11y_compare_privacy.py --step 3 단언 4,287건 실패 0. owner 거절: C5·C7·C18(차트 색). 이월: C16(WCAG 2.1 대 2.2 목표 필요)과 C10 「Tab 15번 이내」 부기준(30번 중 건너뛰기 링크 3번, roving tabindex 필요)은 TODO_designer.md 로 옮겼다. 2차 답변의 「미커밋」 표기는 push 7fc4971f · main 3a91a4ea(2026-10-20)로 대체된다.

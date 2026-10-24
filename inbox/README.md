@@ -31,11 +31,11 @@ inbox/
 
 ```markdown
 ---
-from: validation          # 보낸 스테이지
+from: validation          # 보낸 스테이지 (owner / orchestrator 가 보내는 티켓도 있다)
 to: parser                # 받는 스테이지 (= 폴더명)
 created: 20260608T0210Z
 status: open              # open | answered | resolved | superseded
-route: reparse            # refetch | reparse | escalate | blind_spot
+route: reparse            # refetch | reparse | escalate | blind_spot | backlog (아래 route 표)
 company: KR0003
 period: 2025.4Q
 rule: FY_BOUNDARY_DISCONTINUITY   # 해당 시 검증 rule id

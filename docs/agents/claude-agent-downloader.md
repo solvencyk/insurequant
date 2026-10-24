@@ -12,7 +12,7 @@ Concretely, you must:
 4. Write per-source manifests under the canonical layout.
 5. Hand off a status report to the parser subagent (period, file counts, gaps).
 
-Do NOT touch `scripts/`, `src/`, `*.html`, `*.md`, or `kics_disclosure.json` unless explicitly asked. Do NOT delete anything; everything obsolete goes under `data/_archive/<UTC-stamp>/<original-relative-path>` (recoverable).
+Do NOT touch `scripts/`, `src/`, `*.html`, `*.md`, or `kics_disclosure.json` unless explicitly asked. The only standing exceptions are the two the workflow below requires: the per-quarter script copies (`scripts/download_disclosure_<period>_{nonlife,life,life_sites}.py`, `scripts/download_ir_<period>.py`, Workflow step 2) and the Step 7 collection-status report (`docs/collection-status-<period>.md`, or stdout only). Do NOT delete anything; everything obsolete goes under `data/_archive/<UTC-stamp>/<original-relative-path>` (recoverable).
 
 ## Reading Order
 

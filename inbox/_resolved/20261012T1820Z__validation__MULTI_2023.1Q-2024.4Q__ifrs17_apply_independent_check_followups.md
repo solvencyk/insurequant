@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20261012T1820Z
-status: open
+status: resolved
 route: reparse
 lane: ifrs17
 company: MULTI
@@ -32,3 +32,7 @@ parser-ifrs17 `b8c37fff`(249셀 적용)의 독립 검수 결과, **적용한 249
 6. 메리츠화재 KR0001 FY2023 기초 CSM: 1Q·2Q 100,383.8 · 3Q·4Q 96,376.4(문서화된 면제 `WITHIN_FY_OPENING_DRIFT_EXCEPTED`). 이번 적용이 3Q 를 재작성 기준으로 옮겨 1Q·2Q 가 외톨이가 됐다. 1Q·2Q 는 후속 공시 비교열이 CSM 표를 싣는지 확인 요청.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+## 종결 (orchestrator 2026-10-24)
+
+C6(메리츠 FY2023 기초 CSM)은 1Q~4Q 모두 96,376.4 로 닫혔다(READY-25 적재 afea4342). C5 는 정보성. A1(KR0083 2023.1Q 항목 17·18·19) · A2(KR0005 2023.1Q 항목 19) · B3(KR0008 2024.1Q 항목 13·14) · B4(KR0069 BS 기준 혼합)은 아직 처리 전이라 TODO_parser_ifrs17.md 「오래된 티켓 잔여」로 옮기고 이 티켓은 종결한다(2026-10-24).

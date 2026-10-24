@@ -40,7 +40,7 @@
 > **룰 로직을 고치면 골든 필수.** `run_validation` 은 `_validate_bucket`(자본 1-3·요구자본 4-8) · `_validate_market_irr`(19_market·36_irr) ·
 > `_validate_transition_basic`(8_post·8_life) · `_validate_transition_capital`(9·10)으로 나뉘어 있다. 고친 뒤
 > **`C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe -m pytest tests/test_kics_rules_golden.py`**(라이브 마스터 findings 의 `(회사,분기,룰,상태)` 매트릭스, <1초).
-> 마스터테이블 게이트(`validate_master_tables.py` 의 `_check_*` 7개)는 **`tests/test_master_tables_golden.py`**.
+> 마스터테이블 게이트(`validate_master_tables.py` 의 `_check_*` 함수들, 2026-10-24 기준 10개)는 **`tests/test_master_tables_golden.py`**.
 > 결과가 **의도적으로** 바뀌면 손으로 해시를 고치지 말고 `--update` 재생성 + 커밋 메시지에 **왜**.
 
 | Rule | 검증 내용 | Tolerance |
@@ -54,12 +54,14 @@
 | R7 | `item27 = item1/item14*100` (지급여력비율, item14=0→RED) | 2.0%p |
 | R8 | `item28 = item2/item14*100` (기본자본비율) | 2.0%p |
 | R8_post | 경과조치 적용후 비율 (post 데이터 없으면 SKIP) | 2.0%p |
-| R8_life | 생보 R7 7×7 (item29..35) | `max(2.0, 0.05·|expected|)` |
+| R8_life | 생보 R7 7×7 (item29..35) | `max(2.0, 0.01·|expected|)` (2026-08-25 에 5%→1%) |
 | R9 | `item2_post ≥ item2_pre - tol` (grandfather) | 2.0 |
 | R10 | `item14_pre ≥ item14_post - tol` (SCR phase-in) | 2.0 |
-| 19_market | `item19 = sqrt(V'·M·V)`, V=[36–40] 시장위험 5종 (부분결측 허용) | `max(2.0, 0.05·\|expected\|)` |
+| 19_market | `item19 = sqrt(V'·M·V)`, V=[36–40] 시장위험 5종 (부분결측 허용) | `max(2.0, 0.01·\|expected\|)` (2026-08-25 에 5%→1%) |
 | 36_irr | `item36 = √[max(R상승,R하락)² + max(R평탄,R경사)²] + R평균회귀` (시나리오순자산 41–46) | `max(2.0, 0.05·\|expected\|)` |
 
+> 표의 `R` 접두는 이 문서의 표기일 뿐이다 — 코드 `rule` 필드는 `1`~`10`·`7_post`·`8_post`·`8_life`·`19_market`·`36_irr` 이고, 표에 없는 룰(`7_post`·`2_tier1_bridge`·`47_tier2_census`·`48_tier2_limit`·`50_tfi_tier_split`·`51_tfi_tier2_composition`·`53_tfi_memo_rows` 등)은 [kics-json-validation-rules.md](kics-json-validation-rules.md) 끝의 목록과 코드가 정본이다.
+>
 > `36_irr` 는 `max(base−steep, 0)` 절단 때문에 41~46 중 한 칸이 크게 틀려도 못 볼 수 있다(2026-10-06 AIA 항목46 100배 — 듀레이션갭 역검산만 잡았다).
 
 **K-ICS 금리민감도** (별도 마스터 `kics_rate_sensitivity.json`, 러너 `scripts/validate_kics_rate_sensitivity.py`. 정본: [`kics-rate-sensitivity-spec.md`](kics-rate-sensitivity-spec.md) §5):
@@ -324,7 +326,7 @@ Agent({
 
 domain: kics
 target: kics_disclosure.json
-prior_snapshot: snapshots/kics_2026Q1.json
+prior_snapshot: <직전 분기 마스터 사본 경로>   # 저장소에 snapshots/ 폴더는 없다 — `git show <sha>:kics_disclosure.json` 으로 만든 사본을 쓴다
 parser_agent_doc: docs/agents/claude-agent-parser.md  # 도메인 ref: docs/domains/claude-agent-kics.md
 
 루프 결과를 artifacts/validation/kics_<ts>.json에 저장하고,

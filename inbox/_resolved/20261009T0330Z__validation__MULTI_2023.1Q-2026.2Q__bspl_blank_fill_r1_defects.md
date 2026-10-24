@@ -2,7 +2,7 @@
 from: validation
 to: parser
 created: 20261009T0330Z
-status: open
+status: resolved
 route: reparse
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -24,3 +24,7 @@ validation 1회차(BS 184칸 + PL 126칸 독립 재독). 값 자체는 전수 �
 9. **KR0004 2025.4Q BS 마스터 이상**(기존 TODO 항목): 자산 72,830 vs 직전·직후 3,549,364~4,519,125. 이번 채움 때문에 급변 구간이 가시화됐다. 4Q DART(엠지 명의) 값 재확인.
 
 ## 답변 (recipient 작성 — 처리 후)
+
+## 종결 (orchestrator 2026-10-24)
+
+9건 중 #1(게이트 NEW-FAIL, 항목 1 보류 15칸으로 해소: pl_bridge 3807P/18F/0NEW, coverage_hole 0)·#3·#4·#5·#7·#9 는 완료 또는 수용(validation 2회차 「Accepted, not defects」)이다. 남은 #2(KR0071 2023.1Q DART 대 경영공시) · #6(값_당분기 None 칸) · #8(KR0004 항목 17~21)은 TODO_parser_ifrs17.md 「오래된 티켓 잔여」로 옮기고 이 티켓은 종결한다(2026-10-24).

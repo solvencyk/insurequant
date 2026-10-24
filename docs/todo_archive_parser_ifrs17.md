@@ -1,5 +1,34 @@
 # TODO archive — `TODO_parser_ifrs17.md` (Status 이력, 읽기 지연)
 
+## 2026-10-24 문서 정리로 이동한 끝난 항목 (TODO_parser_ifrs17.md 열린 일, 무수정)
+
+> 이동 사유(2026-10-24 문서 정리). 아래 줄은 한 글자도 고치지 않았다.
+> - 25차 후속 ③ · 21차 후속 ⑥ (publishing xlsx·panel·public_exports): `74a9353f`·`d58d0852`·`cf67ce7e`·`e59e1709` 로 동기화 끝(`check_master_xlsx_drift` RED 0), main `8eb01df` 배포.
+> - 21차 후속 ⑧ (ABL 2024 항목 5·9·10·7·11·12): 23차(2024.1Q~4Q, 2025.1Q·2Q 항목 5 오추출 6칸 포함)와 24차(2025.3Q~2026.2Q)에서 적재(`docs/changelog_parser_ifrs17.md` 23·24차).
+> - 라이나 ① 새 RED 3 · BS·PL 후속 ① RED(불변) · 재보사 CSM ① 새 RED 17: 2026-10-11 밤 마감(재보사 PL 항목 4 17버킷 + 라이나 9버킷 적재, `docs/claude-changelog.md`) · validation 23차(PL 항목 4 주석 계보 + 하노버 2025.3Q `_PL_SOURCE_ABSENT`)로 닫혔고 `validate_data_contract` 는 2026-10-24 RED=0(`docs/changelog_publishing.md` 2026-10-24).
+> - 라이나 ④ (`raw/` 직접 glob 2건 실패): `tests/test_disclosure_raw_pdf_wiring.py` 2026-10-24 실행 516 passed.
+> - 라이나 ⑤ · BS·PL 후속 ④ (골든 `--update`): validation 22차(2026-10-11)가 갱신했고 33차 기준 master_tables SUMMARY = fixture.
+> - BS·PL 후속 ⑤ (xlsx 17BS·손익분해PL 동기화): publishing 2026-10-11 마감 라운드 이후 드리프트 RED 0.
+> - 예별 2025.3Q `PL_YTD_COLLAPSE_TO_ZERO`: owner 가 ② 유지+셀 등재로 결정해 validation 이 등재했다(`docs/changelog_validation.md` 2026-10-10 20차).
+> - PL 골든 실패: 2026-10-22 재측정 통과(364초) 뒤 23·24·25차와 validation 33차 모두 PL 골든 통과 → 재현되지 않아 닫는다.
+> - 재보사 CSM 항목에서는 「① 새 RED 17」 문구만 위 사유로 빼고 ②~⑤ 는 남겼다(빠진 문구는 아래 마지막 줄).
+
+  - ③ publishing: xlsx `손익분해PL` 389칸 · `CSM워터폴` 3칸 동기화, panel, public_exports.
+  - ⑥ publishing: (22차 몫 추가 = xlsx `손익분해PL` 66칸 · `CSM워터폴` 3칸, 농협생명·KB라이프·ABL·KB손보·롯데 CSM) · xlsx `CSM워터폴` 124 · `손익분해PL` 466칸 · `NB_CSM_multiple`(ABL 2023.1Q~3Q 연누계·당분기와 4Q 당분기 · 현대해상 2023.1Q·2Q) · `panel_compare.json` · `panel_csm_combo.json` · public_exports(PUBLIC_EXPORT_DRIFT 는 마스터 커밋 뒤에 나온다).
+  - ⑧ (발견, 범위 밖) ABL 2024.1Q~3Q 항목 5 = 196/369/578 은 재보험 RA 오추출(원수 3,275/6,556/9,661), 2024.4Q 항목 5 12,282 ≠ 주석·롤포워드 13,655 · 항목 10 -785 ≠ -793, 2024.1Q~3Q 항목 9·10 빈칸(-2,249/-4,437/-6,746 · -196/-373/-583), 2024.1Q~3Q 항목 7 gold 는 오추출 5 로 계산, FY2023 항목 11(874/1,793/3,129/2,993)·12 미적재. 같은 읽기로 닫히는 값이 `kr0070_abl/a01_read_abl_fy2023.txt` · `a02_control_current_cols.txt` 에 있다.
+  - ① 새 RED 3(`PL_CSM_AMORT_VS_WATERFALL` 라이나 2025.3Q·2026.1Q·2026.2Q): 건별 등재(`proposed_registry_entries.json`) 또는 재보사 17건과 같이 게이트 설계 변경(경영공시 계보 워터폴 셀은 PL 대조 제외)
+  - ④ `bspl_apply_findpage.py` · `bspl_apply_render.py` 가 `raw/` 를 직접 glob 해 `tests/test_disclosure_raw_pdf_wiring.py` 2건 실패(BS·PL 담당 에이전트 스크립트, `disclosure_pdfs()` 로 교체)
+  - ⑤ validation: `test_master_tables_golden` SUMMARY 3필드가 이 적재로 움직인다(closing 381P → 384P · csm_amort_identity 22S → 25S · qoq_warn 252Y → 254Y) — 의도된 변화라 `--update` + 사유 기록(나는 안 했다).
+  - ① RED(불변): `PL_CSM_AMORT_VS_WATERFALL` 17(재보사 PL 항목 4 계보 한계 — `pl_csm_amort_missing_ledger.json` 건별 등재 또는 게이트 설계 변경, 후보는 CSM 레인 `proposed_registry_entries.json`) · `PL_YTD_COLLAPSE_TO_ZERO` 3(등재 후보 `data/_derived/bspl_granularity_20261011/proposed_owner_confirmed_cells_ytd_collapse.json`, 아니면 항목 23 3칸 철회) · `MASTER_HOLE` 하노버 2025.3Q PL(통째 결손 면제 경로 없음, 원천 not_posted)
+  - ④ 골든 `--update`(validation, 사유 기록; BS 골든 고정 9,030행 → 현재 10,962행)
+  - ⑤ xlsx 동기화(publishing): 17BS 행 누락 1,932 + 값 드리프트 93 · 손익분해PL 드리프트 121칸
+- [ ] **예별(KR0004) 2025.3Q `PL_YTD_COLLAPSE_TO_ZERO` RED = validation r2 V2-1(기준 혼합) — owner/validation 결정 대기** — 원문이 `제1(당)3분기 2025-06-16~09-30`(신설 예별손해보험(주) 제1기)이고 법인세는 `-` 라 0.0 이 인쇄값이다. 2Q(구 MG 제13기 8,079.7)와 보고주체가 다른 단절이라 값을 바꿔도 다른 RED 가 된다.
+  결정지 ① 되돌리기(10-09 에 만든 4행 + 사이드카 1셀 삭제, `MASTER_HOLE(통째)` 복귀) ② 유지 + 근거를 단 셀 단위 등재. 증거 4줄·절차는 런로그 1b §3.3. V2-4(골든 `--update` 보류)가 이 결정에 걸려 있다.
+- [ ] **PL 골든 실패** — `RUN_PL_GOLDEN=1 pytest tests/test_pl_breakdown_golden.py` 에서 `sha256_coverage` 만 어긋난다(master 바이트는 같음). **2026-10-22 재측정(14차 적용 뒤): `1 passed`(364초) — 재현되지 않는다(원인 미확인; 다음 실행도 통과하면 이 항목을 닫을 것).**
+  KR0074 라이나 2023.4Q 1행: 디스크 coverage 는 `no_income_statement`·missing 21·tier2 `partial`, 빌더 재실행은 missing `[4]`·tier2 `ok`.
+  `a0f0607` 이후 디스크 coverage 와 빌더 산출이 어긋난 것으로 보인다. 2026-10-06 K-ICS 정정과는 무관함을 확인했다.
+(재보사 CSM 항목에서 뺀 문구) ① 새 RED 17(`PL_BUCKET_ABSENT_VS_WATERFALL`): 건별 등재(후보 `data/_derived/reinsurer_ifrs17_csm_20261011/proposed_registry_entries.json`) 또는 게이트 설계 변경
+
 ## 2026-10-24 밀린 Status (최신 3개 밖, 문서 정리로 이동)
 
 - **2026-10-24 22차: 후속 티켓 4건 + CSM 단일분기 빈칸 장치 — PL 값 32칸(신규 29 · 제자리 교체 1[ABL 2023.1Q 항목 7] · KB손보 손입력 2칸 제거) + CSM `값_당분기` 3칸 (티켓 `1130Z` · `1210Z` · `0600Z` · `20261024T0100Z` · `1215Z` 건 2, 미커밋)** — 박제·핀·잔차·예외 0, 칸마다 필링 줄 번호 독립 재독 227 checks 문제 0.

@@ -67,7 +67,7 @@ flowchart LR
 
 ### 5) 정합성 검증 계층
 
-- 도메인 룰: `src/solvency/validation/kics_json_rules.py` (R1~R8 · 8_life · 19_market)
+- 도메인 룰: `src/solvency/validation/kics_json_rules.py` (1-10 · 8_life · 19_market · 36_irr · 보완자본 한도/TFI 축 — 목록 `docs/agents/kics-json-validation-rules.md`)
 - 게이트: `scripts/validate_kics_disclosure.py` (RED=0), 배포 전 `scripts/validate_data_contract.py`
 - 하네스: `scripts/run_harness.py` (`--stage quality|pdf|parse`)
 

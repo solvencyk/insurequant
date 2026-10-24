@@ -1,8 +1,9 @@
 meta:
   version: 1
   last_updated: '2026-08-30'
-  scope: 4 data sources for ~28 Korean insurers
+  scope: 4 data sources for the 39-company universe (17 non-life + 22 life); reinsurers KR1101-KR1108 are collected outside this catalog (see .claude/agents/downloader.md)
   notes:
+    - 'The urls/xpaths below are the 2026.1Q snapshot and each source `script:` names the 2026q1 script. The latest per-quarter scripts are scripts/download_disclosure_2026q2_{nonlife,life,life_sites}.py and scripts/download_ir_2026q2.py; the newest script is the source of truth for ids and selectors (docs/agents/claude-agent-downloader.md).'
     - All file I/O must use UTF-8 (no BOM).
     - Korean filenames in zipfile: cp437 -> decode('cp437').encode('cp437').decode('cp949') if garbled.
     - Archive obsolete items under data/_archive/<UTC-stamp>/<original-relative-path>; never delete.
@@ -35,11 +36,11 @@ sources:
         mode: two_step + click_dl
         notes: step1 navigates via JS goViewPage; step2 javascript:downLoadFile(...) returns ZIP
       - kr: KR0004_MG
-        name: MG손해보험 (구 예별)
+        name: 예별손해보험 (구 MG손해보험)
         url: https://yebyeol.co.kr/PB021010DM.scp?menuId=MN0802001
         xpath: '//*[@id="quarter1_2026"]'
         mode: click_dl
-        notes: 예별 -> MG 사명변경. Id 'quarter1_2026' increments per period.
+        notes: MG -> 예별 사명변경. Id 'quarter1_2026' increments per period.
       - kr: KR0005
         name: 흥국화재
         url: https://www.heungkukfire.co.kr/FRW/announce/manageRegular.do

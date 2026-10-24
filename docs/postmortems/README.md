@@ -35,6 +35,7 @@
 |---|---|---|---|
 | K-ICS 게이트 | `scripts/validate_kics_disclosure.py` | **훅 단계 1b** (2026-08-21부터) | ✅ **push 차단** (`n_kics` → `blocked`) |
 | 도메인 게이트 7종 | `validate_{csm_continuity,kics_rate_sensitivity,nb_csm_multiple,csm_waterfall,live_artifacts,disclosure_freshness,stale_quarter_tables}.py` | **훅 단계 1c** (2026-08-21부터) | ✅ **push 차단** (`n_dom` → `blocked`) |
+| DART raw 유실 · 골든 입력지문 · 배포 JS 런타임 | `check_dart_raw_coverage.py` · `validate_golden_input_fingerprints.py` · `validate_deployed_js.py` | **훅 단계 1d · 1e · 1f** (2026-08-25 · 08-29 · 09-21 신설) | ✅ **push 차단** (`n_raw`·`n_fp`·`n_js` → `blocked`) |
 | 마스터테이블 게이트 | `scripts/validate_master_tables.py` | 수동 실행(**`--no-build` 필수**) | ❌ 자기 exit code(2)만. **push를 자동으로 막지 않는다** (골든 `tests/test_master_tables_golden.py` 는 훅 묶음에 있다) |
 | 일반 이상치 발견 | `scripts/scan_generic_anomalies.py` | 수동 (2026-08-25 게이트 밖으로 분리) | ❌ YELLOW 전용 — 원래 막은 적 없다 |
 | **push 게이트** | `scripts/validate_data_contract.py` (← `prepush_check.py` 단계 1) | 훅이 push 직전 | ✅ **실제 push 차단.** display 분기 scope(`scripts/_quarter_horizon.py` 가 마스터에서 파생, 2026.2Q 기준 8개) |
@@ -92,6 +93,9 @@
 | **UH-3 ⚠️ 부분강화** | 종전 `notes`에만 적혀 **집계도 안 되고 조용히 통과**하던 sidecar 부재를 집계되는 **YELLOW `MISSING_PROVENANCE_SIDECAR`** 로 승격(현 4건: sensitivity_heatmap·forward_capital·tier1/tier2_utilization). **RED 전환은 발행 후** — 지금 RED로 두면 미발행 마스터가 전부 red-out돼 push가 영구 차단. 발행 발주: publishing `20260721T0530Z…provenance_sidecar_emission` · parser(ifrs17) `20260721T0530Z…sensitivity_heatmap_provenance` |
 
 ## 🔴 아직 룰로 안 굳은 것
+
+> 2026-10-22 jp 레인이 브랜치 `lane/jp` 로 분리됐다. 아래 UH-18·19·21·22·23·25 와 PM-2026-09-13 이 가리키는 `J-ESR/`·`jp/`·`tests/test_jp_source_gate.py`·`tests/test_jp_deploy_matches_census.py`·`docs/domains/claude-agent-jp.md` 는
+> 이 브랜치에 없고 lane/jp(워크트리 `../iq_jp`)에 있다. 이 브랜치의 push 묶음은 jp 파일이 되살아나는 것만 `tests/test_jp_lane_absent.py` 로 막는다. 해소 표기는 분리 시점 그대로다.
 
 | ID | 내용 | 상태 |
 |---|---|---|

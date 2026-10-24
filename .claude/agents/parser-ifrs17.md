@@ -74,7 +74,7 @@ C:/Users/sangwook.cho/venvs/insurequant/Scripts/python.exe
 - 단위 정규화: 1억 = 100백만. 회사별로 원·천원·백만원·억원이 섞인다 — cue 우선, 없으면
   기말 CSM 등 앵커와 교차검증해 배율을 역산한다. 근거 없이 기본값을 가정하지 마라.
 - 라벨 변형이 많다(`보험료배분접근법` vs `계약의 유형` 등). 회사별 핸들러는
-  `scripts/pl_breakdown/companies.py`에 추가하고 `LIFE_HANDLERS`/`NONLIFE_HANDLERS`에 등록한다
+  `scripts/pl_breakdown/companies.py`에 추가하고 `LIFE_HANDLERS`/`SONBO_HANDLERS`에 등록한다
   — 등록을 빼먹으면 죽은 코드가 된다.
 - 뒤채움(backward fill)은 **아직 공시되지 않은 값을 과거로 소급**하는 look-ahead다. 금지.
   앞채움(forward hold)은 연1회 공시사에 한해 owner가 승인했고 최대 3분기 상한이 있다.

@@ -50,7 +50,7 @@ Numeric parsing (parse_numeric): strips commas; -, —, N/A, empty -> missing (N
 Default tolerance: **2.0** (eok-won units for amount rules; percentage points for ratio rules 7, 8, 8_post).
 
 **Per-rule overrides:**
-- **Rule 8_life** uses a dynamic tolerance: `max(eff_tol, 0.05 * abs(expected))`. R7 diversified sqrt accumulates rounding from 7 sub-items, so an absolute 2.0 eok-won tolerance is too tight when expected is large (hundreds to thousands of eok-won). Other rules retain the default 2.0 (or the image-OCR override below).
+- **Rules 8_life and 19_market** use a dynamic tolerance: `max(eff_tol, DIVERSIFIED_SQRT_TOL_REL * abs(expected))` with `DIVERSIFIED_SQRT_TOL_REL = 0.01` (tightened from 5% to 1% on 2026-08-25; measured residual p90 is 0.05-0.08%). R7 diversified sqrt accumulates rounding from 7 sub-items, so an absolute 2.0 eok-won tolerance is too tight when expected is large (hundreds to thousands of eok-won). **Rule 36_irr** keeps `IRR_DERIVED_TOL_REL = 0.05`. Other rules retain the default 2.0 (or the image-OCR override below).
 - **Image-only PDF insurers** (KR0010, KR0079): tolerance overridden to **10.0** across all rules to absorb OCR rounding (`IMAGE_OCR_COMPANIES` in `kics_json_rules.py`).
 
 Classification (`classify_diff`, diff = actual - expected):
@@ -206,8 +206,7 @@ Uses 값_적용후 for item 2 when present.
 **Actual value:** 값_적용후 on item 28 if present, else 값 on item 28.
 
 **Prerequisites:** item 2 post-transition value present, item 14 present, item14 != 0.  
-**Missing inputs:** RED (
-o post-transition item2 or missing item14).
+**Missing inputs:** **SKIP** (no post data, or item2 and item14 are not on the same pre/post basis; a genuinely missing post cell is caught by the transition-after-capture MISSING check in `validate_kics_disclosure.py`, not here).
 
 ---
 
@@ -243,7 +242,7 @@ Added 2026-05-25.
 **Prerequisites:** item 17 and **all** items 29-35 present.  
 **Missing inputs:** **SKIP** (not RED) — missing item17 or any of items 29-35.
 
-**Tolerance:** dynamic, `max(eff_tol, 0.05 * abs(expected))`. The R7 diversification accumulates rounding from 7 sub-items, so a fixed 2.0 eok-won tolerance is too tight for large expected values.
+**Tolerance:** dynamic, `max(eff_tol, 0.01 * abs(expected))` (`DIVERSIFIED_SQRT_TOL_REL`). The R7 diversification accumulates rounding from 7 sub-items, so a fixed 2.0 eok-won tolerance is too tight for large expected values.
 
 #### R7 matrix (7x7)
 
@@ -283,6 +282,11 @@ Sub-item labels:
 - **Rule 3:** always **SKIP** (item4 - item12 + item13 bridge deferred; use Rule 1 for item1).
 
 Rules 1-2, 4-8, 8_post, 8_life, 9, 10 are enforced in `kics_json_rules.py`.
+
+**Rules added after this catalog was written (2026-10-24 code census; the module docstrings are the spec, `_post` suffix = 경과조치 적용후 mirror):**
+`7_post` (item1후/item14후) · `8_life_census` (29-35 completeness) · `19_market`, `36_irr` (below) · `2_tier1_bridge` · `3_tier2_composition` · `47_tier2_census` ·
+`48_tier2_limit` (items 47-49, 보완자본 한도) · `50_tfi_tier_split` · `51_tfi_tier2_composition` (TFI 표 items 50-51) · `53_tfi_memo_rows` (items 53-54, 메모행).
+Their formulas are not repeated here; read the section comments in `src/solvency/validation/kics_json_rules.py` (and `docs/kics_gate_exceptions.md` for pins).
 
 ---
 
@@ -367,11 +371,13 @@ Report fields per finding: `rule`, `원보험사코드`, `원수사명`, `공시
 | 8_life | item 17 or any item 29-35 missing | No |
 | 19_market | item19 missing or all of items 36-40 missing (부분결측 허용: 없는 하위=0) | No |
 | 36_irr | item36 or any of items 41-46 missing | No |
+| 8_post | no post-transition data, or item2/item14 on mixed pre/post basis (the post MISSING census lives in `validate_kics_disclosure.py`) | No |
+| 9, 10 | `값_적용후` absent or equal to `값` | No |
 | All others | Never SKIP — missing inputs -> RED | Yes (RED) |
 
 Sub-item source absence (parsing, not validation): the TODO.md KICS-SUB cohort is no longer defined; it is registered in `data/_gold/kics_subrisk_source_absent.json`.
 
-**Rule `19_market` / `36_irr` (시장위험액 분해, 2026-06-09 신설)** — 정본 스펙: [`kics-market-risk-decomposition.md`](kics-market-risk-decomposition.md) §6/§7-7. 구현: `kics_json_rules.py` (8_life 복제, dynamic tol `max(eff_tol, 0.05·expected)`).
+**Rule `19_market` / `36_irr` (시장위험액 분해, 2026-06-09 신설)** — 정본 스펙: [`kics-market-risk-decomposition.md`](kics-market-risk-decomposition.md) §6/§7-7. 구현: `kics_json_rules.py` (8_life 복제, dynamic tol: `19_market` = `max(eff_tol, 0.01·expected)`, `36_irr` = `max(eff_tol, 0.05·expected)`).
 - `19_market`: `item19 = sqrt(V'·M·V)`, V=[36–40](금리·주식·부동산·외환·자산집중), M=`MARKET_M` 5×5(대각1/외환-주식 −0.25/자산집중 0/그외 0.25).
 - `36_irr`: `item36 = √[max(R상승,R하락)² + max(R평탄,R경사)²] + R평균회귀`, R=base(41)−시나리오순자산(43–46), 평균회귀=41−42(signed).
 - 골든 3/3 일치: 흥국 8,132억·157,128 / 현대 322,767. (신설 당시 메모 "item36–46 적재 전까지 전사 SKIP" 는 낡았다 — 적재 완료, 현재 SKIP 정책은 위 SKIP policy 표와 `_scan_breakdown_presence`(짝수분기 결측=RED)를 따른다.)

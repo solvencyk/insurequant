@@ -71,7 +71,7 @@ localized sections + `market_pages_nonok.json` (localizer-failure worklist).
 **8_life** item17=√(Sᵀ·R7·S), S=[29-35] — **SKIP** on missing · **19_market** item19=√(Vᵀ·MARKET_M·V), V=[36-40],
 partial OK(missing→0) — **SKIP** if item19 or all 36-40 missing · **36_irr** item36=√(max(R상승,R하락)²+max(R평탄,R경사)²)
 +R평균회귀, R=base(41)−scenario — **SKIP** if item36 or any 41-46 missing.
-Tolerance default **2.0**; 8_life/19_market/36_irr use `max(tol, 0.05·|expected|)`; image-OCR insurers (KR0010, KR0079)
+Tolerance default **2.0**; 8_life/19_market use `max(tol, 0.01·|expected|)` (`DIVERSIFIED_SQRT_TOL_REL`, 5%→1% on 2026-08-25) and 36_irr `max(tol, 0.05·|expected|)` (`IRR_DERIVED_TOL_REL`); image-OCR insurers (KR0010, KR0079)
 tol **10.0**. Status: GREEN |diff|<0.5, YELLOW ≤tol, RED >tol or missing input.
 
 **4 structural gates beyond rule findings (force exit 2):**

@@ -42,6 +42,7 @@ blameless: 원인을 사람이 아니라 **게이트의 사각**으로 서술한
 | K-ICS 게이트 | `scripts/validate_kics_disclosure.py` | ✅ **2026-08-21부터** `prepush_check.py` 단계 1b로 차단 |
 | push 게이트 | `scripts/validate_data_contract.py` (← `scripts/prepush_check.py`) | ✅ display 7분기 scope로 차단 |
 | 도메인 게이트 7종 | `validate_{csm_continuity,kics_rate_sensitivity,nb_csm_multiple,csm_waterfall,live_artifacts,disclosure_freshness,stale_quarter_tables}.py` | ✅ 단계 1c (2026-08-21 신설, 이후 3종 추가) |
+| DART raw 유실 · 골든 입력지문 · 배포 JS 런타임 | `check_dart_raw_coverage.py` · `validate_golden_input_fingerprints.py` · `validate_deployed_js.py` | ✅ 단계 1d · 1e · 1f (2026-08-25 · 08-29 · 09-21 신설, `prepush_check.py` 가 import 해서 부른다) |
 | 일반 이상치 발견 | `scripts/scan_generic_anomalies.py` | ❌ **2026-08-25에 게이트 밖으로 분리** — YELLOW 전용이라 원래 막은 적 없다. 분기 라운드 1회 수동 실행(`claude-agent-publishing.md` §3.0b) |
 
 **"배선했다"와 "실제로 push를 막는다"는 다른 말이다.** 3번 칸을 채울 때 룰을 어느 스크립트에 넣었는지

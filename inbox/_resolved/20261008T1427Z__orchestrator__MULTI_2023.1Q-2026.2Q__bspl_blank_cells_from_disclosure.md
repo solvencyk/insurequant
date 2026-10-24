@@ -2,7 +2,7 @@
 from: orchestrator
 to: parser
 created: 20261008T1427Z
-status: open
+status: resolved
 route: reparse
 company: MULTI
 period: 2023.1Q-2026.2Q
@@ -18,3 +18,7 @@ census(read-only, `data/_derived/bspl_blank_census_20261008.json`): IFRS17_BS �
 
 ## 답변 (recipient 작성 — 처리 후)
 (오케스트레이터가 workflow 결과를 모아 채운다)
+
+## 종결 (orchestrator 2026-10-24)
+
+BS 184칸(전부 공란 25버킷 + 일부 공란 5버킷 → 0)과 PL 126칸(전부 공란 29버킷 → 0, KR0004 2025.3Q 는 10-09 후속에서 채움)을 정기경영공시에서 적재했다(커밋 ba32077e, 2026-10-10, 실행 기록 data/disclosure/_meta/bspl_backfill_runlog_merge.md). 2026-10-24 재측정: 634개 (회사, 분기) 버킷 중 BS 전부 공란 0, PL 전부 공란 0, KR0050 2026.2Q BS 자산 2,908,500 / 부채 2,274,900 / 자본 633,600(백만원, 항등식 정확). 범위 밖이라 따로 추적: PL 항목 17/20/21 보류, 검증 결함은 티켓 20261009T0330Z · 20261009T0700Z(이 티켓과 함께 종결, 잔여는 TODO_parser_ifrs17.md).
