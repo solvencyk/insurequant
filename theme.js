@@ -12,8 +12,8 @@
      window 'iq:themechange'     테마가 바뀌면 발생 — 페이지는 차트를 다시 그린다 */
 (function(){
   /* 업데이트 안내 팝업 설정 (owner 2026-10-18) — 분기마다 이 객체만 고친다.
-     id         기간 식별자. 사용자가 닫으면 이 값을 localStorage 'iq_notice_seen' 에 적어 같은 기간에는 다시 안 뜬다.
-     showFrom   이 날짜(YYYY-MM-DD, 포함)부터 뜬다. 그 전에는 코드가 배포돼 있어도 안 뜬다(owner 2026-10-19: 10월 31일부터).
+     id         기간 식별자. 「일주일간 보지 않기」를 누르면 이 값과 만료 시각을 localStorage 'iq_notice_snooze' 에 적어 7일간 안 뜬다. 그냥 닫으면 이번 탭 세션에서만 안 뜬다.
+     showFrom   이 날짜(YYYY-MM-DD, 포함)부터 뜬다. 그 전에는 코드가 배포돼 있어도 안 뜬다(owner 2026-10-25: 즉시 켬, 시작일 10월 25일).
      hideAfter  이 날짜(YYYY-MM-DD, 포함)가 지나면 저절로 안 뜬다. 지난 안내가 남아 있지 않게 하는 안전장치.
      두 날짜 모두 방문자 브라우저의 로컬 달력 날짜로 비교한다(시간대 변환 없음). 한국 방문자는 한국 시각 기준으로
      0시에 켜지고, 다른 시간대 방문자는 자기 달력 날짜가 showFrom 이 되는 때부터 보인다. */
@@ -26,7 +26,7 @@
       '2026년 3분기 보험개발원 매출 현황 미정',
       '공시 업로드 후 2일-3일 내외 소요 예정'
     ],
-    showFrom: '2026-10-31',
+    showFrom: '2026-10-25',
     hideAfter: '2026-12-31'
   };
   var KEY='iq_theme';
@@ -790,14 +790,28 @@
   }
 
   /* ---- 업데이트 안내 팝업 (owner 2026-10-18) ------------------------------------
-     대시보드 5페이지(index·K-ICS·IFRS17·공시보고서·compare)에서만, 기간(NOTICE.id)마다 브라우저당 한 번 띄운다.
+     대시보드 5페이지(index·K-ICS·IFRS17·공시보고서·compare)에서만 띄운다. 닫기(X·닫기 버튼·Esc·백드롭)는 이번 탭 세션에서만 숨기고
+     (sessionStorage iq_notice_dismissed), 「일주일간 보지 않기」는 localStorage iq_notice_snooze {id, until} 로 7일간 숨긴다(owner 2026-10-25).
+     옛 localStorage iq_notice_seen 이 id 와 같으면 계속 숨긴다(새 코드는 더 이상 쓰지 않는다).
      일본 사이트(jp/)·약관 페이지에는 안 띄운다. 이벤트·분석 호출은 일절 하지 않는다(shLog 도 안 부름).
-     localStorage 는 읽기·쓰기 전부 try/catch — 막힌 브라우저에서는 방문마다 뜬다.
+     저장소는 읽기·쓰기 전부 try/catch — 막힌 브라우저에서는 방문마다 뜬다.
      배경 스크롤은 overflow 를 건드리지 않고(스크롤바가 사라지며 본문 폭이 흔들리지 않게) 백드롭 위 휠·터치만 막는다. */
   var NOTICE_KEY = 'iq_notice_seen';
   var NOTICE_PAGES = ['', 'index', 'K-ICS', 'IFRS17', '공시보고서', 'compare'];
-  function noticeSeen(){ try{ return localStorage.getItem(NOTICE_KEY) === NOTICE.id; }catch(e){ return false; } }
-  function noticeMarkSeen(){ try{ localStorage.setItem(NOTICE_KEY, NOTICE.id); }catch(e){} }
+  var NOTICE_SNOOZE_KEY = 'iq_notice_snooze', NOTICE_SESSION_KEY = 'iq_notice_dismissed', NOTICE_SNOOZE_MS = 7 * 24 * 3600 * 1000;
+  function noticeSnoozed(){
+    try{
+      var v = JSON.parse(localStorage.getItem(NOTICE_SNOOZE_KEY));
+      return !!v && v.id === NOTICE.id && typeof v.until === 'number' && isFinite(v.until) && Date.now() < v.until;
+    }catch(e){ return false; }
+  }
+  function noticeSeen(){
+    try{ if(localStorage.getItem(NOTICE_KEY) === NOTICE.id) return true; }catch(e){}
+    try{ if(sessionStorage.getItem(NOTICE_SESSION_KEY) === NOTICE.id) return true; }catch(e){}
+    return noticeSnoozed();
+  }
+  function noticeMarkDismissed(){ try{ sessionStorage.setItem(NOTICE_SESSION_KEY, NOTICE.id); }catch(e){} }
+  function noticeMarkSnoozed(){ try{ localStorage.setItem(NOTICE_SNOOZE_KEY, JSON.stringify({ id: NOTICE.id, until: Date.now() + NOTICE_SNOOZE_MS })); }catch(e){} }
   function noticeToday(){
     var d = new Date(), m = d.getMonth() + 1, day = d.getDate();
     return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (day < 10 ? '0' : '') + day;
@@ -826,7 +840,11 @@
       '.iq-notice-panel .iq-modal-close{min-width:44px;min-height:44px;margin:-10px -10px -10px 0;font-size:24px}' +
       '.iq-notice-list{margin:0 0 var(--sp-4);padding-left:20px;font-size:15px;line-height:1.6;color:var(--text);word-break:keep-all}' +
       '.iq-notice-list li+li{margin-top:var(--sp-2)}' +
-      '.iq-notice-ok{display:block;box-sizing:border-box;width:100%;min-height:44px;border:0;border-radius:var(--r-md);background:var(--primary);color:var(--on-primary);font:600 15px var(--font-sans);cursor:pointer}' +
+      '.iq-notice-actions{display:flex;flex-wrap:wrap;gap:var(--sp-2)}' +
+      '.iq-notice-snooze{flex:1 1 140px;box-sizing:border-box;min-height:44px;border:1px solid var(--control-border,var(--border));border-radius:var(--r-md);background:transparent;color:var(--text);font:600 15px var(--font-sans);cursor:pointer}' +
+      '.iq-notice-snooze:hover{background:var(--bg)}' +
+      '.iq-notice-snooze:focus-visible{outline:2px solid var(--primary);outline-offset:2px}' +
+      '.iq-notice-ok{display:block;flex:1 1 140px;box-sizing:border-box;min-height:44px;border:0;border-radius:var(--r-md);background:var(--primary);color:var(--on-primary);font:600 15px var(--font-sans);cursor:pointer}' +
       '.iq-notice-ok:hover{background:var(--primary-hover)}' +
       '.iq-notice-ok:focus-visible,.iq-notice-panel .iq-modal-close:focus-visible{outline:2px solid var(--primary);outline-offset:2px}' +
       '@keyframes iqNoticeIn{from{opacity:0}to{opacity:1}}' +
@@ -848,14 +866,16 @@
     var ul = secEl('ul', 'iq-notice-list');
     NOTICE.lines.forEach(function(t){ var li = document.createElement('li'); li.textContent = t; ul.appendChild(li); });
     var ok = secEl('button', 'iq-notice-ok'); ok.type = 'button'; ok.textContent = '닫기';
-    panel.appendChild(head); panel.appendChild(ul); panel.appendChild(ok); back.appendChild(panel);
+    var snooze = secEl('button', 'iq-notice-snooze'); snooze.type = 'button'; snooze.textContent = '일주일간 보지 않기';
+    var acts = secEl('div', 'iq-notice-actions'); acts.appendChild(snooze); acts.appendChild(ok);
+    panel.appendChild(head); panel.appendChild(ul); panel.appendChild(acts); back.appendChild(panel);
 
     var down = null;
-    function close(){
+    function close(snoozed){
       document.removeEventListener('keydown', onKey, true);
       document.removeEventListener('focusin', onFocusIn, true);
       if(back.parentNode) back.parentNode.removeChild(back);
-      noticeMarkSeen();
+      if(snoozed === true) noticeMarkSnoozed(); else noticeMarkDismissed();
       try{ if(prev && prev !== document.body && document.contains(prev) && prev.focus) prev.focus(); }catch(e){}
     }
     function onKey(e){
@@ -867,8 +887,9 @@
       else if(!e.shiftKey && a === ok){ e.preventDefault(); x.focus(); }
     }
     function onFocusIn(e){ if(!panel.contains(e.target)) ok.focus(); }
-    x.addEventListener('click', close);
-    ok.addEventListener('click', close);
+    x.addEventListener('click', function(){ close(); });
+    ok.addEventListener('click', function(){ close(); });
+    snooze.addEventListener('click', function(){ close(true); });
     back.addEventListener('mousedown', function(e){ down = e.target; });
     back.addEventListener('touchstart', function(e){ down = e.target; }, { passive: true });
     back.addEventListener('click', function(e){ if(e.target === back && down === back) close(); down = null; });
