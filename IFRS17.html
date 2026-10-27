@@ -206,7 +206,7 @@
         <li><a href="#sec-hist">보험계약부채 시계열</a></li>
         <li><a href="#sec-amort">상각 스케줄</a></li>
         <li><a href="#sec-pl">손익 워터폴</a></li>
-        <li><a href="#sec-nb">NB 배수</a></li>
+        <li><a href="#sec-nb">신계약·배수</a></li>
         <li><a href="#sec-sens">민감도</a></li>
         <li><a href="#sec-lr">손해율 가정</a></li>
         <li><a href="#sec-ae">보험금 예실차비율</a></li>
@@ -327,9 +327,9 @@
       <div class="table-wrap" id="plTable" style="margin-top:12px"></div>
     </div>
     <div class="panel" id="sec-nb" data-pane="nb" data-share-section="NB 배수">
-      <h2>6) NB · CSM 배수 시계열 (신계약 CSM ÷ 월납월초)</h2>
+      <h2>6) 신계약 매출 및 CSM환산배수 현황</h2>
       <div id="nbStub" class="stub-msg"></div>
-      <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb" role="img" aria-label="NB·CSM 배수 시계열 차트"></canvas></div><div class="table-wrap" id="nbTable" style="margin-top:12px"></div></div>
+      <div id="nbWrap" style="display:none"><div class="chart-container chart-sm"><canvas id="canvasNb" role="img" aria-label="신계약 월납월초보험료(막대)와 CSM 배수(꺾은선) 시계열 차트"></canvas></div><div class="table-wrap" id="nbTable" style="margin-top:12px"></div></div>
     </div>
     <div class="panel" id="sec-sens" data-pane="sens" data-share-section="민감도">
       <h2>7) 민감도(ΔCSM)</h2>
@@ -1653,7 +1653,6 @@
   // ---- 비교 단위(구분 x 상품구분 x 포트폴리오 한 줄) — 정본 docs/loss_ratio_comparable_unit_20261019.md ----
   // 단위 목록·기본 단위·설명은 사별 비교 패널(loss_curve)에서 읽고, 값은 이 패널의 잎 행(5번째 원소 = 위험보험료 억원)에서 합쳐 만든다.
   // 이 패널이 구판(5번째 원소·meta.rp_note 없음)이거나 비교 패널에 단위 목록이 없으면 단위 선택지는 아예 두지 않고 예전 구분 선택기만 쓴다.
-  const LR_FADE_BELOW_EOK = 100;   // 억원: 단위의 칸별 위험보험료가 이 값 미만이면 그 칸을 흐린 점선(표식은 속 빈 원)으로 그린다. 비교 패널 unit_rule.fade_below_eok 와 같은 값
   function lrCatalog(raw){
     const C = raw && raw.loss_curve;
     if (!C || !Array.isArray(C.units) || !C.units.length || !Array.isArray(raw.companies)) return null;
@@ -1717,25 +1716,6 @@
     }
     const all = grpOpts.concat(units.map(u=>u.key));
     sel.value = all.includes(want) ? want : all[0];
-  }
-  // 흐린 선 색: 선 색을 배경 쪽으로 LR_FADE_MIX 만큼 섞는다. 섞은 뒤 배경 대비가 LR_FADE_MIN_CR(2.2:1) 아래로 내려가면 섞는 양을 줄이고, 원래 색이 이미 그 값에 못 미치면 색은 그대로 두며 흐림은 점선·속 빈 표식이 맡는다(색만으로 구분하지 않는다).
-  const LR_FADE_MIX = 0.45, LR_FADE_MIN_CR = 2.2;
-  function lrRgbOf(c){
-    let m = /^#?([0-9a-f]{6})$/i.exec(c||""); if (m){ const n=parseInt(m[1],16); return [(n>>16)&255,(n>>8)&255,n&255]; }
-    m = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i.exec(c||""); return m ? [+m[1],+m[2],+m[3]] : null;
-  }
-  function lrCr(a,b){
-    const L = c=>{ const f=v=>{ v/=255; return v<=0.04045 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); }; return 0.2126*f(c[0])+0.7152*f(c[1])+0.0722*f(c[2]); };
-    let x=L(a), y=L(b); if (x<y){ const t=x; x=y; y=t; } return (x+0.05)/(y+0.05);
-  }
-  function lrFadeColor(color){
-    const a = lrRgbOf(color), b = lrRgbOf(TH.bg) || (TH.dark ? [21,22,21] : [255,255,255]);
-    if (!a || lrCr(a,b) < LR_FADE_MIN_CR) return color;
-    for (let t=LR_FADE_MIX; t>0.001; t-=0.05){
-      const o = a.map((v,i)=> Math.round(v+(b[i]-v)*t));
-      if (lrCr(o,b) >= LR_FADE_MIN_CR) return "rgb("+o.join(",")+")";
-    }
-    return color;
   }
   const lrRpTxt = (v)=> (Math.round(v*100)/100).toLocaleString("ko-KR",{maximumFractionDigits:2});
 
@@ -1818,7 +1798,7 @@
       if (unitOpts.length){
         const defs = ["생보","손보"].map(sec=>{ const k=LRPS.cat.def[sec], u=k && LRPS.cat.units.find(x=>x.key===k); return u ? sec+" "+u.label : null; }).filter(Boolean);
         hDef.textContent = "처음 화면은 그 회사 업권의 기본 단위입니다"+(defs.length ? "("+defs.join(", ")+")" : "")+". 그 단위를 이 시점에 공시하지 않았으면 Non-Par, 없으면 합계, 합계도 없으면 첫 구분입니다.";
-        hUnit.textContent = " "+LRPS.cat.note+" 비교 단위의 선택지는 이 회사가 이 시점에 공시한 단위뿐이고, 단위 선은 사업 구분과 관계없이 그 회사의 해당 단위를 모두 합쳐 그립니다(아래 표는 사업 구분 선택을 따릅니다). 단위의 위험보험료가 "+LR_FADE_BELOW_EOK+"억원 미만인 칸은 분모가 작아 값이 크게 흔들리므로 흐린 점선(표식은 속 빈 원)으로 그립니다.";
+        hUnit.textContent = " "+LRPS.cat.note+" 비교 단위의 선택지는 이 회사가 이 시점에 공시한 단위뿐이고, 단위 선은 사업 구분과 관계없이 그 회사의 해당 단위를 모두 합쳐 그립니다(아래 표는 사업 구분 선택을 따릅니다).";
       } else { hUnit.textContent = ""; }
     }
 
@@ -2005,37 +1985,20 @@
     const labels = Array.from(labelSet).sort((a,b)=> (LR_RANK[a]==null?99:LR_RANK[a]) - (LR_RANK[b]==null?99:LR_RANK[b]));
     const xs = labels.map((y,i)=> lrXPos(y, i, narrow));
     const pts = (m)=> labels.map((y,i)=> ({ x: xs[i], y: (m && m[y]!=null) ? m[y] : null }));
-    // 단위 선택: 칸별 위험보험료(억원, rpm.cur / rpm.prev)가 LR_FADE_BELOW_EOK 미만인 칸은 흐린 점선 + 속 빈 표식. 구분 선택이면 rpm 이 비어 아무것도 흐리지 않는다.
+    // 단위 선택: 칸별 위험보험료(억원, rpm.cur / rpm.prev)는 툴팁에만 보인다(작은 칸도 같은 선·표식으로 그린다). 구분 선택이면 rpm 이 비어 있다.
     const rpOf = (rp)=> labels.map(y=> rp && rp[y]!=null ? rp[y] : null);
-    const fdOf = (m, rp)=> labels.map(y=> !!(rp && rp[y]!=null && rp[y] < LR_FADE_BELOW_EOK && m && m[y]!=null));
-    const fx = (base, fd, r0)=>{
-      if (!fd.some(Boolean)) return {};
-      const fc = lrFadeColor(base), seg = (c)=> fd[c.p0DataIndex] || fd[c.p1DataIndex], isF = (c)=> c.dataIndex!=null && fd[c.dataIndex];
-      return {
-        segment:{ borderColor:(c)=> seg(c) ? fc : base, borderDash:(c)=> seg(c) ? [2,4] : undefined },
-        pointBackgroundColor:(c)=> isF(c) ? TH.bg : base,
-        pointBorderColor:(c)=> isF(c) ? fc : base,
-        pointBorderWidth:(c)=> isF(c) ? 2 : 1,
-        pointRadius:(c)=> isF(c) ? Math.max(r0, 3) : r0,
-      };
-    };
     const ds = [];
-    let anyFade = false;
     if (prev){
-      const fd = fdOf(prev, rpm.prev), x = fx(TH.muted, fd, narrow?0:3);
-      if (fd.some(Boolean)) anyFade = true;
-      ds.push(Object.assign({ label: prevQ+" 공시 "+grp+" (직전)", data: pts(prev), fd, rp: rpOf(rpm.prev),
+      ds.push({ label: prevQ+" 공시 "+grp+" (직전)", data: pts(prev), rp: rpOf(rpm.prev),
         borderColor: TH.muted, backgroundColor: "transparent", pointBackgroundColor: TH.muted, pointBorderColor: TH.muted,
         borderWidth:2, borderDash:[3,4], pointRadius: narrow?0:3, pointHoverRadius: narrow?4:5,
-        cubicInterpolationMode:"monotone", spanGaps:false, order:2 }, x));
+        cubicInterpolationMode:"monotone", spanGaps:false, order:2 });
     }
     if (cur){
-      const fd = fdOf(cur, rpm.cur), x = fx(currentKey.line, fd, narrow?2.5:4);
-      if (fd.some(Boolean)) anyFade = true;
-      ds.push(Object.assign({ label: qq+" 공시 "+grp, data: pts(cur), fd, rp: rpOf(rpm.cur),
+      ds.push({ label: qq+" 공시 "+grp, data: pts(cur), rp: rpOf(rpm.cur),
         borderColor: currentKey.line, backgroundColor: currentKey.soft, pointBackgroundColor: currentKey.line, pointBorderColor: currentKey.line,
         borderWidth:3.5, pointRadius: narrow?2.5:4, pointHoverRadius: narrow?5:6,
-        cubicInterpolationMode:"monotone", spanGaps:false, order:1 }, x));
+        cubicInterpolationMode:"monotone", spanGaps:false, order:1 });
     }
     if (charts.lr){ try{ charts.lr.destroy(); }catch(e){} charts.lr=null; }
     const cv = q(host,"#canvasLr");
@@ -2043,8 +2006,7 @@
     const vals = ds.flatMap(d=> d.data.map(p=>p.y)).filter(v=> v!=null);
     cv.setAttribute("aria-label", shortName(coName)+" "+qq+" 공시 경과차년별 손해율 가정 곡선 차트"
       + (grp==="합계" ? "" : " · "+grp)
-      + (vals.length ? " · 범위 "+pct1(Math.min(...vals))+"%에서 "+pct1(Math.max(...vals))+"%" : " · 표시할 값 없음")
-      + (anyFade ? " · 위험보험료 "+LR_FADE_BELOW_EOK+"억원 미만 칸은 흐린 점선" : ""));
+      + (vals.length ? " · 범위 "+pct1(Math.min(...vals))+"%에서 "+pct1(Math.max(...vals))+"%" : " · 표시할 값 없음"));
     const xMin = narrow ? 0.5 : 0, xMax = narrow ? labels.length+0.5 : LR_OPEN_END_X+1;
     charts.lr = new Chart(cv.getContext("2d"), {
       type:"line", data:{ datasets: ds },
@@ -2057,9 +2019,9 @@
           tooltip:{ callbacks:{
             title:(items)=> items.length ? labels[items[0].dataIndex] : "",
             label:(x)=>{
-              const rv = x.dataset.rp ? x.dataset.rp[x.dataIndex] : null, fz = x.dataset.fd && x.dataset.fd[x.dataIndex];
+              const rv = x.dataset.rp ? x.dataset.rp[x.dataIndex] : null;
               return x.dataset.label+": "+(x.parsed.y==null ? "-" : pct1(x.parsed.y)+"%")
-                + (x.parsed.y!=null && rv!=null ? " · 위험보험료 "+lrRpTxt(rv)+"억원"+(fz ? " ("+LR_FADE_BELOW_EOK+"억원 미만)" : "") : "");
+                + (x.parsed.y!=null && rv!=null ? " · 위험보험료 "+lrRpTxt(rv)+"억원" : "");
             },
           } },
         },
@@ -3095,13 +3057,18 @@
       const labels = nbView.map(r => { const p=r["공시분기"]; const [yy,qn]=wfParseQ(p); return (wfMode!=="quarter" && qn===4) ? String(yy) : p; });
       const ytd = nbView.map(r => r["신계약CSM배수_연누계"]);
       const qtr = nbView.map(r => r["신계약CSM배수_당분기"]);
-      // 기준(period)에 맞춰 한 계열만: 연도→연누계 배수, 분기→당분기 배수 (반대 기준은 무의미).
+      // 기준(period)에 맞춰 한 기준만: 연도→연누계, 분기→당분기 (반대 기준은 무의미).
+      // 막대 = 월납월초보험료(주축, 억원, 회사 키 컬러), 꺾은선 = 신계약 CSM 배수(보조축). 색 규칙은 섹션 3(보험계약부채 시계열)과 같다.
       const useQ = wfMode === "quarter";
+      const nbBasis = useQ ? "당분기" : "연누계";
+      const nbC = hcColors();
+      const prem = nbView.map(r => { const v = r["월납월초보험료_" + nbBasis]; return v == null || isNaN(Number(v)) ? null : Number(v); });
       const ds = [{
-        label: useQ ? "당분기 배수" : "연누계 배수",
-        data: useQ ? qtr : ytd,
-        borderColor:currentKey.line, backgroundColor:currentKey.soft,
-        borderWidth:2.5, pointRadius:4, pointHoverRadius:6, tension:0.2, spanGaps:true, fill:true,
+        type:"bar", label:"월납월초보험료 · " + nbBasis + " (막대·좌)", yAxisID:"y", data:prem, order:1,
+        backgroundColor:nbC.csm, borderColor:nbC.bg, borderWidth:1, maxBarThickness:46,
+      },{
+        type:"line", label:"신계약 CSM 배수 · " + nbBasis + " (선·우)", yAxisID:"y1", data:useQ ? qtr : ytd, order:0,
+        borderColor:nbC.ink, backgroundColor:nbC.ink, borderWidth:2.5, pointRadius:4, pointHoverRadius:6, pointStyle:"rectRot", tension:0.15, spanGaps:true,
       }];
       // 차트 아래 표: 같은 시점(labels)·같은 기준(연도→연누계, 분기→당분기). 값 없는 칸은 —, 음수 △.
       const nbBox=q(host,"#nbTable");
@@ -3114,16 +3081,22 @@
           {label:"신계약 CSM 배수",cells:nbView.map(r=>{ const c=nbCell(r,"신계약CSM배수",2); return c==="—"?c:c+"×"; }),bold:true}
         ])); }
       charts.nb=new Chart(canvasCtx(host,"#canvasNb"),{
-        type:"line",
+        type:"bar",
         data:{ labels, datasets: ds },
         options:{
           responsive:true, maintainAspectRatio:false,
+          interaction:{ mode:"index", intersect:false },
           plugins:{
-            legend:{ display: true, position: window.innerWidth < 640 ? "bottom" : "top" },
-            title:{display:true,text:"NB CSM 배수 (신계약 CSM ÷ 월납월초, "+shortName(coName)+")" },
-            tooltip:{ callbacks:{ label:(ctx)=> `${ctx.dataset.label}: ${ctx.parsed.y==null?"—":fmtNum(Number(ctx.parsed.y),2)+"×"}` } },
+            legend:{ display: true, position: window.innerWidth < 640 ? "bottom" : "top", labels:{ sort:(a,b)=>a.datasetIndex-b.datasetIndex } },
+            title:{display:true,text:["신계약 매출 및 CSM환산배수 · "+shortName(coName),"배수 = 신계약 CSM ÷ 월납월초보험료"],font:{size:13},padding:{top:2,bottom:4}},
+            tooltip:{ callbacks:{ label:(ctx)=> ctx.parsed.y==null ? null
+              : ctx.dataset.yAxisID==="y1" ? `${ctx.dataset.label}: ${hcSamo(ctx.parsed.y,2)}×`
+              : `${ctx.dataset.label}: ${hcSamo(ctx.parsed.y,0)}억` } },
           },
-          scales:{ y:{ ticks:{ callback:(vv)=> fmtNum(Number(vv),1) + "×" } } }
+          scales:{
+            y:{ beginAtZero:true, position:"left", grace:"8%", title:{display:true,text:"억원"}, ticks:{ callback:(vv)=> hcSamo(Number(vv),0) } },
+            y1:{ type:"linear", beginAtZero:true, position:"right", grace:"12%", title:{display:true,text:"배수(×)",color:nbC.ink}, ticks:{ color:nbC.ink, callback:(vv)=> hcSamo(Number(vv),1) }, grid:{ drawOnChartArea:false } }
+          }
         },
       })
     }
