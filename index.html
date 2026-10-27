@@ -749,7 +749,8 @@
 
         // 꼬리 슬리버 방지: 예상 면적이 임계 미만인 소형사는 '기타' 한 칸으로 묶음
         // (호버 툴팁에 목록 표시. 모바일 리스트는 전체 로스터 유지라 정보 손실 없음.)
-        const MIN_CELL_AREA = 2400; // ≈ 60×40px
+        // 재보험·보증은 하단의 얇은 띠(높이 약 58px)라 60×40 기준이면 9곳 중 7곳이 묶인다 → 점이 되는 곳(≈14×14px 미만)만 묶는다.
+        const MIN_CELL_AREA = gData.key === 'Re' ? 200 : 2400; // 그 외 업권 ≈ 60×40px
         const innerArea = innerW * innerH;
         const groupSum = items.reduce((a, b) => a + b.value, 0) || 1;
         const majors = [], minors = [];
@@ -757,7 +758,7 @@
           ((it.value / groupSum) * innerArea >= MIN_CELL_AREA ? majors : minors).push(it);
         }
         let tiled = items;
-        if (minors.length >= 2 && majors.length && gData.key !== 'Re') {   // 재보험·보증은 10곳 안팎이라 '기타'로 묶지 않고 전부 칸으로 둔다
+        if (minors.length >= 2 && majors.length) {
           tiled = majors.concat([{
             value: minors.reduce((a, b) => a + b.value, 0),
             data: { isOther: true, count: minors.length, list: minors.map(m => m.data) }
