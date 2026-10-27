@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.insurequant.app",
+      "sha256_cert_fingerprints": [
+        "ED:AE:10:2A:40:33:D1:51:ED:BC:0A:B6:24:99:52:80:18:4B:24:2B:BB:9C:47:8E:E8:FC:38:33:EB:F6:34:36"
+      ]
+    }
+  }
+]
