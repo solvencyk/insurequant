@@ -298,7 +298,6 @@
   var MAXC = 4;
   var DATA = null, CO = {}, Q = [], LAST = 0, CSM_M = null;
   var GALL = '합계', GDEF = 'Non-Par';
-  var FADE_BELOW_EOK = 100;   /* 억원: 비교 단위의 칸별 위험보험료가 이 값 미만이면 그 칸을 흐린 점선(표식은 속 빈 원)으로 그린다. 정본은 데이터의 unit_rule.fade_below_eok 와 같다 */
   /* g = 손해율 카드의 비교 단위 선택. null = 처음 화면: 단위 목록이 있으면 첫 번째로 고른 회사 업권의 기본 단위(주소에 g 없음),
      단위 목록이 없는 구판 JSON 이면 예전처럼 구분 Non-Par. 값이 구분 이름(합계 | Non-Par | Direct-Par | Indirect-Par)이면 구분 선택, 단위 키(life_np_mb_health 등)면 단위 선택.
      구분 Non-Par 를 고른 때만 회사별 대체가 걸린다: Non-Par 를 공시하지 않은 회사는 합계, 합계도 없으면 공시한 첫 구분(grpFor). 단위 선택에는 대체가 없다(공시하지 않은 회사는 선을 그리지 않음). */
@@ -716,19 +715,6 @@
     for(var i = 0; i < 50 && contrast(out, bg) < LC_MIN_CR; i++){ l += up ? 0.02 : -0.02; if(l <= 0 || l >= 1) break; out = rgbHex(fromHsl(hsl[0], hsl[1], l)); }
     return out;
   }
-  /* 위험보험료가 작은 칸(FADE_BELOW_EOK 억원 미만)의 흐린 선 색: 선 색을 배경 쪽으로 FADE_MIX 만큼 섞는다. 섞은 뒤 배경 대비가 FADE_MIN_CR(2.2:1) 아래로 내려가면 섞는 양을 줄이고,
-     원래 색이 이미 그 값에 못 미치는 옅은 색이면 색은 그대로 두며 흐림은 점선(+넓은 화면은 속 빈 표식)이 맡는다. 색만으로 구분하지 않는다(실측 대비는 scripts/check_loss_unit.py 가 인쇄). */
-  var FADE_MIX = 0.45, FADE_MIN_CR = 2.2;
-  function fadeBg(){ var b = TH && TH.bg; return hexRgb(b) ? b : (TH && TH.dark ? BG_DARK : BG_LIGHT); }
-  function fadeColor(hex){
-    var bg = fadeBg(), a = hexRgb(hex), b = hexRgb(bg);
-    if(!a || !b || contrast(hex, bg) < FADE_MIN_CR) return hex;
-    for(var t = FADE_MIX; t > 0.001; t -= 0.05){
-      var out = rgbHex([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]);
-      if(contrast(out, bg) >= FADE_MIN_CR) return out;
-    }
-    return hex;
-  }
   function toLab(hex){
     var c = hexRgb(hex).map(lin), X = (0.4124 * c[0] + 0.3576 * c[1] + 0.1805 * c[2]) / 0.95047, Y = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2], Z = (0.0193 * c[0] + 0.1192 * c[1] + 0.9505 * c[2]) / 1.08883;
     function f(t){ return t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116; }
@@ -899,7 +885,7 @@
   function lossChart(card, m){
     var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
     var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
-    var ds = [], nas = [], stale = [], coarse = [], any = false, anyFade = false, LC = lineColors(), pvRows = [];
+    var ds = [], nas = [], stale = [], coarse = [], any = false, LC = lineColors(), pvRows = [];
     S.sel.forEach(function(s, k){
       var nm = CO[s.code].short, byQ = lcRows(s.code), row = null, qi = -1;
       for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
@@ -911,17 +897,12 @@
       var pv = cellFor(m, s.code, asof);
       pvRows.push('<tr><th scope="row">' + esc(nm + fbTag(s.code)) + '</th><td>' + (pv ? nfs(pv.v, 1) + '%' + (pv.i !== asof ? ' (' + esc(qshort(Q[pv.i])) + ' 공시)' : '') : 'n/a') + '</td></tr>');
       if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
-      /* 단위 선택: 칸별 위험보험료(억원)가 FADE_BELOW_EOK 미만인 칸은 흐린 점선 + 속 빈 표식 */
-      var upq = lcUp(s.code, Q[qi]), fd = [], rpa = [], lc0 = LC[s.code];
-      for(i = 0; i < nstd; i++){ var rv = upq ? upq[(co && i < 10) ? nstd : i] : null; rpa.push(rv); fd.push(rv != null && rv < FADE_BELOW_EOK && pts[i].y != null); }
-      var faded = fd.some(Boolean), fcol = faded ? fadeColor(lc0) : lc0, fseg = function(c){ return fd[c.p0DataIndex] || fd[c.p1DataIndex]; };
-      if(faded) anyFade = true;
-      ds.push({label: nm + fbTag(s.code) + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm + fbTag(s.code), coarse: co, data: pts, fd: fd, rp: rpa,
+      /* 단위 선택: 칸별 위험보험료(억원)는 툴팁에만 보인다(작은 칸도 같은 선·표식으로 그린다) */
+      var upq = lcUp(s.code, Q[qi]), rpa = [], lc0 = LC[s.code];
+      for(i = 0; i < nstd; i++) rpa.push(upq ? upq[(co && i < 10) ? nstd : i] : null);
+      ds.push({label: nm + fbTag(s.code) + (pv ? ' · 현재가치 ' + nf(pv.v, 1) + '%' : '') + (qi !== asof ? ' · ' + qshort(Q[qi]) : ''), short: nm + fbTag(s.code), coarse: co, data: pts, rp: rpa,
         borderColor: lc0, backgroundColor: lc0, borderWidth: 3, pointStyle: PT[k % 4],
-        segment: faded ? {borderColor: function(c){ return fseg(c) ? fcol : lc0; }, borderDash: function(c){ return fseg(c) ? [2, 4] : (co ? [5, 4] : []); }} : undefined,
-        pointBackgroundColor: faded ? function(c){ return (c.dataIndex != null && fd[c.dataIndex]) ? TH.bg : lc0; } : lc0,
-        pointBorderColor: faded ? function(c){ return (c.dataIndex != null && fd[c.dataIndex]) ? fcol : lc0; } : lc0,
-        pointBorderWidth: faded ? function(c){ return (c.dataIndex != null && fd[c.dataIndex]) ? 2 : 1; } : 1,
+        pointBackgroundColor: lc0, pointBorderColor: lc0, pointBorderWidth: 1,
         pointRadius: co ? 0 : 4, pointHoverRadius: co ? 4 : 6, cubicInterpolationMode: 'monotone', spanGaps: false, borderDash: co ? [5, 4] : [], order: 1});
     });
     if(!any){
@@ -945,7 +926,7 @@
     var label = '손해율 가정 경과차년별 꺾은선' + grpTag() + '. ' + ds.map(function(d){
       var v = d.data.filter(function(p){ return p.y != null; });
       return v.length ? d.short + ' ' + nf(v[0].y, 1) + '%에서 ' + nf(v[v.length - 1].y, 1) + '%' : d.short + ' n/a';
-    }).join('. ') + (anyFade ? '. 위험보험료 ' + FADE_BELOW_EOK + '억원 미만 칸은 흐린 점선으로 그림' : '');
+    }).join('. ');
     var cv = chartCanvas(card, label); cv.parentNode.classList.add('tall');
     /* a11y C14: 꺾은선의 텍스트 대안. 좁은 화면 표와 같은 현재가치를 넓은 화면에서도 스크린리더가 읽게 화면 밖(.sr-only)에 둔다. 레이아웃에는 영향이 없다. */
     var pvMed = (medShown && m.median) ? medCell(m, type, asof) : null;
@@ -963,9 +944,9 @@
             callbacks: {
               title: function(items){ var n = xs.indexOf(items[0].parsed.x); return n >= 0 ? labs[n] : ''; },
               label: function(c){
-                var rv = c.dataset.rp ? c.dataset.rp[c.dataIndex] : null, fz = c.dataset.fd && c.dataset.fd[c.dataIndex];
+                var rv = c.dataset.rp ? c.dataset.rp[c.dataIndex] : null;
                 return c.dataset.short + ': ' + nf(c.parsed.y, 1) + '%' + (c.dataset.coarse && c.parsed.x <= 10 ? ' (1~10년 한 구간 값)' : '') +
-                  (rv != null ? ' · 위험보험료 ' + rpTxt(rv) + '억원' + (fz ? ' (' + FADE_BELOW_EOK + '억원 미만)' : '') : '');
+                  (rv != null ? ' · 위험보험료 ' + rpTxt(rv) + '억원' : '');
               }
             }
           }
@@ -1014,19 +995,16 @@
   function lossMobile(card, m){
     var C = DATA.loss_curve, nstd = C.n_std, labs = C.labels, asof = mLast(m), type = selType(), i, j;
     var xs = []; for(i = 0; i < nstd; i++) xs.push(lrX(labs[i]));
-    var items = [], nas = [], stale = [], coarse = [], any = false, anyFade = false;
+    var items = [], nas = [], stale = [], coarse = [], any = false;
     S.sel.forEach(function(s, k){
       var nm = CO[s.code].short, byQ = lcRows(s.code), row = null, qi = -1;
       for(j = asof; j >= 0; j--){ if(byQ[Q[j]]){ row = byQ[Q[j]]; qi = j; break; } }
-      var it = {nm: nm, k: k, code: s.code, pv: cellFor(m, s.code, asof), pts: null, line: false, fd: null};
+      var it = {nm: nm, k: k, code: s.code, pv: cellFor(m, s.code, asof), pts: null, line: false};
       items.push(it);
       if(!row){ nas.push('<li><b>' + esc(nm) + '</b> n/a — ' + esc(lcReason(m, s.code)) + '</li>'); return; }
       any = true;
       var co = row[nstd] != null; it.pts = [];
       for(i = 0; i < nstd; i++) it.pts.push(co && i < 10 ? row[nstd] : row[i]);   /* 1~10년을 한 구간으로 공시한 회사 */
-      var upq = lcUp(s.code, Q[qi]);   /* 단위 선택: 칸별 위험보험료(억원)가 FADE_BELOW_EOK 미만인 칸은 흐린 점선으로 */
-      it.fd = it.pts.map(function(v, n){ var rv = upq ? upq[(co && n < 10) ? nstd : n] : null; return rv != null && rv < FADE_BELOW_EOK && v != null; });
-      if(it.fd.some(Boolean)) anyFade = true;
       if(co) coarse.push(nm);
       if(qi !== asof) stale.push(nm + ' ' + qshort(Q[qi]));
     });
@@ -1057,24 +1035,10 @@
       pts.forEach(function(v, n){ if(v == null){ pen = false; return; } d += (pen ? 'L' : 'M') + X(xs[n]).toFixed(1) + ' ' + Y(v).toFixed(1); pen = true; });
       return d;
     }
-    /* 같은 모양(실선 | 흐린 점선)이 이어지는 구간마다 한 경로. 두 끝 중 하나라도 위험보험료 작은 칸이면 그 구간은 흐린 점선 */
-    function runsOf(pts, fd){
-      var out = [], cur = null, pi = -1;
-      pts.forEach(function(v, n){
-        if(v == null){ cur = null; pi = -1; return; }
-        if(pi >= 0){
-          var f = !!(fd && (fd[pi] || fd[n]));
-          if(!cur || cur.f !== f){ cur = {f: f, d: 'M' + X(xs[pi]).toFixed(1) + ' ' + Y(pts[pi]).toFixed(1)}; out.push(cur); }
-          cur.d += 'L' + X(xs[n]).toFixed(1) + ' ' + Y(v).toFixed(1);
-        }
-        pi = n;
-      });
-      return out;
-    }
     function lastOf(pts){ for(var n = pts.length - 1; n >= 0; n--) if(pts[n] != null) return {n: n, v: pts[n]}; return null; }
     function firstOf(pts){ for(var n = 0; n < pts.length; n++) if(pts[n] != null) return pts[n]; return null; }
     var label = '손해율 가정 경과차년별 꺾은선' + grpTag() + '. ' + lines.map(function(it){ return it.nm + fbTag(it.code) + ' ' + nfs(firstOf(it.pts), 1) + '%에서 ' + nfs(lastOf(it.pts).v, 1) + '%'; }).join('. ') +
-      (med ? '. ' + medType(type) + ' 업계 중앙값 ' + nfs(firstOf(med), 1) + '%에서 ' + nfs(lastOf(med).v, 1) + '%' : '') + (anyFade ? '. 위험보험료 ' + FADE_BELOW_EOK + '억원 미만 칸은 흐린 점선으로 그림' : '') + '. 현재가치 손해율은 아래 표에 있습니다.';
+      (med ? '. ' + medType(type) + ' 업계 중앙값 ' + nfs(firstOf(med), 1) + '%에서 ' + nfs(lastOf(med).v, 1) + '%' : '') + '. 현재가치 손해율은 아래 표에 있습니다.';
     var svg = svgEl('svg', {viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label});
     var step = (hi - lo) > 80 ? 40 : (hi - lo) > 30 ? 20 : 10;
     var ylabs = [];
@@ -1084,34 +1048,16 @@
     }
     if(med) svg.appendChild(svgEl('path', {d: pathOf(med), fill: 'none', stroke: 'var(--muted)', 'stroke-width': 1.5, 'stroke-dasharray': '1 4', 'stroke-linecap': 'round'}));
     lines.forEach(function(it){
-      if(!it.fd || !it.fd.some(Boolean)){
-        svg.appendChild(svgEl('path', {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'data-line': it.k}));
-        return;
-      }
-      var fc = fadeColor(it.col);
-      runsOf(it.pts, it.fd).forEach(function(r){
-        var a = {d: r.d, fill: 'none', stroke: r.f ? fc : it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'data-line': it.k};
-        if(r.f) a['stroke-dasharray'] = '2 4';
-        svg.appendChild(svgEl('path', a));
-      });
+      svg.appendChild(svgEl('path', {d: pathOf(it.pts), fill: 'none', stroke: it.col, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'data-line': it.k}));
     });
-    /* 선마다 넓은 화면과 같은 모양의 표식(a11y C6, 색만으로 구분하지 않기). 8차년마다 하나씩, 선마다 2차년씩 어긋나게 찍어 네 선이 겹쳐도 모양이 보인다.
-       위험보험료가 작은 칸의 표식은 넓은 화면처럼 속 빈 표식(배경색 채움 + 흐린 윤곽)이고, 흐린 구간마다 표식이 하나는 있게 한다. 선 색은 그대로. */
+    /* 선마다 넓은 화면과 같은 모양의 표식(a11y C6, 색만으로 구분하지 않기). 8차년마다 하나씩, 선마다 2차년씩 어긋나게 찍어 네 선이 겹쳐도 모양이 보인다. */
     lines.forEach(function(it){
-      var kind = PT[it.k % 4], g = svgEl('g', {'class': 'mks', 'data-pt': kind, 'data-line': it.k}), fc = (it.fd && it.fd.some(Boolean)) ? fadeColor(it.col) : it.col, off = 2 * (it.k % 4), done = {};
+      var kind = PT[it.k % 4], g = svgEl('g', {'class': 'mks', 'data-pt': kind, 'data-line': it.k}), off = 2 * (it.k % 4), done = {};
       function mark(n){
         if(done[n]) return; done[n] = 1;
-        var hol = it.fd && it.fd[n];
-        g.appendChild(ptMark(kind, X(xs[n]), Y(it.pts[n]), 4, hol ? 'var(--bg)' : it.col, hol ? fc : it.col, hol ? 2 : 1));
+        g.appendChild(ptMark(kind, X(xs[n]), Y(it.pts[n]), 4, it.col, it.col, 1));
       }
       it.pts.forEach(function(v, n){ if(v != null && n % 8 === off) mark(n); });
-      if(it.fd){   /* 흐린 구간(연속한 흐린 칸)에 표식이 하나도 없으면 구간의 첫 칸에 찍는다 */
-        var run = -1, has = false;
-        it.fd.concat([false]).forEach(function(f, n){
-          if(f){ if(run < 0){ run = n; has = false; } if(done[n]) has = true; }
-          else if(run >= 0){ if(!has) mark(run); run = -1; }
-        });
-      }
       if(!g.childNodes.length) it.pts.some(function(v, n){ if(v == null) return false; mark(n); return true; });
       svg.appendChild(g);
     });
@@ -1453,15 +1399,14 @@
     });
     return h + '</select></div>';
   }
-  /* ? 팝오버 문장: 단위 선택이면 데이터의 unit_note + 처음 화면·빈 칸·흐림 규칙, 구분 선택이면 예전 문장 */
+  /* ? 팝오버 문장: 단위 선택이면 데이터의 unit_note + 처음 화면·빈 칸 규칙, 구분 선택이면 예전 문장 */
   function lcHelp(C, gopts){
     var cu = curU(), t = C.note;
     if(unitsOn()){
       var defs = ['생보', '손보'].filter(function(sec){ return C.default_unit[sec] && unitDef(C.default_unit[sec]); }).map(function(sec){ return sec + ' ' + unitDef(C.default_unit[sec]).label; });
       t += ' 처음 화면은 첫 번째로 고른 회사 업권의 기본 단위입니다' + (defs.length ? '(' + defs.join(', ') + '; 재보는 그 회사가 공시한 첫 단위)' : '') + '.';
       if(cu){
-        t += ' ' + (C.unit_note || '') + ' 단위를 고르면 그 단위를 공시하지 않은 회사는 선을 그리지 않고 합계나 다른 구분으로 바꿔 그리지 않으며, 이유는 n/a 줄에 적습니다.' +
-          ' 그 단위의 위험보험료가 ' + FADE_BELOW_EOK + '억원 미만인 칸은 분모가 작아 값이 크게 흔들리므로 흐린 점선(넓은 화면은 속 빈 표식)으로 그립니다.';
+        t += ' ' + (C.unit_note || '') + ' 단위를 고르면 그 단위를 공시하지 않은 회사는 선을 그리지 않고 합계나 다른 구분으로 바꿔 그리지 않으며, 이유는 n/a 줄에 적습니다.';
       } else if(gopts.length && C.note_g){
         t += ' ' + GNOTE + ' ' + C.note_g;
       }
