@@ -34,8 +34,6 @@
   <meta property="og:title" content="InsureQuant — 日本 ESR ダッシュボード"/>
   <meta property="og:description" content="日本の保険会社の経済価値ベースソルベンシー比率(ESR)を一覧表示。公表され次第、順次更新します。"/>
   <meta property="og:type" content="website"/>
-  <!-- owner 초안 검토 전 임시 noindex. 라이브 확정 시 owner 판단으로 제거. -->
-  <meta name="robots" content="noindex,follow"/>
   <link rel="canonical" href="https://www.insurequant.com/jp/"/>
   <link rel="alternate" hreflang="ko" href="https://www.insurequant.com/"/>
   <link rel="alternate" hreflang="ja" href="https://www.insurequant.com/jp/"/>
@@ -191,6 +189,35 @@
       .esr-table{font-size:12px}
       .esr-table th, .esr-table td{padding:5px 6px}
     }
+
+    /* ESRマップ(2026-10-31): 루트 index.html 의 RecSplit 트리맵(#map/.group/.cell) 을 jp 로 옮긴 것. 데스크톱 전용(<=640px 는 아래 ランキング 로 대체). */
+    .esr-map-wrap{position:relative}
+    #esrMap{position:relative;height:72vh;min-height:520px;border-radius:14px;overflow:hidden;border:1px solid var(--border)}
+    #esrMap .map-status{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;color:var(--muted);font-size:14px;line-height:1.5;background:var(--overlay);z-index:5}
+    #esrMap .group{position:absolute;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:rgba(0,0,0,.02);box-sizing:border-box}
+    #esrMap .group-title{position:absolute;left:6px;top:6px;font-size:12px;color:var(--muted);background:var(--overlay);padding:2px 6px;border-radius:6px;z-index:2}
+    #esrMap .cell{position:absolute;border:1px solid rgba(0,0,0,.08);border-radius:8px;padding:6px;display:flex;flex-direction:column;justify-content:flex-start;gap:3px;overflow:hidden;box-sizing:border-box;cursor:pointer}
+    #esrMap .cell:hover,#esrMap .cell:focus-visible{box-shadow:0 4px 12px rgba(0,0,0,.18);z-index:10}
+    #esrMap .cell.cell-self{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.22) 0 3px,rgba(0,0,0,0) 3px 7px)}
+    #esrMap .cell.cell-other{background:var(--card);color:var(--muted);cursor:default}
+    #esrMap .name{font-weight:700;font-size:12px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
+    #esrMap .ratio{font-size:15px;font-weight:700;pointer-events:none}
+    .esr-map-tip{position:fixed;z-index:3000;max-width:340px;padding:8px 10px;border-radius:8px;background:var(--tip-bg,rgba(24,24,27,.94));color:var(--tip-text,#f5f5f4);font-size:12px;line-height:1.6;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+    .esr-map-tip[hidden]{display:none}
+    .esr-map-tip b{font-size:13px}
+    .map-mobile-note{display:none}
+    .map-extra{margin-top:14px}
+    .map-extra h3{font-size:13px;font-weight:700;margin:12px 0 6px}
+    .map-extra .chip-row{display:flex;flex-wrap:wrap;gap:6px}
+    .map-chip{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:12px;text-decoration:none}
+    .map-chip:hover{border-color:var(--primary)}
+    .map-chip .mc-sw{width:10px;height:10px;border-radius:3px;border:1px solid rgba(0,0,0,.2)}
+    .map-chip .mc-val{font-weight:700;font-variant-numeric:tabular-nums}
+    .map-chip.mc-grey{color:var(--muted)}
+    @media (max-width:640px){
+      #esrMap,#esrMapLegend,#esrMapCaption{display:none}
+      .map-mobile-note{display:block}
+    }
   </style>
 </head>
 <body>
@@ -223,6 +250,24 @@
       <p class="small-muted total-line" id="totalLine">全—社中</p>
       <p class="note-line" id="noteLine">読み込み中…</p>
       <p class="as-of-line" id="asOfLine"></p>
+    </section>
+
+    <section class="panel" aria-labelledby="secMap">
+      <h2 id="secMap">ESRマップ</h2>
+      <p class="map-mobile-note small-muted">スマートフォンでは下の「ESRランキング」をご利用ください。</p>
+      <div class="esr-map-wrap">
+        <div id="esrMap" role="group" aria-label="ESRマップ（面積は適格資本、色は規制ESR）。読み込み中"><div class="map-status" id="esrMapStatus">読み込み中…</div></div>
+      </div>
+      <div class="chart-legend" id="esrMapLegend">
+        <span><span class="sw" style="background:hsl(130,70%,26%)"></span>各社の目標レンジ上限を超過（高いほど濃い緑）</span>
+        <span><span class="sw" style="background:hsl(40,78%,54%)"></span>100%以上・目標レンジ以下（100%に近いほど赤み）</span>
+        <span><span class="sw" style="background:hsl(0,75%,30%)"></span>監督基準100%未満（低いほど濃い赤）</span>
+        <span><span class="sw" style="background:hsl(130,40%,50%)"></span>目標レンジ非公表社は100%基準の参考色</span>
+        <span><span class="sw" style="background-color:var(--muted);background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.35) 0 3px,rgba(0,0,0,0) 3px 7px)"></span>ハッチ柄=自社基準（内部モデル・内部管理）</span>
+        <span><span class="sw" style="background:var(--card);border:1px solid var(--border)"></span>その他（小規模社の合算枠）</span>
+      </div>
+      <p class="chart-caveat" id="esrMapCaption"></p>
+      <div id="esrMapExtra" class="map-extra"></div>
     </section>
 
     <section class="panel" aria-labelledby="secRanking">
@@ -373,7 +418,7 @@
         .replace(/\s{2,}/g, ' ')
         .trim();
     }
-    function fmtPct(x){ return (typeof x==='number' && !isNaN(x)) ? x.toFixed(1)+'%' : '—'; }
+    function fmtPct(x){ return (typeof x==='number' && !isNaN(x)) ? (x<0 ? '△'+Math.abs(x).toFixed(1) : x.toFixed(1))+'%' : '—'; }
     function jaDateFlexible(iso){
       if(!iso) return null;
       var p = String(iso).split('-');
@@ -506,8 +551,9 @@
           lossRatioData = buildLossRatioData(d.companies);
           renderGroup('life'); renderGroup('nonlife');
           renderLossRatioSection();
+          mapDetail = d.companies || []; renderMap();
         })
-        .catch(function(){ detailMap = {}; renderLossRatioSection(); });
+        .catch(function(){ detailMap = {}; mapDetail = []; renderLossRatioSection(); renderMap(); });
     }
     loadDetailMap();
 
@@ -524,15 +570,248 @@
         console.error('jesr_esr.json load failed', err);
       });
 
+    // ---- ESRマップ(2026-10-31): 루트 index.html 의 RecSplit(균형 이진 분할) 트리맵을 jp 로 이식 ----
+    // 면적 = 適格資本(jesr_detail.json の companies[].headline.eligible_capital, 単位 百万円)。jesr_esr.json には金額が無いため
+    // company_en で detail に結合する。金額が無い会社(グループ HD・一部の損保/生保)は面積を捏造せず、地図の下に一覧で出す。
+    // 色 = 規制ESR(jesr_esr.json esr_pct)を colorForRange(ランキングと同じ尺度, 監督基準 100%)で。内部モデルESRは地図に出さない。
+    // 未公表(detail の esr_status=not_yet で records に無い会社)は灰色チップで別掲(0 扱いしない)。
+    var mapRecords = null, mapDetail = null, mapTip = null;
+    var MAP_SEC_LABEL = {life:'生命保険', nonlife:'損害保険', reinsurance:'再保険'};
+    var MAP_SEC_ORDER = ['life', 'nonlife', 'reinsurance'];
+    function hslY(css){
+      var m = /hsl\(\s*([\d.]+),\s*([\d.]+)%,\s*([\d.]+)%\)/.exec(css || '');
+      if(!m) return null;
+      var h = +m[1], S = +m[2]/100, L = +m[3]/100;
+      var c = (1 - Math.abs(2*L - 1)) * S, x = c * (1 - Math.abs(((h/60) % 2) - 1)), mm = L - c/2;
+      var rgb = h < 60 ? [c,x,0] : h < 120 ? [x,c,0] : h < 180 ? [0,c,x] : h < 240 ? [0,x,c] : h < 300 ? [x,0,c] : [c,0,x];
+      var lin = function(v){ var u = v + mm; return u <= 0.03928 ? u/12.92 : Math.pow((u + 0.055)/1.055, 2.4); };
+      return 0.2126*lin(rgb[0]) + 0.7152*lin(rgb[1]) + 0.0722*lin(rgb[2]);
+    }
+    // 칸 글자색: 白と純黒のうち対比が大きい方(루트 textOnRatio と同じ考え方)
+    function inkFor(css){
+      var Y = hslY(css);
+      if(Y == null) return '#000000';
+      return (1.05/(Y + 0.05)) >= ((Y + 0.05)/0.05) ? '#ffffff' : '#000000';
+    }
+    function mapShort(n){
+      return String(n || '').replace(/ホールディングス$/, 'HD').replace(/生命保険$/, '生命').replace(/損害保険$/, '損保')
+        .replace(/火災海上保険$/, '火災').replace(/海上火災保険$/, '海上');
+    }
+    // 百万円 -> 億円/兆円(음수는 △)
+    function fmtYen(m){
+      if(typeof m !== 'number' || !isFinite(m)) return '—';
+      var neg = m < 0, oku = Math.abs(m) / 100, s;
+      if(oku >= 10000) s = (oku/10000).toFixed(2) + '兆円';
+      else s = Math.round(oku).toLocaleString('en-US') + '億円';
+      return (neg ? '△' : '') + s;
+    }
+    function mapDetailKey(r, c){
+      var kids = (GROUP_CHILDREN && GROUP_CHILDREN[r.company_jp]) || [];
+      return (c && c.id) ? c.id : (kids.length ? kids[0].id : encodeURIComponent(r.company_jp));
+    }
+    function mapBuild(){
+      var det = {}, seen = {};
+      (mapDetail || []).forEach(function(c){ if(c.company_en) det[c.company_en] = c; });
+      var sized = [], nosize = [];
+      (mapRecords || []).forEach(function(r){
+        seen[r.company_en] = 1;
+        var c = det[r.company_en], h = c && c.headline;
+        var ec = h && h.eligible_capital, rc = h && h.required_capital;
+        var o = { r:r, c:c, elig:(typeof ec === 'number' && ec > 0) ? ec : null, req:(typeof rc === 'number') ? rc : null };
+        (o.elig ? sized : nosize).push(o);
+      });
+      var unpub = (mapDetail || []).filter(function(c){ return c.esr_status === 'not_yet' && !seen[c.company_en]; });
+      return { sized:sized, nosize:nosize, unpub:unpub };
+    }
+    function mapRecsplit(items, rect){
+      function split(list, x, y, w, h){
+        if(!list.length) return [];
+        if(list.length === 1) return [{x:x, y:y, w:w, h:h, item:list[0]}];
+        list = list.slice().sort(function(a, b){ return b.value - a.value; });
+        var total = list.reduce(function(a, b){ return a + b.value; }, 0), target = total/2, acc = 0, idx = 0;
+        while(idx < list.length && acc + list[idx].value <= target){ acc += list[idx].value; idx++; }
+        if(idx === 0) idx = 1;
+        var left = list.slice(0, idx), right = list.slice(idx);
+        var lr = left.reduce(function(a, b){ return a + b.value; }, 0) / total;
+        if(w >= h){ var lw = w*lr; return split(left, x, y, lw, h).concat(split(right, x + lw, y, w - lw, h)); }
+        var lh = h*lr; return split(left, x, y, w, lh).concat(split(right, x, y + lh, w, h - lh));
+      }
+      return split(items, rect.x, rect.y, rect.w, rect.h);
+    }
+    function mapLayout(sized, rect){
+      var bySec = {};
+      sized.forEach(function(o){ var k = MAP_SEC_LABEL[o.r.sector] ? o.r.sector : 'nonlife'; (bySec[k] = bySec[k] || []).push(o); });
+      var groups = [];
+      MAP_SEC_ORDER.forEach(function(k){
+        if(!bySec[k]) return;
+        groups.push({ key:k, rows:bySec[k], sum:bySec[k].reduce(function(a, b){ return a + b.elig; }, 0) });
+      });
+      var grand = groups.reduce(function(a, b){ return a + b.sum; }, 0) || 1;
+      var RE_MIN_SHARE = 0.07;   // 再保険は件数が少なく比例面積だと細帯になるため、業態が複数あるときだけ最小面積を保証する(루트 index 와 같은 처리)
+      var gItems = groups.map(function(g){
+        var share = g.sum/grand, floored = groups.length > 1 && g.key === 'reinsurance' && share < RE_MIN_SHARE;
+        return { value: floored ? RE_MIN_SHARE : share, data:g };
+      }).sort(function(a, b){ return b.value - a.value; });
+      var out = [], others = [];
+      mapRecsplit(gItems, rect).forEach(function(gr){
+        var g = gr.item.data, padO = 6, titleH = 22, padI = 6;
+        out.push({ type:'group', sector:g.key, x:gr.x, y:gr.y, w:gr.w, h:gr.h });
+        var innerL = gr.x + padO + padI, innerT = gr.y + padO + titleH + padI;
+        var innerW = Math.max(0, gr.w - padO*2 - padI*2), innerH = Math.max(0, gr.h - padO*2 - titleH - padI*2);
+        var items = g.rows.map(function(o){ return { value:o.elig, data:o }; });
+        var MIN_AREA = 2400, area = innerW*innerH, majors = [], minors = [];
+        items.forEach(function(it){ ((it.value/g.sum)*area >= MIN_AREA ? majors : minors).push(it); });
+        var tiled = items;
+        if(minors.length >= 2 && majors.length){
+          tiled = majors.concat([{ value:minors.reduce(function(a, b){ return a + b.value; }, 0), data:{ isOther:true, list:minors.map(function(m){ return m.data; }) } }]);
+          others = others.concat(minors.map(function(m){ return m.data; }));
+        }
+        mapRecsplit(tiled, {x:innerL, y:innerT, w:innerW, h:innerH}).forEach(function(c){
+          var inset = 1, w = Math.max(1, c.w - inset*2), h = Math.max(1, c.h - inset*2);
+          out.push({ type:'cell', x:c.x + inset, y:c.y + inset, w:w, h:h, data:c.item.data });
+        });
+      });
+      return { cells:out, others:others };
+    }
+    function mapTipEl(){
+      if(!mapTip){
+        mapTip = document.createElement('div'); mapTip.className = 'esr-map-tip'; mapTip.hidden = true; mapTip.setAttribute('aria-hidden', 'true');
+        document.body.appendChild(mapTip);
+      }
+      return mapTip;
+    }
+    function mapTipLines(o){
+      var r = o.r;
+      return [
+        ['b', r.company_jp + (r.company_en ? '（' + r.company_en + '）' : '')],
+        ['t', 'ESR ' + fmtPct(r.esr_pct) + (r.preliminary ? '（速報）' : '')],
+        ['t', '適格資本 ' + fmtYen(o.elig) + ' / 所要資本 ' + fmtYen(o.req)],
+        ['t', '範囲: ' + (SCOPE_LABEL[r.scope] || r.scope || '—') + ' ｜ 基準日: ' + (jaDateFlexible(r.as_of) || '—')],
+        ['t', '算定基準: ' + basisLabel(r.basis)]
+      ];
+    }
+    function mapShowTip(lines, ev, anchor){
+      var t = mapTipEl();
+      t.innerHTML = '';
+      lines.forEach(function(l){
+        var d = document.createElement('div');
+        if(l[0] === 'b'){ var b = document.createElement('b'); b.textContent = l[1]; d.appendChild(b); } else d.textContent = l[1];
+        t.appendChild(d);
+      });
+      t.hidden = false;
+      var rect = anchor.getBoundingClientRect();
+      var x = (ev && ev.clientX != null && ev.type !== 'focus') ? ev.clientX + 14 : rect.left + 10;
+      var y = (ev && ev.clientY != null && ev.type !== 'focus') ? ev.clientY + 14 : rect.bottom + 6;
+      var tw = t.offsetWidth, th = t.offsetHeight;
+      if(x + tw > window.innerWidth - 8) x = Math.max(8, window.innerWidth - tw - 8);
+      if(y + th > window.innerHeight - 8) y = Math.max(8, y - th - 28);
+      t.style.left = x + 'px'; t.style.top = y + 'px';
+    }
+    function mapHideTip(){ if(mapTip) mapTip.hidden = true; }
+    function mapChip(r, c, grey){
+      var a = document.createElement('a');
+      a.className = 'map-chip' + (grey ? ' mc-grey' : '');
+      a.href = 'jesr.html?company=' + (c && c.id ? c.id : encodeURIComponent(r.company_jp));
+      var sw = document.createElement('span'); sw.className = 'mc-sw'; sw.setAttribute('aria-hidden', 'true');
+      sw.style.background = grey ? 'var(--card)' : colorForRange(r.esr_pct, r.target_range || null);
+      var nm = document.createElement('span'); nm.textContent = mapShort(r.company_jp);
+      var v = document.createElement('span'); v.className = 'mc-val'; v.textContent = grey ? '未公表' : fmtPct(r.esr_pct);
+      a.appendChild(sw); a.appendChild(nm); a.appendChild(v);
+      a.title = r.company_jp + (grey ? '：ESR未公表' : ' ESR ' + fmtPct(r.esr_pct));
+      return a;
+    }
+    function mapExtraBlock(host, title, chips){
+      if(!chips.length) return;
+      var h = document.createElement('h3'); h.textContent = title + '（' + chips.length + '社）';
+      var row = document.createElement('div'); row.className = 'chip-row';
+      chips.forEach(function(c){ row.appendChild(c); });
+      host.appendChild(h); host.appendChild(row);
+    }
+    function renderMap(){
+      var el = document.getElementById('esrMap');
+      if(!el || !mapRecords || !mapDetail) return;
+      var m = mapBuild();
+      var W = el.clientWidth, H = el.clientHeight;
+      mapLastW = W;
+      el.innerHTML = '';
+      if(W > 0 && H > 0 && m.sized.length){
+        var lay = mapLayout(m.sized, {x:0, y:0, w:W, h:H});
+        lay.cells.forEach(function(r){
+          var x = Math.floor(Math.max(0, r.x)), y = Math.floor(Math.max(0, r.y));
+          var w = Math.max(1, Math.floor(Math.min(r.w, W - x))), h = Math.max(1, Math.floor(Math.min(r.h, H - y)));
+          if(r.type === 'group'){
+            var g = document.createElement('div'); g.className = 'group';
+            g.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px';
+            var t = document.createElement('div'); t.className = 'group-title'; t.textContent = MAP_SEC_LABEL[r.sector] || r.sector;
+            g.appendChild(t); el.appendChild(g); return;
+          }
+          var d = r.data, cell = document.createElement('div'), lines;
+          cell.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px';
+          if(d.isOther){
+            cell.className = 'cell cell-other';
+            lines = [['b', 'その他 ' + d.list.length + '社（適格資本が小さい会社）']].concat(d.list.map(function(o){ return ['t', o.r.company_jp + ' ESR ' + fmtPct(o.r.esr_pct)]; }));
+            if(h >= 24 && w >= 40){ var nm0 = document.createElement('div'); nm0.className = 'name'; nm0.textContent = 'その他 ' + d.list.length + '社'; cell.appendChild(nm0); }
+            cell.setAttribute('role', 'img'); cell.setAttribute('aria-label', lines.map(function(l){ return l[1]; }).join('、'));
+          } else {
+            var bg = colorForRange(d.r.esr_pct, d.r.target_range || null);
+            cell.className = 'cell' + (isSelfBasis(d.r.basis) ? ' cell-self' : '');
+            cell.style.backgroundColor = bg; cell.style.color = inkFor(bg);
+            lines = mapTipLines(d);
+            if(h >= 46 && w >= 60){ var nm = document.createElement('div'); nm.className = 'name'; nm.textContent = mapShort(d.r.company_jp); cell.appendChild(nm); }
+            if(h >= 26 && w >= 44){ var rt = document.createElement('div'); rt.className = 'ratio'; rt.textContent = fmtPct(d.r.esr_pct); cell.appendChild(rt); }
+            cell.tabIndex = 0; cell.setAttribute('role', 'link');
+            cell.setAttribute('aria-label', lines.map(function(l){ return l[1]; }).join('、'));
+            var go = function(){ window.location.href = 'jesr.html?company=' + mapDetailKey(d.r, d.c); };
+            cell.addEventListener('click', go);
+            cell.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); } });
+          }
+          cell.addEventListener('mouseenter', function(e){ mapShowTip(lines, e, cell); });
+          cell.addEventListener('mousemove', function(e){ mapShowTip(lines, e, cell); });
+          cell.addEventListener('mouseleave', mapHideTip);
+          cell.addEventListener('focus', function(e){ mapShowTip(lines, e, cell); });
+          cell.addEventListener('blur', mapHideTip);
+          el.appendChild(cell);
+        });
+        el.setAttribute('aria-label', 'ESRマップ（面積は適格資本、色は規制ESR）。地図に ' + m.sized.length + '社を表示。各社の値は地図の下の一覧とESRランキングにもあります。');
+        renderMapExtra(m, lay.others);
+      } else {
+        var s = document.createElement('div'); s.className = 'map-status'; s.id = 'esrMapStatus';
+        s.textContent = m.sized.length ? '' : '適格資本のデータがないため、地図を表示できません。下の一覧をご利用ください。';
+        el.appendChild(s);
+        renderMapExtra(m, []);
+      }
+      var cap = document.getElementById('esrMapCaption');
+      if(cap) cap.textContent = '※ 面積は適格資本、色は規制ベースのESR。適格資本が未収録の会社・小規模で「その他」にまとめた会社・ESR未公表の会社は地図の下に一覧で示します。';
+    }
+    function renderMapExtra(m, others){
+      var host = document.getElementById('esrMapExtra');
+      if(!host) return;
+      host.innerHTML = '';
+      var byEsr = function(a, b){ return (b.r.esr_pct || 0) - (a.r.esr_pct || 0); };
+      mapExtraBlock(host, '地図で「その他」にまとめた会社', others.slice().sort(byEsr).map(function(o){ return mapChip(o.r, o.c, false); }));
+      mapExtraBlock(host, '適格資本が未収録のため地図に載せていない会社', m.nosize.slice().sort(byEsr).map(function(o){ return mapChip(o.r, o.c, false); }));
+      mapExtraBlock(host, 'ESR未公表', m.unpub.map(function(c){ return mapChip({company_jp:c.company_jp}, c, true); }));
+    }
+    var mapResizeT = null, mapLastW = 0;
+    window.addEventListener('resize', function(){
+      clearTimeout(mapResizeT);
+      mapResizeT = setTimeout(function(){
+        var el = document.getElementById('esrMap');
+        if(el && el.clientWidth && Math.abs(el.clientWidth - mapLastW) > 2) renderMap();
+      }, 150);
+    });
+
     var GROUP_CHILDREN = null;
     function renderAll(data){
       var meta = data._meta || {};
       GROUP_CHILDREN = meta.group_children || {};
       var records = Array.isArray(data.records) ? data.records.slice() : [];
+      mapRecords = records;
       groupData.life    = sortBucketed(records.filter(function(r){ return groupKey(r.sector)==='life'; }));
       groupData.nonlife = sortBucketed(records.filter(function(r){ return groupKey(r.sector)==='nonlife'; }));
 
       renderCards(meta);
+      renderMap();
       renderGroup('life');
       renderGroup('nonlife');
     }
