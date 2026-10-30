@@ -8,7 +8,7 @@
 
   // 対象シート: jp の公開データ 2 本(jp/jesr_esr.json = ESRランキング, jp/jesr_detail.json = 会社別詳細)。
   var SHEETS = [
-    { value: "jesr_esr", label: "ESRランキング (jesr_esr)" },
+    { value: "jesr_esr", label: "ESRマップ・ESRランキング・損害率一覧 (jesr_esr)" },
     { value: "jesr_detail", label: "会社別詳細 (jesr_detail)" }
   ];
   var SHEET_PREFIX = "JP:";
@@ -209,7 +209,71 @@
     return { open: open };
   }
 
+  // 共有ボタン(ヘッダー右上)。ルート theme.js の共有メニュー(.iq-share, common.css)と同じ見た目・操作だが、
+  // theme.js は lang=ja で共有を出さないため、全 jp ページが読むこのファイルから日本語で組み立てる。
+  // 共有先 = このページの URL(iq_internal を除く)。スクリーンショット共有・利用記録の送信は行わない。
+  function shareToast(t) {
+    var n = document.getElementById("iqToast");
+    if (!n) {
+      n = el("div", { class: "iq-toast", id: "iqToast", role: "status", "aria-live": "polite" });
+      n.hidden = true;
+      document.body.appendChild(n);
+    }
+    n.textContent = t; n.hidden = false;
+    clearTimeout(shareToast._t);
+    shareToast._t = setTimeout(function () { n.hidden = true; }, 2600);
+  }
+  function shareUrl() {
+    var u = new URL(location.href);
+    u.searchParams.delete("iq_internal");
+    return u.toString().replace(/%2C/gi, ",");
+  }
+  function shareCopy() {
+    var link = shareUrl();
+    var done = function () { shareToast("リンクをコピーしました"); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, function () { window.prompt("リンクをコピーしてください", link); });
+    else window.prompt("リンクをコピーしてください", link);
+  }
+  function shareNative() {
+    if (navigator.share) navigator.share({ title: document.title, url: shareUrl() }).catch(function () {});
+  }
+  function mountShare() {
+    if (document.getElementById("iqShareBtn")) return;
+    var h = document.querySelector("header");
+    if (!h) return;
+    var wrap = el("div", { class: "iq-share", id: "iqShare" });
+    var btn = el("button", { type: "button", id: "iqShareBtn", class: "iq-share-btn", "aria-haspopup": "menu", "aria-expanded": "false", "aria-controls": "iqShareMenu", "aria-label": "共有", title: "共有" });
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M8.4 10.9l7.2-4.1M8.4 13.1l7.2 4.1" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><g fill="currentColor"><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="6" r="2.6"/><circle cx="18" cy="18" r="2.6"/></g></svg>';
+    var menu = el("ul", { class: "iq-share-menu", id: "iqShareMenu", role: "menu", "aria-label": "共有" });
+    menu.hidden = true;
+    var entries = [["リンクをコピー", shareCopy]];
+    if (navigator.share) entries.push(["他のアプリで共有", shareNative]);
+    entries.forEach(function (it) {
+      var li = el("li", { role: "none" });
+      var b = el("button", { type: "button", role: "menuitem", text: it[0] });
+      b.addEventListener("click", function () { close(); btn.focus(); it[1](); });
+      li.appendChild(b); menu.appendChild(li);
+    });
+    function items() { return [].slice.call(menu.querySelectorAll("[role=menuitem]")); }
+    function close() { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); }
+    function open() { menu.hidden = false; btn.setAttribute("aria-expanded", "true"); items()[0].focus(); }
+    btn.addEventListener("click", function (e) { e.stopPropagation(); if (menu.hidden) open(); else close(); });
+    document.addEventListener("click", function (e) { if (!menu.hidden && !wrap.contains(e.target)) close(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) { close(); btn.focus(); } });
+    menu.addEventListener("keydown", function (e) {
+      if (e.key === "Tab") { close(); btn.focus(); return; }
+      if (["ArrowDown", "ArrowUp", "Home", "End"].indexOf(e.key) < 0) return;
+      e.preventDefault();
+      var it = items(), k = it.indexOf(document.activeElement);
+      var to = e.key === "Home" ? 0 : e.key === "End" ? it.length - 1 : (k + (e.key === "ArrowDown" ? 1 : it.length - 1)) % it.length;
+      it[to].focus();
+    });
+    wrap.appendChild(btn); wrap.appendChild(menu); h.appendChild(wrap);
+    h.classList.add("has-share");
+  }
+
   function init() {
+    mountShare();
     var modal = buildModal();
     var fab = el("button", { class: "iq-report-fab", type: "button" }, [document.createTextNode("⚑ 誤りを報告")]);
     fab.addEventListener("click", function () { modal.open(); });
