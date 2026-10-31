@@ -48,20 +48,16 @@
     .panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px}
 
     /* 언어 전환 (header-row 우측) */
-    .lang-switch{display:flex;align-items:center;gap:8px;font-size:13px}
-    .lang-switch .lang-current{font-weight:700;color:var(--text)}
-    .lang-switch .lang-sep{color:var(--border)}
-    .lang-switch a{color:var(--muted);text-decoration:none}
-    .lang-switch a:hover{color:var(--primary);text-decoration:underline}
+    .country-sw{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+    .country-sw .select{padding:4px 8px;font-size:13px;min-width:0}
 
-    /* 공시 현황 요약 카드 3개 */
-    .card-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    .jcard{background:var(--bg);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px 10px;text-align:center}
-    .jcard .jcard-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.15}
-    .jcard .jcard-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
-    .total-line{text-align:center;margin:8px 0 12px}
-    .note-line{font-size:13px;color:var(--ink-strong);background:var(--bg);border:1px dashed var(--border);border-radius:var(--r-md);padding:10px 12px;margin:0}
-    .as-of-line{font-size:12px;color:var(--muted);margin:8px 0 0}
+    /* 要約チップ 3개(2026-10-31 owner): J-ESR 中央値 / 収録保険会社 / 基準時点 — 루트 index.html .kpi-strip 와 같은 구성 */
+    .kpi-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+    .kpi{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center}
+    .kpi-val{font-size:26px;font-weight:800;color:var(--text);line-height:1.15;overflow-wrap:anywhere}
+    .kpi-lab{margin-top:6px;font-size:12px;color:var(--muted);font-weight:600}
+    .kpi-sub{margin-top:4px;font-size:10px;color:var(--muted);line-height:1.5}
+    .note-line{font-size:13px;color:var(--ink-strong);background:var(--bg);border:1px dashed var(--border);border-radius:var(--r-md);padding:10px 12px;margin:0 0 16px}
 
     /* 랭킹 리스트 (業種 2섹션: 生保/損保). 루트 index.html 82~98행 .map-list~.li-chip 그대로
        복사 + jp 전용 id 로 스코프 조정(원본은 #bubble-list 스코프의 flex 버전을 li-name 기본값으로
@@ -110,12 +106,12 @@
          ESRランキング側(esrList*)にもverify-badgeが付き得るようになった(速報/単体詳細chipと
          同時発生の可能性、実測要 — 09-13の"칩 과다" 재발과 같은 패턴이라 선제적으로 折り返す)。 */
       #lossRatioList .li-name,
-      #esrListLife .li-name,
-      #esrListNonlife .li-name{flex-wrap:wrap;row-gap:2px}
+      #esrListA .li-name,
+      #esrListB .li-name{flex-wrap:wrap;row-gap:2px}
       #lossRatioList .li-name .caveat-badge,
       #lossRatioList .li-name .verify-badge,
-      #esrListLife .li-name .verify-badge,
-      #esrListNonlife .li-name .verify-badge{flex:0 0 100%;margin-left:0}
+      #esrListA .li-name .verify-badge,
+      #esrListB .li-name .verify-badge{flex:0 0 100%;margin-left:0}
     }
     /* 損害率一覧(積み上げ棒) — 2026-09-15 owner判断でバブルを廃止し、この一覧を
        デスクトップ・モバイル共通の唯一のビューにした(display切替なし)。 */
@@ -179,13 +175,13 @@
       header{padding:8px 12px}
       .brand{font-size:15px}
       .brand .hint{display:none}
-      .lang-switch{font-size:12px;gap:6px}
       .container{padding:10px}
       .panel{padding:12px}
-      .card-row{gap:6px}
-      .jcard{padding:10px 4px}
-      .jcard .jcard-val{font-size:18px}
-      .jcard .jcard-lab{font-size:10px}
+      .kpi-strip{gap:6px}
+      .kpi{padding:10px 4px}
+      .kpi-val{font-size:17px}
+      .kpi-lab{font-size:10px}
+      .kpi-sub{font-size:9px}
       .esr-table{font-size:12px}
       .esr-table th, .esr-table td{padding:5px 6px}
     }
@@ -205,7 +201,8 @@
     .esr-map-tip{position:fixed;z-index:3000;max-width:340px;padding:8px 10px;border-radius:8px;background:var(--tip-bg,rgba(24,24,27,.94));color:var(--tip-text,#f5f5f4);font-size:12px;line-height:1.6;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.25)}
     .esr-map-tip[hidden]{display:none}
     .esr-map-tip b{font-size:13px}
-    .map-mobile-note{display:none}
+    .only-mob{display:none}
+    .rank-controls{display:flex;align-items:center;gap:8px;margin:2px 0 12px;font-size:13px;color:var(--muted)}
     .map-extra{margin-top:14px}
     .map-extra h3{font-size:13px;font-weight:700;margin:12px 0 6px}
     .map-extra .chip-row{display:flex;flex-wrap:wrap;gap:6px}
@@ -214,9 +211,14 @@
     .map-chip .mc-sw{width:10px;height:10px;border-radius:3px;border:1px solid rgba(0,0,0,.2)}
     .map-chip .mc-val{font-weight:700;font-variant-numeric:tabular-nums}
     .map-chip.mc-grey{color:var(--muted)}
+    /* 適格資本あり: デスクトップ=地図、スマートフォン=ランキング表 / 適格資本なし: 両方ランキング表 */
     @media (max-width:640px){
-      #esrMap,#esrMapLegend,#esrMapCaption{display:none}
-      .map-mobile-note{display:block}
+      #esrMapBlock{display:none}
+      .only-desk{display:none}
+      .only-mob{display:inline}
+    }
+    @media (min-width:641px){
+      #rankABlock{display:none}
     }
   </style>
 </head>
@@ -224,11 +226,14 @@
   <header>
     <div class="header-row">
       <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">日本 ESR ダッシュボード</span></a>
-      <nav class="lang-switch" aria-label="言語切替 / 언어 선택">
-        <span class="lang-current" aria-current="page">日本語</span>
-        <span class="lang-sep" aria-hidden="true">|</span>
-        <a href="../index.html" lang="ko">한국어</a>
-      </nav>
+      <div class="country-sw">
+        <label for="countrySel">国</label>
+        <select id="countrySel" class="select" aria-label="国 / 국가">
+          <option value="" selected>🇯🇵 Japan</option>
+          <option value="../index.html" lang="ko">🇰🇷 Korea</option>
+        </select>
+      </div>
+      <script>(function(){var s=document.getElementById("countrySel");s.addEventListener("change",function(){if(s.value)location.href=s.value;});window.addEventListener("pageshow",function(){s.value="";});})();</script>
     </div>
     <!-- 한국 K-ICS | IFRS17 | 기타공시 와 같은 3탭(owner 2026-09-13): 회사별 ESR / 決算 / その他開示 -->
     <div class="header-row"><div class="tabs" role="navigation" aria-label="会社別ページ">
@@ -240,47 +245,54 @@
 
   <main class="container">
 
-    <section class="panel" aria-labelledby="secSummary">
-      <h2 id="secSummary">公表状況</h2>
-      <div class="card-row">
-        <div class="jcard"><div class="jcard-val" id="cardPosted">—</div><div class="jcard-lab">公表済み</div></div>
-        <div class="jcard"><div class="jcard-val" id="cardNotYet">—</div><div class="jcard-lab" id="cardNotYetLab">公表予定</div></div>
-        <div class="jcard"><div class="jcard-val" id="cardNotFound">—</div><div class="jcard-lab">未確認</div></div>
+    <section class="hero" aria-label="サマリー">
+      <div class="kpi-strip">
+        <div class="kpi"><div class="kpi-val" id="kpiMedian">—</div><div class="kpi-lab">J-ESR 中央値</div></div>
+        <div class="kpi"><div class="kpi-val" id="kpiCount">—</div><div class="kpi-lab">収録保険会社</div><div class="kpi-sub" id="kpiCountSub"></div></div>
+        <div class="kpi"><div class="kpi-val" id="kpiPeriod">—</div><div class="kpi-lab">基準時点</div></div>
       </div>
-      <p class="small-muted total-line" id="totalLine">全—社中</p>
       <p class="note-line" id="noteLine">読み込み中…</p>
-      <p class="as-of-line" id="asOfLine"></p>
     </section>
 
+    <!-- 適格資本を収録した会社(2026-10-31 owner): デスクトップ=RecSplit 地図 / スマートフォン=ランキング表。業種ドロップダウンは下の未収録社にも効く。 -->
     <section class="panel" aria-labelledby="secMap">
-      <h2 id="secMap">ESRマップ</h2>
-      <p class="map-mobile-note small-muted">スマートフォンでは下の「ESRランキング」をご利用ください。</p>
-      <div class="esr-map-wrap">
-        <div id="esrMap" role="group" aria-label="ESRマップ（面積は適格資本、色は規制ESR）。読み込み中"><div class="map-status" id="esrMapStatus">読み込み中…</div></div>
+      <h2 id="secMap"><span class="only-desk">ESRマップ</span><span class="only-mob">ESRランキング</span><span class="rank-group-count" id="rankCountA"></span></h2>
+      <p>経済価値ベースのソルベンシー比率(ESR)。適格資本の金額を収録した会社です。色は金融庁の監督基準(100%)を上回るほど濃い緑、下回るほど濃い赤で示します。会社を選ぶと会社別の詳細（適格資本・所要資本・損益・収益性指標）に移動します。</p>
+      <div class="rank-controls">
+        <label for="sectorSel">業種:</label>
+        <select id="sectorSel" class="select">
+          <option value="all">全体</option>
+          <option value="life">生命保険</option>
+          <option value="nonlife">損害保険</option>
+          <option value="reinsurance">再保険</option>
+        </select>
       </div>
-      <div class="chart-legend" id="esrMapLegend">
-        <span><span class="sw" style="background:hsl(130,70%,26%)"></span>各社の目標レンジ上限を超過（高いほど濃い緑）</span>
-        <span><span class="sw" style="background:hsl(40,78%,54%)"></span>100%以上・目標レンジ以下（100%に近いほど赤み）</span>
-        <span><span class="sw" style="background:hsl(0,75%,30%)"></span>監督基準100%未満（低いほど濃い赤）</span>
-        <span><span class="sw" style="background:hsl(130,40%,50%)"></span>目標レンジ非公表社は100%基準の参考色</span>
-        <span><span class="sw" style="background-color:var(--muted);background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.35) 0 3px,rgba(0,0,0,0) 3px 7px)"></span>ハッチ柄=自社基準（内部モデル・内部管理）</span>
-        <span><span class="sw" style="background:var(--card);border:1px solid var(--border)"></span>その他（小規模社の合算枠）</span>
+      <div id="esrMapBlock">
+        <div class="esr-map-wrap">
+          <div id="esrMap" role="group" aria-label="ESRマップ（面積は適格資本、色は規制ESR）。読み込み中"><div class="map-status" id="esrMapStatus">読み込み中…</div></div>
+        </div>
+        <div class="chart-legend" id="esrMapLegend">
+          <span><span class="sw" style="background:hsl(130,70%,26%)"></span>各社の目標レンジ上限を超過（高いほど濃い緑）</span>
+          <span><span class="sw" style="background:hsl(40,78%,54%)"></span>100%以上・目標レンジ以下（100%に近いほど赤み）</span>
+          <span><span class="sw" style="background:hsl(0,75%,30%)"></span>監督基準100%未満（低いほど濃い赤）</span>
+          <span><span class="sw" style="background:hsl(130,40%,50%)"></span>目標レンジ非公表社は100%基準の参考色</span>
+          <span><span class="sw" style="background-color:var(--muted);background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.35) 0 3px,rgba(0,0,0,0) 3px 7px)"></span>ハッチ柄=自社基準（内部モデル・内部管理）</span>
+          <span><span class="sw" style="background:var(--card);border:1px solid var(--border)"></span>その他（小規模社の合算枠。カーソルを合わせると内訳）</span>
+        </div>
+        <p class="chart-caveat" id="esrMapCaption"></p>
       </div>
-      <p class="chart-caveat" id="esrMapCaption"></p>
-      <div id="esrMapExtra" class="map-extra"></div>
+      <div id="rankABlock">
+        <div id="esrListA" class="map-list" aria-label="ESRランキング(適格資本収録社、読み込み中)"></div>
+        <button type="button" class="li-more-btn" id="moreBtnA" hidden aria-expanded="false"></button>
+      </div>
     </section>
 
     <section class="panel" aria-labelledby="secRanking">
-      <h2 id="secRanking">ESRランキング</h2>
-      <p>経済価値ベースのソルベンシー比率(ESR)。色は金融庁の監督基準(100%)を上回るほど濃い緑、下回るほど濃い赤で示します。行を選ぶと会社別の詳細（適格資本・所要資本・損益・収益性指標）に移動します。</p>
-
-      <h3 class="rank-group-title">生命保険<span class="rank-group-count" id="rankCountLife"></span></h3>
-      <div id="esrListLife" class="map-list" aria-label="ESRランキング(生命保険、読み込み中)"></div>
-      <button type="button" class="li-more-btn" id="moreBtnLife" hidden aria-expanded="false"></button>
-
-      <h3 class="rank-group-title">損害保険<span class="rank-group-count" id="rankCountNonlife"></span></h3>
-      <div id="esrListNonlife" class="map-list" aria-label="ESRランキング(損害保険、読み込み中)"></div>
-      <button type="button" class="li-more-btn" id="moreBtnNonlife" hidden aria-expanded="false"></button>
+      <h2 id="secRanking">ESRランキング（適格資本の未収録社）<span class="rank-group-count" id="rankCountB"></span></h2>
+      <p>適格資本の金額をまだ収録できていない会社のランキングです（デスクトップ・スマートフォン共通）。上の業種選択が適用されます。行を選ぶと会社別の詳細に移動します。</p>
+      <div id="esrListB" class="map-list" aria-label="ESRランキング(適格資本未収録社、読み込み中)"></div>
+      <button type="button" class="li-more-btn" id="moreBtnB" hidden aria-expanded="false"></button>
+      <div id="esrMapExtra" class="map-extra"></div>
 
       <div class="chart-legend" id="chartLegend">
         <span><span class="sw" style="background:hsl(130,70%,26%)"></span>各社の目標レンジ上限を超過（高いほど濃い緑）</span>
@@ -334,6 +346,7 @@
     'use strict';
     var DATA_URL = 'jesr_esr.json';
     var FOLD = 5;
+    var RANK_FOLD = 10;   // ESRランキング(A/B)は1リストに全業種が入るので損害率一覧(FOLD)より多めに見せる
     var SCOPE_LABEL  = {group:'連結', solo:'単体'};
     // owner 2026-09-13(2차 지시 -- "칩이 너무 많다", 1차 chip안 되돌림): 算定基準(jesr_esr.json
     // record.basis)는 chip이 아니라 막대(li-bar)의 패턴으로 표시한다. 색(초록/황/적)은 이미
@@ -352,9 +365,10 @@
       if(isSelfBasis(basis)) return '算定基準: ' + basisLabel(basis) + '（各社独自の基準。規制ベースの会社とは単純比較に適さない場合があります）';
       return '算定基準: 未確認（出所資料で個別にご確認ください）';
     }
-    // owner 지시 2: sector 섹션은 生保/損保 두 개뿐 — reinsurance는 損保 섹션에 합친다.
-    function groupKey(sector){ return sector === 'life' ? 'life' : 'nonlife'; }
-    var GROUP_LABEL = {life:'生命保険', nonlife:'損害保険'};
+    // 2026-10-31 owner: 랭킹은 業種(生保/損保)이 아니라 適格資本 収録 有無(A=収録, B=未収録)로 2섹션. 業種은 드롭다운 필터.
+    var GROUP_LABEL = {A:'適格資本収録社', B:'適格資本未収録社'};
+    var sectorFilter = 'all';
+    function sectorOk(sector){ return sectorFilter === 'all' || sector === sectorFilter; }
     function cap(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
 
     // 루트 index.html 531~547행 _ratioHsl/colorForRatio 그대로(HSL 발산 스케일).
@@ -450,6 +464,7 @@
     }
     // owner 지시 1: 2단 버킷 정렬. category 가 HD上場/相互会社/上場 로 시작하면 버킷A(주요 시장
     // 플레이어), 그 외(子会社/独立 등)는 버킷B. 각 버킷 안에서 esr_pct 내림차순, A 전체가 먼저.
+    // (2026-10-31 owner: 適格資本 수록/미수록 2섹션으로 나눈 뒤에도 각 섹션 안에서 이 정렬을 유지)
     function isBucketA(category){ return /^(HD上場|相互会社|上場)/.test(category||''); }
     function sortBucketed(list){
       return list.slice().sort(function(a,b){
@@ -459,8 +474,8 @@
       });
     }
 
-    var groupData = {life:[], nonlife:[]};   // 業種별 버킷정렬 전체 리스트
-    var expanded  = {life:false, nonlife:false, lossRatio:false};
+    var groupData = {A:[], B:[]};   // 適格資本 収録(A)/未収録(B) 버킷정렬 전체 리스트
+    var expanded  = {A:false, B:false, lossRatio:false};
     // 損害率 caveat 배지(2026-09-14) — jp/jesr_app.js CAVEAT_META 와 동일 정의(§5.2 관례대로 파일별 복사).
     // 성격별 3그룹(算式差=formula／画像判読精度=read／重複計上=dup)마다 다른 테두리 모양+머리글자,
     // 4코드를 한 덩어리로 뭉뚱그리지 않고 라벨 문구도 코드마다 다르다.
@@ -549,11 +564,11 @@
           (d.companies||[]).forEach(function(c){ if(c.company_en) map[c.company_en] = c.id; });
           detailMap = map;
           lossRatioData = buildLossRatioData(d.companies);
-          renderGroup('life'); renderGroup('nonlife');
+          mapDetail = d.companies || [];
           renderLossRatioSection();
-          mapDetail = d.companies || []; renderMap();
+          rebuild();
         })
-        .catch(function(){ detailMap = {}; mapDetail = []; renderLossRatioSection(); renderMap(); });
+        .catch(function(){ detailMap = {}; mapDetail = []; renderLossRatioSection(); rebuild(); });
     }
     loadDetailMap();
 
@@ -561,7 +576,7 @@
       .then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); })
       .then(renderAll)
       .catch(function(err){
-        ['Life','Nonlife'].forEach(function(suf){
+        ['A','B'].forEach(function(suf){
           var c = document.getElementById('esrList'+suf);
           if(c) c.innerHTML = '<div class="jp-err">データを読み込めませんでした。時間をおいて再度お試しください。</div>';
           var tb = document.getElementById('esrTableBody'+suf);
@@ -615,12 +630,13 @@
       var sized = [], nosize = [];
       (mapRecords || []).forEach(function(r){
         seen[r.company_en] = 1;
+        if(!sectorOk(r.sector)) return;
         var c = det[r.company_en], h = c && c.headline;
         var ec = h && h.eligible_capital, rc = h && h.required_capital;
         var o = { r:r, c:c, elig:(typeof ec === 'number' && ec > 0) ? ec : null, req:(typeof rc === 'number') ? rc : null };
         (o.elig ? sized : nosize).push(o);
       });
-      var unpub = (mapDetail || []).filter(function(c){ return c.esr_status === 'not_yet' && !seen[c.company_en]; });
+      var unpub = (mapDetail || []).filter(function(c){ return c.esr_status === 'not_yet' && !seen[c.company_en] && sectorOk(c.sector); });
       return { sized:sized, nosize:nosize, unpub:unpub };
     }
     function mapRecsplit(items, rect){
@@ -772,24 +788,22 @@
           cell.addEventListener('blur', mapHideTip);
           el.appendChild(cell);
         });
-        el.setAttribute('aria-label', 'ESRマップ（面積は適格資本、色は規制ESR）。地図に ' + m.sized.length + '社を表示。各社の値は地図の下の一覧とESRランキングにもあります。');
-        renderMapExtra(m, lay.others);
+        el.setAttribute('aria-label', 'ESRマップ（面積は適格資本、色は規制ESR）。地図に ' + m.sized.length + '社を表示。各社の区画を選ぶと会社別詳細に移動します。');
+        renderMapExtra(m);
       } else {
         var s = document.createElement('div'); s.className = 'map-status'; s.id = 'esrMapStatus';
-        s.textContent = m.sized.length ? '' : '適格資本のデータがないため、地図を表示できません。下の一覧をご利用ください。';
+        s.textContent = m.sized.length ? '' : '該当する会社がありません（適格資本を収録した会社がありません）。';
         el.appendChild(s);
-        renderMapExtra(m, []);
+        renderMapExtra(m);
       }
       var cap = document.getElementById('esrMapCaption');
-      if(cap) cap.textContent = '※ 面積は適格資本、色は規制ベースのESR。適格資本が未収録の会社・小規模で「その他」にまとめた会社・ESR未公表の会社は地図の下に一覧で示します。';
+      if(cap) cap.textContent = '※ 面積は適格資本、色は規制ベースのESR。小規模社は「その他」にまとめています（カーソルを合わせると内訳）。適格資本が未収録の会社とESR未公表の会社は下のランキングに示します。';
     }
-    function renderMapExtra(m, others){
+    // 「その他」にまとめた小規模社の一覧は出さない(owner 2026-10-31)。適格資本未収録社は下のランキング表、ここはESR未公表社のみ。
+    function renderMapExtra(m){
       var host = document.getElementById('esrMapExtra');
       if(!host) return;
       host.innerHTML = '';
-      var byEsr = function(a, b){ return (b.r.esr_pct || 0) - (a.r.esr_pct || 0); };
-      mapExtraBlock(host, '地図で「その他」にまとめた会社', others.slice().sort(byEsr).map(function(o){ return mapChip(o.r, o.c, false); }));
-      mapExtraBlock(host, '適格資本が未収録のため地図に載せていない会社', m.nosize.slice().sort(byEsr).map(function(o){ return mapChip(o.r, o.c, false); }));
       mapExtraBlock(host, 'ESR未公表', m.unpub.map(function(c){ return mapChip({company_jp:c.company_jp}, c, true); }));
     }
     var mapResizeT = null, mapLastW = 0;
@@ -807,14 +821,27 @@
       GROUP_CHILDREN = meta.group_children || {};
       var records = Array.isArray(data.records) ? data.records.slice() : [];
       mapRecords = records;
-      groupData.life    = sortBucketed(records.filter(function(r){ return groupKey(r.sector)==='life'; }));
-      groupData.nonlife = sortBucketed(records.filter(function(r){ return groupKey(r.sector)==='nonlife'; }));
 
-      renderCards(meta);
-      renderMap();
-      renderGroup('life');
-      renderGroup('nonlife');
+      renderCards(meta, records);
+      rebuild();
     }
+
+    // records(jesr_esr.json) と detail(jesr_detail.json) の両方が揃ってから 地図/A/B を描く。
+    // 業種ドロップダウンで絞ったあとの再描画もここ。
+    function rebuild(){
+      if(!mapRecords || !mapDetail) return;
+      var m = mapBuild();
+      groupData.A = sortBucketed(m.sized.map(function(o){ return o.r; }));
+      groupData.B = sortBucketed(m.nosize.map(function(o){ return o.r; }));
+      renderGroup('A');
+      renderGroup('B');
+      renderMap();
+    }
+    document.getElementById('sectorSel').addEventListener('change', function(){
+      sectorFilter = this.value;
+      expanded.A = false; expanded.B = false;
+      rebuild();
+    });
 
     // owner 지시 2: 業種별 top5 + 더보기(FOLD=5, 루트 index.html MOB-INDEX-FOLD 패턴).
     // 섹션 안 회사 수가 FOLD 이하면 버튼 자체를 렌더링하지 않는다. 리스트·표는 상태를 공유해
@@ -839,32 +866,38 @@
       var full = groupData[key], c = cap(key);
       [document.getElementById('moreBtn'+c)].forEach(function(btn){
         if(!btn) return;
-        if(full.length <= FOLD){ btn.hidden = true; return; }
+        if(full.length <= RANK_FOLD){ btn.hidden = true; return; }
         btn.hidden = false;
-        btn.textContent = expanded[key] ? '閉じる' : 'もっと見る（他'+(full.length - FOLD)+'社）';
+        btn.textContent = expanded[key] ? '閉じる' : 'もっと見る（他'+(full.length - RANK_FOLD)+'社）';
         btn.setAttribute('aria-expanded', expanded[key] ? 'true' : 'false');
         btn.onclick = function(){ toggleExpand(key); };
       });
     }
 
-    function renderCards(meta){
+    // 要約チップ(2026-10-31 owner): J-ESR 中央値 / 収録保険会社(小さい字で公表状況) / 基準時点
+    function medianOf(vals){
+      var v = vals.filter(function(x){ return typeof x === 'number' && isFinite(x); }).sort(function(p, q){ return p - q; });
+      if(!v.length) return null;
+      var n = v.length;
+      return (n % 2) ? v[(n - 1) / 2] : (v[n / 2 - 1] + v[n / 2]) / 2;
+    }
+    function renderCards(meta, records){
       var c = meta.census || {};
-      document.getElementById('cardPosted').textContent   = (c.posted!=null? c.posted:'—') + '社';
-      document.getElementById('cardNotYet').textContent   = (c.not_yet!=null? c.not_yet:'—') + '社';
-      document.getElementById('cardNotFound').textContent = (c.not_found!=null? c.not_found:'—') + '社';
-      if(meta.next_update){
-        document.getElementById('cardNotYetLab').textContent = jaMonthEndShort(meta.next_update) + '公表予定';
-      }
-      document.getElementById('totalLine').textContent = '全' + (c.total!=null? c.total:'—') + '社中';
+      var med = medianOf((records || []).map(function(r){ return r.esr_pct; }));
+      var medEl = document.getElementById('kpiMedian');
+      medEl.textContent = med == null ? '—' : fmtPct(med);
+      medEl.title = '公表済み' + (records || []).length + '社の規制ESR（見出し値）の中央値';
+      document.getElementById('kpiCount').textContent = (c.posted != null ? c.posted : '—') + '社';
+      var nextShort = meta.next_update ? jaMonthEndShort(meta.next_update) : '';
+      document.getElementById('kpiCountSub').textContent =
+        '公表済み' + (c.posted != null ? c.posted : '—') + '社・' + nextShort + '公表予定' + (c.not_yet != null ? c.not_yet : '—') + '社・未確認' + (c.not_found != null ? c.not_found : '—') + '社（全' + (c.total != null ? c.total : '—') + '社中）';
+      // 일본 회계연도 분기 표기(基準時点 2025年度 4Q). 실제 날짜(2026年3月31日)는 title 툴팁으로만.
+      var perEl = document.getElementById('kpiPeriod');
+      perEl.textContent = meta.as_of ? jaFiscalQuarter(meta.as_of) : '—';
+      perEl.title = (meta.as_of_label_ja || (meta.as_of ? jaDateFlexible(meta.as_of) : '—')) + '（公表済み分）';
       var nextLabel = meta.next_update ? jaMonthEnd(meta.next_update) : '順次';
       document.getElementById('noteLine').textContent =
         '各社の経済価値ベースのソルベンシー比率(ESR)は' + nextLabel + 'までに全社反映予定です。';
-      // owner 2026-09-12 정정: 날짜 표기 대신 일본 회계연도 분기 표기(基準時点 2025年度 4Q).
-      // 실제 날짜(2026年3月31日)는 title 툴팁으로만 — jp/jesr.html 상단과 동일 원칙.
-      var fq = meta.as_of ? jaFiscalQuarter(meta.as_of) : '—';
-      var asOfLineEl = document.getElementById('asOfLine');
-      asOfLineEl.textContent = '基準時点 ' + fq + '（公表済み分）';
-      asOfLineEl.title = (meta.as_of_label_ja || (meta.as_of ? jaDateFlexible(meta.as_of) : '—'));
     }
 
     // 2026-09-12: ECharts 가로막대 폐기, 루트 index.html 877~948행 renderList() 패턴으로 교체
@@ -878,8 +911,13 @@
       var el = document.getElementById('esrList'+cap(key));
       if(!el) return;
       var full = groupData[key];
-      var list = (expanded[key] || full.length<=FOLD) ? full : full.slice(0, FOLD);
+      var list = (expanded[key] || full.length<=RANK_FOLD) ? full : full.slice(0, RANK_FOLD);
       el.innerHTML = '';
+      if(!list.length){
+        el.innerHTML = '<div class="jp-err">該当する会社がありません。</div>';
+        el.setAttribute('aria-label', 'ESRランキング（'+GROUP_LABEL[key]+'）。該当する会社がありません。');
+        return;
+      }
 
       var maxV = 1;
       list.forEach(function(r){ maxV = Math.max(maxV, r.esr_pct||0); });

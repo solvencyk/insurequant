@@ -48,11 +48,14 @@
   <header>
     <div class="header-row">
       <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">会社別ESR詳細</span></a>
-      <nav class="lang-switch" aria-label="言語切替 / 언어 선택">
-        <span class="lang-current" aria-current="page">日本語</span>
-        <span class="lang-sep" aria-hidden="true">|</span>
-        <a href="../K-ICS.html" lang="ko">한국어</a>
-      </nav>
+      <div class="country-sw">
+        <label for="countrySel">国</label>
+        <select id="countrySel" class="select" aria-label="国 / 국가">
+          <option value="" selected>🇯🇵 Japan</option>
+          <option value="../K-ICS.html" lang="ko">🇰🇷 Korea</option>
+        </select>
+      </div>
+      <script>(function(){var s=document.getElementById("countrySel");s.addEventListener("change",function(){if(s.value)location.href=s.value;});window.addEventListener("pageshow",function(){s.value="";});})();</script>
     </div>
     <!-- 한국 K-ICS | IFRS17 | 기타공시 와 같은 3탭(owner 2026-09-13). href 는 jesr_app.js 가 ?company= 를 붙여 동기화. -->
     <div class="header-row"><div class="tabs jp-tabs" role="navigation" aria-label="会社別ページ">
