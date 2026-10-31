@@ -84,7 +84,7 @@
       <p class="jp-err">該当する会社がありません。上の「会社」から選択してください。</p>
     </section>
 
-    <section class="panel" aria-labelledby="secJgaapHead" id="secHeadlineWrap">
+    <section class="panel" aria-labelledby="secJgaapHead" data-share-section="主要指標（当期）" id="secHeadlineWrap">
       <h2 id="secJgaapHead">主要指標（当期）</h2>
       <div class="card-row" id="jgaapCards"></div>
     </section>
@@ -100,7 +100,7 @@
     </section>
 
     <!-- 貸借対照表 T자형 (IFRS17.html Panel 1 미러, owner 2026-09-13). 데이터 = c.bs.tree (bs 층, inbox/jp 20260913T1300Z). -->
-    <section class="panel" aria-labelledby="secBs" id="secBsWrap" hidden>
+    <section class="panel" aria-labelledby="secBs" data-share-section="貸借対照表" id="secBsWrap" hidden>
       <h2 id="secBs">貸借対照表（資産 ＝ 負債 ＋ 純資産） <span class="repro-badge" id="bsBadge" style="display:none"></span></h2>
       <p class="axes-note" id="bsCap"></p>
       <div class="bs-t" id="bsT">
@@ -133,7 +133,7 @@
       </div>
       <p class="small-muted" id="bsNote" style="margin-top:6px">※ 単位 億円（百万円はツールチップ）。「その他」は合計から表示行を差し引いた残差です。</p>
     </section>
-    <section class="panel" aria-labelledby="secProfit" id="secProfitWrap">
+    <section class="panel" aria-labelledby="secProfit" data-share-section="損益の内訳" id="secProfitWrap">
       <h2 id="secProfit">損益の内訳</h2>
       <div id="profitNotExtracted" class="empty-note" hidden>本編未取得のため、損益の内訳はまだ表示できません。</div>
       <div id="profitBody" hidden>
@@ -161,7 +161,7 @@
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="secProfitability" id="secProfitabilityWrap" hidden>
+    <section class="panel" aria-labelledby="secProfitability" data-share-section="収益性指標" id="secProfitabilityWrap" hidden>
       <h2 id="secProfitability">収益性指標 <span class="repro-badge" id="combinedBadge" style="display:none"></span></h2>
       <div class="card-row" id="ratioCards"></div>
       <div id="historyChartWrap" style="margin-top:14px"></div>
@@ -189,7 +189,7 @@
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="secReserves" id="secReservesWrap" hidden>
+    <section class="panel" aria-labelledby="secReserves" data-share-section="準備金" id="secReservesWrap" hidden>
       <h2 id="secReserves">準備金</h2>
       <p class="axes-note">保険業法上の準備金(異常危険準備金・普通責任準備金等)。金融庁2026年モニタリングの論点(異常危険準備金の積立水準)に対応する項目です。</p>
       <div class="table-container"><table class="esr-table"><thead><tr><th scope="col">項目</th><th scope="col" class="num">値</th></tr></thead><tbody id="reservesTableBody"></tbody></table></div>
