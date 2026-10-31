@@ -255,7 +255,7 @@
     </section>
 
     <!-- 適格資本を収録した会社(2026-10-31 owner): デスクトップ=RecSplit 地図 / スマートフォン=ランキング表。業種ドロップダウンは下の未収録社にも効く。 -->
-    <section class="panel" aria-labelledby="secMap">
+    <section class="panel" aria-labelledby="secMap" data-share-section="ESRマップ・ランキング">
       <h2 id="secMap"><span class="only-desk">ESRマップ</span><span class="only-mob">ESRランキング</span><span class="rank-group-count" id="rankCountA"></span></h2>
       <p>経済価値ベースのソルベンシー比率(ESR)。適格資本の金額を収録した会社です。色は金融庁の監督基準(100%)を上回るほど濃い緑、下回るほど濃い赤で示します。会社を選ぶと会社別の詳細（適格資本・所要資本・損益・収益性指標）に移動します。</p>
       <div class="rank-controls">
@@ -287,7 +287,7 @@
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="secRanking">
+    <section class="panel" aria-labelledby="secRanking" data-share-section="ESRランキング（適格資本の未収録社）">
       <h2 id="secRanking">ESRランキング（適格資本の未収録社）<span class="rank-group-count" id="rankCountB"></span></h2>
       <p>適格資本の金額をまだ収録できていない会社のランキングです（デスクトップ・スマートフォン共通）。上の業種選択が適用されます。行を選ぶと会社別の詳細に移動します。</p>
       <div id="esrListB" class="map-list" aria-label="ESRランキング(適格資本未収録社、読み込み中)"></div>
@@ -311,7 +311,7 @@
          合算率のある損保会社を一覧化。ESR未公表(census not_yet)の会社もここでは表示対象 — jesr_esr.json
          のランキングに載らない会社(規制ESR様式が未着手でも決算・損害率は先に収録済みの会社)への唯一の
          入口になる(inbox 20260914 owner 발주)。データは jesr_detail.json(loadDetailMap が読み込む)。 -->
-    <section class="panel" aria-labelledby="secLossRatio">
+    <section class="panel" aria-labelledby="secLossRatio" data-share-section="損害率一覧（損保）">
       <h2 id="secLossRatio">損害率一覧（損保）</h2>
       <p>各社の正味損害率・正味事業費率・合算率（当期）。棒の長さが合算率、内側の2色がその内訳です。ESRの規制様式がまだ無い会社もここでは表示します。行を選ぶと会社別の「決算」詳細に移動します。</p>
 
