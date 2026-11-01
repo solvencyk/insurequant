@@ -169,11 +169,20 @@ header .header-row{ padding-right:40px; }
 }
 .theme-toggle:hover{ border-color:var(--primary); color:var(--primary); }
 
+/* 국가 선택(한국/일본) — 헤더 우상단. theme.js 가 변경 이동을 맡고, 마크업은 6페이지 <header> 에 있다(jp/ 쪽 .country-sw 와 같은 모양).
+   공유·테마 토글은 헤더 세로 가운데라 겹치지 않게 맨 윗줄(브랜드 줄) 오른쪽 끝에 둔다. */
+.country-sw{ position:absolute; top:5px; right:16px; display:flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); }
+.country-sw .select{ padding:2px 6px; font-size:13px; min-width:0; }
+/* 국가 선택이 맨 윗줄 오른쪽을 쓰므로 공유·테마 버튼은 세로 가운데에서 11px 아래로 내려 짧은 헤더(index·compare·privacy)에서도 안 겹친다.
+   좁은 화면에서는 브랜드(와 부제) 줄바꿈이 국가 선택 밑으로 들어가지 않게 그 폭만큼 비운다. */
+header .theme-toggle, header .iq-share{ top:calc(50% + 11px); }
+@media (max-width:480px){ header .brand{ display:inline-block; max-width:100%; box-sizing:border-box; padding-right:126px; } }
+
 /* 공유 메뉴 (theme.js 가 header 끝에 붙인다, owner 2026-10-08): 테마 토글 왼쪽(right 16px + 30px + 간격 8px).
    header.has-share 일 때만 .header-row 오른쪽 여백을 늘려 탭·다운로드 버튼과 안 겹치게 한다(jp/ 는 해당 없음). */
 header.has-share .header-row{ padding-right:84px; }
 /* 좁은 화면에서는 브랜드(와 부제)가 줄바꿈되며 가운데 놓인 공유 버튼 밑으로 들어가므로 같은 폭만큼 비운다. */
-@media (max-width:480px){ header.has-share .brand{ display:inline-block; max-width:100%; box-sizing:border-box; padding-right:84px; } }
+@media (max-width:480px){ header.has-share .brand{ display:inline-block; max-width:100%; box-sizing:border-box; padding-right:126px; } }
 .iq-share{ position:absolute; top:50%; right:54px; transform:translateY(-50%); }
 .iq-share-btn{
   width:30px; height:30px; padding:0; display:inline-flex; align-items:center; justify-content:center;

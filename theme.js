@@ -600,7 +600,7 @@
     var ch = chart(), cs = getComputedStyle(document.body), bg = cs.backgroundColor;
     if(!bg || bg === 'transparent' || /rgba\(0, 0, 0, 0\)/.test(bg)) bg = ch.bg;
     var fam = cs.fontFamily, cx = document.createElement('canvas').getContext('2d'), info = shCtx();
-    var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-sec-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.iq-help', '.iq-anon-link']
+    var ign = ['.iq-report-fab', '.iq-secnav-fab', '.iq-secnav-sheet', '.iq-share', '.iq-sec-share', '.iq-toast', '.iq-modal-backdrop', '.theme-toggle', '.country-sw', '.iq-help', '.iq-anon-link']
       .concat(cfg.ignore || []).join(',');
     var rect = target.getBoundingClientRect(), cw0 = Math.ceil(rect.width), bodyH = Math.ceil(Math.max(rect.height, target.scrollHeight));
     /* 섹션 이미지: 가로로 스크롤되는 표는 그 폭만큼 이미지를 넓혀 오른쪽 열까지 담는다(넓은 화면).
@@ -920,6 +920,13 @@
     "메리츠화재":"#E60012", "메리츠화재해상보험":"#E60012",
     "롯데손해보험":"#DA291C"
   };
+
+  /* 국가 선택(한국/일본, 헤더 .country-sw): 고르면 해당 사이트로 이동. 뒤로가기로 돌아오면 현재 나라로 되돌린다. */
+  document.addEventListener('change', function(e){
+    var s = e.target; if(!s || s.id !== 'countrySel') return;
+    if(s.value) location.href = s.value;
+  });
+  window.addEventListener('pageshow', function(){ var s = document.getElementById('countrySel'); if(s) s.value = ''; });
 
   window.IQTheme={ isDark:function(){ return effective()==='dark'; }, current:effective, set:set, toggle:toggle,
                    chart:chart, applyChartJs:applyChartJs, echartsTooltip:echartsTooltip,
