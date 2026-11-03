@@ -64,12 +64,24 @@
         <a href="jgaap.html" class="tab" data-page="jgaap" aria-current="page">決算</a>
         <a href="disclosure.html" class="tab" data-page="disclosure">その他開示</a>
       </div>
-      <div class="back-row" style="padding:0"><a href="index.html">&larr; ESRランキング</a></div></div>
+      <div class="back-row" style="padding:0"><a href="index.html">&larr; ESRランキング</a></div>
+      <button id="downloadMasterBtn" type="button" class="download-cta" data-state="none">⬇ <span class="dl-full">表データのダウンロード(.xlsx)</span><span class="dl-short">ダウンロード(xlsx)</span></button></div>
   </header>
 
-  <main class="container" id="mainRoot">
+  <main class="container has-section-nav" id="mainRoot">
+    <nav class="section-nav" aria-label="このページのセクション">
+      <ul>
+        <li><a href="#secPickerWrap">会社選択</a></li>
+        <li><a href="#secHeadlineWrap">主要指標（当期）</a></li>
+        <li><a href="#secBsWrap">貸借対照表</a></li>
+        <li><a href="#secProfitWrap">損益の内訳</a></li>
+        <li><a href="#secProfitabilityWrap">収益性指標</a></li>
+        <li><a href="#secReservesWrap">準備金</a></li>
+      </ul>
+    </nav>
+    <div class="section-body">
 
-    <section class="panel" aria-labelledby="secPicker">
+    <section class="panel" aria-labelledby="secPicker" id="secPickerWrap">
       <h2 id="secPicker">会社選択</h2>
       <div class="picker-row">
         <label for="companySelect">会社</label>
@@ -195,6 +207,7 @@
       <div class="table-container"><table class="esr-table"><thead><tr><th scope="col">項目</th><th scope="col" class="num">値</th></tr></thead><tbody id="reservesTableBody"></tbody></table></div>
     </section>
 
+    </div>
   </main>
 
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
@@ -206,6 +219,7 @@
   <script src="jesr_app.js"></script>
   <!-- 오류제보 팝업(일본어). 백엔드는 루트 forms-config.js(같은 Apps Script)를 그대로 재사용, sheet 값에 JP: 접두. -->
   <script src="../forms-config.js"></script>
+  <script src="jp-download.js"></script>
   <script src="report-widget.ja.js" data-sheet-hint="jesr_detail"></script>
 </body>
 </html>

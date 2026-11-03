@@ -63,7 +63,8 @@
         <a href="jgaap.html" class="tab" data-page="jgaap">決算</a>
         <a href="disclosure.html" class="tab" data-page="disclosure" aria-current="page">その他開示</a>
       </div>
-      <div class="back-row" style="padding:0"><a href="index.html">&larr; ESRランキング</a></div></div>
+      <div class="back-row" style="padding:0"><a href="index.html">&larr; ESRランキング</a></div>
+      <button id="downloadMasterBtn" type="button" class="download-cta" data-state="none">⬇ <span class="dl-full">表データのダウンロード(.xlsx)</span><span class="dl-short">ダウンロード(xlsx)</span></button></div>
   </header>
 
   <main class="container" id="mainRoot">
@@ -125,6 +126,7 @@
   <script src="jesr_app.js"></script>
   <!-- 오류제보 팝업(일본어). 백엔드는 루트 forms-config.js(같은 Apps Script)를 그대로 재사용, sheet 값에 JP: 접두. -->
   <script src="../forms-config.js"></script>
+  <script src="jp-download.js"></script>
   <script src="report-widget.ja.js" data-sheet-hint="jesr_detail"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
   "_meta": {
     "as_of": "2026-03-31",
     "as_of_label_ja": "2026年3月31日",
-    "generated_at": "2026-10-30T14:36:45Z",
+    "generated_at": "2026-11-03T05:37:23Z",
     "built_from": [
       "fy2025_esr_census_20260912.csv",
       "jesr_sources_2026Q1.csv"
@@ -10,9 +10,9 @@
     "next_update": "2026-10-31",
     "census": {
       "total": 79,
-      "posted": 71,
-      "not_yet": 7,
-      "not_found": 1
+      "posted": 73,
+      "not_yet": 6,
+      "not_found": 0
     },
     "excluded_subsidiaries": [],
     "group_children": {
@@ -108,6 +108,29 @@
     }
   },
   "records": [
+    {
+      "company_jp": "ヤマップネイチャランス損害保険",
+      "company_en": "Yamap",
+      "ticker": null,
+      "sector": "nonlife",
+      "category": "子会社",
+      "scope": "solo",
+      "esr_pct": 812.4,
+      "basis": "regulatory_standard",
+      "as_of": "2026-03-31",
+      "preliminary": false,
+      "total_assets_bn_jpy": null,
+      "target_pct": null,
+      "doc_type": "ディスクロージャー資料2026(ヤマップネイチャランス損害保険の改訂版, 52p; PDF作成2026-10-28)",
+      "doc_date": "2026-10-28",
+      "source_url": "https://storage.googleapis.com/studio-design-asset-files/projects/VGOKD757qn/s-1x1_324f97ce-8dc8-445c-8cdb-97bf6ee1740c.pdf",
+      "notes": "단체 ESR 812.4% (적격자본 361 / 소요자본 44, 백만엔, 2026-03-31, 표준식). PDF p42 요약, p43 적격자본 구성, p44 소요자본 구성, p45-46 EBS, p49 보험부채 조정, p50 민감도(주식·부동산 -10%만 인쇄, 나머지는 발행사가 1%p 미만으로 생략). 회사 전자공고 페이지(/publicnotice)가 링크한 개정판(52p)에서 확인. 구판(43p, image.yamap.co.jp/19fb5e1df2138d.pdf)은 ESR 미기재라 대체됨. 출처 PDF 호스트가 회사 도메인이 아니라 storage.googleapis.com(Studio.Design CMS 자산) — 회사 도메인 동일 문서 여부는 owner 결정 대기. 종전 not_found 근거: 2026-07-31판(43p)에는 ESR 칸이 대시이고 '2026年10月末までに別途開示予定' 가 명시돼 있었다. 免許取得 2024-05-21(p.9 서술), 告示74号 인용 p47, 2026-09 신주발행(2억엔)은 후발사건이라 미반영(p48). [2026-11-03 편입: 종전 not_found 대체]",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
+      "target_range": null
+    },
     {
       "company_jp": "au損害保険",
       "company_en": "au Non-Life",
@@ -754,6 +777,29 @@
       "doc_date": "2026-10-29",
       "source_url": "https://www.tmn-anshin.co.jp/company/corp/report/disclosure/pdf/gnj_2026_03.pdf",
       "notes": "자사 사이트 존재 확인되나 ESR 개별 공시 미확인(검색상 ESR 제도 일반설명만 검출) [2026-10-30 편입(10월 말 재조회, 증거 J-ESR/fy2025_esr_resweep_20261030.json)] 신기준 확정 235.1% (적격자본·소요자본 구성표 포함, 증거: Opened PDF (10pp), HTTP Last-Modified 2026-10-29, linked from the company disclosure-document page. p2: 適格資本 1,355,176 / 所要資本 576,361 (JPY mn) = 235.1% (solo, 単)",
+      "value_verified": {
+        "state": "verified",
+        "reason": null
+      },
+      "target_range": null
+    },
+    {
+      "company_jp": "アフラック生命保険",
+      "company_en": "Aflac Life Japan",
+      "ticker": null,
+      "sector": "life",
+      "category": "外資子会社",
+      "scope": "solo",
+      "esr_pct": 230.0,
+      "basis": "regulatory_standard",
+      "as_of": "2026-03-31",
+      "preliminary": false,
+      "total_assets_bn_jpy": null,
+      "target_pct": null,
+      "doc_type": "統合報告書2026 データ編(ソルベンシー・マージン比率 単体 印刷頁23-29 / 連結 印刷頁78-84, 92p)",
+      "doc_date": null,
+      "source_url": "https://www.aflac.co.jp/static/corp/profile/disclosure/pdf/2026_data.pdf",
+      "notes": "단체 ESR 230.0% (적격자본 4,823,912 / 소요자본 税効果考慮後 2,097,048, 백만엔, 2026-03-31). PDF 쪽수(=인쇄 쪽수+1) p24 요약, p25 소요자본 구성, p26 EBS, p29 민감도(8열 전부 인쇄). 연결 표(p79-85)도 230.0%. 전기(2025-03) 칸은 대시(신기준 첫해); 구기준 FY2024 SMR 973.3%는 별개 지표(회사 하이라이트 페이지 병기). 내부모델·USP 미사용(p30 서술에 언급 없음). 모회사(Aflac Inc.) IR의 227%/243%(USP 포함)는 이 회사의 공시가 아니므로 사용하지 않음. Python 요청은 403이라 소유자가 브라우저로 받은 PDF(2026-11-03, sha256 6da88015...)를 J-ESR/local_source_pdfs.json 로 등재해 검증. [2026-11-03 편입: 구 notes(FY2026年3月期にESR初回報告を予定 → 미공시) 대체]",
       "value_verified": {
         "state": "verified",
         "reason": null

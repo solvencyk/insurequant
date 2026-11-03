@@ -325,7 +325,12 @@
     // セクション画像: 横スクロールする表はその幅だけ画像を広げて右の列まで収める(広い画面のみ)。
     var extra = 0, phone = coarse || document.documentElement.clientWidth < 520;
     if (o.widen && !phone) [].forEach.call(target.querySelectorAll(".table-container, .table-wrap"), function (t) { extra = Math.max(extra, Math.ceil(t.scrollWidth - t.clientWidth)); });
-    var cw = cw0 + extra;
+    // セクション一覧(.section-nav)が左の列にあるページ(幅1080px以上): 一覧は画像に入れず隠すので、本文の左端から切り出して左に空白の列を作らない。
+    var cropX = 0, nv = target.querySelector(":scope > .section-nav"), sbd = target.querySelector(":scope > .section-body");
+    if (nv && sbd && getComputedStyle(nv).position === "sticky" && nv.offsetWidth < rect.width / 2) {
+      cropX = Math.max(0, Math.round(sbd.getBoundingClientRect().left - rect.left - (parseFloat(getComputedStyle(target).paddingLeft) || 0)));
+    }
+    var cw = cw0 + extra - cropX;
     var PAD = (o.pad != null) ? o.pad : 12, W = cw + PAD * 2, narrow = W < 520, LH = 17;
     cx.font = "700 15px " + fam;
     var head = [info.page, o.title, info.company].filter(Boolean).join(" · ") || "InsureQuant";
@@ -376,6 +381,7 @@
       }
     };
     opt.width = cw;
+    if (cropX) opt.x = Math.round(rect.left + (window.pageXOffset || 0)) + cropX;
     if (plan.cropH) opt.height = plan.cropH;
     var settle = Promise.resolve(document.fonts && document.fonts.ready).then(function () { return new Promise(function (r) { setTimeout(r, o.settle || 1200); }); });
     return settle.then(function () { return window.html2canvas(target, opt); }).then(function (cv) {

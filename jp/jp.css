@@ -147,3 +147,73 @@
   .bs-l2-row{grid-template-columns:1fr;gap:2px}
   .bs-l2-val{text-align:left}
 }
+
+/* ===== セクション一覧(2026-11-03): 共有 common.css の .section-nav / theme.js の syncSectionNav・FAB をそのまま使う。
+   共有資産は韓国サイトと同じファイルで韓国語の文言が固定されているため、見える文字だけここで日本語に差し替える。
+   (aria-label 属性は CSS では変えられない) ===== */
+.section-nav a.is-na::after{content:"未収録"}
+/* 読み込み失敗時は jesr_app.js が main の中身を差し替える → 186px の列に押し込まず全幅に */
+.container.has-section-nav > .jp-err{grid-column:1 / -1}
+/* 画面で見える FAB 内の韓国語(シート見出し・「未開示」札)を CSS だけで置換 */
+.iq-secnav-title{font-size:0}
+.iq-secnav-title::before{content:"セクション一覧";font-size:11px}
+.iq-secnav-item.is-na small{display:none}
+.iq-secnav-item.is-na::after{content:"未収録";flex:0 0 auto;padding:1px 6px;border:1px solid var(--border);border-radius:var(--r-pill);font-size:10px;font-weight:500;white-space:nowrap}
+/* jp の「誤りを報告」FAB(report-widget.ja.js)は <html> に iq-has-report-fab を付けない → セクション FAB が真上に重なる。
+   全 jp ページに誤り報告 FAB があるので、積み上げ位置を常時その分だけ上げる。 */
+:root{--iq-secfab-b:calc(var(--iq-fab-base) + 56px)}
+/* ページ全体スクリーンショット中は一覧を隠す(韓国 theme.js と同じ。削除でなく visibility で、格子の1列目を保って幅を変えない) */
+[data-iq-shot-root] .section-nav{visibility:hidden}
+
+/* ---- ダウンロード申請ゲート(jp-download.js, 2026-11-03) ----
+   状態ドットとコード枠だけ。モーダル・入力・ボタンは共有 common.css の .iq-modal-* .iq-field .iq-input .iq-btn を使う。
+   jp.css を読まない index.html には jp-download.js が同じ規則を注入する(--iqjp-css で判定)。 */
+:root{--iqjp-css:1}
+#downloadMasterBtn .iqjp-dot{display:none;position:relative;width:12px;height:12px;margin-left:6px;vertical-align:-1px;border-radius:50%;box-sizing:border-box;border:2px solid var(--on-primary)}
+#downloadMasterBtn[data-state="pending"] .iqjp-dot{display:inline-block;background:var(--warn)}
+#downloadMasterBtn[data-state="approved"] .iqjp-dot{display:inline-block;width:15px;height:15px;background:var(--pos)}
+#downloadMasterBtn[data-state="approved"] .iqjp-dot::after{content:"";position:absolute;left:50%;top:46%;width:3px;height:6px;border:solid var(--on-primary);border-width:0 2px 2px 0;transform:translate(-50%,-62%) rotate(45deg)}
+.iqjp-modal #iqjpdl-form{display:flex;flex-direction:column;flex:1;min-height:0}
+.iqjp-modal a{color:var(--primary)}
+.iqjp-consent{margin-bottom:var(--sp-3)}
+.iqjp-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.iqjp-note{margin-top:6px;line-height:1.5}
+.iqjp-restore{margin:0 0 var(--sp-3)}
+.iqjp-restore-form{margin-top:var(--sp-2);padding:var(--sp-3);border:1px dashed var(--border);border-radius:var(--r-sm)}
+.iqjp-restore-form .iq-field{margin-bottom:var(--sp-2)}
+.iqjp-restore-form[hidden],.iqjp-forget-ask[hidden]{display:none}
+.iqjp-state{margin:0 0 var(--sp-2);font-size:14px;font-weight:700;color:var(--text)}
+.iqjp-note-line{margin:0 0 var(--sp-3)}
+.iqjp-note-line:empty{display:none}
+.iqjp-body{margin:0 0 var(--sp-3);font-size:14px;line-height:1.7;color:var(--text)}
+.iqjp-codebox{margin:0 0 var(--sp-3)}
+.iqjp-code-label{margin-bottom:var(--sp-1);font-size:13px;font-weight:600;color:var(--text)}
+.iqjp-code-row{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap}
+.iqjp-code{flex:1 1 220px;min-width:0;box-sizing:border-box;padding:8px 10px;border:1px solid var(--control-border);border-radius:var(--r-md);background:var(--card);color:var(--text);font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;font-size:13px;letter-spacing:.02em;user-select:all;overflow-wrap:anywhere}
+.iqjp-code-big{font-size:15px;font-weight:700;border:2px solid var(--warn)}
+.iqjp-modal .iq-btn.iqjp-copy{width:auto;flex:0 0 auto;padding:8px 14px}
+.iqjp-warn{margin:0 0 var(--sp-3);padding:var(--sp-2) var(--sp-3);border-left:4px solid var(--warn);background:var(--card);color:var(--text);font-size:13px;font-weight:700}
+.iqjp-actions{display:flex;gap:var(--sp-2);flex-wrap:wrap}
+.iqjp-actions .iq-btn{flex:1 1 120px;width:auto}
+.iqjp-actions .iq-btn:first-child{flex:2 1 170px}
+.iqjp-forget{margin-top:var(--sp-3);text-align:center}
+.iqjp-forget-ask{margin-top:var(--sp-2);text-align:left}
+@media (max-width:640px){
+#downloadMasterBtn{min-height:44px}
+#downloadMasterBtn .iqjp-dot{width:10px;height:10px;margin-left:4px}
+#downloadMasterBtn[data-state="approved"] .iqjp-dot{width:13px;height:13px}
+.iqjp-modal .iq-btn,.iqjp-modal .iq-select,.iqjp-modal .iq-input{min-height:44px}
+.iqjp-modal .iq-modal-close{min-width:44px;min-height:44px}
+.iqjp-modal .iq-check-row{min-height:44px;align-items:center}
+.iqjp-modal .iqjp-link{min-height:44px;display:inline-flex;align-items:center}
+.iqjp-code{font-size:12px}
+}
+
+/* 詳細3ページ: ヘッダー行の並び(戻るリンクを右寄せ、モバイルではタブを1行目、戻るリンクとボタンを2行目に) */
+.header-row > .back-row{margin-left:auto}
+@media (max-width:640px){
+.header-row:has(> .back-row){flex-wrap:wrap}
+.header-row:has(> .back-row) > .tabs{flex:0 0 100%}
+.header-row > .back-row{margin-left:0}
+.header-row > #downloadMasterBtn{margin-left:auto}
+}
