@@ -191,7 +191,7 @@
   var DATA = null, META = null, ENTRIES = [], profitWaterfallChart = null;
   var CURRENT = null;   // 마지막으로 그린 entry — 테마 전환 시 그대로 다시 그린다
   var TH = window.IQTheme ? IQTheme.chart() : { text:'#212529', muted:'#6c757d', ink:'#495057', bg:'#fff', grid:'#e9ecef' };
-  var TOGGLE_IDS = ['secCapitalWrap','secSensWrap','secBsWrap','secProfitWrap','secProfitabilityWrap','secReservesWrap','secReinsWrap','secAxesWrap'];
+  var TOGGLE_IDS = ['secCapitalWrap','secCapLimitsWrap','secSensWrap','secDurWrap','secBsWrap','secProfitWrap','secProfitabilityWrap','secReservesWrap','secReinsWrap','secAxesWrap'];
 
   Promise.all([loadDetail(), loadEsr()]).then(function(res){ boot(res[0], res[1]); }).catch(function(err){
     document.getElementById('mainRoot').innerHTML =
@@ -250,6 +250,7 @@
     // 다크/라이트 전환: 표·SVG 는 CSS 변수라 자동, ECharts 워터폴 2개의 잉크·격자 색만 다시 읽어 재렌더.
     window.addEventListener('iq:themechange', function(){
       if(window.IQTheme) TH = IQTheme.chart();
+      if(window.IQTheme && window.Chart && IQTheme.applyChartJs) IQTheme.applyChartJs(window.Chart);   // 한국 K-ICS.html 과 같은 시점
       if(CURRENT) selectEntry(CURRENT, false);
     });
   }
@@ -264,6 +265,7 @@
   }
 
   function showNotFound(){
+    clDestroyCharts();
     setHidden('notFoundPanelWrap', false);
     setHidden('secHeadlineWrap', true);
     setHidden('noticePanelWrap', true);
@@ -282,6 +284,8 @@
 
   function selectEntry(e, pushUrl){
     CURRENT = e;
+    clDestroyCharts();   // 회사·테마를 바꿀 때마다 이전 도넛 인스턴스를 먼저 정리(누수 방지)
+    ['capLimitsWrap', 'durApproxWrap'].forEach(function(id){ var h = byId(id); if(h) h.innerHTML = ''; });   // ESR 층이 없는 회사로 바꿔도 숨은 패널에 이전 회사의 캔버스가 남지 않게
     setHidden('notFoundPanelWrap', true);
     setHidden('secHeadlineWrap', false);
     var sel = document.getElementById('companySelect');
@@ -312,7 +316,7 @@
       setHidden('noticePanelWrap', ratioOnly ? true : (PAGE === 'esr' ? hasEsr : true));
       setHidden('noDetailNote', true);
       renderScopeNote(c, ratioOnly);
-      ['secCapitalWrap','secSensWrap'].forEach(function(id){ setHidden(id, !hasEsr); });
+      ['secCapitalWrap','secCapLimitsWrap','secSensWrap','secDurWrap'].forEach(function(id){ setHidden(id, !hasEsr); });
       // 損益の内訳: 2026-09-14 까지는 ratio_only 에 PL 이 아예 없어서 "ratio_only면 무조건 숨김"이
       // 맞았지만, 2026-09-15 에 법정 損益計算書를 실으면서 그 전제가 깨졌다(19사). 이제는 **실제로
       // PL 항목이 있는지**로 판정한다 — 아직 없는 회사(출처 교체 대기·스캔 PDF)는 종전대로 숨기고
@@ -334,8 +338,13 @@
       if(hasEsr){
         renderCapital(c);
         renderCapReqTable(c);
+        guarded(renderCapLimits, c);
         renderReproBadge(c);
         renderSensitivity(c);
+        guarded(renderDuration, c);
+        guarded(renderSensMatrix, c);
+        // 새로 그린 「?」 팝오버는 오른쪽으로 넘쳐 있다가 theme.js 가 180ms 뒤에 눌러 준다 — 그 사이 모바일 레이아웃 뷰포트가 넓어진 채 남는다. 같은 태스크에서 바로 누른다.
+        if(window.IQTheme && IQTheme.clampHelpPops){ try{ IQTheme.clampHelpPops(); }catch(ex){} }
       }
       renderBs(c);
       if(ratioOnly && !hasPlItems){
@@ -609,6 +618,433 @@
     } else if(emptyNote){
       emptyNote.remove();
     }
+  }
+
+  // ══ 算入上限に対する割合 / 略式実効デュレーション / 感応度の詳細 (2026-11-04, 티켓 20261103T1550Z) ══════════
+  // 데이터: 회사 레코드의 형제 키 capital_limits · duration_approx · sensitivity_levels 와 _meta 의 같은 이름 블록.
+  // 구판 JSON(키 없음)에서는 각 render 가 자기 컨테이너를 비우고 조용히 돌아간다. 기존 표(renderCapReqTable/renderSensitivity)는 건드리지 않는다.
+  // owner 결정 기본값(오케스트레이터, 2026-11-04 위임)은 이 한 곳에 모은다: 대표 지표=Tier2 전체, Tier1 제한은 10%〜15% 범위+상태만,
+  // 100% 초과는 값을 자르지 않고 「100%超」 칩(막대만 자른다), 바스켓 도달은 「上限に到達」 칩, 듀레이션은 면별 상승/하락/평균만(격차 행 없음).
+  var UI_DEFAULTS = { tier1Range: '10%〜15%の範囲', overPct: 100, overChip: '100%超', atCapChip: '上限に到達' };
+  var helpSeq = 0;
+  function helpHtml(paras, label){
+    var list = (paras || []).filter(function(p){ return !!p; });
+    if(!list.length) return '';
+    var id = 'iqhelp' + (++helpSeq);
+    return '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(label || '補足') + '" aria-describedby="' + id + '">?</button>'
+      + '<span class="iq-help-pop" role="tooltip" id="' + id + '">' + list.map(function(p){ return '<span class="hp-line">' + esc(p) + '</span>'; }).join('') + '</span></span>';
+  }
+  function derivedBadge(){ return '<span class="derived-badge">算出値</span>'; }
+  function chipHtml(t){ return '<span class="jp-chip">' + esc(t) + '</span>'; }
+  function caveatJa(block, id){
+    var m = META && META[block]; var t = m && m.caveats_ja && m.caveats_ja[id];
+    return t || null;   // 문구가 아직 없으면 그 팝오버 항목만 조용히 생략
+  }
+  function guarded(fn, c){ try{ fn(c); }catch(ex){ console.error(fn.name + ' failed', ex); } }
+
+  // 시나리오·표 상태 공통 일본어(티켓 지정 문구). duration 의 reason 파싱에도 쓴다.
+  var SCEN_STATUS_JA = {
+    omitted_below_1pp: '発行体が1%未満のため記載を省略',
+    printed_dash: '開示表は―(記載なし)',
+    not_in_source: '該当する表なし',
+    not_extracted: '未収録'
+  };
+  var SCEN_TAG_JA = { omitted_below_1pp: '記載省略', printed_dash: '―(記載なし)', not_in_source: '表なし', not_extracted: '未収録' };
+  // 閾値が1ppでない省略(status_notes[].threshold)は文言の「1%」を実際の閾値に差し替える。
+  function omitText(sl){
+    var th = null;
+    (sl.status_notes || []).forEach(function(n){ if(n && n.status === 'omitted_below_1pp' && n.threshold && n.threshold !== '1pp') th = n.threshold; });
+    var m = th && /^(\d+(?:\.\d+)?)pp$/.exec(th);
+    return m ? '発行体が' + m[1] + '%未満のため記載を省略' : SCEN_STATUS_JA.omitted_below_1pp;
+  }
+
+  // ── P1. 자본성증권 인정한도 소진율 ──────────────────────────────────────────
+  var CL_REC_JA = { not_extracted: '未収録', not_in_source: '開示表なし', not_computable: '算出不可' };
+  var CL_LABEL = { tier1_restricted: 'tier1_instr_restricted', tier2_total: 'tier2_eligible', tier2_unpaid: 'tier2_instr_unpaid', tier2_basket: 'tier2_ni_basket' };
+  var CL_ORDER = ['tier1_restricted', 'tier2_total', 'tier2_unpaid', 'tier2_basket'];
+  var CL_STATE_JA = {
+    tier1_restricted: { not_applicable_no_instrument: '該当なし(開示表は―)', ok_range: UI_DEFAULTS.tier1Range, needs_instrument_data: '証券条件の確認が必要', not_extracted: '未収録', inconsistent_print: '印字が不整合' },
+    tier2_total: { identity_mismatch: '印字が不整合', not_extracted: '未収録', not_computable: '算出不可' },
+    tier2_unpaid: { not_applicable_not_mutual: '該当なし(相互会社のみ)', not_applicable_no_instrument: '該当なし', not_extracted: '未収録', inconsistent_print: '印字が不整合' },
+    tier2_basket: { no_amount: '該当なし', not_extracted: '未収録' }
+  };
+  // 수치를 그리는 상태(그 밖의 상태는 수치 없이 상태 문구만 — 대시는 0% 가 아니다).
+  var CL_NUMERIC = {
+    tier1_restricted: { ok: 1, ok_range: 1, needs_instrument_data: 1 },
+    tier2_total: { ok: 1 },
+    tier2_unpaid: { ok: 1 },
+    tier2_basket: { ok_post_cap_only: 1 }
+  };
+  function articleJa(a){
+    if(!a) return null;
+    var m = /^(\d+)\s*(.*)$/.exec(String(a));
+    return m ? '根拠条文: 告示74号 第' + m[1] + '条' + (m[2] ? ' ' + m[2] : '') : '根拠条文: 告示74号 ' + a;
+  }
+  function clHelpParas(lim){
+    var out = [articleJa(lim && lim.article)];
+    ((lim && lim.caveat_ids) || []).forEach(function(id){ out.push(caveatJa('capital_limits', id)); });
+    return out;
+  }
+  // 한 한도 객체 → 표 한 줄에 쓸 값. pct 는 JSON 의 퍼센트 그대로(자르지 않는다), null 이면 수치 칸은 「―」.
+  function clModel(key, lim, cl){
+    var st = lim.status, numeric = !!(CL_NUMERIC[key] && CL_NUMERIC[key][st]);
+    var m = { amount: null, capLo: null, capHi: null, pct: null, pctLo: null, pctHi: null, state: (CL_STATE_JA[key] && CL_STATE_JA[key][st]) || '', atCap: false };
+    var rs = cl.row_states || {};
+    if(key === 'tier1_restricted'){
+      if(st === 'not_applicable_no_instrument'){
+        if(rs.tier1_instr_restricted === 'printed_zero' || rs.tier2_instr_t1_excess === 'printed_zero'){ m.amount = lim.printed_restricted_post_limit; m.state = '該当なし(開示表は0)'; }
+      } else if(numeric){
+        m.amount = lim.printed_restricted_post_limit;
+        m.capLo = lim.cap_low_amount; m.capHi = lim.cap_high_amount;
+        m.pct = lim.utilization_pct; m.pctLo = lim.utilization_pct_min; m.pctHi = lim.utilization_pct_max;
+      }
+    } else if(key === 'tier2_total'){
+      if(numeric){ m.amount = lim.numerator_E_minus_F; m.capHi = lim.cap_amount; m.pct = lim.utilization_pct; }
+    } else if(key === 'tier2_unpaid'){
+      if(numeric){ m.amount = lim.printed_unpaid_post_limit; m.capHi = lim.cap_amount; m.pct = lim.pct_of_cap; }
+    } else if(key === 'tier2_basket'){
+      if(numeric){ m.amount = lim.printed_basket_post_cap; m.capHi = lim.cap_amount; m.pct = lim.pct_of_cap; m.atCap = lim.at_cap === true; }
+    }
+    return m;
+  }
+  function clCapText(m){
+    if(m.capHi == null) return '―';
+    if(m.capLo != null && m.capLo !== m.capHi) return fmtEok(m.capLo) + '〜' + fmtEok(m.capHi);
+    return fmtEok(m.capHi);
+  }
+  function clBasisJa(key, cl, m){
+    if(key === 'tier2_total') return clBasisTier2Ja(cl);
+    if(key === 'tier2_basket') return '所要資本×15%';
+    if(key === 'tier2_unpaid') return '出資約定額と所要資本×10%の小さい方';
+    if(key === 'tier1_restricted'){
+      if(cl.mutual) return '所要資本×30%';
+      return (m.capLo != null && m.capHi != null && m.capLo !== m.capHi) ? '所要資本×10%〜15%' : '';
+    }
+    return '';
+  }
+  function clBasisTier2Ja(cl){ return cl.mutual ? '所要資本×60%−Tier1制限額' : '所要資本×50%'; }
+  function clIsNumeric(m){ return m.pct != null || (m.pctLo != null && m.pctHi != null); }
+  function clFmt(v, n){ return (v < 0 ? '△' : '') + Math.abs(v).toFixed(n); }
+  function clClamp(v){ return Math.min(Math.max(v, 0), 100); }
+
+  // ── 도넛: 한국 K-ICS.html renderDonut 와 같은 모양 (Chart.js 4.4.0 doughnut, cutout 72%, 가운데 700 28px, 범례 없음) ──
+  // 색: 0~70% 청록 · 70~100% 주황 · 100% 이상 빨강. 호는 100% 에서 자르고 숫자는 자르지 않는다(가운데 「100%超」, 툴팁에 실제 값).
+  var CL_TITLE = '算入上限に対する割合';
+  var clCharts = [];
+  var clDefaultsSet = false;
+  function clDestroyCharts(){
+    clCharts.forEach(function(ch){ try{ ch.destroy(); }catch(ex){} });
+    clCharts = [];
+  }
+  function clChartDefaults(){
+    var C = window.Chart; if(!C) return false;
+    if(!clDefaultsSet){
+      clDefaultsSet = true;
+      var font = "'Pretendard Variable',Pretendard,ui-sans-serif,system-ui,'Segoe UI',sans-serif";
+      C.defaults.font.family = font; C.defaults.font.size = 12;
+      C.defaults.plugins.tooltip.padding = 10; C.defaults.plugins.tooltip.cornerRadius = 6;
+      C.defaults.plugins.tooltip.titleFont = { family: font, size: 12, weight: '600' };
+      C.defaults.plugins.tooltip.bodyFont = { family: font, size: 12 };
+    }
+    if(window.IQTheme && IQTheme.applyChartJs) IQTheme.applyChartJs(C);   // 색은 theme.js 토큰, 테마가 바뀔 때마다 다시 읽는다
+    return true;
+  }
+  function clFillColor(pct){
+    if(pct >= 100) return 'rgba(220, 53, 69, 0.85)';
+    if(pct >= 70) return 'rgba(255, 159, 64, 0.85)';
+    return 'rgba(75, 192, 192, 0.85)';
+  }
+  // 가운데 글자: 단일 값은 소수 1자리(한국은 정수), 100% 초과는 「100%超」. 범위(10%〜15% 등)는 하한〜상한.
+  function clCenterText(sp){
+    if(sp.lo != null) return (sp.lo > UI_DEFAULTS.overPct ? UI_DEFAULTS.overChip : fmtPct1(sp.lo)) + '〜' + (sp.hi > UI_DEFAULTS.overPct ? UI_DEFAULTS.overChip : fmtPct1(sp.hi));
+    return sp.pct > UI_DEFAULTS.overPct ? UI_DEFAULTS.overChip : fmtPct1(sp.pct);
+  }
+  function clDonut(cv, sp){
+    var TH = window.IQTheme ? IQTheme.chart() : { text: '#212529', neg: '#dc3545', border: 'rgba(233, 236, 239, 0.6)' };
+    var isRange = sp.lo != null;
+    var refPct = isRange ? sp.lo : sp.pct;
+    var main = clFillColor(refPct), data, colors;
+    if(isRange){
+      var lo = clClamp(sp.lo), hi = Math.max(lo, clClamp(sp.hi));
+      data = [lo, hi - lo, 100 - hi];
+      colors = [main, main.replace('0.85', '0.35'), TH.border];
+    } else {
+      var fill = clClamp(sp.pct);
+      data = [fill, 100 - fill];
+      colors = [main, TH.border];
+    }
+    var text = clCenterText(sp);
+    var centerColor = refPct >= 100 ? TH.neg : TH.text;
+    var centerPlugin = {
+      id: 'centerText_' + sp.id,
+      afterDraw: function(chart){
+        if(!chart || !chart.chartArea) return;
+        var a = chart.chartArea, ctx = chart.ctx;
+        var cx = (a.left + a.right) / 2, cy = (a.top + a.bottom) / 2;
+        ctx.save();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = centerColor;
+        // 한국과 같은 700 28px. 범위처럼 글자가 길어 안쪽 원(지름의 72%)을 넘을 때만 줄인다.
+        var px = 28;
+        ctx.font = '700 ' + px + 'px ui-sans-serif, system-ui';
+        var inner = Math.min(a.right - a.left, a.bottom - a.top) * 0.72 * 0.88, w = ctx.measureText(text).width;
+        if(w > inner){ px = Math.max(12, Math.floor(px * inner / w)); ctx.font = '700 ' + px + 'px ui-sans-serif, system-ui'; }
+        ctx.fillText(text, cx, cy);
+        ctx.restore();
+      }
+    };
+    var rm = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    return new Chart(cv.getContext('2d'), {
+      type: 'doughnut',
+      data: { labels: isRange ? ['使用(下限)', '使用(上限)', '残余'] : ['使用', '残余'], datasets: [{ data: data, backgroundColor: colors, borderWidth: 0 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '72%',
+        animation: rm ? false : {},
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: function(c){
+            if(isRange){
+              if(c.dataIndex === 0) return ['使用(下限): ' + clFmt(sp.lo, 2) + '%'];
+              if(c.dataIndex === 1) return ['使用(上限): ' + clFmt(sp.hi, 2) + '%'];
+              return ['残余: ' + clFmt(Math.max(0, 100 - sp.hi), 2) + '%〜' + clFmt(Math.max(0, 100 - sp.lo), 2) + '%'];
+            }
+            // 모바일 폭에서 툴팁이 캔버스보다 넓어 잘리지 않게 긴 줄은 둘로 나눈다(한국 K-ICS.html 과 같은 처리).
+            if(c.dataIndex === 0){
+              return sp.pct > UI_DEFAULTS.overPct ? ['使用: ' + UI_DEFAULTS.overChip, '(実際 ' + clFmt(sp.pct, 2) + '%)'] : ['使用: ' + clFmt(sp.pct, 2) + '%'];
+            }
+            return ['残余: ' + clFmt(Math.max(0, 100 - sp.pct), 2) + '%'];
+          } } }
+        }
+      },
+      plugins: [centerPlugin]
+    });
+  }
+
+  // 한 줄 노트(한국 donut-note 처럼 「 | 」 로 잇는다): 수치 있는 한도는 개시액·算入上限(근거), 없는 한도는 상태 문구만.
+  function clNoteLine(k, m, cl){
+    var name = labelOf(META, CL_LABEL[k], k);
+    if(!clIsNumeric(m)){
+      return esc(name) + ': ' + esc(m.state || '未収録') + (m.amount != null ? ' ／ 開示額 ' + esc(fmtEok(m.amount)) + '億円' : '');
+    }
+    var basis = clBasisJa(k, cl, m);
+    return esc(name) + ' ' + esc(m.amount == null ? '―' : fmtEok(m.amount)) + '億円 ／ 算入上限 ' + esc(clCapText(m)) + '億円' + (basis ? '<span class="nw">(' + esc(basis) + ')</span>' : '');
+  }
+
+  function renderCapLimits(c){
+    var panel = byId('secCapLimitsWrap'), host = byId('capLimitsWrap'); if(!host) return;
+    clDestroyCharts();
+    var cl = c.capital_limits;
+    if(!cl || typeof cl !== 'object'){ host.innerHTML = ''; if(panel) panel.hidden = true; return; }   // 구판 JSON(키 없음): 패널째로 숨김
+    var L = cl.limits || {};
+    var fq = c.as_of ? jaFiscalQuarter(c.as_of) : null;
+    var head = byId('secCapLimits');
+    if(head) head.innerHTML = CL_TITLE + derivedBadge() + (fq ? ' <span class="h2-sub">基準時点 ' + esc(fq) + '</span>' : '');
+    if(panel) panel.hidden = false;
+    if((cl.status !== 'ok' && cl.status !== 'partial') || !Object.keys(L).length){
+      host.innerHTML = '<div class="no-data">算入上限に対する割合: ' + esc(CL_REC_JA[cl.status] || '未収録') + '</div>';
+      return;
+    }
+    var haveChart = clChartDefaults();
+    var cells = [], notes = [], specs = [];
+    CL_ORDER.forEach(function(k){
+      var lim = L[k]; if(!lim) return;
+      var m = clModel(k, lim, cl);
+      notes.push(clNoteLine(k, m, cl));
+      if(!clIsNumeric(m)) return;   // 수치가 없는 한도(대시·未収録·該当なし)는 도넛을 그리지 않는다 — 0% 가 아니다
+      var name = labelOf(META, CL_LABEL[k], k);
+      var sp = { id: 'clDonut' + cells.length, key: k };
+      if(m.pct != null) sp.pct = m.pct; else { sp.lo = m.pctLo; sp.hi = m.pctHi; }
+      var top = sp.lo != null ? sp.hi : sp.pct;
+      var chipTxt = [];
+      if(top > UI_DEFAULTS.overPct) chipTxt.push(UI_DEFAULTS.overChip);
+      if(m.atCap) chipTxt.push(UI_DEFAULTS.atCapChip);
+      var sub = (m.state ? esc(m.state) : '') + chipTxt.map(function(t, i){ return (m.state || i ? ' ' : '') + chipHtml(t); }).join('');
+      var valTxt = clCenterText(sp);
+      var aria = CL_TITLE + ': ' + name + ' ' + valTxt + (top > UI_DEFAULTS.overPct ? '(実際 ' + clFmt(top, 1) + '%)' : '') + (chipTxt.length ? '、' + chipTxt.join('、') : '');
+      var body = haveChart
+        ? '<canvas id="' + sp.id + '" role="img" aria-label="' + esc(aria) + '"></canvas>'
+        : '<div class="cl-fallback" role="img" aria-label="' + esc(aria) + '">' + esc(valTxt) + '</div>';
+      cells.push('<div class="donut-cell"><div class="donut-wrap">' + body + '</div>'
+        + '<div class="donut-caption">' + esc(name) + helpHtml(clHelpParas(lim), name + 'の補足') + (sub ? '<span class="sub">' + sub + '</span>' : '') + '</div></div>');
+      specs.push(sp);
+    });
+    var noteHtml = '<div class="donut-note">' + notes.join(' &nbsp;|&nbsp; ') + '</div>';
+    if(!cells.length){
+      var t2 = L.tier2_total || {};
+      host.innerHTML = '<div class="no-data">算入上限に対する割合: ' + esc((CL_STATE_JA.tier2_total && CL_STATE_JA.tier2_total[t2.status]) || '未収録') + '</div>' + noteHtml;
+      return;
+    }
+    host.innerHTML = '<div class="donut-row">' + cells.join('') + '</div>' + noteHtml;
+    if(!haveChart) return;
+    specs.forEach(function(sp){
+      var cv = byId(sp.id); if(!cv) return;
+      try{ clCharts.push(clDonut(cv, sp)); }catch(ex){
+        console.error('donut failed', ex);
+        var fb = document.createElement('div'); fb.className = 'cl-fallback'; fb.setAttribute('role', 'img');
+        fb.setAttribute('aria-label', cv.getAttribute('aria-label') || ''); fb.textContent = clCenterText(sp);
+        if(cv.parentNode) cv.parentNode.replaceChild(fb, cv);
+      }
+    });
+  }
+
+  // ── P2. 略式実効デュレーション ────────────────────────────────────────────
+  var DUR_TOKEN_JA = {
+    v0_nonpositive: '基準額が0以下のため算出せず',
+    dash_in_jpy_up50: '円金利+50bpの列が開示されていないため算出せず',
+    dash_in_jpy_down50: '円金利−50bpの列が開示されていないため算出せず'
+  };
+  var DUR_FLAG_JA = { negative_duration: 'マイナス値', low_precision: '低精度' };
+  var DUR_SIDES = [
+    { key: 'assets', name: '資産(総資産)', caveats: ['assets_total'] },
+    { key: 'liabilities', name: '負債(保険負債、MOCEを除く)', caveats: ['liabilities_ex_moce', 'negative_base'] }
+  ];
+  var DUR_HEAD_CAVEATS = ['convexity', 'economic_value_not_cashflow', 'ufr_parallel'];
+  function durReasonJa(code){
+    if(!code) return '算出せず';
+    var toks = String(code).split(/[,\s]+/).filter(Boolean), out = [];
+    var up = toks.indexOf('dash_in_jpy_up50') >= 0, dn = toks.indexOf('dash_in_jpy_down50') >= 0;
+    toks.forEach(function(t){
+      if(t === 'dash_in_jpy_up50' || t === 'dash_in_jpy_down50') return;
+      var s = DUR_TOKEN_JA[t] || '算出せず';
+      if(out.indexOf(s) < 0) out.push(s);
+    });
+    if(up && dn) out.push('円金利±50bpの列が開示されていないため算出せず');
+    else if(up) out.push(DUR_TOKEN_JA.dash_in_jpy_up50);
+    else if(dn) out.push(DUR_TOKEN_JA.dash_in_jpy_down50);
+    return out.join('／');
+  }
+  // 레코드 수준 reason: "yen +-50bp scenarios not disclosed (up: <상태>, down: <상태>)" 형식 → 일본어
+  function durRecordReasonJa(reason){
+    var m = /up:\s*([a-z0-9_]+)\s*,\s*down:\s*([a-z0-9_]+)/i.exec(String(reason || ''));
+    if(!m) return '円金利±50bpのシナリオが開示されていないため算出せず';
+    var a = SCEN_STATUS_JA[m[1]], b = SCEN_STATUS_JA[m[2]];
+    var tail = (a && b) ? (m[1] === m[2] ? '(' + a + ')' : '(+50bp: ' + a + '／−50bp: ' + b + ')') : '';
+    return '円金利±50bpのシナリオが開示されていないため算出せず' + tail;
+  }
+  // 소수 1자리, 음수는 △. 반올림은 100배 정수에서 하프업(데이터가 소수 2자리라 부동소수 오차를 피한다).
+  function fmtYears(v){
+    if(v == null || !isFinite(v)) return '―';
+    var r = Math.floor((Math.round(Math.abs(v) * 100) + 5) / 10) / 10;
+    return (v < 0 && r > 0 ? '△' : '') + r.toFixed(1);
+  }
+  // 한국 K-ICS.html 의 .dur-strip / .dur-card 와 같은 모양: 면(資産・負債)마다 제목 줄 + 카드 3장(金利上昇時・金利低下時・平均, 平均 이 .lead).
+  var DUR_LABELS = ['金利上昇時', '金利低下時', '平均'];
+  function renderDuration(c){
+    var panel = byId('secDurWrap'), host = byId('durApproxWrap'); if(!host) return;
+    var da = c.duration_approx;
+    if(!da || typeof da !== 'object'){ host.innerHTML = ''; if(panel) panel.hidden = true; return; }   // 구판 JSON(키 없음): 패널째로 숨김
+    if(panel) panel.hidden = false;
+    var ids = da.caveat_ids || [];
+    var title = '略式実効デュレーション';
+    var headHelp = helpHtml(DUR_HEAD_CAVEATS.filter(function(id){ return ids.indexOf(id) >= 0; }).map(function(id){ return caveatJa('duration_approx', id); }), title + 'の補足');
+    var head = byId('secDur');
+    var fq = c.as_of ? jaFiscalQuarter(c.as_of) : null;   // 한국 패널과 같은 h2 뒤 기준 시점(없으면 만들지 않는다)
+    if(head){
+      head.innerHTML = esc(title) + derivedBadge() + (fq ? ' <span class="h2-sub">基準時点 ' + esc(fq) + '</span>' : '') + headHelp;
+      head.setAttribute('aria-label', title);   // 접근 가능한 이름에 「?」 팝오버 문구가 섞이지 않게 제목만
+    }
+    if(da.status === 'not_computable'){
+      host.innerHTML = '<div class="no-data">' + esc(durRecordReasonJa(da.reason)) + '</div>';
+      return;
+    }
+    host.innerHTML = DUR_SIDES.map(function(s){
+      var side = da[s.key];
+      var helpIds = s.caveats.filter(function(id){ return ids.indexOf(id) >= 0; });
+      var flags = (side && side.flags) || [];
+      var chips = '', flagHelp = [];
+      flags.forEach(function(f){
+        if(!DUR_FLAG_JA[f]) return;
+        chips += ' ' + chipHtml(DUR_FLAG_JA[f]);
+        flagHelp.push(caveatJa('duration_approx', f));
+      });
+      var h3 = '<h3 class="dur-h3" aria-label="' + esc(s.name + flags.filter(function(f){ return !!DUR_FLAG_JA[f]; }).map(function(f){ return ' ' + DUR_FLAG_JA[f]; }).join('')) + '">' + esc(s.name) + chips
+        + helpHtml(helpIds.map(function(id){ return caveatJa('duration_approx', id); }).concat(flagHelp), s.name + 'の補足') + '</h3>';
+      var vals = side ? [side.d_up, side.d_down, side.d_avg] : [null, null, null];
+      var allNull = vals.every(function(v){ return v == null; });
+      var reason = durReasonJa(side ? side.reason : da.reason);
+      var cards = vals.map(function(v, i){
+        // 값이 없는 칸: 「―」 + 이유(.dur-sub). 세 칸 모두 없으면 같은 이유를 세 번 쓰지 않고 카드 아래 한 줄(.dur-note)로 둔다.
+        var sub = (v == null && !allNull) ? '<div class="dur-sub">' + esc(reason) + '</div>' : '';
+        return '<div class="dur-card' + (i === 2 ? ' lead' : '') + '">'
+          + '<div class="dur-val' + (v == null ? ' is-none' : '') + '">' + esc(fmtYears(v)) + (v == null ? '' : '<span class="u">年</span>') + '</div>'
+          + '<div class="dur-lab">' + DUR_LABELS[i] + '</div>' + sub + '</div>';
+      }).join('');
+      return h3 + '<div class="dur-strip" role="group" aria-label="' + esc(s.name + ' ' + title + '(単位: 年)') + '">' + cards + '</div>'
+        + (allNull ? '<div class="dur-note">' + esc(reason) + '</div>' : '');
+    }).join('');
+  }
+
+  // ── P3. T7 감응도 행렬 ───────────────────────────────────────────────────
+  var smMode = 'delta';   // 'delta'(変化額, 기본) | 'level'(水準) — 회사를 바꿔도 유지
+  var smOpen = false;     // <details> 열림 상태 — 테마 전환 등으로 다시 그려도 유지
+  function smScenarioLabel(sid){ return labelOf(META, 'sens_' + sid + '_esr_pct', sid); }
+  function smCell(rid, v, isDelta){
+    if(v == null || !isFinite(v)) return '―';
+    if(rid === 'esr_pct') return isDelta ? fmtPP(v) : fmtPct1(v);
+    return isDelta ? fmtEokDelta(v, 0) : fmtEok(v);
+  }
+  function smTableHtml(sl){
+    var mm = META && META.sensitivity_levels || {};
+    var order = (mm.scenario_order && mm.scenario_order.length) ? mm.scenario_order : Object.keys(sl.scenarios || {});
+    var rowIds = (mm.row_ids && mm.row_ids.length) ? mm.row_ids : Object.keys(sl.rows || {});
+    rowIds = rowIds.filter(function(r){ return sl.rows && sl.rows[r]; });
+    var isDelta = smMode === 'delta';
+    var th = '<th scope="col" class="sm-row-h">項目</th><th scope="col" class="num">基準</th>';
+    var groups = {};
+    order.forEach(function(sid){
+      var st = (sl.scenarios || {})[sid] || 'not_extracted';
+      var dim = st !== 'disclosed';
+      th += '<th scope="col" class="num' + (dim ? ' sm-dim' : '') + '">' + esc(smScenarioLabel(sid))
+        + (dim ? '<span class="sm-tag">' + esc(SCEN_TAG_JA[st] || '未収録') + '</span>' : '') + '</th>';
+      if(dim){ (groups[st] = groups[st] || []).push(smScenarioLabel(sid)); }
+    });
+    var body = rowIds.map(function(rid){
+      var arr = sl.rows[rid];
+      var tr = '<tr><th scope="row" class="sm-row">' + esc(labelOf(META, rid, rid)) + '</th>'
+        + '<td class="num">' + esc(smCell(rid, arr[0], false)) + '</td>';
+      order.forEach(function(sid, i){
+        var dim = ((sl.scenarios || {})[sid] || 'not_extracted') !== 'disclosed';
+        var v = arr[isDelta ? 2 + 2 * i : 1 + 2 * i];
+        tr += '<td class="num' + (dim ? ' sm-dim' : '') + '">' + esc(dim ? '―' : smCell(rid, v, isDelta)) + '</td>';
+      });
+      return tr + '</tr>';
+    }).join('');
+    var notes = Object.keys(groups).map(function(st){
+      var txt = st === 'omitted_below_1pp' ? omitText(sl) : (SCEN_STATUS_JA[st] || '未収録');
+      return '<div class="donut-note sm-note">' + esc(groups[st].join('・')) + ': ' + esc(txt) + '</div>';
+    }).join('');
+    return notes
+      + '<div class="table-container sm-scroll"><table class="esr-table sm-table" aria-label="資産・負債を含む感応度の詳細(' + (isDelta ? '変化額' : '水準') + ')">'
+      + '<thead><tr>' + th + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+  }
+  function renderSensMatrix(c){
+    var host = byId('sensMatrixWrap'); if(!host) return;
+    var sl = c.sensitivity_levels;
+    if(!sl || typeof sl !== 'object'){ host.innerHTML = ''; return; }
+    var title = '資産・負債を含む感応度の詳細';
+    if(sl.status !== 'disclosed' || !sl.rows || !Object.keys(sl.rows).length){
+      var why = sl.status === 'omitted_below_1pp' ? omitText(sl) : (SCEN_STATUS_JA[sl.status] || '未収録');
+      host.innerHTML = '<p class="jp-dim sm-dim-line">' + esc(title) + ': ' + esc(why) + '</p>';
+      return;
+    }
+    host.innerHTML = '<details class="sm-details jp-sub"' + (smOpen ? ' open' : '') + '><summary>' + esc(title) + '</summary>'
+      + '<div class="sm-ctl"><div class="seg-toggle" role="group" aria-label="表示切替">'
+      + '<button type="button" class="seg-btn" data-mode="delta" aria-pressed="false">変化額</button>'
+      + '<button type="button" class="seg-btn" data-mode="level" aria-pressed="false">水準</button></div>'
+      + '<span class="small-muted sm-unit">単位: 億円(ソルベンシー・マージン比率の行は%・pp)</span></div>'
+      + '<div class="sm-body"></div></details>';
+    var det = host.querySelector('details'), bodyEl = host.querySelector('.sm-body');
+    function paint(){
+      bodyEl.innerHTML = smTableHtml(sl);
+      [].forEach.call(host.querySelectorAll('.seg-btn'), function(b){
+        var on = b.getAttribute('data-mode') === smMode;
+        b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on));
+      });
+    }
+    [].forEach.call(host.querySelectorAll('.seg-btn'), function(b){
+      b.addEventListener('click', function(){ smMode = b.getAttribute('data-mode'); paint(); });
+    });
+    det.addEventListener('toggle', function(){ smOpen = det.open; });
+    paint();
   }
 
   // 그 밖의 공시항목(axes) 라우팅: 準備金(cat_reserve_*/…_reserve…) → 決算 페이지 '準備金', 再保険(reins_*) → その他開示 '再保険',

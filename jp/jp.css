@@ -217,3 +217,76 @@
 .header-row > .back-row{margin-left:0}
 .header-row > #downloadMasterBtn{margin-left:auto}
 }
+
+/* ===== 算入上限に対する割合 / 略式実効デュレーション / 感応度の詳細 (2026-11-04, 티켓 20261103T1550Z → 20261103T2240Z 한국 디자인 차용) =====
+   한국 K-ICS.html 의 도넛 패널·듀레이션 카드·민감도 표와 같은 치수·색을 쓴다(한국 CSS 는 K-ICS.html 인라인이라 같은 규칙을 여기에 둔다).
+   색만으로 구분하지 않는다: 상태는 항상 글자(칩·.sub), 도넛은 role="img" + 수치 aria-label. 색은 공통 토큰이 원칙이고, 의도적으로 한국 리터럴을 그대로 쓰는 곳이 있다:
+   도넛 채움색 3개(rgba)와 범위 호의 연한 알파(0.85 → 0.35 로 같은 리터럴에서 파생), .dur-card.lead 의 #0f6e6833 / #0f6e680a. */
+.h2-sub{color:var(--muted);font-size:13px;font-weight:400;white-space:nowrap}
+.derived-badge{display:inline-flex;align-items:center;margin-left:8px;padding:1px 8px;font-size:11px;font-weight:700;line-height:1.6;color:var(--text);background:var(--bg);border:1px solid var(--control-border);border-radius:var(--r-pill);vertical-align:middle;white-space:nowrap}
+.jp-chip{display:inline-block;padding:1px 7px;font-size:11px;font-weight:700;line-height:1.6;color:var(--text);background:var(--bg);border:1px solid var(--warn);border-radius:var(--r-sm);white-space:nowrap;vertical-align:middle}
+.jp-dim{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.jp-sub{margin-top:22px;padding-top:16px;border-top:1px solid var(--border)}
+.iq-help-pop .hp-line{display:block}
+.iq-help-pop .hp-line + .hp-line{margin-top:6px}
+
+/* P1: 도넛 (K-ICS.html .donut-row / .donut-cell / .donut-wrap / .donut-caption / .donut-note / .no-data) */
+.donut-row{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;padding:8px 0}
+.donut-cell{flex:1 1 280px;max-width:360px;text-align:center}
+.donut-wrap{position:relative;height:240px}
+.donut-caption{margin-top:8px;color:var(--text);font-size:14px;font-weight:600}
+.donut-caption .sub{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:2px}
+.donut-note{margin-top:8px;color:var(--muted);font-size:12px;line-height:1.5;word-break:auto-phrase}
+.donut-note .nw{white-space:nowrap}
+.no-data{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px}
+.cl-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .donut-row{gap:12px}
+  .donut-wrap{height:200px}
+}
+
+/* P2: 듀레이션 카드 (K-ICS.html .dur-strip / .dur-card / .dur-val / .dur-lab / .dur-sub / .dur-note / .dur-h3) */
+.dur-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 4px}
+.dur-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:14px 16px;min-width:0}
+.dur-card.lead{border-color:#0f6e6833;background:linear-gradient(180deg,#0f6e680a,transparent)}
+.dur-val{font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--text);font-variant-numeric:tabular-nums}
+.dur-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:3px}
+.dur-val.is-none{color:var(--muted);font-weight:600}
+.dur-lab{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
+.dur-sub{font-size:11px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}
+.dur-note{font-size:11.5px;color:var(--muted);margin:2px 0 6px;line-height:1.5}
+.dur-h3{font-size:14px;font-weight:700;margin:22px 0 0;color:var(--text)}
+.dur-h3:first-child{margin-top:4px}
+.dur-h3 .iq-help, .dur-h3 .jp-chip{margin-left:6px}
+@media (max-width:640px){
+  /* 한국은 1열이지만 여기는 면마다 카드가 3장이라 3열을 유지하고 글자만 줄인다(390px 에서 겹침·가로 넘침 0 확인). */
+  .dur-strip{gap:8px}
+  .dur-card{padding:10px 8px}
+  .dur-val{font-size:20px}
+  .dur-val .u{font-size:12px;margin-left:2px}
+  .dur-lab{font-size:11px}
+}
+
+/* P3: 감응도 행렬 — 접이식·토글 구조는 그대로, 표 모양만 K-ICS.html 민감도 표(.table-container / #sens-table)에 맞춘다 */
+.sm-details > summary{display:block;list-style:none;cursor:pointer;font-size:16px;font-weight:700;color:var(--text);line-height:1.5;padding:2px 0}
+.sm-details > summary::-webkit-details-marker{display:none}
+.sm-details > summary::before{content:"\25B8";display:inline-block;width:1.1em;color:var(--muted)}
+.sm-details[open] > summary::before{content:"\25BE"}
+.sm-details > summary:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.sm-ctl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 8px}
+.sm-ctl .seg-btn{padding:6px 14px;font-size:13px}
+.sm-unit{margin:0}
+.sm-note{margin:0 0 6px}
+.sm-scroll{max-width:100%;margin-top:12px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sm-table{width:max-content;min-width:100%}
+.sm-table th, .sm-table td{white-space:nowrap}
+.sm-table thead th.num{white-space:normal;min-width:104px;vertical-align:bottom}
+.sm-table td.num{font-variant-numeric:tabular-nums}
+.sm-table th.sm-row, .sm-table th.sm-row-h{position:sticky;left:0;z-index:1;background:var(--bg);box-shadow:1px 0 0 var(--border);text-align:left;white-space:normal;min-width:132px;max-width:220px;font-weight:400}
+.sm-table th.sm-row-h{z-index:3;background:var(--card);font-weight:700}
+.sm-table thead th.sm-row-h{vertical-align:bottom}
+.sm-table .sm-dim{color:var(--muted)}
+.sm-tag{display:block;margin-top:2px;font-size:11px;font-weight:600;color:var(--muted)}
+@media (max-width:640px){
+  .sm-table th.sm-row, .sm-table th.sm-row-h{min-width:112px;max-width:40vw}
+}

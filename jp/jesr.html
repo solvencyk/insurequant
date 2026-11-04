@@ -40,6 +40,7 @@
   <link rel="alternate" hreflang="x-default" href="https://www.insurequant.com/K-ICS.html"/>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23212529'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EIQ%3C/text%3E%3C/svg%3E"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" integrity="sha384-GIdEBaqGN9mNkDkMkzMHW8EKUqtpPIe/sLj1X7DIrnc9uPtLROJgmuDlh+3rBw0j" crossorigin="anonymous"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" integrity="sha384-FcQlsUOd0TJjROrBxhJdUhXTUgNJQxTMcxZe6nHbaEfFL1zjQ+bq/uRoBQxb0KMo" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../common.css"/>
   <script src="../theme.js"></script>
   <link rel="stylesheet" href="jp.css"/>
@@ -73,7 +74,9 @@
         <li><a href="#secPickerWrap">会社選択</a></li>
         <li><a href="#secHeadlineWrap">主要指標</a></li>
         <li><a href="#secCapitalWrap">適格資本・所要資本</a></li>
+        <li><a href="#secCapLimitsWrap">算入上限に対する割合</a></li>
         <li><a href="#secSensWrap">感応度</a></li>
+        <li><a href="#secDurWrap">略式実効デュレーション</a></li>
       </ul>
     </nav>
     <div class="section-body">
@@ -144,6 +147,13 @@
       <p class="small-muted" style="margin-top:6px">※［＋］で内訳を展開。符号は上位項目に対する加算（＋）・減算（－）、＝は合計。所要資本の各リスクは相関統合のため内訳の単純合計と一致しません（備考に単純合計を併記）。</p>
     </section>
 
+    <!-- 算入上限に対する割合: 韓国 K-ICS.html の「자본성증권 인정 한도 소진율」と同じ独立パネル(Chart.js 도넛). 見出しと本文は jesr_app.js renderCapLimits が埋め、
+         表示できる値が無い会社(ESR節が非表示の会社・旧版JSON)ではパネルごと hidden のまま。 -->
+    <section class="panel" id="secCapLimitsWrap" data-share-section="算入上限に対する割合" aria-labelledby="secCapLimits" hidden>
+      <h2 id="secCapLimits">算入上限に対する割合</h2>
+      <div id="capLimitsWrap"></div>
+    </section>
+
     <section class="panel" aria-labelledby="secSens" data-share-section="感応度" id="secSensWrap">
       <h2 id="secSens">感応度</h2>
       <div id="sensWrap">
@@ -154,6 +164,13 @@
           </table>
         </div>
       </div>
+      <div id="sensMatrixWrap"></div>
+    </section>
+
+    <!-- 略式実効デュレーション: 韓国 K-ICS.html の「자산·부채 듀레이션」カード(.dur-strip/.dur-card)と同じ独立パネル。renderDuration が埋める。 -->
+    <section class="panel" id="secDurWrap" data-share-section="略式実効デュレーション" aria-labelledby="secDur" hidden>
+      <h2 id="secDur">略式実効デュレーション</h2>
+      <div id="durApproxWrap"></div>
     </section>
 
     <section class="panel" id="smrOldWrap" hidden>
