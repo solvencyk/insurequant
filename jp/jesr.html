@@ -66,12 +66,19 @@
       </div>
       <div class="back-row" style="padding:0"><a href="index.html">&larr; ESRランキング</a></div>
       <button id="downloadMasterBtn" type="button" class="download-cta" data-state="none">⬇ <span class="dl-full">表データのダウンロード(.xlsx)</span><span class="dl-short">ダウンロード(xlsx)</span></button></div>
+    <!-- 会社選択: 韓国 K-ICS.html の header-select-row と同じ構造(タブ行の直下、本文の外)。選択肢は jesr_app.js が埋める。 -->
+    <div class="header-select-row">
+      <label class="header-select-label" for="companySelect">会社選択
+        <select id="companySelect" class="select" disabled>
+          <option>読み込み中…</option>
+        </select>
+      </label>
+    </div>
   </header>
 
   <main class="container has-section-nav" id="mainRoot">
     <nav class="section-nav" aria-label="このページのセクション">
       <ul>
-        <li><a href="#secPickerWrap">会社選択</a></li>
         <li><a href="#secHeadlineWrap">主要指標</a></li>
         <li><a href="#secCapitalWrap">適格資本・所要資本</a></li>
         <li><a href="#secCapLimitsWrap">算入上限に対する割合</a></li>
@@ -80,20 +87,10 @@
       </ul>
     </nav>
     <div class="section-body">
-
-    <section class="panel" aria-labelledby="secPicker" id="secPickerWrap">
-      <h2 id="secPicker">会社選択</h2>
-      <div class="picker-row">
-        <label for="companySelect">会社</label>
-        <select id="companySelect" class="select" disabled>
-          <option>読み込み中…</option>
-        </select>
-      </div>
-      <p class="meta-line" id="metaLine">読み込み中…</p>
-    </section>
+    <p class="meta-line" id="metaLine">読み込み中…</p>
 
     <section class="panel" id="notFoundPanelWrap" hidden>
-      <p class="jp-err">該当する会社がありません。上の「会社」から選択してください。</p>
+      <p class="jp-err">該当する会社がありません。上の「会社選択」から選択してください。</p>
     </section>
 
     <section class="panel" aria-labelledby="secHeadline" data-share-section="主要指標" id="secHeadlineWrap">

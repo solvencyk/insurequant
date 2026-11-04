@@ -9,13 +9,11 @@
 .back-row a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600}
 .back-row a:hover{color:var(--primary);text-decoration:underline}
 
-/* 회사 선택 + 메타 라인 */
-.picker-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.picker-row label{font-size:13px;font-weight:600;color:var(--text)}
-#companySelect{min-width:260px;font-size:14px;font-family:var(--font-sans)}
+/* 메타 라인(회사 선택 셀렉트는 헤더로 올라가 common.css .header-select-row 를 쓴다) */
+.header-select-label{white-space:nowrap}   /* 일본어 라벨은 띄어쓰기가 없어 좁은 폭에서 글자 중간에서 줄이 바뀐다 */
 /* 모바일 375px 에서 공표일자+doc_type 텍스트가 줄바꿈 안 되고 뷰포트 밖으로 밀려나간
    실측 버그 수정(공표 링크 안 긴 괄호구 때문) — overflow-wrap 으로 강제 줄바꿈 허용. */
-.meta-line{font-size:13px;color:var(--muted);line-height:1.9;margin:0;overflow-wrap:anywhere}
+.meta-line{font-size:13px;color:var(--muted);line-height:1.9;margin:0 0 16px;overflow-wrap:anywhere}
 .meta-line a{color:var(--primary)}
 .prelim-badge{display:inline-block;font-size:11px;font-weight:700;color:#212529;background:#f59e0b;padding:1px 6px;border-radius:3px;margin-left:6px}
 
@@ -97,7 +95,6 @@
   .back-row{padding:6px 12px 0}
   .container{padding:10px}
   .panel{padding:12px}
-  #companySelect{width:100%;min-width:0}
   .card-row{grid-template-columns:1fr;gap:6px}
   .jcard{padding:10px 4px}
   .jcard .jcard-val{font-size:18px}
