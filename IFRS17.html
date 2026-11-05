@@ -688,7 +688,23 @@
     return bars;
   }
 
-  function wfFmtJo(v, dp){ return (v/10000).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
+  // 금액 표기 규칙(owner 2026-11-04): 절댓값 1조 미만은 억원(천단위 콤마, 10억 미만만 소수 1자리), 1조 이상은 소수 1자리 조.
+  // 입력 = 백만원(양수·음수 모두 받고 부호는 돌려주지 않는다 — 호출 쪽이 △/+ 를 붙인다).
+  function fmtJoEok(vMn){
+    const a = Math.abs(vMn), e = a/100;                 // e = 억원
+    if (!(a > 0)) return "0억";
+    if (e >= 9999.5) return (a/1e6).toLocaleString("ko-KR",{minimumFractionDigits:1,maximumFractionDigits:1})+"조";
+    if (e < 9.95) return e.toLocaleString("ko-KR",{minimumFractionDigits:1,maximumFractionDigits:1})+"억";
+    return Math.round(e).toLocaleString("ko-KR")+"억";
+  }
+  // 툴팁용: 조 단위일 때만 억원 값을 괄호로 붙인다.
+  function fmtJoEokTip(vMn){
+    const a = Math.abs(vMn);
+    return fmtJoEok(vMn) + ((a/100 >= 9999.5) ? " ("+Math.round(a/100).toLocaleString("ko-KR")+"억)" : "");
+  }
+  // 값축 단위: 차트 자체 규모로 하나만 고른다(축 범위 절댓값 최댓값이 1조 미만이면 억원, 아니면 조원).
+  function axisUnitOf(maxAbsMn){ return maxAbsMn < 1e6 ? { name:"억원", div:100 } : { name:"조원", div:1e6 }; }
+  function axisDecOf(step){ for(let d=0; d<=3; d++){ const m=step*Math.pow(10,d); if(Math.abs(m-Math.round(m))<1e-9) return d; } return 3; }
 
   // ===== 회사 키컬러 (KEYCOLOR-V1, owner 확정 2026-06-12) =====
   // 차트 데이터잉크(워터폴 total 막대·라인 주선)와 select 액티브에만 적용. 배경·패널보더는 무채색 유지.
@@ -759,6 +775,8 @@
     }
 
     const isMobile = window.matchMedia("(max-width:640px)").matches;
+    // 값축 단위는 이 차트의 축 범위(억원 → 백만원 환산)로 하나만 고른다. 막대 라벨은 fmtJoEok 로 막대마다 따로.
+    const wfAx = axisUnitOf(Math.max(Math.abs(wfYMin||0), Math.abs(wfYMax||0)) * 100);
     let dataZoom;
     if (isMobile && bars.length > 9){
       const start = Math.max(0, bars.length - 9);
@@ -776,13 +794,13 @@
             ? `${bar.comp.full} · ${bar.period}`
             : `${bar.kind==="open"?"기초":"기말"} CSM · ${bar.period}`;
           if(bar.value==null) return `<b>${head}</b><br/>데이터 없음`;
-          const jo=bar.value/10000;
+          const amt=fmtJoEokTip(bar.value*100);
           if(bar.kind==="comp"){
             const sign=bar.value>=0?"+":"△";
-            return `<b>${head}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(bar.value).toLocaleString("ko-KR")}억)`;
+            return `<b>${head}</b><br/>${sign}${amt}`;
           }
           const s0 = bar.value < 0 ? "△" : "";
-          return `<b>${head}</b><br/>${s0}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${s0}${Math.abs(bar.value).toLocaleString("ko-KR")}억)`;
+          return `<b>${head}</b><br/>${s0}${amt}`;
         },
       }),
       grid: dataZoom ? { left:52, right:18, top:24, bottom:40 } : { left:52, right:18, top:24, bottom:54 },
@@ -793,10 +811,10 @@
         axisTick:{ show:false },
       },
       yAxis:{
-        type:"value", name:"조원",
+        type:"value", name:wfAx.name,
         min: wfYMin, max: wfYMax,
         nameTextStyle:{ color:TH.muted, fontSize:11 },
-        axisLabel:{ color:TH.muted, formatter:v=> (v<0?"△":"")+Math.abs(v/10000).toLocaleString("ko-KR",{maximumFractionDigits:1}) },
+        axisLabel:{ color:TH.muted, formatter:v=> (v<0?"△":"")+Math.abs(v*100/wfAx.div).toLocaleString("ko-KR",{maximumFractionDigits:wfAx.name==="억원"?0:1}) },
         splitLine:{ lineStyle:{ color:TH.grid } },
       },
       dataZoom,
@@ -804,38 +822,43 @@
         { name:"placeholder", type:"bar", stack:"wf", itemStyle:{ color:"transparent" }, emphasis:{ disabled:true }, data:placeholder },
         { name:"missing", type:"bar", stack:"wf", itemStyle:{ color:"rgba(173,181,189,0.55)" }, data:missing },
         { name:"+", type:"bar", stack:"wf", itemStyle:{ color:"#22c55e" }, data:positive,
-          label:{ show:!isMobile, position:"top", color:TH.text, fontSize:9, formatter:p=> p.value==="-"?"":"+"+wfFmtJo(p.value,2) } },
+          label:{ show:!isMobile, position:"top", color:TH.text, fontSize:9, formatter:p=> p.value==="-"?"":"+"+fmtJoEok(p.value*100) } },
         { name:"−", type:"bar", stack:"wf", itemStyle:{ color:"#ef4444" }, data:negative,
-          label:{ show:!isMobile, position:"top", color:TH.text, fontSize:9, formatter:p=> p.value==="-"?"":"△"+wfFmtJo(p.value,2) } },
+          label:{ show:!isMobile, position:"top", color:TH.text, fontSize:9, formatter:p=> p.value==="-"?"":"△"+fmtJoEok(p.value*100) } },
         { name:"total", type:"bar", stack:"wf", itemStyle:{ color:currentKey.primary }, data:totals,
-          label:{ show:true, position:"top", color:TH.text, fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+wfFmtJo(Math.abs(p.value),1)+"조" } },
+          label:{ show:true, position:"top", color:TH.text, fontSize:10, fontWeight:"bold", formatter:p=> p.value==="-"?"":(p.value<0?"△":"")+fmtJoEok(p.value*100) } },
       ],
     }, true);
   }
 
   // ===== Panel 3: 당기순이익 detailed bridge waterfall (PL_breakdown.json) =====
   // Source rows: {원수사명, 공시분기, 항목번호, 항목명, 값(YTD), 값_당분기}. 단위 = 백만원.
-  // 손보/생보 공통 상세 분해 — 장기원수는 세부(4·5·6·7), 생명장기재보험(8)·자동차+일반(13+14)은 묶음:
-  //   4 CSM상각 +5 위험조정 +6 예실차 +7 기타 +8 재보험 +(13+14) +(15−16 기타) = 보험손익(1)
-  //   → 17 투자손익 → 21 영업외 → (−)23 법인세 → 24 당기순이익  (검산 OK 손보+생보)
-  //   → 26 FVOCI채무 + 27 보험계약금융(OCI) + 28 위험회피파생 + 30 재보험금융(OCI) + 32 기타 포괄손익
-  //     + 29 FVOCI지분 → 31 총포괄손익
-  //   (25 기타포괄손익 총액은 막대로 안 그린다 — 26~30+32와 중복. 24+25=31은 전 회사·전 분기 정확히 성립.)
+  // 손보/생보 공통 상세 분해 — 장기원수는 세부(4·5·6·7·8·9), 생명장기재보험(10)·자동차+일반(15+16)은 묶음:
+  //   4 CSM상각 +5 위험조정 +6 예실차 +7 손실부담계약 +8 발생사고요소조정 +9 기타 +10 재보험 +(15+16) +(17−18 기타) = 보험손익(1)
+  //   → 19 투자손익 → 23 영업외 → (−)25 법인세 → 26 당기순이익  (검산 OK 손보+생보)
+  //   → 28 FVOCI채무 + 29 보험계약금융(OCI) + 30 위험회피파생 + 32 재보험금융(OCI) + 34 기타 포괄손익
+  //     + 31 FVOCI지분 → 33 총포괄손익
+  //   (27 기타포괄손익 총액은 막대로 안 그린다 — 28~32+34와 중복. 26+27=33은 전 회사·전 분기 정확히 성립.)
+  // 2026-11-04 번호 이주: 7번에 「원수 손실부담계약 손실 및 환입」이 신설되고 옛 7번 이후는 전부 +1 (옛 7 기타 → 8,
+  // 옛 24 당기순이익 → 25, 옛 32 → 33). 7번이 빈 칸(null)인 회사·분기는 그 손실이 8번(기타 원수손익)에 그대로 들어 있고
+  // 7번 막대·표 행은 생략된다(optional). 아래 주석의 번호는 새 번호다(옛 번호를 인용한 곳은 「옛」으로 밝힘).
+  // 2026-11-05 2차 번호 이주: 8번에 「원수 발생사고요소조정」이 신설되고 옛 8번 이후는 전부 +1 (기타 원수손익 8 → 9,
+  // 재보험 9 → 10, 당기순이익 25 → 26, 기타OCI 33 → 34; 위 1차 서술의 「옛」은 1차 이주 전 번호). 8번이 빈 칸이면 그 금액은 9번에 그대로 있다.
   // NOTE: PL company names differ from CSM/dropdown (삼성생명보험 vs 삼성생명) → plResolve() fuzzy-matches.
   const PL_NUM = {
-    원수CSM상각:4, 원수RA:5, 원수예실차:6, 기타원수:7, 재보험:8,
-    자동차:13, 일반:14, 기타수익:15, 기타비용:16,
-    보험손익:1, 투자손익:17, 영업외:21, 법인세:23, 당기순이익:24,
-    // 총포괄손익 구간(parser 4cca165 신설). 실데이터 항등식: 24 + 25 = 31 (전 36사 전 분기 오차 0).
-    // 항목32(parser d634492 신설)까지 넣으면 25 = 26+27+28+29+30+32 가 대조가능 273셀 전부에서 닫힌다
+    원수CSM상각:4, 원수RA:5, 원수예실차:6, 손실부담:7, 발생사고:8, 기타원수:9, 재보험:10,
+    자동차:15, 일반:16, 기타수익:17, 기타비용:18,
+    보험손익:1, 투자손익:19, 영업외:23, 법인세:25, 당기순이익:26,
+    // 총포괄손익 구간(parser 4cca165 신설). 실데이터 항등식: 26 + 27 = 33 (전 36사 전 분기 오차 0).
+    // 항목34(parser d634492 신설 당시 번호 32)까지 넣으면 27 = 28+29+30+31+32+34 가 대조가능 273셀 전부에서 닫힌다
     // (실측 2026-08-29: 이탈 0건, YTD 기준). 그 전에는 102개 회사-분기가 잔차 막대를 그렸다.
-    기타포괄총액:25, FVOCI채무:26, 보험금융OCI:27, 위험회피:28, FVOCI지분:29, 재보험금융OCI:30, 총포괄손익:31,
+    기타포괄총액:27, FVOCI채무:28, 보험금융OCI:29, 위험회피:30, FVOCI지분:31, 재보험금융OCI:32, 총포괄손익:33,
     // ⚠ 표시 라벨 매핑: 마스터 항목명은 "기타 포괄손익(미분류)"이지만 화면에는 "기타 포괄손익"으로 쓴다.
     // 내용이 규명돼 있어("확정급여 재측정" 23사·"신용손실" 15사·"자산재평가" 14사·"해외사업환산" 6사·
     // "관계기업 지분법 OCI" 6사 — data/_derived/pl_oci_item32_provenance.json, 24사·14종 계정)
     // "미분류"가 사실과 다르고, 아래 잔차 막대(plOciResidual)와 이름이 겹친다. 마스터 항목명 자체는
     // parser 소관이라 건드리지 않고 화면 라벨만 바꾼다(orchestrator 20260829T0700Z).
-    기타OCI:32,
+    기타OCI:34,
   };
 
   // CSM 분리공시 미제공사 (owner 결정 2026-06-11): 목록 제외 대신 사유 표기 (PL 분해는 공시되므로 노출 유지)
@@ -880,13 +903,12 @@
     const label = lq===4 ? ("FY"+ly+" (연 누계)") : (latest+"("+fyPartialLabel(lq)+")");
     return { q:latest, field:"y", label };
   }
-  function plFmtJo(v, dp){ return (v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:dp,maximumFractionDigits:dp}); }
 
-  // 생명장기재보험(8) 세부 = 9 CSM상각 +10 위험조정 +11 예실차 +12 기타 (합 = 8).
+  // 생명장기재보험(10) 세부 = 11 CSM상각 +12 위험조정 +13 예실차 +14 기타 (합 = 10).
   // ⚠ PL_HEAD_DEFAULT가 이 배열을 즉시 참조하므로 반드시 그 위에 있어야 한다(const TDZ).
   const PL_RE_SUB = [
-    { ko:"재보험 CSM상각", num:9 }, { ko:"재보험 위험조정", num:10 },
-    { ko:"재보험 예실차", num:11 }, { ko:"기타 재보험손익", num:12 },
+    { ko:"재보험 CSM상각", num:11 }, { ko:"재보험 위험조정", num:12 },
+    { ko:"재보험 예실차", num:13 }, { ko:"기타 재보험손익", num:14 },
   ];
 
   // Step definitions — each has a getter so chart (1 period) + table (N periods) share one source.
@@ -908,6 +930,11 @@
     { ko:"원수 CSM상각", role:"flow", get:g=> g(PL_NUM.원수CSM상각) },
     { ko:"원수 위험조정", role:"flow", get:g=> g(PL_NUM.원수RA) },
     { ko:"원수 예실차",  role:"flow", get:g=> g(PL_NUM.원수예실차) },
+    // 신설 7번. 값이 없거나 0 이면 막대·표 행을 통째로 생략 → 읽지 못한 회사·분기는 지금과 같은 화면(그 손실은 기타 원수손익 안).
+    // anyPeriod = 표는 최신 기간뿐 아니라 보이는 기간 중 하나라도 값이 있으면 행을 둔다(부분 파싱 시 옛 열의 값이 숨지 않게).
+    { ko:"원수 손실부담계약", role:"flow", optional:true, anyPeriod:true, loss:true, get:g=> g(PL_NUM.손실부담) },
+    // 신설 8번(2차). 손실부담계약과 같은 옵션 — 값 없음·0 이면 막대·표 행 생략(그 금액은 기타 원수손익 안), 표는 보이는 기간 중 하나라도 값이 있으면 행.
+    { ko:"원수 발생사고요소조정", role:"flow", optional:true, anyPeriod:true, inc:true, get:g=> g(PL_NUM.발생사고) },
     { ko:"기타 원수손익", role:"flow", get:g=> g(PL_NUM.기타원수) },
     { ko:"생명장기재보험",  role:"flow", sub:PL_RE_SUB, subTitle:"재보험 세부", get:g=> g(PL_NUM.재보험) },
     { ko:"자동차+일반",  role:"flow", optional:true, get:g=>{ const a=g(PL_NUM.자동차),b=g(PL_NUM.일반); return (a==null&&b==null)?null:(a||0)+(b||0); } },
@@ -926,7 +953,7 @@
     { ko:"보험계약금융손익(OCI)", role:"flow", oci:true, get:g=> g(PL_NUM.보험금융OCI) },
     { ko:"위험회피 파생상품", role:"flow", oci:true, get:g=> g(PL_NUM.위험회피) },
     { ko:"재보험금융손익(OCI)", role:"flow", oci:true, get:g=> g(PL_NUM.재보험금융OCI) },
-    // 항목32. 마스터 항목명은 "기타 포괄손익(미분류)"이나 화면 라벨은 "기타 포괄손익"(위 PL_NUM 주석 참조).
+    // 항목34. 마스터 항목명은 "기타 포괄손익(미분류)"이나 화면 라벨은 "기타 포괄손익"(위 PL_NUM 주석 참조).
     { ko:"기타 포괄손익", role:"flow", oci:true, get:g=> g(PL_NUM.기타OCI) },
     { ko:"미분류 잔차", role:"flow", oci:true, residual:true, get:plOciResidual },
     { ko:"FVOCI 지분증권", role:"flow", oci:true, clip:true, get:g=> g(PL_NUM.FVOCI지분) },
@@ -936,15 +963,17 @@
 
   // 전업 재보험사 7곳(뮌헨·스위스리아시아·제네럴·하노버·알지에이·스코리·퍼시픽라이프리) 화면 라벨
   // (2026-10-11, owner: 「재보사는 당연히 `원수` 라는 네이밍은 떼야 한다」). 원수 보험이 없는 전업 재보험사의
-  // 항목 4~7 은 사실상 수재분이라 접두 「원수」만 뗀다. **마스터 항목명은 안 바꾼다**(검증 룰이 이름으로 매칭) —
+  // 항목 4~9 은 사실상 수재분이라 접두 「원수」만 뗀다. **마스터 항목명은 안 바꾼다**(검증 룰이 이름으로 매칭) —
   // 회사코드가 남는 곳은 PL_LOB_DISPLAY 와 이 표, 화면 라벨 두 곳뿐이다. 코리안리(KR1000)는 하이픈 블록
-  // LOB 축(plLobHead, 수재/출재 라벨)을 쓰므로 여기 해당 없음. 같은 head 의 생명장기재보험(8)은 「원수」가
+  // LOB 축(plLobHead, 수재/출재 라벨)을 쓰므로 여기 해당 없음. 같은 head 의 생명장기재보험(10)은 「원수」가
   // 없는 슬롯 이름이라 그대로 둔다.
   const PL_RE_ONLY = new Set(["KR1101","KR1102","KR1103","KR1104","KR1105","KR1106","KR1107"]);
   const PL_RE_LABEL = {
     "원수 CSM상각":  { ko:"CSM 상각",  wrap:"CSM\n상각" },
     "원수 위험조정": { ko:"위험조정",  wrap:"위험\n조정" },
     "원수 예실차":   { ko:"예실차",    wrap:"예실차" },
+    "원수 손실부담계약": { ko:"손실부담계약", wrap:"손실부담\n계약" },   // 마스터 7번이 재보험사에 채워질 때만 나타난다(optional)
+    "원수 발생사고요소조정": { ko:"발생사고요소조정", wrap:"발생사고\n요소조정" },   // 마스터 8번이 재보험사에 채워질 때만 나타난다(optional)
     "기타 원수손익": { ko:"기타 손익", wrap:"기타\n손익" },
   };
   const PL_STEP_DEFS_RE = PL_HEAD_DEFAULT.map(d=> PL_RE_LABEL[d.ko] ? Object.assign({}, d, PL_RE_LABEL[d.ko]) : d).concat(PL_TAIL);
@@ -968,12 +997,15 @@
   //  나머지가 어긋난다 — 이 표가 그 간극을 메운다"). 매핑이 없는 회사는 아래 폴백 라벨로 뜬다.
   const PL_LOB_DISPLAY = {
     // 코리안리재보험 — 전업 재보험사라 스키마의 "원수"가 곧 **수재**다. 원문 LOB = 생명·장기·일반,
-    // **자동차는 컬럼 자체가 없다**(미해당 ≠ 결측 — 게이트 lob_na 축, b2f9660). item13이 null이라
+    // **자동차는 컬럼 자체가 없다**(미해당 ≠ 결측 — 게이트 lob_na 축, b2f9660). item15(자동차)가 null이라
     // 아래 optional 규칙에 걸려 막대도, 회색 "미공시" 막대도 그리지 않는다.
     KR1000: { "": "생명", "1": "장기" },
   };
-  // LOB 다리 = 수재(3±)/출재(8±). 세부는 수재 4·5·6·7 / 출재 9·10·11·12 (하이픈 블록도 동형).
-  const PL_LOB_SUB = ["CSM상각", "위험조정", "예실차", "기타"];
+  // LOB 다리 = 수재(3±)/출재(10±). 세부는 수재 4·5·6·7·8·9 / 출재 11·12·13·14 (하이픈 블록도 동형: 7-1·8-1·9-1 / 11-1…).
+  // 2026-11-04 번호 이주로 수재에 7번 「손실부담계약」, 2026-11-05 에 8번 「발생사고요소조정」이 생겨 수재 세부는 6칸, 출재는 4칸 그대로.
+  // 손실부담계약(hideNull)은 표에 보이는 기간 전부가 null 이면 행을 통째로 생략한다(기타 안에 그 손실이 들어 있는 상태).
+  const PL_LOB_SUB_IN  = [{ ko:"CSM상각" }, { ko:"위험조정" }, { ko:"예실차" }, { ko:"손실부담계약", hideNull:true, loss:true }, { ko:"발생사고요소조정", hideNull:true, inc:true }, { ko:"기타" }];
+  const PL_LOB_SUB_OUT = [{ ko:"CSM상각" }, { ko:"위험조정" }, { ko:"예실차" }, { ko:"기타" }];
 
   // 이 (회사,기간)에 실제 값이 있는 하이픈 접미사 목록(오름차순). 없으면 [] → 기본 레이아웃.
   function plLobSuffixes(name, per){
@@ -981,7 +1013,7 @@
     if (!qm) return [];
     const out = new Set();
     for (const k of qm.keys()){
-      const mm = /^(?:3|8)-(\d+)$/.exec(k);
+      const mm = /^(?:3|10)-(\d+)$/.exec(k);
       if (mm && plVal(name, per.q, k, per.field) != null) out.add(mm[1]);
     }
     return Array.from(out).sort((a,b)=> (+a)-(+b));
@@ -998,11 +1030,11 @@
       // 틀릴 수 없고, PL_LOB_DISPLAY에 없는 새 회사에서도 라벨이 비지 않는다.
       const lob = (disp[suf] != null) ? disp[suf]
         : String(plItemName(name, per.q, "2"+sx) || ("구분"+(suf ? (+suf+1) : 1))).replace(/\s*손익$/, "");
-      [["수재","3",4], ["출재","8",9]].forEach(([leg, base, head])=>{
+      [["수재","3",4,PL_LOB_SUB_IN], ["출재","10",11,PL_LOB_SUB_OUT]].forEach(([leg, base, head, subs])=>{
         defs.push({
           ko: lob+" "+leg, wrap: lob+"\n"+leg, role:"flow", optional:true,
           subTitle: lob+" "+leg+" 세부",
-          sub: PL_LOB_SUB.map((ko,i)=> ({ ko, num:String(head+i)+sx })),
+          sub: subs.map((d,i)=> Object.assign({}, d, { num:String(head+i)+sx })),
           get: g=> g(base+sx),
         });
       });
@@ -1024,9 +1056,9 @@
   // OCI 세부 항목번호 — 잔차 계산과 모드 판정이 같은 목록을 쓴다(둘이 어긋나면 브리지가 끊긴다).
   const PL_OCI_PARTS = [PL_NUM.FVOCI채무, PL_NUM.보험금융OCI, PL_NUM.위험회피, PL_NUM.FVOCI지분, PL_NUM.재보험금융OCI, PL_NUM.기타OCI];
 
-  // 25(기타포괄손익 총액) − 세부 합. 항목32가 들어오기 전에는 이 잔차가 102개 회사-분기에서
+  // 27(기타포괄손익 총액) − 세부 합. 항목34(옛 32)가 들어오기 전에는 이 잔차가 102개 회사-분기에서
   // 실제로 그려졌다(에이비엘생명 154,075백만=총액의 58%·코리안리 75,903백만=63% 등) — 그 몫이
-  // 전부 32에 태깅되면서 YTD 기준 대조가능 273셀에서 잔차가 0이 됐다(실측 2026-08-29).
+  // 전부 34(옛 32)에 태깅되면서 YTD 기준 대조가능 273셀에서 잔차가 0이 됐다(실측 2026-08-29).
   // 그래도 막대를 없애지 않는다: 남는 잔차는 이제 진짜 원천 불일치라서 의미가 더 분명하다
   // (당분기 모드에 4건 잔존 — 교보생명 2025.2Q·3Q, KB라이프 2024.4Q, 푸본현대 2023.4Q).
   // 유의미할 때만(총액의 1% 이상, 최소 1억) 노출 → 반올림 오차 수준은 막대를 안 만든다.
@@ -1076,6 +1108,8 @@
   // x-axis label wrapping (full name kept in tooltip + table).
   const PL_WRAP = {
     "원수 CSM상각":"원수\nCSM상각", "원수 위험조정":"원수\n위험조정", "원수 예실차":"원수\n예실차",
+    "원수 손실부담계약":"원수\n손실부담계약",
+    "원수 발생사고요소조정":"원수\n발생사고\n요소조정",
     "기타 원수손익":"기타\n원수", "생명장기재보험":"생명장기\n재보험", "자동차+일반":"자동차\n+일반",
     "기타(사업비용)":"기타\n사업비", "보험손익":"보험손익", "투자손익":"투자손익",
     "영업외손익":"영업외", "법인세":"법인세", "당기순이익":"당기\n순이익",
@@ -1084,11 +1118,11 @@
     "재보험금융손익(OCI)":"재보험\n금융(OCI)", "기타 포괄손익":"기타\n포괄손익", "미분류 잔차":"미분류\n잔차",
     "FVOCI 지분증권":"FVOCI\n지분증권", "총포괄손익":"총포괄\n손익",
   };
-  // 툴팁 보조 한 줄. 항목32는 "미분류"가 아니라 내용이 규명된 묶음이라 무엇이 들어 있는지 밝힌다
+  // 툴팁 보조 한 줄. 항목34는 "미분류"가 아니라 내용이 규명된 묶음이라 무엇이 들어 있는지 밝힌다
   // (24사·14종 계정 실측 — data/_derived/pl_oci_item32_provenance.json, 읽기 전용 참고).
   const PL_TIP_NOTE = {
     "기타 포괄손익": "확정급여 재측정 · 신용손실충당금 · 자산재평가 · 해외사업환산 · 지분법 OCI 등",
-    "미분류 잔차": "기타포괄손익 총액(25) − 세부 합. 남아 있으면 원천 공시 자체의 불일치",
+    "미분류 잔차": "기타포괄손익 총액(27) − 세부 합. 남아 있으면 원천 공시 자체의 불일치",
   };
 
   // 모바일 x축 전용 라벨(한 줄 · 45도 회전). 좁은 화면에서는 막대 하나에 20px 남짓이라 두 줄
@@ -1096,7 +1130,7 @@
   // 눌리므로 이름도 같이 줄인다. "원수" 접두는 패널 제목·캡션에 이미 있고, 전체 이름은 툴팁과
   // 아래 표에 그대로 남는다. 재보험사 축(생명 수재 …)은 이 표에 없어 bar.ko가 그대로 쓰인다.
   const PL_WRAP_M = {
-    "원수 CSM상각":"CSM상각", "원수 위험조정":"위험조정", "원수 예실차":"예실차",
+    "원수 CSM상각":"CSM상각", "원수 위험조정":"위험조정", "원수 예실차":"예실차", "원수 손실부담계약":"손실부담계약", "원수 발생사고요소조정":"발생사고요소조정",
     "기타 원수손익":"기타원수", "생명장기재보험":"재보험", "기타(사업비용)":"사업비",
     "영업외손익":"영업외",
   };
@@ -1149,10 +1183,11 @@
     // y축 눈금 라벨의 소수 자릿수를 **눈금 간격에서 역산**한다. 종전엔 maximumFractionDigits:1
     // 고정이라 간격이 0.05조·0.25조로 잡히는 회사에서 이웃 눈금이 같은 라벨로 찍혔다
     // (예: 0.05·0.10 이 둘 다 "0.1"). 전수 213건 중 197건이 코리안리 밖이었다.
-    const plYDec=(x=>{ for(let d=0; d<=3; d++){ const m=x*Math.pow(10,d);
-      if(Math.abs(m-Math.round(m))<1e-9) return d; } return 3; })(plYStep/1e6);
     const plYMin=Math.floor((_lo-_base*0.06)/plYStep)*plYStep;
     const plYMax=Math.ceil((_hi+_base*0.06)/plYStep)*plYStep;
+    // 값축 단위(owner 2026-11-04): 축 범위 절댓값 최댓값이 1조 미만이면 억원, 아니면 조원 — 차트마다 하나. 막대 라벨은 fmtJoEok 로 막대마다 따로.
+    const plAx = axisUnitOf(Math.max(Math.abs(plYMin), Math.abs(plYMax)));
+    const plYDec = axisDecOf(plYStep/plAx.div);
 
     // 초기 표시 창: 실제 차트 폭(el.clientWidth)을 막대당 약 56px로 나눠 잡는다. 미디어쿼리 폭은
     // 사이드바·줌 때문에 차트 폭과 다르다. x축 라벨이 두 줄이라 56px 정도가 필요하다.
@@ -1178,10 +1213,9 @@
         formatter(items){
           const i=items[0].dataIndex; const bar=bars[i]; if(!bar) return "";
           if(bar.value==null) return `<b>${bar.ko}</b><br/>데이터 없음`;
-          const jo=bar.value/1e6, eok=bar.value/100;
           const sign = bar.value<0 ? "△" : (bar.role==="flow" ? "+" : "");
           const note = PL_TIP_NOTE[bar.ko] ? `<br/><span style="color:${TH.muted};font-size:11px">${PL_TIP_NOTE[bar.ko]}</span>` : "";
-          return `<b>${bar.ko}</b><br/>${sign}${Math.abs(jo).toLocaleString("ko-KR",{maximumFractionDigits:2})}조 (${sign}${Math.abs(eok).toLocaleString("ko-KR",{maximumFractionDigits:0})}억)${note}`;
+          return `<b>${bar.ko}</b><br/>${sign}${fmtJoEokTip(bar.value)}${note}`;
         },
       }),
       // x 라벨이 두 줄이라 슬라이더를 켜면 bottom을 더 줘야 한다(38이면 라벨 위에 슬라이더가 겹친다).
@@ -1195,10 +1229,10 @@
         axisTick:{ show:false },
       },
       yAxis:{
-        type:"value", name:"조원",
+        type:"value", name:plAx.name,
         min: plYMin, max: plYMax, interval: plYStep,
         nameTextStyle:{ color:TH.muted, fontSize:11 },
-        axisLabel:{ color:TH.muted, fontSize:isMobile?9:12, formatter:v=> (v<0?"△":"")+Math.abs(v/1e6).toLocaleString("ko-KR",{minimumFractionDigits:plYDec,maximumFractionDigits:plYDec}) },
+        axisLabel:{ color:TH.muted, fontSize:isMobile?9:12, formatter:v=> (v<0?"△":"")+Math.abs(v/plAx.div).toLocaleString("ko-KR",{minimumFractionDigits:plYDec,maximumFractionDigits:plYDec}) },
         splitLine:{ lineStyle:{ color:TH.grid } },
       },
       dataZoom,
@@ -1238,11 +1272,11 @@
             return { type:"polyline", shape:{ points:pts }, style:{ stroke:TH.bg, lineWidth:2.5, fill:null } };
           };
           const isTot = bar.role!=="flow";
-          const txt = (bar.value<0?"△":(bar.role==="flow"?"+":""))+plFmtJo(Math.abs(bar.value),2)+(isTot?"조":"");
+          const txt = (bar.value<0?"△":(bar.role==="flow"?"+":""))+fmtJoEok(bar.value);
           if(cutTop || cutBot){
             children.push(zig(cutTop?top+2:bot-2, cutTop?1:-1));
-            // 잘린 막대는 축 눈금으로 크기를 읽을 수 없으므로 단위(조)를 라벨에 반드시 붙인다.
-            const lab=(isTot?txt:txt+"조")+(cutTop?" ↑":" ↓");
+            // 잘린 막대는 축 눈금으로 크기를 읽을 수 없으므로 단위가 붙은 라벨(억/조)을 쓴다.
+            const lab=txt+(cutTop?" ↑":" ↓");
             const lw=Math.max(40, lab.length*8), ly=cutTop?(top+16):(bot-16);
             children.push({ type:"rect", shape:{ x:xPix-lw/2, y:ly-8, width:lw, height:16, r:3 },
               style:{ fill:TH.bg } });
@@ -1365,8 +1399,8 @@
   // (owner 2026-08-30). 차트는 이 함수를 타지 않는다 — 워터폴은 스텝을 다 그려야 다리가 이어진다.
   //
   // 총포괄손익(role=end)은 합계 행이라 그룹에 넣지 않고 그대로 남긴다.
-  // 그룹 합계는 회사가 공시한 **항목25(기타포괄손익 총액)** 를 쓴다(24+25=31 이 전 36사 전 분기
-  // 오차 0). 25가 없는 분기에서만 세부 합으로 대체하고 그 사실을 title 로 밝힌다.
+  // 그룹 합계는 회사가 공시한 **항목27(기타포괄손익 총액)** 를 쓴다(26+27=33 이 전 36사 전 분기
+  // 오차 0). 27이 없는 분기에서만 세부 합으로 대체하고 그 사실을 title 로 밝힌다.
   function plOciGroupDefs(defs){
     const parts = defs.filter(d=> d.oci && d.role !== "end" && !d.ociAgg);
     if (parts.length <= 1) return defs;          // 접을 게 없으면 그대로
@@ -1403,8 +1437,11 @@
     const getters = periods.map(p=> plMakeGetter(name,p));
     const latest = periods[periods.length-1];
     const present = new Set(plBuildSteps(name, latest).map(s=>s.ko));
-    const defs = plOciGroupDefs(plStepDefsFor(name, latest).filter(d=> present.has(d.ko)));
+    // anyPeriod 스텝(원수 손실부담계약)은 최신 기간이 비어도 보이는 기간 중 하나에 값이 있으면 행을 둔다.
+    const defs = plOciGroupDefs(plStepDefsFor(name, latest).filter(d=> present.has(d.ko)
+      || (d.anyPeriod && getters.some(g=>{ const v=d.get(g); return v!=null && v!==0; }))));
     const gLast = getters[getters.length-1];
+    let lossShown = null, lossSubShown = false, incShown = null, incSubShown = false;   // ? 팝오버에 손실부담계약 설명을 붙일지 판단
 
     const headers = ["항목", ...periods.map(p=>p.label)];
     const rows = [];
@@ -1447,11 +1484,17 @@
         if(hasSub) for(const s of d.sub){
           // 세부 행의 값: 보통은 항목번호(num) 하나지만, 미분류 잔차처럼 계산식인 것도 있다.
           const sGet = s.get || (g=> g(s.num));
+          // hideNull = 보이는 기간 전부가 null 이면 행을 만들지 않는다(손실부담계약: 그 손실은 기타 안에 들어 있다).
+          if(s.hideNull && getters.every(g=> sGet(g)==null)) continue;
+          if(s.loss) lossSubShown = true;
+          if(s.inc) incSubShown = true;
           rows.push({ cls:"pl-resub "+cls, groups:base.concat([gk]), muted:true,
                       cells:[ (inOi?"　　└ ":"　└ ")+s.ko, ...getters.map(g=> fmtEok(sGet(g))) ] });
         }
         togGroups.push({ tog, gk, label:d.ko, title });
       } else {
+        if(d.loss) lossShown = d;
+        if(d.inc) incShown = d;
         rows.push({ groups:base, muted:inOi, bold:(d.role==="anchor"||d.role==="end"),
                     cells:[ (inOi?"　└ ":"")+d.ko, ...getters.map(g=> fmtEok(d.get(g))) ] });
       }
@@ -1483,10 +1526,30 @@
       : (togGroups.length
           ? " · " + (togGroups.length>1 ? "LOB 각 행" : togGroups[0].label) + " ＋ 클릭 시 세부"
           : "");
+    // 손실부담계약 행이 실제로 나온 표에만 설명을 붙인다(설명은 ? 팝오버 안에만 — 라벨은 공시 표 이름 그대로).
+    let lossHelp = "";
+    const lossTxt = "공시 주석의 ‘손실부담계약(집합)의 손실 및 환입’ 행입니다(보험서비스비용 표, 이 표가 없는 회사는 보험계약부채 변동표의 손실요소 행). 손실은 △, 환입은 +로 표시합니다. 손실요소배분액을 이 행에 포함하는 기준이 회사마다 달라 회사 간 직접 비교에는 주의가 필요합니다. ";
+    const incTxt = "공시 주석의 ‘발생사고요소조정’ 행입니다(발생사고부채의 조정으로 당기 손익에 반영된 과거 서비스 관련 변동; 보험서비스비용 표, 이 표가 없는 회사는 보험계약부채 변동표의 대응 행). 유리한 조정은 +, 불리한 조정은 △로 표시합니다. 회사마다 표기 기준이 달라 회사 간 직접 비교에는 주의가 필요합니다. ";
+    if(lossShown || incShown){
+      const etc = defs.find(d=> d.ko==="기타 원수손익" || d.ko==="기타 손익");
+      const etcKo = etc ? etc.ko : "기타 원수손익";
+      const parts = ["CSM상각", "위험조정", "예실차"];
+      if(lossShown){
+        lossHelp += "<br><b>" + lossShown.ko + "</b>은 " + lossTxt + "이 행을 읽지 못한 회사·분기는 ‘" + etcKo + "’에 함께 들어 있습니다.";
+        parts.push(lossShown.ko.replace(/^원수 /, ""));
+      }
+      if(incShown){
+        lossHelp += "<br><b>" + incShown.ko + "</b>은 " + incTxt + "이 행을 읽지 못한 회사·분기는 ‘" + etcKo + "’에 함께 들어 있습니다.";
+        parts.push(incShown.ko.replace(/^원수 /, ""));
+      }
+      lossHelp += "<br><b>" + etcKo + "</b>은 원수손익에서 " + parts.join("·") + "을 뺀 나머지입니다.";
+    }
+    if(lossSubShown) lossHelp += "<br><b>손실부담계약</b>(수재 세부)은 " + lossTxt + "이 행을 읽지 못한 칸은 같은 수재 세부의 ‘기타’에 함께 들어 있습니다.";
+    if(incSubShown) lossHelp += "<br><b>발생사고요소조정</b>(수재 세부)은 " + incTxt + "이 행을 읽지 못한 칸은 같은 수재 세부의 ‘기타’에 함께 들어 있습니다.";
     const note=document.createElement("div"); note.className="small-muted"; note.style.marginTop="6px";
     note.innerHTML = "단위 억원(소수 반올림) · " + (mode==="quarter" ? "직전 4분기(당분기)" : "직전 3개년(연 누계)")
       + " · 음수 △"
-      + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표 읽는 법" aria-describedby="help-pl-table">?</button><span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-pl-table">당기순이익 이후 행은 <b>기타포괄손익(OCI) 구간</b>입니다.<br>&mdash; 는 해당 항목이 원천에 공시되지 않았다는 뜻입니다.</span></span>'
+      + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표 읽는 법" aria-describedby="help-pl-table">?</button><span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-pl-table">당기순이익 이후 행은 <b>기타포괄손익(OCI) 구간</b>입니다.<br>&mdash; 는 해당 항목이 원천에 공시되지 않았다는 뜻입니다.' + lossHelp + '</span></span>'
       + (subHint ? "<br><span style=\"opacity:.85\">" + subHint.replace(/^ · /, "") + "</span>" : "");
     box.appendChild(note);
   }
@@ -2941,7 +3004,7 @@
       renderWfWaterfall(host, wfName, wfMode);
       let bk = (wfMode==="quarter") ? wfQuarterBuckets(wfName) : wfYearBuckets(wfName);
       const range = bk.length ? (bk[0].label + " ~ " + bk[bk.length-1].label) : "";
-      q(host,"#wfMeta").textContent = (wfMode==="quarter"?"분기(당분기) 기준 · ":"연(YTD) 기준 · ") + range + " · 단위 억원(축은 조원) · 기초 → 변동(신계약·이자·가정/경험·상각) → 기말";
+      q(host,"#wfMeta").textContent = (wfMode==="quarter"?"분기(당분기) 기준 · ":"연(YTD) 기준 · ") + range + " · 단위 1조 미만은 억원, 1조 이상은 조 · 기초 → 변동(신계약·이자·가정/경험·상각) → 기말";
       renderWfTable(host, wfName, bk, wfMode);
     } else {
       if (charts.wf){ try{ charts.wf.dispose(); }catch(e){} charts.wf=null; }
@@ -3005,7 +3068,7 @@
     let plStubMsg = null;
     if (!plName) plStubMsg = "PL 분해 데이터 미수록 보험사입니다.";
     else if (!plPer) plStubMsg = "표시할 기간이 없습니다.";
-    else if (plVal(plName, plPer.q, 24, plPer.field) == null) plStubMsg = "해당 기간 당기순이익 데이터가 없습니다.";
+    else if (plVal(plName, plPer.q, PL_NUM.당기순이익, plPer.field) == null) plStubMsg = "해당 기간 당기순이익 데이터가 없습니다.";
     stub(q(host,"#plStub"), !!plStubMsg, plStubMsg);
 
     if (!plStubMsg){
@@ -3020,7 +3083,7 @@
       const _netAt = plBars.findIndex(b=> b.ko==="당기순이익");
       const plSeq = (plLobOn || plReOn)
         ? plBars.slice(0, _netAt<0 ? plBars.length : _netAt+1).map(b=> b.ko).join(" → ")
-        : "장기원수[CSM상각·위험조정·예실차·기타] → 생명장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익";
+        : "장기원수[CSM상각·위험조정·예실차·" + (plBars.some(b=> b.ko==="원수 손실부담계약") ? "손실부담계약·" : "") + (plBars.some(b=> b.ko==="원수 발생사고요소조정") ? "발생사고요소조정·" : "") + "기타] → 생명장기재보험 → 자동차+일반 → 기타 → 보험손익 → 투자손익 → 영업외 → (−)법인세 → 당기순이익";
       const plAria = q(host,"#chartPl");
       if (plAria) plAria.setAttribute("aria-label", plLobOn
         ? "당기순이익까지의 워터폴(보종별 수재·출재 분해) 차트"
@@ -3031,7 +3094,7 @@
       // 총포괄손익 미공시는 표에도 OCI 구간이 없으니 캡션에 명시 — 결측을 조용히 넘기지 않는다.
       const plOci = plOciModeOf(plName, plPer);
       const ociTail = plOci === "none" ? " · 총포괄손익 미공시(원천 보고서에 총포괄손익계산서 미수록)" : "";
-      q(host,"#plCap").innerHTML = "당기순이익 워터폴 · " + plPer.label + " · 단위 백만원(축은 조원)"
+      q(host,"#plCap").innerHTML = "당기순이익 워터폴 · " + plPer.label + " · 단위 1조 미만은 억원, 1조 이상은 조"
         + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="계정 흐름 설명" aria-describedby="help-pl-flow">?</button>'
         + '<span class="iq-help-pop" role="tooltip" id="help-pl-flow"><b>계정 흐름</b><br>' + plSeq + ociTail
         + '</span></span>';
