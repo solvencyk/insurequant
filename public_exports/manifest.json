@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-04T17:14:35Z",
+  "generated_at_utc": "2026-11-07T14:40:16Z",
   "license": "All rights reserved. 열람·출처표기 인용·사내 분석은 자유, 자동수집(크롤링)으로 통째 긁어가기·대량 재배포·재판매는 금지.",
   "terms_url": "https://www.insurequant.com/privacy.html#terms",
   "copyright": "(c) 2026 InsureQuant (운영자 조상욱). 원천 수치의 권리는 각 공시 주체에게 있음.",
-  "build_id": "9d15275c",
+  "build_id": "1d12560a",
   "sheets": {
     "17BS": {
       "rows": 11016,
@@ -84,6 +84,11 @@
       "rows": 162,
       "quarter_min": "2024.4Q",
       "quarter_max": "2025.4Q"
+    },
+    "CSM워터폴포트폴리오": {
+      "rows": 2120,
+      "quarter_min": "2024.4Q",
+      "quarter_max": "2026.2Q"
     }
   }
 }
