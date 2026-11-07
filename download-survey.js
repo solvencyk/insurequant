@@ -41,7 +41,10 @@
     { name: "자본비율전망", file: "public_exports/자본비율전망.json", code: "FWD", label: "자본비율 5년 전망 (2026~2030)" },
     { name: "금리듀레이션갭", file: "public_exports/금리듀레이션갭.json", code: "DGAP", label: "K-ICS 금리 듀레이션 갭" },
     { name: "보험계약부채", file: "public_exports/보험계약부채.json", code: "ILP", label: "보험계약부채 (잔여보장·발생사고요소)" },
-    { name: "보험금예실차비율", file: "public_exports/보험금예실차비율.json", code: "AE", label: "보험금 예실차비율 (연말 공시)" }
+    { name: "보험금예실차비율", file: "public_exports/보험금예실차비율.json", code: "AE", label: "보험금 예실차비율 (연말 공시)" },
+    // 2026-11-07 추가. IFRS17.html 섹션 2 구분 보기(유배당·무배당·변액)의 원천. 순서는 MASTERS 와 같다.
+    // 값_당분기 는 CSM워터폴과 같은 텍스트 열이라 NUMERIC_COLS 에 넣지 않는다.
+    { name: "CSM워터폴포트폴리오", file: "public_exports/CSM워터폴포트폴리오.json", code: "CSMP", label: "CSM 워터폴 (유배당·무배당·변액 구분)" }
   ];
   var MANIFEST_FILE = "public_exports/manifest.json";
   // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
