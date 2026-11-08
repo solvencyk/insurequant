@@ -5,13 +5,11 @@
 // 짧은 방명록(소속/업권/데이터 목록) 남기면 선택 시트 + 출처 표지가 담긴 xlsx 1개를 바로 받는다.
 // 사용: <script src="download-survey.js" data-default-sheet="KICS"></script>
 // data-default-sheet(선택) = 팝업 열릴 때 미리 체크해둘 SHEETS[].code — 화면별 대표 데이터셋.
-// 코드 하나("KICS") 또는 쉼표로 여러 개("CSMWF,CSMP")를 받는다.
 (function () {
   "use strict";
 
   var _scriptEl = document.currentScript;
-  var DEFAULT_SHEETS = ((_scriptEl && _scriptEl.dataset) ? (_scriptEl.dataset.defaultSheet || "") : "")
-    .split(",").map(function (c) { return c.trim(); }).filter(Boolean);
+  var DEFAULT_SHEET = (_scriptEl && _scriptEl.dataset) ? (_scriptEl.dataset.defaultSheet || "") : "";
 
   // name = 화면 표시·설문 응답용 라벨. file = public_exports/ 스냅샷(루트 마스터 JSON을 그대로
   // 읽지 않음 — 공유 워킹트리에서 다른 세션이 그 파일을 수정 중일 수 있어, 커밋된 상태로 미리
@@ -21,7 +19,9 @@
     { name: "17BS", file: "public_exports/17BS.json", code: "BS", label: "재무상태표 (17BS)" },
     { name: "K-ICS공시", file: "public_exports/K-ICS공시.json", code: "KICS", label: "K-ICS 지급여력 공시" },
     { name: "금리민감도", file: "public_exports/금리민감도.json", code: "RATE", label: "K-ICS 금리민감도" },
-    { name: "CSM워터폴", file: "public_exports/CSM워터폴.json", code: "CSMWF", label: "CSM 워터폴" },
+    // 2026-11-08(owner): fold = 이 시트 한 장에 합계 행(포트폴리오 「전체」)과 아래 숨김 시트의 구분 행을 이어 붙여 낸다
+    // (downloadSheets 의 composeFold). 구분 표는 2024.4Q 부터·28사뿐이라 합계 행은 그대로 둔다.
+    { name: "CSM워터폴", file: "public_exports/CSM워터폴.json", code: "CSMWF", label: "CSM 워터폴 (유배당·무배당·변액 구분 포함)", fold: "CSM워터폴포트폴리오" },
     { name: "CSM상각", file: "public_exports/CSM상각.json", code: "CSMAM", label: "CSM 상각 스케줄" },
     // 2026-08-30 신설. IFRS17.html "7) 민감도(ΔCSM)" 패널의 원천 — 위 "금리민감도"(K-ICS
     // 지급여력비율의 금리 ±bp 민감도)와 이름이 비슷하지만 다른 표다(보험가정 충격의 ΔCSM).
@@ -46,7 +46,8 @@
     { name: "보험금예실차비율", file: "public_exports/보험금예실차비율.json", code: "AE", label: "보험금 예실차비율 (연말 공시)" },
     // 2026-11-07 추가. IFRS17.html 섹션 2 구분 보기(유배당·무배당·변액)의 원천. 순서는 MASTERS 와 같다.
     // 값_당분기 는 CSM워터폴과 같은 텍스트 열이라 NUMERIC_COLS 에 넣지 않는다.
-    { name: "CSM워터폴포트폴리오", file: "public_exports/CSM워터폴포트폴리오.json", code: "CSMP", label: "CSM 워터폴 (유배당·무배당·변액 구분)" }
+    // 2026-11-08: hidden = 체크리스트에 안 그린다. 위 「CSM워터폴」 시트에 합쳐 나간다(별도 시트로는 안 낸다).
+    { name: "CSM워터폴포트폴리오", file: "public_exports/CSM워터폴포트폴리오.json", code: "CSMP", label: "CSM 워터폴 (유배당·무배당·변액 구분)", hidden: true }
   ];
   var MANIFEST_FILE = "public_exports/manifest.json";
   // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
@@ -101,6 +102,11 @@
   var DEPT_KEY = "iqSurveyDept_v1";
   var DISCLAIMER_TEXT = "본 데이터는 공시자료를 자동으로 수집·가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 오류 발견 시 화면의 우측 하단 버튼을 통해 제보 부탁드립니다.";
   var SOURCE_URL = "https://www.insurequant.com";
+  var CSM_FOLD_HOST = "CSM워터폴";
+  var CSM_FOLD_NOTE = "합계와 구분을 함께 더하면 이중으로 계상됩니다. 포트폴리오 열이 「전체」인 행은 회사 합계이고, 유배당·무배당·변액·유배당 외·기타 행은 발행사가 배당유형별 CSM 롤포워드 표에 인쇄한 구분입니다(2024.4Q 부터, 구분 공시가 있는 회사만). 발행사가 비교 기간을 재작성한 경우 구분 합이 합계와 다를 수 있습니다.";
+  // 합성 시트 열 순서·포트폴리오 정렬 순서(합계 행의 포트폴리오 값은 「전체」).
+  var FOLD_COLS = ["원수사명", "티커", "생손보여부", "포트폴리오", "항목번호", "항목명", "공시분기", "값", "값_당분기"];
+  var FOLD_RANK = ["전체", "유배당", "무배당", "변액", "유배당 외", "기타"];
 
   function el(tag, attrs, children) {
     var e = document.createElement(tag);
@@ -121,9 +127,10 @@
   function sheetChecklist() {
     var grid = el("div", { class: "iq-check-grid" });
     SHEETS.forEach(function (s) {
+      if (s.hidden) return; // 다른 시트에 합쳐 나가는 짝(fold) — 단독 선택 불가
       var id = "iqdl-sheet-" + s.name;
       var cb = el("input", { type: "checkbox", id: id, value: s.name });
-      if (DEFAULT_SHEETS.indexOf(s.code) !== -1) cb.checked = true;
+      if (DEFAULT_SHEET && s.code === DEFAULT_SHEET) cb.checked = true;
       grid.appendChild(el("label", { class: "iq-check-row", for: id }, [cb, document.createTextNode(s.label)]));
     });
     return grid;
@@ -229,9 +236,43 @@
     ];
     // build_id 는 export_public_sheets.py 가 manifest 에 넣는다 — 구 스냅샷엔 없으므로 있을 때만.
     if (manifest && manifest.build_id) rows.push({ 항목: "빌드 ID", 내용: String(manifest.build_id) });
+    // 합계 행과 구분 행이 한 시트에 같이 나가므로 이중 계상 경고는 필수(owner 2026-11-08). 경고가 첫 문장이다.
+    if (names.indexOf(CSM_FOLD_HOST) !== -1) rows.push({ 항목: "CSM워터폴 안내", 내용: CSM_FOLD_NOTE });
     var ws = XLSX.utils.json_to_sheet(rows, { skipHeader: true });
     ws["!cols"] = [{ wch: 20 }, { wch: 70 }];
     return ws;
+  }
+
+  function fetchJsonStrict(url) {
+    return fetch(url).then(function (r) {
+      if (!r.ok) throw new Error(url + " HTTP " + r.status);
+      return r.json();
+    });
+  }
+
+  // 합계 스냅샷 + 구분 스냅샷의 단순 연결(값은 건드리지 않는다). 정렬 = 회사(합계 스냅샷의 첫 등장 순, 합계에 없는
+  // 회사는 구분 스냅샷 첫 등장 순으로 뒤) -> 공시분기 -> 포트폴리오(FOLD_RANK) -> 항목번호. 합계 행이 없는 구분 행도 버리지 않는다.
+  function composeFold(totalRows, splitRows) {
+    var co = {}, n = 0;
+    totalRows.concat(splitRows).forEach(function (r) {
+      if (!Object.prototype.hasOwnProperty.call(co, r["원수사명"])) co[r["원수사명"]] = n++;
+    });
+    var rows = totalRows.map(function (r) { return foldRow(r, "전체"); })
+      .concat(splitRows.map(function (r) { return foldRow(r, r["포트폴리오"]); }));
+    function rank(p) { var i = FOLD_RANK.indexOf(p); return i < 0 ? FOLD_RANK.length : i; }
+    rows.sort(function (a, b) {
+      return (co[a["원수사명"]] - co[b["원수사명"]]) ||
+        (a["공시분기"] < b["공시분기"] ? -1 : a["공시분기"] > b["공시분기"] ? 1 : 0) ||
+        (rank(a["포트폴리오"]) - rank(b["포트폴리오"])) ||
+        (a["포트폴리오"] < b["포트폴리오"] ? -1 : a["포트폴리오"] > b["포트폴리오"] ? 1 : 0) ||
+        (a["항목번호"] - b["항목번호"]);
+    });
+    return rows;
+  }
+  function foldRow(r, portfolio) {
+    var out = {};
+    FOLD_COLS.forEach(function (k) { out[k] = (k === "포트폴리오") ? portfolio : r[k]; });
+    return out;
   }
 
   // 선택 시트 + 표지("요약")를 시트 탭 여러 개짜리 xlsx 1개로 묶어 다운로드(zip 아님).
@@ -243,6 +284,13 @@
     XLSX.utils.book_append_sheet(wb, buildCoverSheet(names, manifest), "요약");
     var dataList = await Promise.all(names.map(function (name) {
       var meta = SHEETS.filter(function (s) { return s.name === name; })[0];
+      if (meta.fold) {
+        // 두 스냅샷 중 하나라도 못 불러오면 reject -> 다운로드 실패(반쪽 시트를 조용히 내려주지 않는다).
+        var other = SHEETS.filter(function (s) { return s.name === meta.fold; })[0];
+        return Promise.all([fetchJsonStrict(meta.file), fetchJsonStrict(other.file)]).then(function (two) {
+          return composeFold(two[0], two[1]);
+        });
+      }
       return fetch(meta.file).then(function (r) { return r.json(); });
     }));
     names.forEach(function (name, i) {
