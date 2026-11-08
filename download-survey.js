@@ -5,11 +5,13 @@
 // 짧은 방명록(소속/업권/데이터 목록) 남기면 선택 시트 + 출처 표지가 담긴 xlsx 1개를 바로 받는다.
 // 사용: <script src="download-survey.js" data-default-sheet="KICS"></script>
 // data-default-sheet(선택) = 팝업 열릴 때 미리 체크해둘 SHEETS[].code — 화면별 대표 데이터셋.
+// 코드 하나("KICS") 또는 쉼표로 여러 개("CSMWF,CSMP")를 받는다.
 (function () {
   "use strict";
 
   var _scriptEl = document.currentScript;
-  var DEFAULT_SHEET = (_scriptEl && _scriptEl.dataset) ? (_scriptEl.dataset.defaultSheet || "") : "";
+  var DEFAULT_SHEETS = ((_scriptEl && _scriptEl.dataset) ? (_scriptEl.dataset.defaultSheet || "") : "")
+    .split(",").map(function (c) { return c.trim(); }).filter(Boolean);
 
   // name = 화면 표시·설문 응답용 라벨. file = public_exports/ 스냅샷(루트 마스터 JSON을 그대로
   // 읽지 않음 — 공유 워킹트리에서 다른 세션이 그 파일을 수정 중일 수 있어, 커밋된 상태로 미리
@@ -121,7 +123,7 @@
     SHEETS.forEach(function (s) {
       var id = "iqdl-sheet-" + s.name;
       var cb = el("input", { type: "checkbox", id: id, value: s.name });
-      if (DEFAULT_SHEET && s.code === DEFAULT_SHEET) cb.checked = true;
+      if (DEFAULT_SHEETS.indexOf(s.code) !== -1) cb.checked = true;
       grid.appendChild(el("label", { class: "iq-check-row", for: id }, [cb, document.createTextNode(s.label)]));
     });
     return grid;
