@@ -1,7 +1,7 @@
 // InsureQuant — 마스터 데이터 다운로드 방명록 (4페이지 공통, 2026-08-28부터).
 // GitHub Pages는 서버 없는 정적 호스팅이라 마스터 데이터 자체는 접근 제한이 없다(다른 페이지들도
 // 이미 fetch로 그대로 공개). 그래서 이 폼은 접근 통제가 아니라 방명록이다 — 정직하게 그렇게
-// 안내한다(inbox/designer/20260828T0300Z, orchestrator+owner).
+// 안내한다(2026-08-28, orchestrator+owner).
 // 짧은 방명록(소속/업권/데이터 목록) 남기면 선택 시트 + 출처 표지가 담긴 xlsx 1개를 바로 받는다.
 // 사용: <script src="download-survey.js" data-default-sheet="KICS"></script>
 // data-default-sheet(선택) = 팝업 열릴 때 미리 체크해둘 SHEETS[].code — 화면별 대표 데이터셋.
@@ -13,7 +13,7 @@
 
   // name = 화면 표시·설문 응답용 라벨. file = public_exports/ 스냅샷(루트 마스터 JSON을 그대로
   // 읽지 않음 — 공유 워킹트리에서 다른 세션이 그 파일을 수정 중일 수 있어, 커밋된 상태로 미리
-  // 떠둔 스냅샷만 공개한다. scripts/export_public_sheets.py 참조).
+  // 떠둔 스냅샷만 공개한다. 내보내기 스크립트 참조).
   // code = 파일명에 박는 축약(예: insurequant_20260828_KICS_PL.xlsx).
   var SHEETS = [
     { name: "17BS", file: "public_exports/17BS.json", code: "BS", label: "재무상태표 (17BS)" },
@@ -36,7 +36,7 @@
     //  SheetJS json_to_sheet는 전 행의 키 합집합으로 헤더를 만든다 — 실측 확인 2026-08-29).
     { name: "기본자본소진율", file: "public_exports/기본자본소진율.json", code: "T1", label: "기본자본 소진율 (신종자본증권)" },
     { name: "보완자본소진율", file: "public_exports/보완자본소진율.json", code: "T2", label: "보완자본 소진율 (후순위채)" },
-    // 2026-10-11 추가 3종. 순서는 scripts/export_public_sheets.py MASTERS 와 같다. 자본성증권발행현황·
+    // 2026-10-11 추가 3종. 순서는 내보내기 스크립트의 MASTERS 와 같다. 자본성증권발행현황·
     // 금리듀레이션갭은 스냅샷·manifest 에 이미 있었는데 이 목록에서만 빠져 있었다(의도된 비공개 아님 —
     // 둘 다 공개 시트로 검증 게이트를 통과한다). 보험계약부채는 IFRS17.html 섹션 3 의 원천.
     { name: "자본성증권발행현황", file: "public_exports/자본성증권발행현황.json", code: "CAPSEC", label: "자본성증권 발행현황 (증권별)" },
@@ -50,7 +50,7 @@
     { name: "CSM워터폴포트폴리오", file: "public_exports/CSM워터폴포트폴리오.json", code: "CSMP", label: "CSM 워터폴 (유배당·무배당·변액 구분)", hidden: true }
   ];
   var MANIFEST_FILE = "public_exports/manifest.json";
-  // build_master_xlsx.py coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
+  // 마스터 xlsx 빌더 coerce()의 NUMERIC_COLS와 동일 — 공식 마스터 xlsx와 같은 컬럼만
   // 숫자 셀로, 나머지(티커 등)는 텍스트 유지(안 그러면 "000060"의 앞자리 0이 날아감).
   var NUMERIC_COLS = { "값": 1, "-100bp": 1, "-50bp": 1, "base": 1, "+50bp": 1, "+100bp": 1,
     "상각액": 1, "신계약CSM_연누계": 1, "월납월초보험료_연누계": 1, "신계약CSM배수_연누계": 1 };
@@ -234,7 +234,7 @@
       // 지문(fingerprint) 행 — 파일이 돌아다닐 때 출처·이용조건이 같이 간다(2026-09-11).
       { 항목: "이용 조건", 내용: "출처 표시 인용·사내 분석 가능, 자동수집·재배포·재판매 금지. " + SOURCE_URL + "/privacy.html#terms" }
     ];
-    // build_id 는 export_public_sheets.py 가 manifest 에 넣는다 — 구 스냅샷엔 없으므로 있을 때만.
+    // build_id 는 내보내기 스크립트가 manifest 에 넣는다 — 구 스냅샷엔 없으므로 있을 때만.
     if (manifest && manifest.build_id) rows.push({ 항목: "빌드 ID", 내용: String(manifest.build_id) });
     // 합계 행과 구분 행이 한 시트에 같이 나가므로 이중 계상 경고는 필수(owner 2026-11-08). 경고가 첫 문장이다.
     if (names.indexOf(CSM_FOLD_HOST) !== -1) rows.push({ 항목: "CSM워터폴 안내", 내용: CSM_FOLD_NOTE });
@@ -509,7 +509,7 @@
     });
 
     // localStorage로 방명록을 스킵해도 다운로드 이벤트 자체는 매번 기록한다(재방문자 다운로드가
-    // 통째로 안 잡히는 걸 막기 위해 — inbox/designer/20260828T0300Z 추가요청) — 이전 응답을
+    // 통째로 안 잡히는 걸 막기 위해 — 2026-08-28 추가요청) — 이전 응답을
     // 조용히 재전송, 다운로드를 막지는 않음(fire-and-forget).
     form.addEventListener("submit", function (e) {
       e.preventDefault();

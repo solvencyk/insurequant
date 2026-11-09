@@ -232,9 +232,9 @@ header.has-share .header-row{ padding-right:84px; }
 }
 
 /* — Header select row (보험사 선택, sticky header, owner 2026-09-21) ——————————
-   Hoisted 2026-09-21 from K-ICS.html's page-local <style> (first shipped there,
-   commit 3573509) once IFRS17.html/공시보고서.html needed the identical row —
-   design-system single-source rule (docs/agents/claude-agent-designer.md §5).
+   Hoisted 2026-09-21 from K-ICS.html's page-local <style> (first shipped there)
+   once IFRS17.html/공시보고서.html needed the identical row —
+   design-system single-source rule (designer guide §5).
    theme.js hdrH() measures the header at runtime, so this row's height
    auto-feeds --iq-hdr-h; no hardcoding needed here. */
 .header-select-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}

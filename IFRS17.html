@@ -8,7 +8,7 @@
   <title>InsureQuant — IFRS17</title>
   <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
        integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
-       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). SRI 계산 대상에 등재하지 말 것.
        인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
   <script>
@@ -247,14 +247,14 @@
 
   <template id="dashTpl">
         <div class="panel" id="sec-bs" data-pane="bs" data-share-section="재무상태표">
-      <!-- 2026-08-14 owner 발주(inbox/designer/20260814T1250Z, bs_taccount_top_panel): 최상단 이동
+      <!-- 2026-08-14 owner 발주(bs_taccount_top_panel): 최상단 이동
            + T자(왼쪽 자산·우상단 부채·우하단 자본) + 섹션당 2단계 드릴다운(총계→세부). 데이터는
            IFRS17_BS.json에 parser가 추가 예정인 섹션/레벨 2열 계약으로 구동 — 항목번호 하드코딩 없이
            섹션으로 T배치, 레벨로 총계/세부 구분. 파서 랜딩 전(현재)엔 EQ_SECTION_LEVEL_BRIDGE로
            기존 항목 1-7만 임시 매핑(4=자본/L2, 5·6·7=준비금/L2) — 실 컬럼이 생기면 자동으로 밀려남.
            과거 equity_composition.json 스키마용 L2/L3 죽은 코드(renderBsL2 등)는 이번에 진짜 삭제함
            (08-14b/c 두 번 보존했지만 새 섹션/레벨 계약과 구조가 달라 재사용 불가 — 이력은
-           docs/changelog_designer.md 2026-08-14d). -->
+           designer changelog 2026-08-14d). -->
       <h2>1) 재무상태표 (자산 = 부채 + 자본)</h2>
       <div class="small-muted" id="bsCap"></div>
       <div id="bsStub" class="stub-msg" style="display:none"></div>
@@ -443,12 +443,12 @@
     plx: [resolveUrl("PL_breakdown.json")],
     nbm: dataPaths("NB_CSM_multiple.json", "NB_CSM_multiple.json"),
     eqx: [resolveUrl("IFRS17_BS.json")],
-    // 섹션 8·9 패널 JSON — 마스터(손해율·유지율 시트)의 파생. 빌더 scripts/viz_build_persistency_lossratio_panels.py
+    // 섹션 8·9 패널 JSON — 마스터(손해율·유지율 시트)의 파생.
     lr: [resolveUrl("data/loss_ratio/panel_loss_ratio.json")],
-    // 섹션 8 비교 단위 목록(units · default_unit · unit_note · unit_rule)과 회사 업권은 사별 비교 패널의 loss_curve 에서 읽는다 — 단위 정의는 한 곳(빌더 scripts/viz_build_compare_panel.py). 없으면 단위 선택지를 두지 않는다.
+    // 섹션 8 비교 단위 목록(units · default_unit · unit_note · unit_rule)과 회사 업권은 사별 비교 패널의 loss_curve 에서 읽는다 — 단위 정의는 한 곳(빌더). 없으면 단위 선택지를 두지 않는다.
     cmp: [resolveUrl("data/compare/panel_compare.json")],
     ps: [resolveUrl("data/persistency/panel_persistency.json")],
-    // 섹션 3 콤보 차트·표 — 빌더 scripts/viz_build_csm_combo_panel.py (잔여보장요소 2-4 + 발생사고요소 추정)
+    // 섹션 3 콤보 차트·표 — 빌더 (잔여보장요소 2-4 + 발생사고요소 추정)
     cc: [resolveUrl("data/csm_combo/panel_csm_combo.json")],
   };
 
@@ -478,7 +478,7 @@
     eqx: new Map(),
   };
   // 회사코드(KR0001…) 기반 매칭. 새 마스터(CSM_waterfall.json)가 코드↔이름 등록부.
-  const codeToName = {};   // 'KR0001' → '메리츠화재해상보험'
+  const codeToName = Object.create(null);   // 'KR0001' → '메리츠화재해상보험'
   const codeToSector = {};   // 'KR0001' → 마스터의 생손보여부 값(구분 보기 안내문 분기용; 회사 목록을 코드에 박지 않는다)
   const nbByCode = {};     // 'KR0008' → NB spec (boot에서 NB_LOOKUP를 코드로 재키잉)
 
@@ -552,6 +552,8 @@
     return neg ? -n : n;
   }
 
+  // HTML 문자열(innerHTML, ECharts 툴팁)에 끼워 넣는 값에만 쓴다. textContent 에는 쓰지 않는다(이중 이스케이프).
+  function hEsc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
   function fmtNum(v, maxFrac){
     if (v == null || v === "") return "-";
     if (typeof v === "number"){
@@ -1047,9 +1049,9 @@
         formatter(items){
           if(!items || !items.length) return "";
           const i=items[0].dataIndex; const bar=bars[i]; if(!bar) return "";
-          const head = bar.kind==="comp"
+          const head = hEsc(bar.kind==="comp"
             ? `${bar.comp.full} · ${bar.period}`
-            : `${bar.kind==="open"?"기초":"기말"} CSM · ${bar.period}`;
+            : `${bar.kind==="open"?"기초":"기말"} CSM · ${bar.period}`);
           if(bar.value==null){
             if(!view) return `<b>${head}</b><br/>데이터 없음`;
             const r = wfpReasonOf(company, bar.q, view.seg, bar.comp.nums[0], mode==="quarter"?"q":"y");
@@ -1110,15 +1112,15 @@
     원수CSM상각:4, 원수RA:5, 원수예실차:6, 손실부담:7, 발생사고:8, 기타원수:9, 재보험:10,
     자동차:15, 일반:16, 기타수익:17, 기타비용:18,
     보험손익:1, 투자손익:19, 영업외:23, 법인세:25, 당기순이익:26,
-    // 총포괄손익 구간(parser 4cca165 신설). 실데이터 항등식: 26 + 27 = 33 (전 36사 전 분기 오차 0).
-    // 항목34(parser d634492 신설 당시 번호 32)까지 넣으면 27 = 28+29+30+31+32+34 가 대조가능 273셀 전부에서 닫힌다
+    // 총포괄손익 구간(parser 신설). 실데이터 항등식: 26 + 27 = 33 (전 36사 전 분기 오차 0).
+    // 항목34(parser 신설 당시 번호 32)까지 넣으면 27 = 28+29+30+31+32+34 가 대조가능 273셀 전부에서 닫힌다
     // (실측 2026-08-29: 이탈 0건, YTD 기준). 그 전에는 102개 회사-분기가 잔차 막대를 그렸다.
     기타포괄총액:27, FVOCI채무:28, 보험금융OCI:29, 위험회피:30, FVOCI지분:31, 재보험금융OCI:32, 총포괄손익:33,
     // ⚠ 표시 라벨 매핑: 마스터 항목명은 "기타 포괄손익(미분류)"이지만 화면에는 "기타 포괄손익"으로 쓴다.
     // 내용이 규명돼 있어("확정급여 재측정" 23사·"신용손실" 15사·"자산재평가" 14사·"해외사업환산" 6사·
-    // "관계기업 지분법 OCI" 6사 — data/_derived/pl_oci_item32_provenance.json, 24사·14종 계정)
+    // "관계기업 지분법 OCI" 6사 — 24사·14종 계정)
     // "미분류"가 사실과 다르고, 아래 잔차 막대(plOciResidual)와 이름이 겹친다. 마스터 항목명 자체는
-    // parser 소관이라 건드리지 않고 화면 라벨만 바꾼다(orchestrator 20260829T0700Z).
+    // parser 소관이라 건드리지 않고 화면 라벨만 바꾼다(orchestrator 20260829).
     기타OCI:34,
   };
 
@@ -1239,7 +1241,7 @@
   };
   const PL_STEP_DEFS_RE = PL_HEAD_DEFAULT.map(d=> PL_RE_LABEL[d.ko] ? Object.assign({}, d, PL_RE_LABEL[d.ko]) : d).concat(PL_TAIL);
 
-  // ── 재보험사 LOB 축 (2026-08-30, inbox/designer/20260830T0600Z — owner 지시) ─────────────
+  // ── 재보험사 LOB 축 (2026-08-30 — owner 지시) ─────────────
   // PL 스키마의 LOB 슬롯(item2 생명장기 · 13 자동차 · 14 일반)은 39사 공통 서식을 전제하지만 실제
   // 공시는 회사마다 다르다. 코리안리재보험처럼 LOB이 하나 더 있는 회사는 파서가 **하이픈 항목**
   // (`2-1`·`3-1`·`8-1`·`4-1`…)으로 두 번째 LOB 블록을 병렬로 실어 보낸다. 그 블록을 안 그리면
@@ -1254,11 +1256,11 @@
   // 회사코드가 남는 곳은 **화면 라벨 한 곳뿐**(PL_LOB_DISPLAY). 기본 블록의 마스터 항목명이
   // "생명장기 …"(전 회사 공통 슬롯 이름)라서 이 회사의 실제 LOB(생명)을 데이터에서 읽을 방법이
   // 없기 때문이다. **마스터 항목명은 검증 룰이 이름으로 매칭하므로 건드리지 않는다**
-  // (docs/domains/claude-agent-ifrs17.md §4.1b: "항목명은 스키마 전역이라 한 회사 때문에 바꾸면
+  // (ifrs17 도메인 문서 §4.1b: "항목명은 스키마 전역이라 한 회사 때문에 바꾸면
   //  나머지가 어긋난다 — 이 표가 그 간극을 메운다"). 매핑이 없는 회사는 아래 폴백 라벨로 뜬다.
   const PL_LOB_DISPLAY = {
     // 코리안리재보험 — 전업 재보험사라 스키마의 "원수"가 곧 **수재**다. 원문 LOB = 생명·장기·일반,
-    // **자동차는 컬럼 자체가 없다**(미해당 ≠ 결측 — 게이트 lob_na 축, b2f9660). item15(자동차)가 null이라
+    // **자동차는 컬럼 자체가 없다**(미해당 ≠ 결측 — 게이트 lob_na 축). item15(자동차)가 null이라
     // 아래 optional 규칙에 걸려 막대도, 회색 "미공시" 막대도 그리지 않는다.
     KR1000: { "": "생명", "1": "장기" },
   };
@@ -1380,7 +1382,7 @@
     "FVOCI 지분증권":"FVOCI\n지분증권", "총포괄손익":"총포괄\n손익",
   };
   // 툴팁 보조 한 줄. 항목34는 "미분류"가 아니라 내용이 규명된 묶음이라 무엇이 들어 있는지 밝힌다
-  // (24사·14종 계정 실측 — data/_derived/pl_oci_item32_provenance.json, 읽기 전용 참고).
+  // (24사·14종 계정 실측, 읽기 전용 참고).
   const PL_TIP_NOTE = {
     "기타 포괄손익": "확정급여 재측정 · 신용손실충당금 · 자산재평가 · 해외사업환산 · 지분법 OCI 등",
     "미분류 잔차": "기타포괄손익 총액(27) − 세부 합. 남아 있으면 원천 공시 자체의 불일치",
@@ -1473,10 +1475,10 @@
         trigger:"axis", axisPointer:{ type:"shadow" },
         formatter(items){
           const i=items[0].dataIndex; const bar=bars[i]; if(!bar) return "";
-          if(bar.value==null) return `<b>${bar.ko}</b><br/>데이터 없음`;
+          if(bar.value==null) return `<b>${hEsc(bar.ko)}</b><br/>데이터 없음`;
           const sign = bar.value<0 ? "△" : (bar.role==="flow" ? "+" : "");
           const note = PL_TIP_NOTE[bar.ko] ? `<br/><span style="color:${TH.muted};font-size:11px">${PL_TIP_NOTE[bar.ko]}</span>` : "";
-          return `<b>${bar.ko}</b><br/>${sign}${fmtJoEokTip(bar.value)}${note}`;
+          return `<b>${hEsc(bar.ko)}</b><br/>${sign}${fmtJoEokTip(bar.value)}${note}`;
         },
       }),
       // x 라벨이 두 줄이라 슬라이더를 켜면 bottom을 더 줘야 한다(38이면 라벨 위에 슬라이더가 겹친다).
@@ -1591,7 +1593,7 @@
   }
   function fmtEok(vMn){ return vMn==null ? "—" : samo(vMn/100); }
 
-  // shock 표기 통일(inbox 3b): "3.27% 증가/상승"→"3.27%↑", "9.16% 감소/하락"·"(-)9.16%"→"9.16%↓".
+  // shock 표기 통일: "3.27% 증가/상승"→"3.27%↑", "9.16% 감소/하락"·"(-)9.16%"→"9.16%↓".
   // 복합·비정형(가정변경효과·괄호병기·금액덩어리 등)은 부분치환 후 원문 보존(파싱 실패해도 안전).
   function fmtShock(raw){
     if (raw == null) return "-";
@@ -1785,7 +1787,7 @@
     const subHint = oiHead.length
       ? " · 보험손익 ＋ 클릭 시 구성 항목(그 안의 ＋ 는 한 겹 더)"
       : (togGroups.length
-          ? " · " + (togGroups.length>1 ? "LOB 각 행" : togGroups[0].label) + " ＋ 클릭 시 세부"
+          ? " · " + (togGroups.length>1 ? "LOB 각 행" : hEsc(togGroups[0].label)) + " ＋ 클릭 시 세부"
           : "");
     // 손실부담계약 행이 실제로 나온 표에만 설명을 붙인다(설명은 ? 팝오버 안에만 — 라벨은 공시 표 이름 그대로).
     let lossHelp = "";
@@ -1860,12 +1862,12 @@
   }
 
   // A11y 2026-07-21: 색맹-안전 팔레트로 교체 (기존 팔레트는 orange/red, purple/teal 쌍이
-  // 적록색맹 시뮬레이션 하에서 ΔRGB 39-52로 헷갈림 — docs/a11y_baseline.md #11).
-  // scripts/a11y_contrast_check.py로 검증: 신규 팔레트 전 쌍 최소 ΔRGB 82(기존 최저 39의 2배+).
+  // 적록색맹 시뮬레이션 하에서 ΔRGB 39-52로 헷갈림 — a11y baseline #11).
+  // 대비 검사 스크립트로 검증: 신규 팔레트 전 쌍 최소 ΔRGB 82(기존 최저 39의 2배+).
   const NB_LINE_COLORS = ["#0f6e68", "#009E73", "#D55E00", "#343a40", "#CC79A7", "#7c5c00"];
 
   // ===== 섹션 8·9: 손해율 가정 / 판매채널별 유지율 =====
-  // 패널 JSON 2개(빌더 scripts/viz_build_persistency_lossratio_panels.py)를 fetch 한다 — HTML 에 인라인하지 않는다.
+  // 패널 JSON 2개를 fetch 한다 — HTML 에 인라인하지 않는다.
   // 회사 → 공시분기 중첩. 값이 null 인 칸은 '-' 로 쓰고 선은 끊는다(0 과 미공시를 섞지 않는다).
   const LRPS = { lr:null, ps:null, cat:null };
   const CSMC = { panel:null };   // 섹션 3 콤보 패널(JSON fetch, 인라인 금지)
@@ -1878,7 +1880,7 @@
   const LR_OPEN_END_X = 33;   // "30년 이후" 의 x 위치(연수 비례일 때). 26~30년 구간 가운데값 28 다음 5칸
   const PS_ROUNDS = [13,25,37,61];
   const PS_BUNDLES = ["전속설계사","GA(대리점)"];   // 차트 선은 둘뿐(owner 2026-10-08). 방카·비대면·기타는 표에만
-  // 색약 안전(적록 ΔRGB ≥ 94, scripts/a11y_contrast_check.py cbcheck) + 마커·점선 모양으로도 구분한다.
+  // 색약 안전(적록 ΔRGB ≥ 94, 대비 검사 스크립트 cbcheck) + 마커·점선 모양으로도 구분한다.
   const PS_COLORS = { light:["#0f6e68","#D55E00"], dark:["#54b3aa","#f08a4b"] };
   const PS_MARKERS = ["circle","triangle"];
   const PS_DASH = [[],[]];
@@ -1992,7 +1994,7 @@
     return (LRPS.lr && LRPS.lr.meta && LRPS.lr.meta.years) || LR_YEARS;
   }
   function lrPriorQuarter(qq){ const [y,n]=wfParseQ(qq); return (y-1)+"."+n+"Q"; }
-  // ---- 비교 단위(구분 x 상품구분 x 포트폴리오 한 줄) — 정본 docs/loss_ratio_comparable_unit_20261019.md ----
+  // ---- 비교 단위(구분 x 상품구분 x 포트폴리오 한 줄) — 정본 설계 문서(2026-10-19) ----
   // 단위 목록·기본 단위·설명은 사별 비교 패널(loss_curve)에서 읽고, 값은 이 패널의 잎 행(5번째 원소 = 위험보험료 억원)에서 합쳐 만든다.
   // 이 패널이 구판(5번째 원소·meta.rp_note 없음)이거나 비교 패널에 단위 목록이 없으면 단위 선택지는 아예 두지 않고 예전 구분 선택기만 쓴다.
   function lrCatalog(raw){
@@ -2564,7 +2566,7 @@
   }
 
     // ===== Panel 1 (was 7): 재무상태표 T자 (IFRS17_BS.json) =====
-    // owner 20260814T1250Z(bs_taccount_top_panel): 최상단 이동 + T자(좌 자산/우상단 부채/우하단 자본)
+    // owner 20260814(bs_taccount_top_panel): 최상단 이동 + T자(좌 자산/우상단 부채/우하단 자본)
     // + 섹션당 2단계 드릴다운(총계→세부). 렌더 로직은 항목번호를 하드코딩하지 않고 섹션·레벨로만
     // 그룹핑 — 파서가 실컬럼(섹션/레벨)을 얹으면 HTML 무수정으로 세부가 채워진다.
     // 지금은 그 컬럼이 없으므로 아래 브릿지로 현재 항목 1-7만 임시 매핑(실컬럼이 오면 그 값이 우선).
@@ -2613,8 +2615,8 @@
       return row ? row.value : null;
     }
 
-    // validation 20260814T1710Z: 레벨2는 owner 스코프상 "주요 계정 최대 15줄 하이라이트"라
-    // 폐쇄검산 대상이 아님(scripts/build_ifrs17_bs.py 주석) — 세부합이 총계에 못 미치는 게 정상인데
+    // validation 20260814: 레벨2는 owner 스코프상 "주요 계정 최대 15줄 하이라이트"라
+    // 폐쇄검산 대상이 아님(BS 빌더 주석) — 세부합이 총계에 못 미치는 게 정상인데
     // 화면에 그 설명이 없으면 "안 맞다·깨졌다"로 오독됨(반복된 혼선 지점). total이 있으면 표시된
     // 세부 합과의 잔차를 "기타·미표시" 회색 행으로 자동 계산해 붙인다(마스터에 잔차 항목 신설 금지
     // — 렌더 단 계산만).
@@ -2628,7 +2630,7 @@
         div.className = "bs-l2-row";
         div.dataset.name = r.name;
         div.innerHTML =
-          `<span class="bs-l2-lab">${r.name}</span>`+
+          `<span class="bs-l2-lab">${hEsc(r.name)}</span>`+
           `<span class="bs-l2-bar-track"><span class="bs-l2-bar" style="width:${pct}%"></span></span>`+
           `<span class="bs-l2-val">${r.value==null?'—':fmtEokKR(r.value/100)}</span>`;
         box.appendChild(div);
@@ -2663,7 +2665,7 @@
         div.className = "bs-l2-row bs-l2-row-sub";
         div.title = "법정준비금 — 이익잉여금 내부 적립, 자본총계 합계에는 미포함";
         div.innerHTML =
-          `<span class="bs-l2-lab">　└ ${r.name}</span>`+
+          `<span class="bs-l2-lab">　└ ${hEsc(r.name)}</span>`+
           `<span class="bs-l2-bar-track"></span>`+
           `<span class="bs-l2-val">${r.value==null?'—':fmtEokKR(r.value/100)}</span>`;
         frag.appendChild(div);
@@ -2719,7 +2721,7 @@
       }
       stub(stubEl, false);
       if (wrap) wrap.style.display = "";
-      if (capEl) capEl.innerHTML = "기준 "+qtr+" · 단위 억원 · 음수 △"
+      if (capEl) capEl.innerHTML = "기준 "+hEsc(qtr)+" · 단위 억원 · 음수 △"
         + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="세부 펼치는 법" aria-describedby="help-bs-expand">?</button><span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-bs-expand">섹션 옆 <b>+</b> 를 누르면 세부가 펼쳐집니다.<br>세부는 주요 계정만 담아 전 계정을 망라하지 않습니다 &mdash; 총계에서 표시분을 뺀 나머지는 \'기타·미표시\' 행으로 따로 보여 줍니다.</span></span>';
 
       const liab   = renderBsZone(company, qtr, "부채", "bsTotLiab",   "bsToggleLiab",   "bsDetailLiab");
@@ -2810,8 +2812,8 @@
           }
         }
         // 이익잉여금 행 자체가 없는 회사(비상장 등)도 준비금 공시는 있을 수 있음 — 누락 방지로 자본
-        // 세부 끝에 평행 배치(T자 D-4의 앵커-없음 폴백과 동일 취지). owner 20260819(inbox
-        // 20260819T0620Z, 악사손해보험 실사례): 이 경로엔 소속 라벨이 없어서, 그 섹션에 AOCI 하나만
+        // 세부 끝에 평행 배치(T자 D-4의 앵커-없음 폴백과 동일 취지). owner 20260819(악사손해보험
+        // 실사례): 이 경로엔 소속 라벨이 없어서, 그 섹션에 AOCI 하나만
         // 남아있으면 준비금이 화면상 "AOCI의 하위 항목"처럼 오독됨 — T자(L1090)와 같은 문구의 구분
         // 행을 넣어 AOCI와 시각적으로 분리.
         if (secKey==="자본" && !reAttached){
@@ -2917,7 +2919,7 @@
     }
 
     // ===== 섹션 3: 보험계약부채 시계열(옛 이름 CSM 시계열) = 묶음 누적 막대(잔여보장요소 | 발생사고요소: 실공시·계산값·추정) + 보조축 신계약 CSM 꺾은선 + 값 표 =====
-    // 데이터: data/csm_combo/panel_csm_combo.json (scripts/viz_build_csm_combo_panel.py). 회사코드는 JSON 키로만 쓰고 화면에 안 낸다.
+    // 데이터: data/csm_combo/panel_csm_combo.json. 회사코드는 JSON 키로만 쓰고 화면에 안 낸다.
     // 이 패널에 없는 회사(재보사 등)는 옛 CSM 선 차트로 폴백한다.
     // 기간은 페이지 맨 위 「기준」(#wfPeriod)을 따른다 — 컨트롤은 없다(owner 2026-10-10): VFA 는 CSM·BEL·RA 에 합산, PAA 는 쌓아서, 발생사고요소 막대 표시, 세로축 일부 생략 켜짐.
     function hcSamo(v,d){ const a=Math.abs(v).toLocaleString("ko-KR",{minimumFractionDigits:d,maximumFractionDigits:d}); return (v<0 && Number(a.replace(/,/g,""))!==0) ? "△"+a : a; }
@@ -3354,9 +3356,9 @@
       // 총포괄손익 미공시는 표에도 OCI 구간이 없으니 캡션에 명시 — 결측을 조용히 넘기지 않는다.
       const plOci = plOciModeOf(plName, plPer);
       const ociTail = plOci === "none" ? " · 총포괄손익 미공시(원천 보고서에 총포괄손익계산서 미수록)" : "";
-      q(host,"#plCap").innerHTML = "당기순이익 워터폴 · " + plPer.label + " · 단위 1조 미만은 억원, 1조 이상은 조"
+      q(host,"#plCap").innerHTML = "당기순이익 워터폴 · " + hEsc(plPer.label) + " · 단위 1조 미만은 억원, 1조 이상은 조"
         + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="계정 흐름 설명" aria-describedby="help-pl-flow">?</button>'
-        + '<span class="iq-help-pop" role="tooltip" id="help-pl-flow"><b>계정 흐름</b><br>' + plSeq + ociTail
+        + '<span class="iq-help-pop" role="tooltip" id="help-pl-flow"><b>계정 흐름</b><br>' + hEsc(plSeq) + ociTail
         + '</span></span>';
     } else {
       if (charts.pl){ try{ charts.pl.dispose(); }catch(e){} charts.pl=null; }
@@ -3436,7 +3438,7 @@
     // 한화생명/삼성화재/DB손보 3사 라벨 출현횟수로 검증). 다음 갱신은 FY2026 사업보고서(2027-03경).
     const senCapEl = q(host,"#senCap");
     if (senAo) {
-      senCapEl.innerHTML = "기준: " + senAo.label + " (" + senAo.date + ")"
+      senCapEl.innerHTML = "기준: " + hEsc(senAo.label) + " (" + hEsc(senAo.date) + ")"
         + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="기준 분기가 과거인 이유" aria-describedby="help-sen-asof">?</button>'
         + '<span class="iq-help-pop" role="tooltip" id="help-sen-asof">보험계약 가정민감도는 사업보고서에 1년에 한 번만 실립니다. 반기·분기보고서에는 이 표 자체가 없어서 기준 분기가 과거로 표시됩니다.</span></span>';
     } else {
@@ -3703,7 +3705,7 @@
     }
 
     // Panel 1 BS T자 index: CODE -> quarter -> [{num,name,value,section,level}] (IFRS17_BS.json).
-    // 섹션/레벨은 parser가 곧 실컬럼으로 얹을 계약(owner 20260814T1250Z) — 지금은 없으므로
+    // 섹션/레벨은 parser가 곧 실컬럼으로 얹을 계약(owner 20260814) — 지금은 없으므로
     // EQ_SECTION_LEVEL_BRIDGE로 항목 1-7만 임시 매핑. 실컬럼이 오면 그 값이 그대로 우선한다.
     // 커버리지가 wfx/plx와 다른 회사도 있어 신규 코드가 여기서 처음 등록될 수 있음 — 드롭다운에 반영되는 게 맞음.
     if (Array.isArray(eqxRaw)){
@@ -3796,7 +3798,7 @@
           onSelect();
         } else {
           const hint=document.getElementById("emptyHint");
-          if (hint) hint.textContent = "URL의 회사 '"+wanted+"'를 코호트에서 찾지 못했어. 위 드롭다운에서 직접 선택해줘.";
+          if (hint) hint.textContent = "URL의 회사를 코호트에서 찾지 못했어. 위 드롭다운에서 직접 선택해줘.";
         }
       }
     } catch (e) { /* URL parse safe-guard */ }

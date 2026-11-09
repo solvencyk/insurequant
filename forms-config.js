@@ -1,5 +1,5 @@
 // InsureQuant — 다운로드 설문 + 오류 제보 제출 대상.
-// 백엔드: scripts/appsscript/insurequant_collector.gs (Google Apps Script Web App).
+// 백엔드: Google Apps Script Web App (수집기).
 // action = 그 스크립트를 "웹 앱"으로 배포했을 때 나오는 /exec URL.
 // 아직 실제 URL을 안 넣어서 PLACEHOLDER — 이 값을 바꾸기 전까지 제출은 콘솔에 로그만
 // 남기고 조용히 실패합니다(방문자에게는 정상 제출된 것처럼 보임 — 다운로드는 그대로 동작).
@@ -11,7 +11,7 @@ window.IQ_FORMS.isConfigured = function () {
   return !!(window.IQ_FORMS.action && !window.IQ_FORMS.action.startsWith("PLACEHOLDER"));
 };
 
-// kind: "download" | "report" — insurequant_collector.gs doPost()의 kind 분기와 맞춰야 함.
+// kind: "download" | "report" — 수집기 doPost()의 kind 분기와 맞춰야 함.
 // download는 시트에만 기록(메일 없음), report는 시트 기록 + owner Gmail 알림.
 window.IQ_FORMS.submit = async function (kind, valuesByKey) {
   if (!window.IQ_FORMS.isConfigured()) {

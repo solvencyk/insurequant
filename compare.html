@@ -8,7 +8,7 @@
   <title>InsureQuant — 사별 비교</title>
   <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
        integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
-       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). SRI 계산 대상에 등재하지 말 것.
        인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
   <script>
@@ -359,7 +359,7 @@
     var a = lpAsof();
     return (DATA && DATA.loss_curve && S.sel.length && a >= 0 && curveOn()) ? grpOptions(a) : [];
   }
-  /* ----- 비교 단위(구분 x 상품구분 x 포트폴리오 한 줄): 데이터의 loss_curve.units 가 있을 때만 켜진다. 정본 docs/loss_ratio_comparable_unit_20261019.md ----- */
+  /* ----- 비교 단위(구분 x 상품구분 x 포트폴리오 한 줄): 데이터의 loss_curve.units 가 있을 때만 켜진다. 정본 설계 문서(2026-10-19) ----- */
   function unitsOn(){ var C = DATA && DATA.loss_curve; return !!(C && C.units && C.units.length && C.u && C.default_unit); }
   function unitDef(key){
     var C = DATA && DATA.loss_curve; if(!key || !C || !C.units) return null;
@@ -367,7 +367,7 @@
     return null;
   }
   function secOf(code){ var t = CO[code].type; return (t === '생보' || t === '손보') ? t : '재보'; }   /* 단위 업권 이름: 생보 · 손보 · 재보(재보험·보증) */
-  function gValid(s){ var C = DATA && DATA.loss_curve; return !!(s && C && (s === GALL || (C.g && C.g[s]))); }
+  function gValid(s){ var C = DATA && DATA.loss_curve; return !!(s && C && (s === GALL || (C.g && Object.prototype.hasOwnProperty.call(C.g, s) && C.g[s]))); }
   function ucHas(key, code, asof){
     var by = DATA.loss_curve.u && DATA.loss_curve.u[key] && DATA.loss_curve.u[key][code]; if(!by) return false;
     for(var j = asof; j >= 0; j--) if(by[Q[j]]) return true;
@@ -558,7 +558,7 @@
     var gq = p.get('g');   /* g 없음 = 처음 화면(첫 회사 업권의 기본 단위). 구분 이름(옛 링크의 g=Non-Par · g=합계 · g=Direct-Par · g=Indirect-Par)이나 단위 키를 읽고, 없는 값은 처음 화면으로 */
     S.g = (gq && (gValid(gq) || (unitsOn() && unitDef(gq)))) ? gq : null; normG();
     var ids = [];
-    (p.get('m') || '').split(',').forEach(function(x){ var u = UNIT_OF[x.trim()]; if(u && ids.indexOf(u) < 0) ids.push(u); });
+    (p.get('m') || '').split(',').forEach(function(x){ var k = x.trim(), u = Object.prototype.hasOwnProperty.call(UNIT_OF, k) ? UNIT_OF[k] : null; if(u && ids.indexOf(u) < 0) ids.push(u); });
     S.units = ids.length ? ids : DEF.slice();
   }
   function writeURL(){
@@ -613,7 +613,7 @@
   var pop = null, inp = null, popOpts = [], act = -1;
   function optHTML(c){
     popOpts.push(c.code);
-    return '<li role="option" id="o-' + c.code + '" data-code="' + c.code + '" aria-selected="false" class="po">' +
+    return '<li role="option" id="o-' + esc(c.code) + '" data-code="' + esc(c.code) + '" aria-selected="false" class="po">' +
       '<span class="po-n">' + esc(c.name) + '</span><span class="po-t">' + esc(c.sector || c.type) + '</span></li>';
   }
   function buildPop(){
@@ -637,7 +637,7 @@
     groups.forEach(function(g){
       var rows = all.filter(function(c){ return c.type === g; });
       if(!rows.length) return;
-      h += '<li role="presentation" class="ph">' + (txt ? '검색 결과 · ' : '') + g + ' ' + rows.length + '곳</li>';
+      h += '<li role="presentation" class="ph">' + (txt ? '검색 결과 · ' : '') + esc(g) + ' ' + rows.length + '곳</li>';
       rows.forEach(function(c){ h += optHTML(c); });
     });
     if(!popOpts.length) h += '<li role="presentation" class="ph ph-note">' + (txt ? '일치하는 회사가 없습니다.' : '추가할 수 있는 회사가 없습니다.') + '</li>';
@@ -1115,7 +1115,7 @@
   function setUnits(arr, msg, focus){   /* focus: {id, off} — 다시 그린 뒤 키보드 포커스를 돌려줄 항목 */
     S.units = arr; update(true); say(msg);
     if(focus){
-      var el = focus.id ? $(focus.off ? 'rail-off' : 'rail-ul').querySelector((focus.off ? 'button' : 'a') + '[data-uid="' + focus.id + '"]') : null;
+      var el = focus.id ? $(focus.off ? 'rail-off' : 'rail-ul').querySelector((focus.off ? 'button' : 'a') + '[data-uid="' + (window.CSS && CSS.escape ? CSS.escape(focus.id) : focus.id) + '"]') : null;
       (el || $('rail-sum')).focus();
     }
   }
@@ -1434,8 +1434,8 @@
       if(cu && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, unitDef(cu).label + ' 단위의 ');   /* 단위를 그릴 때는 정의 줄도 그 단위다 */
       else if(gshown !== GALL && /^합계 포트폴리오의 /.test(defn)) defn = defn.replace(/^합계 포트폴리오의 /, gshown + ' 구분의 ');   /* 합계가 아닌 구분을 그릴 때는 정의 줄도 그 구분이다 */
       card.innerHTML = '<span class="anc" id="c-' + esc(id) + '"></span><h2 aria-label="' + esc(title + ' ' + (curve ? curve.unit : m0.unit) + bt) + '">' + esc(title) + '<span class="unit">' + esc(curve ? curve.unit : m0.unit) + bt + '</span>' +
-        '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + m0.id + '">?</button>' +
-        '<span class="iq-help-pop" role="tooltip" id="hp-' + m0.id + '">' + esc(curve ? lcHelp(curve, gopts) : m0.note) + '</span></span></h2>' +
+        '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="' + esc(title) + ' 설명" aria-describedby="hp-' + esc(m0.id) + '">?</button>' +
+        '<span class="iq-help-pop" role="tooltip" id="hp-' + esc(m0.id) + '">' + esc(curve ? lcHelp(curve, gopts) : m0.note) + '</span></span></h2>' +
         '<p class="def">' + esc(defn) + ' · ' + esc(m0.period) + ' 공시 · 최신 공시 ' + (amax >= 0 ? Q[amax] + (m0.ytd ? ' · ' + ytdSpan(amax) : '') : '없음') + '</p>' +
         (curve ? gControl(gopts, gshown, cu) : '');
       grid.appendChild(card);
@@ -1474,7 +1474,7 @@
   function init(){
     DATA.companies.forEach(function(c){ CO[c.code] = c; });
     DATA.metrics.forEach(function(m){ if(m.id === 'csm_closing') CSM_M = m; });
-    Q = DATA.meta.quarters; LAST = Q.length - 1;
+    Q = DATA.meta.quarters.map(function(q){ return /^\d{4}\.\dQ$/.test(q) ? q : '?'; }); LAST = Q.length - 1;
     buildUnits(); readTheme(); readURL(); writeURL(); initPop(); initRail();
     if(WIDE.addEventListener) WIDE.addEventListener('change', function(){ update(false); });
     if(EDIT.addEventListener) EDIT.addEventListener('change', function(){ update(false); });

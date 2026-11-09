@@ -8,7 +8,7 @@
   <title>InsureQuant — K-ICS 지급여력비율 변동 추이</title>
   <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
        integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
-       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). SRI 계산 대상에 등재하지 말 것.
        인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
   <script>
@@ -342,8 +342,8 @@
 
     /* 차트 라이브러리는 CSS `var()` 를 못 읽는다 — 토큰 값을 문자열로 꺼내 준다.
        theme.js 가 없으면 팔레트 B 액센트로 폴백.
-       2026-09-20 섹션 네비 통합(2dbc4ca) 때 이 정의만 지워지고 호출부 2곳(renderSensDetail)이
-       남아 라이브에서 ReferenceError — 2026-09-21 복구(inbox/designer/20260921T0057Z). */
+       2026-09-20 섹션 네비 통합 때 이 정의만 지워지고 호출부 2곳(renderSensDetail)이
+       남아 라이브에서 ReferenceError — 2026-09-21 복구. */
     function IQP(){ return (window.IQTheme && IQTheme.chart().primary) || '#0f6e68'; }
 
     const jsonPath = 'kics_disclosure.json';
@@ -382,7 +382,7 @@
     };
     const subOpen = { netasset: false, life: false, mkt: false, othercap: false };
     // 항목 4/12/13(Ⅰ.순자산·Ⅱ.불인정항목·Ⅲ.보완자본재분류): 정기경영공시 raw에 적용후 컬럼
-    // 자체가 없는 구조적 미공시(parser 확인, inbox/parser/20260712T0704Z...) — 결측을 "0"/빈칸이
+    // 자체가 없는 구조적 미공시(parser 확인) — 결측을 "0"/빈칸이
     // 아니라 "미공시"로 구분 표시.
     const NO_POST_TRANSITION_DISCLOSURE = new Set([4, 12, 13]);
     // 표시용 회사명 정리 — 드롭다운 라벨에만 적용. value(조회 키)는 원수사명 유지.
@@ -552,23 +552,23 @@
       const displayOrder = buildDisplayOrder(data, quarters);
       const tc = document.getElementById('table-container');
       let table = '<table><thead><tr><th>항목명</th>';
-      quarters.forEach(q => table += `<th>${q}</th>`);
+      quarters.forEach(q => table += `<th>${durEsc(q)}</th>`);
       table += '</tr></thead><tbody>';
       displayOrder.forEach(item => {
         const isRatio = /비율/.test(item.name);
         if (item.sub) {
-          table += `<tr class="subrow-${item.group}"${subOpen[item.group] ? '' : ' style="display:none"'}><td class="subitem">${item.name}</td>`;
+          table += `<tr class="subrow-${item.group}"${subOpen[item.group] ? '' : ' style="display:none"'}><td class="subitem">${durEsc(item.name)}</td>`;
         } else if (item.toggle) {
           const open = subOpen[item.toggle];
-          table += `<tr><td>${item.name} <button type="button" class="subtoggle" data-group="${item.toggle}" aria-expanded="${open}" title="하위 항목 ${open ? '접기' : '펼치기'}">${open ? '−' : '+'}</button></td>`;
+          table += `<tr><td>${durEsc(item.name)} <button type="button" class="subtoggle" data-group="${item.toggle}" aria-expanded="${open}" title="하위 항목 ${open ? '접기' : '펼치기'}">${open ? '−' : '+'}</button></td>`;
         } else {
-          table += `<tr><td>${item.name}</td>`;
+          table += `<tr><td>${durEsc(item.name)}</td>`;
         }
         quarters.forEach(q => {
           const found = data.find(row => row['항목번호'] === item.num && row['공시분기'] === q);
           const value = found ? getRowValue(found) : null;
           if (value !== null && value !== undefined && value !== '') {
-            table += `<td>${formatNumber(value, isRatio)}</td>`;
+            table += `<td>${durEsc(formatNumber(value, isRatio))}</td>`;
           } else if (getTransitionMode() === '적용후' && NO_POST_TRANSITION_DISCLOSURE.has(item.num)) {
             table += '<td class="no-disclosure" title="정기경영공시 양식상 적용후 세부 미공시">미공시</td>';
           } else {
@@ -1084,7 +1084,7 @@
                 label: function(c) {
                   if (pct == null) return opt.na || '데이터 없음';
                   const extra = opt.extra ? [opt.extra] : [];
-                  // 375px 에서 툴팁이 캔버스(약 325px)보다 넓어 오른쪽이 잘리던 건(검증 감사 20261012T2236Z): 긴 한 줄을 둘로 나눈다.
+                  // 375px 에서 툴팁이 캔버스(약 325px)보다 넓어 오른쪽이 잘리던 건(검증 감사 20261012): 긴 한 줄을 둘로 나눈다.
                   if (c.dataIndex === 0) {
                     const lines = pct > 100
                       ? ['사용: 100%+ (실제 ' + pct.toFixed(1) + '%)'].concat(opt.overNote ? [opt.overNote] : [])
@@ -1119,7 +1119,7 @@
       const t2 = findUtilRow(tier2UtilData, company);
       const t1Pct = t1 ? t1.utilization_pct : null;
       const t2Pct = t2 ? t2.utilization_pct : null;
-      // 2026-10-12 (owner): 소진율을 규정 근거로 재정의(definition_memo.md §5). 화면 이름은 공시·규정 표기 그대로,
+      // 2026-10-12 (owner): 소진율을 규정 근거로 재정의(정의 메모 §5). 화면 이름은 공시·규정 표기 그대로,
       // 설명은 ? 팝오버 안에만. 새 필드가 없는 구판 JSON 도 깨지지 않게 폴백한다.
       //  tier1: 숫자 = tier1_hybrid_recognized_eok / tier1_hybrid_limit_eok (두 한도 중 먼저 차는 쪽), 구판은 issued.
       //  tier2: rule/reason — rule 이 NA 면 값이 null 이고 reason(경과조치 표 미공시)이 붙는다.
@@ -1248,7 +1248,7 @@
       wrap.style.display = 'block';
 
       const years = row.projections.map(p => String(p.year));
-      // 2026-10-12 (검증 감사 20261012T2236Z): 가용자본(기본자본) <= 0 인 해는 JSON 이 비율을 0.0 으로 자르고 *_exhausted 를 true 로 둔다.
+      // 2026-10-12 (검증 감사): 가용자본(기본자본) <= 0 인 해는 JSON 이 비율을 0.0 으로 자르고 *_exhausted 를 true 로 둔다.
       //  잘린 0.0 을 선·점으로 그리면 거짓 개선처럼 보이므로 그 해는 null(점 없음)로 두고 툴팁에 「자본잠식」, 노트의 변화 칸은 「—」.
       //  플래그가 없는 구판 JSON 은 자본(기본자본) 금액이 0 이하일 때 같은 취급.
       const exR = row.projections.map(p => fwExhausted(p, 'capacity_exhausted', 'capital_eok'));
@@ -1440,7 +1440,7 @@
       const dropBasic = (!exB[lastIdx] && baseline.basic_ratio_post_pct != null && lastProj.basic_ratio_pct != null)
         ? fmtDrop(lastProj.basic_ratio_pct - baseline.basic_ratio_post_pct) + '%p' : '—';
       const baseOf = v => v != null ? fmtTriPct(v, 1) : '-';
-      let noteHtml = `Baseline (${row.baseline_quarter || '최신'} 적용후): 지급여력 <b>${baseOf(baseline.ratio_post_pct)}</b>, 기본자본 <b>${baseOf(baseline.basic_ratio_post_pct)}</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}, 기본자본 ${dropBasic} &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
+      let noteHtml = `Baseline (${durEsc(row.baseline_quarter || '최신')} 적용후): 지급여력 <b>${baseOf(baseline.ratio_post_pct)}</b>, 기본자본 <b>${baseOf(baseline.basic_ratio_post_pct)}</b> &nbsp;|&nbsp; 2030 변화: 지급여력 ${dropRatio}, 기본자본 ${dropBasic} &nbsp;|&nbsp; 잔액(콜 차감 대상): ${fmtEokInt(row.outstanding_bonds_total_eok)}억원`;
       // 자본잠식 해가 있으면 한 줄 안내(공개 시트 비고와 같은 표기: 자본잠식(가용자본<=0) / 기본자본 잠식(가용 기본자본<=0)).
       const clipped = [];
       if (exR.some(Boolean)) clipped.push('자본잠식(가용자본&lt;=0)');
@@ -1788,7 +1788,7 @@
       }
     }
 
-    // 시나리오별 금리부 자산·부채 표 — 마스터 열(자산_/부채_ × 6 시나리오)은 이미 억원이다(빌더 build_kics_duration_gap.py 가 공시
+    // 시나리오별 금리부 자산·부채 표 — 마스터 열(자산_/부채_ × 6 시나리오)은 이미 억원이다(빌더 스크립트가 공시
     // 백만원을 ÷100 해서 적재, 충격전 자산−부채 = 항목 41 순자산가치로 검산). 그래서 화면에서 단위 환산을 하지 않는다.
     // 화면에서 하는 계산은 순자산(자산−부채), 충격전 대비 변화(시나리오−충격전), 변화율(변화÷충격전)의 단순 사칙연산뿐이다.
     // 충격전이 0 이하이면 변화율은 정의되지 않아 뺀다.
@@ -1814,7 +1814,7 @@
         const z = Number(Math.abs(p).toFixed(1)) === 0;
         return z ? '0.0%' : (p < 0 ? '△' : '+') + Math.abs(p).toFixed(1) + '%';
       };
-      let html = '<table><caption class="sr-only">' + quarter + ' 시나리오별 금리부자산·금리부부채·순자산(억원)과 충격전 대비 변화·변화율</caption>'
+      let html = '<table><caption class="sr-only">' + durEsc(quarter) + ' 시나리오별 금리부자산·금리부부채·순자산(억원)과 충격전 대비 변화·변화율</caption>'
         + '<thead><tr><th scope="col">구분</th>'
         + DUR_SCEN.map(([, lab]) => '<th scope="col">' + lab + '</th>').join('') + '</tr></thead><tbody>';
       [['금리부자산', A, false], ['금리부부채', L, false], ['순자산', N, true]].forEach(([name, vals, isNet]) => {
@@ -1838,7 +1838,7 @@
       tbl.style.display = 'block';
       tnote.innerHTML = '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-dur-table">?</button>'
         + '<span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-dur-table">'
-        + '자료: 정기경영공시 「금리위험액 현황」 · ' + quarter + ' 기준. 공시 표의 값을 그대로 옮겼으며 금액 단위는 억원입니다. 순자산 = 금리부자산 − 금리부부채(화면 계산).<br>'
+        + '자료: 정기경영공시 「금리위험액 현황」 · ' + durEsc(quarter) + ' 기준. 공시 표의 값을 그대로 옮겼으며 금액 단위는 억원입니다. 순자산 = 금리부자산 − 금리부부채(화면 계산).<br>'
         + '칸 아랫줄은 <b>충격전 대비 변화</b>(금액)와 <b>변화율</b>입니다. 충격전이 0 이하이면 변화율은 표시하지 않습니다.'
         + '</span></span>';
     }
@@ -2052,7 +2052,7 @@
       tbl.innerHTML = html;
       tbl.style.display = 'block';
 
-      document.getElementById('sens-note').innerHTML = '자료: 정기경영공시 「6-8. 위험 민감도」 · ' + quarter + ' 기준'
+      document.getElementById('sens-note').innerHTML = '자료: 정기경영공시 「6-8. 위험 민감도」 · ' + durEsc(quarter) + ' 기준'
         + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-sens-basis">?</button><span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-sens-basis">금리를 평행이동시킨 <b>즉시충격</b> 기준입니다.<br>단위는 억원과 %.<br>2024.4Q 에 도입된 <b>반기 공시</b> 항목이라 홀수 분기에는 없습니다.</span></span>';
     }
 
@@ -2164,7 +2164,8 @@
         
         // 회사 선택
         if (urlParams.company) {
-          const decodedCompany = decodeURIComponent(urlParams.company);
+          let decodedCompany = urlParams.company;
+          try { decodedCompany = decodeURIComponent(urlParams.company); } catch (e) { /* URLSearchParams 가 이미 풀었다 - '%' 단독 같은 값은 그대로 쓴다 */ }
           // 옵션 목록에서 정확히 일치하는 회사 찾기
           let found = false;
           for (let option of companySelect.options) {
@@ -2219,7 +2220,7 @@
         refreshBottomPanels();
       })
       .catch(e => {
-        document.getElementById('table-container').innerHTML = `<p>JSON 파일을 불러오는 중 오류 발생: ${e}</p>`;
+        document.getElementById('table-container').innerHTML = `<p>JSON 파일을 불러오는 중 오류 발생: ${durEsc(e)}</p>`;
       });
   </script>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">

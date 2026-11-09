@@ -468,7 +468,7 @@
 
   /* ---- 공유 메뉴 (owner 2026-10-08): 링크 복사 · 페이지 전체 스크린샷 / 섹션별 스크린샷(2026-10-11) -------
      헤더 우상단, 테마 토글 왼쪽. 사이트 전 페이지 공통(일본어 jp/ 페이지는 제외).
-     html2canvas 는 스크린샷을 누를 때만 SRI 로 불러온다(평소 로딩 영향 없음). scripts/compute_sri.py 에 등재.
+     html2canvas 는 스크린샷을 누를 때만 SRI 로 불러온다(평소 로딩 영향 없음). SRI 계산 스크립트에 등재.
 
      페이지 계약 — window.IQShareConfig = { container, ignore, onclone, context } 를 (누르는 시점에 읽는다) 둘 수 있다.
        container  전체 스크린샷에 담을 본문 선택자(기본 '.section-body' -> '.container')
@@ -480,7 +480,7 @@
      **전체 캡처와 캔버스 한도**: 브라우저 캔버스는 한 변 약 16,384px(모바일 Safari 는 총 면적 약 1,677만 px)을 넘으면
      조용히 빈 이미지가 된다. 그래서 만들기 전에 높이를 재서 scale 을 자동으로 낮춘다(shPlan). 글자가 읽히는 하한
      (SH_MIN_SCALE)보다 더 낮춰야 하는 매우 긴 페이지는 위쪽만 담고 안내 문구를 넣는다.
-     2026-10-08 첫 구현(8c997cb)에서 본문 높이가 6000px 이하일 때만 전체를 찍고 그보다 길면 "지금 화면"만 찍도록 막았다.
+     2026-10-08 첫 구현에서 본문 높이가 6000px 이하일 때만 전체를 찍고 그보다 길면 "지금 화면"만 찍도록 막았다.
      K-ICS·IFRS17·모바일은 거의 다 6000px 을 넘어 사실상 늘 현재 화면만 찍혔다(owner 2026-10-11 지적). 이 임계값은 폐기했다. */
   var H2C_URL = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
   var H2C_SRI = 'sha384-ZZ1pncU3bQe8y31yfZdMFdSpttDoPmOZg2wguVK9almUodir1PghgT0eY7Mrty8H';

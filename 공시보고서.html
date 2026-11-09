@@ -8,7 +8,7 @@
   <title>InsureQuant — 공시/보고서</title>
   <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
        integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
-       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). compute_sri.py에 등재하지 말 것.
+       이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). SRI 계산 대상에 등재하지 말 것.
        인라인 블록은 script-src의 기존 'unsafe-inline'으로 실행된다 — nonce를 넣으면 'unsafe-inline'이 무시돼 페이지의 다른 인라인 스크립트가 전부 깨진다. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8NSCQZBZK"></script>
   <script>
@@ -61,7 +61,7 @@
     .coming-soon{text-align:center;padding:60px 20px;color:var(--muted)}
     .coming-soon h3{font-size:24px;margin:0 0 12px 0;color:var(--text)}
     .coming-soon p{font-size:16px;margin:0}
-    /* 배당현황 (2026-08-15, inbox designer 20260814T2230Z) — 이 페이지 기존 로컬 토큰/클래스 그대로 사용 */
+    /* 배당현황 (2026-08-15) — 이 페이지 기존 로컬 토큰/클래스 그대로 사용 */
     .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
     .table-wrap{overflow:auto;max-height:520px;border:1px solid var(--border);border-radius:var(--r-md,8px);background:var(--bg);font-size:13px}
     .div-kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -167,7 +167,7 @@
 <script src="download-survey.js" data-default-sheet="DIV"></script>
 <script src="report-widget.js" data-sheet-hint="배당"></script>
 <script>
-/* 배당현황 (2026-08-15, inbox designer 20260814T2230Z — dividend.json, DART alotMatter API)
+/* 배당현황 (2026-08-15 — dividend.json, DART alotMatter API)
    항목1-7=회사단위(종류주="-"), 항목8-10=종류주별(보통주/우선주). null=그 분기 공시 자체 없음
    ("정보없음"), 0=진짜 무배당(그대로 0 표시) — 저장소 상습 함정(0값 맹점) 회피. */
 (() => {
@@ -175,7 +175,7 @@
   const PATH = resolveUrl("dividend.json");
 
   const ix = new Map();       // code -> quarter -> [{num,name,cls,value}]
-  const codeToName = {};
+  const codeToName = Object.create(null);
 
   // 표시용 회사명 정리 — 드롭다운 라벨에만 적용. codeToName 자체(조회 키)는 원래 이름 유지.
   const NAME_ABBR = {

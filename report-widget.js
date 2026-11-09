@@ -134,7 +134,7 @@
     var lastFocused = null;
 
     // prefill = {sheet, company, period} — 차트/표에서 "이 값 오류 신고"로 열 때 현재 보고
-    // 있는 시트·회사·분기를 미리 채운다(inbox/designer/20260828T0300Z 추가요청: 우하단 버튼만
+    // 있는 시트·회사·분기를 미리 채운다(2026-08-28 추가요청: 우하단 버튼만
     // 있으면 드롭다운 3개를 다시 채우다 이탈하니, 프리필 진입이 주 경로여야 한다).
     function open(prefill) {
       lastFocused = document.activeElement;

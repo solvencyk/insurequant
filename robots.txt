@@ -5,7 +5,7 @@
 #
 # 주의: 이 파일은 어떤 HTML 도 참조하지 않는다. 배포 keep-list 는 HTML 의
 # fetch(/src=/href= 를 grep 해서 도출하므로 이 파일은 자동으로 도출되지 않는다.
-# 상시 유지 대상이다 — docs/launch_runbook.md 의 "HTML 무참조 상시 유지 파일" 참조.
+# 상시 유지 대상이다.
 
 User-agent: *
 Allow: /
