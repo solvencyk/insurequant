@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-13",
+ "generated": "2026-11-17",
  "unit": "억원",
  "source": "data/bonds/capital_securities_fy2026h1.json (DART 사업·반기보고서 채권 단위, 회사별 최신 기준일). 발행일이 없는 증권은 제외, 상환돼 잔액 0 인 증권은 포함",
  "securities": {
@@ -279,18 +279,9 @@
   "KR0083": [
    {
     "tier": "subordinated",
-    "issue_date": "2022-06-14",
-    "call_date": "2027-06-14",
+    "issue_date": "2022-04-08",
+    "call_date": "2027-04-08",
     "coupon_pct": 5.1,
-    "face_eok": 500.0,
-    "outstanding_eok": 500.0,
-    "as_of": "2025-12-31"
-   },
-   {
-    "tier": "subordinated",
-    "issue_date": "2022-06-14",
-    "call_date": "2027-06-14",
-    "coupon_pct": 6.9,
     "face_eok": 500.0,
     "outstanding_eok": 500.0,
     "as_of": "2025-12-31"
@@ -301,8 +292,8 @@
     "call_date": "2027-06-14",
     "coupon_pct": 4.6,
     "face_eok": 545.0,
-    "outstanding_eok": 545.0,
-    "as_of": "2025-12-31"
+    "outstanding_eok": 0.0,
+    "as_of": "2026-06-30"
    },
    {
     "tier": "subordinated",
@@ -315,8 +306,8 @@
    },
    {
     "tier": "subordinated",
-    "issue_date": "2022-06-14",
-    "call_date": "2027-06-14",
+    "issue_date": "2022-06-28",
+    "call_date": "2027-06-28",
     "coupon_pct": 6.2,
     "face_eok": 1500.0,
     "outstanding_eok": 1500.0,
@@ -342,17 +333,8 @@
    },
    {
     "tier": "subordinated",
-    "issue_date": "2023-04-11",
-    "call_date": "2028-04-11",
-    "coupon_pct": 7.4,
-    "face_eok": 300.0,
-    "outstanding_eok": 300.0,
-    "as_of": "2025-12-31"
-   },
-   {
-    "tier": "subordinated",
-    "issue_date": "2023-04-11",
-    "call_date": "2028-04-11",
+    "issue_date": "2023-04-26",
+    "call_date": "2028-04-26",
     "coupon_pct": 7.3,
     "face_eok": 800.0,
     "outstanding_eok": 800.0,
@@ -360,8 +342,8 @@
    },
    {
     "tier": "subordinated",
-    "issue_date": "2023-04-11",
-    "call_date": "2028-04-11",
+    "issue_date": "2023-06-16",
+    "call_date": "2028-06-16",
     "coupon_pct": 7.28,
     "face_eok": 980.0,
     "outstanding_eok": 980.0,
@@ -369,8 +351,26 @@
    },
    {
     "tier": "subordinated",
-    "issue_date": "2023-04-11",
-    "call_date": "2028-04-11",
+    "issue_date": "2023-09-25",
+    "call_date": "2028-09-25",
+    "coupon_pct": 7.4,
+    "face_eok": 300.0,
+    "outstanding_eok": 300.0,
+    "as_of": "2025-12-31"
+   },
+   {
+    "tier": "subordinated",
+    "issue_date": "2024-03-15",
+    "call_date": "2029-03-15",
+    "coupon_pct": 6.9,
+    "face_eok": 500.0,
+    "outstanding_eok": 500.0,
+    "as_of": "2025-12-31"
+   },
+   {
+    "tier": "subordinated",
+    "issue_date": "2024-05-31",
+    "call_date": "2029-05-31",
     "coupon_pct": 7,
     "face_eok": 1200.0,
     "outstanding_eok": 1200.0,
@@ -507,7 +507,7 @@
     "call_date": "2026-04-12",
     "coupon_pct": 3.4,
     "face_eok": 2100.0,
-    "outstanding_eok": 2100.0,
+    "outstanding_eok": 0.0,
     "as_of": "2026-06-30"
    },
    {
@@ -769,8 +769,8 @@
    {
     "tier": "subordinated",
     "issue_date": "2026-03-31",
-    "call_date": null,
-    "coupon_pct": null,
+    "call_date": "2031-03-31",
+    "coupon_pct": 5.5,
     "face_eok": 1000.0,
     "outstanding_eok": 1000.0,
     "as_of": "2026-06-30"
@@ -830,8 +830,8 @@
     "call_date": "2026-05-31",
     "coupon_pct": 4,
     "face_eok": 1300.0,
-    "outstanding_eok": 1299.71,
-    "as_of": "2025-12-31"
+    "outstanding_eok": 0.0,
+    "as_of": "2026-06-30"
    },
    {
     "tier": "subordinated",
