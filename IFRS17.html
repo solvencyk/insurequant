@@ -3085,6 +3085,7 @@
       const rangeEl=q(host,"#histRange"); if(rangeEl) rangeEl.textContent=lab[0]+"~"+lab[lab.length-1];
       const capEl=q(host,"#histCap"); if(capEl) capEl.textContent=(mode==="year"?"연도 기준(각 연말 + 최신 분기)":"분기 기준(최신 분기까지 5분기)")+" · 음수 △";   // 긴 설명은 차트 아래 「?」 팝오버
       const pend=P.meta.pending.filter(p=>p[0]===company).map(p=>p[1]);
+      const dcl=((P.meta.dart_comp||{})[company]||[]), dcF=Q.map(qq=>dcl.indexOf(qq)>=0);   // ‡ 구성이 DART 주석 값인 시점(경영공시 2-4 공시 전)
       const mism=P.meta.csm_mismatch.filter(m=>m[0]===company).map(m=>m[1]);
       const kindOf=r=>r?r[16]:null;   // 1 실공시 · 0 추정 · 2 경영공시 2-4 에 이미 포함(사이드카) · null 없음
       const hasVfa=rows.some(r=>r&&(N(r[1])||N(r[3])||N(r[5]))), hasPaa=rows.some(r=>r&&N(r[6])!==0), hasNb=rows.some(r=>r&&r[8]!=null);
@@ -3144,7 +3145,7 @@
       const licTxt=hasLic?(anyEst&&!rows.some(r=>kindOf(r)===1)?" (+ 발생사고요소 추정)":anyEst?" (+ 발생사고요소, 일부 분기 추정)":" (+ 발생사고요소)"):"";
       try{ charts.hist&&charts.hist.destroy(); }catch(e){}
       charts.hist=simple?hcSimpleChart(host,{rows,lab,pend,Q,mode,hasNb,C,coName}):new Chart(canvasCtx(host,"#canvasHistCombo"),{
-        type:"bar",data:{labels:Q.map((qq,i)=>pend.indexOf(qq)>=0?xShort(lab[i])+"*":xShort(lab[i])),datasets:ds},plugins:[hcBreakPlugin],
+        type:"bar",data:{labels:Q.map((qq,i)=>(pend.indexOf(qq)>=0?xShort(lab[i])+"*":xShort(lab[i]))+(dcF[i]?"‡":"")),datasets:ds},plugins:[hcBreakPlugin],
         options:{responsive:true,maintainAspectRatio:false,layout:{padding:{left:brkOn?10:0}},interaction:{mode:"index",intersect:false},
           plugins:{
             axisBreak:{on:brkOn,B:B/div,bars:barsCut,bg:C.bg,ink:C.ink,muted:C.muted,shade:th.dark?"rgba(255,255,255,0.04)":"rgba(0,0,0,0.035)"},
@@ -3162,6 +3163,7 @@
                   out.push(r[17]!=null?"잔여보장요소 합계 (DART 주석, 부채 기준): "+hcFmt(r[17],unit)+(r[18]!=null?" — 이 중 CSM 외 구성 미분리 "+hcFmt(r[18],unit):""):"잔여보장요소 합계: 공시값 없음");
                   out.push("이 시점은 경영공시에 BEL·RA·CSM 구성 표가 없습니다"); }
                 else out.push((kd===2?"2-4 합계 (발생사고요소 포함): ":"잔여보장요소 합계: ")+hcFmt(N(r[7]),unit));
+                if(dcF[di]) out.push("‡ 구성(CSM·BEL·RA·PAA)은 DART 분기보고서 주석 기준 — 경영공시 2-4 공시 전");
                 if(hasVfa&&!noComp[di]) out.push("  VFA 포함분 — CSM "+hcFmt(N(r[1]),unit)+" · BEL "+hcFmt(N(r[3]),unit)+" · RA "+hcFmt(N(r[5]),unit));
                 { const n=nbNote(); if(n) out.push(n); }
                 if(brkOn) out.push("※ 세로축 일부 생략 — 위 값은 실제 값");
@@ -3190,6 +3192,9 @@
       nt(null,(mode==="year"?"연도 기준(각 연말 + 최신 분기) · 신계약 CSM은 해당 연도 누계(우측 축)":"분기 기준(최신 분기까지 5분기) · 신계약 CSM은 당분기 증분(우측 축)")+(simple?" · 막대는 기말 CSM, BEL·RA·발생사고요소 등 나머지 구성은 아래 표 · 음수 △":" · 잔여보장요소(LRC)는 경영공시 2-4 · 음수 △"));
       if(brkOn&&!simple) nt(null,"세로축 일부를 생략했습니다(~ 표시): 표시선 아래(CSM 포함)는 실제 눈금 그대로이고 위쪽은 약 "+Math.round(1/k)+"분의 1로 줄여 그렸습니다. 툴팁·표의 값은 실제 값입니다.");
       if(pend.length) nt("* 합계 행 확인 중","* "+pend.join(", ")+": 발행사 합계 행을 확인하는 중이라 값이 바뀔 수 있습니다.");
+      if(dcF.some(Boolean)){ const lo=lab.filter((l,i)=>dcF[i]);
+        nt("‡ DART 주석 기준","‡ "+lo.join("·")+" 시점의 CSM·BEL·RA·PAA 구성은 경영공시 2-4(해당 분기 11월 말 이후 공시)가 아직 없어 DART 분기보고서 주석 「회계모형별 보험부채 현황」(별도, 잔여보장요소)을 읽은 값입니다. "
+          +"같은 방식으로 읽은 이전 분기는 경영공시 2-4 와 일치했습니다. 경영공시 2-4 가 공시되면 그 값으로 바뀝니다."); }
       if(mism.length) nt("※ CSM 불일치 확인 중","※ "+mism.join(", ")+": 경영공시 2-4 의 CSM 이 섹션 2 의 기말 CSM 과 다릅니다(원천 확인 중).");
       if(!hasNb) nt("신계약 CSM 없음","이 회사는 신계약 CSM 시계열이 없어 꺾은선을 그리지 않습니다.");
       if(anySc) nt(allSc?"2-4 에 발생사고요소 포함":"일부 분기 2-4 에 발생사고요소 포함",simple?"이 회사의 경영공시 2-4 합계는 발생사고요소를 이미 포함한 값입니다. 차트는 CSM 만 그려 영향이 없고, 합계와 발생사고요소 공시값은 아래 표(‘이 중 발생사고요소’ 행)에 있습니다.":"이 회사의 경영공시 2-4 는 발생사고요소를 이미 포함한 값이라 왼쪽 막대에 발생사고요소가 섞여 있습니다. 그래서 "+(allSc?"":"해당 분기는 ")+"오른쪽 막대를 그리지 않았고, 발생사고요소 공시값은 표의 ‘이 중 발생사고요소’ 행에 따로 적었습니다.");
@@ -3219,7 +3224,7 @@
         if(used<sh.length) txt+=" 외 "+(sh.length-used)+"건";
         note.appendChild(document.createTextNode(txt||"막대·축 읽는 법"));
         note.appendChild(hcHelp("help-hc-note","차트 읽는 법과 이 회사 유의사항",notes.map(n=>n[1]))); }
-      renderHistTable(host,rows,lab.map((l,i)=>pend.indexOf(Q[i])>=0?l+"*":l),hasPaa,{allSc,anySc,anyEst,anyCalc,anyOnly,anyNc,nc:noComp,rs,anyRs});
+      renderHistTable(host,rows,lab.map((l,i)=>(pend.indexOf(Q[i])>=0?l+"*":l)+(dcF[i]?"‡":"")),hasPaa,{allSc,anySc,anyEst,anyCalc,anyOnly,anyNc,nc:noComp,rs,anyRs});
     }
     // 보험계약자산 상계 등 차이 = BS 보험계약부채 − 2-4 합계 − 발생사고요소 합계 (실공시 분기만. 추정은 정의상 0, 사이드카는 2-4 에 이미 포함)
     //  2-4 구성이 없는 시점은 2-4 합계 대신 DART 주석 잔여보장요소 합계(r[17], 이미 부채 기준)로 같은 계산을 한다.
@@ -3242,7 +3247,7 @@
         capT.appendChild(document.createTextNode("값(억원) · 음수 △"));
         capT.appendChild(hcHelp("help-hc-cap","표 읽는 법과 기준 설명",paras));
         if(fl.anyRs){ capT.appendChild(document.createTextNode(" · † 소급재작성 비교 기준"));
-          const lo=heads.filter((h,i)=>fl.rs[i]).map(h=>h.replace(/\*$/,"")).join("·");
+          const lo=heads.filter((h,i)=>fl.rs[i]).map(h=>h.replace(/[*‡]+$/,"")).join("·");
           capT.appendChild(hcHelp("help-hc-restated","소급재작성 사유 설명",[lo+" 열은 FY2024 결산에서 소급재작성된 비교 기준입니다(재무상태표 합계, 원 공시 대비)."]
             .concat(fl.rs.map((v,i)=>v?(heads[i]+" 재무상태표 합계 "+hcFmt(v[1],"억")+" → "+hcFmt(v[0],"억")+": "+v[2]):null).filter(Boolean)))); } }
       const defs=[];
