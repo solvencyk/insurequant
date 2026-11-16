@@ -1188,7 +1188,24 @@
   // 축 범위를 "29 제외"로 고정했을 때 잘리는 막대가 29·31 둘뿐이고 앞 열넷은 정상 스케일로 남는다.
   // (clip:true = y축 범위 계산에서 제외 + 넘치면 캔버스 끝에서 자름. axis break는 쓰지 않는다 —
   //  누적 브리지에서 축 중간을 압축하면 압축 구간 뒤 막대 위치가 전부 왜곡된다.)
-  const PL_HEAD_ETC = { ko:"기타(사업비용)", role:"flow", optional:true, get:g=>{ const oi=g(PL_NUM.기타수익),oe=g(PL_NUM.기타비용); return (oi==null&&oe==null)?null:(oi||0)-(oe||0); } };
+  // 기타(사업비용) = 항목17 − 항목18. 단, 보험손익(1)이 「사업비 미차감」 형태(1 = LOB 합 + 15 + 16, 17·18 을 안 넣음)로 닫히는
+  // (회사, 기간)은 이 단계를 그리지 않는다 — 그리면 브리지가 앵커를 항목18 만큼 넘어선다(2026-06-16 owner 지적, 2026-11-16 KB손보 항목18 복원).
+  // 형태는 회사 고정이 아니라 기간마다 마스터에서 판정한다: |1−(그려지는 앞 단계 합+15+16)| < |1−(…+17−18)| 이면 미차감 — 화면이 실제로 그리는 막대
+  // 합(기본형 4~10, 코리안리형은 수재 3·출재 10 과 하이픈 블록)으로 재므로 화면 잔차가 항상 줄어드는 쪽을 고른다(소계 2 와 세부 합이 어긋난 옛 칸 포함).
+  function plEtcBare(g){
+    const oi=g(PL_NUM.기타수익)||0, oe=g(PL_NUM.기타비용)||0;
+    if (oe===0) return false;
+    const a=g(PL_NUM.보험손익); if (a==null) return false;
+    const hy=[1,2,3].filter(k=> g("3-"+k)!=null || g("10-"+k)!=null);
+    let lob=0, seen=false;   // seen = 앞 단계에 값이 하나라도 있는가(없으면 판정할 근거가 없다 — 이 단계만으로 앵커를 설명하는 소형사는 그대로 둔다)
+    const add=v=>{ if (v!=null){ lob+=v; seen=true; } };
+    if (hy.length){ add(g(3)); add(g(10)); hy.forEach(k=>{ add(g("3-"+k)); add(g("10-"+k)); }); }
+    else for (let n=PL_NUM.원수CSM상각; n<=PL_NUM.재보험; n++) add(g(n));
+    if (!seen) return false;
+    const base = lob + (g(PL_NUM.자동차)||0) + (g(PL_NUM.일반)||0);
+    return Math.abs(a-base) < Math.abs(a-base-oi+oe);
+  }
+  const PL_HEAD_ETC = { ko:"기타(사업비용)", role:"flow", optional:true, get:g=>{ const oi=g(PL_NUM.기타수익),oe=g(PL_NUM.기타비용); if(oi==null&&oe==null) return null; if(plEtcBare(g)) return null; return (oi||0)-(oe||0); } };
   const PL_HEAD_DEFAULT = [
     { ko:"원수 CSM상각", role:"flow", get:g=> g(PL_NUM.원수CSM상각) },
     { ko:"원수 위험조정", role:"flow", get:g=> g(PL_NUM.원수RA) },

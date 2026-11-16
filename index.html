@@ -150,7 +150,7 @@
   <div class="container">
     <div class="hero">
       <div class="kpi-strip">
-        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">업계 총 기말 CSM</div></div>
+        <div class="kpi rise" style="animation-delay:.02s"><div class="kpi-val" id="kpiCsm">—</div><div class="kpi-lab">원수 보험사 총 기말 CSM</div></div>
         <div class="kpi rise" style="animation-delay:.08s"><div class="kpi-val" id="kpiRatio">—</div><div class="kpi-lab">K-ICS 지급여력비율 중위값</div></div>
         <div class="kpi rise" style="animation-delay:.14s"><div class="kpi-val" id="kpiCount">—</div><div class="kpi-lab">수록 보험사</div></div>
         <div class="kpi rise" style="animation-delay:.20s"><div class="kpi-val" id="kpiPeriod">—</div><div class="kpi-lab">기준 분기</div></div>
@@ -197,7 +197,7 @@
     </div>
     <div class="panel" style="margin-top:16px">
       <div class="section-title">IFRS17 — CSM Bubble Map</div>
-      <p class="section-desc" id="bubble-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액 · 회색(*)=연1회 공시사 추정치(직전 마감연도 연누계 ÷2, 배수는 이월)</p>
+      <p class="section-desc" id="bubble-desc">X: 신계약 CSM 규모 · Y: NB CSM 배수 · 크기: 기말 CSM 잔액 · 회색(*)=연1회 공시사 추정치(직전 마감연도 연누계를 최신 분기 누계 기간으로 환산, 배수는 이월)</p>
       <div class="controls" style="margin-bottom:10px">
         <label>업권:
           <select id="bubble-sector" class="select">
@@ -250,30 +250,34 @@
     const jsonPath = resolveUrl('kics_disclosure.json');
     let bubbleRows = null;
     let bubbleChart = null;
+    let bubbleEstScale = null;   // 연1회 공시사 추정 배율(전사 최신 분기 번호/4) — buildBubbleData() 가 채운다. 2Q=0.5, 3Q=0.75
     let bubbleShowEst = false;   // owner 2026-10-08: 연1회 공시사(추정)는 기본 숨김 — 버블이 겹쳐 짜부되는 것을 막는다. 범례 '추정'을 눌러 켠다
-    // 업계 총 기말 CSM KPI 용 패널. 실패(404 등)해도 페이지는 계속 — KPI 는 옛 방식으로 폴백한다(updateCsmKpi).
+    // 원수 보험사 총 기말 CSM KPI 용 패널. 실패(404 등)해도 페이지는 계속 — KPI 는 옛 방식으로 폴백한다(updateCsmKpi).
     let csmPanel;   // undefined = 로딩 중, null = 실패, 객체 = 패널
     fetch(resolveUrl('data/csm_combo/panel_csm_combo.json')).then(r => r.ok ? r.json() : null).catch(() => null)
       .then(p => { csmPanel = p; if (typeof updateCsmKpi === 'function') updateCsmKpi(); });
     let nbRowsRaw = null, wfRowsRaw = null; // M3: 모바일 버블 리스트용 원본 마스터 행
+    let kpiWfDone = false;   // CSM 워터폴 로딩이 끝났는가(성공·실패 모두). KPI 가 로딩 중에 낮은 값을 한 번 보였다 바뀌지 않게 끝난 뒤에 계산한다(updateCsmKpi)
     let allData = [];
     let GROUPED = {};
     // 업권 3분류(생명·손해·재보험/보증). 마스터 셀(생손보여부)은 고치지 않고 data/company_segment.json 의 코드->구분 매핑으로 덮는다.
     // 매핑에 없는 회사는 마스터 생손보여부를 따른다. 회사코드는 매핑 키로만 쓰고 화면에는 절대 내보내지 않는다.
     // 매핑 파일을 못 읽으면 재보사가 마스터 분류(생보/손보)로 섞여 보이므로 콘솔에 경고를 남긴다.
-    let SEG = {};
+    let SEG = {}, SEG_OK = false;   // SEG_OK = 매핑을 실제로 읽었는가(원수 총 CSM KPI 가 재보사를 가르는 근거 — isReinsurer)
     const SEG_ORDER = ['Life', 'Non-Life', 'Re'];
     const SEG_LABEL = { 'Life': '생명보험', 'Non-Life': '손해보험', 'Re': '재보험·보증' };
     const SEG_SHORT = { 'Life': '생명', 'Non-Life': '손해', 'Re': '재보·보증' };
     const SEG_READY = fetch(resolveUrl('data/company_segment.json'))
       .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(j => { SEG = (j && j.by_code) || {}; })
+      .then(j => { SEG = (j && j.by_code) || {}; SEG_OK = Object.keys(SEG).length > 0; })
       .catch(e => { console.warn('업권 매핑(data/company_segment.json) 로드 실패 — 재보험·보증이 생보/손보에 섞여 보입니다:', e); });
     function segOf(code, masterType) {
       const m = code && SEG[code];
       if (m && m.seg) return m.seg;
       return masterType === '생명보험' ? 'Life' : 'Non-Life';
     }
+    // 재보사 = 업권 Re 이면서 표기(tag)가 「보증」이 아닌 회사(서울보증은 Re 이지만 보증이라 원수 합에 남는다). 코드는 하드코딩하지 않고 매핑 값으로만 가른다.
+    function isReinsurer(code) { const m = code && SEG[code]; return !!(m && m.seg === 'Re' && m.tag !== '보증'); }
     function emptyGrouped() { return { 'Life': [], 'Non-Life': [], 'Re': [] }; }
     // D-2 20260818(owner): NB 배수(Y축) 분모(월납초회)가 재수집 보류돼 2026.1Q에 고정돼 있었다 —
     // 그때 "2026.1Q" 리터럴이 여러 곳에 복붙돼 있던 걸 이 상수 하나로 모았다.
@@ -429,20 +433,26 @@
       const m = Math.floor(a.length/2);
       return a.length%2 ? a[m] : (a[m-1]+a[m])/2;
     }
-    function totalClosingCsmEok(){            // 회사별 최신 기말(항목6) 합, 단위 억
-      if(!Array.isArray(wfRowsRaw)) return null;
-      const latest = {};                      // code -> {k,v}
-      for(const r of wfRowsRaw){
+    function wfLatestClosing(){               // CSM 워터폴 항목6(기말, 억원) 회사별 최신 분기 값 {code:{k,v}}. 재보사는 뺀다(원수 합 전용)
+      const latest = {};
+      for(const r of (wfRowsRaw||[])){
         if(r['항목번호']!==6 || r['값']==null) continue;
-        const code=r['원보험사코드']; const v=Number(r['값']); if(!code||!Number.isFinite(v)) continue;
+        const code=r['원보험사코드']; const v=Number(r['값']); if(!code||!Number.isFinite(v)||isReinsurer(code)) continue;
         const k=qkey(r['공시분기']);
         if(!latest[code] || k>latest[code].k) latest[code]={k,v};
       }
+      return latest;
+    }
+    function totalClosingCsmEok(){            // 회사별 최신 기말(항목6) 합, 단위 억 (패널 폴백용)
+      if(!Array.isArray(wfRowsRaw)) return null;
+      const latest = wfLatestClosing();
       const codes=Object.keys(latest); if(!codes.length) return null;
       return codes.reduce((s,c)=>s+latest[c].v,0);
     }
-    // 업계 총 기말 CSM — 원천 = 보험계약부채 패널(data/csm_combo/panel_csm_combo.json, 경영공시 2-4 보험부채 현황표)의 csm_gen+csm_vfa.
-    // 연 1회 공시사도 분기별 잔액이 있어 **전 회사를 같은 분기로** 합한다(옛 totalClosingCsmEok 는 회사별 최신 분기를 합해 분기가 섞였다).
+    // 원수 보험사 총 기말 CSM — 원천 = 보험계약부채 패널(data/csm_combo/panel_csm_combo.json, 경영공시 2-4 보험부채 현황표)의 csm_gen+csm_vfa.
+    // 재보사(isReinsurer)는 합에서 뺀다 — 원수 CSM 과 재보사 CSM 을 더하면 같은 계약이 두 번 잡히는 중복계상이다(owner 2026-11-16). 서울보증은 남긴다(CSM 0).
+    // 연 1회 공시사도 분기별 잔액이 있어 패널은 **전 회사를 같은 기준 분기로** 맞춘다. 그 위에 owner 결정(2026-11-16): DART 에 기준 분기보다 늦은 분기가
+    // 이미 올라온 회사는 CSM 워터폴(항목6)의 그 최신 값으로 바꿔 합한다 — 아직 안 올라온 회사는 패널의 기준 분기 값 그대로라 **분기가 섞인다**(owner 승인, updateCsmKpi).
     // 모집단 = 시장지도 KPI 「수록 보험사」와 같은 회사(최신 K-ICS 분기에 지급여력비율이 있는 회사, GROUPED)와 패널의 교집합.
     //  패널에만 있는 회사(예: 재흡수돼 K-ICS·CSM 마스터에 없는 캐롯손해보험)는 자동으로 빠진다. 모집단이 비어 있으면(K-ICS 로딩 실패) 패널 전체.
     // 기준 분기 = meta.quarters 중 가장 늦은 분기 가운데, 그 분기에 값이 있는 모집단 회사 수가 「패널에 값이 한 번이라도 있는 모집단 회사」의 80%(올림) 이상인 첫 분기
@@ -457,25 +467,28 @@
         const ig=cols.indexOf('csm_gen'), iv=cols.indexOf('csm_vfa');
         if(!qs.length||ig<0||iv<0) return null;
         const num=v=>Number.isFinite(v)?v:null;
-        const codes=Object.keys(all).filter(c=>!universe||universe.has(c));
+        const codes=Object.keys(all).filter(c=>(!universe||universe.has(c)) && !isReinsurer(c));
         const rowSum=(c,q)=>{ const r=all[c]&&all[c].q&&all[c].q[q]; if(!r) return null; const a=num(r[ig]), b=num(r[iv]); return (a==null&&b==null)?null:(a||0)+(b||0); };
         const withData=codes.filter(c=>qs.some(q=>rowSum(c,q)!=null)).length;
         if(!withData) return null;
         for(let i=qs.length-1;i>=0;i--){
-          let n=0, tot=0; const fb=[];
+          let n=0, tot=0; const fb=[], vals={};   // vals = 회사별 합산값(기준 분기 값 또는 직전값 폴백) — 늦은 분기 덮어쓰기가 회사별로 뺄 값
           for(const c of codes){
             let v=rowSum(c,qs[i]);
-            if(v!=null){ n++; tot+=v; continue; }
-            for(let j=i-1;j>=0&&v==null;j--){ v=rowSum(c,qs[j]); if(v!=null){ n++; tot+=v; fb.push({n:all[c].n||c, q:qs[j]}); } }
+            if(v!=null){ n++; tot+=v; vals[c]=v; continue; }
+            for(let j=i-1;j>=0&&v==null;j--){ v=rowSum(c,qs[j]); if(v!=null){ n++; tot+=v; vals[c]=v; fb.push({n:all[c].n||c, q:qs[j]}); } }
           }
           const direct=n-fb.length;
-          if(direct>=Math.ceil(withData*0.8)) return {eok:tot, q:qs[i], n, fb};
+          if(direct>=Math.ceil(withData*0.8)) return {eok:tot, q:qs[i], n, fb, vals};
         }
       }catch(e){ console.warn('industry CSM from panel failed:', e); }
       return null;
     }
     function updateCsmKpi(){
       if(csmPanel===undefined) return;        // 패널 로딩이 끝나면(성공·실패 모두) 다시 불린다
+      // 워터폴 로딩이 끝난 뒤(성공·실패 모두)에만 계산한다 — 늦은 분기 덮어쓰기 전의 낮은 값을 먼저 보였다 바꾸지 않으려는 것(loadBubble 이 끝나며 다시 부른다).
+      // 업권 매핑을 못 읽었으면 재보사를 가를 수 없어 값을 내지 않는다(재보사가 섞인 틀린 합보다 「—」가 낫다).
+      if(!kpiWfDone || !SEG_OK) return;
       const el=document.getElementById('kpiCsm'); if(!el) return;
       const fmt=v=>samoNum(v,0)+'<span class="u">조</span>';
       // 모집단은 시장지도 KPI(수록 보험사)와 같은 회사다 — K-ICS 데이터가 아직 안 왔으면 기다린다(updateKpis 가 K-ICS 로딩 뒤 다시 부른다).
@@ -483,9 +496,13 @@
       const comps=SEG_ORDER.flatMap(sg=>GROUPED[sg]||[]), uni=comps.length?new Set(comps.map(c=>c.code).filter(Boolean)):null;
       const hit=csmPanel?industryCsmFromPanel(csmPanel, uni&&uni.size?uni:null):null;
       if(hit){
-        countUp(el, hit.eok/10000, fmt);
+        let eok=hit.eok;
+        // 기준 분기보다 늦은 분기가 워터폴에 있는 회사는 그 값으로 바꾼다(owner 결정 2026-11-16 — 분기 혼합 승인). 워터폴을 못 받았으면 패널 값만.
+        const lat=wfLatestClosing(), base=qkey(hit.q);
+        for(const c in hit.vals){ if(lat[c] && lat[c].k>base) eok += lat[c].v - hit.vals[c]; }
+        countUp(el, eok/10000, fmt);
       }else{
-        const eok=totalClosingCsmEok();       // 폴백: 회사별 최신 분기 합(분기가 섞임)
+        const eok=totalClosingCsmEok();       // 폴백: 회사별 최신 분기 합(분기가 섞임, 재보사 제외)
         if(eok==null) return;
         countUp(el, eok/10000, fmt);
       }
@@ -508,8 +525,12 @@
       const med = _median(comps.map(c=>c.ratio));
       if(med!=null) countUp(document.getElementById('kpiRatio'), med, v=>samoNum(v,0)+'<span class="u">%</span>');
       if(comps.length) countUp(document.getElementById('kpiCount'), comps.length, v=>Math.round(v)+'<span class="u">社</span>');
-      const per = (allData&&allData.length) ? getLatestQuarter(allData) : null;
-      if(per) setT('kpiPeriod', per);
+      // 기준 분기 = K-ICS 와 CSM 워터폴 중 더 늦은 분기 — 푸터(refreshFooterQuarter)와 같은 규칙. owner 2026-11-17: 홈 CSM 합계가 3Q 기준이라 기준 분기도 2026.3Q.
+      // 워터폴 로딩이 끝나기 전에는 쓰지 않는다(K-ICS 2Q 가 먼저 떴다가 3Q 로 바뀌는 깜빡임 방지; 워터폴 실패 시에도 kpiWfDone 이 서서 K-ICS 분기로 낸다).
+      const perK = (allData&&allData.length) ? getLatestQuarter(allData) : null;
+      const perW = Array.isArray(wfRowsRaw) ? globalMaxQuarter(wfRowsRaw) : null;
+      const per = [perK, perW].filter(Boolean).sort((a,b)=>qkey(b)-qkey(a))[0] || null;
+      if(per && kpiWfDone) setT('kpiPeriod', per);
       updateCsmKpi();
     }
 
@@ -1115,7 +1136,7 @@
         + `<b>X · 신계약 CSM 규모</b> — CSM_waterfall 기준, ${span(xQs, maxXQ)}<br>`
         + `<b>Y · NB CSM 배수</b> — ${NB_TARGET_Q} 연누계 고정. 배수의 분모는 월납초회보험료 수집분입니다.<br>`
         + `<b>크기 · 기말 CSM 잔액</b> — ${span(cQs, maxClosingQ)}<br><br>`
-        + `회색 별표(*)는 연 1회만 공시하는 회사의 추정치입니다 — 직전 마감연도 연누계를 2로 나누고, `
+        + `회색 별표(*)는 연 1회만 공시하는 회사의 추정치입니다 — 직전 마감연도 연누계를 ${nbScaleWords(bubbleEstScale)}, `
         + `배수는 직전 값을 이월했습니다.`
         + `</span></span>`;
     }
@@ -1177,7 +1198,7 @@
             const lines = [`<b>${hEsc(shortName(d.name))}</b> · ${hEsc(SEG_SHORT[d.sector] || d.sector)}`];
             // D-2 후속(20260818): X(신계약CSM)와 Y(배수)의 기준 분기가 서로 달라질 수 있어
             // 각 줄이 자기 분기를 직접 표기 — 더는 하나의 if/else로 묶지 않는다.
-            const xNote = d.estimated ? `${hEsc(d.srcQ)} 연누계 ÷2 추정` : `${hEsc(d.srcQ)} 연누계`;
+            const xNote = d.estimated ? `${hEsc(d.srcQ)} 연누계 ${nbScaleText(d.estScale)} 추정` : `${hEsc(d.srcQ)} 연누계`;
             lines.push(`신계약 CSM 규모: ${Math.round(d.nbCsm).toLocaleString()}억 (${xNote})`);
             const yNote = d.multEstimated ? `${hEsc(d.multPeriod)} 연누계 이월` : `${hEsc(d.multPeriod)} 연누계`;
             lines.push(`NB CSM 배수: ${d.multiple.toFixed(2)}× (${yNote})`);
@@ -1263,10 +1284,15 @@
 
     function hEsc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
     function qkey(q){ const m=/^(\d{4})\.(\d)Q$/.exec(String(q)); return m ? (+m[1])*10 + (+m[2]) : 0; }
+    // 연누계 대용값의 스케일 배율 = (전사 최신 분기 번호) / (대용값 원천 분기 번호). 원천은 직전 마감연도(4Q)라 qn/4 —
+    // 2Q(반기 6개월)=0.5, 3Q(9개월)=0.75. 분기 번호는 qkey 의 끝자리(1~4). 범위 밖이면 1(환산 없음).
+    function nbEstScale(globalK, srcK){ const g = globalK % 10, s = srcK % 10; return (g >= 1 && g <= 4 && s >= 1 && s <= 4) ? g / s : 1; }
+    function nbScaleText(f){ const inv = 1 / f; return (inv > 1 && Math.abs(inv - Math.round(inv)) < 1e-9) ? '÷' + Math.round(inv) : '×' + (Math.round(f * 1000) / 1000); }   // 0.5 → ÷2, 0.75 → ×0.75
+    function nbScaleWords(f){ if (!(f > 0)) return '최신 분기 누계 기간으로 환산하고'; const inv = 1 / f; return (inv > 1 && Math.abs(inv - Math.round(inv)) < 1e-9) ? Math.round(inv) + '로 나누고' : (Math.round(f * 1000) / 1000) + '배로 환산하고'; }   // 0.5 → 2로 나누고, 0.75 → 0.75배로 환산하고
 
     // 진짜 마스터: 루트 NB_CSM_multiple.json (코드·분기·신계약CSM_연누계·배수_연누계). CSM워터폴(기말)과 코드로 조인.
     // 연1회(회기) 공시사는 기준분기(NB_TARGET_Q) 행이 없음(20260730):
-    //   Group A(배수 carry 가능) — 같은 code의 직전 회기 값을 fallback으로 채택, nbCsm만 ÷4 추정(배수는 스케일 불변이라 이월).
+    //   Group A(배수 carry 가능) — 같은 code의 직전 회기 값을 fallback으로 채택, nbCsm만 전사 최신 분기 누계 기간으로 환산(nbEstScale; 배수는 스케일 불변이라 이월).
     //   Group B(배수 구조적 부재: 재보험/연금 월납초회보험료 0, 단위오류 검증대기) — multiple=null인 채로 census에 남겨 보조표(전 35사)에서만 노출, 버블에는 안 나감.
     function buildBubbleData(nbRows, wfRows) {
       const wfClosing = {}, wfNbItem = {}, wfMeta = {};    // wfNbItem: code -> {qkey -> {v,q}} 항목2(신계약CSM) — NB에 행 자체가 없는 사 fallback
@@ -1294,6 +1320,7 @@
       for (const code in wfNbItem) {
         for (const k in wfNbItem[code]) { const kk = Number(k); if (kk > xGlobalMaxK) xGlobalMaxK = kk; }
       }
+      bubbleEstScale = nbEstScale(xGlobalMaxK, 4);          // 연1회 공시사(원천=4Q) 추정 배율 — 캡션이 같은 값을 쓴다
 
       for (const code in wfClosing) {                       // census = CSM_waterfall 기말(6) 보유 전사
         let closing = null, closingK = null;               // 기말은 stock → 최신 분기 잔액
@@ -1302,18 +1329,22 @@
 
         // X축: 회사별 CSM_waterfall 최신 신계약CSM(항목2).
         const wn = wfNbItem[code];
-        let nbCsmRaw = null, xSrcQ = null, xEstimated = false;
+        let nbCsmRaw = null, xSrcQ = null, xEstimated = false, estScale = 1;
         if (wn) {
           const ks = Object.keys(wn).map(Number).sort((a, b) => b - a);
           if (ks.length) {
             const kBest = ks[0];
             nbCsmRaw = wn[kBest].v; xSrcQ = wn[kBest].q;
-            xEstimated = kBest !== xGlobalMaxK;             // 전사 최신 분기가 아니면 직전 마감연도 값 대용
+            // 같은 해의 더 이른 분기(예: 라이나 2026.2Q, 전사 최신 2026.3Q)는 그 회사의 실공시 값이다 — 외삽(×1.5)하지 않고 원값 그대로,
+            // 추정 취급도 안 한다(owner 2026-11-16 결정 7 A; 툴팁·표의 기준분기 칸이 자기 분기를 그대로 보여 준다). 추정은 원천이 직전 연도일 때만.
+            const sameYearLag = kBest !== xGlobalMaxK && Math.floor(kBest / 10) === Math.floor(xGlobalMaxK / 10);
+            xEstimated = kBest !== xGlobalMaxK && !sameYearLag;   // 전사 최신 분기가 아니고 직전 연도 값이면 대용
+            if (xEstimated) estScale = nbEstScale(xGlobalMaxK, kBest);
           }
         }
-        // ⚠ 스케일(owner 실측): 전사 최신이 반기누계(2026.2Q)라 연간누계(4Q 마감) 대용값은 ÷4가 아니라
-        // ÷2 — 연 12개월분을 반기(6개월) 스케일로 맞춰야 정상 비교가 된다.
-        const nbCsm = nbCsmRaw == null ? null : (xEstimated ? nbCsmRaw / 2 : nbCsmRaw);
+        // ⚠ 스케일(owner 실측): 대용값(직전 마감연도 연누계 12개월)을 전사 최신 분기의 누계 기간에 맞춘다 — 배율은 분기 번호에서 파생(nbEstScale):
+        // 2Q(반기 6개월)=×0.5(÷2), 3Q(9개월)=×0.75, 1Q=×0.25(÷4). ÷2 리터럴은 3Q 부터 틀리므로 없앴다(2026-11-13, 3Q 라운드 사전 점검).
+        const nbCsm = nbCsmRaw == null ? null : (xEstimated ? nbCsmRaw * estScale : nbCsmRaw);
 
         // Y축(배수): 기존 로직 그대로, NB_CSM_multiple.json에서만 — 변경 없음.
         const nbc = nbByCode[code];
@@ -1337,7 +1368,7 @@
           period: xSrcQ, srcQ: xSrcQ,           // X축(신계약CSM) 기준 분기 — 캡션/커버리지표가 참조
           multPeriod, multEstimated,            // Y축(배수) 기준 분기/추정여부 — X와 분리 표기용
           nbCsmRaw, nbCsm, multiple,
-          closing, closingK, estimated: xEstimated,
+          closing, closingK, estimated: xEstimated, estScale,
         });
       }
       return out;
@@ -1362,7 +1393,7 @@
         // 견주는 "직전값 이월" 분기가 더는 성립하지 않는다(더 최신인 회사까지 "이월"로 오표시하던
         // 버그) — 제거. X축이 회사 자신의 최신이 아닐 때(연1회 공시사)만 "추정"으로 남긴다.
         if (r.multiple == null) { remark = '배수 미산출'; note = ' (월납초회보험료 0/미공시)'; }
-        else if (r.estimated) remark = '추정 (신계약CSM ÷2)';
+        else if (r.estimated) remark = `추정 (신계약CSM ${nbScaleText(r.estScale)})`;
         else remark = '실공시';
 
         const tr = document.createElement('tr');
@@ -1514,6 +1545,7 @@
       ]).then(([nbRows, wfRows]) => {
         nbRowsRaw = nbRows;
         wfRowsRaw = wfRows;
+        kpiWfDone = true;
         _footerWfQ = globalMaxQuarter(wfRows); refreshFooterQuarter();
         bubbleRows = buildBubbleData(nbRows, wfRows);
         // 재보험·보증은 NB CSM 배수 분모(월납초회보험료)가 없어 버블이 0개다 — 버블이 생길 때만 필터·범례에 노출(데이터에서 도출).
@@ -1527,6 +1559,7 @@
         updateKpis();
       }).catch(e => {
         console.error('bubble masters load failed:', e);
+        kpiWfDone = true; updateCsmKpi();   // 워터폴을 못 받아도 KPI 는 패널 값만으로 낸다
         const metaEl = document.getElementById('bubble-meta');
         if (metaEl) metaEl.textContent = 'NB_CSM_multiple.json / CSM_waterfall.json 로드 실패';
       });

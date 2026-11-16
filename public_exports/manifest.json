@@ -1,14 +1,14 @@
 {
-  "generated_at_utc": "2026-11-08T16:18:20Z",
+  "generated_at_utc": "2026-11-16T15:43:36Z",
   "license": "All rights reserved. 열람·출처표기 인용·사내 분석은 자유, 자동수집(크롤링)으로 통째 긁어가기·대량 재배포·재판매는 금지.",
   "terms_url": "https://www.insurequant.com/privacy.html#terms",
   "copyright": "(c) 2026 InsureQuant (운영자 조상욱). 원천 수치의 권리는 각 공시 주체에게 있음.",
-  "build_id": "360840bf",
+  "build_id": "32a2ec90",
   "sheets": {
     "17BS": {
-      "rows": 11016,
+      "rows": 11497,
       "quarter_min": "2021.4Q",
-      "quarter_max": "2026.2Q"
+      "quarter_max": "2026.3Q"
     },
     "K-ICS공시": {
       "rows": 30011,
@@ -21,9 +21,9 @@
       "quarter_max": "2026.2Q"
     },
     "CSM워터폴": {
-      "rows": 2358,
+      "rows": 2490,
       "quarter_min": "2023.1Q",
-      "quarter_max": "2026.2Q"
+      "quarter_max": "2026.3Q"
     },
     "CSM상각": {
       "rows": 635,
@@ -41,14 +41,14 @@
       "quarter_max": "2026.2Q"
     },
     "손익분해PL": {
-      "rows": 14577,
+      "rows": 15372,
       "quarter_min": "2023.1Q",
-      "quarter_max": "2026.2Q"
+      "quarter_max": "2026.3Q"
     },
     "배당": {
-      "rows": 2043,
+      "rows": 2060,
       "quarter_min": "2023.1Q",
-      "quarter_max": "2026.2Q"
+      "quarter_max": "2026.3Q"
     },
     "기본자본소진율": {
       "rows": 470,
@@ -86,9 +86,9 @@
       "quarter_max": "2025.4Q"
     },
     "CSM워터폴포트폴리오": {
-      "rows": 2172,
+      "rows": 2768,
       "quarter_min": "2024.4Q",
-      "quarter_max": "2026.2Q"
+      "quarter_max": "2026.3Q"
     }
   }
 }
