@@ -12,34 +12,36 @@
   한글 파일명은 반드시 퍼센트 인코딩(대문자 헥사)으로 넣는다. 원문 한글을 그대로
   적으면 색인 도구에 따라 실패한다.
 
-  lastmod = 배포 커밋 (2026-09-11T00:00:15+09:00) 시각이다. 5 개 파일 모두
-  그 커밋에서 마지막으로 바뀌었으므로 실제와 일치한다. 근거 없는 날짜는 적지 않는다.
+  lastmod = 그 파일이 라이브(main)에서 마지막으로 바뀐 배포 커밋의 날짜(KST)다.
+  파일마다 다르다: origin/main 에서 그 파일의 마지막 커밋 날짜(git log -1 로 잰다).
+  근거 없는 날짜는 적지 않는다. (2026-11-24 기준: index·IFRS17·privacy = 11-17,
+  K-ICS·공시보고서·compare = 11-10.) jp/ 항목은 lane/jp 에서 관리한다.
   changefreq · priority 는 넣지 않는다 — Google 은 둘 다 무시한다.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.insurequant.com/</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-11-17</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/K-ICS.html</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-11-10</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/IFRS17.html</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-11-17</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/%EA%B3%B5%EC%8B%9C%EB%B3%B4%EA%B3%A0%EC%84%9C.html</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-11-10</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/compare.html</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-11-10</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/privacy.html</loc>
-    <lastmod>2026-09-11</lastmod>
+    <lastmod>2026-11-17</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/jp/</loc>
