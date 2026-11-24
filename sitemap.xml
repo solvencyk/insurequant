@@ -15,7 +15,8 @@
   lastmod = 그 파일이 라이브(main)에서 마지막으로 바뀐 배포 커밋의 날짜(KST)다.
   파일마다 다르다: origin/main 에서 그 파일의 마지막 커밋 날짜(git log -1 로 잰다).
   근거 없는 날짜는 적지 않는다. (2026-11-24 기준: index·IFRS17·privacy = 11-17,
-  K-ICS·공시보고서·compare = 11-10.) jp/ 항목은 lane/jp 에서 관리한다.
+  K-ICS·공시보고서·compare = 11-10.) jp/ 항목도 같은 기준(main 에서 그 파일의 마지막
+  배포 커밋 날짜)이고, lane/jp 세션이 배포 뒤 날짜를 알려 주면 한국 레인이 반영한다.
   changefreq · priority 는 넣지 않는다 — Google 은 둘 다 무시한다.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -45,22 +46,22 @@
   </url>
   <url>
     <loc>https://www.insurequant.com/jp/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-24</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/jp/jesr.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-04</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/jp/jgaap.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-04</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/jp/disclosure.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-24</lastmod>
   </url>
   <url>
     <loc>https://www.insurequant.com/jp/terms.html</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-03</lastmod>
   </url>
 </urlset>
