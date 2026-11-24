@@ -300,6 +300,8 @@
     });
     var codes = names.map(function (name) { return SHEETS.filter(function (s) { return s.name === name; })[0].code; });
     XLSX.writeFile(wb, "insurequant_" + todayStr() + "_" + codes.join("_") + ".xlsx");
+    // GA4 이벤트(2026-11-24, jp 와 같은 이름·params): 파일 저장 성공 뒤에만, 시트 개수만(시트 목록 문자열은 보내지 않는다).
+    try { if (window.IQ_FORMS && typeof window.IQ_FORMS.track === "function") window.IQ_FORMS.track("download_xlsx", { market: "kr", file_type: "xlsx", sheet_count: names.length }); } catch (e) { /* ignore */ }
   }
 
   function buildBackdrop() {

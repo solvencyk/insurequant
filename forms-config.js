@@ -29,3 +29,14 @@ window.IQ_FORMS.submit = async function (kind, valuesByKey) {
     return { ok: false, reason: "network" };
   }
 };
+
+// GA4 사용 이벤트(owner 2026-11-24): 링크 복사·스크린샷·xlsx 다운로드·오류 제보 횟수만 센다. jp 레인과 한 GA4 속성을 공용하므로
+// 이벤트 이름·params 를 맞춘다(market:'kr' 고정). params 에는 개인정보·자유서술·회사명·분기·시트 목록 문자열을 넣지 않는다.
+// 내부 방문 판정은 여기서 하지 않는다 — 각 페이지 head 의 gtag('config',{traffic_type:'internal'}) 가 표시하고 GA4 데이터 필터가 거른다.
+// gtag 가 없으면 아무것도 보내지 않고, 어떤 예외도 호출한 쪽(복사·다운로드·제보) 동작에 닿지 않는다.
+window.IQ_FORMS.track = function (name, params) {
+  try {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", name, params || {});
+  } catch (e) { /* 분석 실패는 사용자 동작에 영향 없음 */ }
+};

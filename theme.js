@@ -512,7 +512,7 @@
   }
   function shLog(action, section, result){
     try{
-      if(shInternal() || !window.IQ_FORMS || typeof window.IQ_FORMS.submit !== 'function') return;
+      if(!window.IQ_FORMS) return;
       var seg = location.pathname.split('/').pop();
       try{ seg = decodeURIComponent(seg); }catch(e){}
       var page = seg.replace(/\.html$/, '') || 'index';
@@ -520,6 +520,17 @@
       var key = page + '|' + action + '|' + section, now = Date.now();
       if(_shLogLast[key] && now - _shLogLast[key] < 1500) return;
       _shLogLast[key] = now;
+      /* GA4 이벤트(owner 2026-11-24, jp 와 같은 이름·params 로 한 속성을 공용): 수집기 전송·내부 방문 제외와 독립.
+         내부 방문은 각 페이지 head 의 gtag('config',{traffic_type:'internal'}) 가 표시하고 GA4 데이터 필터가 거른다.
+         성공한 동작만 보낸다(ok·truncated=이미지는 만들어짐). params 에 회사·분기·자유서술은 넣지 않는다. */
+      try{
+        if(typeof window.IQ_FORMS.track === 'function' && (result === undefined || result === 'ok' || result === 'truncated')){
+          var gp = { market:'kr', page:page };
+          if(action === 'section_screenshot') gp.section = section;
+          window.IQ_FORMS.track(action, gp);
+        }
+      }catch(e){}
+      if(shInternal() || typeof window.IQ_FORMS.submit !== 'function') return;
       var co = ''; try{ co = shCtx().company || ''; }catch(e){}
       var touch = !!(window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
       var p = window.IQ_FORMS.submit('share', { page:page, action:action, section:section, company:co, device:touch ? 'touch' : 'pointer', result:result || 'ok' });

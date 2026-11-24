@@ -52,6 +52,12 @@
     try { return localStorage.getItem("iq_internal") === "1"; } catch (e) { /* ignore */ }
     return false;
   }
+  // theme.js shLog 와 같은 페이지 이름(index·K-ICS·IFRS17·공시보고서·compare).
+  function pageName() {
+    var seg = location.pathname.split("/").pop();
+    try { seg = decodeURIComponent(seg); } catch (e) { /* ignore */ }
+    return seg.replace(/\.html$/, "") || "index";
+  }
   function sendReport(values) {
     if (isInternalVisit()) return Promise.resolve({ ok: false, reason: "internal" });
     return window.IQ_FORMS.submit("report", values);
@@ -183,7 +189,12 @@
       submitBtn.textContent = "제출 중…";
       sendReport({
         sheet: sheet, company: companies.join(", "), period: quarters.join(", "), detail: detailVal
-      }).then(function () {
+      }).then(function (res) {
+        // GA4 이벤트(2026-11-24, jp 와 같은 이름·params): 제출이 끝났을 때(전송 실패·미설정 제외) 대상 시트명(고정 목록) 1개만. 회사·기간·내용은 보내지 않는다.
+        try {
+          var failed = res && res.ok === false && (res.reason === "network" || res.reason === "not_configured");
+          if (!failed && typeof window.IQ_FORMS.track === "function") window.IQ_FORMS.track("report_data_error", { market: "kr", page: pageName(), sheet: sheet });
+        } catch (e) { /* ignore */ }
         submitBtn.textContent = "제출 완료 — 감사합니다";
         setTimeout(function () {
           close();
