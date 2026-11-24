@@ -49,6 +49,17 @@
     return e;
   }
 
+  // GA4 custom event (gtag is loaded in each page <head>; missing/blocked gtag or any error is silently ignored).
+  // Params stay anonymous: page/section names only, never company, free text or form content. The head's
+  // gtag('config') already carries traffic_type=internal for the owner's browser, so internal visits are excluded.
+  function gaEvent(name, params) {
+    try { if (typeof window.gtag === "function") window.gtag("event", name, params || {}); } catch (e) { /* ignore */ }
+  }
+  function gaPage() {
+    var seg = location.pathname.split("/").pop().replace(/\.html$/, "");
+    return seg || "index";
+  }
+
   function fillCheckGrid(grid, name, items) {
     grid.innerHTML = "";
     items.forEach(function (val) {
@@ -196,6 +207,7 @@
       window.IQ_FORMS.submit("report", {
         sheet: SHEET_PREFIX + sheet, company: companies.join(", "), period: quarters.join(", "), detail: detailVal
       }).then(function () {
+        gaEvent("report_data_error", { market: "jp", page: gaPage(), sheet: sheet });
         submitBtn.textContent = "送信完了 — ありがとうございます";
         setTimeout(function () {
           close();
@@ -213,7 +225,7 @@
   // ルート theme.js の共有(リンクコピー・ページ全体/セクション別スクリーンショット)を jp 用に移植したもの —
   // theme.js は lang=ja で共有を出さないため、全 jp ページが読むこのファイルから日本語で組み立てる。
   // html2canvas はスクリーンショットを押した時だけ SRI 付きで読み込む(ルート theme.js と同じ URL・ハッシュ。
-  // scripts/compute_sri.py の html2canvas@1.4.1 と同一)。画像はすべて閲覧者のブラウザ内で作り、利用記録は送らない。
+  // scripts/compute_sri.py の html2canvas@1.4.1 と同一)。画像はすべて閲覧者のブラウザ内で作り、画像・会社名・入力内容は送らない(操作の回数だけ GA4 に匿名イベントとして送る: link_copy / page_screenshot / section_screenshot / report_data_error, gaEvent)。
   // 長いページはキャンバス上限(1辺約16,384px・iOS Safari は総面積約1,677万px)を超えると無言で白紙になるため、
   // 作る前に高さを測って倍率を自動で下げる(shPlan)。読める下限(SH_MIN_SCALE)を割る極端に長いページは上部のみ収録する。
   // 画面側の契約: マークアップに data-share-section="セクション名" を付けた要素(パネル)の右上にボタンが付く。
@@ -252,6 +264,7 @@
     return u.toString().replace(/%2C/gi, ",");
   }
   function shCopyLink() {
+    gaEvent("link_copy", { market: "jp", page: gaPage() });
     var link = shareUrl();
     var done = function () { shToast("リンクをコピーしました"); };
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(done, function () { window.prompt("リンクをコピーしてください", link); });
@@ -412,6 +425,9 @@
           done();
           if (!b) { shToast("画像を作成できませんでした"); return; }
           shSave(b, o.tag);
+          // full-page vs one section: section name (data-share-section, a fixed label) only on the section shot
+          if (o.tag === "full") gaEvent("page_screenshot", { market: "jp", page: gaPage() });
+          else gaEvent("section_screenshot", { market: "jp", page: gaPage(), section: o.title || o.tag });
           if (r.meta.truncated) setTimeout(function () { shToast("ページが非常に長いため上部のみ収録しました。セクション別共有をご利用ください"); }, 700);
         }, "image/png");
       }, function () { done(); shToast("画像を作成できませんでした"); });

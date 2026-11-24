@@ -104,6 +104,12 @@
     (children || []).forEach(function (c) { e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
     return e;
   }
+  // GA4 custom event (gtag is loaded in each page <head>; missing/blocked gtag or any error is silently ignored).
+  // Params stay anonymous: never the approval code, company or any free text. The head's gtag('config') already
+  // carries traffic_type=internal for the owner's browser, so internal visits are excluded here as well.
+  function gaEvent(name, params) {
+    try { if (typeof window.gtag === "function") window.gtag("event", name, params || {}); } catch (e) { /* ignore */ }
+  }
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
   function todayStr() { var d = new Date(); return d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()); }
   function hhmm() { var d = new Date(); return pad2(d.getHours()) + ":" + pad2(d.getMinutes()); }
@@ -542,6 +548,7 @@
       note.textContent = "";
       download(code).then(function (out) {
         dlBusy = false;
+        if (out === "ok") gaEvent("download_xlsx", { market: "jp", file_type: "xlsx" });   // GA4 key event; anonymous, no code/company
         // a download that outlived its view still frees the button of the view that replaced it
         if (dlBtnLive && dlBtnLive.isConnected) { dlBtnLive.disabled = false; dlBtnLive.textContent = T.dl; }
         if (tok !== viewTok || !isOpen()) return;
