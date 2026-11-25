@@ -5,7 +5,7 @@
   <!-- CSP: defense-in-depth, meta-delivered (GitHub Pages static — no HTTP headers). Must stay first in <head>, before CDN tags. frame-ancestors/report-uri are ignored in meta CSP. -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://*.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>InsureQuant — 공시/보고서</title>
+  <title>InsureQuant — 배당</title>
   <!-- Google tag (gtag.js) — GA4 G-F8NSCQZBZK. 반드시 위 CSP meta 뒤에 온다(앞에 두면 CSP가 적용되지 않는다).
        integrity(SRI)를 달지 않는다: gtag.js는 Google이 수시로 갱신하는 가변 파일이라 해시 고정이 불가능하다.
        이 저장소의 "외부 스크립트는 SRI 필수" 관례에 대한 owner 승인 예외다(2026-09-10). SRI 계산 대상에 등재하지 말 것.
@@ -28,9 +28,9 @@
       gtag('config', 'G-F8NSCQZBZK', cfg);
     })();
   </script>
-  <meta name="description" content="보험사 정기경영공시·DART 공시 자료 모음 — 분기·반기·사업보고서"/>
-  <meta property="og:title" content="InsureQuant — 공시/보고서"/>
-  <meta property="og:description" content="보험사 정기경영공시·DART 공시 자료 모음"/>
+  <meta name="description" content="보험사 배당현황(DART 공시)과 배당가능이익 상한 추정 — 분기·연도별 시계열"/>
+  <meta property="og:title" content="InsureQuant — 배당"/>
+  <meta property="og:description" content="보험사 배당현황과 배당가능이익 상한 추정"/>
   <meta property="og:type" content="website"/>
   <meta property="og:image" content="https://www.insurequant.com/og-image.png"/>
   <meta property="og:image:width" content="1200"/>
@@ -99,14 +99,14 @@
 </head>
 <body>
   <header>
-    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">공시/보고서</span></a>
+    <a href="index.html" class="brand">InsureQuant <span class="hint" style="color:var(--muted);font-weight:400">배당</span></a>
     <div class="country-sw"><label for="countrySel">국가</label><select id="countrySel" class="select" aria-label="국가 / 国"><option value="" selected>🇰🇷 Korea</option><option value="jp/index.html" lang="ja">🇯🇵 Japan</option></select></div>
     <div class="header-row">
       <div class="tabs">
         <a href="compare.html" class="tab">사별 비교</a>
         <a href="K-ICS.html" class="tab">K-ICS</a>
         <a href="IFRS17.html" class="tab">IFRS17</a>
-        <a href="공시보고서.html" class="tab active" aria-current="page">기타공시</a>
+        <a href="공시보고서.html" class="tab active" aria-current="page">배당</a>
       </div>
       <button id="downloadMasterBtn" type="button" class="download-cta">⬇ <span class="dl-full">테이블 다운로드(.xlsx)</span><span class="dl-short">다운로드(xlsx)</span></button>
     </div>
@@ -160,6 +160,133 @@
         </div>
       </div>
     </div>
+<!-- ===== 배당가능이익 상한 섹션: 별도 기준 추정(공시값 아님). 데이터는 data/dividend_capacity/panel_dividend_capacity.json fetch. 차트·토글은 K-ICS 와 같은 자산(Chart.js 4.4.0, IQTheme, .subtoggle, td.subitem, .iq-help). ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" integrity="sha384-FcQlsUOd0TJjROrBxhJdUhXTUgNJQxTMcxZe6nHbaEfFL1zjQ+bq/uRoBQxb0KMo" crossorigin="anonymous"></script>
+<style>
+  #capPanel .cap-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  #capPanel .cap-head h2{margin:0}
+  #capPanel .cap-light{display:inline-flex;gap:4px;align-items:center;padding:4px 7px;border:1px solid var(--border);border-radius:var(--r-pill,999px);background:var(--card)}
+  #capPanel .cap-light i{width:12px;height:12px;border-radius:50%;background:var(--border);display:block}
+  #capPanel .cap-light i.on.r{background:var(--neg)}
+  #capPanel .cap-light i.on.y{background:var(--warn)}
+  #capPanel .cap-light i.on.g{background:var(--pos)}
+  #capPanel .cap-sub{margin:6px 0 10px}
+  #capPanel .cap-box{position:relative;height:280px}
+  #capPanel .cap-tbl{margin-top:12px}
+  #capPanel .cap-tbl td,#capPanel .cap-tbl th{white-space:nowrap}
+  #capPanel .cap-tbl td:not(:first-child),#capPanel .cap-tbl th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
+  #capPanel .cap-tbl tr.k td{font-weight:700;background:var(--card)}
+</style>
+<div class="panel" id="capPanel" style="display:none">
+  <div class="cap-head">
+    <h2>배당가능이익 상한</h2>
+    <span class="cap-light" id="capLight" role="img" aria-label="신호등"><i class="r"></i><i class="y"></i><i class="g"></i></span>
+    <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="신호등 의미" aria-describedby="help-cap-light">?</button><span class="iq-help-pop" role="tooltip" id="help-cap-light">
+      <b style="color:var(--pos)">초록</b> 상한이 총자산의 2.0% 이상 — 보도된 배당가능이익과 과거 격차보다 넉넉함<br>
+      <b style="color:var(--warn)">노랑</b> 상한이 0 이상이지만 총자산의 2.0% 미만 — 과거 격차 안이라 실제는 작거나 없을 수 있음<br>
+      <b style="color:var(--neg)">빨강</b> 상한이 음수 — 배당재원 소진 신호<br>
+      <span id="capLightNote" class="small-muted"></span></span></span>
+  </div>
+  <div class="cap-sub small-muted">단위 억원 · 별도 · 추정, 공시값 아님
+    <span class="iq-help"><button type="button" class="iq-help-btn" aria-label="산출 방법" aria-describedby="help-cap-how">?</button><span class="iq-help-pop" role="tooltip" id="help-cap-how">
+      <b>산출 방법</b><br>
+      상한 = 순자산 − 자본금 − 자본잉여금 − 이익준비금 − 법정준비금(해약환급금·비상위험·대손·보증, 적립예정액 포함) − 신종자본증권 − 재평가잉여금 − 재평가 외 기타포괄손익 양(+)분<br>
+      신종자본증권까지 뺀 보수적인 수치이며, 회사에 따라 차감하지 않을 수도 있습니다.<br>
+      재평가잉여금 외 미실현이익(평가이익 누계 등)은 공시되지 않아 차감하지 못했으므로 실제 배당가능이익은 이보다 낮을 수 있습니다.</span></span>
+  </div>
+  <div class="cap-box"><canvas id="capCanvas" role="img" aria-label="배당가능이익 상한, 공표치, 실제 배당액 막대그래프. 값은 아래 표와 같습니다."></canvas></div>
+  <div class="table-wrap cap-tbl" id="capTable"></div>
+</div>
+<script>
+(() => {
+  const DATA_URL = new URL('data/dividend_capacity/panel_dividend_capacity.json', document.baseURI).href;
+  const THRESH = 0.02;
+  let D = null, chart = null, resOpen = false;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const num = (n) => n == null ? '-' : (n < 0 ? '△' : '') + Math.round(Math.abs(n)).toLocaleString('ko-KR');
+  const qp = (s) => { const m = String(s).match(/^(\d{4})\.(\d)Q$/); return m ? [+m[1], +m[2]] : [0, 0]; };
+  const ABBR = { '케이비손해보험':'KB손보','케이비라이프생명보험':'KB라이프','신한이지손해보험':'신한EZ손해','에이비엘생명보험':'ABL생명','케이디비생명보험':'KDB생명','아이엠라이프생명보험':'iM라이프','엠지손해보험':'MG손보','에이아이지손해보험':'AIG손보','에이아이에이생명보험':'AIA생명','비엔피파리바카디프생명보험':'BNP카디프생명','교보라이프플래닛생명보험':'교보라이프플래닛','처브라이프생명보험':'처브라이프','메트라이프생명보험':'메트라이프','악사손해보험':'악사손보','신한라이프생명보험':'신한라이프','푸본현대생명보험':'푸본현대','스위스리아시아':'스위스리','알지에이리인슈어런스':'RGA','마이브라운반려동물전문보험':'마이브라운' };
+  const short = (n) => ABBR[n] || String(n).replace(/화재해상보험$/, '화재').replace(/해상화재보험$/, '해상').replace(/손해보험$/, '손보').replace(/생명보험$/, '생명').replace(/재보험$/, '').replace(/보증보험$/, '보증');
+  function periods(mode) {
+    const all = D.periods, latest = all[all.length - 1], [ly] = qp(latest);
+    if (mode === 'year') { const out = []; for (let k = 3; k >= 1; k--) { const q = (ly - k) + '.4Q'; if (all.includes(q)) out.push(q); } out.push(latest); return out; }
+    return all.slice(-5);
+  }
+  const ROWS = [
+    ['자산', c => c.a], ['부채', c => c.l], ['순자산', c => c.e], ['자본금', c => c.c], ['자본잉여금', c => c.s], ['이익준비금', c => c.i],
+    ['법정준비금', c => { const v = [c.rs, c.rc, c.rb, c.rg]; return v.every(x => x == null) ? null : v.reduce((s, x) => s + (x || 0), 0); }, 'res'],
+    ['해약환급금준비금', c => c.rs, 'sub'], ['비상위험준비금', c => c.rc, 'sub'], ['대손준비금', c => c.rb, 'sub'], ['보증준비금', c => c.rg, 'sub'],
+    ['신종자본증권', c => c.h], ['재평가잉여금', c => c.rv], ['기타포괄손익 양(+)분(재평가 외)', c => c.rp],
+    ['배당가능이익 상한', c => c.cap, 'k'], ['실제 배당가능이익(공표치)', c => c.pub, 'pub'], ['실제 배당액', c => c.div],
+  ];
+  function drawChart(cols) {
+    const t = window.IQTheme ? IQTheme.chart() : { primary: '#0f6e68', neg: '#b4443a', muted: '#63666b', ink: '#3f4347', border: '#e4e4e2' };
+    if (window.IQTheme) IQTheme.applyChartJs(Chart);
+    if (chart) chart.destroy();
+    const pub = cols.map(c => c.pub);
+    const inner = { id: 'capInner', afterDatasetsDraw(ch) {   // 공표치: 상한 막대 안쪽의 가는 막대
+      const m = ch.getDatasetMeta(0), y = ch.scales.y, ctx = ch.ctx; ctx.save(); ctx.fillStyle = t.ink;
+      m.data.forEach((bar, i) => { const v = pub[i]; if (v == null) return; const w = bar.width * 0.5, y0 = y.getPixelForValue(0), y1 = y.getPixelForValue(v); ctx.fillRect(bar.x - w / 2, Math.min(y0, y1), w, Math.max(Math.abs(y1 - y0), 1)); });
+      ctx.restore(); } };
+    chart = new Chart($('capCanvas'), {
+      type: 'bar',
+      data: { labels: cols.map(c => c.q), datasets: [
+        { label: '배당가능이익 상한(추정)', data: cols.map(c => c.cap), backgroundColor: (x) => (x.raw != null && x.raw < 0) ? t.neg : t.primary },
+        { label: '실제 배당액', data: cols.map(c => c.div), backgroundColor: t.muted } ] },
+      options: { responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'top', onClick: () => {}, labels: { boxWidth: 12, generateLabels: (ch) => { const b = Chart.defaults.plugins.legend.labels.generateLabels(ch); b.splice(1, 0, { text: '실제 배당가능이익(공표치)', fillStyle: t.ink, strokeStyle: t.ink, lineWidth: 0, hidden: false, datasetIndex: 0 }); return b; } } },
+          tooltip: { mode: 'index', intersect: false, callbacks: {
+            label: (c) => c.dataset.label + ': ' + num(c.raw) + '억원',
+            afterBody: (items) => { const cell = cols[items[0].dataIndex].cell; return cell && cell.pub != null ? ['실제 배당가능이익(공표치): ' + num(cell.pub) + '억원', cell.pubSrc || ''] : []; } } } },
+        scales: { x: { grid: { display: false } }, y: { ticks: { callback: (v) => num(v) }, grid: { color: (c) => c.tick && c.tick.value === 0 ? t.ink : t.border } } } },
+      plugins: [inner] });
+  }
+  function drawTable(cols) {
+    let h = '<table><thead><tr><th>항목 (억원)</th>' + cols.map(c => `<th>${c.q}</th>`).join('') + '</tr></thead><tbody>';
+    for (const [lab, get, kind] of ROWS) {
+      const cells = cols.map(c => { const v = c.cell ? get(c.cell) : null; const t = kind === 'pub' && c.cell && c.cell.pubSrc ? ` title="${esc(c.cell.pubSrc)}"` : ''; return `<td${t}>${num(v)}</td>`; }).join('');
+      if (kind === 'sub') h += `<tr class="subrow-res"${resOpen ? '' : ' style="display:none"'}><td class="subitem">${lab}</td>${cells}</tr>`;
+      else if (kind === 'res') h += `<tr><td>${lab} <button type="button" class="subtoggle" aria-expanded="${resOpen}" title="하위 항목 ${resOpen ? '접기' : '펼치기'}">${resOpen ? '−' : '+'}</button></td>${cells}</tr>`;
+      else h += `<tr${kind === 'k' ? ' class="k"' : ''}><td>${lab}</td>${cells}</tr>`;
+    }
+    $('capTable').innerHTML = h + '</tbody></table>';
+    const btn = $('capTable').querySelector('.subtoggle');
+    btn.addEventListener('click', () => {   // K-ICS 하위 항목 토글과 같은 방식
+      resOpen = !resOpen; btn.textContent = resOpen ? '−' : '+'; btn.setAttribute('aria-expanded', String(resOpen)); btn.title = '하위 항목 ' + (resOpen ? '접기' : '펼치기');
+      $('capTable').querySelectorAll('tr.subrow-res').forEach(tr => { tr.style.display = resOpen ? '' : 'none'; });
+    });
+  }
+  function drawLight(cols, comp) {
+    const last = [...cols].reverse().find(c => c.cap != null), el = $('capLight'); let k = null;
+    if (last) { const a = last.cell.a; k = last.cap < 0 ? 'r' : (a ? (last.cap / a < THRESH ? 'y' : 'g') : null); }
+    el.querySelectorAll('i').forEach(i => i.classList.toggle('on', i.className.split(' ')[0] === k));
+    el.setAttribute('aria-label', '신호등: ' + (k === 'r' ? '빨강' : k === 'y' ? '노랑' : k === 'g' ? '초록' : '판단 불가') + (last ? ' (' + last.q + ' 기준)' : ''));
+    $('capLightNote').textContent = (last ? last.q + ' 기준. ' : '') + (comp && comp.life ? '생보는 격차 보정(비생보 3개사 기준)이 검증되지 않았습니다.' : '');
+  }
+  function render() {
+    const code = ($('company') || {}).value, panel = $('capPanel');
+    if (!D || !code || !D.companies[code]) { panel.style.display = 'none'; return; }
+    panel.style.display = '';
+    const comp = D.companies[code], mode = ($('period') || {}).value || 'quarter';
+    const cols = periods(mode).map(q => { const cell = comp.p[q] || null; return { q, cell, cap: cell && cell.cap, pub: cell && cell.pub, div: cell && cell.div }; });
+    drawChart(cols); drawTable(cols); drawLight(cols, comp);
+  }
+  function addMissingCompanies() {   // 기존 드롭다운은 DART 배당 공시 24사뿐 — 배당가능이익은 전사 제공
+    const sel = $('company'); if (!sel || !D) return;
+    const have = new Set([...sel.options].map(o => o.value));
+    const extra = Object.keys(D.companies).filter(c => !have.has(c)).sort();
+    if (!extra.length) return;
+    const g = document.createElement('optgroup'); g.label = '배당 공시 없음 · 배당가능이익 상한만';
+    extra.forEach(c => { const o = document.createElement('option'); o.value = c; o.textContent = short(D.companies[c].name); g.appendChild(o); });
+    sel.appendChild(g);
+  }
+  fetch(DATA_URL).then(r => r.json()).then(j => { D = j; const t = setInterval(() => { if ($('company') && $('company').options.length > 1) { clearInterval(t); addMissingCompanies(); render(); } }, 100); setTimeout(() => clearInterval(t), 5000); }).catch(() => {});
+  ['company', 'period'].forEach(id => $(id) && $(id).addEventListener('change', render));
+  window.addEventListener('iq:themechange', () => { if (D) render(); });
+})();
+</script>
   </div>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">—</span>)<br/>
