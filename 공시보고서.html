@@ -158,11 +158,16 @@
           <h3>종류주별 주당배당금·배당수익률</h3>
           <div id="divClassTables"></div>
         </div>
+        <div id="divCapSection" style="margin-top:20px">
+          <h3>배당가능이익 (추정)<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="배당가능이익 추정 방법" aria-describedby="help-div-cap">?</button><span class="iq-help-pop" role="tooltip" id="help-div-cap"><b>추정 방법</b><br>재무상태표의 이익잉여금에서 이익잉여금 안에 적립된 해약환급금준비금·비상위험준비금·대손준비금·보증준비금을 뺀 값입니다. 이 준비금은 배당으로 내보낼 수 없습니다.<br><b>참고 행</b>: 상법상 이익준비금은 자본금의 50%에 이를 때까지 쌓는데, 공시에 이익준비금 잔액이 없어 한도(자본금 50%)를 전부 쌓았다고 가정한 보수적 값을 따로 보여 줍니다.<br><b>한계</b>: 자본준비금·미실현이익 등 상법상 다른 차감 항목과 감독당국의 개별 적용(적립비율 조정 등)은 반영하지 못합니다. 실제 회사가 공시하는 배당가능이익과 다를 수 있습니다.<br><b>분기 값</b>: 회사에 따라 분기 보고서의 준비금 적립액이 직전 결산 값이 이월되거나 0으로 비어 있는 분기가 있어, 연도(4Q) 기준이 가장 안정적입니다.</span></span></h3>
+          <div class="small-muted">단위 백만원 · 재무상태표(17BS) 기준 · 회사가 공시한 배당가능이익이 아니라 공시 수치로 계산한 추정치입니다 · 해당 준비금이 없는 회사는 「—」(0으로 계산)</div>
+          <div class="table-wrap" id="divCapTable"></div>
+        </div>
       </div>
     </div>
   </div>
   <footer style="max-width:1320px;margin:28px auto 0;padding:14px 16px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:12px;line-height:1.8">
-    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">—</span>)<br/>
+    자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 · 재무상태표(17BS) — 회사별 최신 공시 분기 기준 (<span id="footerQ">—</span>)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. 화면·데이터베이스는 저작권법으로 보호되며 이용 조건은 이용안내를 따릅니다. © 2026 InsureQuant · 운영자 조상욱 · <a href="privacy.html" class="iq-anon-link">개인정보처리방침</a> · <a href="privacy.html#terms" class="iq-anon-link">이용안내</a>
   </footer>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
@@ -388,10 +393,73 @@
     });
   }
 
+  // 배당가능이익(추정) — IFRS17_BS.json(재무상태표)의 이익잉여금·준비금 적립액으로 계산. 3.5MB라 배당 표 렌더를 막지 않고 뒤에서 받는다.
+  // 값 없음(null)과 0을 구분: 이익잉여금이 없으면 그 칸은 정보없음, 준비금이 없으면(해당 준비금 비대상 회사) 0으로 계산하고 「—」 표기.
+  const bsIx = new Map();     // code -> quarter -> {항목명: 값}
+  let bsState = "loading";    // loading | ready | failed
+  const RESERVES = ["해약환급금준비금 적립액","비상위험준비금 적립액","대손준비금 적립액","보증준비금 적립액"];
+  const bsVal = (code,q,name)=>{ const m=bsIx.get(code), r=m&&m.get(q); const v=r?r[name]:null; return v==null?null:v; };
+  function capacityOf(code,q){
+    const re = bsVal(code,q,"이익잉여금");
+    if (re==null) return null;
+    const res = RESERVES.map(n=>bsVal(code,q,n));
+    const avail = re - res.reduce((a,v)=>a+(v||0),0);
+    const cap = bsVal(code,q,"자본금");
+    const legal = cap==null ? null : cap*0.5;
+    return { re, res, avail, legal, availAfter: legal==null ? null : avail-legal };
+  }
+  // 해당 분기 이전(포함) 가장 가까운 4Q(사업연도 결산) 현금배당금총액
+  function lastYearCash(code,q){
+    const [y,qn] = qParse(q);
+    const fy = qn===4 ? y : y-1;
+    return val(code, fy+".4Q", 5);
+  }
+  function renderCapacity(code){
+    const box = document.getElementById("divCapTable");
+    if (!box) return;
+    box.innerHTML = "";
+    if (bsState==="loading"){ box.innerHTML='<div class="small-muted" style="padding:10px">재무상태표 불러오는 중…</div>'; return; }
+    if (bsState==="failed"){ box.innerHTML='<div class="small-muted" style="padding:10px">재무상태표를 불러오지 못했습니다</div>'; return; }
+    const periods = selectedPeriods();
+    if (!periods.length) return;
+    const cs = periods.map(p=>capacityOf(code,p.q));
+    const num = (c,f)=> c==null ? "정보없음" : (f(c)==null ? "정보없음" : samo(f(c),0));
+    const rows = [
+      ["이익잉여금", ...cs.map(c=>num(c,x=>x.re))],
+      ...RESERVES.map((n,i)=>["(-) "+n.replace(" 적립액",""), ...cs.map(c=> c==null ? "정보없음" : (c.res[i]==null ? "—" : samo(c.res[i],0)))]),
+      ["추정 배당가능이익", ...cs.map(c=>num(c,x=>x.avail))],
+      ["(참고) 이익준비금 한도(자본금 50%)", ...cs.map(c=>num(c,x=>x.legal))],
+      ["이익준비금 한도까지 쌓았다고 볼 때", ...cs.map(c=>num(c,x=>x.availAfter))],
+      ["현금배당금총액(최근 결산 기준)", ...periods.map(p=>{ const v=lastYearCash(code,p.q); return v==null?"정보없음":samo(v,0); })],
+      ["추정 배당가능이익 ÷ 현금배당금총액(배)", ...periods.map((p,i)=>{ const v=lastYearCash(code,p.q), c=cs[i]; return (c==null||!v)?"—":samo(c.avail/v,1); })],
+    ];
+    const tbl = buildTable(["항목(백만원)", ...periods.map(p=>p.label)], rows);
+    // 합계 행(추정 배당가능이익)은 굵게
+    const tr = tbl.tBodies[0].rows[5]; if (tr) tr.style.fontWeight = "700";
+    box.appendChild(tbl);
+  }
+  async function loadBs(onDone){
+    try{
+      const r = await fetch(resolveUrl("IFRS17_BS.json"));
+      if (!r.ok) throw new Error(r.status);
+      const raw = await r.json();
+      for (const row of raw){
+        const code=row["원보험사코드"], q=row["공시분기"], n=row["항목명"], v=row["값"];
+        if (!code || !q || !n) continue;
+        let byQ = bsIx.get(code); if(!byQ){ byQ=new Map(); bsIx.set(code,byQ); }
+        let o = byQ.get(q); if(!o){ o={}; byQ.set(q,o); }
+        o[n] = (v==null || !Number.isFinite(Number(v))) ? null : Number(v);
+      }
+      bsState = "ready";
+    }catch(e){ console.warn(e); bsState = "failed"; }
+    if (onDone) onDone();
+  }
+
   function renderCompany(code){
     renderKpi(code);
     renderCompanyTable(code);
     renderClassTables(code);
+    renderCapacity(code);
   }
 
   function onSelect(){
@@ -406,6 +474,7 @@
 
   async function boot(){
     let raw = [];
+    loadBs(()=>{ const sel=document.getElementById("company"); if (sel && sel.value) renderCapacity(sel.value); });
     try{
       const r = await fetch(PATH);
       if (r.ok) raw = await r.json();
