@@ -116,14 +116,18 @@
       </label>
     </div>
   </header>
-  <div class="container">
-    <div class="panel">
+  <div class="container has-section-nav">
+    <nav class="section-nav" aria-label="이 페이지의 섹션">
+      <ul>
+        <li><a href="#sec-div">배당현황</a></li>
+        <li><a href="#capPanel">배당가능이익 상한</a></li>
+      </ul>
+    </nav>
+    <div class="section-body">
+    <div class="panel" id="sec-div" data-share-section="배당현황">
       <h2>배당현황</h2>
       <p>보험회사 배당에 관한 사항(DART 사업·반기·분기보고서) — 주당배당금·배당총액·배당성향·배당수익률을 회사별로 확인할 수 있습니다.</p>
       <p class="small-muted" id="divCoverageLine"></p>
-    </div>
-
-    <div class="panel">
       <div class="controls">
         <div class="control-group">
           <span class="control-label" id="period-label">기간</span>
@@ -152,7 +156,7 @@
         <div style="margin-top:20px">
           <h3 id="divTableTitle">분기별 배당 지표</h3>
           <div class="small-muted">단위 표시된 대로(백만원/원/%) · 결측(그 분기 공시 자체 없음)은 "정보없음", 무배당은 0으로 구분 표기</div>
-          <div class="table-wrap" id="divTable"></div>
+          <div class="table-wrap" id="divTable" tabindex="0" role="region" aria-label="분기·연도별 배당 지표 표(좁은 화면에서는 가로로 스크롤)"></div>
         </div>
         <div id="divClassSection" style="margin-top:20px">
           <h3>종류주별 주당배당금·배당수익률</h3>
@@ -164,6 +168,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js" integrity="sha384-FcQlsUOd0TJjROrBxhJdUhXTUgNJQxTMcxZe6nHbaEfFL1zjQ+bq/uRoBQxb0KMo" crossorigin="anonymous"></script>
 <style>
   #capPanel .cap-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  #capPanel .cap-head{padding-right:44px}   /* 우상단 스크린샷 공유 버튼(common.css .iq-sec-share, 44px) 밑으로 신호등·? 가 들어가지 않게 */
   #capPanel .cap-head h2{margin:0}
   #capPanel .cap-light{display:inline-flex;gap:4px;align-items:center;padding:4px 7px;border:1px solid var(--border);border-radius:var(--r-pill,999px);background:var(--card)}
   #capPanel .cap-light i{width:12px;height:12px;border-radius:50%;background:var(--border);display:block}
@@ -177,7 +182,7 @@
   #capPanel .cap-tbl td:not(:first-child),#capPanel .cap-tbl th:not(:first-child){text-align:right;font-variant-numeric:tabular-nums}
   #capPanel .cap-tbl tr.k td{font-weight:700;background:var(--card)}
 </style>
-<div class="panel" id="capPanel" style="display:none">
+<div class="panel" id="capPanel" data-share-section="배당가능이익 상한" style="display:none">
   <div class="cap-head">
     <h2>배당가능이익 상한</h2>
     <span class="cap-light" id="capLight" role="img" aria-label="신호등"><i class="r"></i><i class="y"></i><i class="g"></i></span>
@@ -194,10 +199,12 @@
       신종자본증권까지 뺀 보수적인 수치이며, 회사에 따라 차감하지 않을 수도 있습니다.<br>
       재평가잉여금 외 미실현이익(평가이익 누계 등)은 공시되지 않아 차감하지 못했으므로 실제 배당가능이익은 이보다 낮을 수 있습니다.<br><br>
       실제 배당액은 해당 사업연도의 연누계입니다. 1~3분기는 중간배당 누계, 4분기는 결산배당을 더한 연 합계이며 결산배당은 이듬해 지급돼도 4분기에 귀속됩니다. 결산배당은 그 해 연말 배당가능이익에서, 중간배당은 전년 말 배당가능이익에서 나가므로(상법상 중간배당 한도는 직전 결산기 기준) 연 합계를 연말 배당가능이익 하나와 직접 비교하면 안 됩니다. 코리안리는 2024년 1분기~2026년 1분기의 1~3분기 칸에 직전 결산배당과 같은 값이 표시됩니다.</span></span>
+    <button id="reportCapBtn" type="button" class="iq-anon-link" style="font-size:13px;margin-left:8px">⚑ 이 데이터에 오류가 있나요?</button>
   </div>
   <div class="cap-box"><canvas id="capCanvas" role="img" aria-label="배당가능이익 상한, 공표치, 실제 배당액 막대그래프. 값은 아래 표와 같습니다."></canvas></div>
-  <div class="table-wrap cap-tbl" id="capTable"></div>
+  <div class="table-wrap cap-tbl" id="capTable" tabindex="0" role="region" aria-label="배당가능이익 상한 산출 표(좁은 화면에서는 가로로 스크롤)"></div>
 </div>
+</div><!-- /.section-body -->
 <script>
 (() => {
   const DATA_URL = new URL('data/dividend_capacity/panel_dividend_capacity.json', document.baseURI).href;
@@ -289,6 +296,11 @@
   fetch(DATA_URL).then(r => r.json()).then(j => { D = j; const t = setInterval(() => { if ($('company') && $('company').options.length > 1) { clearInterval(t); addMissingCompanies(); render(); } }, 100); setTimeout(() => clearInterval(t), 5000); }).catch(() => {});
   ['company', 'period'].forEach(id => $(id) && $(id).addEventListener('change', render));
   window.addEventListener('iq:themechange', () => { if (D) render(); });
+  const reportCap = $('reportCapBtn');   // 오류 제보를 이 시트(배당가능이익상한)와 지금 보는 회사로 채워서 연다(위 배당현황 버튼은 시트 「배당」)
+  if (reportCap) reportCap.addEventListener('click', () => {
+    const code = ($('company') || {}).value, comp = D && code ? D.companies[code] : null;
+    if (window.IQreport) window.IQreport.open({ sheet: '배당가능이익상한', company: comp ? comp.name : undefined });
+  });
 })();
 </script>
   </div>
@@ -296,6 +308,17 @@
     자료: 금융감독원 정기경영공시 · DART 전자공시 · 보험개발원 — 회사별 최신 공시 분기 기준 (<span id="footerQ">—</span>)<br/>
     본 사이트의 수치는 공시자료를 가공한 것으로 오류가 있을 수 있으며, 투자 판단의 근거로 사용할 수 없습니다. 음수는 회계 관행에 따라 △로 표기합니다. 화면·데이터베이스는 저작권법으로 보호되며 이용 조건은 이용안내를 따릅니다. © 2026 InsureQuant · 운영자 조상욱 · <a href="privacy.html" class="iq-anon-link">개인정보처리방침</a> · <a href="privacy.html#terms" class="iq-anon-link">이용안내</a>
   </footer>
+<script>
+/* 패널이 화면에 들어올 때 살며시 나타난다 — K-ICS·IFRS17 과 같은 스크립트(common.css .panel.will-reveal/.revealed). 모션 줄이기 설정이면 건너뛴다. */
+(function(){
+  if(!window.IntersectionObserver) return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const obs=new IntersectionObserver((ens,o)=>{ens.forEach(e=>{if(e.isIntersecting){e.target.classList.add('revealed');o.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -12px 0px'});
+  function observe(root){(root||document).querySelectorAll('.panel:not(.will-reveal)').forEach(p=>{p.classList.add('will-reveal');obs.observe(p);});}
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',()=>observe());
+  else observe();
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 <script src="forms-config.js"></script>
 <script src="download-survey.js" data-default-sheet="DIV"></script>
@@ -514,6 +537,7 @@
       const headers = ["항목", ...periods.map(p=>p.label)];
       const rows = CLASS_ITEM_DEFS.map(def => [def.label+"("+def.unit+")", ...periods.map(p=> fmtItem(def, val(code,p.q,def.num,cls)))]);
       const wrap = document.createElement("div"); wrap.className="table-wrap";
+      wrap.tabIndex = 0; wrap.setAttribute("role", "region"); wrap.setAttribute("aria-label", cls+" 주당배당금·배당수익률 표(좁은 화면에서는 가로로 스크롤)");
       wrap.appendChild(buildTable(headers, rows));
       box.appendChild(wrap);
     });
