@@ -192,7 +192,8 @@
       <b>산출 방법</b><br>
       상한 = 순자산 − 자본금 − 자본잉여금 − 이익준비금 − 법정준비금(해약환급금·비상위험·대손·보증, 적립예정액 포함) − 신종자본증권 − 재평가잉여금 − 재평가 외 기타포괄손익 양(+)분<br>
       신종자본증권까지 뺀 보수적인 수치이며, 회사에 따라 차감하지 않을 수도 있습니다.<br>
-      재평가잉여금 외 미실현이익(평가이익 누계 등)은 공시되지 않아 차감하지 못했으므로 실제 배당가능이익은 이보다 낮을 수 있습니다.</span></span>
+      재평가잉여금 외 미실현이익(평가이익 누계 등)은 공시되지 않아 차감하지 못했으므로 실제 배당가능이익은 이보다 낮을 수 있습니다.<br><br>
+      실제 배당액은 해당 사업연도의 연누계입니다. 1~3분기는 중간배당 누계, 4분기는 결산배당을 더한 연 합계이며 결산배당은 이듬해 지급돼도 4분기에 귀속됩니다. 결산배당은 그 해 연말 배당가능이익에서, 중간배당은 전년 말 배당가능이익에서 나가므로(상법상 중간배당 한도는 직전 결산기 기준) 연 합계를 연말 배당가능이익 하나와 직접 비교하면 안 됩니다. 코리안리는 2024년 1분기~2026년 1분기의 1~3분기 칸에 직전 결산배당과 같은 값이 표시됩니다.</span></span>
   </div>
   <div class="cap-box"><canvas id="capCanvas" role="img" aria-label="배당가능이익 상한, 공표치, 실제 배당액 막대그래프. 값은 아래 표와 같습니다."></canvas></div>
   <div class="table-wrap cap-tbl" id="capTable"></div>
@@ -201,7 +202,9 @@
 (() => {
   const DATA_URL = new URL('data/dividend_capacity/panel_dividend_capacity.json', document.baseURI).href;
   const THRESH = 0.02;
-  let D = null, chart = null, resOpen = false;
+  let D = null, chart = null;
+  const subOpen = { res: false, div: false };   // 접이식 하위 행 묶음별 펼침 상태(서로 독립, 기본 접힘)
+  const subName = { res: '법정준비금', div: '실제 배당액' };   // 토글 버튼의 접근성 이름(aria-label)에 쓰는 행 이름
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
   const num = (n) => n == null ? '-' : (n < 0 ? '△' : '') + Math.round(Math.abs(n)).toLocaleString('ko-KR');
@@ -215,10 +218,12 @@
   }
   const ROWS = [
     ['자산', c => c.a], ['부채', c => c.l], ['순자산', c => c.e], ['자본금', c => c.c], ['자본잉여금', c => c.s], ['이익준비금', c => c.i],
-    ['법정준비금', c => { const v = [c.rs, c.rc, c.rb, c.rg]; return v.every(x => x == null) ? null : v.reduce((s, x) => s + (x || 0), 0); }, 'res'],
-    ['해약환급금준비금', c => c.rs, 'sub'], ['비상위험준비금', c => c.rc, 'sub'], ['대손준비금', c => c.rb, 'sub'], ['보증준비금', c => c.rg, 'sub'],
+    ['법정준비금', c => { const v = [c.rs, c.rc, c.rb, c.rg]; return v.every(x => x == null) ? null : v.reduce((s, x) => s + (x || 0), 0); }, 'head', 'res'],
+    ['해약환급금준비금', c => c.rs, 'sub', 'res'], ['비상위험준비금', c => c.rc, 'sub', 'res'], ['대손준비금', c => c.rb, 'sub', 'res'], ['보증준비금', c => c.rg, 'sub', 'res'],
     ['신종자본증권', c => c.h], ['재평가잉여금', c => c.rv], ['기타포괄손익 양(+)분(재평가 외)', c => c.rp],
-    ['배당가능이익 상한', c => c.cap, 'k'], ['실제 배당가능이익(공표치)', c => c.pub, 'pub'], ['실제 배당액', c => c.div],
+    ['배당가능이익 상한', c => c.cap, 'k'], ['실제 배당가능이익(공표치)', c => c.pub, 'pub'],
+    ['실제 배당액 (연누계)', c => c.div, 'head', 'div'],
+    ['결산배당 (그 해 연말 배당가능이익에서)', c => c.dz, 'sub', 'div'], ['중간배당 (전년 말 배당가능이익에서)', c => c.dm, 'sub', 'div'],
   ];
   function drawChart(cols) {
     const t = window.IQTheme ? IQTheme.chart() : { primary: '#0f6e68', neg: '#b4443a', muted: '#63666b', ink: '#3f4347', border: '#e4e4e2' };
@@ -233,7 +238,7 @@
       type: 'bar',
       data: { labels: cols.map(c => c.q), datasets: [
         { label: '배당가능이익 상한(추정)', data: cols.map(c => c.cap), backgroundColor: (x) => (x.raw != null && x.raw < 0) ? t.neg : t.primary },
-        { label: '실제 배당액', data: cols.map(c => c.div), backgroundColor: t.muted } ] },
+        { label: '실제 배당액 (연누계)', data: cols.map(c => c.div), backgroundColor: t.muted } ] },
       options: { responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { position: 'top', onClick: () => {}, labels: { boxWidth: 12, generateLabels: (ch) => { const b = Chart.defaults.plugins.legend.labels.generateLabels(ch); b.splice(1, 0, { text: '실제 배당가능이익(공표치)', fillStyle: t.ink, strokeStyle: t.ink, lineWidth: 0, hidden: false, datasetIndex: 0 }); return b; } } },
@@ -245,18 +250,17 @@
   }
   function drawTable(cols) {
     let h = '<table><thead><tr><th>항목 (억원)</th>' + cols.map(c => `<th>${c.q}</th>`).join('') + '</tr></thead><tbody>';
-    for (const [lab, get, kind] of ROWS) {
+    for (const [lab, get, kind, grp] of ROWS) {
       const cells = cols.map(c => { const v = c.cell ? get(c.cell) : null; const t = kind === 'pub' && c.cell && c.cell.pubSrc ? ` title="${esc(c.cell.pubSrc)}"` : ''; return `<td${t}>${num(v)}</td>`; }).join('');
-      if (kind === 'sub') h += `<tr class="subrow-res"${resOpen ? '' : ' style="display:none"'}><td class="subitem">${lab}</td>${cells}</tr>`;
-      else if (kind === 'res') h += `<tr><td>${lab} <button type="button" class="subtoggle" aria-expanded="${resOpen}" title="하위 항목 ${resOpen ? '접기' : '펼치기'}">${resOpen ? '−' : '+'}</button></td>${cells}</tr>`;
+      if (kind === 'sub') h += `<tr class="subrow-${grp}"${subOpen[grp] ? '' : ' style="display:none"'}><td class="subitem">${lab}</td>${cells}</tr>`;
+      else if (kind === 'head') h += `<tr><td>${lab} <button type="button" class="subtoggle" data-group="${grp}" aria-expanded="${subOpen[grp]}" aria-label="${subName[grp]} 하위 항목 ${subOpen[grp] ? '접기' : '펼치기'}" title="하위 항목 ${subOpen[grp] ? '접기' : '펼치기'}">${subOpen[grp] ? '−' : '+'}</button></td>${cells}</tr>`;
       else h += `<tr${kind === 'k' ? ' class="k"' : ''}><td>${lab}</td>${cells}</tr>`;
     }
     $('capTable').innerHTML = h + '</tbody></table>';
-    const btn = $('capTable').querySelector('.subtoggle');
-    btn.addEventListener('click', () => {   // K-ICS 하위 항목 토글과 같은 방식
-      resOpen = !resOpen; btn.textContent = resOpen ? '−' : '+'; btn.setAttribute('aria-expanded', String(resOpen)); btn.title = '하위 항목 ' + (resOpen ? '접기' : '펼치기');
-      $('capTable').querySelectorAll('tr.subrow-res').forEach(tr => { tr.style.display = resOpen ? '' : 'none'; });
-    });
+    $('capTable').querySelectorAll('.subtoggle').forEach(btn => btn.addEventListener('click', () => {   // K-ICS 하위 항목 토글과 같은 방식 — 묶음(data-group)마다 독립
+      const g = btn.dataset.group, o = subOpen[g] = !subOpen[g]; btn.textContent = o ? '−' : '+'; btn.setAttribute('aria-expanded', String(o)); btn.setAttribute('aria-label', subName[g] + ' 하위 항목 ' + (o ? '접기' : '펼치기')); btn.title = '하위 항목 ' + (o ? '접기' : '펼치기');
+      $('capTable').querySelectorAll('tr.subrow-' + g).forEach(tr => { tr.style.display = o ? '' : 'none'; });
+    }));
   }
   function drawLight(cols, comp) {
     const last = [...cols].reverse().find(c => c.cap != null), el = $('capLight'); let k = null;

@@ -89,6 +89,11 @@
       "rows": 2784,
       "quarter_min": "2024.4Q",
       "quarter_max": "2026.3Q"
+    },
+    "배당가능이익상한": {
+      "rows": 13860,
+      "quarter_min": "2023.1Q",
+      "quarter_max": "2026.3Q"
     }
   }
 }

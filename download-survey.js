@@ -29,6 +29,9 @@
     { name: "신계약CSM배수", file: "public_exports/신계약CSM배수.json", code: "NBCSM", label: "신계약 CSM 배수" },
     { name: "손익분해PL", file: "public_exports/손익분해PL.json", code: "PL", label: "손익분해 (PL)" },
     { name: "배당", file: "public_exports/배당.json", code: "DIV", label: "배당에 관한 사항" },
+    // 2026-11-26 추가(owner 「배당 탭의 새 표 '배당가능이익 상한'이 테이블 다운로드 목록에 안 보인다」). 순서는 MASTERS 와 같다(배당 바로 다음).
+    // 상한은 법정 산식이 아닌 추정치라 라벨에 「추정」을 적는다. 비고 열은 예외 행에만 있다 — json_to_sheet 가 전 행의 키 합집합으로 헤더를 만든다.
+    { name: "배당가능이익상한", file: "public_exports/배당가능이익상한.json", code: "DIVCAP", label: "배당가능이익 상한 (추정)" },
     // 2026-08-29 신설 3종. 다른 8시트와 달리 "비고" 열이 하나 더 있다 — 셀별 known limitation
     // (tier1 발행잔액이 BS 대체값인 행, 소진율 100% 초과가 정상인 이유, 폐기된 tier2 구 산식,
     //  forward 콜일자 추정)이 그 열에 실려 나간다. 화면에는 hover로 맥락이 있지만 xlsx만 받아 간
