@@ -1,9 +1,9 @@
 {
-  "generated_at_utc": "2026-11-25T18:12:34Z",
+  "generated_at_utc": "2026-11-26T20:52:50Z",
   "license": "All rights reserved. 열람·출처표기 인용·사내 분석은 자유, 자동수집(크롤링)으로 통째 긁어가기·대량 재배포·재판매는 금지.",
   "terms_url": "https://www.insurequant.com/privacy.html#terms",
   "copyright": "(c) 2026 InsureQuant (운영자 조상욱). 원천 수치의 권리는 각 공시 주체에게 있음.",
-  "build_id": "c222b1a9",
+  "build_id": "3729a5b1",
   "sheets": {
     "17BS": {
       "rows": 11562,
@@ -50,6 +50,11 @@
       "quarter_min": "2023.1Q",
       "quarter_max": "2026.3Q"
     },
+    "배당가능이익상한": {
+      "rows": 13860,
+      "quarter_min": "2023.1Q",
+      "quarter_max": "2026.3Q"
+    },
     "기본자본소진율": {
       "rows": 470,
       "quarter_min": "2026.2Q",
@@ -88,11 +93,6 @@
     "CSM워터폴포트폴리오": {
       "rows": 2784,
       "quarter_min": "2024.4Q",
-      "quarter_max": "2026.3Q"
-    },
-    "배당가능이익상한": {
-      "rows": 13860,
-      "quarter_min": "2023.1Q",
       "quarter_max": "2026.3Q"
     }
   }
