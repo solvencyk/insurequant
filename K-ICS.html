@@ -99,33 +99,36 @@
     .forward-chart{position:relative;height:420px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .sens-chart{position:relative;height:340px;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:16px}
     .sens-kpis{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
-    /* 자산/부채 듀레이션 갭 (owner 2026-09-22, 컨벡서티 카드 폐지·kics_duration_gap.json 전환) —
-       IFRS17.html 의 kpi7 스트립과 같은 결. 금리위험액 현황 표에서 나오는 파생값이라 표 위에 크게 둔다. */
-    .dur-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0 4px}
-    .dur-card{background:var(--card);border:var(--bd);border-radius:var(--r-md);padding:14px 16px}
-    .dur-card.lead{border-color:#0f6e6833;background:linear-gradient(180deg,#0f6e680a,transparent)}
-    .dur-val{font-size:26px;font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--text)}
-    .dur-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:3px}
-    .dur-lab{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
-    .dur-sub{font-size:11px;color:var(--muted);margin-top:3px}
-    .dur-note{font-size:12px;color:var(--muted);margin:6px 0;line-height:1.6;word-break:keep-all}
-    @media(max-width:640px){.dur-strip{grid-template-columns:1fr}.dur-val{font-size:24px}}
-    @media(min-width:641px){#help-dur-formula{max-width:min(420px,calc(100vw - 32px))}}
-    /* 시나리오별 자산·부채 표 — 칸마다 금액(윗줄)과 충격전 대비 변화·변화율(아랫줄). 첫 열 고정은 .table-container 규칙을 그대로 쓴다. */
-    .dur-h3{font-size:14px;font-weight:700;margin:22px 0 0;color:var(--text)}
-    .dur-h3 .dur-unit{font-size:12px;font-weight:400;color:var(--muted)}
-    #dur-table{margin-top:8px}
-    #dur-table th,#dur-table td{white-space:nowrap}
-    #dur-table thead th:not(:first-child){text-align:right}
-    #dur-table td.dur-num{text-align:right;font-variant-numeric:tabular-nums;vertical-align:top}
+    /* 자산·부채 듀레이션: 맨 위 지급여력비율 표와 같은 구성(기간 토글 → 선·막대 차트 → 기간별 표).
+       첫 열 고정은 .table-container 규칙을 그대로 쓴다. 금액 행을 펼치면 칸마다 금액(윗줄)과 충격전 대비 변화(아랫줄). */
+    .chart-container.dur-chart{height:360px}
+    .dur-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 12px;margin-top:20px;font-size:12px;color:var(--muted);line-height:1.6;word-break:keep-all}
+    /* position:relative — 표 안의 화면낭독기 전용 글자(absolute)가 가로 스크롤 영역 밖으로 새어 문서를 넓히지 않게 가둔다 */
+    #dur-table{position:relative;margin-top:8px}
+    #dur-table td{white-space:nowrap;vertical-align:top;font-variant-numeric:tabular-nums}
+    #dur-table tbody th{background:var(--bg);font-weight:400;vertical-align:top;word-break:keep-all}
+    /* 첫 열 왼쪽 테두리 1px 틈으로 가로 스크롤된 숫자가 비치지 않게 고정 칸이 테두리 선을 같이 들고 간다 */
+    #dur-table th:first-child::before{content:"";position:absolute;top:0;bottom:0;left:-1px;width:1px;background:var(--border)}
+    /* 스크린샷 공유(이미지) 중에는 첫 열 덧선을 끈다 — 이미지 변환기가 선을 칸 전체의 회색 바탕으로 번지게 그린다 */
+    [data-iq-shot-root] #dur-table th:first-child{box-shadow:none}
+    [data-iq-shot-root] #dur-table th:first-child::before{content:none}
+    #dur-table tr.dur-gap th,#dur-table tr.dur-gap td{font-weight:700}
+    #dur-table tr.dur-first th,#dur-table tr.dur-first td{border-top:2px solid var(--muted)} /* 위 = 년·배, 아래 = 억원 */
+    #dur-table tr.dur-sub th{padding-left:24px;color:var(--muted);font-size:12px}
     #dur-table .dur-amt{display:block}
     #dur-table .dur-chg{display:block;font-size:11.5px;color:var(--muted);margin-top:1px}
-    #dur-table tr.dur-net th,#dur-table tr.dur-net td{border-top:2px solid var(--border);font-weight:700}
-    #dur-table tr.dur-net .dur-chg{font-weight:400}
-    /* 자산총계 아래 두 줄: 빼는 금액(들여쓰기)과 그 결과(금리부자산, 굵게) */
-    #dur-table tr.dur-ex th{padding-left:18px;font-weight:400;color:var(--muted)}
-    #dur-table tr.dur-ib th,#dur-table tr.dur-ib td{font-weight:700}
-    #dur-table tr.dur-ib .dur-chg{font-weight:400}
+    .dur-mark{font-size:10px;line-height:0;margin-left:2px;color:var(--muted)}
+    .dur-foot{list-style:none;margin:8px 0 0;padding:0;font-size:12px;color:var(--muted);line-height:1.6;word-break:keep-all}
+    .dur-help-h{display:block}
+    .dur-help-h ~ .dur-help-h{margin-top:7px}
+    /* 「?」 팝오버는 트리거가 아니라 출처 줄(.dur-meta) 왼쪽에 맞춰 연다. 트리거 기준(left:0)이면 숨은 팝오버가 641~768px 에서 섹션 밖으로 나가 가로 스크롤이 생긴다.
+       위치는 640px 이하의 공통 모바일 규칙(? 아래 28px, --up 이면 위)과 같게 둔다. */
+    @media(min-width:641px){
+      .dur-meta{position:relative}
+      .dur-meta .iq-help{position:static}
+      #help-dur{top:auto;margin-top:28px;max-width:min(440px,100%)}
+      #help-dur.iq-help-pop--up{margin-top:0}
+    }
     .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:8px 14px;font-size:13px}
     .sens-kpi-delta{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;margin-left:4px}
     .sens-kpi .sub{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
@@ -144,6 +147,7 @@
       .panel{padding:14px}
       .panel h2{font-size:17px}
       .chart-container{height:360px;padding:8px}
+      .chart-container.dur-chart{height:320px}
       .forward-chart{height:340px;padding:8px}
       .capsec-chart{height:300px;padding:8px 6px 4px}
       .sens-chart{height:260px}
@@ -304,16 +308,27 @@
     </div>
 
     <div class="panel" id="sec-dur" data-share-section="자산·부채 듀레이션">
-      <h2>자산·부채 듀레이션 <span id="dur-title-q" style="color:var(--muted);font-size:13px;font-weight:400"></span></h2>
-      <div class="controls" style="justify-content:flex-start">
-        <label id="dur-quarter-label" style="display:none">기준 분기: <select id="dur-quarter" class="select"></select></label>
-      </div>
+      <h2>자산·부채 듀레이션</h2>
       <div id="dur-placeholder" class="no-data">상단의 보험사를 선택하면 자산·부채 듀레이션이 표시됩니다.</div>
-      <div id="dur-strip" class="dur-strip" style="display:none"></div>
-      <div id="dur-note" class="dur-note" style="display:none"></div>
-      <h3 class="dur-h3" id="dur-table-h" style="display:none">시나리오별 자산·부채 <span class="dur-unit">(단위: 억원)</span></h3>
-      <div class="table-container" id="dur-table" tabindex="0" role="region" aria-label="시나리오별 자산·부채 표(좁은 화면에서는 가로로 스크롤)" style="display:none"></div>
-      <div class="donut-note" id="dur-table-note"></div>
+      <div id="dur-body" style="display:none">
+        <div class="controls">
+          <div class="control-group">
+            <span class="control-label" id="dur-period-label">기간</span>
+            <div class="seg-toggle" id="dur-period-toggle" role="radiogroup" aria-labelledby="dur-period-label">
+              <button type="button" class="seg-btn active" data-value="half" role="radio" aria-checked="true" tabindex="0">반기</button>
+              <button type="button" class="seg-btn" data-value="year" role="radio" aria-checked="false" tabindex="-1">연도</button>
+            </div>
+            <select id="dur-period" class="select sr-only" tabindex="-1" aria-hidden="true">
+              <option value="half" selected>반기</option>
+              <option value="year">연도</option>
+            </select>
+          </div>
+        </div>
+        <div class="chart-container dur-chart" id="dur-chart-wrap"><canvas id="dur-chart" role="img" aria-label="자산·부채 듀레이션(선)과 듀레이션 갭(막대) 추이 차트"></canvas></div>
+        <div class="dur-meta" id="dur-meta"></div>
+        <div class="table-container" id="dur-table" tabindex="0" role="region" aria-label="자산·부채 듀레이션 기간별 표(좁은 화면에서는 가로로 스크롤)"></div>
+        <ul class="dur-foot" id="dur-foot"></ul>
+      </div>
     </div>
 
     <div class="panel" id="sec-forward" data-share-section="자본비율 전망">
@@ -1728,198 +1743,415 @@
       renderSensDetail();
     }
 
-    // 「자산·부채 듀레이션」 섹션(#sec-dur, 2026-10-11 금리 민감도에서 분리). 분기 선택은 자체 select —
-    // 듀레이션 마스터는 2023.2Q 부터, 금리 민감도(반기 공시 2024.4Q 도입)보다 분기가 더 많다. 기본값은 둘 다 해당 회사의 최신 분기.
-    let durGapLoaded = false, durLastCompany = null;
-    const DUR_SCEN = [['충격전', '충격전'], ['평균회귀', '평균회귀'], ['금리상승', '금리상승'],
-                      ['금리하락', '금리하락'], ['금리평탄', '금리평탄'], ['금리경사', '금리경사']];
+    // 「자산·부채 듀레이션」 섹션(#sec-dur). 회사는 헤더 선택을 따르고, 기간(반기·연도)은 이 섹션 자체 토글이다.
+    // 산식(데이터 쪽 정의): D = (V_금리하락 − V_금리상승) ÷ (2% × V_충격전), 갭 = D_자산 − 부채/금리부자산 × D_부채.
+    // 자산 쪽 V 는 금리부자산(자산총계 − 주식·부동산), 부채 쪽은 부채총계 그대로다. 듀레이션·비율·갭은 데이터 값을
+    // 그대로 표시하고(화면 재계산 없음), 화면에서 하는 계산은 순자산(자산총계 − 부채총계)과 충격전 대비 변화·변화율뿐이다.
+    let durGapLoaded = false, durChart = null;
+    const DUR_SHOCKS = ['평균회귀', '금리상승', '금리하락', '금리평탄', '금리경사'];
+    const durSubOpen = { asset: false, excl: false, ib: false, liab: false, net: false };
 
     function durEsc(s) {
       return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]));
+    }
+
+    function durVal(row, key) {
+      const v = row ? row[key] : null;
+      return (v == null || v === '' || isNaN(Number(v))) ? null : Number(v);
+    }
+
+    // 고정 소수 자리 + 음수 △ (반올림해 0 이 되면 부호 없음)
+    function durFixed(v, dp) {
+      const s = Math.abs(v).toLocaleString('ko-KR', {minimumFractionDigits: dp, maximumFractionDigits: dp});
+      return (v < 0 && /[1-9]/.test(s) ? '△' : '') + s;
+    }
+
+    function durDestroyChart() {
+      if (durChart) { durChart.destroy(); durChart = null; }
     }
 
     function durHideAll(msg) {
       const ph = document.getElementById('dur-placeholder');
       ph.style.display = 'block';
       ph.textContent = msg;
-      ['dur-quarter-label', 'dur-strip', 'dur-note', 'dur-table-h', 'dur-table'].forEach(id => {
-        document.getElementById(id).style.display = 'none';
-      });
-      document.getElementById('dur-table').innerHTML = '';
-      document.getElementById('dur-table-note').innerHTML = '';
-      document.getElementById('dur-title-q').textContent = '';
+      document.getElementById('dur-body').style.display = 'none';
+      durDestroyChart();
+      ['dur-meta', 'dur-table', 'dur-foot'].forEach(id => { document.getElementById(id).innerHTML = ''; });
     }
 
-    // 회사 변경/초기 로드: 분기 select 재구성 후 본문 렌더. 같은 회사로 재진입하면(데이터 도착 지연 등) 고른 분기를 유지한다.
+    // 주식·부동산을 뺀 금리부자산 열이 있는 데이터인지. 열이 없는 이전 데이터에서는 자산총계 기준 설명·표를 보여 준다
+    // (화면만 먼저 갱신돼도 설명이 숫자와 어긋나지 않게).
+    function durHasExclusion(row) {
+      return durVal(row, '금리부자산_충격전') != null;
+    }
+
+    // 회사 변경 · 기간 토글 · 테마 변경 · 데이터 도착 때마다 다시 그린다. 펼침 상태(durSubOpen)는 유지된다.
     function renderDurationSection() {
       try {
         const company = document.getElementById('company').value;
         if (!company) { durHideAll('상단의 보험사를 선택하면 자산·부채 듀레이션이 표시됩니다.'); return; }
         if (!durGapLoaded) { durHideAll('자산·부채 듀레이션을 불러오는 중입니다.'); return; }
-        const quarters = sensQuartersDesc(durGapRowsForCompany(company));
-        if (!quarters.length) {
+        const all = durGapRowsForCompany(company);
+        const mode = document.getElementById('dur-period').value;
+        // 반기: 그 회사의 최신 5개 공시 시점. 연도: 최신 + 직전 3개년 연말(4Q).
+        const periods = !all.length ? [] : (mode === 'year' ? getYearEndQuarters(all) : getRecentQuarters(all, 5));
+        if (!periods.length) {
           durHideAll('해당 보험사는 금리위험액 현황 공시(자산·부채 듀레이션)가 아직 없습니다.');
           return;
         }
-        const qSelect = document.getElementById('dur-quarter');
-        const prev = qSelect.value;
-        qSelect.innerHTML = '';
-        quarters.forEach(q => {
-          const opt = document.createElement('option');
-          opt.value = q; opt.textContent = q;
-          qSelect.appendChild(opt);
-        });
-        qSelect.value = (company === durLastCompany && quarters.includes(prev)) ? prev : quarters[0];
-        durLastCompany = company;
-        document.getElementById('dur-quarter-label').style.display = '';
-        renderDurationDetail();
+        const rows = periods.map(q => all.find(r => r['공시분기'] === q));
+        const hasEx = rows.some(durHasExclusion);
+        document.getElementById('dur-placeholder').style.display = 'none';
+        document.getElementById('dur-body').style.display = '';
+        renderDurationMeta(hasEx);
+        renderDurationTable(periods, rows, hasEx);
+        renderDurationChart(company, periods, rows);
       } catch (err) {
         console.error('renderDurationSection failed', err);
         durHideAll('자산·부채 듀레이션을 불러오는 중 오류가 발생했습니다.');
       }
     }
 
-    function renderDurationDetail() {
-      try {
-        const company = document.getElementById('company').value;
-        const quarter = document.getElementById('dur-quarter').value;
-        const row = durGapRowsForCompany(company).find(r => r['공시분기'] === quarter) || null;
-        if (!row) { durHideAll('해당 분기의 자산·부채 듀레이션 공시가 없습니다.'); return; }
-        document.getElementById('dur-placeholder').style.display = 'none';
-        document.getElementById('dur-quarter-label').style.display = '';
-        document.getElementById('dur-title-q').textContent = '(' + quarter + ' 기준)';
-        renderDurationCards(row);
-        renderDurationScenarioTable(row, quarter);
-      } catch (err) {
-        console.error('renderDurationDetail failed', err);
-        durHideAll('자산·부채 듀레이션을 불러오는 중 오류가 발생했습니다.');
-      }
+    // 출처 한 줄 + 이 섹션의 유일한 「?」 + 단위.
+    function renderDurationMeta(hasEx) {
+      const base = hasEx ? '금리부자산' : '자산총계';
+      const head = t => '<b class="dur-help-h">' + t + '</b>';
+      const help = head('산식')
+        + (hasEx ? '금리부자산 = 자산총계 − 주식·부동산 제외(직접보유 + 간접투자, 시나리오별 전액)<br>' : '')
+        + '자산 듀레이션(자산D) = (' + base + ' 금리하락 − 금리상승) ÷ (2% × ' + base + ' 충격전)<br>'
+        + '부채 듀레이션(부채D) = (부채총계 금리하락 − 금리상승) ÷ (2% × 부채총계 충격전)<br>'
+        + '듀레이션 갭 = 자산D − (부채/' + base + ') × 부채D. 양수면 금리가 오를 때 순자산이 줄고, 음수면 반대입니다.<br>'
+        + '부채/' + base + ' = 부채총계 ÷ ' + base + '(둘 다 충격전)'
+        + head('정의되지 않는 경우')
+        + '부채총계 충격전 0 이하: 부채D 없음. 갭의 「(부채/' + base + ') × 부채D」 자리에 (부채총계 금리하락 − 금리상승) ÷ (2% × ' + base + ' 충격전)을 씁니다.<br>'
+        + base + ' 충격전 0 이하: 듀레이션과 갭을 정의하지 않습니다.'
+        + head('표')
+        + '금액 행은 충격전 값입니다. +를 눌러 나오는 칸의 아랫줄은 충격전 대비 변화(변화율)이며, 충격전이 0 이하이면 변화율은 뺍니다.<br>'
+        + '순자산 = 자산총계 − 부채총계(화면 계산). 반올림 때문에 끝자리가 1 차이 날 수 있습니다.'
+        + (hasEx ? '<br>주식·부동산 0 은 공시 표의 해당 행에 금액이 없다는 뜻이며, 보유하지 않는다는 뜻은 아닙니다. 공시 표에 담는 범위가 회사·분기마다 다를 수 있습니다.' : '')
+        + head('기준')
+        + '자료: 정기경영공시 「금리위험액 현황」<br>'
+        + (hasEx
+            ? '감독 기준 개정안([별표13] 듀레이션 갭, 확정 전 · 2028년 시행 예정)의 주식·부동산 제외를 적용했습니다. 금리충격(K-ICS 상승·하락, 만기별 크기가 다름)과 세부 산출 범위가 달라, 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있습니다.'
+            : '금리충격(K-ICS 상승·하락, 만기별 크기가 다름)이 달라, 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있습니다.');
+      document.getElementById('dur-meta').innerHTML =
+        '<span>자료: 정기경영공시 「금리위험액 현황」 · 듀레이션·갭은 자체 산출'
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="자산·부채 듀레이션 산식과 기준" aria-describedby="help-dur">?</button>'
+        + '<span class="iq-help-pop" role="tooltip" id="help-dur">' + help + '</span></span></span>'
+        + '<span>(단위: 억원, 듀레이션은 년)</span>';
     }
 
-    // 주식·부동산을 뺀 금리부자산 열이 있는 데이터인지. 열이 없는 이전 데이터에서는 자산총계 기준 설명·표를 그대로 보여 준다
-    // (화면만 먼저 갱신돼도 설명이 숫자와 어긋나지 않게).
-    function durHasExclusion(row) {
-      const v = row['금리부자산_충격전'];
-      return v != null && v !== '';
-    }
+    // 기간별 표(과거 → 최신). 금액 단위는 억원 그대로라 환산하지 않는다. 변화율은 충격전이 0 이하이면 뺀다.
+    function renderDurationTable(periods, rows, hasEx) {
+      const col = prefix => (row, s) => durVal(row, prefix + '_' + s);
+      const netOf = (row, s) => {
+        const a = durVal(row, '자산_' + s), l = durVal(row, '부채_' + s);
+        return (a == null || l == null) ? null : a - l;
+      };
+      const amounts = [{key: 'asset', label: '자산총계', get: col('자산')}]
+        .concat(hasEx ? [{key: 'excl', label: '주식·부동산 제외', get: col('제외액'), onlyIfDiffers: true},
+                         {key: 'ib', label: '금리부자산', get: col('금리부자산')}] : [])
+        .concat([{key: 'liab', label: '부채총계', get: col('부채')}, {key: 'net', label: '순자산', get: netOf}]);
 
-    // 시나리오별 자산·부채 표 — 마스터 열(자산_/제외액_/금리부자산_/부채_ × 6 시나리오)은 이미 억원이라 화면에서
-    // 단위 환산을 하지 않는다. 화면에서 하는 계산은 순자산(자산총계−부채총계), 충격전 대비 변화(시나리오−충격전),
-    // 변화율(변화÷충격전)의 단순 사칙연산뿐이다. 충격전이 0 이하이면 변화율은 정의되지 않아 뺀다.
-    function renderDurationScenarioTable(row, quarter) {
-      const val = k => (row[k] == null || row[k] === '' || isNaN(Number(row[k]))) ? null : Number(row[k]);
-      const hasEx = durHasExclusion(row);
-      const A = DUR_SCEN.map(([k]) => val('자산_' + k));
-      const X = hasEx ? DUR_SCEN.map(([k]) => val('제외액_' + k)) : [];
-      const B = hasEx ? DUR_SCEN.map(([k]) => val('금리부자산_' + k)) : [];
-      const L = DUR_SCEN.map(([k]) => val('부채_' + k));
-      const N = A.map((a, i) => (a == null || L[i] == null) ? null : a - L[i]);
-      const all = A.concat(X, B, L, N).filter(v => v != null);
-      const h = document.getElementById('dur-table-h'), tbl = document.getElementById('dur-table'), tnote = document.getElementById('dur-table-note');
-      if (!all.length) { h.style.display = 'none'; tbl.style.display = 'none'; tbl.innerHTML = ''; tnote.innerHTML = ''; return; }
-      const maxAbs = Math.max(...all.map(Math.abs));
-      const dp = maxAbs >= 1000 ? 0 : (maxAbs >= 10 ? 1 : 2); // 소규모 사(마이브라운·카카오페이 등)는 변화량이 0 으로 뭉개지지 않게 소수 자리를 늘린다
-      const fmt = (v, dp2) => {
-        const s = Math.abs(v).toLocaleString('ko-KR', {minimumFractionDigits: dp2, maximumFractionDigits: dp2});
-        return (v < 0 && Number(Math.abs(v).toFixed(dp2)) !== 0 ? '△' : '') + s;
-      };
-      const fmtDelta = d => {
-        const z = Number(Math.abs(d).toFixed(dp)) === 0;
-        return z ? '0' : (d < 0 ? '△' : '+') + fmt(Math.abs(d), dp);
-      };
-      const fmtPctDelta = p => {
-        const z = Number(Math.abs(p).toFixed(1)) === 0;
-        return z ? '0.0%' : (p < 0 ? '△' : '+') + Math.abs(p).toFixed(1) + '%';
-      };
-      const lines = [['자산총계', A, '']]
-        .concat(hasEx ? [['주식·부동산 제외', X, 'dur-ex'], ['금리부자산', B, 'dur-ib']] : [])
-        .concat([['부채총계', L, ''], ['순자산', N, 'dur-net']]);
-      let html = '<table><caption class="sr-only">' + durEsc(quarter) + ' 시나리오별 ' + lines.map(r => r[0]).join('·') + '(억원)와 충격전 대비 변화·변화율</caption>'
-        + '<thead><tr><th scope="col">구분</th>'
-        + DUR_SCEN.map(([, lab]) => '<th scope="col">' + lab + '</th>').join('') + '</tr></thead><tbody>';
-      lines.forEach(([name, vals, cls]) => {
-        html += '<tr' + (cls ? ' class="' + cls + '"' : '') + '><th scope="row">' + name + '</th>';
-        vals.forEach((v, i) => {
-          if (v == null) { html += '<td class="dur-num">—</td>'; return; }
-          let chg;
-          if (i === 0) chg = '기준';
-          else if (vals[0] == null) chg = '—';
-          else {
-            const d = v - vals[0];
-            chg = fmtDelta(d) + (vals[0] > 0 ? ' (' + fmtPctDelta(d / vals[0] * 100) + ')' : '');
-          }
-          html += '<td class="dur-num"><span class="dur-amt">' + fmt(v, dp) + '</span><span class="dur-chg">' + chg + '</span></td>';
+      // 소수 자리는 화면에 담는 이 회사의 금액 크기로 정한다 — 소규모 사는 변화량이 0 으로 뭉개지지 않게 늘린다.
+      let maxAbs = 0;
+      amounts.forEach(m => rows.forEach(r => ['충격전'].concat(DUR_SHOCKS).forEach(s => {
+        const v = m.get(r, s);
+        if (v != null) maxAbs = Math.max(maxAbs, Math.abs(v));
+      })));
+      const dp = maxAbs >= 1000 ? 0 : (maxAbs >= 10 ? 1 : 2);
+      const fmtDelta = d => { const s = durFixed(Math.abs(d), dp); return /[1-9]/.test(s) ? (d < 0 ? '△' : '+') + s : '0'; };
+      const fmtPctDelta = p => Number(Math.abs(p).toFixed(1)) === 0 ? '0.0%' : (p < 0 ? '△' : '+') + Math.abs(p).toFixed(1) + '%';
+
+      const metrics = [
+        {label: '듀레이션 갭 (년)', key: '듀레이션갭', dp: 2, cls: 'dur-gap'},
+        {label: '자산 듀레이션 (년)', key: '자산듀레이션', dp: 2},
+        {label: '부채 듀레이션 (년)', key: '부채듀레이션', dp: 2},
+        {label: (hasEx ? '부채/금리부자산' : '부채/자산총계') + ' (배)', key: '부채자산비율', dp: 3}
+      ];
+
+      // 비고(보이는 기간만): 같은 문구는 주석 하나로 묶고, 값이 없는 칸(없으면 갭 칸)에 번호를 단다.
+      const notes = []; // {text, periods}
+      const marks = rows.map((r, i) => {
+        const texts = [];
+        if (r['비고']) texts.push(String(r['비고']));
+        if (hasEx && !durHasExclusion(r)) texts.push('주식·부동산을 빼지 않은 자산총계 기준 값');
+        const nums = texts.map(text => {
+          let n = notes.findIndex(x => x.text === text);
+          if (n < 0) { notes.push({text, periods: []}); n = notes.length - 1; }
+          notes[n].periods.push(periods[i]);
+          return n + 1;
+        });
+        const empty = metrics.filter(m => durVal(r, m.key) == null).map(m => m.key);
+        return {nums, texts, cells: empty.length ? empty : ['듀레이션갭']};
+      });
+
+      let html = '<table><caption class="sr-only">기간별 듀레이션 갭·자산 듀레이션·부채 듀레이션과 자산·부채 금액(억원, 충격전)</caption>'
+        + '<thead><tr><th scope="col">항목명</th>' + periods.map(q => '<th scope="col">' + durEsc(q) + '</th>').join('') + '</tr></thead><tbody>';
+      metrics.forEach(m => {
+        html += '<tr' + (m.cls ? ' class="' + m.cls + '"' : '') + '><th scope="row">' + m.label + '</th>';
+        rows.forEach((r, i) => {
+          const v = durVal(r, m.key), mk = marks[i];
+          const noted = mk.nums.length > 0 && mk.cells.includes(m.key);
+          const why = noted ? mk.texts.join(' / ') : '';
+          let cell = v == null
+            ? '<span aria-hidden="true">—</span><span class="sr-only">값 없음' + (why ? ': ' + durEsc(why) : '(정의 안 됨)') + '</span>'
+            : durFixed(v, m.dp) + (noted ? '<span class="sr-only"> 주석: ' + durEsc(why) + '</span>' : '');
+          if (noted) cell += '<sup class="dur-mark" aria-hidden="true">' + mk.nums.map(n => n + ')').join(' ') + '</sup>';
+          html += '<td' + (noted ? ' title="' + durEsc(why) + '"' : '') + '>' + cell + '</td>';
         });
         html += '</tr>';
       });
+
+      amounts.forEach((m, mi) => {
+        const differs = rows.some(r => DUR_SHOCKS.some(s => {
+          const v = m.get(r, s), b = m.get(r, '충격전');
+          return v != null && b != null && Math.abs(v - b) > 1e-9;
+        }));
+        const toggle = !m.onlyIfDiffers || differs;
+        const open = toggle && durSubOpen[m.key];
+        html += '<tr' + (mi === 0 ? ' class="dur-first"' : '') + '><th scope="row">' + m.label
+          + (toggle ? ' <button type="button" class="subtoggle" data-group="' + m.key + '" data-name="' + m.label + '" aria-expanded="' + open + '"'
+              + ' aria-label="' + m.label + ' 시나리오별 값 ' + (open ? '접기' : '펼치기') + '" title="하위 항목 ' + (open ? '접기' : '펼치기') + '">' + (open ? '−' : '+') + '</button>' : '')
+          + '</th>';
+        rows.forEach(r => {
+          const v = m.get(r, '충격전');
+          html += '<td>' + (v == null ? '—' : durFixed(v, dp)) + '</td>';
+        });
+        html += '</tr>';
+        if (!toggle) return;
+        DUR_SHOCKS.forEach(s => {
+          html += '<tr class="dur-sub dur-sub-' + m.key + '"' + (open ? '' : ' style="display:none"') + '><th scope="row"><span class="sr-only">' + m.label + ' </span>' + s + '</th>';
+          rows.forEach(r => {
+            const v = m.get(r, s), b = m.get(r, '충격전');
+            if (v == null) { html += '<td>—</td>'; return; }
+            const chg = b == null ? '—' : fmtDelta(v - b) + (b > 0 ? ' (' + fmtPctDelta((v - b) / b * 100) + ')' : '');
+            html += '<td><span class="dur-amt">' + durFixed(v, dp) + '</span><span class="dur-chg">' + chg + '</span></td>';
+          });
+          html += '</tr>';
+        });
+      });
       html += '</tbody></table>';
+
+      const tbl = document.getElementById('dur-table');
       tbl.innerHTML = html;
-      h.style.display = '';
-      tbl.style.display = 'block';
-      tnote.innerHTML = '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-dur-table">?</button>'
-        + '<span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-dur-table">'
-        + '자료: 정기경영공시 「금리위험액 현황」 · ' + durEsc(quarter) + ' 기준. 금액 단위는 억원입니다.<br>'
-        + (hasEx
-            ? '<b>자산총계·부채총계</b>는 공시 표의 값입니다. <b>주식·부동산 제외</b>는 같은 표의 직접보유·간접투자 주식과 부동산을 더한 금액이고, <b>금리부자산</b> = 자산총계 − 주식·부동산 제외입니다.<br>'
-              + '<b>순자산</b> = 자산총계 − 부채총계(화면 계산). 반올림 때문에 끝자리가 1 차이 날 수 있습니다.<br>'
-              + '주식·부동산 0 은 표의 해당 행에 금액이 없다는 뜻이며, 보유하지 않는다는 뜻은 아닙니다. 표에 담는 범위가 회사·분기마다 다를 수 있습니다.<br>'
-            : '공시 표의 값을 그대로 옮겼습니다. 순자산 = 자산총계 − 부채총계(화면 계산).<br>')
-        + '칸 아랫줄은 <b>충격전 대비 변화</b>(금액)와 <b>변화율</b>입니다. 충격전이 0 이하이면 변화율은 표시하지 않습니다.'
-        + '</span></span>';
+      tbl.querySelectorAll('.subtoggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const g = btn.dataset.group;
+          durSubOpen[g] = !durSubOpen[g];
+          const word = durSubOpen[g] ? '접기' : '펼치기';
+          btn.textContent = durSubOpen[g] ? '−' : '+';
+          btn.setAttribute('aria-expanded', String(durSubOpen[g]));
+          btn.setAttribute('aria-label', btn.dataset.name + ' 시나리오별 값 ' + word);
+          btn.title = '하위 항목 ' + word;
+          tbl.querySelectorAll('tr.dur-sub-' + g).forEach(tr => { tr.style.display = durSubOpen[g] ? '' : 'none'; });
+        });
+      });
+      document.getElementById('dur-foot').innerHTML = notes.map((n, i) =>
+        '<li>' + (i + 1) + ') ' + n.periods.map(durEsc).join(', ') + ': ' + durEsc(n.text) + '</li>').join('');
     }
 
-    // 자산/부채 듀레이션 갭 카드 — 마스터 `kics_duration_gap.json` 의 컬럼을 그대로 표시한다(JS 재계산 없음).
-    // 산식(마스터 쪽 정의): D = (V_금리하락 − V_금리상승) ÷ (2% × V_충격전), 갭 = D_자산 − 부채자산비율×D_부채.
-    // 자산 쪽 V 는 금리부자산(자산총계 − 주식·부동산), 부채 쪽은 부채총계 그대로이고 부채자산비율 = 부채총계÷금리부자산.
-    // 자산 범위만 감독 기준 개정안(확정 전)의 주식·부동산 제외를 적용했다. 금리충격(K-ICS 상승·하락, 만기별 크기가
-    // 다름)과 세부 산출 범위가 달라 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있다.
-    // 부호: 갭 양수 = 금리 상승 시 순자산 감소(자산 듀레이션이 부채보다 김).
-    function renderDurationCards(row) {
-      const strip = document.getElementById('dur-strip');
-      const note = document.getElementById('dur-note');
+    // 선 색 — 맨 위 지급여력비율 추이 차트의 민트·핑크. Deep 은 같은 색의 진한 톤(밝은 바탕에서 점 테두리).
+    const DUR_COLOR = {
+      mint: 'rgb(75, 192, 192)', pink: 'rgb(255, 99, 132)',
+      mintDeep: 'rgb(31, 122, 122)', pinkDeep: 'rgb(201, 54, 91)'
+    };
+    // 갭 막대는 부호와 상관없이 사이트 키컬러(common.css --primary, 어두운 테마는 그 테마의 값) 한 색이다. 부호는 0 선 위아래와 △ 로 읽는다.
+    // 채움 불투명도: 민트 선과 헷갈리지 않게 밝은 바탕에서는 진하게, 어두운 바탕에서는 가라앉게 둔다.
+    const DUR_BAR_ALPHA = {light: 0.85, dark: 0.55};
+    function durAlpha(hex, a) {
+      const m = /^#([0-9a-f]{6})$/i.exec(hex);
+      if (!m) return hex;
+      const n = parseInt(m[1], 16);
+      return 'rgba(' + (n >> 16) + ', ' + ((n >> 8) & 255) + ', ' + (n & 255) + ', ' + a + ')';
+    }
+    // 세로 공간 나눔(축 높이 대비): 갭 막대는 아래쪽, 듀레이션 선은 위쪽을 써서 서로 가리지 않는다.
+    // label = 막대 끝에 적는 값이 차지하는 높이. MIN_SPAN(년) = 0 근처 값이 큰 막대·큰 등락으로 부풀지 않게 하는 최소 폭.
+    const DUR_BAND = {barTop: 0.5, lineBottom: 0.56, lineTop: 0.95, label: 0.085, minSpan: 0.5};
 
-      const num = (v, dg) => v == null ? '—'
-        : (Number(v) < 0 ? '△' : '') + Math.abs(Number(v)).toFixed(dg);
-      const card = (v, unit, lab, sub, lead) =>
-        '<div class="dur-card' + (lead ? ' lead' : '') + '">'
-        + '<div class="dur-val">' + v + (unit ? '<span class="u">' + unit + '</span>' : '') + '</div>'
-        + '<div class="dur-lab">' + lab + '</div>'
-        + '<div class="dur-sub">' + sub + '</div></div>';
+    function durNiceStep(raw) {
+      const p = Math.pow(10, Math.floor(Math.log10(raw)));
+      const f = raw / p;
+      return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+    }
 
-      const hasEx = durHasExclusion(row);
-      const dA = row['자산듀레이션'], dL = row['부채듀레이션'], dG = row['듀레이션갭'], ratio = row['부채자산비율'];
-      const gapSub = dL == null ? '부채D 없이 부채 금액 변화로 계산'
-        : '자산D − 부채자산비율' + (ratio == null ? '' : '(' + num(ratio, 3) + ')') + '×부채D';
-      strip.innerHTML = [
-        dA == null ? card('—', '', '자산 듀레이션', '정의 안 됨')
-                   : card(num(dA, 2), '년', '자산 듀레이션', hasEx ? '금리부자산 기준' : '자산총계 기준'),
-        dL == null ? card('—', '', '부채 듀레이션', '정의 안 됨')
-                   : card(num(dL, 2), '년', '부채 듀레이션', '부채총계 기준'),
-        dG == null ? card('—', '', '듀레이션 갭', '정의 안 됨', true)
-                   : card(num(dG, 2), '년', '듀레이션 갭', gapSub, true)
-      ].join('');
-      strip.style.display = 'grid';
-      const basis = hasEx
-        ? '공시 자료로 자체 산출 · 자산 범위는 감독 기준 개정안(주식·부동산 제외) 적용 · 금리 충격은 K-ICS 상승·하락 시나리오 기준'
-        : '공시 자료로 자체 산출 · 금리 충격은 K-ICS 상승·하락 시나리오 기준';
-      const assetV = hasEx ? '금리부자산' : '자산총계';
-      let noteHtml = '<span class="dur-basis">' + basis + '</span>'
-        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션 갭 산식" aria-describedby="help-dur-formula">?</button>'
-        /* ? 가 한 줄 설명 끝(화면 가운데~오른쪽)에 있어 왼쪽으로 편다 — 숨은 팝오버가 오른쪽으로 삐져나와 가로 스크롤이 생기지 않게 */
-        + '<span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-dur-formula">'
-        + (hasEx ? '<b>금리부자산</b> = 자산총계 − 주식·부동산(직접보유 + 간접투자, 시나리오별 전액)<br>' : '')
-        + '<b>자산D</b> = (' + assetV + ' 금리하락 − 금리상승) ÷ (2% × 충격전 금액)<br>'
-        + '<b>부채D</b> = (부채총계 금리하락 − 금리상승) ÷ (2% × 충격전 금액)<br>'
-        + '<b>갭</b> = 자산D − 부채자산비율 × 부채D. 부채자산비율 = 부채총계 ÷ ' + assetV + '(충격전). 양수면 금리가 오를 때 순자산이 줄고, 음수면 반대입니다.<br>'
-        + '부채총계가 0 이하이면 부채D 없이, 부채자산비율 × 부채D 자리에 (부채총계 금리하락 − 금리상승) ÷ (2% × ' + assetV + ' 충격전)을 씁니다. '
-        + (hasEx ? '금리부자산이' : '자산총계가') + ' 0 이하이면 듀레이션과 갭을 정의하지 않습니다.<br>'
-        + (hasEx
-            ? '감독 기준 개정안([별표13] 듀레이션 갭, 확정 전 · 2028년 시행 예정)의 주식·부동산 제외를 적용했습니다. 금리충격(K-ICS 상승·하락, 만기별 크기가 다름)과 세부 산출 범위가 달라, 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있습니다.'
-            : '금리충격(K-ICS 상승·하락, 만기별 크기가 다름)이 달라, 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있습니다.')
-        + (row['비고'] ? '<br>비고: ' + durEsc(row['비고']) : '')
-        + '</span></span>';
-      note.innerHTML = noteHtml;
-      note.style.display = 'block';
+    // [lo, hi] 를 parts 칸 안팎으로 끊은 눈금 중 [from, to] 안에 드는 것만(그 축이 쓰는 구역에만 눈금을 단다).
+    function durTicks(lo, hi, parts, from, to) {
+      const step = durNiceStep((hi - lo) / parts);
+      const a = Math.max(from, Math.floor(lo / step) * step), b = Math.min(to, Math.ceil(hi / step) * step);
+      const out = [];
+      for (let k = Math.ceil(a / step - 1e-9); k * step <= b + step * 1e-9; k++) out.push(Number((k * step).toPrecision(12)));
+      return out;
+    }
+
+    // 왼쪽 축(선): 자산·부채 듀레이션의 최소~최대를 위쪽 구역에 맞춘다. 0 에서 시작하지 않으며 어떤 값도 자르지 않는다.
+    function durLineScale(vals, hasBars) {
+      if (!vals.length) return {min: 0, max: 1, ticks: []};
+      let lo = Math.min(...vals), hi = Math.max(...vals);
+      if (hi - lo < DUR_BAND.minSpan) { const mid = (hi + lo) / 2; lo = mid - DUR_BAND.minSpan / 2; hi = mid + DUR_BAND.minSpan / 2; }
+      const a = hasBars ? DUR_BAND.lineBottom : 0.06;
+      const R = (hi - lo) / (DUR_BAND.lineTop - a);
+      const min = lo - a * R, max = min + R;
+      return {min, max, ticks: durTicks(lo, hi, 4, min + (a - 0.05) * R, max)};
+    }
+
+    // 오른쪽 축(막대): 0 을 반드시 품는다(막대는 0 에서 시작). 막대와 값 글자가 아래쪽 구역 안에 들어오게 위를 비운다.
+    function durBarScale(vals, hasLines) {
+      if (!vals.length) return {min: 0, max: 1, ticks: []};
+      let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals);
+      if (hi - lo < DUR_BAND.minSpan) {
+        const add = DUR_BAND.minSpan - (hi - lo);
+        if (lo === 0) hi += add; else if (hi === 0) lo -= add; else { lo -= add / 2; hi += add / 2; }
+      }
+      const top = hasLines ? DUR_BAND.barTop : 0.97;
+      const b0 = lo < 0 ? DUR_BAND.label : 0;
+      const b1 = top - (hi > 0 ? DUR_BAND.label : 0);
+      const R = (hi - lo) / (b1 - b0);
+      const min = lo - b0 * R, max = min + R;
+      return {min, max, ticks: durTicks(lo, hi, 3, min, min + (top + 0.02) * R)};
+    }
+
+    // 막대 끝에 갭 값을 적는다(음수는 △). 좁으면 글자를 한 단계 줄이고, 그래도 칸 폭을 넘으면 적지 않는다(툴팁·표에는 남는다).
+    const durBarValuePlugin = {
+      id: 'durBarValue',
+      afterDatasetsDraw(c, args, opts) {
+        const i = c.data.datasets.findIndex(d => d.type === 'bar');
+        if (i < 0 || !c.isDatasetVisible(i)) return;
+        const bars = c.getDatasetMeta(i).data, x = c.scales.x, ctx = c.ctx;
+        const room = x.width / Math.max(1, bars.length) - 2;
+        const texts = c.data.datasets[i].data.map(v => v == null ? null : durFixed(v, 2));
+        ctx.save();
+        const fits = [11, 10].some(size => {
+          ctx.font = '600 ' + size + 'px ' + Chart.defaults.font.family;
+          return texts.every(t => t == null || ctx.measureText(t).width <= room);
+        });
+        if (fits) {
+          ctx.fillStyle = opts.color;
+          ctx.textAlign = 'center';
+          texts.forEach((t, k) => {
+            if (t == null) return;
+            const v = c.data.datasets[i].data[k], neg = v < 0 && /[1-9]/.test(t);
+            ctx.textBaseline = neg ? 'top' : 'bottom';
+            ctx.fillText(t, bars[k].x, neg ? Math.max(bars[k].y, bars[k].base) + 3 : Math.min(bars[k].y, bars[k].base) - 3);
+          });
+        }
+        ctx.restore();
+      }
+    };
+
+    // 범례 표시: 선 계열 = 실제 선 모양 + 점 모양, 갭 = 막대 한 칸. 기본 상자는 투명하게 두고 그 자리에 그린다.
+    const durLegendPlugin = {
+      id: 'durLegend',
+      afterDraw(c) {
+        const lg = c.legend;
+        if (!lg || !lg.legendItems) return;
+        const ctx = c.ctx, w = lg.options.labels.boxWidth;
+        lg.legendItems.forEach((item, k) => {
+          const box = lg.legendHitBoxes[k], ds = c.data.datasets[item.datasetIndex];
+          if (!box || !ds) return;
+          const cy = box.top + box.height / 2;
+          ctx.save();
+          ctx.globalAlpha = item.hidden ? 0.35 : 1;
+          if (ds.type === 'bar') {
+            const bw = 18, bx = box.left + (w - bw) / 2;
+            ctx.fillStyle = ds.backgroundColor; ctx.strokeStyle = ds.borderColor; ctx.lineWidth = 1.5;
+            ctx.fillRect(bx, cy - 6, bw, 12); ctx.strokeRect(bx, cy - 6, bw, 12);
+          } else {
+            ctx.strokeStyle = ds.borderColor; ctx.lineWidth = ds.borderWidth; ctx.setLineDash(ds.borderDash);
+            ctx.beginPath(); ctx.moveTo(box.left, cy); ctx.lineTo(box.left + w, cy); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = ds.pointBackgroundColor; ctx.strokeStyle = ds.pointBorderColor; ctx.lineWidth = ds.pointBorderWidth;
+            Chart.helpers.drawPoint(ctx, {pointStyle: ds.pointStyle, radius: ds.pointRadius, borderWidth: ds.pointBorderWidth}, box.left + w / 2, cy);
+          }
+          ctx.restore();
+        });
+      }
+    };
+
+    // 혼합 차트: 듀레이션 갭 = 오른쪽 축 막대(0 기준, 키컬러 한 색), 자산 듀레이션(민트 실선·원)과
+    // 부채 듀레이션(핑크 실선·세모) = 왼쪽 축 선. 값이 없으면 선을 끊고 막대를 비운다(0 아님). 극단값도 자르지 않는다.
+    function renderDurationChart(company, periods, rows) {
+      durDestroyChart();
+      const wrap = document.getElementById('dur-chart-wrap');
+      const canvas = document.getElementById('dur-chart');
+      const TH = window.IQTheme ? IQTheme.chart()
+        : {dark: false, bg: '#ffffff', text: '#18181b', muted: '#63666b', grid: '#e4e4e2', primary: '#0f6e68'};
+      const C = DUR_COLOR;
+      // 어두운 바탕에서는 진한 톤이 묻혀서 점 테두리를 원색으로 둔다.
+      const mintEdge = TH.dark ? C.mint : C.mintDeep, pinkEdge = TH.dark ? C.pink : C.pinkDeep;
+      const values = key => rows.map(r => durVal(r, key));
+      const line = (label, key, color, edge, point, radius, order) => ({
+        type: 'line', label, data: values(key), yAxisID: 'y', borderColor: color, backgroundColor: color,
+        borderWidth: 2.5, borderDash: [], pointStyle: point, pointRadius: radius, pointHoverRadius: radius + 2,
+        pointBackgroundColor: color, pointBorderColor: edge, pointBorderWidth: 1.5,
+        tension: 0, fill: false, spanGaps: false, order, clip: false
+      });
+      const gap = values('듀레이션갭');
+      const datasets = [
+        {type: 'bar', label: '듀레이션 갭', data: gap, yAxisID: 'y1', order: 2,
+          backgroundColor: durAlpha(TH.primary, TH.dark ? DUR_BAR_ALPHA.dark : DUR_BAR_ALPHA.light),
+          borderColor: TH.primary,
+          borderWidth: 1.5, borderSkipped: false, maxBarThickness: 56, categoryPercentage: 0.8, barPercentage: 0.72},
+        line('자산 듀레이션', '자산듀레이션', C.mint, mintEdge, 'circle', 4.5, 0),
+        line('부채 듀레이션', '부채듀레이션', C.pink, pinkEdge, 'triangle', 5.5, 1)
+      ];
+      // 세 값이 모두 없는 회사는 빈 축 대신 차트를 숨긴다(표와 주석에 사유가 남는다).
+      if (!datasets.some(d => d.data.some(v => v != null))) { wrap.style.display = 'none'; return; }
+      wrap.style.display = '';
+      const lineVals = datasets[1].data.concat(datasets[2].data).filter(v => v != null);
+      const barVals = gap.filter(v => v != null);
+      const left = durLineScale(lineVals, barVals.length > 0);
+      const right = durBarScale(barVals, lineVals.length > 0);
+      // 눈금: 값이 아주 작은 회사에서도 눈금이 같은 숫자로 뭉개지지 않게 소수 넷째 자리까지 허용한다.
+      const axisNum = v => (v < 0 ? '△' : '') + Math.abs(v).toLocaleString('ko-KR', {maximumFractionDigits: 4});
+      const yScale = (s, position, title, align, grid) => ({
+        type: 'linear', position, min: s.min, max: s.max, display: s.ticks.length > 0,
+        title: {display: true, text: title, align},
+        afterBuildTicks: scale => { scale.ticks = s.ticks.map(value => ({value})); },
+        ticks: {callback: v => axisNum(v), autoSkip: false, padding: 6},
+        border: {display: false},
+        grid: Object.assign({drawTicks: false}, grid)
+      });
+      canvas.setAttribute('aria-label', shortName(company) + ' 자산·부채 듀레이션 추이 차트 ('
+        + periods[0] + '~' + periods[periods.length - 1] + '). 자산 듀레이션은 민트색 실선과 원, 부채 듀레이션은 핑크색 실선과 세모로 왼쪽 축에, '
+        + '듀레이션 갭은 오른쪽 축의 녹색 막대(0 위는 양수, 아래는 음수)로 표시합니다. 값은 아래 표와 같습니다.');
+      durChart = new Chart(canvas.getContext('2d'), {
+        type: 'bar',
+        data: {labels: periods, datasets},
+        plugins: [durBarValuePlugin, durLegendPlugin],
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            durBarValue: {color: TH.text},
+            legend: {position: 'top', labels: {
+              boxWidth: 30, boxHeight: 12,
+              sort: (a, b) => a.datasetIndex - b.datasetIndex,
+              generateLabels: c => Chart.defaults.plugins.legend.labels.generateLabels(c)
+                .map(it => Object.assign(it, {fillStyle: 'transparent', strokeStyle: 'transparent', lineWidth: 0, lineDash: []}))
+            }},
+            tooltip: {
+              mode: 'index',
+              intersect: false,
+              usePointStyle: true,
+              itemSort: (a, b) => a.datasetIndex - b.datasetIndex,
+              callbacks: {
+                label: c => c.dataset.label + ': ' + (c.parsed.y == null ? '—' : durFixed(c.parsed.y, 2) + '년'),
+                labelPointStyle: c => ({pointStyle: c.dataset.type === 'bar' ? 'rect' : c.dataset.pointStyle, rotation: 0}),
+                labelColor: c => ({borderColor: c.dataset.borderColor,
+                  backgroundColor: c.dataset.type === 'bar' ? c.dataset.backgroundColor : c.dataset.borderColor})
+              }
+            }
+          },
+          scales: {
+            y: yScale(left, 'left', '듀레이션 (년)', 'end', {color: TH.grid}),
+            y1: yScale(right, 'right', '듀레이션 갭 (년)', 'start',
+              {color: c => (c.tick && c.tick.value === 0) ? TH.muted : TH.grid}),
+            x: {offset: true, grid: {display: false}}
+          },
+          interaction: {mode: 'index', intersect: false}
+        }
+      });
     }
 
     // 분기 변경: 차트/KPI/테이블/주석만 재렌더
@@ -2155,7 +2387,9 @@
     document.getElementById('sens-quarter').addEventListener('change', renderSensDetail);
 
     // 자산/부채 듀레이션 갭 JSON 로드 (실패해도 이 섹션만 안내 문구로 바뀌고 나머지 패널은 정상 — fail soft)
-    document.getElementById('dur-quarter').addEventListener('change', renderDurationDetail);
+    // 이 섹션만의 기간 토글(맨 위 표의 토글과 따로 움직인다).
+    setupSegToggle(document.getElementById('dur-period-toggle'), document.getElementById('dur-period')).sync();
+    document.getElementById('dur-period').addEventListener('change', renderDurationSection);
     fetch('kics_duration_gap.json')
       .then(r => r.json())
       .then(d => {
