@@ -108,9 +108,10 @@
     .dur-val .u{font-size:14px;font-weight:600;color:var(--muted);margin-left:3px}
     .dur-lab{font-size:12px;color:var(--muted);margin-top:5px;font-weight:600}
     .dur-sub{font-size:11px;color:var(--muted);margin-top:3px}
-    .dur-note{font-size:11.5px;color:var(--muted);margin:2px 0 6px;line-height:1.5}
+    .dur-note{font-size:12px;color:var(--muted);margin:6px 0;line-height:1.6;word-break:keep-all}
     @media(max-width:640px){.dur-strip{grid-template-columns:1fr}.dur-val{font-size:24px}}
-    /* 시나리오별 금리부 자산·부채 표 — 칸마다 금액(윗줄)과 충격전 대비 변화·변화율(아랫줄). 첫 열 고정은 .table-container 규칙을 그대로 쓴다. */
+    @media(min-width:641px){#help-dur-formula{max-width:min(420px,calc(100vw - 32px))}}
+    /* 시나리오별 자산·부채 표 — 칸마다 금액(윗줄)과 충격전 대비 변화·변화율(아랫줄). 첫 열 고정은 .table-container 규칙을 그대로 쓴다. */
     .dur-h3{font-size:14px;font-weight:700;margin:22px 0 0;color:var(--text)}
     .dur-h3 .dur-unit{font-size:12px;font-weight:400;color:var(--muted)}
     #dur-table{margin-top:8px}
@@ -121,6 +122,10 @@
     #dur-table .dur-chg{display:block;font-size:11.5px;color:var(--muted);margin-top:1px}
     #dur-table tr.dur-net th,#dur-table tr.dur-net td{border-top:2px solid var(--border);font-weight:700}
     #dur-table tr.dur-net .dur-chg{font-weight:400}
+    /* 자산총계 아래 두 줄: 빼는 금액(들여쓰기)과 그 결과(금리부자산, 굵게) */
+    #dur-table tr.dur-ex th{padding-left:18px;font-weight:400;color:var(--muted)}
+    #dur-table tr.dur-ib th,#dur-table tr.dur-ib td{font-weight:700}
+    #dur-table tr.dur-ib .dur-chg{font-weight:400}
     .sens-kpi{display:inline-block;border:1px solid var(--border);border-radius:8px;background:var(--bg);padding:8px 14px;font-size:13px}
     .sens-kpi-delta{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;margin-left:4px}
     .sens-kpi .sub{display:block;color:var(--muted);font-size:11px;font-weight:400;margin-top:2px}
@@ -306,8 +311,8 @@
       <div id="dur-placeholder" class="no-data">상단의 보험사를 선택하면 자산·부채 듀레이션이 표시됩니다.</div>
       <div id="dur-strip" class="dur-strip" style="display:none"></div>
       <div id="dur-note" class="dur-note" style="display:none"></div>
-      <h3 class="dur-h3" id="dur-table-h" style="display:none">시나리오별 금리부 자산·부채 <span class="dur-unit">(단위: 억원)</span></h3>
-      <div class="table-container" id="dur-table" tabindex="0" role="region" aria-label="시나리오별 금리부 자산·부채 표(좁은 화면에서는 가로로 스크롤)" style="display:none"></div>
+      <h3 class="dur-h3" id="dur-table-h" style="display:none">시나리오별 자산·부채 <span class="dur-unit">(단위: 억원)</span></h3>
+      <div class="table-container" id="dur-table" tabindex="0" role="region" aria-label="시나리오별 자산·부채 표(좁은 화면에서는 가로로 스크롤)" style="display:none"></div>
       <div class="donut-note" id="dur-table-note"></div>
     </div>
 
@@ -1791,16 +1796,25 @@
       }
     }
 
-    // 시나리오별 금리부 자산·부채 표 — 마스터 열(자산_/부채_ × 6 시나리오)은 이미 억원이다(빌더 스크립트가 공시
-    // 백만원을 ÷100 해서 적재, 충격전 자산−부채 = 항목 41 순자산가치로 검산). 그래서 화면에서 단위 환산을 하지 않는다.
-    // 화면에서 하는 계산은 순자산(자산−부채), 충격전 대비 변화(시나리오−충격전), 변화율(변화÷충격전)의 단순 사칙연산뿐이다.
-    // 충격전이 0 이하이면 변화율은 정의되지 않아 뺀다.
+    // 주식·부동산을 뺀 금리부자산 열이 있는 데이터인지. 열이 없는 이전 데이터에서는 자산총계 기준 설명·표를 그대로 보여 준다
+    // (화면만 먼저 갱신돼도 설명이 숫자와 어긋나지 않게).
+    function durHasExclusion(row) {
+      const v = row['금리부자산_충격전'];
+      return v != null && v !== '';
+    }
+
+    // 시나리오별 자산·부채 표 — 마스터 열(자산_/제외액_/금리부자산_/부채_ × 6 시나리오)은 이미 억원이라 화면에서
+    // 단위 환산을 하지 않는다. 화면에서 하는 계산은 순자산(자산총계−부채총계), 충격전 대비 변화(시나리오−충격전),
+    // 변화율(변화÷충격전)의 단순 사칙연산뿐이다. 충격전이 0 이하이면 변화율은 정의되지 않아 뺀다.
     function renderDurationScenarioTable(row, quarter) {
       const val = k => (row[k] == null || row[k] === '' || isNaN(Number(row[k]))) ? null : Number(row[k]);
+      const hasEx = durHasExclusion(row);
       const A = DUR_SCEN.map(([k]) => val('자산_' + k));
+      const X = hasEx ? DUR_SCEN.map(([k]) => val('제외액_' + k)) : [];
+      const B = hasEx ? DUR_SCEN.map(([k]) => val('금리부자산_' + k)) : [];
       const L = DUR_SCEN.map(([k]) => val('부채_' + k));
       const N = A.map((a, i) => (a == null || L[i] == null) ? null : a - L[i]);
-      const all = A.concat(L, N).filter(v => v != null);
+      const all = A.concat(X, B, L, N).filter(v => v != null);
       const h = document.getElementById('dur-table-h'), tbl = document.getElementById('dur-table'), tnote = document.getElementById('dur-table-note');
       if (!all.length) { h.style.display = 'none'; tbl.style.display = 'none'; tbl.innerHTML = ''; tnote.innerHTML = ''; return; }
       const maxAbs = Math.max(...all.map(Math.abs));
@@ -1817,11 +1831,14 @@
         const z = Number(Math.abs(p).toFixed(1)) === 0;
         return z ? '0.0%' : (p < 0 ? '△' : '+') + Math.abs(p).toFixed(1) + '%';
       };
-      let html = '<table><caption class="sr-only">' + durEsc(quarter) + ' 시나리오별 금리부자산·금리부부채·순자산(억원)과 충격전 대비 변화·변화율</caption>'
+      const lines = [['자산총계', A, '']]
+        .concat(hasEx ? [['주식·부동산 제외', X, 'dur-ex'], ['금리부자산', B, 'dur-ib']] : [])
+        .concat([['부채총계', L, ''], ['순자산', N, 'dur-net']]);
+      let html = '<table><caption class="sr-only">' + durEsc(quarter) + ' 시나리오별 ' + lines.map(r => r[0]).join('·') + '(억원)와 충격전 대비 변화·변화율</caption>'
         + '<thead><tr><th scope="col">구분</th>'
         + DUR_SCEN.map(([, lab]) => '<th scope="col">' + lab + '</th>').join('') + '</tr></thead><tbody>';
-      [['금리부자산', A, false], ['금리부부채', L, false], ['순자산', N, true]].forEach(([name, vals, isNet]) => {
-        html += '<tr' + (isNet ? ' class="dur-net"' : '') + '><th scope="row">' + name + '</th>';
+      lines.forEach(([name, vals, cls]) => {
+        html += '<tr' + (cls ? ' class="' + cls + '"' : '') + '><th scope="row">' + name + '</th>';
         vals.forEach((v, i) => {
           if (v == null) { html += '<td class="dur-num">—</td>'; return; }
           let chg;
@@ -1841,16 +1858,21 @@
       tbl.style.display = 'block';
       tnote.innerHTML = '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="이 표의 기준" aria-describedby="help-dur-table">?</button>'
         + '<span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-dur-table">'
-        + '자료: 정기경영공시 「금리위험액 현황」 · ' + durEsc(quarter) + ' 기준. 공시 표의 값을 그대로 옮겼으며 금액 단위는 억원입니다. 순자산 = 금리부자산 − 금리부부채(화면 계산).<br>'
+        + '자료: 정기경영공시 「금리위험액 현황」 · ' + durEsc(quarter) + ' 기준. 금액 단위는 억원입니다.<br>'
+        + (hasEx
+            ? '<b>자산총계·부채총계</b>는 공시 표의 값입니다. <b>주식·부동산 제외</b>는 같은 표의 직접보유·간접투자 주식과 부동산을 더한 금액이고, <b>금리부자산</b> = 자산총계 − 주식·부동산 제외입니다.<br>'
+              + '<b>순자산</b> = 자산총계 − 부채총계(화면 계산). 반올림 때문에 끝자리가 1 차이 날 수 있습니다.<br>'
+              + '주식·부동산 0 은 표의 해당 행에 금액이 없다는 뜻이며, 보유하지 않는다는 뜻은 아닙니다. 표에 담는 범위가 회사·분기마다 다를 수 있습니다.<br>'
+            : '공시 표의 값을 그대로 옮겼습니다. 순자산 = 자산총계 − 부채총계(화면 계산).<br>')
         + '칸 아랫줄은 <b>충격전 대비 변화</b>(금액)와 <b>변화율</b>입니다. 충격전이 0 이하이면 변화율은 표시하지 않습니다.'
         + '</span></span>';
     }
 
     // 자산/부채 듀레이션 갭 카드 — 마스터 `kics_duration_gap.json` 의 컬럼을 그대로 표시한다(JS 재계산 없음).
     // 산식(마스터 쪽 정의): D = (V_금리하락 − V_금리상승) ÷ (2% × V_충격전), 갭 = D_자산 − 부채자산비율×D_부채.
-    // 분모는 금리위험액 현황 표의 자산총계/부채총계(건전성감독기준 재무상태표 전체가 아님) — 순자산가치
-    // 변동이 금리위험 측정 대상에서만 나오므로 범위를 맞췄다. K-ICS 충격은 평행이동이 아니라 만기별
-    // 기간구조 충격이라 2%로 나누는 것은 근사 — 순위·상대크기는 유효하나 절대 연수는 참고치.
+    // 자산 쪽 V 는 금리부자산(자산총계 − 주식·부동산), 부채 쪽은 부채총계 그대로이고 부채자산비율 = 부채총계÷금리부자산.
+    // 자산 범위만 감독 기준 개정안(확정 전)의 주식·부동산 제외를 적용했다. 금리충격(K-ICS 상승·하락, 만기별 크기가
+    // 다름)과 세부 산출 범위가 달라 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있다.
     // 부호: 갭 양수 = 금리 상승 시 순자산 감소(자산 듀레이션이 부채보다 김).
     function renderDurationCards(row) {
       const strip = document.getElementById('dur-strip');
@@ -1864,25 +1886,36 @@
         + '<div class="dur-lab">' + lab + '</div>'
         + '<div class="dur-sub">' + sub + '</div></div>';
 
-      const dA = row['자산듀레이션'], dL = row['부채듀레이션'], dG = row['듀레이션갭'];
+      const hasEx = durHasExclusion(row);
+      const dA = row['자산듀레이션'], dL = row['부채듀레이션'], dG = row['듀레이션갭'], ratio = row['부채자산비율'];
+      const gapSub = dL == null ? '부채D 없이 부채 금액 변화로 계산'
+        : '자산D − 부채자산비율' + (ratio == null ? '' : '(' + num(ratio, 3) + ')') + '×부채D';
       strip.innerHTML = [
         dA == null ? card('—', '', '자산 듀레이션', '정의 안 됨')
-                   : card(num(dA, 2), '년', '자산 듀레이션', '금리위험액 현황 기준'),
+                   : card(num(dA, 2), '년', '자산 듀레이션', hasEx ? '금리부자산 기준' : '자산총계 기준'),
         dL == null ? card('—', '', '부채 듀레이션', '정의 안 됨')
-                   : card(num(dL, 2), '년', '부채 듀레이션', '금리위험액 현황 기준'),
+                   : card(num(dL, 2), '년', '부채 듀레이션', '부채총계 기준'),
         dG == null ? card('—', '', '듀레이션 갭', '정의 안 됨', true)
-                   : card(num(dG, 2), '년', '듀레이션 갭', '자산D − 부채자산비율×부채D', true)
+                   : card(num(dG, 2), '년', '듀레이션 갭', gapSub, true)
       ].join('');
       strip.style.display = 'grid';
-      let noteHtml = '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션 갭 산식" aria-describedby="help-dur-formula">?</button>'
-        + '<span class="iq-help-pop" role="tooltip" id="help-dur-formula">'
-        + '자산 듀레이션 D<sub>A</sub> = (V<sub>자산,금리하락</sub> − V<sub>자산,금리상승</sub>) ÷ (2% × V<sub>자산,충격전</sub>)<br>'
-        + '부채 듀레이션 D<sub>L</sub> = (V<sub>부채,금리하락</sub> − V<sub>부채,금리상승</sub>) ÷ (2% × V<sub>부채,충격전</sub>)<br>'
-        + '듀레이션 갭 = D<sub>A</sub> − (부채/자산 비율 × D<sub>L</sub>)<br>'
-        + 'K-ICS 충격은 평행이동이 아니라 만기별 크기가 다른 기간구조 충격이라 2%로 나누는 것은 근사입니다. '
-        + '순위·상대크기는 유효하나 절대 연수는 참고치입니다.<br>'
-        + '분모는 경영공시 <b>금리위험액 현황</b> 표의 자산총계·부채총계입니다(건전성감독기준 재무상태표 전체가 아닙니다). '
-        + '양수 갭 = 금리가 오르면 순자산 감소(자산이 부채보다 김), 음수면 반대입니다.'
+      const basis = hasEx
+        ? '공시 자료로 자체 산출 · 자산 범위는 감독 기준 개정안(주식·부동산 제외) 적용 · 금리 충격은 K-ICS 상승·하락 시나리오 기준'
+        : '공시 자료로 자체 산출 · 금리 충격은 K-ICS 상승·하락 시나리오 기준';
+      const assetV = hasEx ? '금리부자산' : '자산총계';
+      let noteHtml = '<span class="dur-basis">' + basis + '</span>'
+        + '<span class="iq-help"><button type="button" class="iq-help-btn" aria-label="듀레이션 갭 산식" aria-describedby="help-dur-formula">?</button>'
+        /* ? 가 한 줄 설명 끝(화면 가운데~오른쪽)에 있어 왼쪽으로 편다 — 숨은 팝오버가 오른쪽으로 삐져나와 가로 스크롤이 생기지 않게 */
+        + '<span class="iq-help-pop iq-help-pop--right" role="tooltip" id="help-dur-formula">'
+        + (hasEx ? '<b>금리부자산</b> = 자산총계 − 주식·부동산(직접보유 + 간접투자, 시나리오별 전액)<br>' : '')
+        + '<b>자산D</b> = (' + assetV + ' 금리하락 − 금리상승) ÷ (2% × 충격전 금액)<br>'
+        + '<b>부채D</b> = (부채총계 금리하락 − 금리상승) ÷ (2% × 충격전 금액)<br>'
+        + '<b>갭</b> = 자산D − 부채자산비율 × 부채D. 부채자산비율 = 부채총계 ÷ ' + assetV + '(충격전). 양수면 금리가 오를 때 순자산이 줄고, 음수면 반대입니다.<br>'
+        + '부채총계가 0 이하이면 부채D 없이, 부채자산비율 × 부채D 자리에 (부채총계 금리하락 − 금리상승) ÷ (2% × ' + assetV + ' 충격전)을 씁니다. '
+        + (hasEx ? '금리부자산이' : '자산총계가') + ' 0 이하이면 듀레이션과 갭을 정의하지 않습니다.<br>'
+        + (hasEx
+            ? '감독 기준 개정안([별표13] 듀레이션 갭, 확정 전 · 2028년 시행 예정)의 주식·부동산 제외를 적용했습니다. 금리충격(K-ICS 상승·하락, 만기별 크기가 다름)과 세부 산출 범위가 달라, 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있습니다.'
+            : '금리충격(K-ICS 상승·하락, 만기별 크기가 다름)이 달라, 개정안(시장금리 ±100bp) 기준 값과 정확히 같지 않을 수 있습니다.')
         + (row['비고'] ? '<br>비고: ' + durEsc(row['비고']) : '')
         + '</span></span>';
       note.innerHTML = noteHtml;
